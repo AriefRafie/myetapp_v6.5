@@ -185,6 +185,7 @@ public class FrmSementaraPermohonan extends AjaxBasedModule {
 		String no_fail = "";
 		String idpermohonan = getParam("id_permohonan");
     	myLogger.info("idpermohonan :: "+idpermohonan);
+    	
     	header.setDataHeader(idpermohonan);
 		Vector dataHeader = header.getDataHeader();
 		context.put("dataHeader", dataHeader);
@@ -199,14 +200,14 @@ public class FrmSementaraPermohonan extends AjaxBasedModule {
 			nama_kementerian = (String)dh.get("nama_kementerian");
 			flagStatusOnline = (String)dh.get("flag_status_online");
 			catatan_status_online = (String)dh.get("catatan_status_online");
-			
+		
 			
 	   		Vector list_sub = null;
 			list_sub = header.listPerjalananFail(idpermohonan);
 			this.context.put("list_sub_header", list_sub);
 	   		
 		}
-		
+	
 		//sebab online ditolak
 		context.put("catatan_status_online",catatan_status_online);
 		
