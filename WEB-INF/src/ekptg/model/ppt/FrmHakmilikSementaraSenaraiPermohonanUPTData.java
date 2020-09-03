@@ -338,6 +338,7 @@ public class FrmHakmilikSementaraSenaraiPermohonanUPTData {
 					sql += " AND us.id_suburusan(+) = f.id_suburusan ";  
 					sql += " AND p.id_permohonan = '"+idpermohonan+"'";
 			
+					myLogger.info("SQL LIST DATA PPS : "+sql);
 					ResultSet rs = stmt.executeQuery(sql);
 					Hashtable h;
 			

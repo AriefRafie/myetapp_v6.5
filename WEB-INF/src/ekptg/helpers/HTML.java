@@ -141,8 +141,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdNegeri() + ">"
-						+ f.getKodNegeri() + " - " + f.getNamaNegeri()
-						+ "</option>\n");
+						+ f.getNamaNegeri() + "</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {
@@ -2024,7 +2023,16 @@ public class HTML {
 			String disability) throws Exception {
 		return SelectLot(selectName, selectedValue, disability, null);
 	}
-
+	/**
+	 * 
+	 * @param selectName
+	 * @param selectedValue
+	 * @param disability
+	 * @param jsFunction
+	 * @return
+	 * @throws Exception
+	 * 26/08/2020, paparan Keterangan sahaja
+	 */
 	public static String SelectLot(String selectName, Long selectedValue,
 			String disability, String jsFunction) throws Exception {
 		StringBuffer sb = new StringBuffer("");
@@ -2047,7 +2055,8 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdLot() + ">"
-						+ f.getKodLot() + " - " + f.getKeterangan()
+						+ f.getKeterangan() 
+//						+ f.getKodLot() + " - " + f.getKeterangan()
 						+ "</option>\n");
 			}
 			sb.append("</select>");
@@ -2896,8 +2905,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdKementerian()
-						+ ">" + f.getKodKementerian() + " - "
-						+ f.getNamaKementerian() + "</option>\n");
+						+ ">" + f.getNamaKementerian() + "</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {
@@ -3014,7 +3022,6 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdBandar() + ">"
-						+ f.getKodBandar() + " - "
 						+ f.getKeterangan().toUpperCase() + "</option>\n");
 			}
 			sb.append("</select>");
@@ -4098,7 +4105,7 @@ public class HTML {
 					kodJawatan = "00";
 				}
 				sb.append("<option " + s + " value=" + f.getIdJawatan() + ">"
-						+ kodJawatan + " - "
+//						+ kodJawatan + " - "
 						+ f.getKeterangan().toUpperCase() + "</option>\n");
 			}
 			sb.append("</select>");
@@ -4517,8 +4524,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdAgensi() + ">"
-						+ f.getKodAgensi() + " - " + f.getNamaAgensi()
-						+ "</option>\n");
+						+ f.getNamaAgensi() + "</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {
@@ -7813,8 +7819,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + h.get("id") + ">"
-						+ h.get("kod") + " - " + h.get("namaPejabat")
-						+ "</option>\n");
+						+ h.get("namaPejabat") + "</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {
@@ -7888,8 +7893,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + h.get("id") + ">"
-						+ h.get("kod") + " - " + h.get("namaPejabat")
-						+ "</option>\n");
+						+ h.get("namaPejabat") + "</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {
@@ -10142,14 +10146,14 @@ public class HTML {
 			sb.append(" > ");
 			sb.append("<option value=>SILA PILIH</option>\n");
 			if (selectedValue.intValue() == 1) {
-				sb.append("<option selected value=1> K - KESELURUHAN</option>\n");
+				sb.append("<option selected value=1> KESELURUHAN</option>\n");
 			} else {
-				sb.append("<option value=1> K - KESELURUHAN</option>\n");
+				sb.append("<option value=1> KESELURUHAN</option>\n");
 			}
 			if (selectedValue.intValue() == 2) {
-				sb.append("<option selected value=2> S - SEBAHAGIAN</option>\n");
+				sb.append("<option selected value=2> SEBAHAGIAN</option>\n");
 			} else {
-				sb.append("<option value=2> S - SEBAHAGIAN</option>\n");
+				sb.append("<option value=2> SEBAHAGIAN</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {
@@ -10364,8 +10368,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + h.get("id") + ">"
-						+ h.get("kod") + " - " + h.get("keterangan")
-						+ "</option>\n");
+						+ h.get("keterangan") + "</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {
@@ -11656,7 +11659,7 @@ public class HTML {
 			Hashtable h;
 			String s = "";
 			for (int i = 0; i < v.size(); i++) {
-				h = new Hashtable();
+				h = new Hashtable();   
 				h = (Hashtable) v.get(i);
 				if (h.get("ID_PEGAWAI").equals(selectedValue)) {
 					s = "selected";

@@ -47,12 +47,6 @@ public class FrmSemakanPPKModel  extends VTemplate{
         RT.setEnvironmentRT(this.engine, this.context, this.request, this.response, this.session, this.modul);	
     }
 	
-	
-	
-	
-	
-	
-	
 	public String htmlSetupSkrin(String command, String currentTable, String currentSkrin, Db db) throws Exception
 	{
 		String html = "";

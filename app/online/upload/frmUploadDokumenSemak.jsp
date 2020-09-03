@@ -60,10 +60,10 @@ padding:0 0.25em;
 	<input type="hidden" name="mode_" value="$mode_"/>
 	<input type="hidden" name="flagOnline" value="$!flagOnline"/>
 	<input type="hidden" name="actionrefresh" value="$!actionRefresh"/>
-	
+
 	<input type="hidden" name="rujukan" value="$!idRujukan"/>
 	<input type="hidden" name="jenisdokumen" value="$!jenisDokumen"/>
-	<input type="hidden" name="idsenarai" value="$!idSenarai"/> 
+	<input type="hidden" name="idsenarai" value="$!idSenarai"/>
 
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
@@ -72,24 +72,24 @@ padding:0 0.25em;
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
 				<tr>
 						<td valign="top" width="1%">
-							<span class="labelmandatory">##if ($mode != 'readonly') * #end </span></td>				        
+							<span class="labelmandatory">##if ($mode != 'readonly') * #end </span></td>
 						<td width="28%">
 							<div align="right" class="labelinput">
 							<div align="left">Bil. Lampiran</div>
 							</div>
-						</td>				      	
-						<td width="1%">:</td>				        
+						</td>
+						<td width="1%">:</td>
 						<td width="70%">
 							<input type="text" size="2" name="jumlahlampiran" $!RO_General value="$!num_files"
 							onBlur="doChangeJumlahLampiranHTAAH('$!IDJadualLampiran',this,'$!action');" > (<font size="1" color="red">Sila masukkan jumlah lampiran</font>)
 						</td>
-				</tr> 
+				</tr>
 				<tr>
 				    <td valign="top" width="1%"><span class="style1">&nbsp;</span></td>
 				    <td valign="top">Muatnaik Lampiran</td>
 				    <td valign="top">:</td>
 				    <td>
-				    #foreach( $i in [1..$num_files] )							
+				    #foreach( $i in [1..$num_files] )
 						<input type="file" id="dokumen" name="dokumen" size="40" class="texts" $!readOnly /></br>
 					#end
 					</td/>
@@ -116,8 +116,8 @@ padding:0 0.25em;
 				#end
 					</td>
 	  			</tr>
-	        
-            </table>        
+
+            </table>
         </fieldset>
     </td>
   </tr>
@@ -128,7 +128,7 @@ padding:0 0.25em;
     	#end
     	<!-- <input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Senarai Tanah" onClick="kembali()">-->
     	<input type="button" class="stylobutton100" name="cmdtutup" value="Tutup" onClick="tutup()">
-    	<!--<input type="button" class="stylobutton100" name="cmdrefrehs" value="Refresh" onClick="refresh()"> --> 
+    	<!--<input type="button" class="stylobutton100" name="cmdrefrehs" value="Refresh" onClick="refresh()"> -->
     </td>
   </tr>
 </table>
@@ -136,7 +136,7 @@ padding:0 0.25em;
 
 <script>
 	//Hapus dokumen pada senarai harta
-	function deleteDetailImej(iDokumen,lampiran){	
+	function deleteDetailImej(iDokumen,lampiran){
 		if ( !window.confirm("Adakah Anda Pasti?")) return;
 	/* 	document.${formName}.actionPopup.value = "papar";
 		document.${formName}.hitButton.value = "hapus"; */
@@ -154,19 +154,19 @@ padding:0 0.25em;
 	    document.${formName}.encoding="multipart/form-data";
 		document.${formName}.submit();
 		//refresh('$!flagOnline');
-	
+
 	}
 	function simpanLampiran() {
 		document.${formName}.hitButton.value = "simpan";
 		document.${formName}.actionPopup.value = "papar";
-		
+
 		var paramsimpan = "&rujukan=$!idRujukan";
 		paramsimpan += "&idsenarai=$!idSenarai";
 		paramsimpan += "&jenisdokumen=$!jenisDokumen";
 		paramsimpan += "&actionrefresh=$!actionRefresh";
 		paramsimpan += "&actionPopup="+document.${formName}.actionPopup.value;
 		paramsimpan += "&hitButton="+document.${formName}.hitButton.value;
-			
+
 		//document.${formName}.method="post";
 		if('phpapb'=='$!actionRefresh'){
 		/* 	document.${formName}.hitButton.value = "simpanHA";
@@ -184,38 +184,38 @@ padding:0 0.25em;
 									+"&hitButton="+document.${formName}.hitButton.value
 									+"&idHarta=$!idHarta"
 									+"&actionrefresh=$!actionRefresh"; */
-		
-	
-		//alert(document.${formName}.action.value);								
+
+
+		//alert(document.${formName}.action.value);
 		document.${formName}.enctype="multipart/form-data";
 	    document.${formName}.encoding="multipart/form-data";
-		document.${formName}.submit(); 
-		
+		document.${formName}.submit();
+
 			//window.opener.refreshFromPilihTanah();
 			//window.close();
-	
+
 	}
 	//Lampiran
-	function doChangeJumlahLampiranHTAAH(IDJadualLampiran,j,a) {		
+	function doChangeJumlahLampiranHTAAH(IDJadualLampiran,j,a) {
 		if (j.value < 1) {
 			alert("Sila masukkan nombor yang sah");
 			j.value = 1;
 			return;
 		}
-		
-		//document.${formName}.actionPopup.value = "";
-		document.${formName}.mode.value="bilampiran";	
-		document.${formName}.submit();
-		
-	} 
 
-	function kembali() {	
+		//document.${formName}.actionPopup.value = "";
+		document.${formName}.mode.value="bilampiran";
+		document.${formName}.submit();
+
+	}
+
+	function kembali() {
 		document.${formName}.actionPopup.value = "";
 		//document.${formName}.submit();
 		doAjaxCall${formName}("");
 
 	}
-	
+
 	// function semua kongsi
 	function validateNumber(elmnt,content) {
 		//if it is character, then remove it..
@@ -223,14 +223,14 @@ padding:0 0.25em;
 			elmnt.value = RemoveNonNumeric(content);
 			return;
 		}
-	}	
-		
-	function tutup() {	
+	}
+
+	function tutup() {
 		//
 		window.close();
 		refresh('$!flagOnline');
 	}
-	
+
 	function cetakImej(id_){
 		//var url = "../servlet/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_;
 		var url = "../${securityToken}/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_;
@@ -239,35 +239,38 @@ padding:0 0.25em;
 		hWnd.opener=document.window;
 	    if (hWnd.focus != null) hWnd.focus();
 	}
-	
+
 	function refresh(flagOnline) {
-		alert('$!actionRefresh');
+		//alert('$!actionRefresh');
 		if('paparHA'=='$!actionRefresh'){
 			window.opener.setSelected(2,0,0,0);
 			window.opener.HAview(flagOnline);
-			
+
 		}else if('paparHTA'=='$!actionRefresh'){
 			window.opener.setSelected(1,0,0,0);
 			window.opener.HtaamView();
-			
+
 		}else if('paparHTATH'=='$!actionRefresh'){
 			window.opener.setSelected(1,0,0,1);
 			window.opener.HtaamViewX(flagOnline);
-		
+
 		}else if('lampiransimati'=='$!actionRefresh'){
 			window.opener.semakLampiran('socBandar');
-			
+
 		}else if('$!actionRefresh'=='phpapb'){
-			window.opener.doChangeTab('2');
-			
-		}else if('$!actionRefresh'=='phppnw'){
-			alert("masuk actionRefresh phppnw");
+			window.opener.doChangeTab('2');			
+		}
+		else if('$!actionRefresh'=='phppnw'){
+		//	alert("masuk actionRefresh phppnw");
 			window.opener.doChangeTabUpper('2');
 		}
-		
+		else if('$!actionRefresh'=='phpphptkr'){
+			window.opener.doChangeTabUpper('2');
+		}
+
 	}
 	//setSelected(1,0,0,1);HtaamViewX('$paramOnline')
-	
+
 </script>
 #parse("app/htp/utiliti/javaScriptUmum.jsp")
 

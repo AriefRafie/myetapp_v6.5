@@ -35,12 +35,28 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailView extends AjaxBasedModule {
     FrmPLPHeaderData logicHeader = new FrmPLPHeaderData();
     FrmPLPJabatanTeknikalData logicJabatanTeknikal = new FrmPLPJabatanTeknikalData();
     FrmMOFOnlineKJPSenaraiUlasanFailData logic = new FrmMOFOnlineKJPSenaraiUlasanFailData();
-	private String templateDir = "app/php2/online/ulasanKJP/plp";
+	//private String templateDir = "app/php2/online/ulasanKJP/mof";
 
+	String idKementerian = "";
+	Vector listDetailKJP = null;
+	
 
 	public String doTemplate2() throws Exception {
 
 		HttpSession session = this.request.getSession();
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		listDetailKJP = logic.getIdNegeriKJPByUserId(userId);
+		if (!listDetailKJP.isEmpty() && listDetailKJP.size() > 0) {
+			Hashtable hashRayuanDB = (Hashtable) listDetailKJP.get(0);
+			idKementerian = hashRayuanDB.get("idKementerian").toString();
+			myLog.info("IDKEMENTERIAN="+hashRayuanDB.get("idKementerian").toString());
+
+		}
+
+		this.context.put("idKementerian", idKementerian);
+		
+		
+		
 
 		Boolean postDB = false;
 		String doPost = (String) session.getAttribute("doPost");
@@ -55,10 +71,11 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailView extends AjaxBasedModule {
 		myLog.info(" command : "+command);
 		context.put("command", command);
 		
-		context.put("templateDir", templateDir);
+		//context.put("templateDir", templateDir);
 
 		String idFail = getParam("idFail");
 		String idUlasanTeknikal = getParam("idUlasanTeknikal");
+		String idPermohonan = getParam("idPermohonan");
 		String idKementerian = "";
 		Vector listDetailKJP = null;
 		
@@ -79,29 +96,34 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailView extends AjaxBasedModule {
 			this.context.put("onload", "");
 			this.context.put("completed", false);
 			
+
 			if ("refreshDokumenMuatNaik".equals(command)) {
 				
-				logicJabatanTeknikal.setMaklumatKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
-				Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJP().get(0);
+				logicJabatanTeknikal.setMaklumatUlasanKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
+				Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatUlasanKJP().get(0);
 				this.context.put("maklumatUlasan", maklumatUlasan);
 				this.context.put("idUlasanTeknikal", idUlasanTeknikal);
+				
+				logicJabatanTeknikal.setMaklumatKJPMOF(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
+				Hashtable maklumatUlasan1 = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJPMOF().get(0);
+				this.context.put("maklumatUlasan1", maklumatUlasan1);
 				
 				Hashtable lampiran = logic.getMaklumatLampiran(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
 				this.context.put("lampiran", lampiran);
 				
-				vm = "/maklumatUlasan.jsp";	
+				vm = "app/php2/online/ulasanKJP/mof/maklumatUlasan.jsp";	
 				
 			} else if ("muatNaikDokumen".equals(command)) {
 				
 				logic.hapusDokumen(idUlasanTeknikal);
 				uploadFiles(idUlasanTeknikal, session);
 				
-				vm = "/refreshDokumenMuatNaik.jsp";	
+				vm = "app/php2/online/ulasanKJP/mof/refreshDokumenMuatNaik.jsp";	
 				
 			} else if ("hantarUlasan".equals(command)) {
 				context.remove("flagStatus");
 				
-				String userId = (String) session.getAttribute("_ekptg_user_id");
+				//String userId = (String) session.getAttribute("_ekptg_user_id");
 				String txtTarikhSurat = getParam("txtTarikhSurat");
 				String txtNoRujukanSurat = getParam("txtNoRujukanSurat");
 				String txtUlasan = getParam("txtUlasan");				
@@ -113,44 +135,54 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailView extends AjaxBasedModule {
 						txtNamaPengulas, txtNoTelPengulas, userId);
 				this.context.put("flagStatus", flagStatus);
 				
-				logicJabatanTeknikal.setMaklumatKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
-				Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJP().get(0);
+				logicJabatanTeknikal.setMaklumatUlasanKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
+				Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatUlasanKJP().get(0);
 				this.context.put("maklumatUlasan", maklumatUlasan);
 				this.context.put("idUlasanTeknikal", idUlasanTeknikal);
+				
+				logicJabatanTeknikal.setMaklumatKJPMOF(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
+				Hashtable maklumatUlasan1 = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJPMOF().get(0);
+				this.context.put("maklumatUlasan1", maklumatUlasan1);
 				
 				Hashtable lampiran = logic.getMaklumatLampiran(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
 				this.context.put("lampiran", lampiran);
 				
-				vm = "/maklumatUlasan.jsp";
+				vm = "app/php2/online/ulasanKJP/mof/maklumatUlasan.jsp";
 			
 			} else if ("simpanUlasan".equals(command)) {
+				
 				context.remove("flagStatus");
 				
-				String userId = (String) session.getAttribute("_ekptg_user_id");
 				String txtTarikhSurat = getParam("txtTarikhSurat");
-				String txtNoRujukanSurat = getParam("txtNoRujukanSurat");
 				String txtUlasan = getParam("txtUlasan");				
 				String txtKeputusan = getParam("txtKeputusan");
-				String txtNamaPengulas = getParam("txtNamaPengulas");
-				String txtNoTelPengulas = getParam("txtNoTelPengulas");
 				
-				String flagStatus = logic.simpanUlasan(idUlasanTeknikal, txtTarikhSurat, txtNoRujukanSurat, txtUlasan, txtKeputusan, 
-						txtNamaPengulas, txtNoTelPengulas, userId);
+				
+				String flagStatus = logic.simpanUlasan(idPermohonan, getParam("txtTarikhSurat"), getParam("txtUlasan"), 
+						getParam("txtKeputusan"), session);
+				
+				logicJabatanTeknikal.setMaklumatUlasanKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
+				Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatUlasanKJP().get(0);
 				this.context.put("flagStatus", flagStatus);
 				
-				logicJabatanTeknikal.setMaklumatKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
-				Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJP().get(0);
+				logicJabatanTeknikal.setMaklumatKJPMOF(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
+				Hashtable maklumatUlasan1 = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJPMOF().get(0);
+				this.context.put("maklumatUlasan1", maklumatUlasan1);
+				
+				myLog.info("idPermohonan========="+idPermohonan);
+				
+				this.context.put("idPermohonan", idPermohonan);
 				this.context.put("maklumatUlasan", maklumatUlasan);
 				this.context.put("idUlasanTeknikal", idUlasanTeknikal);
 				
 				Hashtable lampiran = logic.getMaklumatLampiran(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
 				this.context.put("lampiran", lampiran);
 				
-				vm = "/maklumatUlasan.jsp";
+				vm = "app/php2/online/ulasanKJP/mof/maklumatUlasan.jsp";
 			
 			} else if ("paparFail".equals(command)) {
 				//TO CLEAR CONTEXT
-				context.remove("BeanHeader");
+				//context.remove("BeanHeader");
 				context.remove("BeanMaklumatTanah");
 				context.remove("lampiran");
 				context.remove("flagStatus");
@@ -158,26 +190,49 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailView extends AjaxBasedModule {
 				setMaklumatHeader(idFail, session);
 				setMaklumatTanah(idFail, session);
 				
-				logicJabatanTeknikal.setMaklumatKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
-				Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJP().get(0);
+				listDetailKJP = logic.getIdNegeriKJPByUserId(userId);
+				if (!listDetailKJP.isEmpty() && listDetailKJP.size() > 0) {
+					Hashtable hashRayuanDB = (Hashtable) listDetailKJP.get(0);
+					idKementerian = hashRayuanDB.get("idKementerian").toString();
+					myLog.info("IDKEMENTERIAN="+hashRayuanDB.get("idKementerian").toString());
+
+				}
+
+				this.context.put("idKementerian", idKementerian);
+				
+				logicJabatanTeknikal.setMaklumatUlasanKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
+				Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatUlasanKJP().get(0);
+				
+				logicJabatanTeknikal.setMaklumatKJPMOF(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
+				Hashtable maklumatUlasan1 = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJPMOF().get(0);
+				
+				
+				Vector beanHeader = new Vector();
+		        logicHeader.setMaklumatPermohonan(idFail, session);
+		        beanHeader = logicHeader.getBeanMaklumatPermohonan();
+				this.context.put("BeanHeader", beanHeader);
+				myLog.info("beanHeader=========="+beanHeader);;
+				
 				
 				Vector maklumatLampiran = null;
 				maklumatLampiran = new Vector();
 				logicJabatanTeknikal.setLampiranKJP(logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
 				maklumatLampiran = logicJabatanTeknikal.getBeanMaklumatLampiranKJP();
-				
+				this.context.put("maklumatUlasan1", maklumatUlasan1);
 				this.context.put("maklumatUlasan", maklumatUlasan);
 				this.context.put("idUlasanTeknikal", idUlasanTeknikal);
 				this.context.put("maklumatLampiran", maklumatLampiran);
+				this.context.put("idPermohonan", logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
+				this.context.put("idFail", idFail);
 				
 				Hashtable lampiran = logic.getMaklumatLampiran(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
 				this.context.put("lampiran", lampiran);
 				
-				vm = "/start.jsp";
+				vm = "app/php2/online/ulasanKJP/mof/start.jsp";
 			
 			} else if ("carian".equals(command)) {
 				
-				String userId = (String) session.getAttribute("_ekptg_user_id");
+				//String userId = (String) session.getAttribute("_ekptg_user_id");
 				String findNoFail = getParam("findNoFail");
 				String findTajukFail = getParam("findTajukFail");				
 				String findPemohon = getParam("findPemohon");
@@ -234,11 +289,11 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailView extends AjaxBasedModule {
 				context.put("selectDaerah", HTML.SelectDaerahByIdNegeri(findNegeri, "findDaerah", Long.parseLong(findDaerah), ""," onChange=\"doChangeDaerah();\""));
 				context.put("selectMukim", HTML.SelectMukimByDaerah(findDaerah, "findMukim", Long.parseLong(findMukim), "",""));
 */
-				vm = "/start.jsp";
+				vm = "app/php2/online/ulasanKJP/mof/start.jsp";
 				
 			} else {
 				
-				String userId = (String) session.getAttribute("_ekptg_user_id");
+				//String userId = (String) session.getAttribute("_ekptg_user_id");
 				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
 				this.context.put("SenaraiFail", listFail);
 				setupPage(session, action, listFail);
@@ -258,14 +313,14 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailView extends AjaxBasedModule {
 				context.put("selectDaerah", HTML.SelectDaerahByIdNegeri("9999", "findDaerah", Long.parseLong("9999"), ""," onChange=\"doChangeDaerah();\""));
 				context.put("selectMukim", HTML.SelectMukimByDaerah("9999", "findMukim", Long.parseLong("9999"), "",""));
 				
-				vm = "/start.jsp";
+				vm = "app/php2/online/ulasanKJP/mof/start.jsp";
 			}
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} 
 		
-		return templateDir + vm;
+		return  vm;
 	}
 
 	private void uploadFiles(String idUlasanTeknikal, HttpSession session) throws Exception {

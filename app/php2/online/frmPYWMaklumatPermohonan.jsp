@@ -48,7 +48,6 @@
           <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TANAH</li>
           <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PENYEWAAN</li>
           <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">SENARAI SEMAK</li>
-      <!--      <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">LAMPIRAN</li>  --> 
           <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">PENGESAHAN</li>
         </ul>
         <div class="TabbedPanelsContentGroup">
@@ -300,14 +299,13 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <!-- TAB MAKLUMAT PENYEWAAN -->                    
                 <td>
-                   #if (($idStatus == '' || $idStatus != '1610195') && $mode == 'view' && $selectedTabUpper =='1') <!-- TAB MAKLUMAT TANAH -->
+                   #if (($idStatus == '' || $idStatus != '1610195') && $mode == 'view' && $selectedTabUpper =='1')
                   <input type="button" name="cmdKemaskiniTnh" id="cmdKemaskiniTnh" value="Kemaskini" onClick="doKemaskini()"/>
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>  
                   #elseif (($idStatus == '' || $idStatus != '1610195') && $mode == 'update' && $selectedTabUpper =='1')
-                  <input type="button" name="cmdSimpanKemaskiniTnh" id="cmdSimpanKemaskiniTnh" value="Simpan" onClick="doSimpanKemaskiniMaklumatTnh()"/>
-                  <input type="button" name="cmdBatalKemaskiniTnh" id="cmdBatalKemaskiniTnh" value="Batal" onClick="doBatalKemaskini()"/>
+                  <input type="button" name="cmdSimpanKemaskiniSewa" id="cmdSimpanKemaskiniSewa" value="Simpan" onClick="doSimpanKemaskiniMaklumatPenyewaan('$idLuas')"/>
+                  <input type="button" name="cmdBatalKemaskiniSewa" id="cmdBatalKemaskiniSewa" value="Batal" onClick="doBatalKemaskini()"/>
                   #else
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>  
                   #end                 
@@ -404,7 +402,7 @@
 	           		#if ($idStatus != '')
 	           			<input type="checkbox" name="pengesahan" id="pengesahan" $disabled checked>#end
 	           		</td>
-	           		<td>Saya, $!pemohon.get("namaPemohon"), $!pemohon.get("noPengenalan") dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka 
+	           		<td>Saya, <b>$!pemohon.get("namaPemohon")</b>, <b>$!pemohon.get("noPengenalan")</b> dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka 
 	           			<br/>tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
 	           		</td> 
            		</tr>
@@ -415,10 +413,10 @@
 	           	<tr>
 	           		<td>&nbsp;</td>
 	           		<td colspan=2 align="center">
-	           		#if ($idStatus != '1610905')
+	           		#if ($idStatus != '')
 	            		<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
 	           			<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>	           	
-	           		#elseif ($idStatus == '1610905')	           		
+	           		#elseif ($idStatus == '1610195')	           		
                   		<input type="button" name="cmdDaftarLanjut" id="cmdDaftarLanjut" value="Permohonan Lanjutan" onclick="permohonanLanjutan()"/>
                   		<input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
 	            	#else
@@ -426,7 +424,6 @@
 	           			<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar &amp; Emel" onClick="doHantarEmel()"/>
 	            		<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
 	            	#end
-	            	
 	            	</td>
 	           	</tr>          	        	
            	</table></fieldset>

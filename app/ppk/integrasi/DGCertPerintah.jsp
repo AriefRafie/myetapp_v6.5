@@ -268,7 +268,7 @@ input[readonly]{
 
 #if($flagSimpan == "Y")
 <script>
-openPopupPNB('$NO_FAIL','$id_perbicaraan','$id_fail','');
+openPopupPNB('$NO_FAIL','$id_perintah','$id_fail','');
 </script>
 #end
 
@@ -390,7 +390,7 @@ openPopupPNB('$NO_FAIL','$id_perbicaraan','$id_fail','');
 
 	function simpan() {
 		var NO_FAIL = document.f1.NO_FAIL.value;
-		var id_perbicaraan = document.f1.id_perbicaraan.value;
+		var id_perintah = document.f1.id_perintah.value;
 		var idfail = document.f1.id_fail.value;
 		var signedData = $("#signedText").val();
 	
