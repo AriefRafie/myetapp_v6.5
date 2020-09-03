@@ -321,6 +321,9 @@ background: #E0F2F7;
 
 
 	#if($mode=="view")
+	::$flagSahkan
+	
+	:::$onchange
 	
 		#set($flagSahkan = "")
 		
@@ -368,6 +371,7 @@ background: #E0F2F7;
 		#set($disability1 = "")
 		#end
 	
+	::$txtTempohPendudukan
 	<fieldset>
 	<legend><strong>Maklumat Asas Permohonan</strong></legend>
 
@@ -443,7 +447,7 @@ background: #E0F2F7;
             	<td>&nbsp;</td>
             	<td>No. Rujukan PTG</td>
             	<td>:</td>
-                <td><input type="text" $disability $disabilityx name="txtNoRujukanPTG" id="txtNoRujukanPTG" value="$!txtNoRujukanPTG" maxlength="30" size="37" ></td>
+              <td><input type="text" $disability $disabilityx name="txtNoRujukanPTG" id="txtNoRujukanPTG" value="$!txtNoRujukanPTG" maxlength="30" size="37" ></td> 
             </tr>
             
             <tr>
@@ -520,7 +524,7 @@ background: #E0F2F7;
            		<td>&nbsp;</td>
             	<td>Tempoh Pendudukan (Bulan X) </td>
             	<td>:</td>
-            	<td><input type="text" name="txtTempohPendudukan" value="$!txtTempohPendudukan" size="15" class="disabled" readonly></td>
+            	<td><input type="text" $disability $disabilityx name="txtTempohPendudukan" id="txtTempohPendudukan"  value="$!txtTempohPendudukan" size="15" ></td>
             </tr>
      		<!-- END PPT-41 -->
      		

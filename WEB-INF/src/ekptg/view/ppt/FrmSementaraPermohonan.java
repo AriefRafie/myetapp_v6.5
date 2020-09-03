@@ -2404,6 +2404,7 @@ private void dataHakmilik_copy(String idHakmilik,String disability) throws Excep
 		String id_negeriprojek = "";
 		String flag_jenis_kod_daerah = "";
 		
+		
 		model.setListPohon(idpermohonan);
  		dataPermohonan = model.getListPohon();
  		
@@ -2418,6 +2419,7 @@ private void dataHakmilik_copy(String idHakmilik,String disability) throws Excep
 			id_daerah = dp.get("idDaerah").toString();
 			id_negeriprojek = dp.get("idProjekNegeri").toString();
 			flag_jenis_kod_daerah = (String)dp.get("flag_jenis_kod_daerah");
+			
 		}
 		
 		String mode = "";
