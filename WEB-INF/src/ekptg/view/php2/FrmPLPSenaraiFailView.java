@@ -187,7 +187,7 @@ public class FrmPLPSenaraiFailView extends AjaxBasedModule {
 				this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), "disabled", " class=\"disabled\""));
 				if ("8".equals(idKategoriPemohon)) {
 					
-					this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat), ""," onChange=\"doChangePejabat();\"",idNegeri, "4"));
+					this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat), "disabled"," class=\"disabled\"",idNegeri, "4"));
 					beanMaklumatPejabat = new Vector();
 					logic.setMaklumatPejabatJKPTG(idPejabat);
 					beanMaklumatPejabat = logic.getBeanMaklumatPejabat();
@@ -358,25 +358,16 @@ public class FrmPLPSenaraiFailView extends AjaxBasedModule {
 				this.context.put("selected", "");
 				this.context.put("selected1", "selected");
 				this.context.put("selected2", "");
-				this.context.put("selected3", "");
 				this.context.put("idJenisTanah", idJenisTanah);
         	} else if ("2".equals(idJenisTanah)) {
 				this.context.put("selected", "");
 				this.context.put("selected1", "");
 				this.context.put("selected2", "selected");
-				this.context.put("selected3", "");
-				this.context.put("idJenisTanah", idJenisTanah);
-        	} else if ("3".equals(idJenisTanah)) {
-				this.context.put("selected", "");
-				this.context.put("selected1", "");
-				this.context.put("selected2", "");
-				this.context.put("selected3", "selected");
 				this.context.put("idJenisTanah", idJenisTanah);
         	} else {
         		this.context.put("selected", "selected");
 				this.context.put("selected1", "");
 				this.context.put("selected2", "");
-				this.context.put("selected3", "");
 				this.context.put("idJenisTanah", "0");
         	}
 			

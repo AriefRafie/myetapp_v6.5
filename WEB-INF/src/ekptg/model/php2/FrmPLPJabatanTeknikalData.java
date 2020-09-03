@@ -16,6 +16,8 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 import ekptg.engine.EmailSender;
@@ -34,6 +36,7 @@ public class FrmPLPJabatanTeknikalData {
 	private Vector beanMaklumatKJT = null;
 	private Vector listKJP = null;
 	private Vector beanMaklumatKJP = null;
+	private Vector beanMaklumatKJPMOF = null;
 	private Vector beanMaklumatLampiranKJP = null;
 	private Vector listTanahPohon = null;
 	private Vector listTanahGanti = null;
@@ -44,6 +47,8 @@ public class FrmPLPJabatanTeknikalData {
 	private Vector beanMaklumatUlasanKJP = null;
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	static Logger myLog = Logger.getLogger(FrmPLPJabatanTeknikalData.class);
+
 
 	public void setSenaraiKJT(String idPermohonan) throws Exception {
 		Db db = null;
@@ -1111,18 +1116,109 @@ public class FrmPLPJabatanTeknikalData {
 		}
 	}
 	
+	public void setMaklumatKJPMOF(String idUlasanTeknikal, String idPermohonan) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			beanMaklumatKJPMOF = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT B.NAMA_KEMENTERIAN, C.NAMA_AGENSI, A.ID_ULASANTEKNIKAL, A.ID_PERMOHONAN, A.TARIKH_HANTAR, A.TARIKH_JANGKA_TERIMA, A.JANGKAMASA, A.FLAG_STATUS, A.FLAG_AKTIF, A.ID_MENTERI, A.ID_AGENSI,"
+					+ " A.TARIKH_TERIMA, A.TARIKH_SURAT, A.NO_RUJUKAN, A.ULASAN, A.FLAG_KEPUTUSAN, "
+
+					//add by aishah 08062017 - untuk dapatkan nama pegawai yang memberi ulasan
+					+ " A.NAMA_PEGAWAI, A.NO_TELEFON"
+					
+					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJKEMENTERIAN B, TBLRUJAGENSI C WHERE "
+					+ " A.ID_MENTERI = B.ID_KEMENTERIAN (+)"
+					+ " AND A.ID_AGENSI = C.ID_AGENSI (+)"
+					+ " AND A.ID_ULASANTEKNIKAL = '"+idUlasanTeknikal+"' "
+					+ " AND A.ID_PERMOHONAN = '"+idPermohonan+"' ";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			myLog.info("setMaklumatKJPMOF======"+sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("kementerian",
+						rs.getString("NAMA_KEMENTERIAN") == null ? "" : rs
+								.getString("NAMA_KEMENTERIAN"));
+				h.put("agensi",
+						rs.getString("NAMA_AGENSI") == null ? "" : rs
+								.getString("NAMA_AGENSI"));
+				h.put("idUlasanTeknikal",
+						rs.getString("ID_ULASANTEKNIKAL") == null ? "" : rs
+								.getString("ID_ULASANTEKNIKAL"));
+				h.put("idPermohonan",
+						rs.getString("ID_PERMOHONAN") == null ? "" : rs
+								.getString("ID_PERMOHONAN"));
+				h.put("idKementerianKJP",
+						rs.getString("ID_MENTERI") == null ? "" : rs
+								.getString("ID_MENTERI"));
+				h.put("idAgensiKJP", rs.getString("ID_AGENSI") == null ? ""
+						: rs.getString("ID_AGENSI"));
+				h.put("tarikhHantar", rs.getDate("TARIKH_HANTAR") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_HANTAR")));
+				h.put("jangkamasa", rs.getString("JANGKAMASA") == null ? ""
+						: rs.getString("JANGKAMASA"));
+				h.put("tarikhJangkaTerima",
+						rs.getDate("TARIKH_JANGKA_TERIMA") == null ? "" : sdf
+								.format(rs.getDate("TARIKH_JANGKA_TERIMA")));
+				h.put("flagStatus",
+						rs.getString("FLAG_STATUS") == null ? "99999" : rs
+								.getString("FLAG_STATUS"));
+				h.put("aktif",
+						rs.getString("FLAG_AKTIF") == null ? "" : rs
+								.getString("FLAG_AKTIF"));
+				h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_TERIMA")));
+				h.put("tarikhSurat", rs.getDate("TARIKH_SURAT") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_SURAT")));
+				h.put("noRujukan",
+						rs.getString("NO_RUJUKAN") == null ? "" : rs
+								.getString("NO_RUJUKAN"));
+				h.put("ulasan",
+						rs.getString("ULASAN") == null ? "" : rs
+								.getString("ULASAN"));
+				h.put("flagKeputusan",
+						rs.getString("FLAG_KEPUTUSAN") == null ? "" : rs
+								.getString("FLAG_KEPUTUSAN"));
+				//add by aishah 08062017 - untuk dapatkan nama pegawai yang memberi ulasan
+				h.put("namaPengulas",
+						rs.getString("NAMA_PEGAWAI") == null ? "" : rs
+								.getString("NAMA_PEGAWAI"));
+				h.put("noTelPengulas",
+						rs.getString("NO_TELEFON") == null ? "" : rs
+								.getString("NO_TELEFON"));
+				beanMaklumatKJPMOF.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	//shiqa tambah ulasan MOF 03092020
 	public void setMaklumatUlasanKJP(String idUlasanTeknikal, String idPermohonan) throws Exception {
 		Db db = null;
 		String sql = "";
 
 		try {
-			beanMaklumatKJP = new Vector();
+			beanMaklumatUlasanKJP = new Vector();
 			db = new Db();
 			Statement stmt = db.getStatement();
 
 			sql = "SELECT TARIKH_TERIMA_KEWANGAN, KEPUTUSAN_KEWANGAN, ULASAN_KEWANGAN, FLAG_KEPUTUSAN_PEMOHON, ULASAN_PEMOHON FROM TBLPHPKERTASKERJAPELEPASAN WHERE FLAG_KERTAS = '2' AND ID_PERMOHONAN = '"
 					+ idPermohonan + "'";
 			ResultSet rs = stmt.executeQuery(sql);
+			myLog.info("beanMaklumatUlasanKJP======"+sql);
 
 			Hashtable h;
 			int bil = 1;
@@ -1141,7 +1237,7 @@ public class FrmPLPJabatanTeknikalData {
 								.getString("FLAG_KEPUTUSAN_PEMOHON"));
 				h.put("ulasanPemohon", rs.getString("ULASAN_PEMOHON") == null ? ""
 						: rs.getString("ULASAN_PEMOHON"));
-				beanMaklumatKJP.addElement(h);
+				beanMaklumatUlasanKJP.addElement(h);
 				bil++;
 			}
 
@@ -2759,6 +2855,13 @@ public class FrmPLPJabatanTeknikalData {
 
 	public void setBeanMaklumatKJP(Vector beanMaklumatKJP) {
 		this.beanMaklumatKJP = beanMaklumatKJP;
+	}
+	public Vector getBeanMaklumatKJPMOF() {
+		return beanMaklumatKJPMOF;
+	}
+
+	public void setBeanMaklumatKJPMOF(Vector beanMaklumatKJPMOF) {
+		this.beanMaklumatKJPMOF = beanMaklumatKJPMOF;
 	}
 
 	public Vector getListTanahPohon() {

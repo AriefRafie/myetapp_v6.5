@@ -41,7 +41,7 @@
 		        #set( $row = "row1" )
 		        #elseif (($MaklumatLampiran.bil % 2) != 0)
 		        #set( $row = "row1" )
-		        #else 
+		        #else
 		        #set( $row = "row2" )
 		        #end
 				<tr>
@@ -158,9 +158,7 @@
     <td width="30%">&nbsp;</td>
     <td width="70%">
     	<input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onClick="simpanUlasan()">
-    	#if ( $lampiran )
       	<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar" onClick="hantarUlasan()">
-      	#end
       	<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="doDivAjaxCall$formname('divMainForm','','');"/></td>
     <td width="1%"></td>
   </tr>

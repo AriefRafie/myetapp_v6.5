@@ -321,9 +321,6 @@ background: #E0F2F7;
 
 
 	#if($mode=="view")
-	::$flagSahkan
-	
-	:::$onchange
 	
 		#set($flagSahkan = "")
 		
@@ -346,14 +343,10 @@ background: #E0F2F7;
    			#set($txdTarikhSurat=$data.tarikh_surat)
    			#set($flagPermohonan=$data.flag_jenispermohonan)
    			#set($lblNoOnline=$data.no_permohonan_online)
- 
-   			<!-- PPT-41 -->
    			#set($txdTarikhPendudukanMula=$data.tarikh_pendudukan_mula)
    			#set($txdTarikhPendudukanAkhir=$data.tarikh_pendudukan_akhir)
-   			#set($txtTempohPendudukan=$data.tempoh_pendudukan)
-   			
-   			#set($sorJenisKodDaerah=$data.flag_jenis_kod_daerah)
-  
+   			#set($txtTempohPendudukan=$data.tempoh_pendudukan)  			
+   			#set($sorJenisKodDaerah=$data.flag_jenis_kod_daerah)  
    			#set($lblSuburusan=$data.nama_suburusan)
    			#set($flagSahkan=$data.flag_semak)		
 			#end
@@ -371,7 +364,6 @@ background: #E0F2F7;
 		#set($disability1 = "")
 		#end
 	
-	::$txtTempohPendudukan
 	<fieldset>
 	<legend><strong>Maklumat Asas Permohonan</strong></legend>
 
@@ -491,8 +483,7 @@ background: #E0F2F7;
          		#set($checkJK1="")
          		#set($checkJK2="")
          	#end
-         	
-         	
+	
          	#if($userIdNeg=="10")
      		<tr>
          		<td>&nbsp;</td>
@@ -504,8 +495,6 @@ background: #E0F2F7;
                 </td> 
             </tr>
      		#end
-
-     		<!-- PPT-41 -->
             <tr>
             	<td><font color="red">*</font></td>
             	<td>Tarikh Pendudukan Mula</td>
@@ -522,11 +511,10 @@ background: #E0F2F7;
             </tr>
            	<tr>
            		<td>&nbsp;</td>
-            	<td>Tempoh Pendudukan (Bulan X) </td>
+            	<td>Tempoh Pendudukan (Bulan) </td>
             	<td>:</td>
             	<td><input type="text" $disability $disabilityx name="txtTempohPendudukan" id="txtTempohPendudukan"  value="$!txtTempohPendudukan" size="15" ></td>
             </tr>
-     		<!-- END PPT-41 -->
      		
         </table> 
       

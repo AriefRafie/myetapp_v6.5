@@ -37,6 +37,7 @@ input[readonly]{
 			<input type="hidden" name="id_perbicaraan" id="id_perbicaraan" value='$!id_perbicaraan'/> 
 			<input type="hidden" name="id_fail" id="id_fail" value='$!id_fail'/> 
             <input type="hidden" name="dataDahSign" id="dataDahSign" value='$!dataDahSign'/>
+            <input type="hidden" name="id_perintah" id="id_perintah" value='$!id_perintah'/> <!-- arief add -->
 				 <tr>
             <td width="50%" valign="top"><table width="100%"  cellpadding="1" cellspacing="1" border="0">
                 <tr>
