@@ -52,7 +52,7 @@
 <!--
 <body onload="submitForm();jeniswaktu2();check_kp();check_kp_lama();check_kp_lain();check_pengenalan_simati_1_onload();check_pengenalan_simati_2_onload();check_pengenalan_simati_3_onload();check_pengenalan_simati_4_onload()" >
 -->
-<body onload="submitForm();check_pilih();" >
+<body onload="submitForm();check_pilih();checkSebab();" >
 <form id="form1" name="f1" method="post" action="">
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input name="flagFromSenaraiFailSek8" type="hidden" id="flagFromSenaraiFailSek8" value="$flagFromSenaraiFailSek8"/>
@@ -463,31 +463,78 @@ Click me</a>
                       		 	<input type="hidden" name="idSimati" id="idSimati" value="$idSimati"></input>
                       		 	<input type="hidden" name="idPermohonansimati" id="idPermohonansimati" value="$id_Permohonansimati"></input>
                       		 	<input name="idPermohonan" type="hidden"  value="$idPermohonan"/>
+                      		 	#if($sebabTukar == "kematian")
+			                    	#set ($check1 = "checked")
+			                    #elseif($sebabTukar == "kesihatan")
+			                    	#set ($check2 = "checked")
+			                    #else
+			                    	#set ($check1 = "")
+			                    	#set ($check2 = "")
+			                    #end
                       		 	<tr>
-     								<td><input type="radio" name="sebab" id="kematian" value="kematian" $check1 $setMode1>
+     								<td width="4%"><input type="radio" name="sebab" id="kematian" value="kematian" $check1 $setMode1 onchange="toggleDisplay('ckematian')">
      									</td>
      								<td>KEMATIAN</td>
      								<td></td>
      							</tr>
-     							<tr>
+     							#if($show_hantar_btn == "")
+     							<tr id="ftarikhmati" style="display:none;">
      								<td></td>
-     								<td><span class="style44">*</span> TARIKH KEMATIAN :&nbsp;<input type="text" name="tarikh_mati" id="tarikh_mati" value="$!tarikhMati" $setMode3> <a href="javascript:displayDatePicker('tarikh_mati',false,'dmy');">#parse("app/ppk/ppk_calender.jsp")</a></td>
+     								<td><span class="style44">*</span> TARIKH KEMATIAN :&nbsp;<input type="text" name="tarikh_mati" id="tarikh_mati" value="$!tarikhMati"> <a href="javascript:displayDatePicker('tarikh_mati',false,'dmy');">#parse("app/ppk/ppk_calender.jsp")</a></td>
      								<td></td>
      							</tr>
-     							<tr>
-	     							<td><input type="radio" name="sebab" id="kesihatan" value="kesihatan" $check2 $setMode2></td>
-	     							<td>MASALAH KESIHATAN</td>
-	     							<td></td>
-    							 </tr>
-    							 <tr>
+     							<tr id="buktikematian" style="display:none;">
 								     <td></td>
-								     <td>DOKUMEN SOKONGAN : #if($show_hantar_btn == "")<input id="fileupload" name="fileupload" type="file" value="Lampiran" size="40" onClick="lampiran('$!idPermohonan','dokumenSokongan')" /> #end
-<!-- 								  	   								 <input id="download" name="download" type="button" value="Muat Turun Dokumen"/> -->
-								     #if($show_hantar_btn == "yes") &nbsp; #end
+								     <td><span class="style44">*</span> DOKUMEN SOKONGAN : <input id="fileupload" name="fileupload" type="file" value="Lampiran" size="40" onClick="lampiran('$!idPermohonan','dokumenSokongan')" />	
+								     #if($lampirans != "")
+									 	<input type="text" name="namaDoc1" value="1" />
+									 #else
+									 	<input type="text" name="namaDoc1" value="0" />
+									 #end
 								     $!lampirans
 								     </td>
 								     <td></td>
       							</tr>
+      							#elseif($show_hantar_btn == "yes" && $sebabTukar == "kematian")
+      							<tr>
+     								<td></td>
+     								<td>TARIKH KEMATIAN :&nbsp;<input type="text" value="$!tarikhMati" $setMode3> <a href="javascript:displayDatePicker('tarikh_mati',false,'dmy');">#parse("app/ppk/ppk_calender.jsp")</a></td>
+     								<td></td>
+     							</tr>
+     							<tr>
+								     <td></td>
+								     <td>DOKUMEN SOKONGAN : $!lampirans
+								     </td>
+								     <td></td>
+      							</tr>
+      							#end
+     							<tr>
+	     							<td><input type="radio" name="sebab" id="kesihatan" value="kesihatan" $check2 $setMode2 onchange="toggleDisplay('ckesihatan')"></td>
+	     							<td>MASALAH KESIHATAN</td>
+	     							<td></td>
+    							 </tr>
+    							 #if($show_hantar_btn == "")
+    							 <tr id="buktikesihatan" style="display:none;">
+								     <td></td>
+								     <td><span class="style44">*</span> DOKUMEN SOKONGAN : <input id="fileupload" name="fileupload" type="file" value="Lampiran" size="40" onClick="lampiran('$!idPermohonan','dokumenSokongan')" />
+								     #if($lampirans != "")
+									 	<input type="text" name="namaDoc2" value="1" />
+									 #else
+									 	<input type="text" name="namaDoc2" value="0" />
+									 #end
+								     $!lampirans
+								     </td>
+								     <td></td>
+      							</tr>
+      							#elseif($show_hantar_btn == "yes" && $sebabTukar == "kesihatan")
+    							 <tr>
+								     <td></td>
+								     <td>DOKUMEN SOKONGAN : $!lampirans
+								     </td>
+								     <td></td>
+      							</tr>
+      							#end
+      							
       						 #if($show_hantar_btn == "yes")
       						 	<tr align="center">
 									<td></td>
@@ -4219,19 +4266,29 @@ function testSimpan(idSimati, id_permohonansimati, id_fail, no_fail, nama_butang
 	var _validFileExtensions = [".jpg", ".jpeg", ".bmp", ".gif", ".png"];
 	
 	if (document.f1.id_ob_pemohon.value == "") {
-		alert("Sila pilih Pengganti Waris terlebih dahulu."); 
+		alert("Sila pilih pengganti waris terlebih dahulu."); 
 		return;
 	}
 	
 	if (document.f1.sebab.value == "") {
-		alert("Sila masukkan Sebab Penggantian terlebih dahulu."); 
+		alert("Sila masukkan sebab penggantian terlebih dahulu."); 
 		return;
 	}
 	
-// 	if (document.f1.kematian.checked  && document.f1.tarikh_mati.value != "") {
-// 		alert("Sila masukkan Tarikh Mati terlebih dahulu."); 
-// 		return;
-// 	}
+	if (document.f1.kematian.checked  && document.f1.tarikh_mati.value == "") {
+		alert("Sila masukkan tarikh kematian terlebih dahulu."); 
+		return;
+	}
+	
+	if (document.f1.kematian.checked  && document.f1.namaDoc1.value == "0") {
+		alert("Sila masukkan dokumen sokongan terlebih dahulu."); 
+		return;
+	}
+	
+	if (document.f1.kesihatan.checked  && document.f1.namaDoc2.value == "0") {
+		alert("Sila masukkan Dokumen Sokongan terlebih dahulu."); 
+		return;
+	}
 	
 // 	if(document.f1.fileupload.value == "") {
 // 		alert("Sila pilih \"Dokumen\" yang hendak dimuat naik terlebih dahulu.");
@@ -4323,6 +4380,41 @@ function simpanSub(id_fail_carian,nama_butang) {
 		
 			document.getElementById(nama_butang).value = "Sila Tunggu...";
 		}
+	}
+}
+
+function semakLampiran(){
+	alert("test");
+  	//document.f1.command.value="nilai_harta";
+	//document.f1.mode.value="ppkAddressView";
+	
+	//document.f1.action.value="";	
+	//document.f1.submit();
+}
+
+function checkSebab(){
+	if(document.f1.kematian.checked == true){
+		document.getElementById('ftarikhmati').style.display='';
+		document.getElementById('buktikematian').style.display='';
+		document.getElementById('buktikesihatan').style.display='none';
+	}
+	else if(document.f1.kesihatan.checked == true){
+		document.getElementById('ftarikhmati').style.display='none';
+		document.getElementById('buktikematian').style.display='none';
+		document.getElementById('buktikesihatan').style.display='';
+	}
+}
+
+toggleDisplay = function(e){
+	if (e=="ckematian") {
+		document.getElementById('ftarikhmati').style.display='';
+		document.getElementById('buktikematian').style.display='';
+		document.getElementById('buktikesihatan').style.display='none';
+	}else if (e=="ckesihatan"){
+		document.getElementById('ftarikhmati').style.display='none';
+		document.getElementById('buktikematian').style.display='none';
+		document.getElementById('buktikesihatan').style.display='';
+		
 	}
 }
 // function semakanJPN(myIdBaru){

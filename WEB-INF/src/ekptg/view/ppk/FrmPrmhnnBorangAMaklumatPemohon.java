@@ -3257,10 +3257,17 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			}
 			
 			if ("TukarPemohonview".equals(mode)) {
+				String idwaris = getParam("id_ob_pemohon");
+				String sebabganti = getParam("sebab");
+				String tarikhmati = getParam("tarikh_mati");
+				
+				myLogger.info("syafiqah: "+idwaris+sebabganti+tarikhmati);
+				
 				this.context.put("show_senarai_lapis_pertama", "yes");
-//				this.context.put("show_lapisan_bawah", "yes");
-//				this.context.put("show_tambah_waris1", "yes");
-//				this.context.put("button_Kembali1", "yes");
+				this.context.put("id_Pemohonbaru", idwaris);
+				this.context.put("sebabTukar", sebabganti);
+				this.context.put("tarikhMati", tarikhmati);
+				
 			}
 			else if ("hantarPertukaran".equals(mode)) {
 				String xxxxx = getParam("docSokongan");

@@ -507,7 +507,7 @@ public class HTPSusulanBean implements IHTPSusulan{
 		    sql = getSQLSusulan(idPermohonan)+
 		    " AND S.SUMBER = '"+sumber+"'"+
 		    "";
-			//myLog.info("getMaklumat:sql= "+sql);
+			myLog.info("getMaklumatSusulan:sql= "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			int bil = 1;
 			while (rs.next()) {

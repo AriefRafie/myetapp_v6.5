@@ -288,6 +288,10 @@ padding:0 0.25em;
 		}else if('dokumenA' == '$!actionRefresh'){
 			window.opener.semakLampiran();
 		
+		}else if('dokumenSokongan' == '$!actionRefresh'){
+			window.opener.setSelected(0,7,0,0);
+			window.opener.TukarPemohonView(flagOnline);
+		
 		}
 		
 		
