@@ -483,8 +483,7 @@ background: #E0F2F7;
          		#set($checkJK1="")
          		#set($checkJK2="")
          	#end
-         	
-         	
+	
          	#if($userIdNeg=="10")
      		<tr>
          		<td>&nbsp;</td>
@@ -496,8 +495,6 @@ background: #E0F2F7;
                 </td> 
             </tr>
      		#end
-
-     		<!-- PPT-41 -->
             <tr>
             	<td><font color="red">*</font></td>
             	<td>Tarikh Pendudukan Mula</td>
@@ -514,11 +511,10 @@ background: #E0F2F7;
             </tr>
            	<tr>
            		<td>&nbsp;</td>
-            	<td>Tempoh Pendudukan (Bulan X) </td>
+            	<td>Tempoh Pendudukan (Bulan) </td>
             	<td>:</td>
             	<td><input type="text" $disability $disabilityx name="txtTempohPendudukan" id="txtTempohPendudukan"  value="$!txtTempohPendudukan" size="15" ></td>
             </tr>
-     		<!-- END PPT-41 -->
      		
         </table> 
       

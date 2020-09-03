@@ -139,6 +139,7 @@ public class FrmSementaraTerperinciTanah extends AjaxBasedModule {
 		String id_status = "";
 		String flagSegera = "";
 		String id_fail = "";
+		String id_suburusan = "";
     	String idpermohonan = getParam("id_permohonan");
     	header.setDataHeader(idpermohonan);
 		Vector dataHeader = header.getDataHeader();
@@ -148,6 +149,7 @@ public class FrmSementaraTerperinciTanah extends AjaxBasedModule {
 			id_status = (String)dh.get("id_status");
 			flagSegera = dh.get("flag_segera").toString();
 			id_fail = dh.get("id_fail").toString();
+			id_suburusan =  (String)dh.get("id_suburusan");
 			
 			Vector list_sub = null;
 			list_sub = header.listPerjalananFail(idpermohonan);
@@ -155,6 +157,9 @@ public class FrmSementaraTerperinciTanah extends AjaxBasedModule {
 		}
 
 		context.put("flagSegera",flagSegera);
+		
+		context.put("id_suburusan",id_suburusan);
+		myLogger.info("id_suburusan : "+id_suburusan);
 		
 		//header hakmilik
 		String idHakmilik = getParam("id_hakmilik");
@@ -275,7 +280,8 @@ public class FrmSementaraTerperinciTanah extends AjaxBasedModule {
             		
             		if (doPost.equals("true")) {
             			//simpan data
-            			simpanTanahTerperinci(session,id_status); 
+            			
+            				simpanTanahTerperinci(session,id_status);  		            			
             		}
             		
             		//form validation
@@ -713,7 +719,7 @@ public class FrmSementaraTerperinciTanah extends AjaxBasedModule {
 		FrmUPTSek8InfoTanahTerperinciTanahData.updateHMtanah(h);
 		
 		//insert into tblppttanah
-		FrmUPTSek8InfoTanahTerperinciTanahData.simpanTanahTerperinci(h,id_tanah);
+		FrmUPTSek8InfoTanahTerperinciTanahData.simpanTanahTerperinciSwasta(h,id_tanah);
 		
 		String valItem = getParam("txtTajuk");
 		
@@ -730,6 +736,7 @@ public class FrmSementaraTerperinciTanah extends AjaxBasedModule {
 		}//close valItem
 		
 	}//close simpanTanahTerperinci
+	
 	
 	@SuppressWarnings("unchecked")
 	private void updateTanahTerperinci(HttpSession session) throws Exception{  //PPT-42 THREE
@@ -853,7 +860,7 @@ public class FrmSementaraTerperinciTanah extends AjaxBasedModule {
 			FrmUPTSek8InfoTanahTerperinciTanahData.updateHMtanah(h);
 			
 			//update into tblppttanah
-			FrmUPTSek8InfoTanahTerperinciTanahData.updateTanahTerperinci(h);
+			FrmUPTSek8InfoTanahTerperinciTanahData.updateTanahTerperinciSwasta(h);
 			
 		}
 	    

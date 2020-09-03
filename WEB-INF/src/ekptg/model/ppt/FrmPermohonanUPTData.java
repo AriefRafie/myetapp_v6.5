@@ -940,6 +940,7 @@ public class FrmPermohonanUPTData {
 				sql += " AND p.id_permohonan = smk.id_permohonan(+) ";  
 				sql += " AND p.id_permohonan = '"+idpermohonan+"'";
 
+				myLogger.info("sql list pohon :"+sql);
 				ResultSet rs = stmt.executeQuery(sql);
 				Hashtable h;
 		
@@ -1119,18 +1120,23 @@ public class FrmPermohonanUPTData {
 	
 	
 	@SuppressWarnings("unchecked")
-	public static void add_maklumat_tanah(Hashtable data) throws Exception
+	public static String add_maklumat_tanah(Hashtable data) throws Exception
 	  {
-//		System.out.println("DATA---"+data);
+		myLogger.info("DATA---"+data);
+		Connection conn = null;
 	    Db db = null;
 	    String sql = "";
+	    String output = "";
+	    String id_hakmilikString = "";
 	    
-	    try{
-	      
+	    try{	      
 	    		db = new Db();
+	    		conn = db.getConnection();
+				conn.setAutoCommit(false);
 	    		Statement stmt = db.getStatement();
 	    		String id_user = (String)data.get("id_user");
-	    		
+	    		long id_hakmilik = DB.getNextID("TBLPPTHAKMILIK_SEQ");   
+	    		id_hakmilikString = String.valueOf(id_hakmilik);
 	    		//seksyen 4 & 8
 	    		String id_permohonan = (String)data.get("id_permohonan");
 	    		String id_negeri = (String)data.get("negeri");
@@ -1151,20 +1157,23 @@ public class FrmPermohonanUPTData {
 	    		//seksyen 8
 	    		String id_jenishakmilik = (String)data.get("jenisHakMilik");	 
 	    		String no_hakmilik = (String)data.get("no_hakmilik");
-	    		String id_lot = (String)data.get("lot");
-	    		String id_luas = (String)data.get("luas");
-	    		String luas_lot = (String)data.get("luas_lot");
-	    		String luas_ambil = (String)data.get("anggaran_luas");	
-	    		String socKategoriTanah = (String)data.get("socKategoriTanah");
+	    		String id_lot = (String)data.get("lot");	    		
 	    		
 	    		//PPT-03 Penambahan Strata
 	    		String no_bangunan = (String)data.get("txtNoBangunan");
 	    		String no_tingkat = (String)data.get("txtNoTingkat");
 	    		String no_petak = (String)data.get("txtNoPetak");
 	    		
+	    		String id_luasasal = (String)data.get("unitLuas");
+	    		String luas_ambil = (String)data.get("txtLuasAmbil");	
+	    		String luas_asal = (String)data.get("txtLuasAsal");
+	    		String id_luasambil = (String)data.get("unitLuasAmbil");
+	    		String id_kategoriTanah = (String)data.get("socKategoriTanah");
+	    		
 	    		String TW = "to_date('" + txdTarikhWarta + "','dd/MM/yyyy')";
 	    		
 	    		SQLRenderer r = new SQLRenderer();
+	    		r.add("ID_HAKMILIK", id_hakmilikString);
 	    		r.add("id_permohonan", id_permohonan);
 	    		r.add("id_daerahpenggawa", daerahpenggawa);
 	    		r.add("id_negeri", id_negeri); 	
@@ -1176,15 +1185,22 @@ public class FrmPermohonanUPTData {
 	    		r.add("nama_lain_rizab", txtLain);
 	    		r.add("id_daerah", id_daerah);
 	    		r.add("id_mukim", id_mukim);
-	    		r.add("id_unitluaslot", id_luas);
+	    		
+	    		r.add("id_unitluaslot", id_luasasal);
+	    		r.add("id_unitluasambil", id_luasambil);
+	    		
 	    		r.add("id_lot", id_lot);
-	    		r.add("luas_ambil", luas_ambil);
 	    		r.add("no_hakmilik", no_hakmilik);
 	    		r.add("no_lot", txtnolot);
-	    		r.add("luas_lot", luas_lot);
-	    		r.add("id_kategoritanah",socKategoriTanah);
+	    		
+	    		r.add("luas_lot", luas_asal);
+	    		r.add("luas_ambil", luas_ambil);
+	    		
+	    		r.add("id_kategoritanah",id_kategoriTanah);
+	    		
 	    		r.add("catatan",catatan);
 	    		r.add("seksyen",txtseksyen);
+	    		
 	    		r.add("tarikh_masuk",r.unquote("sysdate"));
 	    		r.add("id_masuk",id_user);	 
 	    		
@@ -1192,28 +1208,34 @@ public class FrmPermohonanUPTData {
 	    		r.add("no_bangunan",no_bangunan);
 	    		r.add("no_tingkat",no_tingkat);
 	    		r.add("no_petak",no_petak);
-//	    		r.add("column_name", String.valueOf(data.get("")));
-//	    		r.add("no_bangunan",String.valueOf(data.get("txtNoBangunan"))); 
-//	    		r.add("no_tingkat", String.valueOf(data.get("txtNoTingkat")));
-//	    		r.add("no_petak", String.valueOf(data.get("txtNoPetak")));
-
 	    		
+	    		 
 	    		sql = r.getSQLInsert("tblppthakmilik");
 	    		
 	    		myLogger.info("ADD HAKMILIK SEK 4 :"+sql.toUpperCase());
 	    		
 	    		stmt.executeUpdate(sql);
+	    		
+	    		output = ""+id_hakmilikString;
+	    		myLogger.info("id HAKMILIK : "+output);
 	    	
-	    	
-	    } catch (Exception re) {
-	    	log.error("Error: ", re);
-	    	throw re;
-	    	}//close try 
-	    finally {
-	    if (db != null) db.close();
-	    }//close finally
-	   
-	  }//close add_maklumat_tanah
+		     	conn.commit();	
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		return output;
+	}
 	
 	@SuppressWarnings("unchecked")
 	
