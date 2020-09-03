@@ -10,4 +10,8 @@ public interface IEmel {
 	public String setEmailSign(String noFail);
 	public String setEmailSign(String noRujukan,String tajuk, String dari) ;
 	//public String setEmailHantarPermohonan(String noFail,String tajuk) ;
+	
 }
+
+//2020/09/02
+

@@ -95,6 +95,12 @@ padding:0 0.25em;
 					</td/>
 				</tr>
 				<tr>
+		          <td>&nbsp;</td>
+		          <td>&nbsp;</td>
+		          <td>&nbsp;</td>
+		          <td><span class="style4"><i><font color="#ff0000">Perhatian</font> : </i><span class="style5">Sila muatnaik fail dalam format PDF sahaja.</span></span></td> <!-- dan saiz fail tidak melebihi 2MB -->
+		        </tr>
+				<tr>
 			   		<td valign="top"></td>
 			       	<td valign="top"></td>
 			       	<td valign="top"></td>
@@ -287,6 +293,10 @@ padding:0 0.25em;
 		
 		}else if('dokumenA' == '$!actionRefresh'){
 			window.opener.semakLampiran();
+		
+		}else if('dokumenSokongan' == '$!actionRefresh'){
+			window.opener.setSelected(0,7,0,0);
+			window.opener.TukarPemohonView(flagOnline);
 		
 		}
 		

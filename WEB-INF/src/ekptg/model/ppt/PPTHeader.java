@@ -690,11 +690,10 @@ public class PPTHeader {
 	    		sql += " where hx.id_permohonan = p.id_permohonan and hx.id_hakmilik = bpx.id_hakmilik ";
 	    		sql += " and flag_jenis_bukti = '1')))as flag_open_paging15, ";
 	    		
-	    		
+			      
 	    		/**OPEN PAGING 16*/
 	    		sql += " (select count(*) from Tblpptpermohonan px ";
-	    		sql += " where px.id_permohonan = p.id_permohonan ";
-	    		
+	    		sql += " where px.id_permohonan = p.id_permohonan ";	    		
 	    		//open komen temp by razman
 	    		//sql += " and " 
 	    		//close komen temp by razman

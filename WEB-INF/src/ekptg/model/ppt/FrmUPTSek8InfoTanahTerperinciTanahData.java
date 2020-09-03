@@ -489,7 +489,7 @@ public class FrmUPTSek8InfoTanahTerperinciTanahData {
 					h.put("user_name", rs.getString("user_name")==null?"":rs.getString("user_name"));
 					
 					maklumatTanahTerperinci.addElement(h);
-					System.out.println("input "+maklumatTanahTerperinci);
+					myLogger.info("input "+maklumatTanahTerperinci);
 					//System.out.println("input : "+h.put("no_hakmilik", rs.getString("no_hakmilik")==null?"":rs.getString("no_hakmilik")));
 				}
 			

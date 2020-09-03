@@ -141,8 +141,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdNegeri() + ">"
-						+ f.getKodNegeri() + " - " + f.getNamaNegeri()
-						+ "</option>\n");
+						+ f.getNamaNegeri() + "</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {
@@ -2906,8 +2905,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdKementerian()
-						+ ">" + f.getKodKementerian() + " - "
-						+ f.getNamaKementerian() + "</option>\n");
+						+ ">" + f.getNamaKementerian() + "</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {
@@ -3024,7 +3022,6 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdBandar() + ">"
-						+ f.getKodBandar() + " - "
 						+ f.getKeterangan().toUpperCase() + "</option>\n");
 			}
 			sb.append("</select>");
@@ -4527,8 +4524,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdAgensi() + ">"
-						+ f.getKodAgensi() + " - " + f.getNamaAgensi()
-						+ "</option>\n");
+						+ f.getNamaAgensi() + "</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {
@@ -7823,8 +7819,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + h.get("id") + ">"
-						+ h.get("kod") + " - " + h.get("namaPejabat")
-						+ "</option>\n");
+						+ h.get("namaPejabat") + "</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {
@@ -7898,8 +7893,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + h.get("id") + ">"
-						+ h.get("kod") + " - " + h.get("namaPejabat")
-						+ "</option>\n");
+						+ h.get("namaPejabat") + "</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {
@@ -10152,14 +10146,14 @@ public class HTML {
 			sb.append(" > ");
 			sb.append("<option value=>SILA PILIH</option>\n");
 			if (selectedValue.intValue() == 1) {
-				sb.append("<option selected value=1> K - KESELURUHAN</option>\n");
+				sb.append("<option selected value=1> KESELURUHAN</option>\n");
 			} else {
-				sb.append("<option value=1> K - KESELURUHAN</option>\n");
+				sb.append("<option value=1> KESELURUHAN</option>\n");
 			}
 			if (selectedValue.intValue() == 2) {
-				sb.append("<option selected value=2> S - SEBAHAGIAN</option>\n");
+				sb.append("<option selected value=2> SEBAHAGIAN</option>\n");
 			} else {
-				sb.append("<option value=2> S - SEBAHAGIAN</option>\n");
+				sb.append("<option value=2> SEBAHAGIAN</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {
@@ -10374,8 +10368,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + h.get("id") + ">"
-						+ h.get("kod") + " - " + h.get("keterangan")
-						+ "</option>\n");
+						+ h.get("keterangan") + "</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {
