@@ -951,7 +951,7 @@ function setTable(id){
 }
 //Add pada 24/08/2020
 function cetakBorangPermohonan(idPermohonan) {
-	var url = "../servlet/ekptg.report.php2.online.PengesahanOnline?template=APBPengesahanPermohonanOnline&folder=ONLINE&ID_PERMOHONAN="+idPermohonan;
+	var url = "../servlet/ekptg.report.php2.online.PengesahanOnline?template=APBBorangPermohonan&folder=ONLINE&idPermohonan="+idPermohonan;
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
