@@ -623,13 +623,14 @@ lain tujuan ::: $lt
       <fieldset>
 	      <table id="tblGeran" width="100%" border="0">
 		      <tr>
-		      	<td width="30%">Dokumen Sokongan</td>
-		      	<td width="2%">:</td>
-		      	<td><input type="button" id="fileupload" name="uploadmyid" value="Lampiran" onClick="lampiran('$idpermohonan','borangP')">
+		      	<td width="18%">#if($chkmode != "disabled")<span class="style1">*</span>#end<b> Dokumen Sokongan</b></td>
+		      	<td width="1%">:</td>
+		      	<td> Sila tekan <span onClick="lampiran('$idpermohonan','borangP')" class="pautan"><b>DISINI</b></span> untuk muatnaik lampiran dokumen sokongan
+<!-- 		      	<input type="button" id="fileupload" name="uploaddoc" value="Lampiran" onClick="lampiran('$idpermohonan','borangP')"> -->
 					<br>
-					$!lampirans
 				</td>
 		      </tr>
+		      <tr><td></td><td></td><td>$!lampirans</td></tr>
 	      </table>
       </fieldset>
       <!-- syafiqah add ends -->

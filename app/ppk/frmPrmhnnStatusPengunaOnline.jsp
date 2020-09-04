@@ -125,8 +125,8 @@
 <!-- 				$!senarai.tarikhmasuk -->
 		  #else
 		  #if($!senarai.id_pemohon != "")
-<!-- 		  	<a href="javascript:papar('$!senarai.id_Permohonan','$!senarai.id_simati','$!senarai.seksyen','$!senarai.id_pemohon','$!senarai.no_subjaket')" class="style1"><b>$!senarai.tarikh_mohon_online</b></a> -->
-				$!senarai.tarikh_mohon_online
+ 		  	<a href="javascript:papar('$!senarai.id_Permohonan','$!senarai.id_simati','$!senarai.seksyen','$!senarai.id_pemohon','$!senarai.no_subjaket')" class="style1"><b>$!senarai.tarikh_mohon_online</b></a>
+<!-- 				$!senarai.tarikh_mohon_online -->
 		  #else
 		  		$!senarai.tarikh_mohon_online	
 		  #end
