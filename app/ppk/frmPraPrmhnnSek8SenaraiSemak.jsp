@@ -352,6 +352,7 @@
                     <input type="text" name="txtNomborSijil" id="txtNomborSijil" maxlength="25" $chkmodeR  class="$chkmode" value="$txtchecked5" onKeyUp="checkitA()" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()"  />
                   </label></td>
           </tr>
+          <!-- 
           <tr>
             <td>&nbsp;</td>
             <td ><div align="center">
@@ -362,16 +363,43 @@
                     <input type="checkbox" name="cbsemaks" $checked6 value="6" id="cbsemaks" />
                     </label>            </td>
           </tr>
+           -->
           <tr>
             <td>&nbsp;</td>
             <td valign="top"><div align="center">
               <input type="radio" name="cbsemakradio" $chkmode id="radio3" value="7" $checked7 onClick="checkit7()"/>
             </div></td>
-            <td> Anggapan Kematian dari Mahkamah Tinggi
+            <td> Perintah Mahkamah (Kematian)
               <label id="divCheckbox"  style="visibility: hidden;">
                     <input type="checkbox" name="cbsemaks" $checked7 value="7" id="cbsemaks" />
                   </label></td>
           </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td width="7%" ><label></label></td>
+            <td width="73%" >Tarikh Perintah&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <label>
+                <input type="text" name="txtPerintahMahkamah" id="txtPerintahMahkamah" width="10" maxlength="10" $chkmodeR  class="$chkmode" value="$!txtchecked6d" onKeyUp="" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()"/>
+                <a href="javascript:displayDatePicker('txtPerintahMahkamah',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
+                <span style="font-size:9px;color:blue;font-style:italic">dd/mm/yyyy</span>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td width="7%" ><label></label></td>
+            <td width="73%" >No. Kes Mahkamah
+              <label>
+              
+              #if($chkmode == "disabled")
+              #set($chkmodeR = "readonly" )
+              #else              
+              #set($chkmodeR = "" )
+              #end
+                    <input type="text" name="txtNoKesMahkamah" id="txtNoKesMahkamah" maxlength="25" $chkmodeR  class="$chkmode" value="$!txtchecked6" onKeyUp="" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()"  />
+                  </label></td>
+          </tr>
+          <!-- 
           <tr>
             <td>&nbsp;</td>
             <td ><div align="center">
@@ -395,6 +423,7 @@
                     <input type="text" name="txtNomborPermit" id="txtNomborPermit" maxlength="10" $chkmodeR class="$chkmode" value="$txtchecked8" onKeyUp="checkitB()" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()"  />
                   </label></td>
           </tr>
+           -->
         </table>
        
       #foreach($List1 in $list2)
@@ -607,7 +636,7 @@
         <td><table width="100%" border="0">
           <tr>
             <td width="10%" >&nbsp;</td>
-            <td width="1%"  valign="top">#if($chkmode != "disabled") <span class="style2">*</span> #end</td>
+            <td width="1%"  valign="top"></td>
             <td width="3%" ><input name="cbsemaks" type="checkbox" id="cbsemaks19" value="24"  $chkmode $checked24 onClick="ReadOnlyCheckBox(this);checkit_harta_cancel()" />            </td>
             <td width="86%"> #if($chkmode != "disabled") Memiliki Harta Tak Alih #else
               Memiliki Harta Tak Alih
@@ -761,13 +790,14 @@ function checkit5(){
 
 if (document.f1.cbsemakradio[0].checked == true)
 	{	
-	document.f1.cbsemakradio[0].checked = true;
+	document.f1.cbsemakradio[0].checked = true; //Sijil Perakuan Kematian
 	document.f1.cbsemaks[3].checked = true;
 	document.f1.cbsemaks[4].checked = true;
 	
 	document.f1.cbsemaks[5].checked = false;
-	document.f1.cbsemaks[6].checked = false;
-    document.f1.cbsemaks[7].checked = false;
+	//document.f1.cbsemaks[6].checked = false; Peguam
+    //document.f1.cbsemaks[7].checked = true; //Dokumen hakmilik semua harta yang dituntut
+    //document.f1.cbsemaks[8].checked = false; //Carian Rasmi
 	document.f1.txtNomborSijil.focus();	
 
 	document.f1.txtNomborPermit.value = "";	
@@ -781,8 +811,8 @@ else
 	document.f1.cbsemaks[4].checked = false;
 	
 	document.f1.cbsemaks[5].checked = false;
-	document.f1.cbsemaks[6].checked = false;
-    document.f1.cbsemaks[7].checked = false;
+	//document.f1.cbsemaks[6].checked = false;
+    //document.f1.cbsemaks[7].checked = false;
 	document.f1.txtNomborSijil.value = "";		
 
 	document.f1.txtNomborPermit.value = "";
@@ -793,8 +823,8 @@ else
 	document.f1.cbsemaks[4].checked = true;
 	
 	document.f1.cbsemaks[5].checked = true;
-	document.f1.cbsemaks[6].checked = true;
-    document.f1.cbsemaks[7].checked = true;
+	//document.f1.cbsemaks[6].checked = true;
+    //document.f1.cbsemaks[7].checked = true;
 
 	document.f1.txtNomborPermit.value = "";
 	}
@@ -812,8 +842,8 @@ if (document.f1.cbsemakradio[1].checked == true)
 	document.f1.txtNomborPermit.value = "";
 	
 	document.f1.cbsemaks[4].checked = false;
-	document.f1.cbsemaks[6].checked = false;
-    document.f1.cbsemaks[7].checked = false;
+	//document.f1.cbsemaks[6].checked = false;
+    //document.f1.cbsemaks[7].checked = false;
 
 	}
 	
@@ -826,8 +856,8 @@ else
 	document.f1.txtNomborPermit.value = "";
 	document.f1.cbsemaks[5].checked = false;
 	document.f1.cbsemaks[4].checked = false;
-	document.f1.cbsemaks[6].checked = false;
-    document.f1.cbsemaks[7].checked = false;
+	//document.f1.cbsemaks[6].checked = false;
+   // document.f1.cbsemaks[7].checked = false;
 			
 	}	
 	else
@@ -835,8 +865,8 @@ else
 	document.f1.cbsemaks[3].checked = true;
 	document.f1.cbsemaks[5].checked = true;
 	document.f1.cbsemaks[4].checked = false;
-	document.f1.cbsemaks[6].checked = false;
-    document.f1.cbsemaks[7].checked = false;
+	//document.f1.cbsemaks[6].checked = false;
+    //document.f1.cbsemaks[7].checked = false;
 	document.f1.txtNomborSijil.value = "";
 	document.f1.txtNomborPermit.value = "";
 	}
@@ -855,7 +885,7 @@ if (document.f1.cbsemakradio[2].checked == true)
 	
 	document.f1.cbsemaks[4].checked = false;
 	document.f1.cbsemaks[5].checked = false;
-    document.f1.cbsemaks[7].checked = false;
+    //document.f1.cbsemaks[7].checked = false;
 	}
 	
 else
@@ -869,7 +899,7 @@ else
 	
 	document.f1.cbsemaks[4].checked = false;
 	document.f1.cbsemaks[5].checked = false;
-    document.f1.cbsemaks[7].checked = false;
+    //document.f1.cbsemaks[7].checked = false;
 			
 	}	
 	else
@@ -881,7 +911,7 @@ else
 	
 	document.f1.cbsemaks[4].checked = false;
 	document.f1.cbsemaks[5].checked = false;
-    document.f1.cbsemaks[7].checked = false;
+    //document.f1.cbsemaks[7].checked = false;
 	}
 	
 }
@@ -1050,28 +1080,31 @@ if(document.f1.cbsemaks[10].checked == false)
 
 function checkit11()
 {
- if (document.f1.cbsemaks[11].checked == true)
+ if (document.f1.cbsemaks[8].checked == true)
 	{	
-	document.f1.cbsemaks[10].checked = true;	
+	document.f1.cbsemaks[7].checked = true;	
+	document.f1.cbsemaks[20].checked = true;	
 	}
 	
-	if (document.f1.cbsemaks[11].checked == false)
+	if (document.f1.cbsemaks[8].checked == false)
 	{	
-	if(document.f1.cbsemaks[12].checked == false && document.f1.cbsemaks[13].checked == false )
+	if(document.f1.cbsemaks[9].checked == false && document.f1.cbsemaks[10].checked == false )
 	{
-	
+	document.f1.cbsemaks[7].checked = false;
+	document.f1.cbsemaks[8].checked = false;
+	document.f1.cbsemaks[9].checked = false;
 	document.f1.cbsemaks[10].checked = false;
 	document.f1.cbsemaks[11].checked = false;
 	document.f1.cbsemaks[12].checked = false;
-	document.f1.cbsemaks[13].checked = false;
-	document.f1.cbsemaks[14].checked = false;
-	document.f1.cbsemaks[15].checked = false;
+	document.f1.cbsemaks[20].checked = false;
+	//document.f1.cbsemaks[14].checked = false;
+	//document.f1.cbsemaks[15].checked = false;
 	
 	}
 	else
 	{
-	document.f1.cbsemaks[10].checked = true;
-	document.f1.cbsemaks[11].checked = false;
+	document.f1.cbsemaks[7].checked = true;
+	document.f1.cbsemaks[8].checked = false;
 	
 	}
  }
@@ -1080,27 +1113,29 @@ function checkit11()
 
 function checkit12()
 {
- if (document.f1.cbsemaks[12].checked == true)
+ if (document.f1.cbsemaks[9].checked == true)
 	{	
-	document.f1.cbsemaks[10].checked = true;	
+	document.f1.cbsemaks[7].checked = true;	
+	document.f1.cbsemaks[20].checked = true;	
 	}	
-	if (document.f1.cbsemaks[12].checked == false)
+	if (document.f1.cbsemaks[9].checked == false)
 	{	
-	if(document.f1.cbsemaks[11].checked == false && document.f1.cbsemaks[13].checked == false )
+	if(document.f1.cbsemaks[8].checked == false && document.f1.cbsemaks[10].checked == false )
 	{
 	
-	document.f1.cbsemaks[10].checked = false;
-	document.f1.cbsemaks[11].checked = false;
-	document.f1.cbsemaks[12].checked = false;
-	document.f1.cbsemaks[13].checked = false;
-	document.f1.cbsemaks[14].checked = false;
-	document.f1.cbsemaks[15].checked = false;
+		document.f1.cbsemaks[7].checked = false;
+		document.f1.cbsemaks[8].checked = false;
+		document.f1.cbsemaks[9].checked = false;
+		document.f1.cbsemaks[10].checked = false;
+		document.f1.cbsemaks[11].checked = false;
+		document.f1.cbsemaks[12].checked = false;
+		document.f1.cbsemaks[20].checked = false;
 	
 	}
 	else
 	{
-	document.f1.cbsemaks[10].checked = true;
-	document.f1.cbsemaks[12].checked = false;
+	document.f1.cbsemaks[7].checked = true;
+	document.f1.cbsemaks[9].checked = false;
 	
 	}
  }
@@ -1109,29 +1144,29 @@ function checkit12()
 
 function checkit13()
 {
- if (document.f1.cbsemaks[13].checked == true)
+ if (document.f1.cbsemaks[10].checked == true)
 	{	
-	document.f1.cbsemaks[10].checked = true;
-	document.f1.cbsemaks[14].checked = true;	
+	document.f1.cbsemaks[7].checked = true;
+	document.f1.cbsemaks[11].checked = true;	
 	}	
 	
-	if (document.f1.cbsemaks[13].checked == false)
+	if (document.f1.cbsemaks[9].checked == false)
 	{	
-	if(document.f1.cbsemaks[11].checked == false && document.f1.cbsemaks[12].checked == false && document.f1.cbsemaks[13].checked == false )
+	if(document.f1.cbsemaks[8].checked == false && document.f1.cbsemaks[9].checked == false && document.f1.cbsemaks[10].checked == false )
 	{
 	
+	document.f1.cbsemaks[7].checked = false;
+	document.f1.cbsemaks[8].checked = false;
+	document.f1.cbsemaks[9].checked = false;
 	document.f1.cbsemaks[10].checked = false;
 	document.f1.cbsemaks[11].checked = false;
 	document.f1.cbsemaks[12].checked = false;
-	document.f1.cbsemaks[13].checked = false;
-	document.f1.cbsemaks[14].checked = false;
-	document.f1.cbsemaks[15].checked = false;
 	
 	}
 	else
 	{
-	document.f1.cbsemaks[14].checked = false;
-	document.f1.cbsemaks[15].checked = false;
+	document.f1.cbsemaks[11].checked = false;
+	document.f1.cbsemaks[12].checked = false;
 	
 	}
  }
@@ -1141,40 +1176,43 @@ function checkit13()
 
 function checkit14()
 {
- if (document.f1.cbsemaks[14].checked == true)
+ if (document.f1.cbsemaks[11].checked == true)
 	{	
+	document.f1.cbsemaks[7].checked = true;
 	document.f1.cbsemaks[10].checked = true;
-	document.f1.cbsemaks[13].checked = true;	
+	document.f1.cbsemaks[20].checked = true;	
 	}	
 	
-	if (document.f1.cbsemaks[14].checked == false)
+	if (document.f1.cbsemaks[11].checked == false)
 	{	
 	
 	
 	
 	
 	
-	if(document.f1.cbsemaks[15].checked == false && (document.f1.cbsemaks[12].checked == false && document.f1.cbsemaks[11].checked == false) )
+	if(document.f1.cbsemaks[12].checked == false && (document.f1.cbsemaks[9].checked == false && document.f1.cbsemaks[8].checked == false) )
 	{
-	document.f1.cbsemaks[13].checked = false;
-	document.f1.cbsemaks[14].checked = false;
-	document.f1.cbsemaks[15].checked = false;
 	document.f1.cbsemaks[10].checked = false;
 	document.f1.cbsemaks[11].checked = false;
 	document.f1.cbsemaks[12].checked = false;
+	document.f1.cbsemaks[7].checked = false;
+	document.f1.cbsemaks[8].checked = false;
+	document.f1.cbsemaks[9].checked = false;
+	document.f1.cbsemaks[20].checked = false;
 	
 	}
-	else if(document.f1.cbsemaks[15].checked == false && (document.f1.cbsemaks[12].checked != false || document.f1.cbsemaks[11].checked != false) )
+	else if(document.f1.cbsemaks[12].checked == false && (document.f1.cbsemaks[9].checked != false || document.f1.cbsemaks[8].checked != false) )
 	{
 
-	document.f1.cbsemaks[14].checked = false;
-	document.f1.cbsemaks[13].checked = false;
-	document.f1.cbsemaks[15].checked = false;
+	document.f1.cbsemaks[11].checked = false;
+	document.f1.cbsemaks[10].checked = false;
+	document.f1.cbsemaks[12].checked = false;
+	
 	
 	}
 	else
 	{
-	document.f1.cbsemaks[14].checked = false;
+	document.f1.cbsemaks[11].checked = false;
 	
 	
 	}
@@ -1185,31 +1223,33 @@ function checkit14()
 
 function checkit15()
 {
- if (document.f1.cbsemaks[15].checked == true)
+ if (document.f1.cbsemaks[12].checked == true)
 	{	
+	document.f1.cbsemaks[7].checked = true;
 	document.f1.cbsemaks[10].checked = true;
-	document.f1.cbsemaks[13].checked = true;	
+	document.f1.cbsemaks[20].checked = true;
 	}	
 	
-	if (document.f1.cbsemaks[15].checked == false)
+	if (document.f1.cbsemaks[12].checked == false)
 	{	
-	if(document.f1.cbsemaks[14].checked == false && (document.f1.cbsemaks[12].checked == false && document.f1.cbsemaks[11].checked == false) )
+	if(document.f1.cbsemaks[11].checked == false && (document.f1.cbsemaks[9].checked == false && document.f1.cbsemaks[8].checked == false) )
 	{
-	document.f1.cbsemaks[13].checked = false;
-	document.f1.cbsemaks[14].checked = false;
-	document.f1.cbsemaks[15].checked = false;
 	document.f1.cbsemaks[10].checked = false;
 	document.f1.cbsemaks[11].checked = false;
 	document.f1.cbsemaks[12].checked = false;
+	document.f1.cbsemaks[7].checked = false;
+	document.f1.cbsemaks[8].checked = false;
+	document.f1.cbsemaks[9].checked = false;
+	document.f1.cbsemaks[20].checked = false;
 	
 	}
-	else if(document.f1.cbsemaks[14].checked == false && (document.f1.cbsemaks[12].checked != false || document.f1.cbsemaks[11].checked != false) )
+	else if(document.f1.cbsemaks[11].checked == false && (document.f1.cbsemaks[9].checked != false || document.f1.cbsemaks[8].checked != false) )
 	{
 
-	document.f1.cbsemaks[14].checked = false;
-	document.f1.cbsemaks[15].checked = false;
-	document.f1.cbsemaks[13].checked = false;
-	
+	document.f1.cbsemaks[11].checked = false;
+	document.f1.cbsemaks[12].checked = false;
+	document.f1.cbsemaks[10].checked = false;
+	document.f1.cbsemaks[20].checked = false;
 	}
 	else
 	{
@@ -1223,20 +1263,20 @@ function checkit15()
 function checkit16()
 {
 
- if (document.f1.cbsemaks[16].checked == true)
+ if (document.f1.cbsemaks[13].checked == true)
 	{	
-	document.f1.cbsemaks[17].checked = true;
-	document.f1.cbsemaks[18].checked = true;
+	document.f1.cbsemaks[14].checked = true;
+	document.f1.cbsemaks[15].checked = true;
 	}	
 	
-	if (document.f1.cbsemaks[16].checked == false)
+	if (document.f1.cbsemaks[13].checked == false)
 	{	
+	document.f1.cbsemaks[14].checked = false;
+	document.f1.cbsemaks[15].checked = false;
+	document.f1.cbsemaks[16].checked = false;
 	document.f1.cbsemaks[17].checked = false;
 	document.f1.cbsemaks[18].checked = false;
 	document.f1.cbsemaks[19].checked = false;
-	document.f1.cbsemaks[20].checked = false;
-	document.f1.cbsemaks[21].checked = false;
-	document.f1.cbsemaks[22].checked = false;
 	document.f1.txtLainLainTujuan.value="";
 	}	
 
@@ -1246,25 +1286,25 @@ function checkit16()
 function checkit17()
 {
 
- if (document.f1.cbsemaks[17].checked == true)
+ if (document.f1.cbsemaks[14].checked == true)
 	{	
-	document.f1.cbsemaks[16].checked = true;
-	document.f1.cbsemaks[18].checked = true;
+	document.f1.cbsemaks[13].checked = true;
+	document.f1.cbsemaks[15].checked = true;
 	}	
 	
-	if (document.f1.cbsemaks[17].checked == false)
+	if (document.f1.cbsemaks[14].checked == false)
 	{
 		
-	if (document.f1.cbsemaks[20].checked == true || document.f1.cbsemaks[22].checked == true || document.f1.cbsemaks[21].checked == true)
+	if (document.f1.cbsemaks[17].checked == true || document.f1.cbsemaks[19].checked == true || document.f1.cbsemaks[18].checked == true)
 	{	
-	document.f1.cbsemaks[19].checked = false;
-	document.f1.cbsemaks[18].checked = false;
+	document.f1.cbsemaks[16].checked = false;
+	document.f1.cbsemaks[15].checked = false;
 	}
-	else if (document.f1.cbsemaks[20].checked == false && document.f1.cbsemaks[22].checked == false && document.f1.cbsemaks[21].checked == false)
+	else if (document.f1.cbsemaks[17].checked == false && document.f1.cbsemaks[19].checked == false && document.f1.cbsemaks[18].checked == false)
 	{	
-	document.f1.cbsemaks[19].checked = false;
-	document.f1.cbsemaks[18].checked = false;	
-	document.f1.cbsemaks[16].checked = false;	
+	document.f1.cbsemaks[16].checked = false;
+	document.f1.cbsemaks[15].checked = false;	
+	document.f1.cbsemaks[13].checked = false;	
 	document.f1.txtLainLainTujuan.value="";
 	}
 	
@@ -1276,30 +1316,30 @@ function checkit17()
 function checkit18()
 {
 
- if (document.f1.cbsemaks[18].checked == true)
+ if (document.f1.cbsemaks[15].checked == true)
 	{	
-	document.f1.cbsemaks[16].checked = true;
-	document.f1.cbsemaks[17].checked = true;
+	document.f1.cbsemaks[13].checked = true;
+	document.f1.cbsemaks[14].checked = true;
 	}	
 	
-	if (document.f1.cbsemaks[18].checked == false)
+	if (document.f1.cbsemaks[15].checked == false)
 	{
 		
-	if (document.f1.cbsemaks[19].checked == false && (document.f1.cbsemaks[20].checked == true || document.f1.cbsemaks[22].checked == true || document.f1.cbsemaks[21].checked == true))
+	if (document.f1.cbsemaks[16].checked == false && (document.f1.cbsemaks[17].checked == true || document.f1.cbsemaks[19].checked == true || document.f1.cbsemaks[18].checked == true))
 	{	
-	document.f1.cbsemaks[19].checked = false;
-	document.f1.cbsemaks[18].checked = false;
-	document.f1.cbsemaks[17].checked = false;
-	}
-	else if (document.f1.cbsemaks[19].checked == false && document.f1.cbsemaks[20].checked == false && document.f1.cbsemaks[22].checked == false && document.f1.cbsemaks[21].checked == false)
-	{	
-	document.f1.cbsemaks[17].checked = false;
 	document.f1.cbsemaks[16].checked = false;
+	document.f1.cbsemaks[15].checked = false;
+	document.f1.cbsemaks[14].checked = false;
+	}
+	else if (document.f1.cbsemaks[16].checked == false && document.f1.cbsemaks[17].checked == false && document.f1.cbsemaks[19].checked == false && document.f1.cbsemaks[18].checked == false)
+	{	
+	document.f1.cbsemaks[14].checked = false;
+	document.f1.cbsemaks[13].checked = false;
+	document.f1.cbsemaks[15].checked = false;
+	document.f1.cbsemaks[16].checked = false;
+	document.f1.cbsemaks[17].checked = false;
 	document.f1.cbsemaks[18].checked = false;
 	document.f1.cbsemaks[19].checked = false;
-	document.f1.cbsemaks[20].checked = false;
-	document.f1.cbsemaks[21].checked = false;
-	document.f1.cbsemaks[22].checked = false;
 	document.f1.txtLainLainTujuan.value="";
 	}
 	
@@ -1313,30 +1353,31 @@ function checkit18()
 function checkit19()
 {
 
- if (document.f1.cbsemaks[19].checked == true)
+ if (document.f1.cbsemaks[16].checked == true)
 	{	
-	document.f1.cbsemaks[16].checked = true;
-	document.f1.cbsemaks[17].checked = true;
+	document.f1.cbsemaks[13].checked = true;
+	document.f1.cbsemaks[14].checked = true;
 	}	
 	
-	if (document.f1.cbsemaks[19].checked == false)
+	if (document.f1.cbsemaks[16].checked == false)
 	{
 		
-	if (document.f1.cbsemaks[18].checked == false && (document.f1.cbsemaks[20].checked == true || document.f1.cbsemaks[22].checked == true || document.f1.cbsemaks[21].checked == true))
-	{	
-	document.f1.cbsemaks[19].checked = false;
-	document.f1.cbsemaks[18].checked = false;
-	document.f1.cbsemaks[17].checked = false;
-	}
-	else if (document.f1.cbsemaks[18].checked == false && document.f1.cbsemaks[20].checked == false && document.f1.cbsemaks[22].checked == false && document.f1.cbsemaks[21].checked == false)
+	if (document.f1.cbsemaks[15].checked == false && (document.f1.cbsemaks[17].checked == true || document.f1.cbsemaks[19].checked == true || document.f1.cbsemaks[18].checked == true))
 	{	
 	document.f1.cbsemaks[17].checked = false;
 	document.f1.cbsemaks[16].checked = false;
+	document.f1.cbsemaks[15].checked = false;
+	}
+	else if (document.f1.cbsemaks[15].checked == false && document.f1.cbsemaks[17].checked == false && document.f1.cbsemaks[19].checked == false && document.f1.cbsemaks[18].checked == false)
+	{	
+	document.f1.cbsemaks[13].checked = false;
+	document.f1.cbsemaks[15].checked = false;
+	document.f1.cbsemaks[14].checked = false;
+	document.f1.cbsemaks[16].checked = false;
+	document.f1.cbsemaks[17].checked = false;
 	document.f1.cbsemaks[18].checked = false;
 	document.f1.cbsemaks[19].checked = false;
-	document.f1.cbsemaks[20].checked = false;
-	document.f1.cbsemaks[21].checked = false;
-	document.f1.cbsemaks[22].checked = false;
+	
 	document.f1.txtLainLainTujuan.value="";
 	}
 	
@@ -1348,22 +1389,23 @@ function checkit19()
 function checkit20()
 {
 
- if (document.f1.cbsemaks[20].checked == true)
+ if (document.f1.cbsemaks[17].checked == true)
 	{	
-	document.f1.cbsemaks[16].checked = true;
+	document.f1.cbsemaks[13].checked = true;
 	}	
 	
-	if (document.f1.cbsemaks[20].checked == false)
+	if (document.f1.cbsemaks[17].checked == false)
 	{	
-	if(document.f1.cbsemaks[17].checked == false && document.f1.cbsemaks[21].checked == false && document.f1.cbsemaks[22].checked == false)
+	if(document.f1.cbsemaks[14].checked == false && document.f1.cbsemaks[18].checked == false && document.f1.cbsemaks[19].checked == false)
 	{
-	document.f1.cbsemaks[17].checked = false;
+	document.f1.cbsemaks[13].checked = false;
+	document.f1.cbsemaks[14].checked = false;
+	document.f1.cbsemaks[15].checked = false;
 	document.f1.cbsemaks[16].checked = false;
+	document.f1.cbsemaks[17].checked = false;
 	document.f1.cbsemaks[18].checked = false;
 	document.f1.cbsemaks[19].checked = false;
-	document.f1.cbsemaks[20].checked = false;
-	document.f1.cbsemaks[21].checked = false;
-	document.f1.cbsemaks[22].checked = false;
+	
 	document.f1.txtLainLainTujuan.value="";
 	}
 	}
@@ -1372,22 +1414,23 @@ function checkit20()
 function checkit21()
 {
 
- if (document.f1.cbsemaks[21].checked == true)
+ if (document.f1.cbsemaks[18].checked == true)
 	{	
-	document.f1.cbsemaks[16].checked = true;
+	document.f1.cbsemaks[13].checked = true;
 	}	
 	
-	if (document.f1.cbsemaks[21].checked == false)
+	if (document.f1.cbsemaks[18].checked == false)
 	{	
-	if(document.f1.cbsemaks[17].checked == false && document.f1.cbsemaks[20].checked == false && document.f1.cbsemaks[22].checked == false)
+	if(document.f1.cbsemaks[14].checked == false && document.f1.cbsemaks[17].checked == false && document.f1.cbsemaks[19].checked == false)
 	{
-	document.f1.cbsemaks[17].checked = false;
+	document.f1.cbsemaks[13].checked = false;
+	document.f1.cbsemaks[14].checked = false;
+	document.f1.cbsemaks[15].checked = false;
 	document.f1.cbsemaks[16].checked = false;
+	document.f1.cbsemaks[17].checked = false;
 	document.f1.cbsemaks[18].checked = false;
 	document.f1.cbsemaks[19].checked = false;
-	document.f1.cbsemaks[20].checked = false;
-	document.f1.cbsemaks[21].checked = false;
-	document.f1.cbsemaks[22].checked = false;
+	
 	document.f1.txtLainLainTujuan.value="";
 	}
 	}
@@ -1397,25 +1440,25 @@ function checkit21()
 function checkit22()
 {
 
- if (document.f1.cbsemaks[22].checked == true)
+ if (document.f1.cbsemaks[19].checked == true)
 	{	
-	document.f1.cbsemaks[16].checked = true;
+	document.f1.cbsemaks[13].checked = true;
 	document.f1.txtLainLainTujuan.focus();	
 	}	
 	
-	if (document.f1.cbsemaks[22].checked == false)
-	{	
-	if(document.f1.cbsemaks[17].checked == false && document.f1.cbsemaks[20].checked == false && document.f1.cbsemaks[21].checked == false)
+	if (document.f1.cbsemaks[19].checked == false){	
+	if(document.f1.cbsemaks[14].checked == false && document.f1.cbsemaks[17].checked == false && document.f1.cbsemaks[18].checked == false)
 	{
+		//alert("Read here");
 	document.f1.txtLainLainTujuan.value="";
-	document.f1.cbsemaks[17].checked = false;
+	document.f1.cbsemaks[13].checked = false;
+	document.f1.cbsemaks[15].checked = false;
+	document.f1.cbsemaks[14].checked = false;
 	document.f1.cbsemaks[16].checked = false;
+	document.f1.cbsemaks[17].checked = false;
 	document.f1.cbsemaks[18].checked = false;
 	document.f1.cbsemaks[19].checked = false;
-	document.f1.cbsemaks[20].checked = false;
-	document.f1.cbsemaks[21].checked = false;
-	document.f1.cbsemaks[22].checked = false;
-	return;
+	
 	}
 	}
 }
@@ -1425,29 +1468,29 @@ function checkitD()
 
  if (document.f1.txtLainLainTujuan.value != "")
 	{	
-	document.f1.cbsemaks[16].checked = true;
-	document.f1.cbsemaks[22].checked = true;
+	document.f1.cbsemaks[13].checked = true;
+	document.f1.cbsemaks[19].checked = true;
 	return;
 	}	
 	
  if (document.f1.txtLainLainTujuan.value == "")
 	{
 		
-if (document.f1.cbsemaks[19].checked == false && document.f1.cbsemaks[20].checked == false && document.f1.cbsemaks[21].checked == false)
+if (document.f1.cbsemaks[16].checked == false && document.f1.cbsemaks[17].checked == false && document.f1.cbsemaks[18].checked == false)
 	{	
-	document.f1.cbsemaks[17].checked = false;
+	document.f1.cbsemaks[14].checked = false;
+	document.f1.cbsemaks[13].checked = false;
+	document.f1.cbsemaks[15].checked = false;
 	document.f1.cbsemaks[16].checked = false;
+	document.f1.cbsemaks[17].checked = false;
 	document.f1.cbsemaks[18].checked = false;
 	document.f1.cbsemaks[19].checked = false;
-	document.f1.cbsemaks[20].checked = false;
-	document.f1.cbsemaks[21].checked = false;
-	document.f1.cbsemaks[22].checked = false;
 	document.f1.txtLainLainTujuan.value="";
 	return;
 	}
 	else
 	{
-	document.f1.cbsemaks[22].checked = false;
+	document.f1.cbsemaks[19].checked = false;
 	document.f1.txtLainLainTujuan.value="";
 	return;
 	}
@@ -1519,10 +1562,10 @@ function DoTheCheck() {
 		dm.focus()
 		return false
 	}
-	else if (document.f1.cbsemaks[23].checked == false) {
-		alert("Sila masukkan Memiliki Harta Tak Alih");
-		return;
-	}
+	//else if (document.f1.cbsemaks[23].checked == false) {
+	//	alert("Sila masukkan Memiliki Harta Tak Alih");
+	//	return;
+	//}
 	else if ( date1 > currentTime ){
 	
 		alert("Sila pastikan tarikh bayaran tidak melebihi dari tarikh hari ini");
