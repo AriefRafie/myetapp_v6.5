@@ -39,8 +39,8 @@
             		<tr>
               			<td scope="row"></td>
               			<td>
-              				<input type="button" class="stylobutton" name="cmdCari" id="cmdCari" value="Cari" onclick="javascript:carian()">
-                			<input type="reset" class="stylobutton" name="cmdKosongkan" id="cmdKosongkan" value="Kosongkan" onClick="javascript:kosongkan()"></td>
+              				<input type="button" name="cmdCari" id="cmdCari" value="Cari" onclick="javascript:carian()">
+                			<input type="reset" name="cmdKosongkan" id="cmdKosongkan" value="Kosongkan" onClick="javascript:kosongkan()"></td>
             		</tr>
             		<tr>
               			<td scope="row">&nbsp;</td>
@@ -67,11 +67,12 @@
 		            	</td>
 		            </tr>
 		            <tr class="table_header">
-				        <td width="3%"><b>Bil.</b></td>
-				        <td width="20%"><b>No Online</b></td>
-				        <td width="37%"><b>Tujuan Pajakan</b></td>
-				        <td width="17%"><b>Negeri</b></td>
-				        <td width="23%"><b>Status</b></td>
+				        <td width="3%" align="center"><b>Bil.</b></td>
+				        <td width="17%" align="center"><b>No. Rujukan Online</b></td>
+				        <td width="17%" align="center"><b>No. Fail Permohonan</b></td>
+				        <td width="30%" align="center"><b>Tujuan Pajakan</b></td>
+				        <td width="17%" align="center"><b>Negeri</b></td>
+				        <td width="20%" align="center"><b>Status</b></td>
 		            </tr>
 		           
           			#set ($list = "")
@@ -85,8 +86,9 @@
 			                #set( $row = "row2" )
 			            #end
 		          	<tr>
-		            	<td class="$row" >$list.bil.</td>
+		            	<td class="$row" align="center">$list.bil.</td>
 		            	<td class="$row">$list.noPermohonan</td>
+		            	<td class="$row">$list.noFail</td>
 		            	<td class="$row" ><a href="javascript:papar('$list.idFail')" class="style1">$list.tajuk</a></td>
 		            	<td class="$row" >$list.negeri</td>
 		            	<!--<td class="$row" align="center">$list.tarikhTerima</td>-->

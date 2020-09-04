@@ -1,5 +1,4 @@
-<form autocomplete="off" action="/app/ppk/BicaraInteraktif/viewKeterangan.jsp"> <!-- arief add bagi tujuan autocomplete bila Pegawai masukkan nama Waris / OB di Keterangan diambil-->
-<div class="viewKeterangan" class="autocomplete" > <!-- arief add class="autocomplete"  -->
+
 <table class="tableEditor classFade" width="100%"  >
 <tr><td colspan="2">
 
@@ -95,6 +94,8 @@
         	   </span>
                #end
                </h4>
+ <form autocomplete="on" action="/app/ppk/BicaraInteraktif/viewKeterangan.jsp"> <!-- arief add bagi tujuan autocomplete bila Pegawai masukkan nama Waris / OB di Keterangan diambil-->
+<div class="viewKeterangan" class="autocomplete" > <!-- arief add class="autocomplete"  -->
 <textarea id="KETERANGAN_$ID_OBPERMOHONAN" name="KETERANGAN_$ID_OBPERMOHONAN"  placeholder="Masukkan Keterangan..." style="width:100%;" spellcheck="false" >$KETERANGAN</textarea>	
 <div id="dummyDivResetupKETERANGAN_$ID_OBPERMOHONAN" style="display:none;" >$KETERANGAN</div>     
 <div id="timer_KETERANGAN_$ID_OBPERMOHONAN" align="right" ></div>
@@ -259,7 +260,12 @@
 		
 		reAssignFieldEditorContent('KETERANGAN_$ID_OBPERMOHONAN'); 
 		
+		</script>	
+		<!-- arief add autocomplete OPEN-->
+		<script>
+		autocomplete(document.getElementById("KETERANGAN_$ID_OBPERMOHONAN"), namaWaris, namaOB);
 		</script>
+		<!-- arief add autocomplete CLOSE-->
           <div id="infobuttonKeterangan$ID_OBPERMOHONAN" style="display:none"><i><font color='blue'>Info</font> : Sila tekan butang <font color='blue'>'Tab'</font> selepas selesai mengisi keterangan. Butang <font color='blue'>'Simpan Keterangan'</font> akan dipaparkan.</i></div>
 </td>
 </tr>  
@@ -401,8 +407,4 @@ if(flagDisable == "Y")
 	disableInput("buttonKeterangan$ID_OBPERMOHONAN");	
 }
 </script>
-<!-- arief add autocomplete OPEN-->
-<script>
-autocomplete(document.getElementById("KETERANGAN_$ID_OBPERMOHONAN"), namaWaris, namaOB);
-</script>
-<!-- arief add autocomplete CLOSE-->
+

@@ -200,7 +200,7 @@
   <tr>
     	<td colspan="2">
 			<fieldset>
-    			<legend><strong>SENARAI HAKMILIK</strong></legend>
+    			<legend><strong>MAKLUMAT TANAH</strong></legend>
     			#foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
     			<input type="hidden" name="idHakmilik" id="idHakmilik" value="$beanMaklumatTanah.idHakmilik" />
     			

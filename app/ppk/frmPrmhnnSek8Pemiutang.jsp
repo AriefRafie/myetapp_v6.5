@@ -1722,7 +1722,7 @@
                             <td width="100%">
                             
                             <fieldset>
-                            <legend>MAKLUMAT PEMIUTANG(SIMATI BERHUTANG)</legend>
+                            <legend>MAKLUMAT PEMIUTANG (SIMATI BERHUTANG)</legend>
                             
                             <table width="100%" border="0">
                               <tr>
@@ -2788,7 +2788,7 @@
                   <input type="hidden" name="idOb" value="" />
                             
                             <fieldset>
-                            <legend>SENARAI PEMIUTANG</legend>
+                            <legend>SENARAI PEMIUTANG (SIMATI BERHUTANG)</legend>
                             
                          
                               <table width="100%" >
@@ -2806,6 +2806,7 @@
                   
                                     #if($open_button_online == "yes")
 <input type="submit" name="cmdPapar" id="cmdPapar" value="Tambah"  onclick="setSelected(0,3,0,0);tambah_penting_baru()"/>
+<span style="color:blue"><small >*</small> Diisi jika berkaitan</span>
  #if($flag_kemaskini_selesai != "yes")
                                 <script>
                                 document.getElementById('cmdPapar').style.display = "none";

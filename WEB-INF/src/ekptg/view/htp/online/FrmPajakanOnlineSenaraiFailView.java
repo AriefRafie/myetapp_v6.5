@@ -231,26 +231,29 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 	        	
 				//MAKLUMAT HAKMILIK
 				beanMaklumatTanah = new Vector();
+				log.info("idHakmilikAgensi" +idHakmilikAgensi);
 				logicMaklumat.setMaklumatTanah(idHakmilikAgensi);
 				beanMaklumatTanah = logicMaklumat.getBeanMaklumatTanah();
 				this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
+				log.info("beanMaklumatTanah:"+beanMaklumatTanah);
 				
 				this.context.put("readOnly", "readOnly");
 	        	this.context.put("classDis", "disabled");
 	        	this.context.put("inputTextClass", "disabled");
 	        	
-				//MAKLUMAT PERMOHONAN
-				logicHeader.setMaklumatPermohonan(idFail);
-				beanMaklumatPermohonan = new Vector();
-				beanMaklumatPermohonan = logicHeader.getBeanMaklumatPermohonan();
-				this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
-				//MaklumatPermohonanView(mode);
-	        	
-				//MAKLUMAT HAKMILIK
-				beanMaklumatTanah = new Vector();
-				logicMaklumat.setMaklumatTanah(idHakmilikAgensi);
-				beanMaklumatTanah = logicMaklumat.getBeanMaklumatTanah();
-				this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
+//				//MAKLUMAT PERMOHONAN
+//				logicHeader.setMaklumatPermohonan(idFail);
+//				beanMaklumatPermohonan = new Vector();
+//				beanMaklumatPermohonan = logicHeader.getBeanMaklumatPermohonan();
+//				this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
+//				//MaklumatPermohonanView(mode);
+//	        	
+//				//MAKLUMAT HAKMILIK
+//				beanMaklumatTanah = new Vector();
+//				logicMaklumat.setMaklumatTanah(idHakmilikAgensi);
+//				beanMaklumatTanah = logicMaklumat.getBeanMaklumatTanah();
+//				this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
+//				log.info("beanMaklumatTanah:"+beanMaklumatTanah);
 				
 				getSenaraiSemakFail(idPermohonan);
 		
