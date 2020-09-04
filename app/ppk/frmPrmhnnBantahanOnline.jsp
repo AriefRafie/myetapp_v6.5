@@ -144,7 +144,7 @@
 		                </td>
 		                
 		                <td align="center">
-		                	<input type="button" name="btnBantah" id="btnBantah" value="Bantah" onclick="skrinBantah('$!list.ID_PERMOHONAN','$!list.ID_FAIL','$!list.NO_FAIL','$!list.NAMA_SIMATI')"/>
+		                	<input type="button" name="btnBantah" id="btnBantah" value="DAFTAR BANTAHAN" onclick="skrinBantah('$!list.ID_PERMOHONAN','$!list.ID_FAIL','$!list.NO_FAIL','$!list.NAMA_SIMATI')"/>
 		                </td>
 		                          
 		    		</tr>
@@ -200,7 +200,7 @@
 						  $!cnt
 						 </td>
 						 <td class="$row" align="center">$!senarai.tarikh_hantar</td>
-						 <td class="$row" align="center"><a href="javascript:paparBicara('$!senarai.id_perbicaraan')" class="style1">$!senarai.no_fail</a></td>
+						 <td class="$row" align="center">$!senarai.no_fail<br>&nbsp;&nbsp;&nbsp;<a href="javascript:paparBicara('$!senarai.id_perbicaraan')" class="style1"><span><small style="color:blue">MAKLUMAT BICARA</small></span></a>&nbsp;&nbsp;&nbsp;</td>
 						 <td class="$row" align="center">$!senarai.nama_pembantah</td>
 						 <td class="$row" align="center">$!senarai.sebab.toUpperCase()</td>
 						 <td class="$row" align="center"><a href="javascript:paparLampiran('$!senarai.id_dokumen')" class="style1">$!senarai.nama_dokumen</a></td>
