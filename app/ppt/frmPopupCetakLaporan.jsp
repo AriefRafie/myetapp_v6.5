@@ -62,7 +62,7 @@ background: #f4eff4 !important;
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input type="hidden" name="user" value='$!{session.getAttribute("_portal_username")}'>
 
-  <input name="tabId" type="text" id="tabId" value="$selectedTab"/>
+  <input name="tabId" type="hidden" id="tabId" value="$selectedTab"/>
   
 
     	<fieldset><legend><strong>Cetakan Laporan</strong></legend>
