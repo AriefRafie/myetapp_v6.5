@@ -668,6 +668,7 @@ public class FrmOnlineMaklumatPajakanData {
 					" AND A.ID_KEMENTERIAN = I.ID_KEMENTERIAN(+) AND A.ID_AGENSI = J.ID_AGENSI(+) AND A.ID_LUAS = K.ID_LUAS " +
 					" AND A.ID_HAKMILIK = '" + idHakmilik + "'";
 			
+			myLog.info("sql" +sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -732,6 +733,7 @@ public class FrmOnlineMaklumatPajakanData {
 				db.close();
 		}
 	}
+	
 	/*public void paparMaklumatTanah(String idPermohonan) throws Exception {
 		Db db = null;
 		String sql = "";

@@ -65,28 +65,26 @@
       		</fieldset>
     	</td>
   	</tr>
+  	<tr><td></td></tr>
+  	<tr>
+  		<td>
+			#if($seksyen == "17")
+			<a href="#" onClick="javascript:cetakBorangS('$!noFail.toUpperCase()','$!idFail','$!idPerbicaraan','$!id_Permohonan','$!icSimati','$signedData')">
+		       	<input type="button" value="Borang S">
+		    </a>
+			#else   
+			<a href="#" onClick="javascript:cetakBorangD('$!noFail.toUpperCase()','$!idFail','$!idPerbicaraan')">
+		 		<input type="button" value="Borang D">
+		 	</a>    			
+			#end
+		</td>
+	</tr>
   	<tr>
   		<td>
   			<a href="#" onClick="javascript:cetakSuratPanduanBicara('$!idFail','$!id_Permohonan')">
 		       	<input type="button" value="Panduan Perbicaraan">
 		    </a>
   		</td>
-  	</tr>
-<!--   	<tr> -->
-<!--   		<td> -->
-<!-- 			#if($seksyen == "17") -->
-<!-- 			<a href="#" onClick="javascript:cetakBorangS('$!noFail.toUpperCase()','$!idFail','$!idPerbicaraan','$!id_Permohonan','$!icSimati','$signedData')"> -->
-<!-- 		       	<input type="button" value="Borang S"> -->
-<!-- 		    </a> -->
-<!-- 			#else    -->
-<!-- 			<a href="#" onClick="javascript:cetakBorangD('$!noFail.toUpperCase()','$!idFail','$!idPerbicaraan')"> -->
-<!-- 		 		<input type="button" value="Borang D"> -->
-<!-- 		 	</a>    			 -->
-<!-- 			#end -->
-<!-- 		</td> -->
-<!-- 	</tr> -->
-  	<tr>
- 		<td>&nbsp;</td>
   	</tr>
 </table>
 

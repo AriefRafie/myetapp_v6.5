@@ -20,6 +20,7 @@ import org.apache.velocity.Template;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Utils;
 import ekptg.model.ppk.FrmPerintahSek8Data;
+import ekptg.model.ppk.FrmPrmhnnSek8Notis;
 
 //import ecourt.ws.ppk.ECourtPPKManager;
 
@@ -28,6 +29,7 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 	
 	// model
 	FrmPerintahSek8Data logic = new FrmPerintahSek8Data();
+	FrmPrmhnnSek8Notis modelNotis = new FrmPrmhnnSek8Notis();
 
 	@Override
 	public Template doTemplate() throws Exception {
@@ -83,7 +85,7 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 			userId = (String) session.getAttribute("_ekptg_user_id");
 			String idPermohonan = getParam("idPermohonan");
 			// get data keputusan permohonan
-			keputusanPermohonan = logic.getKeputusanPermohonan(idPermohonan);
+			keputusanPermohonan = modelNotis.getKeputusanPermohonan(idPermohonan);
 
 			Hashtable kp = new Hashtable();
 			String idkp = "";
@@ -94,8 +96,8 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 			}
 
 			// get info pemohon
-			logic.setListSemak(idPermohonan, userId);
-			list = logic.getListSemak();
+			modelNotis.setListSemak(idPermohonan, userId);
+			list = modelNotis.getListSemak();
 			
 			String idSimati = "";
 			String idStatus = "";
@@ -117,8 +119,8 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 			
 			
 			// --data notis
-			logic.setListSemakWithData(idkp);
-			dataNotis = logic.getListSemakWithData();
+			modelNotis.setListSemakWithData(idkp);
+			dataNotis = modelNotis.getListSemakWithData();
 			
 			
 			String bil = "";
@@ -277,53 +279,7 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 				context.put("checkP2", "");
 				context.put("checkP3", "");
 			}
-			
-			if (idjenispejabat.equals("22")) {
-				// dropdown pejabat jkptg
-//				if (idPejabatJKPTG != "") {
-//					if (idpejabat != "") {
-//						context
-//								.put(
-//										"showBicara",
-//										HTML
-//												.SelectTempatBicaraByPejabatJKPTG(
-//														idPejabatJKPTG,
-//														"editTempatBicara",
-//														Utils
-//																.parseLong(idpejabat),
-//														null,
-//														"style=width:400 class=disabled disabled "));
-//					} else {
-//						context
-//								.put(
-//										"showBicara",
-//										HTML
-//												.SelectTempatBicaraByPejabatJKPTG(
-//														idPejabatJKPTG,
-//														"editTempatBicara",
-//														null, null,
-//														"style=width:400 class=disabled disabled "));
-//					}
-//				} 
-//				else {
-//					if (idpejabat != "") {
-//						context.put("showBicara", HTML.SelectTempatBicara(
-//								"editTempatBicara", Utils.parseLong(idpejabat),
-//								null,
-//								"style=width:400 onChange=\"doChangeidTempatBicara();\" class=disabled disabled "));
-//					} else {
-//						context.put("showBicara", HTML.SelectTempatBicara(
-//								"editTempatBicara", null, null,
-//								"style=width:400 onChange=\"doChangeidTempatBicara();\" class=disabled disabled "));
-//					}
-//				}
-
-				// radio button
-//				context.put("checkP1", "checked");
-//				context.put("checkP2", "");
-//				context.put("checkP3", "");
-
-			} else if (idjenispejabat.equals("2")) {
+			if (idjenispejabat.equals("2")) {
 				// dropdown pejabat tanah
 				
 
@@ -457,7 +413,7 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 			
 		}
 		else if ("verify".equals(submit)) {
-			//System.out.println("inside sendDGCert ################");
+			//System.out.println("inside sendDGCertPerintah ################");
 			
 			Vector list = new Vector();
 			Vector dataNotis = new Vector();
@@ -478,7 +434,7 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 			userId = (String) session.getAttribute("_ekptg_user_id");
 			
 			// get data keputusan permohonan
-			keputusanPermohonan = logic.getKeputusanPermohonan(idPermohonan);
+			keputusanPermohonan = modelNotis.getKeputusanPermohonan(idPermohonan);
 
 			Hashtable kp = new Hashtable();
 			String idkp = "";
@@ -489,8 +445,8 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 			}
 
 			// get info pemohon
-			logic.setListSemak(idPermohonan, userId);
-			list = logic.getListSemak();
+			modelNotis.setListSemak(idPermohonan, userId);
+			list = modelNotis.getListSemak();
 			
 			String idSimati = "";
 			String idStatus = "";
@@ -512,8 +468,8 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 			
 			
 			// --data notis
-			logic.setListSemakWithData(idkp);
-			dataNotis = logic.getListSemakWithData();
+			modelNotis.setListSemakWithData(idkp);
+			dataNotis = modelNotis.getListSemakWithData();
 			
 			
 			String bil = "";
@@ -624,33 +580,6 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 			context.put("alamat1", alamat1);
 			context.put("alamat2", alamat2);
 			context.put("alamat3", alamat3);
-			
-			
-//			if (idPejabatJKPTG != "") {
-//
-//				alamatTempatBicara = modelNotis
-//						.getAlamatTempatBicara(idPejabatJKPTG);
-//
-//				if (alamatTempatBicara.size() != 0) {
-//
-//					Hashtable AB = (Hashtable) alamatTempatBicara.get(0);
-//
-//					alamat1 = AB.get("alamat1").toString();
-//					alamat2 = AB.get("alamat2").toString();
-//					alamat3 = AB.get("alamat3").toString();
-//					poskod = AB.get("poskod").toString();
-//					negeri = AB.get("id_negeri").toString();
-//				}
-//			}
-//
-//			context.put("poskod", poskod);
-//			context.put("alamat1", alamat1);
-//			context.put("alamat2", alamat2);
-//			context.put("alamat3", alamat3);
-			
-
-			
-
 			if (negeri != "") {
 				context.put("selectNegeri", HTML.SelectNegeri("socNegeri",
 						Utils.parseLong(negeri),
@@ -921,4 +850,5 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
  * 5.	DGCertPerintah.jsp
  * 6.	FrmPerintahSek8Data.java
  * 7.	TandatanganSuccessPerintah.jsp
+ * 8.	verifyDGCertPerintah.jsp
 **/

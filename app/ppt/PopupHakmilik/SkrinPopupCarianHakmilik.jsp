@@ -158,7 +158,11 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                   		<td  ><b><font color="white">MUKIM/PEKAN/BANDAR</font></b></td>
                         #end
                   		<td   ><b><font color="white">LUAS DIAMBIL</font></b></td>
-                        
+                  		
+                        #if($flag_skrin == "daftar_sek8_online" || $flag_skrin == "skrin_hakmilik_sek8_KJP")
+                        <td   ><b><font color="white">TARIKH H</font></b></td>
+                        <td   ><b><font color="white">TARIKH K</font></b></td>
+                        #end
                         #if($flag_skrin == "daftar_sek8_online")  
                         
                         
@@ -168,6 +172,9 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                         #else
                   		<td ><b><font color="white">NO. SUBJAKET</font></b></td>
                   		<td   align="center"><b><font color="white">BORANG I</font></b></td>  
+                        #end
+                        #if($flag_skrin == "daftar_sek8_online" || $flag_skrin == "skrin_hakmilik_sek8_KJP")
+                        <td  align="center"><b><font color="white">CETAK</font></b></td>
                         #end
                         
                            
@@ -277,7 +284,10 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                         </td>
                         #end
                 		<td  class="$rowx" >$!listTanah.luas_ambil&nbsp;$!listTanah.unitByKategori</td>
-                		
+                        #if($flag_skrin == "daftar_sek8_online" || $flag_skrin == "skrin_hakmilik_sek8_KJP")
+                		<td  class="$rowx" >$!listTanah.tarikh_borangh</td>
+                		<td  class="$rowx" >$!listTanah.tarikh_borangk</td>
+                		#end
                         
                         #if($flag_skrin == "daftar_sek8_online") 
                         
@@ -324,9 +334,16 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                         
                         <td class="$rowx" align="center">
                 		#if($listTanah.flag_segera_sebahagian=="Y")YA #elseif($listTanah.flag_segera_sebahagian=="N")TIDAK #end 
-                		</td> 
-                        
-                        
+                		#end
+                	
+                		#if($no_fail == "")
+                		<td align="center" class="$rowx"><span class="blink"><b>Borang K belum dikeluarkan</b></span></td>
+                		#else
+                		#if($flag_skrin == "daftar_sek8_online" || $flag_skrin == "skrin_hakmilik_sek8_KJP")
+                		<td  align="center" class="$rowx" >$!listTanah.cetak
+                		 <input a href="#" type="button" value="Cetak" onClick="javascript:cetakBorangK('$!id_permohonan','$listTanah.id_hakmilik')"><font color="blue"></font></a>
+        			
+                		#end
                 		#end
                 	
                 		
@@ -1046,6 +1063,15 @@ function cetakSuratIringanAgensiPemohon(idpermohonan,idhakmilik) {
     if (hWnd.focus != null) hWnd.focus();
     
     }
+}
+function cetakBorangK(idpermohonan,idhakmilik) {
+
+	var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+idhakmilik+"&report=BorangK&selectNoFail=yes";
+	//var url = "../servlet/ekptg.report.ppt.BorangK?id_hakmilik="+idhakmilik+"&id_Fail="+idfail+"&namaPegawai="+namaPengarah;
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
 }
 //PPT-30(ii)
 
