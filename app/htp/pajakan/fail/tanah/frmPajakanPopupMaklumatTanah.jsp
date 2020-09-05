@@ -321,6 +321,10 @@ padding:0 0.25em;
                                   <td align="right">MUKIM :</td>
                                   <td><font color="blue">$mukim</font></td>
                             </tr>
+                            <tr>
+                                  <td align="right">SEKSYEN :</td>
+                                  <td><font color="blue">Sek 01</font></td>
+                            </tr>
 
                           </table>
                           </td>
