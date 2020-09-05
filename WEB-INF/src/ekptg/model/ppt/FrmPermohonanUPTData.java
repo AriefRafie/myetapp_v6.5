@@ -3990,7 +3990,7 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 		      
 		      
 		      Statement stmtMT = db.getStatement();
-		      SQLRenderer rMT = new SQLRenderer();				 
+		      SQLRenderer rMT = new SQLRenderer();
 		      rMT.add("id_kementerian");
 		      rMT.add("kod_kementerian");				      
 		      rMT.add("id_kementerian",id_kementerian);				      
