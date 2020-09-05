@@ -6595,4 +6595,135 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 			}
 		}	
 		
+		//Senarai Siasatan Online
+		Vector senarai_Siasatan = null;
+		public Vector senarai_Siasatan(String no_fail,
+				String no_jkptg_negeri, String id_kementerian, String id_urusan,
+				String id_status, String jenis_permohon,String role,String user_negeri) throws Exception {
+			senarai_Siasatan = new Vector();
+			Db db = null;
+			senarai_Siasatan.clear();
+			String sql = "";
+
+			try {
+				db = new Db();
+				Statement stmt = db.getStatement();
+
+				sql = "SELECT P.ID_PERMOHONAN,P.TARIKH_PERMOHONAN,"
+						+ " F.NO_FAIL, P.NO_RUJUKAN_UPT, P.NO_RUJUKAN_PTG, P.NO_RUJUKAN_PTD, "
+						+ " K.NAMA_KEMENTERIAN,D.NAMA_DAERAH,S.KETERANGAN,U.NAMA_SUBURUSAN  FROM TBLPPTPERMOHONAN P, "
+						+ " TBLRUJSUBURUSAN U,TBLPFDFAIL F,TBLRUJKEMENTERIAN K,TBLRUJDAERAH D,"
+						+ " TBLRUJSTATUS S "+
+						 " WHERE  P.ID_FAIL = F.ID_FAIL "
+						+ " AND F.ID_KEMENTERIAN = K.ID_KEMENTERIAN "
+						+ " AND P.ID_DAERAH = D.ID_DAERAH "
+						+ " AND F.ID_SUBURUSAN = '52' "
+						+ " AND P.FLAG_JENISPERMOHONAN = '"
+						+ jenis_permohon
+						+ "' "
+						+ " AND F.ID_KEMENTERIAN = '" + id_kementerian +"' "					
+						+" AND F.ID_SUBURUSAN = U.ID_SUBURUSAN(+) ";
+						//+" AND S.ID_STATUS IN (38,48,62,74) " 
+						
+						
+						/**OPEN PAGING 16*/
+			    		sql += " and  (P.ID_PERMOHONAN in (select distinct hx.id_permohonan from Tblppthakmilik hx, Tblpptborange bx, Tblpptborangehakmilik beh "; 
+	    	    		sql += " where hx.id_permohonan = p.id_permohonan and hx.id_hakmilik = beh.id_hakmilik and beh.id_borange = bx.id_borange AND NVL (hx.FLAG_PEMBATALAN_KESELURUHAN, 0) <> 'Y' AND NVL (hx.FLAG_PENARIKAN_KESELURUHAN, 0) <> 'Y' ) ";
+			    		sql += " ) "; 
+						
+						
+						sql += " AND P.ID_STATUS = S.ID_STATUS " +
+								"";
+//				    if(!role.equals("(PPT)Pengarah"))
+//				    {
+//					sql += "AND  F.ID_NEGERI = '"+user_negeri+"' ";
+//				    }
+				
+//					if(!user_negeri.equals("16") && !user_negeri.isEmpty()){
+//		    			if(user_negeri.equals("14")){
+//		    				sql += "AND f.id_negeri in (14,15,16) ";
+//		    			}else{
+//		    				sql += "AND f.id_negeri ='"+user_negeri+"'";
+//		    			}		
+//	
+				// kena filter by status (sudah diwartakan)
+
+				if (no_fail != "") {
+					if (!no_fail.trim().equals("")) {
+//						sql = sql + " AND UPPER(F.NO_FAIL) LIKE '%"
+//								+ no_fail.toUpperCase().trim() + "%'";
+						sql += " AND (UPPER(F.NO_FAIL) LIKE '%" + no_fail.toUpperCase().trim() + "%' OR UPPER(P.NO_RUJUKAN_PTG) LIKE '%" + no_fail.toUpperCase().trim() + "%' OR UPPER(P.NO_RUJUKAN_PTD) LIKE '%" + no_fail.toUpperCase().trim() + "%')";
+					}
+				}
+				if (no_jkptg_negeri != "") {
+					if (!no_jkptg_negeri.trim().equals("")) {
+						sql = sql + " AND UPPER(P.NO_RUJUKAN_UPT) LIKE '%"
+								+ no_jkptg_negeri.toUpperCase().trim() + "%'";
+					}
+				}
+				if (id_urusan != "") {
+					if (!id_urusan.trim().equals("")) {
+						sql = sql + " AND UPPER(F.ID_SUBURUSAN) LIKE '"
+								+ id_urusan.toUpperCase() + "'";
+					}
+				}
+				if (id_kementerian == "") {
+					if (!id_kementerian.trim().equals("")) {
+						sql = sql + " AND UPPER(F.ID_KEMENTERIAN) LIKE '"
+								+ id_kementerian.toUpperCase() + "'";
+					}
+				}
+				if (id_status != "") {
+					if (!id_status.trim().equals("")) {
+						sql = sql + " AND UPPER(P.ID_STATUS) LIKE '"
+								+ id_status.toUpperCase() + "'";
+					}
+				}
+
+				sql += " ORDER BY P.TARIKH_KEMASKINI DESC";
+
+				myLogger.info("SQL PENARIKAN CARI :" + sql.toUpperCase());
+				myLogger.info("SQL Filter: " + sql);
+
+				ResultSet rs = stmt.executeQuery(sql);
+				Hashtable h;
+				int bil = 0;
+				while (rs.next()) {
+					bil = bil + 1;
+					h = new Hashtable();
+					h.put("BIL", bil);
+					h.put("NO_RUJUKAN_PTG", rs.getString("NO_RUJUKAN_PTG")== null?"":rs.getString("NO_RUJUKAN_PTG"));
+			    	h.put("NO_RUJUKAN_PTD", rs.getString("NO_RUJUKAN_PTD")== null?"":rs.getString("NO_RUJUKAN_PTD"));
+					h.put("ID_PERMOHONAN",
+							rs.getString("ID_PERMOHONAN") == null ? "" : rs
+									.getString("ID_PERMOHONAN"));
+			    	h.put("TARIKH_PERMOHONAN",
+							rs.getString("TARIKH_PERMOHONAN") == null ? "" : Format
+									.format(rs.getDate("TARIKH_PERMOHONAN")));
+					h.put("NO_FAIL", rs.getString("NO_FAIL") == null ? "default"
+							: rs.getString("NO_FAIL").toUpperCase());
+					h.put("NO_RUJUKAN_UPT",
+							rs.getString("NO_RUJUKAN_UPT") == null ? "" : rs
+									.getString("NO_RUJUKAN_UPT").toUpperCase());
+					h.put("NAMA_KEMENTERIAN",
+							rs.getString("NAMA_KEMENTERIAN") == null ? "" : rs
+									.getString("NAMA_KEMENTERIAN").toUpperCase());
+					h.put("NAMA_DAERAH", rs.getString("NAMA_DAERAH") == null ? ""
+							: rs.getString("NAMA_DAERAH").toUpperCase());
+					h.put("KETERANGAN", rs.getString("KETERANGAN") == null ? ""
+							: rs.getString("KETERANGAN").toUpperCase());
+					h.put("URUSAN", rs.getString("NAMA_SUBURUSAN") == null ? ""
+							: rs.getString("NAMA_SUBURUSAN").toUpperCase());
+					senarai_Siasatan.addElement(h);
+				}
+				return senarai_Siasatan;
+			} catch (Exception re) {
+				log.error("Error: ", re);
+				throw re;
+				} finally {
+				if (db != null)
+					db.close();
+			}
+		}
+		
 }
