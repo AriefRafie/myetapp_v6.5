@@ -196,7 +196,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			this.context.put("htmlCarianTukarPegawai", htmlSkrin);
 			this.context.put("flagOpenTPK", getParam("flagOpenTPK"));
 			setupPageMainList(session, action, listPermohonanTukarPegawai, "listPermohonanTukarPegawai", command);
-			skrin_name = "app/ppk/BicaraInteraktif/listPermohonanTukarPegawai.jsp";
+			skrin_name = "app/ppk/BicaraInteraktif/listPermohonan.Pegawai.jsp";
 		} else if (command.equals("viewPerbicaraan") || command.equals("viewPerbicaraanFromPerintah")) {
 
 			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
@@ -6276,7 +6276,16 @@ public class BicaraInteraktif extends AjaxBasedModule {
 					+ "CATATAN_PERINTAH_BI\"><td></td><td></td><td></td><td align=\"right\">";
 			htmlPageSetup += "<div id=\"word" + skrinName + "CATATAN_PERINTAH_BI\"></div>";
 			htmlPageSetup += "</td></tr>";
+			
 			htmlPageSetup += modelBI.closeHTMLTable();
+			//arief add
+			htmlPageSetup += modelBI.openHTMLTable();
+			htmlPageSetup += "<tr  ><td colspan=\"4\" class=\"table_header\">Perintah Perbicaraan</td></tr>";
+			htmlPageSetup += modelBI.closeHTMLTable();
+			htmlPageSetup += "<iframe src = \"?_portal_module=ekptg.view.ppk.FrmPerintahSek8\" style=\"border: 1px none; margin-right: -35px; height: 812px; width: 1070px;\"</iframe>";
+			//htmlPageSetup += "<p><a href=\"?_portal_module=ekptg.view.ppk.FrmPerintahSek8\" target=\"iframe_a\">FrmPerintahSek8</a></p>";
+			//perlu repair iframe bagi kegunaan daftar perintah di Bicara Interaktif :: 3/9/2020
+			//arief add
 
 		} finally {
 			if (db == null) {

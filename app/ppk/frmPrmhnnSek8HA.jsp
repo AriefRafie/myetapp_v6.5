@@ -2309,7 +2309,7 @@ else if((document.f1.socJenisHartaAlih.value != 2 && document.f1.socJenisHartaAl
 	//else{
 		//alert('xxx ' + document.f1.socJenisHartaAlih.value);
 		 
-		if(document.f1.txtNilaiTarikhMohon.value == "" || document.f1.txtNilaiTarikhMati.value == "") //arief open comment 11/2/2020
+		if(document.f1.txtNilaiTarikhMohon.value == "") //arief open comment 11/2/2020
 			{
 			alert('Sila masukkan Nilaian Harta ');
 			return;

@@ -3224,6 +3224,7 @@
                                  		
                                     
                                   <input type="submit" name="cmdPapar" id="cmdPapar" value="Tambah"  onclick="setSelected(0,3,0,0);tambah_penting_baru()"/>
+                                  <span style="color:blue"><small >*</small> Diisi jika berkaitan</span>
                                    
 								   #if($flag_kemaskini_selesai != "yes")
 								   <script>

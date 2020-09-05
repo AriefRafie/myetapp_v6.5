@@ -600,7 +600,9 @@ lain tujuan ::: $lt
 	    <td  valign="top"></td>
       	<td >
         <br>#if($chkmode != "disabled")<span class="style1">*</span>#end
-        <b>Masukkan Permohonan Khusus Yang Dipohon</b></td>
+        <b>Masukkan Permohonan Khusus Yang Dipohon</b>&nbsp;<a href="javascript:open_info()" class="help" title="info">							
+                    	<b><font color="blue"><img width="15" height="14" src="../img/info.png"  align="center" /></font></b>
+                    </a></td>
 	</tr>  
 	<tr>
 	  	<td  valign="top">&nbsp;</td>
@@ -612,7 +614,7 @@ lain tujuan ::: $lt
         <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td  valign="top"></td>
-      <td><input type="text" readonly class="disabled" name="remPerintahMinta" size="3" maxlength="4" value="2000">Baki Aksara</td>
+      <td><input type="text" readonly class="disabled" name="remPerintahMinta" size="3" maxlength="4" value="2000"> Baki Aksara</td>
     </tr>
         </table>
       </fieldset>
@@ -622,13 +624,42 @@ lain tujuan ::: $lt
       <!-- syafiqah add  -->
       <fieldset>
 	      <table id="tblGeran" width="100%" border="0">
+	      	<tr><td></td></tr>
 		      <tr>
-		      	<td width="30%">Dokumen Sokongan</td>
-		      	<td width="2%">:</td>
-		      	<td><input type="button" id="fileupload" name="uploadmyid" value="Lampiran" onClick="lampiran('$idpermohonan','borangP')">
+		      	<td  valign="top">&nbsp;</td>
+				<td  valign="top"></td>
+			    <td  valign="top"></td>
+		      	<td width="1%">#if($chkmode != "disabled")<span class="style1">*</span>#end</td>
+		      	<td><b> Dokumen Sokongan</b></td>
+		      </tr>
+		      <tr>
+		      	<td  valign="top">&nbsp;</td>
+				<td  valign="top"></td>
+			    <td  valign="top"></td>
+		      	<td></td>
+		      	<td></td>
+		      </tr>
+		      <tr>
+		      	<td  valign="top">&nbsp;</td>
+				<td  valign="top"></td>
+			    <td  valign="top"></td>
+			    <td></td>
+		      	<td> Sila tekan <a href="#"><span onClick="lampiran('$idpermohonan','borangP')" class="pautan"><b>DISINI</b></span></a> untuk muatnaik lampiran dokumen sokongan
+<!-- 		      	<input type="button" id="fileupload" name="uploaddoc" value="Lampiran" onClick="lampiran('$idpermohonan','borangP')"> -->
 					<br>
-					$!lampirans
 				</td>
+		      </tr>
+		      <tr><td  valign="top">&nbsp;</td>
+				<td  valign="top"></td>
+			    <td  valign="top"></td>
+			    <td></td>
+		      	<td>
+		      	#if($lampirans != "")
+					<input type="hidden" name="namaDoc1" value="1" />
+				#else
+					<input type="hidden" name="namaDoc1" value="0" />
+				#end
+		      	$!lampirans</td>
 		      </tr>
 	      </table>
       </fieldset>
@@ -1196,6 +1227,9 @@ function DoTheCheck() {
 		alert("Sila masukkan permohonan khusus yang dipohon");
 		  document.f1.perintahminta.focus();
 	}
+	else if(document.f1.namaDoc1.value == "0"){
+		alert("Sila muatnaik lampiran dokumen sokongan");
+	}
 
 	else {
 	
@@ -1587,6 +1621,42 @@ function textCounter(field, countfield, maxlimit) {
 function ForView(noFail) {
 	document.f1.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.ppk.FrmSenaraiFailSek8ForView&txtNoFail="+noFail;
 	document.f1.submit();
+}
+
+function open_info() {
+	 var width  = 550;
+	 var height = 200;
+	 var left   = (screen.width  - width)/2;
+	 var top    = (screen.height - height)/2;
+	 
+	 var params = 'width='+width+', height='+height;
+	 params += ', top='+top+', left='+left;
+	 params += ', directories=no';
+	 params += ', location=front';
+	 params += ', menubar=no';
+	 params += ', resizable=no';
+	 params += ', scrollbars=no';
+	 params += ', status=no';
+	 params += ', toolbar=no';
+	 new_window = open("","title",params);
+	 new_window.document.open();
+	
+	new_window.document.write("<html><title>Info</title>");
+	new_window.document.write("<body bgcolor=\"#FFFFFF\">");
+	new_window.document.write("<table><tr><td><b>Info Permohonan Khusus Yang Dipohon</b></td></tr></table>");
+	
+	new_window.document.write("<table width='100%'><tr><td width='33%' valign='top'>");
+	
+	new_window.document.write("<table>");
+	new_window.document.write("<tr><td>");
+	new_window.document.write("<font><li>&nbsp;Bagi harta ketinggalan : Nyatakan butiran hakmilik harta tak alih atau maklumat harta alih</li></font>");
+	new_window.document.write("<font><li>&nbsp;Pembatalan pemegang amanah/pentadbir: Nyatakan harta yang berkaitan yang ingin dibuat pembatalan</li></font>");
+	new_window.document.write("<font><li>&nbsp;Pelantikan pemegang amanah yang baharu/pentadbir yang baharu: Nyatakan harta yang berkaitan yang ingin dibuat pembatalan</li></font>");
+	new_window.document.write("<font><li>&nbsp;Penarikan balik kaveat: Nyatakan harta yang berkaitan yang ingin dibuat pembatalan</li></font>");
+	new_window.document.write("</td></tr></table>");
+	
+	new_window.document.write("</body></html>");
+	new_window.document.close();
 }
 
 </script>

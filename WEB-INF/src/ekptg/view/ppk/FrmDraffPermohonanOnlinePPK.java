@@ -113,6 +113,16 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 			FrmTukaranStatus.hapusfail(fifah);
 			
 //			AuditTrail.logActivity("999","2",this,session,"DEL","NO PERMOHONAN ["+NoFail+"] DIHAPUSKAN");
+			
+			// syafiqah add refresh page
+			senaraiFail = FrmPrmhnnStatusPengunaOnlineData.getSenaraiTugasanDraf("",
+					(String) session.getAttribute("_ekptg_user_id"),
+					(String) session.getAttribute("_portal_role"),
+					getParam("kppemohon"), 
+					getParam("kpsimati"), 
+					"yes");
+			
+			setupPage(session, action, senaraiFail);
 						
 		}
 		// daftar dan kemaskini seksyen17

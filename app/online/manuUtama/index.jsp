@@ -458,14 +458,15 @@
 	}
 goMenuTab('$!nTab');
 
-function goMenuTab(tab){
-if ( tab != '' ){
-        document.${formName}.action = "$EkptgUtil.getTabID($!nTab,$myrole)?_portal_module=" + "$!nModul";
-        document.${formName}.submit();
-}
-document.${formName}.namamodul.value = "";
-document.${formName}.namatab.value = "";
-}
+	function goMenuTab(tab){
+		if ( tab != '' ){
+			document.${formName}.action = "$EkptgUtil.getTabID($!nTab,$myrole)?_portal_module=" + "$!nModul";
+		    document.${formName}.submit();
+		
+		}
+		document.${formName}.namamodul.value = "";
+		document.${formName}.namatab.value = "";
+	}
 
 	function goTo(location){
 		document.${formName}.namamodul.value = "";
@@ -489,139 +490,136 @@ document.${formName}.namatab.value = "";
 			document.${formName}.submit();
         
 		}else if(location=='daftarAduan'){
-	
-		document.${formName}.action = "$EkptgUtil.getTabID("Menu",online)?_portal_module=ekptg.view.online.FrmAduanPublic&fromDashboard=Y";
-		document.${formName}.submit();
-}
-else if(location=='senaraiAduan'){
-	
-		document.${formName}.action = "$EkptgUtil.getTabID("Menu",online)?_portal_module=ekptg.view.online.FrmAduanPublic&fromDashboard=";
-		document.${formName}.submit();
-}
-else if(location=='PPKSEK17'){
-        document.${formName}.action = "?myrole=ppk-online-user";
-        document.${formName}.namatab.value = "Pusaka Kecil";
-        document.${formName}.namamodul.value = "ekptg.view.ppk.FrmPrmhnnBorangPOnline"; 
-        document.${formName}.submit();
-}
-else if(location=='PPKSTATUS'){
-        document.${formName}.action = "?myrole=ppk-online-user";
-        document.${formName}.namatab.value = "Pusaka Kecil";
-        document.${formName}.namamodul.value = "ekptg.view.ppk.FrmPrmhnnStatusPengunaOnline";
-        document.${formName}.submit();
-}
+			document.${formName}.action = "$EkptgUtil.getTabID("Menu",online)?_portal_module=ekptg.view.online.FrmAduanPublic&fromDashboard=Y";
+			document.${formName}.submit();
+		
+		}else if(location=='senaraiAduan'){
+			document.${formName}.action = "$EkptgUtil.getTabID("Menu",online)?_portal_module=ekptg.view.online.FrmAduanPublic&fromDashboard=";
+			document.${formName}.submit();
 
-else if(location=='DERAFPPK'){
-        document.${formName}.action = "?myrole=ppk-online-user";
-        document.${formName}.namatab.value = "Pusaka Kecil";
-        document.${formName}.namamodul.value = "ekptg.view.ppk.FrmDraffPermohonanOnlinePPK";
-        document.${formName}.submit();
-}
-else if(location=='PPKBANTAHAN'){
-    document.${formName}.action = "?myrole=ppk-online-user";
-    document.${formName}.namatab.value = "Pusaka Kecil";
-    document.${formName}.namamodul.value = "ekptg.view.ppk.FrmPrmhnnBantahanOnline";
-    document.${formName}.submit();
-}
-else if(location=='SENARAI'){
-    document.${formName}.action = "?myrole=ppk-online-user";
-    document.${formName}.namatab.value = "Pusaka Kecil";
-    document.${formName}.namamodul.value = "ekptg.view.online.CarianNotisPerbicaraan";
-    document.${formName}.submit();
-}
-else if(location=='PENGGANTI'){
-    document.${formName}.action = "?myrole=ppk-online-user";
-    document.${formName}.namatab.value = "Pusaka Kecil";
-    document.${formName}.namamodul.value = "ekptg.view.online.FrmTukarPemohon";
-    document.${formName}.submit();
-}
-else if(location=='PPT'){
-        document.${formName}.action = "?myrole=ppt-online-user";
-        document.${formName}.namatab.value = "Pengambilan Tanah";
-        document.${formName}.namamodul.value = "ekptg.view.ppt.FrmPampasanOnline";
-        document.${formName}.submit();
-}
-else if(location=='PPTSB'){
-    document.${formName}.action = "?myrole=ppt-online-user";
-    document.${formName}.namatab.value = "Pengambilan Tanah";
-    document.${formName}.namamodul.value = "ekptg.view.ppt.FrmStatusBicaraOnline";
-    document.${formName}.submit();
-}
-else if(location=='PermohonanSewa'){
-    document.${formName}.action = "?myrole=php-online-user";
-    document.${formName}.namatab.value = "Penguatkuasaan dan Hasil Persekutuan";
-    document.${formName}.namamodul.value = "ekptg.view.php2.online.FrmPYWOnlineSenaraiFailView";
-    document.${formName}.submit();
-}
-else if(location=='PembayaranSewa'){
-    document.${formName}.action = "?myrole=php-online-user";
-    document.${formName}.namatab.value = "Penguatkuasaan dan Hasil Persekutuan";
-    document.${formName}.namamodul.value = "ekptg.view.php2.online.FrmStatusPembayaranSewa";
-    document.${formName}.submit();
-}
-else if(location=='PHPAPB'){
-        document.${formName}.action = "?myrole=php-online-user";
-        document.${formName}.namatab.value = "Penguatkuasaan dan Hasil Persekutuan";
-        document.${formName}.namamodul.value = "ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView";
-        document.${formName}.submit();
-}
-else if(location=='ADUAN'){
-        document.${formName}.action = "?myrole=online";
-        document.${formName}.namatab.value = "Menu";
-        document.${formName}.namamodul.value = "ekptg.view.online.aduan.ComplaintSenderModule";
-        document.${formName}.submit();
-}
-else if(location=='STATUSADUAN'){
-        document.${formName}.action = "?myrole=online";
-        document.${formName}.namatab.value = "Menu";
-        document.${formName}.namamodul.value = "ekptg.view.online.aduan.ComplaintStatusModule";
-        document.${formName}.submit();
-}
-else if(location=='PENERIMAANADUAN'){
-        document.${formName}.action = "?myrole=online";
-        document.${formName}.namatab.value = "Menu";
-        document.${formName}.namamodul.value = "ekptg.view.online.aduan.ComplaintStatusModule";
-        document.${formName}.submit();
-}
-else if(location=='FPX'){
-        document.${formName}.action = "?myrole=online";
-        document.${formName}.namatab.value = "Menu";
-        document.${formName}.namamodul.value = "ekptg.fpx.FrmFPXView";
-        document.${formName}.submit();
-}
-else if(location=='DokumenPusaka'){
-        document.${formName}.action = "?myrole=online";
-        document.${formName}.namatab.value = "Menu";
-        document.${formName}.namamodul.value = "ekptg.fpx.FrmFPXView";
-        document.${formName}.submit();
-}
-else if(location=='MYINFO'){
-        document.${formName}.action = "?myrole=online";
-        document.${formName}.namatab.value = "Menu";
-        document.${formName}.namamodul.value = "ekptg.view.admin.UserProfileInternal";
-        document.${formName}.submit();
-}
-else if(location=='INBOX'){
-        document.${formName}.action = "?myrole=online";
-        document.${formName}.namatab.value = "Menu";
-        document.${formName}.namamodul.value = "ekptg.view.utils.FrmInboxUsersOnline";
-        document.${formName}.submit();
-}
-else if(location=='HELP'){
-        document.${formName}.action = "?myrole=online";
-        document.${formName}.namatab.value = "Panduan";
-        document.${formName}.namamodul.value = "ekptg.view.FrmManualPengguna";
-        document.${formName}.submit();
-}
+		}else if(location=='PPKSEK17'){
+	        document.${formName}.action = "?myrole=ppk-online-user";
+	        document.${formName}.namatab.value = "Pusaka Kecil";
+	        document.${formName}.namamodul.value = "ekptg.view.ppk.FrmPrmhnnBorangPOnline"; 
+	        document.${formName}.submit();
+	        
+		}else if(location=='PPKSTATUS'){
+	        document.${formName}.action = "?myrole=ppk-online-user";
+	        document.${formName}.namatab.value = "Pusaka Kecil";
+	        document.${formName}.namamodul.value = "ekptg.view.ppk.FrmPrmhnnStatusPengunaOnline";
+	        document.${formName}.submit();
+		
+		}else if(location=='DERAFPPK'){
+	        document.${formName}.action = "?myrole=ppk-online-user";
+	        document.${formName}.namatab.value = "Pusaka Kecil";
+	        document.${formName}.namamodul.value = "ekptg.view.ppk.FrmDraffPermohonanOnlinePPK";
+	        document.${formName}.submit();
+	
+		}else if(location=='PPKBANTAHAN'){
+		    document.${formName}.action = "?myrole=ppk-online-user";
+		    document.${formName}.namatab.value = "Pusaka Kecil";
+		    document.${formName}.namamodul.value = "ekptg.view.ppk.FrmPrmhnnBantahanOnline";
+		    document.${formName}.submit();
+	
+		}else if(location=='SENARAI'){
+		    document.${formName}.action = "?myrole=ppk-online-user";
+		    document.${formName}.namatab.value = "Pusaka Kecil";
+		    document.${formName}.namamodul.value = "ekptg.view.online.CarianNotisPerbicaraan";
+		    document.${formName}.submit();
 
-else if(location=='HTP'){
-    //document.${formName}.action = "?myrole=online";
-    document.${formName}.action = "?myrole=htp-online-user";
-	document.${formName}.namatab.value = "Harta Tanah Persekutuan";
-    document.${formName}.namamodul.value = "ekptg.view.htp.online.FrmPajakanOnlineSenaraiFailView";
-    document.${formName}.submit();
-}
-}
+		}else if(location=='PENGGANTI'){
+		    document.${formName}.action = "?myrole=ppk-online-user";
+		    document.${formName}.namatab.value = "Pusaka Kecil";
+		    document.${formName}.namamodul.value = "ekptg.view.online.FrmTukarPemohon";
+		    document.${formName}.submit();
+		
+		}else if(location=='PPT'){
+	        document.${formName}.action = "?myrole=ppt-online-user";
+	        document.${formName}.namatab.value = "Pengambilan Tanah";
+	        document.${formName}.namamodul.value = "ekptg.view.ppt.FrmPampasanOnline";
+	        document.${formName}.submit();
+
+		}else if(location=='PPTSB'){
+		    document.${formName}.action = "?myrole=ppt-online-user";
+		    document.${formName}.namatab.value = "Pengambilan Tanah";
+		    document.${formName}.namamodul.value = "ekptg.view.ppt.FrmStatusBicaraOnline";
+		    document.${formName}.submit();
+		
+		}else if(location=='PermohonanSewa'){
+		    document.${formName}.action = "?myrole=php-online-user";
+		    document.${formName}.namatab.value = "Penguatkuasaan dan Hasil Persekutuan";
+		    document.${formName}.namamodul.value = "ekptg.view.php2.online.FrmPYWOnlineSenaraiFailView";
+		    document.${formName}.submit();
+		
+		}else if(location=='PembayaranSewa'){
+		    document.${formName}.action = "?myrole=php-online-user";
+		    document.${formName}.namatab.value = "Penguatkuasaan dan Hasil Persekutuan";
+		    document.${formName}.namamodul.value = "ekptg.view.php2.online.FrmStatusPembayaranSewa";
+		    document.${formName}.submit();
+		
+		}else if(location=='PHPAPB'){
+			document.${formName}.action = "?myrole=php-online-user";	
+			document.${formName}.namatab.value = "Penguatkuasaan dan Hasil Persekutuan";
+		    document.${formName}.namamodul.value = "ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView";
+		    document.${formName}.submit();
+		
+		}else if(location=='ADUAN'){
+        	document.${formName}.action = "?myrole=online";
+        	document.${formName}.namatab.value = "Menu";
+        	document.${formName}.namamodul.value = "ekptg.view.online.aduan.ComplaintSenderModule";
+        	document.${formName}.submit();
+
+		}else if(location=='STATUSADUAN'){
+	        document.${formName}.action = "?myrole=online";
+	        document.${formName}.namatab.value = "Menu";
+	        document.${formName}.namamodul.value = "ekptg.view.online.aduan.ComplaintStatusModule";
+	        document.${formName}.submit();
+
+		}else if(location=='PENERIMAANADUAN'){
+	        document.${formName}.action = "?myrole=online";
+	        document.${formName}.namatab.value = "Menu";
+	        document.${formName}.namamodul.value = "ekptg.view.online.aduan.ComplaintStatusModule";
+	        document.${formName}.submit();
+
+		}else if(location=='FPX'){
+	        document.${formName}.action = "?myrole=online";
+	        document.${formName}.namatab.value = "Menu";
+	        document.${formName}.namamodul.value = "ekptg.fpx.FrmFPXView";
+	        document.${formName}.submit();
+
+		}else if(location=='DokumenPusaka'){
+	        document.${formName}.action = "?myrole=online";
+	        document.${formName}.namatab.value = "Menu";
+	        document.${formName}.namamodul.value = "ekptg.fpx.FrmFPXView";
+	        document.${formName}.submit();
+		
+		}else if(location=='MYINFO'){
+	        document.${formName}.action = "?myrole=online";
+	        document.${formName}.namatab.value = "Menu";
+	        document.${formName}.namamodul.value = "ekptg.view.admin.UserProfileInternal";
+	        document.${formName}.submit();
+
+		}else if(location=='INBOX'){
+	        document.${formName}.action = "?myrole=online";
+	        document.${formName}.namatab.value = "Menu";
+	        document.${formName}.namamodul.value = "ekptg.view.utils.FrmInboxUsersOnline";
+	        document.${formName}.submit();
+
+		}else if(location=='HELP'){
+	        document.${formName}.action = "?myrole=online";
+	        document.${formName}.namatab.value = "Panduan";
+	        document.${formName}.namamodul.value = "ekptg.view.FrmManualPengguna";
+	        document.${formName}.submit();
+
+		}else if(location=='HTP'){
+		    //document.${formName}.action = "?myrole=online";
+		    document.${formName}.action = "?myrole=htp-online-user";
+			document.${formName}.namatab.value = "Harta Tanah Persekutuan";
+		    document.${formName}.namamodul.value = "ekptg.view.htp.online.FrmPajakanOnlineSenaraiFailView";
+		    document.${formName}.submit();
+		}
+		
+	}
 
 function statusPermohonan(){
 document.${formName}.action = "?myrole=online";

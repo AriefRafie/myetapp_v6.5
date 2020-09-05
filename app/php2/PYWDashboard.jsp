@@ -200,7 +200,7 @@ a.nav:visited {
                                   <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE"><blink>$!check_notifikasi_tugasan_crb</blink></font></b> </label>
                                   &nbsp;
                                 #end
-                                Penguatkusaan
+                                Penguatkuasaan
                               </li>
                               </font> </a> </td>
                           </tr>
