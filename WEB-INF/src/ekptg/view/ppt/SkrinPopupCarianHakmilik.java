@@ -441,7 +441,7 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 	 * private void displayFail(String NO_FAIL,String NAMA_PROJEK,String
 	 * ID_NEGERI,String ID_DAERAH,Db db) throws Exception{ List<Hashtable> list
 	 * = null; list = getFail(NO_FAIL,NAMA_PROJEK,ID_NEGERI,ID_DAERAH,db);
-	 * context.put("SenaraiFail", list); setupPage(session,action,list); }
+	 * context.put("", list); setupPage(session,action,list); }
 	 */
 
 	private void displayHakmilik(String id_permohonan, String flag_skrin,
@@ -642,7 +642,7 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 					+
 					// "SELECT *    FROM ( "+
 					" SELECT  ROW_NUMBER () OVER (ORDER BY MK.NAMA_MUKIM ASC, LPAD (M.NO_LOT, 20) ASC, LPAD (M.NO_PT, 20) ASC, LPAD (M.NO_SUBJAKET, 20) ASC) AS RN, UI.ID_JAWATAN, "
-					+ " M.FLAG_SEGERA_SEBAHAGIAN, m.flag_pembatalan_keseluruhan,m.flag_penarikan_keseluruhan,P.NO_RUJUKAN_PTG, P.ID_STATUS, F.NO_FAIL, M.CATATAN, P.ID_PERMOHONAN, LS.KETERANGAN AS UNIT1, LT.KETERANGAN AS UNIT2, M.ID_HAKMILIK, M.ID_NEGERI," 
+					+ " M.FLAG_SEGERA_SEBAHAGIAN, m.flag_pembatalan_keseluruhan,m.flag_penarikan_keseluruhan,m.tarikh_borangk, P.NO_RUJUKAN_PTG, P.ID_STATUS, F.NO_FAIL, M.CATATAN, P.ID_PERMOHONAN, LS.KETERANGAN AS UNIT1, LT.KETERANGAN AS UNIT2, M.ID_HAKMILIK, M.ID_NEGERI," 
 					+ " M.TARIKH_MASUK AS TARIKH_MASUK,  ";
 
 			if (!idpegawai.equals("") && idpegawai != null) {
@@ -991,6 +991,7 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 
 			stmt.setFetchSize(10);
 			ResultSet rs = stmt.executeQuery(sql);
+			myLogger.info("getHakmilik======"+sql);
 			int bil = 0;
 			while (rs.next()) {
 				bil = bil + 1;
@@ -1283,6 +1284,8 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 								.getString("KETERANGAN"));
 				h.put("flag_online", rs.getString("FLAG_ONLINE") == null ? ""
 						: rs.getString("FLAG_ONLINE"));
+				h.put("tarikh_borangk", rs.getString("tarikh_borangk") == null ? ""
+						: rs.getString("tarikh_borangk"));
 
 				list_hakmilik.addElement(h);
 			}

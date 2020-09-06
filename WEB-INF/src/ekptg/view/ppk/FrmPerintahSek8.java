@@ -1986,7 +1986,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		logic.setListSemak(idPermohonan, userId);
 		list = logic.getListSemak();
 		// get data keputusan permohonan
-		keputusanPermohonan = logic.getKeputusanPermohonan(idPermohonan);
+		keputusanPermohonan = modelNotis.getKeputusanPermohonan(idPermohonan);
 		String idkp = "";
 		String idperbicaraan = "";
 		String idpsk = "";
@@ -2011,12 +2011,12 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		if (dataPerintah.size() != 0) {
 			Hashtable idn = (Hashtable) dataPerintah.get(0);
 			idpbrn = idn.get("id_perbicaraan").toString();
-			idpsk = idn.get("id_unitpsk").toString();
-			idNeg = idn.get("id_negeribicara").toString();
-			currentBil = idn.get("bil_bicara").toString();
-			idpejabat = idn.get("id_pejabat").toString();
-			tempatBicara = idn.get("tempat_bicara").toString();
-			idjenispejabat = idn.get("id_jenispejabat").toString();
+			//idpsk = idn.get("id_unitpsk").toString();
+			//idNeg = idn.get("id_negeribicara").toString();
+			//currentBil = idn.get("bil_bicara").toString();
+			//idpejabat = idn.get("id_pejabat").toString();
+			//tempatBicara = idn.get("tempat_bicara").toString();
+			//idjenispejabat = idn.get("id_jenispejabat").toString();
 			nama_peg_pengendali = idn.get("peg_pengendali").toString();
 						
 		

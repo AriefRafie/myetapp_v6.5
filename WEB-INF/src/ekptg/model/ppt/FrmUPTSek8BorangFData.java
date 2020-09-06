@@ -378,6 +378,8 @@ public class FrmUPTSek8BorangFData {
 	    		r.add("tarikh_masuk",r.unquote("sysdate"));
 	    		r.add("id_masuk",id_user);	    		
 	    		sql = r.getSQLInsert("Tblpptborange",db);
+	    		
+	    		myLogger.info("sql borangE : "+sql);
 	    		stmt.executeUpdate(sql);
 	    	
 	    }//close try 
@@ -598,7 +600,10 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 	    		sql += "  )AS TARIKH_BORANGE ";
 
 //	    		PPT-06	Jenis Waktu
-	    		sql += " ,(SELECT DISTINCT A1.JENIS_WAKTU AS JW FROM	TBLPPTHAKMILIK M1, TBLPPTBORANGEHAKMILIK A1, TBLPPTBORANGE B1 ";
+	    		sql += " ,(SELECT CASE WHEN A1.JENIS_WAKTU = '1' THEN 'PAGI' ";  
+	    		sql += " WHEN A1.JENIS_WAKTU = '2' THEN 'TENGAHARI' ";
+	    		sql += " ELSE 'MALAM' " ; 
+	    		sql += " END AS JW FROM	TBLPPTHAKMILIK M1, TBLPPTBORANGEHAKMILIK A1, TBLPPTBORANGE B1 ";
 	    		sql += " WHERE A1.ID_HAKMILIK = M1.ID_HAKMILIK ";
 	    		sql += " AND A1.ID_BORANGE = B1.ID_BORANGE ";
 	    		sql += " AND M1.ID_HAKMILIK = M.ID_HAKMILIK ";
@@ -655,8 +660,8 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 	    			h.put("seksyen", rs.getString("SEKSYEN")== null?"":rs.getString("SEKSYEN"));
 	    			h.put("no_subjaket", rs.getString("NO_SUBJAKET")== null?"":rs.getString("NO_SUBJAKET"));
 	    			h.put("TARIKH_BORANGE", rs.getString("TARIKH_BORANGE")== null?"":rs.getString("TARIKH_BORANGE"));
-//	    			h.put("MASA_SIASATAN", rs.getString("MASA_SIASATAN")== null?"":rs.getString("txtMasaSiasatan")); // PPT-06
-//	    			h.put("JENIS_WAKTU", rs.getString("JENIS_WAKTU")== null?"":rs.getString("socJenisWaktu")); // PPT-06
+	    			h.put("MASA_SIASATAN", rs.getString("MASA_SIASATAN")== null?"":rs.getString("MASA_SIASATAN")); // PPT-06
+	    			h.put("JENIS_WAKTU", rs.getString("JENIS_WAKTU")== null?"":rs.getString("JENIS_WAKTU")); // PPT-06
 	    			listHakmilikBorangEInBulk.addElement(h);
 	    			bil++;
 	    	}			    
@@ -672,7 +677,7 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 		
 //	    Db db = null;
 	    String sql = "";
-	    myLogger.info("simpanBorangEInBulk ID_BorangE " +id_borange);
+	    myLogger.info("simpanBorangEInBulk DATA " +data);
 	    
 	    try{
 	    		//db = new Db();
@@ -682,23 +687,23 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 	    		Statement stmt = db.getStatement();
 	    		
 	    		String id_user = (String)data.get("id_user");
-	    		String txtMasaSiasatan = (String)data.get("txtMasaSiasatan"); // PPT-06
-	    		String socJenisWaktu = (String)data.get("socJenisWaktu"); // PPT-06
-	    		
-	    		myLogger.info("simpanBorangEInBulk Masa_Siasatan [INSERT Value] = " +txtMasaSiasatan);
-	    		myLogger.info("simpanBorangEInBulk Jenis Waktu [INSERT Value] = " +socJenisWaktu);
+	    		//String id_borange = (String)data.get("id_borange");
+	    	
+	    		String txtMasaSiasatan = (String)data.get("txtMasaSiasatan");
+	    		String socJenisWaktu = (String)data.get("socJenisWaktu");
 	    		
 	    		SQLRenderer r = new SQLRenderer();
 	    		r.add("id_borangehakmilik", id_borangehakmilik);
 	    		r.add("id_borange", id_borange);
 	    		r.add("id_hakmilik", idHakmilik);
+	    		r.add("masa_siasatan", txtMasaSiasatan);
+			 	r.add("jenis_waktu",socJenisWaktu);    
 	    		r.add("tarikh_masuk",r.unquote("sysdate"));
 	    		r.add("id_masuk",id_user);
-	    		r.add("masa_siasatan",txtMasaSiasatan); // PPT-06 
-	    		r.add("jenis_waktu",socJenisWaktu); // PPT-06
+	    	
 	    		sql = r.getSQLInsert("tblpptborangehakmilik",db);
 	    		stmt.executeUpdate(sql);
-	    		myLogger.info("SQL simpanBorangEInBulk tblpptborangehakmilik = " +sql);
+	    		myLogger.info("SQL simpanBorangEInBulk tblpptborangehakmilik BARU = " +sql);
 	    }//close try 
 	    finally {
 	   //   if (db != null) db.close();
@@ -786,8 +791,7 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 	
 	@SuppressWarnings("unchecked")
 	public static void setDataBorangEInBulk(String id_borange,String id_hakmilik)throws Exception {
-	    
-		myLogger.info("setDataBorangEInBulk---nakViewBalik---");
+	   
 		
 		dataBorangEInBulk = new Vector();
 		
@@ -799,7 +803,7 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 	    		db = new Db();
 	    		Statement stmt = db.getStatement();
 	      
-	    		sql =  " SELECT DISTINCT A.ID_HAKMILIK, A.MASA_SIASATAN, A.JENIS_WAKTU, B.ID_BORANGE, B.TARIKH_BORANGF, B.TARIKH_BORANGE, B.TARIKH_SIASATAN,  "; // B.MASA_SIASATAN, B.JENIS_WAKTU,
+	    		sql =  " SELECT DISTINCT A.ID_HAKMILIK, A.MASA_SIASATAN, CASE WHEN A.JENIS_WAKTU = '1' THEN 'PAGI' WHEN A.JENIS_WAKTU = '2' THEN 'TENGAHARI' ELSE 'MALAM' END AS JENIS_WAKTU, B.ID_BORANGE, B.TARIKH_BORANGF, B.TARIKH_BORANGE, B.TARIKH_SIASATAN,  "; // B.MASA_SIASATAN, B.JENIS_WAKTU,
 				sql += " B.ALAMAT1, B.ALAMAT2, B.ALAMAT3, B.POSKOD, B.ID_BANDAR, B.ID_NEGERI, B.TARIKH_CETAK, B.TARIKH_AKHIR_TAMPAL ";
 	    		sql += " FROM TBLPPTBORANGEHAKMILIK A, TBLPPTBORANGE B, TBLPPTHAKMILIK C ";
 	    		sql += " WHERE A.ID_BORANGE = B.ID_BORANGE ";
@@ -824,8 +828,8 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 					h.put("tarikh_borangf", rs.getDate("TARIKH_BORANGF")==null?"":Format.format(rs.getDate("TARIKH_BORANGF")));
 					h.put("tarikh_borange", rs.getDate("TARIKH_BORANGE")==null?"":Format.format(rs.getDate("TARIKH_BORANGE")));
 					h.put("tarikh_siasatan", rs.getDate("TARIKH_SIASATAN")==null?"":Format.format(rs.getDate("TARIKH_SIASATAN")));
-					h.put("masa_siasatan", rs.getString("MASA_SIASATAN")==null?"":rs.getString("MASA_SIASATAN"));
-					h.put("jenis_waktu", rs.getString("JENIS_WAKTU")==null?"":rs.getString("JENIS_WAKTU"));			
+					h.put("MASA_SIASATAN", rs.getString("MASA_SIASATAN")==null?"":rs.getString("MASA_SIASATAN"));
+					h.put("JENIS_WAKTU", rs.getString("JENIS_WAKTU")==null?"":rs.getString("JENIS_WAKTU"));			
 					h.put("alamat1", rs.getString("ALAMAT1")==null?"":rs.getString("ALAMAT1"));	
 					h.put("alamat2", rs.getString("ALAMAT2")==null?"":rs.getString("ALAMAT2"));	
 					h.put("alamat3", rs.getString("ALAMAT3")==null?"":rs.getString("ALAMAT3"));	
@@ -833,6 +837,7 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 					h.put("id_hakmilik", rs.getString("ID_HAKMILIK")==null?"":rs.getString("ID_HAKMILIK"));	
 					h.put("id_bandar", rs.getString("ID_BANDAR")==null?"":rs.getString("ID_BANDAR"));	
 					h.put("id_negeri", rs.getString("ID_NEGERI")==null?"":rs.getString("ID_NEGERI"));
+					
 	    			dataBorangEInBulk.addElement(h);    		
 	    	}			    
 	     

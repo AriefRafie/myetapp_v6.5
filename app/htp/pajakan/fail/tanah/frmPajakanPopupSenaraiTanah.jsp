@@ -130,13 +130,14 @@ padding:0 0.25em;
     	<fieldset>
 		<legend><b>SENARAI TANAH</b></legend>
         #parse("app/utils/record_paging_popup.jsp")
-        
-        <table align="center" width="100%"> 
+
+        <table align="center" width="100%">
             <tr class="table_header">
               <td scope="row" width="5%" align="center"><strong>Bil.</strong></td>
               <td width="15%"><strong>Negeri</strong></td>
               <td width="15%"><strong>Daerah</strong></td>
               <td width="15%"><strong>Bandar/Pekan/Mukim</strong></td>
+              <td width="15%"><strong>Seksyen</strong></td>
               <td width="15%"><strong>No. Hakmilik</strong></td>
               <td width="15%"><strong>No. Warta</strong></td>
               <td width="15%"><strong>No.PT/ Lot/</strong></td>
@@ -149,7 +150,7 @@ padding:0 0.25em;
                 #set( $row = "row1" )
             #elseif (($list.bil % 2) != 0)
                 #set( $row = "row1" )
-            #else 
+            #else
                 #set( $row = "row2" )
             #end
           <tr>
@@ -158,6 +159,7 @@ padding:0 0.25em;
              <td class="$row"><a href="javascript:papar('$list.idHakmilik')" class="style1">$list.negeri</a></td>
              <td class="$row">$list.daerah</td>
              <td class="$row">$list.mukim</td>
+             <td class="$row">Sek 01</td>
             <td class="$row">$list.noHakmilik</td>
             <td class="$row">$list.noWarta</td>
          	<td class="$row">$list.lot</td>
@@ -204,7 +206,7 @@ padding:0 0.25em;
 			document.${formName}.txtNoLot.value = "";
 			document.${formName}.txtNoWarta.value = "";
 			document.${formName}.tarikhWarta.value = "";
-		} else if (document.${formName}.socJenisTanah.value == '1'){		
+		} else if (document.${formName}.socJenisTanah.value == '1'){
 			document.${formName}.socJenisHakmilik.value = "";
 			document.${formName}.txtNoHakmilik.value = "";
 			document.${formName}.socJenisLot.value = "";
@@ -223,7 +225,7 @@ padding:0 0.25em;
 		document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmPajakanPopupSenaraiTanahView";
 		document.${formName}.submit();
 	}
-	function papar(idHakmilik) {	
+	function papar(idHakmilik) {
 		document.${formName}.idHakmilik.value = idHakmilik;
 		document.${formName}.mode.value = "baru";
 		document.${formName}.actionPopup.value = "papar";

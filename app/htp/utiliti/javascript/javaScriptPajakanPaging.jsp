@@ -2,16 +2,16 @@
 	//javaScriptPajakanPaging
 	//Pagging
 	function langkah1(){
-		// 2017 
+		// 2017
 		//document.${formName}.actionPajakan.value = "papar";
 		document.${formName}.actionPajakan.value = "";
 		//document.${formName}.action = "?_portal_module=ekptg.view.htp.pajakan.FrmPajakanSenaraiFailView";
 		document.${formName}.mode.value = "view";
 		//document.${formName}.submit();
 		doAjaxCall${formName}("");
-		
+
 	}
-	
+
 	function langkah2(permohonan,idFail){
 		url = "../servlet/ekptg.view.htp.FrmPajakanServlet?command=papar&idFail="+idFail;
 		actionName = "setSessionIdFail";
@@ -31,15 +31,57 @@
 		target = "setSessionIdFail_result";
 		doAjaxUpdater(document.${formName}, url, target, actionName);
 		//document.${formName}.action = "?_portal_module=ekptg.view.htp.pajakan.FrmPajakanMJMView&idPermohonan="+permohonan+"&actionPajakan=papar";
+		document.${formName}.actionPajakan.value = "paparpemohon";
+		document.${formName}.mode.value = "view";
+		document.${formName}.selectedTab.value = 0;
+		//document.${formName}.submit();
+		doAjaxCall${formName}("");
+
+	}
+
+	function langkah4(permohonan,idFail){
+		url = "../servlet/ekptg.view.htp.FrmPajakanServlet?command=papar&idFail="+idFail;
+		actionName = "setSessionIdFail";
+		target = "setSessionIdFail_result";
+		doAjaxUpdater(document.${formName}, url, target, actionName);
+		//document.${formName}.action = "?_portal_module=ekptg.view.htp.pajakan.FrmPajakanMJMView&idPermohonan="+permohonan+"&actionPajakan=papar";
+		document.${formName}.actionPajakan.value = "paparulasan";
+		document.${formName}.mode.value = "view";
+		document.${formName}.selectedTab.value = 0;
+		//document.${formName}.submit();
+		doAjaxCall${formName}("");
+
+	}
+
+	function langkah5(permohonan,idFail){
+		url = "../servlet/ekptg.view.htp.FrmPajakanServlet?command=papar&idFail="+idFail;
+		actionName = "setSessionIdFail";
+		target = "setSessionIdFail_result";
+		doAjaxUpdater(document.${formName}, url, target, actionName);
+		//document.${formName}.action = "?_portal_module=ekptg.view.htp.pajakan.FrmPajakanMJMView&idPermohonan="+permohonan+"&actionPajakan=papar";
 		document.${formName}.actionPajakan.value = "paparmjm";
 		document.${formName}.mode.value = "view";
 		document.${formName}.selectedTab.value = 0;
 		//document.${formName}.submit();
 		doAjaxCall${formName}("");
-		
+
 	}
 
-	function langkah4(permohonan,idFail){
+	function langkah6(permohonan,idFail){
+		url = "../servlet/ekptg.view.htp.FrmPajakanServlet?command=papar&idFail="+idFail;
+		actionName = "setSessionIdFail";
+		target = "setSessionIdFail_result";
+		doAjaxUpdater(document.${formName}, url, target, actionName);
+		//document.${formName}.action = "?_portal_module=ekptg.view.htp.pajakan.FrmPajakanMJMView&idPermohonan="+permohonan+"&actionPajakan=papar";
+		document.${formName}.actionPajakan.value = "paparderaf";
+		document.${formName}.mode.value = "view";
+		document.${formName}.selectedTab.value = 0;
+		//document.${formName}.submit();
+		doAjaxCall${formName}("");
+
+	}
+
+	function langkah7(permohonan,idFail){
 		url = "../servlet/ekptg.view.htp.FrmPajakanServlet?command=papar&idFail="+idFail;
 		actionName = "setSessionIdFail";
 		target = "setSessionIdFail_result";
@@ -56,7 +98,24 @@
 
 	}
 
-	function langkah5(permohonan,idFail){
+	function langkah8(permohonan,idFail){
+		url = "../servlet/ekptg.view.htp.FrmPajakanServlet?command=papar&idFail="+idFail;
+		actionName = "setSessionIdFail";
+		target = "setSessionIdFail_result";
+		doAjaxUpdater(document.${formName}, url, target, actionName);
+		//document.${formName}.action = "?_portal_module=ekptg.view.htp.pajakan.FrmPajakanPerjanjianView&idPermohonan="+permohonan+"&actionPajakan=papar";
+		document.${formName}.actionPajakan.value = "paparpajakan";
+		document.${formName}.mode.value = "view";
+		//
+		document.${formName}.selectedTab.value = 0;
+		//document.${formName}.submit();
+		//
+		doAjaxCall${formName}("");
+		//doAjaxCall${formName}("","selectedTab=0");
+
+	}
+
+	function langkah9(permohonan,idFail){
 		url = "../servlet/ekptg.view.htp.FrmPajakanServlet?command=papar&idFail="+idFail;
 		actionName = "setSessionIdFail";
 		target = "setSessionIdFail_result";
@@ -68,7 +127,7 @@
 		doAjaxCall${formName}("");
 
 	}
-	function langkah6(permohonan,idFail){
+	function langkah10(permohonan,idFail){
 		//alert('langkah 6');
 		url = "../servlet/ekptg.view.htp.FrmPajakanServlet?command=papar&idFail="+idFail;
 		actionName = "setSessionIdFail";
@@ -81,7 +140,7 @@
 		doAjaxCall${formName}("");
 
 	}
-	function langkah7(permohonan,idFail){
+	function langkah11(permohonan,idFail){
 		//alert('langkah 6');
 		url = "../servlet/ekptg.view.htp.FrmPajakanServlet?command=papar&idFail="+idFail;
 		actionName = "setSessionIdFail";
@@ -94,5 +153,5 @@
 		//document.${formName}.submit();
 		doAjaxCall${formName}("");
 
-	}	
+	}
 </script>

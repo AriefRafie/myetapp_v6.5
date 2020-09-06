@@ -144,13 +144,14 @@
 
 <div id="display_ada_harta"></div>
 <script>
-	window.onload = function (e){
-		document.f1.command.value="Simpan";
-		document.f1.submit();		
+//  tunggu akta baru based on UAT pada 2/9/2020
+// 	window.onload = function (e){
+// 		document.f1.command.value="Simpan";
+// 		document.f1.submit();		
 
-	}
+// 	}
 	
-	//parent.document.getElementById("display_ada_harta").innerHTML="<div class=\"warning_online_ppk\"><b><blink>*</blink> Sila pastikan anda mempunyai harta tak alih. Sekiranya tiada, permohonan tidak dapat diteruskan.<br><input name='cmdSimpan' type='button' id='cmdSimpan'  value='Ada Harta Tak Alih' onClick='DoTheCheck()'/><input name='cmdBatal' type='button'  id='cmdBatal' value='Tiada Harta Tak Alih (Batal)' onClick='hartaTiada()'/></b></div>";
+	parent.document.getElementById("display_ada_harta").innerHTML="<div class=\"warning_online_ppk\"><b><blink>*</blink> Sila pastikan anda mempunyai harta tak alih. Sekiranya tiada, permohonan tidak dapat diteruskan.<br><input name='cmdSimpan' type='button' id='cmdSimpan'  value='Ada Harta Tak Alih' onClick='DoTheCheck()'/><input name='cmdBatal' type='button'  id='cmdBatal' value='Tiada Harta Tak Alih (Batal)' onClick='hartaTiada()'/></b></div>";
 </script>
 
 	

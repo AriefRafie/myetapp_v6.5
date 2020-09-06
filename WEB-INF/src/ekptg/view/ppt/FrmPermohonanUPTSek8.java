@@ -2248,7 +2248,7 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
     	//pengambilan segera
     	h.put("socPSegera", getParam("socPSegera"));
     	
-//    	PPT-03 Strata
+//    	// PPT-03 Strata
     	h.put("txtNoBangunan", getParam("txtNoBangunan"));
     	h.put("txtNoTingkat", getParam("txtNoTingkat"));
     	h.put("txtNoPetak", getParam("txtNoPetak"));
