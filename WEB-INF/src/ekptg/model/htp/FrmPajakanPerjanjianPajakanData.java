@@ -19,7 +19,7 @@ import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
 
 public class FrmPajakanPerjanjianPajakanData {
-		
+
 	private static Logger myLog = Logger.getLogger(FrmPajakanPerjanjianPajakanData.class);
 
 	private Vector<Hashtable <String,String>> senaraiFail = null;
@@ -34,7 +34,7 @@ public class FrmPajakanPerjanjianPajakanData {
 	private Connection conn = null;
 	private String sql = "";
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-	
+
 	public void carianFail(String noFail, String tarikhTerima) throws Exception {
 		try {
 			senaraiFail = new Vector<Hashtable <String,String>>();
@@ -85,7 +85,7 @@ public class FrmPajakanPerjanjianPajakanData {
 				db.close();
 		}
 	}
-	
+
 	public void seterusnya(String idFail, String idPermohonan, String subUrusan, HttpSession session) throws Exception {
 		String userId = session.getAttribute("_ekptg_user_id").toString();
 		try {
@@ -99,7 +99,7 @@ public class FrmPajakanPerjanjianPajakanData {
 			setIdStatus = FrmUtilData.getIdStatusByLangkah("9",subUrusan,"=");
 			Long setIdSuburusanstatus = 0L;
 			setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah("9",subUrusan,"=");
-			
+
 			//TBLPERMOHONAN
 			r.update("ID_PERMOHONAN", idPermohonan);
 			r.add("ID_STATUS", setIdStatus);
@@ -109,20 +109,20 @@ public class FrmPajakanPerjanjianPajakanData {
 
 			sql = r.getSQLUpdate("TBLPERMOHONAN");
 			stmt.executeUpdate(sql);
-			
+
 			//TBLRUJSUBURUSANSTATUSFAIL
 			r = new SQLRenderer();
 			r.update("ID_PERMOHONAN", idPermohonan);
 			r.update("AKTIF", "1");
-			
+
 			r.add("AKTIF", "0");
-			
+
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 
 			sql = r.getSQLUpdate("TBLRUJSUBURUSANSTATUSFAIL");
 			stmt.executeUpdate(sql);
-			
+
 			r = new SQLRenderer();
 			long idSuburusanstatusfail = DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");
 			r.add("ID_SUBURUSANSTATUSFAIL", idSuburusanstatusfail);
@@ -135,9 +135,9 @@ public class FrmPajakanPerjanjianPajakanData {
 				r.add("ID_SUBURUSANSTATUS", "201"); //MAKLUMAT PERMOHONAN TANAH
 			}*/
 			r.add("ID_SUBURUSANSTATUS", setIdSuburusanstatus);
-			r.add("AKTIF", "1");	
+			r.add("AKTIF", "1");
 			r.add("ID_FAIL", idFail);
-			
+
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 			r.add("ID_KEMASKINI", userId);
@@ -145,37 +145,37 @@ public class FrmPajakanPerjanjianPajakanData {
 
 			sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
 			stmt.executeUpdate(sql);
-			
+
 			conn.commit();
-			
-		} catch (SQLException ex) { 
+
+		} catch (SQLException ex) {
 	    	try {
 	    		conn.rollback();
 	    	} catch (SQLException e) {
 	    		throw new Exception("Rollback error : " + e.getMessage());
 	    	}
 	    	throw new Exception("Ralat : Masalah penyimpanan data " + ex.getMessage());
-	    	
+
 	    } finally {
 			if (db != null)
 				db.close();
 		}
 	}
 
-	public void setMaklumatMOA(String idPermohonan) throws Exception {		
+	public void setMaklumatMOA(String idPermohonan) throws Exception {
 		try{
 			db = new Db();
 			Statement stmt = db.getStatement();
 			beanMaklumatMOA = new Vector<Hashtable <String,String>>();
-			
+
 			sql = "SELECT A.ID_MOA, A.ID_PERMOHONAN, A.TARIKH_HANTAR, ";
 			sql += "A.TARIKH_TERIMA, A.NO_RUJUKAN_MOA, A.TARIKH_TANDATANGAN, ";
 			sql += "A.TARIKH_DAFTAR, A.TARIKH_BAYARAN, A.TARIKH_HANTAR_PENGARAH ";
 			sql += "FROM TBLHTPMOA A ";
 			sql += "WHERE A.ID_PERMOHONAN = " + idPermohonan;
-			
+
 			ResultSet rs = stmt.executeQuery(sql);
-			
+
 			Hashtable <String,String> h;
 			while(rs.next()){
 				h = new Hashtable <String,String>();
@@ -189,13 +189,13 @@ public class FrmPajakanPerjanjianPajakanData {
 				h.put("noPerjanjian", rs.getString("NO_RUJUKAN_MOA") == null ? "" : rs.getString("NO_RUJUKAN_MOA"));
 				h.put("tarikhHantarPengarah", rs.getDate("TARIKH_HANTAR_PENGARAH") == null ? "" : sdf.format(rs.getDate("TARIKH_HANTAR_PENGARAH")));
 
-				beanMaklumatMOA.addElement(h);		
+				beanMaklumatMOA.addElement(h);
 			}
 		} catch(Exception e){
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void updateMOA(String idPermohonan, Hashtable <String,String> hash, HttpSession session) throws Exception {
 		String userId = session.getAttribute("_ekptg_user_id").toString();
 		try {
@@ -204,10 +204,10 @@ public class FrmPajakanPerjanjianPajakanData {
 	    	conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			
+
 			//TBLHTPMOA
 			r.update("ID_PERMOHONAN", idPermohonan);
-			
+
 			if (!"".equals(hash.get("tarikhTerima"))){
 				r.add("TARIKH_TERIMA", r.unquote("to_date('" + hash.get("tarikhTerima") + "','dd/MM/yyyy')"));
 			}
@@ -225,7 +225,7 @@ public class FrmPajakanPerjanjianPajakanData {
 			}
 			if (!"".equals(hash.get("tarikhHantarPengarah"))){
 				r.add("TARIKH_HANTAR_PENGARAH", r.unquote("to_date('" + hash.get("tarikhHantarPengarah") + "','dd/MM/yyyy')"));
-			}	
+			}
 			r.add("NO_RUJUKAN_MOA", hash.get("noPerjanjian"));
 
 			r.add("ID_KEMASKINI", userId);
@@ -233,17 +233,17 @@ public class FrmPajakanPerjanjianPajakanData {
 
 			sql = r.getSQLUpdate("TBLHTPMOA");
 			stmt.executeUpdate(sql);
-			
+
 			conn.commit();
-			
-		} catch (SQLException ex) { 
+
+		} catch (SQLException ex) {
 	    	try {
 	    		conn.rollback();
 	    	} catch (SQLException e) {
 	    		throw new Exception("Rollback error : " + e.getMessage());
 	    	}
 	    	throw new Exception("Ralat : Masalah penyimpanan data " + ex.getMessage());
-	    	
+
 	    } finally {
 			if (db != null)
 				db.close();
@@ -254,7 +254,7 @@ public class FrmPajakanPerjanjianPajakanData {
 		try{
 			db = new Db();
 			Statement stmt = db.getStatement();
-			
+
 			sql = "SELECT A.FLAG_NOTIFIKASI, A.ID_BORANGPAJAKAN, A.ID_PERMOHONAN, A.NO_PERSERAHAN, ";
 			sql += "A.TARIKH_TERIMA, A.TARIKH_HANTARPEMOHON, A.TARIKH_TANDATANGANPTP, ";
 			sql += "A.TARIKH_DAFTAR, A.TARIKH_TERIMAHAKMILIK, A.TARIKH_KEMASKINIHAKMILIK ";
@@ -262,7 +262,7 @@ public class FrmPajakanPerjanjianPajakanData {
 			sql += "WHERE A.ID_PERMOHONAN = " + idPermohonan;
 			//myLog.info("getMaklumat15A("+idPermohonan+"):sql="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
-			
+
 			while(rs.next()){
 				h = new Hashtable <String,String>();
 				h.put("idBorangPajakan", rs.getString("ID_BORANGPAJAKAN") == null ? "" : rs.getString("ID_BORANGPAJAKAN"));
@@ -274,21 +274,21 @@ public class FrmPajakanPerjanjianPajakanData {
 				h.put("tarikhTerimaHakmilik", rs.getDate("TARIKH_TERIMAHAKMILIK") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMAHAKMILIK")));
 				h.put("tarikhKemaskini", rs.getDate("TARIKH_KEMASKINIHAKMILIK") == null ? "" : sdf.format(rs.getDate("TARIKH_KEMASKINIHAKMILIK")));
 				h.put("flag_notifikasi", rs.getString("FLAG_NOTIFIKASI") == null ? "" : rs.getString("FLAG_NOTIFIKASI"));
-				//beanMaklumat15A.addElement(h);		
+				//beanMaklumat15A.addElement(h);
 			}
 
 		} catch(Exception e){
 			e.printStackTrace();
 		}
 		return h;
-		
+
 	}
 	public void setMaklumat15A(String idPermohonan){
 		try{
 			db = new Db();
 			Statement stmt = db.getStatement();
 			beanMaklumat15A = new Vector<Hashtable <String,String>>();
-			
+
 			sql = "SELECT A.FLAG_NOTIFIKASI, A.ID_BORANGPAJAKAN, A.ID_PERMOHONAN, A.NO_PERSERAHAN, ";
 			sql += "A.TARIKH_TERIMA, A.TARIKH_HANTARPEMOHON, A.TARIKH_TANDATANGANPTP, ";
 			sql += "A.TARIKH_DAFTAR, A.TARIKH_TERIMAHAKMILIK, A.TARIKH_KEMASKINIHAKMILIK ";
@@ -296,7 +296,7 @@ public class FrmPajakanPerjanjianPajakanData {
 			sql += "WHERE A.ID_PERMOHONAN = " + idPermohonan;
 			//myLog.info("setMaklumat15A("+idPermohonan+"):sql="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
-			
+
 			Hashtable <String,String> h;
 			while(rs.next()){
 				h = new Hashtable <String,String>();
@@ -309,14 +309,14 @@ public class FrmPajakanPerjanjianPajakanData {
 				h.put("tarikhTerimaHakmilik", rs.getDate("TARIKH_TERIMAHAKMILIK") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMAHAKMILIK")));
 				h.put("tarikhKemaskini", rs.getDate("TARIKH_KEMASKINIHAKMILIK") == null ? "" : sdf.format(rs.getDate("TARIKH_KEMASKINIHAKMILIK")));
 				h.put("flag_notifikasi", rs.getString("FLAG_NOTIFIKASI") == null ? "" : rs.getString("FLAG_NOTIFIKASI"));
-				beanMaklumat15A.addElement(h);		
+				beanMaklumat15A.addElement(h);
 			}
 
 		} catch(Exception e){
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void update15A(String idPermohonan, Hashtable <String,String> hash, HttpSession session) throws Exception {
 		String userId = session.getAttribute("_ekptg_user_id").toString();
 		try {
@@ -325,10 +325,10 @@ public class FrmPajakanPerjanjianPajakanData {
 	    	conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			
+
 			//TBLHTPBORANGPAJAKAN
 			r.update("ID_PERMOHONAN", idPermohonan);
-			
+
 			if (!"".equals(hash.get("tarikhTerima"))){
 				r.add("TARIKH_TERIMA", r.unquote("to_date('" + hash.get("tarikhTerima") + "','dd/MM/yyyy')"));
 			}
@@ -343,48 +343,48 @@ public class FrmPajakanPerjanjianPajakanData {
 			}
 			if (!"".equals(hash.get("tarikhTerimaHakmilik"))){
 				r.add("TARIKH_TERIMAHAKMILIK", r.unquote("to_date('" + hash.get("tarikhTerimaHakmilik") + "','dd/MM/yyyy')"));
-			}	
+			}
 			if (!"".equals(hash.get("tarikhKemaskini"))){
 				r.add("TARIKH_KEMASKINIHAKMILIK", r.unquote("to_date('" + hash.get("tarikhKemaskini") + "','dd/MM/yyyy')"));
 			}
 			if (!"".equals(hash.get("flagNotifikasi"))){
 				r.add("FLAG_NOTIFIKASI", hash.get("flagNotifikasi"));
 			}
-			
+
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 			sql = r.getSQLUpdate("TBLHTPBORANGPAJAKAN");
 			myLog.info("update15A:sql="+sql);
-			stmt.executeUpdate(sql);			
+			stmt.executeUpdate(sql);
 			conn.commit();
-			
-		} catch (SQLException ex) { 
+
+		} catch (SQLException ex) {
 	    	try {
 	    		conn.rollback();
 	    	} catch (SQLException e) {
 	    		throw new Exception("Rollback error : " + e.getMessage());
 	    	}
 	    	throw new Exception("Ralat : Masalah penyimpanan data " + ex.getMessage());
-	    	
+
 	    } finally {
 			if (db != null)
 				db.close();
 		}
 	}
-	
+
 	public void setMaklumatTabKelulusanJemaahMenteri(String idPermohonan){
 		try{
 			db = new Db();
 			Statement stmt = db.getStatement();
 			beanMaklumatJemaahMenteri = new Vector<Hashtable <String,String>>();
-			
+
 			sql = "SELECT A.ID_JEMAAHMENTERI, A.ID_PERMOHONAN, A.TARIKH_KUASA_PBDN, ";
 			sql += "A.TARIKH_MSYRT_JEMAAH, A.NO_MEMORANDUM ";
 			sql += "FROM TBLHTPJEMAAHMENTERI A ";
 			sql += "WHERE A.ID_PERMOHONAN = " + idPermohonan;
 
 			ResultSet rs = stmt.executeQuery(sql);
-			
+
 			Hashtable<String,String> h;
 			while(rs.next()){
 				h = new Hashtable<String,String>();
@@ -393,15 +393,15 @@ public class FrmPajakanPerjanjianPajakanData {
 				h.put("tarikhMesyuarat", rs.getDate("TARIKH_MSYRT_JEMAAH") == null ? "" : sdf.format(rs.getDate("TARIKH_MSYRT_JEMAAH")));
 				h.put("noMemo", rs.getString("NO_MEMORANDUM") == null ? "" : rs.getString("NO_MEMORANDUM"));
 				h.put("tarikhPerbadanan", rs.getDate("TARIKH_KUASA_PBDN") == null ? "" : sdf.format(rs.getDate("TARIKH_KUASA_PBDN")));
-				
-				beanMaklumatJemaahMenteri.addElement(h);		
+
+				beanMaklumatJemaahMenteri.addElement(h);
 			}
 
 		} catch(Exception e){
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void updateJM(String idPermohonan, Hashtable<String,String> hash, HttpSession session) throws Exception {
 		String userId = session.getAttribute("_ekptg_user_id").toString();
 		try {
@@ -410,10 +410,10 @@ public class FrmPajakanPerjanjianPajakanData {
 	    	conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			
+
 			//TBLHTPJEMAAHMENTERI
 			r.update("ID_PERMOHONAN", idPermohonan);
-			
+
 			if (!"".equals(hash.get("tarikhPerbadanan"))){
 				r.add("TARIKH_KUASA_PBDN", r.unquote("to_date('" + hash.get("tarikhPerbadanan") + "','dd/MM/yyyy')"));
 			}
@@ -427,23 +427,23 @@ public class FrmPajakanPerjanjianPajakanData {
 
 			sql = r.getSQLUpdate("TBLHTPJEMAAHMENTERI");
 			stmt.executeUpdate(sql);
-			
+
 			conn.commit();
-			
-		} catch (SQLException ex) { 
+
+		} catch (SQLException ex) {
 	    	try {
 	    		conn.rollback();
 	    	} catch (SQLException e) {
 	    		throw new Exception("Rollback error : " + e.getMessage());
 	    	}
 	    	throw new Exception("Ralat : Masalah penyimpanan data " + ex.getMessage());
-	    	
+
 	    } finally {
 			if (db != null)
 				db.close();
 		}
 	}
-	
+
 	public void setListDraf(String idPermohonan) throws Exception {
 		try {
 			senaraiDraf = new Vector<Hashtable <String,String>>();
@@ -451,7 +451,7 @@ public class FrmPajakanPerjanjianPajakanData {
 			Statement stmt = db.getStatement();
 
 			sql = "SELECT A.ID_DERAFPERJANJIAN, A.TARIKH_HANTAR_DERAF, A.TARIKH_TERIMA, A.TARIKH_HANTARPTP, A.TARIKH_TERIMAPTP, A.ULASAN_SEKSYEN"
-				+ " FROM TBLHTPDERAFPERJANJIAN A WHERE A.JENIS_DOKUMEN = 'P' AND A.ID_PERMOHONAN = '" + idPermohonan + "'";		
+				+ " FROM TBLHTPDERAFPERJANJIAN A WHERE A.JENIS_DOKUMEN = 'P' AND A.ID_PERMOHONAN = '" + idPermohonan + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable <String,String> h;
@@ -467,26 +467,26 @@ public class FrmPajakanPerjanjianPajakanData {
 				h.put("ulasan", rs.getString("ULASAN_SEKSYEN") == null ? "" : rs.getString("ULASAN_SEKSYEN"));
 				senaraiDraf.addElement(h);
 				bil++;
-				
+
 			}
 
 		} finally {
 			if (db != null)
 				db.close();
 		}
-		
+
 	}
-	
+
 	public void setMaklumatDraf(String idDraf) throws Exception {
 		try{
 			db = new Db();
 			Statement stmt = db.getStatement();
 			beanMaklumatDraf = new Vector<Hashtable<String,String>>();
-			
+
 			sql = "SELECT A.ID_DERAFPERJANJIAN, A.TARIKH_HANTAR_DERAF, A.TARIKH_TERIMA, A.TARIKH_HANTARPTP, A.TARIKH_TERIMAPTP, A.ULASAN_SEKSYEN"
-				+ " FROM TBLHTPDERAFPERJANJIAN A WHERE A.ID_DERAFPERJANJIAN = '" + idDraf + "'";		
+				+ " FROM TBLHTPDERAFPERJANJIAN A WHERE A.ID_DERAFPERJANJIAN = '" + idDraf + "'";
 			ResultSet rs = stmt.executeQuery(sql);
-			
+
 			Hashtable<String,String> h;
 			while(rs.next()){
 				h = new Hashtable<String,String>();
@@ -495,11 +495,11 @@ public class FrmPajakanPerjanjianPajakanData {
 				h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMA")));
 				h.put("tarikhHantarPKP", rs.getDate("TARIKH_HANTARPTP") == null ? "" : sdf.format(rs.getDate("TARIKH_HANTARPTP")));
 				h.put("tarikhTerimaPKP", rs.getDate("TARIKH_TERIMAPTP") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMAPTP")));
-				h.put("ulasan", rs.getString("ULASAN_SEKSYEN") == null ? "" : rs.getString("ULASAN_SEKSYEN"));				
-				beanMaklumatDraf.addElement(h);		
-				
+				h.put("ulasan", rs.getString("ULASAN_SEKSYEN") == null ? "" : rs.getString("ULASAN_SEKSYEN"));
+				beanMaklumatDraf.addElement(h);
+
 			}
-			
+
 		} finally {
 			if (db != null)
 				db.close();
@@ -510,12 +510,12 @@ public class FrmPajakanPerjanjianPajakanData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			beanMaklumatDraf = new Vector<Hashtable<String,String>>();
-			
+
 			sql = "SELECT DP.ID_DERAFPERJANJIAN, DP.TARIKH_HANTARPTP,DP.TARIKH_TERIMAPTP,DP.ULASAN_SEKSYEN" +
 				" A.TARIKH_TERIMAPTP, A.ULASAN_SEKSYEN"
-				+ " FROM TBLHTPDERAFPERJANJIAN A WHERE A.ID_DERAFPERJANJIAN = '" + idDraf + "'";		
+				+ " FROM TBLHTPDERAFPERJANJIAN A WHERE A.ID_DERAFPERJANJIAN = '" + idDraf + "'";
 			ResultSet rs = stmt.executeQuery(sql);
-			 
+
 			Hashtable<String,String> h;
 			while(rs.next()){
 				h = new Hashtable<String,String>();
@@ -524,11 +524,11 @@ public class FrmPajakanPerjanjianPajakanData {
 				h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMA")));
 				h.put("tarikhHantarPKP", rs.getDate("TARIKH_HANTARPTP") == null ? "" : sdf.format(rs.getDate("TARIKH_HANTARPTP")));
 				h.put("tarikhTerimaPKP", rs.getDate("TARIKH_TERIMAPTP") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMAPTP")));
-				h.put("ulasan", rs.getString("ULASAN_SEKSYEN") == null ? "" : rs.getString("ULASAN_SEKSYEN"));				
-				beanMaklumatDraf.addElement(h);		
-				
+				h.put("ulasan", rs.getString("ULASAN_SEKSYEN") == null ? "" : rs.getString("ULASAN_SEKSYEN"));
+				beanMaklumatDraf.addElement(h);
+
 			}
-			
+
 		} finally {
 			if (db != null)
 				db.close();
@@ -542,11 +542,11 @@ public class FrmPajakanPerjanjianPajakanData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			//beanMaklumatDraf = new Vector<Hashtable<String,String>>();
-			
+
 			sql = "SELECT A.ID_DERAFPERJANJIAN, A.TARIKH_HANTAR_DERAF, A.TARIKH_TERIMA, A.TARIKH_HANTARPTP, A.TARIKH_TERIMAPTP, A.ULASAN_SEKSYEN"
-				+ " FROM TBLHTPDERAFPERJANJIAN A WHERE A.ID_DERAFPERJANJIAN = '" + idDraf + "'";		
+				+ " FROM TBLHTPDERAFPERJANJIAN A WHERE A.ID_DERAFPERJANJIAN = '" + idDraf + "'";
 			ResultSet rs = stmt.executeQuery(sql);
-			
+
 			while(rs.next()){
 				h = new Hashtable<String,String>();
 				h.put("idDraf", rs.getString("ID_DERAFPERJANJIAN") == null ? "" : rs.getString("ID_DERAFPERJANJIAN"));
@@ -554,19 +554,19 @@ public class FrmPajakanPerjanjianPajakanData {
 				h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMA")));
 				h.put("tarikhHantarPKP", rs.getDate("TARIKH_HANTARPTP") == null ? "" : sdf.format(rs.getDate("TARIKH_HANTARPTP")));
 				h.put("tarikhTerimaPKP", rs.getDate("TARIKH_TERIMAPTP") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMAPTP")));
-				h.put("ulasan", rs.getString("ULASAN_SEKSYEN") == null ? "" : rs.getString("ULASAN_SEKSYEN"));				
-				//beanMaklumatDraf.addElement(h);		
-				
+				h.put("ulasan", rs.getString("ULASAN_SEKSYEN") == null ? "" : rs.getString("ULASAN_SEKSYEN"));
+				//beanMaklumatDraf.addElement(h);
+
 			}
-			
+
 		} finally {
 			if (db != null)
 				db.close();
 		}
 		return h;
-	
+
 	}
-	
+
 	public void saveDraf(String idPermohonan, Hashtable<String,String> hash, HttpSession session) throws Exception {
 	//public void saveDraf(String idPermohonan, Hashtable<String,String> hash) throws Exception { //2018
 		String userId = session.getAttribute("_ekptg_user_id").toString();
@@ -575,12 +575,12 @@ public class FrmPajakanPerjanjianPajakanData {
 			conn = db.getConnection();
 	    	conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();	
-			
+			SQLRenderer r = new SQLRenderer();
+
 			//TBLHTPDERAFPERJANJIAN
 			long idDerafPerjanjian = DB.getNextID("TBLHTPDERAFPERJANJIAN_SEQ");
 			r.add("ID_DERAFPERJANJIAN", idDerafPerjanjian);
-			r.add("ID_PERMOHONAN", idPermohonan);		
+			r.add("ID_PERMOHONAN", idPermohonan);
 			if (!"".equals(hash.get("tarikhHantar"))){
 				r.add("TARIKH_HANTAR_DERAF", r.unquote("to_date('" + hash.get("tarikhHantar") + "','dd/MM/yyyy')"));
 			}
@@ -594,31 +594,31 @@ public class FrmPajakanPerjanjianPajakanData {
 				r.add("TARIKH_TERIMAPTP", r.unquote("to_date('" + hash.get("tarikhTerimaPKP") + "','dd/MM/yyyy')"));
 			}
 			r.add("ULASAN_SEKSYEN", hash.get("ulasan"));
-			r.add("JENIS_DOKUMEN","P");	
-			
+			r.add("JENIS_DOKUMEN","P");
+
 			r.add("ID_MASUK", userId);
 			//r.add("ID_MASUK", hash.get("userId")); //2018
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLHTPDERAFPERJANJIAN");
 			stmt.executeUpdate(sql);
-			
+
 			conn.commit();
-			
-		} catch (SQLException ex) { 
+
+		} catch (SQLException ex) {
 	    	try {
 	    		conn.rollback();
 	    	} catch (SQLException e) {
 	    		throw new Exception("Rollback error : " + e.getMessage());
 	    	}
 	    	throw new Exception("Ralat : Masalah penyimpanan data " + ex.getMessage());
-	    	
+
 	    } finally {
 			if (db != null)
 				db.close();
 		}
 	}
-	
+
 	public void saveUpdateDraf(String idDraf, Hashtable<String,String> hash, HttpSession session) throws Exception {
 		String userId = session.getAttribute("_ekptg_user_id").toString();
 		try {
@@ -626,11 +626,11 @@ public class FrmPajakanPerjanjianPajakanData {
 			conn = db.getConnection();
 	    	conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();	
-			
+			SQLRenderer r = new SQLRenderer();
+
 			//TBLHTPDERAFPERJANJIAN
 			r.update("ID_DERAFPERJANJIAN", idDraf);
-					
+
 			if (!"".equals(hash.get("tarikhHantar"))){
 				r.add("TARIKH_HANTAR_DERAF", r.unquote("to_date('" + hash.get("tarikhHantar") + "','dd/MM/yyyy')"));
 			}
@@ -643,61 +643,61 @@ public class FrmPajakanPerjanjianPajakanData {
 			if (!"".equals(hash.get("tarikhTerimaPKP"))){
 				r.add("TARIKH_TERIMAPTP", r.unquote("to_date('" + hash.get("tarikhTerimaPKP") + "','dd/MM/yyyy')"));
 			}
-			r.add("ULASAN_SEKSYEN", hash.get("ulasan"));	
-			
+			r.add("ULASAN_SEKSYEN", hash.get("ulasan"));
+
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 
 			sql = r.getSQLUpdate("TBLHTPDERAFPERJANJIAN");
 			stmt.executeUpdate(sql);
-			
+
 			conn.commit();
-			
-		} catch (SQLException ex) { 
+
+		} catch (SQLException ex) {
 	    	try {
 	    		conn.rollback();
 	    	} catch (SQLException e) {
 	    		throw new Exception("Rollback error : " + e.getMessage());
 	    	}
 	    	throw new Exception("Ralat : Masalah penyimpanan data " + ex.getMessage());
-	    	
+
 	    } finally {
 			if (db != null)
 				db.close();
 		}
-		
+
 	}
-	
+
 	public void hapusDraf(String idDraf) throws Exception {
 		try {
 			db = new Db();
 			conn = db.getConnection();
 	    	conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();	
-			
+			SQLRenderer r = new SQLRenderer();
+
 			//TBLHTPDERAFPERJANJIAN
 			r.add("ID_DERAFPERJANJIAN", r.unquote(idDraf));
 			sql = r.getSQLDelete("TBLHTPDERAFPERJANJIAN");
 			//myLog.info("sql="+sql);
-			stmt.executeUpdate(sql);			
+			stmt.executeUpdate(sql);
 			conn.commit();
-			
-		} catch (SQLException ex) { 
+
+		} catch (SQLException ex) {
 	    	try {
 	    		conn.rollback();
 	    	} catch (SQLException e) {
 	    		throw new Exception("Rollback error : " + e.getMessage());
 	    	}
 	    	throw new Exception("Ralat : Masalah menghapus data " + ex.getMessage());
-	    	
+
 	    } finally {
 			if (db != null)
 				db.close();
-		}	
-		
+		}
+
 	}
-	
+
 	public void setListPajakan(String idPermohonan) throws Exception {
 		try {
 			senaraiPajakan = new Vector<Hashtable <String,String>>();
@@ -705,7 +705,7 @@ public class FrmPajakanPerjanjianPajakanData {
 			Statement stmt = db.getStatement();
 			//sql = "SELECT A.ID_PAJAKAN, A.TARIKH_TANDATANGAN, A.TARIKH_MULA_PAJAKAN, A.TARIKH_TAMATPAJAKAN, A.TEMPOH_PAJAKAN, A.KADAR_CUKAI, A.KADAR_PAJAKAN, C.KETERANGAN, A.CARA_BAYAR"
 			//	+ " FROM TBLHTPPAJAKAN A, TBLRUJCARABAYAR C WHERE A.CARA_BAYAR = C.ID_CARABAYAR AND A.ID_PERMOHONAN = '" + idPermohonan + "'";
-			
+
 			sql = " SELECT a.id_pajakan, a.tarikh_tandatangan, a.tarikh_mula_pajakan, "+
 					" a.tarikh_tamatpajakan, a.tempoh_pajakan, a.kadar_cukai, "+
 					" nvl(a.kadar_pajakan,0) kadar_pajakan, c.keterangan, a.cara_bayar, "+
@@ -717,7 +717,7 @@ public class FrmPajakanPerjanjianPajakanData {
 					" WHERE a.cara_bayar = c.id_carabayar(+) " +
 					"AND a.id_permohonan = '"+idPermohonan+"' " +
 					"";
-			
+
 			myLog.info("setListPajakan:sql= "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -745,7 +745,7 @@ public class FrmPajakanPerjanjianPajakanData {
 				db.close();
 		}
 	}
-	
+
 	public void setMaklumatPajakan(String idPajakan) throws Exception {
 		try {
 			beanMaklumatPajakan = new Vector<Hashtable<String,String>>();
@@ -754,7 +754,7 @@ public class FrmPajakanPerjanjianPajakanData {
 
 			sql = "SELECT A.NOTIFIKASI_PERINGATAN, A.ID_PAJAKAN, A.TARIKH_TANDATANGAN, A.TARIKH_MULA_PAJAKAN, A.TARIKH_TAMATPAJAKAN" +
 				", A.KADAR_PAJAKAN, A.TEMPOH_PAJAKAN, A.KADAR_CUKAI, C.KETERANGAN, A.CARA_BAYAR" +
-				", A.KATEGORI_CUKAI, A.TARIKH_PATUT_BAYAR,A.CATATAN,A.DENDA,A.FLAG_AKTIF " +
+				", A.KATEGORI_CUKAI, A.TARIKH_PATUT_BAYAR,A.CATATAN,A.DENDA,A.FLAG_AKTIF,A.ID_HAKMILIKURUSAN " +
 				" FROM TBLHTPPAJAKAN A, TBLRUJCARABAYAR C " +
 				" WHERE A.CARA_BAYAR = C.ID_CARABAYAR(+) " +
 				" AND A.ID_PAJAKAN = '" + idPajakan + "'";
@@ -782,6 +782,7 @@ public class FrmPajakanPerjanjianPajakanData {
 				h.put("catatan", rs.getString("CATATAN") == null ? "" : rs.getString("CATATAN"));
 				h.put("status", rs.getString("FLAG_AKTIF") == null ? "Y" : rs.getString("FLAG_AKTIF"));
 				h.put("denda", rs.getString("DENDA") == null ? "" : rs.getString("DENDA"));
+				h.put("idTanah", rs.getString("ID_HAKMILIKURUSAN") == null ? "" : rs.getString("ID_HAKMILIKURUSAN"));
 				beanMaklumatPajakan.addElement(h);
 				bil++;
 			}
@@ -791,36 +792,36 @@ public class FrmPajakanPerjanjianPajakanData {
 				db.close();
 		}
 	}
-	
+
 	public void hapusPajakan(String idPajakan) throws Exception {
 		try {
 			db = new Db();
 			conn = db.getConnection();
 	    	conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();	
+			SQLRenderer r = new SQLRenderer();
 
 			//TBLHTPPAJAKAN
 			r.add("ID_PAJAKAN", idPajakan);
 			sql = r.getSQLDelete("TBLHTPPAJAKAN");
 			stmt.executeUpdate(sql);
-			
+
 			conn.commit();
-			
-		} catch (SQLException ex) { 
+
+		} catch (SQLException ex) {
 	    	try {
 	    		conn.rollback();
 	    	} catch (SQLException e) {
 	    		throw new Exception("Rollback error : " + e.getMessage());
 	    	}
 	    	throw new Exception("Ralat : Masalah menghapus data " + ex.getMessage());
-	    	
+
 	    } finally {
 			if (db != null)
 				db.close();
-		}	
+		}
 	}
-	
+
 	public void savePajakan(String idPermohonan, Hashtable<String,String> hash, HttpSession session) throws Exception {
 		String userId = session.getAttribute("_ekptg_user_id").toString();
 		try {
@@ -829,13 +830,13 @@ public class FrmPajakanPerjanjianPajakanData {
 	    	conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			ResultSet rs = null;
-			SQLRenderer r = new SQLRenderer();				
+			SQLRenderer r = new SQLRenderer();
 			//System.out.println("kadar : "+hash.get("kadar"));
-			
+
 			//TBLHTPPAJAKAN
 			long idPajakan = DB.getNextID("TBLHTPPAJAKAN_SEQ");
 			r.add("ID_PAJAKAN", idPajakan);
-			r.add("ID_PERMOHONAN", idPermohonan);		
+			r.add("ID_PERMOHONAN", idPermohonan);
 			if (!"".equals(hash.get("tarikhTandatangan"))){
 				r.add("TARIKH_TANDATANGAN", r.unquote("to_date('" + hash.get("tarikhTandatangan") + "','dd/MM/yyyy')"));
 			}
@@ -849,9 +850,9 @@ public class FrmPajakanPerjanjianPajakanData {
 			r.add("KADAR_CUKAI", hash.get("kadar"));
 			r.add("KADAR_PAJAKAN", hash.get("kadarPajakan"));
 			r.add("CARA_BAYAR", hash.get("idCaraBayar"));
-			r.add("KATEGORI_CUKAI", hash.get("katCukai"));		
+			r.add("KATEGORI_CUKAI", hash.get("katCukai"));
 			//PENAMBAHBAIKAN FASA3. 27112014. SYAZ. POPUP/NOTIFIKASI PERINGATAN SEMULA / LUPUT
-			r.add("NOTIFIKASI_PERINGATAN",hash.get("socNotifikasiPeringatan"));		
+			r.add("NOTIFIKASI_PERINGATAN",hash.get("socNotifikasiPeringatan"));
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 			//2017/05/09
@@ -869,11 +870,11 @@ public class FrmPajakanPerjanjianPajakanData {
 			//TBLHTPMOA
 			r = new SQLRenderer();
 			r.add("ID_MOA");
-			r.add("ID_PERMOHONAN",idPermohonan);				      
+			r.add("ID_PERMOHONAN",idPermohonan);
 			sql = r.getSQLSelect("TBLHTPMOA");
 			rs = stmt.executeQuery(sql);
 			if(rs.next()==false){
-				r = new SQLRenderer();			
+				r = new SQLRenderer();
 				long idMOA = DB.getNextID("TBLHTPMOA_SEQ");
 				r.add("ID_MOA", idMOA);
 				r.add("ID_PERMOHONAN", idPermohonan);
@@ -882,44 +883,44 @@ public class FrmPajakanPerjanjianPajakanData {
 				sql = r.getSQLInsert("TBLHTPMOA");
 				//System.out.println("sql 2 "+sql);
 				stmt.executeUpdate(sql);
-				
-			}		
-			
+
+			}
+
 			//TBLHTPBORANGPAJAKAN
 			r = new SQLRenderer();
 			r.add("ID_BORANGPAJAKAN");
-			r.add("ID_PERMOHONAN",idPermohonan);				      
+			r.add("ID_PERMOHONAN",idPermohonan);
 			sql = r.getSQLSelect("TBLHTPBORANGPAJAKAN");
 			rs = stmt.executeQuery(sql);
 			if(rs.next()==false){
 				r = new SQLRenderer();
 				long idBorangPajakan = DB.getNextID("TBLHTPBORANGPAJAKAN_SEQ");
 				r.add("ID_BORANGPAJAKAN", idBorangPajakan);
-				r.add("ID_PERMOHONAN", idPermohonan);	
+				r.add("ID_PERMOHONAN", idPermohonan);
 				r.add("ID_MASUK", userId);
-				r.add("TARIKH_MASUK", r.unquote("SYSDATE"));	
+				r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 				sql = r.getSQLInsert("TBLHTPBORANGPAJAKAN");
 				//System.out.println("sql 3 "+sql);
 				stmt.executeUpdate(sql);
-				
+
 			}
 			conn.commit();
-			
-		} catch (SQLException ex) { 
+
+		} catch (SQLException ex) {
 	    	try {
 	    		conn.rollback();
 	    	} catch (SQLException e) {
 	    		throw new Exception("Rollback error : " + e.getMessage());
 	    	}
 	    	throw new Exception("Ralat : Masalah penyimpanan data " + ex.getMessage());
-	    	
+
 	    } finally {
 			if (db != null)
 				db.close();
 		}
-		
+
 	}
-	
+
 	public void saveUpdatePajakan(String idPajakan, Hashtable<String,String> hash, HttpSession session) throws Exception {
 		String userId = session.getAttribute("_ekptg_user_id").toString();
 		try {
@@ -927,11 +928,11 @@ public class FrmPajakanPerjanjianPajakanData {
 			conn = db.getConnection();
 	    	conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();	
-			
+			SQLRenderer r = new SQLRenderer();
+
 			//TBLHTPPAJAKAN
 			r.update("ID_PAJAKAN", r.unquote(idPajakan));
-						
+
 			if (!"".equals(hash.get("tarikhTandatangan"))){
 				r.add("TARIKH_TANDATANGAN", r.unquote("to_date('" + hash.get("tarikhTandatangan") + "','dd/MM/yyyy')"));
 			}
@@ -945,9 +946,9 @@ public class FrmPajakanPerjanjianPajakanData {
 			r.add("KADAR_CUKAI", hash.get("kadar"));
 			r.add("KADAR_PAJAKAN", hash.get("kadarPajakan"));
 			r.add("CARA_BAYAR", hash.get("idCaraBayar"));
-			r.add("KATEGORI_CUKAI", hash.get("katCukai"));		
+			r.add("KATEGORI_CUKAI", hash.get("katCukai"));
 			//PENAMBAHBAIKAN FASA3. 27112014. SYAZ. POPUP/NOTIFIKASI PERINGATAN SEMULA / LUPUT
-			r.add("NOTIFIKASI_PERINGATAN",hash.get("socNotifikasiPeringatan"));			
+			r.add("NOTIFIKASI_PERINGATAN",hash.get("socNotifikasiPeringatan"));
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 			//2017/05/09
@@ -957,27 +958,28 @@ public class FrmPajakanPerjanjianPajakanData {
 			r.add("CATATAN", hash.get("catatan"));
 			r.add("FLAG_AKTIF", hash.get("status"));
 			r.add("DENDA", hash.get("denda"));
-			
+			r.add("ID_HAKMILIKURUSAN", hash.get("id_tanah"));
+
 			sql = r.getSQLUpdate("TBLHTPPAJAKAN");
 			myLog.info("saveUpdatePajakan:sql="+sql);
 			stmt.executeUpdate(sql);
-			
+
 			conn.commit();
-			
-		} catch (SQLException ex) { 
+
+		} catch (SQLException ex) {
 	    	try {
 	    		conn.rollback();
 	    	} catch (SQLException e) {
 	    		throw new Exception("Rollback error : " + e.getMessage());
 	    	}
 	    	throw new Exception("saveUpdatePajakan,Ralat: Masalah penyimpanan data " + ex.getMessage());
-	    	
+
 	    } finally {
 			if (db != null)
 				db.close();
 		}
 	}
-	
+
 	public Vector<Hashtable <String,String>> getSenaraiFail() {
 		return senaraiFail;
 	}

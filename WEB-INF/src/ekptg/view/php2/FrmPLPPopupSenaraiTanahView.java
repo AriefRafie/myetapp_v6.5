@@ -36,7 +36,7 @@ public class FrmPLPPopupSenaraiTanahView extends AjaxBasedModule {
 	    String idNegeriPemohon = getParam("idNegeriPemohon");
 	    String idKementerianPemohon = getParam("idKementerianPemohon");
 	    String idHakmilikSementara = getParam("idHakmilikSementara");
-	    
+	    String idJenisTanahPemohon = getParam("idJenisTanahPemohon");
 	    
 	    //VECTOR
         Vector list = null;
@@ -170,6 +170,11 @@ public class FrmPLPPopupSenaraiTanahView extends AjaxBasedModule {
 	    	//GO TO LIST TANAH        	
         	vm = "app/php2/frmPLPPopupSenaraiTanah.jsp";  
         	
+        	//SET DEFAULT VALUE
+        	if("99999".equals(idJenisTanah)) {
+        		idJenisTanah = idJenisTanahPemohon;
+        	}
+        	
         	if ("1".equals(idJenisTanah)) {
 				this.context.put("selected", "");
 				this.context.put("selected1", "selected");
@@ -187,10 +192,10 @@ public class FrmPLPPopupSenaraiTanahView extends AjaxBasedModule {
 				this.context.put("idJenisTanah", "0");
 			}
         	
-        	//SET DEFAULT VALUE
         	if ("99999".equals(idNegeri)){
         		idNegeri = idNegeriPemohon;
         	}
+        	
         	if ("99999".equals(idKementerian)){
         		idKementerian = idKementerianPemohon;
         	}
@@ -199,6 +204,7 @@ public class FrmPLPPopupSenaraiTanahView extends AjaxBasedModule {
 				idDaerah = "99999";
 				idMukim = "99999";
 			}
+			
 			if ("doChangeDaerah".equals(submit)) {
 				idMukim = "99999";
 			}
@@ -242,6 +248,7 @@ public class FrmPLPPopupSenaraiTanahView extends AjaxBasedModule {
 	    this.context.put("idKategoriPemohon", idKategoriPemohon);
 	    this.context.put("idNegeriPemohon", idNegeriPemohon);
 	    this.context.put("idKementerianPemohon", idKementerianPemohon);
+	    this.context.put("idJenisTanahPemohon", idJenisTanahPemohon); 
 	    
 	    this.context.put("actionPopup", actionPopup);
 		this.context.put("idLuas", idLuas);

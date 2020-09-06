@@ -270,7 +270,7 @@
             #elseif ($idKategoriPemohon != '3')
             #if ($idNegeri != '' && $idNegeri != '99999')
             <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" onblur="doChangePeganganHakmilik();" />
-            <input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Tanah" onclick="pilihTanah('$idKategoriPemohon','99999' , '$idNegeri')"/>
+            <input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Tanah" onclick="pilihTanah('$idKategoriPemohon','99999' , '$idNegeri', '$idJenisTanah')"/>
             #else
             <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" readonly="readonly" class="disabled" />
             #end
@@ -651,8 +651,8 @@ function doChangeKementerian() {
 function doChangeAgensi() {
 	doAjaxCall${formName}("doChangeAgensi");
 }
-function pilihTanah(idKategoriPemohon,idKementerianPemohon,idNegeri) {
-	var url = "../x/${securityToken}/ekptg.view.php2.FrmPLPPopupSenaraiTanahView?idKategoriPemohon="+idKategoriPemohon+"&idKementerianPemohon="+idKementerianPemohon+"&idNegeriPemohon="+idNegeri;
+function pilihTanah(idKategoriPemohon,idKementerianPemohon,idNegeri,idJenisTanahPemohon) {
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmPLPPopupSenaraiTanahView?idKategoriPemohon="+idKategoriPemohon+"&idKementerianPemohon="+idKementerianPemohon+"&idNegeriPemohon="+idNegeri+"&idJenisTanahPemohon="+idJenisTanahPemohon;
     var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;

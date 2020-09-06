@@ -69,7 +69,7 @@ import ekptg.model.entities.Users;
 import ekptg.model.ppk.PPKUtilHTML;
 
 public class HTML {
-	
+
 	static Logger myLogger = Logger.getLogger(HTML.class);
 
 	public static String SelectNegeri(String selectName) throws Exception {
@@ -79,7 +79,7 @@ public class HTML {
 	public static String SelectNegeri(String selectName, String jsFunction)
 			throws Exception {
 		return SelectNegeri(selectName, null, null, jsFunction);
-	} 
+	}
 
 	public static String SelectNegeri(String selectName, Long selectedValue)
 			throws Exception {
@@ -90,7 +90,7 @@ public class HTML {
 			String disability) throws Exception {
 		return SelectNegeri(selectName, selectedValue, disability, null);
 	}
-	
+
 	public static String SelectNegeriWithOnChange(String selectName) throws Exception {
 		return SelectNegeriWOC(selectName);
 	}
@@ -429,11 +429,11 @@ public class HTML {
 		return SelectDaerahByNegeri(idnegeri, selectName, selectedValue,
 				disability, null);
 	}
-	
+
 	public static String SelectDaerahByNegeri_KPP(String idnegeri,
 			String selectName, Long selectedValue, String disability, String userId, boolean kpp_hq)
-			throws Exception {		
-	
+			throws Exception {
+
 		return SelectDaerahByNegeri_KPP(idnegeri, selectName, selectedValue,
 				disability,null, userId, kpp_hq);
 	}
@@ -472,13 +472,13 @@ public class HTML {
 		return sb.toString();
 
 	}
-	
+
 	public static String SelectDaerahByNegeri_KPP(String idnegeri,
 			String selectName, Long selectedValue, String disability,
 			String jsFunction,String userId, boolean kpp_hq ) throws Exception {
 		StringBuffer sb = new StringBuffer("");
 		try {
-			
+
 			sb.append("<select name='" + selectName + "'");
 			if (disability != null)
 				sb.append(disability);
@@ -674,7 +674,7 @@ public class HTML {
 			throw ex;
 		}
 		return sb.toString();
-	
+
 	}
 	// dat 17072010
 	public static String SelectSubUrusanPelepasan(String idUrusan,
@@ -1125,10 +1125,10 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
-	
+
+
 	/*select status fail Gadaian*/
-	
+
 	public static String SelectStatusFailGadaian(String selectName) throws Exception {
 		return SelectStatusFailGadaian(selectName, null, null);
 	}
@@ -1160,10 +1160,10 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
-	
+
+
 /*select status fail Hapus*/
-	
+
 	public static String SelectStatusFailHapus(String selectName) throws Exception {
 		return SelectStatusFailHapus(selectName, null, null);
 	}
@@ -1195,10 +1195,10 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
-	
+
+
 /*select status fail Perletakhakan*/
-	
+
 	public static String SelectStatusFailPerletakhakan(String selectName) throws Exception {
 		return SelectStatusFailPerletakhakan(selectName, null, null);
 	}
@@ -1230,10 +1230,10 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
-	
+
+
 /*select status fail Penswastaan*/
-	
+
 	public static String SelectStatusFailPenswastaan(String selectName) throws Exception {
 		return SelectStatusFailPenswastaan(selectName, null, null);
 	}
@@ -1265,9 +1265,9 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
+
 /*select status fail PajakanKecil*/
-	
+
 	public static String SelectStatusFailPajakanKecil(String selectName) throws Exception {
 		return SelectStatusFailPajakanKecil(selectName, null, null);
 	}
@@ -1299,10 +1299,10 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
-	
+
+
 /*select status fail Pembelian*/
-	
+
 	public static String SelectStatusFailPembelian(String selectName) throws Exception {
 		return SelectStatusFailPembelian(selectName, null, null);
 	}
@@ -1334,10 +1334,10 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
-	
+
+
 /*select status fail Pajakan*/
-	
+
 	public static String SelectStatusFailPajakan(String selectName) throws Exception {
 		return SelectStatusFailPajakan(selectName, null, null);
 	}
@@ -1369,10 +1369,10 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
-	
+
+
 /*select status fail Perizapan*/
-	
+
 	public static String SelectStatusFailPerizapan(String selectName) throws Exception {
 		return SelectStatusFailPerizapan(selectName, null, null);
 	}
@@ -1404,10 +1404,10 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
-	
+
+
 /*select status fail Pemberimilikan*/
-	
+
 	public static String SelectStatusFailPemberimilikan(String selectName) throws Exception {
 		return SelectStatusFailPemberimilikan(selectName, null, null);
 	}
@@ -1439,10 +1439,10 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
-	
+
+
 /*select status FailKeseluruhan*/
-	
+
 	public static String SelectStatusFailKeseluruhan(String selectName) throws Exception {
 		return SelectStatusFailKeseluruhan(selectName, null, null);
 	}
@@ -1474,8 +1474,8 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
-	
+
+
 
 	public static String SelectLokasiFail(String selectName) throws Exception {
 		return SelectLokasiFail(selectName, null, null);
@@ -2024,7 +2024,7 @@ public class HTML {
 		return SelectLot(selectName, selectedValue, disability, null);
 	}
 	/**
-	 * 
+	 *
 	 * @param selectName
 	 * @param selectedValue
 	 * @param disability
@@ -2055,7 +2055,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdLot() + ">"
-						+ f.getKeterangan() 
+						+ f.getKeterangan()
 //						+ f.getKodLot() + " - " + f.getKeterangan()
 						+ "</option>\n");
 			}
@@ -2634,7 +2634,7 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
+
 	public static String SelectJenisNoPbIndividuLain(String selectName,
 			Long selectedValue, String disability, String jsFunction)
 			throws Exception {
@@ -2835,11 +2835,11 @@ public class HTML {
 		return sb.toString();
 	}
 	/**
-	 * Created by   : Mohamad Rosli 
-	 * Created on   : 30/05/2009 
+	 * Created by   : Mohamad Rosli
+	 * Created on   : 30/05/2009
 	 * Propose		: Digunakan apabila agensi dipilih mengikut
 	 * 				 Kementerian
-	 * 
+	 *
 	 * @param selectName
 	 * @param idKementerian
 	 * @param selectedValue
@@ -2874,7 +2874,7 @@ public class HTML {
 			throw ex;
 		}
 		return sb.toString();
-	
+
 	}
 
 	public static String SelectKementerian(String selectName, String jsFunction)
@@ -2949,7 +2949,7 @@ public class HTML {
 		return sb.toString();
 
 	}
-	
+
 	// ** Bandar
 
 		public static String SelectBandar2(String selectName, Long selectedValue,
@@ -2997,7 +2997,7 @@ public class HTML {
 			throws Exception {
 		return SelectBandarByNegeri(idnegeri, selectName, selectedValue,
 				disability, null);
-	}	
+	}
 
 	public static String SelectBandarByNegeri(String idnegeri,
 			String selectName, Long selectedValue, String disability,
@@ -3035,7 +3035,7 @@ public class HTML {
 
 	/**
 	 * added by elly to cater status/penerangan no fail for UPT(PPT)
-	 * 
+	 *
 	 * @return
 	 * @throws Exception
 	 *             //----------HTML.java
@@ -3075,7 +3075,7 @@ public class HTML {
 
 	/**
 	 * added by elly to cater status/penerangan no fail for PPTHakmilikSek4
-	 * 
+	 *
 	 * @return
 	 * @throws Exception
 	 *             //----------HTML.java
@@ -3371,7 +3371,7 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
+
 	// DOKUMEN UNTUK NOTIS PERINGATAN PENGUATKUASAAN
 		public static String SelectPHPRujDokumenPanggilMesyuarat(String selectName,
 				Long selectedValue, String disability, String jsFunction)
@@ -3452,7 +3452,7 @@ public class HTML {
 	 * throws Exception { StringBuffer sb = new StringBuffer(""); try {
 	 * sb.append("<select name='" + selectName + "' " + disability + "> ");
 	 * sb.append("<option value=>SILA PILIH</option>\n");
-	 * 
+	 *
 	 * Vector v = DB.getRujKodJenisPB2(); Tblrujjenispb f = null; String s = "";
 	 * for (int i = 0; i < v.size(); i++) { f = (Tblrujjenispb) v.get(i); if
 	 * (f.getIdJenispb().equals(selectedValue)) { s = "selected"; } else { s =
@@ -3460,7 +3460,7 @@ public class HTML {
 	 * f.getKodJenisPb() + " - " + f.getKeterangan() + "</option>\n"); }
 	 * sb.append("</select>"); } catch (Exception ex) { ex.printStackTrace();
 	 * throw ex; }
-	 * 
+	 *
 	 * return sb.toString(); }
 	 */
 
@@ -3812,7 +3812,7 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
+
 	public static String SelectKategoriPemohonOrganisasiAndSyarikat(
 			String selectName, Long selectedValue, String disability,
 			String jsFunction) throws Exception {
@@ -3846,7 +3846,7 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
+
 	public static String SelectKategoriPemohonIndividu(
 			String selectName, Long selectedValue, String disability,
 			String jsFunction) throws Exception {
@@ -3880,7 +3880,7 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
+
 	public static String SelectKategoriIndividuBukanIndividu(
 			String selectName, Long selectedValue, String disability,
 			String jsFunction) throws Exception {
@@ -4196,7 +4196,7 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
+
 	public static String SelectJenisLesen(String selectName,
 			Long selectedValue, String disability, String jsFunction)
 			throws Exception {
@@ -4263,7 +4263,7 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
+
 	public static String SelectJenisPermohonanAPB(String selectName,
 			Long selectedValue, String disability, String jsFunction)
 			throws Exception {
@@ -6093,7 +6093,7 @@ public class HTML {
 				disability, jsFunction);
 
 	}
-	
+
 	public static String SelectPegawaiPengendaliByNegeri_KPP(String idNegeri,
 			String selectName, Long selectedValue, String disability,
 			String jsFunction, boolean hq_kpp) throws Exception {
@@ -6170,7 +6170,7 @@ public class HTML {
 			sb.append(">");
 			sb.append("<option value=>SILA PILIH</option>\n");
 			/*sb.append("<option value='\"\"'>SILA PILIH</option>\n");*/
-			
+
 			Vector v = DB.getSenaraiPegawaiLaporan(idNegeri);
 			Tblppkrujunit f = null;
 			String s = "";
@@ -6302,7 +6302,7 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
+
 	/*public static String SelectBulan(String selectName, Long selectedValue,
 
 			String disability, String jsFunction) throws Exception {
@@ -6373,7 +6373,7 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
+
 	public static String SelectTahunH(String selectName, String selectedValue,
 			String disability, String jsFunction) throws Exception {
 		StringBuffer sb = new StringBuffer("");
@@ -6408,8 +6408,8 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
-	
+
+
 
 	public static String SelectHTAByIdSimati(String idsimati,
 			String selectName, Long selectedValue, String disability,
@@ -7211,6 +7211,73 @@ public class HTML {
 		return sb.toString();
 	}
 
+	public static String selectTanah(String idPermohonan, String selectName, Long selectedValue,
+			String disability, String jsFunction) throws Exception {
+		StringBuffer sb = new StringBuffer("");
+		try {
+			sb.append("<select name='" + selectName + "'");
+			if (disability != null)
+				sb.append(disability);
+			if (jsFunction != null)
+				sb.append(jsFunction);
+			sb.append(" > ");
+
+			sb.append("<option value=>SILA PILIH</option>\n");
+			Vector v = DB.getNamaTanah(idPermohonan);
+			Hashtable h;
+			String s = "";
+			for (int i = 0; i < v.size(); i++) {
+				h = new Hashtable();
+				h = (Hashtable) v.get(i);
+				if (h.get("idHakmilikUrusan").equals(selectedValue)) {
+
+					s = "selected";
+				} else {
+					s = "";
+				}
+				sb.append("<option " + s + " value=" + h.get("idHakmilikUrusan")
+						+ ">"
+						+ h.get("peganganHakmilik") + "</option>\n");
+			}
+			sb.append("</select>");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw ex;
+		}
+		return sb.toString();
+	}
+
+	public static String selectTanah(String idPermohonan, String selectName, String selectedValue,
+			String disability) throws Exception {
+		StringBuffer sb = new StringBuffer("");
+		try {
+			sb.append("<select name='" + selectName + "' " + disability + "> ");
+			sb.append("<option value=>SILA PILIH</option>\n");
+			Vector v = DB.getNamaTanah(idPermohonan);
+			Hashtable h;
+			String s = "";
+			for (int i = 0; i < v.size(); i++) {
+				h = new Hashtable();
+				h = (Hashtable) v.get(i);
+				if (h.get("idHakmilikUrusan").equals(selectedValue)) {
+
+					s = "selected";
+				} else {
+					s = "";
+				}
+				sb.append("<option " + s + " value=" + h.get("idHakmilikUrusan")
+						+ ">"
+						+ h.get("peganganHakmilik") + "</option>\n");
+			}
+			sb.append("</select>");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw ex;
+		}
+
+		return sb.toString();
+	}
+
 	// GET CARA BAYAR HASIL (PHP) - PEJE
 	public static String selectCaraBayaran(String selectName,
 			Long selectedValue, String disability, String jsFunction)
@@ -7354,7 +7421,7 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
+
 	public static String SelectJenisBayaranFiAPB(String selectName, Long selectedValue,
 			String disability, String jsFunction) throws Exception {
 		StringBuffer sb = new StringBuffer("");
@@ -7388,7 +7455,7 @@ public class HTML {
 		}
 		return sb.toString();
 	}
-	
+
 	public static String selectBank(String selectName, Long selectedValue,
 			String disability, String jsFunction) throws Exception {
 		StringBuffer sb = new StringBuffer("");
@@ -7422,7 +7489,7 @@ public class HTML {
 		}
 		return sb.toString();
 	}
-	
+
 
 	// 24012009 Jenis Bebanan -Syah
 	public static String SelectBebanan(String selectName, Long selectedValue,
@@ -7639,9 +7706,9 @@ public class HTML {
 
 	}// close get PTG
 	/**
-	 * Created by 	: Mohamad Rosli 
-	 * Created on 	: 06/02/2010 
-	 * Updated by 	: 06/02/2010 
+	 * Created by 	: Mohamad Rosli
+	 * Created on 	: 06/02/2010
+	 * Updated by 	: 06/02/2010
 	 * Propose 		: Menyenarai kakitangan yang berjawatan Pegawai Pra syarat : Pengguna biasa
 	 * 				  hendaklah diassign kepada sub -Pegawai- terlebih dahulu
 	 */
@@ -7717,7 +7784,7 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
+
 	public static String SelectJenisPejabat(String selectName,
 			Long selectedValue, String disability, String jsFunction)
 			throws Exception {
@@ -7867,7 +7934,7 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
+
 	public static String SelectPejabatKPTGByIdNegeriIdSeksyen(String selectName,
 			Long selectedValue, String disability, String jsFunction,
 			String idNegeri, String idSeksyen) throws Exception {
@@ -10027,7 +10094,7 @@ public class HTML {
 		}
 		return sb.toString();
 	}
-	
+
 	public static String selectPegawaiUnitPenyewaanByNegeri(String idNegeri, String selectName,
 			Long selectedValue, String disability, String jsFunction)
 			throws Exception {
@@ -10097,7 +10164,7 @@ public class HTML {
 		}
 		return sb.toString();
 	}
-	
+
 	public static String selectPegawaiUnitPenguatkuasaan(String selectName,
 			Long selectedValue, String disability, String jsFunction)
 			throws Exception {
@@ -10304,7 +10371,7 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
+
 	public static String SelectKategoriPemohonPNW(String selectName,
 			Long selectedValue, String disability, String jsFunction)
 			throws Exception {
@@ -10341,7 +10408,7 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
+
 
 	public static String SelectKategoriPemohonPelepasan(String selectName,
 			Long selectedValue, String disability, String jsFunction)
@@ -10474,7 +10541,7 @@ public class HTML {
 			}else{
 				sb.append("<option value="+0+">SILA PILIH</option>\n");
 			}
-			
+
 			Vector v = DB.getLuasAPB();
 			Hashtable h;
 			String s = "";
@@ -11104,7 +11171,7 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
+
 	// edityati 7/2/2018
 	public static String SelectDaerahLaporanByIdPejabatJKPTGPPT(
 			String id_pejabatjkptg, String selectName, Long selectedValue,
@@ -11659,7 +11726,7 @@ public class HTML {
 			Hashtable h;
 			String s = "";
 			for (int i = 0; i < v.size(); i++) {
-				h = new Hashtable();   
+				h = new Hashtable();
 				h = (Hashtable) v.get(i);
 				if (h.get("ID_PEGAWAI").equals(selectedValue)) {
 					s = "selected";
@@ -11709,9 +11776,9 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
+
 	//added by Asna
-	
+
 	public static String selectPegawaiUnitHasil(String selectName,
 			Long selectedValue, String disability, String jsFunction)
 			throws Exception {
@@ -11746,11 +11813,11 @@ public class HTML {
 		}
 		return sb.toString();
 	}
-	
+
 	public static String selectNumberRange(String selectName, Integer selectedValue, String disability, String jsFunction, Integer rangefrom, Integer rangeTo) throws Exception {
-		
+
 		StringBuffer sb = new StringBuffer("");
-		
+
 		try {
 
 			sb.append("<select name='" + selectName + "'");
@@ -11768,10 +11835,10 @@ public class HTML {
 				} else {
 					s = "";
 				}
-				
+
 				sb.append("<option " + s + " value=" + i
 						+ ">" + i + "</option>\n");
-				
+
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {
@@ -11780,7 +11847,7 @@ public class HTML {
 		}
 		return sb.toString();
 	}
-	
+
 	public static String SelectPenolongDanPengarahHTP(String selectName, Long selectedValue, String disability, String jsFunction) throws Exception {
 		StringBuffer sb = new StringBuffer("");
 		try {
@@ -11791,7 +11858,7 @@ public class HTML {
 				sb.append(jsFunction);
 			sb.append(">");
 			sb.append("<option value=>SILA PILIH</option>\n");
-			
+
 			Vector v = DB.getSenaraiPenolongDanPengarahHTP();
 			Users f = null;
 			String s = "";
@@ -11813,7 +11880,7 @@ public class HTML {
 		return sb.toString();
 	}
 
-	
+
 	public static String SelectStatusAPB(String selectName,
 			Long selectedValue, String disability, String jsFunction)
 			throws Exception {
@@ -11883,7 +11950,7 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
+
 	//add by Asna
 	public static String SelectModBayaran(String selectName,
 			String selectedValue, String disability, String jsFunction)
@@ -11915,12 +11982,12 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
-	
+
+
 	// close class
 	public static String selectNamaPejabat(String selectName,
-	Long selectedValue, String disability, String jsFunction, String noFail)	
-	
+	Long selectedValue, String disability, String jsFunction, String noFail)
+
 			throws Exception {
 		StringBuffer sb = new StringBuffer("");
 		try {
@@ -11949,11 +12016,11 @@ public class HTML {
 			ex.printStackTrace();
 			throw ex;
 		}
-		
-		
+
+
 		return sb.toString();
 	}
-	
+
 	public static String selectPejabatByIdFailAndIdJenisPejabat(String selectName,
 			Long selectedValue, String idFail, String idJenisPejabat, String disability, String jsFunction)
 			throws Exception {
@@ -11977,7 +12044,7 @@ public class HTML {
 				Long idPej = null;
 				if(h.get("idPejabat")!=null)
 					idPej = Long.parseLong(h.get("idPejabat").toString());
-					
+
 				if (idPej.equals(selectedValue)) {
 					s = "selected";
 				} else {
@@ -12070,7 +12137,7 @@ public class HTML {
 
 		return sb.toString();
 	}
-	
+
 
 	//sort negeri sarawak ikut list yg diminta
 	public static String SelectSortDaerahByNegeri(String idnegeri,
@@ -12107,7 +12174,7 @@ public class HTML {
 		return sb.toString();
 
 	}
-	
+
 	public static String SelectStatusPerjanjianSewa(String selectName, Long selectedValue,
 			String disability, String jsFunction) throws Exception {
 		StringBuffer sb = new StringBuffer("");
