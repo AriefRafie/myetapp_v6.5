@@ -204,6 +204,7 @@ public class FrmPermohonanUPTData {
 		    		}
 		    		sql +="ORDER by f.no_fail desc, p.tarikh_permohonan desc ";
 
+		    		myLogger.info("sql list permohonan sek4 : "+sql);
 		    		ResultSet rs = stmt.executeQuery(sql);
 		    		Vector list = new Vector();
 		      

@@ -501,6 +501,7 @@ public class FrmPLPSenaraiFailView extends AjaxBasedModule {
 		this.context.put("idHakmilikUrusan", idHakmilikUrusan);
 		this.context.put("idPHPBorangK", idPHPBorangK);		
 		this.context.put("idHakmilikSementara", idHakmilikSementara);
+		this.context.put("idJenisTanah", idJenisTanah);
 		
 		
 		return vm;
