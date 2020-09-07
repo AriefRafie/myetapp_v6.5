@@ -1143,8 +1143,8 @@ public class FrmPermohonanUPTData {
 	    		String id_negeri = (String)data.get("negeri");
 	    		String id_daerah = (String)data.get("daerah");
 	    		String id_mukim = (String)data.get("mukim");
-	    		String txtseksyen = (String)data.get("txtseksyen");
-	    		String catatan = (String)data.get("catatan");
+	    		String txtseksyen = (String)data.get("seksyen");
+	    		String catatan = (String)data.get("txtcatatan");
 	    		String txtnolot = (String)data.get("txtnolot");
 	    		String txtnopt = (String)data.get("txtnopt");
 	    		String daerahpenggawa = (String)data.get("daerahpenggawa");
@@ -1169,6 +1169,10 @@ public class FrmPermohonanUPTData {
 	    		String luas_ambil = (String)data.get("txtLuasAmbil");	
 	    		String luas_asal = (String)data.get("txtLuasAsal");
 	    		String id_luasambil = (String)data.get("unitLuasAmbil");
+	    		
+	    		String sorDropdownUnitAsal = (String)data.get("sorDropdownUnitAsal");
+	    		String sorDropdownUnitAmbil = (String)data.get("sorDropdownUnitAmbil");
+	    		
 	    		String id_kategoriTanah = (String)data.get("socKategoriTanah");
 	    		
 	    		String TW = "to_date('" + txdTarikhWarta + "','dd/MM/yyyy')";
@@ -1196,6 +1200,9 @@ public class FrmPermohonanUPTData {
 	    		
 	    		r.add("luas_lot", luas_asal);
 	    		r.add("luas_ambil", luas_ambil);
+	    		
+	    		r.add("id_unitluaslot_convert",sorDropdownUnitAsal);
+	    		r.add("id_unitluasambil_convert",sorDropdownUnitAmbil);	
 	    		
 	    		r.add("id_kategoritanah",id_kategoriTanah);
 	    		

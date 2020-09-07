@@ -75,7 +75,6 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 		}    		
 		context.put("id_projekNegeri", id_projekNegeri);
 	
-    	myLogger.info("id_projekNegeri xxxxx"+id_projekNegeri);
     	//reset data
     	String checkedAda = "";
     	String checkedTiada = "";
@@ -392,8 +391,11 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
         		
         		idhakmilik = (String) context.get("ResultHM");
     		
-        		myLogger.info("id hakmilik : "+idhakmilik);
         		context.put("id_hakmilik",idhakmilik);
+        		
+        		model.setMaklumatTanah(idhakmilik);
+        		dataMaklumatTanah = model.getMaklumatTanah();
+        		context.put("dataMaklumatTanah", dataMaklumatTanah);
     		//form validation
         		context.put("semakTanah", "yes");
         		context.put("wantedit", "no");	
@@ -411,7 +413,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     		
     		context.put("mode", "view");
     		
-    		maklumatPageHakMilik(session,idpermohonan,noLOT);
+    		//maklumatPageHakMilik(session,idpermohonan,noLOT);
     		
     		String idHakmilik = getParam("id_hakmilik");
     		context.put("id_hakmilik", idHakmilik);
@@ -513,7 +515,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     		//context.put("selectLot", HTML.SelectUnitPT("socLot",Utils.parseLong(id_lot),"class=disabled disabled id=socLot style=width:auto"));
     		//BARU 2-9-2020
     		context.put("selectKategoriTanah",HTML.SelectKategoriTanah("socKategoriTanah",Utils.parseLong(id_kategoritanah),"id=socKategoriTanah "+mode+" style=width:auto",null));
-    		context.put("selectLot", HTML.SelectUnitPT("socLot",Utils.parseLong(id_lot),"style=width:auto class=disabled disabled "));
+    		context.put("selectLot", HTML.SelectUnitPT("socLot",Utils.parseLong(id_lot),"style=width:auto class=disabled disabled "));	
     		
     		//dropdown unit luas
     		context.put("selectUnitLuasLot",HTML.SelectLuas("socUnitLuasLot",Utils.parseLong(id_luaslot),"style=width:250px "+mode+" id=socUnitLuasLot onchange=onchangeUnitLuasAsalUpdate()"));
@@ -1200,6 +1202,10 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     		
     		clearValueHM();
         	
+    		context.put("txtseksyen", "");
+    		context.put("id_hakmilik", "");
+    		context.put("txtCatatan", "");
+    		
     		newDataSetting(idpermohonan);
     		
     		noLOT = getParam("carianNoLot2");
@@ -2195,10 +2201,10 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 	    	h.put("negeri", getParam("id_existNegeri"));
 	    	h.put("daerah", getParam("id_existDaerah"));
 	    	h.put("mukim", getParam("socMukim"));
-	    	h.put("txtseksyen", getParam("txtseksyen"));
+	    	h.put("seksyen", getParam("txtseksyen"));
 	    	h.put("txtnolot", getParam("txtnolot"));
 	    	h.put("txtnopt", getParam("txtnopt"));
-	    	h.put("catatan", getParam("txtCatatan"));
+	    	h.put("txtcatatan", getParam("txtCatatan"));
 	    	
 	    	h.put("daerahpenggawa", getParam("daerahpenggawa"));
 	    	
@@ -2222,7 +2228,8 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 			h.put("unitLuasAmbil", getParam("socUnitLuasAmbil"));		
 			
 			h.put("txtLuasLotAsalSebelumConvert", getParam("txtLuasLotAsalSebelumConvert"));
-			h.put("txtLuasLotAmbilSebelumConvert", getParam("txtLuasLotAmbilSebelumConvert"));		
+			h.put("txtLuasLotAmbilSebelumConvert", getParam("txtLuasLotAmbilSebelumConvert"));	
+			
 			h.put("sorDropdownUnitAsal", getParam("sorDropdownUnitAsal"));
 			h.put("sorDropdownUnitAmbil", getParam("sorDropdownUnitAmbil"));
 			
@@ -2964,7 +2971,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 			    
 				context.put("socPSegera", "");
 				
-				context.put("txtSeksyen", "");
+				context.put("txtseksyen", "");
 				context.put("txtNoHakmilik", "");
 				context.put("txdTarikhDaftar", "");
 				context.put("txdTarikhLuput", "");
@@ -2995,7 +3002,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 				context.put("txtNoTingkat", "");
 				context.put("txtNoPetak", "");
 				context.put("txtnopt", "");
-				context.put("txtseksyen", "");
+		
 				myLogger.info("clearrr");
 				
 			}//close clearValueHM
