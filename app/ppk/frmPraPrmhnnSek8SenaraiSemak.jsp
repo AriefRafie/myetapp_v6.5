@@ -274,8 +274,22 @@
         
         <table width="100%" border="0">
         
+         #if($listsijilmati.size() > 0 )
+         
+         	#foreach($listm in $listsijilmati)
+    	  		#set ($no_sijil = $listm.no_sijil)
+    	  		#set ($jenis_sijil = $listm.jenis_sijil)
+    	  	#end
+    	  	
+    	  	#if($jenis_sijil == "1")
+          		#set($checked5 = "checked")
+          		#set($txtchecked5 = $no_sijil)
+           	#end
+    	  	
+         #end 
+         
           #if($SimpanStatus == "0" && $EventStatus=="0" && $backStatus == "0" && $listsijilmati.size() > 0 )
-          
+         
          #set($checked4 = "checked") 
           
           
@@ -341,7 +355,7 @@
           <tr>
             <td>&nbsp;</td>
             <td width="7%" ><label></label></td>
-            <td width="73%" >No. Sijil
+            <td width="73%" >No. Sijil 
               <label>
               
               #if($chkmode == "disabled")
@@ -349,8 +363,13 @@
               #else              
               #set($chkmodeR = "" )
               #end
-                    <input type="text" name="txtNomborSijil" id="txtNomborSijil" maxlength="25" $chkmodeR  class="$chkmode" value="$txtchecked5" onKeyUp="checkitA()" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()"  />
+                    <input type="text" name="txtNomborSijil" id="txtNomborSijil" maxlength="25" $chkmodeR  class="$chkmode" value="$!txtchecked5" onKeyUp="checkitA()" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()"  />
                   </label></td>
+          </tr>
+          <tr style="border-bottom: 1px solid #000;">
+            <td>&nbsp;</td>
+            <td ></td>
+            <td> </td>
           </tr>
           <!-- 
           <tr>

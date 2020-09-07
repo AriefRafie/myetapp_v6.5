@@ -1,5 +1,5 @@
 <p> 
-<input type="text" id="mode" name="mode" value="$!mode">
+<input type="hidden" id="mode" name="mode" value="$!mode">
 <input type="hidden" name="command2">
 <input type="hidden" name="command3">
 <input type="hidden" name="command4">
@@ -13,7 +13,7 @@
 <input type="hidden" name="CursorPoint" value="$CursorPoint">
 <input type="hidden" name="tabId">
 <input type="hidden" name="id_permohonan" value="$id_permohonan">  
-<input type="text" name="id_hakmilik" value="$!id_hakmilik">
+<input type="hidden"   name="id_hakmilik" id="id_hakmilik" value="$!id_hakmilik">
 <input type="hidden" name="txtNoLot">
 <input type="hidden" name="id_hakmilik_salin" id="id_hakmilik_salin" value="$!id_hakmilik_salin" />
 
@@ -35,8 +35,10 @@
 
 </p>
 
+
 #parse("app/ppt/frmLabelSet.jsp")
 
+#if($mode=="view")
 #foreach($data in $dataMaklumatTanah)
 
 	#set($idPermohonan=$data.id_permohonan)
@@ -47,7 +49,7 @@
 	#set($luas=$data.luas_lot)
 	#set($luasAmbil=$data.luas_ambil)
 	#set($seksyen=$data.seksyen)
-	#set($catatan=$data.catatan)
+	#set($txtcatatan=$data.catatan)
     #set($id_fail=$data.id_fail)
     #set($txtNoBangunan=$data.no_bangunan)
     #set($txtNoPetak=$data.no_petak)
@@ -61,7 +63,7 @@
     
     
 #end
-
+#end
 
 
 #if($semakTanah=="no")
@@ -130,7 +132,7 @@
             	<td>Presint</td>
             	#end
             	<td>:</td>
-                <td><input type="text" name="txtseksyen" size="22" value="$txtseksyen" maxlength="30" id="txtseksyen"  ></td>
+                <td><input type="text" name="txtseksyen" size="22" value="$!seksyen" maxlength="30" id="txtseksyen"  ></td>
         </tr>
           </table>
           </fieldset>
@@ -302,7 +304,7 @@
             <tr>
             	<td valign="top">Catatan</td>
             	<td valign="top">:</td>
-            	<td><textarea name="txtCatatan" id="txtCatatan" cols="90%" rows="15" onKeyUp="textCounter(this.form.txtCatatan,this.form.remLen1,4000);" onKeyDown="textCounter(this.form.txtCatatan,this.form.remLen1,4000);" >$catatan</textarea></td>
+            	<td><textarea name="txtCatatan" id="txtCatatan" cols="90%" rows="15" onKeyUp="textCounter(this.form.txtCatatan,this.form.remLen1,4000);" onKeyDown="textCounter(this.form.txtCatatan,this.form.remLen1,4000);" >$!txtcatatan</textarea></td>
             </tr>
             <tr>
         		<td>&nbsp;</td>
@@ -323,7 +325,7 @@
 #end
 
 #if($semakTanah=="yes")
-aaaa
+
 <fieldset id="changeTanah">
 	<legend><strong>Maklumat Tanah</strong></legend>
 	<table width="100%"  cellpadding="1" border="0">
@@ -331,7 +333,7 @@ aaaa
       #if($wantedit=="no")
         	
   <tr>
-            	<td width="20%">Negeri d</td>
+            	<td width="20%">Negeri</td>
             	<td width="1%">:</td>
                 <td width="79%"><input type="text" name="existNegeri" value="$existNegeri" size="42" class="disabled" readonly>
                 	<input type="hidden" name="id_existNegeri" value="$id_existNegeri"></td>
@@ -435,15 +437,15 @@ aaaa
 				<td>
 					
 					#if($showFieldAsalBeforeConvert=="yes")
-					<input type="text" name="txtLuasLotAsalSebelumConvert" $disability $disabilityx id="txtLuasLotAsalSebelumConvert" size="50" value="$!txtLuasLotAsalSebelumConvert" maxlength="100"   /><p/>
+					<input type="text" name="txtLuasLotAsalSebelumConvert"  readonly class="disabled" id="txtLuasLotAsalSebelumConvert" size="50" value="$!txtLuasLotAsalSebelumConvert" maxlength="100"   /><p/>
 					#end
 					
-					<input type="text" $disability $disabilityx name="txtLuasLotAsal" id="txtLuasLotAsal" size="15" value="$!txtLuasLotAsal" maxlength="20" onkeyup="validateNilai(this,this.value);" />
+					<input type="text"  readonly class="disabled" name="txtLuasLotAsal" id="txtLuasLotAsal" size="15" value="$!txtLuasLotAsal" maxlength="20" onkeyup="validateNilai(this,this.value);" />
 					#if($showBoxAsal2=="yes" || $showBoxAsal3=="yes")<input type="text" name="txtLuasLotAsal2" id="txtLuasLotAsal2" size="15" value="$!txtLuasLotAsal2" maxlength="20" onkeyup="validateNilai(this,this.value);" />#end
 					#if($showBoxAsal3=="yes")<input type="text" name="txtLuasLotAsal3" id="txtLuasLotAsal3" size="15" value="$!txtLuasLotAsal3" maxlength="20" onkeyup="validateNilai(this,this.value);" />#end
-					
+
 					#if($showDropdownUnitAsal=="yes")
-					<select $disability1 $disabilityx name="sorDropdownUnitAsal" style="width:132px" onchange="onchangeUnitAsalUpdate()">
+					<select  readonly class="disabled" name="sorDropdownUnitAsal" style="width:132px" onchange="onchangeUnitAsalUpdate()">
       		
       					#if($sorDropdownUnitAsal=="1")
       					<option value="1">HEKTAR</option>
@@ -490,15 +492,15 @@ aaaa
 				<td>
 					
 					#if($showFieldAmbilBeforeConvert=="yes")
-					<input type="text" $disability $disabilityx name="txtLuasLotAmbilSebelumConvert" id="txtLuasLotAmbilSebelumConvert" size="50" value="$!txtLuasLotAmbilSebelumConvert" maxlength="100"   /><p/>
+					<input type="text"  readonly class="disabled" name="txtLuasLotAmbilSebelumConvert" id="txtLuasLotAmbilSebelumConvert" size="50" value="$!txtLuasLotAmbilSebelumConvert" maxlength="100"   /><p/>
 					#end
 					
-					<input $disability $disabilityx type="text" name="txtLuasLotAmbil" id="txtLuasLotAmbil" size="15" value="$!txtLuasLotAmbil" maxlength="20" onkeyup="validateNilai(this,this.value);" />
+					<input  readonly class="disabled" type="text" name="txtLuasLotAmbil" id="txtLuasLotAmbil" size="15" value="$!txtLuasLotAmbil" maxlength="20" onkeyup="validateNilai(this,this.value);" />
 					#if($showBoxAmbil2=="yes" || $showBoxAmbil3=="yes")<input type="text" name="txtLuasLotAmbil2" id="txtLuasLotAmbil2" size="15" value="$!txtLuasLotAmbil2" maxlength="20" onkeyup="validateNilai(this,this.value);" />#end
 					#if($showBoxAmbil3=="yes")<input type="text" name="txtLuasLotAmbil3" id="txtLuasLotAmbil3" size="15" value="$!txtLuasLotAmbil3" maxlength="20" onkeyup="validateNilai(this,this.value);" />#end
 				
 					#if($showDropdownUnitAmbil=="yes")
-					<select $disability1 $disabilityx name="sorDropdownUnitAmbil" style="width:132px" onchange="onchangeUnitAmbilUpdate()">
+					<select  readonly class="disabled" name="sorDropdownUnitAmbil" style="width:132px" onchange="onchangeUnitAmbilUpdate()">
       		
       					#if($sorDropdownUnitAmbil=="1")
       					<option value="1">HEKTAR</option>
@@ -535,7 +537,7 @@ aaaa
             <tr>
             	<td valign="top">Catatan</td>
             	<td valign="top">:</td>
-            	<td><textarea name="txtCatatan" id="txtCatatan" cols="90%" rows="15" readonly class="disabled">$!catatan</textarea></td>
+            	<td><textarea name="txtCatatan" id="txtCatatan" cols="90%" rows="15" readonly class="disabled">$!txtcatatan</textarea></td>
             </tr>
             
         #end    
@@ -753,7 +755,7 @@ aaaa
            	<tr>
             	<td valign="top">Catatan</td>
             	<td valign="top">:</td>
-            	<td><textarea name="txtCatatan" id="txtCatatan" cols="90%" rows="15" onKeyUp="textCounter(this.form.txtCatatan,this.form.remLen1,4000);" onKeyDown="textCounter(this.form.txtCatatan,this.form.remLen1,4000);" >$!catatan</textarea></td>
+            	<td><textarea name="txtCatatan" id="txtCatatan" cols="90%" rows="15" onKeyUp="textCounter(this.form.txtCatatan,this.form.remLen1,4000);" onKeyDown="textCounter(this.form.txtCatatan,this.form.remLen1,4000);" >$!txtcatatan</textarea></td>
             </tr>
             <tr>
         		<td>&nbsp;</td>
