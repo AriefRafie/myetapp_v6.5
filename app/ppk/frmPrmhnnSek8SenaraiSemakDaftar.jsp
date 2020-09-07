@@ -330,7 +330,7 @@
             <td width="7%" ><label></label></td>
             <td width="73%" >Tarikh Perintah&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <label>
-                <input type="text" name="txtPerintahMahkamah" id="txtPerintahMahkamah" width="10" maxlength="10" $chkmodeR  class="$chkmode" value="$txtchecked6d" onKeyUp="" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()"/>
+                <input type="text" name="txtPerintahMahkamah" id="txtPerintahMahkamah" width="10" maxlength="10" $chkmodeR  class="$chkmode" value="$!txtchecked6d" onKeyUp="" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()"/>
                 <a href="javascript:displayDatePicker('txtPerintahMahkamah',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
                 <span style="font-size:9px;color:blue;font-style:italic">dd/mm/yyyy</span>
               </label>
@@ -347,7 +347,7 @@
               #else              
               #set($chkmodeR = "" )
               #end
-                    <input type="text" name="txtNoKesMahkamah" id="txtNoKesMahkamah" maxlength="25" $chkmodeR  class="$chkmode" value="$txtchecked6" onKeyUp="" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()"  />
+                    <input type="text" name="txtNoKesMahkamah" id="txtNoKesMahkamah" maxlength="25" $chkmodeR  class="$chkmode" value="$!txtchecked6" onKeyUp="" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()"  />
                   </label></td>
           </tr>
           <!-- 
@@ -554,7 +554,7 @@
           <tr>
             <td width="10%" >&nbsp;</td>
             <td width="1%" >&nbsp;</td>
-            <td width="3%" ><input name="cbsemaks" type="checkbox" id="cbsemaks12" $chkmode value="17" $checked17 onClick="checkit16()"/>            </td>
+            <td width="3%" ><input name="cbsemaks" type="checkbox" id="cbsemaks12" $chkmode value="17" $checked17 onClick="ReadOnlyCheckBox(this);checkit16()"/>            </td>
             <td width="86%"> Salinan dokumen sokongan bagi Harta Alih</td>
           </tr>
         </table></td>

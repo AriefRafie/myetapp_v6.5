@@ -62,8 +62,19 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     	String vm = "";
     	String noLOT = "";
     	String idpegawai = "";
-    	String id_projekNegeri = "";
+    	//get id Projek Negeri
     	
+    	Vector listPohon = new Vector();
+    	String id_projekNegeri = "";
+   
+    	listPohon = model.getListPohon();
+    	
+    	if(listPohon.size()!=0){
+			Hashtable h = (Hashtable) listPohon.get(0);
+			id_projekNegeri = h.get("idProjekNegeri").toString();
+		}    		
+		context.put("id_projekNegeri", id_projekNegeri);
+	
     	//reset data
     	String checkedAda = "";
     	String checkedTiada = "";
@@ -86,7 +97,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     	//Vector list = new Vector();
     	Vector listPageDepan = new Vector();
     	Vector listDokumen = new Vector();
-    	Vector listPohon = new Vector();
+    	
     	Vector listPohon2 = new Vector();
     	Vector listMaklumatTanah = new Vector();
     	Vector dataMaklumatTanah = new Vector();
@@ -151,6 +162,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 		}
 
 		String idpermohonan = getParam("id_permohonan");
+		String idhakmilik = getParam("id_hakmilik");
 		context.put("id_status", "");
 		
 		String nama_pengarah = "";
@@ -368,13 +380,27 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     	}//close tambah maklumat tanah hakmilik
     	
     	else if("addMaklumatTanah".equals(submit)) {
-    		myLogger.info("addMaklumatTanah: ------");
-    			//simpan data
-        	add_maklumat_tanah(session);
-    		maklumatPageHakMilik(session,idpermohonan,noLOT);
+
+    		//simpan data
+    		String result = "";
+        		//simpan data
+            	result = add_maklumat_tanah(session);
+    		//maklumatPageHakMilik(session,idpermohonan,noLOT);
+            	
+            	context.put("ResultHM",result);
+        		
+        		idhakmilik = (String) context.get("ResultHM");
     		
+        		context.put("id_hakmilik",idhakmilik);
+        		
+        		model.setMaklumatTanah(idhakmilik);
+        		dataMaklumatTanah = model.getMaklumatTanah();
+        		context.put("dataMaklumatTanah", dataMaklumatTanah);
     		//form validation
-    		context.put("semakTanah", "no");    		
+        		context.put("semakTanah", "yes");
+        		context.put("wantedit", "no");	
+        		context.put("mode", "view");
+    				
     		//screen
     		vm = screenTanah;
     		
@@ -384,6 +410,10 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     		
     		noLOT = getParam("carianNoLot2");
     		context.put("carianNoLot2", noLOT.trim());
+    		
+    		context.put("mode", "view");
+    		
+    		//maklumatPageHakMilik(session,idpermohonan,noLOT);
     		
     		String idHakmilik = getParam("id_hakmilik");
     		context.put("id_hakmilik", idHakmilik);
@@ -429,6 +459,9 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     		String id_jenishakmilik = "";
     		String id_luaslot = "";
     		String id_lot = "";
+    		String id_kategoritanah = "";
+    		String id_unitluasambil = "";
+    		String mode = getParam("mode");
     		
     		if(dataMaklumatTanah.size()!=0){
     			Hashtable h = (Hashtable) dataMaklumatTanah.get(0);
@@ -437,6 +470,8 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     			id_luaslot = h.get("id_luasLot").toString();
     			id_lot = h.get("id_lot").toString();
     			id_daerahpenggawa = h.get("id_daerahpenggawa").toString();
+    			id_kategoritanah= h.get("id_kategoritanah").toString();
+    			id_unitluasambil= h.get("id_unitluasambil").toString();
     		}
     		
     		
@@ -473,11 +508,18 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     		}else{
     			context.put("selectJenisHakmilik",HTML.SelectJenisHakmilik("socJenisHakmilik",Utils.parseLong(id_jenishakmilik),"class=disabled disabled id=socJenisHakmilik style=width:auto"));   	
     		}
-    		
+    		myLogger.info("masuk sini la");
     		//dropdown
     		//context.put("selectJenisHakmilik",HTML.SelectJenisHakmilik("MKJenisHakmilik",Utils.parseLong(id_jenishakmilik),"class=disabled style=width:auto disabled"));
-    		context.put("selectLuas",HTML.SelectLuas("MKLuas",Utils.parseLong(id_luaslot),"style=width:250px class=disabled disabled"));
-    		context.put("selectLot", HTML.SelectUnitPT("MKLot",Utils.parseLong(id_lot),"class=disabled disabled style=width:auto"));
+    		//context.put("selectLuas",HTML.SelectLuas("socJenisHakmilik",Utils.parseLong(id_luaslot),"style=width:250px class=disabled disabled"));
+    		//context.put("selectLot", HTML.SelectUnitPT("socLot",Utils.parseLong(id_lot),"class=disabled disabled id=socLot style=width:auto"));
+    		//BARU 2-9-2020
+    		context.put("selectKategoriTanah",HTML.SelectKategoriTanah("socKategoriTanah",Utils.parseLong(id_kategoritanah),"id=socKategoriTanah "+mode+" style=width:auto",null));
+    		context.put("selectLot", HTML.SelectUnitPT("socLot",Utils.parseLong(id_lot),"style=width:auto class=disabled disabled "));	
+    		
+    		//dropdown unit luas
+    		context.put("selectUnitLuasLot",HTML.SelectLuas("socUnitLuasLot",Utils.parseLong(id_luaslot),"style=width:250px "+mode+" id=socUnitLuasLot onchange=onchangeUnitLuasAsalUpdate()"));
+    		context.put("selectUnitLuasAmbil",HTML.SelectLuas("socUnitLuasAmbil",Utils.parseLong(id_unitluasambil),"style=width:250px "+mode+" id=socUnitLuasAmbil onchange=onchangeUnitLuasAmbilUpdate()"));
     		
     		//form validation
     		context.put("semakTanah", "yes");
@@ -547,6 +589,8 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     	
     	else if("kemaskiniTanah".equals(submit)) {
     		
+    		context.put("mode", "new");
+    		
     		String idHakmilik = getParam("id_hakmilik");  	
     		context.put("id_hakmilik", idHakmilik);
     		
@@ -573,6 +617,9 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     		String id_jenishakmilik = "";
     		String id_luaslot = "";
     		String id_lot = "";
+    		String id_unitluasambil = "";
+    		String id_kategoritanah = "";
+    		String mode = getParam("mode");
     		
     		if(dataMaklumatTanah.size()!=0){
     			Hashtable h = (Hashtable) dataMaklumatTanah.get(0);
@@ -583,6 +630,9 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     			id_luaslot = h.get("id_luasLot").toString();
     			id_lot = h.get("id_lot").toString();
     			id_daerahpenggawa = h.get("id_daerahpenggawa").toString();
+    			id_kategoritanah = h.get("id_kategoritanah").toString();
+    			id_unitluasambil = h.get("id_unitluasambil").toString();
+    			
     		}
     		
     		model.setListPohon2(idpermohonan);
@@ -612,8 +662,15 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     		}   		
     		//dropdown
     		//context.put("selectJenisHakmilik",HTML.SelectJenisHakmilik("editJenisHakmilik",Utils.parseLong(id_jenishakmilik),"style=width:auto"));
-    		context.put("selectLuas",HTML.SelectLuas("editLuas",Utils.parseLong(id_luaslot),"style=width:250px"));
-    		context.put("selectLot", HTML.SelectUnitPT("editLot",Utils.parseLong(id_lot),"style=width:auto"));    		
+    		//context.put("selectLuas",HTML.SelectLuas("editLuas",Utils.parseLong(id_luaslot),"style=width:250px"));
+    		//context.put("selectLot", HTML.SelectUnitPT("editLot",Utils.parseLong(id_lot),"style=width:auto"));    		
+    		context.put("selectKategoriTanah",HTML.SelectKategoriTanah("socKategoriTanah",Utils.parseLong(id_kategoritanah),"id=socKategoriTanah "+mode+" style=width:auto",null));
+    		context.put("selectLot", HTML.SelectUnitPT("socLot",Utils.parseLong(id_lot),"style=width:auto "));
+    		
+    		//dropdown unit luas
+    		context.put("selectUnitLuasLot",HTML.SelectLuas("socUnitLuasLot",Utils.parseLong(id_luaslot),"style=width:250px "+mode+" id=socUnitLuasLot onchange=onchangeUnitLuasAsalUpdate()"));
+    		context.put("selectUnitLuasAmbil",HTML.SelectLuas("socUnitLuasAmbil",Utils.parseLong(id_unitluasambil),"style=width:250px "+mode+" id=socUnitLuasAmbil onchange=onchangeUnitLuasAmbilUpdate()"));
+    		
     		
     		if(lot.isEmpty()){
     			context.put("checkA", "");
@@ -643,6 +700,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 		
 			//data
     		context.put("dataMaklumatTanah", dataMaklumatTanah);
+    		myLogger.info("dataMaklumatTanah :"+dataMaklumatTanah);
     		context.put("saiz_dataTanah", dataMaklumatTanah.size());
     		//form validation
     		context.put("semakTanah", "yes");
@@ -1141,8 +1199,13 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     	else if("tambah".equals(submit)){
     		
     		context.put("mode","new"); 
+    		
     		clearValueHM();
         	
+    		context.put("txtseksyen", "");
+    		context.put("id_hakmilik", "");
+    		context.put("txtCatatan", "");
+    		
     		newDataSetting(idpermohonan);
     		
     		noLOT = getParam("carianNoLot2");
@@ -1150,8 +1213,10 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     		context.put("carianNoLot2", noLOT.trim());
     		
     		maklumatPageHakMilik(session,idpermohonan,noLOT);
+    		//getAndSetHM(idpermohonan,"new",id_projekNegeri);
    
-    		context.put("txtnolot","");   		
+    		context.put("txtnolot","");   
+    	
     		//form validation
     		context.put("semakTanah", "no");   	
     		 
@@ -1172,6 +1237,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     
     		//get and set data
     		getAndSetHM(idpermohonan,"new",id_projekNegeri);
+    		//maklumatPageHakMilik(session,idpermohonan,noLOT);
     	
     		String submit3 = getParam("command3");
         	myLogger.info("submit[3] : " + submit3);
@@ -1180,6 +1246,10 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
         		
         		//validations for luas asal
         		validationConvertLuas();
+        		
+        		//get and set data
+        		getAndSetHM(idpermohonan,"new",id_projekNegeri);
+        		//maklumatPageHakMilik(session,idpermohonan,noLOT);
         		
         		String submit4 = getParam("command4");
             	myLogger.info("submit[4] : " + submit4);
@@ -2113,11 +2183,12 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 	    	h.put("tarikh_lengkap", "");
 	    	
 	    	return FrmPermohonanUPTData.addSPT(h);
+	    	
 	  
 	}//close add
 
-	@SuppressWarnings("unchecked")
-	private void add_maklumat_tanah(HttpSession session) throws Exception{
+	@SuppressWarnings("unchecked") 
+	private String add_maklumat_tanah(HttpSession session) throws Exception{ //SEK4
 	    
 			Hashtable h = new Hashtable();
 			
@@ -2129,31 +2200,47 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 	    	h.put("id_permohonan", getParam("id_permohonan"));
 	    	h.put("negeri", getParam("id_existNegeri"));
 	    	h.put("daerah", getParam("id_existDaerah"));
-	    	h.put("mukim", getParam("mukim"));
-	    	h.put("txtseksyen", getParam("txtseksyen"));
+	    	h.put("mukim", getParam("socMukim"));
+	    	h.put("seksyen", getParam("txtseksyen"));
 	    	h.put("txtnolot", getParam("txtnolot"));
 	    	h.put("txtnopt", getParam("txtnopt"));
-	    	h.put("catatan", getParam("txtCatatan"));
+	    	h.put("txtcatatan", getParam("txtCatatan"));
 	    	
 	    	h.put("daerahpenggawa", getParam("daerahpenggawa"));
 	    	
 	    	h.put("jenisHakMilik", getParam("socJenisHakmilik"));
 	    	h.put("no_hakmilik", getParam("txtNoHakmilik"));
-	    	h.put("lot", getParam("lot"));	    	
-	    	h.put("luas", "");
-	    	h.put("luas_lot", "");
-	    	h.put("anggaran_luas", "");
-	    	h.put("socKategoriTanah", "");
+	    	h.put("lot", getParam("socLot"));	    	
+	    	//h.put("luas", "");
+	    	//h.put("luas_lot", "");
+	    	//h.put("anggaran_luas", "");
+	    
 	    	
 //	    	PPT-03 Penambahan Strata
-	    	myLogger.info("No. Bangunan = "+getParam("txtNoBangunan"));
 	    	h.put("txtNoBangunan", getParam("txtNoBangunan"));
 	    	h.put("txtNoTingkat", getParam("txtNoTingkat"));
 	    	h.put("txtNoPetak", getParam("txtNoPetak"));
 	    	
+	    	//PENAMBAHAN YATI
+	    	h.put("socKategoriTanah",  getParam("socKategoriTanah"));
+	    	
+	    	h.put("unitLuas", getParam("socUnitLuasLot"));
+			h.put("unitLuasAmbil", getParam("socUnitLuasAmbil"));		
+			
+			h.put("txtLuasLotAsalSebelumConvert", getParam("txtLuasLotAsalSebelumConvert"));
+			h.put("txtLuasLotAmbilSebelumConvert", getParam("txtLuasLotAmbilSebelumConvert"));	
+			
+			h.put("sorDropdownUnitAsal", getParam("sorDropdownUnitAsal"));
+			h.put("sorDropdownUnitAmbil", getParam("sorDropdownUnitAmbil"));
+			
+			h.put("txtLuasAsal", Utils.RemoveSymbol(getParam("txtLuasLotAsal")));
+			h.put("txtLuasAmbil",  Utils.RemoveSymbol(getParam("txtLuasLotAmbil")));
+	    	
+	    	
 	    	h.put("id_user", session.getAttribute("_ekptg_user_id"));
 	    	
-	    	FrmPermohonanUPTData.add_maklumat_tanah(h);
+	    
+	    	return FrmPermohonanUPTData.add_maklumat_tanah(h);
 
 	    
 	   }//close add_maklumat_tanah
@@ -2423,6 +2510,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 	@SuppressWarnings("unchecked")
 	public void maklumatPageHakMilik(HttpSession session,String idpermohonan,String noLOT) throws Exception {
 		 
+		myLogger.info("masukkkksini");
 		Vector listPohon = null;
 		Vector listPohon2 = null;
 		Vector listMaklumatTanah = null;
@@ -2431,6 +2519,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 		String id_unitluasambil = "";
 		String mode = "";
 		String id_kategoritanah = "";
+		String id_lot = "";
 		
 		//data & list maklumat tanah
  		//model.setListMaklumatTanah(idpermohonan,noLOT,idpegawai);
@@ -2472,7 +2561,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 		}else{
 			context.put("showJajahan","no");
 		}
-		myLogger.info("skrin hakmilik sek 4");
+
 		//dropdown
 		if(id_projekNegeri.equals("10")){
 			context.put("selectJenisHakmilik",HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",null,"id=socJenisHakmilik style=width:auto"));   	
@@ -2485,7 +2574,11 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 		context.put("selectUnitLuasAmbil",HTML.SelectLuas("socUnitLuasAmbil",Utils.parseLong(id_unitluasambil),"style=width:250px "+mode+" id=socUnitLuasAmbil onchange=onchangeUnitLuasAmbil()"));
 		
 		//context.put("SelectLuas",HTML.SelectLuas("luas",null,"style=width:250px"));
-		context.put("SelectLot", HTML.SelectUnitPT("lot",null,"style=width:auto"));
+		//context.put("selectLot", HTML.SelectUnitPT("lot",null,"style=width:auto")); // new
+		
+		//context.put("selectLot", HTML.SelectUnitPT("lot",Utils.parseLong(id_lot),"style=width:auto"));
+		
+		context.put("selectLot", HTML.SelectUnitPT("socLot",Utils.parseLong(id_lot), "id=socLot style=width:auto" ));
 		
 		context.put("selectKategoriTanah",HTML.SelectKategoriTanah("socKategoriTanah",Utils.parseLong(id_kategoritanah),"id=socKategoriTanah "+mode+" style=width:auto",null));
 		
@@ -2773,7 +2866,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 			}
 			
 			context.put("SelectLuas",HTML.SelectLuas("luas",null,"style=width:250px"));
-			context.put("SelectLot", HTML.SelectUnitPT("lot",Utils.parseLong(id_lot),"style=width:auto"));
+			context.put("selectLot", HTML.SelectUnitPT("lot",Utils.parseLong(id_lot),"style=width:auto"));
 			
 			
 			
@@ -2788,8 +2881,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 			}
 			
 			//untuk kelantan shj
-			
-			myLogger.info("testing abcde");
+		
 			//dropdown unit luas
 			context.put("selectUnitLuasLot",HTML.SelectLuas("socUnitLuasLot",Utils.parseLong(id_luaslot),"style=width:250px "+mode+" id=socUnitLuasLot onchange=onchangeUnitLuasAsal()"));
 			context.put("selectUnitLuasAmbil",HTML.SelectLuas("socUnitLuasAmbil",Utils.parseLong(id_unitluasambil),"style=width:250px "+mode+" id=socUnitLuasAmbil onchange=onchangeUnitLuasAmbil()"));
@@ -2874,10 +2966,12 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 			}//close changeUnitAsal
 			
 			private void clearValueHM() throws Exception{
+				
+				myLogger.info("clear dlu");
 			    
 				context.put("socPSegera", "");
 				
-				context.put("txtSeksyen", "");
+				context.put("txtseksyen", "");
 				context.put("txtNoHakmilik", "");
 				context.put("txdTarikhDaftar", "");
 				context.put("txdTarikhLuput", "");
@@ -2907,6 +3001,10 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 				context.put("txtNoBangunan", "");
 				context.put("txtNoTingkat", "");
 				context.put("txtNoPetak", "");
+				context.put("txtnopt", "");
+		
+				myLogger.info("clearrr");
+				
 			}//close clearValueHM
 			
 			@SuppressWarnings("unchecked")
@@ -3613,6 +3711,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 				
 				if(mode.equals("new")){
 					
+					myLogger.info("id_projekNegeri "+id_projekNegeri);
 					if(id_projekNegeri.equals("10")){
 						context.put("selectJenisHakmilik",HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",Utils.parseLong(getParam("socJenisHakmilik")),"id=socJenisHakmilik style=width:auto onchange=doOnchange()"));   	
 					}else{
@@ -3623,7 +3722,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 					context.put("selectUnitLuasLot",HTML.SelectLuas("socUnitLuasLot",Utils.parseLong(getParam("socUnitLuasLot")),"style=width:250px id=socUnitLuasLot onchange=onchangeUnitLuasAsal()"));
 					context.put("selectUnitLuasAmbil",HTML.SelectLuas("socUnitLuasAmbil",Utils.parseLong(getParam("socUnitLuasAmbil")),"style=width:250px id=socUnitLuasAmbil onchange=onchangeUnitLuasAmbil()"));
 				}else{
-					
+
 					if(id_projekNegeri.equals("10")){
 						context.put("selectJenisHakmilik",HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",Utils.parseLong(getParam("socJenisHakmilik")),"id=socJenisHakmilik style=width:auto onchange=doOnchangeUpdate()"));   	
 					}else{
@@ -3652,19 +3751,22 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 				
 				//dropdown by
 				if(id_daerah!=""){
+
 					context.put("selectMukim",HTML.SelectMukimNoKodByDaerah(id_daerah,"socMukim",Utils.parseLong(getParam("socMukim")),"style=width:auto"));
+					
 				}else{
+
 					context.put("selectMukim",HTML.SelectMukimNoKod("socMukim",Utils.parseLong(getParam("socMukim")),"style=width:auto"));
 				}
 				
 				//data
-				context.put("txtSeksyen", getParam("txtSeksyen"));
-				if(getParam("socJenisHakmilik").equals("116")){
+			//	context.put("txtSeksyen", getParam("txtSeksyen"));
+				/*if(getParam("socJenisHakmilik").equals("116")){
 					context.put("txtNoHakmilik", "RH");
 				}else{
 					context.put("txtNoHakmilik", getParam("txtNoHakmilik"));
 				}
-				
+				*/
 				
 				String resetRadio = getParam("resetRadio");
 				
@@ -3675,8 +3777,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 				context.put("txdTarikhLuput", getParam("txdTarikhLuput"));
 				context.put("txtBakiTempoh", getParam("txtBakiTempoh"));
 				context.put("txtNoSyit", getParam("txtNoSyit"));
-				context.put("txtNoPT", getParam("txtNoPT"));
-				context.put("txtNoLot", getParam("txtNoLot"));
+				
 				context.put("txtLuasLotAsal", getParam("txtLuasLotAsal"));
 				context.put("txtLuasLotAsal2", getParam("txtLuasLotAsal2"));
 				context.put("txtLuasLotAsal3", getParam("txtLuasLotAsal3"));
@@ -3689,6 +3790,12 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 				context.put("txtNoBangunan", getParam("txtNoBangunan"));
 				context.put("txtNoTingkat", getParam("txtNoTingkat"));
 				context.put("txtNoPetak", getParam("txtNoPetak"));
+				context.put("txtNoHakmilik", getParam("txtNoHakmilik"));
+				context.put("txtnopt", getParam("txtnopt"));
+				context.put("txtnolot", getParam("txtnolot"));
+				context.put("txtseksyen", getParam("txtseksyen"));
+						
+				context.put("selectLot", HTML.SelectUnitPT("socLot",Utils.parseLong(getParam("socLot")),"style=width:auto"));
 				
 				if(resetRadio.equals("1")){
 					context.put("sorJenisRizab", "");
