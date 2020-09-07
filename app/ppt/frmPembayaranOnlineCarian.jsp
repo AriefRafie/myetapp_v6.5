@@ -44,6 +44,7 @@
   </tr>
   -->
   
+  <!--
   #if($jenis_permohonan != '3'  && $jenis_permohonan != '1')
   <tr>
     <td>&nbsp;</td>
@@ -108,6 +109,9 @@
         </td>
   </tr>
   
+  --> 
+  
+  <!--
   #if($jenis_permohonan != '3'  && $jenis_permohonan != '1')
    <tr>
     <td>&nbsp;</td>
@@ -140,6 +144,8 @@
         </label>       </td>
   </tr> 
   #end
+ 
+--> 
   
   <tr>
     <td>&nbsp;</td>
@@ -162,6 +168,7 @@
 	#parse("app/ppt/frmCarianOnlinePPT.jsp")
 	<br/>
 #end
+
 
     <fieldset>
     <legend>SENARAI PERMOHONAN  #if($jenis_permohonan == '4'  || $jenis_permohonan == '3')

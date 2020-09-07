@@ -21,22 +21,22 @@
 </style>
 <p>  
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-  <input name="mode" type="hidden" id="mode" value="$mode"/>
-  <input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
-  <input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
-  <input name="selectedTabUpper" type="hidden" id="selectedTabUpper" value="$selectedTabUpper"/>
-  <input name="hitButton" type="hidden" id="hitButton"/>
-  <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
-  <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
-  <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
-  <input name="idUlasanTeknikal" type="hidden" id="idUlasanTeknikal" value="$idUlasanTeknikal"/>
-  <input name="idDokumen" type="hidden" id="idDokumen" value="$idDokumen"/>
-  <input name="idNegeriTanah" type="hidden" id="idNegeriTanah" value="$idNegeriTanah"/>
-  <input name="idKementerianTanah" type="hidden" id="idKementerianTanah" value="$idKementerianTanah"/>
-  <input name="idAgensiTanah" type="hidden" id="idAgensiTanah" value="$idAgensiTanah"/>
-  <input name="flagStatus" type="hidden" id="flagStatus" value="$flagStatus"/>
-  <input name="flagAktif" type="hidden" id="flagAktif" value="$flagAktif"/>  
-  <input name="step" type="hidden" id="step" value="$step"/>
+  <input type="hidden" name="mode" id="mode" value="$mode"/>
+  <input type="hidden" name="flagPopup" id="flagPopup" value="$flagPopup"/>
+  <input type="hidden" name="modePopup" id="modePopup" value="$modePopup"/>
+  <input type="hidden" name="selectedTabUpper" id="selectedTabUpper" value="$selectedTabUpper"/>
+  <input type="hidden" name="hitButton" id="hitButton"/>
+  <input type="hidden" name="idFail" id="idFail" value="$idFail"/>
+  <input type="hidden" name="idPermohonan" id="idPermohonan" value="$idPermohonan"/>
+  <input type="hidden" name="idStatus" id="idStatus" value="$idStatus"/>
+  <input type="hidden" name="idUlasanTeknikal" id="idUlasanTeknikal" value="$idUlasanTeknikal"/>
+  <input type="hidden" name="idDokumen" id="idDokumen" value="$idDokumen"/>
+  <input type="hidden" name="idNegeriTanah" id="idNegeriTanah" value="$idNegeriTanah"/>
+  <input type="hidden" name="idKementerianTanah" id="idKementerianTanah" value="$idKementerianTanah"/>
+  <input type="hidden" name="idAgensiTanah" id="idAgensiTanah" value="$idAgensiTanah"/>
+  <input type="hidden" name="flagStatus" id="flagStatus" value="$flagStatus"/>
+  <input type="hidden" name="flagAktif" id="flagAktif" value="$flagAktif"/>  
+  <input type="hidden" name="step" id="step" value="$step"/>
 </p>
 <body onLoad = $onload >
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -51,7 +51,7 @@
   </tr>
   #end
 
-  #if ($idFail != '' && $idStatus != '1610198')
+  #if ($idFail != '' && $idStatus != '1610198' && $idStatus != '1610200')
   <tr>
     <td><div id="TabbedPanels1" class="TabbedPanels">
         <ul class="TabbedPanelsTabGroup">
@@ -76,7 +76,7 @@
 </table>
 
 <script type="text/javascript">
-#if ($idFail != '' && $idStatus != '1610198')
+#if ($idFail != '' && $idStatus != '1610198' && $idStatus != '1610200')
 	var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedTabUpper});
 #end
 </script>
