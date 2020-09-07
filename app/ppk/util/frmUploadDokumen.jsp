@@ -152,6 +152,8 @@ padding:0 0.25em;
 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen&actionPopup=paparHA&hitButton=hapusmyid&iDokumen="+iDokumen;  
 		}else if('$!jenisdokumen' == '99211'){
 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen&actionPopup=paparHA&hitButton=hapusmyid&iDokumen="+iDokumen;  
+		}else if('$!jenisdokumen' == '99212'){
+			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen&actionPopup=paparHA&hitButton=hapusmyid&iDokumen="+iDokumen;  
 		}
 		
 		else{
@@ -207,6 +209,12 @@ padding:0 0.25em;
 		else if('$!jenisdokumen' == '99211'){
 			actExt ="&jenisdokumen=$!jenisdokumen";
 			actExt +="&actionPopup=$!actionPopup&hitButton=simpanboranga&rujukan=$!idRujukan&actionrefresh=$!actionRefresh";
+			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"+actExt;
+
+		}
+		else if('$!jenisdokumen' == '99212'){
+			actExt ="&jenisdokumen=$!jenisdokumen";
+			actExt +="&actionPopup=$!actionPopup&hitButton=simpanicwaris&rujukan=$!idRujukan&actionrefresh=$!actionRefresh";
 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"+actExt;
 
 		}
@@ -297,7 +305,10 @@ padding:0 0.25em;
 		}else if('dokumenSokongan' == '$!actionRefresh'){
 			window.opener.setSelected(0,7,0,0);
 			window.opener.TukarPemohonView(flagOnline);
-		
+			
+		}else if('dokumenIC' == '$!actionRefresh'){
+			window.opener.setSelected(0,2,0,0);
+			window.opener.WarisView(flagOnline);
 		}
 		
 		
