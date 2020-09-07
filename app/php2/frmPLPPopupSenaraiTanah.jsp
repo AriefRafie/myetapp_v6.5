@@ -12,6 +12,7 @@
 <input type="hidden" name="idNegeriPemohon" value="$idNegeriPemohon"/>
 <input type="hidden" name="idKementerianPemohon" value="$idKementerianPemohon"/>
 <input type="hidden" name="idHakmilikSementara"/>
+<input type="hidden" name="idJenisTanahPemohon" value="$idJenisTanahPemohon"/>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td><fieldset>

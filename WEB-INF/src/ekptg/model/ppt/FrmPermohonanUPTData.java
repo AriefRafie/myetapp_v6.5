@@ -204,6 +204,7 @@ public class FrmPermohonanUPTData {
 		    		}
 		    		sql +="ORDER by f.no_fail desc, p.tarikh_permohonan desc ";
 
+		    		myLogger.info("sql list permohonan sek4 : "+sql);
 		    		ResultSet rs = stmt.executeQuery(sql);
 		    		Vector list = new Vector();
 		      
@@ -3481,7 +3482,7 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 		Db db = null;
 		maklumatTanah.clear();
 		String sql = "";
-	
+		
 		try{
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -3619,7 +3620,7 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 			h.put("jenis_hakmilik", rs.getString("jenis_hakmilik")==null?"":rs.getString("jenis_hakmilik"));
 			h.put("kategori_tanah", rs.getString("kategori_tanah")==null?"":rs.getString("kategori_tanah"));
 			
-			//PPT-03 Penambahan Strata
+//			PPT-03 Penambahan Strata
 			h.put("no_bangunan", rs.getString("no_bangunan")==null?"":rs.getString("no_bangunan"));
 			h.put("no_tingkat", rs.getString("no_tingkat")==null?"":rs.getString("no_tingkat"));
 			h.put("no_petak", rs.getString("no_petak")==null?"":rs.getString("no_petak"));
@@ -3634,7 +3635,7 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 			if(db != null) db.close();
 		}
 		
-	}//close setlistpohon
+	}//close setMaklumatTanah
 	
 	
 	@SuppressWarnings("unchecked")
@@ -3990,7 +3991,7 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 		      
 		      
 		      Statement stmtMT = db.getStatement();
-		      SQLRenderer rMT = new SQLRenderer();				 
+		      SQLRenderer rMT = new SQLRenderer();
 		      rMT.add("id_kementerian");
 		      rMT.add("kod_kementerian");				      
 		      rMT.add("id_kementerian",id_kementerian);				      

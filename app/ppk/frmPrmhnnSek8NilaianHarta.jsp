@@ -1215,7 +1215,9 @@ kod :: $listhath.kod_hakmilik
 	</tr>  
 	       		#end
 
-
+</table>
+</fieldset>
+<br>
 <fieldset>
 <legend>PENGESAHAN PERMOHONAN</legend>
 <!--
@@ -1537,8 +1539,11 @@ kod :: $listhath.kod_hakmilik
 <td></td>
 <td>
 	<label align="left" valign="top"> 
-	<b><font color="BLUE" size="2"><span class="blink">Sekiranya permohonan telah dihantar, pemohon sudah tidak boleh mengemaskini permohonan.
-	<br> Jika terdapat sebarang maklumat yang perlu ditambah, sila mengemaskini permohonan terlebih dahulu sebelum menghantar permohonan.</span></font></b>
+<!-- 	<b><font color="BLUE" size="2"><span class="blink">Sekiranya permohonan telah dihantar, pemohon sudah tidak boleh mengemaskini permohonan. -->
+<!-- 	<br> Jika terdapat sebarang maklumat yang perlu ditambah, sila mengemaskini permohonan terlebih dahulu sebelum menghantar permohonan.</span></font></b> -->
+<!-- 	</label></td> -->
+	<b><font color="BLUE" size="2"><span class="blink">Ambil Perhatian: Sila pastikan maklumat yang diisi pada permohonan adalah TEPAT dan MUKTAMAD. 
+	Permohonan yang telah <br>dihantar TIDAK DIBENARKAN untuk dipinda/dikemaskini.</span></font></b>
 	</label></td>
 </tr>
 </table>

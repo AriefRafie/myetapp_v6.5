@@ -103,7 +103,7 @@ public class FrmPermohonanUPTOnlineData {
 		    Vector list = new Vector();
 		    Hashtable h = null;
 		    int bil = 1;
-
+		    
 		    while (rs.next()) {
 		    	h = new Hashtable();
 		    	h.put("bil", bil);

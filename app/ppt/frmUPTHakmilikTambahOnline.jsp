@@ -9,7 +9,6 @@ $jumlah_hakmilik
 -->
 
 
-
 <!-- #if ($showSave=="yes")
 <div class="success" id="alertSave">
 Maklumat Hakmilik telah berjaya disimpan.
@@ -49,8 +48,9 @@ Maklumat Hakmilik telah berjaya disimpan.
 #set($txtSekatanHak=$maklumat_Hakmilik_Salin.sekatan_hak)
 #set($txdTarikhPembayaran=$maklumat_Hakmilik_Salin.tarikh_pembayaran)
 
-
-
+#set($txtNoBangunan=$maklumat_Hakmilik_Salin.no_bangunan)
+#set($txtNoTingkat=$maklumat_Hakmilik_Salin.no_tingkat)
+#set($txtNoPetak=$maklumat_Hakmilik_Salin.no.petak)
 
 #set($showDropdownUnitAsal="yes") #set($showDropdownUnitAmbil="yes")
 
@@ -58,8 +58,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 #set($showFieldAmbilBeforeConvert="yes")
 
 
-<script>
-		
+<script>	
 		/*
 		$jquery(document).ready(function()
 		{
@@ -68,11 +67,8 @@ Maklumat Hakmilik telah berjaya disimpan.
 				//convertNilaiAmbil('$!showBoxAmbil2','$!showBoxAmbil3');
 				
 		});
-		*/
-		
-	
-		</script>
-
+		*/	
+</script>
 
 #end
 
@@ -141,9 +137,21 @@ Maklumat Hakmilik telah berjaya disimpan.
 			<td><input type="text" name="txtNoHakmilik" id="txtNoHakmilik"
 				value="$!txtNoHakmilik" size="12" maxlength="50"></td>
 		</tr>
+		
+		<!-- PPT-03 Penambahan Strata -->
+		<tr>
+			<td>&nbsp;</td>
+			<td>No. Strata</td>
+			<td>:</td>
+			<td>
+              	<span class="labelinput">No.Bang</span>&nbsp;<input name="txtNoBangunan" type="text" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+				<span class="labelinput">No.Ting</span>&nbsp;<input name="txtNoTingkat" type="text" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+				<span class="labelinput">No.Petak</span>&nbsp;<input name="txtNoPetak" type="text" id="txtNoPetak"  value="$!txtNoPetak" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+  			</td>
+		</tr>
 
 
-		#if($hideFieldHakmilik=="no")
+#if($hideFieldHakmilik=="no")
 
 		<tr>
 			<td>&nbsp;</td>
@@ -185,15 +193,13 @@ Maklumat Hakmilik telah berjaya disimpan.
 			<td><font color="red">*</font></td>
 			<td>No.Syit</td>
 			<td>:</td>
-			<td><input type="text" name="txtNoSyit" id="txtNoSyit"
-				value="$!txtNoSyit" size="12" maxlength="40"
-				onblur="javascript:updatetxtNoSyit('$!txtNoSyit')"></td>
+			<td><input type="text" name="txtNoSyit" id="txtNoSyit" value="$!txtNoSyit" size="12" maxlength="40"	onblur="javascript:updatetxtNoSyit('$!txtNoSyit')"></td>
 		</tr>
 
 		#end
 
 		<tr>
-			<td>&nbsp;</td>
+			<td><font color="red">*</font></td>
 			<td>No.PT</td>
 			<td>:</td>
 			<td>$!selectKodLot</td>
@@ -208,8 +214,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 		</tr>
 
 		<tr>
-
-			<td>&nbsp;</td>
+			<td><font color="red">*</font></td>
 			<td>No.LOT</td>
 			<td>:</td>
 			<td><input type="text" name="txtNoLot" id="txtNoLot"
@@ -441,17 +446,20 @@ Maklumat Hakmilik telah berjaya disimpan.
 
 
 
-
-#if($mode=="view") #if($onchangeHM=="no") #foreach($data in
-$dataMaklumatTanah) #set($nama_negeriprojek=$data.nama_negeri)
-#set($nama_daerah=$data.nama_daerah) #set($txtSeksyen=$data.seksyen)
+#if($mode=="view") #if($onchangeHM=="no") #foreach($data in $dataMaklumatTanah) 
+#set($nama_negeriprojek=$data.nama_negeri)
+#set($nama_daerah=$data.nama_daerah) 
+#set($txtSeksyen=$data.seksyen)
 #set($txtNoHakmilik=$data.no_hakmilik)
 #set($txdTarikhLuput=$data.tarikh_luput)
 #set($txdTarikhDaftar=$data.tarikh_daftar)
-#set($txtBakiTempoh=$data.tempoh_luput) #set($txtNoSyit=$data.no_syit)
-#set($txtNoLot=$data.no_lot) #set($txtNoPT=$data.no_pt)
+#set($txtBakiTempoh=$data.tempoh_luput) 
+#set($txtNoSyit=$data.no_syit)
+#set($txtNoLot=$data.no_lot) 
+#set($txtNoPT=$data.no_pt)
 #set($txtLuasLotAmbil=$data.luas_ambil)
-#set($txtLuasLotAsal=$data.luas_lot) #set($txtCatatan=$data.catatan)
+#set($txtLuasLotAsal=$data.luas_lot) 
+#set($txtCatatan=$data.catatan)
 #set($txtNoWartaRizab=$data.no_warta_rizab)
 #set($txdTarikhWarta=$data.tarikh_warta_rizab)
 #set($txtLain=$data.nama_lain_rizab)
@@ -461,10 +469,16 @@ $dataMaklumatTanah) #set($nama_negeriprojek=$data.nama_negeri)
 #set($txtLuasLotAsalSebelumConvert=$data.nama_luas_asal)
 #set($txtLuasLotAmbilSebelumConvert=$data.nama_luas_ambil)
 #set($txdTarikhPembayaran=$maklumat_Hakmilik_Salin.tarikh_pembayaran)
+
+#set($txtNoBangunan=$data.no_bangunan)
+#set($txtNoTingkat=$data.no_tingkat)
+#set($txtNoPetak=$data.no_petak)
+
 #end #end #if($isEdit=="no") #set($disability = "readonly")
 #set($disabilityx = "class=disabled") #set($disability1 = "disabled")
 #set($M = "") #else #set($M = "*") #set($disability = "")
 #set($disabilityx = "") #set($disability1 = "") #end
+
 
 <fieldset id="top">
 	<legend>
@@ -532,6 +546,18 @@ $dataMaklumatTanah) #set($nama_negeriprojek=$data.nama_negeri)
 				name="txtNoHakmilik" id="txtNoHakmilik" value="$!txtNoHakmilik"
 				size="12" maxlength="50"></td>
 		</tr>
+		
+		<!-- PPT-03 Penambahan Strata -->
+		<tr>
+			<td>&nbsp;</td>
+			<td> No. Strata </td>
+			<td>:</td>
+			<td>
+               	<span class="labelinput">No.Bang</span>&nbsp;<input $disability $disabilityx  name="txtNoBangunan" type="text" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+				<span class="labelinput">No.Ting</span>&nbsp;<input $disability $disabilityx  name="txtNoTingkat" type="text" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+				<span class="labelinput">No.Petak</span>&nbsp;<input $disability $disabilityx  name="txtNoPetak" type="text" id="txtNoPetak"  value="$!txtNoPetak" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+  			</td>
+		</tr>
 
 		#if($hideFieldHakmilik=="no")
 
@@ -584,8 +610,9 @@ $dataMaklumatTanah) #set($nama_negeriprojek=$data.nama_negeri)
 		#end
 
 		<tr>
+			#if($hideFieldHakmilik=="no")<font color="red">$!M</font>#end
 			<td>&nbsp;</td>
-			<td>No.PT</td>
+			<td>No. PT</td>
 			<td>:</td>
 			<td>$!selectKodLot</td>
 		</tr>
@@ -875,31 +902,23 @@ $dataMaklumatTanah) #set($nama_negeriprojek=$data.nama_negeri)
 
 <table width="100%" border="0">
 	<tr align="center">
-		<td>#if($roleAgensi=="no") #if($mode=="new") #if($jumlah_hakmilik
-			== $saiz_listTanah) <span class="blink"><font color="red">Jumlah
-					Hakmilik Telah Mencukupi!</font></span> #else <input type="button"
-			name="cmdSimpan" value="Simpan"
-			onClick="javascript:simpanHM('$!id_permohonan','$!id_hakmilik','$!flag_subjaket','$!hideFieldHakmilik','$!mode')">
-			#end #end #if($mode=="view" && ($id_status=="8" ||
-			$flagStatusOnline=="1")) #if($isEdit=="no") #if(($id_jawatan_user ==
-			$layer1 && ($flag_semakan_online=="" || $flag_semakan_online=="4" ))
-			|| ($id_jawatan_user == $layer2 && ($flag_semakan_online=="" ||
-			$flag_semakan_online=="1" )) || ($id_jawatan_user == $layer3 &&
-			($flag_semakan_online=="" || $flag_semakan_online=="1" ||
-			$flag_semakan_online=="2"))) <input type="button" name="cmdKemaskini"
-			value="Kemaskini" onClick="javascript:kemaskiniHM('$!id_hakmilik')">
-			<input type="button" name="cmdHapus" value="Hapus"
-			onClick="hapusHM('$!id_hakmilik')"> #end #else <input
-			type="button" name="cmdUpdate" value="Simpan"
-			onClick="javascript:simpanHM('$!id_permohonan','$!id_hakmilik','$!flag_subjaket','$!hideFieldHakmilik','$!mode')">
-			<input type="button" name="cmdBatal" value="Batal"
-			onClick="javascript:batalKemaskini('$!id_hakmilik')"> #end
-			#end #end <input type="button" name="cmdKembali" value="Kembali"
-			onClick="javascript:kembali('$!id_permohonan')">
+		<td>
+		#if($roleAgensi=="no") #if($mode=="new") #if($jumlah_hakmilik==$saiz_listTanah) 
+			<span class="blink"><font color="red">Jumlah Hakmilik Telah Mencukupi!</font></span> 
+		#else
+			<input type="button" name="cmdSimpan" value="Simpan" onClick="javascript:simpanHM('$!id_permohonan','$!id_hakmilik','$!flag_subjaket','$!hideFieldHakmilik','$!mode')">
+		#end #end
+		#if($mode=="view" && ($id_status=="8" || $flagStatusOnline=="1")) #if($isEdit=="no") #if(($id_jawatan_user == $layer1 && ($flag_semakan_online=="" || $flag_semakan_online=="4" )) || ($id_jawatan_user == $layer2 && ($flag_semakan_online=="" || $flag_semakan_online=="1" )) || ($id_jawatan_user == $layer3 && ($flag_semakan_online=="" || $flag_semakan_online=="1" || $flag_semakan_online=="2"))) 
+			<input type="button" name="cmdKemaskini" value="Kemaskini" onClick="javascript:kemaskiniHM('$!id_hakmilik')">
+			<input type="button" name="cmdHapus" value="Hapus" onClick="hapusHM('$!id_hakmilik')"> #end
+		#else
+			<input type="button" name="cmdUpdate" value="Simpan" onClick="javascript:simpanHM('$!id_permohonan','$!id_hakmilik','$!flag_subjaket','$!hideFieldHakmilik','$!mode')">
+			<input type="button" name="cmdBatal" value="Batal" onClick="javascript:batalKemaskini('$!id_hakmilik')"> #end
+		#end #end 
+			<input type="button" name="cmdKembali" value="Kembali" onClick="javascript:kembali('$!id_permohonan')">
 		</td>
 	</tr>
 </table>
-
 
 
 
@@ -1156,6 +1175,10 @@ $dataMaklumatTanah) #set($nama_negeriprojek=$data.nama_negeri)
 <input type="hidden" name="txtLuasLotAsalSebelumConvertHidden" value="$!txtLuasLotAsalSebelumConvert">
 <input type="hidden" name="txtNoSyitHidden" value="$!txtNoSyit">
 
+<!-- PPT-03 Penambahan Strata Hidden -->
+<!-- input type="hidden" name="txtNoBangunanHidden" value="$!txtNoBangunan" -->
+<!-- input type="hidden" name="txtNoTingkatHidden" value="$!txtNoTingkat" -->
+<!-- input type="hidden" name="txtNoPetakHidden" value="$!txtNoPetak" -->
 
 
 <!-- Id daerah & Id projek negeri -->
@@ -1195,7 +1218,10 @@ function popupCarianHakmilikSalin(id_permohonan,flag_skrin,id_daerah)
 {
 	var no_lot = document.${formName}.txtNoLot.value;	
 	var no_hakmilik = document.${formName}.txtNoHakmilik.value;	
-	var id_mukim = document.${formName}.socMukim.value;	
+	var id_mukim = document.${formName}.socMukim.value;
+	var txtNoBangunan = document.${formName}.txtNoBangunan.value;
+	var txtNoTingkat = document.${formName}.txtNoTingkat.value;
+	var txtNoPetak = document.${formName}.txtNoPetak.value;
 	
 	var url = "../x/${securityToken}/ekptg.view.ppt.SkrinPopupSalinPBHakmilik?&id_permohonan="+id_permohonan+"&flag_skrin="+flag_skrin+"&NO_HAKMILIK="+no_hakmilik+"&NO_LOT="+no_lot+"&ID_MUKIM="+id_mukim+"&ID_DAERAH="+id_daerah;
 	var hWnd = window.open(url,'printuser','width=1200,height=800, resizable=yes,scrollbars=yes');
@@ -1276,8 +1302,18 @@ function updatetxtNoSyit(txtNoSyit){
 	document.${formName}.txtNoSyitHidden.value = document.${formName}.txtNoSyit.value;
 }
 
-
-
+<!-- PPT-03 Penambahan Strata -->
+<!--
+function updatetxtNoBangunan(txtNoBangunan){
+	document.${formName}.txtNoBangunanHidden.value = document.${formName}.txtNoBangunan.value;
+}
+function updatetxtNoTingkat(txtNoTingkat){
+	document.${formName}.txtNoTingkatHidden.value = document.${formName}.txtNoTingkat.value;
+}
+function updatetxtNoPetak(txtNoPetak){
+	document.${formName}.txtNoPetakHidden.value = document.${formName}.txtNoPetak.value;
+}
+-->
 
 function viewBebanan(idBebanan){
 
@@ -1481,6 +1517,7 @@ function viewHM(id_hakmilik){
 	document.${formName}.submit();
 }
 function onchangeUnitAmbil(){
+
 	document.${formName}.ScreenLocation.value = "top";
 	document.${formName}.command.value = "tambahHakmilik";
 	document.${formName}.command2.value = "doOnchange";
@@ -1488,8 +1525,10 @@ function onchangeUnitAmbil(){
 	document.${formName}.command4.value = "onchangeUnitAmbil";
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline";
 	document.${formName}.submit();
+	
 }
 function onchangeUnitAsal(){
+
 	document.${formName}.ScreenLocation.value = "top";
 	document.${formName}.command.value = "tambahHakmilik";
 	document.${formName}.command2.value = "doOnchange";
@@ -1497,7 +1536,10 @@ function onchangeUnitAsal(){
 	document.${formName}.command4.value = "onchangeUnitAsal";
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline";
 	document.${formName}.submit();
+	
 }
+
+
 function onchangeUnitLuasAsal(){
 	document.${formName}.ScreenLocation.value = "top";
 	document.${formName}.command.value = "tambahHakmilik";
@@ -1549,9 +1591,9 @@ function kembali(idpermohonan){
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline";
 	document.${formName}.submit();
 }
-function simpanHM(id_permohonan,id_hakmilik,flagSubjaket,hideFieldHakmilik,mode){
-
-	if(hideFieldHakmilik=="no"){
+function simpanHM(id_permohonan, id_hakmilik, flagSubjaket, hideFieldHakmilik, mode)	{
+	
+	if(hideFieldHakmilik=="no")	{
 		var dat2=document.${formName}.txdTarikhDaftar
 	}
 	
@@ -1639,8 +1681,8 @@ function simpanHM(id_permohonan,id_hakmilik,flagSubjaket,hideFieldHakmilik,mode)
 	if (hideFieldHakmilik=="no" && document.${formName}.showButtonConvertAmbil.value == "yes") {
 		alert ("Sila 'Convert' nilai luas ambil terlebih dahulu");
 		return;
-	}
-	else{
+		
+	}	else	{
 	
 		if ( !window.confirm("Adakah Anda Pasti?") ) return;
 		
@@ -1656,20 +1698,24 @@ function simpanHM(id_permohonan,id_hakmilik,flagSubjaket,hideFieldHakmilik,mode)
 			document.${formName}.command2.value = "kemaskiniHM";
 			document.${formName}.command3.value = "updateHM";
 		}
-		//for upload function
+		
+		// for upload Function
 		var command = document.${formName}.command.value;
 		var command2 = document.${formName}.command2.value;
 		var command3 = document.${formName}.command3.value;
-		var id_negeriprojek = document.${formName}.id_negeriprojek.value;
+		
+		var id_negeriprojek = document.${formName}.id_negeriprojek.value;;
 		var id_daerah = document.${formName}.id_daerah.value;
 	    var socJenisHakmilik = document.${formName}.socJenisHakmilik.value;
 		var txtNoHakmilik = document.${formName}.txtNoHakmilik.value;
 		var txdTarikhLuput = document.${formName}.txdTarikhLuputHidden.value;
 		var txdTarikhDaftar = document.${formName}.txdTarikhDaftarHidden.value;
 		var txtBakiTempoh = document.${formName}.txtBakiTempohHidden.value;
+		
+		// Simpan Hakmilik dan Luas
 		var socKategoriTanah = document.${formName}.socKategoriTanah.value;
 		var socMukim = document.${formName}.socMukim.value;
-		var kodLot = document.${formName}.socKodLot.value;
+		var socKodLot = document.${formName}.socKodLot.value;
 		var txtNoSyit = document.${formName}.txtNoSyitHidden.value;
 		var txtNoLot = document.${formName}.txtNoLot.value;
 		var txtNoPT = document.${formName}.txtNoPT.value;
@@ -1677,8 +1723,9 @@ function simpanHM(id_permohonan,id_hakmilik,flagSubjaket,hideFieldHakmilik,mode)
 		var txtLuasAmbil = document.${formName}.txtLuasLotAmbil.value;
 		var txtCatatan = document.${formName}.txtCatatanHidden.value;
 		var txtSeksyen = document.${formName}.txtseksyenHidden.value;
-		var txdTarikhPembayaran = document.${formName}.txdTarikhPembayaran.value;
+		var txdTarikhPembayaran = document.${formName}.txdTarikhPembayaranHidden.value;
 		var unitLuas = document.${formName}.socUnitLuasLot.value;
+		var unitLuasAmbil = document.${formName}.socUnitLuasAmbil.value;
 		var txtLuasLotAmbilSebelumConvert = document.${formName}.txtLuasLotAmbilSebelumConvertHidden.value;
 		var txtLuasLotAsalSebelumConvert = document.${formName}.txtLuasLotAsalSebelumConvertHidden.value;
 		var sorDropdownUnitAsal = document.${formName}.sorDropdownUnitAsal.value;
@@ -1687,19 +1734,25 @@ function simpanHM(id_permohonan,id_hakmilik,flagSubjaket,hideFieldHakmilik,mode)
 		var txtLain = document.${formName}.txtLainHidden.value;
 		var txtNoWartaRizab = document.${formName}.txtNoWartaRizabHidden.value;
 		var txdTarikhWarta = document.${formName}.txdTarikhWartaHidden.value;
+		var txtNoBangunan = document.${formName}.txtNoBangunan.value;
+		var txtNoTingkat = document.${formName}.txtNoTingkat.value;
+		var txtNoPetak = document.${formName}.txtNoPetak.value;
+		
 		document.${formName}.enctype = "multipart/form-data";
 		document.${formName}.encoding = "multipart/form-data";
 		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline&command="+command+"&command2="+command2+
 				"&command3="+command3+"&id_permohonan="+id_permohonan+"&flagSubjaket="+flagSubjaket+"&id_negeriprojek="+id_negeriprojek+
-				"&id_daerah="+id_daerah+"&socJenisHakmilik="+socJenisHakmilik+"&txtNoHakmilik="+txtNoHakmilik+
-				"&txdTarikhLuput="+txdTarikhLuput+"&txdTarikhDaftar="+txdTarikhDaftar+"&txtBakiTempoh="+txtBakiTempoh+"&socKategoriTanah="+socKategoriTanah+
-				"&socMukim="+socMukim+"&txtNoSyit="+txtNoSyit+"&kodLot="+kodLot+"&txtNoLot="+txtNoLot+"&txtNoPT="+txtNoPT+"&txtLuasAsal="+txtLuasAsal+
-				"&txtLuasAmbil="+txtLuasAmbil+"&txtCatatan="+txtCatatan+"&txtSeksyen="+txtSeksyen+"&txdTarikhPembayaran="+txdTarikhPembayaran+"&unitLuas="+unitLuas+
+				"&id_daerah="+id_daerah+"&socJenisHakmilik="+socJenisHakmilik+"&txtNoHakmilik="+txtNoHakmilik+"&txdTarikhLuput="+txdTarikhLuput+
+				"&txdTarikhDaftar="+txdTarikhDaftar+"&txtBakiTempoh="+txtBakiTempoh+"&socKategoriTanah="+socKategoriTanah+"&socMukim="+socMukim+
+				"&socKodLot="+socKodLot+"&txtNoSyit="+txtNoSyit+"&txtNoLot="+txtNoLot+"&txtNoPT="+txtNoPT+"&txtLuasAsal="+txtLuasAsal+"&txtLuasAmbil="+txtLuasAmbil+
+				"&txtCatatan="+txtCatatan+"&txtSeksyen="+txtSeksyen+"&txdTarikhPembayaran="+txdTarikhPembayaran+"&unitLuas="+unitLuas+"&unitLuasAmbil="+unitLuasAmbil+
 				"&txtLuasLotAsalSebelumConvert="+txtLuasLotAsalSebelumConvert+"&txtLuasLotAmbilSebelumConvert="+txtLuasLotAmbilSebelumConvert+
 				"&sorDropdownUnitAsal="+sorDropdownUnitAsal+"&sorDropdownUnitAmbil="+sorDropdownUnitAmbil+"&sorJenisRizab="+sorJenisRizab+"&txtLain="+txtLain+
-				"&txtNoWartaRizab="+txtNoWartaRizab+"&txdTarikhWarta="+txdTarikhWarta;
+				"&txtNoWartaRizab="+txtNoWartaRizab+"&txdTarikhWarta="+txdTarikhWarta+"&txtNoBangunan="+txtNoBangunan+"&txtNoTingkat="+txtNoTingkat+"&txtNoPetak="+txtNoPetak;
 		//end upload
+		document.${formName}.command.value = "viewHM";
 		document.${formName}.submit();
+		
 	}
 }
 function validateTarikh(elmnt,content) {

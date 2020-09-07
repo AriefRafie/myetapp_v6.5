@@ -16,6 +16,8 @@ import net.sf.ehcache.Element;
 import org.apache.log4j.Logger;
 
 import ekptg.engine.StateLookup;
+import ekptg.model.entities.Tblhtphakmilikurusan;
+import ekptg.model.entities.Tblhtppajakan;
 import ekptg.model.entities.Tblpdtagendamesyuarat;
 import ekptg.model.entities.Tblpdtaktabab;
 import ekptg.model.entities.Tblpdtaktabahagian;
@@ -1357,12 +1359,12 @@ public class DB extends EkptgCache implements Serializable {
 				db = new Db();
 				Statement stmt = db.getStatement();
 				SQLRenderer r = new SQLRenderer();
-				
+
 				sql += " SELECT ID_JENISHAKMILIK, KOD_JENIS_HAKMILIK, KETERANGAN "
 						+ " FROM TBLRUJJENISHAKMILIK "
 						+ " WHERE ID_JENISHAKMILIK NOT IN ('333')"
 						+ " ORDER BY LPAD (REPLACE (kod_jenis_hakmilik, '00', 'A'), 100)";
-				
+
 				ResultSet rs = stmt.executeQuery(sql);
 				myLogger.info("Tblrujjenishakmilik====="+sql);
 				v = new Vector<Tblrujjenishakmilik>();
@@ -5888,6 +5890,95 @@ public class DB extends EkptgCache implements Serializable {
 				s.setIdCarabayar(rs.getLong("id_carabayar"));
 				s.setKodCaraBayar(rs.getString("kod_carabayar"));
 				s.setKeterangan(rs.getString("keterangan"));
+				v.addElement(s);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
+	public static Vector<Hashtable<String, String>> getNamaTanah(String idPermohonan) throws Exception {
+		Db db = null;
+		String sql = " SELECT A.ID_HAKMILIKURUSAN, A.PEGANGAN_HAKMILIK, B.KETERANGAN, A.NO_LOT" +
+				" ,A.NO_HAKMILIK, A.NO_WARTA, E.NAMA_MUKIM, D.NAMA_DAERAH" +
+				" ,C.NAMA_NEGERI, A.ID_JENISHAKMILIK, A.ID_LOT, A.TARIKH_WARTA, A.ID_MUKIM" +
+				" ,A.ID_DAERAH, A.ID_NEGERI,A.LUAS,A.LUAS_BERSAMAAN" +
+				" ,REPLACE(RJH.KOD_JENIS_HAKMILIK,'00','') KOD_JENIS_HAKMILIK " +
+				" ,RL.KOD_LUAS KOD_LUAS " +
+				" ,RLB.KOD_LUAS KOD_LUASBERSAMAAN " +
+				" ,NVL(GIS.UPI,'N') GIS_HANTAR  ,NVL(GIS.LATITUDE,'N') GIS_CHARTING " +
+				" FROM TBLHTPHAKMILIKURUSAN A, TBLRUJLOT B" +
+				", TBLRUJNEGERI C, TBLRUJDAERAH D,TBLRUJMUKIM E " +
+				" ,TBLRUJJENISHAKMILIK RJH, TBLRUJLUAS RL,TBLRUJLUAS RLB,TBLINTGIS GIS " +
+				" ,(   SELECT MT.ID_HAKMILIKURUSAN " +
+				" ,GETUPI(RN.KOD_NEGERI,RD.KOD_DAERAH_UPI,RM.KOD_MUKIM_UPI,'000',RJH.STATUS_HAKMILIK,MT.NO_LOT,MT.NO_HAKMILIK,RJH.KOD_JENIS_HAKMILIK ) UPI  " +
+				"  FROM TBLHTPHAKMILIKURUSAN MT,TBLRUJJENISHAKMILIK RJH  " +
+				" ,TBLRUJNEGERI RN,TBLRUJDAERAH RD,TBLRUJMUKIM RM  " +
+				" WHERE MT.ID_JENISHAKMILIK = RJH.ID_JENISHAKMILIK  " +
+				" AND MT.ID_NEGERI = RN.ID_NEGERI  " +
+				" AND MT.ID_DAERAH = RD.ID_DAERAH  " +
+				" AND MT.ID_MUKIM = RM.ID_MUKIM  " +
+				" ) UP  	" +
+				" WHERE A.ID_LOT = B.ID_LOT " +
+				" AND A.ID_NEGERI = C.ID_NEGERI " +
+				" AND A.ID_DAERAH = D.ID_DAERAH " +
+				" AND A.ID_MUKIM = E.ID_MUKIM" +
+				" AND A.ID_JENISHAKMILIK = RJH.ID_JENISHAKMILIK " +
+				" AND A.ID_LUAS = RL.ID_LUAS " +
+				" AND A.ID_LUAS_BERSAMAAN = RLB.ID_LUAS " +
+				" AND A.ID_HAKMILIKURUSAN = UP.ID_HAKMILIKURUSAN" +
+				" AND UP.UPI = GIS.UPI(+) AND GIS.STATUS_TANAH(+) = 7 " +
+				" AND A.ID_PERMOHONAN = '" + idPermohonan + "' ORDER BY A.ID_HAKMILIKURUSAN ASC";
+		myLogger.info("getNamaTanah :: " + sql);
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector<Hashtable<String, String>> v = new Vector<Hashtable<String, String>>();
+			Hashtable<String, String> h;
+			while (rs.next()) {
+				h = new Hashtable<String, String>();
+				h.put("idHakmilikUrusan", rs.getString("ID_HAKMILIKURUSAN") == null ? "" : rs.getString("ID_HAKMILIKURUSAN").toUpperCase());
+				h.put("peganganHakmilik", rs.getString("PEGANGAN_HAKMILIK") == null ? "" : rs.getString("PEGANGAN_HAKMILIK").toUpperCase());
+				h.put("lot", rs.getString("KETERANGAN") == null || rs.getString("NO_LOT") == null ? "" : rs.getString("KETERANGAN").toUpperCase() + " " + rs.getString("NO_LOT").toUpperCase());
+				h.put("noLot", rs.getString("NO_LOT"));
+				h.put("noHakmilik", rs.getString("NO_HAKMILIK") == null ? "" : rs.getString("NO_HAKMILIK"));
+				h.put("noWarta", rs.getString("NO_WARTA") == null ? "" : rs.getString("NO_WARTA"));
+				h.put("mukim",rs.getString("NAMA_MUKIM") == null ? "" : rs.getString("NAMA_MUKIM"));
+				h.put("daerah", rs.getString("NAMA_DAERAH") == null ? "" : rs.getString("NAMA_DAERAH"));
+				h.put("negeri", rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI"));
+				h.put("kodJenisHakmilik", rs.getString("KOD_JENIS_HAKMILIK") == null ? "" : rs.getString("KOD_JENIS_HAKMILIK"));
+				h.put("luas",rs.getString("LUAS") == null ? "" : rs.getString("LUAS"));
+				h.put("kodLuas", rs.getString("KOD_LUAS") == null ? "" : rs.getString("KOD_LUAS"));
+				h.put("luasBersamaan", rs.getString("LUAS_BERSAMAAN") == null ? "" : Utils.formatLuas(rs.getDouble("LUAS_BERSAMAAN")));
+				h.put("kodLuasBersamaan", rs.getString("KOD_LUASBERSAMAAN") == null ? "" : rs.getString("KOD_LUASBERSAMAAN"));
+				h.put("gisHantar", rs.getString("GIS_HANTAR"));
+				h.put("gisCharting", rs.getString("GIS_CHARTING"));
+				v.addElement(h);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
+	public static Vector<Tblhtphakmilikurusan> getTanah(String idhakmilikurusan) throws Exception {
+		Db db = null;
+		String sql = "SELECT ID_HAKMILIKURUSAN,PEGANGAN_HAKMILIK FROM TBLHTPHAKMILIKURUSAN WHERE ID_HAKMILIKURUSAN= '"
+				+ idhakmilikurusan + "' ";
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector<Tblhtphakmilikurusan> v = new Vector<Tblhtphakmilikurusan>();
+			Tblhtphakmilikurusan s = null;
+			while (rs.next()) {
+				s = new Tblhtphakmilikurusan();
+				s.setIdHakmilikurusan(rs.getLong("id_hakmilikurusan"));
+				s.setPeganganHakmilik(rs.getString("pegangan_hakmilik"));
 				v.addElement(s);
 			}
 			return v;
