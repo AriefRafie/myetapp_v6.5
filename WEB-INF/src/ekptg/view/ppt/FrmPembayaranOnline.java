@@ -29,6 +29,7 @@ import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.model.ppt.FrmPembatalanInternalData;
+import ekptg.model.ppt.FrmPermohonanUPTData;
 import ekptg.model.ppt.PPTHeader;
 import ekptg.view.ppt.email.Email_PenarikanBalik;
 
@@ -45,6 +46,7 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 	FrmPembatalanInternalData logic = new FrmPembatalanInternalData();
 	Email_PenarikanBalik email_penarikan = new Email_PenarikanBalik();
 	PPTHeader header = new PPTHeader();
+	FrmPermohonanUPTData modelUPT = new FrmPermohonanUPTData();
 	
 	
 	@SuppressWarnings("unchecked")
@@ -55,13 +57,16 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 		String vm = ""; 
 		
 		//get user login detail
-    	//String id_user = (String) session.getAttribute("_ekptg_user_id");
+    	String id_user = (String) session.getAttribute("_ekptg_user_id");
     	String userIdNeg = (String) session.getAttribute("_ekptg_user_negeri");
     	
     	//get nama pengarah dan id pengarah
     	nameAndId(userIdNeg);
     	String id_pengarah = nameAndId(userIdNeg);
-		
+    	
+    	kementerian(id_user);
+    	String userIdKementerian = kementerian(id_user);
+    	myLogger.info("ID kementerian User: " +id_user);
 		
 		String flag_MyInfoPPT = getParam("flag_MyInfoPPT");
 		this.context.put("flag_MyInfoPPT", flag_MyInfoPPT);
@@ -4519,7 +4524,7 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 				this.context.put("list_urusan",list_urusan);
 				list_status = logic.list_status();
 				this.context.put("list_status",list_status);
-				listdepan = logic.senarai_penarikan_carian((String) session.getAttribute("_ekptg_user_negeri"),txtNoFail,txtNoRujJkptgNegeri,socKementerian,socUrusan,socStatus,"2",(String) session.getAttribute("_portal_role"),(String) session.getAttribute("_ekptg_user_negeri"));						
+				listdepan = logic.senarai_pembayaran_online((String) session.getAttribute("_ekptg_user_negeri"),txtNoFail,txtNoRujJkptgNegeri,userIdKementerian,socUrusan,socStatus,"2",(String) session.getAttribute("_portal_role"),(String) session.getAttribute("_ekptg_user_negeri"));						
 				this.context.put("listdepan",listdepan);
 				this.context.put("listdepan_size",listdepan.size());
 				vm = "app/ppt/frmPembayaranOnlineCarian.jsp";	
@@ -5596,6 +5601,25 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 				}
 				
 		  }
+			
+		
+			private String kementerian(String id_user) throws Exception {
+
+				Vector dataKementerianOnline = new Vector();
+
+				dataKementerianOnline.clear();
+
+				modelUPT.setDataKementerianOnline(id_user);
+				dataKementerianOnline = modelUPT.getDataKementerianOnline();
+				String userIdKementerian = "";
+				if (dataKementerianOnline.size() != 0) {
+					Hashtable t = (Hashtable) dataKementerianOnline.get(0);
+					userIdKementerian = t.get("id_kementerian").toString();
+				}
+
+				return userIdKementerian;
+
+			}// close nameAndId
 	 
 	 
 }// close class

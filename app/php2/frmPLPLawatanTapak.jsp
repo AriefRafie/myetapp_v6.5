@@ -9,23 +9,23 @@
 -->
 </style>
 <p>
-  <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-  <input name="actionPelepasan" type="hidden" id="actionPelepasan" value="$actionPelepasan"/>
-  <input name="mode" type="hidden" id="mode" value="$mode"/>
-  <input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
-  <input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
-  <input name="selectedTabUpper" type="hidden" id="selectedTabUpper" value="$selectedTabUpper"/>
-  <input name="hitButton" type="hidden" id="hitButton"/>
-  <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
-  <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
-  <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
-  <input name="idHakmilikPermohonan" type="hidden" id="idHakmilikPermohonan" value="$idHakmilikPermohonan"/>
-  <input name="idTanahGanti" type="hidden" id="idTanahGanti" value="$idTanahGanti"/>  
-  <input name="idNegeriTanah" type="hidden" id="idNegeriTanah" value="$idNegeriTanah"/>  
-  <input name="flagJenisTanah" type="hidden" id="flagJenisTanah" value="$flagJenisTanah"/>  
-  <input name="step" type="hidden" id="step" value="$step"/>
-    <input name="flagStatus" type="hidden" id="flagStatus" value="$flagStatus"/>  
-<input name="idUlasanTeknikal" type="hidden" id="idUlasanTeknikal" value="$idUlasanTeknikal"/>
+  	<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
+  	<input name="actionPelepasan" type="hidden" id="actionPelepasan" value="$actionPelepasan"/>
+  	<input name="mode" type="hidden" id="mode" value="$mode"/>
+	<input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
+  	<input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
+  	<input name="selectedTabUpper" type="hidden" id="selectedTabUpper" value="$selectedTabUpper"/>
+  	<input name="hitButton" type="hidden" id="hitButton"/>
+  	<input name="idFail" type="hidden" id="idFail" value="$idFail"/>
+  	<input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
+  	<input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
+  	<input name="idHakmilikPermohonan" type="hidden" id="idHakmilikPermohonan" value="$idHakmilikPermohonan"/>
+  	<input name="idTanahGanti" type="hidden" id="idTanahGanti" value="$idTanahGanti"/>  
+  	<input name="idNegeriTanah" type="hidden" id="idNegeriTanah" value="$idNegeriTanah"/>  
+  	<input name="flagJenisTanah" type="hidden" id="flagJenisTanah" value="$flagJenisTanah"/>  
+  	<input name="step" type="hidden" id="step" value="$step"/>
+  	<input name="flagStatus" type="hidden" id="flagStatus" value="$flagStatus"/>  
+	<input name="idUlasanTeknikal" type="hidden" id="idUlasanTeknikal" value="$idUlasanTeknikal"/>
     <input name="changeDropdown" type="hidden" id="changeDropdown" value="$changeDropdown"/>      
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -39,7 +39,7 @@
       <div class="warning">SILA PILIH FAIL DI SENARAI FAIL TERLEBIH DAHULU</div></td>
   </tr>
   #end
-  #if ($idFail != '' && $idStatus != '1610198' && $idStatus != '1610199')
+  #if ($idFail != '' && $idStatus != '1610198')
   <tr>
     <td><fieldset>
       <legend>TANAH DIPOHON</legend>

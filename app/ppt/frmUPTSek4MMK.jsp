@@ -1028,15 +1028,20 @@ function setTable(id){
 }
 function cetakBorangA(idpermohonan,noupdate) {
 
-	if(noupdate=="no"){
+	/*if(noupdate=="no"){
 		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmUPTSek4MMKSenarai";
 		document.${formName}.command.value = "SimpanTarikhBorangA";
 		document.${formName}.submit();
 	}
+	else {*/
+	//	alert("here");
+		//document.${formName}.submit();
+	//}
 
 	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&report=BorangA&selectNoFail=yes&flagShowTarikhCetak=yes";	
     //var url = "../servlet/ekptg.report.ppt.BorangA?idfail="+idfail+"&namaMukim="+nama2Mukim;
-    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    
+	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();

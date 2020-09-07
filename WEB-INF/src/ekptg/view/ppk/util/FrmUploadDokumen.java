@@ -90,7 +90,7 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 			//this.context.put("num_files", jumLampiran);
 		
 		}else if(hitButton.equals("simpanlampiran")){ //30/06/2020
-			//99203 (S17) , 99204 (Bantahan) , 99210 (Tuakr pemohon)
+			//99203 (S17) , 99204 (Bantahan) , 99210 (Tukar pemohon)
 			l.lampiranSimati(request,idRujukan,getParam("jenisdokumen"),idUser);
 			hitButton = "";
 			//this.context.put("num_files", jumLampiran);
@@ -98,6 +98,11 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 		else if(hitButton.equals("simpanboranga")){ //14/08/2020
 			//99211 (Borang A)
 			l.lampiranBorangA(request,idRujukan,getParam("jenisdokumen"),idUser);
+			hitButton = "";
+			//this.context.put("num_files", jumLampiran);
+		}else if(hitButton.equals("simpanicwaris")){ //07/09/2020
+			//99212 (IC Waris)
+			l.lampiranICWaris(request,idRujukan,getParam("jenisdokumen"),idUser);
 			hitButton = "";
 			//this.context.put("num_files", jumLampiran);
 		}
@@ -132,7 +137,29 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 			}			
 			dokumens = l.getLampiranSimati(idRujukan, null,getParam("jenisdokumen"));
 			// End
+	    }else if (actionPopup.equals("paparIC")){
+			disability = "";
+		   	readability = "";
+			//Lampiran
+			if (mode.equals("bilampiran")) {
+				RO_General = "";
+				jumLampiran = getParamAsInteger("jumlahlampiran");
+
+			}			
+			dokumens = l.getLampiranSimati(idRujukan, null,getParam("jenisdokumen"));
+			// End
 	    }else if (actionPopup.equals("paparboranga")){
+			disability = "";
+		   	readability = "";
+			//Lampiran
+			if (mode.equals("bilampiran")) {
+				RO_General = "";
+				jumLampiran = getParamAsInteger("jumlahlampiran");
+
+			}			
+			dokumens = l.getLampiranBorangA(idRujukan, null,getParam("jenisdokumen"));
+			// End
+	    }else if (actionPopup.equals("paparicwaris")){
 			disability = "";
 		   	readability = "";
 			//Lampiran

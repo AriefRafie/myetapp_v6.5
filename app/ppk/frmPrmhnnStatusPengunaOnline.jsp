@@ -226,6 +226,9 @@
 			#elseif($senarai.id_status == '8')
 				<a href="#" title="Papar Surat Akuan Terima" onclick="javascript:cetakSuratAkuanTerima('$!senarai.nofail.toUpperCase()','$!senarai.idFail','S')"><strong>$senarai.status </strong><small style="color:blue">(KLIK DI SINI)</small></a>
 			
+			#elseif($senarai.id_status == '50')
+				<a href="#" title="Papar Maklumat Pindah Mahkamah Tinggi" onclick="javascript:paparMaklumatPindah('$!senarai.id_Permohonan')"><strong>$senarai.status </strong><br><small style="color:blue">(KLIK DI SINI)</small></a>
+			
 			##elseif($senarai.id_status == '21'|| ($senarai.id_status == '177') || ($senarai.id_status == '175'))
 				<!-- <strong>$senarai.status</strong>
 				<br>
@@ -364,15 +367,26 @@
 	    if (hWnd.focus != null) hWnd.focus();
 	}
 	
-function paparPraBicara(a){
-	var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupPraPerbicaraan?idPraPerbicaraan="+a;
+	function paparPraBicara(a){
+		var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupPraPerbicaraan?idPraPerbicaraan="+a;
+		
+		var hWnd = window.open(url,'printuser','width=700,height=315, resizable=yes,scrollbars=yes');
+		if ((document.window != null) && (!hWnd.opener))
+		       hWnd.opener = document.window;
+		if (hWnd.focus != null) hWnd.focus();
+			hWnd.focus();
+	}
 	
-	var hWnd = window.open(url,'printuser','width=700,height=315, resizable=yes,scrollbars=yes');
-	if ((document.window != null) && (!hWnd.opener))
-	       hWnd.opener = document.window;
-	if (hWnd.focus != null) hWnd.focus();
-		hWnd.focus();
-} 
+	function paparMaklumatPindah(a){
+//		alert(a);
+		var url = "../x/${securityToken}/ekptg.view.ppk.FrmMaklumatPindahMT?idPermohonan="+a;
+		
+		var hWnd = window.open(url,'printuser','width=700,height=315, resizable=yes,scrollbars=yes');
+		if ((document.window != null) && (!hWnd.opener))
+		       hWnd.opener = document.window;
+		if (hWnd.focus != null) hWnd.focus();
+			hWnd.focus();
+	}
 
 function submitForm() {    
 	//alert('$val_tab')
