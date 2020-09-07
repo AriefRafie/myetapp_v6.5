@@ -15466,4 +15466,139 @@ public void deleteFail(String id_fail, HttpSession session) throws Exception {
 	    }
 	  }//close updateFlag
 	
+
+	public Vector senarai_pembayaran_online(String negeriuser,String no_fail,
+			String no_jkptg_negeri, String id_kementerian, String id_urusan,
+			String id_status, String jenis_permohon,String role,String user_negeri) throws Exception {
+		senarai_penarikan_carian = new Vector();
+		Db db = null;
+		senarai_penarikan_carian.clear();
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT P.ID_PERMOHONAN,P.TARIKH_PERMOHONAN,"
+					+ " F.NO_FAIL, P.NO_RUJUKAN_UPT, P.NO_RUJUKAN_PTG, "
+					+ " K.NAMA_KEMENTERIAN,D.NAMA_DAERAH,S.KETERANGAN,U.NAMA_SUBURUSAN  FROM TBLPPTPERMOHONAN P, "
+					+ " TBLRUJSUBURUSAN U,TBLPFDFAIL F,TBLRUJKEMENTERIAN K,TBLRUJDAERAH D,"
+					+ " TBLRUJSTATUS S "
+					+ " WHERE  P.ID_FAIL = F.ID_FAIL(+) "
+					+ " AND F.ID_KEMENTERIAN = K.ID_KEMENTERIAN(+) "
+					+ " AND P.ID_DAERAH = D.ID_DAERAH(+) "
+					+ " AND (SELECT COUNT(*) FROM TBLPPTWARTA WHERE ID_PERMOHONAN = P.ID_PERMOHONAN ) > '0' "
+					+ " AND F.ID_SUBURUSAN = '52' "
+					+" "
+					+" AND (SELECT COUNT(*) FROM TBLPPTHAKMILIK HMK WHERE HMK.ID_PERMOHONAN = P.ID_PERMOHONAN " +
+							"AND HMK.ID_HAKMILIK  NOT IN "
+					+" (SELECT DISTINCT H.ID_HAKMILIK FROM TBLPPTHAKMILIK H,TBLPPTHAKMILIKBORANGK HK,TBLPPTBORANGK BK "
+					+" WHERE HK.ID_HAKMILIK = H.ID_HAKMILIK AND H.ID_PERMOHONAN = P.ID_PERMOHONAN AND HK.ID_BORANGK = BK.ID_BORANGK ) ) > 0  "
+			/*		+ " AND P.FLAG_JENISPERMOHONAN = '"
+					+ jenis_permohon
+					+ "' "		*/
+					+ " AND F.ID_SUBURUSAN = U.ID_SUBURUSAN(+) "
+					+ " AND F.ID_KEMENTERIAN = '" + id_kementerian +"' " // Penambahan bagi paparan mengikut kementerian
+			/*		+ " AND NVL(S.ID_STATUS,0) IN ('31','35','38','43','46','48','52','54','58','59',"
+					+ " '62','66','68','72','74','76','181')"*/
+					+ " AND P.ID_STATUS = S.ID_STATUS " +
+							"";
+			
+			if(!negeriuser.equals("16") && !negeriuser.isEmpty()){
+    			if(negeriuser.equals("14")){
+    				sql += "AND f.id_negeri in (14,15,16) ";
+    			}else{
+    				sql += "AND f.id_negeri ='"+negeriuser+"'";
+    			}		
+    		}
+
+			// kena filter by status (sudah diwartakan)
+
+			if (no_fail != "") {
+				if (!no_fail.trim().equals("")) {
+					sql = sql + " AND (UPPER(F.NO_FAIL) LIKE '%"
+							+ no_fail.toUpperCase().trim() + "%'";					
+					
+					sql = sql + " OR UPPER(P.NO_RUJUKAN_PTG) LIKE '%"
+					+ no_fail.toUpperCase().trim() + "%'";
+					
+					sql = sql + " OR UPPER(P.NO_RUJUKAN_PTD) LIKE '%"
+					+ no_fail.toUpperCase().trim() + "%')";
+				}
+			}
+			if (no_jkptg_negeri != "") {
+				if (!no_jkptg_negeri.trim().equals("")) {
+					sql = sql + " AND UPPER(P.NO_RUJUKAN_UPT) LIKE '%"
+							+ no_jkptg_negeri.trim() + "%'";
+				}
+			}
+			if (id_urusan != "") {
+				if (!id_urusan.trim().equals("")) {
+					sql = sql + " AND UPPER(F.ID_SUBURUSAN) LIKE '"
+							+ id_urusan.toUpperCase() + "'";
+				}
+			}
+			if (id_kementerian != "") {
+				if (!id_kementerian.trim().equals("")) {
+					sql = sql + " AND UPPER(F.ID_KEMENTERIAN) LIKE '"
+							+ id_kementerian.toUpperCase() + "'";
+				}
+			}
+			if (id_status != "") {
+				if (!id_status.trim().equals("")) {
+					sql = sql + " AND UPPER(P.ID_STATUS) LIKE '"
+							+ id_status.toUpperCase() + "'";
+				}
+			}
+
+			sql += " ORDER BY P.TARIKH_KEMASKINI DESC";
+
+			myLogger.info("SQL PENARIKAN CARI :" + sql.toUpperCase());
+
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+			int bil = 0;
+			while (rs.next()) {
+				bil = bil + 1;
+				h = new Hashtable();
+				h.put("BIL", bil);
+				h.put("ID_PERMOHONAN",
+						rs.getString("ID_PERMOHONAN") == null ? "" : rs
+								.getString("ID_PERMOHONAN"));
+				// h.put("ID_PEMBATALAN",rs.getString("ID_PENARIKANBALIK") ==
+				// null ? "" : rs.getString("ID_PENARIKANBALIK"));
+				h.put("TARIKH_PERMOHONAN",
+						rs.getString("TARIKH_PERMOHONAN") == null ? "" : Format
+								.format(rs.getDate("TARIKH_PERMOHONAN")));
+				// h.put("NO_PEMBATALAN",rs.getString("NO_PENARIKANBALIK") ==
+				// null ? "" : rs.getString("NO_PENARIKANBALIK").toUpperCase());
+				h.put("NO_FAIL", rs.getString("NO_FAIL") == null ? "TIADA"
+						: rs.getString("NO_FAIL").toUpperCase());
+				// h.put("TARIKH_PEMBATALAN",
+				// rs.getString("TARIKH_PENARIKAN_BALIK")==null?"":Format.format(rs.getDate("TARIKH_PENARIKAN_BALIK")));
+				h.put("NO_RUJUKAN_UPT",
+						rs.getString("NO_RUJUKAN_UPT") == null ? "" : rs
+								.getString("NO_RUJUKAN_UPT"));
+				h.put("NO_RUJUKAN_PTG",
+						rs.getString("NO_RUJUKAN_PTG") == null ? "" : rs
+								.getString("NO_RUJUKAN_PTG"));
+				h.put("NAMA_KEMENTERIAN",
+						rs.getString("NAMA_KEMENTERIAN") == null ? "" : rs
+								.getString("NAMA_KEMENTERIAN").toUpperCase());
+				h.put("NAMA_DAERAH", rs.getString("NAMA_DAERAH") == null ? ""
+						: rs.getString("NAMA_DAERAH").toUpperCase());
+				h.put("KETERANGAN", rs.getString("KETERANGAN") == null ? ""
+						: rs.getString("KETERANGAN").toUpperCase());
+				h.put("URUSAN", rs.getString("NAMA_SUBURUSAN") == null ? ""
+						: rs.getString("NAMA_SUBURUSAN").toUpperCase());
+				senarai_penarikan_carian.addElement(h);
+			}
+			return senarai_penarikan_carian;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
 }
+

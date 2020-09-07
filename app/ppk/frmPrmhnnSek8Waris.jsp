@@ -9,6 +9,7 @@
 -->
 <style type="text/css">
 <!--
+.pautan {color: #0000FF}
 .style1 {
 	font-family: Arial, Helvetica, sans-serif
 }
@@ -3537,8 +3538,9 @@ Click me</a>
                                       <td width="15%"><div align="center">MyID BARU</div></td>
                                       <td width="5%"><div align="center">UMUR</div></td>
                                       <td width="20%"><div align="left">TALIAN PERSAUDARAAN</div></td>
-                                      <td width="20%"><div align="center">STATUS</div></td>
-                                      <td width="15%"><div align="center">LAPISAN</div></td>
+                                      <td width="15%"><div align="center">STATUS</div></td>
+                                      <td width="10%"><div align="center">LAPISAN</div></td>
+                                      <td width="10%"><div align="center">DOKUMEN</div></td>
                                     </tr>
                                   </table>
                                   <table width="100%">
@@ -3556,6 +3558,7 @@ Click me</a>
                                       <td><div align="left">TALIAN PERSAUDARAAN</div></td>
                                       <td><div align="center">STATUS</div></td>
                                       <td><div align="center">LAPISAN</div></td>
+                                      <td><div align="center">DOKUMEN</div></td>
                                     </tr>
                                     #set($nowa=0)
                                     #foreach($listwaris in $listWaris)
@@ -3595,8 +3598,24 @@ Click me</a>
                                       #if($listwaris.statushidup=="")
                                       #set($hidup="")
                                       #end
-                                      <td width="20%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$hidup</div></td>
-                                      <td width="15%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwaris.lapis</div></td>
+                                      <td width="15%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$hidup</div></td>
+                                      <td width="10%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwaris.lapis</div></td>
+                                      <td width="10%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">
+                                   		#if($id_Status != "169" 
+                       					&& $id_Status != "21" 
+                       					&& $id_Status != "64" 
+                       					&& $id_Status != "163" 
+                       					&& $id_Status != "164" 
+                       					&& $id_Status != "165")	
+                          					#if($open_button_online == "yes")
+                                      		<a href = "javascript:lampiranICWaris('$listwaris.idwaris','dokumenIC');">
+												<img border="0" src="../img/plus.gif" width="20" height="15"/>
+											</a><br>
+											#end
+										#end
+											$listwaris.lampirans
+											</div>
+									  </td>
                                     </tr>
                                     #else
                                     <tr class="table_header">
@@ -3627,8 +3646,24 @@ Click me</a>
                                       #if($listwaris.statushidup=="")
                                       #set($hidup="")
                                       #end
-                                      <td width="20%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$hidup</div></td>
-                                      <td width="15%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwaris.lapis</div></td>
+                                      <td width="15%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$hidup</div></td>
+                                      <td width="10%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwaris.lapis</div></td>
+                                      <td width="10%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">
+                                      	#if($id_Status != "169" 
+                       					&& $id_Status != "21" 
+                       					&& $id_Status != "64" 
+                       					&& $id_Status != "163" 
+                       					&& $id_Status != "164" 
+                       					&& $id_Status != "165")	
+                          					#if($open_button_online == "yes")
+                                      		<a href = "javascript:lampiranICWaris('$listwaris.idwaris','dokumenIC');">
+												<img border="0" src="../img/plus.gif" width="20" height="15"/>
+											</a><br>
+											#end
+										#end
+											$listwaris.lampirans
+											</div>
+									  </td>
                                     </tr>
                                     #end
                                     
@@ -10707,6 +10742,37 @@ function defineStatusWarisByUmur(){
 		}
 	//}
 }
+
+	// SYAFIQAH ADD UPLOAD IC WARIS	
+	function lampiranICWaris(idWaris,jenisUpload) {	
+		// console.log("syafiqah :"+idPermohonan);
+		jenisUpload = "paparicwaris";
+		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=dokumenIC&actionPopup="+jenisUpload+"&rujukan="+idWaris+"&flagOnline=$!flagOnline";
+	    url +="&jenisdokumen=99212";
+			
+		//
+	    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus(); /**/
+	    //
+	    var title = 'Lampiran';
+		var w =1024;
+		var h = 800;
+	    var left = (screen.width/2)-(w/2);
+
+	}
+	
+	function paparLampiran(id_){
+		var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=simati";
+		//var url = "../servlet/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_+"&tablename=ha";
+	    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+	    if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener=document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+	
+	}
 // function semakanJPN(myIdBaru){
 // 	//	var noResit = document.${formName}.txtNomborResitPerintahEDIT.value;
 // 	//	document.${formName}.action="?_portal_module=ekptg.view.ppk.FrmSenaraiFailKeputusanPerbicaraan";
