@@ -4541,13 +4541,15 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			// System.out.println("sql-->>"+sql);
 			stmtT.executeUpdate(sql);
 			
-			Statement stmtFail = db.getStatement();
-			String noFail = getNoFail(db,idnegeri,iddaerah,X,getYear);
-			sql = "update tblpfdfail set "
-					+ "NO_FAIL = '"+ noFail+"'"
-					+ " where id_fail="+idFail
-					+ "";
-				stmtFail.executeUpdate(sql);
+			// auto generate no fail
+			
+//			Statement stmtFail = db.getStatement();
+//			String noFail = getNoFail(db,idnegeri,iddaerah,X,getYear);
+//			sql = "update tblpfdfail set "
+//					+ "NO_FAIL = '"+ noFail+"'"
+//					+ " where id_fail="+idFail
+//					+ "";
+//				stmtFail.executeUpdate(sql);
 
 
 		} finally {

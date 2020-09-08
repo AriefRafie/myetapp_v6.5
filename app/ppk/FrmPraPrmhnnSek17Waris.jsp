@@ -3769,7 +3769,8 @@ Click me</a>
                     <td width="5%"><div align="center">UMUR</div></td>
                     <td width="20%"><div align="left">TALIAN PERSAUDARAAN</div></td>
                     <td width="20%"><div align="center">STATUS</div></td>
-                     <td width="15%"><div align="center">LAPISAN</div></td>
+                     <td width="10%"><div align="center">LAPISAN</div></td>
+                     <td width="5%"><div align="center">DOKUMEN</div></td>
                   </tr>
             </table>      
                   
@@ -3790,6 +3791,7 @@ Click me</a>
                        <td><div align="left">TALIAN PERSAUDARAAN</div></td>
                        <td><div align="center">STATUS</div></td>
                        <td><div align="center">LAPISAN</div></td>
+                       <td><div align="left">DOKUMEN</div></td>
                      </tr>
                    
                    #set($nowa=0)
@@ -3833,7 +3835,24 @@ Click me</a>
                     #set($hidup="")
                     #end
                     <td width="20%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$hidup</div></td>
-                     <td width="15%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwaris.lapis</div></td>
+                     <td width="10%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwaris.lapis</div></td>
+                  	 <td width="5%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">
+                  	 	#if($id_Status != "169" 
+           					&& $id_Status != "21" 
+           					&& $id_Status != "64" 
+           					&& $id_Status != "163" 
+           					&& $id_Status != "164" 
+           					&& $id_Status != "165")	
+		                    #if($!skrin_online_17 == "yes")
+		                    	#if($open_button_online == "yes")
+		                        <a href = "javascript:lampiranICWaris('$listwaris.idwaris','dokumenIC');">
+									<img border="0" src="../img/plus.gif" width="20" height="15"/>
+								</a><br>
+								#end
+							#end
+						#end
+						$listwaris.lampirans
+                  	 </div></td>
                   </tr>
                   #else
                   
@@ -3866,7 +3885,24 @@ Click me</a>
                     #set($hidup="")
                     #end
                     <td width="20%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$hidup</div></td>
-                     <td width="15%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwaris.lapis</div></td>
+                     <td width="10%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwaris.lapis</div></td>
+                  	 <td width="5%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">
+                  	 	#if($id_Status != "169" 
+           					&& $id_Status != "21" 
+           					&& $id_Status != "64" 
+           					&& $id_Status != "163" 
+           					&& $id_Status != "164" 
+           					&& $id_Status != "165")	
+		                    #if($!skrin_online_17 == "yes")
+		                    	#if($open_button_online == "yes")
+		                        <a href = "javascript:lampiranICWaris('$listwaris.idwaris','dokumenIC');">
+									<img border="0" src="../img/plus.gif" width="20" height="15"/>
+								</a><br>
+								#end
+							#end
+						#end
+						$listwaris.lampirans
+                  	 </div></td>
                   </tr>
                   
                   #end
@@ -3913,8 +3949,9 @@ Click me</a>
                     <td width="15%"><div align="center">NO KP BARU</div></td>
                     <td width="5%"><div align="center">UMUR</div></td>
                     <td width="20%"><div align="left">TALIAN PERSAUDARAAN</div></td>
-                    <td width="20%"><div align="center">STATUS</div></td>
-                     <td width="15%"><div align="center">LAPISAN</div></td>
+                    <td width="15%"><div align="center">STATUS</div></td>
+                     <td width="10%"><div align="center">LAPISAN</div></td>
+                     <td width="10%"><div align="center">DOKUMEN</div></td>
                   </tr>
             </table>      
              
@@ -3974,8 +4011,11 @@ Click me</a>
                     #if($listwaris.statushidup=="")
                     #set($hidup="")
                     #end
-                    <td width="20%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$hidup</div></td>
-                     <td width="15%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwaris.lapis</div></td>
+                    <td width="15%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$hidup</div></td>
+                     <td width="10%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwaris.lapis</div></td>
+                     <td width="10%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">
+                     	$listwaris.lampirans
+					 </div></td>
                   </tr>
                   #else
                   
@@ -4011,8 +4051,11 @@ Click me</a>
                     #if($listwaris.statushidup=="")
                     #set($hidup="")
                     #end
-                    <td width="20%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$hidup</div></td>
-                     <td width="15%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwaris.lapis</div></td>
+                    <td width="15%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$hidup</div></td>
+                     <td width="10%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwaris.lapis</div></td>
+                     <td width="10%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">
+                     	$listwaris.lampirans
+                     </div></td>
                   </tr>
                   
                   #end
@@ -4062,7 +4105,8 @@ Click me</a>
                 <td width="15%"><div align="left">TALIAN PERSAUDARAAN</div></td>
                 <td width="20%"><div align="left">NAMA WARIS YANG MENINGGAL</div></td>
                 <td width="10%"><div align="center">STATUS</div></td>
-                <td width="10%"><div align="center">LAPISAN</div></td>
+                <td width="5%"><div align="center">LAPISAN</div></td>
+                <td width="5%"><div align="left">DOKUMEN</div></td>
               </tr>
               <!--   <input name="idwaris" type="hidden" id="idwaris" value="$listwaris.idwaris" /> -->
             </table>
@@ -4083,6 +4127,7 @@ Click me</a>
                 <td width="20%"><div align="left" >NAMA WARIS YANG MENINGGAL</div></td>
                 <td width="10%"><div align="center" >STATUS</div></td>
                 <td width="10%"><div align="center" >LAPISAN</div></td>
+                <td width="5%"><div align="left" >DOKUMEN</div></td>
               </tr>
             #set($nowar=0)
               #foreach($listwarislapisan in $listWarisLapisanIdMati)
@@ -4118,7 +4163,9 @@ Click me</a>
                 #set($hidup="")
                 #end
                 <td width="10%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$hidup</div></td>
-                <td width="10%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwarislapisan.lapis</div></td>
+                <td width="5%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwarislapisan.lapis</div></td>
+                <td width="5%" class="row1"><div align="left" class="style72" style="text-transform:uppercase;" onblur="uppercase()">
+                </div></td>
               </tr>
               
               #else
@@ -4151,7 +4198,8 @@ Click me</a>
                 #set($hidup="")
                 #end
                 <td width="10%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$hidup</div></td>
-                <td width="10%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwarislapisan.lapis</div></td>
+                <td width="5%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwarislapisan.lapis</div></td>
+              	<td width="5%" class="row2"><div align="left" class="style72" style="text-transform:uppercase;" onblur="uppercase()"></div></td>
               </tr>
               #end
               #end
@@ -4184,7 +4232,8 @@ Click me</a>
                 <td width="15%"><div align="left">TALIAN PERSAUDARAAN</div></td>
                 <td width="20%"><div align="left">NAMA WARIS YANG MENINGGAL</div></td>
                 <td width="10%"><div align="center">STATUS</div></td>
-                <td width="10%"><div align="center">LAPISAN</div></td>
+                <td width="5%"><div align="center">LAPISAN</div></td>
+                <td width="5%"><div align="left">DOKUMEN</div></td>
               </tr>
               <!--   <input name="idwaris" type="hidden" id="idwaris" value="$listwaris.idwaris" /> -->
             </table>
@@ -4235,7 +4284,9 @@ Click me</a>
                 #set($hidup="")
                 #end
                 <td width="10%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$hidup</div></td>
-                <td width="10%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwarislapisan.lapis</div></td>
+                <td width="5%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwarislapisan.lapis</div></td>
+              	<td width="5%" class="row1"><div align="left" class="style72" style="text-transform:uppercase;" onblur="uppercase()">
+              	</div></td>
               </tr>
               
               #else
@@ -4269,7 +4320,9 @@ Click me</a>
                 #set($hidup="")
                 #end
                 <td width="10%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$hidup</div></td>
-                <td width="10%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwarislapisan.lapis</div></td>
+                <td width="5%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwarislapisan.lapis</div></td>
+                <td width="5%" class="row2"><div align="left" class="style72" style="text-transform:uppercase;" onblur="uppercase()">
+                </div></td>
               </tr>
               #end
               #end
@@ -7765,7 +7818,8 @@ Click me</a>
             <td width="15%"><div align="left">TALIAN PERSAUDARAAN</div></td>
             <td width="20%"><div align="left">NAMA WARIS YANG MENINGGAL</div></td>
             <td width="10%"><div align="center">STATUS</div></td>
-            <td width="10%"><div align="center">LAPISAN</div></td>
+            <td width="5%"><div align="center">LAPISAN</div></td>
+            <td width="5%"><div align="left">DOKUMEN</div></td>
           </tr>
        <!--   <input name="idwaris" type="hidden" id="idwaris" value="$listwaris.idwaris" /> -->
        </table>
@@ -7790,7 +7844,8 @@ Click me</a>
             <td width="15%"><div align="left" >TALIAN PERSAUDARAAN</div></td>
             <td width="20%"><div align="left" >NAMA WARIS YANG MENINGGAL</div></td>
             <td width="10%"><div align="center" >STATUS</div></td>
-            <td width="10%"><div align="center" >LAPISAN</div></td>
+            <td width="5%"><div align="center" >LAPISAN</div></td>
+            <td width="5%"><div align="left">DOKUMEN</div></td>
           </tr>
        
          #set($bu=0)
@@ -7838,7 +7893,9 @@ Click me</a>
             #set($hidup="")
             #end
             <td width="10%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$hidup</div></td>
-             <td width="10%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwarislapisan.lapis</div></td>
+             <td width="5%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwarislapisan.lapis</div></td>
+          	<td width="5%" class="row1"><div align="left" class="style72" style="text-transform:uppercase;" onblur="uppercase()">
+          	</div></td>
           </tr>
           #else
             <tr class="table_header">
@@ -7875,7 +7932,9 @@ Click me</a>
             #set($hidup="")
             #end
             <td width="10%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$hidup</div></td>
-             <td width="10%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwarislapisan.lapis</div></td>
+             <td width="5%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwarislapisan.lapis</div></td>
+          	<td width="5%" class="row2"><div align="left" class="style72" style="text-transform:uppercase;" onblur="uppercase()">
+          	</div></td>
           </tr>
           #end
           #end
@@ -7956,7 +8015,8 @@ Click me</a>
                 <td width="15%"><div align="left">TALIAN PERSAUDARAAN</div></td>
                 <td width="20%"><div align="left">NAMA WARIS YANG MENINGGAL</div></td>
                 <td width="10%"><div align="center">STATUS</div></td>
-                <td width="10%"><div align="center">LAPISAN</div></td>
+                <td width="5%"><div align="center">LAPISAN</div></td>
+                <td width="5%"><div align="center">DOKUMEN</div></td>
               </tr>
               <!--   <input name="idwaris" type="hidden" id="idwaris" value="$listwaris.idwaris" /> -->
             </table>
@@ -8007,7 +8067,9 @@ Click me</a>
                 #set($hidup="")
                 #end
                 <td width="10%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$hidup</div></td>
-                <td width="10%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwarislapisan.lapis</div></td>
+                <td width="5%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwarislapisan.lapis</div></td>
+                <td width="5%" class="row1"><div align="left" class="style72" style="text-transform:uppercase;" onblur="uppercase()">
+                </div></td>
               </tr>
               
               #else
@@ -8040,7 +8102,9 @@ Click me</a>
                 #set($hidup="")
                 #end
                 <td width="10%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$hidup</div></td>
-                <td width="10%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwarislapisan.lapis</div></td>
+                <td width="5%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwarislapisan.lapis</div></td>
+                <td width="5%" class="row2"><div align="left" class="style72" style="text-transform:uppercase;" onblur="uppercase()">
+                </div></td>
               </tr>
               #end
               #end
@@ -11689,6 +11753,37 @@ if(document.f1.txtNoSuratBeranakWaris.value != "" && document.f1.txtNoSuratBeran
 tarikh_waris_saudara_negeritetap('txtUmurWaris','in');
 tarikh_waris_saudara_negerisurat('txtUmurWaris','in')
 }
+
+}
+
+//SYAFIQAH ADD UPLOAD IC WARIS	
+function lampiranICWaris(idWaris,jenisUpload) {	
+	// console.log("syafiqah :"+idPermohonan);
+	jenisUpload = "paparicwaris";
+	var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=dokumenIC&actionPopup="+jenisUpload+"&rujukan="+idWaris+"&flagOnline=$!flagOnline";
+    url +="&jenisdokumen=99212";
+		
+	//
+    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus(); /**/
+    //
+    var title = 'Lampiran';
+	var w =1024;
+	var h = 800;
+    var left = (screen.width/2)-(w/2);
+
+}
+
+function paparLampiran(id_){
+	var url = "../servlet/ekptg.view.ppk.util.LampiranByBlob?iDokumen="+id_+"&tablename=simati";
+	//var url = "../servlet/ekptg.view.ppk.util.DisplayBlobHarta?iDokumen="+id_+"&tablename=ha";
+    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener=document.window;
+    if (hWnd.focus != null) hWnd.focus();
 
 }
 
