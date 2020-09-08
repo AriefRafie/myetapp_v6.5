@@ -267,7 +267,9 @@ padding:0 0.25em;
 		else if('$!actionRefresh'=='phpphptkr'){
 			window.opener.doChangeTabUpper('2');
 		}
-
+		else if('$!actionRefresh'=='phpphppelepasan'){
+			window.opener.doChangeTabUpper('5');
+		}
 	}
 	//setSelected(1,0,0,1);HtaamViewX('$paramOnline')
 
