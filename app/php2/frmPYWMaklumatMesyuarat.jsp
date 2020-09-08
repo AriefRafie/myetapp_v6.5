@@ -25,6 +25,10 @@
   <input type="hidden" name="selectedTabUpper" id="selectedTabUpper" value="$selectedTabUpper"/>
   <input type="hidden" name="hitButton" id="hitButton"/>
   <input type="hidden" name="step" id="step" value="$step">
+  
+ <input type="hidden" name="idMesyuaratPermohonan" id="idMesyuaratPermohonan" value="$idMesyuaratPermohonan">
+ <input type="hidden" name="flagResult" id="flagResult" value="$flagResult"/>
+ <input type="hidden" name="catatan" id="catatan" value="$catatan"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
@@ -188,6 +192,7 @@
           <!-- END KEHADIRAN -->
           <!-- START SENARAI PERMOHONAN -->
           <div class="TabbedPanelsContent">
+         
           	<table width="100%" border="0" cellspacing="2" cellpadding="2">
           		<tr>
 			  		<td><fieldset>
@@ -195,8 +200,8 @@
       					#parse("app/utils/record_paging.jsp")
       					<table align="center" width="100%">
       						<tr>
-					          <td colspan="5" scope="row"><input name="cmdPilihPermohonan" type="button" value="Pilih Senarai Permohonan Baru" 
-					          			onclick="javascript:pilihSenaraiPermohonan()"/></td>
+					          <td colspan="5" scope="row">
+					          <input name="cmdPilihPermohonanBaru" type="button" value="Pilih Senarai Permohonan Baru" onclick="javascript:pilihSenaraiPermohonanBaru()"/></td>
 					        </tr>
 					        <tr class="table_header" align="center">
 					          <td scope="row" width="5%"><strong>Bil</strong></td>
@@ -220,12 +225,31 @@
 					        #end
 					        <tr>
 					          <td class="$row" align="center">$senaraiFailMohonBaru.bil</td>
-					          <td class="$row"></td>
-					          <td class="$row"></td>
-					          <td class="$row"></td>
-					          <td class="$row"></td>
-					          <td class="$row"></td>
-					          <td class="$row"></td>
+					          <td class="$row">$senaraiFailMohonBaru.noFailPermohonan</td>
+					          <td class="$row">$senaraiFailMohonBaru.jenisPermohonan</td>
+					          <td class="$row">$senaraiFailMohonBaru.namaPemohon</td>
+					          <td class="$row" align="center"><a href="#" class="style2" onClick="javascript:doHapus('$senaraiFailMohonBaru.idPermohonan')">
+                      		  <img border="0" src="../img/print.gif"/></a></td>
+					          <td class="$row">
+					            #if ($!senaraiFailMohonBaru.jenisPermohonan == "PERMOHONAN BARU")
+								    <select id="idKeputusan$senaraiFailMohonBaru.id" name="idKeputusan$senaraiFailMohonBaru.id" style="width:100%" onChange="doSaveKeputusanBaru('idKeputusan$senaraiFailMohonBaru.id',$senaraiFailMohonBaru.id)">
+									    <option value="">SILA PILIH</option>
+									    <option #if ( "L" == $senaraiFailMohonBaru.flagKeputusan ) selected #end value="L">LULUS</option>
+									    ##<option #if ( "LB" == $senaraiFailMohonBaru.flagKeputusan ) selected #end value="LB">LULUS BERSYARAT</option>
+									    ##<option #if ( "TG" == $senaraiFailMohonBaru.flagKeputusan ) selected #end value="TG">TANGGUH</option>
+									    <option #if ( "T" == $senaraiFailMohonBaru.flagKeputusan ) selected #end value="T">TOLAK</option>
+									</select>
+								#else
+									<b>$senaraiFailMohonBaru.flagKeputusan()</b>
+								#end
+					          </td>
+					          <td class="$row">
+					            ##if ($!r.status == "B")
+								    <textarea id="catatanKeputusan$senaraiFailMohonBaru.id" name="catatanKeputusan$senaraiFailMohonBaru.id" onBlur="doSaveCatatanKeputusanBaru('catatanKeputusan$senaraiFailMohonBaru.id',$senaraiFailMohonBaru.id)" >$senaraiFailMohonBaru.catatanKeputusan</textarea>
+								##else
+									<b>$!senaraiFailMohonBaru.catatan</b>
+								##end
+					          </td>
                       		  <td class="$row" align="center"><a href="#" class="style2" onClick="javascript:doHapus('$senaraiFailMohonBaru.idPermohonan')">
                       		  					<img border="0" src="../img/hapus.gif"/></a></td>
 					        </tr>
@@ -252,6 +276,16 @@
   </tr>
 </table>
 
+<table width="100%">
+	<tr>
+		<td align="right">
+			##if ($!r.status == "B")
+			<input id="btnSelesai" type="button" value="Selesai Mesyuarat" onClick="javascript:doSelesaiMesyuarat();">
+			##end
+	    	<input id="btnBack" type="button" value="Kembali" onClick="$('div_main_entry').style.display='none';$('div_main').style.display='block';doDivAjaxCall$formname('div_list','list_page','page_num=$!current_page_num')">
+	    </td>
+	</tr>
+</table>
 <script type="text/javascript">
 	var TabbedPanels = new Spry.Widget.TabbedPanels("TabbedPanels",{defaultTab:$selectedTabUpper});
 </script>
@@ -378,7 +412,6 @@ function simpanKehadiran(){
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}
-	
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
 	document.${formName}.hitButton.value = "simpanKehadiran";
@@ -407,12 +440,27 @@ function simpanKemaskiniKehadiran(){
 	document.${formName}.hitButton.value = "simpanKemaskiniKehadiran";
 	doAjaxCall${formName}("");
 }
-function pilihSenaraiPermohonan() {
+function pilihSenaraiPermohonanBaru() {
 	var url = "../x/${securityToken}/ekptg.view.php2.FrmPYWPopupSenaraiPermohonanView";
     var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
+}
+function doSaveKeputusanBaru(id,idMesyuaratPermohonan){	
+	if(document.${formName}.id.value !== "SILA PILIH"){
+		document.${formName}.hitButton.value = "simpanKeputusanBaru";
+		document.${formName}.idMesyuaratPermohonan.value= idMesyuaratPermohonan;
+		document.${formName}.flagResult.value= document.getElementById(id).value;
+		document.${formName}.submit();
+	}
+}
+function doSaveCatatanKeputusanBaru(id,idMesyuaratPermohonan){	
+	document.${formName}.hitButton.value = "simpanCatatanBaru";
+	document.${formName}.idMesyuaratPermohonan.value= idMesyuaratPermohonan;
+	document.${formName}.catatan.value= document.getElementById(id).value;
+	document.${formName}.submit();
+	
 }
 </script>

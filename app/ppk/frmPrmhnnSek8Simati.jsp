@@ -792,11 +792,13 @@ resetOnBlur:false
                                   
                                   <select name="socBuktiKematianSimati" class="autoselect" onChange="jenis_hutangU(this.value)" >
                                     <option value="">SILA PILIH BUKTI MATI</option>
+                                    <option value="1">SIJIL KEMATIAN</option>
+                                    <option value="3">PERINTAH MAHKAMAH (KEMATIAN)</option>
                                     
-                                  #foreach($listbuk in $listbuktimati)
-                                 		<option value="$listbuk.id_Buktimati">$listbuk.keterangan</option>
+                                  ##foreach($listbuk in $listbuktimati)
+<!--                                  		<option value="$listbuk.id_Buktimati">$listbuk.keterangan</option> -->
                                     
-	                               #end
+	                               ##end
                                   
                                   </select>
                                   #end
