@@ -98,7 +98,7 @@ padding:0 0.25em;
 		          <td>&nbsp;</td>
 		          <td>&nbsp;</td>
 		          <td>&nbsp;</td>
-		          <td><span class="style4"><i><font color="#ff0000">Perhatian</font> : </i><span class="style5">Sila muatnaik fail dalam format PDF sahaja.</span></span></td> <!-- dan saiz fail tidak melebihi 2MB -->
+		          <td><span class="style4"><i><font color="#ff0000">Perhatian</font> : </i><span class="style5">Sila muatnaik fail dalam format PDF sahaja. #if($jenisdokumen == '99212') Sila muatnaik salinan kad pengenalan depan dan belakang. #end</span></span></td> <!-- dan saiz fail tidak melebihi 2MB -->
 		        </tr>
 				<tr>
 			   		<td valign="top"></td>
