@@ -518,7 +518,7 @@
 				<td><font color="red">$!M</font></td>
 				<td>Bandar/Pekan/Mukim</td>
 				<td>:</td>
-				<td>$!selectMukim</td>
+				<td>$!selectMukim</td> 
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
