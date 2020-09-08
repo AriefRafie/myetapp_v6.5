@@ -784,7 +784,10 @@ resetOnBlur:false
                                      
                                 #foreach($listbuk in $listbuktimati)                                 
                                 #if($listmati.idBuktimati!=$listbuk.id_Buktimati)
+                                	#if($listbuk.id_Buktimati == '1' || $listbuk.id_Buktimati == '3')
                                     <option value="$listbuk.id_Buktimati">$listbuk.kod -  $listbuk.keterangan</option>
+                                    #end
+                                    
                                 #end    
 	                              #end
                                   </select>
@@ -794,8 +797,9 @@ resetOnBlur:false
                                     <option value="">SILA PILIH BUKTI MATI</option>
                                     
                                   #foreach($listbuk in $listbuktimati)
+                                  	#if($listbuk.id_Buktimati == '1' || $listbuk.id_Buktimati == '3')
                                  		<option value="$listbuk.id_Buktimati">$listbuk.keterangan</option>
-                                    
+                                    #end
 	                               #end
                                   
                                   </select>

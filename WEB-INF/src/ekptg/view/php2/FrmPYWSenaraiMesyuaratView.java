@@ -1,6 +1,9 @@
 
 package ekptg.view.php2;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Hashtable;
@@ -10,7 +13,11 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import lebah.db.Db;
+import lebah.db.SQLRenderer;
 import lebah.portal.AjaxBasedModule;
+import ekptg.helpers.AuditTrail;
+import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.model.php2.FrmPYWSenaraiMesyuaratData;
@@ -58,9 +65,11 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 		String mode = getParam("mode");
 		String actionMesyuarat = getParam("actionMesyuarat");
 		String selectedTabUpper = getParam("selectedTabUpper").toString();
+		
 		if (selectedTabUpper == null || "".equals(selectedTabUpper)) {
 			selectedTabUpper = "0";
 		}
+		
         if (mode.isEmpty()){
         	mode = "view";
         }
@@ -74,6 +83,9 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 		String flagPermohonanDari = getParam("flagPermohonanDari");
 		String flagPopup = getParam("flagPopup");
 		String modePopup = getParam("modePopup");
+		String flagResult = getParam("flagResult");
+		String catatan = getParam("catatan");
+		String idMesyuaratPermohonan = getParam("idMesyuaratPermohonan");
 		
 		// VECTOR
 		Vector list = null;
@@ -89,34 +101,40 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 		if (idKategoriPemohon == null || idKategoriPemohon.trim().length() == 0) {
 			idKategoriPemohon = "99999";
 		}
+		
 		String idLokasi = getParam("socLokasi");
 		if (idLokasi == null || idLokasi.trim().length() == 0){
 			idLokasi = "99999";
 		}
+		
 		String idJamDari = getParam("socJamDari");
 		if (idJamDari == null || idJamDari.trim().length() == 0){
 			idJamDari = "99999";
 		}
+
 		String idMinitDari = getParam("socMinitDari");
 		if (idMinitDari == null || idMinitDari.trim().length() == 0){
 			idMinitDari = "99999";
 		}
+		
 		String idJamHingga = getParam("socJamHingga");
 		if (idJamHingga == null || idJamHingga.trim().length() == 0){
 			idJamHingga = "99999";
 		}
+		
 		String idMinitHingga = getParam("socMinitHingga");
 		if (idMinitHingga == null || idMinitHingga.trim().length() == 0){
 			idMinitHingga = "99999";
 		}
+		
 		String idPegawai = getParam("socPegawai");
 		if (idPegawai == null || idPegawai.trim().length() == 0) {
 			idPegawai = "99999";
 		}
-				
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Date currentDate = new Date();
-				
+		
 		//HITBUTTON
 		if (postDB) {
 			if ("simpanMesyuarat".equals(hitButton)) {
@@ -129,8 +147,49 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 						getParam("txtBilMesyuarat"), getParam("txtTajukMesyuarat"), idJamDari, idMinitDari,
 						idJamHingga, idMinitHingga, getParam("txtCatatanMesyuarat"), idLokasi, session);
 			}
-		}		
-		
+			
+			if ("simpanKehadiran".equals(hitButton)) {
+
+				String listNama[] = this.request.getParameterValues("txtNama");
+				String listAgensi[] = this.request
+						.getParameterValues("txtAgensi");
+				String listJawatan[] = this.request
+						.getParameterValues("txtJawatan");
+				String listNoTel[] = this.request
+						.getParameterValues("txtNoTel");
+
+				if (listNama != null) {
+					for (int i = 0; i < listNama.length; i++) {
+						if (!listNama[i].equals("")) {
+							logic.saveKehadiran(i, idMesyuarat, listNama[i],
+									listAgensi[i], listJawatan[i],
+									listNoTel[i], getParam("flagPengerusi"),
+									session);
+						}
+					}
+				}
+			}
+			
+			if ("simpanKemaskiniKehadiran".equals(hitButton)) {
+				logic.updateKehadiran(idMesyuarat, idKehadiran,
+						getParam("txtNama"), getParam("txtAgensi"),
+						getParam("txtNoTel"), getParam("txtJawatan"),
+						getParam("socPengerusi"), session);
+			}
+			if ("hapusKehadiran".equals(hitButton)) {
+				logic.hapusKehadiranMesyuarat(idKehadiran, session);
+			}
+			
+			if ("hapusKehadiran".equals(hitButton)) {
+				logic.hapusKehadiranMesyuarat(idKehadiran, session);
+			}
+			if ("simpanKeputusanBaru".equals(hitButton)) {
+				logic.simpanKeputusanPermohonanBaru(idMesyuaratPermohonan,flagResult,session);
+			}
+			if ("simpanCatatanBaru".equals(hitButton)) {
+				logic.simpanCatatanPermohonanBaru(idMesyuaratPermohonan,catatan,session);
+			}
+		}
 		myLogger.info("actionPenyewaan : " +actionMesyuarat);
 		myLogger.info("mode : " +mode);
 		
@@ -186,7 +245,7 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 				logic.setSenaraiPermohonanBaharu(idMesyuarat);
 				senaraiFailMohonBaru = logic.getListPermohonanBaharu();
 				this.context.put("SenaraiFailMohonBaru", senaraiFailMohonBaru);
-				
+				this.context.put("totalRecords", senaraiFailMohonBaru.size());
 			} else {
 
 				// MODE VIEW
@@ -239,13 +298,16 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 			// GO TO LIST SENARAI MESYUARAT
 			vm = "app/php2/frmPYWSenaraiFailMesyuarat.jsp";
 
-			logic.carianSenaraiMesyuarat(getParam("txtTajukMesyuarat"), getParam("txtBilMesyuarat"), 
-					getParam("txtTarikhMesyuarat"), userId, userRole);
+			//logic.carianSenaraiMesyuarat(getParam("txtTajukMesyuarat"), getParam("txtBilMesyuarat"), 
+			//		getParam("txtTarikhMesyuarat"), userId, userRole);
+			logic.listSenaraiMesyuarat();
 			
 			list = new Vector();
+			
 			list = logic.getSenaraiMesyuarat();
+			
 			this.context.put("SenaraiMesyurat", list);
-
+			
 			this.context.put("txtTajukMesyuarat", getParam("txtTajukMesyuarat"));
 			this.context.put("txtBilMesyuarat", getParam("txtBilMesyuarat"));
 			this.context.put("txtTarikhMesyuarat", getParam("txtTarikhMesyuarat"));
@@ -327,6 +389,89 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 			this.context.put("error", e.getMessage());
 		}
 	}
+	public void saveKehadiran(int i, String idMesyuarat, String nama,
+			String agensi, String jawatan, String noTel, String flagPengerusi,
+			HttpSession session) throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = session.getAttribute("_ekptg_user_id").toString();
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			if (!"".equals(flagPengerusi)) {
+				if (Integer.parseInt(flagPengerusi) == (i + 1)) {
+					resetFlagPengerusi(idMesyuarat, db, userId);
+				}
+			}
+
+			// TBLPHPKEHADIRANMESY
+			long idKehadiran = DB.getNextID("TBLPHPKEHADIRANMESY_SEQ");
+			r.add("ID_KEHADIRAN", idKehadiran);
+			r.add("ID_MESYUARAT", idMesyuarat);
+			r.add("NAMA_PEGAWAI", nama);
+			r.add("NAMA_AGENSI", agensi);
+			r.add("NAMA_JAWATAN", jawatan);
+			r.add("NO_TELEFON", noTel);
+			if (!"".equals(flagPengerusi)) {
+				if (Integer.parseInt(flagPengerusi) == (i + 1)) {
+					r.add("FLAG_PENGERUSI", "Y");
+				} else {
+					r.add("FLAG_PENGERUSI", "T");
+				}
+			} else {
+				r.add("FLAG_PENGERUSI", "T");
+			}
+
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPHPKEHADIRANMESY");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+			
+			AuditTrail.logActivity("1610201", "4", null, session, "INS",
+					"FAIL [" + idKehadiran + "] DIDAFTARKAN");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
 	
-	
+	private void resetFlagPengerusi(String idMesyuarat, Db db, String userId)
+			throws Exception {
+		String sql = "";
+		try {
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPKEHADIRANMESY
+			r.update("ID_MESYUARAT", idMesyuarat);
+			r.add("FLAG_PENGERUSI", "T");
+
+			sql = r.getSQLUpdate("TBLPHPKEHADIRANMESY");
+			stmt.executeUpdate(sql);
+
+		} catch (SQLException ex) {
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+		}
+	}
 }
