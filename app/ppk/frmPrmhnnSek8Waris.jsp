@@ -3540,7 +3540,7 @@ Click me</a>
                                       <td width="20%"><div align="left">TALIAN PERSAUDARAAN</div></td>
                                       <td width="15%"><div align="center">STATUS</div></td>
                                       <td width="10%"><div align="center">LAPISAN</div></td>
-                                      <td width="12%"><div align="center">DOKUMEN</div></td>
+                                      <td width="12%"><div align="left">DOKUMEN</div></td>
                                     </tr>
                                   </table>
                                   <table width="100%">
@@ -3558,7 +3558,7 @@ Click me</a>
                                       <td><div align="left">TALIAN PERSAUDARAAN</div></td>
                                       <td><div align="center">STATUS</div></td>
                                       <td><div align="center">LAPISAN</div></td>
-                                      <td><div align="center">DOKUMEN</div></td>
+                                      <td><div align="left">DOKUMEN</div></td>
                                     </tr>
                                     #set($nowa=0)
                                     #foreach($listwaris in $listWaris)
@@ -3600,7 +3600,7 @@ Click me</a>
                                       #end
                                       <td width="15%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$hidup</div></td>
                                       <td width="10%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwaris.lapis</div></td>
-                                      <td width="12%" class="row1"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">
+                                      <td width="12%" class="row1"><div align="left" class="style72" style="text-transform:uppercase;" onblur="uppercase()">
                                    		#if($id_Status != "169" 
                        					&& $id_Status != "21" 
                        					&& $id_Status != "64" 
@@ -3650,7 +3650,7 @@ Click me</a>
                                       #end
                                       <td width="15%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$hidup</div></td>
                                       <td width="10%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">$listwaris.lapis</div></td>
-                                      <td width="12%" class="row2"><div align="center" class="style72" style="text-transform:uppercase;" onblur="uppercase()">
+                                      <td width="12%" class="row2"><div align="left" class="style72" style="text-transform:uppercase;" onblur="uppercase()">
                                       	#if($id_Status != "169" 
                        					&& $id_Status != "21" 
                        					&& $id_Status != "64" 
@@ -3703,7 +3703,7 @@ Click me</a>
                                 <td width="20%"><div align="left">NAMA WARIS YANG MENINGGAL</div></td>
                                 <td width="10%"><div align="center">STATUS</div></td>
                                 <td width="5%"><div align="center">LAPISAN</div></td>
-                                <td width="7%"><div align="center">DOKUMEN</div></td>
+                                <td width="7%"><div align="left">DOKUMEN</div></td>
                               </tr>
                               <!--   <input name="idwaris" type="hidden" id="idwaris" value="$listwaris.idwaris" /> -->
                             </table>
@@ -3723,7 +3723,7 @@ Click me</a>
                                 <td width="20%"><div align="left" >NAMA WARIS YANG MENINGGAL</div></td>
                                 <td width="10%"><div align="center" >STATUS</div></td>
                                 <td width="5%"><div align="center" >LAPISAN</div></td>
-                                <td width="7%"><div align="center">DOKUMEN</div></td>
+                                <td width="7%"><div align="left">DOKUMEN</div></td>
                               </tr>
                               #set($nowar=0)
                               #foreach($listwarislapisan in $listWarisLapisanIdMati)
@@ -7034,7 +7034,7 @@ onBlur="calculateTarikhLahirWaris();"/>
                                 <td width="20%"><div align="left">NAMA WARIS YANG MENINGGAL</div></td>
                                 <td width="10%"><div align="center">STATUS</div></td>
                                 <td width="5%"><div align="center">LAPISAN</div></td>
-                                <td width="7%"><div align="center">DOKUMEN</div></td>
+                                <td width="7%"><div align="left">DOKUMEN</div></td>
                               </tr>
                               <!--   <input name="idwaris" type="hidden" id="idwaris" value="$listwaris.idwaris" /> -->
                             </table>
@@ -7054,7 +7054,7 @@ onBlur="calculateTarikhLahirWaris();"/>
                                 <td width="20%"><div align="left" >NAMA WARIS YANG MENINGGAL</div></td>
                                 <td width="10%"><div align="center" >STATUS</div></td>
                                 <td width="5%"><div align="center" >LAPISAN</div></td>
-                                <td width="7%"><div align="center">DOKUMEN</div></td>
+                                <td width="7%"><div align="left">DOKUMEN</div></td>
                               </tr>
                               #set($bu=0)
                               
