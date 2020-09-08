@@ -784,7 +784,10 @@ resetOnBlur:false
                                      
                                 #foreach($listbuk in $listbuktimati)                                 
                                 #if($listmati.idBuktimati!=$listbuk.id_Buktimati)
+                                	#if($listbuk.id_Buktimati == '1' || $listbuk.id_Buktimati == '3')
                                     <option value="$listbuk.id_Buktimati">$listbuk.kod -  $listbuk.keterangan</option>
+                                    #end
+                                    
                                 #end    
 	                              #end
                                   </select>
@@ -792,13 +795,12 @@ resetOnBlur:false
                                   
                                   <select name="socBuktiKematianSimati" class="autoselect" onChange="jenis_hutangU(this.value)" >
                                     <option value="">SILA PILIH BUKTI MATI</option>
-                                    <option value="1">SIJIL KEMATIAN</option>
-                                    <option value="3">PERINTAH MAHKAMAH (KEMATIAN)</option>
                                     
-                                  ##foreach($listbuk in $listbuktimati)
-<!--                                  		<option value="$listbuk.id_Buktimati">$listbuk.keterangan</option> -->
-                                    
-	                               ##end
+                                  #foreach($listbuk in $listbuktimati)
+                                  	#if($listbuk.id_Buktimati == '1' || $listbuk.id_Buktimati == '3')
+                                 		<option value="$listbuk.id_Buktimati">$listbuk.keterangan</option>
+                                    #end
+	                               #end
                                   
                                   </select>
                                   #end
