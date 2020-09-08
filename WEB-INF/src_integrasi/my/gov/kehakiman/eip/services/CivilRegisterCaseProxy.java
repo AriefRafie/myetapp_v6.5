@@ -1,8 +1,8 @@
-package integrasi.ws.mt.reg;
+package my.gov.kehakiman.eip.services;
 
-public class CivilRegisterCaseProxy implements CivilRegisterCase_PortType {
+public class CivilRegisterCaseProxy implements my.gov.kehakiman.eip.services.CivilRegisterCase_PortType {
   private String _endpoint = null;
-  private CivilRegisterCase_PortType civilRegisterCase_PortType = null;
+  private my.gov.kehakiman.eip.services.CivilRegisterCase_PortType civilRegisterCase_PortType = null;
   
   public CivilRegisterCaseProxy() {
     _initCivilRegisterCaseProxy();
@@ -15,7 +15,7 @@ public class CivilRegisterCaseProxy implements CivilRegisterCase_PortType {
   
   private void _initCivilRegisterCaseProxy() {
     try {
-      civilRegisterCase_PortType = (new CivilRegisterCase_ServiceLocator()).getCivilRegisterCaseSOAP();
+      civilRegisterCase_PortType = (new my.gov.kehakiman.eip.services.CivilRegisterCase_ServiceLocator()).getCivilRegisterCaseSOAP();
       if (civilRegisterCase_PortType != null) {
         if (_endpoint != null)
           ((javax.xml.rpc.Stub)civilRegisterCase_PortType)._setProperty("javax.xml.rpc.service.endpoint.address", _endpoint);
@@ -38,13 +38,13 @@ public class CivilRegisterCaseProxy implements CivilRegisterCase_PortType {
     
   }
   
-  public CivilRegisterCase_PortType getCivilRegisterCase_PortType() {
+  public my.gov.kehakiman.eip.services.CivilRegisterCase_PortType getCivilRegisterCase_PortType() {
     if (civilRegisterCase_PortType == null)
       _initCivilRegisterCaseProxy();
     return civilRegisterCase_PortType;
   }
   
-  public Civilregistercaseresponse civilRegisterCase(Civilregistercaserequest parameters) throws java.rmi.RemoteException{
+  public my.gov.kehakiman.eip.services.Civilregistercaseresponse civilRegisterCase(my.gov.kehakiman.eip.services.Civilregistercaserequest parameters) throws java.rmi.RemoteException{
     if (civilRegisterCase_PortType == null)
       _initCivilRegisterCaseProxy();
     return civilRegisterCase_PortType.civilRegisterCase(parameters);

@@ -1,5 +1,5 @@
 /**
- * CivilregistercaserequestEventName.java
+ * SubmitApplicationRequestSource.java
  *
  * This file was auto-generated from WSDL
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
@@ -7,27 +7,29 @@
 
 package my.gov.kehakiman.eip.services;
 
-public class CivilregistercaserequestEventName implements java.io.Serializable {
+public class SubmitApplicationRequestSource implements java.io.Serializable {
     private java.lang.String _value_;
     private static java.util.HashMap _table_ = new java.util.HashMap();
 
     // Constructor
-    protected CivilregistercaserequestEventName(java.lang.String value) {
+    public SubmitApplicationRequestSource(java.lang.String value) {
         _value_ = value;
         _table_.put(_value_,this);
     }
 
-    public static final java.lang.String _CivilRegisterCase = "CivilRegisterCase";
-    public static final CivilregistercaserequestEventName CivilRegisterCase = new CivilregistercaserequestEventName(_CivilRegisterCase);
+    public static final java.lang.String _ETP = "ETP";
+    public static final java.lang.String _CMS = "CMS";
+    public static final SubmitApplicationRequestSource ETP = new SubmitApplicationRequestSource(_ETP);
+    public static final SubmitApplicationRequestSource CMS = new SubmitApplicationRequestSource(_CMS);
     public java.lang.String getValue() { return _value_;}
-    public static CivilregistercaserequestEventName fromValue(java.lang.String value)
+    public static SubmitApplicationRequestSource fromValue(java.lang.String value)
           throws java.lang.IllegalArgumentException {
-        CivilregistercaserequestEventName enumeration = (CivilregistercaserequestEventName)
+        SubmitApplicationRequestSource enumeration = (SubmitApplicationRequestSource)
             _table_.get(value);
         if (enumeration==null) throw new java.lang.IllegalArgumentException();
         return enumeration;
     }
-    public static CivilregistercaserequestEventName fromString(java.lang.String value)
+    public static SubmitApplicationRequestSource fromString(java.lang.String value)
           throws java.lang.IllegalArgumentException {
         return fromValue(value);
     }
@@ -53,10 +55,10 @@ public class CivilregistercaserequestEventName implements java.io.Serializable {
     }
     // Type metadata
     private static org.apache.axis.description.TypeDesc typeDesc =
-        new org.apache.axis.description.TypeDesc(CivilregistercaserequestEventName.class);
+        new org.apache.axis.description.TypeDesc(SubmitApplicationRequestSource.class);
 
     static {
-        typeDesc.setXmlType(new javax.xml.namespace.QName("https://eip.kehakiman.gov.my/services/", ">>civilregistercaserequest>eventName"));
+        typeDesc.setXmlType(new javax.xml.namespace.QName("https://eip.kehakiman.gov.my/services/", ">>submitApplicationRequest>source"));
     }
     /**
      * Return type metadata object

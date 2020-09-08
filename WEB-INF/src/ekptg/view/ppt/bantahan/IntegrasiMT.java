@@ -1,10 +1,6 @@
 package ekptg.view.ppt.bantahan;
 
 //import integrasi.utils.IntLogManager;
-import integrasi.ws.mt.reg.DeceaseInfoType;
-import integrasi.ws.mt.reg.MTRegManager;
-import integrasi.ws.mt.reg.PartyType;
-
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
@@ -19,6 +15,8 @@ import javax.servlet.http.HttpSession;
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 import lebah.portal.AjaxBasedModule;
+import my.gov.kehakiman.eip.services.DeceaseInfoType;
+import my.gov.kehakiman.eip.services.PartyType;
 
 import org.apache.log4j.Logger;
 
@@ -36,6 +34,7 @@ import ekptg.model.ppt.BantahanAgensiDaftar;
 import ekptg.model.ppt.BantahanDaftar;
 import ekptg.model.ppt.util.LampiranBean;
 import ekptg.model.utils.rujukan.UtilHTMLPilihanMT;
+import integrasi.ws.mt.MTManagerReg;
 
 //public class IntegrasiMT extends VTemplate{
 public class IntegrasiMT extends AjaxBasedModule{
@@ -61,7 +60,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 		String socmt =""; 
 		Vector<Hashtable<String,String>> list = null;
 
-		MTRegManager im = null;
+		MTManagerReg im = null;
 		PartyType[] party = null;
 		PartyType pt = null;	
 		
@@ -129,7 +128,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 		
 //			Tujuan Pengujian
 			}else {
-				im = new MTRegManager();
+				im = new MTManagerReg();
 				socmt = getPilihan().Pilihan("socmt",pejabatMT, "disabled");
 //				socmt = String.valueOf(vecMT.get(0).get("namaPejabat"));
 				kodmt = im.getKodMT(pejabatMT);
@@ -267,7 +266,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 //				refType = "OT";
 			}
 			
-			im = new MTRegManager("MTREG");
+			im = new MTManagerReg("MTREG");
 			
 			Hashtable<String,String> daftar = new Hashtable<String,String>();
 			daftar.put("idFail",idFail);
@@ -285,12 +284,12 @@ public class IntegrasiMT extends AjaxBasedModule{
 	        //MTRegManager manager = new MTRegManager("15");
 			myLog.info("sql="+sql);
 			if(jenisPembantah.equals("2")){
-				pt = MTRegManager.getPartyPerayuGov(idRujukanPB //id rujukan party
+				pt = MTManagerReg.getPartyPerayuGov(idRujukanPB //id rujukan party
 					,name
 					,add,add2,add3,postcode,stateCode,city);
 			}else {
 				//,String name,String umur,String gen,String noRef
-				pt = MTRegManager.getPartyPerayu(idRujukanPB //id rujukan party
+				pt = MTManagerReg.getPartyPerayu(idRujukanPB //id rujukan party
 						,name, String.valueOf(umur), gen, noRef,refType
 						,add,add2,add3,postcode,stateCode,city);
 			}
@@ -320,7 +319,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 	        deceaseInfo.setDeceaseInfoCountry("MYS");
 
 	        String returnMessage = "1 Tidak Berjaya Dihantar";
-	        returnMessage = MTRegManager. PendaftaranBaharu("15"
+	        returnMessage = MTManagerReg. PendaftaranBaharu("15"
 	        					,doc.getIdDokumen(),renameDoc,doc.getKandungan()
 	        					,party
 	        					,deceaseInfo
@@ -338,8 +337,8 @@ public class IntegrasiMT extends AjaxBasedModule{
 				if (code.equals("0")) {
 					daftar = new Hashtable<String,String>();
 					daftar.put("idRujukan",idBantahan);
-					if (MTRegManager.getReferenceNo() != null) {
-						daftar.put("noKes",MTRegManager.getReferenceNo());
+					if (MTManagerReg.getReferenceNo() != null) {
+						daftar.put("noKes",MTManagerReg.getReferenceNo());
 					}					
 					daftar.put("catatan",idBantahan);
 					daftar.put("idUser",idUser);
@@ -371,7 +370,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 			
 		}else if(submit.equals("getmahkamah")){
 			String idPejabat = getParam("socmt");
-			im = new MTRegManager();
+			im = new MTManagerReg();
 			
 			socmt = getPilihan().Pilihan("socmt",idPejabat,"onchange = \'pilihMT()\'");
 			kodmt = im.getKodMT(idPejabat);
@@ -383,7 +382,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 			String idPejabat = getParam("socPejabat");
 			
 //			socPejabat = getPTGD().Pilihan("socPejabat", idPejabat,idPermohonan,"onchange = \'pilihPejabat()\'");
-			PartyType partyType = MTRegManager.getPartyResponden(idPejabat);
+			PartyType partyType = MTManagerReg.getPartyResponden(idPejabat);
 
 			setContextPejabat(partyType);
 

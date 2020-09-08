@@ -36,9 +36,9 @@ public class CivilRegisterCaseSOAPStub extends org.apache.axis.client.Stub imple
 
     }
 
-    public CivilRegisterCaseSOAPStub(java.net.URL endpointURL) throws org.apache.axis.AxisFault {
-        this(endpointURL,null);
-   }
+    public CivilRegisterCaseSOAPStub() throws org.apache.axis.AxisFault {
+         this(null);
+    }
 
     public CivilRegisterCaseSOAPStub(java.net.URL endpointURL, javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
          this(service);
@@ -72,6 +72,13 @@ public class CivilRegisterCaseSOAPStub extends org.apache.axis.client.Stub imple
             cachedSerFactories.add(enumsf);
             cachedDeserFactories.add(enumdf);
 
+            qName = new javax.xml.namespace.QName("https://eip.kehakiman.gov.my/services/", ">>dataCreateReqType>PartyAgency>PartyCounsel");
+            cachedSerQNames.add(qName);
+            cls = my.gov.kehakiman.eip.services.DataCreateReqTypePartyAgencyPartyCounsel.class;
+            cachedSerClasses.add(cls);
+            cachedSerFactories.add(beansf);
+            cachedDeserFactories.add(beandf);
+
             qName = new javax.xml.namespace.QName("https://eip.kehakiman.gov.my/services/", ">civilregistercaserequest");
             cachedSerQNames.add(qName);
             cls = my.gov.kehakiman.eip.services.Civilregistercaserequest.class;
@@ -82,6 +89,13 @@ public class CivilRegisterCaseSOAPStub extends org.apache.axis.client.Stub imple
             qName = new javax.xml.namespace.QName("https://eip.kehakiman.gov.my/services/", ">civilregistercaseresponse");
             cachedSerQNames.add(qName);
             cls = my.gov.kehakiman.eip.services.Civilregistercaseresponse.class;
+            cachedSerClasses.add(cls);
+            cachedSerFactories.add(beansf);
+            cachedDeserFactories.add(beandf);
+
+            qName = new javax.xml.namespace.QName("https://eip.kehakiman.gov.my/services/", ">dataCreateReqType>PartyAgency");
+            cachedSerQNames.add(qName);
+            cls = my.gov.kehakiman.eip.services.DataCreateReqTypePartyAgency.class;
             cachedSerClasses.add(cls);
             cachedSerFactories.add(beansf);
             cachedDeserFactories.add(beandf);
@@ -202,8 +216,6 @@ public class CivilRegisterCaseSOAPStub extends org.apache.axis.client.Stub imple
         _call.setOperation(_operations[0]);
         _call.setUseSOAPAction(true);
         _call.setSOAPActionURI("http://www.example.org/SIT_CivilRegisterCase/CivilRegiterCase");
-        
-        //_call.setSOAPActionURI("http://sit-ws.kehakiman.gov.my/sit/etappCivilRegisterCase");	
         _call.setEncodingStyle(null);
         _call.setProperty(org.apache.axis.client.Call.SEND_TYPE_ATTR, Boolean.FALSE);
         _call.setProperty(org.apache.axis.AxisEngine.PROP_DOMULTIREFS, Boolean.FALSE);

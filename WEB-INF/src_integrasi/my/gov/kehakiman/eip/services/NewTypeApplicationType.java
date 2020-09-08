@@ -12,7 +12,7 @@ public class NewTypeApplicationType implements java.io.Serializable {
     private static java.util.HashMap _table_ = new java.util.HashMap();
 
     // Constructor
-    protected NewTypeApplicationType(java.lang.String value) {
+    public NewTypeApplicationType(java.lang.String value) {
         _value_ = value;
         _table_.put(_value_,this);
     }

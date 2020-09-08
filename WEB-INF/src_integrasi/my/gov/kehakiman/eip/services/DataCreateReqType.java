@@ -28,10 +28,8 @@ public class DataCreateReqType  implements java.io.Serializable {
      *                 				5) 11 = Federal Court */
     private java.lang.String jurisdiction;
 
-    /* Division level
-     * Possible Value:
-     * 1)	3 = Civil
-     * 2)	2 = Criminal */
+    /* Division level Possible Value: 1) 3 =
+     *                 				Civil 2) 2 = Criminal */
     private java.lang.String division;
 
     private java.lang.String caseCode;
@@ -44,6 +42,8 @@ public class DataCreateReqType  implements java.io.Serializable {
     private my.gov.kehakiman.eip.services.CauseofactionType[] causeofaction;
 
     private my.gov.kehakiman.eip.services.PartyType[] party;
+
+    private my.gov.kehakiman.eip.services.DataCreateReqTypePartyAgency partyAgency;
 
     /* This section is REQUIRED if Case Code =
      *                 				31NCVC only. */
@@ -63,6 +63,7 @@ public class DataCreateReqType  implements java.io.Serializable {
            java.lang.String valueInvolved,
            my.gov.kehakiman.eip.services.CauseofactionType[] causeofaction,
            my.gov.kehakiman.eip.services.PartyType[] party,
+           my.gov.kehakiman.eip.services.DataCreateReqTypePartyAgency partyAgency,
            my.gov.kehakiman.eip.services.DeceaseInfoType deceaseInfo,
            my.gov.kehakiman.eip.services.DocumentType[] document) {
            this.sourceReferenceNo = sourceReferenceNo;
@@ -73,6 +74,7 @@ public class DataCreateReqType  implements java.io.Serializable {
            this.valueInvolved = valueInvolved;
            this.causeofaction = causeofaction;
            this.party = party;
+           this.partyAgency = partyAgency;
            this.deceaseInfo = deceaseInfo;
            this.document = document;
     }
@@ -149,10 +151,8 @@ public class DataCreateReqType  implements java.io.Serializable {
     /**
      * Gets the division value for this DataCreateReqType.
      * 
-     * @return division   * Division level
-     * Possible Value:
-     * 1)	3 = Civil
-     * 2)	2 = Criminal
+     * @return division   * Division level Possible Value: 1) 3 =
+     *                 				Civil 2) 2 = Criminal
      */
     public java.lang.String getDivision() {
         return division;
@@ -162,10 +162,8 @@ public class DataCreateReqType  implements java.io.Serializable {
     /**
      * Sets the division value for this DataCreateReqType.
      * 
-     * @param division   * Division level
-     * Possible Value:
-     * 1)	3 = Civil
-     * 2)	2 = Criminal
+     * @param division   * Division level Possible Value: 1) 3 =
+     *                 				Civil 2) 2 = Criminal
      */
     public void setDivision(java.lang.String division) {
         this.division = division;
@@ -273,6 +271,26 @@ public class DataCreateReqType  implements java.io.Serializable {
 
 
     /**
+     * Gets the partyAgency value for this DataCreateReqType.
+     * 
+     * @return partyAgency
+     */
+    public my.gov.kehakiman.eip.services.DataCreateReqTypePartyAgency getPartyAgency() {
+        return partyAgency;
+    }
+
+
+    /**
+     * Sets the partyAgency value for this DataCreateReqType.
+     * 
+     * @param partyAgency
+     */
+    public void setPartyAgency(my.gov.kehakiman.eip.services.DataCreateReqTypePartyAgency partyAgency) {
+        this.partyAgency = partyAgency;
+    }
+
+
+    /**
      * Gets the deceaseInfo value for this DataCreateReqType.
      * 
      * @return deceaseInfo   * This section is REQUIRED if Case Code =
@@ -291,7 +309,6 @@ public class DataCreateReqType  implements java.io.Serializable {
      */
     public void setDeceaseInfo(my.gov.kehakiman.eip.services.DeceaseInfoType deceaseInfo) {
         this.deceaseInfo = deceaseInfo;
-        System.out.println("setDeceaseInfo" + deceaseInfo);
     }
 
 
@@ -358,6 +375,9 @@ public class DataCreateReqType  implements java.io.Serializable {
             ((this.party==null && other.getParty()==null) || 
              (this.party!=null &&
               java.util.Arrays.equals(this.party, other.getParty()))) &&
+            ((this.partyAgency==null && other.getPartyAgency()==null) || 
+             (this.partyAgency!=null &&
+              this.partyAgency.equals(other.getPartyAgency()))) &&
             ((this.deceaseInfo==null && other.getDeceaseInfo()==null) || 
              (this.deceaseInfo!=null &&
               this.deceaseInfo.equals(other.getDeceaseInfo()))) &&
@@ -414,6 +434,9 @@ public class DataCreateReqType  implements java.io.Serializable {
                     _hashCode += obj.hashCode();
                 }
             }
+        }
+        if (getPartyAgency() != null) {
+            _hashCode += getPartyAgency().hashCode();
         }
         if (getDeceaseInfo() != null) {
             _hashCode += getDeceaseInfo().hashCode();
@@ -489,6 +512,13 @@ public class DataCreateReqType  implements java.io.Serializable {
         elemField.setXmlType(new javax.xml.namespace.QName("https://eip.kehakiman.gov.my/services/", "PartyType"));
         elemField.setNillable(false);
         elemField.setMaxOccursUnbounded(true);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("partyAgency");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "PartyAgency"));
+        elemField.setXmlType(new javax.xml.namespace.QName("https://eip.kehakiman.gov.my/services/", ">dataCreateReqType>PartyAgency"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("deceaseInfo");
