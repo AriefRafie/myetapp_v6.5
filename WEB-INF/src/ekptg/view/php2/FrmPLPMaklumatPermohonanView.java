@@ -61,7 +61,6 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
 		String hitButton = getParam("hitButton");
 		String flagPopup = getParam("flagPopup");
 		String modePopup = getParam("modePopup");
-		String flagFrom = getParam("flagFrom");
 		String step = getParam("step");
 	    String vm = ""; 
 		String flagReKeyin = "";
@@ -786,7 +785,6 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
 		this.context.put("flagPopup", flagPopup);
 		this.context.put("modePopup", modePopup);
 		this.context.put("selectedTabUpper", selectedTabUpper);
-		//		this.context.put("flagFrom", flagFrom);
 		
         //SET ID PARAM
 		this.context.put("idFail", idFail);
