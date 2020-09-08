@@ -860,10 +860,7 @@
     
     <tr>
         <td><a href="#" class="style2" onClick="nota('$id_siasatan')"><font color="blue">Nota Siasatan Tarik Balik</font></a></td>
-      </tr>  
-    <tr>
-        <td><a href="#" class="style2" onClick="BorangLB('$id_pembatalan')"><font color="blue">Borang LB</font></a></td>
-      </tr>         
+    </tr>         
     </table>
 </fieldset>
   
@@ -1743,17 +1740,6 @@ function nota(id_siasatan)
     if (hWnd.focus != null) hWnd.focus();
 
 }
-
-function BorangLB(id_pembatalan)
-{
-    var url = "../servlet/ekptg.report.ppt.BorangLB?id_penarikan="+id_pembatalan;  
-    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-	hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-
-}
-
 
 function FCKeditor_OnComplete(editorInstance){
 	if (editorInstance.Name == "txtUlasanSiasatan" ) {	
