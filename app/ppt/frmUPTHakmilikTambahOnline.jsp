@@ -74,7 +74,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 
 <fieldset id="top">
 	<legend>
-		<strong>Maklumat Hakmilik</strong>
+		<strong>Maklumat Hakmilik $hideFieldHakmilik</strong>
 	</legend>
 
 	<br />
@@ -222,9 +222,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 				href="javascript:popupCarianHakmilikSalin('$id_permohonan','skrin_hakmilik_sek8_KJP','$id_daerah')"><font
 					color="blue">>> SALIN MAKLUMAT HAKMILIK/LOT</font></a></td>
 		</tr>
-
-
-		#if($hideFieldHakmilik=="no")
+		
 
 		<tr>
 			<td><font color="red">*</font></td>
@@ -232,12 +230,14 @@ Maklumat Hakmilik telah berjaya disimpan.
 			<td>:</td>
 			<td>$!selectKategoriTanah</td>
 		</tr>
+		
 		<tr>
 			<td><font color="red">*</font></td>
 			<td>Unit Luas Asal</td>
 			<td>:</td>
 			<td>$!selectUnitLuasLot</td>
 		</tr>
+		
 		<tr>
 			<td valign="top"><font color="red">*</font></td>
 			<td valign="top">Luas Asal</td>
@@ -296,6 +296,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 			<td>:</td>
 			<td>$!selectUnitLuasAmbil</td>
 		</tr>
+		
 		<tr>
 			<td valign="top"><font color="red">*</font></td>
 			<td valign="top">Luas Diambil</td>
@@ -337,6 +338,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 
 		#if($showButtonConvertAmbil=="yes" ||
 		$showFieldAmbilBeforeConvert=="yes")
+		
 		<tr>
 			<td colspan="3">&nbsp;</td>
 			<td>#if($showButtonConvertAmbil=="yes") <input type="button"
@@ -347,7 +349,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 				onClick="javascript:clearConvertAmbil()"> #end
 			</td>
 		</tr>
-		#end #end
+		#end
 
 	</table>
 </fieldset>
@@ -394,7 +396,9 @@ Maklumat Hakmilik telah berjaya disimpan.
 			<td>&nbsp;<a href="javascript:doOnchange('1')"><font
 					color="blue">kosongkan pilihan</font></a></td>
 		</tr>
-		#end #if($showWarta=="yes")
+		#end 
+		
+		#if($showWarta=="yes")
 		<tr>
 			<td>&nbsp;</td>
 			<td>No.Warta</td>
@@ -403,6 +407,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 				value="$!txtNoWartaRizab" maxlength="20" id="txtNoWartaRizab"
 				onblur="javascript:updateNoWartaRizab('$!txtNoWartaRizab')"></td>
 		</tr>
+		
 		<tr>
 			<td>&nbsp;</td>
 			<td>Tarikh Warta</td>
@@ -418,7 +423,6 @@ Maklumat Hakmilik telah berjaya disimpan.
 
 	</table>
 </fieldset>
-
 #end
 
 <fieldset>
@@ -633,7 +637,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 				id="txtNoLot" value="$!txtNoLot" size="12" maxlength="20"></td>
 		</tr>
 
-		#if($hideFieldHakmilik=="no")
+		##if($hideFieldHakmilik=="no")
 
 		<tr>
 			<td><font color="red">$!M</font></td>
@@ -711,6 +715,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 			<td>:</td>
 			<td>$!selectUnitLuasAmbil</td>
 		</tr>
+		
 		<tr>
 			<td valign="top"><font color="red">$!M</font></td>
 			<td valign="top">Luas Diambil</td>
@@ -755,6 +760,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 				</td>
 		</tr>
 
+
 		#if($isEdit=="yes" && ($showButtonConvertAmbil=="yes" ||
 		$showFieldAmbilBeforeConvert=="yes"))
 		<tr>
@@ -767,7 +773,10 @@ Maklumat Hakmilik telah berjaya disimpan.
 				onClick="javascript:clearConvertAmbilUpdate()"> #end
 			</td>
 		</tr>
-		#end #end
+		#end 
+		
+		##end
+
 
 	</table>
 </fieldset>
@@ -816,7 +825,9 @@ Maklumat Hakmilik telah berjaya disimpan.
 			<td>&nbsp;<a href="javascript:doOnchangeUpdate('1')"><font
 					color="blue">kosongkan pilihan</font></a></td>
 		</tr>
-		#end #if($showWarta=="yes")
+		#end 
+		
+		#if($showWarta=="yes")
 		<tr>
 			<td>&nbsp;</td>
 			<td>No.Warta</td>
@@ -826,6 +837,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 				maxlength="20" id="txtNoWartaRizab"
 				onblur="javascript:updateNoWartaRizab('$!txtNoWartaRizab')"></td>
 		</tr>
+		
 		<tr>
 			<td>&nbsp;</td>
 			<td>Tarikh Warta</td>
@@ -856,6 +868,8 @@ Maklumat Hakmilik telah berjaya disimpan.
 					onKeyDown="textCounter(this.form.txtCatatan,this.form.remLen1,4000);"
 					onblur="javascript:updatetxtCatatan('$!txtCatatan')">$!txtCatatan</textarea></td>
 		</tr>
+		
+		
 		#if($isEdit=="yes")
 		<tr>
 			<td colspan="3">&nbsp;</td>
@@ -865,6 +879,8 @@ Maklumat Hakmilik telah berjaya disimpan.
 		#end
 	</table>
 </fieldset>
+
+
 <fieldset>
 	<table width="100%" border="0">
 		<tr>
@@ -878,6 +894,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 				<img src="../img/calendar.gif"
 				onclick="displayDatePicker('txdTarikhPembayaran',false,'dmy');">&nbsp;$!frmtdate</td>
 		</tr>
+		
 		<tr>
 			<td valign="top">
 			<td valign="top" width="23%">Buku Pembayaran (baucer)</td>
@@ -888,6 +905,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 	</table>
 	#if($isEdit=="yes")
 	<table width="100%" border="0">
+	
 		<tr>
 			<td>&nbsp;</td>
 		</tr>
@@ -1683,7 +1701,7 @@ function simpanHM(id_permohonan, id_hakmilik, flagSubjaket, hideFieldHakmilik, m
 		return;
 		
 	}	else	{
-	
+		
 		if ( !window.confirm("Adakah Anda Pasti?") ) return;
 		
 		document.${formName}.flag_subjaket.value = flagSubjaket;
@@ -1700,11 +1718,11 @@ function simpanHM(id_permohonan, id_hakmilik, flagSubjaket, hideFieldHakmilik, m
 		}
 		
 		// for upload Function
-		var command = document.${formName}.command.value;
-		var command2 = document.${formName}.command2.value;
+		var command = document.${formName}.command.value; // tambahHakmilik
+		var command2 = document.${formName}.command2.value; // simpanHakmilik
 		var command3 = document.${formName}.command3.value;
 		
-		var id_negeriprojek = document.${formName}.id_negeriprojek.value;;
+		var id_negeriprojek = document.${formName}.id_negeriprojek.value;
 		var id_daerah = document.${formName}.id_daerah.value;
 	    var socJenisHakmilik = document.${formName}.socJenisHakmilik.value;
 		var txtNoHakmilik = document.${formName}.txtNoHakmilik.value;
@@ -1721,6 +1739,7 @@ function simpanHM(id_permohonan, id_hakmilik, flagSubjaket, hideFieldHakmilik, m
 		var txtNoPT = document.${formName}.txtNoPT.value;
 		var txtLuasAsal = document.${formName}.txtLuasLotAsal.value;
 		var txtLuasAmbil = document.${formName}.txtLuasLotAmbil.value;
+		
 		var txtCatatan = document.${formName}.txtCatatanHidden.value;
 		var txtSeksyen = document.${formName}.txtseksyenHidden.value;
 		var txdTarikhPembayaran = document.${formName}.txdTarikhPembayaranHidden.value;
@@ -1730,8 +1749,17 @@ function simpanHM(id_permohonan, id_hakmilik, flagSubjaket, hideFieldHakmilik, m
 		var txtLuasLotAsalSebelumConvert = document.${formName}.txtLuasLotAsalSebelumConvertHidden.value;
 		var sorDropdownUnitAsal = document.${formName}.sorDropdownUnitAsal.value;
 		var sorDropdownUnitAmbil = document.${formName}.sorDropdownUnitAmbil.value;
-		var sorJenisRizab = document.${formName}.sorJenisRizab.value;
+		alert("sorDropdownUnitAmbil: " +sorDropdownUnitAmbil);
+
+		if (hideFieldHakmilik=="no")	{	
+			var sorJenisRizab = document.${formName}.sorJenisRizab.value;
+		}
+		else{	
+			var sorJenisRizab = "" ;
+		}
+		
 		var txtLain = document.${formName}.txtLainHidden.value;
+		alert("txtLain: " +txtLain);
 		var txtNoWartaRizab = document.${formName}.txtNoWartaRizabHidden.value;
 		var txdTarikhWarta = document.${formName}.txdTarikhWartaHidden.value;
 		var txtNoBangunan = document.${formName}.txtNoBangunan.value;
@@ -1750,6 +1778,7 @@ function simpanHM(id_permohonan, id_hakmilik, flagSubjaket, hideFieldHakmilik, m
 				"&sorDropdownUnitAsal="+sorDropdownUnitAsal+"&sorDropdownUnitAmbil="+sorDropdownUnitAmbil+"&sorJenisRizab="+sorJenisRizab+"&txtLain="+txtLain+
 				"&txtNoWartaRizab="+txtNoWartaRizab+"&txdTarikhWarta="+txdTarikhWarta+"&txtNoBangunan="+txtNoBangunan+"&txtNoTingkat="+txtNoTingkat+"&txtNoPetak="+txtNoPetak;
 		//end upload
+		
 		document.${formName}.command.value = "viewHM";
 		document.${formName}.submit();
 		

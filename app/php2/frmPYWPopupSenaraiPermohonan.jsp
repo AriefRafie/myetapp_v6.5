@@ -10,7 +10,7 @@
 	<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
 	<input type="hidden" name="actionPopup" value='$!actionPopup'/>
 	<input type="hidden" name="idFail"/>
-	<input type="hidden" name="idMesyuarat"/>
+	<input type="hidden" name="idMesyuarat" value='$!idMesyuarat'/>
 	<input type="hidden" name="hitButton" id="hitButton"/>
 	<input type="hidden" name="step" id="step" value='$!step'/>
 </p>
@@ -44,8 +44,7 @@
           <td class="$row">$!senaraiFail.jenisPermohonan</td>
           <td class="$row">$senaraiFail.namaPemohon</td>
           <td class="$row" align="center">
-          	<input type="checkbox" name="checkPermohonan" id="checkPermohonan$u.id" value="$u.id" onclick="$('err_checkPermohonan').innerHTML=''; at(this, event)" />
-<!--           	<input type="checkbox" name="ids1" id="ids1" onClick="doUpdateCheckAll1()" value="$id_fail" title="Semak untuk pilih fail ini" > -->
+          	<input type="checkbox" name="checkPermohonan" id="checkPermohonan$senaraiFail.idPermohonan" value="$senaraiFail.idPermohonan" onclick="$('err_checkPermohonan').innerHTML=''; at(this, event)" />
           </td>
         #end
         #else
@@ -82,7 +81,6 @@ function doPilih() {
 		if ( !window.confirm("Adakah Anda Pasti?") ){
 			return;
 		}
-		alert("2");
 		document.${formName}.hitButton.value = "doSimpanPilihan";
 		document.${formName}.submit();
 	}

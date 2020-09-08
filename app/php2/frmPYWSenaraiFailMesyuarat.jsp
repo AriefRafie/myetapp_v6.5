@@ -9,6 +9,7 @@
   <input type="hidden" name="actionMesyuarat" id="actionMesyuarat" value="$actionMesyuarat"/>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input type="hidden" name="idPermohonan" id="idPermohonan" value="$idPermohonan"/>
+  <input type="hidden" name="idMesyuarat" id="idMesyuarat" value="$idMesyuarat"/>
   <input type="hidden" name="flagDetail" id="flagDetail" value="$flagDetail"/>
   <input type="hidden" name="initiateFlagBuka" id="initiateFlagBuka"/>
   <input type="hidden" name="mode" id="mode" value="$mode"/>
@@ -66,13 +67,11 @@
         </tr>
         <tr class="table_header" align="center">
           <td scope="row" width="4%" align="center"><strong>Bil</strong></td>
-          <td width="20%"><strong>Tajuk Mesyuarat</strong></td>
-          <td width="20%"><strong>Bil. Mesyuarat</strong></td>
-          <td width="8%"><strong>Tarikh Mesyuarat</strong></td>
-          <td width="8%"><strong>Lokasi</strong></td>
-          <td width="18%"><strong>Status Mesyuarat</strong></td>
-          <td width="8%"><strong>Papar</strong></td>
-          <td width="8%"><strong>Hapus</strong></td>
+          <td width="36%"><strong>Tajuk Mesyuarat</strong></td>
+          <td width="10%"><strong>Bil. Mesyuarat</strong></td>
+          <td width="11%"><strong>Tarikh Mesyuarat</strong></td>
+          <td width="20%"><strong>Lokasi</strong></td>
+          <td width="13%"><strong>Status Mesyuarat</strong></td>
         </tr>
         #set ($list = "")
         #if ($SenaraiMesyurat.size() > 0)
@@ -86,13 +85,11 @@
         #end
         <tr>
           <td class="$row" align="center">$list.bil</td>
-          <td class="$row">$list.tajukMesyuarat</a></td>
+          <td class="$row"><a href="javascript:papar('$list.idMesyuarat')" class="style1">$list.tajukMesyuarat</a></td>
           <td class="$row">$list.bilMesyuarat</td>
-          <td class="$row" align="center">$list.tarikhMesyurat</td>
+          <td class="$row" align="center">$list.tarikhMesyuarat</td>
           <td class="$row" align="center">$list.lokasiMesyuarat</td>
           <td class="$row" align="center">$list.statusMesyuarat</td>
-          <td class="$row" align="center"><a href="javascript:papar('$list.idPermohonan','$list.idStatus')" class="style1"></td>
-          <td class="$row"></td>
         </tr>
         #end
         #else
@@ -154,12 +151,12 @@ function kosongkan() {
 	document.${formName}.socStatusC.value = "";
 	doAjaxCall${formName}("");
 }
-function papar(idFail,idStatus) {
+function papar(idMesyuarat) {
 
-	document.${formName}.idFail.value = idFail;
+	document.${formName}.idMesyuarat.value = idMesyuarat;
 	document.${formName}.initiateFlagBuka.value = "Y";
-	document.${formName}.flagFrom.value = "failTugasan";	
-
+	document.${formName}.flagFrom.value = "failTugasan";
+	document.${formName}.actionMesyuarat.value = "papar";
 	document.${formName}.submit();
 }
 function daftarBaruMesyuarat(){
