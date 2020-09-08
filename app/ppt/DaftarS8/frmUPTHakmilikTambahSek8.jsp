@@ -143,8 +143,8 @@
 				<td> No. Strata </td>
 				<td>:</td>
 				<td>
-                   	<span class="labelinput">No.Bang</span>&nbsp;<input name="txtNoBangunan" type="text" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
-					<span class="labelinput">No.Ting</span>&nbsp;<input name="txtNoTingkat" type="text" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+                   	<span class="labelinput">No.Bangunan</span>&nbsp;<input name="txtNoBangunan" type="text" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+					<span class="labelinput">No.Tingkat</span>&nbsp;<input name="txtNoTingkat" type="text" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
 					<span class="labelinput">No.Petak</span>&nbsp;<input name="txtNoPetak" type="text" id="txtNoPetak"  value="$!txtNoPetak" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
   				</td>
 			</tr>
@@ -551,8 +551,8 @@
 				<td> No. Strata </td>
 				<td>:</td>
 				<td>
-                   	<span class="labelinput">No.Bang</span>&nbsp;<input $disability $disabilityx  name="txtNoBangunan" type="text" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
-					<span class="labelinput">No.Ting</span>&nbsp;<input $disability $disabilityx  name="txtNoTingkat" type="text" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+                   	<span class="labelinput">No.Bangunan</span>&nbsp;<input $disability $disabilityx  name="txtNoBangunan" type="text" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+					<span class="labelinput">No.Tingkat</span>&nbsp;<input $disability $disabilityx  name="txtNoTingkat" type="text" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
 					<span class="labelinput">No.Petak</span>&nbsp;<input $disability $disabilityx  name="txtNoPetak" type="text" id="txtNoPetak"  value="$!txtNoPetak" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
   				</td>
 			</tr>
