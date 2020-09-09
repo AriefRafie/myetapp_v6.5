@@ -13,7 +13,7 @@
 #set($saizTxtPerkara="1000")
 #set($saizTxtNamaProjek="1000")
 <p>
-  <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
+  <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'/>
   <input name="mode" type="hidden" id="mode" value="$mode"/>
   <input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
   <input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
@@ -56,7 +56,7 @@
           <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PEMOHON</li>
           <li onClick="doChangeTabUpper(4);" class="TabbedPanelsTab" tabindex="0">TANAH GANTI</li>
           <li onClick="doChangeTabUpper(5);" class="TabbedPanelsTab" tabindex="0">SENARAI SEMAK</li>          
-          <li onClick="doChangeTabUpper(6);" class="TabbedPanelsTab" tabindex="0">LAMPIRAN</li>
+          <!-- <li onClick="doChangeTabUpper(6);" class="TabbedPanelsTab" tabindex="0">LAMPIRAN</li> -->
         </ul>
         <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent">  
@@ -64,9 +64,9 @@
           		#parse("app/php2/frmPLPMaklumatBorangK.jsp") 
           	#else 
           		#parse("app/php2/frmPLPMaklumatTanah.jsp")
-          	  	#if ($userRole == '(PHP)PYWPenolongPegawaiTanahHQ' || $userRole == '(PHP)PYWPenolongPengarahHQ' || $userRole == '(PHP)PYWPengarahHQ')
-          			#parse("app/php2/frmPLPTindakan.jsp") 
-          	 	#end
+          	  #if ($userRole == '(PHP)PYWPenolongPegawaiTanahHQ' || $userRole == '(PHP)PYWPenolongPengarahHQ' || $userRole == '(PHP)PYWPengarahHQ')
+          		#parse("app/php2/frmPLPTindakan.jsp") 
+          	  #end
           	#end
           </div>
           
@@ -77,13 +77,14 @@
                 <td><fieldset>
                   <legend><b>SENARAI TANAH BERKAITAN</b></legend>
                   <table align="center" width="100%">
-                  	#if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
+					#if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
                     <tr>
-                      <td colspan="8" scope="row"><input name="cmdDaftar" type="button" value="Pilih Hakmilik" onClick="javascript:doDaftarHakmilik('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/>
-                        <input name="cmdDaftar" type="button" value="Pilih Borang K" onClick="javascript:doDaftarBorangK('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/>
-                      </td>
+                      <td colspan="8" scope="row">
+						<input name="cmdDaftar" type="button" value="Pilih Hakmilik" onClick="javascript:doDaftarHakmilik('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/>
+                        <!-- <input name="cmdDaftar" type="button" value="Pilih Borang K" onClick="javascript:doDaftarBorangK('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/> -->
+					  </td>
                     </tr>
-                    #end
+					#end
                     <tr class="table_header">
                       <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
                       <td width="15%"><strong>Pegangan Hakmilik</strong></td>
@@ -606,11 +607,11 @@
                 <td><fieldset>
                   <legend><b>SENARAI TANAH GANTI</b></legend>
                   <table align="center" width="100%">
-                    #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
+					#if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
                     <tr>
                       <td colspan="7" scope="row"><input name="cmdDaftar" type="button" value="Daftar Baru" onClick="javascript:doDaftarBaruTanahGanti()"/></td>
                     </tr>
-                    #end
+					 #end
                     <tr class="table_header">
                       <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
                       <td width="15%"><strong>Pegangan Hakmilik</strong></td>
@@ -1447,7 +1448,6 @@ function kiraLuasTG(idLuas){
 	  document.${formName}.txtLuasBersamaanTG.value = luasH.toFixed(5);
 	}
 }
-
 function doHapus(idHakmilikPermohonan) {
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
@@ -1481,8 +1481,6 @@ function refreshFromPilihTanahBerkaitan(idPermohonan,idHakmilikAgensi,idHakmilik
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmPLPMaklumatPermohonanView&selectedTabUpper=1&hitButton=simpanDaftarHakmilikBaru&doPost=tru&idHakmilikAgensi="+idHakmilikAgensi+"&idHakmilikSementara="+idHakmilikSementara+"&idPermohonan="+idPermohonan;
 	document.${formName}.submit();
 }
-</script>
-<script>
 function setTable(id){
 	if(document.getElementById(id).style.display=="none"){
 		document.getElementById(id).style.display="block";
@@ -1525,10 +1523,7 @@ function gotoSenaraiFailKeseluruhan() {
 	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPSenaraiFailKeseluruhanView";
 	document.${formName}.submit();
 }
-</script>
-<script>
 function doSimpanKemaskiniSenaraiSemak() {
-	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "update";
 		return;
@@ -1539,3 +1534,4 @@ function doSimpanKemaskiniSenaraiSemak() {
 	document.${formName}.submit();
 }
 </script>
+$javascriptLampiran

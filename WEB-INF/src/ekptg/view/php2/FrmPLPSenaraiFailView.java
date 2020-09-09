@@ -448,6 +448,7 @@ public class FrmPLPSenaraiFailView extends AjaxBasedModule {
 			// GO TO LIST FAIL PELEPASAN
 			vm = "app/php2/frmPLPSenaraiFail.jsp";
 
+
 			logic.carianFail(getParam("txtNoFail"),
 					getParam("txtNoFailNegeri"), getParam("txtTajukFail"),
 					getParam("txtPemohon"), getParam("txtNoPengenalan"),
@@ -503,6 +504,12 @@ public class FrmPLPSenaraiFailView extends AjaxBasedModule {
 		this.context.put("idHakmilikSementara", idHakmilikSementara);
 		this.context.put("idJenisTanah", idJenisTanah);
 		
+		if (session.getAttribute("MSG") != null){
+			this.context.put("errMsg", session.getAttribute("MSG"));
+			session.removeAttribute("MSG");
+		} else {
+			this.context.put("errMsg", "");
+		}
 		
 		return vm;
 	}
