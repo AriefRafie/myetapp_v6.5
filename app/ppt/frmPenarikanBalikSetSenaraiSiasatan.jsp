@@ -612,6 +612,11 @@
       <label>
       <input type="button" name="cmdHapus1" id="cmdHapus1" value="Hapus" onClick="hapus()">
       </label>
+      
+      <!-- Tambah BUtang Cetak -->
+      <label>
+      <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:setTable('tableReport1')">
+      </label>
     #end
     #if($readmode == "edit")  
       <label>
@@ -995,6 +1000,17 @@ $list.TARIKH_AKHIR_TAMPAL
 </td>
 </tr>
 </table>
+
+<fieldset id="tableReport1" style="display:none;">
+<legend><strong>Senarai Laporan</strong></legend>
+	<table width="100%" border="0" cellspacing="2" cellpadding="2">
+    
+      <tr>
+        <td><a href="#" class="style2" onClick="BorangLB('$id_pembatalan')"><font color="blue">Borang LB</font></a></td>
+      </tr>
+       
+    </table>
+</fieldset>
   <input type="hidden" name="sub_command" id="sub_command" />
   <input type="hidden" name="subminor_command" id="subminor_command" />
   <input type="hidden" name="location" id="location" />
@@ -2103,9 +2119,26 @@ my_form.value = my_form.value.substring(0, maxLen);
 $jquery("#"+text_num).html(maxLen+"");
 }
 
+function setTable(id){
+	if(document.getElementById(id).style.display=="none"){
+		document.getElementById(id).style.display="block";
+		window.location.hash=id;
+        goTo(id);
+	}
+	else if(document.getElementById(id).style.display=="block"){
+		document.getElementById(id).style.display="none";
+	}
+}
 
+function BorangLB(id_pembatalan)
+{
+    var url = "../servlet/ekptg.report.ppt.BorangLB?id_penarikan="+id_pembatalan;  
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
 
-
+}
 
 </script>
   

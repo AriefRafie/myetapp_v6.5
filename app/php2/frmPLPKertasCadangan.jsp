@@ -61,7 +61,7 @@
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         <tr>
           <td width="20%">&nbsp;</td>
-          <td width="80%"><textarea name="txtPemohon" id="txtPemohon" cols="80" rows="5" $readonly class="$inputTextClass">$beanKertasCadangan.txtPemohon</textarea></td>
+          <td width="80%"><textarea name="txtPPemohon" id="txtPPemohon" cols="80" rows="5" $readonly class="$inputTextClass">$beanKertasCadangan.txtPemohon</textarea></td>
         </tr>
       </table>
       </fieldset></td>
