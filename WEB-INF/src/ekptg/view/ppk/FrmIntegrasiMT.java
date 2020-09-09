@@ -865,7 +865,7 @@ public class FrmIntegrasiMT extends VTemplate {
 			}
 
 			// aishah start integration ecourt
-			MTManager manager = new MTManager();
+			MTManager manager = new MTManager("MT");
 
 			String returnMessage = "";
 			returnMessage = manager.sendMaklumat2Court(
@@ -957,7 +957,7 @@ public class FrmIntegrasiMT extends VTemplate {
 			
 			// aishah start integration ecourt
 			myLogger.info("hantarPermohonanBorangI11");
-			MTManagerReg manager = new MTManagerReg();
+			MTManagerReg manager = new MTManagerReg("MTREG");
 			myLogger.info("hantarPermohonanBorangI22");
 			String returnMessage = "";
 			returnMessage = manager.sendMaklumat2Court(
@@ -1072,7 +1072,8 @@ public class FrmIntegrasiMT extends VTemplate {
 			
 			// aishah start integration ecourt
 			myLogger.info("hantarPermohonanRayuan2");
-			MTManagerReg manager = new MTManagerReg();
+			MTManagerReg manager = new MTManagerReg("MTREG");
+//			MTManagerReg manager = new MTManagerReg();
 			myLogger.info("hantarPermohonanRayuan2");
 			String returnMessage = "";
 			returnMessage = manager.sendMaklumat2Court16A(
@@ -1217,7 +1218,7 @@ public class FrmIntegrasiMT extends VTemplate {
 			}		
 
 			// aishah start integration ecourt
-			MTManager manager = new MTManager();
+			MTManager manager = new MTManager("MT");
 
 			String returnMessage = "";
 			returnMessage = manager.sendMaklumat2CourtPetioner(

@@ -19,16 +19,20 @@ import my.gov.kehakiman.eip.services.SubmitApplicationResponse;
 public class MTManager {
 	
 	private static IntegrasiManager im = null;
-	//url sit 
-	//private static String url = "https://eip.kehakiman.gov.my/sit/etapp?wsdl";
-	private static String url = "http://eip.kehakiman.gov.my/services/etapp?wsdl"; //url live
-	private static String source = "ETP";
-	//private static String userName = "etpapi01"; //sit
-	//private static String password = "etpapi01"; //sit
-	private static String userName = "etappapiprod"; //live
-	private static String password = "et@pp@p!pr0d"; //live
-	private static String eventName = "MyeTaPPApplication";
+	private static String eventName = "";
+	private static String password = ""; 
+	private static String url = "";
+	private static String userName = ""; 
+	private static String source = "";
+
 	private static String idKadBiru = null;
+
+	//url sit 
+//	private static String url = "http://eip.kehakiman.gov.my/services/etapp?wsdl"; //url live
+//	private static String source = "ETP";
+//	private static String userName = "etappapiprod"; //live
+//	private static String password = "et@pp@p!pr0d"; //live
+//	private static String eventName = "MyeTaPPApplication";
 
 	public MTManager() throws Exception{	}
 	
@@ -129,7 +133,7 @@ public class MTManager {
 		
 	}
 	
-	public static String sendMaklumat2Court(String noPetisyen,
+	public static String sendMaklumat2Court_(String noPetisyen,
 			String namaSimati, String namaSimatiLain, String noKPSimatiBaru,
 			String noKPSimatiLama, String noKPSimatiLain, String tarikhMati,
 			String namaPemohon, String noKPPemohon, String hubSimatiPemohon,
@@ -297,7 +301,7 @@ public class MTManager {
 		return msg;
 	}
 	
-	public static String sendMaklumat2CourtPetioner(String noPetisyen,
+	public static String sendMaklumat2CourtPetioner_(String noPetisyen,
 			String namaSimati, String namaSimatiLain, String noKPSimatiBaru,
 			String noKPSimatiLama, String noKPSimatiLain, String tarikhMati,
 			String namaPemohon, String noKPPemohon, String hubSimatiPemohon,
@@ -487,4 +491,6 @@ public class MTManager {
 	public static void setIdKadBiru(String idKadBiru) {
 		MTManager.idKadBiru = idKadBiru;
 	}
+	
+	
 }
