@@ -759,6 +759,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				// form validation
 				context.put("mode", "new");
 				
+				context.put("id_hakmilik", "");
 				// clear value
 				clearValueHM();
 				
@@ -858,7 +859,9 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 					if (doPost.equals("false")) {
 						// simpan hm
 						myLogger.info("simpanHM(session)");
-						simpanHM(session);
+						String result = "";
+						
+						result = simpanHM(session);
 					}
 					
 					// form validation
@@ -1019,8 +1022,13 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 					else if ("updateHM".equals(submit3)) {
 
+						// data hakmilik
+						/*model.setMaklumatTanah(idHakmilik);
+						dataMaklumatTanah = model.getMaklumatTanah();
+						context.put("dataMaklumatTanah", dataMaklumatTanah);
+*/	
 						updateHM(session, idHakmilik, id_projekDaerah);
-
+						
 						// form validation
 						context.put("mode", "view");
 						context.put("isEdit", "no");
@@ -2914,6 +2922,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		String id_daerahpenggawa = "";
 		String id_unitluasambil = "";
 		String id_suburusan = "";
+		String id_hakmilik = "";
 		if (dataMaklumatTanah.size() != 0) {
 			Hashtable h = (Hashtable) dataMaklumatTanah.get(0);
 			id_mukim = h.get("id_mukim").toString();
@@ -2926,8 +2935,10 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			id_daerahpenggawa = h.get("id_daerahpenggawa").toString();
 			id_unitluasambil = h.get("id_unitluasambil").toString();
 			id_suburusan = h.get("id_suburusan").toString();
+			id_hakmilik = h.get("id_hakmilik").toString();
 		}
-
+		context.put(id_hakmilik,"id_hakmilik");
+		myLogger.info(" id_hakmilik "+id_hakmilik);
 		// validation hakmiliik by urusan
 		if (id_suburusan.equals("51")) {
 			context.put("hideFieldHakmilik", "yes");
@@ -2988,7 +2999,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 	}// close dataHakmilik
 
 	@SuppressWarnings("unchecked")
-	private void simpanHM(HttpSession session) throws Exception {
+	private String simpanHM(HttpSession session) throws Exception {
 
 		Hashtable h = new Hashtable();
 
@@ -3046,15 +3057,17 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		h.put("socPSegera", getParam("socPSegera"));
 
 		// FrmUPTSek8HakmilikData.
-		simpanHM2(h, flagSubjaket);
+		return simpanHM2(h, flagSubjaket);
 		// FrmUPTSek8HakmilikData.upload(h, getParam("id_permohonan"));
 
 	}// close simpanHM
 
-	public void simpanHM2(Hashtable data, String flagSubjaket) throws Exception {
+	public static String simpanHM2(Hashtable data, String flagSubjaket) throws Exception {
 		myLogger.info("simpanHM2");
 		Db db = null;
 		String sql = "";
+		String output = "";
+		String id_hakmilikString = "";
 		Connection conn = null;
 		try {
 			
@@ -3064,7 +3077,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			Statement stmt = db.getStatement();
 			
 			String id_user = (String) data.get("id_user");
-			
+			long id_hakmilik = DB.getNextID("TBLPPTHAKMILIK_SEQ");
+			id_hakmilikString = String.valueOf(id_hakmilik);
 			// pengambilan segera
 			String socPSegera = (String) data.get("socPSegera");
 			
@@ -3197,12 +3211,15 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
     		
 			r.add("tarikh_masuk", r.unquote("sysdate"));
 			r.add("id_masuk", id_user);
+			r.add("id_hakmilik",id_hakmilikString);
 			sql = r.getSQLInsert("tblppthakmilik");
 			
 			myLogger.info("sql add tanah : " + sql);
 			stmt.executeUpdate(sql);
+			output = ""+id_hakmilikString;
+			myLogger.info("id hakmilik "+output);
 			conn.commit();
-			uploadFiles(db, conn, id_permohonan);
+			//uploadFiles(db, conn, id_permohonan);
 			// remove subjaket kalau dah ada
 			if (flagSubjaket.equals("1")) {
 				
@@ -3226,7 +3243,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				sql = r.getSQLUpdate("Tblppthakmilik");
 				stmt.executeUpdate(sql);
 				conn.commit();
-				uploadFiles(db, conn, id_permohonan);
+				//uploadFiles(db, conn, id_permohonan);
 			}
 
 		} catch (Exception re) {
@@ -3238,6 +3255,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			if (db != null)
 				db.close();
 		} // close finally
+		return output;
 
 	}// close simpanHM
 
