@@ -19,6 +19,8 @@ import my.gov.kehakiman.eip.services.Civilregistercaserequest;
 import my.gov.kehakiman.eip.services.CivilregistercaserequestEventName;
 import my.gov.kehakiman.eip.services.Civilregistercaseresponse;
 import my.gov.kehakiman.eip.services.DataCreateReqType;
+import my.gov.kehakiman.eip.services.DataCreateReqTypePartyAgency;
+import my.gov.kehakiman.eip.services.DataCreateReqTypePartyAgencyPartyCounsel;
 import my.gov.kehakiman.eip.services.DeceaseInfoType;
 import my.gov.kehakiman.eip.services.DocumentType;
 import my.gov.kehakiman.eip.services.PartyType;
@@ -58,7 +60,7 @@ public class MTManagerReg {
 		,DeceaseInfoType deceaseInfo
 		,String courtLocation,
 		String division, String jurisdiction, String sourceReferenceNo,
-		String valueInvolved, String transactionID){
+		String valueInvolved, DataCreateReqTypePartyAgency partyAgency,String transactionID){
 		caseCode = typeReg;
 		CauseofactionType cof = null;
 		String docType = "";
@@ -106,7 +108,7 @@ public class MTManagerReg {
 				,document
 				,party
 				,deceaseInfo
-				,courtLocation,division,jurisdiction,sourceReferenceNo,valueInvolved,transactionID);
+				,courtLocation,division,jurisdiction,sourceReferenceNo,valueInvolved,partyAgency,transactionID);
 		return msgDaftar;
 	}		
 
@@ -334,7 +336,7 @@ public class MTManagerReg {
 		,DeceaseInfoType deceaseInfo
 		,String courtLocation,
 		String division, String jurisdiction, String sourceReferenceNo,
-		String valueInvolved, String transactionID) {		
+		String valueInvolved, DataCreateReqTypePartyAgency partyAgency, String transactionID) {		
 		try {			
 			//DATA
 			DataCreateReqType data = new DataCreateReqType();
@@ -357,7 +359,16 @@ public class MTManagerReg {
 			data.setValueInvolved(valueInvolved);			
 			data.setCaseCode("15");
 			//data.setCaseCode(caseCode);
-	
+//			DataCreateReqTypePartyAgencyPartyCounsel partyAgencyc = new DataCreateReqTypePartyAgencyPartyCounsel();
+//			partyAgencyc.setPartyCounselId("");			
+//			DataCreateReqTypePartyAgency partyAgency = new DataCreateReqTypePartyAgency();
+
+			data.setPartyAgency(partyAgency);
+//			33	PartyAgencyTypeID	String	100	O	-	Refer to Party Type ID Value in Appendix 5.3, Case Code 15, Party Type Description - Responden 
+//			34	PartyAgencyName	String	255	O	-	Value as per 4.2.5 – PartyAgencyName with Status = A
+//			35	PartyAgencyIDType	String	10	O	-	Fix Value: GA_CIVIL
+//			36	PartyAgencyIDNo	String	255	O	-	Value as per 4.2.5 – PartyAgencyIDNo with Status = A
+
 			Civilregistercaseresponse response = submitMT(data, transactionID);			
 			if (response != null) {
 				msg = response.getCode() + "," + response.getDescription() + " , " + response.getDetail();
