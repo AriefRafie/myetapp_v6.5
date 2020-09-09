@@ -1026,7 +1026,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 						/*model.setMaklumatTanah(idHakmilik);
 						dataMaklumatTanah = model.getMaklumatTanah();
 						context.put("dataMaklumatTanah", dataMaklumatTanah);
-*/	
+						*/
+						
 						updateHM(session, idHakmilik, id_projekDaerah);
 						
 						// form validation
@@ -3321,13 +3322,15 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 	private void updateHM(HttpSession session, String idHakmilik, String id_projekDaerah) throws Exception {
 
 		Hashtable h = new Hashtable();
-
+		
+		myLogger.info("Check Value update1");
+		
 		h.put("txtLokasi", "");
 		h.put("txtSyaratNyata", "");
 		h.put("txtSyaratKhas", "");
 		h.put("txtSekatanKepentingan", "");
 		h.put("txtSekatanHak", "");
-
+		
 		h.put("id_hakmilik", idHakmilik);
 		h.put("id_daerah", id_projekDaerah);
 		
@@ -3343,25 +3346,25 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		h.put("kodLot", getParam("socKodLot"));
 		h.put("txtNoLot", getParam("txtNoLot"));
 		h.put("txtNoPT", getParam("txtNoPT"));
-		h.put("txtLuasAsal", Utils.RemoveSymbol(getParam("txtLuasLotAsal")));
-		h.put("txtLuasAmbil", Utils.RemoveSymbol(getParam("txtLuasLotAmbil")));
+		h.put("txtLuasAsal", Utils.RemoveSymbol(getParam("txtLuasAsal")));	myLogger.info("txtLuasAsal betul tak?: " +Utils.RemoveSymbol(getParam("txtLuasAsal")));
+		h.put("txtLuasAmbil", Utils.RemoveSymbol(getParam("txtLuasAmbil")));	myLogger.info("txtLuasAmbil betul tak?: " +Utils.RemoveSymbol(getParam("txtLuasAmbil")));
 		h.put("txtCatatan", getParam("txtCatatan"));
 		h.put("txdTarikhPembayaran", getParam("txdTarikhPembayaran"));
 		h.put("txtseksyen", getParam("txtSeksyen"));
 		
-		h.put("unitLuas", getParam("socUnitLuasLot"));
-		h.put("unitLuasAmbil", getParam("socUnitLuasAmbil"));
-		h.put("txtLuasLotAsalSebelumConvert", getParam("txtLuasLotAsalSebelumConvert"));
-		h.put("txtLuasLotAmbilSebelumConvert", getParam("txtLuasLotAmbilSebelumConvert"));
-		h.put("sorDropdownUnitAsal", getParam("sorDropdownUnitAsal"));
-		h.put("sorDropdownUnitAmbil", getParam("sorDropdownUnitAmbil"));
-
+		h.put("unitLuas", getParam("unitLuas"));	myLogger.info("unitLuas: " +getParam("unitLuas"));
+		h.put("unitLuasAmbil", getParam("unitLuasAmbil"));	myLogger.info("unitLuasAmbil: " +getParam("socUnitLuasAmbil"));
+		h.put("txtLuasLotAsalSebelumConvert", getParam("txtLuasLotAsalSebelumConvert"));	myLogger.info("txtLuasLotAsalSebelumConvert: " +getParam("txtLuasLotAsalSebelumConvert"));
+		h.put("txtLuasLotAmbilSebelumConvert", getParam("txtLuasLotAmbilSebelumConvert"));	myLogger.info("txtLuasLotAmbilSebelumConvert: " +getParam("txtLuasLotAmbilSebelumConvert"));
+		h.put("sorDropdownUnitAsal", getParam("sorDropdownUnitAsal"));	myLogger.info("sorDropdownUnitAsal: " +getParam("sorDropdownUnitAsal"));
+		h.put("sorDropdownUnitAmbil", getParam("sorDropdownUnitAmbil"));	myLogger.info("sorDropdownUnitAmbil: " +getParam("sorDropdownUnitAmbil"));
+		
 		// rizab
 		h.put("sorJenisRizab", getParam("sorJenisRizab"));
 		h.put("txtLain", getParam("txtLain"));
 		h.put("txtNoWartaRizab", getParam("txtNoWartaRizab"));
 		h.put("txdTarikhWarta", getParam("txdTarikhWarta"));
-
+		
 //    	PPT-03 Penambahan Strata
 		h.put("no_bangunan", getParam("txtNoBangunan"));	
     	h.put("no_tingkat", getParam("txtNoTingkat"));	

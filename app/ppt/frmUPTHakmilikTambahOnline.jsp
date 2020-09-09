@@ -1175,7 +1175,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 
 <input type="hidden" name="id_bebanan">
 <input type="hidden" name="id_pihakberkepentingan">
-<input type="text" name="id_hakmilik" value="$!id_hakmilik">
+<input type="hidden" name="id_hakmilik" value="$!id_hakmilik">
 <input type="hidden" name="id_permohonan" value="$!id_permohonan">
 <input type="hidden" name="command2">
 <input type="hidden" name="command3">
@@ -1738,7 +1738,7 @@ function simpanHM(id_permohonan, id_hakmilik, flagSubjaket, hideFieldHakmilik, m
 		var txtNoPT = document.${formName}.txtNoPT.value;
 		var txtLuasAsal = document.${formName}.txtLuasLotAsal.value;
 		var txtLuasAmbil = document.${formName}.txtLuasLotAmbil.value;
-		var txtCatatan = document.${formName}.txtCatatanHidden.value;
+		var txtCatatan = document.${formName}.txtCatatanHidden.value; 
 		var txtSeksyen = document.${formName}.txtseksyenHidden.value;
 		var txdTarikhPembayaran = document.${formName}.txdTarikhPembayaranHidden.value;
 		var unitLuas = document.${formName}.socUnitLuasLot.value;
@@ -1748,7 +1748,7 @@ function simpanHM(id_permohonan, id_hakmilik, flagSubjaket, hideFieldHakmilik, m
 		var sorDropdownUnitAsal = document.${formName}.sorDropdownUnitAsal.value;
 		var sorDropdownUnitAmbil = document.${formName}.sorDropdownUnitAmbil.value;
 
-		if (hideFieldHakmilik=="no")	{	
+		if (hideFieldHakmilik=="no")	{
 			var sorJenisRizab = document.${formName}.sorJenisRizab.value;
 		}
 		else{	
