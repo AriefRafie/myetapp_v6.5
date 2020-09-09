@@ -20,7 +20,7 @@
 		//document.${formName}.action = "?_portal_module=ekptg.view.htp.pajakan.FrmPajakanPendaftaranView&idPermohonan="+permohonan+"&actionPajakan=papar";
 		document.${formName}.actionPajakan.value = "papardaftar";
 		document.${formName}.mode.value = "view";
-		document.${formName}.selectedTab.value = 0;
+		//document.${formName}.selectedTab.value = 0;
 		//document.${formName}.submit();
 		doAjaxCall${formName}("");
 	}
@@ -33,7 +33,7 @@
 		//document.${formName}.action = "?_portal_module=ekptg.view.htp.pajakan.FrmPajakanMJMView&idPermohonan="+permohonan+"&actionPajakan=papar";
 		document.${formName}.actionPajakan.value = "paparpemohon";
 		document.${formName}.mode.value = "view";
-		document.${formName}.selectedTab.value = 0;
+		//document.${formName}.selectedTab.value = 0;
 		//document.${formName}.submit();
 		doAjaxCall${formName}("");
 
