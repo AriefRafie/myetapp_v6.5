@@ -48,6 +48,7 @@
 #set($txtJenisTanaman = $list_siasatan.JENIS_TANAMAN)
 #set($socJenisBangunan = $list_siasatan.JENIS_BANGUNAN)
 #set($socBangunan = $list_siasatan.JENIS_BANGUNAN)
+#set($keteranganBangunan = $list_siasatan.KETERANGAN_TANAH)
 #set($sorPecahSempadan = $list_siasatan.FLAG_PECAH_SEMPADAN)
 #set($txdPecahSempadan = $list_siasatan.TARIKH_PECAH_SEMPADAN)
 #set($sorTukarSyarat = $list_siasatan.FLAG_TUKAR_SYARAT)
@@ -302,7 +303,7 @@
     			<td>&nbsp;</td>
     			<td>Jenis Bangunan</td>
     			<td>:</td>
-    			<td>$!selectBangunan</td> 
+    			<td> <input name="keteranganBangunan" type="text" id="keteranganBangunan" value="$keteranganBangunan" size="50" class="disabled" />   </td>
     		</tr>
     		#end
       <tr>
