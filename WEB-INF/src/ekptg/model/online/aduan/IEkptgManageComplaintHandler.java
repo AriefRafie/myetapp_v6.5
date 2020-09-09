@@ -10,6 +10,8 @@ public interface IEkptgManageComplaintHandler {
 	public Complaint getComplaint(String idComplaint);
 	public Vector<Tblrujnegeri> getAvailableNegeri();
 	public Vector<Complaint> search(String noAduan,String status,String tarikh);
-	
-	
+	public Vector<Complaint> getComplaintTanah();
+	public AduanPublic getComplaintTanahDetails(String idComplaint);
+
+
 }

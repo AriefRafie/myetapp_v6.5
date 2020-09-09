@@ -172,7 +172,7 @@
 							  <td colspan="6">&nbsp;</td>
 							  <td>:</td>
 							  <td>
-								<input type="text" name="tarikhWarta" id="tarikhWarta" onBlur="check_date(this);cekTarikhWarta(this)" value="$tarikhWarta" size="9" $readonly class="$inputTextClass"/>
+								<input type="text" name="tarikhWarta" id="tarikhWarta" onblur="check_date(this);cekTarikhWarta(this)" value="$tarikhWarta" size="9" $readonly class="$inputTextClass"/>
 									<a href="javascript:displayDatePicker('tarikhWarta',false,'dmy');">#if ($mode != 'view')<img border="0" src="../img/calendar.gif"/>#end</a>
 							  </td>
 							</tr>
