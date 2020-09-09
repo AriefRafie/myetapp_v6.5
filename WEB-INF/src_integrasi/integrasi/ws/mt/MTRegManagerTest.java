@@ -1,13 +1,18 @@
-package integrasi.ws.mt.reg;
+package integrasi.ws.mt;
+
+import my.gov.kehakiman.eip.services.CauseofactionType;
+import my.gov.kehakiman.eip.services.DeceaseInfoType;
+import my.gov.kehakiman.eip.services.DocumentType;
+import my.gov.kehakiman.eip.services.PartyType;
 
 //import integrasi.IntegrasiManager;
 
 public class MTRegManagerTest {
-	static MTRegManager im = null;
+	static MTManagerReg im = null;
 	
 	public static void main(String[] args)  throws Exception{
-		im = new MTRegManager("MTREG");
-		//System.out.println("Trying to start service at...[" + im.getURL() + "]");
+		im = new MTManagerReg("MTREG");
+		System.out.println("Trying to start service at...[" + im + "]");
 		
 		
 		//CauseofactionType causeofaction = new CauseofactionType();
@@ -17,6 +22,10 @@ public class MTRegManagerTest {
         		,""
         		,"B8BA9758-E1CE-40A2-99FC-01FAD4462FB4"
         		);
+//        CauseofactionType cof = new CauseofactionType();
+//		cof.setCauseOfActionRefID("1");
+//		cof.setCauseOfActionID("00FF2689-FA1E-4332-A101-7D7FC9A11C4E");
+//		cof.setCauseOfActionDesc("Rujukan Tanah"); 
         CauseofactionType[] causeofaction = null;
         causeofaction = new CauseofactionType[1];
         causeofaction[0] = cof;
@@ -86,17 +95,18 @@ public class MTRegManagerTest {
 //				, "20200331"
 //				, "0.00"
 //				, "");
-        String strRes = im. PendaftaranBaharu("15","12345","nama_fail",""
-    			,party
-    			,deceaseInfo
-    			, "RA" 	//MT Kangar
-				, "3"	//Civil
-				, "2"	//High Court
-				, "20200331"
-				, "0.00"
-				, "");
-
-		System.out.println("Trying to start service at...[" + strRes + "]");
+ 
+//        String strRes = im. PendaftaranBaharu("15","12345","nama_fail",""
+//    			,party
+//    			,deceaseInfo
+//    			, "RA" 	//MT Kangar
+//				, "3"	//Civil
+//				, "2"	//High Court
+//				, "20200331"
+//				, "0.00"
+//				, "");
+//
+//		System.out.println("Trying to start service at...[" + strRes + "]");
 
 	}
 	

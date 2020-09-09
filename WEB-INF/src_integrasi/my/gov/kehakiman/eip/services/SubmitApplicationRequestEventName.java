@@ -1,5 +1,5 @@
 /**
- * SubmitApplicationRequestSource.java
+ * SubmitApplicationRequestEventName.java
  *
  * This file was auto-generated from WSDL
  * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
@@ -7,29 +7,27 @@
 
 package my.gov.kehakiman.eip.services;
 
-public class SubmitApplicationRequestSource implements java.io.Serializable {
+public class SubmitApplicationRequestEventName implements java.io.Serializable {
     private java.lang.String _value_;
     private static java.util.HashMap _table_ = new java.util.HashMap();
 
     // Constructor
-    protected SubmitApplicationRequestSource(java.lang.String value) {
+    public SubmitApplicationRequestEventName(java.lang.String value) {
         _value_ = value;
         _table_.put(_value_,this);
     }
 
-    public static final java.lang.String _ETP = "ETP";
-    public static final java.lang.String _CMS = "CMS";
-    public static final SubmitApplicationRequestSource ETP = new SubmitApplicationRequestSource(_ETP);
-    public static final SubmitApplicationRequestSource CMS = new SubmitApplicationRequestSource(_CMS);
+    public static final java.lang.String _MyeTaPPApplication = "MyeTaPPApplication";
+    public static final SubmitApplicationRequestEventName MyeTaPPApplication = new SubmitApplicationRequestEventName(_MyeTaPPApplication);
     public java.lang.String getValue() { return _value_;}
-    public static SubmitApplicationRequestSource fromValue(java.lang.String value)
+    public static SubmitApplicationRequestEventName fromValue(java.lang.String value)
           throws java.lang.IllegalArgumentException {
-        SubmitApplicationRequestSource enumeration = (SubmitApplicationRequestSource)
+        SubmitApplicationRequestEventName enumeration = (SubmitApplicationRequestEventName)
             _table_.get(value);
         if (enumeration==null) throw new java.lang.IllegalArgumentException();
         return enumeration;
     }
-    public static SubmitApplicationRequestSource fromString(java.lang.String value)
+    public static SubmitApplicationRequestEventName fromString(java.lang.String value)
           throws java.lang.IllegalArgumentException {
         return fromValue(value);
     }
@@ -55,10 +53,10 @@ public class SubmitApplicationRequestSource implements java.io.Serializable {
     }
     // Type metadata
     private static org.apache.axis.description.TypeDesc typeDesc =
-        new org.apache.axis.description.TypeDesc(SubmitApplicationRequestSource.class);
+        new org.apache.axis.description.TypeDesc(SubmitApplicationRequestEventName.class);
 
     static {
-        typeDesc.setXmlType(new javax.xml.namespace.QName("https://eip.kehakiman.gov.my/services/", ">>submitApplicationRequest>source"));
+        typeDesc.setXmlType(new javax.xml.namespace.QName("https://eip.kehakiman.gov.my/services/", ">>submitApplicationRequest>eventName"));
     }
     /**
      * Return type metadata object
