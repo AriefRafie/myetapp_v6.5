@@ -22,6 +22,7 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 	 private static SimpleDateFormat sdf =  new SimpleDateFormat("dd/MM/yyyy");	 
 	 private Vector list = null;
 	 public Vector listPageDepan = null;
+	 public Vector listPageDepanRayuanOnline = null;
 	 private Vector header = null;
 	 public Vector listCarian = null;
 	 public Vector listCarianPBOnline = null;	
@@ -343,7 +344,120 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 			    finally{
 			      if (db != null) db.close();
 			    }
-		 }		
+		 }	
+		 
+		 //shiqa 09092020 papar list rayuan KJP by kementerian
+		 @SuppressWarnings("unchecked")
+			public Vector getListRayuanOnline(String userIdNegeri, String id_Kementerian)throws Exception {		 
+				    
+				 Db db = null;
+				 String sql = "";		    
+				    
+				 try{
+					 	listPageDepanRayuanOnline  = new Vector();
+					 	db = new Db();
+				     	Statement stmt = db.getStatement();		     
+				    
+				      sql = " SELECT DISTINCT P.ID_STATUS, P.ID_PERMOHONAN, P.NO_PERMOHONAN, F.ID_FAIL,NVL(F.NO_FAIL,'Belum Diluluskan') AS NO_FAIL, P.TARIKH_PERMOHONAN, "+
+				    		  " SU.NAMA_SUBURUSAN,K.NAMA_KEMENTERIAN, S.KETERANGAN, P.NO_RUJUKAN_UPT,P.TARIKH_KEMASKINI, P.NO_RUJUKAN_PTG "+
+				    		  " FROM TBLPPTPERMOHONAN P,TBLPFDFAIL F,TBLRUJSUBURUSAN SU,TBLRUJSTATUS S,TBLRUJKEMENTERIAN K, "+
+				    		  " (SELECT DISTINCT P1.ID_PERMOHONAN FROM TBLPPTBORANGH H, TBLPPTPERMOHONAN P1,TBLPPTHAKMILIK HM,TBLPPTHAKMILIKPB HPB, "+
+				    		  " TBLPPTPIHAKBERKEPENTINGAN PB WHERE PB.ID_PIHAKBERKEPENTINGAN = HPB.ID_PIHAKBERKEPENTINGAN "+
+				    		  " AND HM.ID_HAKMILIK = HPB.ID_HAKMILIK AND HM.ID_PERMOHONAN = P1.ID_PERMOHONAN "+
+				    		  " AND H.ID_HAKMILIKPB = HPB.ID_HAKMILIKPB AND NVL (HM.FLAG_PENARIKAN_KESELURUHAN, ' ') <> 'Y' "+
+				    		  " AND NVL (HM.FLAG_PEMBATALAN_KESELURUHAN, ' ') <> 'Y' ) CHECK_H  "+               
+				    		  " WHERE F.ID_FAIL = P.ID_FAIL AND F.ID_SUBURUSAN = SU.ID_SUBURUSAN "+
+				    		  " AND F.ID_KEMENTERIAN = K.ID_KEMENTERIAN AND SU.ID_SUBURUSAN = '52'  "
+				    		  + " AND CHECK_H.ID_PERMOHONAN = P.ID_PERMOHONAN "
+				    		  + " AND K.ID_KEMENTERIAN = '" + id_Kementerian + "'"
+				    		  + " AND P.ID_STATUS = S.ID_STATUS  ";
+		             
+				    
+				      //sql +=" AND P.ID_STATUS NOT IN (199,200,201,203,204,205,1610249) ";
+				     
+			    		if(!userIdNegeri.equals("16") && !userIdNegeri.isEmpty()){
+			    			if(userIdNegeri.equals("14")){
+			    				sql += "AND f.id_negeri in (14,15,16) ";
+			    			}else{
+			    				sql += "AND f.id_negeri ='"+userIdNegeri+"'";
+			    			}		
+			    		}
+			    		
+				      sql +=" ORDER BY P.TARIKH_KEMASKINI DESC ";
+				      
+				      myLogger.info("sql listPageDepanRayuanOnline ====== "+sql);
+				      
+				      
+				      
+				      
+				      ResultSet rs = stmt.executeQuery(sql);		      		      
+				      Hashtable h = null;
+				      int bil = 1;
+				      while (rs.next()) {
+				    	  h = new Hashtable();
+				    	  h.put("bil", bil);
+				    	  h.put("id_fail", rs.getString("id_fail")==null?"":rs.getString("id_fail"));		
+				    	  h.put("id_status", rs.getString("id_status")==null?"":rs.getString("id_status"));		
+				    	  h.put("id_permohonan", rs.getString("id_permohonan")==null?"":rs.getString("id_permohonan"));		
+				    	  h.put("no_permohonan", rs.getString("no_permohonan")==null?"":rs.getString("no_permohonan"));		
+				    	  h.put("tarikh_permohonan", rs.getString("tarikh_permohonan")==null?"":sdf.format(rs.getDate("tarikh_permohonan")));
+				    	  h.put("nama_suburusan", rs.getString("nama_suburusan")==null?"":rs.getString("nama_suburusan"));		    	  
+				    	  h.put("nama_kementerian", rs.getString("nama_kementerian")==null?"":rs.getString("nama_kementerian"));
+				    	  h.put("keterangan", rs.getString("keterangan")==null?"":rs.getString("keterangan"));
+				    	  h.put("no_rujukan_upt", rs.getString("no_rujukan_upt")==null?"":rs.getString("no_rujukan_upt"));
+				    	  h.put("no_rujukan_ptg", rs.getString("no_rujukan_ptg")==null?"":rs.getString("no_rujukan_ptg"));
+				    	  if(rs.getString("no_fail") == null){
+					    		h.put("no_fail","Belum Diluluskan");
+					    	}else{
+					    		h.put("no_fail",rs.getString("no_fail"));
+					    	}
+				    	  h.put("tarikh_kemaskini", rs.getString("tarikh_kemaskini")==null?"":sdf.format(rs.getDate("tarikh_kemaskini")));		    	  
+				    	  listPageDepanRayuanOnline.addElement(h);
+				    	  bil++;		    	  
+				      }
+						return listPageDepanRayuanOnline;
+				    }
+				    finally{
+				      if (db != null) db.close();
+				    }
+			 }		
+		 
+		 public Vector getIdNegeriKJPByUserId(String userId) throws Exception {
+				Db db = null;
+				String sql = "";
+				Hashtable h;
+				Vector listDetailKJP = new Vector();
+
+				try {
+					db = new Db();
+					Statement stmt = db.getStatement();
+
+					sql = "SELECT A.USER_ID, A.USER_NAME, C.ID_NEGERI, B.ID_KEMENTERIAN, B.ID_AGENSI FROM USERS A, USERS_KEMENTERIAN B, TBLRUJAGENSI C, TBLRUJKEMENTERIAN D "
+							+ " WHERE A.USER_ID = B.USER_ID AND B.ID_AGENSI = C.ID_AGENSI AND B.ID_KEMENTERIAN = D.ID_KEMENTERIAN AND A.USER_ID = '"
+							+ userId + "'";
+
+					ResultSet rs = stmt.executeQuery(sql);
+					myLogger.info("listDetailKJP:: "+sql);
+
+					if (rs.next()) {
+						h = new Hashtable();
+						h.put("userId", rs.getString("USER_ID").toString());
+						h.put("idNegeri", rs.getString("ID_NEGERI").toString());
+						h.put("idKementerian", rs.getString("ID_KEMENTERIAN").toString());
+						h.put("idAgensi", rs.getString("ID_AGENSI").toString());
+						h.put("namaPemohon", rs.getString("USER_NAME").toString());
+						listDetailKJP.addElement(h);
+
+						return listDetailKJP;
+					} else {
+						return listDetailKJP;
+					}
+
+				} finally {
+					if (db != null)
+						db.close();
+				}
+			}
 		 
 			@SuppressWarnings("unchecked")
 			public Vector setCarianFailAP(String usid, String txtNoFail, String socKementerian, String userIdNegeri)throws Exception {

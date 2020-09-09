@@ -215,7 +215,7 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
 	    		logic.doSimpanAgihanTugas(idFail, idPegawai, getParam("txtCatatan"), idNegeriUser, session);
 	    		session.removeAttribute("ID_FAIL");
 				session.setAttribute("MSG", "FAIL TELAH DITUGASKAN KEPADA PEGAWAI");
-	    		this.context.put("onload", "gotoSenaraiFail();");
+	    		this.context.put("onload", "gotoSenaraiFailPelepasan();");
 			}
         	if ("doBatalPermohonan".equals(hitButton)){
     			logic.doBatalPermohonan(idFail, idPermohonan, getParam("tarikhBatal"), getParam("txtSebab"), session);
