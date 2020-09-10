@@ -105,6 +105,7 @@ input[readonly]{
 			<tr>
 				<td align="center">
 					<input style="cursor: pointer" type="button" name="tutup" id="tutup" value="Tutup" align="center" onClick="tutupTetingkap()" />
+					<input style="cursor: pointer" type="button" name="hantar" id="hantar" value="Hantar" align="left" onClick="javascript:hantarPermohonan()" />
 					<!--  #if ($!semakPerintah == 'tiada')-->
 						<input style="cursor: pointer" type="button" name="hantar" id="hantar" value="Hantar" align="left" onClick="javascript:hantarPermohonan()" />
 					<!-- #end  -->

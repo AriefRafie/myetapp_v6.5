@@ -3929,7 +3929,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 					insertSDTable(session);
 				}
 				else
-				{*/
+				{*/ 
 				System.out.println("-------getSimpan_keputusan2----");
 				System.out.println("-------ARB----"+ARB);
 				check_idkeputusan(session);
