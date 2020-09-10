@@ -3926,37 +3926,37 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 					
 				} else {
 					/*if("107".equals(checkSD)) {
-						insertSDTable(session);
-					}
-					else
-					{*/
-					System.out.println("-------getSimpan_keputusan2----");
-					System.out.println("-------ARB----"+ARB);
-					check_idkeputusan(session);
-					/*Vector checkIdKeputusan = FrmPrmhnnSek8KeputusanPermohonanInternalData
-							.getSemakIdKeputusan();*/
-					/*Hashtable j = (Hashtable) checkIdKeputusan.get(0);*/
-					//String idKeputusanPermohonan = j.get("cntid").toString();
-					//System.out.println("-------idKeputusanPermohonan----"+idKeputusanPermohonan);
-					
-					//check_tblppksd(idKeputusanPermohonan);
-					/*Vector checktblppksd = FrmPrmhnnSek8KeputusanPermohonanInternalData
-							.getsemaktblppksd();*/
-					/*Hashtable k = (Hashtable) checktblppksd.get(0);*/
-					//String cntResultppksd = k.get("cntid").toString();
-					
-					//System.out.println("-------cntResultppksd----"+cntResultppksd);
-					
-					//updateBorang(session,checkSD,idKeputusanPermohonan,cntResultppksd);
-					if (ARB.equals("YES"))
-						{
-							System.out.println("-------ARB keputusan2----"+ARB);
-							checkdulusamadaARBtelahwujudataubelumUpdate(session);
-						}
-					//insertARB(session);
-					//updateARB(session);
-					//}
+					insertSDTable(session);
 				}
+				else
+				{*/
+				System.out.println("-------getSimpan_keputusan2----");
+				System.out.println("-------ARB----"+ARB);
+				check_idkeputusan(session);
+				Vector checkIdKeputusan = FrmPrmhnnSek8KeputusanPermohonanInternalData
+						.getSemakIdKeputusan();
+				Hashtable j = (Hashtable) checkIdKeputusan.get(0);
+				String idKeputusanPermohonan = j.get("cntid").toString();
+				System.out.println("-------idKeputusanPermohonan----"+idKeputusanPermohonan);
+				
+				check_tblppksd(idKeputusanPermohonan);
+				Vector checktblppksd = FrmPrmhnnSek8KeputusanPermohonanInternalData
+						.getsemaktblppksd();
+				Hashtable k = (Hashtable) checktblppksd.get(0);
+				String cntResultppksd = k.get("cntid").toString();
+				
+				System.out.println("-------cntResultppksd----"+cntResultppksd);
+				
+				updateBorang(session,checkSD,idKeputusanPermohonan,cntResultppksd);
+				if (ARB.equals("YES"))
+					{
+						System.out.println("-------ARB keputusan2----"+ARB);
+						checkdulusamadaARBtelahwujudataubelumUpdate(session);
+					}
+				//insertARB(session);
+				//updateARB(session);
+				//}
+			}
 			}
 			view_mode(session);
 

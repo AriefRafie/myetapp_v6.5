@@ -39,7 +39,7 @@
 	#set($check5juta = $Listflag5juta.flag_5juta )
 #end
 
-#if($check5juta=='T')
+#if($check5juta=='F')
 	#set($nilaiHartaMaximum = 5000000)
 #else
 	#set($nilaiHartaMaximum = 2000000)
@@ -2147,7 +2147,7 @@ Pindah ke Mahkamah Tinggi
        #end
        
     <!-- arief add 5 JUTA -->
-    #if($nilaiHartaMaximum == 5000000)
+    #if($check5juta=='T')
 		<input type="radio" name="tujuanPindah" id="tujuanPindah" $selectedTujuan1 $setModeTujuan1 value="1"   />     
         Harta Melebihi 5 Juta
       <input type="radio" name="tujuanPindah" id="tujuanPindah" $selectedTujuan2 $setModeTujuan2 value="2"  />

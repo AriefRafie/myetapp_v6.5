@@ -318,6 +318,33 @@ public class FrmIntegrasiMT extends VTemplate {
 			String idBandar = (String) permohonanMT.get("idBandar");
 			String idNegeri = (String) permohonanMT.get("idNegeri");
 			String idNegeriPemohon = (String) permohonanMT.get("idNegeriPemohon");
+			if(idNegeriPemohon.equals("1")){
+				idNegeriPemohon = "01";
+			}
+			else if (idNegeriPemohon.equals("2")){
+				idNegeriPemohon = "02";
+			}
+			else if (idNegeriPemohon.equals("3")){
+				idNegeriPemohon = "03";
+			}
+			else if (idNegeriPemohon.equals("4")){
+				idNegeriPemohon = "04";
+			}
+			else if (idNegeriPemohon.equals("5")){
+				idNegeriPemohon = "05";
+			}
+			else if (idNegeriPemohon.equals("6")){
+				idNegeriPemohon = "06";
+			}
+			else if (idNegeriPemohon.equals("7")){
+				idNegeriPemohon = "07";
+			}
+			else if (idNegeriPemohon.equals("8")){
+				idNegeriPemohon = "08";
+			}
+			else if (idNegeriPemohon.equals("9")){
+				idNegeriPemohon = "09";
+			}
 			String umurPemohon = (String) permohonanMT.get("umurPemohon");
 			String jantinaPemohon = (String) permohonanMT.get("jantinaPemohon");
 			
@@ -335,19 +362,32 @@ public class FrmIntegrasiMT extends VTemplate {
 			String namaDokumen = (String) permohonanMT.get("namaDokumen");
 			String docContent = (String) permohonanMT.get("docContent");
 			String idSimatiA = (String) permohonanMT.get("idSimati");
-			
+			String jumlahharta = (String) permohonanMT.get("jumlahharta");
+			double jumlahhartaDouble = Double.parseDouble(jumlahharta);
+			context.put("jumlahharta", jumlahhartaDouble);
+			myLogger.info("jumlahharta = "+jumlahharta);
 			if (noKPSimatiBaru.equals("")) {
 				if (logic_F.checkDahUpload(idSimatiA) == false)
 				{
 					this.context.put("Errormsg", "Error1");
 				}
 			}
-			
-			FrmPrmhnnSek8KeputusanPermohonanInternalData
-			.setMaklumatMahkamah(idPermohonan);
-			Vector listMaklumatMahkamah = FrmPrmhnnSek8KeputusanPermohonanInternalData
-			.getMaklumatMahkamah();
-			this.context.put("listMaklumatMahkamah", listMaklumatMahkamah);
+			String dari = "";
+			dari = "KeputusanPermohonan";//request.getParameter("dari");
+			String idPerbicaraan = request.getParameter("idPerbicaraan");
+			myLogger.info("dari = "+dari);
+			if (dari.equals("KeputusanPerbicaraan"))
+			{
+				FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatMahkamah2(idPerbicaraan);
+				Vector listMaklumatMahkamah = FrmPrmhnnSek8KeputusanPermohonanInternalData.getMaklumatMahkamah();
+				this.context.put("listMaklumatMahkamah", listMaklumatMahkamah);
+			}
+			else
+			{
+				FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatMahkamah(idPermohonan);
+				Vector listMaklumatMahkamah = FrmPrmhnnSek8KeputusanPermohonanInternalData.getMaklumatMahkamah();
+				this.context.put("listMaklumatMahkamah", listMaklumatMahkamah);
+			}
 			
 			String formatTarikhMati = tarikhMati + "T00:00:00.00";
 
@@ -372,6 +412,33 @@ public class FrmIntegrasiMT extends VTemplate {
 
 			String namaPejabat = getPejabatJKPTGByKodPejabat(kodPejabat);
 			String jenisTransaksi = (String) permohonanMT.get("jenisTransaksi");
+			if(idnegerisimati.equals("1")){
+				idnegerisimati = "01";
+			}
+			else if (idnegerisimati.equals("2")){
+				idnegerisimati = "02";
+			}
+			else if (idnegerisimati.equals("3")){
+				idnegerisimati = "03";
+			}
+			else if (idnegerisimati.equals("4")){
+				idnegerisimati = "04";
+			}
+			else if (idnegerisimati.equals("5")){
+				idnegerisimati = "05";
+			}
+			else if (idnegerisimati.equals("6")){
+				idnegerisimati = "06";
+			}
+			else if (idnegerisimati.equals("7")){
+				idnegerisimati = "07";
+			}
+			else if (idnegerisimati.equals("8")){
+				idnegerisimati = "08";
+			}
+			else if (idnegerisimati.equals("9")){
+				idnegerisimati = "09";
+			}
 
 			context.put("noPetisyen", noPetisyen);
 			context.put("namaSimati", namaSimati);
@@ -508,7 +575,7 @@ public class FrmIntegrasiMT extends VTemplate {
 			String namaDokumen = (String) permohonanMT.get("namaDokumen");
 			String docContent = (String) permohonanMT.get("docContent");
 			
-			
+			 
 			//COMMENT BY BELLA - MAHKAMAH CEK DENGAN JPN TARIKH MATI SAHAJA
 //			String WAKTU_KEMATIAN = (String) permohonanMT.get("WAKTU_KEMATIAN");
 //			String JAM = "";
@@ -995,6 +1062,7 @@ public class FrmIntegrasiMT extends VTemplate {
 					docContent,
 					request.getParameter("applicationType"), transactionID, 
 					request.getParameter("umurPemohon"),
+					//request.getParameter("jumlahharta"),
 					request.getParameter("jantinaPemohon"));
 			
 
@@ -1486,7 +1554,7 @@ public class FrmIntegrasiMT extends VTemplate {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			
-			sql = "SELECT P.ID_PERMOHONAN, F.NO_FAIL AS noPetisyen,"
+			sql = "SELECT P.ID_PERMOHONAN, p.jumlah_harta_tarikhmohon as jumlahharta, F.NO_FAIL AS noPetisyen,"
 					+ " SM.NAMA_SIMATI AS namaSimati,"
 					+ " SM.ID_SIMATI AS idSimati,"					
 					+ " SM.NAMA_LAIN AS namaSimatiLain,"
@@ -1740,19 +1808,24 @@ public class FrmIntegrasiMT extends VTemplate {
 						rs.getString("idSimati") == null ? "" : rs
 								.getString("idSimati"));
 				permohonanMT.put(
+						"jumlahharta",
+						rs.getString("jumlahharta") == null ? "" : rs
+								.getString("jumlahharta"));
+				
+				permohonanMT.put(
 						"namaDokumen",
 						rs.getString("NAMA_DOKUMEN") == null ? "" : rs
 								.getString("NAMA_DOKUMEN"));
-				String content = "TIADA";	
-				if(rs.getString("KANDUNGAN")!=null) {
-					Blob  b = rs.getBlob("KANDUNGAN");
-					InputStream is = b.getBinaryStream();
-					byte [] b2 = IOUtils.toByteArray(is);
-					content = Base64.encodeToString(b2);
-					
-				}	
-//				myLogger.info("*****KANDUNGAN*****");			
-				permohonanMT.put("docContent", content);				
+				
+				Blob  b = rs.getBlob("KANDUNGAN");
+				InputStream is = b.getBinaryStream();
+				 byte [] b2 = IOUtils.toByteArray(is);
+					String content = Base64.encodeToString(b2);
+					myLogger.info("*****KANDUNGAN*****");
+				
+				permohonanMT.put("docContent", content);
+				
+				
 				
 			}
 		} catch (Exception ex) {

@@ -635,10 +635,10 @@
 
 
 
-<!--  <input type="button" value="Kembali" onClick="screen5('$id_permohonan')"> -->
+ <input type="button" value="Kembali Skrin Utama" onClick="screen5('$id_permohonan')"> 
 
 <!-- PPT-19 -->
-<input type="button" value="Kembali" onClick="popupCarianHakmilik('$id_permohonan','senarai_siasatan')">
+<input type="button" value="Kembali Skrin Hakmilik" onClick="popupCarianHakmilik('$id_permohonan','senarai_siasatan')">   
 
 #if($flag_stop_siasatan!="Y")
 	#if($list_siasatan.size() == 0 && $record_siasatan != "yes")
