@@ -3,7 +3,7 @@
 <table width="100%" border="0">
 	<tr>
     	<td >
-    		
+
 			<fieldset><legend><strong>MAKLUMAT PEMOHON</strong></legend>
 				<table width="100%" border="0" >
 			#if($BeanMaklumatPemohon.isEmpty()==false)
@@ -15,7 +15,7 @@
 			            <td width="15%">MyID/MyCoID</td>
 			            <td width="1%">:</td>
 			            <td width="83%"><input type="text" name="txtnorujukan" onkeyup="this.value=this.value.toUpperCase();" size="60" maxlength="80" value="$!beanMaklumatPemohon.noPemohon" $readOnly class="$classDis" /></td>
-			      	</tr>			          
+			      	</tr>
 			      	<tr>
 			            <td width="1%">#if ($mode != 'view')<font color="#FF0000">*</font>#end</td>
 			            <td width="15%">Nama</td>
@@ -77,16 +77,16 @@
 			            <td width="83%">
 			            	<input type="text" name="txtemail" size="30" maxlength="80" value="$!beanMaklumatPemohon.emel" $readOnly class="$classDis" onKeyup="checkEmail(this.value)"/>
 			            </td>
-			      	</tr>        
+			      	</tr>
 				#end
-			
+
 			#else
 			     	<tr>
 			            <td width="1%"></td>
 			            <td width="15%">MyID/MyCoID</td>
 			            <td width="1%">:</td>
 			            <td width="83%"><input type="text" name="txtnorujukan" value="$!pemohon.getNoPemohon()" onkeyup="this.value=this.value.toUpperCase();" size="60" maxlength="80" /></td>
-			      	</tr>			          
+			      	</tr>
 			      	<tr>
 			            <td width="1%"><font color="#FF0000">*</font></td>
 			            <td width="15%">Nama</td>
@@ -148,8 +148,8 @@
 			            <td width="83%">
 			            	<input type="text" name="txtemail" size="30" maxlength="80" onBlur="checkEmail(this.value)"/>
 			            </td>
-			      	</tr>  
-			
+			      	</tr>
+
 			#end
 			    	<tr>
 			        	<td>&nbsp;</td>
@@ -163,7 +163,7 @@
 			            <td colspan="2">
 			            </td>
 			      	</tr>
-			      	
+
 				</table>
 			</fieldset>
 
@@ -178,33 +178,36 @@
 	        			<span class="labelwar"><em><span class="labelmandatory">Perhatian</span> : Sila pastikan label bertanda <span class="labelmandatory">*</span> diisi.</em></span>
 	        	</td>
 	     	</tr>
-            
+
                 #end
-            
+
             #elseif ($mode == 'update')
 			<tr>
 	  			<td>
 	        			<span class="labelwar"><em><span class="labelmandatory">Perhatian</span> : Sila pastikan label bertanda <span class="labelmandatory">*</span> diisi.</em></span>
 	        	</td>
 	     	</tr>
-	     	
-            #end 
-	
+
+            #end
+
 	<tr>
     	<td align="center">
     	#if($mode == 'view')
     		#if($!BeanMaklumatPemohon.isEmpty())
-	        	<input class="stylobutton100" type="button" name="cmdKemaskini" id="cmdKemaskini" value="Simpan" onclick="javascript:simpanPemohon()" />            
+	        	<input class="stylobutton100" type="button" name="cmdKemaskini" id="cmdKemaskini" value="Simpan" onclick="javascript:simpanPemohon()" />
 	     	#else
-        		<input class="stylobutton100" type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="javascript:kemaskiniPemohon()" />  
-        		<input class="stylobutton100" type="button" name="cmdCetak" id="cmdCetak" value="Surat" onclick="javascript:setTable('tableReport2')" />  
+        		<input class="stylobutton100" type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="javascript:kemaskiniPemohon()" />
+        		<input class="stylobutton100" type="button" name="cmdCetak" id="cmdCetak" value="Surat" onclick="javascript:setTable('tableReport2')" />
 			#end
-		
+
 		#elseif ($mode == 'update')
         	<input class="stylobutton100" type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:simpanPemohon()" />
         	<!-- <input class="stylobutton100" type="reset" name="cmdBatal" id="cmdBatal" value="Kosongkan"/> -->
         	<input class="stylobutton100" type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="javascript:batalPemohon()" />
-		#end  
+		#end
+		#if ( $idStatus == '65' )
+			<input class="stylobutton100" name="cmdSeterusnya" type="button" value="Seterusnya" onclick="seterusnyaPemohon()"/>
+		#end
    		</td>
 	</tr>
 </table>
@@ -214,17 +217,17 @@
 	<table width="100%" border="0" cellspacing="2" cellpadding="2">
 	  <tr>
       	<td><a href="#" onClick="javascript:cetakSuratPemohon('$!idPermohonan')"><font color="blue">SURAT KEPADA PEMOHON (SETELAH TERIMA PERMOHONAN)</font></a></td>
-	  </tr>	  
+	  </tr>
 	  <tr>
       	<td><a href="#" onClick="javascript:cetakSuratJKPTGNegeri('$!idPermohonan')"><font color="blue">SURAT KEPADA JKPTG NEGERI (PERMOHONAN LAPORAN TANAH)</font></a></td>
-	  </tr>	 
+	  </tr>
 	  <tr>
       	<td><a href="#" onClick="javascript:cetakSuratUlasanKJP('$!idPermohonan')"><font color="blue">SURAT KEPADA KJP (ULASAN)</font></a></td>
 	  </tr>
 	  <tr>
       	<td><a href="#" onClick="javascript:cetakSuratUlasanJPPH('$!idPermohonan')"><font color="blue">SURAT KEPADA JPPH (PENILAIAN)</font></a></td>
-	  </tr>	
+	  </tr>
 	</table>
-</fieldset>	
+</fieldset>
 ##parse("app/htp/utiliti/javascript/javaScriptPajakanPemohon.jsp")
 

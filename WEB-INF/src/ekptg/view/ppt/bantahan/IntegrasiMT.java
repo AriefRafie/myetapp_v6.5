@@ -222,7 +222,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 			String postcode = getParam("txtPoskod");
 			String stateCode = getStateCode(Integer.parseInt(getParam("txtIdNegeri")));
 			String city = "Putrajaya";
-			myLog.info("stateCode="+stateCode);
+//			myLog.info("stateCode="+stateCode);
 
 			String kodMT = getParam("kodmt");
 			
@@ -237,7 +237,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 				String renameDate = Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.YEAR)), 4) + Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.MONTH) + 1), 2)
 									+ Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.DATE)), 2);
 				renameDoc = "ETP_"+idBantahan+"_"+sdfNaming.format(new Date())+"_"+doc.getIdDokumen()+".pdf";
-				myLog.info("renameDoc="+renameDoc);
+//				myLog.info("renameDoc="+renameDoc);
 				getDoc().simpanDokumenInt(doc);
 				
 			}else{
@@ -247,7 +247,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 					}
 				}
 			}
-			myLog.info("jenisRef="+jenisRef);
+//			myLog.info("jenisRef="+jenisRef);
 			//Perayu PB (Individu|Syarikat)
 			String gen = "U";
 			String noRef = getParam("noRef");
@@ -537,25 +537,26 @@ public class IntegrasiMT extends AjaxBasedModule{
 			db = new Db();
 	    	Statement stmt = db.getStatement();
 	    	SQLRenderer r = new SQLRenderer();
-//	    	r.add("RP.ID_PEJABAT");
 	    	r.add("RP.KOD_PEJABATPEN");
 	    	r.add("RP.KOD_PEJABATU");
-	    	r.add("P.NAMA_PEJABAT");
+	    	r.add("RP.JAWATAN");
 	    	r.add("RP.ID_PEJABATPEN",idPejabat);
-	  		r.relate("RP.ID_PEJABATPEN", "P.ID_PEJABAT");
-	  		sql = r.getSQLSelect("TBLINTMTPEJABATMAP RP,TBLRUJPEJABAT P");
+//	  		r.relate("RP.ID_PEJABATPEN", "P.ID_PEJABAT");
+	  		sql = r.getSQLSelect("TBLINTMTPEJABATMAP RP");
 	  		myLog.info("getParty:"+sql);
 	  		ResultSet rs = stmt.executeQuery(sql);
 	  		 
 	  		while (rs.next()) {
 	  			partyAgencyc = new DataCreateReqTypePartyAgencyPartyCounsel(rs.getString("KOD_PEJABATU"));
 	  			party = new DataCreateReqTypePartyAgency("525C71F2-E571-4EA5-925B-DE5217E2B6A9"
-	  					,rs.getString("NAMA_PEJABAT")
+	  					,rs.getString("JAWATAN")
 	  					,"GA_CIVIL"
 	  					,rs.getString("KOD_PEJABATPEN")
 	  					,partyAgencyc);
-	
+
 	  		}
+//	  		myLog.info("getParty:2"+partyAgencyc);
+//		  	myLog.info("getParty:3"+party);
 	      
 	    } catch (Exception e) {
 	    	//myLog.info(e.getMessage());

@@ -216,7 +216,7 @@ public class FrmIntegrasiPerintah extends VTemplate {
 			context.put("jenisPerintah", request.getParameter("jenisPerintah"));
 			
 			//aishah start integration ecourt
-			MTManager manager = new MTManager();
+			MTManager manager = new MTManager("MT");
 			
 			String returnMessage = "";
 			returnMessage = 

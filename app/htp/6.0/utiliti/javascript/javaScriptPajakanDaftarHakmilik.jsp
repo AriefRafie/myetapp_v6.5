@@ -8,7 +8,7 @@
 		document.${formName}.actionPajakan.value = "papar";
 		return;
 	}
-	
+
 	document.${formName}.hitButton.value = "seterusnya";
 	doAjaxCall${formName}("");
 }
@@ -19,7 +19,7 @@
 	document.${formName}.mode.value = "view";
 	document.${formName}.actionPajakan.value = "papar";
 	doAjaxCall${formName}("");
-	
+
 }
 */
 	//Tab Maklumat Permohonan
@@ -37,11 +37,11 @@
 		actionName = "setSessionIdFail";
 		target = "setSessionIdFail_result";
 		doAjaxUpdater(document.${formName}, url, target, actionName);
-		
+
 		document.${formName}.action = "$EkptgUtil.getTabID('Penswastaan',$portal_role)?_portal_module=ekptg.view.htp.FrmPenswastaan2SyarikatView&actionPenswastaan=papar&mode=view&idFail="+idFail;
 		document.${formName}.submit();
 		//doAjaxCall${formName}("");
-		
+
 	}
 
 	function kemaskiniFail(){
@@ -62,51 +62,51 @@
 	}
 
 	function simpanKemaskiniFail(){
-	
+
 	/*if(document.${formName}.txtNoFailKJP.value == ""){
 		alert('Sila masukkan No Fail KJP.');
-  		document.${formName}.txtNoFailKJP.focus(); 
-		return; 
+  		document.${formName}.txtNoFailKJP.focus();
+		return;
 	}
 	if(document.${formName}.tarikhSuratKJP.value == ""){
 		alert('Sila masukkan Tarikh Surat KJP.');
-  		document.${formName}.tarikhSuratKJP.focus(); 
-		return; 
+  		document.${formName}.tarikhSuratKJP.focus();
+		return;
 	}
 	if(document.${formName}.txtNoFailLain.value == ""){
 		alert('Sila masukkan No. Fail Lain');
-  		document.${formName}.txtNoFailLain.focus(); 
-		return; 
+  		document.${formName}.txtNoFailLain.focus();
+		return;
 	}
 	if(document.${formName}.tarikhAgihan.value == ""){
 		alert('Sila masukkan Tarikh Agihan.');
-  		document.${formName}.tarikhAgihan.focus(); 
-		return; 
+  		document.${formName}.tarikhAgihan.focus();
+		return;
 	}*/
-	
+
 		if(document.${formName}.tarikhSuratPemohon.value == ""){
 			alert('Sila masukkan Tarikh Surat Permohonan.');
-	  		document.${formName}.tarikhSuratPemohon.focus(); 
-			return; 
+	  		document.${formName}.tarikhSuratPemohon.focus();
+			return;
 		}
 		if(document.${formName}.txtTajuk.value == ""){
 			alert('Sila masukkan Tajuk.');
-	  		document.${formName}.txtTajuk.focus(); 
-			return; 
+	  		document.${formName}.txtTajuk.focus();
+			return;
 		}
 		if ( !window.confirm("Adakah Anda Pasti ?") ){
 			//document.${formName}.actionPajakan.value = "papar";
 			//document.${formName}.actionPajakan.value = "papardaftar";
 			return;
 		}
-		
+
 		document.${formName}.mode.value = "view";
 		//document.${formName}.actionPajakan.value = "papar";
 		document.${formName}.actionPajakan.value = "papardaftar";
 		document.${formName}.hitButton.value = "saveUpdateFail";
 		document.${formName}.submit();
 		//doAjaxCall${formName}("");
-	
+
 	}
 
 // 19/08/2010 -
@@ -135,13 +135,13 @@
 	 * H = HANTAR
 	 * S = SAH (TELAH DISAHKAN)
 	 * note : Hanya fail selepas penambahbaikan sahaja akan ada flag ini. Yang lama dikira telah disahkan dan boleh proceed seperti biasa.
-	 */	 
+	 */
 	 function doHantarPengesahan(){
 		 if ( !window.confirm("Adakah Anda Pasti ?") ){
 			//document.${formName}.actionPajakan.value = "papar";
 			//document.${formName}.actionPajakan.value = "papardaftar";
 			return;
-		
+
 		 }
 		document.${formName}.mode.value = "view";
 		//document.${formName}.actionPajakan.value = "papar";
@@ -149,7 +149,7 @@
 		document.${formName}.hitButton.value = "hantarpengesahandaftar";
 		document.${formName}.submit();
 		//doAjaxCall${formName}("");
-			
+
 	 }
 
 	 function doSahkan() {
@@ -166,8 +166,8 @@
 		document.${formName}.hitButton.value = "sahkanpermohonandaftar";
 		document.${formName}.submit();
 		//doAjaxCall${formName}("");
-			
-	}	
+
+	}
 
 /*function langkah1(){
 	document.${formName}.action = "?_portal_module=ekptg.view.htp.pajakan.FrmPajakanSenaraiFailView";
@@ -192,7 +192,7 @@ function langkah3(permohonan,idFail){
 	document.${formName}.action = "?_portal_module=ekptg.view.htp.pajakan.FrmPajakanMJMView&idPermohonan="+permohonan+"&actionPajakan=papar";
 	document.${formName}.mode.value = "view";
 	document.${formName}.submit();
-	
+
 }
 
 function langkah4(permohonan,idFail){
@@ -223,9 +223,9 @@ function langkah5(permohonan,idFail){
 	       hWnd.opener = document.window;
 	    if (hWnd.focus != null) hWnd.focus();
 		hWnd.focus();
-		
+
 	}
-	
+
 	function kemaskiniTanah(idPermohonan,idHakmilikUrusan) {
 		var url = "../x/${securityToken}/ekptg.view.htp.FrmPajakanPopupSenaraiTanahView?idPermohonan="+idPermohonan+"&idhakmilikurusan="+idHakmilikUrusan+"&actionPopup=kemaskini";
 	    var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
@@ -233,42 +233,42 @@ function langkah5(permohonan,idFail){
 	       hWnd.opener = document.window;
 	    if (hWnd.focus != null) hWnd.focus();
 		hWnd.focus();
-	}	
+	}
 	function doDeleteHakmilik(idHakmilikUrusan){
 		if ( !window.confirm("Adakah Anda Pasti ?") ){
 			//document.${formName}.actionPajakan.value = "papar";
 			return;
-			
-		}			
+
+		}
 		//document.${formName}.actionPajakan.value = "papardaftar";
 		document.${formName}.idHakmilikUrusan.value = idHakmilikUrusan;
 		document.${formName}.hitButton.value = "deletehakmilik";
 		document.${formName}.submit();
-			
+
 	}
 	//Skrin Senarai hakmilik. Butang [Seterusnya]
 	function seterusnya(){
 		if ( !window.confirm("Adakah Anda Pasti ?") ){
 			return;
-		}		
-		document.${formName}.actionPajakan.value = "paparmjm";
+		}
+		document.${formName}.actionPajakan.value = "paparpemohon";
 		//document.${formName}.hitButton.value = "seterusnya";
 		document.${formName}.hitButton.value = "seterusnyadaftar";
 		document.${formName}.selectedTab.value = 0;
 		document.${formName}.submit();
 		//doAjaxCall${formName}("");
-		
+
 	}
-	
+
 	function refreshFromPilihTanah() {
 		document.${formName}.actionPajakan.value = "papardaftar";
 		document.${formName}.submit();
 		refreshAgain()
-		
+
 	}
-	
+
 	function refreshAgain() {
 		document.${formName}.submit();
-	}	 
-	 
+	}
+
 </script>

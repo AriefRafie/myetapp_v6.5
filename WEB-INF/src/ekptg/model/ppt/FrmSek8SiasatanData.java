@@ -2316,9 +2316,10 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 						"WHEN SUBSTR(ROUND(HM.LUAS_AMBIL,4),1,1) != '.' THEN '' || ROUND(HM.LUAS_AMBIL,4) END AS LUAS_AMBIL, " +
 						"(HM.LUAS_LOT - HM.LUAS_AMBIL) AS LUAS_BAKI," +
 						"HM.NAMA_LUAS_AMBIL, HM.NO_SUBJAKET, HM.NO_LOT AS NO_LOTHM, HM.NO_PT, " +
-						"NEG.NAMA_NEGERI, DRH.NAMA_DAERAH, MKM.NAMA_MUKIM , U.USER_NAME AS NAMA_PEGAWAI " +
+						"NEG.NAMA_NEGERI, DRH.NAMA_DAERAH, MKM.NAMA_MUKIM , U.USER_NAME AS NAMA_PEGAWAI, " +
+						"S.JENIS_BANGUNAN, JB.KETERANGAN AS KETERANGAN_TANAH " +
 						"FROM TBLPPTSIASATAN S, TBLPPTPERMOHONAN P, TBLPPTHAKMILIK HM, TBLPPTTANAH T, TBLRUJJENISHAKMILIK JH, " +
-						"TBLRUJLOT JL,TBLRUJNEGERI NEG, TBLRUJDAERAH DRH, TBLRUJMUKIM MKM, TBLRUJLUAS LS, TBLRUJLUAS LJ, USERS U " +
+						"TBLRUJLOT JL,TBLRUJNEGERI NEG, TBLRUJDAERAH DRH, TBLRUJMUKIM MKM, TBLRUJLUAS LS, TBLRUJLUAS LJ, USERS U, TBLRUJJENISBANGUNAN JB " +
 						"WHERE HM.ID_PERMOHONAN = P.ID_PERMOHONAN " +
 						"AND S.ID_HAKMILIK = HM.ID_HAKMILIK(+) " +
 						"AND S.ID_HAKMILIK = T.ID_HAKMILIK(+) " +
@@ -2330,12 +2331,12 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 						"AND HM.ID_UNITLUASLOT = LS.ID_LUAS " +
 						"AND HM.ID_UNITLUASAMBIL = LJ.ID_LUAS " +
 						"AND S.ID_PEGAWAI_SIASATAN = U.USER_ID(+) " +
+						"AND S.JENIS_BANGUNAN = JB.ID_JENIS_BANGUNAN " +
 						"AND S.ID_SIASATAN = '" + id_siasatan + "' " +
 						"ORDER BY LPAD (HM.NO_SUBJAKET, 10) ASC, " +
 						"LPAD (NO_LOTHM, 10) ASC, " +
 						"LPAD (HM.NO_PT, 10) ASC, " +
 						"LPAD (NO_LOT, 10) ASC ";
-
 
 				ResultSet rs = stmt.executeQuery(sql);
 
@@ -2448,6 +2449,9 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 					h.put("JENIS_BANGUNAN",
 							rs.getString("JENIS_BANGUNAN") == null ? "" : rs
 									.getString("JENIS_BANGUNAN"));
+					h.put("KETERANGAN_TANAH",
+							rs.getString("KETERANGAN_TANAH") == null ? "" : rs
+									.getString("KETERANGAN_TANAH"));
 					h.put("JENIS_TANAMAN",
 							rs.getString("JENIS_TANAMAN") == null ? "" : rs
 									.getString("JENIS_TANAMAN"));

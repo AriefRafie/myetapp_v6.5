@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
+import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
 import ekptg.model.htp.FrmSemakan;
@@ -458,8 +459,9 @@ public class FrmSek8Siasatan extends AjaxBasedModule{
         		
         		maklumat_siasatan = logic.maklumat_siasatan(getParam("id_siasatan"));
         		if ("View".equals(subminor_command))
-   				{      			
-        			context.put("selectBangunan",HTMLPPT.SelectBangunan("socBangunan",Utils.parseLong(socJenisBangunan),null,"style=width:auto"));
+   				{    
+        			myLogger.info("masuk sini");
+        			
         			Hashtable h = (Hashtable) maklumat_siasatan.get(0);
             		if(h.get("TEMPOH_MILIK_TANAH").toString().equals("") && 
             				h.get("CARA_MILIK").toString().equals("") && 
@@ -471,23 +473,28 @@ public class FrmSek8Siasatan extends AjaxBasedModule{
             				h.get("FLAG_PECAH_SEMPADAN").toString().equals("") && 
             				h.get("TARIKH_PECAH_SEMPADAN").toString().equals("") && 
             				h.get("FLAG_TUKAR_SYARAT").toString().equals("") && 
-            				h.get("TARIKH_TUKAR_SYARAT").toString().equals(""))
+            				h.get("TARIKH_TUKAR_SYARAT").toString().equals("") &&
+            				h.get("JENIS_BANGUNAN").toString().equals("")) 
             		{
             			Hashtable hh = (Hashtable) maklumat_siasatan.get(0);	   			
                 		if(Integer.parseInt(hh.get("BIL_SIASATAN").toString())>1)
         	   			{
-                			myLogger.info("AWAT XKELUAQ NI");
+                			myLogger.info("AWAT XKELUAQ NI"); //YATI
                 			maklumat_siasatan_history = logic.maklumat_siasatan_history(hh.get("ID_PERMOHONAN").toString(),hh.get("ID_HAKMILIK").toString(),Integer.parseInt(hh.get("BIL_SIASATAN").toString())-1);
             	   			this.context.put("maklumat_siasatan_history",maklumat_siasatan_history);
             	   				}
             				this.context.put("readmode", "edit");    
             		}
             		else{
+            			myLogger.info("view bangunan");
             			this.context.put("readmode", "view");  
             			context.put("selectBangunan",HTMLPPT.SelectBangunan("socBangunan",Utils.parseLong(socJenisBangunan),null,"style=width:auto class=disabled"));
             		}         	
             		//String txtCaraMilikTanah = getParam("txtCaraMilikTanah");
+            		
+            		context.put("selectBangunan",HTMLPPT.SelectBangunan("socBangunan",Utils.parseLong(h.get("JENIS_BANGUNAN").toString()),null,"style=width:auto class=disabled"));
     		
+            	
    				}
         	    if ("Kemaskini".equals(subminor_command))
    				{  

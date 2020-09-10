@@ -11,13 +11,13 @@
 	//MOA javaScriptPerjanjian
 	function kemaskiniMOA(){
 		//
-		document.${formName}.actionPajakan.value = "paparperjanjian";
+		document.${formName}.actionPajakan.value = "paparpajakan";
 		document.${formName}.mode.value = "update";
 		doAjaxCall${formName}("");
 	}
 	function batalMOA(){
 		//
-		document.${formName}.actionPajakan.value = "paparperjanjian";
+		document.${formName}.actionPajakan.value = "paparpajakan";
 		document.${formName}.mode.value = "view";
 		doAjaxCall${formName}("");
 	}
@@ -57,7 +57,7 @@
 
 		if ( !window.confirm("Adakah Anda Pasti ?") ){
 			//
-			document.${formName}.actionPajakan.value = "paparperjanjian";
+			document.${formName}.actionPajakan.value = "paparpajakan";
 			return;
 		}
 
@@ -69,14 +69,14 @@
 	// MULA 15A
 	function kemaskini15A(){
 		//
-		document.${formName}.actionPajakan.value = "paparperjanjian";
+		document.${formName}.actionPajakan.value = "paparpajakan";
 		document.${formName}.mode.value = "update";
 		doAjaxCall${formName}("");
 
 	}
 	function batal15A(){
 		//
-		document.${formName}.actionPajakan.value = "paparperjanjian";
+		document.${formName}.actionPajakan.value = "paparpajakan";
 		document.${formName}.mode.value = "view";
 		doAjaxCall${formName}("");
 
@@ -117,7 +117,7 @@
 
 		if ( !window.confirm("Adakah Anda Pasti ?") ){
 			//
-			document.${formName}.actionPajakan.value = "paparperjanjian";
+			document.${formName}.actionPajakan.value = "paparpajakan";
 			return;
 		}
 

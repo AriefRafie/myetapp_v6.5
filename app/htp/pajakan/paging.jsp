@@ -7,7 +7,7 @@
 <div align="right">
 
 <!-- -->
-
+$valFlagMohonFail
 #if($page == "1" )<img src="../img/1current.png" alt="" border="0" title="Senarai Fail"/><img src="../img/arrowgaris.png" alt="" border="0"/>#else<img src="../img/1enable.png" alt="" border="0" title="Senarai Fail" onclick="langkah1()" onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>#end
 #if($page == "2")<img src="../img/2current.png" alt="" border="0" title="Maklumat Permohonan"/><img src="../img/arrowgaris.png" alt="" border="0"/>#else<img src="../img/2enable.png" alt="" border="0" title="Maklumat Permohonan" onclick="langkah2($!htpPermohonan.permohonan.getIdPermohonan(),'$!htpPermohonan.permohonan.pfdFail.getIdFail()')" onMouseOver="this.style.cursor='pointer';"/><img src="../img/arrowgaris.png" alt="" border="0"/>#end
 #if($!valFlagMohonFail.equalsIgnoreCase("display"))
@@ -30,11 +30,15 @@
 	#if($page == "11")<img src="../img/11current.png" alt="" border="0" title="Tindakan"/>
 	#else<img src="../img/11enable.png" alt="" border="0" title="Tindakan" onclick="langkah11($!htpPermohonan.permohonan.getIdPermohonan(),'$!htpPermohonan.permohonan.pfdFail.getIdFail()')" onMouseOver="this.style.cursor='pointer'"/>#end
 #else
-	<img src="../img/3disable.png" alt="" border="0" title="Maklumat MJM"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
-	<img src="../img/4disable.png" alt="" border="0" title="Perjanjian"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
-	<img src="../img/5disable.png" alt="" border="0" title="Bayaran"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
-	<img src="../img/6disable.png" alt="" border="0" title="Penamatan"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
-	<img src="../img/7disable.png" alt="" border="0" title="Pemantauan"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
+	<img src="../img/3disable.png" alt="" border="0" title="Maklumat Pemohon"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
+	<img src="../img/4disable.png" alt="" border="0" title="Ulasan"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
+	<img src="../img/5disable.png" alt="" border="0" title="Maklumat MJM"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
+	<img src="../img/6disable.png" alt="" border="0" title="Deraf Perjanjian"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
+	<img src="../img/7disable.png" alt="" border="0" title="Perjanjian"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
+	<img src="../img/8disable.png" alt="" border="0" title="Pajakan"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
+	<img src="../img/9disable.png" alt="" border="0" title="Bayaran"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
+	<img src="../img/10disable.png" alt="" border="0" title="Penamatan"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
+	<img src="../img/11disable.png" alt="" border="0" title="Tindakan"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
 #end
 
 

@@ -1,3 +1,4 @@
+XXX
 <style>
 body{
 background: #f4eff4 !important;
@@ -6,6 +7,7 @@ background: #f4eff4 !important;
 <!-- 18/8/2020 -->
 	<!-- SEKSYEN 4 DAN 8 --><strong></strong>
 <!-- test xxxxx -->
+#parse("app/ppt/tindakanPegawaiSignPPT.jsp")
 #set($frmtdate = "&nbsp;<i><font color='blue' style='font-size:10px'>dd/mm/yyyy</font></i>")
 	
 	<input name="id_borange" type="hidden" id="id_borange" value="$!id_borange"/>
@@ -20,6 +22,7 @@ background: #f4eff4 !important;
    <input name="nama_pegawai" type="hidden" id="nama_pegawai" value="$!nama_pegawai"/> 
    <input name="nama_pegawai1" type="hidden" id="nama_pegawai1" value="$!nama_pegawai1"/> 
    <input name="nama_pegawai2" type="hidden" id="nama_pegawai2" value="$!nama_pegawai2"/> 
+   
    
    
    
@@ -62,7 +65,7 @@ background: #f4eff4 !important;
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input type="hidden" name="user" value='$!{session.getAttribute("_portal_username")}'>
 
-  <input name="tabId" type="hidden" id="tabId" value="$selectedTab"/>
+  <input name="tabId" type="text" id="tabId" value="$selectedTab"/>
   
 
     	<fieldset><legend><strong>Cetakan Laporan</strong></legend>
@@ -100,6 +103,7 @@ background: #f4eff4 !important;
               
               #if($selectNoFail == 'yes')
              
+             <!-- testing yati v7 penambahbaikan -->
                <tr>
                 <td valign="top">&nbsp;</td>
                 <td valign="top">Nama Pegawai</td>
@@ -209,6 +213,7 @@ background: #f4eff4 !important;
               && $report != 'coveringSijilPU' && $report != 'minitSijilPU' && $report != 'cetakNotis' && $report != 'senaraiKehadiran' 
               && $report != 'senaraiKehadiranKosong' && $report != 'BayaranLainKos_Nofail' && $report != 'sabpn_notis_awam_sek4' && $report != 'sabpn_notis_awam_sek8'  && $report != 'sabpn_notis_borange'  
               && $report != 'sabpn_notis_borangk'  && $report != 'sabpn_notis_borangh')
+            
 <!--               || $report == 'SuratPengosonganTanah' || -->
               <!-- PPT-27 & PPT-30-->
               <tr>
@@ -4821,8 +4826,9 @@ function cetakBorangA(idfail,nama2mukim) {
 
 		var valType = document.${formName}.sorSelectNoFail.value;
 		var nofail = "";
-		
+
 		if(valType=="1"){
+		
 			nofail = document.${formName}.no_fail.value;
 		}else if(valType=="2"){
 			nofail = document.${formName}.no_rujukan_ptg.value;

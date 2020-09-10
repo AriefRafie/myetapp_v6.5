@@ -1,6 +1,6 @@
 <script>
 
-	document.${formName}.actionPajakan.value = "paparperjanjian";
+	document.${formName}.actionPajakan.value = "paparpajakan";
 	//alert($!txtCatatan);
 	//document.${formName}.txtcatatan.value = "$!txtCatatan";
 
@@ -11,7 +11,7 @@
 		//document.${formName}.actionPajakan.value = "paparperjanjian";
 		document.${formName}.submit();
 		//doAjaxCall${formName}("");
-	
+
 	}
 	function kemaskiniPajakan(){
 		//document.${formName}.actionPajakan.value = "papar";
@@ -19,7 +19,7 @@
 		document.${formName}.mode.value = "updatePajakan";
 		document.${formName}.submit();
 		//doAjaxCall${formName}("");
-		
-	}	
+
+	}
 
 </script>
