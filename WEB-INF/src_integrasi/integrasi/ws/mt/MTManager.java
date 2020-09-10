@@ -414,7 +414,10 @@ public class MTManager {
 			data.setApplicantIC((noKPPemohon != null ? noKPPemohon : ""));
 			data.setApplicantRelationship("");
 			data.setApplicantRelOther("");
-			data.setBlueCardID((blueCardId != null ? blueCardId : ""));
+			//code di bawah ini yang ORIGINAL untuk hantar BluecardID
+			//data.setBlueCardID((blueCardId != null ? blueCardId : ""));
+			
+			data.setBlueCardID("");
 //			data.setBlueCardID("16061039");
 			data.setGrantDate((tarikhPerintah != null ? tarikhPerintah : ""));
 			data.setGrantName((grandName != null ? grandName : ""));
