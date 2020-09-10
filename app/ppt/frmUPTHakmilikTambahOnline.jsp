@@ -144,8 +144,8 @@ Maklumat Hakmilik telah berjaya disimpan.
 			<td>No. Strata</td>
 			<td>:</td>
 			<td>
-              	<span class="labelinput">No.Bang</span>&nbsp;<input name="txtNoBangunan" type="text" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
-				<span class="labelinput">No.Ting</span>&nbsp;<input name="txtNoTingkat" type="text" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+              	<span class="labelinput">No.Bangunan</span>&nbsp;<input name="txtNoBangunan" type="text" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+				<span class="labelinput">No.Tingkat</span>&nbsp;<input name="txtNoTingkat" type="text" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
 				<span class="labelinput">No.Petak</span>&nbsp;<input name="txtNoPetak" type="text" id="txtNoPetak"  value="$!txtNoPetak" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
   			</td>
 		</tr>
@@ -222,9 +222,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 				href="javascript:popupCarianHakmilikSalin('$id_permohonan','skrin_hakmilik_sek8_KJP','$id_daerah')"><font
 					color="blue">>> SALIN MAKLUMAT HAKMILIK/LOT</font></a></td>
 		</tr>
-
-
-		#if($hideFieldHakmilik=="no")
+		
 
 		<tr>
 			<td><font color="red">*</font></td>
@@ -232,12 +230,14 @@ Maklumat Hakmilik telah berjaya disimpan.
 			<td>:</td>
 			<td>$!selectKategoriTanah</td>
 		</tr>
+		
 		<tr>
 			<td><font color="red">*</font></td>
 			<td>Unit Luas Asal</td>
 			<td>:</td>
 			<td>$!selectUnitLuasLot</td>
 		</tr>
+		
 		<tr>
 			<td valign="top"><font color="red">*</font></td>
 			<td valign="top">Luas Asal</td>
@@ -296,6 +296,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 			<td>:</td>
 			<td>$!selectUnitLuasAmbil</td>
 		</tr>
+		
 		<tr>
 			<td valign="top"><font color="red">*</font></td>
 			<td valign="top">Luas Diambil</td>
@@ -337,6 +338,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 
 		#if($showButtonConvertAmbil=="yes" ||
 		$showFieldAmbilBeforeConvert=="yes")
+		
 		<tr>
 			<td colspan="3">&nbsp;</td>
 			<td>#if($showButtonConvertAmbil=="yes") <input type="button"
@@ -347,7 +349,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 				onClick="javascript:clearConvertAmbil()"> #end
 			</td>
 		</tr>
-		#end #end
+		#end
 
 	</table>
 </fieldset>
@@ -394,7 +396,9 @@ Maklumat Hakmilik telah berjaya disimpan.
 			<td>&nbsp;<a href="javascript:doOnchange('1')"><font
 					color="blue">kosongkan pilihan</font></a></td>
 		</tr>
-		#end #if($showWarta=="yes")
+		#end 
+		
+		#if($showWarta=="yes")
 		<tr>
 			<td>&nbsp;</td>
 			<td>No.Warta</td>
@@ -403,6 +407,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 				value="$!txtNoWartaRizab" maxlength="20" id="txtNoWartaRizab"
 				onblur="javascript:updateNoWartaRizab('$!txtNoWartaRizab')"></td>
 		</tr>
+		
 		<tr>
 			<td>&nbsp;</td>
 			<td>Tarikh Warta</td>
@@ -418,7 +423,6 @@ Maklumat Hakmilik telah berjaya disimpan.
 
 	</table>
 </fieldset>
-
 #end
 
 <fieldset>
@@ -445,12 +449,12 @@ Maklumat Hakmilik telah berjaya disimpan.
 </fieldset>
 
 
-
 #if($mode=="view") #if($onchangeHM=="no") #foreach($data in $dataMaklumatTanah) 
 #set($nama_negeriprojek=$data.nama_negeri)
 #set($nama_daerah=$data.nama_daerah) 
 #set($txtSeksyen=$data.seksyen)
 #set($txtNoHakmilik=$data.no_hakmilik)
+#set($id_hakmilik=$data.id_hakmilik)
 #set($txdTarikhLuput=$data.tarikh_luput)
 #set($txdTarikhDaftar=$data.tarikh_daftar)
 #set($txtBakiTempoh=$data.tempoh_luput) 
@@ -474,10 +478,12 @@ Maklumat Hakmilik telah berjaya disimpan.
 #set($txtNoTingkat=$data.no_tingkat)
 #set($txtNoPetak=$data.no_petak)
 
+
 #end #end #if($isEdit=="no") #set($disability = "readonly")
 #set($disabilityx = "class=disabled") #set($disability1 = "disabled")
 #set($M = "") #else #set($M = "*") #set($disability = "")
 #set($disabilityx = "") #set($disability1 = "") #end
+
 
 
 <fieldset id="top">
@@ -494,6 +500,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 			<td width="1%">:</td>
 			<td width="75%">$!nama_negeriprojek</td>
 		</tr>
+		
 		<tr>
 			<td>&nbsp;</td> #if($showJajahan=="yes")
 			<td>Jajahan</td> #else
@@ -501,6 +508,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 			<td>:</td>
 			<td>$!nama_daerah</td>
 		</tr>
+		
 		#if($showJajahan=="yes")
 		<tr>
 			<td></td>
@@ -509,12 +517,14 @@ Maklumat Hakmilik telah berjaya disimpan.
 			<td>$!SelectDaerahPenggawa</td>
 		</tr>
 		#end
+		
 		<tr>
 			<td><font color="red">$!M</font></td>
 			<td>Bandar/Pekan/Mukim</td>
 			<td>:</td>
 			<td>$!selectMukim</td>
 		</tr>
+		
 		<tr>
 			<td>&nbsp;</td>
 			<td>Seksyen</td>
@@ -537,6 +547,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 			<td width="1%">:</td>
 			<td width="75%">$!selectJenisHakmilik</td>
 		</tr>
+		
 		<tr>
 			<td>#if($hideFieldHakmilik=="no")<font color="red">$!M</font>#end
 			</td>
@@ -553,14 +564,13 @@ Maklumat Hakmilik telah berjaya disimpan.
 			<td> No. Strata </td>
 			<td>:</td>
 			<td>
-               	<span class="labelinput">No.Bang</span>&nbsp;<input $disability $disabilityx  name="txtNoBangunan" type="text" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
-				<span class="labelinput">No.Ting</span>&nbsp;<input $disability $disabilityx  name="txtNoTingkat" type="text" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+               	<span class="labelinput">No.Bangunan</span>&nbsp;<input $disability $disabilityx  name="txtNoBangunan" type="text" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
+				<span class="labelinput">No.Tingkat</span>&nbsp;<input $disability $disabilityx  name="txtNoTingkat" type="text" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
 				<span class="labelinput">No.Petak</span>&nbsp;<input $disability $disabilityx  name="txtNoPetak" type="text" id="txtNoPetak"  value="$!txtNoPetak" size="3" maxlength="3"  onkeyup="this.value=this.value.toUpperCase();"/>
   			</td>
 		</tr>
-
+		
 		#if($hideFieldHakmilik=="no")
-
 		<tr>
 			<td>&nbsp;</td>
 			<td>Tarikh Daftar</td>
@@ -606,7 +616,6 @@ Maklumat Hakmilik telah berjaya disimpan.
 				id="txtNoSyit" value="$!txtNoSyit" size="12" maxlength="40"
 				onblur="javascript:updatetxtNoSyit('$!txtNoSyit')"></td>
 		</tr>
-
 		#end
 
 		<tr>
@@ -633,20 +642,21 @@ Maklumat Hakmilik telah berjaya disimpan.
 				id="txtNoLot" value="$!txtNoLot" size="12" maxlength="20"></td>
 		</tr>
 
-		#if($hideFieldHakmilik=="no")
-
+		##if($hideFieldHakmilik=="no")
 		<tr>
 			<td><font color="red">$!M</font></td>
 			<td>Kategori Tanah</td>
 			<td>:</td>
 			<td>$!selectKategoriTanah</td>
 		</tr>
+		
 		<tr>
 			<td><font color="red">$!M</font></td>
 			<td>Unit Luas Asal</td>
 			<td>:</td>
 			<td>$!selectUnitLuasLot</td>
 		</tr>
+		
 		<tr>
 			<td valign="top"><font color="red">$!M</font></td>
 			<td valign="top">Luas Asal</td>
@@ -691,8 +701,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 		</tr>
 
 
-		#if($isEdit=="yes" && ($showButtonConvertAsal=="yes" ||
-		$showFieldAsalBeforeConvert=="yes"))
+		#if($isEdit=="yes" && ($showButtonConvertAsal=="yes" || $showFieldAsalBeforeConvert=="yes"))
 		<tr>
 			<td colspan="3">&nbsp;</td>
 			<td>#if($showButtonConvertAsal=="yes") <input type="button"
@@ -704,13 +713,14 @@ Maklumat Hakmilik telah berjaya disimpan.
 			</td>
 		</tr>
 		#end
-
+		
 		<tr>
 			<td><font color="red">$!M</font></td>
 			<td>Unit Luas Ambil</td>
 			<td>:</td>
 			<td>$!selectUnitLuasAmbil</td>
 		</tr>
+		
 		<tr>
 			<td valign="top"><font color="red">$!M</font></td>
 			<td valign="top">Luas Diambil</td>
@@ -721,6 +731,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 				value="$!txtLuasLotAmbilSebelumConvert" maxlength="100"
 				onblur="javascript:updatetxtLuasLotAmbilSebelumConvert($!txtLuasLotAmbilSebelumConvert)" />
 				<p /> #end 
+				
 					<input $disability $disabilityx type="text" name="txtLuasLotAmbil"
 						id="txtLuasLotAmbil" size="15" value="$!txtLuasLotAmbil"
 						maxlength="20" onkeyup="validateNilai(this,this.value);" />
@@ -755,6 +766,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 				</td>
 		</tr>
 
+
 		#if($isEdit=="yes" && ($showButtonConvertAmbil=="yes" ||
 		$showFieldAmbilBeforeConvert=="yes"))
 		<tr>
@@ -767,13 +779,15 @@ Maklumat Hakmilik telah berjaya disimpan.
 				onClick="javascript:clearConvertAmbilUpdate()"> #end
 			</td>
 		</tr>
-		#end #end
+		#end 
+		
+		##end
+
 
 	</table>
 </fieldset>
 
 #if($hideFieldHakmilik=="no")
-
 <fieldset>
 	<table width="100%" border="0">
 
@@ -816,7 +830,9 @@ Maklumat Hakmilik telah berjaya disimpan.
 			<td>&nbsp;<a href="javascript:doOnchangeUpdate('1')"><font
 					color="blue">kosongkan pilihan</font></a></td>
 		</tr>
-		#end #if($showWarta=="yes")
+		#end 
+		
+		#if($showWarta=="yes")
 		<tr>
 			<td>&nbsp;</td>
 			<td>No.Warta</td>
@@ -826,6 +842,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 				maxlength="20" id="txtNoWartaRizab"
 				onblur="javascript:updateNoWartaRizab('$!txtNoWartaRizab')"></td>
 		</tr>
+		
 		<tr>
 			<td>&nbsp;</td>
 			<td>Tarikh Warta</td>
@@ -841,7 +858,6 @@ Maklumat Hakmilik telah berjaya disimpan.
 
 	</table>
 </fieldset>
-
 #end
 
 <fieldset>
@@ -856,6 +872,8 @@ Maklumat Hakmilik telah berjaya disimpan.
 					onKeyDown="textCounter(this.form.txtCatatan,this.form.remLen1,4000);"
 					onblur="javascript:updatetxtCatatan('$!txtCatatan')">$!txtCatatan</textarea></td>
 		</tr>
+		
+		
 		#if($isEdit=="yes")
 		<tr>
 			<td colspan="3">&nbsp;</td>
@@ -865,6 +883,8 @@ Maklumat Hakmilik telah berjaya disimpan.
 		#end
 	</table>
 </fieldset>
+
+
 <fieldset>
 	<table width="100%" border="0">
 		<tr>
@@ -878,6 +898,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 				<img src="../img/calendar.gif"
 				onclick="displayDatePicker('txdTarikhPembayaran',false,'dmy');">&nbsp;$!frmtdate</td>
 		</tr>
+		
 		<tr>
 			<td valign="top">
 			<td valign="top" width="23%">Buku Pembayaran (baucer)</td>
@@ -888,9 +909,11 @@ Maklumat Hakmilik telah berjaya disimpan.
 	</table>
 	#if($isEdit=="yes")
 	<table width="100%" border="0">
+	
 		<tr>
 			<td>&nbsp;</td>
 		</tr>
+		
 		<tr>
 			<td>$!perhatian3</td>
 		</tr>
@@ -912,7 +935,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 			<input type="button" name="cmdKemaskini" value="Kemaskini" onClick="javascript:kemaskiniHM('$!id_hakmilik')">
 			<input type="button" name="cmdHapus" value="Hapus" onClick="hapusHM('$!id_hakmilik')"> #end
 		#else
-			<input type="button" name="cmdUpdate" value="Simpan" onClick="javascript:simpanHM('$!id_permohonan','$!id_hakmilik','$!flag_subjaket','$!hideFieldHakmilik','$!mode')">
+			<input type="button" name="cmdUpdate" value="Simpan Kemaskini" onClick="javascript:simpanHM('$!id_permohonan','$!id_hakmilik','$!flag_subjaket','$!hideFieldHakmilik','$!mode')">
 			<input type="button" name="cmdBatal" value="Batal" onClick="javascript:batalKemaskini('$!id_hakmilik')"> #end
 		#end #end 
 			<input type="button" name="cmdKembali" value="Kembali" onClick="javascript:kembali('$!id_permohonan')">
@@ -922,11 +945,9 @@ Maklumat Hakmilik telah berjaya disimpan.
 
 
 
-
-
 <!-- TAB -->
 <input name="tabId" type="hidden" id="tabId" value="$selectedTab" />
-<!--  		
+<!--
 #if($mode=="view" && $hideFieldHakmilik=="no")
 
 		<div id="TabbedPanels1" class="TabbedPanels">
@@ -983,6 +1004,7 @@ Maklumat Hakmilik telah berjaya disimpan.
               		<tr>
                     #end
                #else
+
                     <tr>
                     	<td colspan="2">Tiada rekod</td>
                     </tr>
@@ -1082,16 +1104,14 @@ Maklumat Hakmilik telah berjaya disimpan.
 			onClick="javascript:tambahHM('$!flag_subjaket');"> #end #end
 		#end
 
-
-
-
-
 	</legend>
 	<a
 		href="javascript:popupCarianHakmilik('$id_permohonan','skrin_hakmilik_sek8_KJP')"><font
 		color="blue">>> SKRIN CAPAIAN HAKMILIK</font></a>
 
-	<!--
+
+
+<!--
 			<table width="100%" border="0">   
                 	<tr>
                 		#if($mode=="view" && ($id_status=="8" || $flagStatusOnline=="1"))
@@ -1174,11 +1194,6 @@ Maklumat Hakmilik telah berjaya disimpan.
 <input type="hidden" name="txtLuasLotAmbilSebelumConvertHidden" value="$!txtLuasLotAmbilSebelumConvert">
 <input type="hidden" name="txtLuasLotAsalSebelumConvertHidden" value="$!txtLuasLotAsalSebelumConvert">
 <input type="hidden" name="txtNoSyitHidden" value="$!txtNoSyit">
-
-<!-- PPT-03 Penambahan Strata Hidden -->
-<!-- input type="hidden" name="txtNoBangunanHidden" value="$!txtNoBangunan" -->
-<!-- input type="hidden" name="txtNoTingkatHidden" value="$!txtNoTingkat" -->
-<!-- input type="hidden" name="txtNoPetakHidden" value="$!txtNoPetak" -->
 
 
 <!-- Id daerah & Id projek negeri -->
@@ -1683,7 +1698,7 @@ function simpanHM(id_permohonan, id_hakmilik, flagSubjaket, hideFieldHakmilik, m
 		return;
 		
 	}	else	{
-	
+		
 		if ( !window.confirm("Adakah Anda Pasti?") ) return;
 		
 		document.${formName}.flag_subjaket.value = flagSubjaket;
@@ -1704,13 +1719,15 @@ function simpanHM(id_permohonan, id_hakmilik, flagSubjaket, hideFieldHakmilik, m
 		var command2 = document.${formName}.command2.value;
 		var command3 = document.${formName}.command3.value;
 		
-		var id_negeriprojek = document.${formName}.id_negeriprojek.value;;
+		var id_negeriprojek = document.${formName}.id_negeriprojek.value;
 		var id_daerah = document.${formName}.id_daerah.value;
 	    var socJenisHakmilik = document.${formName}.socJenisHakmilik.value;
 		var txtNoHakmilik = document.${formName}.txtNoHakmilik.value;
 		var txdTarikhLuput = document.${formName}.txdTarikhLuputHidden.value;
 		var txdTarikhDaftar = document.${formName}.txdTarikhDaftarHidden.value;
 		var txtBakiTempoh = document.${formName}.txtBakiTempohHidden.value;
+		
+		var id_hakmilik = document.${formName}.id_hakmilik.value;
 		
 		// Simpan Hakmilik dan Luas
 		var socKategoriTanah = document.${formName}.socKategoriTanah.value;
@@ -1721,7 +1738,7 @@ function simpanHM(id_permohonan, id_hakmilik, flagSubjaket, hideFieldHakmilik, m
 		var txtNoPT = document.${formName}.txtNoPT.value;
 		var txtLuasAsal = document.${formName}.txtLuasLotAsal.value;
 		var txtLuasAmbil = document.${formName}.txtLuasLotAmbil.value;
-		var txtCatatan = document.${formName}.txtCatatanHidden.value;
+		var txtCatatan = document.${formName}.txtCatatanHidden.value; 
 		var txtSeksyen = document.${formName}.txtseksyenHidden.value;
 		var txdTarikhPembayaran = document.${formName}.txdTarikhPembayaranHidden.value;
 		var unitLuas = document.${formName}.socUnitLuasLot.value;
@@ -1730,7 +1747,14 @@ function simpanHM(id_permohonan, id_hakmilik, flagSubjaket, hideFieldHakmilik, m
 		var txtLuasLotAsalSebelumConvert = document.${formName}.txtLuasLotAsalSebelumConvertHidden.value;
 		var sorDropdownUnitAsal = document.${formName}.sorDropdownUnitAsal.value;
 		var sorDropdownUnitAmbil = document.${formName}.sorDropdownUnitAmbil.value;
-		var sorJenisRizab = document.${formName}.sorJenisRizab.value;
+
+		if (hideFieldHakmilik=="no")	{
+			var sorJenisRizab = document.${formName}.sorJenisRizab.value;
+		}
+		else{	
+			var sorJenisRizab = "" ;
+		}
+		
 		var txtLain = document.${formName}.txtLainHidden.value;
 		var txtNoWartaRizab = document.${formName}.txtNoWartaRizabHidden.value;
 		var txdTarikhWarta = document.${formName}.txdTarikhWartaHidden.value;
@@ -1748,8 +1772,9 @@ function simpanHM(id_permohonan, id_hakmilik, flagSubjaket, hideFieldHakmilik, m
 				"&txtCatatan="+txtCatatan+"&txtSeksyen="+txtSeksyen+"&txdTarikhPembayaran="+txdTarikhPembayaran+"&unitLuas="+unitLuas+"&unitLuasAmbil="+unitLuasAmbil+
 				"&txtLuasLotAsalSebelumConvert="+txtLuasLotAsalSebelumConvert+"&txtLuasLotAmbilSebelumConvert="+txtLuasLotAmbilSebelumConvert+
 				"&sorDropdownUnitAsal="+sorDropdownUnitAsal+"&sorDropdownUnitAmbil="+sorDropdownUnitAmbil+"&sorJenisRizab="+sorJenisRizab+"&txtLain="+txtLain+
-				"&txtNoWartaRizab="+txtNoWartaRizab+"&txdTarikhWarta="+txdTarikhWarta+"&txtNoBangunan="+txtNoBangunan+"&txtNoTingkat="+txtNoTingkat+"&txtNoPetak="+txtNoPetak;
+				"&txtNoWartaRizab="+txtNoWartaRizab+"&txdTarikhWarta="+txdTarikhWarta+"&txtNoBangunan="+txtNoBangunan+"&txtNoTingkat="+txtNoTingkat+"&txtNoPetak="+txtNoPetak+"&id_hakmilik="+id_hakmilik;
 		//end upload
+		
 		document.${formName}.command.value = "viewHM";
 		document.${formName}.submit();
 		

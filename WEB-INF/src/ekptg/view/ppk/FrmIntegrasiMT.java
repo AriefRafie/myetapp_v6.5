@@ -2,9 +2,8 @@ package ekptg.view.ppk;
 
 import integrasi.utils.IntLogManager;
 //import integrasi.ws.mt.MTManager;
-
-import my.gov.kehakiman.eip.services.MTManager;
-import my.gov.kehakiman.eip.services.MTManagerCivilRegisterCase;
+import integrasi.ws.mt.MTManager;
+import integrasi.ws.mt.MTManagerReg;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -866,7 +865,7 @@ public class FrmIntegrasiMT extends VTemplate {
 			}
 
 			// aishah start integration ecourt
-			MTManager manager = new MTManager();
+			MTManager manager = new MTManager("MT");
 
 			String returnMessage = "";
 			returnMessage = manager.sendMaklumat2Court(
@@ -958,7 +957,7 @@ public class FrmIntegrasiMT extends VTemplate {
 			
 			// aishah start integration ecourt
 			myLogger.info("hantarPermohonanBorangI11");
-			MTManagerCivilRegisterCase manager = new MTManagerCivilRegisterCase();
+			MTManagerReg manager = new MTManagerReg("MTREG");
 			myLogger.info("hantarPermohonanBorangI22");
 			String returnMessage = "";
 			returnMessage = manager.sendMaklumat2Court(
@@ -1073,7 +1072,8 @@ public class FrmIntegrasiMT extends VTemplate {
 			
 			// aishah start integration ecourt
 			myLogger.info("hantarPermohonanRayuan2");
-			MTManagerCivilRegisterCase manager = new MTManagerCivilRegisterCase();
+			MTManagerReg manager = new MTManagerReg("MTREG");
+//			MTManagerReg manager = new MTManagerReg();
 			myLogger.info("hantarPermohonanRayuan2");
 			String returnMessage = "";
 			returnMessage = manager.sendMaklumat2Court16A(
@@ -1218,7 +1218,7 @@ public class FrmIntegrasiMT extends VTemplate {
 			}		
 
 			// aishah start integration ecourt
-			MTManager manager = new MTManager();
+			MTManager manager = new MTManager("MT");
 
 			String returnMessage = "";
 			returnMessage = manager.sendMaklumat2CourtPetioner(

@@ -948,10 +948,15 @@ Lain - Lain Kos</td>
         <td><a href="#" class="style2" onClick="nota('$id_siasatan')"><font color="blue">Nota Siasatan Tarik Balik</font></a></td>
       </tr>  
        
-         <tr>
+      <tr>
         <td><a href="#" class="style2" onClick="SuratSuruhAPBayar('$id_fail','$id_siasatan')" >
         <font color="blue">Surat Mohon Agensi Pemohon Bayar Pampasan</font></a></td>
-      </tr>     
+      </tr>    
+       
+       <!-- Tambah Borang LC -->
+      <tr>
+      	<td><a href="#" class="style2" onClick="CetakBorangLC('$id_hakmilik')"><font color="blue">Borang LC</font></a></td>
+      </tr>
        
     </table>
 </fieldset>
@@ -3284,6 +3289,16 @@ input_box = confirm("Adakah anda pasti?");
 	document.${formName}.point.value = "maklumat_award";
 	document.${formName}.submit();
 	}
+}
+
+function CetakBorangLC(id_hakmilik)
+{
+   
+	var url = "../servlet/ekptg.report.ppt.BorangLC?id_hakmilik="+id_hakmilik;  
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
 }
 
 </script>

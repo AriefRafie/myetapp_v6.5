@@ -731,7 +731,7 @@
                               
                               <tr>
                                 <td><div align="right" class="style38">
-                                  <div align="left"><span class="style38">No Sijil Mati / Permit Menguburkan</span></div>
+                                  <div align="left"><span class="style38">No. Sijil Mati / Perintah Mahkamah (Kematian)</span></div>
                                 </div></td>
                                 <td class="style36" style="text-transform:uppercase;">:</td>
                                 <td class="style36" style="text-transform:uppercase;"><label>

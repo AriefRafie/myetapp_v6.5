@@ -495,26 +495,28 @@ public class FrmUPTSek8HakmilikData {
 	    		
 	    		String socDaerahPenggawa = (String)data.get("socDaerahPenggawa");
 	    		
-	    		String id_hakmilik = (String)data.get("id_hakmilik");
-	    		String id_daerah = (String)data.get("id_daerah");
+	    		myLogger.info("Check Value update2");
 	    		
-	    		String id_mukimProjek = (String)data.get("socMukim"); myLogger.info("socMukim: " +id_mukimProjek);
-	    		String txtseksyen = (String)data.get("txtseksyen"); myLogger.info("txtseksyen: " +txtseksyen);
+	    		String id_hakmilik = (String)data.get("id_hakmilik");	myLogger.info("id_hakmilik: " +id_hakmilik);
+	    		String id_daerah = (String)data.get("id_daerah");   	myLogger.info("id_daerah: " +id_daerah);
+	    		
+	    		String id_mukimProjek = (String)data.get("socMukim");   	myLogger.info("id_mukimProjek: " +id_mukimProjek);
+	    		String txtseksyen = (String)data.get("txtseksyen"); 
 	    		String catatan = (String)data.get("txtCatatan");
 	    		String txtnolot = (String)data.get("txtNoLot");
 	    		String txtnopt = (String)data.get("txtNoPT");
 	    		
-	    		String id_jenishakmilik = (String)data.get("jenisHakMilik"); myLogger.info("socJenisHakmilik: " +id_jenishakmilik);
+	    		String id_jenishakmilik = (String)data.get("jenisHakMilik");
 	    		String no_hakmilik = (String)data.get("txtNoHakmilik");
-	    		String id_lot = (String)data.get("kodLot");  myLogger.info("socKodLot: " +id_lot);
-	    		String id_luas = (String)data.get("unitLuas");	 myLogger.info("id_luas: " +id_luas);
-	    		String luas_ambil = (String)data.get("txtLuasAmbil");	
-	    		String luas_asal = (String)data.get("txtLuasAsal");
+	    		String id_lot = (String)data.get("kodLot");  
+	    		String id_luas = (String)data.get("unitLuas");	myLogger.info("id_luas: " +id_luas);
+	    		String luas_ambil = (String)data.get("txtLuasAmbil");	myLogger.info("luas_ambil: " +luas_ambil);
+	    		String luas_asal = (String)data.get("txtLuasAsal");	myLogger.info("luas_asal: " +luas_asal);
 
 	    		String tarikhLuput = (String)data.get("txdTarikhLuput");	 
 	    		String tarikhDaftar = (String)data.get("txdTarikhDaftar");
 	    		String baki = (String)data.get("txtBakiTempoh");
-	    		String id_kategoriTanah = (String)data.get("socKategoriTanah"); myLogger.info("KategoriTanah: " +id_kategoriTanah);
+	    		String id_kategoriTanah = (String)data.get("socKategoriTanah");
 	    		String lokasi = (String)data.get("txtLokasi");	
 	    	
 	    		//rizab
@@ -530,11 +532,11 @@ public class FrmUPTSek8HakmilikData {
 	    		String noSyit = (String)data.get("txtNoSyit");	
 	    		
 	    		//new
-	    		String id_luasambil = (String)data.get("unitLuasAmbil");
-	    		String nama_luas_asal = (String)data.get("txtLuasLotAsalSebelumConvert");
-	    		String nama_luas_ambil = (String)data.get("txtLuasLotAmbilSebelumConvert");
-	    		String id_unitluaslot_convert = (String)data.get("sorDropdownUnitAsal");
-	    		String id_unitluasambil_convert = (String)data.get("sorDropdownUnitAmbil");
+	    		String id_luasambil = (String)data.get("unitLuasAmbil");	myLogger.info("id_luasambil: " +id_luasambil);
+	    		String nama_luas_asal = (String)data.get("txtLuasLotAsalSebelumConvert");  	myLogger.info("nama_luas_asal: " +nama_luas_asal);
+	    		String nama_luas_ambil = (String)data.get("txtLuasLotAmbilSebelumConvert");	myLogger.info("nama_luas_ambil: " +nama_luas_ambil);
+	    		String id_unitluaslot_convert = (String)data.get("sorDropdownUnitAsal");	myLogger.info("id_unitluaslot_convert: " +id_unitluaslot_convert);
+	    		String id_unitluasambil_convert = (String)data.get("sorDropdownUnitAmbil");		myLogger.info("id_unitluasambil_convert: " +id_unitluasambil_convert);
 	    		
 	    		
 	    		String TL = "to_date('" + tarikhLuput + "','dd/MM/yyyy')";
@@ -544,9 +546,7 @@ public class FrmUPTSek8HakmilikData {
 	    		//PPT-03 Penambahan Strata
 	    		String txtNoBangunan = (String)data.get("no_bangunan");
 	    		String txtNoTingkat = (String)data.get("no_tingkat");
-	    		String txtNoPetak =  (String)data.get("no_petak");
-	    		myLogger.info("Data updateHM no bangunan: " +txtNoBangunan);
-	    		myLogger.info("nak nombor bangunan ni: " +(String)data.get("no_bangunan"));
+	    		String txtNoPetak =  (String)data.get("no_petak"); 		 myLogger.info("txtNoPetak: " +txtNoPetak);
 	    		
 	    		String flagSebahagian = "0";
 	    		

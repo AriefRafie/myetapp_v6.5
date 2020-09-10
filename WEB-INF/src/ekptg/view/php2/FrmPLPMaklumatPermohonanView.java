@@ -18,22 +18,28 @@ import lebah.portal.AjaxBasedModule;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.log4j.Logger;
 
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Utils;
+import ekptg.model.htp.FrmSemakan;
 import ekptg.model.php2.FrmPLPHeaderData;
 import ekptg.model.php2.FrmPLPMaklumatPermohonanData;
 import ekptg.model.php2.FrmPNWPopupSenaraiTanahData;
+import ekptg.model.php2.utiliti.LampiranBean;
+import ekptg.model.utils.lampiran.ILampiran;
 
 public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
+	private ILampiran iLampiran = null;
 	
 	FrmPLPHeaderData logicHeader = new FrmPLPHeaderData();
 	FrmPLPMaklumatPermohonanData logic = new FrmPLPMaklumatPermohonanData();
 	FrmPNWPopupSenaraiTanahData logicTanah = new FrmPNWPopupSenaraiTanahData();
+	static Logger myLog = Logger.getLogger(FrmPLPMaklumatPermohonanView.class);
 
 	String userId = null;
 	String userRole = null;
@@ -45,17 +51,19 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
 		HttpSession session = this.request.getSession();
 		
 		Boolean postDB = false;
-		String doPost = (String) session.getAttribute("doPost");
-	    if (doPost.equals("true") || getParam("doPost").equals("tru")) {
-	        postDB = true;
-	    }
+
 	    userId = (String)session.getAttribute("_ekptg_user_id");
 		userRole = (String)session.getAttribute("myrole");
 		idNegeriUser = (String)session.getAttribute("_ekptg_user_negeri");
 	    
 	    //GET DEFAULT PARAM
 	    String submit = getParam("command");  
+		String hitButton = getParam("hitButton");
+		String flagPopup = getParam("flagPopup");
+		String modePopup = getParam("modePopup");
+		String step = getParam("step");
 	    String vm = ""; 
+		String flagReKeyin = "";
         String mode = getParam("mode");
         if (mode.isEmpty()){
         	mode = "view";
@@ -64,13 +72,10 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
 		if (selectedTabUpper == null || "".equals(selectedTabUpper) ) {
 			selectedTabUpper = "0";
 		}
-		String hitButton = getParam("hitButton");
-		String flagPopup = getParam("flagPopup");
-		String modePopup = getParam("modePopup");
-		String flagReKeyin = "";
-		String flagFrom = getParam("flagFrom");
-		
-		String step = getParam("step");
+		String doPost = (String) session.getAttribute("doPost");
+	    if (doPost.equals("true") || getParam("doPost").equals("true")) {
+	        postDB = true;
+	    }
 
         //GET ID PARAM
         String idFail = getParam("idFail");
@@ -124,7 +129,6 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
 		if (idPejabat == null || idPejabat.trim().length() == 0) {
 			idPejabat = "99999";
 		}
-		
 		String idJenisHakmilikTG = getParam("socJenisHakmilikTG");
 		if (idJenisHakmilikTG == null || idJenisHakmilikTG.trim().length() == 0){
 			idJenisHakmilikTG = "99999";
@@ -174,6 +178,8 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
         Vector beanMaklumatLampiran = null;
         Vector senaraiLampiran = null;
         Vector senaraiSemak = null;
+        
+        FrmSemakan semak = null;
         
         vm = "app/php2/frmPLPMaklumatPermohonan.jsp";  
         
@@ -255,8 +261,17 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
     			vm = "app/php2/frmPLPSenaraiFail.jsp";
     		}
         	if ("doSimpanKemaskiniSenaraiSemak".equals(hitButton)) {
-        		String semaks [] = this.request.getParameterValues("idsSenaraiSemak");
-    			logic.updateSenaraiSemak(idPermohonan,semaks,session);
+//        		String semaks [] = this.request.getParameterValues("idsSenaraiSemak");
+//    			logic.updateSenaraiSemak(idPermohonan,semaks,session);
+        		String cbsemaks [] = this.request.getParameterValues("idsSenaraiSemak");
+        		
+        		FrmSemakan frmSemak = new FrmSemakan();
+    			frmSemak.semakanHapusByPermohonan(idPermohonan);
+    			if (cbsemaks != null) {
+    				for (int i = 0; i < cbsemaks.length; i++) {
+    					FrmSemakan.semakanTambah(cbsemaks[i], String.valueOf(idPermohonan));
+    				}
+    			}
         	}
         	if ("simpanLampiran".equals(hitButton)) {
 				uploadLampiran(idPermohonan, session);
@@ -273,6 +288,8 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
         	
     	}
     	
+    	this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("", "paparLampiran", "idDokumen",session, "phppelepasan"));
+    	
         //HEADER
         beanHeader = new Vector();
         logicHeader.setMaklumatPermohonan(idFail, session);
@@ -284,7 +301,6 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
 			idPermohonan = (String) hashPermohonan.get("idPermohonan");
 			idPemohon = (String) hashPermohonan.get("idPemohon");
 			idStatus = (String) hashPermohonan.get("idStatus");
-			
 			idNegeriPemohon = (String) hashPermohonan.get("idNegeriPemohon");
 			idKementerianPemohon = (String) hashPermohonan.get("idKementerianPemohon");
 		}
@@ -577,8 +593,11 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
 			this.context.put("SenaraiTanahBerkaitan", senaraiTanahBerkaitan);
 			
 			//SENARAI SEMAK
-			senaraiSemak = logic.getSenaraiSemak(idPermohonan);
+			semak = new FrmSemakan();
+			semak.mode = mode;
+			senaraiSemak = semak.getSenaraiSemakanAttach("phppelepasan",idPermohonan);
 			this.context.put("SenaraiSemak", senaraiSemak);
+			this.context.put("mode", mode);
 			
 			//MAKLUMAT LAMPIRAN
 			if ("6".equals(selectedTabUpper)){
@@ -747,8 +766,11 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
 				}
 			}		
 			
-			senaraiSemak = logic.getSenaraiSemak(idPermohonan);
+			semak = new FrmSemakan();
+			semak.mode = mode;
+			senaraiSemak = semak.getSenaraiSemakanAttach("phppelepasan",idPermohonan);
 			this.context.put("SenaraiSemak", senaraiSemak);
+			this.context.put("mode", mode);
         }
         
         if ("batalPermohonan".equals(step)){
@@ -763,7 +785,6 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
 		this.context.put("flagPopup", flagPopup);
 		this.context.put("modePopup", modePopup);
 		this.context.put("selectedTabUpper", selectedTabUpper);
-		//		this.context.put("flagFrom", flagFrom);
 		
         //SET ID PARAM
 		this.context.put("idFail", idFail);
@@ -901,5 +922,13 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
 				db.close();
 		}
 		this.context.put("completed", true);
+	}
+	
+	private ILampiran getDocPHP() {
+		if(iLampiran == null) {
+			iLampiran = new LampiranBean();
+		}
+		return iLampiran;
+
 	}
 }

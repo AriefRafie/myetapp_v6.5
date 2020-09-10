@@ -53,7 +53,7 @@
 
               	<div class="TabbedPanelsContentGroup">
                 	<div class="TabbedPanelsContent">
-	                	#parse ("app/htp/pajakan/mjm/frmPajakanTabPemohonPajakan.jsp")
+	                	#parse ("app/htp/pajakan/pemohon/frmPajakanTabPemohonPajakan.jsp")
                 	</div>
          		</div>
          		<!-- close TabbedPanelsContentGroup -->

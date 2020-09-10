@@ -303,6 +303,22 @@ background: #f4eff4 !important;
               </tr>           
                #end 
                
+               <!-- Masa Siasatan -->
+               #if($report == 'BorangE')
+               <tr>
+               	<td>&nbsp;</td>
+               	<td valign="top">Waktu Siasatan</td>
+               	<td valign="top">:</td>
+               	<td valign="top">
+               		<input type="text" id="masa_siasatan" name="masa_siasatan" value="" style="width:50px"/>
+               		<select name="$!statusBL" style="width:90px">
+      					<option value="" #if($!listTanah.jenis_pilih=="") selected=selected #end >Sila Pilih</option>	
+			      		<option value="1" #if($!listTanah.jenis_pilih=="1") selected=selected #end>PAGI</option>
+			      		<option value="2" #if($!listTanah.jenis_pilih=="2") selected=selected #end>TENGAH HARI</option>	
+			      		<option value="3" #if($!listTanah.jenis_pilih=="3") selected=selected #end>PETANG</option>	
+			      	</select> 
+               </tr>
+               #end
                
                 #if($report == 'BorangH') 
                <tr>
@@ -3529,11 +3545,14 @@ function cetakBorangF(idhakmilik,nama_pengarah) {
 
 function cetakBorangE(id_borange,nama_pengarah) {
 
+	var masa_siasatan = "";
+		
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
 	}
+	
 	else{
 
 		var valType = document.${formName}.sorSelectNoFail.value;
@@ -3551,8 +3570,10 @@ function cetakBorangE(id_borange,nama_pengarah) {
 		}else{
 			nofail = document.${formName}.no_fail.value;
 		}
-
-		var url = "../../servlet/ekptg.report.ppt.BorangE?id_borange="+id_borange+"&namaPegawai="+nama_pengarah+"&no_fail="+nofail+"&id_permohonan="+id_permohonan;
+		
+		masa_siasatan = document.${formName}.masa_siasatan.value;
+		
+		var url = "../../servlet/ekptg.report.ppt.BorangE?id_borange="+id_borange+"&namaPegawai="+nama_pengarah+"&no_fail="+nofail+"&id_permohonan="+id_permohonan+"&masa_siasatan="+masa_siasatan;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
