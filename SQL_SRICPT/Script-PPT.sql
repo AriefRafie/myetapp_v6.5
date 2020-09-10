@@ -1,44 +1,58 @@
-14072020	PPT-33
+--09092020
+UPDATE TBLRUJJENISBANGUNAN SET KETERANGAN = 'Bangunan Konkrit'
+WHERE ID_JENIS_BANGUNAN = '1';
+
+
+
+--Tambah Column SEMAK10 dan SEMAK20
+ALTER TABLE TBLPPTSENARAISEMAK ADD (
+    SEMAK10 VARCHAR(1 byte),
+    SEMAK20 VARCHAR(1 byte)
+);
+
+
+
+--14072020	PPT-33
 ALTER TABLE TBLPPTPERMINTAANUKUR ADD NO_JUPEM VARCHAR(400);
 
 ----------------------------------------------------------------------------------
 
-14072020	PPT-06
+--14072020	PPT-06
 ALTER TABLE TBLPPTBORANGEHAKMILIK ADD MASA_SIASATAN VARCHAR(400);
 ALTER TABLE TBLPPTBORANGEHAKMILIK ADD JENIS_WAKTU VARCHAR(400);
 
 ----------------------------------------------------------------------------------
 
 
-20200609 UAT--------------------------------------------------------------------------------
+--20200609 UAT--------------------------------------------------------------------------------
 
 ALTER TABLE TBLPPTTANAHUMUM ADD KETERANGAN_KEROSAKAN VARCHAR(400);
 
-SELECT * FROM TBLPPTTANAHUMUM
-
-28042020--------------------------------------------------------------------------------
+--28042020--------------------------------------------------------------------------------
 --2020/04/29 Run Staging
 ALTER TABLE TBLRUJJENISPB ADD FLAG_AKTIF VARCHAR(2) DEFAULT 'Y';
 
 UPDATE TBLRUJJENISPB 
-SET FLAG_AKTIF='Y'
+SET FLAG_AKTIF='Y';
 
-26/04/2020 Dari Rozi --------------------------------------------------------------------------------
-BLPPTHAKMILIKSTRATA 
-TBLRUJJENISHAKMILIK (LIST > Tambah TT - STRATA)
+--26/04/2020 Dari Rozi --------------------------------------------------------------------------------
+--BLPPTHAKMILIKSTRATA 
+--TBLRUJJENISHAKMILIK (LIST > Tambah TT - STRATA)
 
-PPT 41
-DATABASE : tblpptpermohonan
-TAMBAH COLUMN 
-TARIKH_PENDUDUKAN_MULA (DATE) 
-TARIKH_PENDUDUKAN_AKHIR (DATE) 
-TEMPOH_PENDUDUKAN (VARCHAR 5)
+--PPT 41
+--DATABASE : tblpptpermohonan
+--TAMBAH COLUMN 
+--TARIKH_PENDUDUKAN_MULA (DATE) 
+--TARIKH_PENDUDUKAN_AKHIR (DATE) 
+--TEMPOH_PENDUDUKAN (VARCHAR 5)
 
 ALTER TABLE TBLPPTPERMOHONAN ADD TEMPOH_PENDUDUKAN VARCHAR(5);
+ALTER TABLE TBLPPTPERMOHONAN ADD TARIKH_PENDUDUKAN_MULA DATE(5);
+ALTER TABLE TBLPPTPERMOHONAN ADD TARIKH_PENDUDUKAN_AKHIR DATE(5);
 
 
 --02/03/2020
-02032020--------------------------------------------------------------------------------
+--02032020--------------------------------------------------------------------------------
 
 --DROP TRIGGER PPTDOKUMENHAKMILIK_BI;
 
@@ -190,7 +204,7 @@ ALTER TABLE TBLRUJJENISBANGUNAN ADD (
                 PCTINCREASE      0
                ));
 
-
+--v6--
 SET DEFINE OFF;
 Insert into TBLRUJJENISBANGUNAN
    (ID_JENIS_BANGUNAN, NAMA_BANGUNAN, KETERANGAN)
@@ -345,7 +359,7 @@ INSERT INTO EKPTGHQLIVE.TBLSEMAKAN
 VALUES(193, NULL, 'jenispemilikan', 'Lain - lain', NULL, NULL, NULL, NULL, NULL);
 
 
-// TAMBAHAN data TBLSEMAKANSENARAI untuk jenis tanaman dan jenis pemilikan
+//TAMBAHAN data TBLSEMAKANSENARAI untuk jenis tanaman dan jenis pemilikan
 
 INSERT INTO EKPTGHQLIVE.TBLSEMAKANSENARAI
 (ID_SEMAKANSENARAI, ID_SEMAKAN, ID_URUSAN, KOD_FORM, ATURAN, CATATAN, ID_SUBURUSAN, ID_KATEGORIPEMOHON, STATUS_DOKUMEN, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI)
