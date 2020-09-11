@@ -27,9 +27,11 @@ import ekptg.helpers.EkptgCache;
 public class FrmSek8SiasatanData extends EkptgCache implements
 		Serializable {
 
-	static Logger myLogger = Logger.getLogger(FrmSek8SiasatanData.class);
+	static Logger myLogger = Logger.getLogger(ekptg.model.ppt.FrmSek8SiasatanData.class);
 	private static SimpleDateFormat Format = new SimpleDateFormat("dd/MM/yyyy");
 	private static final Log log = LogFactory.getLog(FrmSek8SiasatanData.class);
+	 private static Db db = null;
+		private static String sql = "";
 	public static final String SEQ_TABLE = "TBLRUJSEQFAIL";
 
 	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -2331,7 +2333,7 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 						"AND HM.ID_UNITLUASLOT = LS.ID_LUAS " +
 						"AND HM.ID_UNITLUASAMBIL = LJ.ID_LUAS " +
 						"AND S.ID_PEGAWAI_SIASATAN = U.USER_ID(+) " +
-						"AND S.JENIS_BANGUNAN = JB.ID_JENIS_BANGUNAN " +
+						"AND S.JENIS_BANGUNAN = JB.ID_JENIS_BANGUNAN(+) " +
 						"AND S.ID_SIASATAN = '" + id_siasatan + "' " +
 						"ORDER BY LPAD (HM.NO_SUBJAKET, 10) ASC, " +
 						"LPAD (NO_LOTHM, 10) ASC, " +
@@ -6729,5 +6731,50 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 					db.close();
 			}
 		}
+		
+		 public static void semakanTambah(String idsemakan, String idpermohonan, String keterangan) throws Exception {
+			
+				
+			 try {
+			      long idSemakanhantar = DB.getNextID("TBLSEMAKANHANTAR_SEQ");
+			      String idPermohonan = idpermohonan;
+			      String idSemakan = idsemakan;
+			      db = new Db();
+			      Statement stmt = db.getStatement();
+			      SQLRenderer r = new SQLRenderer();
+			      r.add("id_semakanhantar", idSemakanhantar);
+			      r.add("id_permohonan", idPermohonan);
+			      r.add("id_semakansenarai", idSemakan);
+			      r.add("catatan", keterangan);
+			      sql = r.getSQLInsert("tblsemakanhantar");
+			      myLogger.info("semakanTambah : "+sql);
+			      stmt.executeUpdate(sql);
+			 
+			 }catch(Exception e){
+			    	e.printStackTrace();
+			 }finally {
+				 if (db != null) db.close();
+			 }
+			  
+		 }
+		 
+		 public void semakanHapusByPermohonan(String idpermohonan) throws Exception {	
+			 try {
+			      db = new Db();
+			      Statement stmt = db.getStatement();
+			      SQLRenderer r = new SQLRenderer();
+			      r.add("id_permohonan", r.unquote(idpermohonan));
+			      sql = r.getSQLDelete("tblsemakanhantar");
+			      stmt.executeUpdate(sql);
+			 
+			 }catch(Exception e){
+			    	e.printStackTrace();
+			 
+			 }finally	{
+			      if (db != null) db.close();
+			 }
+		  
+		 }
+		 
 		
 }

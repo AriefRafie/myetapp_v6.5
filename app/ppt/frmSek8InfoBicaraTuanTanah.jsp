@@ -37,6 +37,8 @@
 #set($disabledmode = "")
 #set($readonlymode = "")
 #end
+
+:$readmode
 <table width="100%">
    
     #foreach($list_siasatan in $maklumat_siasatan)
@@ -168,7 +170,7 @@
      
       <tr>
         <td>&nbsp;</td>
-        <td>Keterangan Tuan Tanah / Wakil <span style="font-size:9px;color:red">*wajib pilih</span> </td>
+        <td>Keterangan Tuan Tanah / Wakil</td>
         <td>:</td>
         <td>
         	<table id="jenispemilikan">
@@ -208,10 +210,10 @@
       </tr>
       
       
-      <tr>
+      <tr id="lainlain">
         <td valign="top">&nbsp;</td>
-        <td valign="top">&nbsp;</td>
-        <td valign="top">&nbsp;</td>
+        <td valign="top">Lain-lain</td>
+        <td valign="top">:</td>
         <td>
 
          
@@ -230,6 +232,99 @@
          #end
   <div id="txtKeteranganTuanTanah_check" class="alert_msg" ></div>               </td>
       </tr>
+      
+            <tr id="pembelian">
+        <td valign="top">&nbsp;</td>
+        <td valign="top">Pembelian</td>
+        <td valign="top">:</td>
+        <td>
+
+         
+       <textarea name="txtKeteranganPembelian" id="txtKeteranganPembelian" cols="60"   rows="6" 
+         onBlur="check_length(this,'4000','txtKeteranganPembelian_check','txtKeteranganPembelian_num','normal','no','keterangan Pembelian');"  
+         onKeyup="check_length(this,'4000','txtKeteranganPembelian_check','txtKeteranganPembelian_num','normal','no','keterangan Pembelian');" 
+         onKeydown="check_length(this,'4000','txtKeteranganPembelian_check','txtKeteranganPembelian_num','normal','no','keterangan Pembelian');"                    
+          $readonlymode class = "$disabledmode" 
+        >$txtKeteranganPembelian</textarea> 
+          
+        
+       #if($readmode == "edit")           
+        <div><span id="txtKeteranganPusaka_num" style="color:blue;" ></span><span> Baki Aksara</span>         </div>
+         #else
+         <input name="txtKeteranganPusaka_num" id="txtKeteranganPusaka_num" size="3" value="4000"  style=" display:none" > 
+         #end
+  <div id="txtKeteranganPusaka_check" class="alert_msg" ></div>               </td>
+      </tr>
+      
+      
+            <tr id="perletakhakan ">
+        <td valign="top">&nbsp;</td>
+        <td valign="top">Keterangan Perletakhakan Mahkamah</td>
+        <td valign="top">:</td>
+        <td>
+
+         
+       <textarea name="txtKeteranganPerletakhakan" id="txtKeteranganPerletakhakan" cols="60"   rows="6" 
+         onBlur="check_length(this,'4000','txtKeteranganPerletakhakan_check','txtKeteranganPerletakhakan_num','normal','no','keterangan Perletakhakan');"  
+         onKeyup="check_length(this,'4000','txtKeteranganPerletakhakan_check','txtKeteranganPerletakhakan_num','normal','no','keterangan Perletakhakan');" 
+         onKeydown="check_length(this,'4000','txtKeteranganPerletakhakan_check','txtKeteranganPerletakhakan_num','normal','no','keterangan Perletakhakan');"                    
+          $readonlymode class = "$disabledmode" 
+        >$txtKeteranganPerletakhakan</textarea> 
+          
+        
+       #if($readmode == "edit")           
+        <div><span id="txtKeteranganPerletakhakan_num" style="color:blue;" ></span><span> Baki Aksara</span>         </div>
+         #else
+         <input name="txtKeteranganPerletakhakan_num" id="txtKeteranganPerletakhakan_num" size="3" value="4000"  style=" display:none" > 
+         #end
+  <div id="txtKeteranganPerletakhakan_check" class="alert_msg" ></div>               </td>
+      </tr>
+      
+          <tr id="pusaka">
+        <td valign="top">&nbsp;</td>
+        <td valign="top">Pusaka</td>
+        <td valign="top">:</td>
+        <td>
+
+         
+       <textarea name="txtKeteranganPusaka" id="txtKeteranganPusaka" cols="60"   rows="6" 
+         onBlur="check_length(this,'4000','txtKeteranganPusaka_check','txtKeteranganPusaka_num','normal','no','keterangan Pusaka');"  
+         onKeyup="check_length(this,'4000','txtKeteranganPusaka_check','txtKeteranganPusaka_num','normal','no','keterangan Pusaka');" 
+         onKeydown="check_length(this,'4000','txtKeteranganPusaka_check','txtKeteranganPusaka_num','normal','no','keterangan Pusaka');"                    
+          $readonlymode class = "$disabledmode" 
+        >$txtKeteranganPusaka</textarea> 
+          
+        
+       #if($readmode == "edit")           
+        <div><span id="txtKeteranganPusaka_num" style="color:blue;" ></span><span> Baki Aksara</span>         </div>
+         #else
+         <input name="txtKeteranganPusaka_num" id="txtKeteranganPusaka_num" size="3" value="4000"  style=" display:none" > 
+         #end
+  <div id="txtKeteranganPusaka_check" class="alert_msg" ></div>               </td>
+      </tr>
+      
+      <tr id="pemberimilikan">
+        <td valign="top">&nbsp;</td>
+        <td valign="top">Pemberimilikan</td>
+        <td valign="top">:</td>
+        <td>
+
+         
+       <textarea name="txtKeteranganPemberimilikan" id="txtKeteranganPemberimilikan" cols="60"   rows="6" 
+         onBlur="check_length(this,'4000','txtKeteranganPemberimilikan_check','txtKeteranganPemberimilikan_num','normal','no','keterangan Pemberimilikan');"  
+         onKeyup="check_length(this,'4000','txtKeteranganPemberimilikan_check','txtKeteranganPemberimilikan_num','normal','no','keterangan Pemberimilikan');" 
+         onKeydown="check_length(this,'4000','txtKeteranganPemberimilikan_check','txtKeteranganPemberimilikan_num','normal','no','keterangan Pemberimilikan');"                    
+          $readonlymode class = "$disabledmode" 
+        >$txtKeteranganPemberimilikan</textarea> 
+          
+        
+       #if($readmode == "edit")           
+        <div><span id="txtKeteranganPemberimilikan_num" style="color:blue;" ></span><span> Baki Aksara</span>         </div>
+         #else
+         <input name="txtKeteranganPemberimilikan_num" id="txtKeteranganPemberimilikan_num" size="3" value="4000"  style=" display:none" > 
+         #end
+  <div id="txtKeteranganPemberimilikan_check" class="alert_msg" ></div>               </td>
+      </tr>
   <!-- 
       <tr>
         <td width="1%">&nbsp;</td>
@@ -244,7 +339,7 @@
       <!-- PPT-25 ii -->
       <tr>
         <td>&nbsp;</td>
-        <td>Jenis Tanaman <span style="font-size:9px;color:red">*wajib pilih</span> </td>
+        <td>Jenis Tanaman</td>
         <td>:</td>
         <td>
         	<table id="jenistanaman">
