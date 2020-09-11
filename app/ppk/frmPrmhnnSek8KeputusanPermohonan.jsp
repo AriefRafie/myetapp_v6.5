@@ -35,6 +35,7 @@
 <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
 
 <!-- arief add 5 JUTA -->
+
 #foreach ($Listflag5juta in $flag5juta)
 	#set($check5juta = $Listflag5juta.flag_5juta )
 #end
@@ -2147,7 +2148,7 @@ Pindah ke Mahkamah Tinggi
        #end
        
     <!-- arief add 5 JUTA -->
-    #if($nilaiHartaMaximum == 5000000)
+    #if($check5juta=='T')
 		<input type="radio" name="tujuanPindah" id="tujuanPindah" $selectedTujuan1 $setModeTujuan1 value="1"   />     
         Harta Melebihi 5 Juta
       <input type="radio" name="tujuanPindah" id="tujuanPindah" $selectedTujuan2 $setModeTujuan2 value="2"  />

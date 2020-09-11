@@ -139,6 +139,10 @@ private static final long serialVersionUID = 1L;
 		
 	    this.context.put("step",step);
 	    
+	    if (!"".equals(getParam("flagFrom"))){
+	      	session.setAttribute("FLAG_FROM", getParam("flagFrom"));
+	    }
+	    
 		return vm;
 	}	
 }

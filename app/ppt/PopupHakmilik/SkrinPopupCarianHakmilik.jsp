@@ -473,6 +473,22 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 </table>
 -->
 
+ #if($flag_skrin == "senarai_siasatan" || $flag_skrin == "senarai_siasatan_sementara")
+ <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>
+		
+			<table width="100%" border="0" cellspacing="2" cellpadding="2">
+			  <tr>
+		      	<td align="center"><input type="button" value="Kembali" onClick="screen5('$id_permohonan')"></td>
+			  </tr>			 	  
+		    </table>
+
+		</td>
+		</tr>
+		</table>
+		#end
+
 <!-- PPT-30 (ii) -->
 #if($flag_skrin == "hakmilik_borangk")
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -1111,6 +1127,13 @@ function tambahWakil()
 	document.${formName}.submit();
 	
 }
+
+function screen5(id_permohonan)
+{
+
+	  window.close();   // Closes the new window
+}
+
 
 </script>
 

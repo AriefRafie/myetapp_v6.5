@@ -1,7 +1,4 @@
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
-<tr>
-    <td colspan="2">##parse("app/php2/online/ulasanKJP/frmHeader.jsp")</td>
-  </tr>
   <tr>
     <td colspan="2"><fieldset>
         <legend>MAKLUMAT ULASAN</legend>
@@ -92,39 +89,43 @@
                     <td><font color="#ff0000">*</font></td>
                     <td>Keputusan</td>
                     <td>:</td>
-                    <td><select name="txtKeputusan" id="txtKeputusan" style="width:140px;" >
-                        
-                    #if ($!maklumatUlasan.flagKeputusan == 'L')
-                        
-                        <option>SILA PILIH</option>
-                        <option value="L" selected="selected">LULUS</option>
-                        <option value="T">TOLAK</option>
-                        <option value="G">TANGGUH</option>
-                        
-                   #elseif ($!maklumatUlasan.flagKeputusan == 'T')
-                        
-                        <option>SILA PILIH</option>
-                        <option value="L">LULUS</option>
-                        <option value="T" selected="selected">TOLAK</option>
-                        <option value="G">TANGGUH</option>
-                        
-                   #elseif ($!maklumatUlasan.flagKeputusan == 'G')
-                        
-                        <option>SILA PILIH</option>
-                        <option value="L">LULUS</option>
-                        <option value="T">TOLAK</option>
-                        <option value="G" selected="selected">TANGGUH</option>
-                        
-                   #else
-                        
-                        <option selected="selected">SILA PILIH</option>
-                        <option value="L">LULUS</option>
-                        <option value="T">TOLAK</option>
-                        <option value="G">TANGGUH</option>
-                        
-                   #end
-                      
-                      </select></td>
+                    <td>
+                    	<select name="txtKeputusan" id="txtKeputusan" style="width:140px;" >
+                    		#if ($!maklumatUlasan.flagKeputusan == 'L')
+		                        <option>SILA PILIH</option>
+		                        <option value="L" selected="selected">LULUS</option>
+		                        <option value="T">TOLAK</option>
+		                        <option value="G">TANGGUH</option>
+		                    #elseif ($!maklumatUlasan.flagKeputusan == 'T')
+		                        <option>SILA PILIH</option>
+		                        <option value="L">LULUS</option>
+		                        <option value="T" selected="selected">TOLAK</option>
+		                        <option value="G">TANGGUH</option>
+		                    #elseif ($!maklumatUlasan.flagKeputusan == 'G')
+		                        <option>SILA PILIH</option>
+		                        <option value="L">LULUS</option>
+		                        <option value="T">TOLAK</option>
+		                        <option value="G" selected="selected">TANGGUH</option>
+		                    #else
+		                        <option selected="selected">SILA PILIH</option>
+		                        <option value="L">LULUS</option>
+		                        <option value="T">TOLAK</option>
+		                        <option value="G">TANGGUH</option>
+		                    #end
+                      	</select>
+                     </td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>Nama Pengulas</td>
+                    <td>:</td>
+                    <td><input type="text" name="txtNamaPengulas" id="txtNamaPengulas"  size="50" value="$!maklumatUlasan.namaPengulas" onblur="this.value=this.value.toUpperCase();"/></td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>No. Telefon Pengulas</td>
+                    <td>:</td>
+                    <td><input type="text" name="txtNoTelPengulas" id="txtNoTelPengulas"  size="50" value="$!maklumatUlasan.noTelPengulas" onblur="this.value=this.value.toUpperCase();"/></td>
                   </tr>
                   #if ($!maklumatUlasan.tarikhSurat != "")
                   <tr>

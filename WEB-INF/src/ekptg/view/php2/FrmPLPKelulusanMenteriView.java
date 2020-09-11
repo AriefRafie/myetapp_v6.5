@@ -146,6 +146,10 @@ public class FrmPLPKelulusanMenteriView extends AjaxBasedModule{
 	    this.context.put("idPermohonan", idPermohonan);
 	    this.context.put("idStatus", idStatus);
 	    this.context.put("statusRizab", statusRizab);
+	    
+	    if (!"".equals(getParam("flagFrom"))){
+	      	session.setAttribute("FLAG_FROM", getParam("flagFrom"));
+	    }
 		
 		return vm;
 	}
