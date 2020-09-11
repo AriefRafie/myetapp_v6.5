@@ -318,33 +318,7 @@ public class FrmIntegrasiMT extends VTemplate {
 			String idBandar = (String) permohonanMT.get("idBandar");
 			String idNegeri = (String) permohonanMT.get("idNegeri");
 			String idNegeriPemohon = (String) permohonanMT.get("idNegeriPemohon");
-			if(idNegeriPemohon.equals("1")){
-				idNegeriPemohon = "01";
-			}
-			else if (idNegeriPemohon.equals("2")){
-				idNegeriPemohon = "02";
-			}
-			else if (idNegeriPemohon.equals("3")){
-				idNegeriPemohon = "03";
-			}
-			else if (idNegeriPemohon.equals("4")){
-				idNegeriPemohon = "04";
-			}
-			else if (idNegeriPemohon.equals("5")){
-				idNegeriPemohon = "05";
-			}
-			else if (idNegeriPemohon.equals("6")){
-				idNegeriPemohon = "06";
-			}
-			else if (idNegeriPemohon.equals("7")){
-				idNegeriPemohon = "07";
-			}
-			else if (idNegeriPemohon.equals("8")){
-				idNegeriPemohon = "08";
-			}
-			else if (idNegeriPemohon.equals("9")){
-				idNegeriPemohon = "09";
-			}
+			
 			String umurPemohon = (String) permohonanMT.get("umurPemohon");
 			String jantinaPemohon = (String) permohonanMT.get("jantinaPemohon");
 			
@@ -412,34 +386,7 @@ public class FrmIntegrasiMT extends VTemplate {
 
 			String namaPejabat = getPejabatJKPTGByKodPejabat(kodPejabat);
 			String jenisTransaksi = (String) permohonanMT.get("jenisTransaksi");
-			if(idnegerisimati.equals("1")){
-				idnegerisimati = "01";
-			}
-			else if (idnegerisimati.equals("2")){
-				idnegerisimati = "02";
-			}
-			else if (idnegerisimati.equals("3")){
-				idnegerisimati = "03";
-			}
-			else if (idnegerisimati.equals("4")){
-				idnegerisimati = "04";
-			}
-			else if (idnegerisimati.equals("5")){
-				idnegerisimati = "05";
-			}
-			else if (idnegerisimati.equals("6")){
-				idnegerisimati = "06";
-			}
-			else if (idnegerisimati.equals("7")){
-				idnegerisimati = "07";
-			}
-			else if (idnegerisimati.equals("8")){
-				idnegerisimati = "08";
-			}
-			else if (idnegerisimati.equals("9")){
-				idnegerisimati = "09";
-			}
-
+			
 			context.put("noPetisyen", noPetisyen);
 			context.put("namaSimati", namaSimati);
 			context.put("namaSimatiLain", namaSimatiLain);
@@ -931,7 +878,7 @@ public class FrmIntegrasiMT extends VTemplate {
 				context.put("fFrom", "tidak");
 			}
 
-			// aishah start integration ecourt
+			// aishah start integration ecourt 
 			MTManager manager = new MTManager("MT");
 
 			String returnMessage = "";
@@ -1045,7 +992,7 @@ public class FrmIntegrasiMT extends VTemplate {
 					request.getParameter("bandarsimati"),
 					request.getParameter("bandarSimati"),
 					request.getParameter("poskodsimati"),
-					request.getParameter("idnegerisimati"),
+					manager.getStateCode(Integer.parseInt(request.getParameter("idnegerisimati"))),
 										
 					request.getParameter("namaPemohon"),
 					request.getParameter("noKPPemohon"),
@@ -1056,7 +1003,7 @@ public class FrmIntegrasiMT extends VTemplate {
 					request.getParameter("poskodPemohon"),
 					request.getParameter("bandarPemohon"),
 					request.getParameter("idbandarPemohon"),
-					request.getParameter("idnegeriPemohon"),
+					manager.getStateCode(Integer.parseInt(request.getParameter("idnegeriPemohon"))),
 					request.getParameter("idMahkamah"),
 					request.getParameter("namaDokumen"),
 					docContent,
