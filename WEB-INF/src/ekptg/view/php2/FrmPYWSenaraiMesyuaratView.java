@@ -2,15 +2,21 @@
 package ekptg.view.php2;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 
 import lebah.db.Db;
@@ -75,6 +81,7 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
         }
 
 		// GET ID PARAM
+        String idSuburusan = getParam("idSuburusan");
 		String idFail = getParam("idFail");
         String idPermohonan = getParam("idPermohonan");
         String idStatus = getParam("idStatus");
@@ -86,6 +93,7 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 		String flagResult = getParam("flagResult");
 		String catatan = getParam("catatan");
 		String idMesyuaratPermohonan = getParam("idMesyuaratPermohonan");
+		String idDokumen = getParam("idDokumen");
 		
 		// VECTOR
 		Vector list = null;
@@ -95,7 +103,9 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 		Vector senaraiKehadiran = null;
 		Vector senaraiFailMohonBaru = null;
 		Vector beanMaklumatPengerusi = null;
-
+		Vector senaraiImejan = null;
+		Vector beanMaklumatImejan = null;
+		
 		// GET DROPDOWN PARAM
 		String idKategoriPemohon = getParam("socKategoriPemohon");
 		if (idKategoriPemohon == null || idKategoriPemohon.trim().length() == 0) {
@@ -157,13 +167,14 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 						.getParameterValues("txtJawatan");
 				String listNoTel[] = this.request
 						.getParameterValues("txtNoTel");
-
+				String listEmail[] = this.request
+						.getParameterValues("txtEmail");
 				if (listNama != null) {
 					for (int i = 0; i < listNama.length; i++) {
 						if (!listNama[i].equals("")) {
 							logic.saveKehadiran(i, idMesyuarat, listNama[i],
 									listAgensi[i], listJawatan[i],
-									listNoTel[i], getParam("flagPengerusi"),
+									listNoTel[i], listEmail[i],getParam("flagPengerusi"),
 									session);
 						}
 					}
@@ -180,15 +191,40 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 				logic.hapusKehadiranMesyuarat(idKehadiran, session);
 			}
 			
-			if ("hapusKehadiran".equals(hitButton)) {
-				logic.hapusKehadiranMesyuarat(idKehadiran, session);
+			if ("simpanDokumen".equals(hitButton)) {
+				uploadFiles(idMesyuarat, idPermohonan, session);
 			}
+			if ("simpanKemaskiniDokumen".equals(hitButton)) {
+				logic.simpanKemaskiniDokumen(idDokumen,
+						getParam("txtNamaImej"), getParam("txtCatatanImej"),
+						session);
+			}
+			if ("hapusDokumen".equals(hitButton)) {
+				logic.hapusDokumen(idDokumen, session);
+			}
+			if ("doBatalPermohonan".equals(hitButton)) {
+//				logicHeader.doBatalPermohonan(idFail, idPermohonan, idStatus,
+//						getParam("tarikhBatal"), getParam("txtSebab"), session);
+//				step = "";
+			}
+			
 			if ("simpanKeputusanBaru".equals(hitButton)) {
 				logic.simpanKeputusanPermohonanBaru(idMesyuaratPermohonan,flagResult,session);
 			}
 			if ("simpanCatatanBaru".equals(hitButton)) {
 				logic.simpanCatatanPermohonanBaru(idMesyuaratPermohonan,catatan,session);
 			}
+			if ("hapusPermohonanMesyuarat".equals(hitButton)) {
+				logic.hapusPermohonanMesyuarat(idMesyuaratPermohonan,session);
+			}
+			if ("doSelesaiMesyuarat".equals(hitButton)) {
+				logic.updateStatus(idMesyuarat, session);
+			}
+			if ("hapusMesyuarat".equals(hitButton)){
+        		logic.hapusDokumen(idMesyuarat, session);
+    			logic.hapusMesyuarat(idMesyuarat, session);
+			}
+			
 		}
 		myLogger.info("actionPenyewaan : " +actionMesyuarat);
 		myLogger.info("mode : " +mode);
@@ -200,7 +236,6 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 			this.context.put("readonly", "");
 			this.context.put("inputTextClass", "");
 			this.context.put("disabled", "");
-			
 			this.context.put("selectJamDari", HTML.SelectJam("socJamDari", Long.parseLong(idJamDari), "", ""));
 			this.context.put("selectMinitDari", HTML.SelectMinit("socMinitDari", Long.parseLong(idMinitDari), "", ""));
 			this.context.put("selectJamHingga", HTML.SelectJam("socJamHingga", Long.parseLong(idJamDari), "", ""));
@@ -246,6 +281,38 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 				senaraiFailMohonBaru = logic.getListPermohonanBaharu();
 				this.context.put("SenaraiFailMohonBaru", senaraiFailMohonBaru);
 				this.context.put("totalRecords", senaraiFailMohonBaru.size());
+				
+			} else if ("3".equals(selectedTabUpper)) {
+				
+				if ("openPopupDokumen".equals(flagPopup)) {
+
+					if ("new".equals(modePopup)) {
+
+						beanMaklumatImejan = new Vector();
+						Hashtable hashMaklumatImejan = new Hashtable();
+						hashMaklumatImejan.put("namaImej", "");
+						hashMaklumatImejan.put("catatanImej", "");
+						beanMaklumatImejan.addElement(hashMaklumatImejan);
+						this.context.put("BeanMaklumatImejan",beanMaklumatImejan);
+
+					} else {
+
+						// MAKLUMAT DOKUMEN
+						beanMaklumatImejan = new Vector();
+						logic.setMaklumatImej(idDokumen);
+						beanMaklumatImejan = logic.getBeanMaklumatImejan();
+						this.context.put("BeanMaklumatImejan",
+								beanMaklumatImejan);
+
+					}
+				}
+
+				// SENARAI IMEJAN
+				senaraiImejan = new Vector();
+				logic.setSenaraiImejan(idMesyuarat);
+				senaraiImejan = logic.getListImejan();
+				this.context.put("SenaraiImejan", senaraiImejan);
+				
 			} else {
 
 				// MODE VIEW
@@ -473,5 +540,61 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 			throw new Exception("Ralat : Masalah penyimpanan data "
 					+ ex.getMessage());
 		}
+	}
+	// UPLOAD FILE
+	private void uploadFiles(String idMesyuarat, String idPermohonan,
+			HttpSession session) throws Exception {
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+		if (isMultipart != false) {
+			List items = upload.parseRequest(request);
+			Iterator itr = items.iterator();
+			while (itr.hasNext()) {
+				FileItem item = (FileItem) itr.next();
+				if ((!(item.isFormField())) && (item.getName() != null)
+						&& (!("".equals(item.getName())))) {
+					saveData(item, idMesyuarat, idPermohonan, session);
+				}
+			}
+		}
+	}
+	private void saveData(FileItem item, String idMesyuarat,
+			String idPermohonan, HttpSession session) throws Exception {
+
+		Db db = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		try {
+			db = new Db();
+
+			// TBLPHPDOKUMEN
+			long idDokumen = DB.getNextID("TBLPHPDOKUMEN_SEQ");
+			Connection con = db.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement ps = con
+					.prepareStatement("INSERT INTO TBLPHPDOKUMEN "
+							+ "(ID_DOKUMEN,NAMA_DOKUMEN,CATATAN,ID_MASUK,TARIKH_MASUK,CONTENT,JENIS_MIME,NAMA_FAIL,ID_MESYUARAT,FLAG_DOKUMEN,ID_PERMOHONAN) "
+							+ "VALUES(?,?,?,?,SYSDATE,?,?,?,?,?,?)");
+			ps.setLong(1, idDokumen);
+			ps.setString(2, getParam("namaImej"));
+			ps.setString(3, getParam("catatanImej"));
+			ps.setString(4, userId);
+			ps.setBinaryStream(5, item.getInputStream(), (int) item.getSize());
+			ps.setString(6, item.getContentType());
+			ps.setString(7, item.getName());
+			ps.setString(8, idMesyuarat);
+			ps.setString(9, "MM");// MINIT MESYUARAT
+			ps.setString(10, idPermohonan);
+			ps.executeUpdate();
+
+			con.commit();
+			this.context.put("idDokumen", idDokumen);
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+
+		this.context.put("completed", true);
 	}
 }
