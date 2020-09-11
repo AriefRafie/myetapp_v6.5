@@ -33,6 +33,8 @@ import ekptg.model.utils.IUtilHTMLPilihan;
 import ekptg.model.utils.lampiran.ILampiran;
 import ekptg.model.entities.Tblrujdokumen;
 import ekptg.model.entities.Tblrujpejabat;
+import ekptg.model.htp.HtpBean;
+import ekptg.model.htp.IHtp;
 import ekptg.model.ppt.BantahanAgensiDaftar;
 import ekptg.model.ppt.BantahanDaftar;
 import ekptg.model.ppt.util.LampiranBean;
@@ -47,12 +49,13 @@ public class IntegrasiMT extends AjaxBasedModule{
 	static Logger myLog = Logger.getLogger(ekptg.view.ppt.bantahan.IntegrasiMT.class);
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	SimpleDateFormat sdfNaming = new SimpleDateFormat("yymmdd");
+	private IHtp iHTP = null;  
  	private IUtilHTMLPilihan iUtilPilihan = null;
 // 	private IUtilHTMLPilihan iPilihan = null;
  	private ILampiran iLampiran = null;
 	private String sql = "";
 	private String idPejabatPTGD = "";
-	
+
 	@Override
 	public String doTemplate2() throws Exception {
 		
@@ -326,6 +329,10 @@ public class IntegrasiMT extends AjaxBasedModule{
 
 	        //2020/09/09 - Penambahan Skop
 	        DataCreateReqTypePartyAgency partyAgency = getParty(idPejabatPTGD);
+	        if(partyAgency==null) {
+				throw new Exception(getIHTP().getErrorHTML("[MODUL PPT - INTEGRASI MT] SILA SEMAK KONFIGURASI PENTADBIR TANAH <br>"
+						+ "<input type=\"button\" value=\"Tutup\" onClick=\"javascript:window.close()\">"));
+	        }
 	        
 	        String returnMessage = "1 Tidak Berjaya Dihantar";
 	        returnMessage = MTManagerReg. PendaftaranBaharu("15"
@@ -601,6 +608,10 @@ public class IntegrasiMT extends AjaxBasedModule{
 			
 	}
 
-
+	private IHtp getIHTP(){
+		if(iHTP== null)
+			iHTP = new HtpBean();
+		return iHTP;
+	}
 	
 }

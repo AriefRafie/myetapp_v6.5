@@ -1407,7 +1407,6 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				id_bantahan = (String) a.get("id_bantahan");
 				// get JENIS_DOKUMEN
 				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDokumen);
-				myLogger.info("ID Bantahan borangO >>> "+id_bantahan+",Jenis Dokumen borangO >>> "+jenisDoc);
 				context.put("listDokumen", listDokumen);
 				context.put("listDokumen_size", listDokumen.size());
 				
@@ -1486,6 +1485,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 							HTML.SelectBandar("socBandar", Utils.parseLong(id_bandar), "style=width:auto disabled "));
 				}
 
+				
 				context.put("flag", "semak");
 				context.put("mode", "disabled");
 				context.put("clearForm", "");
