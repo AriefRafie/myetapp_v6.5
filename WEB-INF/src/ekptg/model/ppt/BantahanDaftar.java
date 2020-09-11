@@ -1396,11 +1396,23 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 				 getDataBorangO = new Vector();
 					db = new Db();
 					Statement stmt = db.getStatement();
+					
 					SQLRenderer r = new SQLRenderer();				
 					sql =  " SELECT O.ID_BORANGO, O.TARIKH_BORANGO, O.ID_MAHKAMAH, A.NAMA_PEJABAT, A.ALAMAT1, A.ALAMAT2, "; 
-					sql += " A.ALAMAT3, A.POSKOD, A.ID_BANDAR, A.ID_NEGERI, A.NO_TEL, A.NO_FAX, O.NAMA_PENGHANTAR_BORANGO, O.NAMA_PENERIMA_BORANGO, O.TARIKH_HANTAR_BORANGO ";
-					sql += " FROM TBLPPTBORANGO O, TBLRUJPEJABAT A ";
-					sql += " WHERE O.ID_MAHKAMAH=A.ID_PEJABAT AND O.ID_BORANGO = '"+ idBorangO +"' ";																				
+					sql += " A.ALAMAT3, A.POSKOD, A.ID_BANDAR, A.ID_NEGERI, A.NO_TEL, A.NO_FAX "
+						+ "	,NVL(O.NAMA_PENGHANTAR_BORANGO,MT.NAMA) NAMA_PENGHANTAR_BORANGO "
+						+ " ,NVL(O.TARIKH_HANTAR_BORANGO,MT.TARIKH_HANTAR) TARIKH_HANTAR_BORANGO "
+						+ " ,O.NAMA_PENERIMA_BORANGO ";
+					sql += " FROM TBLPPTBORANGO O, TBLRUJPEJABAT A "
+						+ " ,(	SELECT P.ID_RUJUKAN ID_BANTAHAN,TO_CHAR(P.TARIKH_HANTAR,'dd/mm/yyyy') TARIKH_HANTAR, U.USER_NAME NAMA"
+						+ " FROM TBLINTMTPENDAFTARAN P,USERS U"
+						+ " WHERE P.ID_MASUK = U.USER_ID"
+						+ " AND P.NO_KES IS NOT NULL "
+						+ ") MT ";
+									 						 
+					sql += " WHERE O.ID_MAHKAMAH=A.ID_PEJABAT "
+						+ " AND O.ID_BANTAHAN = MT.ID_BANTAHAN(+)"
+						+ " AND O.ID_BORANGO = '"+ idBorangO +"' ";																				
 //					myLogger.info("getDataBorangO :: "+sql);
 					ResultSet rs = stmt.executeQuery(sql);					
 					Hashtable h;			    

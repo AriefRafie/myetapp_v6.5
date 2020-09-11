@@ -607,6 +607,14 @@ public class FrmCRBSenaraiFailView extends AjaxBasedModule {
 		this.context.put("idNegeriTanah", idNegeriTanah);
 		this.context.put("idJenisHakmilik", idJenisHakmilik);
 		this.context.put("idJenisLot", idJenisLot);
+		this.context.put("idJenisTanah", idJenisTanah);
+		
+		if (session.getAttribute("MSG") != null){
+			this.context.put("errMsg", session.getAttribute("MSG"));
+			session.removeAttribute("MSG");
+		} else {
+			this.context.put("errMsg", "");
+		}
 
 		return vm;
 	}
