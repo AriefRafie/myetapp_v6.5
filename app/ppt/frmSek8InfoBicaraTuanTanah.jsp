@@ -4,6 +4,12 @@
 -->
 </style>
 
+ <input type="hidden" name="id_bangunan" id="id_bangunan" value="$!socJenisBangunan" />
+ <input type="text" name="newDate" id="newDate" value="$!newDate" />
+ <input type="hidden" name="Datev7" id="Datev7" value="$!Datev7" />
+ <input type="text" name="Datev6" id="Datev6" value="$!Datev6" />
+ <input type="text" name="diffv7" id="diffv7" value="$!diffv7" />
+  <input type="text" name="diffv6" id="diffv6" value="$!diffv6" />
 
 
 
@@ -20,13 +26,6 @@
 #set($txdTukarSyarat = "")
 
 
- 
-
-
-
-
-
-
 #if($readmode == "edit")
 #set($disabledmode = "")
 #set($readonlymode = "")
@@ -38,7 +37,7 @@
 #set($readonlymode = "")
 #end
 
-:$readmode
+
 <table width="100%">
    
     #foreach($list_siasatan in $maklumat_siasatan)
@@ -50,7 +49,7 @@
 #set($txtJenisTanaman = $list_siasatan.JENIS_TANAMAN)
 #set($socJenisBangunan = $list_siasatan.JENIS_BANGUNAN)
 #set($socBangunan = $list_siasatan.JENIS_BANGUNAN)
-#set($keteranganBangunan = $list_siasatan.KETERANGAN_TANAH)
+#set($keteranganBangunan = $list_siasatan.JENIS_BANGUNAN)
 #set($sorPecahSempadan = $list_siasatan.FLAG_PECAH_SEMPADAN)
 #set($txdPecahSempadan = $list_siasatan.TARIKH_PECAH_SEMPADAN)
 #set($sorTukarSyarat = $list_siasatan.FLAG_TUKAR_SYARAT)
@@ -70,8 +69,6 @@
   </tr>
   <tr>
 <td>#parse("app/ppt/header_siasatan.jsp") </td>
-
- <input type="hidden" name="id_bangunan" id="id_bangunan" value="$!socJenisBangunan" />
 
   </tr>
 <tr>
@@ -168,6 +165,7 @@
       </tr>
       
      
+     #if($diffv7 >= 0)
       <tr>
         <td>&nbsp;</td>
         <td>Keterangan Tuan Tanah / Wakil</td>
@@ -206,8 +204,9 @@
 				<!-- PPT-25 (ii) -->
 			
 			</table>
-		</td>
+		</td>	
       </tr>
+      #end
       
       
       <tr id="lainlain">
@@ -249,15 +248,15 @@
           
         
        #if($readmode == "edit")           
-        <div><span id="txtKeteranganPusaka_num" style="color:blue;" ></span><span> Baki Aksara</span>         </div>
+        <div><span id="txtKeteranganPembelian_num" style="color:blue;" ></span><span> Baki Aksara</span>         </div>
          #else
-         <input name="txtKeteranganPusaka_num" id="txtKeteranganPusaka_num" size="3" value="4000"  style=" display:none" > 
+         <input name="txtKeteranganPembelian_num" id="txtKeteranganPembelian_num" size="3" value="4000"  style=" display:none" > 
          #end
-  <div id="txtKeteranganPusaka_check" class="alert_msg" ></div>               </td>
+  <div id="txtKeteranganPembelian_check" class="alert_msg" ></div>               </td>
       </tr>
       
       
-            <tr id="perletakhakan ">
+        <tr id="perletakhakan ">
         <td valign="top">&nbsp;</td>
         <td valign="top">Keterangan Perletakhakan Mahkamah</td>
         <td valign="top">:</td>
@@ -337,6 +336,9 @@
    -->
    
       <!-- PPT-25 ii -->
+  
+      #if($diffv7 >= 0)
+ 
       <tr>
         <td>&nbsp;</td>
         <td>Jenis Tanaman</td>
@@ -372,9 +374,21 @@
 			</table>
 		</td>
       </tr>
+      #else
+ 
+       <tr>
+        <td width="1%">&nbsp;</td>
+        <td width="28%">Jenis Tanaman </td>
+        <td width="1%">:</td>
+        <td width="70%"><input name="txtJenisTanaman" type="text" id="txtJenisTanaman" size="50" maxlength="50" value="$txtJenisTanaman"  onBlur="checking_validation(this,'txtJenisTanaman_check','no','jenis tanaman','normal')" $readonlymode class = "$disabledmode" 
+        onkeyup="checking_validation(this,'txtJenisTanaman_check','no','jenis tanaman','normal')" >
+        <span id="txtJenisTanaman_check" class = "alert_msg" ></span> </td>
+      </tr>
+      #end
       <!-- PPT-25 ii -->
-      
-     <!--  <tr>
+   
+      #if($diffv6 < "-9997")
+      <tr>
         <td>&nbsp;</td>
         <td>Jenis Bangunan</td>
         <td>:</td>
@@ -382,8 +396,8 @@
         onkeyup="checking_validation(this,'txtJenisBangunan_check','no','jenis bangunan','normal')" >
         <span id="txtJenisBangunan_check" class = "alert_msg" ></span> </td>
       </tr>
-      
-      -->
+   
+     #else
      #if($readmode == "edit" ) 
       <tr>
     			<td>&nbsp;</td>
@@ -401,6 +415,8 @@
     			<td> <input name="keteranganBangunan" type="text" id="keteranganBangunan" value="$keteranganBangunan" size="50" class="disabled" />   </td>
     		</tr>
     		#end
+    		#end
+    		
       <tr>
         <td>&nbsp;</td>
         <td>Status Pecah Sempadan</td>
@@ -1797,35 +1813,7 @@ function showRow(rowId)
 }
 
 
-function semakJenisTanaman() {
-    var flag = 0;
-    for (var i = 0; i < 5; i++) {
-      if(document.${formName}["jenistanaman"][i].checked){
-      	flag++;
-      }
-    }
-    
-    if (flag == 0) {
-      alert ("Pastikan 'Jenis Tanaman' dipilih");
-      return c++;
-    }
-    return true;
-}
 
-function semakJenisPemilikan() {
-    var flag = 0;
-    for (var i = 0; i < 5; i++) {
-      if(document.${formName}["jenispemilikan"][i].checked){
-      	flag++;
-      }
-    }
-    
-    if (flag == 0) {
-      alert ("Pastikan 'Keterangan Tuan Tanah / Wakil' dipilih");
-      return c++;
-    }
-    return true;
-}
 
   
 
