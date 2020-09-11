@@ -64,9 +64,8 @@ public class FrmPrmhnnSek8KeputusanPermohonanInternalData {
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next())	{
 				Hashtable h = new Hashtable();
-				if (h.put("flag_5juta", rs.getString(1)==null?"":rs.getString(1)) == "T") {
-					f5j = true;
-				}
+				h.put("flag_5juta", rs.getString(1)==null?"":rs.getString(1));
+				flag5juta.addElement(h);
 			} 
 		}
 		finally {
