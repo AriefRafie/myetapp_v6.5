@@ -35,11 +35,12 @@
 <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
 
 <!-- arief add 5 JUTA -->
+
 #foreach ($Listflag5juta in $flag5juta)
 	#set($check5juta = $Listflag5juta.flag_5juta )
 #end
 
-#if($check5juta=='F')
+#if($check5juta=='T')
 	#set($nilaiHartaMaximum = 5000000)
 #else
 	#set($nilaiHartaMaximum = 2000000)

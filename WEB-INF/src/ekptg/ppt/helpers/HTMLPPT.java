@@ -1,9 +1,13 @@
 package ekptg.ppt.helpers;
 
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Hashtable;
 import java.util.Vector;
 
 import org.apache.log4j.Logger;
 
+import ekptg.helpers.Utils;
 import ekptg.model.entities.Tblintrujkategoritanah;
 import ekptg.model.entities.Tblrujjenisbangunan;
 import ekptg.model.entities.Tblrujnegeri;
@@ -11,10 +15,48 @@ import ekptg.model.entities.Tblrujpejabat;
 import ekptg.model.meps.PPT_modeldata;
 import ekptg.model.ppt.FrmUPTSek8InfoTanahTerperinciBangunanData;
 import ekptg.view.ppt.FrmSek8JabatanTeknikal;
+import lebah.db.Db;
+import lebah.db.SQLRenderer;
 
 public class HTMLPPT {
 	static Logger myLogger = Logger.getLogger(HTMLPPT.class);
 
+	private static Db db = null;
+	private static String sql = "";
+	//10092020
+	public static Vector<Hashtable<String,String>> getSenaraiTuanTanah() throws Exception {
+		 Vector<Hashtable<String,String>> list = new Vector<Hashtable<String,String>>();
+	    try {
+	      db = new Db();
+	      Statement stmt = db.getStatement();
+	      SQLRenderer r = new SQLRenderer();
+	      
+	      r.add("i.id_jenis_keterangantanah");
+	      r.add("i.nama_keterangantanah");
+  
+	      sql = r.getSQLSelect("tblrujjenisketerangantanah i","i.id_jenis_keterangantanah");
+	      myLogger.info("Semakan : " + sql);
+	      ResultSet rs = stmt.executeQuery(sql);
+	      Hashtable<String,String> h;
+
+	      while (rs.next()) {
+	    	  h = new Hashtable<String,String>();
+	    	  h.put("id", rs.getString("id_jenis_keterangantanah"));
+	    	  h.put("keterangan", rs.getString("nama_keterangantanah"));
+	    	  list.addElement(h);
+	    	  
+	      }
+	      
+	    }catch(Exception e){
+	    	e.printStackTrace();
+	    }finally {
+	      if (db != null){
+	    	  db.close();
+	      }
+	    }
+	    return list;
+	 }
+	//JENIS KETERANGAN TUAN TANAH
 	
 	public static String SelectTanah(String selectName, Long selectedValue,
 			String disability, String jsFunction) throws Exception {
