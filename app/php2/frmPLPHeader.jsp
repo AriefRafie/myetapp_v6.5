@@ -142,7 +142,7 @@ function paparLogTugasan(idFail) {
 		hWnd.focus();
 }
 
-/* function arkibWindow(noFail){
+<!-- function arkibWindow(noFail){
 		var url = "../x/${securityToken}/ekptg.view.integrasi.sid.FrmPopupPaparArkibDokumen?kodModul=PHP&noFail="+noFail;
 		var hWnd = window.open(url,"printuser","scrollbars=1,width=800,height=700");
 		 if ((document.window != null) && (!hWnd.opener))
@@ -150,5 +150,5 @@ function paparLogTugasan(idFail) {
 		    if (hWnd.focus != null) hWnd.focus();
 			hWnd.focus();
 			
-} */
+} -->
 </script>

@@ -126,6 +126,8 @@ public class FrmPLPSenaraiFailView extends AjaxBasedModule {
 						getParam("idNegeriTanah"), getParam("txtNoFailNegeri"),
 						getParam("idLuasTanah"), getParam("luasTanah"),
 						idHakmilikSementara, session);
+				
+				idStatus = "1610198"; // MAKLUMAT PERMOHONAN
 
 			}
 		}
