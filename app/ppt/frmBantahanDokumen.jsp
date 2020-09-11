@@ -71,7 +71,7 @@
       #if($id_dokumen == "")
       #foreach( $i in [1..$num_files] )
        
-  	<input id="fileupload" name="fileupload" type=file size=50 value="$!txtdokumensokongan" onmouseout="checking_validation(this,'fileupload_check','yes','dokumen sokongan','file');"  onkeyup="checking_validation(this,'fileupload_check','yes','dokumen sokongan','file');"  onblur="checking_validation(this,'fileupload_check','yes','dokumen sokongan','file');" />
+  	<input type="file" accept=".pdf" id="fileupload" name="fileupload" size=50 value="$!txtdokumensokongan" onmouseout="checking_validation(this,'fileupload_check','yes','dokumen sokongan','file');"  onkeyup="checking_validation(this,'fileupload_check','yes','dokumen sokongan','file');"  onblur="checking_validation(this,'fileupload_check','yes','dokumen sokongan','file');" />
   	<br/>
       
   	  #end   

@@ -291,7 +291,6 @@ public class FrmCRBPopupSenaraiTanahData {
 				}
 			}
 
-			System.out.println("cek sql PENGUATKUASAAN: " + sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
 			int bil = 1;
@@ -552,7 +551,7 @@ public class FrmCRBPopupSenaraiTanahData {
 					+ " AND HMS.ID_AGENSI = RUJAGENSI.ID_AGENSI(+) AND RUJAGENSI.ID_KEMENTERIAN = RUJKEMENTERIAN.ID_KEMENTERIAN(+)"
 					+ " AND HMS.ID_HAKMILIKSEMENTARA = '" + idHakmilikSementara
 					+ "'";
-			System.out.println("sql pilihan tanah: " + sql);
+			
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;

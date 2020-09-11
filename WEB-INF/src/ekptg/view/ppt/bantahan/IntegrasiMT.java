@@ -33,6 +33,8 @@ import ekptg.model.utils.IUtilHTMLPilihan;
 import ekptg.model.utils.lampiran.ILampiran;
 import ekptg.model.entities.Tblrujdokumen;
 import ekptg.model.entities.Tblrujpejabat;
+import ekptg.model.htp.HtpBean;
+import ekptg.model.htp.IHtp;
 import ekptg.model.ppt.BantahanAgensiDaftar;
 import ekptg.model.ppt.BantahanDaftar;
 import ekptg.model.ppt.util.LampiranBean;
@@ -47,12 +49,13 @@ public class IntegrasiMT extends AjaxBasedModule{
 	static Logger myLog = Logger.getLogger(ekptg.view.ppt.bantahan.IntegrasiMT.class);
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	SimpleDateFormat sdfNaming = new SimpleDateFormat("yymmdd");
+	private IHtp iHTP = null;  
  	private IUtilHTMLPilihan iUtilPilihan = null;
 // 	private IUtilHTMLPilihan iPilihan = null;
  	private ILampiran iLampiran = null;
 	private String sql = "";
 	private String idPejabatPTGD = "";
-	
+
 	@Override
 	public String doTemplate2() throws Exception {
 		
@@ -306,26 +309,38 @@ public class IntegrasiMT extends AjaxBasedModule{
 	        //party[1] = pt02;
 
 	        DeceaseInfoType deceaseInfo = new DeceaseInfoType();
-	        deceaseInfo.setDeceaseInfoName(name);
-	        deceaseInfo.setDeceaseInfoType("1");
-	        deceaseInfo.setDeceaseInfoIDType1("IC");
-	        deceaseInfo.setDeceaseInfoIDType1No("251202095009");
-	        deceaseInfo.setDeceaseInfoIDType2("OC");
-	        deceaseInfo.setDeceaseInfoIDType2No("12345");
-	        deceaseInfo.setDeathCertNo("12345");
-	        deceaseInfo.setDeceaseInfoGender("M");
-	        deceaseInfo.setDeceaseInfoAge("98");
-	        deceaseInfo.setDateOfDeath("2020-03-01T00:00:00");
-	        deceaseInfo.setDeceaseInfoAddr1(add);
-	        deceaseInfo.setDeceaseInfoAddr1(add2);
-	        deceaseInfo.setDeceaseInfoAddr1(add3);
-	        deceaseInfo.setDeceaseInfoPostcode("44000");
-	        deceaseInfo.setDeceaseInfoCity("KUALA LUMPUR");
-	        deceaseInfo.setDeceaseInfoState(stateCode);
-	        deceaseInfo.setDeceaseInfoCountry("MYS");
+//	        deceaseInfo.setDeceaseInfoName(name);
+//	        deceaseInfo.setDeceaseInfoType("1");
+//	        deceaseInfo.setDeceaseInfoIDType1("IC");
+//	        deceaseInfo.setDeceaseInfoIDType1No("251202095009");
+//	        deceaseInfo.setDeceaseInfoIDType2("OC");
+//	        deceaseInfo.setDeceaseInfoIDType2No("12345");
+//	        deceaseInfo.setDeathCertNo("12345");
+//	        deceaseInfo.setDeceaseInfoGender("M");
+//	        deceaseInfo.setDeceaseInfoAge("98");
+//	        deceaseInfo.setDateOfDeath("2020-03-01T00:00:00");
+//	        deceaseInfo.setDeceaseInfoAddr1(add);
+//	        deceaseInfo.setDeceaseInfoAddr1(add2);
+//	        deceaseInfo.setDeceaseInfoAddr1(add3);
+//	        deceaseInfo.setDeceaseInfoPostcode("44000");
+//	        deceaseInfo.setDeceaseInfoCity("KUALA LUMPUR");
+//	        deceaseInfo.setDeceaseInfoState(stateCode);
+//	        deceaseInfo.setDeceaseInfoCountry("MYS");
 
 	        //2020/09/09 - Penambahan Skop
 	        DataCreateReqTypePartyAgency partyAgency = getParty(idPejabatPTGD);
+	        if(partyAgency==null) {
+				throw new Exception(getIHTP().getErrorHTML("<link rel=\"stylesheet\" type=\"text/css\" href=\"../../css/eTapp_PPT.css\" /> "
+						+ "<table style=\"width:100%\" "
+						+ " <tr align=\"center\"><td>"
+						+ "	<font><b>[MODUL PPT - INTEGRASI MT] SILA SEMAK KONFIGURASI PENTADBIR TANAH</b></font>"
+						+ "</td></tr>"
+						+ "<tr align=\"center\"><td>"
+						+ "<input align=\"center\" type=\"button\" value=\"Tutup\" onClick=\"javascript:window.close()\">"
+						+ "</td></tr>"
+						+ "</table>"
+						+ ""));
+	        }
 	        
 	        String returnMessage = "1 Tidak Berjaya Dihantar";
 	        returnMessage = MTManagerReg. PendaftaranBaharu("15"
@@ -601,6 +616,10 @@ public class IntegrasiMT extends AjaxBasedModule{
 			
 	}
 
-
+	private IHtp getIHTP(){
+		if(iHTP== null)
+			iHTP = new HtpBean();
+		return iHTP;
+	}
 	
 }

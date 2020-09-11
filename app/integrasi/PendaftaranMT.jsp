@@ -322,9 +322,9 @@
 
 				<tr>
 					<td align="center">
-					##if($!noKes == '')
+					#if($!noKes == '')
 						<input type="button" name="cetak" id="cetak" value="Hantar" onClick="javascript:hantarPermohonan()" />
-					##end	
+					#end	
 						<input type="button" name="tutup" id="tutup" value="Tutup" onClick="tutupTetingkap()" />
 					</td>
 				</tr>		
