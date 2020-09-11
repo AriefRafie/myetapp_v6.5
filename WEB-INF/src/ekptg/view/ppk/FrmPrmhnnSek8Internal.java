@@ -5974,7 +5974,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
     	String idSimati1 = idSimati;
     	myLogger.info("idSimati1********* = "+idSimati1);
     	//String id_permohonansimati = getParam("id_permohonansimati_atheader");
-    	PreparedStatement ps = con.prepareStatement("INSERT INTO TBLPPKDOKUMENSIMATI (ID_SIMATI,ID_JENISDOKUMEN,NAMA_DOKUMEN, FORMAT, KANDUNGAN, ID_MASUK, TARIKH) VALUES (?,?,?,?,?,?,"+r.unquote("sysdate")+")");	
+    	PreparedStatement ps = con.prepareStatement("INSERT INTO TBLPPKDOKUMENSIMATI (ID_SIMATI,ID_JENISDOKUMEN,NAMA_DOKUMEN, FORMAT, KANDUNGAN, ID_MASUK, TARIKH_MASUK) VALUES (?,?,?,?,?,?,"+r.unquote("sysdate")+")");	
     	
     	ps.setString(1,idSimati1);
     	ps.setString(2,"99201");
