@@ -205,8 +205,27 @@
         	<!-- <input class="stylobutton100" type="reset" name="cmdBatal" id="cmdBatal" value="Kosongkan"/> -->
         	<input class="stylobutton100" type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="javascript:batalPemohon()" />
 		#end
-		#if ( $idStatus == '65' )
-			<input class="stylobutton100" name="cmdSeterusnya" type="button" value="Seterusnya" onclick="seterusnyaPemohon()"/>
+		#if ( $idStatus == '12' )
+		#if($valFlagMohonFail.equalsIgnoreCase("hide"))
+				#if($!statusSemasa.equals("penyedia"))
+				<input type="button" class="stylobutton100" style="width:auto !important" name="cmdHantarSahkan" id="cmdHantarSahkan" value="Hantar Semakan" onclick="javascript:doHantarPenyemak()" />
+				#end
+			#end
+		#end
+		#if ( $idStatus == '148' )
+			#if($valFlagMohonFail.equalsIgnoreCase("hide"))
+				#if ($!statusSemasa.equals("penyemak"))
+				<input type="button" class="stylobutton100" style="width:auto !important" name="cmdHantarSahkan" id="cmdHantarSahkan" value="Hantar Pengesahan" onclick="javascript:doHantarPengesahan()" />
+				#end
+			#end
+		#end
+
+		#if ( $idStatus == '240' )
+			#if($valFlagMohonFail.equalsIgnoreCase("hide"))
+				#if ($!statusSemasa.equals("pelulus"))
+				<input type="button" class="stylobutton100" style="width:auto !important" name="cmdSahkan" id="cmdSahkan" value="Sahkan Permohonan" onclick="javascript:doSahkan()" />
+				#end
+			#end
 		#end
    		</td>
 	</tr>

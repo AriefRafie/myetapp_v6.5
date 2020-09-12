@@ -15,6 +15,8 @@
   <input type="hidden" name="idUlasanKJP" id="idUlasanKJP" value="$idUlasanKJP"/>
   <input type="hidden" name="idDraf" id="idDraf" value="$idDraf"/>
   <input type="hidden" name="idUlasanSPHP" id="idUlasanSPHP" value="$idUlasanSPHP"/>
+  <input type="hidden" name="idJawatan" id="idJawatan" value="$idjawatan"/>
+  <input type="hidden" name="statusSemasa" id="statusSemasa" value="$statusSemasa"/>
 </p>
 
 #if($showpopup.equalsIgnoreCase("true") && $selectedTab=="1")
