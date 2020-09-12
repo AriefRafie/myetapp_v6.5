@@ -41,25 +41,9 @@ VALUES(99203, 123, 334, '97f37703-35aa-4bee-9d35-0c29692dffae', 'c5c40654-a22f-4
 ------------------- MULA DARI SINI ----------------
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
--- Wilayah Labuan 17
-            </PartyAgency>
-            	</PartyAgencyIDNo>4447f6a5-5411-46d1-83e6-1471ddc3250b</PartyAgencyIDNo>
-            	<PartyAgencyName>Pentadbir Tanah Wilayah Persekutuan Labuan</PartyAgencyName>
-            	<Status>A</Status>
-            </PartyAgency>
 
 
 -- Selangor 18	LEPAS
-            <PartyAgency>
-               <PartyAgencyIDNo>f07b1ba4-8064-41b8-bba4-14f1ddd68786</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Daerah Sabak Bernam</PartyAgencyName>
-               <Status>A</Status>
-            </PartyAgency>
-            
-INSERT INTO TBLINTMTPEJABATMAP
-(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
-VALUES(992018, 260, 331, 'f07b1ba4-8064-41b8-bba4-14f1ddd68786', 'f05d9e40-2045-423c-8abf-73f46afdc78d', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Sabak Bernam');
-
 
 -- Kelantan 19
             <PartyAgency>
