@@ -73,7 +73,7 @@
           <td width="11%"><strong>Tarikh Mesyuarat</strong></td>
           <td width="20%"><strong>Lokasi</strong></td>
           <td width="13%"><strong>Status Mesyuarat</strong></td>
-          <td width="13%"><strong></strong></td>
+          ##<td width="13%"><strong></strong></td>
           
         </tr>
         #set ($list = "")
@@ -94,10 +94,10 @@
           <td class="$row" align="center">$list.lokasiMesyuarat</td>
           <td class="$row" align="center">$list.statusMesyuarat</td>
           
-										#if ($list.statusMesyuarat != "SELESAI")
-                                		  <td class="$row" align="center"><a href="#" class="style2" onClick="hapusMesyuarat('$list.idMesyuarat')">
-                      		  					<img border="0" src="../img/hapus.gif"/></a></td>
-                      		  					#end
+			##							#if ($list.statusMesyuarat != "SELESAI")
+            ##                    		  <td class="$row" align="center"><a href="#" class="style2" onClick="hapusMesyuarat('$list.idMesyuarat')">
+            ##          		  					<img border="0" src="../img/hapus.gif"/></a></td>
+            ##          		  					#end
         </tr>
         #end
         #else
@@ -170,12 +170,6 @@ function papar(idMesyuarat) {
 function daftarBaruMesyuarat(){
 	document.${formName}.actionMesyuarat.value = "daftarBaru";
 	document.${formName}.mode.value = "new";
-	document.${formName}.submit();
-}
-function hapusMesyuarat(idMesyuarat){
-	document.${formName}.idMesyuarat.value = idMesyuarat;
-	document.${formName}.hitButton.value = "hapusMesyuarat";
-	document.${formName}.mode.value = "";
 	document.${formName}.submit();
 }
 </script>
