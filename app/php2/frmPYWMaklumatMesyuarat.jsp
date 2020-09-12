@@ -250,12 +250,15 @@
 										    <option value="">SILA PILIH</option>
 										    <option #if ( "L" == $senaraiFailMohonBaru.flagKeputusan ) selected #end value="L">LULUS</option>
 										    <option #if ( "T" == $senaraiFailMohonBaru.flagKeputusan ) selected #end value="T">TOLAK</option>
+										    <option #if ( "G" == $senaraiFailMohonBaru.flagKeputusan ) selected #end value="G">TANGGUH</option>
 										  </select>
 										#else
 											#if ( "L" == $senaraiFailMohonBaru.flagKeputusan )
 								    			DILULUSKAN
-								    		#else
+								    		#elseif ( "T" == $senaraiFailMohonBaru.flagKeputusan )
 								    			DITOLAK
+								    		#else
+								    			TANGGUH
 								    		#end
 								    	#end
 								  	#end
@@ -562,6 +565,7 @@ function doSaveCatatanKeputusanBaru(id,idMesyuaratPermohonan){
 }
 
 function doKembaliSenaraiPermohonan(){
+	document.${formName}.reset();
 	document.${formName}.actionMesyuarat.value = "";
 	document.${formName}.mode.value = "";
 	document.${formName}.submit();

@@ -365,9 +365,9 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 			// GO TO LIST SENARAI MESYUARAT
 			vm = "app/php2/frmPYWSenaraiFailMesyuarat.jsp";
 
-			//logic.carianSenaraiMesyuarat(getParam("txtTajukMesyuarat"), getParam("txtBilMesyuarat"), 
-			//		getParam("txtTarikhMesyuarat"), userId, userRole);
-			logic.listSenaraiMesyuarat();
+			logic.carianSenaraiMesyuarat(getParam("txtTajukMesyuarat"), getParam("txtBilMesyuarat"), 
+					getParam("txtTarikhMesyuarat"), userId, userRole);
+			//logic.listSenaraiMesyuarat();
 			
 			list = new Vector();
 			
