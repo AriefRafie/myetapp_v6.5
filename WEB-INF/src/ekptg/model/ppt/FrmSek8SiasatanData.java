@@ -2295,7 +2295,7 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 						"S.ALAMAT3, S.POSKOD, S.ID_NEGERI, S.ALASAN_TANGGUH, S.NILAIAN_JPPH," +
 						"S.ID_UNITLUAS, S.BANTAHAN_TUANTNH, S.BANTAHAN_AGENSI," +
 						"S.BANTAHAN_LAIN, S.TEMPOH_MILIK_TANAH, S.CARA_MILIK, S.HARGA_BELI," +
-						"S.JENIS_BANGUNAN, S.JENIS_TANAMAN, S.FLAG_PECAH_SEMPADAN," +
+						"S.JENIS_TANAMAN, S.FLAG_PECAH_SEMPADAN," +
 						"S.FLAG_TUKAR_SYARAT, S.TARIKH_PECAH_SEMPADAN, S.TARIKH_TUKAR_SYARAT," +
 						"S.STATUS_SEMASA, S.BEBANAN, S.KETERANGAN_TUAN_TANAH," +
 						"S.KETERANGAN_AGENSI, S.KETERANGAN_JURUNILAI, S.TUNTUTAN_TUANTNH," +
@@ -2319,9 +2319,13 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 						"(HM.LUAS_LOT - HM.LUAS_AMBIL) AS LUAS_BAKI," +
 						"HM.NAMA_LUAS_AMBIL, HM.NO_SUBJAKET, HM.NO_LOT AS NO_LOTHM, HM.NO_PT, " +
 						"NEG.NAMA_NEGERI, DRH.NAMA_DAERAH, MKM.NAMA_MUKIM , U.USER_NAME AS NAMA_PEGAWAI, " +
-						"S.JENIS_BANGUNAN, JB.KETERANGAN AS KETERANGAN_TANAH " +
+						"CASE WHEN S.JENIS_BANGUNAN = '1' THEN 'Bangunan konkrit' " + 
+						"WHEN S.JENIS_BANGUNAN = '2' THEN 'Bangunan separuh konkrit dan separuh papan' " + 
+						"WHEN S.JENIS_BANGUNAN = '3' THEN 'Binaan bangunan dan papan dan kayu' " + 
+						"WHEN S.JENIS_BANGUNAN = '4' THEN 'Lain-lain' " + 
+						"ELSE S.JENIS_BANGUNAN END AS JENIS_BANGUNAN " +
 						"FROM TBLPPTSIASATAN S, TBLPPTPERMOHONAN P, TBLPPTHAKMILIK HM, TBLPPTTANAH T, TBLRUJJENISHAKMILIK JH, " +
-						"TBLRUJLOT JL,TBLRUJNEGERI NEG, TBLRUJDAERAH DRH, TBLRUJMUKIM MKM, TBLRUJLUAS LS, TBLRUJLUAS LJ, USERS U, TBLRUJJENISBANGUNAN JB " +
+						"TBLRUJLOT JL,TBLRUJNEGERI NEG, TBLRUJDAERAH DRH, TBLRUJMUKIM MKM, TBLRUJLUAS LS, TBLRUJLUAS LJ, USERS U " +
 						"WHERE HM.ID_PERMOHONAN = P.ID_PERMOHONAN " +
 						"AND S.ID_HAKMILIK = HM.ID_HAKMILIK(+) " +
 						"AND S.ID_HAKMILIK = T.ID_HAKMILIK(+) " +
@@ -2333,13 +2337,13 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 						"AND HM.ID_UNITLUASLOT = LS.ID_LUAS " +
 						"AND HM.ID_UNITLUASAMBIL = LJ.ID_LUAS " +
 						"AND S.ID_PEGAWAI_SIASATAN = U.USER_ID(+) " +
-						"AND S.JENIS_BANGUNAN = JB.ID_JENIS_BANGUNAN(+) " +
 						"AND S.ID_SIASATAN = '" + id_siasatan + "' " +
 						"ORDER BY LPAD (HM.NO_SUBJAKET, 10) ASC, " +
 						"LPAD (NO_LOTHM, 10) ASC, " +
 						"LPAD (HM.NO_PT, 10) ASC, " +
 						"LPAD (NO_LOT, 10) ASC ";
 
+				myLogger.info("DATA DLM SIASATAN SQL: "+sql);
 				ResultSet rs = stmt.executeQuery(sql);
 
 				myLogger.info("DATA DLM SIASATAN : "+sql);
@@ -2451,9 +2455,9 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 					h.put("JENIS_BANGUNAN",
 							rs.getString("JENIS_BANGUNAN") == null ? "" : rs
 									.getString("JENIS_BANGUNAN"));
-					h.put("KETERANGAN_TANAH",
+					/*h.put("KETERANGAN_TANAH",
 							rs.getString("KETERANGAN_TANAH") == null ? "" : rs
-									.getString("KETERANGAN_TANAH"));
+									.getString("KETERANGAN_TANAH"));*/
 					h.put("JENIS_TANAMAN",
 							rs.getString("JENIS_TANAMAN") == null ? "" : rs
 									.getString("JENIS_TANAMAN"));

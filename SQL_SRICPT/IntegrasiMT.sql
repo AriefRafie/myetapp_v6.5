@@ -9,18 +9,536 @@
 
 Peguam Negara, Putrajaya
 
+
+-- Selangor 18
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992018, 260, 331, 'f07b1ba4-8064-41b8-bba4-14f1ddd68786', 'f05d9e40-2045-423c-8abf-73f46afdc78d', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Sabak Bernam');
+
+Peguam Negara, Kuala Lumpur
+
+
+-- Kelantan 19
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992019, 200, 335, '8e2c8477-846f-4355-afe2-19ff7a0aed3c', 'dda63d7a-8075-46ff-b5e0-526d6e585ac1', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Jajahan Bachok');
+
+-- Perak    20    (Tiada dalam Database Senarai Daerah Negeri Perak) [Tinggalkan]
+--            <PartyAgency>
+--               <PartyAgencyIDNo>405d9741-dce5-46c8-bf12-1a54afc9b2a4</PartyAgencyIDNo>
+--               <PartyAgencyName>Pentadbir Tanah Daerah Perak Tengah</PartyAgencyName>
+--               <Status>A</Status>
+--            </PartyAgency>
+            
+-- INSERT INTO TBLINTMTPEJABATMAP
+-- (ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+-- VALUES(992020, 0, 329, '405d9741-dce5-46c8-bf12-1a54afc9b2a4', '689ffa90-1393-47f9-9499-3f685566ae38', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Perak Tengah');
+
+
+-- 21
+
+
+-- Pahang 22
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992022, 293, 328, 'bb3224ee-24a9-4908-a6ed-1c516f1e63f1', '70dd54a8-7576-404a-b66d-a65a10a69f43', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Bentong');
+
+            
+-- Johor 23
+           	<PartyAgency>
+				<PartyAgencyIDNo>a55deacd-304b-4d0d-acd8-1f5f9a4b2343</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Muar</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+
+
+-- Melaka	24
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992024, 202, 326, '5b097ca4-aed5-4b16-ba05-204b44867335', 'e6e1090c-0c7c-4869-a299-eac495c2dbe6', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Alor Gajah');
+
+
+-- Pahang	25
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992025, 177, 328, 'ddde1393-0d10-4fd0-91ed-231ceb1ae53c', '70dd54a8-7576-404a-b66d-a65a10a69f43', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Maran');
+
+
+-- Pahang	26
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992026, 289, 328, 'ffa74729-7806-400d-b48e-26cbf13d1d61', '70dd54a8-7576-404a-b66d-a65a10a69f43', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Bera');
+
+30eafcfe-06c8-4051-ace8-04937780c3d1</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Mersing
+
+-- Kedah	27
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992027, 281, 327, '9e738f6b-9273-4034-a7ef-279b02d8db99', 'aaea5021-9985-45ed-817e-44d7c20d0d67', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Kuala Muda');
+
+
+-- Kelantan	28
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992028, 221, 335, '2d5a5d66-ba5a-4cf7-b895-27af1e41faa5', 'dda63d7a-8075-46ff-b5e0-526d6e585ac1', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Jajahan Pasir Puteh');
+
+
+-- Kelantan	29
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992029, 275, 335, '446aed95-405c-467b-a534-304210060429', 'dda63d7a-8075-46ff-b5e0-526d6e585ac1', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Jajahan Jeli');
+
+
+-- Kedah	30
+            --Ambil ni
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992030, 239, 327, 'bbdfbf05-dbf3-4ce1-97fe-34e2d311f89f', 'aaea5021-9985-45ed-817e-44d7c20d0d67', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Pendang');
+
+
+-- 31
+
+
+-- Perak	32
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992032, 290, 329, '2927f280-9022-44be-bca8-36e47957902d', '689ffa90-1393-47f9-9499-3f685566ae38', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Hulu Perak');
+
+
+-- Perak	33
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992033, 299, 329, 'f9bf0324-10c8-4d41-ba75-37128f72d4b7', '689ffa90-1393-47f9-9499-3f685566ae38', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Muallim');
+
+
+-- Kelantan	34
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992034, 288, 335, 'a6aeba93-3d6a-44e8-9e77-3932ae1a70fe', 'dda63d7a-8075-46ff-b5e0-526d6e585ac1', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Jajahan Gua Musang');
+
+
+-- Perak	35
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992035, 229, 329, 'e0d6961f-a5a1-4b04-9db3-39d1f531bd5b', '689ffa90-1393-47f9-9499-3f685566ae38', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Manjung');
+
+
+-- Pahang	36
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992036, 283, 328, '83c8d843-b2f3-4e23-8d74-3aac4cf3111c', '70dd54a8-7576-404a-b66d-a65a10a69f43', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Cameron Highlands');
+
+
+-- Johor	37
+            <PartyAgency>
+               <PartyAgencyIDNo>9d415186-737a-423e-a68a-3c27f3e95c9c</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Kluang</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+
+
+-- Selangor	38
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992038, 270, 331, 'be9d8d45-c91d-4e9b-acf8-3eee601f430a', 'f05d9e40-2045-423c-8abf-73f46afdc78d', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Petaling');
+
+
+-- Pahang	39
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992039, 242, 328, '042efe94-15b4-496d-a7d2-42ee7634169c', '70dd54a8-7576-404a-b66d-a65a10a69f43', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Lipis');
+
+
+-- Kedah	40
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992040, 287, 327, 'aa6e1dc0-fcea-4e73-8143-43021957678b', 'aaea5021-9985-45ed-817e-44d7c20d0d67', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Yan');
+
+
+-- Negeri Sembilan	41
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992041, 241, 330, '24e36136-2236-4954-9f5c-43ea4563eccd', 'b46e0723-9bf3-46c3-95f6-625e7db92981', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Kuala Pilah');
+
+
+-- Perak	42
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992042, 180, 329, '514fe7a1-2a3d-4ffb-b55b-4b8b3d033eb7', '689ffa90-1393-47f9-9499-3f685566ae38', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Batang Padang');
+
+            
+-- Terengganu	43
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992043, 9919918, 334, 'fef73686-8077-435e-9ba9-51da0df12950', 'c5c40654-a22f-4204-adf8-b65b954290de', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Kemaman');
+
+
+-- Johor	44
+            <PartyAgency>
+               <PartyAgencyIDNo>189ede0b-0aa5-4e81-ad0a-558822e1507a</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Pengerang</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            
+
+-- Selangor	45
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992045, 279, 331, '52c1603c-00f6-43ef-a4bd-5804ccc7c69d', 'f05d9e40-2045-423c-8abf-73f46afdc78d', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Gombak');
+
+
+-- Negeri Sembilan   46
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992046, 172, 330, '735cd2bc-4e7b-4c77-9f64-5e48ea41a3c4', 'b46e0723-9bf3-46c3-95f6-625e7db92981', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Port Dickson');
+
+
+-- Johor	47
+            <PartyAgency>
+               <PartyAgencyIDNo>8e3dc4ff-e937-45fd-bf82-5f1c153c2d7c</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Johor Bahru</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            
+            
+-- Perlis	48
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992048, 102, 337, 'cfda4ba1-0d73-45e1-9132-5f68fcfec9c6', 'b44dcf80-2c0c-440f-97fa-5c5a07533700', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Negeri Perlis');
+             
+            
+-- Terengganu	49
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992049, 271, 334, 'f5ecad62-f136-4943-9a94-6305b4a4da94', 'c5c40654-a22f-4204-adf8-b65b954290de', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Setiu');
+
+-- Kelantan	50
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992050, 167, 335, '0b07fbf0-6279-4d7c-b1ab-643f79c58304', 'dda63d7a-8075-46ff-b5e0-526d6e585ac1', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Jajahan Tumpat');
+
+            
+-- Kelantan	51
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992051, 282, 335, '8cc36c3e-b71e-4ac2-a319-67edc33902b5', 'dda63d7a-8075-46ff-b5e0-526d6e585ac1', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Jajahan Kuala Krai');
+
+            
+-- Pulau Pinang   52
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992052, 1610433, 332, '656b9f5b-e6fe-4b28-82fb-6a1cbc2d92b3', '6015e6a5-9c18-4bba-9745-bc1a496f7967', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Timur Laut');
+
+-- Negeri Sembilan 	53
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992053, 255, 330, 'cb5e2f21-8e9f-485d-af02-6af5a922ca4b', 'b46e0723-9bf3-46c3-95f6-625e7db92981', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Jempol');
+
+-- Kedah	54
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992054, 20, 327, '014cecaa-cbe3-4174-a949-6cf7dc405008', 'aaea5021-9985-45ed-817e-44d7c20d0d67', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Kulim');
+
+-- Kedah	55
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992055, 265, 327, 'd45dc591-4409-4b25-aadb-6d5c3eb47560', 'aaea5021-9985-45ed-817e-44d7c20d0d67', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Padang Terap');
+
+-- Perak	56
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992056, 210, 329, 'eef82dbc-c7f1-46e0-9aa5-732c8186854f', '689ffa90-1393-47f9-9499-3f685566ae38', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Kinta');
+
+
+-- Selangor	57
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992057, 103, 331, 'd766daff-da5e-4a90-982a-73a4bba5ce28', 'f05d9e40-2045-423c-8abf-73f46afdc78d', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Kuala Langat');
+
+-- Johor	58
+            <PartyAgency>
+               <PartyAgencyIDNo>5223935c-154c-4600-a868-79b66ff7d6e5</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Rengit</PartyAgencyName>
+               <PartyAgencyIDNo>bb3224ee-24a9-4908-a6ed-1c516f1e63f1</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Bentong
+a55deacd-304b-4d0d-acd8-1f5f9a4b2343</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Muar</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            
+-- Melaka	59
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992059, 171, 326, '33718ff1-b882-4dac-a04f-7de3cfb85777', 'e6e1090c-0c7c-4869-a299-eac495c2dbe6', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Jasin');
+
+            
+-- Kuala Lumpur	60
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992060, 148, 336, 'e26da38a-79f7-4a82-90e5-8061e1ef38d0', '2dc7faaf-583d-48c9-8428-3f0d97a933f5', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Wilayah Persekutuan Kuala Lumpur');
+
+            
+-- Pulau Pinang	61
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992061, 1610431, 332, '7df3d1ec-ac85-422f-a11a-84ed2fa04152', '6015e6a5-9c18-4bba-9745-bc1a496f7967', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Seberang Perai Utara');
+
+-- Pahang	62
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992062, 224, 328, '2bf78866-6a43-4909-a5f0-8c468bd2696d', '70dd54a8-7576-404a-b66d-a65a10a69f43', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Jerantut');
+
+            
+-- Johor	63
+            <PartyAgency>
+               <PartyAgencyIDNo>96140317-a3a2-4f1e-8ae2-8e790f6114ec</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Segamat</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            
+-- Negeri Sembilan	64
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992064, 203, 330, '904b2c3a-c15e-40c1-8511-906b45a6bca6', 'b46e0723-9bf3-46c3-95f6-625e7db92981', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Rembau');
+
+-- Kedah	65
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992065, 20, 327, 'dbc295a2-36e4-46da-847c-918940a0de64', 'aaea5021-9985-45ed-817e-44d7c20d0d67', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Bandar Baharu');
+
+-- Johor	66
+            <PartyAgency>
+               <PartyAgencyIDNo>26f430f8-6b4a-4203-83ac-921e93ee4cc2</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Kulai</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            
+-- Johor	67
+            <PartyAgency>
+               <PartyAgencyIDNo>3c06079e-d9d9-48d2-b920-9ab91bbd1ed7</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Labis</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            
+-- Kedah	68
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992068, 292, 327, 'f59f7a05-a5f4-43d9-94f7-9c167a0c4d11', 'aaea5021-9985-45ed-817e-44d7c20d0d67', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Sik');
+
+-- Terengganu	69
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992069, 213, 334, '7633303f-8277-46d9-8328-9d99c0a6ddcc', 'c5c40654-a22f-4204-adf8-b65b954290de', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Hulu Terengganu');
+
+-- Perak	70
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992070, 92, 329, 'aa193b2a-d5dc-4bbe-b540-9e36e4c0f891', '689ffa90-1393-47f9-9499-3f685566ae38', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Hilir Perak');
+            
+-- Perak	71
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992071, 258, 329, 'f9b492c3-a851-4962-9f71-a39191d8d21c', '689ffa90-1393-47f9-9499-3f685566ae38', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Kuala Kangsar');
+
+            
+-- Terengganu	72
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992072, 9919911, 334, 'e8cf8298-006e-422c-87e5-a55e2e65b41e', 'c5c40654-a22f-4204-adf8-b65b954290de', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Kuala Nerus');
+
+-- Kedah	73
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992073, 296, 327, 'b368e436-0500-4471-86cc-ab39d4c343f6', 'aaea5021-9985-45ed-817e-44d7c20d0d67', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Pokok Sena');
+
+-- Pahang	74
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992074, 277, 328, 'c6c9d78a-d729-4f46-b08e-ae38fa43137b', '70dd54a8-7576-404a-b66d-a65a10a69f43', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Rompin');
+
+            
+-- Selangor	75
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992075, 185, 331, 'db519a70-c8f0-4b35-90de-b3783ebdc1c1', 'f05d9e40-2045-423c-8abf-73f46afdc78d', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Hulu Langat');
+
+-- Melaka	76
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992076, 45, 326, '045cc0c1-045c-4420-b351-c3d576ee6a7b', 'e6e1090c-0c7c-4869-a299-eac495c2dbe6', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Melaka Tengah');
+
+            
+-- Kelantan	77
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992077, 240, 335, 'fa7874b6-2583-48d5-b25c-c5fc928ad712', 'dda63d7a-8075-46ff-b5e0-526d6e585ac1', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Jajahan Machang');
+
+            
+-- Wilayah Putrajaya	78 (Hanya ada Pejabat Tanah dan Galian Sahaja)
+            <PartyAgency>
+               <PartyAgencyIDNo>e88e5cd9-2302-462c-95c0-c66347e482f5</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Wilayah Persekutuan Putrajaya</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992078, 0, 0, 'e88e5cd9-2302-462c-95c0-c66347e482f5', '99e854d1-a63b-4e08-9c35-0bd448f730d1', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Wilayah Persekutuan Putrajaya');
+            
+-- Johor	79
+            <PartyAgency>
+               <PartyAgencyIDNo>9d5cf228-ce25-43ab-a28d-ca01141985a8</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Batu Pahat</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            
+-- Pulau Pinang	80
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992080, 710428, 332, '523f5b88-21eb-4c12-a4c9-ca7178e2e0e8', '6015e6a5-9c18-4bba-9745-bc1a496f7967', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Seberang Perai Tengah');
+
+-- Pahang	81
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992081, 205, 328, '52aab3ef-5896-4707-915b-ca934f618678', '70dd54a8-7576-404a-b66d-a65a10a69f43', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Pekan');
+
+            
+-- Johor	82
+            <PartyAgency>
+               <PartyAgencyIDNo>c0ffa173-dc9c-4414-b9bc-cbf44e22ccb8</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Tangkak</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            
+-- Selangor	83
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992083, 212, 331, 'ee36d046-6a1b-4854-9ed3-cc7513107fb6', 'f05d9e40-2045-423c-8abf-73f46afdc78d', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Sepang');
+
+-- Selangor	84
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992084, 285, 331, 'ec244620-ba1b-48a5-bd9b-dab7550c504d', 'f05d9e40-2045-423c-8abf-73f46afdc78d', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Klang');
+
+-- Kelantan	85
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992085, 31, 335, '6f849cae-ff82-4e1e-8188-db48b43b6eab', 'dda63d7a-8075-46ff-b5e0-526d6e585ac1', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Jajahan Kota Bharu');
+
+            
+-- Pulau Pinang	86
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992086, 1610434, 332, '5f0da921-7450-4a1f-be96-ea6fea5b837a', '6015e6a5-9c18-4bba-9745-bc1a496f7967', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Barat Daya');
+
+-- Johor	87
+            <PartyAgency>
+               <PartyAgencyIDNo>d0d932d7-e208-4aec-b237-ec36a6dd5111</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Pontian</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            
+-- Pahang	88
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992088, 65, 328, '6c347441-1c16-483d-90f5-ec7c141edf8a', '70dd54a8-7576-404a-b66d-a65a10a69f43', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Kuantan');
+
+            
+-- Negeri Sembilan	89
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992089, 53, 330, 'f283594e-6298-4dcf-85f8-ecc0789457d0', 'b46e0723-9bf3-46c3-95f6-625e7db92981', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Seremban');
+
+-- Pahang	90
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992090, 257, 328, '0eaca528-381f-4764-a156-ee6078ced85d', '70dd54a8-7576-404a-b66d-a65a10a69f43', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Temerloh');
+
+            
+-- Negeri Sembilan	91
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992091, 223, 330, 'efc51ff4-e54b-4a66-909c-eedd422d3c8f', 'b46e0723-9bf3-46c3-95f6-625e7db92981', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Jelebu');
+
+-- Kelantan	92
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992092, 254, 335, '38a32f94-8070-4536-bf34-ef15bd0d25cb', 'dda63d7a-8075-46ff-b5e0-526d6e585ac1', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Jajahan Pasir Mas');
+
+            
+-- Pahang	93
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992093, 268, 328, '420fc7d1-d13e-4cd4-a077-f02a75766633', '70dd54a8-7576-404a-b66d-a65a10a69f43', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Raub');
+
+            
+-- Perak	94 Pakai ID_PEJABAT SELAMA
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992094, 246, 329, 'c73b8322-48d2-4601-92f3-f0d6a6ceab30', '689ffa90-1393-47f9-9499-3f685566ae38', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Larut Matang & Selama');
+
+            
+-- Terengganu	95
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992095, 233, 334, 'b0991f1e-58e4-4d69-ae4b-f1f78bc6ba3a', 'c5c40654-a22f-4204-adf8-b65b954290de', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Besut');
+
+-- Terengganu	96
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992096, 188, 334, '24aff222-b910-4449-84e6-f68c7e3aaa17', 'c5c40654-a22f-4204-adf8-b65b954290de', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Marang');
+
+-- Kedah	97
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992097, 274, 327, '9ea97c49-5897-4dd8-a5df-f6cb7d2a1292', 'aaea5021-9985-45ed-817e-44d7c20d0d67', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Kubang Pasu');
+
+-- Selangor	98
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992098, 231, 331, '686e7499-61fc-4680-a78a-fa9476a10bf9', 'f05d9e40-2045-423c-8abf-73f46afdc78d', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Hulu Selangor');
+
+-- Kelantan	99
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992099, 266, 335, '9bafda78-ccf3-4cfa-9548-fcde391916ed', 'dda63d7a-8075-46ff-b5e0-526d6e585ac1', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Jajahan Tanah Merah');
+
+
+-- Johor	100
+            <PartyAgency>
+               <PartyAgencyIDNo>82763f05-24d3-4b6f-af26-fde895a75437</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Kota Tinggi</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+
+-- Perak	101
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(9920101, 303, 329, '811161b9-d880-4770-8fa4-fe6cfaa2148f', '689ffa90-1393-47f9-9499-3f685566ae38', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Kerian');
+
+			
+-- Johor	102
+			<PartyAgency>
+				<PartyAgencyIDNo>30eafcfe-06c8-4051-ace8-04937780c3d1</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Mersing</PartyAgencyName>
+               <Status>A</Status>
+			</PartyAgency>
+
+
+
+--2020/09/010
+Peguam Negara, Putrajaya
 INSERT INTO TBLINTMTPEJABATMAP
 (ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
 VALUES(99206, 0, 0, '', '99e854d1-a63b-4e08-9c35-0bd448f730d1', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah');
 
 Peguam Negara, Kuala Lumpur
-
 INSERT INTO TBLINTMTPEJABATMAP
 (ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
 VALUES(99207, 0, 0, '', '2dc7faaf-583d-48c9-8428-3f0d97a933f5', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah');
 
 Pejabat Penasihat Undang-Undang Negeri Perak
-
 INSERT INTO TBLINTMTPEJABATMAP
 (ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
 VALUES(99208, 0, 0, '', '689ffa90-1393-47f9-9499-3f685566ae38', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah');
@@ -34,18 +552,13 @@ Pejabat Penasihat Undang-Undang Negeri Perlis|
 INSERT INTO TBLINTMTPEJABATMAP
 (ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
 VALUES(992010, 0, 0, '', 'b44dcf80-2c0c-440f-97fa-5c5a07533700', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah');
-               
 
 Pejabat Penasihat Undang-Undang Negeri Pahang|
 INSERT INTO TBLINTMTPEJABATMAP
 (ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
 VALUES(992011, 0, 0, '', '70dd54a8-7576-404a-b66d-a65a10a69f43', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah');
 
-30eafcfe-06c8-4051-ace8-04937780c3d1</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Daerah Mersing
-
 Peguam Negara, Sabah
-
 INSERT INTO TBLINTMTPEJABATMAP
 (ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
 VALUES(992012, 0, 0, '', 'e3a7b85f-07ef-4b10-90c6-dd67821f73d4', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah');
@@ -70,102 +583,20 @@ INSERT INTO TBLINTMTPEJABATMAP
 (ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
 VALUES(992016, 123, 334, '46ebfe17-0601-4ad8-8479-13f815db0935', 'c5c40654-a22f-4204-adf8-b65b954290de', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Kuala Terengganu');
 
-            <PartyAgency>
-               <PartyAgencyIDNo>f07b1ba4-8064-41b8-bba4-14f1ddd68786</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Daerah Sabak Bernam</PartyAgencyName>
+            </PartyAgency>
+               <PartyAgencyIDNo>4447f6a5-5411-46d1-83e6-1471ddc3250b</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Wilayah Persekutuan Labuan</PartyAgencyName>
                <Status>A</Status>
             </PartyAgency>
-            <PartyAgency>
-               <PartyAgencyIDNo>8e2c8477-846f-4355-afe2-19ff7a0aed3c</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Jajahan Bachok</PartyAgencyName>
-               <Status>A</Status>
-            </PartyAgency>
+            -- Tiada dalam senarai Database Perak
             <PartyAgency>
                <PartyAgencyIDNo>405d9741-dce5-46c8-bf12-1a54afc9b2a4</PartyAgencyIDNo>
                <PartyAgencyName>Pentadbir Tanah Daerah Perak Tengah</PartyAgencyName>
                <Status>A</Status>
             </PartyAgency>
             <PartyAgency>
-               <PartyAgencyIDNo>888cf963-1226-40f1-92c0-1ae94bf60d5f</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Daerah Tampin</PartyAgencyName>
-               <Status>A</Status>
-            </PartyAgency>
-            <PartyAgency>
-               <PartyAgencyIDNo>bb3224ee-24a9-4908-a6ed-1c516f1e63f1</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Daerah Bentong
-a55deacd-304b-4d0d-acd8-1f5f9a4b2343</PartyAgencyIDNo>
+               </PartyAgencyIDNo>a55deacd-304b-4d0d-acd8-1f5f9a4b2343</PartyAgencyIDNo>
                <PartyAgencyName>Pentadbir Tanah Daerah Muar</PartyAgencyName>
-               <Status>A</Status>
-            </PartyAgency>
-            <PartyAgency>
-               <PartyAgencyIDNo>5b097ca4-aed5-4b16-ba05-204b44867335</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Daerah Alor Gajah</PartyAgencyName>
-               <Status>A</Status>
-            </PartyAgency>
-            <PartyAgency>
-               <PartyAgencyIDNo>ddde1393-0d10-4fd0-91ed-231ceb1ae53c</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Daerah Maran</PartyAgencyName>
-               <Status>A</Status>
-            </PartyAgency>
-            <PartyAgency>
-               <PartyAgencyIDNo>ffa74729-7806-400d-b48e-26cbf13d1d61</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Daerah Bera</PartyAgencyName>
-               <Status>A</Status>
-            </PartyAgency>
-            <PartyAgency>
-               <PartyAgencyIDNo>9e738f6b-9273-4034-a7ef-279b02d8db99</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Daerah Kuala Muda</PartyAgencyName>
-               <Status>A</Status>
-            </PartyAgency>
-            <PartyAgency>
-               <PartyAgencyIDNo>2d5a5d66-ba5a-4cf7-b895-27af1e41faa5</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Jajahan Pasir Puteh</PartyAgencyName>
-               <Status>A</Status>
-            </PartyAgency>
-            <PartyAgency>
-               <PartyAgencyIDNo>446aed95-405c-467b-a534-304210060429</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Jajahan Jeli</PartyAgencyName>
-               <Status>A</Status>
-            </PartyAgency>
-            <PartyAgency>
-               <PartyAgencyIDNo>bbdfbf05-dbf3-4ce1-97fe-34e2d311f89f</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Daerah Pendang</PartyAgencyName>
-               <Status>A</Status>
-            </PartyAgency>
-            
-INSERT INTO TBLINTMTPEJABATMAP
-(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
-VALUES(992017, 239, 327, 'bbdfbf05-dbf3-4ce1-97fe-34e2d311f89f', 'aaea5021-9985-45ed-817e-44d7c20d0d67', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Pendang');
-            
-            
-            <PartyAgency>
-               <PartyAgencyIDNo>3c25fc26-e9b9-4d8d-9979-36936ffa9cc4</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Daerah Kuala Selangor</PartyAgencyName>
-               <Status>A</Status>
-            </PartyAgency>
-            <PartyAgency>
-               <PartyAgencyIDNo>2927f280-9022-44be-bca8-36e47957902d</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Daerah Hulu Perak</PartyAgencyName>
-               <Status>A</Status>
-            </PartyAgency>
-            <PartyAgency>
-               <PartyAgencyIDNo>f9bf0324-10c8-4d41-ba75-37128f72d4b7</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Daerah Muallim</PartyAgencyName>
-               <Status>A</Status>
-            </PartyAgency>
-            <PartyAgency>
-               <PartyAgencyIDNo>a6aeba93-3d6a-44e8-9e77-3932ae1a70fe</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Jajahan Gua Musang</PartyAgencyName>
-               <Status>A</Status>
-            </PartyAgency>
-            <PartyAgency>
-               <PartyAgencyIDNo>e0d6961f-a5a1-4b04-9db3-39d1f531bd5b</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Daerah Manjung</PartyAgencyName>
-               <Status>A</Status>
-            </PartyAgency>
-            <PartyAgency>
-               <PartyAgencyIDNo>83c8d843-b2f3-4e23-8d74-3aac4cf3111c</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Daerah Cameron Highlands</PartyAgencyName>
                <Status>A</Status>
             </PartyAgency>
             <PartyAgency>
@@ -301,16 +732,6 @@ VALUES(992017, 239, 327, 'bbdfbf05-dbf3-4ce1-97fe-34e2d311f89f', 'aaea5021-9985-
             <PartyAgency>
                <PartyAgencyIDNo>96140317-a3a2-4f1e-8ae2-8e790f6114ec</PartyAgencyIDNo>
                <PartyAgencyName>Pentadbir Tanah Daerah Segamat</PartyAgencyName>
-               <Status>A</Status>
-            </PartyAgency>
-            <PartyAgency>
-               <PartyAgencyIDNo>904b2c3a-c15e-40c1-8511-906b45a6bca6</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Daerah Rembau</PartyAgencyName>
-               <Status>A</Status>
-            </PartyAgency>
-            <PartyAgency>
-               <PartyAgencyIDNo>dbc295a2-36e4-46da-847c-918940a0de64</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Daerah Bandar Baharu</PartyAgencyName>
                <Status>A</Status>
             </PartyAgency>
             <PartyAgency>
@@ -489,7 +910,7 @@ VALUES(992017, 239, 327, 'bbdfbf05-dbf3-4ce1-97fe-34e2d311f89f', 'aaea5021-9985-
                <Status>A</Status>
             </PartyAgency>
             <PartyAgency>
-               <PartyAgencyIDNo>811161b9-d880-4770-8fa4-fe6cfaa2148f</PartyAgencyIDNo>
+               <PartyAgencyIDNo>30eafcfe-06c8-4051-ace8-04937780c3d1</PartyAgencyIDNo>
                <PartyAgencyName>Pentadbir Tanah Daerah Kerian   
 --Pejabat Penasihat Undang-Undang Negeri Selangor| Pentadbir Tanah Daerah Sabak Bernam
 INSERT INTO TBLINTMTPEJABATMAP

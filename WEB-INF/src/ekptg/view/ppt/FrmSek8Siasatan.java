@@ -2,6 +2,9 @@ package ekptg.view.ppt;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -14,6 +17,7 @@ import lebah.portal.AjaxBasedModule;
 import lebah.util.DateUtil;
 
 import org.apache.log4j.Logger;
+import org.jaxen.saxpath.Operator;
 
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
@@ -61,6 +65,38 @@ public class FrmSek8Siasatan extends AjaxBasedModule{
 		String jenis_permohonan = "4";
 		String jenis_button = "";	
 		//String id_bangunan = "";
+		
+		
+		DateFormat df = new SimpleDateFormat("ddMMyyyy");
+        Date currentDate = new Date();
+        
+        String newDate = df.format(currentDate);
+        
+        long d1 = Long.valueOf(newDate);
+
+        context.put("newDate",d1);
+         
+        myLogger.info("newDate :" +d1);
+                 
+        long Datev7;
+        Datev7 = 11092020; // ganti v7
+        context.put("Datev7",Datev7);
+        
+        long Datev6;
+        Datev6 = 11102017; // ganti v6
+        context.put("Datev6",Datev6);
+         
+        myLogger.info("Datev7 :" +Datev7);
+         
+        long diffv7;
+ 		diffv7 = d1 - Datev7;
+ 		context.put("diffv7",diffv7);
+        myLogger.info("diffv7 "+diffv7);
+        
+        long diffv6;
+ 		diffv6 = d1 - Datev6;
+ 		context.put("diffv6",diffv6);
+        myLogger.info("diffv6 "+diffv6);
 		
 		 String idStatus = getParam("idStatus");
 		 String idPermohonan = getParam("id_permohonan");
