@@ -1,4 +1,12 @@
---2020/09/010
+--2020/09/10
+
+-- Wilayah Labuan 17
+            </PartyAgency>
+            	</PartyAgencyIDNo>4447f6a5-5411-46d1-83e6-1471ddc3250b</PartyAgencyIDNo>
+            	<PartyAgencyName>Pentadbir Tanah Wilayah Persekutuan Labuan</PartyAgencyName>
+            	<Status>A</Status>
+            </PartyAgency>
+
 Peguam Negara, Putrajaya
 
 INSERT INTO TBLINTMTPEJABATMAP
@@ -62,10 +70,6 @@ INSERT INTO TBLINTMTPEJABATMAP
 (ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
 VALUES(992016, 123, 334, '46ebfe17-0601-4ad8-8479-13f815db0935', 'c5c40654-a22f-4204-adf8-b65b954290de', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Kuala Terengganu');
 
-4447f6a5-5411-46d1-83e6-1471ddc3250b</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Wilayah Persekutuan Labuan</PartyAgencyName>
-               <Status>A</Status>
-            </PartyAgency>
             <PartyAgency>
                <PartyAgencyIDNo>f07b1ba4-8064-41b8-bba4-14f1ddd68786</PartyAgencyIDNo>
                <PartyAgencyName>Pentadbir Tanah Daerah Sabak Bernam</PartyAgencyName>
@@ -486,7 +490,13 @@ VALUES(992017, 239, 327, 'bbdfbf05-dbf3-4ce1-97fe-34e2d311f89f', 'aaea5021-9985-
             </PartyAgency>
             <PartyAgency>
                <PartyAgencyIDNo>811161b9-d880-4770-8fa4-fe6cfaa2148f</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Daerah Kerian               
+               <PartyAgencyName>Pentadbir Tanah Daerah Kerian   
+--Pejabat Penasihat Undang-Undang Negeri Selangor| Pentadbir Tanah Daerah Sabak Bernam
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992018, 260, 331, 'f07b1ba4-8064-41b8-bba4-14f1ddd68786', 'f05d9e40-2045-423c-8abf-73f46afdc78d', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Sabak Bernam');
+               
+               
 
 --2020/09/08
 
@@ -521,9 +531,19 @@ DELETE FROM TBLINTMTPEJABATMAP
 
 ALTER TABLE TBLINTMTPEJABATMAP ADD JAWATAN VARCHAR2(50);
 
+--199	Pejabat Tanah Kulim
+--220	Pejabat Tanah Bandar Baharu
 
-SELECT * FROM TBLINTMTPEJABATMAP
-ORDER BY ID_PEJABATU,ID_PEJABATPEN,ID_PEJABATMAP
+--53	Pejabat Daerah Dan Tanah Seremban
+--172	Pejabat Daerah Dan Tanah Port Dickson
+--203	Pejabat Daerah Dan Tanah Rembau
+
+
+SELECT rowid,p.* FROM TBLINTMTPEJABATMAP p
+ORDER BY 
+--
+ID_PEJABATU,ID_PEJABATPEN,
+ID_PEJABATMAP
 
 CREATE OR REPLACE TRIGGER TBLINTMTPEJABATMAP_BI    
 before insert on     TBLINTMTPEJABATMAP    for each row
@@ -581,8 +601,8 @@ WHERE
 --NAMA_PEJABAT LIKE '%Undang-Undang%'
 --NAMA_PEJABAT LIKE '%Tanah%'
 --
-ID_JENISPEJABAT IN (2,81)
-AND ID_NEGERI=2
+ID_JENISPEJABAT IN (2)
+AND ID_NEGERI=5
 
  INFO [09/Sep/2020 17:06:40] (IntegrasiMT.java:547) getParty:
  
