@@ -392,7 +392,7 @@ function paparHakmilik(id_hakmilik,id_permohonan,flag_skrin){
 
 
 function viewBorangEInBulk(id_borangE,flag_skrin){
-	alert("xxx");
+
 	try {
 			window.opener.viewBorangEInBulk(id_borangE);
 		
