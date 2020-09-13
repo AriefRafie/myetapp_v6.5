@@ -729,8 +729,8 @@ public class PPTHeader {
 	    		sql += " and sx.id_siasatan = (select max(sx1.id_siasatan) from Tblpptsiasatan sx1 where sx1.id_hakmilik = hx.id_hakmilik))))as flag_open_paging17, ";                                                                              
 
 	    		/**OPEN PAGING 18*/
-	    		sql += " (select count(*) from Tblpptpermohonan px ";
-	    		sql += " where px.id_permohonan = p.id_permohonan ";
+	    		sql += " (select count(*) from Tblpptpermohonan px ,TBLPPTBORANGE E";
+	    		sql += " where px.id_permohonan = p.id_permohonan AND E.ID_BORANGE IS NOT NULL ";
 	    		sql += " and (" +
 	    				/*"px.id_status='72' ";   
 	    		sql += " OR px.id_status='76' "; 
@@ -745,7 +745,13 @@ public class PPTHeader {
 	    		sql += " OR px.flag_segera = '3' AND px.id_permohonan in (select distinct hx.id_permohonan from Tblppthakmilik hx "; 
 	    		sql += " where hx.id_permohonan = p.id_permohonan and hx.flag_segera_sebahagian = 'Y') ";
 	    		sql += " AND px.id_permohonan in (select distinct bix.id_permohonan from Tblpptborangi bix "; 
-	    		sql += " where bix.id_permohonan = p.id_permohonan)))as flag_open_paging18, ";
+	    		sql += " where bix.id_permohonan = p.id_permohonan)) ";
+	    		sql += " OR (P.FLAG_SEGERA = '1' AND P.ID_PERMOHONAN IN " ; 
+	    		sql += " (SELECT P1.ID_PERMOHONAN FROM TBLPPTPERMOHONAN P1, TBLPPTHAKMILIK HM1, TBLPPTBORANGEHAKMILIK BE1, TBLPPTBORANGE E1 WHERE " ; 
+	    		sql += " P1.ID_PERMOHONAN = HM1.ID_PERMOHONAN " ; 
+	    		sql += " AND BE1.ID_HAKMILIK = HM1.ID_HAKMILIK " ;
+	    		sql += " AND E1.ID_BORANGE = BE1.ID_BORANGE AND E1.TARIKH_BORANGE IS NOT NULL) " ; 
+	    		sql += " )) as flag_open_paging18, ";
 
 	    		
 	    		/**OPEN PAGING 19*/

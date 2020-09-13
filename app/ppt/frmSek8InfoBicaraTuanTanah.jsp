@@ -4,6 +4,12 @@
 -->
 </style>
 
+ <input type="hidden" name="id_bangunan" id="id_bangunan" value="$!socJenisBangunan" />
+ <input type="hidden" name="newDate" id="newDate" value="$!newDate" />
+ <input type="hidden" name="Datev7" id="Datev7" value="$!Datev7" />
+ <input type="hidden" name="Datev6" id="Datev6" value="$!Datev6" />
+ <input type="hidden" name="diffv7" id="diffv7" value="$!diffv7" />
+  <input type="hidden" name="diffv6" id="diffv6" value="$!diffv6" />
 
 
 
@@ -18,13 +24,10 @@
 #set($txdPecahSempadan = "")
 #set($sorTukarSyarat = "")
 #set($txdTukarSyarat = "")
-
-
- 
-
-
-
-
+#set($txtKeteranganPembelian = "")
+#set($txtKeteranganPusaka = "")
+#set($txtKeteranganPerletakhakan = "")
+#set($txtKeteranganPemberimilikan = "")
 
 
 #if($readmode == "edit")
@@ -38,7 +41,7 @@
 #set($readonlymode = "")
 #end
 
-:$readmode
+
 <table width="100%">
    
     #foreach($list_siasatan in $maklumat_siasatan)
@@ -50,11 +53,15 @@
 #set($txtJenisTanaman = $list_siasatan.JENIS_TANAMAN)
 #set($socJenisBangunan = $list_siasatan.JENIS_BANGUNAN)
 #set($socBangunan = $list_siasatan.JENIS_BANGUNAN)
-#set($keteranganBangunan = $list_siasatan.KETERANGAN_TANAH)
+#set($keteranganBangunan = $list_siasatan.JENIS_BANGUNAN)
 #set($sorPecahSempadan = $list_siasatan.FLAG_PECAH_SEMPADAN)
 #set($txdPecahSempadan = $list_siasatan.TARIKH_PECAH_SEMPADAN)
 #set($sorTukarSyarat = $list_siasatan.FLAG_TUKAR_SYARAT)
 #set($txdTukarSyarat = $list_siasatan.TARIKH_TUKAR_SYARAT)
+#set($txtKeteranganPembelian = $list_siasatan.KETERANGAN_PEMBELIAN)
+#set($txtKeteranganPusaka = $list_siasatan.KETERANGAN_PUSAKA)
+#set($txtKeteranganPerletakhakan = $list_siasatan.KETERANGAN_PERLETAKHAKAN)
+#set($txtKeteranganPemberimilikan = $list_siasatan.KETERANGAN_PEMBERIMILIKAN)
 #end
 
 #if($readmode == "view")
@@ -70,8 +77,6 @@
   </tr>
   <tr>
 <td>#parse("app/ppt/header_siasatan.jsp") </td>
-
- <input type="hidden" name="id_bangunan" id="id_bangunan" value="$!socJenisBangunan" />
 
   </tr>
 <tr>
@@ -168,6 +173,7 @@
       </tr>
       
      
+   
       <tr>
         <td>&nbsp;</td>
         <td>Keterangan Tuan Tanah / Wakil</td>
@@ -206,36 +212,14 @@
 				<!-- PPT-25 (ii) -->
 			
 			</table>
-		</td>
+		</td>	
       </tr>
+   
       
-      
-      <tr id="lainlain">
-        <td valign="top">&nbsp;</td>
-        <td valign="top">Lain-lain</td>
-        <td valign="top">:</td>
-        <td>
-
-         
-       <textarea name="txtKeteranganTuanTanah" id="txtKeteranganTuanTanah" cols="60"   rows="6" 
-         onBlur="check_length(this,'4000','txtKeteranganTuanTanah_check','txtKeteranganTuanTanah_num','normal','no','keterangan tuan tanah');"  
-         onKeyup="check_length(this,'4000','txtKeteranganTuanTanah_check','txtKeteranganTuanTanah_num','normal','no','keterangan tuan tanah');" 
-         onKeydown="check_length(this,'4000','txtKeteranganTuanTanah_check','txtKeteranganTuanTanah_num','normal','no','keterangan tuan tanah');"                    
-          $readonlymode class = "$disabledmode" 
-        >$txtKeteranganTuanTanah</textarea> 
-          
-        
-       #if($readmode == "edit")           
-        <div><span id="txtKeteranganTuanTanah_num" style="color:blue;" ></span><span> Baki Aksara</span>         </div>
-         #else
-         <input name="txtKeteranganTuanTanah_num" id="txtKeteranganTuanTanah_num" size="3" value="4000"  style=" display:none" > 
-         #end
-  <div id="txtKeteranganTuanTanah_check" class="alert_msg" ></div>               </td>
-      </tr>
-      
+    
             <tr id="pembelian">
         <td valign="top">&nbsp;</td>
-        <td valign="top">Pembelian</td>
+        <td valign="top">Keterangan Pembelian</td>
         <td valign="top">:</td>
         <td>
 
@@ -249,6 +233,29 @@
           
         
        #if($readmode == "edit")           
+        <div><span id="txtKeteranganPembelian_num" style="color:blue;" ></span><span> Baki Aksara</span>         </div>
+         #else
+         <input name="txtKeteranganPembelian_num" id="txtKeteranganPembelian_num" size="3" value="4000"  style=" display:none" > 
+         #end
+  <div id="txtKeteranganPembelian_check" class="alert_msg" ></div>               </td>
+      </tr>
+      
+        <tr id="pusaka">
+        <td valign="top">&nbsp;</td>
+        <td valign="top">Keterangan Pusaka</td>
+        <td valign="top">:</td>
+        <td>
+
+         
+       <textarea name="txtKeteranganPusaka" id="txtKeteranganPusaka" cols="60"   rows="6" 
+         onBlur="check_length(this,'4000','txtKeteranganPusaka_check','txtKeteranganPusaka_num','normal','no','keterangan Pusaka');"  
+         onKeyup="check_length(this,'4000','txtKeteranganPusaka_check','txtKeteranganPusaka_num','normal','no','keterangan Pusaka');" 
+         onKeydown="check_length(this,'4000','txtKeteranganPusaka_check','txtKeteranganPusaka_num','normal','no','keterangan Pusaka');"                    
+          $readonlymode class = "$disabledmode" 
+        >$txtKeteranganPusaka</textarea> 
+          
+        
+       #if($readmode == "edit")           
         <div><span id="txtKeteranganPusaka_num" style="color:blue;" ></span><span> Baki Aksara</span>         </div>
          #else
          <input name="txtKeteranganPusaka_num" id="txtKeteranganPusaka_num" size="3" value="4000"  style=" display:none" > 
@@ -257,7 +264,8 @@
       </tr>
       
       
-            <tr id="perletakhakan ">
+      
+        <tr id="perletakhakan ">
         <td valign="top">&nbsp;</td>
         <td valign="top">Keterangan Perletakhakan Mahkamah</td>
         <td valign="top">:</td>
@@ -280,32 +288,10 @@
   <div id="txtKeteranganPerletakhakan_check" class="alert_msg" ></div>               </td>
       </tr>
       
-          <tr id="pusaka">
-        <td valign="top">&nbsp;</td>
-        <td valign="top">Pusaka</td>
-        <td valign="top">:</td>
-        <td>
-
-         
-       <textarea name="txtKeteranganPusaka" id="txtKeteranganPusaka" cols="60"   rows="6" 
-         onBlur="check_length(this,'4000','txtKeteranganPusaka_check','txtKeteranganPusaka_num','normal','no','keterangan Pusaka');"  
-         onKeyup="check_length(this,'4000','txtKeteranganPusaka_check','txtKeteranganPusaka_num','normal','no','keterangan Pusaka');" 
-         onKeydown="check_length(this,'4000','txtKeteranganPusaka_check','txtKeteranganPusaka_num','normal','no','keterangan Pusaka');"                    
-          $readonlymode class = "$disabledmode" 
-        >$txtKeteranganPusaka</textarea> 
-          
         
-       #if($readmode == "edit")           
-        <div><span id="txtKeteranganPusaka_num" style="color:blue;" ></span><span> Baki Aksara</span>         </div>
-         #else
-         <input name="txtKeteranganPusaka_num" id="txtKeteranganPusaka_num" size="3" value="4000"  style=" display:none" > 
-         #end
-  <div id="txtKeteranganPusaka_check" class="alert_msg" ></div>               </td>
-      </tr>
-      
       <tr id="pemberimilikan">
         <td valign="top">&nbsp;</td>
-        <td valign="top">Pemberimilikan</td>
+        <td valign="top">Keterangan Pemberimilikan</td>
         <td valign="top">:</td>
         <td>
 
@@ -325,6 +311,31 @@
          #end
   <div id="txtKeteranganPemberimilikan_check" class="alert_msg" ></div>               </td>
       </tr>
+      
+        <tr id="lainlain">
+        <td valign="top">&nbsp;</td>
+        <td valign="top">Lain-lain</td>
+        <td valign="top">:</td>
+        <td>
+
+         
+       <textarea name="txtKeteranganTuanTanah" id="txtKeteranganTuanTanah" cols="60"   rows="6" 
+         onBlur="check_length(this,'4000','txtKeteranganTuanTanah_check','txtKeteranganTuanTanah_num','normal','no','keterangan tuan tanah');"  
+         onKeyup="check_length(this,'4000','txtKeteranganTuanTanah_check','txtKeteranganTuanTanah_num','normal','no','keterangan tuan tanah');" 
+         onKeydown="check_length(this,'4000','txtKeteranganTuanTanah_check','txtKeteranganTuanTanah_num','normal','no','keterangan tuan tanah');"                    
+          $readonlymode class = "$disabledmode" 
+        >$txtKeteranganTuanTanah</textarea> 
+          
+        
+       #if($readmode == "edit")           
+        <div><span id="txtKeteranganTuanTanah_num" style="color:blue;" ></span><span> Baki Aksara</span>         </div>
+         #else
+         <input name="txtKeteranganTuanTanah_num" id="txtKeteranganTuanTanah_num" size="3" value="4000"  style=" display:none" > 
+         #end
+  <div id="txtKeteranganTuanTanah_check" class="alert_msg" ></div>               </td>
+      </tr>
+      
+      
   <!-- 
       <tr>
         <td width="1%">&nbsp;</td>
@@ -337,6 +348,8 @@
    -->
    
       <!-- PPT-25 ii -->
+  
+ 
       <tr>
         <td>&nbsp;</td>
         <td>Jenis Tanaman</td>
@@ -353,7 +366,7 @@
 				  	#else
 				    	#set ( $checked_ = "" )
 				  	#end
-				        	 <input type="checkbox" name="jenistanaman" class="jenistanaman" id="checkbox2" value="$semakan.id"  $checked_ $selectstyle required="required">
+				        	 <input type="checkbox" name="jenistanaman" class="jenistanaman" id="checkbox2" value="$semakan.id"  $checked_ $selectstyle>
 				        	 
 				  		</td>
 			    		<td class="$row">
@@ -372,9 +385,21 @@
 			</table>
 		</td>
       </tr>
-      <!-- PPT-25 ii -->
       
-     <!--  <tr>
+ <!--
+       <tr>
+        <td width="1%">&nbsp;</td>
+        <td width="28%">Jenis Tanaman </td>
+        <td width="1%">:</td>
+        <td width="70%"><input name="txtJenisTanaman" type="text" id="txtJenisTanaman" size="50" maxlength="50" value="$txtJenisTanaman"  onBlur="checking_validation(this,'txtJenisTanaman_check','no','jenis tanaman','normal')" $readonlymode class = "$disabledmode" 
+        onkeyup="checking_validation(this,'txtJenisTanaman_check','no','jenis tanaman','normal')" >
+        <span id="txtJenisTanaman_check" class = "alert_msg" ></span> </td>
+      </tr>
+        -->
+      <!-- PPT-25 ii -->
+   
+    <!--  
+      <tr>
         <td>&nbsp;</td>
         <td>Jenis Bangunan</td>
         <td>:</td>
@@ -382,8 +407,8 @@
         onkeyup="checking_validation(this,'txtJenisBangunan_check','no','jenis bangunan','normal')" >
         <span id="txtJenisBangunan_check" class = "alert_msg" ></span> </td>
       </tr>
-      
-      -->
+   -->
+   
      #if($readmode == "edit" ) 
       <tr>
     			<td>&nbsp;</td>
@@ -401,6 +426,8 @@
     			<td> <input name="keteranganBangunan" type="text" id="keteranganBangunan" value="$keteranganBangunan" size="50" class="disabled" />   </td>
     		</tr>
     		#end
+    	
+    		
       <tr>
         <td>&nbsp;</td>
         <td>Status Pecah Sempadan</td>
@@ -1322,29 +1349,7 @@ function tambah(id_hakmilik,id_pembatalan)
 
 
 function simpan(id_siasatan)	{
-	var c = 0;
-	semakJenisTanaman();
-	semakJenisPemilikan();
-	
-if(document.${formName}.validation_field != null)	{
-   if (document.${formName}.validation_field.length == null)  {
-		if(document.${formName}.validation_field.value == "invalid")  {
-				c++;
-		}
-   }	else 	{
-   for (i = 0; i < document.${formName}.validation_field.length; i++)	{		
-			if(document.${formName}.validation_field[i].value == "invalid")	{
-               c++;	 
-			}	
-        }
-    }
-}
 
-
-if(c>0)	{
-	alert("Sila pastikan maklumat yang diisi adalah lengkap dan sah");
-	return;
-}	else	{
 input_box = confirm("Adakah anda pasti?");
 	if (input_box == true) {
 	document.${formName}.command.value = "Siasatan";
@@ -1356,7 +1361,7 @@ input_box = confirm("Adakah anda pasti?");
 	document.${formName}.point.value = "tuan_tanah";	
 	document.${formName}.submit(); 
 	}
-}
+
 }
 
 
@@ -1797,35 +1802,7 @@ function showRow(rowId)
 }
 
 
-function semakJenisTanaman() {
-    var flag = 0;
-    for (var i = 0; i < 5; i++) {
-      if(document.${formName}["jenistanaman"][i].checked){
-      	flag++;
-      }
-    }
-    
-    if (flag == 0) {
-      alert ("Pastikan 'Jenis Tanaman' dipilih");
-      return c++;
-    }
-    return true;
-}
 
-function semakJenisPemilikan() {
-    var flag = 0;
-    for (var i = 0; i < 5; i++) {
-      if(document.${formName}["jenispemilikan"][i].checked){
-      	flag++;
-      }
-    }
-    
-    if (flag == 0) {
-      alert ("Pastikan 'Keterangan Tuan Tanah / Wakil' dipilih");
-      return c++;
-    }
-    return true;
-}
 
   
 

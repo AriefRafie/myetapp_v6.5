@@ -12613,6 +12613,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 	private Vector listSumDataHta = new Vector();
 	private Vector listSumDataHtaDulu = new Vector();
 	private Vector listSimati = new Vector();
+	private Vector listPemohon = new Vector();
 
 	public void setSumDataHta(String id2) throws Exception {
 		Db db = null;
@@ -12763,6 +12764,43 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 		}
 	}
 	
+	public void setPemohon(String idSimati) throws Exception {
+		Db db = null;
+		listPemohon.clear();
+		String sql = "";
+		try{
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			sql = "SELECT UMUR, NO_HP, EMEL FROM TBLPPKPEMOHON WHERE ID_PEMOHON = "
+				+ " (SELECT ID_PEMOHON FROM TBLPPKPERMOHONAN WHERE ID_PERMOHONAN =(SELECT ID_PERMOHONAN FROM TBLPPKPERMOHONANSIMATI "
+				+ " WHERE ID_SIMATI = '"
+				+ idSimati + "'))";
+			
+			System.out.println("Maklumat Pemohon = " + sql.toUpperCase());
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("UMUR", rs.getString("UMUR") == null ? "" 
+						: rs.getString("UMUR"));
+				h.put("NO_HP", rs.getString("NO_HP") == null ? ""
+						: rs.getString("NO_HP"));
+				h.put("EMEL", rs.getString("EMEL") == null ? ""
+						: rs.getString("EMEL"));
+				
+
+				listPemohon.addElement(h);
+				
+			}
+			// return list;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
 	public void setSumDataHtaDulu(String id2) throws Exception {
 		Db db = null;
 		listSumDataHtaDulu.clear();
@@ -12903,6 +12941,11 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 
 	public Vector getSimati() {
 		return listSimati;
+		
+	}
+	
+	public Vector getPemohon() {
+		return listPemohon;
 		
 	}
 	public Vector getSumDataHtaDulu() {

@@ -1,3 +1,4 @@
+
 #set($frmtdate = "&nbsp;<i><font color='blue' style='font-size:10px'>dd/mm/yyyy</font></i>")
 
 #if($mode=="new")
@@ -195,7 +196,7 @@
 		
 	</fieldset>
 	
-	
+
 	<table width="100%" border="0">
 			<tr align="center">
 				<td>

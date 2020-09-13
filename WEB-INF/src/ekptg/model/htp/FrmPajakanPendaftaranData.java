@@ -17,6 +17,8 @@ import lebah.db.SQLRenderer;
 
 import org.apache.log4j.Logger;
 
+import com.mysql.jdbc.MysqlSavepoint;
+
 import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
 
@@ -126,37 +128,187 @@ public class FrmPajakanPendaftaranData {
 				stmt.executeUpdate(sql);
 
 			}
-//			//TBLHTPULASANKJP
-//			r = new SQLRenderer();
-//			long idUlasanKJP = DB.getNextID("TBLHTPULASANKJP_SEQ");
-//			r.add("ID_ULASANKJP", idUlasanKJP);
-//			r.add("ID_PERMOHONAN", idPermohonan);
-//
-//			r.add("ID_MASUK", userId);
-//			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
-//
-//			sql = r.getSQLInsert("TBLHTPULASANKJP");
-//			stmt.executeUpdate(sql);
 
-			//TBLHTPJEMAAHMENTERI
+			//TBLPERMOHONAN
+			Long setIdStatus = 0L;
+			//MJM =5
+			//ros jadikan maklumat tanah
+			//setIdStatus = FrmUtilData.getIdStatusByLangkah("5",subUrusan,"=");
+			setIdStatus = FrmUtilData.getIdStatusByLangkah("3",subUrusan,"=");
+
 			r = new SQLRenderer();
-			mjmData = new FrmPajakanMemorandumJemaahMenteriData();
-			if(mjmData.isMaklumatMemorandumJemaahMenteri(idPermohonan)==false){
+			r.update("ID_FAIL", idFail);
+			r.update("ID_PERMOHONAN", idPermohonan);
+			//r.add("ID_STATUS", "65");
+			r.add("ID_STATUS", setIdStatus);
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			sql = r.getSQLUpdate("TBLPERMOHONAN");
+			// Buka komen oleh Mohamad Rosli pada 2017/04/10
+			stmt.executeUpdate(sql);
 
-				long idJemaahMenteri = DB.getNextID("TBLHTPJEMAAHMENTERI_SEQ");
-				r.add("ID_JEMAAHMENTERI", idJemaahMenteri);
+			//TBLRUJSUBURUSANSTATUSFAIL
+			r = new SQLRenderer();
+			r.update("ID_FAIL", idFail);
+			r.update("ID_PERMOHONAN", idPermohonan);
+			r.update("AKTIF", "1");
+			r.add("AKTIF", "0");
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			sql = r.getSQLUpdate("TBLRUJSUBURUSANSTATUSFAIL");
+			stmt.executeUpdate(sql);
+
+			Long setIdSuburusanstatus = 0L;
+			//ros jadikan maklumat tanah
+			//setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah("5",subUrusan,"=");
+			setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah("3",subUrusan,"=");
+
+			r = new SQLRenderer();
+			long idSuburusanstatusfail = DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");
+			r.add("ID_SUBURUSANSTATUSFAIL", idSuburusanstatusfail);
+			r.add("ID_PERMOHONAN", idPermohonan);
+			r.add("ID_SUBURUSANSTATUS",setIdSuburusanstatus); //MEMORANDUM JEMAAH MENTERI
+			r.add("AKTIF", "1");
+			r.add("ID_FAIL", idFail);
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
+			stmt.executeUpdate(sql);
+			conn.commit();
+
+		} catch (SQLException ex) {
+	    	try {
+	    		conn.rollback();
+	    	} catch (SQLException e) {
+	    		throw new Exception("Rollback error : " + e.getMessage());
+	    	}
+	    	throw new Exception("Ralat : Masalah penyimpanan data " + ex.getMessage());
+
+	    } finally {
+			if (db != null)
+				db.close();
+		}
+
+	}
+
+	public void hantarPenyemak(String idFail, String idPermohonan, String subUrusan, HttpSession session) throws Exception {
+		String userId = session.getAttribute("_ekptg_user_id").toString();
+		FrmPajakanMemorandumJemaahMenteriData mjmData = new FrmPajakanMemorandumJemaahMenteriData();
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+	    	conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			//TBLHTPPEMOHON
+			if(mjmData.isMaklumatPemohonPajakan(idPermohonan)==false){
+				long idPemohon = DB.getNextID("TBLHTPPEMOHON_SEQ");
+				r.add("ID_PEMOHON", idPemohon);
 				r.add("ID_PERMOHONAN", idPermohonan);
 
 				r.add("ID_MASUK", userId);
 				r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
-				sql = r.getSQLInsert("TBLHTPJEMAAHMENTERI");
+				sql = r.getSQLInsert("TBLHTPPEMOHON");
 				stmt.executeUpdate(sql);
 
 			}
+
+			//TBLPERMOHONAN
+			Long setIdStatus = 0L;
+			//ros jadikan tindakan penyemak
+			//setIdStatus = FrmUtilData.getIdStatusByLangkah("5",subUrusan,"=");
+			setIdStatus = FrmUtilData.getIdStatusByLangkah("4",subUrusan,"=");
+
+			r = new SQLRenderer();
+			r.update("ID_FAIL", idFail);
+			r.update("ID_PERMOHONAN", idPermohonan);
+			//r.add("ID_STATUS", "65");
+			r.add("ID_STATUS", setIdStatus);
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			sql = r.getSQLUpdate("TBLPERMOHONAN");
+			// Buka komen oleh Mohamad Rosli pada 2017/04/10
+			stmt.executeUpdate(sql);
+
+			//TBLRUJSUBURUSANSTATUSFAIL
+			r = new SQLRenderer();
+			r.update("ID_FAIL", idFail);
+			r.update("ID_PERMOHONAN", idPermohonan);
+			r.update("AKTIF", "1");
+			r.add("AKTIF", "0");
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			sql = r.getSQLUpdate("TBLRUJSUBURUSANSTATUSFAIL");
+			stmt.executeUpdate(sql);
+
+			Long setIdSuburusanstatus = 0L;
+			//ros jadikan tindakan penyemak
+			//setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah("5",subUrusan,"=");
+			setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah("4",subUrusan,"=");
+
+			r = new SQLRenderer();
+			long idSuburusanstatusfail = DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");
+			r.add("ID_SUBURUSANSTATUSFAIL", idSuburusanstatusfail);
+			r.add("ID_PERMOHONAN", idPermohonan);
+			r.add("ID_SUBURUSANSTATUS",setIdSuburusanstatus); //MEMORANDUM JEMAAH MENTERI
+			r.add("AKTIF", "1");
+			r.add("ID_FAIL", idFail);
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
+			stmt.executeUpdate(sql);
+			conn.commit();
+
+		} catch (SQLException ex) {
+	    	try {
+	    		conn.rollback();
+	    	} catch (SQLException e) {
+	    		throw new Exception("Rollback error : " + e.getMessage());
+	    	}
+	    	throw new Exception("Ralat : Masalah penyimpanan data " + ex.getMessage());
+
+	    } finally {
+			if (db != null)
+				db.close();
+		}
+
+	}
+
+	public void hantarPengesahan(String idFail, String idPermohonan, String subUrusan, HttpSession session) throws Exception {
+		String userId = session.getAttribute("_ekptg_user_id").toString();
+		FrmPajakanMemorandumJemaahMenteriData mjmData = new FrmPajakanMemorandumJemaahMenteriData();
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+	    	conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			//TBLHTPPEMOHON
+			if(mjmData.isMaklumatPemohonPajakan(idPermohonan)==false){
+				long idPemohon = DB.getNextID("TBLHTPPEMOHON_SEQ");
+				r.add("ID_PEMOHON", idPemohon);
+				r.add("ID_PERMOHONAN", idPermohonan);
+
+				r.add("ID_MASUK", userId);
+				r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+
+				sql = r.getSQLInsert("TBLHTPPEMOHON");
+				stmt.executeUpdate(sql);
+
+			}
+
 			//TBLPERMOHONAN
 			Long setIdStatus = 0L;
 			//MJM =5
+			//ros jadikan tindakan pelulus
+			//setIdStatus = FrmUtilData.getIdStatusByLangkah("5",subUrusan,"=");
 			setIdStatus = FrmUtilData.getIdStatusByLangkah("5",subUrusan,"=");
 
 			r = new SQLRenderer();
@@ -182,20 +334,106 @@ public class FrmPajakanPendaftaranData {
 			stmt.executeUpdate(sql);
 
 			Long setIdSuburusanstatus = 0L;
-			//MJM =5
+			//ros jadikan tindakan pelulus
+			//setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah("5",subUrusan,"=");
 			setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah("5",subUrusan,"=");
 
 			r = new SQLRenderer();
 			long idSuburusanstatusfail = DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");
 			r.add("ID_SUBURUSANSTATUSFAIL", idSuburusanstatusfail);
 			r.add("ID_PERMOHONAN", idPermohonan);
-			/*if ("7".equals(subUrusan)){
-				r.add("ID_SUBURUSANSTATUS", "19"); //MEMORANDUM JEMAAH MENTERI
-			} else if ("17".equals(subUrusan)){
-				r.add("ID_SUBURUSANSTATUS", "190"); //MEMORANDUM JEMAAH MENTERI
-			} else if ("18".equals(subUrusan)){
-				r.add("ID_SUBURUSANSTATUS", "199"); //MEMORANDUM JEMAAH MENTERI
-			}*/
+			r.add("ID_SUBURUSANSTATUS",setIdSuburusanstatus); //MEMORANDUM JEMAAH MENTERI
+			r.add("AKTIF", "1");
+			r.add("ID_FAIL", idFail);
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
+			stmt.executeUpdate(sql);
+			conn.commit();
+
+		} catch (SQLException ex) {
+	    	try {
+	    		conn.rollback();
+	    	} catch (SQLException e) {
+	    		throw new Exception("Rollback error : " + e.getMessage());
+	    	}
+	    	throw new Exception("Ralat : Masalah penyimpanan data " + ex.getMessage());
+
+	    } finally {
+			if (db != null)
+				db.close();
+		}
+
+	}
+
+	public void sahkan(String idFail, String idPermohonan, String subUrusan, HttpSession session) throws Exception {
+		String userId = session.getAttribute("_ekptg_user_id").toString();
+		FrmPajakanMemorandumJemaahMenteriData mjmData = new FrmPajakanMemorandumJemaahMenteriData();
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+	    	conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			//TBLHTPPEMOHON
+			if(mjmData.isMaklumatPemohonPajakan(idPermohonan)==false){
+				long idPemohon = DB.getNextID("TBLHTPPEMOHON_SEQ");
+				r.add("ID_PEMOHON", idPemohon);
+				r.add("ID_PERMOHONAN", idPermohonan);
+
+				r.add("ID_MASUK", userId);
+				r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+
+				sql = r.getSQLInsert("TBLHTPPEMOHON");
+				stmt.executeUpdate(sql);
+
+			}
+
+			//TBLPERMOHONAN
+			Long setIdStatus = 0L;
+			//ros jadikan mjm
+			//setIdStatus = FrmUtilData.getIdStatusByLangkah("5",subUrusan,"=");
+			setIdStatus = FrmUtilData.getIdStatusByLangkah("6",subUrusan,"=");
+
+			//stmt.executeUpdate(sql);
+			r = new SQLRenderer();
+			r.update("ID_FAIL", idFail);
+			r.update("ID_PERMOHONAN", idPermohonan);
+			r.add("FLAG_MOHON_FAIL", "S");
+			//r.add("ID_STATUS", "65");
+			r.add("ID_STATUS", setIdStatus);
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			sql = r.getSQLUpdate("TBLPERMOHONAN");
+			// Buka komen oleh Mohamad Rosli pada 2017/04/10
+			stmt.executeUpdate(sql);
+			myLog.info("sql update >>> "+sql);
+
+			//TBLRUJSUBURUSANSTATUSFAIL
+			r = new SQLRenderer();
+			r.update("ID_FAIL", idFail);
+			r.update("ID_PERMOHONAN", idPermohonan);
+			r.update("AKTIF", "1");
+			r.add("AKTIF", "0");
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			sql = r.getSQLUpdate("TBLRUJSUBURUSANSTATUSFAIL");
+			stmt.executeUpdate(sql);
+
+			Long setIdSuburusanstatus = 0L;
+			//MJM =5
+			//ros jadikan mjm
+			//setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah("5",subUrusan,"=");
+			setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah("6",subUrusan,"=");
+			myLog.info("setIdSuburusanstatus >>> " +setIdSuburusanstatus);
+
+			r = new SQLRenderer();
+			long idSuburusanstatusfail = DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");
+			r.add("ID_SUBURUSANSTATUSFAIL", idSuburusanstatusfail);
+			r.add("ID_PERMOHONAN", idPermohonan);
 			r.add("ID_SUBURUSANSTATUS",setIdSuburusanstatus); //MEMORANDUM JEMAAH MENTERI
 			r.add("AKTIF", "1");
 			r.add("ID_FAIL", idFail);

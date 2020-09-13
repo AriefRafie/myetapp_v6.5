@@ -309,29 +309,37 @@ public class IntegrasiMT extends AjaxBasedModule{
 	        //party[1] = pt02;
 
 	        DeceaseInfoType deceaseInfo = new DeceaseInfoType();
-	        deceaseInfo.setDeceaseInfoName(name);
-	        deceaseInfo.setDeceaseInfoType("1");
-	        deceaseInfo.setDeceaseInfoIDType1("IC");
-	        deceaseInfo.setDeceaseInfoIDType1No("251202095009");
-	        deceaseInfo.setDeceaseInfoIDType2("OC");
-	        deceaseInfo.setDeceaseInfoIDType2No("12345");
-	        deceaseInfo.setDeathCertNo("12345");
-	        deceaseInfo.setDeceaseInfoGender("M");
-	        deceaseInfo.setDeceaseInfoAge("98");
-	        deceaseInfo.setDateOfDeath("2020-03-01T00:00:00");
-	        deceaseInfo.setDeceaseInfoAddr1(add);
-	        deceaseInfo.setDeceaseInfoAddr1(add2);
-	        deceaseInfo.setDeceaseInfoAddr1(add3);
-	        deceaseInfo.setDeceaseInfoPostcode("44000");
-	        deceaseInfo.setDeceaseInfoCity("KUALA LUMPUR");
-	        deceaseInfo.setDeceaseInfoState(stateCode);
-	        deceaseInfo.setDeceaseInfoCountry("MYS");
+//	        deceaseInfo.setDeceaseInfoName(name);
+//	        deceaseInfo.setDeceaseInfoType("1");
+//	        deceaseInfo.setDeceaseInfoIDType1("IC");
+//	        deceaseInfo.setDeceaseInfoIDType1No("251202095009");
+//	        deceaseInfo.setDeceaseInfoIDType2("OC");
+//	        deceaseInfo.setDeceaseInfoIDType2No("12345");
+//	        deceaseInfo.setDeathCertNo("12345");
+//	        deceaseInfo.setDeceaseInfoGender("M");
+//	        deceaseInfo.setDeceaseInfoAge("98");
+//	        deceaseInfo.setDateOfDeath("2020-03-01T00:00:00");
+//	        deceaseInfo.setDeceaseInfoAddr1(add);
+//	        deceaseInfo.setDeceaseInfoAddr1(add2);
+//	        deceaseInfo.setDeceaseInfoAddr1(add3);
+//	        deceaseInfo.setDeceaseInfoPostcode("44000");
+//	        deceaseInfo.setDeceaseInfoCity("KUALA LUMPUR");
+//	        deceaseInfo.setDeceaseInfoState(stateCode);
+//	        deceaseInfo.setDeceaseInfoCountry("MYS");
 
 	        //2020/09/09 - Penambahan Skop
 	        DataCreateReqTypePartyAgency partyAgency = getParty(idPejabatPTGD);
 	        if(partyAgency==null) {
-				throw new Exception(getIHTP().getErrorHTML("[MODUL PPT - INTEGRASI MT] SILA SEMAK KONFIGURASI PENTADBIR TANAH <br>"
-						+ "<input type=\"button\" value=\"Tutup\" onClick=\"javascript:window.close()\">"));
+				throw new Exception(getIHTP().getErrorHTML("<link rel=\"stylesheet\" type=\"text/css\" href=\"../../css/eTapp_PPT.css\" /> "
+						+ "<table style=\"width:100%\" "
+						+ " <tr align=\"center\"><td>"
+						+ "	<font><b>[MODUL PPT - INTEGRASI MT] SILA SEMAK KONFIGURASI PENTADBIR TANAH</b></font>"
+						+ "</td></tr>"
+						+ "<tr align=\"center\"><td>"
+						+ "<input align=\"center\" type=\"button\" value=\"Tutup\" onClick=\"javascript:window.close()\">"
+						+ "</td></tr>"
+						+ "</table>"
+						+ ""));
 	        }
 	        
 	        String returnMessage = "1 Tidak Berjaya Dihantar";
