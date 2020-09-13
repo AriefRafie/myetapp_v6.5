@@ -2662,7 +2662,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			String userId = (String) session.getAttribute("_ekptg_user_id");
 			String sql = "";
 			String namaUser = "";
-			String emelUser = "";
+			String emelUser = "nurulain.siprotech@gmail.com";
 			String idhakmilikPermohonan = "";
 			String noPermohonan = "";
 			String idSuburusan = "";
@@ -2686,7 +2686,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 					noPermohonan = rsPermohonan.getString("NO_PERMOHONAN");
 					idSuburusan = rsPermohonan.getString("ID_SUBURUSAN");
 					namaUser = rsPermohonan.getString("NAMA");
-					emelUser = rsPermohonan.getString("EMEL");
+					//emelUser = rsPermohonan.getString("EMEL");
 				}
 
 				//TBLPERMOHONAN
@@ -2849,6 +2849,70 @@ public class FrmTKROnlineKJPSenaraiFailData {
 				sql = r.getSQLUpdate("TBLPHPHAKMILIKPERMOHONAN");
 				stmt.executeUpdate(sql);*/
 
+				conn.commit();
+
+			} catch (SQLException ex) {
+				try {
+					conn.rollback();
+				} catch (SQLException e) {
+					throw new Exception("Rollback error : " + e.getMessage());
+				}
+				throw new Exception("Ralat : Masalah penyimpanan data " + ex.getMessage());
+
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}
+
+		public void updateMaklumatPermohonan(String idFail,String idPermohonan,String tarikhTerima,
+				String tarikhSurat, String idLuasKegunaan, String txtTujuanKegunaan,
+				String idLuasTanah, String luasTanah) throws Exception {
+
+			Db db = null;
+			Connection conn = null;
+			//String userId = session.getAttribute("_ekptg_user_id").toString();
+			String sql = "";
+			String sql2 = "";
+			String idHakmilikSementara ="";
+			String id_hakmilikpermohonan ="";
+
+			String TT = "to_date('" + tarikhTerima + "','dd/MM/yyyy')";
+			String TS = "to_date('" + tarikhSurat + "','dd/MM/yyyy')";
+
+			try {
+				db = new Db();
+				conn = db.getConnection();
+				conn.setAutoCommit(false);
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+
+				Statement stmt2 = db.getStatement();
+				SQLRenderer r2 = new SQLRenderer();
+
+				r.update("ID_PERMOHONAN", idPermohonan);
+				r.add("ID_LUASASAL", idLuasTanah);
+				r.add("LUAS_ASAL", luasTanah);
+				r.add("FLAG_GUNA", idLuasKegunaan);
+				if ("1".equals(idLuasKegunaan)) {
+					r.add("LUAS_MHNBERSAMAAN", luasTanah);
+					r.add("ID_UNITLUASBAKI", idLuasTanah);
+					r.add("LUAS_BAKI", 0);
+				}
+				r.add("CADANGAN_KEGUNAAN", txtTujuanKegunaan);
+				r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+				sql = r.getSQLUpdate("TBLPHPPERMOHONANPELEPASAN");
+				myLogger.info("sql updateMaklumatPermohonan >>>> "+sql);
+				stmt.executeUpdate(sql);
+
+				r2.update("ID_PERMOHONAN", idPermohonan);
+				r2.add("TARIKH_SURAT", r.unquote(TS));
+				r2.add("TARIKH_TERIMA", r.unquote(TT));
+				r2.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+				sql2 = r2.getSQLUpdate("TBLPERMOHONAN");
+				myLogger.info("sql updateMaklumatPermohonan 2 >>>> "+sql2);
+				stmt2.executeUpdate(sql2);
 				conn.commit();
 
 			} catch (SQLException ex) {

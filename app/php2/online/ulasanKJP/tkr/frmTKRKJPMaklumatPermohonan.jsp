@@ -187,14 +187,24 @@
                 <td width="1%">#if ($mode == 'update')<span class="style1">*</span>#end</td>
                 <td width="28%" valign="top">Tarikh Terima</td>
                 <td width="1%">:</td>
-                <td width="70%"><input type="text" name="tarikhTerima" id="tarikhTerima" value="$beanMaklumatPermohonan.tarikhTerima" onBlur="check_date(this);cekTarikhTerima(this)" size="9" $readonly class="$inputTextClass"/>
+                <td width="70%">
+                  #if ($mode == 'update')
+                  <input type="text" name="tarikhTerima" id="tarikhTerima" value="$beanMaklumatPermohonan.tarikhTerima" onBlur="check_date(this);cekTarikhTerima(this)" size="9"/>
+                  #else
+                  <input type="text" name="tarikhTerima" id="tarikhTerima" value="$beanMaklumatPermohonan.tarikhTerima" onBlur="check_date(this);cekTarikhTerima(this)" size="9" $readonly class="$inputTextClass"/>
+                  #end
                   #if ($mode == 'update') <a href="javascript:displayDatePicker('tarikhTerima',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a>#end</td>
               </tr>
               <tr>
                 <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
                 <td valign="top">Tarikh Surat</td>
                 <td>:</td>
-                <td><input type="text" name="tarikhSurat" id="tarikhSurat" value="$beanMaklumatPermohonan.tarikhSurat" onBlur="check_date(this);cekTarikhSurat(this)" size="9" $readonly class="$inputTextClass"/>
+                <td>
+                  #if ($mode == 'update')
+                  <input type="text" name="tarikhSurat" id="tarikhSurat" value="$beanMaklumatPermohonan.tarikhSurat" onBlur="check_date(this);cekTarikhSurat(this)" size="9"/>
+                  #else
+                  <input type="text" name="tarikhSurat" id="tarikhSurat" value="$beanMaklumatPermohonan.tarikhSurat" onBlur="check_date(this);cekTarikhSurat(this)" size="9" $readonly class="$inputTextClass"/>
+                  #end
                   #if ($mode == 'update')<a href="javascript:displayDatePicker('tarikhSurat',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a>#end</td>
               </tr>
               #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
@@ -202,7 +212,13 @@
                 <td valign="top">&nbsp;</td>
                 <td valign="top">Cadangan Kegunaan</td>
                 <td valign="top">:</td>
-                <td valign="top"><textarea name="txtTujuanKegunaan" id="txtTujuanKegunaan" rows="5" cols="50" $readonly class="$inputTextClass">$beanMaklumatPermohonan.tujuanKegunaan</textarea></td>
+                <td valign="top">
+                	#if ($mode == 'update')
+                	<textarea name="txtTujuanKegunaan" id="txtTujuanKegunaan" rows="5" cols="50">$beanMaklumatPermohonan.tujuanKegunaan</textarea>
+                	#else
+                	<textarea name="txtTujuanKegunaan" id="txtTujuanKegunaan" rows="5" cols="50" $readonly class="$inputTextClass">$beanMaklumatPermohonan.tujuanKegunaan</textarea>
+                	#end
+                </td>
               </tr>
               #end
               <tr>
@@ -222,14 +238,14 @@
               #end
               #if ($idLuasKegunaan == '2')
 
-              #if ($mode == 'update')
+              <!-- #if ($mode == 'update')
               <tr>
                 <td><span class="style1">*</span></td>
                 <td>Unit Luas</td>
                 <td>:</td>
                 <td>#parse("app/php2/unit_luas.jsp") </td>
               </tr>
-              #else
+              #else -->
               <tr>
                 <td><span class="style1"></span></td>
                 <td>Unit Luas</td>
@@ -241,7 +257,7 @@
                     <option $selectedL3 value="3">P - EKAR PERPULUHAN</option>
                   </select></td>
               </tr>
-              #end
+              <!-- #end -->
 
               #if ($idLuas != '99999' && $idLuas != '')
               <tr>
@@ -290,10 +306,10 @@
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
                   ##end
                   #if ($mode == 'update')
-                  <input type="button" name="cmdSimpanKemaskiniTnh" id="cmdSimpanKemaskiniTnh" value="Simpan" onClick="doSimpanKemaskiniMaklumatTnh()"/>
+                  <input type="button" name="cmdSimpanKemaskiniTnh" id="cmdSimpanKemaskiniTnh" value="Simpan" onClick="doSimpanKemaskiniMaklumatPermohonan()"/>
                   #end
                   #else
-                  <input type="button" name="cmdSimpanKemaskiniTnh" id="cmdSimpanKemaskiniTnh" value="Simpan" onClick="doSimpanKemaskiniMaklumatTnh()"/>
+                  <input type="button" name="cmdSimpanKemaskiniTnh" id="cmdSimpanKemaskiniTnh" value="Simpan" onClick="doSimpanKemaskiniMaklumatPermohonan()"/>
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
                  #end</td>
               </tr>
@@ -455,6 +471,17 @@ function doSimpanKemaskiniMaklumatTnh() {
 	document.${formName}.selectedTabUpper.value = 0;
 	document.${formName}.submit2.value = "seterusnya";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniMaklumatTnh";
+	document.${formName}.submit();
+}
+function doSimpanKemaskiniMaklumatPermohonan() {
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.submit2.value = "seterusnya";
+		return;
+	}
+	document.${formName}.mode.value = "view";
+	document.${formName}.selectedTabUpper.value = 0;
+	document.${formName}.submit2.value = "seterusnya";
+	document.${formName}.hitButton.value = "doSimpanKemaskiniMaklumatPermohonan";
 	document.${formName}.submit();
 }
 function doChangePeganganHakmilik() {

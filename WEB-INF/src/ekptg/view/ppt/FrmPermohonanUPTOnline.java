@@ -1075,8 +1075,9 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 			/************** PIHAK BERKEPENTINGAN *****************/
 
-			else if ("tambahPB".equals(submit)) {
+			else if ("tambahPBOnline".equals(submit)) {
 
+				myLogger.info("masuk  sini");
 				// form validation
 				context.put("mode", "new");
 

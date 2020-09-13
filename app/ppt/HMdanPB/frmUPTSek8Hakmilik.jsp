@@ -155,8 +155,8 @@
 				<td> No. Strata</td>
 				<td>:</td>
 				<td>
-                   	<span class="labelinput">No.Bang</span>&nbsp;<input name="txtNoBangunan" type="text" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3" onkeyup="this.value=this.value.toUpperCase();"/>
-					<span class="labelinput">No.Ting</span>&nbsp;<input name="txtNoTingkat" type="text" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3" onkeyup="this.value=this.value.toUpperCase();"/>
+                   	<span class="labelinput">No.Bangunan</span>&nbsp;<input name="txtNoBangunan" type="text" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3" onkeyup="this.value=this.value.toUpperCase();"/>
+					<span class="labelinput">No.Tingkat</span>&nbsp;<input name="txtNoTingkat" type="text" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3" onkeyup="this.value=this.value.toUpperCase();"/>
 					<span class="labelinput">No.Petak</span>&nbsp;<input name="txtNoPetak" type="text" id="txtNoPetak"  value="$!txtNoPetak" size="3" maxlength="3" onkeyup="this.value=this.value.toUpperCase();"/>
   				</td>
 			</tr>
@@ -205,7 +205,9 @@
 				<td>&nbsp;</td>
 				<td>Syarat Khas</td>
 				<td>:</td>
-				<td><input type="text" name="txtSyaratKhas" id="txtSyaratKhas" value="$!txtSyaratKhas" size="50" maxlength="400"   ></td>
+				<!--  <td><input type="text" name="txtSyaratKhas" id="txtSyaratKhas" value="$!txtSyaratKhas" size="50" maxlength="400"   ></td> -->
+			<td><textarea cols="47%" rows="5" name="txtSyaratKhas" id="txtSyaratKhas">$!txtSyaratKhas</textarea></td>
+			
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
@@ -218,7 +220,9 @@
 				<td>&nbsp;</td>
 				<td>Sekatan Hak</td>
 				<td>:</td>
-				<td><input type="text" name="txtSekatanHak" id="txtSekatanHak" value="$!txtSekatanHak" size="50" maxlength="400"   ></td>
+				<!-- <td><input type="text" name="txtSekatanHak" id="txtSekatanHak" value="$!txtSekatanHak" size="50" maxlength="400"   ></td>   -->
+			<td><textarea cols="47%" rows="5" name="txtSekatanHak" id="txtSekatanHak">$!txtSekatanHak</textarea></td>
+			
 			</tr>
 			<tr>
 				<td><font color="red">*</font></td>
@@ -602,8 +606,8 @@
 				<td> No. Strata</td>
 				<td>:</td>
 				<td>
-                   	<span class="labelinput">No.Bang</span>&nbsp;<input $disability $disabilityx name="txtNoBangunan" type="text" class="$disabled" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3" onkeyup="this.value=this.value.toUpperCase();"/>
-					<span class="labelinput">No.Ting</span>&nbsp;<input $disability $disabilityx name="txtNoTingkat" type="text" class="$disabled" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3" onkeyup="this.value=this.value.toUpperCase();"/>
+                   	<span class="labelinput">No.Bangunan</span>&nbsp;<input $disability $disabilityx name="txtNoBangunan" type="text" class="$disabled" id="txtNoBangunan"  value="$!txtNoBangunan" size="3" maxlength="3" onkeyup="this.value=this.value.toUpperCase();"/>
+					<span class="labelinput">No.Tingkat</span>&nbsp;<input $disability $disabilityx name="txtNoTingkat" type="text" class="$disabled" id="txtNoTingkat"  value="$!txtNoTingkat" size="3" maxlength="3" onkeyup="this.value=this.value.toUpperCase();"/>
 					<span class="labelinput">No.Petak</span>&nbsp;<input $disability $disabilityx name="txtNoPetak" type="text" class="$disabled" id="txtNoPetak"  value="$!txtNoPetak" size="3" maxlength="3 onkeyup="this.value=this.value.toUpperCase();"/>
   				</td>
 			</tr>

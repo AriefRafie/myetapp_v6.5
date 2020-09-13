@@ -134,6 +134,19 @@
 
 	 }
 
+	 function doHantarPenyemak(){
+		 if ( !window.confirm("Adakah Anda Pasti ?") ){
+			return;
+
+		 }
+		document.${formName}.actionPajakan.value = "papardaftar";
+		document.${formName}.hitButton.value = "hantarpenyemakdaftar";
+		document.${formName}.mode.value = "view";
+		//document.${formName}.submit();
+		doAjaxCall${formName}("");
+
+	 }
+
 	 function doSahkan() {
 		if ( !window.confirm("Adakah Anda Pasti ?") ){
 				return;

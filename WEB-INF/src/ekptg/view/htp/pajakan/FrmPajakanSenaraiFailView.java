@@ -63,6 +63,8 @@ import ekptg.model.htp.utiliti.IHTPSusulan;
 import ekptg.model.htp.utiliti.fail.HTPFailBean;
 import ekptg.model.htp.utiliti.fail.IHTPFail;
 import ekptg.model.integrasi.FrmJPPHModelNilaianPajakan;
+import ekptg.model.utils.IUserPegawai;
+import ekptg.model.utils.UserKJPBean;
 import ekptg.view.htp.utiliti.HtpEmailServices;
 
 /**
@@ -124,6 +126,9 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 	private Tblrujsuburusanstatusfail subUrusanStatusFail = null;
 	String idSusulan = "";
 
+	String idJawatan = "";
+	private IUserPegawai iUser = null;
+
 	@Override
 	public String doTemplate2() throws Exception {
 
@@ -145,6 +150,8 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
         String selectedTabLower = getParam("selectedTabLower");
         myLog.info("doPost="+doPost+",action="+action+",actionpajakan="+actionPajakan+",mode="+mode+",hitButton="+hitButton);
         userID = String.valueOf(session.getAttribute("_ekptg_user_id"));
+        String portal_role = (String)session.getAttribute("myrole");
+        myLog.info("portal_role ros >>>>> "+portal_role);
 
         //GET ID PARAM
         String idFail = getParam("idFail");
@@ -253,6 +260,28 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 		//Tindakan
 		idSusulan = getParam("idsusulan");
 
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String userJawatan = "";
+
+		Hashtable hUser = getIUser().getPengguna(userId);
+		userJawatan = String.valueOf(hUser.get("idJawatan"));
+		idJawatan = userJawatan;
+		myLog.info("idJawatan >>> "+idJawatan);
+		context.put("idjawatan", idJawatan);
+		myLog.info("hitButton ros >>>> "+hitButton);
+		myLog.info("actionPajakan ros >>>> "+actionPajakan);
+		String statusSemasa = "";
+
+		if(portal_role.contains("HQPengguna")){
+			statusSemasa = "penyedia";
+		}else if(portal_role.contains("HQPegawai")){
+			statusSemasa = "penyemak";
+		}else if(portal_role.contains("HQPengarah")){
+			statusSemasa = "pelulus";
+		}
+		myLog.info("statusSemasa >>> "+statusSemasa);
+		this.context.put("statusSemasa", statusSemasa);
+
 		//HITBUTTON
 		if (postDB){
 			//myLog.info("HITBUTTON="+hitButton);
@@ -277,8 +306,19 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
              	logicp.deleteHakmilik(idHakmilikUrusan);
         	}else if (hitButton.equals("saveUpdateFail")){
         		saveUpdateFail(idFail,subUrusan,session);
+        	}else if (hitButton.equals("hantarpenyemakdaftar")){
+    			//swastaData.saveHantarPengesahan(idFail, session,"H"); //hantar
+        		logicp.hantarPenyemak(idFail, idPermohonan, subUrusan, session);
+
+    			//email
+    			if(sendEmail){
+    				//System.out.println("send mail");
+    				htpEmailService.setEmail(emUrusan,emEmailto,emMaincontent,emNofail,emTitle,emTarikhMohon,emAgensi);
+    			}
+
         	}else if (hitButton.equals("hantarpengesahandaftar")){
-    			swastaData.saveHantarPengesahan(idFail, session,"H"); //hantar
+    			//swastaData.saveHantarPengesahan(idFail, session,"H"); //hantar
+        		logicp.hantarPengesahan(idFail, idPermohonan, subUrusan, session);
 
     			//email
     			if(sendEmail){
@@ -287,7 +327,8 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
     			}
 
         	}else if (hitButton.equals("sahkanpermohonandaftar")){
-    			swastaData.saveHantarPengesahan(idFail, session,"S"); //sahkan
+        		logicp.sahkan(idFail, idPermohonan, subUrusan, session);
+    			//swastaData.saveHantarPengesahan(idFail, session,"S"); //sahkan
 
     		/** MJM */
         	}else if (hitButton.equals("savePemohon")){
@@ -393,6 +434,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
         	//PENAMATAN
         	}else if (hitButton.equals("selesaisimpan")){
 				String langkah = getParam("sockategori");
+        		myLog.info("masuk sini langkah " +langkah);
 
         		kemaskiniSimpanStatusSelesai(idFail,idPermohonan,subUrusan,langkah);
         		getStatus().kemaskiniStatusPermohonan(idPermohonan,subUrusan,langkah,userID);
@@ -565,6 +607,9 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 	        	vm ="app/htp/pajakan/pemohon/index.jsp";
 	        	myLog.info("paparpemohon...selectedTab="+selectedTab);
 	        	myLog.info("paparpemohon...selectedTabLower="+selectedTabLower);
+
+	    		myLog.info("idJawatan paparpemohon >>> "+idJawatan);
+	    		this.context.put("idjawatan", idJawatan);
 
         		Vector<Hashtable<String, String>> vec = logicmjm.getMaklumatPemohonPajakan(idPermohonan);
             	PemohonPajakanView(mode,vec);
@@ -2387,6 +2432,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 
 	private void kemaskiniSimpanStatusSelesai(String idFail,String idPermohonan,String idSubUrusan,String langkah)
 		throws Exception {
+		myLog.info("kemaskiniSimpanStatusSelesai ::: langkah >>> "+langkah);
 		 try {
 			subUrusanStatusFail = new Tblrujsuburusanstatusfail();
 			subUrusanStatusFail.setIdPermohonan(Long.parseLong(idPermohonan));
@@ -2500,6 +2546,14 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 			iPajakanBayaran = new PajakanUtamaBayaranBean();
 
 		return iPajakanBayaran;
+
+	}
+
+	private IUserPegawai getIUser(){
+		if(iUser==null){
+			iUser = new UserKJPBean();
+		}
+		return iUser;
 
 	}
 
