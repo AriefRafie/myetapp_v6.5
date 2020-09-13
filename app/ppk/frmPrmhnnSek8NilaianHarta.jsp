@@ -60,6 +60,65 @@
     <input name="id_Suburusanstatusfail" type="hidden"  value="$listFail.id_Suburusanstatusfail"/>
     #end
     
+    #foreach($checkMaklumatSimati in $maklumatSimati)
+    	#set ($CHKTARIKH_MATI = $checkMaklumatSimati.TARIKH_MATI)
+    	#set ($CHKTEMPAT_MATI = $checkMaklumatSimati.TEMPAT_MATI)
+    	#set ($CHKSEBAB_MATI = $checkMaklumatSimati.SEBAB_MATI)
+    	#set ($CHKALAMAT_1 = $checkMaklumatSimati.ALAMAT_1)
+    	#set ($CHKPOSKOD = $checkMaklumatSimati.POSKOD)
+    	#set ($CHKID_NEGERI = $checkMaklumatSimati.ID_NEGERI)
+    	#set ($CHKBANDAR = $checkMaklumatSimati.BANDAR)
+    	#set ($CHKJENIS_WARGA = $checkMaklumatSimati.JENIS_WARGA)
+    #end
+    
+    #foreach($checkMaklumatPemohon in $maklumatPemohon)
+    	#set ($CHKUMUR = $checkMaklumatPemohon.UMUR)
+    	#set ($CHKNO_HP = $checkMaklumatPemohon.NO_HP)
+    	#set ($CHKEMEL = $checkMaklumatPemohon.EMEL)
+    #end
+    
+    #set ($strErrorMaklumatSimati = "")
+    #set ($strErrorMaklumatPemohon = "")
+    #if ($CHKTARIKH_MATI == "")
+    	#set ($strErrorMaklumatSimati = "Maklumat Tarikh Mati tidak diisi. ")
+    #end
+    
+    #if ($CHKJENIS_WARGA == "")
+    	#set ($strErrorMaklumatSimati = $strErrorMaklumatSimati + "Jenis Kewarganageraan Simati tidak diisi. ")
+    #end
+    
+    #if ($CHKTEMPAT_MATI == "")
+    	#set ($strErrorMaklumatSimati = $strErrorMaklumatSimati + "Maklumat Tempat Mati tidak diisi.")
+    #end
+    
+    #if ($CHKSEBAB_MATI == "")
+    	#set ($strErrorMaklumatSimati = $strErrorMaklumatSimati + "Maklumat Sebab Kematian tidak diisi. ")
+    #end
+    
+    #if ($CHKALAMAT_1 == "" || $CHKPOSKOD == "" || $CHKID_NEGERI == "" || $CHKBANDAR == "" )
+    	#set ($strErrorMaklumatSimati = $strErrorMaklumatSimati + "Alamat Lengkap Simati tidak diisi. ")
+    #end
+    
+    #if ($CHKUMUR == "")
+    	#set ($strErrorMaklumatPemohon = $strErrorMaklumatPemohon + "Maklumat Umur Pemohon tidak diisi. ")
+    #end
+    
+    
+    
+    #foreach($listUbah in $listUbah)
+		#set($flagEmail = $listUbah.flag_email_pemohon)
+		#set($flagNoTelefonBimbit = $listUbah.flag_notelefonbimbit_pemohon)
+	#end
+	
+	#if ($CHKNO_HP == "" && $flagNoTelefonBimbit != "F" )
+    	#set ($strErrorMaklumatPemohon = $strErrorMaklumatPemohon + "Maklumat No. Telefon Pemohon tidak diisi. ")
+    #end
+    
+    #if ($CHKEMEL == "" && $flagEmail != "F")
+    	#set ($strErrorMaklumatPemohon = $strErrorMaklumatPemohon + "Maklumat Emel Pemohon tidak diisi. ")
+    #end
+    
+    
     #foreach($list in $View)
     #set ($id = $list.idPermohonan)
     #set ($idPemohon = $list.idPemohon)
@@ -799,9 +858,9 @@ kod :: $listhath.kod_hakmilik
                             <input type="hidden" name="txtJumlahBesarTarikhMati" value="$overalljumlahmati">
                             <input type="hidden" name="txtJumlahBesarTarikhMohon" value="$overalljumlah">
                             <tr class="table_header">
-                              <td  width="76%" colspan="4" ><b>Jumlah Nilai Harta Alih (RM)</b></td>
-                              <td  align="right" width="12%"> #if($sumjumlah == 0) <b> 0.00 </b> #else <b> $Util.formatDecimal($sumjumlah) </b> #end </td>
-                              <td  align="right" width="12%"> #if($sumjumlahmati == 0) <b> 0.00 </b> #else <b> $Util.formatDecimal($sumjumlahmati) </b> #end </td>
+                              <td  width="76%" colspan="4" ><b>Jumlah Nilai Harta Alih (RM) </b></td>
+                              <td  align="right" width="12%"> #if($sumjumlah == 0 ) <b> 0.00 </b> #else <b> $Util.formatDecimal($sumjumlah) </b> #end </td>
+                              <td  align="right" width="12%"> #if($sumjumlahmati == 0  ) <b> 0.00 </b> #else <b> $Util.formatDecimal($sumjumlahmati) </b> #end </td>
                             </tr>
                           </table>
                           </fieldset>
@@ -832,7 +891,7 @@ kod :: $listhath.kod_hakmilik
                               #end </tr>
                             <tr class="row2">
                               <td>2 </td>
-                              <td><strong>Jumlah Nilai Harta Alih</strong></td>
+                              <td><strong>Jumlah Nilai Harta Alih </strong></td>
                               #if($sumjumlah == 0)
                               <td align="right">0.00</td>
                               #else
@@ -840,7 +899,7 @@ kod :: $listhath.kod_hakmilik
                               #end
                               
                               
-                              #if($sumjumlah == 0)
+                              #if($sumjumlahmati == 0  )
                               <td align="right">0.00</td>
                               #else
                               <td align="right">$Util.formatDecimal($sumjumlahmati)</td>
@@ -899,11 +958,13 @@ kod :: $listhath.kod_hakmilik
                                             #if ($jumppkhta.size()>0 && $sumhta >= 0)
                                             #end
                                         #end    
-                                      
-                                           #if(($pilihpegawai != "") && ($flag_pengesahanPegawai != "") && (($daftarHTA == "1") || ($daftarHA == "1") ))
-                                            
+                                      <!-- Kena check sama ada Maklumat Simati dan Pemohon lengkap diisi -->
+                                      	#if ($strErrorMaklumatSimati == "" && $strErrorMaklumatPemohon == "")
                  							<input type="button" name="button" id="button" value="Seterusnya" onClick="hantar_terus('$listseksyen','$id','$permohonan_mati','$listtarikhMohon','$listidSimati')" />
-                 							#end
+                 						#else
+                 						<p align="center"><font color="red">Tidak dapat meneruskan ke proses seterusnya kerana terdapat maklumat berkenaan Simati/Pemohon yang tidak lengkap diisi: $strErrorMaklumatSimati $strErrorMaklumatPemohon</font> </p>
+                 						
+                 						#end	
                  							
                  							 #if(($pilihpegawai != "") && ($flag_pengesahanPegawai == "") && ($USER_ROLE != "user_ppk") && (($daftarHTA == "1") || ($daftarHA == "1") ))
                                             
