@@ -25,7 +25,7 @@
   <input name="flagAktif" type="hidden" id="flagAktif" value="$flagAktif"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
-  #if ($idFail != '')
+  #if ($idFail != '' && $idStatus != '1610198' && $idStatus != '1610200')
   <tr>
     <td> #parse("app/php2/frmCRBHeader.jsp") </td>
   </tr>
@@ -36,7 +36,7 @@
   </tr>
   #end
   
-  #if ($idFail != '' && $flagOpenDetail)
+  #if ($idFail != '' && $flagOpenDetail && $idStatus != '1610198' && $idStatus != '1610200')
   <tr>
     <td><div id="TabbedPanels1" class="TabbedPanels">
         <ul class="TabbedPanelsTabGroup">

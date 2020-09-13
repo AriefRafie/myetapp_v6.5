@@ -8,10 +8,15 @@
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input name="flagDetail" type="hidden" id="flagDetail" value="$flagDetail"/>
-  <input name="flagFrom" type="hidden" id="flagFrom"/>
   <input name="initiateFlagBuka" type="hidden" id="initiateFlagBuka"/>
   <input name="idNegeriUser" type="hidden" id="idNegeriUser" value="$idNegeriUser"/>
+  <input name="flagFrom" type="hidden" id="flagFrom"/>
 </p>
+
+#if ($errMsg != "")
+<div class="info"><strong>$errMsg</strong></div>
+#end
+
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td><fieldset>
@@ -120,7 +125,7 @@
       <table align="center" width="100%">
         <tr>
           <td colspan="6" scope="row">
-          	#if ($userRole == '(PHP)PYWPenolongPegawaiTanahNegeri')
+          	#if ($userRole == '(PHP)PYWPenolongPegawaiTanahNegeri' && $userRole == '(PHP)PYWPenolongPegawaiTanahHQ')
           	<input name="cmdDaftar" type="button" value="Daftar Permohonan Baru" onClick="javascript:daftarBaru()"/>
             &nbsp;
             #end
@@ -243,6 +248,8 @@ function kosongkan(flagDetail) {
 function papar(idFail,idStatus) {
 
 	document.${formName}.idFail.value = idFail;
+	document.${formName}.initiateFlagBuka.value = "Y";
+	document.${formName}.flagFrom.value = "failTugasan";	
 
 	if (idStatus == '1610198'){
 		document.${formName}.action = "$EkptgUtil.getTabID("Penguatkuasaan",$portal_role)?_portal_module=ekptg.view.php2.FrmCRBMaklumatPermohonanView";

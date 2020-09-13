@@ -9,11 +9,11 @@
 -->
 </style>
 
-#set($saizTxtLain="300")
-#set($saizTxtLokasi="300")
-#set($saizTxtKeterangan="500")
+#set($saizTxtLain="1000")
+#set($saizTxtLokasi="1000")
+#set($saizTxtKeterangan="1000")
 #set($saizTxtPerkara="1000")
-#set($saizTxtAktiviti="300")
+#set($saizTxtAktiviti="1000")
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
@@ -51,7 +51,13 @@
           <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT ADUAN</li>
         </ul>
         <div class="TabbedPanelsContentGroup">
-          <div class="TabbedPanelsContent"> #if ($flagBorangK == 'Y') #parse("app/php2/frmCRBMaklumatBorangK.jsp") #else #parse("app/php2/frmCRBMaklumatTanah.jsp") #end </div>
+          <div class="TabbedPanelsContent"> 
+          	#if ($flagBorangK == 'Y') 
+          		#parse("app/php2/frmCRBMaklumatBorangK.jsp") 
+          	#else 
+          		#parse("app/php2/frmCRBMaklumatTanah.jsp") 
+          	#end 
+          </div>
           <div class="TabbedPanelsContent">
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
               #foreach ($beanMaklumatAduan in $BeanMaklumatAduan)
@@ -185,7 +191,7 @@
                 <td>&nbsp;</td>
                 <td> 
                   #if ($mode == 'view')
-	                  #if ($userRole != '(PHP)PYWPenolongPengarahNegeri' || $userRole != '(PHP)PYWPengarahNegeri')
+	                  #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
 		                  <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>
 		                  #if ($idStatus == '1610198') 
 			                  <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>

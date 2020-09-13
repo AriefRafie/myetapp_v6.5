@@ -66,8 +66,10 @@
       <input name="cmdBatalLT" id="cmdBatalLT" type="button" value="Batal" onClick="batalLawatanTapak()" />
       #end 
       #if ($modePopup == 'view')
+      #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
       <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="kemaskiniMaklumatSiasatanLT()"/>
       <input name="cmdBatalLT2" id="cmdBatalLT" type="button" value="Kembali" onClick="batalLawatanTapak()" />
+      #end
       #end
       #if ($modePopup == 'update')
       <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="simpanKemaskiniMaklumatSiasatanLT()"/>

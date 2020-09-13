@@ -355,7 +355,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
        
         <tr>
           <td width="1%">#if ($mode=="")<font color="red">*</font>#end</td>
-          <td>Bantahan Terhadap                  </td>
+          <td>Bantahan Terhadap</td>
           <td>:</td>
           <td width="3%">
           
@@ -399,19 +399,18 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           
           <td>Jumlah Pampasan</td>
         </tr>
+        
         <tr>
           <td width="1%"></td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>
           
-          
            #if($terima_pampasan=="Y")
            #set($TEMPchecked3 = "checked")
            #else
            #set($TEMPchecked3 = "")
            #end
-          
           
           #if ($mode=="disabled")
           <input type="checkbox" name="terima_pampasan" id="terima_pampasan" value="Y" disabled $TEMPchecked3 />
@@ -423,6 +422,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           
           <td>Orang-orang yang  menerima pampasan</td>
         </tr>
+        
         <tr>
           <td width="1%"></td>
           <td>&nbsp;</td>
@@ -445,6 +445,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           #end          </td>          
           <td>Bahagian Pemberian Pampasan</td>
         </tr>
+        
         <tr>
           <td width="1%">#if ($mode=="")<font color="red">*</font>#end</td>
           <td>Amaun Pampasan Ditawarkan (RM)         </td>
@@ -455,7 +456,8 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           #else
           <input type="text" size="15" name="txtAmaunTuntutan" id="txtAmaunTuntutan" value="$txtAmaunTuntutan" maxlength="12" onblur="validateNumber(this,this.value);validateModal(this,this.value,'$txtAmaunTuntutan')" onkeyup="validateNumber(this,this.value);"  />          
           #end          </td>
-        </tr>        
+        </tr>
+        
         <tr>
           <td width="1%" valign="top">#if ($mode=="")<font color="red">*</font>#end</td>
           <td valign="top">Alasan Bantahan          </td>
@@ -499,7 +501,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 
 <fieldset id="senarai_dokumen" >
 <legend>Senarai Dokumen</legend>    
-    <input name="cmdTambahDokumen" type="button" value="Tambah" onClick="tambahDokumen()" title="Sila klik untuk tambah dokumen" >    
+    <input name="cmdTambahDokumen" type="button" value="Tambah" onClick="tambahDokumen()" title="Sila klik untuk tambah dokumen" >
     #if($listDokumen_size > 0)
      <input name="cmdHapusDokumen" type="button" value="Hapus" onClick="hapusDokumenMaster('$!readmode')" title="Sila tick untuk hapus dokumen" >
     #end
@@ -539,13 +541,13 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
   	#end
   
   #else
-	  	<tr>  
-	    	<td colspan="5">Tiada Rekod</td>    
-	  	tr>
+	  	<tr>
+	    	<td colspan="5">Tiada Rekod</td>
+	  	</tr>
   #end
 	</table>
   
-</fieldset> 
+</fieldset>
 
         <div align="center"> 
      
