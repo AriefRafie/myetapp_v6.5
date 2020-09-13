@@ -28,17 +28,24 @@
 </p>
 <body onLoad = $onload >
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
-  #if ($idFail != '')
+  #if ($idFail != '' && $idStatus != '1610198')
   <tr>
     <td> #parse("app/php2/frmCRBHeader.jsp") </td>
   </tr>
-  #else
+  #elseif ($idFail == '' )
   <tr>
     <td>&nbsp;
       <div class="warning">SILA PILIH FAIL DI SENARAI FAIL TERLEBIH DAHULU</div></td>
   </tr>
+  #else
+  #foreach($beanHeader in $BeanHeader)
+  <tr>
+    <td>&nbsp;
+      <div class="warning">FAIL INI MASIH DI STATUS <strong>$beanHeader.status</strong></div></td>
+  </tr>
   #end
-  #if ($idFail != '' && $flagOpenDetail)
+  #end
+  #if ($idFail != '' && $idStatus != '1610198' && $flagOpenDetail)
   <tr>
     <td><div id="TabbedPanels1" class="TabbedPanels">
         <ul class="TabbedPanelsTabGroup">
@@ -46,7 +53,9 @@
           <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">LAWATAN TAPAK</li>
         </ul>
         <div class="TabbedPanelsContentGroup">
-          <div class="TabbedPanelsContent"> #parse("app/php2/frmCRBSuratMintaLawatanTapak.jsp") </div>
+          <div class="TabbedPanelsContent"> 
+          	#parse("app/php2/frmCRBSuratMintaLawatanTapak.jsp") 
+          </div>
           <div class="TabbedPanelsContent">
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
               #if ($actionCRB == "newLawatanTapak")
@@ -115,7 +124,8 @@
   </tr>      
   <tr>
     <td align="center">
-     #if ($idStatus == '1610200' && $actionCRB == '' && $flagPopup == '')
+    #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan')
+      #if ($idStatus == '1610200' && $actionCRB == '' && $flagPopup == '')
      	#if ($userRole == '(PHP)PYWPenolongPegawaiTanahHQ')
     		<input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
 	 	#end
@@ -130,7 +140,11 @@
      	#if ($userRole == '(PHP)PYWPenolongPengarahHQ')
          	<input type="button" name="cmdHantarTugasan" id="cmdHantarTugasan" value="Agihan Kepada Pen. Pegawai Tanah" onClick="gotoHantarTugasanPPT()"/>
       	#end
-     #end
+      #end
+    #end
+    #if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
+      <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
+    #end
     </td>
   </tr>
   #elseif ($idFail != '')
