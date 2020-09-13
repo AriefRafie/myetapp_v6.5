@@ -1490,7 +1490,7 @@ public class FrmTKROnlineKJPSenaraiUlasanFailData {
 			Statement stmt = db.getStatement();
 
 			sql = "SELECT ID_DOKUMEN FROM TBLPHPDOKUMEN WHERE ID_PERMOHONAN = '" + idPermohonan + "' AND ID_ULASANTEKNIKAL = '" + idUlasanTeknikal + "'";
-			System.out.println(sql);
+			myLogger.info("getMaklumatLampiran ::sql >>> "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			if (rs.next()) {
@@ -2702,7 +2702,7 @@ public class FrmTKROnlineKJPSenaraiUlasanFailData {
 			String userId = (String) session.getAttribute("_ekptg_user_id");
 			String sql = "";
 			String namaUser = "";
-			String emelUser = "";
+			String emelUser = "nurulain.siprotech@gmail.com";
 			String idhakmilikPermohonan = "";
 			String noPermohonan = "";
 			String idSuburusan = "";
@@ -2726,7 +2726,7 @@ public class FrmTKROnlineKJPSenaraiUlasanFailData {
 					noPermohonan = rsPermohonan.getString("NO_PERMOHONAN");
 					idSuburusan = rsPermohonan.getString("ID_SUBURUSAN");
 					namaUser = rsPermohonan.getString("NAMA");
-					emelUser = rsPermohonan.getString("EMEL");
+					//emelUser = rsPermohonan.getString("EMEL");
 				}
 
 				//TBLPERMOHONAN

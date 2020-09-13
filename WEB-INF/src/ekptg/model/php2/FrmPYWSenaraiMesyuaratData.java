@@ -56,15 +56,19 @@ public class FrmPYWSenaraiMesyuaratData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = " SELECT B.ID_PERMOHONAN, C.TAJUK AS TAJUK_MESYUARAT, C.BIL_MESYUARAT, C.TARIKH_MESYUARAT, C.ID_LOKASI, E.LOKASI "
-				+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPMESYUARAT C, TBLPHPMESYUARATPERMOHONAN D, TBLPFDRUJLOKASIMESYUARAT E "
-				+ " WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PERMOHONAN = D.ID_PERMOHONAN AND C.ID_MESYUARAT = D.ID_MESYUARAT "
-				+ " AND C.ID_LOKASI = E.ID_LOKASI AND C.ID_URUSAN = 4 ";
-
+			//sql = " SELECT B.ID_PERMOHONAN, C.TAJUK AS TAJUK_MESYUARAT, C.BIL_MESYUARAT, C.TARIKH_MESYUARAT, C.ID_LOKASI, E.LOKASI "
+			//	+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPMESYUARAT C, TBLPHPMESYUARATPERMOHONAN D, TBLPFDRUJLOKASIMESYUARAT E "
+			//	+ " WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PERMOHONAN = D.ID_PERMOHONAN AND C.ID_MESYUARAT = D.ID_MESYUARAT "
+			//	+ " AND C.ID_LOKASI = E.ID_LOKASI AND C.ID_URUSAN = 4 ";SELECT A.ID_MESYUARAT, A.TAJUK, A.BIL_MESYUARAT,A.TARIKH_MESYUARAT, B.ID_LOKASI, B.LOKASI, A.STATUS_MESYUARAT 
+			sql = "SELECT A.ID_MESYUARAT, A.TAJUK, A.BIL_MESYUARAT,A.TARIKH_MESYUARAT, B.LOKASI, A.STATUS_MESYUARAT " +
+				      "FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B "+
+				      "WHERE A.ID_LOKASI = B.ID_LOKASI "+
+				      "AND ID_URUSAN='4'";
+			
 			// tajukMesyuarat
 			if (tajukMesyuarat != null) {
 				if (!tajukMesyuarat.trim().equals("")) {
-					sql = sql + " AND UPPER(C.TAJUK) LIKE '%' ||'"
+					sql = sql + " AND UPPER(A.TAJUK) LIKE '%' ||'"
 							+ tajukMesyuarat.trim().toUpperCase() + "'|| '%'";
 				}
 			}
@@ -72,44 +76,73 @@ public class FrmPYWSenaraiMesyuaratData {
 			// bilMesyuarat
 			if (bilMesyuarat != null) {
 				if (!bilMesyuarat.trim().equals("")) {
-					sql = sql + " AND UPPER(C.BIL_MESYUARAT) LIKE '%' ||'"
+					sql = sql + " AND UPPER(A.BIL_MESYUARAT) LIKE '%' ||'"
 							+ bilMesyuarat.trim().toUpperCase() + "'|| '%'";
 				}
 			}
 			
-			SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MMM-yy");
+			SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
 
 			// tarikhMesyuarat
 			if (tarikhMesyuarat != null) {
 				if (!tarikhMesyuarat.toString().trim().equals("")) {
 					sql = sql
-							+ " AND TO_CHAR(C.TARIKH_MESYUARAT,'DD-MM-YYYY') = '"
+							+ " AND TO_CHAR(A.TARIKH_MESYUARAT,'dd-MM-yyyy') = '"
 							+ sdf1.format(sdf.parse(tarikhMesyuarat))
 									.toUpperCase() + "'";
 				}
 			}
 			
-			sql = sql + " ORDER BY C.TARIKH_MESYUARAT DESC";
-
+			//sql = sql + " ORDER BY C.TARIKH_MESYUARAT DESC";
+			sql = sql + " ORDER BY A.TARIKH_MESYUARAT DESC";
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
 			int bil = 1;
+//			while (rs.next()) {
+//				h = new Hashtable();
+//				h.put("bil", bil);
+//				h.put("idPermohonan",
+//						rs.getString("ID_PERMOHONAN") == null ? "" : rs
+//								.getString("ID_PERMOHONAN"));
+//				h.put("tajukMesyuarat", rs.getString("TAJUK_MESYUARAT") == null ? "" : rs
+//						.getString("TAJUK_MESYUARAT").toUpperCase());
+//				h.put("bilMesyuarat", rs.getString("BIL_MESYUARAT") == null ? "" : rs
+//						.getString("BIL_MESYUARAT").toUpperCase());
+//				h.put("tarikhMesyuarat", rs.getDate("TARIKH_MESYUARAT") == null ? ""
+//						: sdf.format(rs.getDate("TARIKH_MESYUARAT")));
+///				senaraiMesyuarat.addElement(h);
+//				bil++;
+//
+//			}
 			while (rs.next()) {
 				h = new Hashtable();
 				h.put("bil", bil);
-				h.put("idPermohonan",
-						rs.getString("ID_PERMOHONAN") == null ? "" : rs
-								.getString("ID_PERMOHONAN"));
-				h.put("tajukMesyuarat", rs.getString("TAJUK_MESYUARAT") == null ? "" : rs
-						.getString("TAJUK_MESYUARAT").toUpperCase());
+				h.put("idMesyuarat",
+						rs.getString("ID_MESYUARAT") == null ? "" : rs
+								.getString("ID_MESYUARAT"));
+				h.put("tajukMesyuarat",
+						rs.getString("TAJUK") == null ? "" : rs
+								.getString("TAJUK"));
 				h.put("bilMesyuarat", rs.getString("BIL_MESYUARAT") == null ? "" : rs
 						.getString("BIL_MESYUARAT").toUpperCase());
 				h.put("tarikhMesyuarat", rs.getDate("TARIKH_MESYUARAT") == null ? ""
 						: sdf.format(rs.getDate("TARIKH_MESYUARAT")));
+				h.put("lokasiMesyuarat", rs.getString("LOKASI") == null ? "" : rs
+						.getString("LOKASI").toUpperCase());
+				
+				String status=rs.getString("STATUS_MESYUARAT");
+				String statusMesyuarat="";
+				
+				if(status.equalsIgnoreCase("1")){
+					statusMesyuarat="BARU";
+					h.put("statusMesyuarat", statusMesyuarat);
+				}else{
+					statusMesyuarat="SELESAI";
+					h.put("statusMesyuarat", statusMesyuarat);
+				}
 				senaraiMesyuarat.addElement(h);
 				bil++;
-
 			}
 
 		} finally {
