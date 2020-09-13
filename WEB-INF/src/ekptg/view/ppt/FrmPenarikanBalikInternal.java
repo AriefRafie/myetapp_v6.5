@@ -1239,7 +1239,7 @@ public class FrmPenarikanBalikInternal extends AjaxBasedModule{
 					if(maklumat_am_tanah.size()>0)
 					{
 					Hashtable h = (Hashtable) maklumat_am_tanah.get(0);
-					if(h.get("TARIKH_KEMASUKAN").toString().equals("") && h.get("PERIHAL_SYIT").toString().equals("") && h.get("TARIKH_PEMERIKSAAN").toString().equals("")
+					if(h.get("LOKASI_TANAH").toString().equals("") && h.get("TARIKH_KEMASUKAN").toString().equals("") && h.get("PERIHAL_SYIT").toString().equals("") && h.get("TARIKH_PEMERIKSAAN").toString().equals("")
             				&& h.get("FLAG_JENIS_TANAH").toString().equals("") && h.get("NO_GAZET").toString().equals("") && h.get("FLAG_DLM_SIMPANAN").toString().equals("")
             				&& h.get("FLAG_LUAR_SIMPANAN").toString().equals("") && h.get("FLAG_LUAR_MAJLIS").toString().equals("") && h.get("FLAG_DLM_MAJLIS").toString().equals("")
             				)
@@ -1272,13 +1272,13 @@ public class FrmPenarikanBalikInternal extends AjaxBasedModule{
 				{
 					 if(getParam("id_tanahumum")!="" && getParam("id_tanahumum")!=null)
 					 {
-						 if (bolehsimpan.equals("yes")) 
-							{
-					updateMaklumatAmTanah(session);	
+						 if (bolehsimpan.equals("yes")){
+						 	updateMaklumatAmTanah(session);	
 					/*	logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
 								(String) session.getAttribute("_ekptg_user_id"),"16102699","add");
 					*/
-							}		}	 
+							}		
+					 }	 
 					 else
 					 {
 						 if (bolehsimpan.equals("yes")) 
@@ -1308,162 +1308,187 @@ public class FrmPenarikanBalikInternal extends AjaxBasedModule{
 							
 				vm = "app/ppt/frmPenarikanLaporanAwalTanah.jsp";
 	    	}
- 			if ("Perihal_Tanah".equals(sub_command))
-			{		                 
-				if ("View".equals(subminor_command))
-				{
+ 			if ("Perihal_Tanah".equals(sub_command)){		                 
 				
-					if(maklumat_am_tanah.size()>0)
-					{
-					Hashtable h = (Hashtable) maklumat_am_tanah.get(0);
+ 				if ("View".equals(subminor_command)){
+				
+					if(maklumat_am_tanah.size()>0){
+						Hashtable h = (Hashtable) maklumat_am_tanah.get(0);
 					
-					if(h.get("LOKASI_TANAH").toString().equals("") && h.get("LOT_SELURUH_LOT").toString().equals("") && h.get("LOT_JENIS_TANAMAN").toString().equals("")
-            				&& h.get("LOT_BERHAMPIRAN").toString().equals("") && h.get("LOT_KEADAAN_TANAMAN").toString().equals("") && h.get("ULASAN").toString().equals("")
-            				&& h.get("RUPABUMI_SELURUH_LOT").toString().equals("") && h.get("RUPABUMI_KWSN_TERLIBAT").toString().equals("") 
-            				&& h.get("MELIBATKAN_BANGUNAN").toString().equals("") && h.get("BILANGAN_BANGUNAN").toString().equals("")
-            				)
-            		{
-            			this.context.put("readmode", "edit");		
-            		}else
-            		{
-            			 this.context.put("readmode", "view");			
-            		}						
-					}
-					else
-					{
-					 this.context.put("readmode", "edit");	
+						if(h.get("flag_diusaha").toString().equals("") && h.get("flag_lembah").toString().equals("") && h.get("flag_lurah").toString().equals("") && h.get("flag_paya").toString().equals("")
+            				&& h.get("flag_rendah").toString().equals("") && h.get("flag_rata").toString().equals("") && h.get("flag_landai").toString().equals("")
+            				&& h.get("flag_bukit").toString().equals("") && h.get("flag_semak").toString().equals("") && h.get("flag_belukar").toString().equals("")
+            				&& h.get("flag_hutan").toString().equals("") && h.get("flag_terbiar").toString().equals("") && h.get("flag_lapang").toString().equals("")
+            				&& h.get("keadaan_tanah").toString().equals("") && h.get("flag_lapang").toString().equals("")){
+								this.context.put("readmode", "edit");		
+						}else{
+							this.context.put("readmode", "view");			
+						}	
+						
+					}else{
+						this.context.put("readmode", "edit");	
 					}
 				}
-				else if ("Simpan".equals(subminor_command))
-				{
-					 if(getParam("id_tanahumum")!="" && getParam("id_tanahumum")!=null)
-					 {						
-						 if (bolehsimpan.equals("yes")) 
-							{
+				else if ("Simpan".equals(subminor_command)){
+					 if(getParam("id_tanahumum")!="" && getParam("id_tanahumum")!=null){						
+						 if (bolehsimpan.equals("yes")){
 							 updatePerihalTanah(session);	
 				/*		logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
 								(String) session.getAttribute("_ekptg_user_id"),"16102699","add");*/
-					 		}						
-					 }	 
-					 else
-					 {							
-						if (bolehsimpan.equals("yes")) 
-						{
+						 }						
+					 }else{							
+						if (bolehsimpan.equals("yes")){
 							addPerihalTanah(session);
-					logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
+							logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
 							(String) session.getAttribute("_ekptg_user_id"),"16102699","add",getParam("id_fail"));
 				 		}	
 					 }
-					 this.context.put("readmode", "view");	
-				}
-				else if("Batal".equals(subminor_command) ||  "Kemaskini".equals(subminor_command))
-				{
+					 this.context.put("readmode", "view");
+					 
+				}else if("Batal".equals(subminor_command) || "Kemaskini".equals(subminor_command)){
 					this.context.put("readmode", "edit");	
-				}
-				else if ("UpdateSuburusan".equals(subminor_command))
-				{
-					if (bolehsimpan.equals("yes")) 
-					{
-					logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
+					
+				}else if ("UpdateSuburusan".equals(subminor_command)){
+					if (bolehsimpan.equals("yes")){
+						logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
 							(String) session.getAttribute("_ekptg_user_id"),"16102700","add",getParam("id_fail"));
 					}
 					this.context.put("readmode", "view");	
 					
-				}
-				
-				else if("Hapus".equals(subminor_command))
-				{				
-					if (bolehsimpan.equals("yes")) 
-					{
+				}else if("Hapus".equals(subminor_command)){				
+					if (bolehsimpan.equals("yes")){
 						logic.deleteMaklumatAm(getParam("id_tanahumum"));
-					logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
+						logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
 							(String) session.getAttribute("_ekptg_user_id"),"16102699","hapus",getParam("id_fail"));
-					this.context.put("readmode", "edit");	
+						this.context.put("readmode", "edit");	
 					}				
 					
 					this.context.put("readmode", "edit");	
 				}
 							
 				vm = "app/ppt/frmPenarikanBalikPerihalTanah.jsp";
-	    	}			
- 			if ("Laporan_Kerosakan".equals(sub_command))
-			{		                 
-				if ("View".equals(subminor_command))
-				{
+	    	}	
+ 			
+ 			if ("Laporan_Kerosakan".equals(sub_command)){		                 
+				if ("View".equals(subminor_command)){
 				
-					if(maklumat_am_tanah.size()>0)
-					{
-					Hashtable h = (Hashtable) maklumat_am_tanah.get(0);
+					if(maklumat_am_tanah.size()>0){
+						Hashtable h = (Hashtable) maklumat_am_tanah.get(0);
 
-					if(h.get("KEROSAKAN_TANAH").toString().equals("") && h.get("KEROSAKAN_TANAMAN").toString().equals("") && h.get("KEROSAKAN_BANGUNAN").toString().equals("")
-            				&& h.get("KOS_DITANGGUNG").toString().equals(""))
-            		{
-            			this.context.put("readmode", "edit");		
-            		}else
-            		{
-            			 this.context.put("readmode", "view");			
-            		}						
+						if(h.get("KEROSAKAN_TANAH").toString().equals("") && h.get("KEROSAKAN_TANAMAN").toString().equals("") 
+								&& h.get("KEROSAKAN_BANGUNAN").toString().equals("") && h.get("KOS_DITANGGUNG").toString().equals("")){
+							this.context.put("readmode", "edit");		
+						}else{
+							this.context.put("readmode", "view");			
+						}						
 					}
-					else
-					{
-					 this.context.put("readmode", "edit");	
+					else{
+						this.context.put("readmode", "edit");	
 					}
 				}
-				else if ("Simpan".equals(subminor_command))
-				{
+				else if ("Simpan".equals(subminor_command)){
 							
-					 if(getParam("id_tanahumum")!="" && getParam("id_tanahumum")!=null)
-					 {						
-						 if (bolehsimpan.equals("yes")) 
-							{
+					 if(getParam("id_tanahumum")!="" && getParam("id_tanahumum")!=null){						
+						 if (bolehsimpan.equals("yes")){
 							 updateMaklumatKerosakan(session);	
 					/*		
 						logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
 								(String) session.getAttribute("_ekptg_user_id"),"16102699","add");
 					 	*/	}						
 					 }	 
-					 else
-					 {							
-						if (bolehsimpan.equals("yes")) 
-						{
+					 else{							
+						if (bolehsimpan.equals("yes")){
 							 addMaklumatKerosakan(session);		
-					logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
+							 logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
 							(String) session.getAttribute("_ekptg_user_id"),"16102699","add",getParam("id_fail"));
 				 		}	
 					 }
 					
-					
 					 this.context.put("readmode", "view");	
 				}
-				else if ("UpdateSuburusan".equals(subminor_command))
-				{
-					if (bolehsimpan.equals("yes")) 
-					{
-					logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
+				else if ("UpdateSuburusan".equals(subminor_command)){
+					if (bolehsimpan.equals("yes")){
+						logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
 							(String) session.getAttribute("_ekptg_user_id"),"16102700","add",getParam("id_fail"));
 					}
-					this.context.put("readmode", "view");	
 					
+					this.context.put("readmode", "view");	
 				}
-				else if("Batal".equals(subminor_command) ||  "Kemaskini".equals(subminor_command))
-				{
+				else if("Batal".equals(subminor_command) ||  "Kemaskini".equals(subminor_command)){
 					this.context.put("readmode", "edit");	
 				}
 				
-				else if("Hapus".equals(subminor_command))
-				{
-					if (bolehsimpan.equals("yes")) 
-					{
+				else if("Hapus".equals(subminor_command)){
+					if (bolehsimpan.equals("yes")){
 						logic.deleteMaklumatAm(getParam("id_tanahumum"));
-					logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
+						logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
 							(String) session.getAttribute("_ekptg_user_id"),"16102699","hapus",getParam("id_fail"));
-					
 					}	
+					
 					this.context.put("readmode", "edit");	
 				}
 							
 				vm = "app/ppt/frmPenarikanBalikLaporanTanahKerosakan.jsp";
-	    	}			
+	    	}
+ 			
+ 			//TAMBAH v6.5
+ 			if ("Pembangunan_Sekitar".equals(sub_command)){
+				if ("View".equals(subminor_command)){
+				
+					if(maklumat_am_tanah.size()>0){
+						Hashtable h = (Hashtable) maklumat_am_tanah.get(0);
+
+						if(h.get("KEROSAKAN_TANAH").toString().equals("") && h.get("KEROSAKAN_TANAMAN").toString().equals("") 
+								&& h.get("KEROSAKAN_BANGUNAN").toString().equals("") && h.get("KOS_DITANGGUNG").toString().equals("")){
+							this.context.put("readmode", "edit");		
+						}else{
+							this.context.put("readmode", "view");			
+						}						
+					}else{
+						this.context.put("readmode", "edit");	
+					}
+				}
+				else if ("Simpan".equals(subminor_command)){
+							
+					 if(getParam("id_tanahumum")!="" && getParam("id_tanahumum")!=null){						
+						 if (bolehsimpan.equals("yes")){
+							 updateMaklumatKerosakan(session);	
+						}						
+					 }	 
+					 else{							
+						if (bolehsimpan.equals("yes")){
+							 addMaklumatKerosakan(session);		
+							 logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
+									 (String) session.getAttribute("_ekptg_user_id"),"16102699","add",getParam("id_fail"));
+				 		}	
+					 }
+					
+					 this.context.put("readmode", "view");	
+				}
+				else if ("UpdateSuburusan".equals(subminor_command)){
+					if (bolehsimpan.equals("yes")){
+						logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
+							(String) session.getAttribute("_ekptg_user_id"),"16102700","add",getParam("id_fail"));
+					}
+					
+					this.context.put("readmode", "view");	
+				}
+				else if("Batal".equals(subminor_command) ||  "Kemaskini".equals(subminor_command)){
+					this.context.put("readmode", "edit");	
+				}
+				
+				else if("Hapus".equals(subminor_command)){
+					if (bolehsimpan.equals("yes")){
+						logic.deleteMaklumatAm(getParam("id_tanahumum"));
+						logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
+							(String) session.getAttribute("_ekptg_user_id"),"16102699","hapus",getParam("id_fail"));
+					}	
+					
+					this.context.put("readmode", "edit");	
+				}
+							
+				vm = "app/ppt/frmPenarikanBalikPembangunan.jsp";
+	    	}
  			
 			context.put("id_permohonan",getParam("id_permohonan"));
 			context.put("id_pembatalan",getParam("id_pembatalan"));
@@ -4989,6 +5014,20 @@ public class FrmPenarikanBalikInternal extends AjaxBasedModule{
 			h.put("txtNoGazetDaerah", getParam("txtNoGazetDaerah"));
 			h.put("id_pembatalan", getParam("id_pembatalan"));
 			h.put("id_hakmilik", getParam("id_hakmilik"));
+			
+			//TAMBAH v6.5
+			h.put("txtPendahuluan", getParam("txtPendahuluan"));
+			h.put("txtStatusTanah", getParam("txtStatusTanah"));
+			h.put("txtJalanUtama", getParam("txtJalanUtama"));
+			h.put("txtJalanMasuk", getParam("txtJalanMasuk"));
+			h.put("txtNamaTempat", getParam("txtNamaTempat"));
+			h.put("txtJarak", getParam("txtJarak"));
+			h.put("txtPerumahan", getParam("txtPerumahan"));
+			h.put("txtIndustri", getParam("txtIndustri"));
+			h.put("txtNamaPBT", getParam("txtNamaPBT"));
+			h.put("txtPerumahan", getParam("txtPerumahan"));
+			h.put("txtLokasi", getParam("txtLokasi"));
+			
 			h.put("id_Masuk", (String) session.getAttribute("_ekptg_user_id"));
 			logic.addMaklumatAmTanah(h);		
 		}
@@ -5007,6 +5046,22 @@ public class FrmPenarikanBalikInternal extends AjaxBasedModule{
 			h.put("id_pembatalan", getParam("id_pembatalan"));
 			h.put("id_hakmilik", getParam("id_hakmilik"));
 			h.put("id_tanahumum", getParam("id_tanahumum"));
+			
+			//TAMBAH v6.5
+			h.put("txtPendahuluan", getParam("txtPendahuluan"));
+			h.put("txtStatusTanah", getParam("txtStatusTanah"));
+			h.put("txtJalanUtama", getParam("txtJalanUtama"));
+			h.put("txtJalanMasuk", getParam("txtJalanMasuk"));
+			h.put("txtNamaTempat", getParam("txtNamaTempat"));
+			h.put("txtJarak", getParam("txtJarak"));
+			h.put("txtPerumahan", getParam("txtPerumahan"));
+			h.put("txtIndustri", getParam("txtIndustri"));
+			h.put("txtNamaPBT", getParam("txtNamaPBT"));
+			h.put("txtPerumahan", getParam("txtPerumahan"));
+			h.put("txtLokasi", getParam("txtLokasi"));
+			h.put("sorPBT", getParam("sorPBT"));
+			
+			
 			h.put("id_Masuk", (String) session.getAttribute("_ekptg_user_id"));
 			logic.updateMaklumatAmTanah(h);		
 		}
@@ -5028,6 +5083,26 @@ public class FrmPenarikanBalikInternal extends AjaxBasedModule{
 			
 			h.put("txtKawasanTerlibat", getParam("txtKawasanTerlibat"));
 			
+			//TAMBAH v6.5
+			h.put("flagBukit", getParam("flagBukit"));
+			h.put("flagLandai", getParam("flagLandai"));
+			h.put("flagRata", getParam("flagRata"));
+			h.put("flagRendah", getParam("flagRendah"));
+			h.put("flagBerpaya", getParam("flagBerpaya"));
+			h.put("flagLurah", getParam("flagLurah"));
+			h.put("flagLembah", getParam("flagLembah"));
+			h.put("txtPerihalRupabumi", getParam("txtPerihalRupabumi"));
+			h.put("flagUsaha", getParam("flagUsaha"));
+			h.put("flagLapang", getParam("flagLapang"));
+			h.put("flagTerbiar", getParam("flagTerbiar"));
+			h.put("flagHutan", getParam("flagHutan"));
+			h.put("flagBelukar", getParam("flagBelukar"));
+			h.put("flagSemak", getParam("flagSemak"));
+			h.put("txtPerihalKeadaan", getParam("txtPerihalKeadaan"));
+			h.put("txtHalangan", getParam("txtHalangan"));
+			h.put("txtTanaman", getParam("txtTanaman"));
+			
+			
 			h.put("id_pembatalan", getParam("id_pembatalan"));
 			h.put("id_hakmilik", getParam("id_hakmilik"));
 			h.put("id_Masuk", (String) session.getAttribute("_ekptg_user_id"));
@@ -5038,7 +5113,6 @@ public class FrmPenarikanBalikInternal extends AjaxBasedModule{
 		 
 			Hashtable h = new Hashtable();
 			h.put("txtKawasanTerlibat", getParam("txtKawasanTerlibat"));
-			
 			h.put("txtLokasiTanah", getParam("txtLokasiTanah"));
 			h.put("txtKeadaanLot", getParam("txtKeadaanLot"));
 			h.put("txtJenisTanaman", getParam("txtJenisTanaman"));
@@ -5052,6 +5126,26 @@ public class FrmPenarikanBalikInternal extends AjaxBasedModule{
 			h.put("id_pembatalan", getParam("id_pembatalan"));
 			h.put("id_hakmilik", getParam("id_hakmilik"));
 			h.put("id_tanahumum", getParam("id_tanahumum"));
+			
+			//TAMBAH v6.5
+			h.put("flagBukit", getParam("flagBukit"));
+			h.put("flagLandai", getParam("flagLandai"));
+			h.put("flagRata", getParam("flagRata"));
+			h.put("flagRendah", getParam("flagRendah"));
+			h.put("flagBerpaya", getParam("flagBerpaya"));
+			h.put("flagLurah", getParam("flagLurah"));
+			h.put("flagLembah", getParam("flagLembah"));
+			h.put("txtPerihalRupabumi", getParam("txtPerihalRupabumi"));
+			h.put("flagUsaha", getParam("flagUsaha"));
+			h.put("flagLapang", getParam("flagLapang"));
+			h.put("flagTerbiar", getParam("flagTerbiar"));
+			h.put("flagHutan", getParam("flagHutan"));
+			h.put("flagBelukar", getParam("flagBelukar"));
+			h.put("flagSemak", getParam("flagSemak"));
+			h.put("txtPerihalKeadaan", getParam("txtPerihalKeadaan"));
+			h.put("txtHalangan", getParam("txtHalangan"));
+			h.put("txtTanaman", getParam("txtTanaman"));
+			
 			h.put("id_Masuk", (String) session.getAttribute("_ekptg_user_id"));
 			logic.updatePerihalTanah(h);		
 		}

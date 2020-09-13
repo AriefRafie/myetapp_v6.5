@@ -93,6 +93,7 @@
         <li class="TabbedPanelsTab" tabindex="0" onClick="screen2('$id_permohonan','$id_pembatalan')" >Senarai Lot Penarikan</li>
         <li class="TabbedPanelsTab" tabindex="0" id="maklumat_am" onClick="LaporanTanah('$!id_hakmilik','$!id_pembatalan')">Maklumat Am Tanah</li>
         <li class="TabbedPanelsTab" tabindex="0" onClick="PerihalTanah('$!id_hakmilik','$!id_pembatalan')">Perihal Tanah</li>
+                <li class="TabbedPanelsTab" tabindex="0" onclick="PembangunanSekitar('$!id_hakmilik','$!id_pembatalan')">Pembangunan Sekitar</li>
         <li class="TabbedPanelsTab" tabindex="0" onClick="LaporanKerosakan('$!id_hakmilik','$!id_pembatalan')">Laporan Kerosakan</li>
       </ul>
       <div class="TabbedPanelsContentGroup">
@@ -272,7 +273,7 @@
 <!----------------------------------------- SENARAI DOKUMEN YANG DISERTAKAN --------------------------------------------->
 <!-- :::upload -->
 <fieldset id="senarai_dokumen" >
-<legend> Senarai Dokumen Yang Disertakan Bagi Kerosakan </legend>
+<legend> Senarai Dokumen </legend>
 	
 	<a href="javascript:popupCarianDokumen('$id_pembatalan', '$id_hakmilik')"><font color="blue">>> SKRIN SENARAI DOKUMEN</font></a>   
     
@@ -1141,4 +1142,16 @@ function popupCarianDokumen(id_penarikanbalik,id_hakmilik)	{
 	
 }
 
+function PembangunanSekitar(id_hakmilik,id_pembatalan)
+{
+	document.${formName}.command.value = "Laporan_Tanah";
+	document.${formName}.sub_command.value = "Pembangunan_Sekitar";
+	document.${formName}.subminor_command.value = "View";
+	document.${formName}.location.value = "maklumat_am";
+	document.${formName}.point.value = "maklumat_am";	
+	document.${formName}.id_hakmilik.value = id_hakmilik;
+	document.${formName}.id_pembatalan.value = id_pembatalan;
+	document.${formName}.action = "";
+	document.${formName}.submit();
+}
   </script>
