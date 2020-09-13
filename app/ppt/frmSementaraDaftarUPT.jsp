@@ -165,7 +165,7 @@ background: #E0F2F7;
             	<td><font color="red">*</font></td>
             	<td>Tarikh Pendudukan Mula</td>
             	<td>:</td>
-                <td><input name="txdTarikhPendudukanMula" value="$!txdTarikhPendudukanMula" size="11" id="txdTarikhPendudukanMula" type="text"  onblur="monthsDiff(); check_date(this);" />
+                <td><input name="txdTarikhPendudukanMula" value="$!txdTarikhPendudukanMula" size="11" id="txdTarikhPendudukanMula" type="text"  onblur="monthsDiff();" />
        		 	<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhPendudukanMula',false,'dmy');">$!frmtdate</td>
             </tr>
             <tr>
@@ -177,7 +177,7 @@ background: #E0F2F7;
             </tr>
            	<tr>
            		<td>&nbsp;</td>
-            	<td>Tempoh Pendudukan (Bulan)</td>
+            	<td>Tempoh Pendudukan (Hari)</td>
             	<td>:</td>
             	<td><input type="text" name="txtTempohPendudukan" value="$!txtTempohPendudukan" size="15" class="disabled" readonly></td>
             </tr>
@@ -1407,31 +1407,111 @@ return true
 }
 
 
-//PPT-41
-function monthsDiff() {  
-
+/*function monthsDiff() {
+	
 	var date1=document.${formName}.txdTarikhPendudukanMula.value;
 	var date2=document.${formName}.txdTarikhPendudukanAkhir.value;
 	
-	var datearray1 = date1.split("/");
-	var date1 = datearray1[1] + '/' + datearray1[0] + '/' + datearray1[2];
-	var datearray2 = date2.split("/");
-	var date2 = datearray2[1] + '/' + datearray2[0] + '/' + datearray2[2];
-	
-	var d1 = new Date(date1);
-	var d2 = new Date(date2);
-		
-    var months;
-    months = (d2.getFullYear() - d1.getFullYear()) * 12;
-    months -= d1.getMonth();
-    months += d2.getMonth();
+    // The number of milliseconds in one day
+    var ONEDAY = (1000 * 60 * 60 * 24);
+    // Convert both dates to milliseconds
+    var date1_ms = date1.getTime();
+    var date2_ms = date2.getTime();
+    // Calculate the difference in milliseconds
+    var difference_ms = (date1_ms - date2_ms);
 
-    if(months > -1){
-		document.${formName}.txtTempohPendudukan.value = months;
-    }
+    // Convert back to days and return
+   // return Math.round(difference_ms/ONEDAY);
+ alert(difference_ms);
+}
+*/
+
+/*function monthsDiff() {
+	
+var date1=document.${formName}.txdTarikhPendudukanMula.value;
+var date2=document.${formName}.txdTarikhPendudukanAkhir.value;
+
+var d1 = new Date("dd/MM/yyyy");
+
+alert("DATE 1 : "+d1);
+//alert("DATE 1 xx: "+dt1);
+
+//alert("DATE 2 :"+date2);
+// get total seconds between two dates
+var res = Math.abs(date1 - date2) / 1000;
+var days = Math.floor(res / 86400);
+alert(days);
+
+}*/
+/*function monthsDiff() {
+	
+var dob1= document.getElementById("txdTarikhPendudukanMula").value;
+var dob2= document.getElementById("txdTarikhPendudukanAkhir").value;
+var date1 = new Date(dob);
+var date2=new Date(dob2);
+alert(date1)
+
+var ONE_DAY = 1000 * 60 * 60 * 24
+var d1 = date1.getTime()
+var d2 = date2.getTime()
+var diff = Math.abs(d1 - d2)
+document.getElementById("months").value=Math.round(diff/ONE_DAY);
+}*/
+
+
+
+/*function monthsDiff() {
+	
+var new
+	
+var date1 = new Date(document.${formName}.txdTarikhPendudukanMula.value);
+var date2=document.${formName}.txdTarikhPendudukanAkhir.value;
+
+var dt1 = new Date(date1);
+var dd = dt1.getDate();
+alert("date :"+dd);
+
+var dd = dt1.getMonth()+1; 
+var yyyy = dt1.getFullYear();
+if(mm<10) 
+{
+    mm='0'+mm;
+} 
+
+if(dd<10) 
+{
+    dd='0'+dd;
+} 
+
+dt1 = mm+'/'+dd+'/'+yyyy;
+//alert(dt1);
+}*/
+
+function monthsDiff() {
+	//tarikh pendudukan mula PPT-41
+	var Mula  = document.getElementById("txdTarikhPendudukanMula").value;
+	var dt1   = parseInt(Mula.substring(0,2),10);
+	var mon1  = parseInt(Mula.substring(3,5),10)-1;
+	var yr1   = parseInt(Mula.substring(6,10),10);
+	var datePendudukanMula = new Date(yr1, mon1, dt1);
+	//alert(datePendudukanMula);
+	
+	//tarikh pendudukan mula PPT-41
+	var Akhir  = document.getElementById("txdTarikhPendudukanAkhir").value;
+	var dt2   = parseInt(Akhir.substring(0,2),10);
+	var mon2  = parseInt(Akhir.substring(3,5),10)-1;
+	var yr2   = parseInt(Akhir.substring(6,10),10);
+	var datePendudukanAkhir = new Date(yr2, mon2, dt2);
+	//alert(datePendudukanAkhir);
+	
+	// get total seconds between two dates
+	var res = Math.abs(datePendudukanMula - datePendudukanAkhir) / 1000;
+	var days = Math.floor(res / 86400);
+
+	
+	document.${formName}.txtTempohPendudukan.value = days;
 
 }
-
 
 </script>
 

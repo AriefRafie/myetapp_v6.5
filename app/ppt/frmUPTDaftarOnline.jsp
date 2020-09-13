@@ -1477,9 +1477,18 @@ function cetakLampiranA(idpermohonan,namaMukim) {
     
 }
 function viewHM(id_hakmilik){
+
 	document.${formName}.ScreenLocation.value = "top";
 	document.${formName}.id_hakmilik.value = id_hakmilik;
 	document.${formName}.command.value = "viewHM";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline";
+	document.${formName}.submit();
+}
+function tambahPBOnline(id_hakmilik){
+
+	document.${formName}.ScreenLocation.value = "top";
+	document.${formName}.id_hakmilik.value = id_hakmilik;
+	document.${formName}.command.value = "tambahPBOnline";
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline";
 	document.${formName}.submit();
 }

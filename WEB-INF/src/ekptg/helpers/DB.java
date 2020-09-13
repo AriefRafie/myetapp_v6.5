@@ -2869,8 +2869,9 @@ public class DB extends EkptgCache implements Serializable {
 
 	public static Vector<Tblrujjenisnopb> getRujJenisNoPB() throws Exception {
 		Db db = null;
-		String sql = "Select id_jenisnopb, kod_jenis_nopb, keterangan from "
-				+ " tblrujjenisnopb where id_jenisnopb <> '9' order by lpad(id_jenisnopb,10)";
+		String sql = "select id_jenisnopb, kod_jenis_nopb, UPPER(keterangan) keterangan "
+				+ " from tblrujjenisnopb "
+				+ " where id_jenisnopb <> '9' order by lpad(id_jenisnopb,10)";
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -2889,6 +2890,7 @@ public class DB extends EkptgCache implements Serializable {
 			if (db != null)
 				db.close();
 		}
+		
 	}
 
 	public static Vector<Tblrujjenisnopb> getRujJenisNoPBIndividu() throws Exception {

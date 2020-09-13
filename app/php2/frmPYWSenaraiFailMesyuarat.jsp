@@ -14,6 +14,7 @@
   <input type="hidden" name="initiateFlagBuka" id="initiateFlagBuka"/>
   <input type="hidden" name="mode" id="mode" value="$mode"/>
   <input type="hidden" name="flagFrom" id="flagFrom"/>
+  <input type="hidden" name="hitButton" id="hitButton"/>
 </p>
 
 #if ($errMsg != "")
@@ -27,25 +28,25 @@
       <table width="100%" align="center" border="0">
         <tr>
           <td width="30%" height="24" scope="row" align="right">Tajuk Mesyuarat : </td>
-          <td width="70%"><input name="txtTajukMesyuarat" id="txtTajukMesyuarat" type="text" value="$txtTajukMesyuarat" size="50" maxlength="50" style="text-transform:uppercase;" >
+          <td width="70%"><input name="txtTajukMesyuarat" id="txtTajukMesyuarat" type="text" value="" size="50" maxlength="50" style="text-transform:uppercase;" >
             <input type="hidden" name="idPermohonan" />
             <input type="hidden" name="actionPenyewaan" />
           </td>
         </tr>
         <tr>
           <td width="30%" height="24" scope="row" align="right">Bil. Mesyuarat : </td>
-          <td width="70%"><input name="txtBilMesyuarat" id="txtBilMesyuarat" type="text" value="$txtBilMesyuarat" size="50" maxlength="50" style="text-transform:uppercase;" ></td>
+          <td width="70%"><input name="txtBilMesyuarat" id="txtBilMesyuarat" type="text" value="" size="50" maxlength="50" style="text-transform:uppercase;" ></td>
         </tr>
         <tr>
           <td width="30%" height="24" scope="row" align="right">Tarikh Mesyuarat : </td>
-          <td width="70%"><input type="text" name="txtTarikhMesyuarat" id="txtTarikhMesyuarat" value="$!txtTarikhMesyuarat" onblur="check_date(this)" size="9"/>
+          <td width="70%"><input type="text" name="txtTarikhMesyuarat" id="txtTarikhMesyuarat" value="" onblur="check_date(this)" size="9"/>
             <a href="javascript:displayDatePicker('txtTarikhMesyuarat',false,'dmy');"><img border="0" src="../img/calendar.gif"/></td>
         </tr>
         <tr>
           <td scope="row"></td>
           <td>
             <input name="cmdCari" id="cmdCari" value="Cari" type="button" onclick="javascript:carian()">
-            <input name="cmdKosongkan" id="cmdKosongkan" value="Kosongkan" type="reset" onClick="javascript:kosongkan('$')">
+            <input name="cmdKosongkan" id="cmdKosongkan" value="Kosongkan" type="reset" onClick="javascript:kosongkan()">
           </td>
         </tr>
         <tr>
@@ -72,6 +73,7 @@
           <td width="11%"><strong>Tarikh Mesyuarat</strong></td>
           <td width="20%"><strong>Lokasi</strong></td>
           <td width="13%"><strong>Status Mesyuarat</strong></td>
+          
         </tr>
         #set ($list = "")
         #if ($SenaraiMesyurat.size() > 0)
@@ -143,12 +145,9 @@ function carian(){
 }
 function kosongkan() {
 	document.${formName}.reset();
-	document.${formName}.txtNoFail.value = "";
-	document.${formName}.txtNoFailNegeri.value = "";
-	document.${formName}.txtPemohon.value = "";
-	document.${formName}.txtNoPengenalan.value = "";
-	document.${formName}.txdTarikhTerima.value = "";
-	document.${formName}.socStatusC.value = "";
+	document.${formName}.txtTajukMesyuarat.value = "";
+	document.${formName}.txtBilMesyuarat.value = "";
+	document.${formName}.txtTarikhMesyuarat.value = "";
 	doAjaxCall${formName}("");
 }
 function papar(idMesyuarat) {

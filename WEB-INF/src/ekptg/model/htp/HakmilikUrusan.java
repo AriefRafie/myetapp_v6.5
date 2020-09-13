@@ -23,6 +23,7 @@ public class HakmilikUrusan implements Serializable {
 	private String idNegeri;
 	private String idDaerah;
 	private String idMukim;
+	private String idSeksyen;
 	private String idHakmilik;
 	private String idLot;
 	private String idKemaskini;
@@ -185,21 +186,23 @@ public class HakmilikUrusan implements Serializable {
 		this.idDaerah = idDaerah;
 	}
 
-
 	public String getIdMukim() {
 		return idMukim;
 	}
-
-
 	public void setIdMukim(String idMukim) {
 		this.idMukim = idMukim;
 	}
 
-
+	public String getIdSeksyen() {
+		return idSeksyen;
+	}
+	public void setIdSeksyen(String idSeksyen) {
+		this.idSeksyen = idSeksyen;
+	}
+	
 	public String getIdHakmilik() {
 		return idHakmilik;
 	}
-
 
 	public void setIdHakmilik(String idHakmilik) {
 		this.idHakmilik = idHakmilik;

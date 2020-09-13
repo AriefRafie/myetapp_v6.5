@@ -152,6 +152,22 @@
 
 	 }
 
+	 function doHantarPenyemak(){
+		 if ( !window.confirm("Adakah Anda Pasti ?") ){
+			//document.${formName}.actionPajakan.value = "papar";
+			//document.${formName}.actionPajakan.value = "papardaftar";
+			return;
+
+		 }
+		document.${formName}.mode.value = "view";
+		//document.${formName}.actionPajakan.value = "papar";
+		//document.${formName}.actionPajakan.value = "papardaftar";
+		document.${formName}.hitButton.value = "hantarpenyemakdaftar";
+		document.${formName}.submit();
+		//doAjaxCall${formName}("");
+
+	 }
+
 	 function doSahkan() {
 		if ( !window.confirm("Adakah Anda Pasti ?") ){
 			//document.${formName}.actionPajakan.value = "papar";
