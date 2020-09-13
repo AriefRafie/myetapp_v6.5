@@ -22,23 +22,26 @@
   <input name="hitButton" type="hidden" id="hitButton"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
-  #if ($idFail != '')
+  #if ($idFail != '' && $idStatus != '1610198' && $idStatus != '1610199' && $idStatus != '1610200')
   <tr>
     <td> #parse("app/php2/frmCRBHeader.jsp") </td>
   </tr>
-  #else
+  #elseif ($idFail == '' )
   <tr>
     <td>&nbsp;
       <div class="warning">SILA PILIH FAIL DI SENARAI FAIL TERLEBIH DAHULU</div></td>
   </tr>
   #end
-  #if ($idFail != '' && $flagOpenDetail)
+  
+  #if ($idFail != '' && $flagOpenDetail && $idStatus != '1610198' && $idStatus != '1610199' && $idStatus != '1610200')
   <tr>
     <td><fieldset>
       <legend><strong>SENARAI MESYUARAT</strong></legend>
       <table align="center" width="100%">
         <tr>
+        #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
           <td colspan="4" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:doDaftarBaruMesyuarat()"/></td>
+        #end
         </tr>
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
@@ -81,11 +84,18 @@
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td align="center"> #if ($idStatus == '1610201')
-      <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
-      <input type="button" name="cmdSelesaiPermohonan" id="cmdSelesaiPermohonan" value="Selesai Permohonan" onClick="gotoSelesaiPermohonan()"/>
-      <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
-      #end </td>
+    <td align="center"> 
+    #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan')
+    	#if ($idStatus == '1610201')
+      		<input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
+      		<input type="button" name="cmdSelesaiPermohonan" id="cmdSelesaiPermohonan" value="Selesai Permohonan" onClick="gotoSelesaiPermohonan()"/>
+      		<input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
+      	#end 
+    #end
+    #if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
+    	<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
+    #end
+    </td>
   </tr>
   #elseif ($idFail != '')
   <tr>
@@ -122,6 +132,10 @@ function doSeterusnya(){
 	
 	document.${formName}.hitButton.value = "doSeterusnya";
 	doAjaxCall${formName}("");
+}
+function gotoSenaraiFailKeseluruhan() {
+	document.${formName}.action = "$EkptgUtil.getTabID("'My Info'",$portal_role)?_portal_module=ekptg.view.php2.FrmCRBSenaraiFailKeseluruhanView";
+	document.${formName}.submit();
 }
 </script>
 <input name="step" type="hidden" id="step"/>

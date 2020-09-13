@@ -14,18 +14,18 @@
   <input name="flagAktif" type="hidden" id="flagAktif" value="$flagAktif"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
-  #if ($idFail != '')
+  #if ($idFail != '' && $idStatus != '1610198' && $idStatus != '1610199' && $idStatus != '1610200' && $idStatus != '1610201')
   <tr>
     <td> #parse("app/php2/frmCRBHeader.jsp") </td>
   </tr>
-  #else
+  #elseif ($idFail == '' )
   <tr>
     <td>&nbsp;
       <div class="warning">SILA PILIH FAIL DI SENARAI FAIL TERLEBIH DAHULU</div></td>
   </tr>
   #end
   
-  #if ($idFail != '' && $flagOpenDetail)
+  #if ($idFail != '' && $flagOpenDetail && $idStatus != '1610198' && $idStatus != '1610199' && $idStatus != '1610200' && $idStatus != '1610201')
   <tr>
     <td><div id="TabbedPanels1" class="TabbedPanels">
         <ul class="TabbedPanelsTabGroup">
@@ -43,9 +43,10 @@
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td align="center"><input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
-      <input type="button" name="cmdSelesaiPermohonan" id="cmdSelesaiPermohonan" value="Selesai Permohonan" onClick="gotoSelesaiPermohonan()"/>
-      <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
+    <td align="center">
+    	<input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
+      	<input type="button" name="cmdSelesaiPermohonan" id="cmdSelesaiPermohonan" value="Selesai Permohonan" onClick="gotoSelesaiPermohonan()"/>
+      	<input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
     </td>
   </tr>
   #end

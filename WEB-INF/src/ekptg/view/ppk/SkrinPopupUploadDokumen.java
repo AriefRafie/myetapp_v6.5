@@ -31,7 +31,7 @@ import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8InternalData;
 public class SkrinPopupUploadDokumen extends AjaxBasedModule {
 	static Logger myLogger = Logger.getLogger(SkrinPopupUploadDokumen.class);
 	private final String PATH="app/ppk/";
-	private String vm = PATH +"SkrinPopupDokumen.jsp";
+	private String vm = PATH +"SkrinPopupDokumen.jsp"; 
 	
 	HttpSession session = null;
 	String action = null;

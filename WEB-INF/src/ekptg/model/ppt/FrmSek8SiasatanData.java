@@ -2323,7 +2323,8 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 						"WHEN S.JENIS_BANGUNAN = '2' THEN 'Bangunan separuh konkrit dan separuh papan' " + 
 						"WHEN S.JENIS_BANGUNAN = '3' THEN 'Binaan bangunan dan papan dan kayu' " + 
 						"WHEN S.JENIS_BANGUNAN = '4' THEN 'Lain-lain' " + 
-						"ELSE S.JENIS_BANGUNAN END AS JENIS_BANGUNAN " +
+						"ELSE S.JENIS_BANGUNAN END AS JENIS_BANGUNAN, " +
+						"S.KETERANGAN_PEMBELIAN ,S.KETERANGAN_PUSAKA, S.KETERANGAN_PERLETAKHAKAN ,S.KETERANGAN_PEMBERIMILIKAN "+
 						"FROM TBLPPTSIASATAN S, TBLPPTPERMOHONAN P, TBLPPTHAKMILIK HM, TBLPPTTANAH T, TBLRUJJENISHAKMILIK JH, " +
 						"TBLRUJLOT JL,TBLRUJNEGERI NEG, TBLRUJDAERAH DRH, TBLRUJMUKIM MKM, TBLRUJLUAS LS, TBLRUJLUAS LJ, USERS U " +
 						"WHERE HM.ID_PERMOHONAN = P.ID_PERMOHONAN " +
@@ -2396,7 +2397,20 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 							: rs.getString("NAMA_PEGAWAI"));
 					h.put("KETERANGAN_TUAN_TANAH", rs
 							.getString("KETERANGAN_TUAN_TANAH") == null ? "" : rs
-							.getString("KETERANGAN_TUAN_TANAH"));
+							.getString("KETERANGAN_TUAN_TANAH"));					
+					//BARU-V7
+					h.put("KETERANGAN_PEMBELIAN", rs
+							.getString("KETERANGAN_PEMBELIAN") == null ? "" : rs
+							.getString("KETERANGAN_PEMBELIAN"));
+					h.put("KETERANGAN_PUSAKA", rs
+							.getString("KETERANGAN_PUSAKA") == null ? "" : rs
+							.getString("KETERANGAN_PUSAKA"));
+					h.put("KETERANGAN_PERLETAKHAKAN", rs
+							.getString("KETERANGAN_PERLETAKHAKAN") == null ? "" : rs
+							.getString("KETERANGAN_PERLETAKHAKAN"));
+					h.put("KETERANGAN_PEMBERIMILIKAN", rs
+							.getString("KETERANGAN_PEMBERIMILIKAN") == null ? "" : rs
+							.getString("KETERANGAN_PEMBERIMILIKAN"));
 					h.put("ID_PENARIKANBALIK",
 							rs.getString("ID_PERMOHONAN") == null ? "" : rs
 									.getString("ID_PERMOHONAN"));
@@ -4679,6 +4693,10 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 			String txtHargaTanah = (String) data.get("txtHargaTanah");
 			String txtBebananTanah = (String) data.get("txtBebananTanah");
 			String txtKeteranganTuanTanah = (String) data.get("txtKeteranganTuanTanah");
+			String txtKeteranganPembelian = (String) data.get("txtKeteranganPembelian");
+			String txtKeteranganPusaka = (String) data.get("txtKeteranganPusaka");
+			String txtKeteranganPerletakhakan = (String) data.get("txtKeteranganPerletakhakan");
+			String txtKeteranganPemberimilikan = (String) data.get("txtKeteranganPemberimilikan");
 			String txtJenisTanaman = (String) data.get("txtJenisTanaman");
 			String socBangunan = (String) data.get("socBangunan");
 			String sorPecahSempadan = (String) data.get("sorPecahSempadan");
@@ -4699,6 +4717,10 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 				r.add("HARGA_BELI", txtHargaTanah);
 				r.add("BEBANAN", txtBebananTanah);
 				r.add("KETERANGAN_TUAN_TANAH", txtKeteranganTuanTanah);
+				r.add("KETERANGAN_PEMBELIAN", txtKeteranganPembelian);
+				r.add("KETERANGAN_PUSAKA", txtKeteranganPusaka);
+				r.add("KETERANGAN_PERLETAKHAKAN", txtKeteranganPerletakhakan);
+				r.add("KETERANGAN_PEMBERIMILIKAN", txtKeteranganPemberimilikan);
 				r.add("JENIS_TANAMAN", txtJenisTanaman);
 				r.add("JENIS_BANGUNAN", socBangunan);
 				r.add("FLAG_PECAH_SEMPADAN", sorPecahSempadan);

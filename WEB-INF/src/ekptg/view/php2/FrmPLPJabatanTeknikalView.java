@@ -220,12 +220,7 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
         	if ("doBatalPermohonan".equals(hitButton)){
     			logic.doBatalPermohonan(idFail, idPermohonan, getParam("tarikhBatal"), getParam("txtSebab"), session);
     			step = "";
-    			
-    		} else if ("gotoHantarTugasanPPT".equals(step)){
-    			this.context.put("selectPegawai", HTML.SelectPYWPenolongPegawaiTanahHQ("socPegawai", Long.parseLong(idPegawai), "", ""));
-    			vm = "app/php2/frmPYWAgihanTugas.jsp";
-            
-    		}
+    		} 
         }
 
         //HEADER
@@ -723,7 +718,12 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
 		
 		if ("batalPermohonan".equals(step)){
         	vm = "app/php2/frmBatalPermohonan.jsp";
-        }
+        	
+        } else if ("gotoHantarTugasanPPT".equals(step)){
+			this.context.put("selectPegawai", HTML.SelectPYWPenolongPegawaiTanahHQ("socPegawai", Long.parseLong(idPegawai), "", ""));
+			vm = "app/php2/frmPYWAgihanTugas.jsp";
+        
+		}
 		
 		//SET DEFAULT PARAM
 		this.context.put("mode", mode);

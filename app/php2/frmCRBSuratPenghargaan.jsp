@@ -12,7 +12,11 @@
       <legend><b>SENARAI DOKUMEN</b></legend>
       <table align="center" width="100%">
         <tr>
-          <td colspan="9" scope="row"><input name="cmdTambah" type="button" value="Tambah" onClick="javascript:doDaftarMaklumatSuratPenghargaan()"/></td>
+          #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan')
+          <td colspan="9" scope="row">
+          	<input name="cmdTambah" type="button" value="Tambah" onClick="javascript:doDaftarMaklumatSuratPenghargaan()"/>
+          </td>
+          #end
         </tr>
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
