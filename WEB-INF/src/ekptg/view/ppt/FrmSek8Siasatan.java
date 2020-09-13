@@ -2,9 +2,6 @@ package ekptg.view.ppt;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -17,7 +14,6 @@ import lebah.portal.AjaxBasedModule;
 import lebah.util.DateUtil;
 
 import org.apache.log4j.Logger;
-import org.jaxen.saxpath.Operator;
 
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
@@ -44,8 +40,7 @@ public class FrmSek8Siasatan extends AjaxBasedModule{
 	FrmUPTSek8BorangFData modelBF = new FrmUPTSek8BorangFData();
 	FrmUPTSek8HakmilikData model = new FrmUPTSek8HakmilikData();
 	//FrmUPTSek8InfoTanahTerperinciBangunanData modelTanah = new FrmUPTSek8InfoTanahTerperinciBangunanData();
-	//private FrmSemakan frmSemak = null;
-	private FrmSek8SiasatanData frmSemak = null;
+	private FrmSemakan frmSemak = null;
 
 	
 	@Override
@@ -65,38 +60,6 @@ public class FrmSek8Siasatan extends AjaxBasedModule{
 		String jenis_permohonan = "4";
 		String jenis_button = "";	
 		//String id_bangunan = "";
-		
-		
-		DateFormat df = new SimpleDateFormat("ddMMyyyy");
-        Date currentDate = new Date();
-        
-        String newDate = df.format(currentDate);
-        
-        long d1 = Long.valueOf(newDate);
-
-        context.put("newDate",d1);
-         
-        myLogger.info("newDate :" +d1);
-                 
-        long Datev7;
-        Datev7 = 11092020; // ganti v7
-        context.put("Datev7",Datev7);
-        
-        long Datev6;
-        Datev6 = 11102017; // ganti v6
-        context.put("Datev6",Datev6);
-         
-        myLogger.info("Datev7 :" +Datev7);
-         
-        long diffv7;
- 		diffv7 = d1 - Datev7;
- 		context.put("diffv7",diffv7);
-        myLogger.info("diffv7 "+diffv7);
-        
-        long diffv6;
- 		diffv6 = d1 - Datev6;
- 		context.put("diffv6",diffv6);
-        myLogger.info("diffv6 "+diffv6);
 		
 		 String idStatus = getParam("idStatus");
 		 String idPermohonan = getParam("id_permohonan");
@@ -486,7 +449,7 @@ public class FrmSek8Siasatan extends AjaxBasedModule{
         		context.put("id_bangunan", socBangunan);
 
         		// Checkbox PPT-25 (ii) Jenis Pemilikan
-        		Vector semakanList = HTMLPPT.getSenaraiTuanTanah();  //, "pptjenistanaman"
+        		Vector semakanList = FrmSemakan.getSenaraiSemakan("pptjenispemilikan");  //, "pptjenistanaman"
         		context.put("senaraiSemakan", semakanList); 
         		
         		// Checkbox PPT-25 (iii) Jenis Tanaman
@@ -529,8 +492,9 @@ public class FrmSek8Siasatan extends AjaxBasedModule{
             		}         	
             		//String txtCaraMilikTanah = getParam("txtCaraMilikTanah");
             		
-            		context.put("selectBangunan",HTMLPPT.SelectBangunan("socBangunan",Utils.parseLong(h.get("JENIS_BANGUNAN").toString()),null,"style=width:auto"));
-    		
+            		//context.put("selectBangunan",HTMLPPT.SelectBangunan("socBangunan",Utils.parseLong(h.get("JENIS_BANGUNAN").toString()),null,"style=width:auto class=disabled"));
+            		context.put("selectBangunan",HTMLPPT.SelectBangunan("socBangunan",Utils.parseLong(socJenisBangunan),null,"style=width:auto"));
+            		
             	
    				}
         	    if ("Kemaskini".equals(subminor_command))
@@ -545,43 +509,15 @@ public class FrmSek8Siasatan extends AjaxBasedModule{
    				}        		
         		else if ("Simpan".equals(subminor_command)){
         			String idSiasatan = getParam("id_siasatan");
-        			String txtKeteranganTuanTanah = getParam("txtKeteranganTuanTanah");
-        			String txtKeteranganPusaka = getParam("txtKeteranganPusaka");
-        			String txtKeteranganPerletakhakan = getParam("txtKeteranganPerletakhakan");
-        			String txtKeteranganPemberimilikan = getParam("txtKeteranganPemberimilikan");
-        			String txtKeteranganPembelian = getParam("txtKeteranganPembelian");
-        	
         			// Checkbox PPT-25 (ii) Jenis Pemilikan
         			String[] cbsemak = this.request.getParameterValues("jenispemilikan");
-        			
-        		//	if(cbsemak ==)
-        			frmSemak = new FrmSek8SiasatanData();
-        			myLogger.info("Simpan pushdb, idSiasatan= " +idSiasatan); // debugger at log copy
+        			frmSemak = new FrmSemakan();
+//        			myLogger.info("Simpan pushdb, idSiasatan= " +idSiasatan); // debugger at log copy
         			frmSemak.semakanHapusByPermohonan(idSiasatan);
         			if (cbsemak != null) {
         				for (int i = 0; i < cbsemak.length; i++) {
-        					frmSemak = new FrmSek8SiasatanData();
-        					if(cbsemak[i].equals(1)) {
-        						String txtKeterangan= getParam("txtKeteranganPembelian");
-        						myLogger.info(txtKeterangan);
-        					}
-        					if(cbsemak[i].equals(2)) {
-        						String txtKeterangan= getParam("txtKeteranganPusaka");
-        						myLogger.info(txtKeterangan);
-        					}
-        					if(cbsemak[i].equals(3)) {
-        						String txtKeterangan= getParam("txtKeteranganPerletakhakan");
-        						myLogger.info(txtKeterangan);
-        					}
-        					if(cbsemak[i].equals(4)) {
-        						String txtKeterangan= getParam("txtKeteranganPemberimilikan");
-        						
-        					}
-        					if(cbsemak[i].equals(5)) {
-        						String txtKeterangan= getParam("txtKeteranganTuanTanah");
-        						
-        					} 					
-        						frmSemak.semakanTambah(cbsemak[i], idSiasatan, txtKeteranganPembelian);
+        					frmSemak = new FrmSemakan();
+        					frmSemak.semakanTambah(cbsemak[i], idSiasatan);
         					
         				}
         			}
@@ -589,12 +525,12 @@ public class FrmSek8Siasatan extends AjaxBasedModule{
 
         			// Checkbox PPT-25 (iii) Jenis Tanaman
         			String[] cbsemaks = this.request.getParameterValues("jenistanaman");
-        			frmSemak = new FrmSek8SiasatanData();
+        			frmSemak = new FrmSemakan();
         			//frmSemak.semakanHapusByPermohonan(idSiasatan);
         			if (cbsemaks != null) {
         				for (int i = 0; i < cbsemaks.length; i++) {
-        					frmSemak = new FrmSek8SiasatanData();
-        					frmSemak.semakanTambah(cbsemaks[i], idSiasatan, idSiasatan); //ubah utk tanaman
+        					frmSemak = new FrmSemakan();
+        					frmSemak.semakanTambah(cbsemaks[i], idSiasatan);
         				}
         			}
         			
@@ -1115,6 +1051,10 @@ public class FrmSek8Siasatan extends AjaxBasedModule{
 		    vm = "app/ppt/frmSek8InfoBicaraPB.jsp";	
 				
    			}
+        	
+        	
+        	
+        	//TODO
         	
         	
         	else if ("Nilaian".equals(sub_command))
@@ -3007,7 +2947,6 @@ public class FrmSek8Siasatan extends AjaxBasedModule{
 	 
 	 @SuppressWarnings("unchecked")
 	private void updateTuanTanah(HttpSession session) throws Exception {
-		 myLogger.info("masuk update tuan tanah");
 		 
 			Hashtable h = new Hashtable();	
 			h.put("txdMilikTanah", getParam("txdMilikTanah"));
@@ -3021,6 +2960,11 @@ public class FrmSek8Siasatan extends AjaxBasedModule{
 			h.put("txdPecahSempadan", getParam("txdPecahSempadan"));
 			h.put("sorTukarSyarat", getParam("sorTukarSyarat"));
 			h.put("txdTukarSyarat", getParam("txdTukarSyarat"));
+			//BARU-V7
+			h.put("txtKeteranganPembelian", getParam("txtKeteranganPembelian"));
+			h.put("txtKeteranganPusaka", getParam("txtKeteranganPusaka"));
+			h.put("txtKeteranganPerletakhakan", getParam("txtKeteranganPerletakhakan"));
+			h.put("txtKeteranganPemberimilikan", getParam("txtKeteranganPemberimilikan"));
 			h.put("id_siasatan", getParam("id_siasatan"));			
 			h.put("id_Masuk", (String) session.getAttribute("_ekptg_user_id"));
 			logic.updateTuanTanah(h);		

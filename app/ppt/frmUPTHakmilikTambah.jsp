@@ -132,7 +132,7 @@
             	<td>Presint</td>
             	#end
             	<td>:</td>
-                <td><input type="text" name="txtseksyen" size="22" value="$!seksyen" maxlength="30" id="txtseksyen"  ></td>
+                <td><input type="text" name="txtseksyen" size="22" value="$!txtseksyen" maxlength="30" id="txtseksyen"  ></td>
         </tr>
           </table>
           </fieldset>
@@ -159,8 +159,8 @@
                 </td>
                 <td width="1%">:</td>
                 <td width="10%">
-                	<span>No.Bang</span>&nbsp;<input name="txtNoBangunan" id="txtNoBangunan" type="text"value="$!txtNoBangunan" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
-					<span>No.Ting</span>&nbsp;<input name="txtNoTingkat" id="txtNoTingkat" type="text"value="$!txtNoTingkat" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
+                	<span>No.Bangunan</span>&nbsp;<input name="txtNoBangunan" id="txtNoBangunan" type="text"value="$!txtNoBangunan" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
+					<span>No.Tingkat</span>&nbsp;<input name="txtNoTingkat" id="txtNoTingkat" type="text"value="$!txtNoTingkat" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
 					<span>No.Petak</span>&nbsp;<input name="txtNoPetak" id="txtNoPetak" type="text" value="$!txtNoPetak" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
   				</td>
         </tr>
@@ -394,8 +394,8 @@
                 </td>
                 <td width="1%">:</td>
                 <td width="10%">
-                	<span>No.Bang</span>&nbsp;<input name="txtNoBangunan" id="txtNoBangunan" type="text"value="$!txtNoBangunan" size="3" maxlength="3" readonly class="disabled" onkeyup="this.value=this.value.toUpperCase();"/>
-					<span>No.Ting</span>&nbsp;<input name="txtNoTingkat" id="txtNoTingkat" type="text"value="$!txtNoTingkat" size="3" maxlength="3" readonly class="disabled" onkeyup="this.value=this.value.toUpperCase();"/>
+                	<span>No.Bangunan</span>&nbsp;<input name="txtNoBangunan" id="txtNoBangunan" type="text"value="$!txtNoBangunan" size="3" maxlength="3" readonly class="disabled" onkeyup="this.value=this.value.toUpperCase();"/>
+					<span>No.Tingkat</span>&nbsp;<input name="txtNoTingkat" id="txtNoTingkat" type="text"value="$!txtNoTingkat" size="3" maxlength="3" readonly class="disabled" onkeyup="this.value=this.value.toUpperCase();"/>
 					<span>No.Petak</span>&nbsp;<input name="txtNoPetak" id="txtNoPetak" type="text" value="$!txtNoPetak" size="3" maxlength="3" readonly class="disabled" onkeyup="this.value=this.value.toUpperCase();"/>
   				</td>
             </tr>
@@ -602,8 +602,8 @@
                 </td>
                 <td width="1%">:</td>
                 <td width="10%">
-                	<span>No.Bang</span>&nbsp;<input name="txtNoBangunan" id="txtNoBangunan" type="text"value="$!txtNoBangunan" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
-					<span>No.Ting</span>&nbsp;<input name="txtNoTingkat" id="txtNoTingkat" type="text"value="$!txtNoTingkat" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
+                	<span>No.Bangunan</span>&nbsp;<input name="txtNoBangunan" id="txtNoBangunan" type="text"value="$!txtNoBangunan" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
+					<span>No.Tingkat</span>&nbsp;<input name="txtNoTingkat" id="txtNoTingkat" type="text"value="$!txtNoTingkat" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
 					<span>No.Petak</span>&nbsp;<input name="txtNoPetak" id="txtNoPetak" type="text" value="$!txtNoPetak" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
   				</td>
             </tr>
@@ -900,7 +900,7 @@ function popupCarianHakmilikSalin(id_permohonan,flag_skrin,id_daerah)
 {
 	var no_lot = document.${formName}.txtnolot.value;	
 	var no_hakmilik = document.${formName}.txtNoHakmilik.value;	
-	var id_mukim = document.${formName}.mukim.value;	
+	var id_mukim = document.${formName}.socMukim.value;	
 	
 	var url = "../x/${securityToken}/ekptg.view.ppt.SkrinPopupSalinPBHakmilik?&id_permohonan="+id_permohonan+"&flag_skrin="+flag_skrin+"&NO_HAKMILIK="+no_hakmilik+"&NO_LOT="+no_lot+"&ID_MUKIM="+id_mukim+"&ID_DAERAH="+id_daerah;
 	var hWnd = window.open(url,'printuser','width=1200,height=800, resizable=yes,scrollbars=yes');
@@ -944,10 +944,12 @@ function add_maklumat_tanah(id_permohonan,id_hakmilik,flagSubjaket,mode){
 	else 
 	{
 	if ( !window.confirm("Adakah Anda Pasti?") ) return;
+	
 	document.${formName}.ScreenLocation.value = "TabbedPanels1";
-	document.${formName}.tabId.value = "0";
-	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTSek4&command=addMaklumatTanah&id_permohonan="+id_permohonan;	
+	document.${formName}.command.value = "addMaklumatTanah";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTSek4&id_permohonan="+id_permohonan;
 	document.${formName}.submit();
+
 	}
 	
 }
@@ -1299,11 +1301,16 @@ function onchangeUnitLuasAmbilUpdate(){
 }
 function onchangeUnitAsalUpdate(){
 	document.${formName}.ScreenLocation.value = "top";
-	document.${formName}.command.value = "viewHM";
-	document.${formName}.command2.value = "kemaskiniHM";
-	document.${formName}.command3.value = "doOnchangeUpdate";
-	document.${formName}.command4.value = "onchangeUnitLuasAsalUpdate";
-	document.${formName}.command5.value = "onchangeUnitAsalUpdate";
+
+	document.${formName}.command.value = "kemaskiniTanah";
+	
+	document.${formName}.command2.value = "doOnchangeUpdate";
+
+	document.${formName}.command3.value = "onchangeUnitLuasAsalUpdate";
+
+	document.${formName}.command4.value = "onchangeUnitAsalUpdate";
+
+
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTSek4";
 	document.${formName}.submit();
 }
@@ -1329,10 +1336,16 @@ function convertNilaiAsalUpdate(){
 }
 function onchangeUnitLuasAsalUpdate(){
 	document.${formName}.ScreenLocation.value = "top";
-	document.${formName}.command.value = "viewHM";
-	document.${formName}.command2.value = "kemaskiniHM";
-	document.${formName}.command3.value = "doOnchangeUpdate";
-	document.${formName}.command4.value = "onchangeUnitLuasAsalUpdate";
+
+	document.${formName}.command.value = "kemaskiniTanah";
+	
+	document.${formName}.command2.value = "doOnchangeUpdate";
+
+	document.${formName}.command3.value = "onchangeUnitLuasAsalUpdate";
+
+	document.${formName}.command4.value = "onchangeUnitAsalUpdate";
+
+
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTSek4";
 	document.${formName}.submit();
 }

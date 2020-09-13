@@ -467,6 +467,10 @@ public class FrmCRBMesyuaratView extends AjaxBasedModule {
 
 		this.context.put("flagOpenDetail", flagOpenDetail);
 		this.context.put("status", status.toUpperCase());
+		
+		if (!"".equals(getParam("flagFrom"))){
+        	session.setAttribute("FLAG_FROM", getParam("flagFrom"));
+        }
 
 		return vm;
 	}

@@ -60,6 +60,12 @@
 #set($txtnamadaerah = $listmaklumat.NAMA_DAERAH)
 #set($txtnamajajahan = $listmaklumat.NAMA_MUKIM)
 #set($STATUS_LAPORAN = $listmaklumat.STATUS_LAPORAN)
+#set($noHakmilik = $listmaklumat.NO_HAKMILIK)
+#set($jenisHakmilik = $listmaklumat.KOD_JENIS_HAKMILIK)
+#set($noSyit = $listmaklumat.NO_SYIT)
+#set($kategori = $listmaklumat.KATEGORI_TANAH)
+#set($luas_lot = $listmaklumat.LUAS_LOT)
+#set($luas_lot_tarik = $listmaklumat.LUAS_LOT_TARIK)
 #end
 
 
@@ -73,12 +79,30 @@
 #set($txtNoGazetDaerah = $maklumatam.NO_GAZET_DAERAH)
 #set($id_tanahumum = $maklumatam.ID_TANAHUMUM)
 #if($maklumatam.FLAG_DLM_SIMPANAN == "1" && $maklumatam.FLAG_LUAR_SIMPANAN != "1")
-#set($sorKedudukan = "2")
+	#set($sorKedudukan = "2")
 #elseif($maklumatam.FLAG_LUAR_SIMPANAN == "1" && $maklumatam.FLAG_DLM_SIMPANAN != "1")
-#set($sorKedudukan = "1")
+	#set($sorKedudukan = "1")
 #else
-#set($sorKedudukan = "")
+	#set($sorKedudukan = "")
 #end
+
+<!-- TAMBAH v6.5 -->
+#set($txtPendahuluan = $maklumatam.PENDAHULUAN)
+#set($txtStatusTanah = $maklumatam.STATUS_TANAH)
+#set($txtJalanUtama = $maklumatam.JALAN_UTAMA)
+#set($txtJalanMasuk = $maklumatam.JALAN_MASUK)
+#set($txtNamaTempat = $maklumatam.NAMA_TEMPAT)
+#set($txtJarak = $maklumatam.JARAK_BANDAR)
+#set($txtPerumahan = $maklumatam.PERUMAHAN)
+#set($txtIndustri = $maklumatam.INDUSTRI)
+#set($txtNamaPBT = $maklumatam.NAMA_PBT)
+#set($txtLokasi = $maklumatam.LOKASI_TANAH)
+#set($txdTarikhLawatAkhir=$data.tarikh_akhir_lawat)
+#set($txdTarikhLawatMula=$data.tarikh_mula_lawat)
+
+#set($sorPBT=$data.sorPBT)
+#set($sorRizab=$data.flag_rezab_melayu)
+
 
 #if($maklumatam.FLAG_DLM_MAJLIS == "1" && $maklumatam.FLAG_LUAR_MAJLIS != "1")
 #set($sorJenisGazet = "2")
@@ -141,60 +165,210 @@
        <div class="TabbedPanelsContent">
        </div>
         <div class="TabbedPanelsContent"><table width="100%">
-  <tr>
-    <td width="1%">&nbsp;</td>
-    <td width="28%">No. Lot</td>
-    <td width="1%">:</td>
-    <td width="70%">$txtnorujukan</td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-    <td>Negeri</td>
-    <td>:</td>
-    <td>$txtnamanegeri</td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-    <td>Daerah/Jajahan</td>
-    <td>:</td>
-    <td>$txtnamadaerah</td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-    <td>Bandar/Pekan/Mukim</td>
-    <td>:</td>
-    <td>$txtnamajajahan</td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-    <td>Status Laporan Tanah</td>
-    <td>:</td>
-    <td>$STATUS_LAPORAN</td>
-  </tr>
-  <tr style="display:none">
-    <td>#parse("app/ppt/mandatory_pembatalan.jsp")</td>
-    <td>Tarikh Kemasukan</td>
-    <td>:</td>
-    <td>
-    <input name="txdTarikhKemasukan" type="text" id="txdTarikhKemasukan" size="10" maxlength="10"   value="$!txdTarikhKemasukan" onblur="validateTarikh(this,this.value);checking_validation(this,'txdTarikhKemasukan_check','yes','kemasukan','tarikh');" onKeyUp="validateTarikh(this,this.value);" $readonlymode class = "$disabledmode" />   
-    #if($readmode == "edit")    
-      <a href="javascript:displayDatePicker('txdTarikhKemasukan',false,'dmy');"><img src="../img/calendar.gif" alt="" border="0"/></a>  
-       <span style="font-size:9px;color:blue;font-style:italic">dd/mm/yyyy</span>  
-      #end
-       <span id="txdTarikhKemasukan_check" class="alert_msg" ></span>    </td>
-  </tr>
-  <tr>
-    <td>#parse("app/ppt/mandatory_pembatalan.jsp")</td>
-    <td>Tarikh Pemeriksaan Tanah Dibuat</td>
-    <td>:</td>
-    <td>
-    <input name="txdTarikhPemeriksaan" type="text" id="txdTarikhPemeriksaan" size="10" maxlength="10"   value="$!txdTarikhPemeriksaan" onblur="validateTarikh(this,this.value);checking_validation(this,'txdTarikhPemeriksaan_check','yes','pemeriksaan','tarikh');" onKeyUp="validateTarikh(this,this.value);" $readonlymode class = "$disabledmode" />  
-    #if($readmode == "edit")     
-      <a href="javascript:displayDatePicker('txdTarikhPemeriksaan',false,'dmy');"><img src="../img/calendar.gif" alt="" border="0"/></a>  
-       <span style="font-size:9px;color:blue;font-style:italic">dd/mm/yyyy</span>
-      #end  
-       <span id="txdTarikhPemeriksaan_check" class="alert_msg" ></span>    </td>
-  </tr>
+
+
+  	<table width="100%" border="0">   		
+     <tr>
+      <td>
+        <table width="100%" border="0">
+    	<tr>
+    		<td width="1%">&nbsp;</td>
+    		<td width="28%">No. Hakmilik</td>
+   		 	<td width="1%">:</td>
+    		<td width="70%">$noHakmilik</td>
+  		</tr>
+  		<tr>
+    		<td width="1%">&nbsp;</td>
+    		<td width="28%">No. Syit</td>
+    		<td width="1%">:</td>
+    		<td width="70%">$noSyit</td>
+  		</tr>
+  		<tr>
+    		<td>&nbsp;</td>
+    		<td>Kategori</td>
+    		<td>:</td>
+    		<td>$kategori</td>
+  		</tr>
+  		<tr>
+    		<td>&nbsp;</td>
+    		<td>Luas Asal</td>
+    		<td>:</td>
+    		<td>$luas_lot</td>
+  		</tr>
+  		<tr>
+    		<td>&nbsp;</td>
+    		<td>Luas Diambil</td>
+    		<td>:</td>
+    		<td>$luas_lot_tarik</td>
+  		</tr>
+  		</table>
+  	  </td>
+  	  <td>
+  	  	<td width="47%" valign="top"><table width="100%" border="0">
+    		
+    			<tr>
+    				<td width="1%">&nbsp;</td>
+					<td width="37%">Tarikh Lawat Mula</td>
+					<td width="1%">:</td>
+					<td width="61%"><input $readonlymode class = "$disabledmode" name="txdTarikhLawatMula" value="$!txdTarikhLawatMula" size="11" id="txdTarikhLawatMula" type="text" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" />
+       		 		#if($readmode == "edit")<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhLawatMula',false,'dmy');">&nbsp;$!frmtdate#end</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>Tarikh Lawat Akhir</td>
+					<td>:</td>
+					<td><input $readonlymode class = "$disabledmode" name="txdTarikhLawatAkhir" value="$!txdTarikhLawatAkhir" size="11" id="txdTarikhLawatAkhir" type="text" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" />
+       		 		#if($readmode == "edit")<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhLawatAkhir',false,'dmy');">&nbsp;$!frmtdate#end</td>
+				</tr>
+				
+    		</table>
+  	  </td>
+  	 </tr>
+  	 
+  	 </table>
+  	 
+  	 <fieldset>
+  	<table width="100%" border="0">
+   		<tr>
+   			<td width="53%" valign="top"><table width="100%" border="0">
+   				<tr>
+   					<td>&nbsp;</td>
+   					<td>Pendahuluan</td>
+   				</tr>
+    			<tr>
+    				<td>&nbsp;</td>
+    				<td><textarea name="txtPendahuluan" id="txtPendahuluan" cols="45"   rows="5"
+    				 $readonlymode class = "$disabledmode">$txtPendahuluan</textarea></td>
+    			</tr>
+    		</table></td>	
+    				
+    		<td width="47%" valign="top"><table width="100%" border="0">
+    			<tr>
+    				<td>&nbsp;</td>
+   					<td>Status Tanah</td>
+    			</tr>		
+    			<tr>
+    				<td>&nbsp;</td>
+    				<td><textarea name="txtStatusTanah" id="txtStatusTanah" cols="45"   rows="5"
+    				 $readonlymode class = "$disabledmode">$txtStatusTanah</textarea></td>
+    			</tr>
+    		</table></td>
+    			</tr>			
+    		</table>
+  </fieldset>
+  
+  <fieldset>
+	<legend><strong>Lokasi / Kedudukan Tanah</strong></legend>
+	<table width="100%" border="0">
+    			
+    	<tr>
+    		<td width="1%">&nbsp;</td>
+    		<td width="32%" valign="top">Lokasi</td>
+    		<td width="1%" valign="top">:</td>
+    		<td width="66%"><textarea name="txtLokasi" id="txtLokasi" cols="45"   rows="5"
+    				 $readonlymode class = "$disabledmode">$txtLokasi</textarea></td>
+    	</tr>
+    			
+    	<tr>
+    		<td>&nbsp;</td>
+    		<td valign="top">Jalan raya Utama</td>
+    		<td valign="top">:</td>
+    		<td><textarea name="txtJalanUtama" id="txtJalanUtama" cols="45"   rows="3"
+    				 $readonlymode class = "$disabledmode">$txtJalanUtama</textarea></td>
+    	</tr>
+    			
+    	<tr>
+    		<td>&nbsp;</td>
+    		<td valign="top">Jalan Masuk</td>
+    		<td valign="top">:</td>
+    		<td><textarea name="txtJalanMasuk" id="txtJalanMasuk" cols="45"   rows="3"
+    				 $readonlymode class = "$disabledmode">$txtJalanMasuk</textarea></td>
+    	</tr>
+    	
+    	<tr>
+    		<td>&nbsp;</td>
+    		<td>Nama Kampung/Pekan/Bandar</td>
+    		<td>:</td>
+    		<td><input type="text" name="txtNamaTempat" id="txtNamaTempat" value="$txtNamaTempat"
+    				 size="45" maxlength="100" $readonlymode class = "$disabledmode"></td>
+    	</tr>
+    		
+    	<tr>
+    		<td>&nbsp;</td>
+    		<td>Jarak Dari Kampung/Pekan/Bandar</td>
+    		<td>:</td>
+    		<td><input type="text" name="txtJarak" id="txtJarak" value="$txtJarak"
+    				 size="45" maxlength="100" $readonlymode class = "$disabledmode"></td>
+    	</tr>
+    		
+    	<tr>
+    		<td>&nbsp;</td>
+    		<td>Perumahan Terdekat</td>
+    		<td>:</td>
+    		<td><input type="text" name="txtPerumahan" id="txtPerumahan" value="$!txtPerumahan" 
+    		size="45" maxlength="100" $readonlymode class = "$disabledmode"></td>
+    	</tr>
+    		
+    	<tr>
+    		<td>&nbsp;</td>
+    		<td>Industri Terdekat</td>
+    		<td>:</td>
+    		<td><input type="text" name="txtIndustri" id="txtIndustri" value="$!txtIndustri" 
+    		size="45" maxlength="100" $readonlymode class = "$disabledmode"></td>
+    	</tr>
+    			
+    	#set($check1 = "")
+    	#set($check2 = "")
+    		
+    	#if($sorPBT=="1")
+    		#set($check1 = "checked")
+    		#set($check2 = "")
+    	#elseif($sorPBT=="2")
+    		#set($check1 = "")
+    		#set($check2 = "checked")
+    	#end
+    		
+    	<tr>
+    		<td>&nbsp;</td>
+    		<td>Kawasan Pihak Berkuasa Tempatan ?</td>
+    		<td>:</td>
+    		<td><input $readonlymode type="radio" $check1 name="sorPBT" id="sorPBT" value="1" >Ya
+     		&nbsp;&nbsp;<input $readonlymode type="radio" $check2 name="sorPBT" id="sorPBT" value="2" >Tidak</td>
+    	</tr>
+    			
+    	<tr>
+    		<td>&nbsp;</td>
+    		<td>Nama PBT (Sekiranya Ya)</td>
+    		<td>:</td>
+    		<td><input type="text" name="txtNamaPBT" id="txtNamaPBT" value="$!txtNamaPBT" 
+    		size="40" maxlength="80" $readonlymode class = "$disabledmode"></td>
+    	</tr>
+    			
+    	#set($checkR1 = "")
+    	#set($checkR2 = "")
+    	
+    	#if($sorRizab=="1")
+    		#set($checkR1 = "checked")
+    		#set($checkR2 = "")
+    	#elseif($sorRizab=="2")
+    		#set($checkR1 = "")
+    		#set($checkR2 = "checked")
+    	#end
+    		
+    	<tr>
+    		<td>&nbsp;</td>
+    		<td>Kawasan Rizab Melayu ?</td>
+    		<td>:</td>
+    		<td><input $disOtherId1 type="radio" $checkR1 name="sorRizab" value="1" >Di dalam
+     			&nbsp;&nbsp;<input $disOtherId1 type="radio" $checkR2 name="sorRizab" value="2" >Di luar</td>
+    	</tr>
+    		
+    </table>
+    </fieldset>
+    		
+  </fieldset>
+  
+  
   <tr style="display:none">
     <td valign="top">#parse("app/ppt/mandatory_pembatalan.jsp")</td>
     <td valign="top">Bilangan Syit Piawai</td>
@@ -370,6 +544,9 @@ Di Luar Kawasan Majlis Daerah</td>
                 </table>
           #end    </td>
   </tr>
+  </table>
+  
+  
   
   <div id="warta_2" ></div>
   <tr style="display:none" >

@@ -45,32 +45,32 @@
   <input name="idDokumen" type="hidden" id="idDokumen" value="$!idDokumen"/>
 </p>
 #set ($inputbaru = '')
- #if($afterSave == 'doTangguhMaklumatTambahan')
-<tr>
-  <td>&nbsp;
-    <div class="warning">FAIL TELAH DIHANTAR UNTUK MAKLUMAT TAMBAHAN</div></td>
-</tr>
-#elseif ($afterSave == 'doPengesahanPengarahNegeri')
-<tr>
-  <td>&nbsp;
-    <div class="warning">FAIL TELAH DIHANTAR UNTUK SEMAKAN PENGARAH</div></td>
-</tr>
-#else
-<table width="100%" border="0" cellspacing="2" cellpadding="2">
-  #if ($idFail != '')
-  <tr>
-    <td> #parse("app/php2/frmPYWHeader.jsp") </td>
-  </tr>
-  #else
-  <tr>
-    <td>&nbsp;
-      <div class="warning">SILA PILIH FAIL DI SENARAI TUGASAN TERLEBIH DAHULU</div></td>
-  </tr>
-  #end
+ 	#if($afterSave == 'doTangguhMaklumatTambahan')
+	<tr>
+	  <td>&nbsp;
+	    <div class="warning">FAIL TELAH DIHANTAR UNTUK MAKLUMAT TAMBAHAN</div></td>
+	</tr>
+	#elseif ($afterSave == 'doPengesahanPengarahNegeri')
+	<tr>
+	  <td>&nbsp;
+	    <div class="warning">FAIL TELAH DIHANTAR UNTUK SEMAKAN PENGARAH</div></td>
+	</tr>
+	#else
+	<table width="100%" border="0" cellspacing="2" cellpadding="2">
+	  #if ($idFail != '')
+	  <tr>
+	    <td> #parse("app/php2/frmPYWHeader.jsp") </td>
+	  </tr>
+	  #else
+	  <tr>
+	    <td>&nbsp;
+	      <div class="warning">SILA PILIH FAIL DI SENARAI TUGASAN TERLEBIH DAHULU</div></td>
+	  </tr>
+ 	#end
   
-  #if ($idFail != '')
-  <tr>
-    <td><div id="TabbedPanels1" class="TabbedPanels">
+  	#if ($idFail != '')
+  	<tr>
+      <td><div id="TabbedPanels1" class="TabbedPanels">
         <ul class="TabbedPanelsTabGroup">
           <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TANAH</li>
           <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TANAH BERKAITAN</li>
@@ -729,7 +729,7 @@ function validateCurrency(elmnt,content,content2) {
 }
 function doKemaskini() {
 	document.${formName}.mode.value = "update";
-	doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function doBatalKemaskini() {
 	document.${formName}.mode.value = "view";

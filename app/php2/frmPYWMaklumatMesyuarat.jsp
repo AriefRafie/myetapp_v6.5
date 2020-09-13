@@ -109,7 +109,11 @@
 				    <td> 
 				      #if ($mode == 'view')
 				      <input name="cmdkmskiniMesyuarat" type="button" value="Kemaskini" onClick="kemaskiniMesyuarat()" >
-				      ##<input name="cmdBatalMesyuarat" type="button" value="Kembali" onClick="batalMesyuarat()" />
+			      		#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
+							#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
+				      		<input name="cmdBatalMesyuarat" type="button" value="Hapus" onClick="hapusMesyuarat('$idMesyuarat')" />
+				      		#end
+				      	#end
 				      #end  
 				      #if ($mode == 'update')
 				      <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onclick="simpanKemaskiniMesyuarat()"/>
@@ -203,7 +207,7 @@
       						<tr>
 					          <td colspan="5" scope="row">
 					          #foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
-										#if ($beanMaklumatMesyuarat.statusMesyuarat == "B")
+										#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
 					          <input name="cmdPilihPermohonanBaru" type="button" value="Pilih Senarai Permohonan Baru" onclick="javascript:pilihSenaraiPermohonanBaru()"/></td>
 					        			#end
 					        	#end
@@ -217,7 +221,7 @@
 					          <td width="10%"><strong>Keputusan</strong></td>
 					          <td width="15%"><strong>Catatan</strong></td>
 					          #foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
-										#if ($beanMaklumatMesyuarat.statusMesyuarat == "B")
+										#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
 					          <td width="10%"><strong>Hapus</strong></td>
 					          #end
 					          #end
@@ -241,24 +245,27 @@
                       		  ##<img border="0" src="../img/print.gif"/></a></td>
 					          <td class="$row">
 					          		#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
-										#if ($beanMaklumatMesyuarat.statusMesyuarat == "B")
+										#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
 										  <select id="idKeputusan$senaraiFailMohonBaru.id" name="idKeputusan$senaraiFailMohonBaru.id" style="width:100%" onChange="doSaveKeputusanBaru('idKeputusan$senaraiFailMohonBaru.id',$senaraiFailMohonBaru.id)">
 										    <option value="">SILA PILIH</option>
 										    <option #if ( "L" == $senaraiFailMohonBaru.flagKeputusan ) selected #end value="L">LULUS</option>
 										    <option #if ( "T" == $senaraiFailMohonBaru.flagKeputusan ) selected #end value="T">TOLAK</option>
+										    <option #if ( "G" == $senaraiFailMohonBaru.flagKeputusan ) selected #end value="G">TANGGUH</option>
 										  </select>
 										#else
 											#if ( "L" == $senaraiFailMohonBaru.flagKeputusan )
-								    			PERMOHONAN LULUS
+								    			DILULUSKAN
+								    		#elseif ( "T" == $senaraiFailMohonBaru.flagKeputusan )
+								    			DITOLAK
 								    		#else
-								    			PERMOHONAN DITOLAK
+								    			TANGGUH
 								    		#end
 								    	#end
 								  	#end
 					          </td>
 					          <td class="$row">
 							        #foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
-										#if ($beanMaklumatMesyuarat.statusMesyuarat == "B")
+										#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
 										  <textarea id="catatanKeputusan$senaraiFailMohonBaru.id" name="catatanKeputusan$senaraiFailMohonBaru.id" onBlur="doSaveCatatanKeputusanBaru('catatanKeputusan$senaraiFailMohonBaru.id',$senaraiFailMohonBaru.id)" >$senaraiFailMohonBaru.catatanKeputusan</textarea>
 										#else
 										  $senaraiFailMohonBaru.catatanKeputusan
@@ -266,7 +273,7 @@
 									#end
 					          </td>
 					           #foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
-										#if ($beanMaklumatMesyuarat.statusMesyuarat == "B")
+										#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
                       		  <td class="$row" align="center"><a href="#" class="style2" onClick="doHapus('$senaraiFailMohonBaru.id')">
                       		  					<img border="0" src="../img/hapus.gif"/></a></td>
                       		  					#end #end
@@ -351,7 +358,7 @@
 	<tr>
 		<td align="right">
 		#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
-			#if ($beanMaklumatMesyuarat.statusMesyuarat == "B")
+			#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
 			<input id="btnSelesai" type="button" value="Selesai Mesyuarat" onClick="javascript:doSelesaiMesyuarat();">
 			#end
 	    	<input id="btnBack" type="button" value="Kembali" onClick="doKembaliSenaraiPermohonan()">
@@ -549,7 +556,7 @@ function doSaveKeputusanBaru(id,idMesyuaratPermohonan){
 	}
 }
 
-function doSaveCatatanKeputusanBaru(id,idMesyuaratPermohonan){	
+function doSaveCatatanKeputusanBaru(id,idMesyuaratPermohonan){
 	document.${formName}.hitButton.value = "simpanCatatanBaru";
 	document.${formName}.idMesyuaratPermohonan.value= idMesyuaratPermohonan;
 	document.${formName}.catatan.value= document.getElementById(id).value;
@@ -558,6 +565,7 @@ function doSaveCatatanKeputusanBaru(id,idMesyuaratPermohonan){
 }
 
 function doKembaliSenaraiPermohonan(){
+	document.${formName}.reset();
 	document.${formName}.actionMesyuarat.value = "";
 	document.${formName}.mode.value = "";
 	document.${formName}.submit();
@@ -572,6 +580,9 @@ function doKembaliSenaraiPermohonan(){
 //}
 
 function doHapus(idMesyuaratPermohonan){
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
 	document.${formName}.hitButton.value = "hapusPermohonanMesyuarat";
 	document.${formName}.idMesyuaratPermohonan.value= idMesyuaratPermohonan;
 	document.${formName}.mode.value = "";
@@ -579,6 +590,9 @@ function doHapus(idMesyuaratPermohonan){
 }
 
 function doSelesaiMesyuarat(idMesyuaratPermohonan){
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
 	document.${formName}.hitButton.value = "doSelesaiMesyuarat";
 	document.${formName}.mode.value = "";
 	document.${formName}.submit();
@@ -676,6 +690,16 @@ function cetakImej(id){
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener=document.window;
     if (hWnd.focus != null) hWnd.focus();
+}
+function hapusMesyuarat(idMesyuarat){
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+	document.${formName}.idMesyuarat.value = idMesyuarat;
+	document.${formName}.hitButton.value = "hapusMesyuarat";
+	document.${formName}.actionMesyuarat.value = "";
+	document.${formName}.mode.value = "";
+	document.${formName}.submit();
 }
 
 </script>

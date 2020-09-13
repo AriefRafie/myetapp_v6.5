@@ -1,4 +1,4 @@
-
+xxx
 #set($frmtdate = "&nbsp;<i><font color='blue' style='font-size:10px'>dd/mm/yyyy</font></i>")
 
 #if($showAlertPaging=="yes")
@@ -492,7 +492,7 @@ alert("Sila Klik Butang Kembali Dan Klik 'Paging' No.11 Untuk Proses Endorsan");
 </fieldset>
 
 
-<input type="hidden" name="id_endosanborangd" value="$!id_endosanborangd">
+<input type="hidden" name="id_endosanborangd" id="id_endosanborangd" value="$!id_endosanborangd">
 <input type="hidden" name="id_permohonan" value="$!id_permohonan">
 <input type="hidden" name="id_status" value="$!id_status">
 <input type="hidden" name="id_warta" value="$!id_warta">

@@ -1,16 +1,21 @@
--- 2020/09/11
--- Wilayah Labuan 17 (TIADA SCRIPT)
+--2020/09/10
+
+-- Wilayah Labuan 17
             </PartyAgency>
             	</PartyAgencyIDNo>4447f6a5-5411-46d1-83e6-1471ddc3250b</PartyAgencyIDNo>
             	<PartyAgencyName>Pentadbir Tanah Wilayah Persekutuan Labuan</PartyAgencyName>
             	<Status>A</Status>
             </PartyAgency>
 
+Peguam Negara, Putrajaya
+
 
 -- Selangor 18
 INSERT INTO TBLINTMTPEJABATMAP
 (ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
 VALUES(992018, 260, 331, 'f07b1ba4-8064-41b8-bba4-14f1ddd68786', 'f05d9e40-2045-423c-8abf-73f46afdc78d', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Sabak Bernam');
+
+Peguam Negara, Kuala Lumpur
 
 
 -- Kelantan 19
@@ -64,6 +69,8 @@ INSERT INTO TBLINTMTPEJABATMAP
 (ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
 VALUES(992026, 289, 328, 'ffa74729-7806-400d-b48e-26cbf13d1d61', '70dd54a8-7576-404a-b66d-a65a10a69f43', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Bera');
 
+30eafcfe-06c8-4051-ace8-04937780c3d1</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Mersing
 
 -- Kedah	27
 INSERT INTO TBLINTMTPEJABATMAP
@@ -253,6 +260,10 @@ VALUES(992057, 103, 331, 'd766daff-da5e-4a90-982a-73a4bba5ce28', 'f05d9e40-2045-
             <PartyAgency>
                <PartyAgencyIDNo>5223935c-154c-4600-a868-79b66ff7d6e5</PartyAgencyIDNo>
                <PartyAgencyName>Pentadbir Tanah Daerah Rengit</PartyAgencyName>
+               <PartyAgencyIDNo>bb3224ee-24a9-4908-a6ed-1c516f1e63f1</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Bentong
+a55deacd-304b-4d0d-acd8-1f5f9a4b2343</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Muar</PartyAgencyName>
                <Status>A</Status>
             </PartyAgency>
             
@@ -594,8 +605,48 @@ VALUES(992016, 123, 334, '46ebfe17-0601-4ad8-8479-13f815db0935', 'c5c40654-a22f-
                <Status>A</Status>
             </PartyAgency>
             <PartyAgency>
+               <PartyAgencyIDNo>be9d8d45-c91d-4e9b-acf8-3eee601f430a</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Petaling</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>042efe94-15b4-496d-a7d2-42ee7634169c</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Lipis</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>aa6e1dc0-fcea-4e73-8143-43021957678b</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Yan</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>24e36136-2236-4954-9f5c-43ea4563eccd</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Kuala Pilah</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>514fe7a1-2a3d-4ffb-b55b-4b8b3d033eb7</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Batang Padang</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>fef73686-8077-435e-9ba9-51da0df12950</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Kemaman</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
                <PartyAgencyIDNo>189ede0b-0aa5-4e81-ad0a-558822e1507a</PartyAgencyIDNo>
                <PartyAgencyName>Pentadbir Tanah Daerah Pengerang</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>52c1603c-00f6-43ef-a4bd-5804ccc7c69d</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Gombak</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>735cd2bc-4e7b-4c77-9f64-5e48ea41a3c4</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Port Dickson</PartyAgencyName>
                <Status>A</Status>
             </PartyAgency>
             <PartyAgency>
@@ -604,8 +655,78 @@ VALUES(992016, 123, 334, '46ebfe17-0601-4ad8-8479-13f815db0935', 'c5c40654-a22f-
                <Status>A</Status>
             </PartyAgency>
             <PartyAgency>
+               <PartyAgencyIDNo>cfda4ba1-0d73-45e1-9132-5f68fcfec9c6</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Negeri Perlis</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>f5ecad62-f136-4943-9a94-6305b4a4da94</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Setiu</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>0b07fbf0-6279-4d7c-b1ab-643f79c58304</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Jajahan Tumpat</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>8cc36c3e-b71e-4ac2-a319-67edc33902b5</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Jajahan Kuala Krai</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>656b9f5b-e6fe-4b28-82fb-6a1cbc2d92b3</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Timur Laut</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>cb5e2f21-8e9f-485d-af02-6af5a922ca4b</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Jempol</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>014cecaa-cbe3-4174-a949-6cf7dc405008</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Kulim</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>d45dc591-4409-4b25-aadb-6d5c3eb47560</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Padang Terap</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>eef82dbc-c7f1-46e0-9aa5-732c8186854f</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Kinta</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>d766daff-da5e-4a90-982a-73a4bba5ce28</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Kuala Langat</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
                <PartyAgencyIDNo>5223935c-154c-4600-a868-79b66ff7d6e5</PartyAgencyIDNo>
                <PartyAgencyName>Pentadbir Tanah Daerah Rengit</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>33718ff1-b882-4dac-a04f-7de3cfb85777</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Jasin</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>e26da38a-79f7-4a82-90e5-8061e1ef38d0</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Wilayah Persekutuan Kuala Lumpur</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>7df3d1ec-ac85-422f-a11a-84ed2fa04152</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Seberang Perai Utara</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>2bf78866-6a43-4909-a5f0-8c468bd2696d</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Jerantut</PartyAgencyName>
                <Status>A</Status>
             </PartyAgency>
             <PartyAgency>
@@ -624,6 +745,56 @@ VALUES(992016, 123, 334, '46ebfe17-0601-4ad8-8479-13f815db0935', 'c5c40654-a22f-
                <Status>A</Status>
             </PartyAgency>
             <PartyAgency>
+               <PartyAgencyIDNo>f59f7a05-a5f4-43d9-94f7-9c167a0c4d11</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Sik</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>7633303f-8277-46d9-8328-9d99c0a6ddcc</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Hulu Terengganu</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>aa193b2a-d5dc-4bbe-b540-9e36e4c0f891</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Hilir Perak</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>f9b492c3-a851-4962-9f71-a39191d8d21c</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Kuala Kangsar</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>e8cf8298-006e-422c-87e5-a55e2e65b41e</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Kuala Nerus</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>b368e436-0500-4471-86cc-ab39d4c343f6</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Pokok Sena</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>c6c9d78a-d729-4f46-b08e-ae38fa43137b</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Rompin</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>db519a70-c8f0-4b35-90de-b3783ebdc1c1</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Hulu Langat</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>045cc0c1-045c-4420-b351-c3d576ee6a7b</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Melaka Tengah</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>fa7874b6-2583-48d5-b25c-c5fc928ad712</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Jajahan Machang</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
                <PartyAgencyIDNo>e88e5cd9-2302-462c-95c0-c66347e482f5</PartyAgencyIDNo>
                <PartyAgencyName>Pentadbir Tanah Wilayah Persekutuan Putrajaya</PartyAgencyName>
                <Status>A</Status>
@@ -634,13 +805,103 @@ VALUES(992016, 123, 334, '46ebfe17-0601-4ad8-8479-13f815db0935', 'c5c40654-a22f-
                <Status>A</Status>
             </PartyAgency>
             <PartyAgency>
+               <PartyAgencyIDNo>523f5b88-21eb-4c12-a4c9-ca7178e2e0e8</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Seberang Perai Tengah</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>52aab3ef-5896-4707-915b-ca934f618678</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Pekan</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
                <PartyAgencyIDNo>c0ffa173-dc9c-4414-b9bc-cbf44e22ccb8</PartyAgencyIDNo>
                <PartyAgencyName>Pentadbir Tanah Daerah Tangkak</PartyAgencyName>
                <Status>A</Status>
             </PartyAgency>
             <PartyAgency>
+               <PartyAgencyIDNo>ee36d046-6a1b-4854-9ed3-cc7513107fb6</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Sepang</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>ec244620-ba1b-48a5-bd9b-dab7550c504d</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Klang</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>6f849cae-ff82-4e1e-8188-db48b43b6eab</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Jajahan Kota Bharu</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>5f0da921-7450-4a1f-be96-ea6fea5b837a</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Barat Daya</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
                <PartyAgencyIDNo>d0d932d7-e208-4aec-b237-ec36a6dd5111</PartyAgencyIDNo>
                <PartyAgencyName>Pentadbir Tanah Daerah Pontian</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>6c347441-1c16-483d-90f5-ec7c141edf8a</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Kuantan</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>f283594e-6298-4dcf-85f8-ecc0789457d0</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Seremban</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>0eaca528-381f-4764-a156-ee6078ced85d</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Temerloh</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>efc51ff4-e54b-4a66-909c-eedd422d3c8f</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Jelebu</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>38a32f94-8070-4536-bf34-ef15bd0d25cb</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Jajahan Pasir Mas</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>420fc7d1-d13e-4cd4-a077-f02a75766633</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Raub</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>c73b8322-48d2-4601-92f3-f0d6a6ceab30</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Larut Matang &amp; Selama</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>b0991f1e-58e4-4d69-ae4b-f1f78bc6ba3a</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Besut</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>24aff222-b910-4449-84e6-f68c7e3aaa17</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Marang</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>9ea97c49-5897-4dd8-a5df-f6cb7d2a1292</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Kubang Pasu</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>686e7499-61fc-4680-a78a-fa9476a10bf9</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Daerah Hulu Selangor</PartyAgencyName>
+               <Status>A</Status>
+            </PartyAgency>
+            <PartyAgency>
+               <PartyAgencyIDNo>9bafda78-ccf3-4cfa-9548-fcde391916ed</PartyAgencyIDNo>
+               <PartyAgencyName>Pentadbir Tanah Jajahan Tanah Merah</PartyAgencyName>
                <Status>A</Status>
             </PartyAgency>
             <PartyAgency>
@@ -650,9 +911,13 @@ VALUES(992016, 123, 334, '46ebfe17-0601-4ad8-8479-13f815db0935', 'c5c40654-a22f-
             </PartyAgency>
             <PartyAgency>
                <PartyAgencyIDNo>30eafcfe-06c8-4051-ace8-04937780c3d1</PartyAgencyIDNo>
-               <PartyAgencyName>Pentadbir Tanah Daerah Mersing</PartyAgencyName>
-               <Status>A</Status>     
-            </PartyAgency>
+               <PartyAgencyName>Pentadbir Tanah Daerah Kerian   
+--Pejabat Penasihat Undang-Undang Negeri Selangor| Pentadbir Tanah Daerah Sabak Bernam
+INSERT INTO TBLINTMTPEJABATMAP
+(ID_PEJABATMAP, ID_PEJABATPEN, ID_PEJABATU, KOD_PEJABATPEN, KOD_PEJABATU, STATUS, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, JAWATAN)
+VALUES(992018, 260, 331, 'f07b1ba4-8064-41b8-bba4-14f1ddd68786', 'f05d9e40-2045-423c-8abf-73f46afdc78d', 'Y', NULL, NULL, NULL, NULL, 'Pentadbir Tanah Daerah Sabak Bernam');
+               
+               
 
 --2020/09/08
 
@@ -687,9 +952,19 @@ DELETE FROM TBLINTMTPEJABATMAP
 
 ALTER TABLE TBLINTMTPEJABATMAP ADD JAWATAN VARCHAR2(50);
 
+--199	Pejabat Tanah Kulim
+--220	Pejabat Tanah Bandar Baharu
 
-SELECT * FROM TBLINTMTPEJABATMAP
-ORDER BY ID_PEJABATU,ID_PEJABATPEN,ID_PEJABATMAP
+--53	Pejabat Daerah Dan Tanah Seremban
+--172	Pejabat Daerah Dan Tanah Port Dickson
+--203	Pejabat Daerah Dan Tanah Rembau
+
+
+SELECT rowid,p.* FROM TBLINTMTPEJABATMAP p
+ORDER BY 
+--
+ID_PEJABATU,ID_PEJABATPEN,
+ID_PEJABATMAP
 
 CREATE OR REPLACE TRIGGER TBLINTMTPEJABATMAP_BI    
 before insert on     TBLINTMTPEJABATMAP    for each row
@@ -747,8 +1022,8 @@ WHERE
 --NAMA_PEJABAT LIKE '%Undang-Undang%'
 --NAMA_PEJABAT LIKE '%Tanah%'
 --
-ID_JENISPEJABAT IN (2,81)
-AND ID_NEGERI=2
+ID_JENISPEJABAT IN (2)
+AND ID_NEGERI=5
 
  INFO [09/Sep/2020 17:06:40] (IntegrasiMT.java:547) getParty:
  

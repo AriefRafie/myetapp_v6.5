@@ -1699,7 +1699,7 @@ public class HtpBean implements IHtp {
 	}
 	
 	@Override
-	public HtpPermohonan simpanPermohonan(HtpPermohonan htpPermohonan)throws Exception{
+	public HtpPermohonan simpanPermohonan(HtpPermohonan htpPermohonan) throws Exception{
 		Db db = null;
 		Connection conn = null;
 		Permohonan permohonan = htpPermohonan.getPermohonan();

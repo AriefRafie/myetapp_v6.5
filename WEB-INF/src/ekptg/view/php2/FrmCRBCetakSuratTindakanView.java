@@ -301,12 +301,15 @@ public class FrmCRBCetakSuratTindakanView extends AjaxBasedModule{
         this.context.put("idHakmilikPermohonan", idHakmilikPermohonan);
         this.context.put("flagStatus", flagStatus);
         this.context.put("flagAktif", flagAktif);
-        this.context.put("idPejabat", idPejabat);
-        
-        this.context.put("selectedTabUpper", selectedTabUpper);
-        
+        this.context.put("idPejabat", idPejabat);      
+        this.context.put("selectedTabUpper", selectedTabUpper);        
         this.context.put("flagOpenDetail", flagOpenDetail);
 	    this.context.put("status", status.toUpperCase());
+	    
+	    if (!"".equals(getParam("flagFrom"))){
+        	session.setAttribute("FLAG_FROM", getParam("flagFrom"));
+        }
+
 	    
 		return vm;
 	}

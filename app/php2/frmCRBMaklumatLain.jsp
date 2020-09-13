@@ -118,13 +118,17 @@
   #end
   <tr>
     <td width="35%">&nbsp;</td>
-    <td width="65%">#if ($modePopup == 'view')
-      <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskiniMaklumatLain()"/>
-      <input type="button" name="cmKembali" id="cmKembali" value="Kembali" onclick="batalLawatanTapak()"/>
-      #end
-      #if ($modePopup == 'update')
-      <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onclick="simpanKemaskiniMaklumatLain()"/>
-      <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onclick="batalKemaskiniMaklumatLain()"/>
-      #end </td>
+    <td width="65%">
+    #if ($modePopup == 'view')
+    	#if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
+      		<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskiniMaklumatLain()"/>
+      		<input type="button" name="cmKembali" id="cmKembali" value="Kembali" onclick="batalLawatanTapak()"/>
+      	#end
+    #end
+    #if ($modePopup == 'update')
+    	<input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onclick="simpanKemaskiniMaklumatLain()"/>
+      	<input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onclick="batalKemaskiniMaklumatLain()"/>
+    #end 
+    </td>
   </tr>
 </table>

@@ -767,4 +767,13 @@ function RemoveNonNumeric( strString )
       }
       return strReturn;
 }
+
+function tambahPBOnline()
+{
+	document.${formName}.command.value = "tambahPB";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline";
+	document.${formName}.id_hakmilikpb.value = "";	
+	document.${formName}.submit();
+	
+}
 </script>
