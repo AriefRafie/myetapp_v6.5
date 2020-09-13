@@ -1,4 +1,4 @@
-<input name="flagFrom" type="text" id="flagFrom" value='$!{session.getAttribute("FLAG_FROM")}'>
+<input name="flagFrom" type="hidden" id="flagFrom" value='$!{session.getAttribute("FLAG_FROM")}'>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr> #foreach($beanHeader in $BeanHeader)
     #set($idFail = $beanHeader.idFail)
