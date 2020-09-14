@@ -20,7 +20,6 @@
   <input type="hidden" name="idStatus" id="idStatus" value="$!idStatus"/>
   <input type="hidden" name="subUrusan" id="subUrusan" value="$!subUrusan"/>
   <input type="hidden" name="idHakmilikUrusan" id="!idHakmilikUrusan" />
-
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
 
   #if ($idFail != '')
@@ -235,12 +234,6 @@
                         #if ($mode == 'view')
                           	<input class="stylobutton100" type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="javascript:kemaskiniFail()" />
                				<input class="stylobutton100" type="button"  name="Cetak" id="Cetak" value="Previu" onclick="javascript:senaraiDokumenSurat('tabledokumensurat');" />
-                 			#if($flagFail == "N")
-					    		<input type="button" class="stylobutton100" style="width:auto !important" name="cmdHantarSahkan" id="cmdHantarSahkan" value="Hantar Pengesahan" onclick="javascript:doHantarPengesahan()" />
-					        #elseif($flagFail == "H") <!-- and role $portal_role -->
-					        	<input type="button" class="stylobutton100" style="width:auto !important" name="cmdSahkan" id="cmdSahkan" value="Sahkan Permohonan" onclick="javascript:doSahkan()" />
-					        #end
-
           				#elseif ($mode == 'update')
                				<input class="stylobutton100" type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:simpanKemaskiniFail()" />
                				<!-- <input class="stylobutton100" type="reset" name="cmdReset" id="cmdReset" value="Kosongkan"/> -->
@@ -352,8 +345,7 @@
                           </tr>
                           #end
                         </table>
-                        $idStatus
-                        #if ( ($idStatus == '1' || $idStatus == '6' || $idStatus == '12' || $idStatus == '63' || $idStatus == '65') && ($!SenaraiHakmilik.size() > 0) )
+                        #if ( ($idStatus == '1' || $idStatus == '6' || $idStatus == '12' || $idStatus == '63') && ($!SenaraiHakmilik.size() > 0) )
     						<!-- <input class="stylobutton100" name="cmdSeterusnya" type="button" value="Sahkan" onclick="seterusnya()"/> -->
     						<input class="stylobutton100" name="cmdSeterusnya" type="button" value="Seterusnya" onclick="seterusnya()"/>
     					#end

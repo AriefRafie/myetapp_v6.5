@@ -342,9 +342,10 @@ public class MTManagerReg {
 			DataCreateReqType data = new DataCreateReqType();
 			//CauseofactionType[] causeofaction = new CauseofactionType();
 			data.setCauseofaction(causeofaction);
+			
 			//untuk case_code 31NCVC
 			//DeceaseInfoType deceaseInfo = new DeceaseInfoType();
-			//data.setDeceaseInfo(deceaseInfo);
+			data.setDeceaseInfo(deceaseInfo);
 			
 			//DocumentType document = new DocumentType();
 			data.setDocument(document);
@@ -364,10 +365,6 @@ public class MTManagerReg {
 //			DataCreateReqTypePartyAgency partyAgency = new DataCreateReqTypePartyAgency();
 
 			data.setPartyAgency(partyAgency);
-//			33	PartyAgencyTypeID	String	100	O	-	Refer to Party Type ID Value in Appendix 5.3, Case Code 15, Party Type Description - Responden 
-//			34	PartyAgencyName	String	255	O	-	Value as per 4.2.5 – PartyAgencyName with Status = A
-//			35	PartyAgencyIDType	String	10	O	-	Fix Value: GA_CIVIL
-//			36	PartyAgencyIDNo	String	255	O	-	Value as per 4.2.5 – PartyAgencyIDNo with Status = A
 
 			Civilregistercaseresponse response = submitMT(data, transactionID);			
 			if (response != null) {

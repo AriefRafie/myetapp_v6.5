@@ -75,6 +75,10 @@ function gotoSenaraiFailPelepasan(){
 	document.${formName}.action = "$EkptgUtil.getTabID("Pelepasan",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPSenaraiFailView";
 	document.${formName}.submit();
 } 
+function gotoSenaraiFailPenguatkuasaan(){
+	document.${formName}.action = "$EkptgUtil.getTabID("Penguatkuasaan",$portal_role)?_portal_module=ekptg.view.php2.FrmCRBSenaraiFailView";
+	document.${formName}.submit();
+} 
 function doKembali() {
 	document.${formName}.step.value = "";
 	document.${formName}.submit();

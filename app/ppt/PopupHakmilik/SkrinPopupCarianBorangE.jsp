@@ -85,7 +85,7 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 <div id="TabbedPanels1" class="TabbedPanels" style="padding : 0 5px">
 	<ul class="TabbedPanelsTabGroup">
  		<li class="TabbedPanelsTab" onClick="javascript:setSelected(0);" tabindex="0">SENARAI BORANG E</li>
-		<!-- <li class="TabbedPanelsTab" onClick="javascript:setSelected(1);" tabindex="1">RINGKASAN SIASATAN</li>  -->
+		 <li class="TabbedPanelsTab" onClick="javascript:setSelected(1);" tabindex="1">RINGKASAN SIASATAN</li> 
 		<!-- <li class="TabbedPanelsTab" onClick="javascript:setSelected(2);" tabindex="2">KEMASKINI</li>  -->
 	</ul>
   		
@@ -154,7 +154,78 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
    		</div>
     	<!-- END TAB 1 -->
     	
-    	
+    	<!-- TAB 2 -->
+    	<div class="TabbedPanelsContent">
+			<!-- PPT-07 -->   
+				<table width="100%" border="0" cellspacing="2" cellpadding="2">
+				  <tr>
+				    <td><fieldset id="tableSiasatan">
+				      <legend><b>JADUAL RINGKASAN SIASATAN</b></legend>    
+							
+								#if($SenaraiRingkasan.size()>10)
+								<div style="width: 100%; height: 285; overflow: auto">
+								#end
+							
+									<table width="100%" cellpadding="0" cellspacing="2" border="0">
+													
+				        				<tr class="table_header">
+					                  		<td align="center" ><b><font color="white">TARIKH BORANG E</font></b></td>        
+					                  		<td align="center"><b><font color="white">NO. HAKMILIK</font></b></td>
+					                  		<td align="center" ><b><font color="white">NO. LOT/NO. PT</font></b></td>
+				                            <td align="center" ><b><font color="white">MUKIM/PEKAN/BANDAR</font></b></td>  
+				                            #if($!flag_subjaket!="")
+				                            	<td align="center" ><b><font color="white">NO. SUBJAKET</font></b></td> 
+				                            #end 
+				                            <td align="center"><b><font color="white">TARIKH SIASATAN</font></b></td>
+					                  		<td align="center"><b><font color="white">MASA SIASATAN</font></b></td>    
+				           		 		</tr>
+						
+							         	#if($SenaraiRingkasan.size()>0)
+								           	#foreach ($listR in $SenaraiRingkasan )
+												<tr>
+													<td class="$row" align="center"><b>$!listR.bil</b>
+														#if($!listR.TARIKH_BORANGE != "")
+															&nbsp;($!listR.TARIKH_BORANGE) 
+														#end
+													</td>
+													<td class="$row">$!listR.kod_jenis_hakmilik $!listR.no_hakmilik</td>
+													<td class="$row">$!listR.no_lotpt</td>
+													<td class="$row">$!listR.nama_mukim
+														#if($listR.seksyen!="")
+															<font style="font-size: 10px">Seksyen $listR.seksyen</font>
+															
+														#end
+													</td> 
+													#if($!flag_subjaket!="")
+														<td class="$row">Sj.$!listR.no_subjaket</td>
+													#end
+													<td class="$row">$!listR.tarikh_siasatan</td>
+													<td class="$row">$!listR.masa_siasatan
+														#if($!listR.jenis_waktu== '1') PAGI  #end
+														#if($!listR.jenis_waktu== '2') TENGAH HARI  #end
+														#if($!listR.jenis_waktu== '3') PETANG  #end
+													</td>
+												</tr>
+								           	#end
+										#else
+										<tr>
+											<td colspan="2">Tiada rekod</td>
+										</tr>
+										#end
+							
+									</table>
+							
+									#if($saiz_listHakmilikBorangEInBulk > 10)
+								</div>
+								#end 
+				      </fieldset>
+				      
+				      </td>
+				  </tr>
+				</table> 
+			<!-- PPT-07 END -->
+    	</div>
+    	<!-- END TAB 2 -->
     
 
     	
@@ -243,6 +314,7 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 
 //PPT-07
 function setSelected(tabId) {
+
 	document.${formName}.tabId.value = tabId;	
 }
 var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$!selectedTab});
@@ -392,7 +464,7 @@ function paparHakmilik(id_hakmilik,id_permohonan,flag_skrin){
 
 
 function viewBorangEInBulk(id_borangE,flag_skrin){
-	alert("xxx");
+
 	try {
 			window.opener.viewBorangEInBulk(id_borangE);
 		

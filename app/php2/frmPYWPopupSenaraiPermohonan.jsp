@@ -61,12 +61,13 @@
   </tr>
 </table>
 <br/><br/>
+
 <table width="100%">
 	<tr>
 		<td align="left"><div id="err_checkPermohonan" style="color:#CC0000;font-weight:bold;border:2px #000"></div></td>
 		<td align="center">
 			<input type="button" name="btnPilihPermohonan" id="btnPilihPermohonan" value="Pilih" onClick="doPilih()"/>
-			<input type="button" name="btnTutupPermohonan" id="btnTutupPermohonan" value="Tutup" onClick="doTutup()"/>
+			##<input type="button" name="btnTutupPermohonan" id="btnTutupPermohonan" value="Tutup" onClick="doTutup()"/>
 		</td>
 	</tr>
 </table>

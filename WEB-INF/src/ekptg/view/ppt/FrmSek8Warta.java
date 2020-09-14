@@ -331,6 +331,7 @@ public class FrmSek8Warta extends AjaxBasedModule {
     		
     		String id_endosanborangd = getParam("id_endosanborangd");
     		context.put("id_endosanborangd",id_endosanborangd);
+    		myLogger.info(id_endosanborangd);
     		
     		//list Warta
     		listWarta(session,idpermohonan);

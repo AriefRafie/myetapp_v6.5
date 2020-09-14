@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
-import java.util.GregorianCalendar;
+import java.util.GregorianCalendar; 
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -253,6 +253,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 		Vector selectedppkha = null;
 		Vector sumppkhta = null;
 		Vector maklumatSimati = null;
+		Vector maklumatPemohon = null;
 		Vector sumoverallppkhta = null;
 		Vector listxxx = null;
 		Vector v = null;
@@ -558,7 +559,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 				String alamatTetap;
 				String poskod;
 				String alamatSurat;
-				String negeri;
+				String negeri; 
 				String noTel;
 				String noHp;
 				String catatan;
@@ -5057,11 +5058,22 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
 				this.context.put("id2", id2);
 				this.context.put("id1", id1);
 
-				//check skrin Simati
+				//check skrin Simati sama ada lengkap diisi atau tidak
 				
 				logic_A.setSimati(id1);
 				maklumatSimati = logic_A.getSimati();
 				this.context.put("maklumatSimati", maklumatSimati);
+				//
+				
+				//check skrin Pemohon sama ada lengkap diisi atau tidak
+				
+				logic_A.setPemohon(id1);
+				maklumatPemohon = logic_A.getPemohon();
+				this.context.put("maklumatPemohon", maklumatPemohon);
+				
+				logic_A.setPerubahanAkta();
+				listUbah = logic_A.getPerubahanAkta();
+				this.context.put("listUbah", listUbah);
 				//
 				
 				logic_A.setSumDataHta(mati);
@@ -5974,7 +5986,7 @@ public class FrmPrmhnnSek8Internal extends VTemplate {
     	String idSimati1 = idSimati;
     	myLogger.info("idSimati1********* = "+idSimati1);
     	//String id_permohonansimati = getParam("id_permohonansimati_atheader");
-    	PreparedStatement ps = con.prepareStatement("INSERT INTO TBLPPKDOKUMENSIMATI (ID_SIMATI,ID_JENISDOKUMEN,NAMA_DOKUMEN, FORMAT, KANDUNGAN, ID_MASUK, TARIKH) VALUES (?,?,?,?,?,?,"+r.unquote("sysdate")+")");	
+    	PreparedStatement ps = con.prepareStatement("INSERT INTO TBLPPKDOKUMENSIMATI (ID_SIMATI,ID_JENISDOKUMEN,NAMA_DOKUMEN, FORMAT, KANDUNGAN, ID_MASUK, TARIKH_MASUK) VALUES (?,?,?,?,?,?,"+r.unquote("sysdate")+")");	
     	
     	ps.setString(1,idSimati1);
     	ps.setString(2,"99201");

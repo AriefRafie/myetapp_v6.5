@@ -313,6 +313,7 @@ public class FrmUPTSek8BorangF extends AjaxBasedModule {
     		    		try {
     		    		dbx = new Db();
     		    		updateBorangEInBulk(session,id_borange,dbx,id_hakmilik);
+    		    		 
     		    		}finally {
     		    			if (dbx != null)
     		    			dbx.close();
@@ -706,25 +707,17 @@ public class FrmUPTSek8BorangF extends AjaxBasedModule {
 	
 	@SuppressWarnings("unchecked")
 	private void updateBorangEInBulk(HttpSession session,String id_borange, Db db,String id_hakmilik) throws Exception{
-		
-//		PPT-06
-		String[] txtMasaSiasatan = request.getParameterValues("txtMasaSiasatan");
-		String[] socJenisWaktu = request.getParameterValues("socJenisWaktu");
-	    if(txtMasaSiasatan != null) {
-	    	for(int i = 0; i < txtMasaSiasatan.length; i++) {
-	    		myLogger.info("updateBorangEInBulk Masa_Siasatan = " +txtMasaSiasatan[i]);
-	    		myLogger.info("updateBorangEInBulk Jenis_Waktu = " +socJenisWaktu[i]);
-	    
+    
 	    Hashtable h = new Hashtable();
-		
+	    String idUser = (String)session.getAttribute("_ekptg_user_id");
+	    
 		h.put("id_borange", id_borange);
 		h.put("socBandar", getParam("socBandar"));
 		h.put("socNegeri", getParam("socNegeri"));
 		h.put("txdTarikhBorangE", getParam("txdTarikhBorangE"));
     	h.put("txdTarikhBorangF", getParam("txdTarikhBorangF"));
     	h.put("txdTarikhSiasatan", getParam("txdTarikhSiasatan"));
-    	h.put("txtMasaSiasatan", txtMasaSiasatan[i]); // PPT-06
-    	h.put("socJenisWaktu", socJenisWaktu[i]); // PPT-06
+    	
 //    	h.put("txtMasaSiasatan", getParam("txtMasaSiasatan"));
 //    	h.put("socJenisWaktu", getParam("socJenisWaktu"));
     	h.put("txtAlamat1", getParam("txtAlamat1"));
@@ -733,7 +726,7 @@ public class FrmUPTSek8BorangF extends AjaxBasedModule {
     	h.put("txtPoskod", getParam("txtPoskod"));  	
     	h.put("id_hakmilik", getParam("id_hakmilik"));   
     	h.put("txtAlamat1", getParam("txtAlamat1"));
-		h.put("id_user", session.getAttribute("_ekptg_user_id"));
+    	h.put("id_user", idUser);
 		
 		FrmUPTSek8BorangFData.updateBorangE(h,db);
 		myLogger.info("updateBorangEInBulk ID_BorangE = " +id_borange);
@@ -741,17 +734,27 @@ public class FrmUPTSek8BorangF extends AjaxBasedModule {
 //		delete senarai notis dalam attribute table
 		FrmUPTSek8BorangFData.deleteListCB(id_borange,db);
 		
-		String[] cbsemaks = request.getParameterValues("cbsemaks");
-    	if(cbsemaks != null){
-			for (int j = 0; j < cbsemaks.length; j++) {
-				FrmUPTSek8BorangFData.deleteListCB_byHakmilik(cbsemaks[j],db);
-				FrmUPTSek8BorangFData.simpanBorangEInBulk(h,cbsemaks[j],Utils.parseLong(id_borange),db);
-				myLogger.info("simpanBorangEInBulk by cbsemaks: " +h);
+
+    	String[] cb_id_hakmilik = request.getParameterValues("cbsemaks");
+    	myLogger.info("value id hakmilik : "+ request.getParameterValues("cbsemaks"));
+		
+		if(cb_id_hakmilik!=null){
+			for (int i = 0; i < cb_id_hakmilik.length; i++) { 
+				int bil = i+1;
+				String txtMasaSiasatan = getParam("txtMasaSiasatan"+bil);
+				String socJenisWaktu = getParam("socJenisWaktu"+bil);
+				String id_borangehakmilik = getParam("id_borangehakmilik"+bil);
+				myLogger.info("txtMasaSiasatan :"+txtMasaSiasatan);
+				
+				if(id_borangehakmilik.equals("")){
+					long id_borangehakmilik_seq = DB.getNextID("TBLPPTBORANGEHAKMILIK_SEQ");
+					simpanBorangE(idUser,cb_id_hakmilik[i],id_borangehakmilik_seq,txtMasaSiasatan,socJenisWaktu,id_borange,db);
+				}else{
+					updateBorangE(idUser,cb_id_hakmilik[i],id_borangehakmilik,txtMasaSiasatan,socJenisWaktu,id_borange,db);
+				}
+			
 			}
-		} //close cbsemaks
-	  
-	    	}
-	  } //close jenisWaktu, MasaSiasatan PPT-06
+		}
 		
 	}//close updateBorangEInBulk
 	

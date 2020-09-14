@@ -453,17 +453,15 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
          
           
           #if ($mode=="disabled")
-          <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" disabled $TEMPchecked2  />
+          	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" disabled $TEMPchecked2  />
           #elseif ($mode!="disabled"  &&  $alasan2 == "2")
-          <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" $TEMPchecked2  />
+          	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" $TEMPchecked2  />
           #else
-          <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
+          	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
           #end          
           
           </td>
-          <td>Jumlah Pampasan
-          	<!-- ; UI: frmBantahanMaster.jsp, Controller: FrmBantahanSenaraiCarian.java; -->
-          </td>
+          <td>Jumlah Pampasan BantahanMaster</td>
         </tr>
 		
         <tr>
@@ -472,7 +470,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           <td>&nbsp;</td>
           <td>&nbsp;</td>
         	<td>
-	        	<table id="jenisbantahanpampasan">
+	        	<table id="pptbantahanpampasan">
 	        		<tr>
 	        		 <!-- PPT-35 (i) Jenis Bantahan Pampasan-->
 					#set ( $checked = "" )
@@ -484,7 +482,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 					        #else
 					        	#set ( $checked = "" )
 					    	#end
-					    	<!-- #set ( $checked = "" ) -->
+					    		#set ( $checked = "" )
 					    	#if ($mode=="disabled")
 					    		<input class="cb" type="checkbox" name="jenisbantahanpampasan" value="$semak.id" onclick="checkJumlahPampasan(true)" disabled $checked>
 					    	#elseif ($mode!="disabled")
@@ -492,7 +490,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 					        #end
 					       	</td>
 					        <td class="$row">
-					        	$semak.keterangan <!-- $semak.id -->
+					        	$semak.keterangan
 					        </td>
 					      
 				    #end

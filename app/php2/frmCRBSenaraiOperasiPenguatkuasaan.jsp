@@ -30,18 +30,20 @@
 	<input name="selectedTabLower" type="hidden" id="selectedTabLower" value="$selectedTabLower" />
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
-	#if ($idFail != '')
+	#if ($idFail != '' && $idStatus != '1610198' && $idStatus != '1610199' && $idStatus != '1610200' && $idStatus != '1610201' && $idStatus != '1610216')
 	<tr>
 		<td>#parse("app/php2/frmCRBHeader.jsp")</td>
 	</tr>
-	#else
+	#elseif ($idFail == '' )
 	<tr>
 		<td>&nbsp;
 			<div class="warning">SILA PILIH FAIL DI SENARAI FAIL TERLEBIH
 				DAHULU</div>
 		</td>
 	</tr>
-	#end #if ($idFail != '' && $flagOpenDetail)
+	#end 
+	
+	#if ($idFail != '' && $flagOpenDetail && $idStatus != '1610198' && $idStatus != '1610199' && $idStatus != '1610200' && $idStatus != '1610201' && $idStatus != '1610216')
 	<tr>
 		<td><div id="TabbedPanels1" class="TabbedPanels">
 				<ul class="TabbedPanelsTabGroup">
@@ -69,9 +71,11 @@
 										</legend>
 										<table align="center" width="100%">
 											<tr>
-												<td colspan="4" scope="row"><input name="cmdDaftar"
-													type="button" value="Tambah"
-													onClick="javascript:doDaftarBaruLO()" /></td>
+												#if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan')
+												<td colspan="4" scope="row">
+													<input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:doDaftarBaruLO()" />
+												</td>
+												#end
 											</tr>
 											<tr class="table_header">
 												<td scope="row" width="5%" align="center"><strong>Bil</strong></td>
@@ -124,15 +128,25 @@
 				</div>
 			</div></td>
 	</tr>
+	#if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan')
 	#if ($idStatus == '1610217' && $actionCRB == '' && $flagPopup == '')
 	<tr>
-		<td align="center"><input type="button"
-			name="cmdSelesaiPermohonan" id="cmdSelesaiPermohonan"
-			value="Selesai Permohonan" onClick="gotoSelesaiPermohonan()" /> <input
-			type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan"
-			value="Batal Permohonan" onClick="gotoBatalPermohonan()" /></td>
+		<td align="center">
+			<input type="button" name="cmdSelesaiPermohonan" id="cmdSelesaiPermohonan" value="Selesai Permohonan" onClick="gotoSelesaiPermohonan()" /> 
+			<input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()" />
+		</td>
 	</tr>
-	#end #elseif ($idFail != '')
+	#end
+	#end
+    #if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
+    <tr>
+    	<td align="center">
+    		<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
+    	</td>
+    </tr>
+    #end
+	 
+	#elseif ($idFail != '')
 	<tr>
 		<td> 
 			<div class="warning">

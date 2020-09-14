@@ -31,7 +31,7 @@ import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8InternalData;
 public class SkrinPopupUploadDokumen extends AjaxBasedModule {
 	static Logger myLogger = Logger.getLogger(SkrinPopupUploadDokumen.class);
 	private final String PATH="app/ppk/";
-	private String vm = PATH +"SkrinPopupDokumen.jsp";
+	private String vm = PATH +"SkrinPopupDokumen.jsp"; 
 	
 	HttpSession session = null;
 	String action = null;
@@ -213,7 +213,7 @@ public class SkrinPopupUploadDokumen extends AjaxBasedModule {
     	myLogger.info("id_jenisDoc********* = "+id_jenisDoc);
     	
     	//String id_permohonansimati = getParam("id_permohonansimati_atheader");
-    	PreparedStatement ps = con.prepareStatement("INSERT INTO TBLPPKDOKUMENSIMATI (ID_DOKUMEN, ID_SIMATI,ID_JENISDOKUMEN,NAMA_DOKUMEN, FORMAT, KANDUNGAN, ID_MASUK, TARIKH) VALUES (?,?,?,?,?,?,?,"+r.unquote("sysdate")+")");	
+    	PreparedStatement ps = con.prepareStatement("INSERT INTO TBLPPKDOKUMENSIMATI (ID_DOKUMEN, ID_SIMATI,ID_JENISDOKUMEN,NAMA_DOKUMEN, FORMAT, KANDUNGAN, ID_MASUK, TARIKH_MASUK) VALUES (?,?,?,?,?,?,?,"+r.unquote("sysdate")+")");	
     	ps.setLong(1,idDokumen);
     	ps.setString(2,idSimati1);
     	ps.setString(3,id_jenisDoc);

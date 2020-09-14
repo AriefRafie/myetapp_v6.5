@@ -393,13 +393,18 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     		
         		context.put("id_hakmilik",idhakmilik);
         		
-        		model.setMaklumatTanah(idhakmilik);
-        		dataMaklumatTanah = model.getMaklumatTanah();
-        		context.put("dataMaklumatTanah", dataMaklumatTanah);
+
+        		clearValueHM();
+        		
+        		newDataSetting(idpermohonan);
+        		
+        		//model.setMaklumatTanah(idhakmilik);
+        		//dataMaklumatTanah = model.getMaklumatTanah();
+        		//context.put("dataMaklumatTanah", dataMaklumatTanah);
     		//form validation
-        		context.put("semakTanah", "yes");
-        		context.put("wantedit", "no");	
-        		context.put("mode", "view");
+        		//context.put("semakTanah", "yes");
+        		//context.put("wantedit", "no");	
+        		//context.put("mode", "view");
     				
     		//screen
     		vm = screenTanah;
@@ -514,12 +519,12 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     		//context.put("selectLuas",HTML.SelectLuas("socJenisHakmilik",Utils.parseLong(id_luaslot),"style=width:250px class=disabled disabled"));
     		//context.put("selectLot", HTML.SelectUnitPT("socLot",Utils.parseLong(id_lot),"class=disabled disabled id=socLot style=width:auto"));
     		//BARU 2-9-2020
-    		context.put("selectKategoriTanah",HTML.SelectKategoriTanah("socKategoriTanah",Utils.parseLong(id_kategoritanah),"id=socKategoriTanah "+mode+" style=width:auto",null));
+    		context.put("selectKategoriTanah",HTML.SelectKategoriTanah("socKategoriTanah",Utils.parseLong(id_kategoritanah),"id=socKategoriTanah  class=disabled disabled  style=width:auto",null));
     		context.put("selectLot", HTML.SelectUnitPT("socLot",Utils.parseLong(id_lot),"style=width:auto class=disabled disabled "));	
     		
     		//dropdown unit luas
-    		context.put("selectUnitLuasLot",HTML.SelectLuas("socUnitLuasLot",Utils.parseLong(id_luaslot),"style=width:250px "+mode+" id=socUnitLuasLot onchange=onchangeUnitLuasAsalUpdate()"));
-    		context.put("selectUnitLuasAmbil",HTML.SelectLuas("socUnitLuasAmbil",Utils.parseLong(id_unitluasambil),"style=width:250px "+mode+" id=socUnitLuasAmbil onchange=onchangeUnitLuasAmbilUpdate()"));
+    		context.put("selectUnitLuasLot",HTML.SelectLuas("socUnitLuasLot",Utils.parseLong(id_luaslot),"style=width:250px  class=disabled disabled  id=socUnitLuasLot onchange=onchangeUnitLuasAsalUpdate()"));
+    		context.put("selectUnitLuasAmbil",HTML.SelectLuas("socUnitLuasAmbil",Utils.parseLong(id_unitluasambil),"style=width:250px class=disabled disabled  id=socUnitLuasAmbil onchange=onchangeUnitLuasAmbilUpdate()"));
     		
     		//form validation
     		context.put("semakTanah", "yes");
@@ -704,7 +709,88 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     		context.put("saiz_dataTanah", dataMaklumatTanah.size());
     		//form validation
     		context.put("semakTanah", "yes");
-    		context.put("wantedit", "yes");   		
+    		context.put("wantedit", "yes");   	
+    		
+    		String submit2 = getParam("command2");
+        	myLogger.info("submit[2] : " + submit2);
+    		
+    		if("doOnchangeUpdate".equals(submit2)){
+        		
+        		//onchange validation
+        		context.put("onchangeHM","yes");
+        		
+        		//check validation jenis hakmilik & jenis rizab
+        		checkValOnChange();
+        		
+        		//check validation convert
+        		checkValConvert();
+        
+        		//get and set data
+        		getAndSetHM(idpermohonan,"view",id_projekNegeri);
+        		
+        		
+        		String submit3 = getParam("command3");
+            	myLogger.info("submit[3] : " + submit3);
+            	
+            	if("onchangeUnitLuasAsalUpdate".equals(submit3)){
+            		
+            		//validations for luas asal
+            		validationConvertLuas();
+            		
+            		String submit4 = getParam("command4");
+                	myLogger.info("submit[4] : " + submit4);
+                	
+                	if("convertNilaiAsalUpdate".equals(submit4)){
+                		
+                		calculateNilaiAsal();
+                		
+                	}//close convertNilaiAsalUpdate
+                	
+                	else if("clearConvertAsalUpdate".equals(submit4)){
+                		
+                		clearConvertAsal("view");
+                		
+                	}//close clearConvertAsalUpdate
+                	
+                	else if("onchangeUnitAsalUpdate".equals(submit4)){
+                		
+                		//convert nilai lain
+                		changeUnitAsal();
+                		
+                	}//close onchangeUnitAsalUpdate
+                	
+            	}//close onchangeUnitLuasAsalUpdate
+            	
+            	else if("onchangeUnitLuasAmbilUpdate".equals(submit3)){
+            		
+            		//validations for luas ambil
+            		validationConvertLuasAmbil();
+            		
+            		String submit4 = getParam("command4");
+                	myLogger.info("submit[4] : " + submit4);
+                	
+                	if("convertNilaiAmbilUpdate".equals(submit4)){
+                		
+                		calculateNilaiAmbil();
+                		
+                	}//close convertNilaiAmbilUpdate
+                	
+                	else if("clearConvertAmbilUpdate".equals(submit4)){
+                		
+                		clearConvertAmbil("view");
+                		
+                	}//close clearConvertAmbilUpdate
+                	
+                	else if("onchangeUnitAmbilUpdate".equals(submit4)){
+
+                		//convert nilai lain
+                		changeUnitAmbil();
+                		
+                	}//close onchangeUnitAmbilUpdate
+            		
+            	}//close onchangeUnitLuasAmbilUpdate
+            	
+        	}//close doOnchangeUpdate
     		//screen
     		vm = screenTanah;
     		
@@ -2978,7 +3064,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 				context.put("txtBakiTempoh", "");
 				context.put("txtNoSyit", "");
 				context.put("txtNoPT", "");
-				context.put("txtNoLot", "");
+				context.put("txtnolot", "");
 				context.put("txtLuasLotAsal", "");
 				context.put("txtLuasLotAsal2", "");
 				context.put("txtLuasLotAsal3", "");
@@ -3052,6 +3138,8 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 				
 				context.put("selectKategoriTanah",HTML.SelectKategoriTanah("socKategoriTanah",null,"id=socKategoriTanah style=width:auto",null));
 				context.put("selectKodLot", HTML.SelectUnitPT("socKodLot",null,"style=width:auto"));
+				
+				context.put("selectLot", HTML.SelectUnitPT("socLot",null,"style=width:auto"));
 				
 				//dropdown unit luas
 				context.put("selectUnitLuasLot",HTML.SelectLuas("socUnitLuasLot",null,"style=width:250px id=socUnitLuasLot onchange=onchangeUnitLuasAsal()"));
@@ -3794,6 +3882,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 				context.put("txtnopt", getParam("txtnopt"));
 				context.put("txtnolot", getParam("txtnolot"));
 				context.put("txtseksyen", getParam("txtseksyen"));
+				myLogger.info("seksyen :"+getParam("txtseksyen"));
 						
 				context.put("selectLot", HTML.SelectUnitPT("socLot",Utils.parseLong(getParam("socLot")),"style=width:auto"));
 				
@@ -3881,7 +3970,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 				h.put("txtLuasAsal", Utils.RemoveSymbol(getParam("txtLuasLotAsal")));
 				h.put("txtLuasAmbil",  Utils.RemoveSymbol(getParam("txtLuasLotAmbil")));
 				h.put("txtCatatan", getParam("txtCatatan"));
-				h.put("txtseksyen", getParam("txtSeksyen"));
+				h.put("txtseksyen", getParam("txtseksyen"));
 				
 				h.put("unitLuas", getParam("socUnitLuasLot"));
 				h.put("unitLuasAmbil", getParam("socUnitLuasAmbil"));		

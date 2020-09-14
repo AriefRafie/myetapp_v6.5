@@ -1609,7 +1609,7 @@ Vector listabc = null;
 			logic.setDataPemohonOB(ido);
 			listPemohonOB = logic.getDataPemohonOB();
 			this.context.put("listPemohonOB", listPemohonOB);
-			this.context.put("duplicate", "yes");
+			
 
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8.jsp";
 
