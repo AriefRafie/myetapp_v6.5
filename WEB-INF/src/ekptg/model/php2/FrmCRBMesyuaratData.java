@@ -24,9 +24,272 @@ public class FrmCRBMesyuaratData {
 	private Vector listImejan = null;
 	private Vector beanMaklumatImejan = null;
 	private Vector listNotifikasi = null;
+	private Vector listPanggilMesyuarat = null;
+	private Vector beanMaklumatPanggilMesyuarat = null;
+	private Vector beanMaklumatPejabat = null;
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
+	public void setSenaraiPanggilMesyuarat(String idMesyuarat) throws Exception {
+
+		Db db = null;
+		String sql = "";
+
+		try {
+			listPanggilMesyuarat = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.ID_ULASANTEKNIKAL, A.TARIKH_HANTAR, A.TARIKH_JANGKA_TERIMA, A.FLAG_STATUS, B.NAMA_PEJABAT,"
+				+ " A.FLAG_AKTIF, E.NAMA_PEJABAT AS PEJABATPTGPTD, A.FLAG_KJP, A.NAMA_PEGAWAI, A.NO_TELEFON, A.EMEL_PEGAWAI,"
+				+ " D.ID_KEMENTERIAN, D.NAMA_KEMENTERIAN FROM TBLPHPULASANTEKNIKAL A, TBLRUJPEJABATJKPTG B, TBLRUJKEMENTERIAN D, TBLRUJPEJABAT E"
+				+ " WHERE A.ID_PEJABAT = B.ID_PEJABATJKPTG(+) AND A.ID_MENTERI = D.ID_KEMENTERIAN(+)"
+				+ " AND A.ID_PEJABAT = E.ID_PEJABAT(+) AND A.ID_MESYUARAT = '" + idMesyuarat + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("idUlasanTeknikal",
+						rs.getString("ID_ULASANTEKNIKAL") == null ? "" : rs
+								.getString("ID_ULASANTEKNIKAL"));
+				h.put("namaPejabat", rs.getString("NAMA_PEJABAT") == null ? ""
+						: rs.getString("NAMA_PEJABAT").toUpperCase());
+				h.put("namaPejabatPTGPTD",
+						rs.getString("PEJABATPTGPTD") == null ? "" : rs
+								.getString("PEJABATPTGPTD").toUpperCase());
+				h.put("flagKJP",
+						rs.getString("FLAG_KJP") == null ? "" : rs
+								.getString("FLAG_KJP"));
+				h.put("tarikhHantar", rs.getDate("TARIKH_HANTAR") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_HANTAR")));
+				h.put("tarikhJangkaTerima",
+						rs.getDate("TARIKH_JANGKA_TERIMA") == null ? "" : sdf
+								.format(rs.getDate("TARIKH_JANGKA_TERIMA")));
+				h.put("flagStatus", rs.getString("FLAG_STATUS") == null ? ""
+						: rs.getString("FLAG_STATUS"));
+				if ("1".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "TELAH DIHANTAR");
+				} else if ("2".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "DITERIMA");
+				} else if ("3".equals(rs.getString("FLAG_STATUS"))) {
+					h.put("status", "TIADA JAWAPAN");
+				} else {
+					h.put("status", "");
+				}
+				h.put("flagAktif",
+						rs.getString("FLAG_AKTIF") == null ? "" : rs
+								.getString("FLAG_AKTIF"));
+				h.put("namaPegawai", rs.getString("NAMA_PEGAWAI") == null ? ""
+						: rs.getString("NAMA_PEGAWAI"));
+				h.put("noTelPegawai", rs.getString("NO_TELEFON") == null ? ""
+						: rs.getString("NO_TELEFON"));
+				h.put("emelPegawai", rs.getString("EMEL_PEGAWAI") == null ? ""
+						: rs.getString("EMEL_PEGAWAI"));
+				h.put("idKementerian", rs.getString("ID_KEMENTERIAN") == null ? ""
+						: rs.getString("ID_KEMENTERIAN"));
+				h.put("kementerian", rs.getString("NAMA_KEMENTERIAN") == null ? ""
+						: rs.getString("NAMA_KEMENTERIAN"));
+				listPanggilMesyuarat.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public void setMaklumatPanggilMesyuarat(String idUlasanTeknikal) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			beanMaklumatPanggilMesyuarat = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT ID_ULASANTEKNIKAL, ID_MENTERI, ID_AGENSI, ID_NEGERI, ID_PEJABAT, TARIKH_HANTAR,"
+					+ " FLAG_STATUS, FLAG_AKTIF, FLAG_KJP,NAMA_PEGAWAI , EMEL_PEGAWAI, NO_TELEFON "
+					+ " FROM TBLPHPULASANTEKNIKAL WHERE ID_ULASANTEKNIKAL = '"
+					+ idUlasanTeknikal + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("idUlasanTeknikal",
+						rs.getString("ID_ULASANTEKNIKAL") == null ? "" : rs
+								.getString("ID_ULASANTEKNIKAL"));
+				h.put("idKementerian",
+						rs.getString("ID_MENTERI") == null ? "99999" : rs
+								.getString("ID_MENTERI"));
+				h.put("idAgensi", rs.getString("ID_AGENSI") == null ? "99999"
+						: rs.getString("ID_AGENSI"));
+				h.put("idNegeri", rs.getString("ID_NEGERI") == null ? "99999"
+						: rs.getString("ID_NEGERI"));
+				h.put("idPejabat", rs.getString("ID_PEJABAT") == null ? "99999"
+						: rs.getString("ID_PEJABAT"));
+				h.put("tarikhHantar", rs.getDate("TARIKH_HANTAR") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_HANTAR")));
+				h.put("flagStatus",
+						rs.getString("FLAG_STATUS") == null ? "99999" : rs
+								.getString("FLAG_STATUS"));
+				h.put("flagAktif",
+						rs.getString("FLAG_AKTIF") == null ? "" : rs
+								.getString("FLAG_AKTIF"));
+				h.put("flagKJP", rs.getString("FLAG_KJP") == null ? "99999"
+						: rs.getString("FLAG_KJP"));
+				h.put("namaPegawai", rs.getString("NAMA_PEGAWAI") == null ? ""
+						: rs.getString("NAMA_PEGAWAI"));
+				h.put("emelPegawai",
+						rs.getString("EMEL_PEGAWAI") == null ? "" : rs
+								.getString("EMEL_PEGAWAI"));
+				h.put("noTelPegawai",
+						rs.getString("NO_TELEFON") == null ? "" : rs
+								.getString("NO_TELEFON"));
+				beanMaklumatPanggilMesyuarat.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public String simpanRekodNotifikasiEmail(String idMesyuarat, String idPermohonan, String idPejabat,
+			String idNegeri, String txtNamaPegawai, String txtEmelPegawai,
+			String txtNoTelPegawai, String idSuratKe, String txtTarikhHantar, HttpSession session)
+			throws Exception {
+		
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+		String idUlasanTeknikalString = "";
+		
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPULASANTEKNIKAL
+			long idUlasanTeknikal = DB.getNextID("TBLPHPULASANTEKNIKAL_SEQ");
+			idUlasanTeknikalString = String.valueOf(idUlasanTeknikal);
+			r.add("ID_ULASANTEKNIKAL", idUlasanTeknikal);
+			r.add("ID_PERMOHONAN", idPermohonan);
+			r.add("ID_MESYUARAT", idMesyuarat);
+			r.add("FLAG_KJP", idSuratKe);
+			r.add("ID_NEGERI", idNegeri);
+			r.add("ID_PEJABAT", idPejabat);
+			r.add("FLAG_STATUS", "1");
+			r.add("FLAG_AKTIF", "Y");
+			r.add("NAMA_PEGAWAI", txtNamaPegawai);
+			r.add("EMEL_PEGAWAI", txtEmelPegawai);
+			r.add("NO_TELEFON", txtNoTelPegawai);
+			if (!"".equals(txtTarikhHantar)) {
+				r.add("TARIKH_HANTAR",
+						r.unquote("to_date('" + txtTarikhHantar
+								+ "','dd/MM/yyyy')"));
+			}
+
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPHPULASANTEKNIKAL");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+			
+			AuditTrail.logActivity("1610217", "4", null, session, "INS",
+					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
+							+ "] DIDAFTARKAN");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		
+		return idUlasanTeknikalString;
+	}
+	
+	public void hapusRekodNotifikasiEmail(String idUlasanTeknikal, HttpSession session) throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String sql = "";
+		String idParent = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			sql = "SELECT ID_PARENT FROM TBLPHPULASANTEKNIKAL WHERE ID_ULASANTEKNIKAL = '"
+					+ idUlasanTeknikal + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				if (rs.getString("ID_PARENT") != null
+						&& !"".equals(rs.getString("ID_PARENT"))) {
+					// TBLPHPULASANTEKNIKAL
+					idParent = rs.getString("ID_PARENT");
+					r = new SQLRenderer();
+					r.update("ID_ULASANTEKNIKAL", idParent);
+					r.add("FLAG_STATUS", "1");
+					r.add("FLAG_AKTIF", "Y");
+
+					sql = r.getSQLUpdate("TBLPHPULASANTEKNIKAL");
+					stmt.executeUpdate(sql);
+				}
+			}
+
+			// TBLPHPULASANTEKNIKAL
+			r = new SQLRenderer();
+			r.add("ID_ULASANTEKNIKAL", idUlasanTeknikal);
+
+			sql = r.getSQLDelete("TBLPHPULASANTEKNIKAL");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+			
+			AuditTrail.logActivity("1610217", "4", null, session, "DEL",
+					"FAIL [" + idUlasanTeknikal
+							+ "] DIHAPUSKAN");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah menghapus data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
 	public String saveMesyuarat(String idFail, String idPermohonan,
 			String tarikhMesyuarat, String bilMesyuarat, String tujuan,
 			String idJamDari, String idMinitDari, String idJamHingga,
@@ -989,6 +1252,150 @@ public class FrmCRBMesyuaratData {
 		}
 	}
 	
+	public void setMaklumatPejabat(String idPejabat) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			beanMaklumatPejabat = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.NAMA_PEJABAT, A.ALAMAT1, A.ALAMAT2, A.ALAMAT3, A.POSKOD, A.ID_NEGERI, B.NAMA_NEGERI, C.KETERANGAN AS NAMA_BANDAR, A.NO_TEL, A.NO_FAX, A.ID_PEJABAT"
+					+ " FROM TBLRUJPEJABAT A, TBLRUJNEGERI B, TBLRUJBANDAR C WHERE A.ID_NEGERI = B.ID_NEGERI(+) AND A.ID_BANDAR = C.ID_BANDAR(+) AND A.ID_PEJABAT = '"
+					+ idPejabat + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("idPejabat", rs.getString("ID_PEJABAT") == null ? ""
+						: rs.getString("ID_PEJABAT"));
+				h.put("namaPejabat", rs.getString("NAMA_PEJABAT") == null ? ""
+						: rs.getString("NAMA_PEJABAT").toUpperCase());
+				h.put("alamat1", rs.getString("ALAMAT1") == null ? "" : rs
+						.getString("ALAMAT1").toUpperCase());
+				h.put("alamat2", rs.getString("ALAMAT2") == null ? "" : rs
+						.getString("ALAMAT2").toUpperCase());
+				h.put("alamat3", rs.getString("ALAMAT3") == null ? "" : rs
+						.getString("ALAMAT3").toUpperCase());
+				h.put("poskod",
+						rs.getString("POSKOD") == null ? "" : rs
+								.getString("POSKOD"));
+				h.put("bandar", rs.getString("NAMA_BANDAR") == null ? "" : rs
+						.getString("NAMA_BANDAR").toUpperCase());
+				h.put("negeri", rs.getString("NAMA_NEGERI") == null ? "" : rs
+						.getString("NAMA_NEGERI").toUpperCase());
+				h.put("idNegeri", rs.getString("ID_NEGERI") == null ? "" : rs
+						.getString("ID_NEGERI").toUpperCase());
+				h.put("noTel", rs.getString("NO_TEL") == null ? "" : rs
+						.getString("NO_TEL").toUpperCase());
+				h.put("noFax", rs.getString("NO_FAX") == null ? "" : rs
+						.getString("NO_FAX").toUpperCase());
+				beanMaklumatPejabat.addElement(h);
+				bil++;
+			}
+
+			if (bil == 1) {
+				h = new Hashtable();
+				h.put("idPejabat", "");
+				h.put("namaPejabat", "");
+				h.put("alamat1", "");
+				h.put("alamat2", "");
+				h.put("alamat3", "");
+				h.put("poskod", "");
+				h.put("bandar", "");
+				h.put("negeri", "");
+				h.put("idNegeri", "");
+				h.put("noTel", "");
+				h.put("noFax", "");
+				beanMaklumatPejabat.addElement(h);
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public void setMaklumatPejabatJKPTG(String idPejabat) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			beanMaklumatPejabat = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.NAMA_PEJABAT, A.ALAMAT1, A.ALAMAT2, A.ALAMAT3, A.POSKOD, A.ID_NEGERI, B.NAMA_NEGERI, C.KETERANGAN AS NAMA_BANDAR, A.NO_TEL, A.NO_FAX, A.ID_PEJABATJKPTG"
+					+ " FROM TBLRUJPEJABATJKPTG A, TBLRUJNEGERI B, TBLRUJBANDAR C WHERE A.ID_NEGERI = B.ID_NEGERI(+) AND A.ID_BANDAR = C.ID_BANDAR(+) AND A.ID_PEJABATJKPTG = '"
+					+ idPejabat + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("idPejabat", rs.getString("ID_PEJABATJKPTG") == null ? ""
+						: rs.getString("ID_PEJABATJKPTG"));
+				h.put("namaPejabat", rs.getString("NAMA_PEJABAT") == null ? ""
+						: rs.getString("NAMA_PEJABAT").toUpperCase());
+				h.put("alamat1", rs.getString("ALAMAT1") == null ? "" : rs
+						.getString("ALAMAT1").toUpperCase());
+				h.put("alamat2", rs.getString("ALAMAT2") == null ? "" : rs
+						.getString("ALAMAT2").toUpperCase());
+				h.put("alamat3", rs.getString("ALAMAT3") == null ? "" : rs
+						.getString("ALAMAT3").toUpperCase());
+				h.put("poskod",
+						rs.getString("POSKOD") == null ? "" : rs
+								.getString("POSKOD"));
+				h.put("bandar", rs.getString("NAMA_BANDAR") == null ? "" : rs
+						.getString("NAMA_BANDAR").toUpperCase());
+				h.put("negeri", rs.getString("NAMA_NEGERI") == null ? "" : rs
+						.getString("NAMA_NEGERI").toUpperCase());
+				h.put("idNegeri", rs.getString("ID_NEGERI") == null ? "" : rs
+						.getString("ID_NEGERI").toUpperCase());
+				h.put("noTel", rs.getString("NO_TEL") == null ? "" : rs
+						.getString("NO_TEL").toUpperCase());
+				h.put("noFax", rs.getString("NO_FAX") == null ? "" : rs
+						.getString("NO_FAX").toUpperCase());
+				beanMaklumatPejabat.addElement(h);
+				bil++;
+			}
+
+			if (bil == 1) {
+				h = new Hashtable();
+				h.put("idPejabat", "");
+				h.put("namaPejabat", "");
+				h.put("alamat1", "");
+				h.put("alamat2", "");
+				h.put("alamat3", "");
+				h.put("poskod", "");
+				h.put("bandar", "");
+				h.put("negeri", "");
+				h.put("idNegeri", "");
+				h.put("noTel", "");
+				h.put("noFax", "");
+				beanMaklumatPejabat.addElement(h);
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public Vector getBeanMaklumatPejabat() {
+		return beanMaklumatPejabat;
+	}
+
+	public void setBeanMaklumatPejabat(Vector beanMaklumatPejabat) {
+		this.beanMaklumatPejabat = beanMaklumatPejabat;
+	}
+	
 	public Vector getListNotifikasi() {
 		return listNotifikasi;
 	}
@@ -1039,5 +1446,16 @@ public class FrmCRBMesyuaratData {
 
 	public void setListKehadiran(Vector listKehadiran) {
 		this.listKehadiran = listKehadiran;
+	}
+	public Vector getListPanggilMesyuarat() {
+		return listPanggilMesyuarat;
+	}
+
+	public void setListPanggilMesyuarat(Vector listPanggilMesyuarat) {
+		this.listPanggilMesyuarat = listPanggilMesyuarat;
+	}
+	
+	public Vector getMaklumatPanggilMesyuarat() {
+		return beanMaklumatPanggilMesyuarat;
 	}
 }
