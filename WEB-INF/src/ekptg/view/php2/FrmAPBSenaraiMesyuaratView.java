@@ -26,19 +26,19 @@ import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
-import ekptg.model.php2.FrmPYWSenaraiMesyuaratData;
+import ekptg.model.php2.FrmAPBSenaraiMesyuaratData;
 import ekptg.model.php2.utiliti.PHPUtilHTML;
 
 /**
  * @author nurulain
  * 
  */
-public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
+public class FrmAPBSenaraiMesyuaratView extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
-	static Logger myLogger = Logger.getLogger(ekptg.view.php2.FrmPYWSenaraiMesyuaratView.class);
+	static Logger myLogger = Logger.getLogger(ekptg.view.php2.FrmAPBSenaraiMesyuaratView.class);
 
-	FrmPYWSenaraiMesyuaratData logic = new FrmPYWSenaraiMesyuaratData();
+	FrmAPBSenaraiMesyuaratData logic = new FrmAPBSenaraiMesyuaratData();
 	
 	String userId = null;
 	String userRole = null;
@@ -244,7 +244,7 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 			
 		} else if ("papar".equals(actionMesyuarat)) {
 			
-			vm = "app/php2/frmPYWMaklumatMesyuaratSenaraiPermohonan.jsp";
+			vm = "app/php2/frmAPBMaklumatMesyuaratSenaraiPermohonan.jsp";
 			
 			if ("1".equals(selectedTabUpper)) {
 
@@ -363,7 +363,7 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 		} else {
 			
 			// GO TO LIST SENARAI MESYUARAT
-			vm = "app/php2/frmPYWSenaraiFailMesyuarat.jsp";
+			vm = "app/php2/frmAPBSenaraiFailMesyuarat.jsp";
 
 			logic.carianSenaraiMesyuarat(getParam("txtCarianTajukMesyuarat"), getParam("txtCarianBilMesyuarat"), 
 					getParam("txtCarianTarikhMesyuarat"), userId, userRole);
