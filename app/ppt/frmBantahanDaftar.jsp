@@ -442,12 +442,12 @@
             <td width="4%">
             
             #if ($alasan1=="1") 
-            <input type="checkbox" name="ukuran_luas" id="ukuran_luas" value="Y" tabindex="17" $TEMPchecked1 disabled />
+            	<input type="checkbox" name="ukuran_luas" id="ukuran_luas" value="Y" tabindex="17" $TEMPchecked1 disabled />
             #else
-            <input type="checkbox" name="ukuran_luas" id="ukuran_luas" value="Y" tabindex="17" $TEMPchecked1 />
+            	<input type="checkbox" name="ukuran_luas" id="ukuran_luas" value="Y" tabindex="17" $TEMPchecked1 />
             #end            
             
-            </td>            
+            </td>
             <td width="73%" colspan="4">Ukuran Luas Tanah Tersebut;</td>
         </tr>
 
@@ -458,73 +458,71 @@
             <td>
             
             #if ($alasan2=="2") 
-            <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 disabled />
+            	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 disabled />
             #else
-            <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
+            	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
             #end            
             
             </td>
-            <td colspan="4">Jumlah Pampasan;</td>
-        </tr>  
+            <td colspan="4">Jumlah Pampasan BantahanDaftar;</td>
+        </tr>
         
-        <!-- PPT-35 (i) -->
         <tr>
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-			<td valign="top">&nbsp;</td>
+          <td width="1%"></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
             <td>
-	        	<table>
+	        	<table id="jenisbantahanpampasan">
 	        		<tr>
-	        		 <!-- PPT-35 (i) -->
-					#set ( $checked = "" )
-				    #foreach ($semak in $senaraiSemakan)
-					    	<td  width="10">
-		                   
-					          #if ( $semakclass.isSemakan("$permohonanInfo.idpermohonan", "$semak.id" ))
-					        	#set ( $checked = "checked" )
-					        #else
-					        	#set ( $checked = "" )
-					    	#end
-					    	#set ( $checked = "" )
-					        	 <input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked>
-					       	</td>
-					        <td >
-					        	$semak.keterangan <!-- $semak.id -->
-					        </td>
-					      
-				    #end	
+	        		 <!-- PPT-35 (i) Jenis Bantahan Pampasan -->
+					 #set ( $checked = "" )
+				     #foreach ($semak in $senaraiSemakan)
+					 <td  width="10">
+		             
+					 #if ( $semakclass.isSemakan("$permohonanInfo.idpermohonan", "$semak.id" ))
+					   	#set ( $checked = "checked" )
+					 #else
+					   	#set ( $checked = "" )
+					 #end
+					   	#set ( $checked = "" )
+					   	 <input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked>
+					 </td>
+					 <td >
+					 	$semak.keterangan <!-- $semak.id -->
+					 </td>
+				     #end
 				    </tr>
-				</table>
-            
-
-	            <!-- table>
-					<tr>
+				<!-- /table>
+            	
+	            <table -->
+					<!-- tr>
 		            	<td>
 			            #if ($alasan2=="2") 
-			            <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 disabled />
+			            	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 disabled />
 			            #else
-			            <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
+			            	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
 			            #end            
 			            </td>
-			            <td>Nilai Tanah</td>
+			            	<td>Nilai Tanah</td>
 			            <td>
 			            #if ($alasan2=="2") 
-			            <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 disabled />
+			            	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 disabled />
 			            #else
-			            <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
+			            	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
 			            #end            
 			            </td>
-			            <td>Bangunan</td>
+			            	<td>Bangunan</td>
 			            <td>
 			            #if ($alasan2=="2") 
-			            <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 disabled />
+			            	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 disabled />
 			            #else
-			            <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
-			            #end            
+			            	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
+			            #end
 			            </td>
-			            <td>Kecederaan</td>
-	            	</tr>
-	            </table-->
+			            	<td>Kecederaan</td>
+	            	</tr -->
+	            </table>
 	            
 	            
 	        </td>
@@ -536,14 +534,15 @@
             <td valign="top">&nbsp;</td>
             <td>
             #if ($alasan3=="3") 
-            <input type="checkbox" name="terima_pampasan" id="terima_pampasan" value="Y" tabindex="19" $TEMPchecked3 disabled />
+            	<input type="checkbox" name="terima_pampasan" id="terima_pampasan" value="Y" tabindex="19" $TEMPchecked3 disabled />
             #else
-            <input type="checkbox" name="terima_pampasan" id="terima_pampasan" value="Y" tabindex="19" $TEMPchecked3 />
-            #end            </td>
+            	<input type="checkbox" name="terima_pampasan" id="terima_pampasan" value="Y" tabindex="19" $TEMPchecked3 />
+            #end
+            </td>
             <td colspan="4">Orang-orang yang  menerima pampasan;</td>
       </tr>
       
-        <tr>
+      <tr>
             <td valign="top">&nbsp;</td>
             <td valign="top">&nbsp;</td>
             <td>
@@ -944,5 +943,7 @@ function RemoveNonNumeric2( strString )
       }
       return strReturn;
 }
+
+
 </script>
 

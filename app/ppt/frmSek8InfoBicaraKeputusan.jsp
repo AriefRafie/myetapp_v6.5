@@ -49,7 +49,6 @@ alert("Sila Klik Tab 'Senarai Lot & Siasatan' dan Klik 'Paging' No.17 Untuk Pros
 <td>#parse("app/ppt/header_siasatan.jsp") </td>
 
 
-
 #foreach($list in $senarai_perintah_award)  
 #set($socAwardKepada = $list.STATUS_PENERIMA)
 #set($txtUlasanTidakHadir = $list.ULASAN_TIDAK_HADIR)
@@ -279,7 +278,7 @@ alert("Sila Klik Tab 'Senarai Lot & Siasatan' dan Klik 'Paging' No.17 Untuk Pros
     
     
     #else
-   
+   xxxx
     <option value="">SILA PILIH STATUS SIASATAN</option> 
     <option value="1">SIASATAN PERMULAAN</option> 
     <option value="2">DITUNDA SEBELUM SIASATAN</option> 
