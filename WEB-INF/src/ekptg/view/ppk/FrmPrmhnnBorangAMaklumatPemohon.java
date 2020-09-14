@@ -4200,9 +4200,12 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				idRujukan += check_no_kp_lain_simati.equals("")?"-":check_no_kp_lain_simati;
 				myLogger.info("noRujukan="+idRujukan);
 				LampiranBean lb = new LampiranBean();
+				myLogger.info("Lampiran="+lb.getLampiranSimati(idRujukan, null, "99201").size());
 				myLogger.info("Lampiran="+lb.getLampiranSimati(idRujukan, null, "99202").size());
 				if(lb.getLampiranSimati(idRujukan, null, "99202").size() > -1)
 					lb.kemaskiniLampiranSimati(idRujukan,"99202",String.valueOf(h1.get("idSimati")));
+				if(lb.getLampiranSimati(idRujukan, null, "99201").size() > -1)
+					lb.kemaskiniLampiranSimati(idRujukan,"99201",String.valueOf(h1.get("idSimati")));
 				
 
 				/*
@@ -6896,9 +6899,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 	}
 
 	private void getSenaraiSemak(String idSimati,String idPermohonan) throws Exception{
-		Vector <Hashtable<String,String>> sm = FrmSemakan.getSenaraiSemakanByIDAttach("4,1,17",idSimati,idPermohonan);
+		Vector <Hashtable<String,String>> sm = FrmSemakan.getSenaraiSemakanByIDAttach("4,1,3,17,99201000035",idSimati,idPermohonan);
 		// 4 Bukti kematian
 		// 11 Dokumen hakmilik semua harta yang dituntut
+		// 2 Salinan kad pengenalan pemohon
 		context.put("senaraiSemakan", sm);
 		context.put("semakclass", new FrmSemakan());
 		
