@@ -1075,9 +1075,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 			/************** PIHAK BERKEPENTINGAN *****************/
 
-			else if ("tambahPBOnline".equals(submit)) {
+			else if ("tambahPB".equals(submit)) {
 
-				myLogger.info("masuk  sini");
 				// form validation
 				context.put("mode", "new");
 
@@ -3261,6 +3260,194 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 	}// close simpanHM
 
+	public void updateHM(Hashtable data, String flagSubjaket) throws Exception
+	  {
+		
+	    Db db = null;
+	    String sql = "";
+	    
+	    try{
+	      
+	    		db = new Db();
+	    		Statement stmt = db.getStatement();
+	    		Connection conn = null;
+	    		
+	    		String id_user = (String)data.get("id_user");
+	    	
+	    		//pengambilan segera
+	    		String socPSegera = (String)data.get("socPSegera");
+	    		
+	    		String socDaerahPenggawa = (String)data.get("socDaerahPenggawa");
+	    		
+	    		myLogger.info("Check Value update2");
+	    		String id_permohonan = (String) data.get("id_permohonan");
+	    		myLogger.info("id_permohonan==="+sql);
+	    		String id_hakmilik = (String)data.get("id_hakmilik");	myLogger.info("id_hakmilik: " +id_hakmilik);
+	    		String id_daerah = (String)data.get("id_daerah");   	myLogger.info("id_daerah: " +id_daerah);
+	    		
+	    		String id_mukimProjek = (String)data.get("socMukim");   	myLogger.info("id_mukimProjek: " +id_mukimProjek);
+	    		String txtseksyen = (String)data.get("txtseksyen"); 
+	    		String catatan = (String)data.get("txtCatatan");
+	    		String txtnolot = (String)data.get("txtNoLot");
+	    		String txtnopt = (String)data.get("txtNoPT");
+	    		
+	    		String id_jenishakmilik = (String)data.get("jenisHakMilik");
+	    		String no_hakmilik = (String)data.get("txtNoHakmilik");
+	    		String id_lot = (String)data.get("kodLot");  
+	    		String id_luas = (String)data.get("unitLuas");	myLogger.info("id_luas: " +id_luas);
+	    		String luas_ambil = (String)data.get("txtLuasAmbil");	myLogger.info("luas_ambil: " +luas_ambil);
+	    		String luas_asal = (String)data.get("txtLuasAsal");	myLogger.info("luas_asal: " +luas_asal);
+
+	    		String tarikhLuput = (String)data.get("txdTarikhLuput");	 
+	    		String tarikhDaftar = (String)data.get("txdTarikhDaftar");
+	    		String baki = (String)data.get("txtBakiTempoh");
+	    		String id_kategoriTanah = (String)data.get("socKategoriTanah");
+	    		String lokasi = (String)data.get("txtLokasi");	
+	    	
+	    		//rizab
+		    	String sorJenisRizab = (String)data.get("sorJenisRizab");
+		    	String txtLain = (String)data.get("txtLain");
+		    	String txtNoWartaRizab = (String)data.get("txtNoWartaRizab");
+		    	String txdTarikhWarta = (String)data.get("txdTarikhWarta");
+		    	 
+	    		String syaratNyata = (String)data.get("txtSyaratNyata");	 
+	    		String syaratKhas = (String)data.get("txtSyaratKhas");
+	    		String sekatanKepentingan = (String)data.get("txtSekatanKepentingan");
+	    		String sekatanHak = (String)data.get("txtSekatanHak");
+	    		String noSyit = (String)data.get("txtNoSyit");	
+	    		
+	    		//new
+	    		String id_luasambil = (String)data.get("unitLuasAmbil");	myLogger.info("id_luasambil: " +id_luasambil);
+	    		String nama_luas_asal = (String)data.get("txtLuasLotAsalSebelumConvert");  	myLogger.info("nama_luas_asal: " +nama_luas_asal);
+	    		String nama_luas_ambil = (String)data.get("txtLuasLotAmbilSebelumConvert");	myLogger.info("nama_luas_ambil: " +nama_luas_ambil);
+	    		String id_unitluaslot_convert = (String)data.get("sorDropdownUnitAsal");	myLogger.info("id_unitluaslot_convert: " +id_unitluaslot_convert);
+	    		String id_unitluasambil_convert = (String)data.get("sorDropdownUnitAmbil");		myLogger.info("id_unitluasambil_convert: " +id_unitluasambil_convert);
+	    		
+	    		
+	    		String TL = "to_date('" + tarikhLuput + "','dd/MM/yyyy')";
+	    		String TD = "to_date('" + tarikhDaftar + "','dd/MM/yyyy')";
+	    		String TW = "to_date('" + txdTarikhWarta + "','dd/MM/yyyy')";
+
+	    		//PPT-03 Penambahan Strata
+	    		String txtNoBangunan = (String)data.get("no_bangunan");
+	    		String txtNoTingkat = (String)data.get("no_tingkat");
+	    		String txtNoPetak =  (String)data.get("no_petak"); 		 myLogger.info("txtNoPetak: " +txtNoPetak);
+	    		
+	    		String flagSebahagian = "0";
+	    		
+	    		if(!luas_asal.isEmpty() && !luas_ambil.isEmpty()){
+	    			
+	    			//validate sebahagian / keseluruhan
+	    			double luasAsal = Double.parseDouble(luas_asal);
+	    			if(id_unitluaslot_convert.equals("1")){
+	    				luasAsal *= 10000;
+	    			}
+	    		
+	    			double luasAmbil = Double.parseDouble(luas_ambil);
+	    			if(id_unitluasambil_convert.equals("1")){
+	    				luasAmbil *= 10000;
+	    			}
+	    		
+	    			if((luasAsal - luasAmbil) > 0 ){
+	    				flagSebahagian = "1";
+	    			}else if((luasAsal - luasAmbil) == 0 ){
+	    				flagSebahagian = "2";
+	    			}else{
+	    				flagSebahagian = "0";
+	    			}
+	    			
+	    		}
+	    		
+	    		SQLRenderer r = new SQLRenderer();
+	    		r.update("id_hakmilik", id_hakmilik);
+	    		//flag segera
+	    		r.add("FLAG_SEGERA_SEBAHAGIAN", socPSegera);
+	    		r.add("flag_sebahagian", flagSebahagian);
+	    		r.add("id_daerahpenggawa", socDaerahPenggawa);
+	    		r.add("id_jenishakmilik", id_jenishakmilik);
+	    		r.add("id_daerah", id_daerah);
+	    		r.add("id_mukim", id_mukimProjek);
+	    		r.add("id_unitluaslot", id_luas);
+	    		r.add("id_lot", id_lot);
+	    		r.add("luas_lot",luas_asal);
+	    		r.add("no_warta_rizab", txtNoWartaRizab); 	
+		    	r.add("tarikh_warta_rizab", r.unquote(TW));
+		    	r.add("flag_jenis_rizab", sorJenisRizab); 	
+		    	r.add("nama_lain_rizab", txtLain);
+	    		r.add("luas_ambil", luas_ambil);
+	    		r.add("no_hakmilik", no_hakmilik);
+	    		r.add("no_lot", txtnolot);
+	    		r.add("no_pt", txtnopt);
+	    		r.add("catatan",catatan);
+	    		r.add("seksyen",txtseksyen);	    		
+	    		r.add("tarikh_daftar",r.unquote(TD));
+	    		r.add("tarikh_luput",r.unquote(TL));
+	    		r.add("tempoh_luput", baki);
+	    		r.add("id_kategoritanah",id_kategoriTanah);
+	    		r.add("lokasi",lokasi);	    		
+	    		r.add("syarat_nyata", syaratNyata);
+	    		r.add("syarat_khas", syaratKhas);
+	    		r.add("sekatan_kepentingan",sekatanKepentingan);
+	    		r.add("sekatan_hak",sekatanHak);
+	    		r.add("no_syit",noSyit);
+	    		
+//	    		PPT-03 Strata
+	    		r.add("no_bangunan",txtNoBangunan);
+	    		r.add("no_tingkat",txtNoTingkat);
+	    		r.add("no_petak",txtNoPetak);
+	    		
+	    		//new
+	    		r.add("id_unitluasambil", id_luasambil);
+	    		r.add("nama_luas_asal", nama_luas_asal);
+	    		r.add("nama_luas_ambil", nama_luas_ambil);
+	    		r.add("id_unitluaslot_convert", id_unitluaslot_convert);
+	    		r.add("id_unitluasambil_convert", id_unitluasambil_convert);	
+	    		
+	    		r.add("tarikh_kemaskini",r.unquote("sysdate"));
+	    		r.add("id_kemaskini",id_user); 
+	    		
+	    		sql = r.getSQLUpdate("TBLPPTHAKMILIK");
+	    		stmt.executeUpdate(sql);
+	    		myLogger.info("updateHM ****  : "+sql);
+	    		myLogger.info("flagSubjaket ****  : "+flagSubjaket);
+	    		// remove subjaket kalau dah ada
+				//if (flagSubjaket.equals("1")) {
+					
+					r.clear();
+					
+					// update flag di tblpptpermohonan
+					myLogger.info("Baca id_permohonan:--------------"+id_permohonan);
+					r.update("id_permohonan", id_permohonan);
+					r.add("flag_subjaket", "");
+					r.add("tarikh_kemaskini", r.unquote("sysdate"));
+					r.add("id_kemaskini", id_user);
+					
+					sql = r.getSQLUpdate("Tblpptpermohonan");
+					myLogger.info("Baca sql:--------------"+sql);
+					stmt.executeUpdate(sql);
+
+					r.clear();
+
+					r.update("id_permohonan", id_permohonan);
+					r.add("no_subjaket", "");
+					r.add("tarikh_kemaskini", r.unquote("sysdate"));
+					r.add("id_kemaskini", id_user);
+					sql = r.getSQLUpdate("Tblppthakmilik");
+					stmt.executeUpdate(sql);
+					conn.commit();
+					uploadFiles(db, conn, id_permohonan);
+				//}
+  	
+	    } catch (Exception re) {
+	    	Category log = null;
+	    	log.error("Error: ", re);
+	    	throw re;
+	    	}//close try 
+	    finally {
+	      if (db != null) db.close();
+	    }//close finally
+	   
+	  }//close updateHM
 	// upload start
 
 	private void uploadFiles(Db db, Connection conn, String id_permohonan) throws Exception {
@@ -3323,6 +3510,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 	private void updateHM(HttpSession session, String idHakmilik, String id_projekDaerah) throws Exception {
 
 		Hashtable h = new Hashtable();
+		String flagSubjaket = getParam("flag_subjaket");
 		
 		myLogger.info("Check Value update1");
 		
@@ -3376,7 +3564,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 		h.put("id_user", session.getAttribute("_ekptg_user_id"));
 
-		FrmUPTSek8HakmilikData.updateHM(h);
+		updateHM(h, flagSubjaket);
 
 	}// close updateHM
 
