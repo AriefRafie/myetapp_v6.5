@@ -267,13 +267,11 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                         #if($flag_skrin != "hakmilik_borangL")
                 		<td class="$rowx" align="center">$!listTanah.totalPB
                         
-                        #if($flag_skrin == "skrin_list_hakmilik_pb_sek8" || $flag_skrin == "skrin_hakmilik_pb_sek8" )
+                        #if($flag_skrin == "skrin_list_hakmilik_pb_sek8" || $flag_skrin == "skrin_hakmilik_pb_sek8" || $flag_skrin == "daftar_sek8_online" || $flag_skrin == "skrin_hakmilik_sek8_KJP")
                         &nbsp;
                         
-                        <a href="javascript:tambahPbPopup('$!listTanah.id_hakmilik','$flag_skrin')"><font color="blue">(Tambah PB)</font></a> 
-                     	<!--   <a href="javascript:paparHakmilik('$!listTanah.id_hakmilik','$id_permohonan','$flag_skrin')"><font color="blue">(Tambah PB)</font>  --> 
-                        #elseif($flag_skrin == "daftar_sek8_online" || $flag_skrin == "skrin_hakmilik_sek8_KJP")
-                       <a href="javascript:tambahPbPopup('$!listTanah.id_hakmilik','$flag_skrin')"><font color="blue">(Tambah PB)</font></a> 
+                       <!--  <a href="javascript:tambahPbPopup('$!listTanah.id_hakmilik','$flag_skrin')"><font color="blue">(Tambah PB)</font></a> -->
+                        <a href="javascript:paparHakmilik('$!listTanah.id_hakmilik','$id_permohonan','$flag_skrin')"><font color="blue">(Tambah PB)</font>
                         
                         #end 
                         
@@ -940,18 +938,29 @@ function paparHakmilik(id_hakmilik,id_permohonan,flag_skrin){
 
 
 function tambahPbPopup(id_hakmilik,flag_skrin)	{
-	//kakyat baiki
+	alert(id_hakmilik);
 	try {
-		if(flag_skrin=="skrin_list_hakmilik_pb_sek8" || flag_skrin=="skrin_hakmilik_pb_sek8" )	{
-			window.opener.tambahWakil(id_hakmilik);
-		}	else if(flag_skrin=="skrin_hakmilik_sementara" )	{
+		if(flag_skrin=="skrin_list_hakmilik_pb_sek8" || flag_skrin=="skrin_hakmilik_pb_sek8" || flag_skrin == "daftar_sek8_online" || flag_skrin == "skrin_hakmilik_sek8_KJP")	{
+			//alert('masuk1==='+id_hakmilik);
+			window.opener.tambahPB(id_hakmilik);
+			//alert('masuk2==='+id_hakmilik);
+		}	else if(flag_skrin=="skrin_hakmilik_sementara" || flag_skrin == "skrin_hakmilik_sek8_KJP" || flag_skrin == "daftar_sek8_online")	{
+			//alert('masuk3==='+id_hakmilik);
 			window.opener.tambahPB(id_hakmilik);
 		}
-			else if(flag_skrin=="daftar_sek8_online")	{
-				window.opener.tambahPBOnline(id_hakmilik);
-			}
+		
+		/* else if(flag_skrin=="senarai_pampasan_sementara")	{
+			window.opener.viewSenaraiPampasanPB(id_hakmilik);	
 		}
-
+		else if(flag_skrin=="daftar_sek8_online")	{
+			window.opener.viewHM(id_hakmilik);
+		}
+		else if(flag_skrin=="skrin_hakmilik_sek8_KJP")	{
+			window.opener.viewHM(id_hakmilik);
+		} */
+		
+		
+	}
 	catch (err) {}
     window.close();
     return false;
@@ -1108,6 +1117,7 @@ function cetakBorangK(idpermohonan,idhakmilik) {
 function tambahWakil()
 {
 
+	
 	document.${formName}.command.value = "tambahPB";	
 	document.${formName}.subminor_command.value = "tambah_wakil";	
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmUPTSek8Hakmilik";
@@ -1117,7 +1127,6 @@ function tambahWakil()
 	document.${formName}.submit();
 	
 }
-
 
 function screen5(id_permohonan)
 {
