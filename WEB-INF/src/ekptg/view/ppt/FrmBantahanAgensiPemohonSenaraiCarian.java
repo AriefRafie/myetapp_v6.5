@@ -1160,8 +1160,9 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     		}else if("borangO".equals(submit)){		
     			String jenisDoc = "borangO";
     			selectedtab = "2";
+    			context.put("idWarta", id_warta); //integrasi MT
     			context.put("selectedtab",selectedtab);
-    			
+    			 
     	    	id_fail = getParam("id_fail");	
     	   		context.put("id_fail", id_fail);
     	   		
@@ -1174,6 +1175,13 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     			if (list.size()!=0){
     				Hashtable a = (Hashtable) list.get(0);		
     				id_bantahan = (String)a.get("id_bantahan");
+    				
+    				// integrasi MT, get JENIS_DOKUMEN 
+    				listDokumen = modelBantahanPB.senaraiDokumenBantahan(id_bantahan, jenisDokumen);
+//    				myLogger.info("borangO:id_bantahan= "+id_bantahan+",Jenis Dokumen="+jenisDokumen);
+    				context.put("listDokumen", listDokumen);
+    				context.put("listDokumen_size", listDokumen.size());
+    				
     			}else{
     				context.put("status", true);
     			}				
