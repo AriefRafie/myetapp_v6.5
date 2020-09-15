@@ -101,6 +101,7 @@
 <div id="timer_KETERANGAN_$ID_OBPERMOHONAN" align="right" ></div>
 		<script type="text/javascript">
 		
+		
 		$jquery(document).ready(function () {
 			$jquery('#KETERANGAN_$ID_OBPERMOHONAN').wysihtml5({ 
 				"font-styles": true, // Font styling, e.g. h1, h2, etc.
@@ -273,7 +274,7 @@
 		<!-- arief try add Nama OB di Keterangan OPEN -->
 		<ul style="" class="wysihtml5-toolbar">
 		<li><div class="btn-group_OB">
-		<a class="btn btn-small" data-wysihtml5-command="Khadijah Binti Yeop" title="CTRL+B" tabindex="-1" href="javascript:;" unselectable="on">Khadijah Binti Yeop</a>
+		<a class="btn btn-small" data-wysihtml5-command="function()" title="CTRL+B" tabindex="-1" href="javascript:;" unselectable="on">Khadijah Binti Yeop</a>
 		<a class="btn btn-small" data-wysihtml5-command="Khalil Bin Yeop" title="CTRL+B" tabindex="-1" href="javascript:;" unselectable="on">Khalil Bin Yeop</a>
 		<a class="btn btn-small" data-wysihtml5-command="Saadah Binti Aziz" title="CTRL+I" tabindex="-1" href="javascript:;" unselectable="on">Saadah Binti Aziz</a>
 		<a class="btn btn-small" data-wysihtml5-command="Salasiah Binti Yeop" title="CTRL+U" tabindex="-1" href="javascript:;" unselectable="on">Salasiah Binti Yeop</a>
@@ -283,7 +284,16 @@
 		</div>
 		</li>
 		</ul>
+		<script>
+		$(function(){
+			$('input:button[Khadijah Binti Yeop]').click(function() {
+        		var getInpVal = $('#btn btn-small').val();
+       			$('iframe[name=wysihtml5-sandbox]').contents().find('#KETERANGAN_$ID_OBPERMOHONAN').val(getInpVal);
+    		});
+		}
+		</script>
 		<!-- arief try add Nama OB di Keterangan CLOSE -->
+		
           <div id="infobuttonKeterangan$ID_OBPERMOHONAN" style="display:none"><i><font color='blue'>Info</font> : Sila tekan butang <font color='blue'>'Tab'</font> selepas selesai mengisi keterangan. Butang <font color='blue'>'Simpan Keterangan'</font> akan dipaparkan.</i></div>
 </td>
 </tr>  
