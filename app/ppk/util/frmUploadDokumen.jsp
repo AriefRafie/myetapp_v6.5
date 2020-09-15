@@ -214,7 +214,7 @@ padding:0 0.25em;
 		}
 		else if('$!jenisdokumen' == '99212'){
 			actExt ="&jenisdokumen=$!jenisdokumen";
-			actExt +="&actionPopup=$!actionPopup&hitButton=simpanicwaris&rujukan=$!idRujukan&actionrefresh=$!actionRefresh";
+			actExt +="&actionPopup=$!actionPopup&hitButton=simpanicwaris&rujukan=$!idRujukan&idSimati=$!idSimati&actionrefresh=$!actionRefresh";
 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"+actExt;
 
 		}
