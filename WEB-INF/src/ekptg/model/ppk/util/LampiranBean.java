@@ -335,6 +335,7 @@ public class LampiranBean {
 	public void lampiranICWaris(HttpServletRequest request
 			,String idRujukan
 			,String jenisDok
+			,String idSimati
 			,String idUser) throws Exception {
 		    DiskFileItemFactory factory = new DiskFileItemFactory();
 		    ServletFileUpload upload = new ServletFileUpload(factory);
@@ -344,7 +345,7 @@ public class LampiranBean {
 		      FileItem item = (FileItem)itr.next();
 		      //myLog.info("item.getName()="+item.getName());
 		      if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {	    	  
-		    	  simpanLampiranBorangA("TBLPPKDOKUMENSIMATI",idRujukan,item,jenisDok,idUser);
+		    	  simpanLampiranICWaris("TBLPPKDOKUMENSIMATI",idRujukan,item,jenisDok,idSimati,idUser);
 		      }
 		    }
 		  }
@@ -353,6 +354,7 @@ public class LampiranBean {
 			,String idRujukan
 			,FileItem item
 			,String jenisDok
+			,String idSimati
 			,String idUser) throws Exception {
 			Db db = null;
 			String sql="";
@@ -375,7 +377,7 @@ public class LampiranBean {
 				myLog.info("simpanLampiranBorang4:sql="+ps.toString());
 		ps.setString(6, idUser);
 				myLog.info("simpanLampiranBorang5:sql="+ps.toString());
-				ps.setString(7, idRujukan);
+				ps.setString(7, idSimati);
 				myLog.info("simpanLampiranBorang6:sql="+ps.toString());
 				ps.executeUpdate();
 

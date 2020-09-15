@@ -26,6 +26,7 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 	String disability = "";
 	String idUser = "0"; 
     String idRujukan = "";
+    String idSimati = "";
 
 	@Override
 	public String doTemplate2() throws Exception {		
@@ -39,6 +40,7 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 	    String flagOnline = getParam("flagOnline");
 	    //lampiran simati/permohonan
 	    idRujukan = getParam("rujukan"); 
+	    idSimati = getParam("idSimati"); 
 	    
 	    //VECTOR
 		Vector<Hashtable<String, String>> dokumens = null;
@@ -48,6 +50,7 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 		myLog.info("actionPopup="+actionPopup);
 		myLog.info("hitButton="+hitButton);
 		myLog.info("idRujukan="+idRujukan);
+		myLog.info("idSimati="+idSimati);
 		
 		if ("simpanHakmilik".equals(hitButton)){
 
@@ -102,7 +105,7 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 			//this.context.put("num_files", jumLampiran);
 		}else if(hitButton.equals("simpanicwaris")){ //07/09/2020
 			//99212 (IC Waris)
-			l.lampiranICWaris(request,idRujukan,getParam("jenisdokumen"),idUser);
+			l.lampiranICWaris(request,idRujukan,getParam("jenisdokumen"),idSimati,idUser);
 			hitButton = "";
 			//this.context.put("num_files", jumLampiran);
 		}
@@ -227,6 +230,7 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 	    }
 	    //lampiran simati
 	   	this.context.put("idRujukan",idRujukan);
+	   	this.context.put("idSimati",idSimati);
 	   	this.context.put("jenisdokumen",getParam("jenisdokumen"));
 	   	
 		this.context.put("senaraidokumen",dokumens);
