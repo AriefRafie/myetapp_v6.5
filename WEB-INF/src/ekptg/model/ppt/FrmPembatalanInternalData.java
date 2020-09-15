@@ -15656,13 +15656,14 @@ public void deleteFail(String id_fail, HttpSession session) throws Exception {
 	    }
 	  }//close updateFlag
 	
-
+	Vector senarai_pembayaran_online = null;
+	
 	public Vector senarai_pembayaran_online(String negeriuser,String no_fail,
 			String no_jkptg_negeri, String id_kementerian, String id_urusan,
 			String id_status, String jenis_permohon,String role,String user_negeri) throws Exception {
-		senarai_penarikan_carian = new Vector();
+		senarai_pembayaran_online = new Vector();
 		Db db = null;
-		senarai_penarikan_carian.clear();
+		senarai_pembayaran_online.clear();
 		String sql = "";
 
 		try {
@@ -15781,9 +15782,9 @@ public void deleteFail(String id_fail, HttpSession session) throws Exception {
 						: rs.getString("KETERANGAN").toUpperCase());
 				h.put("URUSAN", rs.getString("NAMA_SUBURUSAN") == null ? ""
 						: rs.getString("NAMA_SUBURUSAN").toUpperCase());
-				senarai_penarikan_carian.addElement(h);
+				senarai_pembayaran_online.addElement(h);
 			}
-			return senarai_penarikan_carian;
+			return senarai_pembayaran_online;
 		} finally {
 			if (db != null)
 				db.close();
