@@ -45,6 +45,7 @@
 	</tr>
 	#if($listKehadiran.size()>0)	
 		#foreach($pr in $listKehadiran)
+		
 		<tr  >
 			   <td class="$pr.rowCss"  align="center" valign="top" >$pr.BIL </td>
                <td class="$pr.rowCss"  align="left" valign="top" >
