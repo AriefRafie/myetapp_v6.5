@@ -417,7 +417,37 @@
                       
             </td>
             <td colspan="4">Jumlah Pampasan;</td>
-        </tr>  
+        </tr>
+        
+        
+        
+        <tr>
+          <td width="1%"></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+            <td>
+	        	<table id="bantahanpampasan">
+	        		<tr>
+	        		 <!-- PPT-35 (i) Jenis Bantahan Pampasan -->
+					 #set ( $checked = "" )
+				     #foreach ($semakan in $senaraiSemakan)
+					 <td  width="10">
+		             
+					 #if ( $semakclass.isSemakan("$permohonanInfo.idpermohonan", "$semakan.id" ))
+					   	#set ( $checked = "checked" )
+					 #else
+					   	#set ( $checked = "" )
+					 #end
+					   	 <input class="cb" type="checkbox" name="jenisbantahanpampasan" value="$semakan.id" onclick="checkJumlahPampasan(true)" $checked>
+					 </td>
+					 <td >
+					 	$semakan.keterangan <!-- $semak.id -->
+					 </td>
+				     #end
+				    </tr>
+				</table>
+            	
           
         <tr>
             <td valign="top">&nbsp;</td>
@@ -694,6 +724,36 @@ function textCounter(field, countfield, maxlimit) {
 	else 
 		countfield.value = maxlimit - field.value.length;
 }
+
+
+
+// PPT-35 (i) Jenis Bantahan Pampasan Jika Dipilih
+function semakJenisBantahanPampasan() {
+	var checked = 0;
+    for (var i = 0; i < 3; i++) {
+      if(document.${formName}["jenisbantahanpampasan"][i].checked == !false){
+      	checked++;
+      	return checked++;
+      }
+    }
+    
+    if (checked == 0) {
+		alert("Pastikan pilihan 'Jumlah Pampasan' dipilih");
+  		document.${formName}.txtKptgnAtasTnh.focus(); 
+		return error++;
+    }
+    return;
+}
+
+function checkJumlahPampasan(checked) {
+    var elm = document.${formName}.amaun_pampasan;
+    if (checked != elm.checked) {
+        elm.click();
+    }
+}
+
+
+
 
 </script>
 

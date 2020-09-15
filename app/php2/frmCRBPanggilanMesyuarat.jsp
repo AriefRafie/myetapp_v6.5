@@ -1,5 +1,5 @@
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
-  #if ($flagPopup == 'openSuratPenghargaan')
+  #if ($flagPopup == 'openPanggilMesyuarat')
   <tr>
     <td> #parse("app/php2/frmCRBPanggilanMesyuaratDetails.jsp") </td>
   </tr>
@@ -8,7 +8,8 @@
   </tr>
   #end
   <tr>
-    <td><fieldset>
+    <td>
+     <fieldset>
       <legend><b>SENARAI NOTIFIKASI EMEL</b></legend>
       <table align="center" width="100%">
         <tr>
@@ -20,7 +21,6 @@
           <td width="35%"><strong>PTD / PTG / KJP / JKPTG</strong></td>
           <td width="15%" align="center"><strong>Emel</strong></td>
           <td width="10%"><strong>Status</strong></td>
-          ##<td width="5%"><strong></strong></td>
         </tr>
         #set ($list = "")
         #if ($SenaraiNotifikasiEmel.size() > 0)
@@ -34,9 +34,9 @@
         #end
         <tr>
           <td class="$row" align="center">$list.bil</td>
-          <td class="$row"><a href="javascript:paparMaklumatSuratPenghargaan('$list.idUlasanTeknikal')" class="style2">$list.namaPegawai</a></td>
+          <td class="$row"><a href="javascript:paparMaklumatNotifikasi('$list.idUlasanTeknikal')" class="style2">$list.namaPegawai</a></td>
           <td class="$row">$list.namaPejabatPTGPTD</td>
-          <td class="$row" align="center">$list.emel</td>
+          <td class="$row" align="center">$list.emelPegawai</td>
           <td class="$row">$list.status</td>
         </tr>
         #end
@@ -51,7 +51,71 @@
         </tr>
         #end
       </table>
-      </fieldset></td>
+     </fieldset>
+    </td>
   </tr>
 </table>
-
+<script>
+function doBatalPanggilanMesyuarat(){
+	document.${formName}.flagPopup.value = "";
+	document.${formName}.modePopup.value = "";
+	doAjaxCall${formName}("");
+}
+function doSimpanRekodNotifikasiEmail(){
+	
+	if(document.${formName}.idSuratKe.value == ""){
+		alert('Sila pilih Surat Ke terlebih dahulu.');
+  		document.${formName}.idSuratKe.focus(); 
+		return; 
+	}
+	if(document.${formName}.socNegeri.value == ""){
+		alert('Sila pilih Negeri.');
+		document.${formName}.socNegeri.focus(); 
+		return; 
+	}
+	if(document.${formName}.socPejabat.value == ""){
+		alert('Sila pilih Pejabat.');
+		document.${formName}.socPejabat.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtNamaPegawai.value == ""){
+		alert('Sila pilih Nama Pegawai.');
+  		document.${formName}.txtNamaPegawai.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtEmel.value == ""){
+		alert('Sila pilih Emel Pegawai.');
+  		document.${formName}.txtEmel.focus(); 
+		return; 
+	}
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+	
+	document.${formName}.flagPopup.value = "openPanggilMesyuarat";
+	document.${formName}.modePopup.value = "view";
+	document.${formName}.hitButton.value = "simpanRekodNotifikasiEmail";
+	doAjaxCall${formName}("");
+}
+function paparMaklumatNotifikasi(idUlasanTeknikal){
+	document.${formName}.flagPopup.value = "openPanggilMesyuarat";
+	document.${formName}.modePopup.value = "view";
+	document.${formName}.idUlasanTeknikal.value = idUlasanTeknikal;
+	doAjaxCall${formName}("");
+}
+function doHapusRekodNotifikasiEmail(){
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+	
+	document.${formName}.flagPopup.value = "";
+	document.${formName}.modePopup.value = "";
+	document.${formName}.hitButton.value = "hapusRekodNotifikasiEmail";
+	doAjaxCall${formName}("");
+}
+function doKemaskiniRekodNotifikasiEmail(){
+	document.${formName}.flagPopup.value = "openPanggilMesyuarat";
+	document.${formName}.modePopup.value = "update";
+	doAjaxCall${formName}("");
+}
+</script>

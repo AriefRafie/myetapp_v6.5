@@ -2532,6 +2532,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			// :::upload
 			context.put("nama_skrin", getParam("nama_skrin"));
 			myLogger.info("----------------->>  NAMA SKRIN " + getParam("nama_skrin"));
+			
 			// context.put("nama_skrin","XXX");
 
 			vm = "app/ppt/frmBantahanDokumen.jsp";

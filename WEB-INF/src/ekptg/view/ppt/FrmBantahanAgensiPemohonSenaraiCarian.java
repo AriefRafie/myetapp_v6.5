@@ -423,6 +423,17 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
         	  vm = "app/ppt/frmBantahanAgensiSenaraiPB.jsp"; 
           		          		
 		}else if("add_bantahanAP".equals(submit)){	
+			// Checkbox PPT-35 (i) Jenis Bantahan Pampasan frmBantahanDaftar (PB) (SIMPAN KE DB)
+			String idPermohonan = getParam("id_permohonan"); // ASAL: getParam("id_permohonan" + 1)
+			String[] bantahanpampasan = this.request.getParameterValues("jenisbantahanpampasan"); // Nama checkbox dalam .jsp
+			FrmSemakan frmSemak = new FrmSemakan();
+			frmSemak.semakanHapusByPermohonan(idPermohonan);
+			if (bantahanpampasan != null) {
+				for (int i = 0; i < bantahanpampasan.length; i++) {
+//					frmSemak = new FrmSemakan();
+					FrmSemakan.semakanTambah(bantahanpampasan[i], idPermohonan);
+				}
+			}
     			
         	  if (doPost.equals("true")){				    				
     				// INSERT TBLPPTBANTAHAN & INSERT TBLPPTSUBURUSANSTATUSBANTAHAN & UPDATE TBLPPTHAKMILIK
@@ -776,6 +787,24 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     			Db db = null;
 				String NO_BANTAHAN_temp = "";
 				String AMAUN_TUNTUTAN_temp = "";
+
+				// Checkbox PPT-35 (i) Jenis Bantahan Pampasan MasterBantahan (SIMPAN KE DB)
+				String idPermohonan = getParam("id_permohonan"); // asal: getParam("id_permohonan" + 1)
+				String[] bantahanpampasan = this.request.getParameterValues("jenisbantahanpampasan"); // Nama checkbox dalam jsp
+				// context.put("idPermohonan1", id_permohonan + "1");
+				
+				
+				myLogger.info("Simpan pushdb, idPermohonan= " +idPermohonan); // debugger at log copy
+				FrmSemakan frmSemak = new FrmSemakan();
+				frmSemak.semakanHapusByPermohonan(idPermohonan); // Kalau dalam satu page ada dua checkbox letak satu sahaja
+				if (bantahanpampasan != null) {
+					for (int i = 0; i < bantahanpampasan.length; i++) {
+						myLogger.info("simpan pilihan Jumlah Pampasan masterAP ke tblsenaraihantar");
+						frmSemak = new FrmSemakan();
+						frmSemak.semakanTambah(bantahanpampasan[i], idPermohonan);
+					}
+				}
+				
     			try{				
     				list = model.getMaklumatBantahanAP(id_permohonan,id_hakmilik,id_siasatan,id_warta);			
     				Hashtable b = (Hashtable) list.get(0);	

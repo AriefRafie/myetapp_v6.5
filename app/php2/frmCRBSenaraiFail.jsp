@@ -125,7 +125,7 @@
       <table align="center" width="100%">
         <tr>
           <td colspan="6" scope="row">
-          	#if ($userRole == '(PHP)PYWPenolongPegawaiTanahNegeri' && $userRole == '(PHP)PYWPenolongPegawaiTanahHQ')
+          	#if ($userRole == '(PHP)PYWPenolongPegawaiTanahNegeri' || $userRole == '(PHP)PYWPenolongPegawaiTanahHQ')
           	<input name="cmdDaftar" type="button" value="Daftar Permohonan Baru" onClick="javascript:daftarBaru()"/>
             &nbsp;
             #end
