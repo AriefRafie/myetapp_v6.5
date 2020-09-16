@@ -170,6 +170,11 @@ input[readonly] {
 					 -->	
 				</tr>
 				<tr>
+					<td align="right">Umur Perayu</td>
+					<td>:</td>
+					<td colspan="2"><input type="text" name="umurPerayu" value="$!umurPerayu" size="25" style="text-transform:uppercase;" readonly="readonly" /></td>
+				</tr>
+				<tr>
 					<td align="right">Alamat Perayu</td>
 					<td>:</td>
 					<td colspan="2"><input type="text" name="alamat1Perayu" value="$!alamat1Perayu" size="40" style="text-transform:uppercase;" readonly="readonly" /></td>

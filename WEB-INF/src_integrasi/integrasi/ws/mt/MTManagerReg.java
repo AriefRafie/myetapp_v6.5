@@ -114,17 +114,18 @@ public class MTManagerReg {
 
 	public static String sendMaklumat2Court(String noPetisyen,
 			String namaSimati, String namaSimatiLain, String noKPSimatiBaru,
-			String noKPSimatiLama, String noKPSimatiLain, String tarikhMati, String jantinasimati, String umursimati, String nosijilmati, String newtarikhmati, String alamat1simati, 
+			String noKPSimatiLama, String noKPSimatiLain, String jenisPengenalanSimati, String tarikhMati, String jantinasimati, String umursimati, String nosijilmati, String newtarikhmati, String alamat1simati, 
 			String alamat2simati, String alamat3simati, String bandarsimati, String bandarSimati, String poskodsimati, String idnegerisimati,
-			String namaPemohon, String noKPPemohon, String hubSimatiPemohon,
+			String namaPemohon, String noKPPemohon, String jenisPengenalanPemohon, String hubSimatiPemohon,
 			String alamat1Pemohon, String alamat2Pemohon, String alamat3Pemohon, String poskodPemohon, String bandarPemohon,
 			String idbandarPemohon, String idnegeriPemohon, String idMahkamah,
-			String namaDokumen,  String docContent, String applicationType, String transactionID, String umurPemohon, String jantinaPemohon) {//String docContent,
+			String namaDokumen,  String docContent, String applicationType, String transactionID, String umurPemohon, String jumlahharta, String jantinaPemohon) {//String docContent,
 		
 		String relationship = "";
 		String reldetails = "";
 		String msg = "";	
-
+		String deceaseInfoType = "";
+		String deceaseInfoIDType1No = "";
 		
 		try {
 			
@@ -152,7 +153,24 @@ public class MTManagerReg {
 				relationship = "Others";
 				reldetails = "Others";
 			}
-				
+			myLog.info("noKPSimatiBaru = "+noKPSimatiBaru);
+			if (noKPSimatiBaru.equals(""))
+			{
+				deceaseInfoType = "2"; // 2 = Non-Mykad
+				if (!noKPSimatiLama.equals(""))
+					{
+						deceaseInfoIDType1No = noKPSimatiLama;
+					}
+				else if (!noKPSimatiLain.equals(""))
+					{
+						deceaseInfoIDType1No = noKPSimatiLain;
+					}
+			}
+			else
+			{
+				deceaseInfoType = "1"; // 1 = MyKad
+				deceaseInfoIDType1No = noKPSimatiBaru;
+			}
 			
 			if (jantinaPemohon.equals("1"))
 			{
@@ -161,7 +179,16 @@ public class MTManagerReg {
 			else if (jantinaPemohon.equals("2"))
 			{
 				jantinaPemohon = "F";
-			}			
+			}	
+			
+			if (jenisPengenalanSimati.equals("") || jenisPengenalanSimati.equals("0"))
+			{
+				jenisPengenalanSimati = "IC";
+			}
+			
+			myLog.info("deceaseInfoType = "+deceaseInfoType);
+			myLog.info("jenisPengenalanSimati = "+jenisPengenalanSimati);
+			myLog.info("deceaseInfoIDType1No = "+deceaseInfoIDType1No);
 			
 			//Kes 31NCvC
 			DataCreateReqType data = new DataCreateReqType();
@@ -170,18 +197,18 @@ public class MTManagerReg {
 			data.setJurisdiction("2");
 			data.setDivision("3");
 			data.setCaseCode("31NCvC");
-			data.setValueInvolved("49000.00");
+			data.setValueInvolved(jumlahharta);
 			CauseofactionType sebab = new CauseofactionType("1", "9479101A-AB53-4E0A-948A-53C6C7577051", "Surat Kuasa Mentadbir");
 			
 			CauseofactionType[] causetype ={sebab};
 				
 			data.setCauseofaction(causetype);
-			PartyType pemohon = new PartyType("1", "7CDB66DA-175C-413F-84DD-3F53BE477E3C", namaPemohon, "IC", noKPPemohon, "", alamat1Pemohon , alamat2Pemohon, alamat3Pemohon, poskodPemohon, bandarPemohon, idnegeriPemohon, "MYS", umurPemohon, "", "MYS", jantinaPemohon, relationship);
+			PartyType pemohon = new PartyType("1", "7CDB66DA-175C-413F-84DD-3F53BE477E3C", namaPemohon, jenisPengenalanPemohon, noKPPemohon, "", alamat1Pemohon , alamat2Pemohon, alamat3Pemohon, poskodPemohon, bandarPemohon, idnegeriPemohon, "MYS", umurPemohon, "", "MYS", jantinaPemohon, relationship);
 			
 			PartyType[] partytype = {pemohon};//new PartyType[]{};
 			data.setParty(partytype);
 			//bagi kes simati tiada no id lain selain ic baharu; masukkan OT sebagai id kedua dan - sebagai value
-			DeceaseInfoType deceasetype = new DeceaseInfoType(namaSimati,"1","IC",noKPSimatiBaru,"OT","-",nosijilmati,jantinasimati,umursimati,newtarikhmati,alamat1simati,alamat2simati,alamat3simati,poskodsimati,bandarSimati,idnegerisimati,"MYS");
+			DeceaseInfoType deceasetype = new DeceaseInfoType(namaSimati,deceaseInfoType,jenisPengenalanSimati,deceaseInfoIDType1No,"OT","-",nosijilmati,jantinasimati,umursimati,newtarikhmati,alamat1simati,alamat2simati,alamat3simati,poskodsimati,bandarSimati,idnegerisimati,"MYS");
 			data.setDeceaseInfo(deceasetype);
 			DocumentType jenisDoc = new DocumentType(transactionID, "1", "E7DD535E-187F-4D09-9278-EB3B50DD6926", namaDokumen, docContent);
 			DocumentType[] doctype = {jenisDoc};
@@ -209,7 +236,7 @@ public class MTManagerReg {
 	public static String sendMaklumat2Court16A(String noPetisyen,
 		String namaSimati, String namaSimatiLain, String noKPSimatiBaru,
 		String noKPSimatiLama, String noKPSimatiLain, String tarikhMati,
-		String namaPerayu, String noKPBaruPerayu, 
+		String namaPerayu, String noKPBaruPerayu, String umurPerayu,
 		String alamat1Perayu,String alamat2Perayu, String alamat3Perayu,
 		String poskodPerayu, String bandarPerayu, String idbandarPerayu, String idnegeriPerayu,
 		String idMahkamah,  String namaDokumen, String docContent, String applicationType, String transactionID) {//String docContent,
@@ -240,7 +267,7 @@ public class MTManagerReg {
 			CauseofactionType[] causetype ={cof};
 				
 			data.setCauseofaction(causetype);
-			PartyType pemohon = new PartyType("1", "CA5A0F64-061E-423D-BB68-04DEC7D28609", namaPerayu, "IC", noKPBaruPerayu, "", alamat1Perayu , alamat2Perayu, alamat3Perayu, poskodPerayu, bandarPerayu, idnegeriPerayu, "MYS", "", "", "MYS", "", "");
+			PartyType pemohon = new PartyType("1", "CA5A0F64-061E-423D-BB68-04DEC7D28609", namaPerayu, "IC", noKPBaruPerayu, "", alamat1Perayu , alamat2Perayu, alamat3Perayu, poskodPerayu, bandarPerayu, idnegeriPerayu, "MYS", umurPerayu, "", "MYS", "", "");
 			
 			PartyType[] partytype = {pemohon};//new PartyType[]{};
 			data.setParty(partytype);
