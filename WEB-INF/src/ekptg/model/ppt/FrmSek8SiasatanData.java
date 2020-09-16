@@ -27,9 +27,11 @@ import ekptg.helpers.EkptgCache;
 public class FrmSek8SiasatanData extends EkptgCache implements
 		Serializable {
 
-	static Logger myLogger = Logger.getLogger(FrmSek8SiasatanData.class);
+	static Logger myLogger = Logger.getLogger(ekptg.model.ppt.FrmSek8SiasatanData.class);
 	private static SimpleDateFormat Format = new SimpleDateFormat("dd/MM/yyyy");
 	private static final Log log = LogFactory.getLog(FrmSek8SiasatanData.class);
+	 private static Db db = null;
+		private static String sql = "";
 	public static final String SEQ_TABLE = "TBLRUJSEQFAIL";
 
 	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -2293,7 +2295,7 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 						"S.ALAMAT3, S.POSKOD, S.ID_NEGERI, S.ALASAN_TANGGUH, S.NILAIAN_JPPH," +
 						"S.ID_UNITLUAS, S.BANTAHAN_TUANTNH, S.BANTAHAN_AGENSI," +
 						"S.BANTAHAN_LAIN, S.TEMPOH_MILIK_TANAH, S.CARA_MILIK, S.HARGA_BELI," +
-						"S.JENIS_BANGUNAN, S.JENIS_TANAMAN, S.FLAG_PECAH_SEMPADAN," +
+						"S.JENIS_TANAMAN, S.FLAG_PECAH_SEMPADAN," +
 						"S.FLAG_TUKAR_SYARAT, S.TARIKH_PECAH_SEMPADAN, S.TARIKH_TUKAR_SYARAT," +
 						"S.STATUS_SEMASA, S.BEBANAN, S.KETERANGAN_TUAN_TANAH," +
 						"S.KETERANGAN_AGENSI, S.KETERANGAN_JURUNILAI, S.TUNTUTAN_TUANTNH," +
@@ -2316,7 +2318,13 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 						"WHEN SUBSTR(ROUND(HM.LUAS_AMBIL,4),1,1) != '.' THEN '' || ROUND(HM.LUAS_AMBIL,4) END AS LUAS_AMBIL, " +
 						"(HM.LUAS_LOT - HM.LUAS_AMBIL) AS LUAS_BAKI," +
 						"HM.NAMA_LUAS_AMBIL, HM.NO_SUBJAKET, HM.NO_LOT AS NO_LOTHM, HM.NO_PT, " +
-						"NEG.NAMA_NEGERI, DRH.NAMA_DAERAH, MKM.NAMA_MUKIM , U.USER_NAME AS NAMA_PEGAWAI " +
+						"NEG.NAMA_NEGERI, DRH.NAMA_DAERAH, MKM.NAMA_MUKIM , U.USER_NAME AS NAMA_PEGAWAI, " +
+						"CASE WHEN S.JENIS_BANGUNAN = '1' THEN 'Bangunan konkrit' " + 
+						"WHEN S.JENIS_BANGUNAN = '2' THEN 'Bangunan separuh konkrit dan separuh papan' " + 
+						"WHEN S.JENIS_BANGUNAN = '3' THEN 'Binaan bangunan dan papan dan kayu' " + 
+						"WHEN S.JENIS_BANGUNAN = '4' THEN 'Lain-lain' " + 
+						"ELSE S.JENIS_BANGUNAN END AS JENIS_BANGUNAN, " +
+						"S.KETERANGAN_PEMBELIAN ,S.KETERANGAN_PUSAKA, S.KETERANGAN_PERLETAKHAKAN ,S.KETERANGAN_PEMBERIMILIKAN "+
 						"FROM TBLPPTSIASATAN S, TBLPPTPERMOHONAN P, TBLPPTHAKMILIK HM, TBLPPTTANAH T, TBLRUJJENISHAKMILIK JH, " +
 						"TBLRUJLOT JL,TBLRUJNEGERI NEG, TBLRUJDAERAH DRH, TBLRUJMUKIM MKM, TBLRUJLUAS LS, TBLRUJLUAS LJ, USERS U " +
 						"WHERE HM.ID_PERMOHONAN = P.ID_PERMOHONAN " +
@@ -2336,7 +2344,7 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 						"LPAD (HM.NO_PT, 10) ASC, " +
 						"LPAD (NO_LOT, 10) ASC ";
 
-
+				myLogger.info("DATA DLM SIASATAN SQL: "+sql);
 				ResultSet rs = stmt.executeQuery(sql);
 
 				myLogger.info("DATA DLM SIASATAN : "+sql);
@@ -2389,7 +2397,20 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 							: rs.getString("NAMA_PEGAWAI"));
 					h.put("KETERANGAN_TUAN_TANAH", rs
 							.getString("KETERANGAN_TUAN_TANAH") == null ? "" : rs
-							.getString("KETERANGAN_TUAN_TANAH"));
+							.getString("KETERANGAN_TUAN_TANAH"));					
+					//BARU-V7
+					h.put("KETERANGAN_PEMBELIAN", rs
+							.getString("KETERANGAN_PEMBELIAN") == null ? "" : rs
+							.getString("KETERANGAN_PEMBELIAN"));
+					h.put("KETERANGAN_PUSAKA", rs
+							.getString("KETERANGAN_PUSAKA") == null ? "" : rs
+							.getString("KETERANGAN_PUSAKA"));
+					h.put("KETERANGAN_PERLETAKHAKAN", rs
+							.getString("KETERANGAN_PERLETAKHAKAN") == null ? "" : rs
+							.getString("KETERANGAN_PERLETAKHAKAN"));
+					h.put("KETERANGAN_PEMBERIMILIKAN", rs
+							.getString("KETERANGAN_PEMBERIMILIKAN") == null ? "" : rs
+							.getString("KETERANGAN_PEMBERIMILIKAN"));
 					h.put("ID_PENARIKANBALIK",
 							rs.getString("ID_PERMOHONAN") == null ? "" : rs
 									.getString("ID_PERMOHONAN"));
@@ -2448,6 +2469,9 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 					h.put("JENIS_BANGUNAN",
 							rs.getString("JENIS_BANGUNAN") == null ? "" : rs
 									.getString("JENIS_BANGUNAN"));
+					/*h.put("KETERANGAN_TANAH",
+							rs.getString("KETERANGAN_TANAH") == null ? "" : rs
+									.getString("KETERANGAN_TANAH"));*/
 					h.put("JENIS_TANAMAN",
 							rs.getString("JENIS_TANAMAN") == null ? "" : rs
 									.getString("JENIS_TANAMAN"));
@@ -4669,6 +4693,10 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 			String txtHargaTanah = (String) data.get("txtHargaTanah");
 			String txtBebananTanah = (String) data.get("txtBebananTanah");
 			String txtKeteranganTuanTanah = (String) data.get("txtKeteranganTuanTanah");
+			String txtKeteranganPembelian = (String) data.get("txtKeteranganPembelian");
+			String txtKeteranganPusaka = (String) data.get("txtKeteranganPusaka");
+			String txtKeteranganPerletakhakan = (String) data.get("txtKeteranganPerletakhakan");
+			String txtKeteranganPemberimilikan = (String) data.get("txtKeteranganPemberimilikan");
 			String txtJenisTanaman = (String) data.get("txtJenisTanaman");
 			String socBangunan = (String) data.get("socBangunan");
 			String sorPecahSempadan = (String) data.get("sorPecahSempadan");
@@ -4689,6 +4717,10 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 				r.add("HARGA_BELI", txtHargaTanah);
 				r.add("BEBANAN", txtBebananTanah);
 				r.add("KETERANGAN_TUAN_TANAH", txtKeteranganTuanTanah);
+				r.add("KETERANGAN_PEMBELIAN", txtKeteranganPembelian);
+				r.add("KETERANGAN_PUSAKA", txtKeteranganPusaka);
+				r.add("KETERANGAN_PERLETAKHAKAN", txtKeteranganPerletakhakan);
+				r.add("KETERANGAN_PEMBERIMILIKAN", txtKeteranganPemberimilikan);
 				r.add("JENIS_TANAMAN", txtJenisTanaman);
 				r.add("JENIS_BANGUNAN", socBangunan);
 				r.add("FLAG_PECAH_SEMPADAN", sorPecahSempadan);
@@ -6594,5 +6626,181 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 					db.close();
 			}
 		}	
+		
+		//Senarai Siasatan Online
+		Vector senarai_Siasatan = null;
+		public Vector senarai_Siasatan(String no_fail,
+				String no_jkptg_negeri, String id_kementerian, String id_urusan,
+				String id_status, String jenis_permohon,String role,String user_negeri) throws Exception {
+			senarai_Siasatan = new Vector();
+			Db db = null;
+			senarai_Siasatan.clear();
+			String sql = "";
+
+			try {
+				db = new Db();
+				Statement stmt = db.getStatement();
+
+				sql = "SELECT P.ID_PERMOHONAN,P.TARIKH_PERMOHONAN,"
+						+ " F.NO_FAIL, P.NO_RUJUKAN_UPT, P.NO_RUJUKAN_PTG, P.NO_RUJUKAN_PTD, "
+						+ " K.NAMA_KEMENTERIAN,D.NAMA_DAERAH,S.KETERANGAN,U.NAMA_SUBURUSAN  FROM TBLPPTPERMOHONAN P, "
+						+ " TBLRUJSUBURUSAN U,TBLPFDFAIL F,TBLRUJKEMENTERIAN K,TBLRUJDAERAH D,"
+						+ " TBLRUJSTATUS S "+
+						 " WHERE  P.ID_FAIL = F.ID_FAIL "
+						+ " AND F.ID_KEMENTERIAN = K.ID_KEMENTERIAN "
+						+ " AND P.ID_DAERAH = D.ID_DAERAH "
+						+ " AND F.ID_SUBURUSAN = '52' "
+						+ " AND P.FLAG_JENISPERMOHONAN = '"
+						+ jenis_permohon
+						+ "' "
+						+ " AND F.ID_KEMENTERIAN = '" + id_kementerian +"' "					
+						+" AND F.ID_SUBURUSAN = U.ID_SUBURUSAN(+) ";
+						//+" AND S.ID_STATUS IN (38,48,62,74) " 
+						
+						
+						/**OPEN PAGING 16*/
+			    		sql += " and  (P.ID_PERMOHONAN in (select distinct hx.id_permohonan from Tblppthakmilik hx, Tblpptborange bx, Tblpptborangehakmilik beh "; 
+	    	    		sql += " where hx.id_permohonan = p.id_permohonan and hx.id_hakmilik = beh.id_hakmilik and beh.id_borange = bx.id_borange AND NVL (hx.FLAG_PEMBATALAN_KESELURUHAN, 0) <> 'Y' AND NVL (hx.FLAG_PENARIKAN_KESELURUHAN, 0) <> 'Y' ) ";
+			    		sql += " ) "; 
+						
+						
+						sql += " AND P.ID_STATUS = S.ID_STATUS " +
+								"";
+//				    if(!role.equals("(PPT)Pengarah"))
+//				    {
+//					sql += "AND  F.ID_NEGERI = '"+user_negeri+"' ";
+//				    }
+				
+//					if(!user_negeri.equals("16") && !user_negeri.isEmpty()){
+//		    			if(user_negeri.equals("14")){
+//		    				sql += "AND f.id_negeri in (14,15,16) ";
+//		    			}else{
+//		    				sql += "AND f.id_negeri ='"+user_negeri+"'";
+//		    			}		
+//	
+				// kena filter by status (sudah diwartakan)
+
+				if (no_fail != "") {
+					if (!no_fail.trim().equals("")) {
+//						sql = sql + " AND UPPER(F.NO_FAIL) LIKE '%"
+//								+ no_fail.toUpperCase().trim() + "%'";
+						sql += " AND (UPPER(F.NO_FAIL) LIKE '%" + no_fail.toUpperCase().trim() + "%' OR UPPER(P.NO_RUJUKAN_PTG) LIKE '%" + no_fail.toUpperCase().trim() + "%' OR UPPER(P.NO_RUJUKAN_PTD) LIKE '%" + no_fail.toUpperCase().trim() + "%')";
+					}
+				}
+				if (no_jkptg_negeri != "") {
+					if (!no_jkptg_negeri.trim().equals("")) {
+						sql = sql + " AND UPPER(P.NO_RUJUKAN_UPT) LIKE '%"
+								+ no_jkptg_negeri.toUpperCase().trim() + "%'";
+					}
+				}
+				if (id_urusan != "") {
+					if (!id_urusan.trim().equals("")) {
+						sql = sql + " AND UPPER(F.ID_SUBURUSAN) LIKE '"
+								+ id_urusan.toUpperCase() + "'";
+					}
+				}
+				if (id_kementerian == "") {
+					if (!id_kementerian.trim().equals("")) {
+						sql = sql + " AND UPPER(F.ID_KEMENTERIAN) LIKE '"
+								+ id_kementerian.toUpperCase() + "'";
+					}
+				}
+				if (id_status != "") {
+					if (!id_status.trim().equals("")) {
+						sql = sql + " AND UPPER(P.ID_STATUS) LIKE '"
+								+ id_status.toUpperCase() + "'";
+					}
+				}
+
+				sql += " ORDER BY P.TARIKH_KEMASKINI DESC";
+
+				myLogger.info("SQL PENARIKAN CARI :" + sql.toUpperCase());
+				myLogger.info("SQL Filter: " + sql);
+
+				ResultSet rs = stmt.executeQuery(sql);
+				Hashtable h;
+				int bil = 0;
+				while (rs.next()) {
+					bil = bil + 1;
+					h = new Hashtable();
+					h.put("BIL", bil);
+					h.put("NO_RUJUKAN_PTG", rs.getString("NO_RUJUKAN_PTG")== null?"":rs.getString("NO_RUJUKAN_PTG"));
+			    	h.put("NO_RUJUKAN_PTD", rs.getString("NO_RUJUKAN_PTD")== null?"":rs.getString("NO_RUJUKAN_PTD"));
+					h.put("ID_PERMOHONAN",
+							rs.getString("ID_PERMOHONAN") == null ? "" : rs
+									.getString("ID_PERMOHONAN"));
+			    	h.put("TARIKH_PERMOHONAN",
+							rs.getString("TARIKH_PERMOHONAN") == null ? "" : Format
+									.format(rs.getDate("TARIKH_PERMOHONAN")));
+					h.put("NO_FAIL", rs.getString("NO_FAIL") == null ? "default"
+							: rs.getString("NO_FAIL").toUpperCase());
+					h.put("NO_RUJUKAN_UPT",
+							rs.getString("NO_RUJUKAN_UPT") == null ? "" : rs
+									.getString("NO_RUJUKAN_UPT").toUpperCase());
+					h.put("NAMA_KEMENTERIAN",
+							rs.getString("NAMA_KEMENTERIAN") == null ? "" : rs
+									.getString("NAMA_KEMENTERIAN").toUpperCase());
+					h.put("NAMA_DAERAH", rs.getString("NAMA_DAERAH") == null ? ""
+							: rs.getString("NAMA_DAERAH").toUpperCase());
+					h.put("KETERANGAN", rs.getString("KETERANGAN") == null ? ""
+							: rs.getString("KETERANGAN").toUpperCase());
+					h.put("URUSAN", rs.getString("NAMA_SUBURUSAN") == null ? ""
+							: rs.getString("NAMA_SUBURUSAN").toUpperCase());
+					senarai_Siasatan.addElement(h);
+				}
+				return senarai_Siasatan;
+			} catch (Exception re) {
+				log.error("Error: ", re);
+				throw re;
+				} finally {
+				if (db != null)
+					db.close();
+			}
+		}
+		
+		 public static void semakanTambah(String idsemakan, String idpermohonan, String keterangan) throws Exception {
+			
+				
+			 try {
+			      long idSemakanhantar = DB.getNextID("TBLSEMAKANHANTAR_SEQ");
+			      String idPermohonan = idpermohonan;
+			      String idSemakan = idsemakan;
+			      db = new Db();
+			      Statement stmt = db.getStatement();
+			      SQLRenderer r = new SQLRenderer();
+			      r.add("id_semakanhantar", idSemakanhantar);
+			      r.add("id_permohonan", idPermohonan);
+			      r.add("id_semakansenarai", idSemakan);
+			      r.add("catatan", keterangan);
+			      sql = r.getSQLInsert("tblsemakanhantar");
+			      myLogger.info("semakanTambah : "+sql);
+			      stmt.executeUpdate(sql);
+			 
+			 }catch(Exception e){
+			    	e.printStackTrace();
+			 }finally {
+				 if (db != null) db.close();
+			 }
+			  
+		 }
+		 
+		 public void semakanHapusByPermohonan(String idpermohonan) throws Exception {	
+			 try {
+			      db = new Db();
+			      Statement stmt = db.getStatement();
+			      SQLRenderer r = new SQLRenderer();
+			      r.add("id_permohonan", r.unquote(idpermohonan));
+			      sql = r.getSQLDelete("tblsemakanhantar");
+			      stmt.executeUpdate(sql);
+			 
+			 }catch(Exception e){
+			    	e.printStackTrace();
+			 
+			 }finally	{
+			      if (db != null) db.close();
+			 }
+		  
+		 }
+		 
 		
 }

@@ -59,6 +59,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 	String checkedSelesai = "";// arief add
 	String checkedTangguh = "";// arief add
 	String checkedBatal = "";// arief add
+	
 
 	// List listPerbicaraan = null;
 	@SuppressWarnings("unused")
@@ -80,6 +81,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 		String idpermohonan = getParam("idpermohonan");// arief add
 		String idNegeriMhn = "";// arief add
 		Vector list = new Vector();// arief add
+		String STATUS_PERBICARAAN = ""; //arief add
 		/*
 		 * if(USER_ID_SYSTEM == null) { skrin_name = "app/blankSessionOut.jsp"; } else {
 		 */
@@ -196,7 +198,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			this.context.put("htmlCarianTukarPegawai", htmlSkrin);
 			this.context.put("flagOpenTPK", getParam("flagOpenTPK"));
 			setupPageMainList(session, action, listPermohonanTukarPegawai, "listPermohonanTukarPegawai", command);
-			skrin_name = "app/ppk/BicaraInteraktif/listPermohonanTukarPegawai.jsp";
+			skrin_name = "app/ppk/BicaraInteraktif/listPermohonan.Pegawai.jsp";
 		} else if (command.equals("viewPerbicaraan") || command.equals("viewPerbicaraanFromPerintah")) {
 
 			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
@@ -354,7 +356,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				String ID_NEGERIPEGAWAIASAL = "";
 				String ID_TUKARPEGAWAI = "";
 				String NAMA_PEGAWAI_BARU = "";
-
+				
 				String NO_FAIL = "";
 				String TARIKH_BICARA = "";
 				String MASA_BICARA = "";
@@ -393,7 +395,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 								TARIKH_KEPUTUSAN = getParam(skrinName + "TARIKH_KEPUTUSAN");
 								FLAG_DAFTAR_TERUS = getParam(skrinName + "FLAG_DAFTAR_TERUS");
 								ID_NEGERIPEGAWAIASAL = getParam("listID_NEGERI" + ID_PERBICARAAN);
-
+								STATUS_PERBICARAAN = getParam("listkSTATUS_PERBICARAAN" + STATUS_PERBICARAAN);//arief add
 								NO_FAIL = getParam("listNO_FAIL" + ID_PERBICARAAN);
 								TARIKH_BICARA = getParam("listTARIKH_BICARA" + ID_PERBICARAAN);
 								MASA_BICARA = getParam("listMASA_BICARA" + ID_PERBICARAAN);
@@ -407,6 +409,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 								h_listBicaraMohonMultiple.put("BIL_BICARA", BIL_BICARA);
 								h_listBicaraMohonMultiple.put("PEG_PENGENDALI", PEG_PENGENDALI);
 								h_listBicaraMohonMultiple.put("NAMA_PEGAWAI_BARU", NAMA_PEGAWAI_BARU);
+								h_listBicaraMohonMultiple.put("STATUS_PERBICARAAN", STATUS_PERBICARAAN);//arief add
 								listBicaraMohonMultiple.add(h_listBicaraMohonMultiple);
 
 								if (FLAG_DAFTAR_TERUS.equals("Y")) {
@@ -433,6 +436,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 								myLogger.info("MASA_BICARA : " + MASA_BICARA);
 								myLogger.info("BIL_BICARA : " + BIL_BICARA);
 								myLogger.info("PEG_PENGENDALI : " + PEG_PENGENDALI);
+								myLogger.info("STATUS_PERBICARAAN : " + STATUS_PERBICARAAN);//arief add
 								myLogger.info("--------------------------------------------------------");
 
 								Map setupTukarPegawai = modelBI.getValueColumn(session, "", ID_PERBICARAAN, skrinName,
@@ -481,13 +485,14 @@ public class BicaraInteraktif extends AjaxBasedModule {
 								TARIKH_MOHON = getParam(skrinName + "TARIKH_MOHON");
 								TARIKH_KEPUTUSAN = getParam(skrinName + "TARIKH_KEPUTUSAN");
 								FLAG_DAFTAR_TERUS = getParam(skrinName + "FLAG_DAFTAR_TERUS");
-
+								
 								NO_FAIL = getParam("listkNO_FAIL" + ID_TUKARPEGAWAI);
 								TARIKH_BICARA = getParam("listkTARIKH_BICARA" + ID_TUKARPEGAWAI);
 								MASA_BICARA = getParam("listkMASA_BICARA" + ID_TUKARPEGAWAI);
 								BIL_BICARA = getParam("listkBIL_BICARA" + ID_TUKARPEGAWAI);
 								PEG_PENGENDALI = getParam("listkPEG_PENGENDALI" + ID_TUKARPEGAWAI);
 								NAMA_PEGAWAI_BARU = getParam("listkNAMA_PEGAWAI_BARU" + ID_TUKARPEGAWAI);
+								STATUS_PERBICARAAN = getParam("listkSTATUS_PERBICARAAN" + STATUS_PERBICARAAN);//arief add
 
 								h_listBicaraMohonMultiple.put("NO", bil + "");
 								h_listBicaraMohonMultiple.put("NO_FAIL", NO_FAIL);
@@ -496,6 +501,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 								h_listBicaraMohonMultiple.put("BIL_BICARA", BIL_BICARA);
 								h_listBicaraMohonMultiple.put("PEG_PENGENDALI", PEG_PENGENDALI);
 								h_listBicaraMohonMultiple.put("NAMA_PEGAWAI_BARU", NAMA_PEGAWAI_BARU);
+								h_listBicaraMohonMultiple.put("STATUS_PERBICARAAN", STATUS_PERBICARAAN);//arief add
 								listBicaraMohonMultiple.add(h_listBicaraMohonMultiple);
 
 								myLogger.info("ID_PERBICARAAN : " + ID_PERBICARAAN);
@@ -513,6 +519,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 								myLogger.info("TARIKH_KEPUTUSAN : " + TARIKH_KEPUTUSAN);
 								myLogger.info("FLAG_DAFTAR_TERUS : " + FLAG_DAFTAR_TERUS);
 								myLogger.info("ID_NEGERIPEGAWAIASAL : " + ID_NEGERIPEGAWAIASAL);
+								myLogger.info("STATUS_PERBICARAAN : " + STATUS_PERBICARAAN);//arief add
 								myLogger.info("--------------------------------------------------------");
 
 								Map setupTukarPegawai = modelBI.getValueColumn(session, "", ID_PERBICARAAN, skrinName,
@@ -643,6 +650,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				myLogger.info(">>>>>>>>>>> statusTukarPegawai : " + statusTukarPegawai);
 				myLogger.info(">>>>>>>>>>> id_jawatan_login : " + id_jawatan_login);
 				myLogger.info(">>>>>>>>>>> id_negeri_login : " + id_negeri_login);
+				myLogger.info(">>>>>>>>>>> STATUS_PERBICARAAN : " + STATUS_PERBICARAAN);//arief add
 				myLogger.info("----------------------------------------");
 
 				if (skrinName.equals("tukarpegawaiKPP") && statusTukarPegawai.equals("1")
@@ -653,6 +661,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				if (!openFormTukarPegawai.equals("N")) {
 					int check_TP_baru = 0;
 					String NO_TUKARPEGAWAI_CHECK = "";
+					
 					if (listPermohonanTukarPegawaiSejarah.size() != 0) {
 						for (int i = 0; i < listPermohonanTukarPegawaiSejarah.size(); i++) {
 							Map map_column_name = (Map) listPermohonanTukarPegawaiSejarah.get(i);
@@ -6276,7 +6285,16 @@ public class BicaraInteraktif extends AjaxBasedModule {
 					+ "CATATAN_PERINTAH_BI\"><td></td><td></td><td></td><td align=\"right\">";
 			htmlPageSetup += "<div id=\"word" + skrinName + "CATATAN_PERINTAH_BI\"></div>";
 			htmlPageSetup += "</td></tr>";
+			
 			htmlPageSetup += modelBI.closeHTMLTable();
+			//arief add
+			htmlPageSetup += modelBI.openHTMLTable();
+			htmlPageSetup += "<tr  ><td colspan=\"4\" class=\"table_header\">Perintah Perbicaraan</td></tr>";
+			htmlPageSetup += modelBI.closeHTMLTable();
+			htmlPageSetup += "<iframe src = \"?_portal_module=ekptg.view.ppk.FrmPerintahSek8\" style=\"border: 1px none; margin-right: -35px; height: 812px; width: 1070px;\"</iframe>";
+			//htmlPageSetup += "<p><a href=\"?_portal_module=ekptg.view.ppk.FrmPerintahSek8\" target=\"iframe_a\">FrmPerintahSek8</a></p>";
+			//perlu repair iframe bagi kegunaan daftar perintah di Bicara Interaktif :: 3/9/2020
+			//arief add
 
 		} finally {
 			if (db == null) {

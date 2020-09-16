@@ -258,16 +258,18 @@ padding:0 0.25em;
 			window.opener.semakLampiran('socBandar');
 
 		}else if('$!actionRefresh'=='phpapb'){
-			window.opener.doChangeTab('2');
-
-		}else if('$!actionRefresh'=='phppnw'){
-			alert("masuk actionRefresh phppnw");
+			window.opener.doChangeTab('2');			
+		}
+		else if('$!actionRefresh'=='phppnw'){
+		//	alert("masuk actionRefresh phppnw");
 			window.opener.doChangeTabUpper('2');
 		}
 		else if('$!actionRefresh'=='phpphptkr'){
 			window.opener.doChangeTabUpper('2');
 		}
-
+		else if('$!actionRefresh'=='phpphppelepasan'){
+			window.opener.doChangeTabUpper('5');
+		}
 	}
 	//setSelected(1,0,0,1);HtaamViewX('$paramOnline')
 

@@ -16,9 +16,9 @@
   #if ($mode == 'newDraf' || $mode == 'updateDraf' || $mode == 'viewDraf')
   <tr>
     <td>
-    
+
     	<fieldset><legend><strong>MAKLUMAT PERJANJIAN</strong></legend>
-        
+
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
             #foreach ($beanDraf in $BeanDraf)
               <tr>
@@ -28,7 +28,7 @@
                 <td width="70%"><input type="text" name="txdTarikhHantarDraf" id="txdTarikhHantarDraf" size="10" value="$!beanDraf.tarikhHantar" onblur="check_date(this)" class="$classDis" $readOnly/>
                 #if ($mode == 'newDraf' || $mode == 'updateDraf')
                 <img src="../img/calendar.gif" alt="Calendar" border="0" onclick="displayDatePicker('txdTarikhHantarDraf',false,'dmy');" />
-                #end                
+                #end
                 </td>
               </tr>
               <tr>
@@ -47,7 +47,7 @@
                 <td width="70%">                <strong>
                   <input type="text" name="txdTarikhHantarPKP" id="txdTarikhHantarPKP" size="10" value="$!beanDraf.tarikhHantarPTP" onblur="check_date(this)" class="$classDis" $readonly/>
                 </strong>#if ($mode == 'newDraf' || $mode == 'updateDraf') <img src="../img/calendar.gif" alt="Calendar" border="0" onclick="displayDatePicker('txdTarikhHantarPKP',false,'dmy');" />
-                #end                
+                #end
                 </td>
               </tr>
               <tr>
@@ -92,17 +92,17 @@
                     <input class="stylobutton100" type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="javascript:kemaskiniPerjanjian()" />
                     <input class="stylobutton100" type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onclick="javascript:hapusPerjanjian()" />
                     <input class="stylobutton100" type="button" name="cmdBatal" id="cmdBatal" value="Kembali" onclick="javascript:batalPerjanjian()" />
-                    
+
                 #elseif ($mode == 'updateDraf')
                     <input class="stylobutton100" type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:simpanKemaskiniPerjanjian()" />
                     <input class="stylobutton100" type="reset" name="cmdBatal" id="cmdBatal" value="Kosongkan"/>
                     <input class="stylobutton100" type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="javascript:kembaliPerjanjian()" />
-                #end 
+                #end
                 </td>
               </tr>
             </table>
         </fieldset>
-        
+
     </td>
   </tr>
   <tr>
@@ -111,11 +111,11 @@
   #end
   <tr>
     <td>
-    
+
     <fieldset>
     <legend><strong>SENARAI PERJANJIAN</strong></legend>
-    
-    	<table align="center" width="100%"> 
+
+    	<table align="center" width="100%">
             #if ($mode == 'view')
             <tr>
               	<td colspan="7" scope="row">
@@ -138,7 +138,7 @@
                 #set( $row = "row1" )
             #elseif (($list.bil % 2) != 0)
                 #set( $row = "row1" )
-            #else 
+            #else
                 #set( $row = "row2" )
             #end
       <tr>
@@ -150,8 +150,8 @@
           	<td class="q1" >
 				<a alt="Hapus" href = "javascript:hapusPerjanjianSenarai('$list.idDraf');">
 					<img border="0" src="../img/online/x.gif" width="20" height="15"/>
-				</a>          		
-				<!-- 
+				</a>
+				<!--
           		<input name="cmdHapus" type="button" value="Hapus" onclick="javascript:hapusPerjanjianSenarai('$list.idDraf')"/> -->
          	</td>
           		<input type="hidden" value="$list.ulasan"/>
@@ -168,14 +168,14 @@
       </tr>
           #end
         </table>
-        
+
     </fieldset>
-    
+
     </td>
   </tr>
 </table>
 ##parse("app/htp/utiliti/javascript/javaScriptPajakanPerjanjian.jsp")
 <script>
-	//PERJANJIAN 
+	//PERJANJIAN
 	//alert('frmPajakanTabDeraf');
 </script>

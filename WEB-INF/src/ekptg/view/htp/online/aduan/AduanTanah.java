@@ -120,6 +120,7 @@ public class AduanTanah extends AjaxModule {
 
 		String idAduan = getParam("idAduan");
 		String no_fail = getParam("no_fail");
+		String keteranganAduan = getParam("keteranganAduan");
 		String txtPeganganHakmilik = getParam("txtPeganganHakmilik");
 		String txtNoHakmilikTanah = getParam("txtNoHakmilikTanah");
 		String noWarta = getParam("noWarta");
@@ -278,12 +279,14 @@ public class AduanTanah extends AjaxModule {
 					context.put("txtNoHakmilikTanah", (String) get_aduan.get("NO_HAKMILIK"));
 					context.put("ID_ADUANPUBLIC", (String) get_aduan.get("ID_ADUANPUBLIC"));
 					context.put("id_phphakmilikaduan", (String) get_aduan.get("ID_HAKMILIKADUAN"));
+					context.put("keteranganAduan", (String) get_aduan.get("KETERANGAN_ADUAN"));
 
 					idNegeri = (String) get_aduan.get("ID_NEGERI");
 					idDaerahTanah = (String) get_aduan.get("ID_DAERAH");
 					idMukimTanah = (String) get_aduan.get("ID_MUKIM");
 					idJenisHakmilik = (String) get_aduan.get("ID_JENISHAKMILIK");
 					idJenisLot = (String) get_aduan.get("ID_LOT");
+					keteranganAduan = (String) get_aduan.get("KETERANGAN_ADUAN");
 				}
 
 				if (!userId.equals("")) {
@@ -381,6 +384,7 @@ public class AduanTanah extends AjaxModule {
 					context.put("txtNoHakmilikTanah", (String) get_aduan.get("NO_HAKMILIK"));
 					context.put("ID_ADUANPUBLIC", (String) get_aduan.get("ID_ADUANPUBLIC"));
 					context.put("id_phphakmilikaduan", (String) get_aduan.get("ID_HAKMILIKADUAN"));
+					context.put("keteranganAduan", (String) get_aduan.get("KETERANGAN_ADUAN"));
 
 					idNegeri = (String) get_aduan.get("ID_NEGERI");
 					idDaerahTanah = (String) get_aduan.get("ID_DAERAH");
@@ -554,6 +558,7 @@ public class AduanTanah extends AjaxModule {
 					//r.add("ID_STATUS",16121); //LOG BARU
 					new_ID_STATUS = "16121";
 					myLog.info("**** save new_ID_STATUS : "+new_ID_STATUS);
+					r.add("ID_STATUS", new_ID_STATUS);
 				}
 			}
 			else if(command.equals("simpanDraf"))
@@ -645,16 +650,12 @@ public class AduanTanah extends AjaxModule {
 				ID_ADUANPUBLIC = id+"";
 			}
 
-			String id_phphakmilikaduan = getParam("id_phphakmilikaduan");
-			if (id_phphakmilikaduan == null || id_phphakmilikaduan.trim().length() == 0) {
-				id_phphakmilikaduan = "0";
-			}
-			idTanah = Long.parseLong(id_phphakmilikaduan);
+			String ID_TANAH = getParam("id_phphakmilikaduan");
+			myLog.info("ID_TANAH >>>> "+ID_TANAH);
 
-			if(idTanah!=0)
+			if(!ID_TANAH.equals(""))
 			{
-				System.out.println("Masuk sini");
-				r2.update("ID_HAKMILIKADUAN", idTanah);
+				r2.update("ID_HAKMILIKADUAN", ID_TANAH);
 			}
 			else
 			{
@@ -669,17 +670,24 @@ public class AduanTanah extends AjaxModule {
 			r2.add("ID_JENISHAKMILIK", getParam("idJenisHakmilik"));
 			r2.add("NO_HAKMILIK", getParam("txtNoHakmilikTanah"));
 			r2.add("NO_WARTA", getParam("noWarta"));
-			r2.add("TARIKH_WARTA", r.unquote("sysdate"));
+
+			String TW = "to_date('" + getParam("tarikhWarta") + "','dd/MM/yyyy')";
+			myLog.info("TW >>>> "+TW);
+			if(TW == "null"){
+				r2.add("TARIKH_WARTA", r.unquote("sysdate"));
+			}else{
+				r2.add("TARIKH_WARTA", r.unquote(TW));
+			}
 			r2.add("ID_LOT", getParam("idJenisLot"));
 			r2.add("NO_LOT", getParam("txtNoLot"));
-			r2.add("ID_LUAS", getParam("txtLuas"));
-			r2.add("LUAS", getParam("socLuas"));
+			r2.add("LUAS", getParam("txtLuas"));
+			r2.add("ID_LUAS", getParam("socLuas"));
 			r2.add("ID_MASUK", USER_ID_SYSTEM);
 			r2.add("TARIKH_MASUK", r.unquote("sysdate"));
 			r2.add("ID_KEMASKINI", USER_ID_SYSTEM);
 			r2.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
 
-			if(idTanah!=0)
+			if(!ID_TANAH.equals(""))
 			{
 				sql2 = r2.getSQLUpdate("TBLHTPHAKMILIKADUAN");
 			}
@@ -2419,11 +2427,11 @@ public class AduanTanah extends AjaxModule {
 
 		ResultSet rs = null;
 		Statement stmt = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		//List listJenisAduan = null;
 		list_aduan = new Vector();
 		list_aduan.clear();
 		list_aduan.removeAllElements();
-		System.out.println("list aduan >>>>> "+ list_aduan);
 		String sql = "";
 		try {
 			db1 = new Db();
@@ -2454,7 +2462,7 @@ public class AduanTanah extends AjaxModule {
 				h.put("ID_ADUAN",rs.getString("ID_ADUAN") == null ? "" : rs.getString("ID_ADUAN"));
 				h.put("ID_LUAS",rs.getString("ID_LUAS") == null ? "" : rs.getString("ID_LUAS"));
 				h.put("NO_WARTA",rs.getString("NO_WARTA") == null ? "" : rs.getString("NO_WARTA"));
-				h.put("TARIKH_WARTA",rs.getString("TARIKH_WARTA") == null ? "" : rs.getString("TARIKH_WARTA"));
+				h.put("TARIKH_WARTA", rs.getDate("TARIKH_WARTA") == null ? "": sdf.format(rs.getDate("TARIKH_WARTA")));
 				h.put("NO_LOT",rs.getString("NO_LOT") == null ? "" : rs.getString("NO_LOT"));
 				h.put("LUAS",rs.getString("LUAS") == null ? "" : rs.getString("LUAS"));
 				h.put("ID_DAERAH",rs.getString("ID_DAERAH") == null ? "" : rs.getString("ID_DAERAH"));

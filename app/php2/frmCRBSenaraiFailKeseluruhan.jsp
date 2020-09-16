@@ -222,6 +222,7 @@ function papar(idFail,idStatus) {
 
 	document.${formName}.idFail.value = idFail;
 	document.${formName}.flagFrom.value = "failKeseluruhan";
+	
 	document.${formName}.action = "$EkptgUtil.getTabID("Penguatkuasaan",$portal_role)?_portal_module=ekptg.view.php2.FrmCRBMaklumatPermohonanView";
 	document.${formName}.submit();
 }

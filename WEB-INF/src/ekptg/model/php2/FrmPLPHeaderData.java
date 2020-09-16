@@ -37,7 +37,7 @@ public class FrmPLPHeaderData {
 				idFail = (String) session.getAttribute("ID_FAIL");
 			}
 
-			sql = "SELECT FAIL.ID_FAIL, FAIL.NO_FAIL, FAIL.TAJUK_FAIL, MOHON.ID_PERMOHONAN, MOHON.TARIKH_TERIMA, MOHON.TARIKH_SURAT,"
+			sql = "SELECT FAIL.ID_FAIL, FAIL.NO_FAIL, FAIL.NO_FAIL_NEGERI, FAIL.TAJUK_FAIL, MOHON.ID_PERMOHONAN, MOHON.TARIKH_TERIMA, MOHON.TARIKH_SURAT,"
 					+ " PEMOHON.ID_PEMOHON, PEMOHON.ID_KATEGORIPEMOHON, PEMOHON.ID_PEJABAT, PEMOHON.NAMA, PEMOHON.ALAMAT1_TETAP, PEMOHON.ALAMAT2_TETAP, PEMOHON.ALAMAT3_TETAP, PEMOHON.POSKOD_TETAP,"
 					+ " RUJBANDAR.KETERANGAN AS NAMA_BANDAR, RUJNEGERI.NAMA_NEGERI, PEMOHON.NO_TEL, PEMOHON.NO_FAX, MOHON.ID_STATUS, RUJSTATUS.KETERANGAN AS STATUS,"
 					+ " MOHONPLP.KEPUTUSAN AS ID_KEPUTUSAN, MOHONPLP.FLAG_GUNA, MOHON.CATATAN_BATAL, MOHON.TARIKH_BATAL, MOHONPLP.FLAG_PAMPASAN, MOHONPLP.PAMPASAN,"
@@ -58,7 +58,16 @@ public class FrmPLPHeaderData {
 								.getString("ID_FAIL"));
 				h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs
 						.getString("NO_FAIL").toUpperCase());
-				h.put("subUrusan", "PELEPASAN / PENYERAHANBALIK");
+				h.put("noFailNegeri", rs.getString("NO_FAIL_NEGERI") == null ? "" : rs
+						.getString("NO_FAIL_NEGERI").toUpperCase());
+				
+				if(rs.getString("TAJUK_FAIL").contains("TANAH MILIK")) {
+					h.put("subUrusan", "PELEPASAN");
+					
+				} else if(rs.getString("TAJUK_FAIL").contains("TANAH RIZAB")) {
+					h.put("subUrusan", "PENYERAHAN BALIK");
+					
+				}
 				h.put("idPermohonan",
 						rs.getString("ID_PERMOHONAN") == null ? "" : rs
 								.getString("ID_PERMOHONAN").toUpperCase());
@@ -166,6 +175,7 @@ public class FrmPLPHeaderData {
 				h = new Hashtable();
 				h.put("idFail", "");
 				h.put("noFail", "");
+				h.put("noFailNegeri", "");
 				h.put("subUrusan", "");
 				h.put("idPermohonan", "");
 				h.put("tarikhTerima", "");

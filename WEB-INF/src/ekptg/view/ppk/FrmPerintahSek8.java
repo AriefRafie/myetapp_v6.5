@@ -130,6 +130,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		String flagSelesaiPembahagian = "Y";
 		this.context.put("systemMsg", "");
 		this.context.put("SimpanStatus", simpanStatus);
+		
         //VECTOR
         Vector list = new Vector();
         Vector beanMaklumatPermohonan = new Vector();
@@ -157,6 +158,11 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		Vector getSelectedPenghantarNotis = new Vector();
 		Vector getSelectedPenghantarNotisByJkptg = new Vector();
         
+		Vector keputusanPermohonan = new Vector();//arief add
+		Vector dataPerintah = new Vector();//arief add
+		Vector validPegPengendali = new Vector();//arief add
+		validPegPengendali.clear();//arief add
+		
 		// clear data vector
 		getSelectedPenghantarNotisByJkptg.clear();
 		getSelectedPenghantarNotis.clear();
@@ -1975,6 +1981,86 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		}
 		this.context.put("flagSelesaiPembahagian", flagSelesaiPembahagian);
 		
+		
+		//arief try add open
+		logic.setListSemak(idPermohonan, userId);
+		list = logic.getListSemak();
+		// get data keputusan permohonan
+		keputusanPermohonan = modelNotis.getKeputusanPermohonan(idPermohonan);
+		String idkp = "";
+		String idperbicaraan = "";
+		String idpsk = "";
+		String idNeg = "";
+		String currentBil = "";
+		String idpejabat = "";
+		String idjenispejabat = "";
+		String tempatBicara = "";
+		
+		if (keputusanPermohonan.size() != 0) {
+			Hashtable kp = (Hashtable) keputusanPermohonan.get(0);
+			idkp = kp.get("id_keputusanpermohonan").toString();
+		}
+				
+		// --data notis
+		String idpbrn = "";
+		String nama_peg_pengendali = "";
+
+		logic.setListSemakWithData(idkp);
+		dataPerintah = logic.getListSemakWithData();
+
+		if (dataPerintah.size() != 0) {
+			Hashtable idn = (Hashtable) dataPerintah.get(0);
+			idpbrn = idn.get("id_perbicaraan").toString();
+			//idpsk = idn.get("id_unitpsk").toString();
+			//idNeg = idn.get("id_negeribicara").toString();
+			//currentBil = idn.get("bil_bicara").toString();
+			//idpejabat = idn.get("id_pejabat").toString();
+			//tempatBicara = idn.get("tempat_bicara").toString();
+			//idjenispejabat = idn.get("id_jenispejabat").toString();
+			nama_peg_pengendali = idn.get("peg_pengendali").toString();
+						
+		
+			if(nama_peg_pengendali.equals("")){
+				nama_peg_pengendali = "";
+			}
+		}
+		context.put("dataPerintah_size", dataPerintah.size());
+		context.put("nama_peg_pengendali", nama_peg_pengendali);
+		myLogger.info("nama_peg_pengendali::"+nama_peg_pengendali);
+		
+		String username = (String) session.getAttribute("_portal_username");
+		logic.setValidPegawaiPengendali(usid,idpbrn,nama_peg_pengendali,username );
+		validPegPengendali = logic.getValidPegawaiPengendali();
+
+		System.out.println("validPegPengendali.size()==="+validPegPengendali.size());
+		if (validPegPengendali.size() != 0) {
+			context.put("enabledPegawai", "yes");
+		} else {
+			context.put("enabledPegawai", "no");
+		}
+		
+		String signedData = getParam("signedData");
+		String open_pupop = getParam("open_pupop");
+		if(open_pupop.equals("Y"))
+		{
+			//NO_FAIL="+NO_FAIL+"&id_perbicaraan="+id_perbicaraan+"&idfail="+idfail+
+			context.put("open_pupop",open_pupop);
+			context.put("NO_FAIL", getParam("NO_FAIL"));
+			context.put("id_perbicaraan", getParam("id_perbicaraan"));
+			context.put("idfail", getParam("idfail"));	
+			context.put("signedData", getParam("signedData"));				
+		}
+		else
+		{
+			context.put("open_pupop","");
+		}
+		
+
+		//GET SIGNEDDATA
+		String dataDahSign = logic.getSignedData(getParam("id_perbicaraan"));
+		context.put("dataDahSign", dataDahSign);
+		
+		//arief try add close
         
         //SET ID PARAM
 		

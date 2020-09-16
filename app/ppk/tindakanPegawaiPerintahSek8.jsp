@@ -26,21 +26,16 @@
             
              <tr>
              <td width="10%" valign="top">&nbsp;</td>
-             <td colspan=3 align=left>
+             <td colspan=3 align=justify>
              
             
-             #if($!id_perbicaraan!="")
+             #if($!id_perintah!="")
            
              	#if($!enabledPegawai=="yes" && $statusPNB!="yes")
-              		<input type="button" name="cmdHPNB1" id="cmdHPNB1" value="Pengesahan Tandatangan" onClick="sendDGcertPerintah('$!NO_FAIL','$!id_perbicaraan','$!id_fail','$id_permohonan','$idpermohonansimati')" />
+              		<input type="button" name="cmdHPNB1" id="cmdHPNB1" value="Pengesahan Tandatangan" onClick="sendDGcertPerintah('$!NO_FAIL','$!id_perintah','$!id_fail','$id_permohonan','$idpermohonansimati')" />
               	
               	#end
-              	
-              	#if($statusPNB=="yes")
-              	
-              		<input type="button" name="cmdHPNB1" id="cmdHPNB1" value="Semak Status PNMB" onClick="cetakBorangD_PDF('$!NO_FAIL','$!id_perbicaraan','$!id_fail')" disabled/>
-                    <input type="button" name="verifyButton" id="verifyButton" value="Verifikasi Maklumat" onClick="verifyDGcertPerintah('$!NO_FAIL','$!id_perbicaraan','$!id_fail','$id_permohonan','$idpermohonansimati')" />
-              	#end
+
               #end
               </td></tr>
               

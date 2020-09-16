@@ -16,7 +16,8 @@
   <input name="idMesyuarat" type="hidden" id="idMesyuarat" value="$idMesyuarat"/>
   <input name="idKehadiran" type="hidden" id="idKehadiran" value="$idKehadiran"/>
   <input name="idDokumen" type="hidden" id="idDokumen" value="$idDokumen"/>
-  
+  <input name="idUlasanTeknikal" type="hidden" id="idUlasanTeknikal" value="$idUlasanTeknikal" /> 
+  <input name="flagStatus" type="hidden" id="flagStatus" value="$flagStatus" />
   <input name="actionCRB" type="hidden" id="actionCRB" value="$actionCRB"/>
   <input name="mode" type="hidden" id="mode" value="$mode"/>
   <input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
@@ -50,6 +51,7 @@
       </div></td>
   </tr>
 </table>
+
 <fieldset id="tableReport" style="display:none;"-->
 <legend><strong>SENARAI LAPORAN</strong></legend>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -61,10 +63,20 @@
   </tr>
 </table>
 </fieldset>
+
 <script type="text/javascript">
 	var TabbedPanels = new Spry.Widget.TabbedPanels("TabbedPanels",{defaultTab:$selectedTabUpper});
 </script>
 <script>
+function doChangeSuratKe() {
+	doAjaxCall${formName}("doChangeSuratKe");
+}
+function doChangeNegeri() {
+	doAjaxCall${formName}("doChangeNegeri");
+}
+function doChangePejabat() {
+	doAjaxCall${formName}("doChangePejabat");
+}
 function doChangeTab(tabId) {
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmCRBMesyuaratView";
 	document.${formName}.method="POST";
@@ -138,7 +150,6 @@ function simpanKemaskiniKeputusan(){
 	document.${formName}.hitButton.value = "simpanKemaskiniKeputusan";
 	doAjaxCall${formName}("");
 }
-
 function daftarKehadiran(){
 	document.${formName}.flagPopup.value = "openKehadiran";
 	document.${formName}.modePopup.value = "new";

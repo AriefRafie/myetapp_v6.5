@@ -84,6 +84,16 @@
   	doAjaxCall${formName}("daftarBaru");
   }
 
+  function doChangeJenisHakmilik() {
+	  	//doAjaxCall${formName}("doChangeNegeri");
+	  	doAjaxCall${formName}("daftarBaru");
+	  }
+
+  function doChangeJenisLot() {
+	  	//doAjaxCall${formName}("doChangeNegeri");
+	  	doAjaxCall${formName}("daftarBaru");
+	  }
+
   function daftarBaru() {
 	doAjaxCall${formName}("daftarBaru");
 

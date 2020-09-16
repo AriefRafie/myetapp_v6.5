@@ -99,11 +99,13 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		String flagShowTarikhCetak = getParam("flagShowTarikhCetak");
 		String tarikhBorangL = getParam("tarikhBorangL");
 		String tempohBL = getParam("tempohBL");
+		String token = getParam("token");
 		
 		String txtBilKertas = getParam("txtBilKertas");
 		String txtBilSalinan = getParam("txtBilSalinan");
 		
 		String bilLot = getParam("bilLot");
+		String masa_siasatan = getParam("masa_siasatan");
 		
 		String txtNamaPentadbir = getParam("txtNamaPentadbir");
 		String id_buktipenyampaian = getParam("id_buktipenyampaian");
@@ -155,6 +157,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		String id_projekNegeri = "";
     	String idpermohonan = getParam("id_permohonan");
     	this.context.put("listPenghantarNotis", "");
+    	this.context.put("token", token);
     	header.setDataHeader(idpermohonan);
 		Vector dataHeader = header.getDataHeader();
 		context.put("dataHeader", dataHeader);
@@ -485,6 +488,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		context.put("bilDokumen", bilDokumen);	
 		
 		context.put("bilLot", bilLot);
+		context.put("masa_siasatan", masa_siasatan);
 		
 		//date in malay dy date
 		String sysdateMalaytarikhBorangL = "";

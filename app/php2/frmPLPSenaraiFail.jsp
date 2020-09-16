@@ -24,9 +24,14 @@
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input name="flagDetail" type="hidden" id="flagDetail" value="$flagDetail"/>
   <input name="checkTanah" type="hidden" id="checkTanah" value= "$checkTanah"/>
-  <input name="flagFrom" type="hidden" id="flagFrom"/>
   <input name="initiateFlagBuka" type="hidden" id="initiateFlagBuka"/>
+  <input name="flagFrom" type="hidden" id="flagFrom"/>  
 </p>
+
+#if ($errMsg != "")
+<div class="info"><strong>$errMsg</strong></div>
+#end
+
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td><fieldset>

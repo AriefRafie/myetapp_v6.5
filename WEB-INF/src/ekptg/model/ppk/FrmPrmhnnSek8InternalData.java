@@ -22,6 +22,7 @@ import org.apache.log4j.Logger;
 
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
+import ekptg.helpers.Utils;
 import ekptg.intergration.XEkptgEmailSender;
 import ekptg.view.ppk.PendaftaranCheck;
 
@@ -6678,6 +6679,11 @@ System.out.println("TARIKH_SURAT_AKUAN=="+TARIKH_SURAT_AKUAN);
 						.getString("no_Hp"));
 				h.put("lapis", rs.getString("lapis") == null ? "" : rs
 						.getString("lapis"));
+				
+				//2020/09/07 Lampiran IC Waris
+				ekptg.model.ppk.util.LampiranBean l = new ekptg.model.ppk.util.LampiranBean();
+				h.put("lampirans", Utils.isNull(l.getLampiranSimatiPapar(rs.getString("id_Ob"),"99212")));
+				
 				listWaris.addElement(h);
 
 			}
@@ -6883,6 +6889,11 @@ System.out.println("TARIKH_SURAT_AKUAN=="+TARIKH_SURAT_AKUAN);
 
 				h.put("nohp", rs.getString("no_Hp") == null ? "" : rs.getString("no_Hp"));
 				h.put("lapis", rs.getString("lapis") == null ? "" : rs.getString("lapis"));
+				
+				//2020/09/08 Lampiran IC Waris
+				ekptg.model.ppk.util.LampiranBean l = new ekptg.model.ppk.util.LampiranBean();
+				h.put("lampirans", Utils.isNull(l.getLampiranSimatiPapar(rs.getString("id_Ob"),"99212")));
+				
 				listWarisDulu.addElement(h);
 
 			}

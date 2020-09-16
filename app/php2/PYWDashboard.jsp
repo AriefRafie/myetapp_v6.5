@@ -200,7 +200,7 @@ a.nav:visited {
                                   <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE"><blink>$!check_notifikasi_tugasan_crb</blink></font></b> </label>
                                   &nbsp;
                                 #end
-                                Penguatkusaan
+                                Penguatkuasaan
                               </li>
                               </font> </a> </td>
                           </tr>
@@ -290,12 +290,34 @@ a.nav:visited {
         <tr>
           <td valign="top" align="left"><table cellpadding="2" cellspacing="1" border="0" width="100%" class="dashboard_sub" align="left">
               <tr>
-                <td width="50%" valign="top"><table width="100%" >
+                #if($role == '(PHP)PYWPenolongPegawaiTanahHQ')
+                <td width="50%" valign="top">
+                  <table width="100%" >
+                    <tr>
+                      <td width="15%" align="center" valign="top"><img  width="30" height="30" src="../img/new_application.png" align="center"/></td>
+                      <td width="85%"><table width="100%">
+                          <tr>
+                            <td><b>Daftar Permohonan</b></td>
+                          </tr> 
+                          <tr>
+                            <td><a href="javascript:gotoPenguatkuasaan()" class="help" title="Permohonan Baru Penguatkuasaan"> <font color="blue">
+                              <li>&nbsp;Penguatkuasaan</li>
+                              </font> </a> </td>
+                          </tr>
+                        </table></td>
+                    </tr>
+                  </table>
+                </td>
+                #else             
+                <td width="50%" valign="top">
+                  <table width="100%" >
                     <tr>
                       <td width="15%" align="center" valign="top">&nbsp;</td>
                       <td width="85%">&nbsp;</td>
                     </tr>
-                  </table></td>
+                  </table>
+                </td>
+                #end
                 <td width="50%" valign="top"><table width="100%" >
                     <tr>
                       <td width="15%" align="center" valign="top"><img width="30" height="30" src="../img/utiliti.png" align="center"/></td>

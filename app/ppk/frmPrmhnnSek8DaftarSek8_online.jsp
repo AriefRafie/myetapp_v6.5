@@ -447,7 +447,7 @@ Sila gunakan MyID atau No. Rujukan Online untuk mengemaskini permohonan anda.
 
 <div id="info_alert"></div>
 <script>
-parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_online_ppk\"><b><blink>*</blink> Sila lengkapkan maklumat permohonan Tuan/Puan dengan menekan butang <input type='button' name='cmdSeterusnya' value='Borang A' onClick='seterusnya_tab()'><br><blink>*</blink> Sila gunakan MyID atau No. Rujukan Online untuk mengemaskini permohonan anda.</b></div>";
+parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_online_ppk\"><b><blink>*</blink> Sila muat turun dokumen Senarai Semak Permohonan sebelum meneruskan permohonan dengan menekan butang <input type='button' name='cmdSemakan' value='Senarai Semak' onClick='download_senarai()'><br><blink>*</blink> Sila lengkapkan maklumat permohonan Tuan/Puan dengan menekan butang <input type='button' name='cmdSeterusnya' value='Borang A' onClick='seterusnya_tab()'><br><blink>*</blink> Sila gunakan MyID atau No. Rujukan Online untuk mengemaskini permohonan anda.</b></div>";
 </script>
 
 
@@ -756,7 +756,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
        
          <tr id="amanah" >
             <td >&nbsp;</td>
-            <td >Amanah raya</td>
+            <td >Amanah Raya</td>
             <td >:</td>
             <td ><select name="jenis_pej1" id="jenis_pej1" class="largeselect" $setMode style="text-transform:uppercase;" onChange="alamat_raya()" >
                 
@@ -1329,7 +1329,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
             #if($negeri!="" && $negeri!="0"  )
             
             <span id="socNegeri_1a">
-						<select name="socNegeri" class="autoselect" $setmode  onchange="getBandar('socBandar');get_bandar_simati()" style="text-transform:uppercase;" onBlur="uppercase()">
+						<select name="socNegeri" class="autoselect" $setmode  onchange="getBandar('socBandar');get_bandar_simati();semakLampiran('socBandar');" style="text-transform:uppercase;" onBlur="uppercase()">
                           <option value="$negeri">$negerikodpemoP - $negeriketeranganpemoP</option>
                                   #foreach($listnegpomo in $listnegeri)                                 
                                   #if($negeri!=$listnegpomo.id_Negeri)
@@ -1353,7 +1353,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
                         
             #else
             <span id="socNegeri_2a" >
-            <select name="socNegeri" class="autoselect" $setmode  onchange="getBandar('socBandar');get_bandar_simati()" style="text-transform:uppercase;" onBlur="uppercase()">
+            <select name="socNegeri" class="autoselect" $setmode  onchange="getBandar('socBandar');get_bandar_simati();semakLampiran('socBandar');" style="text-transform:uppercase;" onBlur="uppercase()">
               <option value="">Sila Pilih Negeri</option>
                                   #foreach($listnegpomo in $listnegeri)
               <option value="$listnegpomo.id_Negeri">$listnegpomo.kod_Negeri - $listnegpomo.nama_Negeri</option>                    
@@ -1955,47 +1955,50 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
               #if ($idAlert == "1" || $idAlert == "2")
               	 <input name="txtTarikhMati" id="txtTarikhMati" type="text" style="width: 80px;" value="$tarikhMatix" size="11" maxlength="10" $setmodeR class="$setmode" onFocus="qryHowOld()" onBlur="trans_date(this.value);qryHowOld()"  />
               #else
-              		<input name="txtTarikhMati" id="txtTarikhMati" type="text" style="width: 80px;" value="$tarikhMati" size="11" maxlength="10" $setmodeR class="$setmode"  onfocus="qryHowOld()" onBlur="trans_date(this.value);qryHowOld()" />
+              		<input name="txtTarikhMati" id="txtTarikhMati" type="text" style="width: 80px;" value="$tarikhMati" size="11" maxlength="10" $setmodeR class="$setmode"  onfocus="qryHowOld()" onBlur="trans_date(this.value);qryHowOld();semakLampiran('socBandar');" />
               #end
               #if ($setmode != "disabled" )
               		<a href="javascript:displayDatePicker('txtTarikhMati',false,'dmy');"/>#parse("app/ppk/ppk_calender.jsp")</a>
                     <em><span class="style3 style4 style2">dd/mm/yyyy</span></em>#end               </td>
             </tr>
-            <tr>
-		            	<td valign="top" width="2%">
-		            	<span class="style1">*</span>
-		              	</td>
-		             	<td width="28%"> Muatnaik MyID </td>
-		             	<td width="1%">:</td> 
-		             	<td width="9%">
-							<input type="button" id="uploadmyid" name="uploadmyid" value="Lampiran" onClick="lampiran(this.value,'MyID')" />
-							<br>
-							#if($lampirans != "")
-								<input type="hidden" name="namaDoc1" value="1" />
-							#else
-								<input type="hidden" name="namaDoc1" value="0" />
-							#end
-							$!lampirans
-						</td>
-             		</tr>
 					
-					<tr>            
-				    	<td valign="top" width="2%">
-				    	<span class="style1">*</span>
-				      	</td>
-				     	<td width="28%"> Muatnaik Sijil Mati / Surat Akuan / Anggapan Kematian / Permit Pengkuburan </td>
-				     	<td width="1%">:</td> 
-				     	<td width="9%">
-							<input type="button" id="fileupload" name="fileupload" value="Lampiran" onClick="lampiran(this.value,'cod')">
-							<br>
-							#if($lampiranSijil != "")
-								<input type = "hidden" name="namaDoc2" id="namaDoc2" value="1" />
-							#else
-								<input type = "hidden" name="namaDoc2" id="namaDoc2" value="0" />
-							#end
-							$!lampiranSijil     
-						</td>
-      				</tr>            
+			<tr>            
+		    	<td valign="top" width="2%">
+		    	<span class="style1">*</span>
+		      	</td>
+		     	<td width="28%"> Muatnaik Sijil Mati / Perintah Mahkamah (Kematian) </td>
+		     	<td width="1%">:</td> 
+		     	<td width="9%">
+					<input type="button" id="fileupload" name="fileupload" value="Lampiran" onClick="lampiran(this.value,'cod')">
+					<br>
+					#if($lampiranSijil != "")
+						<input type = "hidden" name="namaDoc2" id="namaDoc2" value="1" />
+					#else
+						<input type = "hidden" name="namaDoc2" id="namaDoc2" value="0" />
+					#end
+					$!lampiranSijil     
+				</td>
+    		</tr> 
+      		<tr>
+            	<td valign="top" width="2%">
+<!--             	<span class="style1">*</span> -->
+              	</td>
+             	<td width="28%"> Muatnaik Maklumat Perkahwinan </td>
+             	<td width="1%">:</td> 
+             	<td width="9%">
+					<input type="button" id="uploadmyid" name="uploadmyid" value="Lampiran" onClick="lampiran(this.value,'MyID')" />
+					<a href="javascript:open_info()" class="help" title="info">							
+                    	<b><font color="blue"><img width="18" src="../img/info.png"  align="center" /></font></b>
+                    </a>
+					<br>
+					#if($lampirans != "")
+						<input type="hidden" name="namaDoc1" value="1" />
+					#else
+						<input type="hidden" name="namaDoc1" value="0" />
+					#end
+					$!lampirans
+				</td>
+           	</tr>           
             #if ($SimpanStatus != "2")
           #end
           </table>
@@ -2142,7 +2145,7 @@ alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_nama_warga
   }	
 
   function semakLampiran(v_t){
-  	alert('Semak Lampiran');
+//  	alert('Semak Lampiran');
   	document.f1.method = "POST";
   	document.f1.command.value="getlampiran";
   	document.f1.eventStatus.value="1";
@@ -2224,6 +2227,16 @@ alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_nama_warga
   	document.f1.action = "";
   	document.f1.submit();
   }
+  
+  function download_senarai() {
+	  	// alert("Senarai Semak");
+  	    var url = "../servlet/ekptg.report.ppk.SenaraiSemakBorangA?idpermohonan=0";
+  	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+  	    if ((document.window != null) && (!hWnd.opener))
+  		hWnd.opener = document.window;
+  	    if (hWnd.focus != null) hWnd.focus();
+	  
+	  }
 
   function Kemaskini() {
   		//document.f1.method = "POST";
@@ -2285,19 +2298,19 @@ alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_nama_warga
       document.f1.txtNoKPLainPemohon.focus();
     }
     else if (document.f1.txtNamaPemohon[0] != 'null' && document.f1.txtNamaPemohon[0].value=="" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "20") ) {
-      alert("Sila masukkan nama pemohon.");
+      alert("Sila masukkan Nama Pemohon");
       document.f1.txtNamaPemohon[0].focus();
     }
     else if (document.f1.txtAlamat1[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "20")){
-      alert("Sila masukkan alamat tetap");
+      alert("Sila masukkan Alamat Tetap");
       document.f1.txtAlamat1.focus();
     }
     else if (document.f1.txtPoskod[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "20")){
-      alert("Sila masukkan poskod");
+      alert("Sila masukkan Poskod");
       document.f1.txtPoskod.focus();
     }
     else if (document.f1.socNegeri[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "20")){
-      alert("Sila pilih negeri");
+      alert("Sila pilih Negeri");
       document.f1.socNegeri.focus();
     }
     //else if (document.f1.socBandar[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "20")){
@@ -2305,11 +2318,11 @@ alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_nama_warga
     //  document.f1.socBandar.focus();
     //}
     else if (document.f1.txtPoskod[0] != 'null' && document.f1.txtPoskod[0].value != "" && document.f1.txtPoskod[0].value.length < 5 && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "20") ) {
-      alert("Sila masukkan nombor poskod dengan lengkapnya");
+      alert("Sila masukkan nombor Poskod dengan lengkapnya");
       document.f1.txtPoskod[0].focus();
     }
     else if (document.f1.txtPoskod[1] != 'null' && document.f1.txtPoskod[1].value != "" && document.f1.txtPoskod[1].value.length < 5 && (document.f1.taraf_penting.value == "6" || document.f1.taraf_penting.value == "8" && document.f1.taraf_penting.value != "20") ) {
-      alert("Sila masukkan nombor poskod dengan lengkapnya");
+      alert("Sila masukkan nombor Poskod dengan lengkapnya");
       document.f1.txtPoskod[1].focus();
     }
     
@@ -2326,15 +2339,15 @@ alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_nama_warga
     
     else if(document.f1.no_kp1.value == 'yes')
     {
-      alert("No kp baru simati telah wujud!");   
+      alert("No KP Baru simati telah wujud!");   
     } 
      else if(document.f1.no_kp2.value == 'yes')
     {
-      alert("No kp lama simati telah wujud!");   
+      alert("No KP Lama simati telah wujud!");   
     }
      else if(document.f1.no_kp3.value == 'yes')
     {
-      alert("No kp lain simati telah wujud!");   
+      alert("No KP Lain simati telah wujud!");   
     }
       
     
@@ -2407,13 +2420,13 @@ alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_nama_warga
     else if (document.f1.txtNamaSimati != 'null' && document.f1.txtNamaSimati.value=="" 
         //&& (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8") 
         ) {
-      alert("Sila masukkan nama simati ");
+      alert("Sila masukkan Nama Simati ");
       document.f1.txtNamaSimati.focus();
     }
     else if (document.f1.txtTarikhMati != 'null' && document.f1.txtTarikhMati.value=="" 
         //&& (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8") 
         ) {
-      alert("Sila masukkan tarikh mati");
+      alert("Sila masukkan Tarikh Mati");
       document.f1.txtTarikhMati.focus();
     
     }else if (date1 > currentTime){
@@ -2421,13 +2434,13 @@ alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_nama_warga
       document.f1.txtTarikhMati.focus();
     }
 
-    else if(document.f1.namaDoc1.value == "0" && document.f1.namaDoc2.value =="1"){
-    	alert('Sila muatnaik MyID simati.');
-     	document.f1.uploadmyid.focus(); 
-    }
-    else if(document.f1.namaDoc2.value == "0" && document.f1.namaDoc1.value =="1"){
-      alert('Sila muatnaik Sijil Mati.');
-    document.f1.fileupload.focus(); 
+//     else if(document.f1.namaDoc1.value == "0" && document.f1.namaDoc2.value =="1"){
+//     	alert('Sila muatnaik MyID simati.');
+//      	document.f1.uploadmyid.focus(); 
+//     }
+    else if(document.f1.namaDoc2.value == "0"){
+    	alert('Sila muatnaik Sijil Mati / Perintah Mahkamah (Kematian)');
+    	document.f1.fileupload.focus(); 
    	}
     else{
       input_box = confirm("Adakah anda pasti?");
@@ -3941,6 +3954,34 @@ document.getElementById('majlisagama').style.display="none";
 	
 	function check(){
 	//alert("masuk!");
+	}
+	
+	function open_info() {
+
+		 var width  = 500;
+		 var height = 100;
+		 var left   = (screen.width  - width)/2;
+		 var top    = (screen.height - height)/2;
+		 
+		 var params = 'width='+width+', height='+height;
+		 params += ', top='+top+', left='+left;
+		 params += ', directories=no';
+		 params += ', location=front';
+		 params += ', menubar=no';
+		 params += ', resizable=no';
+		 params += ', scrollbars=no';
+		 params += ', status=no';
+		 params += ', toolbar=no';
+		 new_window = open("","title",params);
+		 new_window.document.open();
+	
+		new_window.document.write("<html><title>Info Maklumat Perkahwinan</title>");
+		new_window.document.write("<body bgcolor=\"#FFFFFF\">");
+		new_window.document.write("<table><tr><td><b><u>Maklumat Perkahwinan</u></b></td></tr></table>");
+	
+		new_window.document.write("<table><tr><td align='justify'>Sijil Perkahwinan atau Daftar Perkahwinan atau Perakuan Cerai</td></tr></table>");
+		new_window.document.write("</body></html>");
+		new_window.document.close();
 	}
 	
 </script>

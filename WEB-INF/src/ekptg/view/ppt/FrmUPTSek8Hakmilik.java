@@ -3637,6 +3637,11 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 		context.put("txtLuasLotAmbil", getParam("txtLuasLotAmbil"));
 		context.put("txtLuasLotAmbil2", getParam("txtLuasLotAmbil2"));
 		context.put("txtLuasLotAmbil3", getParam("txtLuasLotAmbil3"));
+		
+		//baru - v7 yati
+		context.put("txtNoBangunan", getParam("txtNoBangunan"));
+		context.put("txtNoTingkat", getParam("txtNoTingkat"));
+		context.put("txtNoPetak", getParam("txtNoPetak"));
 
 		if (resetRadio.equals("1")) {
 			context.put("sorJenisRizab", "");
@@ -3805,6 +3810,11 @@ public class FrmUPTSek8Hakmilik extends AjaxBasedModule {
 
 		context.put("txtLuasLotAmbilSebelumConvert", "");
 		context.put("sorDropdownUnitAmbil", "");
+		
+		//yati tambah
+		context.put("txtNoBangunan", "");
+		context.put("txtNoTingkat", "");
+		context.put("txtNoPetak", "");
 
 	}// close clearValueHM
 

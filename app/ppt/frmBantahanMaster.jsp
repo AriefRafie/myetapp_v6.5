@@ -453,17 +453,15 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
          
           
           #if ($mode=="disabled")
-          <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" disabled $TEMPchecked2  />
+          	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" disabled $TEMPchecked2  />
           #elseif ($mode!="disabled"  &&  $alasan2 == "2")
-          <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" $TEMPchecked2  />
+          	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" $TEMPchecked2  />
           #else
-          <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
+          	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
           #end          
           
           </td>
-          <td>Jumlah Pampasan
-          	<!-- ; UI: frmBantahanMaster.jsp, Controller: FrmBantahanSenaraiCarian.java; -->
-          </td>
+          <td>Jumlah Pampasan</td>
         </tr>
 		
         <tr>
@@ -472,27 +470,26 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           <td>&nbsp;</td>
           <td>&nbsp;</td>
         	<td>
-	        	<table id="jenisbantahanpampasan">
+	        	<table id="bantahanpampasan">
 	        		<tr>
 	        		 <!-- PPT-35 (i) Jenis Bantahan Pampasan-->
 					#set ( $checked = "" )
-				    #foreach ($semak in $senaraiSemakan)
+				    #foreach ($semakan in $senaraiSemakan)
 					    	<td class="$row" width="10">
 		                   	
-					        #if ($semakanclass.isSemakan("$id_permohonan", "$semak.id" ))
+					        #if ($semakanclass.isSemakan("$id_permohonan", "$semakan.id" ))
 					        	#set ( $checked = "checked" )
 					        #else
 					        	#set ( $checked = "" )
 					    	#end
-					    	<!-- #set ( $checked = "" ) -->
 					    	#if ($mode=="disabled")
-					    		<input class="cb" type="checkbox" name="jenisbantahanpampasan" value="$semak.id" onclick="checkJumlahPampasan(true)" disabled $checked>
+					    		<input class="cb" type="checkbox" name="jenisbantahanpampasan" value="$semakan.id" onclick="checkJumlahPampasan(true)" disabled $checked>
 					    	#elseif ($mode!="disabled")
-					        	<input class="cb" type="checkbox" name="jenisbantahanpampasan" value="$semak.id" onclick="checkJumlahPampasan(true)" $checked>
+					        	<input class="cb" type="checkbox" name="jenisbantahanpampasan" value="$semakan.id" onclick="checkJumlahPampasan(true)" $checked>
 					        #end
 					       	</td>
 					        <td class="$row">
-					        	$semak.keterangan <!-- $semak.id -->
+					        	$semakan.keterangan
 					        </td>
 					      
 				    #end
@@ -1072,6 +1069,7 @@ function simpanBantahan() {
   			return false;
   		}
   	}
+  	
 	if(document.${formName}.txtAmaunTuntutan.value == ""){
 		alert("Sila masukkan \"Amaun Tuntutan\" terlebih dahulu.");
   		document.${formName}.txtAmaunTuntutan.focus(); 

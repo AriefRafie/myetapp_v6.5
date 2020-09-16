@@ -156,7 +156,7 @@
 
 		<br />
 
-		<fieldset id="center">
+	<fieldset id="center">
 			<legend>
 				<strong><font color="red">$M</font>Senarai Pilihan	Hakmilik</strong>
 			</legend>
@@ -213,12 +213,22 @@
 							<td class="$row">Sj.$!listTanah.no_subjaket</td>
 						#end
 						
-						<!-- PPT-06 -->
 						<td class="$row">
-							<input $disability $disabilityx type="text" name="txtMasaSiasatan" id="txtMasaSiasatan" value="$!listTanah.masa_siasatan" 
+					
+						<!--	<input $disability $disabilityx type="text" name="txtMasaSiasatan" id="txtMasaSiasatan" value="$!listTanah.masa_siasatan" 
 							onblur="validateNumber(this,this.value);checkDigit()" onkeyup="validateNumber(this,this.value);validateJenisWaktu(this,this.value)" 
 							maxlength="4" size="4" />
-							
+							-->
+						#if($isEdit=="yes")
+						#set($dateName = "txtMasaSiasatan"+$!listTanah.bil)
+                   		<input name="$!dateName" id="$!dateName" size="11" type="text" value="$!listTanah.MASA_SIASATAN"  onblur="validateNumber(this,this.value);checkDigit() ">            	  	
+            	  		#set($idBL = "id_borangehakmilik"+$!listTanah.bil)
+            	  		<input type="hidden" name="$!idBL" value="$!listTanah.id_borangehakmilik">
+            	  		<input type="hidden" name="id_hakmilik" value="$!listTanah.id_hakmilik">
+            			#else
+            			$!listTanah.MASA_SIASATAN
+            			#end
+            			<!--  
 							<select $disability1 $disabilityx name="socJenisWaktu" id="socJenisWaktu" style="width: 105px">
 							
 								<option value="0" #if($listTanah.jenis_waktu== "" || $listTanah.jenis_waktu=="0" ) selected=selected #end>SILA PILIH</option>
@@ -227,7 +237,22 @@
 								<option value="3" #if($listTanah.jenis_waktu== '3') selected=selected #end>PETANG</option>
 
 							</select>&nbsp;#if(($mode=="new" && $saiz_listHakmilikBorangEInBulk != 0) || ($mode=="view" && $isEdit=="yes")) <font color="blue" style="font-size: 10px"><i>format 12 jam (HHMM)</i></font>#end
-						</td>
+							-->
+							
+								
+						#if($isEdit=="yes")
+                		#set($statusBL = "socJenisWaktu"+$!listTanah.bil)
+                		<select name="$!statusBL" style="width:100px">
+      						<option value="" #if($!listTanah.jenis_pilih=="") selected=selected #end >Sila Pilih</option>	
+			      			<option value="1" #if($!listTanah.jenis_pilih=="1") selected=selected #end>PAGI</option>
+			      			<option value="2" #if($!listTanah.jenis_pilih=="2") selected=selected #end>TENGAH HARI</option>	
+			      			<option value="3" #if($!listTanah.jenis_pilih=="3") selected=selected #end>PETANG</option>	
+			      		</select>      
+			      		#else
+			      		$!listTanah.JENIS_WAKTU
+			      		#end     			
+                		</td>  
+
 					</tr>
 					#end #else
 					<tr>

@@ -27,7 +27,6 @@
 #foreach($data in $dataMaklumatTanahTerperinci)
 
 	
-	<!-- TAB 1 -->
 	#if($onchange=="no")
 		#set($txtLuasLotAsal=$data.luas_lot)
 		#set($txtLuasLotAmbil=$data.luas_ambil)
@@ -50,17 +49,17 @@
 		#set($txtIndustri=$data.industri)
 		#set($txtNamaTempat=$data.nama_tempat)
 	
-		<!-- flag radio/checkbox -->
+		
 		#set($sorPBT=$data.flag_pbt)
 		#set($sorRizab=$data.flag_rezab_melayu)
 	#end
 	
-	<!-- TAB 2 -->
+
 	#set($txtPerihalRupabumi=$data.rupabumi)
 	#set($txtPerihalKeadaan=$data.keadaan_tanah)
 	#set($txtHalangan=$data.halangan)
 	#set($txtTanaman=$data.tanaman)
-	<!-- flag radio/checkbox -->
+	
 	#set($flagLembah=$data.flag_lembah)
 	#set($flagLurah=$data.flag_lurah)
 	#set($flagBerpaya=$data.flag_paya)
@@ -75,24 +74,22 @@
 	#set($flagTerbiar=$data.flag_terbiar)
 	#set($flagLapang=$data.flag_lapang)
 	
-	<!-- TAB 3 -->
+
 	#set($txtKemudahan=$data.kemudahan_awam)
 	#set($txtSempadanUtara=$data.sempadan_utara)
 	#set($txtSempadanSelatan=$data.sempadan_selatan)
 	#set($txtSempadanTimur=$data.sempadan_timur)
 	#set($txtSempadanBarat=$data.sempadan_barat)
-	<!-- flag radio -->
+	
 	#set($sorSaliran=$data.flag_saliran)
 	
-	<!-- TAB 4 -->
-	<!-- SO -->
 	#set($socUnitHargaSO=$data.unit_harga_so)
 	#set($txtHargaSeunitSO=$data.harga_seunit_so)
 	#set($txtHargaPasaranSO=$data.harga_pasaran_so)
 	#set($txtPenjejasanSO=$data.bayar_penjejasan)
 	#set($txtPecahSO=$data.bayar_pecahpisah)
 	#set($txtKenaikanSO=$data.bayar_naik_nilaiso)
-	<!-- JPPH -->
+
 	#set($socUnitHargaJP=$data.unit_harga)
 	#set($txtHargaSeunitJP=$data.harga_seunit_jpph)
 	#set($txtHargaPasaranJP=$data.harga_pasaran)
@@ -104,7 +101,6 @@
 	
 	#set($txtJenisPisah=$data.pecah_pisah)
 	
-	<!-- SWASTA --><!-- PPT-42 -->
 	#set($socUnitHargaNS=$data.unit_harga_ns)
 	#set($txtHargaSeunitNS=$data.harga_seunit_ns)
 	#set($txtHargaPasaranNS=$data.harga_pasaran_ns)
@@ -112,12 +108,11 @@
 	#set($txtPecahNS=$data.bayar_pecah_ns)
 	#set($txtKenaikanNS=$data.bayar_naik_nilai_ns)
 	
-	<!-- TAB 5 -->
 	#set($txdTarikhUlasan=$data.tarikh_ulasan)
 	#set($txtUlasanPegawai=$data.ulasan_pegawai)
-	<!-- Nama Pegawai -->
+
 	#set($txtPelapor=$data.user_name)
-	<!-- set($txtPelapor=$data.nama_pelapor) -->
+
 	
 #end
 
@@ -1511,7 +1506,7 @@
     		</table>
     		#end
 
-<!-- PPT-42V -->    		
+  		
     		<br/>
     		
     		<fieldset>
@@ -1679,8 +1674,7 @@
     			
     		</fieldset>	    		
     		
-    		
-<!-- END PPT-42 -->   		
+    				
     		<br/>
     		
     		<fieldset>

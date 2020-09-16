@@ -2,7 +2,9 @@
 #set ( $idFail = $data.get("id_fail") )
 #set($perhatian="<i><font color=red >Perhatian</font><font >: Sila pastikan label bertanda</font>&nbsp;<font color=red >*</font>&nbsp;<font >diisi.</font></i>")
 
-
+#foreach ($Listflag5juta in $flag5juta)
+	#set($check5juta = $Listflag5juta.flag_5juta )
+#end
 
 #if($size_M!=0)
 	#foreach($m in $listMahkamah)
@@ -852,7 +854,7 @@ document.getElementById("header_lama").style.display="block";
     <tr align="center">
       <td >&nbsp;</td>
       <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="4" $TEMPcheckedMahkamahTinggi2Juta onclick="DocSupportAppear();MahkamahAppear2();MahkamahDisappear()" >
-        Pindah ke Mahkamah Tinggi kerana harta melebihi RM2 juta </td>
+        Pindah ke Mahkamah Tinggi kerana harta melebihi #if($check5juta=='T')RM5 juta #else RM2 juta #end</td>
     </tr>
     
     <tr align="center">
@@ -1802,7 +1804,7 @@ document.getElementById("header_lama").style.display="block";
     <tr align="center">
       <td >&nbsp;</td>
       <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="4" $TEMPcheckedMahkamahTinggi2Juta disabled>
-        Pindah ke Mahkamah Tinggi kerana harta melebihi RM2 juta #if($batal2juta == '1')($namaMahkamah)#end</td>
+        Pindah ke Mahkamah Tinggi kerana harta melebihi #if($check5juta=='T')RM5 juta #else RM2 juta #end #if($batal2juta == '1')($namaMahkamah)#end</td>
     </tr>
     <tr align="center">
       <td >&nbsp;</td>
@@ -2595,7 +2597,7 @@ document.getElementById("header_lama").style.display="block";
       <tr align="center">
         <td >&nbsp;</td>
         <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="4" $TEMPcheckedMahkamahTinggi2Juta >
-          Pindah ke Mahkamah Tinggi kerana harta melebihi RM2 juta </td>
+          Pindah ke Mahkamah Tinggi kerana harta melebihi #if($check5juta=='T')RM5 juta #else RM2 juta #end </td>
       </tr>
       <tr align="center">
         <td >&nbsp;</td>

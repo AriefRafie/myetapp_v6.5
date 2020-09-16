@@ -437,7 +437,7 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	    		  " UPPER (PM.NAMA_PEMOHON) AS NAMA_PEMOHON, UPPER(CASE WHEN PM.NO_KP_BARU IS NOT NULL THEN PM.NO_KP_BARU ELSE CASE WHEN PM.NO_KP_LAMA IS NOT NULL THEN PM.NO_KP_LAMA ELSE "+
 	    		  " CASE WHEN PM.NO_KP_LAIN IS NOT NULL THEN (CASE WHEN PM.JENIS_KP = '5' THEN 'Tentera : ' WHEN PM.JENIS_KP = '6' THEN 'Polis : ' "+
 	    		  " WHEN PM.JENIS_KP = '4' THEN 'Passport : ' WHEN PM.JENIS_KP = '7' THEN 'Lain-lain : ' ELSE '' END) ||  PM.NO_KP_LAIN ELSE '' END END END) AS MYID_PEMOHON, PM.ID_PEMOHON, P.ID_STATUS, "+
-	    		  " CASE WHEN P.ID_STATUS = '171' THEN    UPPER (S.KETERANGAN) || ' DI ' || UPPER (D.NAMA_DAERAH) WHEN P.ID_STATUS IN ('21', '8', '18', '44') THEN UPPER (S.KETERANGAN) "+
+	    		  " CASE WHEN P.ID_STATUS = '171' THEN    UPPER (S.KETERANGAN) || ' DI ' || UPPER (D.NAMA_DAERAH) WHEN P.ID_STATUS IN ('21', '8', '18', '44','50') THEN UPPER (S.KETERANGAN) "+
 	    		  " WHEN P.ID_STATUS IN ('37', '47', '70', '152', '169') THEN 'BATAL' ELSE 'DALAM PROSES' END AS STATUS, "+
 	    		  " CASE WHEN PERINTAH.FLAG_TANGGUH = '1' THEN 'PEMOHON / WARIS TIDAK HADIR' WHEN PERINTAH.FLAG_TANGGUH = '2' THEN 'MENUNGGU KEPUTUSAN RUJUKAN MAHKAMAH SYARIAH' "+
 	    		  " WHEN PERINTAH.FLAG_TANGGUH = '3' THEN 'MENUNGGU KEPUTUSAN RUJUKAN KEPADA RULER OF THE STATE ATAU MAHKAMAH TINGGI (BORANG J)' "+
@@ -639,6 +639,39 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	    	  
 	    	  list.addElement(h);
 	      }
+	      return list;
+	    } finally {
+	      if (db != null) db.close();
+	    }
+	}
+	
+	public static Vector getMaklumatPindahMT(String search,String idPermohonan, String flag_draff) throws Exception {
+		Db db = null;
+	    String sql = "";
+	    Format formatter = new SimpleDateFormat("dd/MM/yyyy h:MM:ss a");
+	    try {
+	      db = new Db();
+	      Statement stmt = db.getStatement();
+	      
+	      sql = "SELECT KP.FLAG_SEBABPINDAHMAHKAMAH, KP.ID_NEGERIMAHKAMAH, KP.ID_DAERAH_MAHKAMAH "
+	      		+ "FROM TBLPPKKEPUTUSANPERMOHONAN KP "
+	      		+ "WHERE KP.ID_PERMOHONAN = '"+idPermohonan+"'";
+	      
+	      myLogger.info("SQL LIST MAKLUMAT PINDAH MT >>>> "+sql.toUpperCase());
+	      ResultSet rs = stmt.executeQuery(sql);
+	      Vector list = new Vector();
+	      Hashtable h;
+	      
+	      while (rs.next()) {
+	    	  h = new Hashtable();
+	    	
+	    	  h.put("tujuan_pindah", rs.getString("FLAG_SEBABPINDAHMAHKAMAH")==null?"":rs.getString("FLAG_SEBABPINDAHMAHKAMAH"));
+	    	  h.put("id_negerim", rs.getString("ID_NEGERIMAHKAMAH")==null?"":rs.getString("ID_NEGERIMAHKAMAH"));
+	    	  h.put("id_daerahm", rs.getString("ID_DAERAH_MAHKAMAH")==null?"":rs.getString("ID_DAERAH_MAHKAMAH"));
+	    	  
+	    	  list.addElement(h);
+	      }
+	      
 	      return list;
 	    } finally {
 	      if (db != null) db.close();

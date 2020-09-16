@@ -2,14 +2,13 @@
 <style type="text/css">
 <!--
 .style1 {
-	font-weight: bold
+	color: #FF0000
 }
 .style2 {
 	font-weight: bold
 }
 -->
 </style>
-
 
 #set($saizTxtTujuanPengambilan="500")
 #set($saizTxtRingkasanPengalaman="900")
@@ -233,7 +232,8 @@ TAHUN </td>
       </table>
       </fieldset></td>
   </tr>
-  <!--  <tr>
+  
+ <!-- <tr>
     <td colspan="2">
     <fieldset>
       <legend><strong>KEUPAYAAN KEWANGAN</strong></legend>
@@ -261,9 +261,9 @@ TAHUN </td>
       #end
       </fieldset>
     </td>
-  </tr>
--->
-  #end
+  </tr>-->
+  #end 
+  
   <tr>
     <td colspan="2"><table width="100%" border="0" cellspacing="2" cellpadding="2">
         #if ($mode == 'newKoordinat' || $mode == 'viewKoordinat' || $mode == 'updateKoordinat')

@@ -24,7 +24,6 @@
   <input name="idLaporanTanah" type="hidden" id="idLaporanTanah" value="$idLaporanTanah"/>
   <input name="idPegawaiLaporanTanah" type="hidden" id="idPegawaiLaporanTanah" value="$idPegawaiLaporanTanah"/>
   <input name="idDokumen" type="hidden" id="idDokumen" value="$idDokumen"/>
-  
   <input name="flagJenisTanah" type="hidden" id="flagJenisTanah" value="$flagJenisTanah"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">

@@ -4031,16 +4031,16 @@ function popupIntergrasiPerintahEtanah(idFail, idPerintah) {
 
 <script>
 //arief add Tandatangan Digital OPEN
-function sendDGcertPerintah(NO_FAIL,id_perbicaraan,idfail,id_permohonan,idpermohonansimati){
-	var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCertPerintah?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&commandw=sendDGCertPerintah";
+function sendDGcertPerintah(NO_FAIL,id_perintah,idfail,id_permohonan,idpermohonansimati){
+	var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCertPerintah?nofail="+NO_FAIL+"&idfail="+idfail+"&idperintah="+id_perintah+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&commandw=sendDGCertPerintah";
 	var hWnd = window.open(url,'Cetak','width=625,height=400, resizable=no,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
     hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
 
-function verifyDGcertPerintah(NO_FAIL,id_perbicaraan,idfail,id_permohonan,idpermohonansimati){
-    var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCertPerintah?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&commandw=verify";
+function verifyDGcertPerintah(NO_FAIL,id_perintah,idfail,id_permohonan,idpermohonansimati){
+    var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCertPerintah?nofail="+NO_FAIL+"&idfail="+idfail+"&idperintah="+id_perintah+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&commandw=verify";
 	var hWnd = window.open(url,'Cetak','width=625,height=400, resizable=no,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
     hWnd.opener = document.window;

@@ -1,7 +1,9 @@
+<input name="flagFrom" type="hidden" id="flagFrom" value='$!{session.getAttribute("FLAG_FROM")}'>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr> #foreach($beanHeader in $BeanHeader)
     #set($idFail = $beanHeader.idFail)
     #set($noFail = $beanHeader.noFail)
+    #set($noFailNegeri = $beanHeader.noFailNegeri)
     #set($urusan = $beanHeader.urusan)
     #set($subUrusan = $beanHeader.subUrusan)
     #set($idPermohonan = $beanHeader.idPermohonan)
@@ -34,7 +36,12 @@
             <input type="button" name="cmdLogTugasan" id="cmdLogTugasan" value="LOG TUGASAN FAIL" onclick="paparLogTugasan('$idFail')"/>
           </td>
         </tr>
-         <tr>
+        <tr>
+          <td width="36%" align="right">No Fail Negeri</td>
+          <td width="1%">:</td>
+          <td width="63%"><font color="blue">$noFailNegeri</font></td>
+        </tr>
+        <tr>
           <td width="36%" align="right">Urusan</td>
           <td width="1%">:</td>
           <td width="63%"><font color="blue">$urusan</font></td>
@@ -127,13 +134,12 @@ function paparLogTugasan(idFail) {
     if (hWnd.focus != null) hWnd.focus();
 		hWnd.focus();
 }
-
-/* function arkibWindow(noFail){
+</script>
+<!-- function arkibWindow(noFail){
 	var url = "../x/${securityToken}/ekptg.view.integrasi.sid.FrmPopupPaparArkibDokumen?kodModul=PHP&noFail="+noFail;
 	var hWnd = window.open(url,"printuser","scrollbars=1,width=800,height=700");
 	if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 		hWnd.focus();
-} */
-</script>
+} -->

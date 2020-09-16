@@ -3755,14 +3755,15 @@ public class FrmPembatalanInternalData extends EkptgCache implements
 			" END AS NO_LOT, "
 					+ " JH.KETERANGAN AS JENIS_HAKMILIK, "
 					+ " JH.KOD_JENIS_HAKMILIK,H.ID_UNITLUASLOT_CONVERT,H.ID_UNITLUASAMBIL_CONVERT,H.NO_HAKMILIK,M.NAMA_MUKIM,H.LUAS_LOT,NVL(H.ID_KATEGORITANAH,'0') AS ID_KATEGORITANAH, "
-					+ " N.NAMA_NEGERI,D.NAMA_DAERAH  "
+					+ " N.NAMA_NEGERI,D.NAMA_DAERAH, H.NO_SYIT, K.KETERANGAN AS KATEGORI_TANAH "
 					+ " FROM TBLPPTHAKMILIK H,TBLRUJJENISHAKMILIK JH,TBLRUJMUKIM M,TBLPPTPENARIKANBALIK PB,TBLPPTPENARIKANHAKMILIK PH,"
-					+ " TBLRUJNEGERI N,TBLRUJDAERAH D,TBLRUJLOT JL  "
+					+ " TBLRUJNEGERI N,TBLRUJDAERAH D,TBLRUJLOT JL, TBLRUJKATEGORI K  "
 					+ " WHERE H.ID_JENISHAKMILIK = JH.ID_JENISHAKMILIK(+) "
 					+ " AND H.ID_MUKIM = M.ID_MUKIM "
 					+ " AND H.ID_NEGERI = N.ID_NEGERI(+) "
 					+ " AND H.ID_DAERAH = D.ID_DAERAH(+) "
 					+ " AND PH.ID_HAKMILIK = H.ID_HAKMILIK AND H.ID_LOT = JL.ID_LOT(+) "
+					+ " AND H.ID_KATEGORITANAH = K.ID_KATEGORI"
 					+ " AND PH.ID_HAKMILIK = '"+id_hakmilik+"' "					
 					+ " AND PH.ID_PENARIKANBALIK = PB.ID_PENARIKANBALIK "
 					+ " AND PB.ID_PENARIKANBALIK = '"
@@ -3808,6 +3809,12 @@ public class FrmPembatalanInternalData extends EkptgCache implements
 				h.put("ID_KATEGORITANAH",
 						rs.getString("ID_KATEGORITANAH") == null ? "" : rs
 								.getString("ID_KATEGORITANAH"));
+				h.put("NO_SYIT",
+						rs.getString("NO_SYIT") == null ? "" : rs
+								.getString("NO_SYIT"));
+				h.put("KATEGORI_TANAH",
+						rs.getString("KATEGORI_TANAH") == null ? "" : rs
+								.getString("KATEGORI_TANAH"));
 			
 				
 				if (rs.getString("ID_UNITLUASLOT_CONVERT")!=null) {					
@@ -7669,20 +7676,25 @@ try {
 					+ " TU.LOKASI_TANAH,TU.LOT_SELURUH_LOT,TU.LOT_JENIS_TANAMAN,TU.LOT_KEADAAN_TANAMAN,"
 					+ " TU.LOT_BERHAMPIRAN,TU.ULASAN,TU.RUPABUMI_SELURUH_LOT, "
 					+ " TU.RUPABUMI_KWSN_TERLIBAT,TU.MELIBATKAN_BANGUNAN,"
-					+ " TU.KATEGORI_BANGUNAN,TU.NO_GAZET_DAERAH,TU.BILANGAN_BANGUNAN "
-					+
+					+ " TU.KATEGORI_BANGUNAN,TU.NO_GAZET_DAERAH,TU.BILANGAN_BANGUNAN, "
+					
+					//TAMBAH v6.5
+					+ " TU.PENDAHULUAN, TU.STATUS_TANAH, TU.JALAN_UTAMA, TU.JALAN_MASUK,TU.NAMA_TEMPAT, TU.JARAK_BANDAR, "
+					+ " TU.PERUMAHAN, TU.INDUSTRI, TU.NAMA_PBT, TU.FLAG_PBT, TU.FLAG_REZAB_MELAYU, TU.TARIKH_AKHIR_LAWAT, TU.TARIKH_MULA_LAWAT, "
+					+ " TU.PENDAHULUAN, TU.STATUS_TANAH, TU.JALAN_UTAMA, TU.JALAN_MASUK,TU.NAMA_TEMPAT, TU.JARAK_BANDAR, " + 
+					"   TU.PERUMAHAN, TU.INDUSTRI, TU.NAMA_PBT, TU.FLAG_PBT, TU.FLAG_REZAB_MELAYU, TU.TARIKH_AKHIR_LAWAT, TU.TARIKH_MULA_LAWAT, " + 
+					"   TU.FLAG_BUKIT, TU.FLAG_BELUKAR, TU.FLAG_DIUSAHA, TU.FLAG_HUTAN, TU.FLAG_JENIS_TANAH, TU.FLAG_LANDAI, TU.FLAG_LAPANG, TU.FLAG_LEMBAH, " + 
+					"   TU.FLAG_LURAH, TU.FLAG_PAYA, TU.FLAG_SEMAK, TU.FLAG_TERBIAR, TU.KEADAAN_TANAH, TU.RUPABUMI, TU.FLAG_RENDAH, TU.FLAG_RATA"
 
-					" FROM TBLPPTTANAHUMUM TU,TBLPPTPENARIKANBALIK PB,TBLPPTHAKMILIK HM,TBLPPTPERMOHONAN P, "
+					+ " FROM TBLPPTTANAHUMUM TU,TBLPPTPENARIKANBALIK PB,TBLPPTHAKMILIK HM,TBLPPTPERMOHONAN P, "
 					+ " TBLRUJNEGERI N,TBLRUJDAERAH D,TBLRUJMUKIM M,TBLPPTPENARIKANHAKMILIK PH  "
-					+ "  WHERE TU.ID_PENARIKANBALIK = PB.ID_PENARIKANBALIK "
+					+ " WHERE TU.ID_PENARIKANBALIK = PB.ID_PENARIKANBALIK "
 					+ " AND TU.ID_HAKMILIK = HM.ID_HAKMILIK "
 					+ " AND PB.ID_PERMOHONAN = P.ID_PERMOHONAN "
 					+ " AND HM.ID_NEGERI = N.ID_NEGERI(+) "
 					+ " AND HM.ID_MUKIM = M.ID_MUKIM(+) "
 					+ " AND HM.ID_DAERAH = D.ID_DAERAH(+) "
-					+ " AND HM.ID_HAKMILIK = "
-					+ id_hakmilik
-					+ " "
+					+ " AND HM.ID_HAKMILIK = " + id_hakmilik + " "
 					+ " AND PB.ID_PENARIKANBALIK = " + id_penarikanbalik + "" +
 							" AND PH.ID_HAKMILIK = HM.ID_HAKMILIK "+
 							" AND PH.ID_PENARIKANBALIK = PB.ID_PENARIKANBALIK ";
@@ -7796,6 +7808,51 @@ try {
 				h.put("KOS_DITANGGUNG",
 						rs.getString("KOS_DITANGGUNG") == null ? "" : rs
 								.getString("KOS_DITANGGUNG"));
+				
+				//TAMBAH v6.5
+				h.put("PENDAHULUAN", rs.getString("PENDAHULUAN") == null ? "" : rs
+					.getString("PENDAHULUAN"));
+				h.put("STATUS_TANAH", rs.getString("STATUS_TANAH") == null ? "" : rs
+					.getString("STATUS_TANAH"));
+				h.put("JALAN_UTAMA", rs.getString("JALAN_UTAMA") == null ? "" : rs
+					.getString("JALAN_UTAMA"));
+				h.put("JALAN_MASUK", rs.getString("JALAN_MASUK") == null ? "" : rs
+					.getString("JALAN_MASUK"));
+				h.put("NAMA_TEMPAT", rs.getString("NAMA_TEMPAT") == null ? "" : rs
+					.getString("NAMA_TEMPAT"));
+				h.put("JARAK_BANDAR", rs.getString("JARAK_BANDAR") == null ? "" : rs
+					.getString("JARAK_BANDAR"));
+				h.put("PERUMAHAN", rs.getString("PERUMAHAN") == null ? "" : rs
+					.getString("PERUMAHAN"));
+				h.put("INDUSTRI", rs.getString("INDUSTRI") == null ? "" : rs
+					.getString("INDUSTRI"));
+				h.put("NAMA_PBT", rs.getString("NAMA_PBT") == null ? "" : rs
+					.getString("NAMA_PBT"));
+				h.put("sorPBT", rs.getString("flag_pbt")==null?"0":rs
+					.getString("flag_pbt"));
+				h.put("tarikh_akhir_lawat", rs.getDate("tarikh_akhir_lawat")==null?"":
+					Format.format(rs.getDate("tarikh_akhir_lawat")));
+				h.put("tarikh_mula_lawat", rs.getDate("tarikh_mula_lawat")==null?"":
+					Format.format(rs.getDate("tarikh_mula_lawat")));
+				h.put("keadaan_tanah", rs.getString("keadaan_tanah")==null?"0":rs.getString("keadaan_tanah"));
+				h.put("rupabumi", rs.getString("rupabumi")==null?"0":rs.getString("rupabumi"));
+				//flag checkbox
+				h.put("flag_diusaha", rs.getString("flag_diusaha")==null?"0":rs.getString("flag_diusaha"));
+				h.put("flag_lembah", rs.getString("flag_lembah")==null?"0":rs.getString("flag_lembah"));
+				h.put("flag_lurah", rs.getString("flag_lurah")==null?"0":rs.getString("flag_lurah"));
+				h.put("flag_paya", rs.getString("flag_paya")==null?"0":rs.getString("flag_paya"));
+				h.put("flag_rendah", rs.getString("flag_rendah")==null?"0":rs.getString("flag_rendah"));
+				h.put("flag_rata", rs.getString("flag_rata")==null?"0":rs.getString("flag_rata"));
+				
+				h.put("flag_landai", rs.getString("flag_landai")==null?"0":rs.getString("flag_landai"));
+				h.put("flag_bukit", rs.getString("flag_bukit")==null?"0":rs.getString("flag_bukit"));
+				h.put("flag_semak", rs.getString("flag_semak")==null?"0":rs.getString("flag_semak"));
+				h.put("flag_belukar", rs.getString("flag_belukar")==null?"0":rs.getString("flag_belukar"));
+				h.put("flag_hutan", rs.getString("flag_hutan")==null?"0":rs.getString("flag_hutan"));
+				h.put("flag_terbiar", rs.getString("flag_terbiar")==null?"0":rs.getString("flag_terbiar"));
+				h.put("flag_lapang", rs.getString("flag_lapang")==null?"0":rs.getString("flag_lapang"));
+				
+				
 
 				maklumat_am_tanah.addElement(h);
 			}
@@ -8077,6 +8134,20 @@ try {
 		String id_pembatalan = (String) data.get("id_pembatalan");
 		String id_Masuk = (String) data.get("id_Masuk");
 		String id_hakmilik = (String) data.get("id_hakmilik");
+		
+		//TAMBAH v6.5
+		String txtPendahuluan = (String) data.get("txtPendahuluan");
+		String txtStatusTanah = (String) data.get("txtStatusTanah");
+		String txtJalanUtama = (String) data.get("txtJalanUtama");
+		String txtJalanMasuk = (String) data.get("txtJalanMasuk");
+		String txtNamaTempat = (String) data.get("txtNamaTempat");
+		String txtJarak = (String) data.get("txtJarak");
+		String txtPerumahan = (String) data.get("txtPerumahan");
+		String txtIndustri = (String) data.get("txtIndustri");
+		String txtNamaPBT = (String) data.get("txtNamaPBT");
+		String txtLokasi = (String) data.get("txtLokasi");
+		String txdTarikhLawatMula = (String)data.get("txdTarikhLawatMula");
+		String txdTarikhLawatAkhir = (String)data.get("txdTarikhLawatAkhir");
 
 		try {
 			db = new Db();
@@ -8088,6 +8159,17 @@ try {
 			r.add("NO_GAZET", txtNoGazet);
 			r.add("NO_GAZET_DAERAH", txtNoGazetDaerah);
 			r.add("ID_PENARIKANBALIK", id_pembatalan);
+			
+			r.add("PENDAHULUAN", txtPendahuluan);
+			r.add("STATUS_TANAH", txtStatusTanah);
+			r.add("JALAN_UTAMA", txtJalanUtama);
+			r.add("JALAN_MASUK", txtJalanMasuk);
+			r.add("NAMA_TEMPAT", txtNamaTempat);
+			r.add("JARAK_BANDAR", txtJarak);
+			r.add("PERUMAHAN", txtPerumahan);
+			r.add("INDUSTRI", txtIndustri);
+			r.add("NAMA_PBT", txtNamaPBT);
+			r.add("LOKASI_TANAH", txtLokasi);
 
 			if (sorKedudukan.equals("1")) {
 				r.add("FLAG_DLM_SIMPANAN", "");
@@ -8157,6 +8239,22 @@ try {
 		String id_Masuk = (String) data.get("id_Masuk");
 		String id_tanahumum = (String) data.get("id_tanahumum");
 		String id_hakmilik = (String) data.get("id_hakmilik");
+			
+		
+		//TAMBAH v6.5
+		String txtPendahuluan = (String) data.get("txtPendahuluan");
+		String txtStatusTanah = (String) data.get("txtStatusTanah");
+		String txtJalanUtama = (String) data.get("txtJalanUtama");
+		String txtJalanMasuk = (String) data.get("txtJalanMasuk");
+		String txtNamaTempat = (String) data.get("txtNamaTempat");
+		String txtJarak = (String) data.get("txtJarak");
+		String txtPerumahan = (String) data.get("txtPerumahan");
+		String txtIndustri = (String) data.get("txtIndustri");
+		String txtNamaPBT = (String) data.get("txtNamaPBT");
+		String txtLokasi = (String) data.get("txtLokasi");
+		String sorPBT = (String) data.get("sorPBT");
+		String txdTarikhLawatMula = (String)data.get("txdTarikhLawatMula");
+		String txdTarikhLawatAkhir = (String)data.get("txdTarikhLawatAkhir");
 
 		try {
 			db = new Db();
@@ -8169,6 +8267,18 @@ try {
 			r.add("NO_GAZET", txtNoGazet);
 			r.add("NO_GAZET_DAERAH", txtNoGazetDaerah);
 			r.add("ID_PENARIKANBALIK", id_pembatalan);
+			r.add("PENDAHULUAN", txtPendahuluan);
+			r.add("STATUS_TANAH", txtStatusTanah);
+			r.add("JALAN_UTAMA", txtJalanUtama);
+			r.add("JALAN_MASUK", txtJalanMasuk);
+			r.add("NAMA_TEMPAT", txtNamaTempat);
+			r.add("JARAK_BANDAR", txtJarak);
+			r.add("PERUMAHAN", txtPerumahan);
+			r.add("INDUSTRI", txtIndustri);
+			r.add("NAMA_PBT", txtNamaPBT);
+			r.add("LOKASI_TANAH", txtLokasi);
+			r.add("FLAG_PBT", sorPBT);
+			
 
 			if (sorKedudukan.equals("1")) {
 				r.add("FLAG_DLM_SIMPANAN", "");
@@ -8262,6 +8372,25 @@ try {
 		String id_hakmilik = (String) data.get("id_hakmilik");
 		String txtKawasanTerlibat = (String) data.get("txtKawasanTerlibat");
 		
+		//TAMBAH v6.5
+		String flagBukit = (String)data.get("flagBukit");
+		String flagLandai = (String)data.get("flagLandai");
+		String flagRata = (String)data.get("flagRata");
+		String flagRendah = (String)data.get("flagRendah");
+		String flagBerpaya = (String)data.get("flagBerpaya");
+		String flagLurah = (String)data.get("flagLurah");
+		String flagLembah = (String)data.get("flagLembah");
+		String txtPerihalRupabumi = (String)data.get("txtPerihalRupabumi");
+		String txtKemudahan = (String)data.get("txtKemudahan");
+		String txtTanaman = (String)data.get("txtTanaman");
+		String txtHalangan = (String)data.get("txtHalangan");
+		String txtPerihalKeadaan = (String)data.get("txtPerihalKeadaan");
+		String flagSemak = (String)data.get("flagSemak");
+		String flagBelukar = (String)data.get("flagBelukar");
+		String flagHutan = (String)data.get("flagHutan");
+		String flagTerbiar = (String)data.get("flagTerbiar");
+		String flagLapang = (String)data.get("flagLapang");	    		
+		String flagUsaha = (String)data.get("flagUsaha");
 		
 
 		try {
@@ -8281,7 +8410,27 @@ try {
 			r.add("MELIBATKAN_BANGUNAN", sorBangunan);
 			r.add("BILANGAN_BANGUNAN", txtBilBangunan);
 			r.add("ID_PENARIKANBALIK", id_pembatalan);
-			r.add("ID_HAKMILIK", id_hakmilik);
+			
+			//TAMBAH v6.5
+			r.add("flag_lapang",flagLapang);
+    		r.add("flag_terbiar",flagTerbiar);
+    		r.add("flag_hutan",flagHutan);
+    		r.add("flag_belukar",flagBelukar);
+    		r.add("flag_semak",flagSemak);
+    		r.add("keadaan_tanah",txtPerihalKeadaan);
+    		r.add("halangan",txtHalangan);
+    		r.add("tanaman",txtTanaman);
+    		r.add("flag_bukit",flagBukit);
+    		r.add("flag_landai",flagLandai);
+    		r.add("flag_rata",flagRata);
+    		r.add("flag_rendah",flagRendah);
+    		r.add("flag_paya",flagBerpaya);
+    		r.add("flag_lurah",flagLurah);
+    		r.add("flag_lembah",flagLembah);
+    		r.add("rupabumi",txtPerihalRupabumi);
+    		r.add("flag_diusaha",flagUsaha);
+    		
+    		r.add("ID_HAKMILIK", id_hakmilik);
 			r.add("ID_MASUK", id_Masuk);
 			r.add("ID_KEMASKINI", id_Masuk);
 			r.add("TARIKH_MASUK", r.unquote("sysdate"));
@@ -8316,6 +8465,27 @@ try {
 		String id_pembatalan = (String) data.get("id_pembatalan");
 		String id_hakmilik = (String) data.get("id_hakmilik");
 		String txtKawasanTerlibat = (String) data.get("txtKawasanTerlibat");
+		
+		//TAMBAH v6.5
+		String flagBukit = (String)data.get("flagBukit");
+		String flagLandai = (String)data.get("flagLandai");
+		String flagRata = (String)data.get("flagRata");
+		String flagRendah = (String)data.get("flagRendah");
+		String flagBerpaya = (String)data.get("flagBerpaya");
+		String flagLurah = (String)data.get("flagLurah");
+		String flagLembah = (String)data.get("flagLembah");
+		String txtPerihalRupabumi = (String)data.get("txtPerihalRupabumi");
+		String txtKemudahan = (String)data.get("txtKemudahan");
+		String txtTanaman = (String)data.get("txtTanaman");
+		String txtHalangan = (String)data.get("txtHalangan");
+		String txtPerihalKeadaan = (String)data.get("txtPerihalKeadaan");
+		String flagSemak = (String)data.get("flagSemak");
+		String flagBelukar = (String)data.get("flagBelukar");
+		String flagHutan = (String)data.get("flagHutan");
+		String flagTerbiar = (String)data.get("flagTerbiar");
+		String flagLapang = (String)data.get("flagLapang");	    		
+		String flagUsaha = (String)data.get("flagUsaha");
+		
 
 		try {
 			db = new Db();
@@ -8336,6 +8506,26 @@ try {
 			r.add("ID_PENARIKANBALIK", id_pembatalan);
 			r.add("ID_HAKMILIK", id_hakmilik);
 
+			//TAMBAH v6.5
+			r.add("flag_lapang",flagLapang);
+    		r.add("flag_terbiar",flagTerbiar);
+    		r.add("flag_hutan",flagHutan);
+    		r.add("flag_belukar",flagBelukar);
+    		r.add("flag_semak",flagSemak);
+    		r.add("keadaan_tanah",txtPerihalKeadaan);
+    		r.add("halangan",txtHalangan);
+    		r.add("tanaman",txtTanaman);
+    		r.add("flag_bukit",flagBukit);
+    		r.add("flag_landai",flagLandai);
+    		r.add("flag_rata",flagRata);
+    		r.add("flag_rendah",flagRendah);
+    		r.add("flag_paya",flagBerpaya);
+    		r.add("flag_lurah",flagLurah);
+    		r.add("flag_lembah",flagLembah);
+    		r.add("rupabumi",txtPerihalRupabumi);
+    		r.add("flag_diusaha",flagUsaha);
+    		
+			
 			r.add("ID_KEMASKINI", id_Masuk);
 
 			r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
@@ -15466,4 +15656,140 @@ public void deleteFail(String id_fail, HttpSession session) throws Exception {
 	    }
 	  }//close updateFlag
 	
+	Vector senarai_pembayaran_online = null;
+	
+	public Vector senarai_pembayaran_online(String negeriuser,String no_fail,
+			String no_jkptg_negeri, String id_kementerian, String id_urusan,
+			String id_status, String jenis_permohon,String role,String user_negeri) throws Exception {
+		senarai_pembayaran_online = new Vector();
+		Db db = null;
+		senarai_pembayaran_online.clear();
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT P.ID_PERMOHONAN,P.TARIKH_PERMOHONAN,"
+					+ " F.NO_FAIL, P.NO_RUJUKAN_UPT, P.NO_RUJUKAN_PTG, "
+					+ " K.NAMA_KEMENTERIAN,D.NAMA_DAERAH,S.KETERANGAN,U.NAMA_SUBURUSAN  FROM TBLPPTPERMOHONAN P, "
+					+ " TBLRUJSUBURUSAN U,TBLPFDFAIL F,TBLRUJKEMENTERIAN K,TBLRUJDAERAH D,"
+					+ " TBLRUJSTATUS S "
+					+ " WHERE  P.ID_FAIL = F.ID_FAIL(+) "
+					+ " AND F.ID_KEMENTERIAN = K.ID_KEMENTERIAN(+) "
+					+ " AND P.ID_DAERAH = D.ID_DAERAH(+) "
+					+ " AND (SELECT COUNT(*) FROM TBLPPTWARTA WHERE ID_PERMOHONAN = P.ID_PERMOHONAN ) > '0' "
+					+ " AND F.ID_SUBURUSAN = '52' "
+					+" "
+					+" AND (SELECT COUNT(*) FROM TBLPPTHAKMILIK HMK WHERE HMK.ID_PERMOHONAN = P.ID_PERMOHONAN " +
+							"AND HMK.ID_HAKMILIK  NOT IN "
+					+" (SELECT DISTINCT H.ID_HAKMILIK FROM TBLPPTHAKMILIK H,TBLPPTHAKMILIKBORANGK HK,TBLPPTBORANGK BK "
+					+" WHERE HK.ID_HAKMILIK = H.ID_HAKMILIK AND H.ID_PERMOHONAN = P.ID_PERMOHONAN AND HK.ID_BORANGK = BK.ID_BORANGK ) ) > 0  "
+			/*		+ " AND P.FLAG_JENISPERMOHONAN = '"
+					+ jenis_permohon
+					+ "' "		*/
+					+ " AND F.ID_SUBURUSAN = U.ID_SUBURUSAN(+) "
+					+ " AND F.ID_KEMENTERIAN = '" + id_kementerian +"' " // Penambahan bagi paparan mengikut kementerian
+			/*		+ " AND NVL(S.ID_STATUS,0) IN ('31','35','38','43','46','48','52','54','58','59',"
+					+ " '62','66','68','72','74','76','181')"*/
+					+ " AND P.ID_STATUS = S.ID_STATUS " +
+							"";
+			
+			if(!negeriuser.equals("16") && !negeriuser.isEmpty()){
+    			if(negeriuser.equals("14")){
+    				sql += "AND f.id_negeri in (14,15,16) ";
+    			}else{
+    				sql += "AND f.id_negeri ='"+negeriuser+"'";
+    			}		
+    		}
+
+			// kena filter by status (sudah diwartakan)
+
+			if (no_fail != "") {
+				if (!no_fail.trim().equals("")) {
+					sql = sql + " AND (UPPER(F.NO_FAIL) LIKE '%"
+							+ no_fail.toUpperCase().trim() + "%'";					
+					
+					sql = sql + " OR UPPER(P.NO_RUJUKAN_PTG) LIKE '%"
+					+ no_fail.toUpperCase().trim() + "%'";
+					
+					sql = sql + " OR UPPER(P.NO_RUJUKAN_PTD) LIKE '%"
+					+ no_fail.toUpperCase().trim() + "%')";
+				}
+			}
+			if (no_jkptg_negeri != "") {
+				if (!no_jkptg_negeri.trim().equals("")) {
+					sql = sql + " AND UPPER(P.NO_RUJUKAN_UPT) LIKE '%"
+							+ no_jkptg_negeri.trim() + "%'";
+				}
+			}
+			if (id_urusan != "") {
+				if (!id_urusan.trim().equals("")) {
+					sql = sql + " AND UPPER(F.ID_SUBURUSAN) LIKE '"
+							+ id_urusan.toUpperCase() + "'";
+				}
+			}
+			if (id_kementerian != "") {
+				if (!id_kementerian.trim().equals("")) {
+					sql = sql + " AND UPPER(F.ID_KEMENTERIAN) LIKE '"
+							+ id_kementerian.toUpperCase() + "'";
+				}
+			}
+			if (id_status != "") {
+				if (!id_status.trim().equals("")) {
+					sql = sql + " AND UPPER(P.ID_STATUS) LIKE '"
+							+ id_status.toUpperCase() + "'";
+				}
+			}
+
+			sql += " ORDER BY P.TARIKH_KEMASKINI DESC";
+
+			myLogger.info("SQL PENARIKAN CARI :" + sql.toUpperCase());
+
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+			int bil = 0;
+			while (rs.next()) {
+				bil = bil + 1;
+				h = new Hashtable();
+				h.put("BIL", bil);
+				h.put("ID_PERMOHONAN",
+						rs.getString("ID_PERMOHONAN") == null ? "" : rs
+								.getString("ID_PERMOHONAN"));
+				// h.put("ID_PEMBATALAN",rs.getString("ID_PENARIKANBALIK") ==
+				// null ? "" : rs.getString("ID_PENARIKANBALIK"));
+				h.put("TARIKH_PERMOHONAN",
+						rs.getString("TARIKH_PERMOHONAN") == null ? "" : Format
+								.format(rs.getDate("TARIKH_PERMOHONAN")));
+				// h.put("NO_PEMBATALAN",rs.getString("NO_PENARIKANBALIK") ==
+				// null ? "" : rs.getString("NO_PENARIKANBALIK").toUpperCase());
+				h.put("NO_FAIL", rs.getString("NO_FAIL") == null ? "TIADA"
+						: rs.getString("NO_FAIL").toUpperCase());
+				// h.put("TARIKH_PEMBATALAN",
+				// rs.getString("TARIKH_PENARIKAN_BALIK")==null?"":Format.format(rs.getDate("TARIKH_PENARIKAN_BALIK")));
+				h.put("NO_RUJUKAN_UPT",
+						rs.getString("NO_RUJUKAN_UPT") == null ? "" : rs
+								.getString("NO_RUJUKAN_UPT"));
+				h.put("NO_RUJUKAN_PTG",
+						rs.getString("NO_RUJUKAN_PTG") == null ? "" : rs
+								.getString("NO_RUJUKAN_PTG"));
+				h.put("NAMA_KEMENTERIAN",
+						rs.getString("NAMA_KEMENTERIAN") == null ? "" : rs
+								.getString("NAMA_KEMENTERIAN").toUpperCase());
+				h.put("NAMA_DAERAH", rs.getString("NAMA_DAERAH") == null ? ""
+						: rs.getString("NAMA_DAERAH").toUpperCase());
+				h.put("KETERANGAN", rs.getString("KETERANGAN") == null ? ""
+						: rs.getString("KETERANGAN").toUpperCase());
+				h.put("URUSAN", rs.getString("NAMA_SUBURUSAN") == null ? ""
+						: rs.getString("NAMA_SUBURUSAN").toUpperCase());
+				senarai_pembayaran_online.addElement(h);
+			}
+			return senarai_pembayaran_online;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
 }
+

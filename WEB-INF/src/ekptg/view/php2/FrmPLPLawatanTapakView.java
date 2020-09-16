@@ -696,6 +696,10 @@ public class FrmPLPLawatanTapakView extends AjaxBasedModule {
 
 		this.context.put("step",step);
 		
+		if (!"".equals(getParam("flagFrom"))){
+	      	session.setAttribute("FLAG_FROM", getParam("flagFrom"));
+	    }
+		
 		return vm;
 	}
 

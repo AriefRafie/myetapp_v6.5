@@ -18,6 +18,7 @@ public class FrmCRBPopupSenaraiTanahView extends AjaxBasedModule  {
 	private static final long serialVersionUID = 1L;
 	static Logger myLogger = Logger.getLogger(FrmCRBPopupSenaraiTanahView.class);
 	FrmCRBPopupSenaraiTanahData logic = new FrmCRBPopupSenaraiTanahData();
+	
 	@Override
 	public String doTemplate2() throws Exception {
 		
@@ -41,6 +42,7 @@ public class FrmCRBPopupSenaraiTanahView extends AjaxBasedModule  {
 	    String idNegeriPemohon = getParam("idNegeriPemohon");
 	    String idKementerianPemohon = getParam("idKementerianPemohon");*/
 	    String idHakmilikSementara = getParam("idHakmilikSementara");
+	    String idJenisTanahPemohon = getParam("idJenisTanahPemohon");
 	    	    
 	    //VECTOR
         Vector list = null;
@@ -172,7 +174,12 @@ public class FrmCRBPopupSenaraiTanahView extends AjaxBasedModule  {
 	    } else {
 	    	
 	    	//GO TO LIST TANAH        	
-        	vm = "app/php2/frmCRBPopupSenaraiTanah.jsp";        	
+        	vm = "app/php2/frmCRBPopupSenaraiTanah.jsp";   
+        	
+        	//SET DEFAULT VALUE
+        	if("99999".equals(idJenisTanah)) {
+        		idJenisTanah = idJenisTanahPemohon;
+        	}
         	
         	if ("1".equals(idJenisTanah)) {
 				this.context.put("selected", "");
@@ -191,7 +198,6 @@ public class FrmCRBPopupSenaraiTanahView extends AjaxBasedModule  {
 				this.context.put("idJenisTanah", "0");
 			}
         	
-        	//SET DEFAULT VALUE
         	/*if ("99999".equals(idNegeri)){
         		idNegeri = idNegeriPemohon;
         	}
@@ -247,11 +253,12 @@ public class FrmCRBPopupSenaraiTanahView extends AjaxBasedModule  {
 		/*this.context.put("idKategoriPemohon", idKategoriPemohon);
 	    this.context.put("idNegeriPemohon", idNegeriPemohon);
 	    this.context.put("idKementerianPemohon", idKementerianPemohon);*/
+		this.context.put("idJenisTanahPemohon", idJenisTanahPemohon); 
 	    
 	    this.context.put("actionPopup", actionPopup);
 		this.context.put("idLuas", idLuas);
 	    
-	 		return vm;
+	 	return vm;
 	}
 
 	public void setupPage(HttpSession session,String action,Vector list) {

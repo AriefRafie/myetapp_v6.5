@@ -240,6 +240,10 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 			if ("doSimpanKemaskiniMaklumatTnh".equals(hitButton)) {
 				logic.updateTanah(idPermohonan, idHakmilikAgensi, idHakmilik, idFail,session);
 			}
+			if ("doSimpanKemaskiniMaklumatPermohonan".equals(hitButton)) {
+				logic.updateMaklumatPermohonan(idFail,idPermohonan,getParam("tarikhTerima"), getParam("tarikhSurat"),
+						idLuasKegunaan,getParam("txtTujuanKegunaan"),getParam("idLuasTanah"), getParam("luasTanah"));
+			}
 			if("doSimpanSenaraiSemak".equals(hitButton)){
 				logic.simpanKemaskiniLampiran(idDokumen, getParam("txtNamaLampiran"), getParam("txtCatatanLampiran"),
 						session);
@@ -789,6 +793,18 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 							}
 
 					}
+					beanMaklumatPermohonan = new Vector();
+					logic.setMaklumatPermohonan(idFail);
+					beanMaklumatPermohonan = logic.getBeanMaklumatPermohonan();
+					if (beanMaklumatPermohonan.size() != 0){
+		    			Hashtable hashMaklumatPelepasan = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
+		    			idLuasKegunaan = (String) hashMaklumatPelepasan.get("flagGuna");
+					}
+					this.context.put("selectLuasKegunaan", HTML.SelectLuasKegunaan("socLuasKegunaan",
+							Long.parseLong(idLuasKegunaan), "", ""));
+					this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
+					myLog.info("update beanMaklumatPermohonan >>>> "+beanMaklumatPermohonan);
+
 				}
 
 

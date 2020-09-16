@@ -1,4 +1,4 @@
-package ekptg.view.ppk;
+package ekptg.view.ppk; 
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -1609,7 +1609,7 @@ Vector listabc = null;
 			logic.setDataPemohonOB(ido);
 			listPemohonOB = logic.getDataPemohonOB();
 			this.context.put("listPemohonOB", listPemohonOB);
-			this.context.put("duplicate", "yes");
+			
 
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8.jsp";
 
