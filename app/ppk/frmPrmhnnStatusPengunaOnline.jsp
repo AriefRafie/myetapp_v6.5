@@ -125,8 +125,8 @@
 <!-- 				$!senarai.tarikhmasuk -->
 		  #else
 		  #if($!senarai.id_pemohon != "")
-<!-- 		  	<a href="javascript:papar('$!senarai.id_Permohonan','$!senarai.id_simati','$!senarai.seksyen','$!senarai.id_pemohon','$!senarai.no_subjaket')" class="style1"><b>$!senarai.tarikh_mohon_online</b></a> -->
-				$!senarai.tarikh_mohon_online
+ 		  	<a href="javascript:papar('$!senarai.id_Permohonan','$!senarai.id_simati','$!senarai.seksyen','$!senarai.id_pemohon','$!senarai.no_subjaket')" class="style1"><b>$!senarai.tarikh_mohon_online</b></a>
+<!-- 				$!senarai.tarikh_mohon_online -->
 		  #else
 		  		$!senarai.tarikh_mohon_online	
 		  #end
@@ -222,12 +222,18 @@
 				<strong>$senarai.status</strong>
 				<br>
 				<a href="#" title="Permohonan Cetak Perintah" onClick="javascript:cetakBorangF('$!senarai.idFail','$!senarai.id_Permohonan')"><small style="color:blue"> CETAK PERINTAH </small></a>
-				
-			#elseif($senarai.id_status == '21'|| ($senarai.id_status == '177') || ($senarai.id_status == '175'))
-				<strong>$senarai.status</strong>
+			
+			#elseif($senarai.id_status == '8')
+				<a href="#" title="Papar Surat Akuan Terima" onclick="javascript:cetakSuratAkuanTerima('$!senarai.nofail.toUpperCase()','$!senarai.idFail','S')"><strong>$senarai.status </strong><small style="color:blue">(KLIK DI SINI)</small></a>
+			
+			#elseif($senarai.id_status == '50')
+				<a href="#" title="Papar Maklumat Pindah Mahkamah Tinggi" onclick="javascript:paparMaklumatPindah('$!senarai.id_Permohonan')"><strong>$senarai.status </strong><br><small style="color:blue">(KLIK DI SINI)</small></a>
+			
+			##elseif($senarai.id_status == '21'|| ($senarai.id_status == '177') || ($senarai.id_status == '175'))
+				<!-- <strong>$senarai.status</strong>
 				<br>
 				<a href="#" onClick="javascript:cetakBorangE('$!senarai.idFail','$!senarai.id_Permohonan','$!senarai.id_simati','$idPerintahHTAOBMST')"><small style="color:blue"> CETAK PERINTAH </small></a>
-		
+				 -->
 			
 			#else
 	  			<strong>$senarai.status</strong>
@@ -352,17 +358,35 @@
 			hWnd.focus();
 	}
 	
-function paparPraBicara(a){
-	// alert (a);
+	function cetakSuratAkuanTerima(noFail,idfail,flagReport) {
+		//window.close();
+	    var url = "../servlet/ekptg.report.ppk.SuratAkuanTerima?nofail="+noFail+"&idfail="+idfail+"&bilDokumen=01&idPegawai=0&flagReport="+flagReport; 
+	    var hWnd = window.open(url,'printuser','width=800,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+	}
 	
-	var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupPraPerbicaraan?idPraPerbicaraan="+a;
+	function paparPraBicara(a){
+		var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupPraPerbicaraan?idPraPerbicaraan="+a;
+		
+		var hWnd = window.open(url,'printuser','width=700,height=315, resizable=yes,scrollbars=yes');
+		if ((document.window != null) && (!hWnd.opener))
+		       hWnd.opener = document.window;
+		if (hWnd.focus != null) hWnd.focus();
+			hWnd.focus();
+	}
 	
-	var hWnd = window.open(url,'printuser','width=700,height=315, resizable=yes,scrollbars=yes');
-	if ((document.window != null) && (!hWnd.opener))
-	       hWnd.opener = document.window;
-	if (hWnd.focus != null) hWnd.focus();
-		hWnd.focus();
-} 
+	function paparMaklumatPindah(a){
+//		alert(a);
+		var url = "../x/${securityToken}/ekptg.view.ppk.FrmMaklumatPindahMT?idPermohonan="+a;
+		
+		var hWnd = window.open(url,'printuser','width=700,height=315, resizable=yes,scrollbars=yes');
+		if ((document.window != null) && (!hWnd.opener))
+		       hWnd.opener = document.window;
+		if (hWnd.focus != null) hWnd.focus();
+			hWnd.focus();
+	}
 
 function submitForm() {    
 	//alert('$val_tab')

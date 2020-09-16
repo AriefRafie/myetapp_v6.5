@@ -174,7 +174,11 @@ public class FrmPLPKeputusanView extends AjaxBasedModule {
         this.context.put("pampasan", pampasan);
         
         this.context.put("step",step);
-        System.out.println(" keputusan vm : "+vm);
+
+  	  	if (!"".equals(getParam("flagFrom"))){
+        	session.setAttribute("FLAG_FROM", getParam("flagFrom"));
+        }
+        
         return vm;
 	}
 }

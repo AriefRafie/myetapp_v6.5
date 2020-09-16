@@ -8,6 +8,8 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import lebah.portal.AjaxBasedModule;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Utils;
@@ -19,6 +21,7 @@ import ekptg.model.utils.emel.EmailConfig;
 public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
+	static Logger myLog = Logger.getLogger(FrmPLPJabatanTeknikalView.class);
 	
 	FrmPLPHeaderData logicHeader = new FrmPLPHeaderData();
 	FrmPLPJabatanTeknikalData logic = new FrmPLPJabatanTeknikalData();
@@ -128,6 +131,8 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
         
         this.context.put("onload", "");
         
+        myLog.info("session apa yang keluar : " +session.getAttribute("FLAG_FROM"));
+        
         //SEND TO MODEL
         if (postDB) {
         	if ("simpanMaklumatKJT".equals(hitButton)){
@@ -167,7 +172,7 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
         	if ("doSimpanKemaskiniMaklumatCadangan".equals(hitButton)){
 				logic.updateKertasCadangan(idKertasKerja, getParam("txtTajukKertas"), getParam("txtTujuan"),
 						getParam("txtLatarBelakangTanah"), getParam("txtLaporanNilaian"), getParam("txtCadanganPembangunan"),
-						getParam("txtPemohon"),getParam("txtPerakuanPTP"), session);
+						getParam("txtPPemohon"),getParam("txtPerakuanPTP"), session);
 			}
         	if ("doSimpanKemaskiniMaklumatNilaian".equals(hitButton)){
         		simpanKemaskiniMaklumatNilaian(idPermohonan, session);
@@ -210,17 +215,12 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
 	    		logic.doSimpanAgihanTugas(idFail, idPegawai, getParam("txtCatatan"), idNegeriUser, session);
 	    		session.removeAttribute("ID_FAIL");
 				session.setAttribute("MSG", "FAIL TELAH DITUGASKAN KEPADA PEGAWAI");
-	    		this.context.put("onload", "gotoSenaraiFail();");
+	    		this.context.put("onload", "gotoSenaraiFailPelepasan();");
 			}
         	if ("doBatalPermohonan".equals(hitButton)){
     			logic.doBatalPermohonan(idFail, idPermohonan, getParam("tarikhBatal"), getParam("txtSebab"), session);
     			step = "";
-    			
-    		} else if ("gotoHantarTugasanPPT".equals(step)){
-    			this.context.put("selectPegawai", HTML.SelectPYWPenolongPegawaiTanahHQ("socPegawai", Long.parseLong(idPegawai), "", ""));
-    			vm = "app/php2/frmPYWAgihanTugas.jsp";
-            
-    		}
+    		} 
         }
 
         //HEADER
@@ -718,7 +718,12 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
 		
 		if ("batalPermohonan".equals(step)){
         	vm = "app/php2/frmBatalPermohonan.jsp";
-        }
+        	
+        } else if ("gotoHantarTugasanPPT".equals(step)){
+			this.context.put("selectPegawai", HTML.SelectPYWPenolongPegawaiTanahHQ("socPegawai", Long.parseLong(idPegawai), "", ""));
+			vm = "app/php2/frmPYWAgihanTugas.jsp";
+        
+		}
 		
 		//SET DEFAULT PARAM
 		this.context.put("mode", mode);

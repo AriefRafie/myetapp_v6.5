@@ -3,6 +3,7 @@
  */
 package ekptg.view.php2;
 
+
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
@@ -37,6 +38,7 @@ public class FrmPYWPopupSenaraiPermohonanView extends AjaxBasedModule {
 	    String hitButton = getParam("hitButton");
 	    String idFail = getParam("idFail");
 	    String step = getParam("step");
+	    String idMesyuarat = getParam("idMesyuarat");
 	    
 	    idNegeriUser = (String)session.getAttribute("_ekptg_user_negeri");		
 	    
@@ -44,10 +46,15 @@ public class FrmPYWPopupSenaraiPermohonanView extends AjaxBasedModule {
         Vector senaraiFail = null;
 	    		
 		//SEND TO MODEL
-		if ("doSimpanHakMilik".equals(hitButton)) {
+		if ("doSimpanPilihan".equals(hitButton)) {
 			
-		}
-	    
+			String idPermohonan="";
+			String[] cbPilihan = request.getParameterValues("checkPermohonan");
+			for(int i = 0; i < cbPilihan.length; i++){
+				 idPermohonan=cbPilihan[i].toString();
+				 logic.simpanPilihanBaru(idMesyuarat, idPermohonan, session);
+			}
+		}	    
 		if ("tutup".equals(actionPopup)){
 			
 	    	
@@ -55,18 +62,14 @@ public class FrmPYWPopupSenaraiPermohonanView extends AjaxBasedModule {
 	    	
 	    	//GO TO LIST TANAH        	
         	vm = "app/php2/frmPYWPopupSenaraiPermohonan.jsp";  
-
         	senaraiFail = new Vector();
         	logic.setSenaraiFailMesyuarat(idFail);
         	senaraiFail = logic.getSenaraiFailMesyuarat();
-			this.context.put("SenaraiFail", senaraiFail);
-        	
+			this.context.put("SenaraiFail", senaraiFail);   	
         	setupPage(session,action,senaraiFail);
 	    }
-		
 	    this.context.put("actionPopup", actionPopup);
 	    this.context.put("step", step);
-	    
 		return vm;
 	}
 

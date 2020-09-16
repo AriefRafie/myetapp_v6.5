@@ -28,6 +28,7 @@ import ekptg.helpers.File;
 import ekptg.helpers.Utils;
 //import ekptg.intergration.EkptgEmailSender;
 import ekptg.model.php2.online.FrmAPBOnlineSenaraiFailData;
+import ekptg.view.esaduan.EkptgEmailSender;
 
 
 
@@ -2172,17 +2173,17 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			conn.commit();
 			
 
-//			if (!"".equals(namaUser) && !"".equals(emelUser)){
-//				EkptgEmailSender email = EkptgEmailSender.getInstance();
-//				email.FROM = "etapp_webmaster@kptg.gov.my";
-//				email.RECIEPIENT = emelUser;				
-//				email.SUBJECT = "PERMOHONAN LESEN AKTA PELANTAR BENUA #" + noPermohonan;
-//				email.MESSAGE = namaUser.toUpperCase() + "."
-//								+ "<br><br>Permohonan anda telah diterima.Sila gunakan nombor permohonan diatas sebagai rujukan."
-//								+ "Anda akan dimaklumkan setelah permohonan ini telah didaftarkan."
-//								+ "<br><br>Terima Kasih.";
-//				email.sendEmail();
-//			}
+			if (!"".equals(namaUser) && !"".equals(emelUser)){
+				EkptgEmailSender email = EkptgEmailSender.getInstance();
+				email.FROM = "etapp_webmaster@kptg.gov.my";
+				email.RECIEPIENT = emelUser;				
+				email.SUBJECT = "PERMOHONAN LESEN AKTA PELANTAR BENUA #" + noPermohonan;
+				email.MESSAGE = namaUser.toUpperCase() + "."
+								+ "<br><br>Permohonan anda telah diterima.Sila gunakan nombor permohonan diatas sebagai rujukan."
+								+ "Anda akan dimaklumkan setelah permohonan ini telah didaftarkan."
+								+ "<br><br>Terima Kasih.";
+				email.sendEmail();
+			}
 			
 		} catch (SQLException ex) { 
 	    	try {
@@ -2826,13 +2827,13 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 		return beanMaklumatPejabat;
 	}
 	
-//	public Vector getBeanMaklumatPejabat() {
-//		return beanMaklumatPejabat;
-//	}
+	public Vector getBeanMaklumatPejabat() {
+		return beanMaklumatPejabat;
+	}
 
-//	public void setBeanMaklumatPejabat(Vector beanMaklumatPejabat) {
-//		this.beanMaklumatPejabat = beanMaklumatPejabat;
-//	}
+	public void setBeanMaklumatPejabat(Vector beanMaklumatPejabat) {
+		this.beanMaklumatPejabat = beanMaklumatPejabat;
+	}
 		
 	public Vector getSenaraiFail() {
 		return senaraiFail;

@@ -1,10 +1,6 @@
 package ekptg.view.ppt.bantahan;
 
 //import integrasi.utils.IntLogManager;
-import integrasi.ws.mt.reg.DeceaseInfoType;
-import integrasi.ws.mt.reg.MTRegManager;
-import integrasi.ws.mt.reg.PartyType;
-
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
@@ -19,6 +15,10 @@ import javax.servlet.http.HttpSession;
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 import lebah.portal.AjaxBasedModule;
+import my.gov.kehakiman.eip.services.DataCreateReqTypePartyAgency;
+import my.gov.kehakiman.eip.services.DataCreateReqTypePartyAgencyPartyCounsel;
+import my.gov.kehakiman.eip.services.DeceaseInfoType;
+import my.gov.kehakiman.eip.services.PartyType;
 
 import org.apache.log4j.Logger;
 
@@ -32,10 +32,15 @@ import ekptg.model.utils.FrmNegeriData;
 import ekptg.model.utils.IUtilHTMLPilihan;
 import ekptg.model.utils.lampiran.ILampiran;
 import ekptg.model.entities.Tblrujdokumen;
+import ekptg.model.entities.Tblrujpejabat;
+import ekptg.model.htp.HtpBean;
+import ekptg.model.htp.IHtp;
 import ekptg.model.ppt.BantahanAgensiDaftar;
 import ekptg.model.ppt.BantahanDaftar;
 import ekptg.model.ppt.util.LampiranBean;
+import ekptg.model.utils.rujukan.DBPPT;
 import ekptg.model.utils.rujukan.UtilHTMLPilihanMT;
+import integrasi.ws.mt.MTManagerReg;
 
 //public class IntegrasiMT extends VTemplate{
 public class IntegrasiMT extends AjaxBasedModule{
@@ -44,10 +49,12 @@ public class IntegrasiMT extends AjaxBasedModule{
 	static Logger myLog = Logger.getLogger(ekptg.view.ppt.bantahan.IntegrasiMT.class);
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	SimpleDateFormat sdfNaming = new SimpleDateFormat("yymmdd");
+	private IHtp iHTP = null;  
  	private IUtilHTMLPilihan iUtilPilihan = null;
 // 	private IUtilHTMLPilihan iPilihan = null;
  	private ILampiran iLampiran = null;
 	private String sql = "";
+	private String idPejabatPTGD = "";
 
 	@Override
 	public String doTemplate2() throws Exception {
@@ -61,7 +68,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 		String socmt =""; 
 		Vector<Hashtable<String,String>> list = null;
 
-		MTRegManager im = null;
+		MTManagerReg im = null;
 		PartyType[] party = null;
 		PartyType pt = null;	
 		
@@ -129,13 +136,14 @@ public class IntegrasiMT extends AjaxBasedModule{
 		
 //			Tujuan Pengujian
 			}else {
-				im = new MTRegManager();
+				im = new MTManagerReg();
 				socmt = getPilihan().Pilihan("socmt",pejabatMT, "disabled");
 //				socmt = String.valueOf(vecMT.get(0).get("namaPejabat"));
 				kodmt = im.getKodMT(pejabatMT);
 			}
-			
-//			Vector<Tblrujpejabat> vecPejabat = DBPPT.getMTByPermohonan(idPermohonan);
+			myLog.info("idPermohonan="+idPermohonan);
+			Vector<Tblrujpejabat> vecPejabat = DBPPT.getMTByPermohonan(idPermohonan);
+			idPejabatPTGD = String.valueOf(vecPejabat.get(0).getIdPejabat());
 //			if(vecPejabat.size() > 1) {
 //				socPejabat = getPTGD().Pilihan("socPejabat", "",idPermohonan,"onchange = \'pilihPejabat()\'");
 //
@@ -217,7 +225,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 			String postcode = getParam("txtPoskod");
 			String stateCode = getStateCode(Integer.parseInt(getParam("txtIdNegeri")));
 			String city = "Putrajaya";
-			myLog.info("stateCode="+stateCode);
+//			myLog.info("stateCode="+stateCode);
 
 			String kodMT = getParam("kodmt");
 			
@@ -232,7 +240,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 				String renameDate = Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.YEAR)), 4) + Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.MONTH) + 1), 2)
 									+ Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.DATE)), 2);
 				renameDoc = "ETP_"+idBantahan+"_"+sdfNaming.format(new Date())+"_"+doc.getIdDokumen()+".pdf";
-				myLog.info("renameDoc="+renameDoc);
+//				myLog.info("renameDoc="+renameDoc);
 				getDoc().simpanDokumenInt(doc);
 				
 			}else{
@@ -242,7 +250,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 					}
 				}
 			}
-			myLog.info("jenisRef="+jenisRef);
+//			myLog.info("jenisRef="+jenisRef);
 			//Perayu PB (Individu|Syarikat)
 			String gen = "U";
 			String noRef = getParam("noRef");
@@ -267,7 +275,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 //				refType = "OT";
 			}
 			
-			im = new MTRegManager("MTREG");
+			im = new MTManagerReg("MTREG");
 			
 			Hashtable<String,String> daftar = new Hashtable<String,String>();
 			daftar.put("idFail",idFail);
@@ -285,12 +293,12 @@ public class IntegrasiMT extends AjaxBasedModule{
 	        //MTRegManager manager = new MTRegManager("15");
 			myLog.info("sql="+sql);
 			if(jenisPembantah.equals("2")){
-				pt = MTRegManager.getPartyPerayuGov(idRujukanPB //id rujukan party
+				pt = MTManagerReg.getPartyPerayuGov(idRujukanPB //id rujukan party
 					,name
 					,add,add2,add3,postcode,stateCode,city);
 			}else {
 				//,String name,String umur,String gen,String noRef
-				pt = MTRegManager.getPartyPerayu(idRujukanPB //id rujukan party
+				pt = MTManagerReg.getPartyPerayu(idRujukanPB //id rujukan party
 						,name, String.valueOf(umur), gen, noRef,refType
 						,add,add2,add3,postcode,stateCode,city);
 			}
@@ -319,8 +327,23 @@ public class IntegrasiMT extends AjaxBasedModule{
 	        deceaseInfo.setDeceaseInfoState(stateCode);
 	        deceaseInfo.setDeceaseInfoCountry("MYS");
 
+	        //2020/09/09 - Penambahan Skop
+	        DataCreateReqTypePartyAgency partyAgency = getParty(idPejabatPTGD);
+	        if(partyAgency==null) {
+				throw new Exception(getIHTP().getErrorHTML("<link rel=\"stylesheet\" type=\"text/css\" href=\"../../css/eTapp_PPT.css\" /> "
+						+ "<table style=\"width:100%\" "
+						+ " <tr align=\"center\"><td>"
+						+ "	<font><b>[MODUL PPT - INTEGRASI MT] SILA SEMAK KONFIGURASI PENTADBIR TANAH</b></font>"
+						+ "</td></tr>"
+						+ "<tr align=\"center\"><td>"
+						+ "<input align=\"center\" type=\"button\" value=\"Tutup\" onClick=\"javascript:window.close()\">"
+						+ "</td></tr>"
+						+ "</table>"
+						+ ""));
+	        }
+	        
 	        String returnMessage = "1 Tidak Berjaya Dihantar";
-	        returnMessage = MTRegManager. PendaftaranBaharu("15"
+	        returnMessage = MTManagerReg. PendaftaranBaharu("15"
 	        					,doc.getIdDokumen(),renameDoc,doc.getKandungan()
 	        					,party
 	        					,deceaseInfo
@@ -329,6 +352,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 	        					, "2"	//High Court
 	        					, idBantahan	// Rujukan Permohonan (id bantahan)
 	        					, "0.00"
+	        					,partyAgency
 	        					, transactionID);
 			
 			if (!returnMessage.equals("")) {
@@ -338,8 +362,8 @@ public class IntegrasiMT extends AjaxBasedModule{
 				if (code.equals("0")) {
 					daftar = new Hashtable<String,String>();
 					daftar.put("idRujukan",idBantahan);
-					if (MTRegManager.getReferenceNo() != null) {
-						daftar.put("noKes",MTRegManager.getReferenceNo());
+					if (MTManagerReg.getReferenceNo() != null) {
+						daftar.put("noKes",MTManagerReg.getReferenceNo());
 					}					
 					daftar.put("catatan",idBantahan);
 					daftar.put("idUser",idUser);
@@ -371,7 +395,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 			
 		}else if(submit.equals("getmahkamah")){
 			String idPejabat = getParam("socmt");
-			im = new MTRegManager();
+			im = new MTManagerReg();
 			
 			socmt = getPilihan().Pilihan("socmt",idPejabat,"onchange = \'pilihMT()\'");
 			kodmt = im.getKodMT(idPejabat);
@@ -383,7 +407,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 			String idPejabat = getParam("socPejabat");
 			
 //			socPejabat = getPTGD().Pilihan("socPejabat", idPejabat,idPermohonan,"onchange = \'pilihPejabat()\'");
-			PartyType partyType = MTRegManager.getPartyResponden(idPejabat);
+			PartyType partyType = MTManagerReg.getPartyResponden(idPejabat);
 
 			setContextPejabat(partyType);
 
@@ -519,6 +543,62 @@ public class IntegrasiMT extends AjaxBasedModule{
 		return iUtilPilihan;
 			
 	}
+	
+	private DataCreateReqTypePartyAgency getParty(String idPejabat) throws Exception{
+		DataCreateReqTypePartyAgency party = null;
+		DataCreateReqTypePartyAgencyPartyCounsel partyAgencyc = null;
+		Db db = null;
+		try {
+			db = new Db();
+	    	Statement stmt = db.getStatement();
+	    	SQLRenderer r = new SQLRenderer();
+	    	r.add("RP.KOD_PEJABATPEN");
+	    	r.add("RP.KOD_PEJABATU");
+	    	r.add("RP.JAWATAN");
+	    	r.add("RP.ID_PEJABATPEN",idPejabat);
+//	  		r.relate("RP.ID_PEJABATPEN", "P.ID_PEJABAT");
+	  		sql = r.getSQLSelect("TBLINTMTPEJABATMAP RP");
+	  		myLog.info("getParty:"+sql);
+	  		ResultSet rs = stmt.executeQuery(sql);
+	  		 
+	  		while (rs.next()) {
+	  			partyAgencyc = new DataCreateReqTypePartyAgencyPartyCounsel(rs.getString("KOD_PEJABATU"));
+	  			party = new DataCreateReqTypePartyAgency("525C71F2-E571-4EA5-925B-DE5217E2B6A9"
+	  					,rs.getString("JAWATAN")
+	  					,"GA_CIVIL"
+	  					,rs.getString("KOD_PEJABATPEN")
+	  					,partyAgencyc);
+
+	  		}
+//	  		myLog.info("getParty:2"+partyAgencyc);
+//		  	myLog.info("getParty:3"+party);
+	      
+	    } catch (Exception e) {
+	    	//myLog.info(e.getMessage());
+	    	return null;
+	    }finally {
+	      if (db != null) db.close();
+	    }
+		
+//		DataCreateReqTypePartyAgencyPartyCounsel partyAgencyc = new DataCreateReqTypePartyAgencyPartyCounsel();
+//		partyAgencyc.setPartyCounselId("");			
+//		DataCreateReqTypePartyAgency partyAgency =new DataCreateReqTypePartyAgency();
+
+//		data.setPartyAgency(partyAgency);
+//		33	PartyAgencyTypeID	String	100	O	-	Refer to Party Type ID Value in Appendix 5.3, Case Code 15, Party Type Description - Responden 
+//		34	PartyAgencyName	String	255	O	-	Value as per 4.2.5 – PartyAgencyName with Status = A
+//		35	PartyAgencyIDType	String	10	O	-	Fix Value: GA_CIVIL
+//		36	PartyAgencyIDNo	String	255	O	-	Value as per 4.2.5 – PartyAgencyIDNo with Status = A
+		
+//		DataCreateReqTypePartyAgency(
+//		           java.lang.String partyAgencyTypeID, 525C71F2-E571-4EA5-925B-DE5217E2B6A9
+//		           java.lang.String partyAgencyName,
+//		           java.lang.String partyAgencyIDType,
+//		           java.lang.String partyAgencyIDNo,
+//		           my.gov.kehakiman.eip.services.DataCreateReqTypePartyAgencyPartyCounsel partyCounsel)
+		return party;
+
+	}
 //	
 //	private IUtilHTMLPilihan getPTGD(){
 //		if(iPilihan == null){
@@ -536,6 +616,10 @@ public class IntegrasiMT extends AjaxBasedModule{
 			
 	}
 
-
+	private IHtp getIHTP(){
+		if(iHTP== null)
+			iHTP = new HtpBean();
+		return iHTP;
+	}
 	
 }

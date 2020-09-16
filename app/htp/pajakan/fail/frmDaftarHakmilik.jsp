@@ -20,36 +20,35 @@
   <input type="hidden" name="idStatus" id="idStatus" value="$!idStatus"/>
   <input type="hidden" name="subUrusan" id="subUrusan" value="$!subUrusan"/>
   <input type="hidden" name="idHakmilikUrusan" id="!idHakmilikUrusan" />
-
-<table width="100%" border="0" cellspacing="2" cellpadding="2"> 
+<table width="100%" border="0" cellspacing="2" cellpadding="2">
 
   #if ($idFail != '')
  	<tr>
 		<td>
 		#parse('app/htp/pajakan/paging.jsp')
 		</td>
-    </tr>  
+    </tr>
      #if ($!bayarPajakan.size()!= 0)
-		
+
 		<!-- <tr>
 			<td>
 			<div class="warning" align="left">
-				Sila Ambil Perhatian. Bayaran Pajakan Masih Belum Dijelaskan.      
-			</div>  
+				Sila Ambil Perhatian. Bayaran Pajakan Masih Belum Dijelaskan.
+			</div>
 			</td>
 		</tr> -->
 		<script>
 			alert("Sila Ambil Perhatian. Bayaran Pajakan Masih Belum Dijelaskan.");
 		</script>
 	#end
-  	
+
   <tr>
     <td>##parse("app/htp/pajakan/fail/frmPajakanHeader.jsp")</td>
   </tr>
   <tr>
     <td>&nbsp;</td>
   </tr>
-  
+
   #else
   <tr>
     <td>
@@ -61,35 +60,35 @@
 	<tr>
     <td>
            <div id="TabbedPanels1" class="TabbedPanels">
-            
-              <ul class="TabbedPanelsTabGroup">              
+
+              <ul class="TabbedPanelsTabGroup">
                 <li class="TabbedPanelsTab" title="Pemohon Pajakan" onclick="doChangeTab(0)" tabindex="0">MAKLUMAT PERMOHONAN</li>
                 <li class="TabbedPanelsTab" title="Senarai Hakmilik" onclick="doChangeTab(1)" tabindex="0">SENARAI HAKMILIK</li>
 
               </ul>
-              
-              <div class="TabbedPanelsContentGroup">              
+
+              <div class="TabbedPanelsContentGroup">
                 <div class="TabbedPanelsContent">
                 <!-- content pemohon pajakan -->
      			#if ($selectedTab == '0')
                 	<table width="100%" border="0" >
 					<tr>
 						<td>
-							
+
 
                    <fieldset>
                     <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
-                    
+
                         <table width="100%" border="0" cellspacing="2" cellpadding="2">
                         #set($flagFail = "")
                         #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
-                        
+
                         	#if($!beanMaklumatPermohonan.flagMohonFail.equalsIgnoreCase(""))
 						    	#set($flagFail = "")
 						    #else
 						    	#set($flagFail = $!beanMaklumatPermohonan.flagMohonFail)
 						    #end
-                        
+
                          <tr>
                             <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
                             <td width="28%">Negeri</td>
@@ -140,7 +139,7 @@
                          </tr>
                          <tr>
                             <td>
-                         <!--	#if ($mode != 'view')<span class="style1">*</span>#end --> 
+                         <!--	#if ($mode != 'view')<span class="style1">*</span>#end -->
                             </td>
                             <td>No. Fail KJP</td>
                             <td>:</td>
@@ -148,7 +147,7 @@
                          </tr>
                          <tr>
                             <td>
-                         <!--	#if ($mode != 'view')<span class="style1">*</span>#end --> 
+                         <!--	#if ($mode != 'view')<span class="style1">*</span>#end -->
                             </td>
                             <td valign="top">Tarikh Surat KJP</td>
                             <td>:</td>
@@ -159,7 +158,7 @@
                          </tr>
                          <tr>
                          <td>
-                         <!--	#if ($mode != 'view')<span class="style1">*</span>#end --> 
+                         <!--	#if ($mode != 'view')<span class="style1">*</span>#end -->
                          </td>
                          <td>No. Fail Lain / Pemohon</td>
                          <td>:</td>
@@ -176,28 +175,28 @@
 							<td >&nbsp;</td>
 					        <td >&nbsp;</td>
 					        <td >&nbsp;</td>
-         					<td >$!agenda.noFail</td>					              			
-		              	</tr>	
+         					<td >$!agenda.noFail</td>
+		              	</tr>
 		              	#else
 	       				<tr>
 							<td >&nbsp;</td>
 					        <td >&nbsp;</td>
 					        <td >&nbsp;</td>
          					<td >
-   								<a href="javascript:paparPautan('$agenda.idFailURL')" class="pautanms">$!agenda.noFail</a>      					
-         					</td>					              			
-		              	</tr>		              	
+   								<a href="javascript:paparPautan('$agenda.idFailURL')" class="pautanms">$!agenda.noFail</a>
+         					</td>
+		              	</tr>
 		              	#end
-					#end 
+					#end
                          <tr>
                            <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
                            <td>Tarikh Surat Permohonan</td>
                            <td>:</td>
                            <td>
                            	<input type="text" size="11" maxlength="10" name="tarikhSuratPemohon" class="$classDis" id="tarikhSuratPemohon" onblur="check_date(this)" value="$beanMaklumatPermohonan.tarikhSuratPemohon" readonly="readonly" $readOnly/>
-								#if ($mode != 'view') 
-									<a href="javascript:displayDatePicker('tarikhSuratPemohon',false,'dmy');"><img src="../img/calendar.gif" alt="Calendar" border="0"/> 
-								#end 
+								#if ($mode != 'view')
+									<a href="javascript:displayDatePicker('tarikhSuratPemohon',false,'dmy');"><img src="../img/calendar.gif" alt="Calendar" border="0"/>
+								#end
 							</td>
                          </tr>
                          <tr style="display:none">
@@ -207,7 +206,7 @@
                             <td><input name="tarikhAgihan" type="text" class="$classDis" id="tarikhAgihan" onblur="check_date(this)" value="$beanMaklumatPermohonan.tarikhAgihan" size="10" maxlength="10" $readOnly/>
                             #if ($mode != 'view')
                             <a href="javascript:displayDatePicker('tarikhAgihan',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
-                            #end            
+                            #end
                             </td>
                          </tr>
                          <tr>
@@ -223,29 +222,23 @@
                             <td colspan="2" valign="top">
                              </td>
                           </tr> -->
-                        
+
                         </table>
-             
+
                     </fieldset>
-           				
+
            				</td>
 					</tr>
-					<tr>						
+					<tr>
 						<td align="center">
                         #if ($mode == 'view')
                           	<input class="stylobutton100" type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="javascript:kemaskiniFail()" />
                				<input class="stylobutton100" type="button"  name="Cetak" id="Cetak" value="Previu" onclick="javascript:senaraiDokumenSurat('tabledokumensurat');" />
-                 			#if($flagFail == "N")
-					    		<input type="button" class="stylobutton100" style="width:auto !important" name="cmdHantarSahkan" id="cmdHantarSahkan" value="Hantar Pengesahan" onclick="javascript:doHantarPengesahan()" />
-					        #elseif($flagFail == "H") <!-- and role $portal_role -->
-					        	<input type="button" class="stylobutton100" style="width:auto !important" name="cmdSahkan" id="cmdSahkan" value="Sahkan Permohonan" onclick="javascript:doSahkan()" />
-					        #end
-          				
           				#elseif ($mode == 'update')
-               				<input class="stylobutton100" type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:simpanKemaskiniFail()" />                				
+               				<input class="stylobutton100" type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:simpanKemaskiniFail()" />
                				<!-- <input class="stylobutton100" type="reset" name="cmdReset" id="cmdReset" value="Kosongkan"/> -->
                				<input class="stylobutton100" type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="javascript:batalKemaskiniFail()" />
-           				#end 							
+           				#end
 						</td>
 					</tr>
 
@@ -258,26 +251,26 @@
 							  </tr>
 							  <tr>
 							    <td><a href="javascript:cetakFailDoket('&idpermohonan=$!idPermohonan','&template=rptNoFailTajukFail','ekptg.report.htp.NoFailTajukFail')" class="pautanms">DOKET</a></td>
-							  </tr>  			   
+							  </tr>
 							  <tr>
 							    <td><a href="javascript:cetakFailDoket('&idpermohonan=$!idPermohonan','&template=HTPajakanMaklumat','ekptg.report.htp.NoFailTajukFail')" class="pautanms">MAKLUMAT PAJAKAN</a></td>
 							  </tr>
 							  </table>
 							</fieldset>
 					  </td>
-				  	</tr>					
-					</table>                        
-                	#end     
-                        
+				  	</tr>
+					</table>
+                	#end
+
                 </div>
                     <!-- close content pemohon pajakan -->
-                    
+
                 <div class="TabbedPanelsContent">
                 <!-- content Ulasan KJP -->
    					#if ($selectedTab == '1')
                     <fieldset>
                     <legend><strong>SENARAI HAKMILIK</strong></legend>
-                    
+
                         <table align="center" width="100%">
                             <tr>
                               <td colspan="8" scope="row">
@@ -288,7 +281,7 @@
                             </tr>
                             <tr class="table_header">
                               <!--<td scope="row" width="5%" align="center"><strong>Bil.</strong></td>
-                              
+
                             	<td width="15%"><strong>Negeri</strong></td>
                               	<td width="15%"><strong>Daerah</strong></td>
                               	<td width="16%"><strong>Bandar/Pekan/Mukim</strong></td>
@@ -302,7 +295,7 @@
                               	<td width="14%">Daerah</td>
                               	<td width="10%">Bandar/Pekan/Mukim</td>
                               	<td width="5%">Seksyen</td>
-                              	
+
                               	<td width="14%">No. Hakmilik</td>
                               	<td width="13%">No. Warta</td>
                              	<td width="10%">No. Lot/PT</td>
@@ -316,7 +309,7 @@
                                 #set( $row = "row1" )
                             #elseif (($list.bil % 2) != 0)
                                 #set( $row = "row1" )
-                            #else 
+                            #else
                                 #set( $row = "row2" )
                             #end
                           <tr>
@@ -326,7 +319,7 @@
                             <td class="$row">$!list.daerah</td>
                             <td class="$row">$!list.mukim</td>
                            <td class="$row">Sek 01</td>
-                        
+
                            	<td class="$row">$!list.kodJenisHakmilik $!list.noHakmilik</td>
                             <td class="$row">$!list.noWarta</td>
                             <td class="$row">$!list.lot</td>
@@ -336,8 +329,8 @@
     							    #if (!$!list.gisCharting.equals('N') )
     								<a alt="GIS" href = "javascript:gisWindow('TIADA','$!maklumatGis');">
 						      			<img border="0" src="../img/online/map.png" width="20" height="15"/>
-						      		</a>   
-						      		#end                         		
+						      		</a>
+						      		#end
 						      		<a alt="Hapus" href = "javascript:doDeleteHakmilik('$list.idHakmilikUrusan');">
 						      			<img border="0" src="../img/online/x.gif" width="20" height="15"/>
 						      		</a>
@@ -348,7 +341,7 @@
                           #else
                           <tr>
                             <td class="row1" align="center">&nbsp;</td>
-                            <td class="row1" align="left" colspan="8">Tiada Rekod</td>                            
+                            <td class="row1" align="left" colspan="8">Tiada Rekod</td>
                           </tr>
                           #end
                         </table>
@@ -360,16 +353,16 @@
     				#end
               </div>
               <!-- close content Ulasan KJP -->
-              
-              
+
+
          </div>
          <!-- close TabbedPanelsContentGroup -->
-              
+
       </div>
       <!-- close TabbedPanels1 -->
-    
-    
-    
+
+
+
     </td>
   </tr>
   <tr>
@@ -377,7 +370,7 @@
   </tr>
   <tr>
     <td align="center">
-    
+
     </td>
   </tr>
   #end
@@ -396,7 +389,7 @@
 		document.${formName}.actionPajakan.value = "papar";
 		return;
 	}
-	
+
 	document.${formName}.hitButton.value = "seterusnya";
 	doAjaxCall${formName}("");
 }
@@ -425,13 +418,13 @@ function doDeleteHakmilik(idHakmilikUrusan){
 			document.${formName}.actionPajakan.value = "papardaftar";
 			return;
 		}
-		
+
 		//document.${formName}.actionPajakan.value = "papar";
 		document.${formName}.actionPajakan.value = "papardaftar";
 		document.${formName}.idHakmilikUrusan.value = idHakmilikUrusan;
 		document.${formName}.hitButton.value = "deletehakmilik";
 		document.${formName}.submit();
-		
+
 	}
 */
 /*function doChangeTab(tabId) {
@@ -439,7 +432,7 @@ function doDeleteHakmilik(idHakmilikUrusan){
 	document.${formName}.mode.value = "view";
 	document.${formName}.actionPajakan.value = "papar";
 	doAjaxCall${formName}("");
-	
+
 }
 */
 	//, 2017/05/08 - Komen
@@ -459,44 +452,44 @@ function doDeleteHakmilik(idHakmilikUrusan){
 
 	//, 2017/05/08 - Komen
 	//function SimpanKemaskiniFail(){
-	
+
 	/*if(document.${formName}.txtNoFailKJP.value == ""){
 		alert('Sila masukkan No Fail KJP.');
-  		document.${formName}.txtNoFailKJP.focus(); 
-		return; 
+  		document.${formName}.txtNoFailKJP.focus();
+		return;
 	}
 	if(document.${formName}.tarikhSuratKJP.value == ""){
 		alert('Sila masukkan Tarikh Surat KJP.');
-  		document.${formName}.tarikhSuratKJP.focus(); 
-		return; 
+  		document.${formName}.tarikhSuratKJP.focus();
+		return;
 	}
 	if(document.${formName}.txtNoFailLain.value == ""){
 		alert('Sila masukkan No. Fail Lain');
-  		document.${formName}.txtNoFailLain.focus(); 
-		return; 
+  		document.${formName}.txtNoFailLain.focus();
+		return;
 	}
 	if(document.${formName}.tarikhAgihan.value == ""){
 		alert('Sila masukkan Tarikh Agihan.');
-  		document.${formName}.tarikhAgihan.focus(); 
-		return; 
+  		document.${formName}.tarikhAgihan.focus();
+		return;
 	}*/
 	/*
 	if(document.${formName}.tarikhSuratPemohon.value == ""){
 		alert('Sila masukkan Tarikh Surat Permohonan.');
-  		document.${formName}.tarikhSuratPemohon.focus(); 
-		return; 
+  		document.${formName}.tarikhSuratPemohon.focus();
+		return;
 	}
 	if(document.${formName}.txtTajuk.value == ""){
 		alert('Sila masukkan Tajuk.');
-  		document.${formName}.txtTajuk.focus(); 
-		return; 
+  		document.${formName}.txtTajuk.focus();
+		return;
 	}
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		//document.${formName}.actionPajakan.value = "papar";
 		document.${formName}.actionPajakan.value = "papardaftar";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	//document.${formName}.actionPajakan.value = "papar";
 	document.${formName}.actionPajakan.value = "papardaftar";
@@ -550,7 +543,7 @@ function langkah3(permohonan,idFail){
 	document.${formName}.action = "?_portal_module=ekptg.view.htp.pajakan.FrmPajakanMJMView&idPermohonan="+permohonan+"&actionPajakan=papar";
 	document.${formName}.mode.value = "view";
 	document.${formName}.submit();
-	
+
 }
 
 function langkah4(permohonan,idFail){
@@ -591,43 +584,43 @@ function langkah5(permohonan,idFail){
 	   		hWnd.opener = document.window;
 	  	if (hWnd.focus != null) hWnd.focus();
 	}
-	
+
 	function paparPautan(idFail){
 		url = "../servlet/ekptg.view.htp.FrmPenswastaan2Servlet?command=papar&idFail="+idFail;
 		actionName = "setSessionIdFail";
 		target = "setSessionIdFail_result";
 		doAjaxUpdater(document.${formName}, url, target, actionName);
-		
+
 		document.${formName}.action = "$EkptgUtil.getTabID('Penswastaan',$portal_role)?_portal_module=ekptg.view.htp.FrmPenswastaan2SyarikatView&actionPenswastaan=papar&mode=view&idFail="+idFail;
 		document.${formName}.submit();
 		//doAjaxCall${formName}("");
-		
+
 	} */
-	
+
 	//Penambahbaikan. Syaz. 01122014. Untuk function pengesahan (2 layer)
 	/**
 	 * N = BARU SAVE
 	 * H = HANTAR
 	 * S = SAH (TELAH DISAHKAN)
-	 * 
+	 *
 	 * note : Hanya fail selepas penambahbaikan sahaja akan ada flag ini. Yang lama dikira telah disahkan dan boleh proceed seperti biasa.
-	 */	 
+	 */
 	/** 2017/05/18
 	function doHantarPengesahan(){
 		 if ( !window.confirm("Adakah Anda Pasti ?") ){
 			//document.${formName}.actionPajakan.value = "papar";
 			document.${formName}.actionPajakan.value = "papardaftar";
 			return;
-		
+
 		 }
 		document.${formName}.mode.value = "view";
 		//document.${formName}.actionPajakan.value = "papar";
 		document.${formName}.actionPajakan.value = "papardaftar";
 		document.${formName}.hitButton.value = "hantarpengesahandaftar";
 		doAjaxCall${formName}("");
-			
+
 	 }
-	
+
 	 function doSahkan() {
 		if ( !window.confirm("Adakah Anda Pasti ?") ){
 			//document.${formName}.actionPajakan.value = "papar";
@@ -641,7 +634,7 @@ function langkah5(permohonan,idFail){
 		//document.${formName}.hitButton.value = "sahkanPermohonan";
 		document.${formName}.hitButton.value = "sahkanpermohonandaftar";
 		doAjaxCall${formName}("");
-			
+
 	}*/
 </script>
 ##parse("app/htp/utiliti/javascript/javaScriptPajakanLangkah2.jsp")

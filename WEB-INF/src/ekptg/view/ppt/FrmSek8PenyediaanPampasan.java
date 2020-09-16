@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -49,6 +50,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
 	static Logger myLogger = Logger.getLogger(FrmSek8PenyediaanPampasan.class);
 	
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+     
 	
 	//model
 	FrmUPTSek8HakmilikData modelHM = new FrmUPTSek8HakmilikData();
@@ -69,6 +71,17 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
     	
     	String vm = "";
     	String noLOT = "";
+    	
+
+       // Date Date5 = new Date("12/01/2017");
+       // String new'Date = sdf.format(currentDate);
+    	String Date5 = "";
+        context.put("Date5","01/12/2017");
+        myLogger.info(" Date5 :"+Date5);
+        
+    	String Date8 = "";
+        context.put("Date8","11/30/2017");
+        myLogger.info(" Date8 :"+Date8);
     	
     	Vector listPageDepan = new Vector();
     	Vector listSediaPampasan = new Vector();
@@ -1126,6 +1139,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
     		
     		//list senarai surat agensi
     		listMaklumatSuratAgensi(idHakmilik);
+    		dataBorangG(id_siasatan);
     		
     		String submit2 = getParam("command2");
             myLogger.info("submit[2] : " + submit2);
@@ -3066,6 +3080,9 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
 		
 		String id_borangg = "";
 		String no_siasatan = "";
+		String tarikh_borangh = "";
+		double jumlah_award = 0 ;
+
 		model.setDataBorangG(id_siasatan);
 		
 		dataBorangG = model.getDataBorangG();
@@ -3073,12 +3090,20 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
 			Hashtable gh = (Hashtable)dataBorangG.get(0);
 			id_borangg = (String)gh.get("id_borangg");
 			no_siasatan = (String)gh.get("no_siasatan");
+			tarikh_borangh = (String)gh.get("tarikh_borangh");
+			//jumlah_award = (String)gh.get("jumlah_award");
+			jumlah_award = (Double)gh.get("jumlah_award");
+
 		}
 		
 		//data and id
 		context.put("dataBorangG",dataBorangG);
 		context.put("id_borangg",id_borangg);
 		context.put("lblNoSiasatan", no_siasatan);
+		context.put("tarikh_borangh", tarikh_borangh);
+		
+		context.put("jumlah_award", jumlah_award);
+		myLogger.info("jumlah_award :"+jumlah_award);
 		
 	}//close dataBorangG
 	

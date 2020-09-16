@@ -386,16 +386,16 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 						ListCheckBox(idpermohonan);
 //						senaraiSemak = model.getSenaraiSemakan(idpermohonan);
 //		        		context.put("senaraiSemakan", senaraiSemak);
-
+						
 						// data pendaftaran
 						DataPermohonan(idpermohonan, "disabled");
-
+						
 						// list dokumen
 						ListDokumen(idpermohonan);
-
+						
 						// list hakmilik
 						ListHakmilik(idpermohonan, noLOT, idpegawai);
-
+						
 						// LIST DEPAN
 					} else {
 						String jawatan = request.getParameter("jawatan");
@@ -403,7 +403,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 						listPageDepan = modelOnline.getListPemohon(id_user, portal_role, "");
 
 						resetValueCarian();
-
+						
 						// screen
 						context.put("jawatan", jawatan);
 						vm = listdepan;
@@ -735,6 +735,10 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 				// form validation
 				context.put("mode", "new");
+				
+				// Dapatkan balik Data
+				getAndSetHM(idpermohonan, "new", id_projekNegeri);
+				
 				// get data from pendaftaran
 				newDataSetting(idpermohonan);
 
@@ -751,22 +755,23 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 			} // close tambahHM
 			else if ("tambahHakmilik".equals(submit)) {
-
+				
 				// form validation
 				context.put("mode", "new");
-
+				
+				context.put("id_hakmilik", "");
 				// clear value
 				clearValueHM();
-
+				
 				noLOT = getParam("carianNoLot2");
 				context.put("carianNoLot2", noLOT.trim());
-
+				
 				// list hakmilik
 				ListHakmilik(idpermohonan, noLOT, idpegawai);
-
+				
 				// get data from pendaftaran
 				newDataSetting(idpermohonan);
-
+				
 				String submit2 = getParam("command2");
 				myLogger.info("submit[2] : " + submit2);
 
@@ -786,6 +791,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 					if ("onchangeUnitLuasAsal".equals(submit3)) {
 
+						getAndSetHM(idpermohonan, "new", id_projekNegeri);
 						// validations for luas asal
 						validationConvertLuas();
 
@@ -853,9 +859,11 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 					if (doPost.equals("false")) {
 						// simpan hm
 						myLogger.info("simpanHM(session)");
-						simpanHM(session);
+						String result = "";
+						
+						result = simpanHM(session);
 					}
-
+					
 					// form validation
 					context.put("mode", "new");
 					context.put("showSave", "yes");
@@ -865,10 +873,10 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 					// list hakmilik
 					ListHakmilik(idpermohonan, noLOT, idpegawai);
-
+					
 					// get data from pendaftaran
 					newDataSetting(idpermohonan);
-
+					
 					// update header
 					header.setDataHeader(idpermohonan);
 					dataHeader = header.getDataHeader();
@@ -1014,8 +1022,14 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 					else if ("updateHM".equals(submit3)) {
 
+						// data hakmilik
+						/*model.setMaklumatTanah(idHakmilik);
+						dataMaklumatTanah = model.getMaklumatTanah();
+						context.put("dataMaklumatTanah", dataMaklumatTanah);
+						*/
+						
 						updateHM(session, idHakmilik, id_projekDaerah);
-
+						
 						// form validation
 						context.put("mode", "view");
 						context.put("isEdit", "no");
@@ -1024,7 +1038,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 						checkFieldValidation(idHakmilik);
 
 						// list hakmilik
-						ListHakmilik(idpermohonan, noLOT, idpegawai);
+						//ListHakmilik(idpermohonan, noLOT, idpegawai);
 
 						// data hakmilik
 						dataHakmilik(idHakmilik, "disabled");
@@ -2890,6 +2904,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 	@SuppressWarnings("unchecked")
 	private void dataHakmilik(String idHakmilik, String disability) throws Exception {
 
+		myLogger.info("masuk sini ");
 		Vector dataMaklumatTanah = new Vector();
 		dataMaklumatTanah.clear();
 
@@ -2897,7 +2912,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		model.setMaklumatTanah(idHakmilik);
 		dataMaklumatTanah = model.getMaklumatTanah();
 		context.put("dataMaklumatTanah", dataMaklumatTanah);
-
+		
 		String id_negeriprojek = "";
 		String id_daerah = "";
 		String id_mukim = "";
@@ -2908,6 +2923,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		String id_daerahpenggawa = "";
 		String id_unitluasambil = "";
 		String id_suburusan = "";
+		String id_hakmilik = "";
 		if (dataMaklumatTanah.size() != 0) {
 			Hashtable h = (Hashtable) dataMaklumatTanah.get(0);
 			id_mukim = h.get("id_mukim").toString();
@@ -2920,8 +2936,10 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			id_daerahpenggawa = h.get("id_daerahpenggawa").toString();
 			id_unitluasambil = h.get("id_unitluasambil").toString();
 			id_suburusan = h.get("id_suburusan").toString();
+			id_hakmilik = h.get("id_hakmilik").toString();
 		}
-
+		context.put(id_hakmilik,"id_hakmilik");
+		myLogger.info(" id_hakmilik "+id_hakmilik);
 		// validation hakmiliik by urusan
 		if (id_suburusan.equals("51")) {
 			context.put("hideFieldHakmilik", "yes");
@@ -2971,6 +2989,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 		// dropdown by
 		if (id_daerah != "") {
+			myLogger.info("masukkk :"+id_daerah);
 			context.put("selectMukim", HTML.SelectMukimNoKodByDaerah(id_daerah, "socMukim", Utils.parseLong(id_mukim),
 					"style=width:auto " + mode + ""));
 		} else {
@@ -2981,7 +3000,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 	}// close dataHakmilik
 
 	@SuppressWarnings("unchecked")
-	private void simpanHM(HttpSession session) throws Exception {
+	private String simpanHM(HttpSession session) throws Exception {
 
 		Hashtable h = new Hashtable();
 
@@ -3005,56 +3024,65 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		h.put("socKategoriTanah", getParam("socKategoriTanah"));
 		h.put("socMukim", getParam("socMukim"));
 		h.put("txtNoSyit", getParam("txtNoSyit"));
+		
+//		Simpan Value Luas
 		h.put("kodLot", getParam("socKodLot"));
 		h.put("txtNoLot", getParam("txtNoLot"));
 		h.put("txtNoPT", getParam("txtNoPT"));
-		h.put("txtLuasAsal", Utils.RemoveSymbol(getParam("txtLuasLotAsal")));
-		h.put("txtLuasAmbil", Utils.RemoveSymbol(getParam("txtLuasLotAmbil")));
+		h.put("txtLuasAsal", Utils.RemoveSymbol(getParam("txtLuasAsal")));
+		h.put("txtLuasAmbil", Utils.RemoveSymbol(getParam("txtLuasAmbil")));
 		h.put("txtCatatan", getParam("txtCatatan"));
 		h.put("txtseksyen", getParam("txtSeksyen"));
 		h.put("txdTarikhPembayaran", getParam("txdTarikhPembayaran"));
-
-		h.put("unitLuas", getParam("socUnitLuasLot"));
-		h.put("unitLuasAmbil", getParam("socUnitLuasAmbil"));
+		h.put("unitLuas", getParam("unitLuas"));
+		h.put("unitLuasAmbil", getParam("unitLuasAmbil"));		myLogger.info("socUnitLuasAmbil: " +getParam("socUnitLuasAmbil"));
 		h.put("txtLuasLotAsalSebelumConvert", getParam("txtLuasLotAsalSebelumConvert"));
 		h.put("txtLuasLotAmbilSebelumConvert", getParam("txtLuasLotAmbilSebelumConvert"));
 		h.put("sorDropdownUnitAsal", getParam("sorDropdownUnitAsal"));
 		h.put("sorDropdownUnitAmbil", getParam("sorDropdownUnitAmbil"));
-
-		// rizab
+		
+//		rizab
 		h.put("sorJenisRizab", getParam("sorJenisRizab"));
 		h.put("txtLain", getParam("txtLain"));
 		h.put("txtNoWartaRizab", getParam("txtNoWartaRizab"));
 		h.put("txdTarikhWarta", getParam("txdTarikhWarta"));
-
+		
+//    	PPT-03 Penambahan Strata
+		h.put("txtNoBangunan", getParam("txtNoBangunan"));	myLogger.info("txtNoBangunan: " +getParam("txtNoBangunan"));
+    	h.put("txtNoTingkat", getParam("txtNoTingkat"));
+    	h.put("txtNoPetak", getParam("txtNoPetak"));
+    	
 		h.put("id_user", session.getAttribute("_ekptg_user_id"));
 
 		// pengambilan segera
 		h.put("socPSegera", getParam("socPSegera"));
 
 		// FrmUPTSek8HakmilikData.
-		simpanHM2(h, flagSubjaket);
+		return simpanHM2(h, flagSubjaket);
 		// FrmUPTSek8HakmilikData.upload(h, getParam("id_permohonan"));
 
 	}// close simpanHM
 
-	public void simpanHM2(Hashtable data, String flagSubjaket) throws Exception {
-		myLogger.info("simpanHM");
+	public static String simpanHM2(Hashtable data, String flagSubjaket) throws Exception {
+		myLogger.info("simpanHM2");
 		Db db = null;
 		String sql = "";
+		String output = "";
+		String id_hakmilikString = "";
 		Connection conn = null;
 		try {
-
+			
 			db = new Db();
 			conn = db.getConnection();
 			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
-
+			
 			String id_user = (String) data.get("id_user");
-
+			long id_hakmilik = DB.getNextID("TBLPPTHAKMILIK_SEQ");
+			id_hakmilikString = String.valueOf(id_hakmilik);
 			// pengambilan segera
 			String socPSegera = (String) data.get("socPSegera");
-
+			
 			String socDaerahPenggawa = (String) data.get("socDaerahPenggawa");
 			String id_permohonan = (String) data.get("id_permohonan");
 			String id_negeriProjek = (String) data.get("id_negeriProjek");
@@ -3065,14 +3093,14 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			String txdTarikhPembayaran = (String) data.get("txdTarikhPembayaran");
 			String txtnolot = (String) data.get("txtNoLot");
 			String txtnopt = (String) data.get("txtNoPT");
-
+			
 			String id_jenishakmilik = (String) data.get("jenisHakMilik");
 			String no_hakmilik = (String) data.get("txtNoHakmilik");
 			String id_lot = (String) data.get("kodLot");
 			String id_luasasal = (String) data.get("unitLuas");
 			String luas_ambil = (String) data.get("txtLuasAmbil");
 			String luas_asal = (String) data.get("txtLuasAsal");
-
+			
 			String tarikhLuput = (String) data.get("txdTarikhLuput");
 			String tarikhDaftar = (String) data.get("txdTarikhDaftar");
 			String baki = (String) data.get("txtBakiTempoh");
@@ -3085,39 +3113,44 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			String nama_luas_ambil = (String) data.get("txtLuasLotAmbilSebelumConvert");
 			String id_unitluaslot_convert = (String) data.get("sorDropdownUnitAsal");
 			String id_unitluasambil_convert = (String) data.get("sorDropdownUnitAmbil");
-
+			
 			// rizab
 			String sorJenisRizab = (String) data.get("sorJenisRizab");
 			String txtLain = (String) data.get("txtLain");
 			String txtNoWartaRizab = (String) data.get("txtNoWartaRizab");
 			String txdTarikhWarta = (String) data.get("txdTarikhWarta");
-
+			
+			//	PPT-03 Penambahan Strata
+    		String txtNoBangunan = (String)data.get("txtNoBangunan");
+    		String txtNoTingkat = (String)data.get("txtNoTingkat");
+    		String txtNoPetak =  (String)data.get("txtNoPetak");
+    		
 			String syaratNyata = (String) data.get("txtSyaratNyata");
 			String syaratKhas = (String) data.get("txtSyaratKhas");
 			String sekatanKepentingan = (String) data.get("txtSekatanKepentingan");
 			String sekatanHak = (String) data.get("txtSekatanHak");
 			String noSyit = (String) data.get("txtNoSyit");
-
+			
 			String TW = "to_date('" + txdTarikhWarta + "','dd/MM/yyyy')";
 			String TL = "to_date('" + tarikhLuput + "','dd/MM/yyyy')";
 			String TD = "to_date('" + tarikhDaftar + "','dd/MM/yyyy')";
 			String TP = "to_date('" + txdTarikhPembayaran + "','dd/MM/yyyy')";
-
+			
 			String flagSebahagian = "0";
-
+			
 			if (!luas_asal.isEmpty() && !luas_ambil.isEmpty()) {
-
+				
 				// validate sebahagian / keseluruhan
 				double luasAsal = Double.parseDouble(luas_asal);
 				if (id_unitluaslot_convert.equals("1")) {
 					luasAsal *= 10000;
 				}
-
+				
 				double luasAmbil = Double.parseDouble(luas_ambil);
 				if (id_unitluasambil_convert.equals("1")) {
 					luasAmbil *= 10000;
 				}
-
+				
 				if ((luasAsal - luasAmbil) > 0) {
 					flagSebahagian = "1";
 				} else if ((luasAsal - luasAmbil) == 0) {
@@ -3125,9 +3158,9 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				} else {
 					flagSebahagian = "0";
 				}
-
+				
 			}
-
+			
 			// 1 = sebahagian
 			// 2 = keseluruhan
 			SQLRenderer r = new SQLRenderer();
@@ -3164,32 +3197,41 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			r.add("sekatan_kepentingan", sekatanKepentingan);
 			r.add("sekatan_hak", sekatanHak);
 			r.add("no_syit", noSyit);
-
+			
 			// new
 			r.add("id_unitluasambil", id_luasambil);
 			r.add("nama_luas_asal", nama_luas_asal);
 			r.add("nama_luas_ambil", nama_luas_ambil);
 			r.add("id_unitluaslot_convert", id_unitluaslot_convert);
 			r.add("id_unitluasambil_convert", id_unitluasambil_convert);
-
+			
+//    		PPT-03 Penambahan Strata
+    		r.add("no_bangunan",txtNoBangunan);
+    		r.add("no_tingkat",txtNoTingkat);
+    		r.add("no_petak",txtNoPetak);
+    		
 			r.add("tarikh_masuk", r.unquote("sysdate"));
 			r.add("id_masuk", id_user);
+			r.add("id_hakmilik",id_hakmilikString);
 			sql = r.getSQLInsert("tblppthakmilik");
+			
 			myLogger.info("sql add tanah : " + sql);
 			stmt.executeUpdate(sql);
+			output = ""+id_hakmilikString;
+			myLogger.info("id hakmilik "+output);
 			conn.commit();
-			uploadFiles(db, conn, id_permohonan);
+			//uploadFiles(db, conn, id_permohonan);
 			// remove subjaket kalau dah ada
 			if (flagSubjaket.equals("1")) {
-
+				
 				r.clear();
-
+				
 				// update flag di tblpptpermohonan
 				r.update("id_permohonan", id_permohonan);
 				r.add("flag_subjaket", "");
 				r.add("tarikh_kemaskini", r.unquote("sysdate"));
 				r.add("id_kemaskini", id_user);
-
+				
 				sql = r.getSQLUpdate("Tblpptpermohonan");
 				stmt.executeUpdate(sql);
 
@@ -3202,7 +3244,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				sql = r.getSQLUpdate("Tblppthakmilik");
 				stmt.executeUpdate(sql);
 				conn.commit();
-				uploadFiles(db, conn, id_permohonan);
+				//uploadFiles(db, conn, id_permohonan);
 			}
 
 		} catch (Exception re) {
@@ -3214,9 +3256,198 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			if (db != null)
 				db.close();
 		} // close finally
+		return output;
 
 	}// close simpanHM
 
+	public void updateHM(Hashtable data, String flagSubjaket) throws Exception
+	  {
+		
+	    Db db = null;
+	    String sql = "";
+	    
+	    try{
+	      
+	    		db = new Db();
+	    		Statement stmt = db.getStatement();
+	    		Connection conn = null;
+	    		
+	    		String id_user = (String)data.get("id_user");
+	    	
+	    		//pengambilan segera
+	    		String socPSegera = (String)data.get("socPSegera");
+	    		
+	    		String socDaerahPenggawa = (String)data.get("socDaerahPenggawa");
+	    		
+	    		myLogger.info("Check Value update2");
+	    		String id_permohonan = (String) data.get("id_permohonan");
+	    		myLogger.info("id_permohonan==="+sql);
+	    		String id_hakmilik = (String)data.get("id_hakmilik");	myLogger.info("id_hakmilik: " +id_hakmilik);
+	    		String id_daerah = (String)data.get("id_daerah");   	myLogger.info("id_daerah: " +id_daerah);
+	    		
+	    		String id_mukimProjek = (String)data.get("socMukim");   	myLogger.info("id_mukimProjek: " +id_mukimProjek);
+	    		String txtseksyen = (String)data.get("txtseksyen"); 
+	    		String catatan = (String)data.get("txtCatatan");
+	    		String txtnolot = (String)data.get("txtNoLot");
+	    		String txtnopt = (String)data.get("txtNoPT");
+	    		
+	    		String id_jenishakmilik = (String)data.get("jenisHakMilik");
+	    		String no_hakmilik = (String)data.get("txtNoHakmilik");
+	    		String id_lot = (String)data.get("kodLot");  
+	    		String id_luas = (String)data.get("unitLuas");	myLogger.info("id_luas: " +id_luas);
+	    		String luas_ambil = (String)data.get("txtLuasAmbil");	myLogger.info("luas_ambil: " +luas_ambil);
+	    		String luas_asal = (String)data.get("txtLuasAsal");	myLogger.info("luas_asal: " +luas_asal);
+
+	    		String tarikhLuput = (String)data.get("txdTarikhLuput");	 
+	    		String tarikhDaftar = (String)data.get("txdTarikhDaftar");
+	    		String baki = (String)data.get("txtBakiTempoh");
+	    		String id_kategoriTanah = (String)data.get("socKategoriTanah");
+	    		String lokasi = (String)data.get("txtLokasi");	
+	    	
+	    		//rizab
+		    	String sorJenisRizab = (String)data.get("sorJenisRizab");
+		    	String txtLain = (String)data.get("txtLain");
+		    	String txtNoWartaRizab = (String)data.get("txtNoWartaRizab");
+		    	String txdTarikhWarta = (String)data.get("txdTarikhWarta");
+		    	 
+	    		String syaratNyata = (String)data.get("txtSyaratNyata");	 
+	    		String syaratKhas = (String)data.get("txtSyaratKhas");
+	    		String sekatanKepentingan = (String)data.get("txtSekatanKepentingan");
+	    		String sekatanHak = (String)data.get("txtSekatanHak");
+	    		String noSyit = (String)data.get("txtNoSyit");	
+	    		
+	    		//new
+	    		String id_luasambil = (String)data.get("unitLuasAmbil");	myLogger.info("id_luasambil: " +id_luasambil);
+	    		String nama_luas_asal = (String)data.get("txtLuasLotAsalSebelumConvert");  	myLogger.info("nama_luas_asal: " +nama_luas_asal);
+	    		String nama_luas_ambil = (String)data.get("txtLuasLotAmbilSebelumConvert");	myLogger.info("nama_luas_ambil: " +nama_luas_ambil);
+	    		String id_unitluaslot_convert = (String)data.get("sorDropdownUnitAsal");	myLogger.info("id_unitluaslot_convert: " +id_unitluaslot_convert);
+	    		String id_unitluasambil_convert = (String)data.get("sorDropdownUnitAmbil");		myLogger.info("id_unitluasambil_convert: " +id_unitluasambil_convert);
+	    		
+	    		
+	    		String TL = "to_date('" + tarikhLuput + "','dd/MM/yyyy')";
+	    		String TD = "to_date('" + tarikhDaftar + "','dd/MM/yyyy')";
+	    		String TW = "to_date('" + txdTarikhWarta + "','dd/MM/yyyy')";
+
+	    		//PPT-03 Penambahan Strata
+	    		String txtNoBangunan = (String)data.get("no_bangunan");
+	    		String txtNoTingkat = (String)data.get("no_tingkat");
+	    		String txtNoPetak =  (String)data.get("no_petak"); 		 myLogger.info("txtNoPetak: " +txtNoPetak);
+	    		
+	    		String flagSebahagian = "0";
+	    		
+	    		if(!luas_asal.isEmpty() && !luas_ambil.isEmpty()){
+	    			
+	    			//validate sebahagian / keseluruhan
+	    			double luasAsal = Double.parseDouble(luas_asal);
+	    			if(id_unitluaslot_convert.equals("1")){
+	    				luasAsal *= 10000;
+	    			}
+	    		
+	    			double luasAmbil = Double.parseDouble(luas_ambil);
+	    			if(id_unitluasambil_convert.equals("1")){
+	    				luasAmbil *= 10000;
+	    			}
+	    		
+	    			if((luasAsal - luasAmbil) > 0 ){
+	    				flagSebahagian = "1";
+	    			}else if((luasAsal - luasAmbil) == 0 ){
+	    				flagSebahagian = "2";
+	    			}else{
+	    				flagSebahagian = "0";
+	    			}
+	    			
+	    		}
+	    		
+	    		SQLRenderer r = new SQLRenderer();
+	    		r.update("id_hakmilik", id_hakmilik);
+	    		//flag segera
+	    		r.add("FLAG_SEGERA_SEBAHAGIAN", socPSegera);
+	    		r.add("flag_sebahagian", flagSebahagian);
+	    		r.add("id_daerahpenggawa", socDaerahPenggawa);
+	    		r.add("id_jenishakmilik", id_jenishakmilik);
+	    		r.add("id_daerah", id_daerah);
+	    		r.add("id_mukim", id_mukimProjek);
+	    		r.add("id_unitluaslot", id_luas);
+	    		r.add("id_lot", id_lot);
+	    		r.add("luas_lot",luas_asal);
+	    		r.add("no_warta_rizab", txtNoWartaRizab); 	
+		    	r.add("tarikh_warta_rizab", r.unquote(TW));
+		    	r.add("flag_jenis_rizab", sorJenisRizab); 	
+		    	r.add("nama_lain_rizab", txtLain);
+	    		r.add("luas_ambil", luas_ambil);
+	    		r.add("no_hakmilik", no_hakmilik);
+	    		r.add("no_lot", txtnolot);
+	    		r.add("no_pt", txtnopt);
+	    		r.add("catatan",catatan);
+	    		r.add("seksyen",txtseksyen);	    		
+	    		r.add("tarikh_daftar",r.unquote(TD));
+	    		r.add("tarikh_luput",r.unquote(TL));
+	    		r.add("tempoh_luput", baki);
+	    		r.add("id_kategoritanah",id_kategoriTanah);
+	    		r.add("lokasi",lokasi);	    		
+	    		r.add("syarat_nyata", syaratNyata);
+	    		r.add("syarat_khas", syaratKhas);
+	    		r.add("sekatan_kepentingan",sekatanKepentingan);
+	    		r.add("sekatan_hak",sekatanHak);
+	    		r.add("no_syit",noSyit);
+	    		
+//	    		PPT-03 Strata
+	    		r.add("no_bangunan",txtNoBangunan);
+	    		r.add("no_tingkat",txtNoTingkat);
+	    		r.add("no_petak",txtNoPetak);
+	    		
+	    		//new
+	    		r.add("id_unitluasambil", id_luasambil);
+	    		r.add("nama_luas_asal", nama_luas_asal);
+	    		r.add("nama_luas_ambil", nama_luas_ambil);
+	    		r.add("id_unitluaslot_convert", id_unitluaslot_convert);
+	    		r.add("id_unitluasambil_convert", id_unitluasambil_convert);	
+	    		
+	    		r.add("tarikh_kemaskini",r.unquote("sysdate"));
+	    		r.add("id_kemaskini",id_user); 
+	    		
+	    		sql = r.getSQLUpdate("TBLPPTHAKMILIK");
+	    		stmt.executeUpdate(sql);
+	    		myLogger.info("updateHM ****  : "+sql);
+	    		myLogger.info("flagSubjaket ****  : "+flagSubjaket);
+	    		// remove subjaket kalau dah ada
+				//if (flagSubjaket.equals("1")) {
+					
+					r.clear();
+					
+					// update flag di tblpptpermohonan
+					myLogger.info("Baca id_permohonan:--------------"+id_permohonan);
+					r.update("id_permohonan", id_permohonan);
+					r.add("flag_subjaket", "");
+					r.add("tarikh_kemaskini", r.unquote("sysdate"));
+					r.add("id_kemaskini", id_user);
+					
+					sql = r.getSQLUpdate("Tblpptpermohonan");
+					myLogger.info("Baca sql:--------------"+sql);
+					stmt.executeUpdate(sql);
+
+					r.clear();
+
+					r.update("id_permohonan", id_permohonan);
+					r.add("no_subjaket", "");
+					r.add("tarikh_kemaskini", r.unquote("sysdate"));
+					r.add("id_kemaskini", id_user);
+					sql = r.getSQLUpdate("Tblppthakmilik");
+					stmt.executeUpdate(sql);
+					conn.commit();
+					uploadFiles(db, conn, id_permohonan);
+				//}
+  	
+	    } catch (Exception re) {
+	    	Category log = null;
+	    	log.error("Error: ", re);
+	    	throw re;
+	    	}//close try 
+	    finally {
+	      if (db != null) db.close();
+	    }//close finally
+	   
+	  }//close updateHM
 	// upload start
 
 	private void uploadFiles(Db db, Connection conn, String id_permohonan) throws Exception {
@@ -3279,16 +3510,19 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 	private void updateHM(HttpSession session, String idHakmilik, String id_projekDaerah) throws Exception {
 
 		Hashtable h = new Hashtable();
-
+		String flagSubjaket = getParam("flag_subjaket");
+		
+		myLogger.info("Check Value update1");
+		
 		h.put("txtLokasi", "");
 		h.put("txtSyaratNyata", "");
 		h.put("txtSyaratKhas", "");
 		h.put("txtSekatanKepentingan", "");
 		h.put("txtSekatanHak", "");
-
+		
 		h.put("id_hakmilik", idHakmilik);
 		h.put("id_daerah", id_projekDaerah);
-
+		
 		h.put("socDaerahPenggawa", getParam("socDaerahPenggawa"));
 		h.put("jenisHakMilik", getParam("socJenisHakmilik"));
 		h.put("txtNoHakmilik", getParam("txtNoHakmilik"));
@@ -3301,31 +3535,36 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		h.put("kodLot", getParam("socKodLot"));
 		h.put("txtNoLot", getParam("txtNoLot"));
 		h.put("txtNoPT", getParam("txtNoPT"));
-		h.put("txtLuasAsal", Utils.RemoveSymbol(getParam("txtLuasLotAsal")));
-		h.put("txtLuasAmbil", Utils.RemoveSymbol(getParam("txtLuasLotAmbil")));
+		h.put("txtLuasAsal", Utils.RemoveSymbol(getParam("txtLuasAsal")));	myLogger.info("txtLuasAsal betul tak?: " +Utils.RemoveSymbol(getParam("txtLuasAsal")));
+		h.put("txtLuasAmbil", Utils.RemoveSymbol(getParam("txtLuasAmbil")));	myLogger.info("txtLuasAmbil betul tak?: " +Utils.RemoveSymbol(getParam("txtLuasAmbil")));
 		h.put("txtCatatan", getParam("txtCatatan"));
 		h.put("txdTarikhPembayaran", getParam("txdTarikhPembayaran"));
 		h.put("txtseksyen", getParam("txtSeksyen"));
-
-		h.put("unitLuas", getParam("socUnitLuasLot"));
-		h.put("unitLuasAmbil", getParam("socUnitLuasAmbil"));
-		h.put("txtLuasLotAsalSebelumConvert", getParam("txtLuasLotAsalSebelumConvert"));
-		h.put("txtLuasLotAmbilSebelumConvert", getParam("txtLuasLotAmbilSebelumConvert"));
-		h.put("sorDropdownUnitAsal", getParam("sorDropdownUnitAsal"));
-		h.put("sorDropdownUnitAmbil", getParam("sorDropdownUnitAmbil"));
-
+		
+		h.put("unitLuas", getParam("unitLuas"));	myLogger.info("unitLuas: " +getParam("unitLuas"));
+		h.put("unitLuasAmbil", getParam("unitLuasAmbil"));	myLogger.info("unitLuasAmbil: " +getParam("socUnitLuasAmbil"));
+		h.put("txtLuasLotAsalSebelumConvert", getParam("txtLuasLotAsalSebelumConvert"));	myLogger.info("txtLuasLotAsalSebelumConvert: " +getParam("txtLuasLotAsalSebelumConvert"));
+		h.put("txtLuasLotAmbilSebelumConvert", getParam("txtLuasLotAmbilSebelumConvert"));	myLogger.info("txtLuasLotAmbilSebelumConvert: " +getParam("txtLuasLotAmbilSebelumConvert"));
+		h.put("sorDropdownUnitAsal", getParam("sorDropdownUnitAsal"));	myLogger.info("sorDropdownUnitAsal: " +getParam("sorDropdownUnitAsal"));
+		h.put("sorDropdownUnitAmbil", getParam("sorDropdownUnitAmbil"));	myLogger.info("sorDropdownUnitAmbil: " +getParam("sorDropdownUnitAmbil"));
+		
 		// rizab
 		h.put("sorJenisRizab", getParam("sorJenisRizab"));
 		h.put("txtLain", getParam("txtLain"));
 		h.put("txtNoWartaRizab", getParam("txtNoWartaRizab"));
 		h.put("txdTarikhWarta", getParam("txdTarikhWarta"));
-
+		
+//    	PPT-03 Penambahan Strata
+		h.put("no_bangunan", getParam("txtNoBangunan"));	
+    	h.put("no_tingkat", getParam("txtNoTingkat"));	
+    	h.put("no_petak", getParam("txtNoPetak"));
+    	
 		// pengambilan segera
 		h.put("socPSegera", getParam("socPSegera"));
 
 		h.put("id_user", session.getAttribute("_ekptg_user_id"));
 
-		FrmUPTSek8HakmilikData.updateHM(h);
+		updateHM(h, flagSubjaket);
 
 	}// close updateHM
 
@@ -3879,6 +4118,9 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		context.put("txtLuasLotAmbil", getParam("txtLuasLotAmbil"));
 		context.put("txtLuasLotAmbil2", getParam("txtLuasLotAmbil2"));
 		context.put("txtLuasLotAmbil3", getParam("txtLuasLotAmbil3"));
+		context.put("txtNoBangunan", getParam("txtNoBangunan"));
+		context.put("txtNoTingkat", getParam("txtNoTingkat"));
+		context.put("txtNoPetak", getParam("txtNoPetak"));
 
 		if (resetRadio.equals("1")) {
 			context.put("sorJenisRizab", "");
@@ -3922,6 +4164,9 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		context.put("txdTarikhWarta", "");
 		context.put("txtCatatan", "");
 		context.put("txdTarikhPembayaran", "");
+		context.put("txtNoBangunan", "");
+		context.put("txtNoTingkat", "");
+		context.put("txtNoPetak", "");
 
 		context.put("txtLuasLotAsalSebelumConvert", "");
 		context.put("sorDropdownUnitAsal", "");

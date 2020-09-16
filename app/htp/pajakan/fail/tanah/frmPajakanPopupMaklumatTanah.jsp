@@ -53,10 +53,200 @@ padding:0 0.25em;
   <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
+	<tr>
+		<td>
+			<fieldset><legend><strong>URUSAN TANAH </strong></legend>
+			<table width="100%">
+			<tr>
+            	<td>
+					<fieldset>	<legend>MAKLUMAT SEMASA</legend>
+				<!-- Ajax: Maklumat Detail -->
+					<div id="div_maklumatsemasa"></div>
+
+				<!-- SENARAI URUSAN -->
+					<table width="100%">
+						<tr class="table_header">
+							<td scope="row" width="5%" align="center">Bil.</td>
+							<td width="20%">No. Fail</td>
+							<td width="35%">Tujuan</td>
+							<td width="20%">Urusan</td>
+							<td width="20%">Status Semasa</td>
+						</tr>
+
+			 	#if($!senaraiUrusanLain.size()!=0)
+		           	#foreach($list in $!senaraiUrusanLain)
+		                #set( $i = $velocityCount )
+		         		#if ( ($i % 2) != 1 )
+		              		 #set( $row = "row2" )
+		         		#else
+		               		 #set( $row = "row1" )
+		         		#end
+
+			        	<tr>
+			        		<td class="$row" align="center">$list.bil</td>
+			        		<td class="$row">$!list.noFail</td>
+			            	<td class="$row">$!list.tujuan</td>
+			            	<td class="$row">$!list.urusan</td>
+			            	<td class="$row">$!list.tindakan</td>
+			        	</tr>
+		        	#end
+
+		     	#else
+		        		<tr>
+		        			<td colspan="5">Tiada rekod</td>
+		        		</tr>
+		     	#end
+					</table>
+				<!-- END SENARAI URUSAN SEMASA -->
+					</fieldset>
+	            </td>
+       		</tr>
+       		<tr>
+            	<td>
+					<fieldset>	<legend>MAKLUMAT PENYEWAAN</legend>
+
+					<!-- NOT USE. REPLACE WITH DIV -->
+
+					<!-- Ajax: Maklumat Detail -->
+					<div id="div_maklumatPenyewaan"></div>
+
+					<!-- LIST PENYEWAAN -->
+					<table width="100%">
+						<tr class="table_header">
+							<td scope="row" width="5%" align="center">Bil.</td>
+							<td width="20%">No. Fail Penyewaan</td>
+							<td width="20%">Penyewa</td>
+							<td width="35%">Tujuan</td>
+							<td width="10%">Tarikh Mula</td>
+							<td width="10%">Tarikh Tamat</td>
+						</tr>
+
+			 	#if($listPHPPenyewaan.size()!=0)
+		           	#foreach($list in $listPHPPenyewaan)
+		                #set( $i = $velocityCount )
+		         		#if ( ($i % 2) != 1 )
+		              		 #set( $row = "row2" )
+		         		#else
+		               		 #set( $row = "row1" )
+		         		#end
+
+			        	<tr>
+			        		<td class="$row" align="center">$list.BIL</td>
+			        		<td class="$row">
+			        			<a href="javascript:viewDetailSewa('$!list.ID_PERMOHONAN')"><font color="blue">$!list.NO_FAIL</font></a>
+			        			<input type="hidden" name="id_permohonan" value="$!list.ID_PERMOHONAN">
+			        		</td>
+			            	<td class="$row">$list.NAMA_PEMOHON</td>
+			            	<td class="$row">$list.TUJUAN</td>
+			            	<td class="$row">$list.TARIKH_MULA_PERJANJIAN</td>
+			            	<td class="$row">$list.TARIKH_TAMAT_PERJANJIAN</td>
+			        	</tr>
+		        	#end
+
+		     	#else
+		        		<tr>
+		        			<td colspan="6">Tiada rekod</td>
+		        		</tr>
+		     	#end
+					</table>
+		<!-- END LIST PENYEWAAN -->
+					</fieldset>
+	            </td>
+       		</tr>
+       		<tr>
+				<td>
+					<fieldset>	<legend>MAKLUMAT PAJAKAN</legend>
+						<div id="divmaklumatpajakan"></div>
+
+					<table width="100%">
+						<tr class="table_header">
+							<td scope="row" width="5%" align="center">Bil.</td>
+							<td width="20%">No. Fail Pajakan</td>
+							<td width="20%">Nama Pemajak</td>
+							<td width="35%">Tujuan</td>
+							<td width="10%">Tarikh Mula</td>
+							<td width="10%">Tarikh Tamat</td>
+						</tr>
+				#if($!senaraiPajakan.size()!=0)
+		           	#foreach($list in $!senaraiPajakan)
+		                #set( $i = $velocityCount )
+		         		#if ( ($i % 2) != 1 )
+		              		 #set( $row = "row2" )
+		         		#else
+		               		 #set( $row = "row1" )
+		         		#end
+
+			        	<tr>
+			        		<td class="$row" align="center">$list.bil</td>
+			        		<td class="$row">
+			        			<a href="javascript:terperinciPajakan('$!list.idPermohonan','$!list.idHakmilik')"><font color="blue">$!list.noFail</font></a>
+			        			<input type="hidden" name="id_permohonan" value="$!list.idPermohonan">
+			        			<input type="hidden" name="idHakmilik" value="$!list.idHakmilik">
+			        		</td>
+			            	<td class="$row">$!list.pemohon</td>
+			            	<td class="$row">$!list.tujuan</td>
+			            	<td class="$row">$!list.tarikhMula</td>
+			            	<td class="$row">$!list.tarikhTamat</td>
+			        	</tr>
+		        	#end
+
+		     	#else
+		        		<tr>
+		        			<td colspan="6">Tiada rekod</td>
+		        		</tr>
+		     	#end
+					</table>
+					</fieldset>
+				</fieldset>
+	            </td>
+       		</tr>
+			<tr>
+				<td>
+	            	<fieldset>	<legend>MAKLUMAT PENSWASTAAN</legend>
+					<table width="100%">
+				       	<tr class="table_header">
+				            <td scope="row" width="5%" align="center">Bil.</td>
+				           	<td width="20%">No. Fail</td>
+				         	<td width="75%">Tindakan Lanjut</td>
+				      	</tr>
+				#set ($list = "")
+			 	#if ($!swasta.size() > 0)
+				    #foreach ($list in $swasta)
+			        	#if ($list.bil == '')
+				       		#set( $row = "row1" )
+				      	#elseif (($list.bil % 2) != 0)
+				        	#set( $row = "row1" )
+				      	#else
+				       		#set( $row = "row2" )
+				     	#end
+					 	<tr>
+					   		<td class="$row" align="center"><a href="javascript:paparHakmilik('$!list.idHakmilikUrusan')" >$list.bil.</a></td>
+					      	<td class="$row">$list.noFail</td>
+					     	<td class="$row">
+					            	$!list.tindakan
+					            	#if($list.tindakan == 'PAJAK SEMUA')
+					          			<a href="javascript:daftarPajakanSemua('$list.idHakmilikUrusan')" class="style1">.</a>
+					          		#end
+					     	</td>
+					  	</tr>
+			     	#end
+
+				#else
+						<tr>
+			            	<td class="row1" colspan="3">Tiada Rekod</td>
+						</tr>
+			  	#end
+					</table>
+					</fieldset>
+	       		</td>
+      		</tr>
+		</table>
+	</td>
+  </tr>
   <tr>
     <td>
     	<fieldset><legend><strong>MAKLUMAT TANAH</strong></legend>
-	#set($idHakmilikUrusan = "0")            
+	#set($idHakmilikUrusan = "0")
         #foreach($beanMaklumatTanah in $BeanMaklumatTanah)
        		#set($idHakmilik = $beanMaklumatTanah.idHakmilik)
         	#set($idHakmilikUrusan = $beanMaklumatTanah.idHakmilikUrusan)
@@ -64,23 +254,23 @@ padding:0 0.25em;
 			#set($jenisLot = $beanMaklumatTanah.jenisLot)
             #set($noLot = $beanMaklumatTanah.noLot)
             #set($luasLot = $beanMaklumatTanah.luasLot)
- 			##set($socLuas_ = $beanMaklumatTanah.idLuasPajakanBer)            
+ 			##set($socLuas_ = $beanMaklumatTanah.idLuasPajakanBer)
            	#set($txtLuas = $beanMaklumatTanah.luasBersamaan)
             #set($jenisHakmilik = $beanMaklumatTanah.jenisHakmilik)
             #set($noHakmilik = $beanMaklumatTanah.noHakmilik)
             #set($noWarta = $beanMaklumatTanah.noWarta)
-            #set($tarikhWarta = $beanMaklumatTanah.tarikhWarta)             
+            #set($tarikhWarta = $beanMaklumatTanah.tarikhWarta)
             #set($mukim = $beanMaklumatTanah.mukim)
             #set($daerah = $beanMaklumatTanah.daerah)
-            #set($negeri = $beanMaklumatTanah.negeri)            
+            #set($negeri = $beanMaklumatTanah.negeri)
             #set($kategoriTanah = $beanMaklumatTanah.kategoriTanah)
             #set($subKategoriTanah = $beanMaklumatTanah.subKategoriTanah)
             #set($syarat = $beanMaklumatTanah.syarat)
             #set($sekatan = $beanMaklumatTanah.sekatan)
             #set($kementerian = $beanMaklumatTanah.kementerian)
-            #set($agensi = $beanMaklumatTanah.agensi)         
+            #set($agensi = $beanMaklumatTanah.agensi)
         #end
-            
+
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
                     <tr>
                       <td width="50%">
@@ -131,8 +321,12 @@ padding:0 0.25em;
                                   <td align="right">MUKIM :</td>
                                   <td><font color="blue">$mukim</font></td>
                             </tr>
-                          
-                          </table>                      
+                            <tr>
+                                  <td align="right">SEKSYEN :</td>
+                                  <td><font color="blue">Sek 01</font></td>
+                            </tr>
+
+                          </table>
                           </td>
                             <td width="50%" valign="top">
                                 <table width="100%"  cellpadding="2" cellspacing="2" border="0">
@@ -145,7 +339,7 @@ padding:0 0.25em;
                                         <td width="42%" align="right">SUBKATEGORI TANAH</td>
                                         <td width="1%">:</td>
                                         <td width="57%"><font color="blue">$subKategoriTanah</font></td>
-                                  </tr>	
+                                  </tr>
                                     <tr>
                                         <td width="42%" align="right">SYARAT NYATA</td>
                                         <td width="1%" valign="top">:</td>
@@ -185,7 +379,7 @@ padding:0 0.25em;
                                   		<td width="42%" align="right">LUAS PAJAKAN (UNIT LUAS ASAL)</td>
                                         <td width="1%">:</td>
                                         <td width="57%">
-											#parse("app/htp/unit_luas.jsp") 
+											#parse("app/htp/unit_luas.jsp")
                                        	</td>
                             </tr>
                             <tr>
@@ -203,10 +397,10 @@ padding:0 0.25em;
 												<input name="txtLuas6" type="text" class="$disabled" id="txtLuas6" size="8" maxlength="8" $disability onkeyup="validateNumber(this,this.value);" onblur="kiraLuas('$socLuas');"/>
 											#else
 												<input value="$!txtLuasLama" name="txtLuas1" type="text" id="txtLuas1" size="20" maxlength="8" $disability $readability onkeyup="validateNumber(this,this.value);" onblur="kiraLuas('$socLuas');"/>
-											#end 
+											#end
 												<input type=hidden name=XtxtLuas value=$!Luas>
 												<input name="txtLuasLama" type="hidden" id="txtLuasLama" value="$!Luas" />
-												<input name="txtLuasGabung" type="hidden" id="txtLuasGabung" value="$!txtLuasLama" />                                        	
+												<input name="txtLuasGabung" type="hidden" id="txtLuasGabung" value="$!txtLuasLama" />
                                         </td>
                             </tr>
                        		<tr>
@@ -217,14 +411,14 @@ padding:0 0.25em;
 									  	#set ($listUnitLuas = ["SILA PILIH","KM - KILOMETER PERSEGI","H - HEKTAR","M - METER PERSEGI","E - EKAR,ROOD,POLE","K - KAKI PERSEGI","P - EKAR PERPULUHAN","D - EKAR,DEPA","R - RELONG,JEMBA,KAKI PERSEGI","BN - BATU NAUTIKA"])
 									    #set( $counter = 0 )
 									    #foreach ($i in $listUnitLuas)
-									    #if ($!counter == $!socLuas_) 
+									    #if ($!counter == $!socLuas_)
 									        <option selected value="$counter">$i</option>
 									    #else
 									        <option value="$counter">$i</option>
 									    #end
 									    #set ($counter = $counter+1)
 									    #end
-									    	</select>                              	
+									    	</select>
                                       	</td>
                             </tr>
                             <tr>
@@ -233,13 +427,13 @@ padding:0 0.25em;
                                         <td width="57%">
                                         	<input name="txtLuas" type="text" id="txtLuas" value="$!txtLuas" size="20" $disability $readability onkeyup="this.value=this.value.toUpperCase();" />
                                         </td>
-                            </tr> 
- 
+                            </tr>
+
                                   #end
-                            </table>                      
+                            </table>
                         </td>
                     </tr>
-            </table>        
+            </table>
         </fieldset>
     </td>
   </tr>
@@ -250,7 +444,7 @@ padding:0 0.25em;
     	#end
     	<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Senarai Tanah" onClick="kembali()">
     	<input type="button" class="stylobutton100" name="cmdtutup" value="Tutup" onClick="tutup()">
-    	<input type="button" class="stylobutton100" name="cmdrefrehs" value="Refresh" onClick="refresh()"> 
+    	<input type="button" class="stylobutton100" name="cmdrefrehs" value="Refresh" onClick="refresh()">
     </td>
   </tr>
 </table>
@@ -261,7 +455,7 @@ padding:0 0.25em;
 <input type="hidden" name="idHakmilik" id="idHakmilik" value="$idHakmilik"/>
 
 <script>
-	function kembali() {	
+	function kembali() {
 		document.${formName}.actionPopup.value = "";
 		//document.${formName}.submit();
 		doAjaxCall${formName}("");
@@ -277,17 +471,17 @@ padding:0 0.25em;
 		doAjaxCall${formName}("");
 		//window.opener.refreshFromPilihTanah();
 		//window.close();
-	
+
 	}
 
 	function doChangeKodLuas(val) {
 		document.${formName}.actionPopup.value = "papar";
 		document.${formName}.mode.value = "doChangeKodLuas";
-		//document.${formName}.idHakmilik.value = idHakmilik;		
+		//document.${formName}.idHakmilik.value = idHakmilik;
 		doAjaxCall${formName}("paparDetailHakmilik2");
-	
+
 	}
-	
+
 	//2018/02/18 Guna fungsi dalam fail javaScriptUmum.jsp
 	function kiraLuas_(idLuas){
 		var intConv = 5;
@@ -298,17 +492,17 @@ padding:0 0.25em;
 			var luasH = luasK*100;
 	  		//document.${formName}.txtLuas.value = luasH.toFixed(4);
 	  		document.${formName}.txtLuas.value = luasH.toFixed(intConv);
-	  	
+
 		}else if(jenisLuas == "2"){ //HEKTAR
 	  		var luasH = (document.${formName}.txtLuas1.value);
 	  		document.${formName}.txtLuas.value = luasH;
-		   
+
 		}else if(jenisLuas == "3"){ // METER PERSEGI
 	  		var luasM = document.${formName}.txtLuas1.value;
 	  	  	var luasH = (luasM*0.0001);
 		  	//document.${formName}.txtLuas.value = luasH.toFixed(4);
 		  	document.${formName}.txtLuas.value = luasH.toFixed(intConv);
-	   	
+
 		}else if(jenisLuas == "4"){ //EKAR, ROOD, POLE
 	  	  	var luasE = document.${formName}.txtLuas2.value;
 		  	var luasR = document.${formName}.txtLuas3.value;
@@ -316,13 +510,13 @@ padding:0 0.25em;
 		  	var luasH = (luasE*0.4046864)+(luasR*0.1011716)+(luasP*0.00252929);
 	  	  	//document.${formName}.txtLuas.value = luasH.toFixed(4);
 		  	document.${formName}.txtLuas.value = luasH.toFixed(intConv);
-		   		
+
 	   	}else if(jenisLuas == "5"){ //KAKI PERSEGI
 	  	  	var luasAsal = document.${formName}.txtLuas1.value;
 		  	var luasK = luasAsal*0.0000092;
 	  	  	//document.${formName}.txtLuas.value = luasK.toFixed(4);
 		  	document.${formName}.txtLuas.value = luasK.toFixed(intConv);
-	  	  
+
 	   	}else if(jenisLuas == "6"){	//EKAR PERPULUHAN
 	  	  	var luasAsal = document.${formName}.txtLuas1.value;
 		  	/* AZAM */
@@ -331,24 +525,24 @@ padding:0 0.25em;
 		  	document.${formName}.txtLuas.value = luasK.toFixed(intConv);
 		  	/* var luasK = luasAsal*0.0000092;
 	  	  	document.${formName}.txtLuas.value = luasK.toFixed(4);
-	  	  	var num1 = (parseFloat(a) * 4046.86)/1000;  //Ekar perpuluhan to Hektar    
-	  	  	*/	  	  
-	   	
+	  	  	var num1 = (parseFloat(a) * 4046.86)/1000;  //Ekar perpuluhan to Hektar
+	  	  	*/
+
 	   	}else if(jenisLuas == "7"){ //EKAR,DEPA
 	  	  	var luasE = document.${formName}.txtLuas5.value;
-		  	var luasD = document.${formName}.txtLuas6.value;		  
+		  	var luasD = document.${formName}.txtLuas6.value;
 		  	var luasH = (luasE*0.4046864)+(luasD*0.00040469);
 	  	  	//document.${formName}.txtLuas.value = luasH.toFixed(4);
 		  	document.${formName}.txtLuas.value = luasH.toFixed(intConv);
-		  
+
 	   	}else if(jenisLuas == "8"){ //RELONG,JEMBA,KAKI PERSEGI
 	  	  	var luasR = document.${formName}.txtLuas2.value;
 		  	var luasJ = document.${formName}.txtLuas3.value;
-		  	var luasK = document.${formName}.txtLuas4.value;  
+		  	var luasK = document.${formName}.txtLuas4.value;
 		  	var luasH = (luasR*0.2877764)+(luasJ*0.0005945)+(luasK*0.0000092);
 	  	  	//document.${formName}.txtLuas.value = luasH.toFixed(4);
 		  	document.${formName}.txtLuas.value = luasH.toFixed(intConv);
-	   
+
 	   	}
 	   	//by Rosli 2010/05/10
 	 	if(document.${formName}.socLuas.value == "4" || document.${formName}.socLuas.value == "7" ||document.${formName}.socLuas.value == "8"){
@@ -359,11 +553,11 @@ padding:0 0.25em;
 			}else if(document.${formName}.socLuas.value == "8"){
 				document.${formName}.txtLuasGabung.value = document.${formName}.txtLuas2.value +"R,"+document.${formName}.txtLuas3.value+"J,"+document.${formName}.txtLuas4.value+"K";
 			}
-		
+
 	 	}else{
 			document.${formName}.txtLuasGabung.value = document.${formName}.txtLuas1.value;
 		 }
-	
+
 	}
 
 	function doChangeLuasBersamaan(idBersamaan){
@@ -371,7 +565,7 @@ padding:0 0.25em;
 		document.${formName}.actionPopup.value = "papar";
 		kiraLuas(id);
 	}
-	
+
 	// function semua kongsi
 	function validateNumber(elmnt,content) {
 		//if it is character, then remove it..
@@ -379,19 +573,19 @@ padding:0 0.25em;
 			elmnt.value = RemoveNonNumeric(content);
 			return;
 		}
-	}	
-		
-	function tutup() {	
+	}
+
+	function tutup() {
 		window.opener.refreshFromPilihTanah();
 		window.close();
-		
+
 	}
-			
-	function refresh() {	
-		window.opener.refreshFromPilihTanah();	
+
+	function refresh() {
+		window.opener.refreshFromPilihTanah();
 	}
-	
-	
+
+
 </script>
 #parse("app/htp/utiliti/javaScriptUmum.jsp")
 

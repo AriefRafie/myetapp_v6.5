@@ -1,4 +1,4 @@
-
+<input name="flagFrom" type="hidden" id="flagFrom" value='$!{session.getAttribute("FLAG_FROM")}'>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   #foreach($beanHeader in $BeanHeader)
   <tr>
@@ -13,6 +13,11 @@
           	&nbsp;&nbsp;&nbsp;&nbsp;
             <input type="button" name="cmdLogTugasan" id="cmdLogTugasan" value="LOG TUGASAN FAIL" onclick="paparLogTugasan('$idFail')"/>
           </td>
+        </tr>
+        <tr>
+          <td width="36%" align="right">No Fail Negeri</td>
+          <td width="1%">:</td>
+          <td width="63%"><font color="blue">$beanHeader.noFailNegeri</font></td>
         </tr>
         <tr>
           <td width="36%" align="right">Urusan</td>
@@ -137,7 +142,7 @@ function paparLogTugasan(idFail) {
 		hWnd.focus();
 }
 
-/* function arkibWindow(noFail){
+<!-- function arkibWindow(noFail){
 		var url = "../x/${securityToken}/ekptg.view.integrasi.sid.FrmPopupPaparArkibDokumen?kodModul=PHP&noFail="+noFail;
 		var hWnd = window.open(url,"printuser","scrollbars=1,width=800,height=700");
 		 if ((document.window != null) && (!hWnd.opener))
@@ -145,5 +150,5 @@ function paparLogTugasan(idFail) {
 		    if (hWnd.focus != null) hWnd.focus();
 			hWnd.focus();
 			
-} */
+} -->
 </script>

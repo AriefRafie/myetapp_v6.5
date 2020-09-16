@@ -2,9 +2,8 @@ package ekptg.view.ppk;
 
 import integrasi.utils.IntLogManager;
 //import integrasi.ws.mt.MTManager;
-
-import my.gov.kehakiman.eip.services.MTManager;
-import my.gov.kehakiman.eip.services.MTManagerCivilRegisterCase;
+import integrasi.ws.mt.MTManager;
+import integrasi.ws.mt.MTManagerReg;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -13,6 +12,7 @@ import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -137,6 +137,7 @@ public class FrmIntegrasiMT extends VTemplate {
 			String namaDokumen = (String) permohonanMT.get("namaDokumen");
 			String docContent = (String) permohonanMT.get("docContent");
 			String idSimatiA = (String) permohonanMT.get("idSimati");
+			String jenisKPPemohon = (String) permohonanMT.get("jenisKPPemohon");
 			
 			if (noKPSimatiBaru.equals("")) {
 				if (logic_F.checkDahUpload(idSimatiA) == false)
@@ -222,6 +223,7 @@ public class FrmIntegrasiMT extends VTemplate {
 			context.put("idFail", idFail);
 			context.put("idPermohonan", idPermohonan);
 			context.put("docContent", docContent);
+			context.put("jeniskpPemohon", jenisKPPemohon);
 			
 			Hashtable tarikhHantar = getTarikhHantarMT(idFail);
 			String tarikhHantarBorangB = (String) tarikhHantar.get("TARIKH_HANTAR");
@@ -319,9 +321,10 @@ public class FrmIntegrasiMT extends VTemplate {
 			String idBandar = (String) permohonanMT.get("idBandar");
 			String idNegeri = (String) permohonanMT.get("idNegeri");
 			String idNegeriPemohon = (String) permohonanMT.get("idNegeriPemohon");
+			
 			String umurPemohon = (String) permohonanMT.get("umurPemohon");
 			String jantinaPemohon = (String) permohonanMT.get("jantinaPemohon");
-			
+			String jenisKPPemohon = (String) permohonanMT.get("jenisKPPemohon");
 			Hashtable getNegeriPemohon = getNegeriPerayu(idNegeriPemohon);
 			String negeriPemohon = (String) getNegeriPemohon.get("namaNegeri");
 			Hashtable getBandarPemohon = getBandarPerayu(idBandar);
@@ -336,19 +339,40 @@ public class FrmIntegrasiMT extends VTemplate {
 			String namaDokumen = (String) permohonanMT.get("namaDokumen");
 			String docContent = (String) permohonanMT.get("docContent");
 			String idSimatiA = (String) permohonanMT.get("idSimati");
+			String jumlahharta = (String) permohonanMT.get("jumlahharta");
 			
+			myLogger.info("jumlahharta = "+jumlahharta);
+			DecimalFormat decim = new DecimalFormat("0.00");
+			
+			double jumlahhartaDouble = Double.parseDouble(jumlahharta);
+			jumlahhartaDouble = Double.parseDouble(decim.format(jumlahhartaDouble));
+			String formatted = String.format("%.2f", jumlahhartaDouble);
+			context.put("jumlahharta", formatted);
+			
+			
+			myLogger.info("formatted = "+formatted);
 			if (noKPSimatiBaru.equals("")) {
 				if (logic_F.checkDahUpload(idSimatiA) == false)
 				{
 					this.context.put("Errormsg", "Error1");
 				}
 			}
-			
-			FrmPrmhnnSek8KeputusanPermohonanInternalData
-			.setMaklumatMahkamah(idPermohonan);
-			Vector listMaklumatMahkamah = FrmPrmhnnSek8KeputusanPermohonanInternalData
-			.getMaklumatMahkamah();
-			this.context.put("listMaklumatMahkamah", listMaklumatMahkamah);
+			String dari = "";
+			dari = "KeputusanPermohonan";//request.getParameter("dari");
+			String idPerbicaraan = request.getParameter("idPerbicaraan");
+			myLogger.info("dari = "+dari);
+			if (dari.equals("KeputusanPerbicaraan"))
+			{
+				FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatMahkamah2(idPerbicaraan);
+				Vector listMaklumatMahkamah = FrmPrmhnnSek8KeputusanPermohonanInternalData.getMaklumatMahkamah();
+				this.context.put("listMaklumatMahkamah", listMaklumatMahkamah);
+			}
+			else
+			{
+				FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatMahkamah(idPermohonan);
+				Vector listMaklumatMahkamah = FrmPrmhnnSek8KeputusanPermohonanInternalData.getMaklumatMahkamah();
+				this.context.put("listMaklumatMahkamah", listMaklumatMahkamah);
+			}
 			
 			String formatTarikhMati = tarikhMati + "T00:00:00.00";
 
@@ -373,7 +397,7 @@ public class FrmIntegrasiMT extends VTemplate {
 
 			String namaPejabat = getPejabatJKPTGByKodPejabat(kodPejabat);
 			String jenisTransaksi = (String) permohonanMT.get("jenisTransaksi");
-
+			
 			context.put("noPetisyen", noPetisyen);
 			context.put("namaSimati", namaSimati);
 			context.put("namaSimatiLain", namaSimatiLain);
@@ -426,6 +450,7 @@ public class FrmIntegrasiMT extends VTemplate {
 			context.put("negeriPemohon", negeriPemohon);
 			context.put("idnegeriPemohon", idNegeriPemohon);
 			context.put("idbandarPemohon", idBandar);
+			context.put("jeniskpPemohon", jenisKPPemohon);
 			
 			Hashtable tarikhHantar = getTarikhHantarMT(idFail);
 			String tarikhHantarBorangB = (String) tarikhHantar.get("TARIKH_HANTAR");
@@ -509,7 +534,7 @@ public class FrmIntegrasiMT extends VTemplate {
 			String namaDokumen = (String) permohonanMT.get("namaDokumen");
 			String docContent = (String) permohonanMT.get("docContent");
 			
-			
+			 
 			//COMMENT BY BELLA - MAHKAMAH CEK DENGAN JPN TARIKH MATI SAHAJA
 //			String WAKTU_KEMATIAN = (String) permohonanMT.get("WAKTU_KEMATIAN");
 //			String JAM = "";
@@ -690,8 +715,27 @@ public class FrmIntegrasiMT extends VTemplate {
 			String namaDokumen = (String) permohonanMT.get("namaDokumen");
 			String docContent = (String) permohonanMT.get("docContent");
 			
+			//Umur Perayu
+			Hashtable getUmurPerayu = getUmurPerayu(idPermohonan);
+			String tahunKelahiranPerayu = (String) getUmurPerayu.get("TARIKH_LAHIR");
 			
+//			String waktuMati = waktuMati = "0000";			
+//			int jam_1 = 0;
+//			if (!JENIS_WAKTU_MATI.equals("")) {
+//				if (!JENIS_WAKTU_MATI.equals("1")) {
+//					jam_1 = Integer.parseInt(JAM) + 12;
+//					waktuMati = Integer.toString(jam_1) + MINIT;
+//				} else {
+//					waktuMati = WAKTU_KEMATIAN;
+//				}
+//			} else {
+//				waktuMati = "0000";
+//			}
+			DateFormat dateFormat2 = new SimpleDateFormat("yyyy");
+			Date tarikhhariini = new Date();
+			String tahunIni = dateFormat2.format(tarikhhariini);
 			
+			int umurPerayu = Integer.parseInt(tahunIni) - Integer.parseInt(tahunKelahiranPerayu);
 			
 			FrmPrmhnnSek8KeputusanPermohonanInternalData
 			.setMaklumatMahkamah(idPermohonan);
@@ -737,7 +781,7 @@ public class FrmIntegrasiMT extends VTemplate {
 			context.put("poskodPerayu", poskodPerayu);	
 			context.put("negeriPerayu", negeriPerayu);	
 			context.put("bandarPerayu", bandarPerayu);	
-			
+			context.put("umurPerayu", umurPerayu);	
 			context.put("idMahkamah", idMahkamah);	
 			context.put("namaMahkamah", namaMahkamah);	
 			
@@ -865,8 +909,8 @@ public class FrmIntegrasiMT extends VTemplate {
 				context.put("fFrom", "tidak");
 			}
 
-			// aishah start integration ecourt
-			MTManager manager = new MTManager();
+			// aishah start integration ecourt 
+			MTManager manager = new MTManager("MT");
 
 			String returnMessage = "";
 			returnMessage = manager.sendMaklumat2Court(
@@ -958,7 +1002,7 @@ public class FrmIntegrasiMT extends VTemplate {
 			
 			// aishah start integration ecourt
 			myLogger.info("hantarPermohonanBorangI11");
-			MTManagerCivilRegisterCase manager = new MTManagerCivilRegisterCase();
+			MTManagerReg manager = new MTManagerReg("MTREG");
 			myLogger.info("hantarPermohonanBorangI22");
 			String returnMessage = "";
 			returnMessage = manager.sendMaklumat2Court(
@@ -968,6 +1012,7 @@ public class FrmIntegrasiMT extends VTemplate {
 					request.getParameter("noKPSimatiBaru"),
 					request.getParameter("noKPSimatiLama"),
 					request.getParameter("noKPSimatiLain"),
+					request.getParameter("jenisPengenalanSimati"),
 					request.getParameter("tarikhMati"),
 					request.getParameter("jantinasimati"),
 					request.getParameter("umursimati"),
@@ -979,10 +1024,11 @@ public class FrmIntegrasiMT extends VTemplate {
 					request.getParameter("bandarsimati"),
 					request.getParameter("bandarSimati"),
 					request.getParameter("poskodsimati"),
-					request.getParameter("idnegerisimati"),
+					manager.getStateCode(Integer.parseInt(request.getParameter("idnegerisimati"))),
 										
 					request.getParameter("namaPemohon"),
 					request.getParameter("noKPPemohon"),
+					request.getParameter("jenisPengenalanPemohon"),
 					request.getParameter("hubSimatiPemohon"),
 					request.getParameter("alamat1Pemohon"),
 					request.getParameter("alamat2Pemohon"),
@@ -990,12 +1036,13 @@ public class FrmIntegrasiMT extends VTemplate {
 					request.getParameter("poskodPemohon"),
 					request.getParameter("bandarPemohon"),
 					request.getParameter("idbandarPemohon"),
-					request.getParameter("idnegeriPemohon"),
+					manager.getStateCode(Integer.parseInt(request.getParameter("idnegeriPemohon"))),
 					request.getParameter("idMahkamah"),
 					request.getParameter("namaDokumen"),
 					docContent,
 					request.getParameter("applicationType"), transactionID, 
 					request.getParameter("umurPemohon"),
+					request.getParameter("jumlahharta"),
 					request.getParameter("jantinaPemohon"));
 			
 
@@ -1073,7 +1120,8 @@ public class FrmIntegrasiMT extends VTemplate {
 			
 			// aishah start integration ecourt
 			myLogger.info("hantarPermohonanRayuan2");
-			MTManagerCivilRegisterCase manager = new MTManagerCivilRegisterCase();
+			MTManagerReg manager = new MTManagerReg("MTREG");
+//			MTManagerReg manager = new MTManagerReg();
 			myLogger.info("hantarPermohonanRayuan2");
 			String returnMessage = "";
 			returnMessage = manager.sendMaklumat2Court16A(
@@ -1086,6 +1134,7 @@ public class FrmIntegrasiMT extends VTemplate {
 					request.getParameter("tarikhMati"),
 					request.getParameter("namaPerayu"),
 					request.getParameter("noKPBaruPerayu"),
+					request.getParameter("umurPerayu"),
 					request.getParameter("alamat1Perayu"),
 					request.getParameter("alamat2Perayu"),
 					request.getParameter("alamat3Perayu"),
@@ -1218,7 +1267,7 @@ public class FrmIntegrasiMT extends VTemplate {
 			}		
 
 			// aishah start integration ecourt
-			MTManager manager = new MTManager();
+			MTManager manager = new MTManager("MT");
 
 			String returnMessage = "";
 			returnMessage = manager.sendMaklumat2CourtPetioner(
@@ -1486,7 +1535,7 @@ public class FrmIntegrasiMT extends VTemplate {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			
-			sql = "SELECT P.ID_PERMOHONAN, F.NO_FAIL AS noPetisyen,"
+			sql = "SELECT P.ID_PERMOHONAN, p.jumlah_harta_tarikhmohon as jumlahharta, F.NO_FAIL AS noPetisyen,"
 					+ " SM.NAMA_SIMATI AS namaSimati,"
 					+ " SM.ID_SIMATI AS idSimati,"					
 					+ " SM.NAMA_LAIN AS namaSimatiLain,"
@@ -1503,6 +1552,7 @@ public class FrmIntegrasiMT extends VTemplate {
 					+ " PM.NO_KP_BARU AS noKPBaruPemohon,"
 					+ " PM.NO_KP_LAMA AS noKPLamaPemohon,"
 					+ " PM.NO_KP_LAIN AS noKPLainPemohon,"
+					+ " decode(PM.JENIS_KP , 0, 'IC', 4,'PP',5,'SO',6,'PO',7,'OT',13,'PDC') as jenisKPPemohon,"
 					+ " PM.UMUR AS umurPemohon,"
 					+ " PM.JANTINA AS jantinaPemohon,"
 					+ " PM.ALAMAT_1 AS alamat1,"
@@ -1664,6 +1714,10 @@ public class FrmIntegrasiMT extends VTemplate {
 						rs.getString("noKPLainPemohon") == null ? "" : rs
 								.getString("noKPLainPemohon"));
 				permohonanMT.put(
+						"jenisKPPemohon",
+						rs.getString("jenisKPPemohon") == null ? "" : rs
+								.getString("jenisKPPemohon"));
+				permohonanMT.put(
 						"umurPemohon",
 						rs.getString("umurPemohon") == null ? "" : rs
 								.getString("umurPemohon"));
@@ -1740,19 +1794,24 @@ public class FrmIntegrasiMT extends VTemplate {
 						rs.getString("idSimati") == null ? "" : rs
 								.getString("idSimati"));
 				permohonanMT.put(
+						"jumlahharta",
+						rs.getString("jumlahharta") == null ? "" : rs
+								.getString("jumlahharta"));
+				
+				permohonanMT.put(
 						"namaDokumen",
 						rs.getString("NAMA_DOKUMEN") == null ? "" : rs
 								.getString("NAMA_DOKUMEN"));
-				String content = "TIADA";	
-				if(rs.getString("KANDUNGAN")!=null) {
-					Blob  b = rs.getBlob("KANDUNGAN");
-					InputStream is = b.getBinaryStream();
-					byte [] b2 = IOUtils.toByteArray(is);
-					content = Base64.encodeToString(b2);
-					
-				}	
-//				myLogger.info("*****KANDUNGAN*****");			
-				permohonanMT.put("docContent", content);				
+				
+				Blob  b = rs.getBlob("KANDUNGAN");
+				InputStream is = b.getBinaryStream();
+				 byte [] b2 = IOUtils.toByteArray(is);
+					String content = Base64.encodeToString(b2);
+					myLogger.info("*****KANDUNGAN*****");
+				
+				permohonanMT.put("docContent", content);
+				
+				
 				
 			}
 		} catch (Exception ex) {
@@ -1868,6 +1927,38 @@ public class FrmIntegrasiMT extends VTemplate {
 		}
 		return getNegeriPerayu;
 	}
+	
+	public Hashtable<String,String> getUmurPerayu(String idPermohonan) {
+		Db db = null;
+		String sql = "";
+		Hashtable<String,String> getUmurPerayu = new Hashtable<String,String>();
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			
+			sql = "SELECT TO_CHAR(TARIKH_LAHIR, 'YYYY') AS TARIKH_LAHIR  FROM TBLPPKOB WHERE NO_KP_BARU = (SELECT  NO_KP_BARU FROM TBLPPKPERAYU WHERE ID_RAYUAN = (SELECT ID_RAYUAN FROM TBLPPKRAYUAN WHERE ID_PERMOHONAN = "+idPermohonan+"))";
+			myLogger.info("SQL STATEMENT - getUmurPerayu : " + sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				getUmurPerayu.put(
+						"TARIKH_LAHIR",
+						rs.getString("TARIKH_LAHIR") == null ? "" : rs
+								.getString("TARIKH_LAHIR"));
+					
+				
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		return getUmurPerayu;
+	}
+	
 	
 	public Hashtable<String,String> getMahkamah(String idPermohonan) {
 		Db db = null;

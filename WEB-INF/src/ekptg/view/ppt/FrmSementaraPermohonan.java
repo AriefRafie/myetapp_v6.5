@@ -185,6 +185,7 @@ public class FrmSementaraPermohonan extends AjaxBasedModule {
 		String no_fail = "";
 		String idpermohonan = getParam("id_permohonan");
     	myLogger.info("idpermohonan :: "+idpermohonan);
+    	
     	header.setDataHeader(idpermohonan);
 		Vector dataHeader = header.getDataHeader();
 		context.put("dataHeader", dataHeader);
@@ -199,14 +200,14 @@ public class FrmSementaraPermohonan extends AjaxBasedModule {
 			nama_kementerian = (String)dh.get("nama_kementerian");
 			flagStatusOnline = (String)dh.get("flag_status_online");
 			catatan_status_online = (String)dh.get("catatan_status_online");
-			
+		
 			
 	   		Vector list_sub = null;
 			list_sub = header.listPerjalananFail(idpermohonan);
 			this.context.put("list_sub_header", list_sub);
 	   		
 		}
-		
+	
 		//sebab online ditolak
 		context.put("catatan_status_online",catatan_status_online);
 		
@@ -265,6 +266,9 @@ public class FrmSementaraPermohonan extends AjaxBasedModule {
         		
         		String id_kementerian = getParam("socKementerian");
         		
+        		String txtTempohPendudukan = getParam("txtTempohPendudukan");
+        		context.put("txtTempohPendudukan", txtTempohPendudukan);
+        		myLogger.info("txtTempohPendudukan   :"+txtTempohPendudukan);
         		//get and set data
         		getAndSetDataOnchangeKementerian(id_kementerian,"new",userIdNeg);
         		
@@ -2401,11 +2405,12 @@ private void dataHakmilik_copy(String idHakmilik,String disability) throws Excep
 		String id_negeriprojek = "";
 		String flag_jenis_kod_daerah = "";
 		
+		
 		model.setListPohon(idpermohonan);
- 		dataPermohonan = model.getListPohon();
- 		
+ 		dataPermohonan = model.getListPohon();		
  		//data
  		context.put("dataPermohonan",dataPermohonan);
+ 		myLogger.info("dataPermohonan : "+dataPermohonan);
  		
 		if(dataPermohonan.size()!=0){
 			Hashtable dp = (Hashtable)dataPermohonan.get(0);
@@ -2415,6 +2420,7 @@ private void dataHakmilik_copy(String idHakmilik,String disability) throws Excep
 			id_daerah = dp.get("idDaerah").toString();
 			id_negeriprojek = dp.get("idProjekNegeri").toString();
 			flag_jenis_kod_daerah = (String)dp.get("flag_jenis_kod_daerah");
+			
 		}
 		
 		String mode = "";
@@ -2710,6 +2716,7 @@ private void dataHakmilik_copy(String idHakmilik,String disability) throws Excep
 		context.put("sorFlagSegera", "");
 		context.put("sorJenisProjek", "");
 		context.put("txdTarikhPendudukanMula", getParam("txdTarikhPendudukanMula"));
+		context.put("txtTempohPendudukan", "");
 		
 		context.put("sorJenisKodDaerah", "");
 		

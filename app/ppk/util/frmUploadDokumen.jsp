@@ -95,6 +95,12 @@ padding:0 0.25em;
 					</td/>
 				</tr>
 				<tr>
+		          <td>&nbsp;</td>
+		          <td>&nbsp;</td>
+		          <td>&nbsp;</td>
+		          <td><span class="style4"><i><font color="#ff0000">Perhatian</font> : </i><span class="style5">Sila muatnaik fail dalam format PDF sahaja. #if($jenisdokumen == '99212') Salinan kad pengenalan perlu dimuatnaik depan dan belakang. #end</span></span></td> <!-- dan saiz fail tidak melebihi 2MB -->
+		        </tr>
+				<tr>
 			   		<td valign="top"></td>
 			       	<td valign="top"></td>
 			       	<td valign="top"></td>
@@ -145,6 +151,8 @@ padding:0 0.25em;
 		}else if('$!jenisdokumen' == '99210'){
 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen&actionPopup=paparHA&hitButton=hapusmyid&iDokumen="+iDokumen;  
 		}else if('$!jenisdokumen' == '99211'){
+			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen&actionPopup=paparHA&hitButton=hapusmyid&iDokumen="+iDokumen;  
+		}else if('$!jenisdokumen' == '99212'){
 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen&actionPopup=paparHA&hitButton=hapusmyid&iDokumen="+iDokumen;  
 		}
 		
@@ -201,6 +209,12 @@ padding:0 0.25em;
 		else if('$!jenisdokumen' == '99211'){
 			actExt ="&jenisdokumen=$!jenisdokumen";
 			actExt +="&actionPopup=$!actionPopup&hitButton=simpanboranga&rujukan=$!idRujukan&actionrefresh=$!actionRefresh";
+			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"+actExt;
+
+		}
+		else if('$!jenisdokumen' == '99212'){
+			actExt ="&jenisdokumen=$!jenisdokumen";
+			actExt +="&actionPopup=$!actionPopup&hitButton=simpanicwaris&rujukan=$!idRujukan&idSimati=$!idSimati&actionrefresh=$!actionRefresh";
 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"+actExt;
 
 		}
@@ -288,6 +302,13 @@ padding:0 0.25em;
 		}else if('dokumenA' == '$!actionRefresh'){
 			window.opener.semakLampiran();
 		
+		}else if('dokumenSokongan' == '$!actionRefresh'){
+			window.opener.setSelected(0,7,0,0);
+			window.opener.TukarPemohonView(flagOnline);
+			
+		}else if('dokumenIC' == '$!actionRefresh'){
+			window.opener.setSelected(0,2,0,0);
+			window.opener.WarisView(flagOnline);
 		}
 		
 		

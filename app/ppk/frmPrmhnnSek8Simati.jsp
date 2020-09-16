@@ -784,7 +784,10 @@ resetOnBlur:false
                                      
                                 #foreach($listbuk in $listbuktimati)                                 
                                 #if($listmati.idBuktimati!=$listbuk.id_Buktimati)
+                                	#if($listbuk.id_Buktimati == '1' || $listbuk.id_Buktimati == '3')
                                     <option value="$listbuk.id_Buktimati">$listbuk.kod -  $listbuk.keterangan</option>
+                                    #end
+                                    
                                 #end    
 	                              #end
                                   </select>
@@ -794,8 +797,9 @@ resetOnBlur:false
                                     <option value="">SILA PILIH BUKTI MATI</option>
                                     
                                   #foreach($listbuk in $listbuktimati)
+                                  	#if($listbuk.id_Buktimati == '1' || $listbuk.id_Buktimati == '3')
                                  		<option value="$listbuk.id_Buktimati">$listbuk.keterangan</option>
-                                    
+                                    #end
 	                               #end
                                   
                                   </select>
@@ -825,7 +829,7 @@ resetOnBlur:false
                           
                               <tr>
                                 <td><span class="style38"></span></td>
-                                <td><div align="left" class="style38">No Sijil Mati / Permit Menguburkan</div></td>
+                                <td><div align="left" class="style38">No. Sijil Mati / Perintah Mahkamah (Kematian)</div></td>
                                 <td class="style36" style="text-transform:uppercase;">:</td>
                                 <td class="style36" style="text-transform:uppercase;"><label>
                               
@@ -894,7 +898,7 @@ resetOnBlur:false
                                 </label></td>
                               </tr>
                               <tr>
-                                <td><span class="style38"></span></td>
+                                <td valign="top" ><span class="style38">#if($readmode != "disabled") <span class="style49">*</span> #end</span></td>
                                 <td><div align="left" class="style38">Waktu Kematian</div></td>
                                 <td class="style36">:</td>
                                 <td class="style36"><input name="socWaktuKematianSimati" type="text" id="socWaktuKematianSimati" value="$listmati.masamati"  onKeyUp="javascript:validateIC(event,this,this.value,'socWaktuKematianSimati')" size="4" maxlength="4"   $readmodeR class="$readmode" onBlur="jeniswaktu1()" /> 
@@ -1787,41 +1791,50 @@ function SimpanSimati() {
 		return; 
 	}
 	else if(document.f1.txdTarikhMatiSimati.value == ""){
-		alert('Sila masukkan " Tarikh mati " terlebih dahulu.');
+		alert('Sila masukkan tarikh mati terlebih dahulu.');
   		document.f1.txdTarikhMatiSimati.focus(); 
 		return; 
 	}
-	
+	else if(document.f1.socWaktuKematianSimati.value == ""){
+		alert('Sila masukkan waktu kematian terlebih dahulu.');
+  		document.f1.socWaktuKematianSimati.focus(); 
+		return; 
+	}
+	else if(document.f1.jeniswaktu.value == ""){
+		alert('Sila pilih jenis waktu kematian terlebih dahulu.');
+  		document.f1.jeniswaktu.focus(); 
+		return; 
+	}
 	else if(document.f1.patMatiSimati.value == ""){
-		alert('Sila masukkan " Tempat mati " terlebih dahulu.');
+		alert('Sila masukkan tempat mati terlebih dahulu.');
   		document.f1.patMatiSimati.focus(); 
 		return; 
 	}
 	
 	else if(document.f1.txtSebabKematian.value == ""){
-		alert('Sila masukkan " Sebab kematian " terlebih dahulu.');
+		alert('Sila masukkan sebab kematian terlebih dahulu.');
   		document.f1.txtSebabKematian.focus(); 
 		return; 
 	}
 	else if(document.f1.txtAlamatTerakhir.value == ""){
-		alert('Sila masukkan " Alamat terakhir " terlebih dahulu.');
+		alert('Sila masukkan alamat terakhir terlebih dahulu.');
   		document.f1.txtAlamatTerakhir.focus(); 
 		return; 
 	}
 	else if(document.f1.txtPoskodSimati.value == ""){
-		alert('Sila masukkan " Poskod " terlebih dahulu.');
+		alert('Sila masukkan poskod terlebih dahulu.');
   		document.f1.txtPoskodSimati.focus(); 
 		return; 
 	}
 	else if(document.f1.socNegeriSimati.value == ""){
-		alert('Sila masukkan " Negeri " terlebih dahulu.');
+		alert('Sila masukkan negeri terlebih dahulu.');
   		document.f1.socNegeriSimati.focus(); 
 		return; 
 	}
 	
 	else if(checkBandar == true){
 		 
-			alert('Sila masukkan " Bandar " terlebih dahulu.');
+			alert('Sila masukkan bandar terlebih dahulu.');
 	  		document.f1.txtBandarSimati.focus(); 
 			return; 
 		

@@ -16,6 +16,8 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 import ekptg.engine.EmailSender;
@@ -23,7 +25,6 @@ import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.NumberToWords;
 import ekptg.helpers.Utils;
-import ekptg.model.utils.emel.EmailConfig;
 
 /**
  * modified by hilda
@@ -42,8 +43,11 @@ public class FrmPLPJabatanTeknikalData {
 	private Vector beanMaklumatPejabat = null;
 	private Vector listJPPH = null;
 	private Vector beanMaklumatJPPH = null;
+	private Vector beanMaklumatUlasanMOF = null;
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	static Logger myLog = Logger.getLogger(FrmPLPJabatanTeknikalData.class);
+
 
 	public void setSenaraiKJT(String idPermohonan) throws Exception {
 		Db db = null;
@@ -1040,10 +1044,8 @@ public class FrmPLPJabatanTeknikalData {
 					//add by aishah 08062017 - untuk dapatkan nama pegawai yang memberi ulasan
 					+ " A.NAMA_PEGAWAI, A.NO_TELEFON"
 					
-					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJKEMENTERIAN B, TBLRUJAGENSI C WHERE "
-					//+ "A.ID_MENTERI = B.ID_KEMENTERIAN"
-					//+ " AND A.ID_AGENSI = C.ID_AGENSI "
-					+ "A.ID_ULASANTEKNIKAL = '"+idUlasanTeknikal+"' "
+					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJKEMENTERIAN B, TBLRUJAGENSI C WHERE A.ID_MENTERI = B.ID_KEMENTERIAN"
+					+ " AND A.ID_AGENSI = C.ID_AGENSI AND A.ID_ULASANTEKNIKAL = '"+idUlasanTeknikal+"' "
 					+ " AND A.ID_PERMOHONAN = '"+idPermohonan+"' ";
 
 			ResultSet rs = stmt.executeQuery(sql);
@@ -1111,6 +1113,53 @@ public class FrmPLPJabatanTeknikalData {
 			if (db != null)
 				db.close();
 		}
+	}
+		
+	public void setMaklumatUlasanMOF(String idUlasanTeknikal, String idPermohonan) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			beanMaklumatUlasanMOF = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT ID_KERTASKERJA, TARIKH_TERIMA_KEWANGAN, TARIKH_HANTAR_KEWANGAN, KEPUTUSAN_KEWANGAN, ULASAN_KEWANGAN, "
+				+ "NAMA_PEGAWAI, NO_TELEFON_PEGAWAI FROM TBLPHPKERTASKERJAPELEPASAN "
+				+ "WHERE FLAG_KERTAS = '2' AND ID_KERTASKERJA = '"+idUlasanTeknikal+"' "
+				+ "AND ID_PERMOHONAN = '"+idPermohonan+"' ";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("tarikhSurat",
+						rs.getDate("TARIKH_TERIMA_KEWANGAN") == null ? "" : sdf
+								.format(rs.getDate("TARIKH_TERIMA_KEWANGAN")));
+				h.put("tarikhHantar",
+						rs.getString("TARIKH_HANTAR_KEWANGAN") == null ? "" : rs
+								.getString("TARIKH_HANTAR_KEWANGAN"));
+				h.put("flagKeputusan",
+						rs.getString("KEPUTUSAN_KEWANGAN") == null ? "" : rs
+								.getString("KEPUTUSAN_KEWANGAN"));
+				h.put("ulasan", rs.getString("ULASAN_KEWANGAN") == null ? ""
+						: rs.getString("ULASAN_KEWANGAN"));
+				h.put("namaPengulas",
+						rs.getString("NAMA_PEGAWAI") == null ? "" : rs
+								.getString("NAMA_PEGAWAI"));
+				h.put("noTelPengulas",
+						rs.getString("NO_TELEFON_PEGAWAI") == null ? "" : rs
+								.getString("NO_TELEFON_PEGAWAI"));
+				beanMaklumatUlasanMOF.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}		
 	}
 	
 	public void setLampiranKJP(String idPermohonan) throws Exception {
@@ -1462,7 +1511,7 @@ public class FrmPLPJabatanTeknikalData {
 
 			sql = r.getSQLUpdate("TBLPERMOHONAN");
 			stmt.executeUpdate(sql);
-			
+
 			// TBLRUJSUBURUSANSTATUSFAIL
 			r = new SQLRenderer();
 			r.update("ID_PERMOHONAN", idPermohonan);
@@ -2753,5 +2802,13 @@ public class FrmPLPJabatanTeknikalData {
 
 	public void setBeanMaklumatJPPH(Vector beanMaklumatJPPH) {
 		this.beanMaklumatJPPH = beanMaklumatJPPH;
+	}
+	
+	public Vector getBeanMaklumatUlasanMOF() {
+		return beanMaklumatUlasanMOF;
+	}
+
+	public void setBeanMaklumatUlasanMOF(Vector beanMaklumatUlasanMOF) {
+		this.beanMaklumatUlasanMOF = beanMaklumatUlasanMOF;
 	}
 }

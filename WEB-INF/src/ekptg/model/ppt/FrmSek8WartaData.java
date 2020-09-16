@@ -563,7 +563,7 @@ public class FrmSek8WartaData {
 		    		//penambahan yati
 		    		//table tblpptendorsanborangd
 		    		String check_id_endosanborangd = (String) data.get("id_endosanborangd");
-		    		
+		    		myLogger.info("check_id_endosanborangd :"+check_id_endosanborangd);
 		    		if(check_id_endosanborangd.equals(""))
 					{
 		    			id_endosanborangd = DB.getNextID(db, "TBLPPTENDOSANBORANGD_SEQ");
@@ -609,12 +609,14 @@ public class FrmSek8WartaData {
 		    		if(check_id_endosanborangd.equals(""))
 					{
 						sql = r.getSQLInsert("Tblpptendosanborangd");
+						myLogger.info("INSERT TBL ENDOSAN : "+sql);
 					}
 					else
 					{
 						sql = r.getSQLUpdate("Tblpptendosanborangd");
+						myLogger.info("UPDATE TBL ENDOSAN : "+sql);
 					}
-					System.out.println("UPDATE TBL ENDOSAN : "+sql);
+					
 		    		stmt.executeUpdate(sql);
 	    	
 		    }//close try 

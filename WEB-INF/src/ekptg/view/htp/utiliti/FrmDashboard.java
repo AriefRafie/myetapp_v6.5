@@ -42,6 +42,7 @@ import ekptg.model.htp.entity.HtpPermohonan;
 import ekptg.model.htp.online.IOnline;
 import ekptg.model.htp.online.OnlineBean;
 import ekptg.model.htp.rekod.HTPStatusRekodBean;
+import ekptg.model.ppt.FrmPermohonanUPTData;
 import ekptg.model.utils.status.IStatus;
 import ekptg.model.utils.status.StatusBean;
 import ekptg.view.admin.Pengumuman;
@@ -51,7 +52,9 @@ public class FrmDashboard extends AjaxBasedModule {
 	 * 
 	 */
 	private static final long serialVersionUID = -3455784952255888226L;
-	private final String PATH="app/htp/utiliti/";
+	private final String PATHBASE="app/";
+	private final String PATH=PATHBASE+"htp/utiliti/";
+	private final String PATHVER=PATHBASE+"htp/6.0/utiliti/";
 	private final String IDURUSANCUKAI = "11";
 	private final String IDURUSANPAJAKANKECIL = "309";
 	private final String IDSUBURUSANREKOD = "61";
@@ -77,7 +80,8 @@ public class FrmDashboard extends AjaxBasedModule {
 	List listHakmilik = null;
 	List listKemaskiniCukai = null;
 	List listCukai = null;
-	
+	Vector pendaftaranPPT = null; 
+
 	private IHTPeringatan iHTPP = null;  
 	SimpleDateFormat sdfTahun = new SimpleDateFormat("yyyy");
 	SimpleDateFormat sdfBulan = new SimpleDateFormat("MM");
@@ -91,6 +95,7 @@ public class FrmDashboard extends AjaxBasedModule {
 		context.put("portal_role_",portal_role);
 		String command = getParam("command");
 		myLog.info("command="+command);
+		
 		//Carian 
 		if (command.equals("doCarianFail")) {
 			return doCarianFail(session);
@@ -99,7 +104,10 @@ public class FrmDashboard extends AjaxBasedModule {
 		}else if (command.equals("doCloseCarianFail")) {
 			return doCloseCarianFail(session);
 		}else if (command.equals("doCloseCarianHakmilik")) {
-			return doCloseCarianHakmilik(session);
+			return doCloseCarianHakmilik(session); 
+		}else if (command.equals("getPPT")) {
+    		pendaftaranPPT = FrmPermohonanUPTData.getListPemohonSeksyen8("");
+			return senaraiFailPPT(session); 
 		}else if (command.equals("doGetListFail")) {
 			return doGetListFail(session);
 		} else if (command.equals("doCloseListFail")) {
@@ -171,6 +179,7 @@ public class FrmDashboard extends AjaxBasedModule {
     	Vector<HtpPermohonan> onlinePermohonan = null; 
     	Vector<Hashtable<String, String>> onlinePermohonanPra = null; 
     	Vector<Hashtable<String, String>> onlinePermohonanPraRizab = null; 
+
     	if(isTab(portal_role,"Permohonan")){
     		context.remove("onlinePermohonan");
     		onlinePermohonan = getIOnline().findFailOnlineUrusan("","","","","1,10");
@@ -185,8 +194,12 @@ public class FrmDashboard extends AjaxBasedModule {
     		if(onlinePermohonanPraRizab != null)
     			bilPermohonanOnline += onlinePermohonanPraRizab.size();
 
+    		pendaftaranPPT = FrmPermohonanUPTData.getListPemohonSeksyen8("");
+//    		pendaftaranPPT.isEmpty()
     		
     	}
+    	context.put("senaraiPermohonanPPT", pendaftaranPPT);  
+
     	if(onlinePermohonanPra !=null & onlinePermohonan != null)
     		context.put("onlinePermohonanPra", onlinePermohonanPra.size() + onlinePermohonanPraRizab.size());  
 
@@ -351,9 +364,9 @@ public class FrmDashboard extends AjaxBasedModule {
 		
 		
 		//PENAMBAHBAIKAN. SYAZ. 17112014. NOTIFIKASI BORANG 15A UTK UNIT REKOD DAN UNIT CUKAI
-		Integer bil_borang5ABaru = getBilBorang5ABaru(userId);
-		this.context.put("bil_borang5ABaru",bil_borang5ABaru);
-		
+//		Integer bil_borang5ABaru = getBilBorang5ABaru(userId);
+//		this.context.put("bil_borang5ABaru",bil_borang5ABaru);
+//		
 		Integer bil_borang15ABaru = getBilBorang15ABaru(userId);
 		this.context.put("bil_borang15ABaru",bil_borang15ABaru);
 		
@@ -411,6 +424,19 @@ public class FrmDashboard extends AjaxBasedModule {
 	private String doCloseCarianHakmilik(HttpSession session) throws Exception {
 		this.context.put("div_carianHakmilik_open", "N");
 		return PATH+"/div_carianHakmilik.jsp";
+	}
+	
+	private String senaraiFailPPT(HttpSession session) throws Exception {
+		if (!getParam("div_getListFail_open").equals("Y")) {
+			this.context.put("div_getListFail_open", "Y");
+			Vector senaraiFail = pendaftaranPPT;
+//			listFail = ListFail(session, "fail", getParam("search"));
+			this.context.put("listFail", senaraiFail);
+			this.context.put("search", getParam("search"));
+		} else {
+			this.context.put("div_getListFail_open", "N");
+		}
+		return PATHVER+"div_senaraiFailPPT.jsp";
 	}
 	
 	private String doGetListFail(HttpSession session) throws Exception {

@@ -8,23 +8,32 @@
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input name="flagDetail" type="hidden" id="flagDetail" value="$flagDetail"/>
-  <input name="flagFrom" type="hidden" id="flagFrom"/>
   <input name="initiateFlagBuka" type="hidden" id="initiateFlagBuka"/>
   <input name="idNegeriUser" type="hidden" id="idNegeriUser" value="$idNegeriUser"/>
+  <input name="flagFrom" type="hidden" id="flagFrom"/>
 </p>
+
+#if ($errMsg != "")
+<div class="info"><strong>$errMsg</strong></div>
+#end
+
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td><fieldset>
       <legend><b>CARIAN</b></legend>
       <table width="100%" align="center" border="0">
         <tr>
-          <td width="30%" height="24" scope="row" align="right">No Fail : </td>
+          <td width="30%" height="24" scope="row" align="right">No. Fail : </td>
           <td width="70%"><input name="txtNoFail" id="txtNoFail" type="text" value="$txtNoFail" size="50" maxlength="50" style="text-transform:uppercase;" >
             <input type="hidden" name="idFail" />
             <input type="hidden" name="idPermohonan" />
             <input type="hidden" name="idStatus" />
             <input type="hidden" name="actionPengkuatkuasaan" />
             #if($flagDetail == '') <a href="javascript:bukaCarian()" class="style1">Buka Carian Terperinci #else </a> &nbsp;  &nbsp;<a href="javascript:tutupCarian()" class="style1">Tutup Carian Terperinci #end</a> </td>
+        </tr>
+        <tr>
+          <td width="30%" height="24" scope="row" align="right">No. Fail Negeri : </td>
+          <td width="70%"><input name="txtNoFailNegeri" id="txtNoFailNegeri" type="text" value="$txtNoFailNegeri" size="50" maxlength="50" style="text-transform:uppercase;" ></td>
         </tr>
         <tr>
           <td width="30%" height="24" scope="row" align="right">Nama Pengadu : </td>
@@ -116,7 +125,7 @@
       <table align="center" width="100%">
         <tr>
           <td colspan="6" scope="row">
-          	#if ($userRole == '(PHP)PYWPenolongPegawaiTanahNegeri')
+          	#if ($userRole == '(PHP)PYWPenolongPegawaiTanahNegeri' || $userRole == '(PHP)PYWPenolongPegawaiTanahHQ')
           	<input name="cmdDaftar" type="button" value="Daftar Permohonan Baru" onClick="javascript:daftarBaru()"/>
             &nbsp;
             #end
@@ -125,7 +134,8 @@
         </tr>
         <tr class="table_header">
           <td scope="row" width="4%" align="center"><strong>Bil</strong></td>
-          <td width="23%"><strong>No Fail</strong></td>
+          <td width="23%"><strong>No. Fail</strong></td>
+          <td width="18%"><strong>No. Fail Negeri</strong></td>
           <td width="23%" align="center"><strong>KJP</strong></td>
           <td width="30%" align="center"><strong>Keterangan Hakmilik</strong></td>
           <td width="10%" align="center"><strong>Tarikh Terima</strong></td>
@@ -144,6 +154,7 @@
         <tr>
           <td class="$row" align="center">$list.bil</td>
           <td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus')" class="style1">$list.noFail</a></td>
+          <td class="$row">$list.noFailNegeri</td>
           <td class="$row">$list.namaKementerian</td>
           <td class="$row">$list.kodHakmilik  $list.noHakmilik$list.koma $list.keteranganLot $list.noLot$list.koma
             $list.namaMukim$list.koma $list.namaDaerah$list.koma $list.namaNegeri</td>
@@ -237,6 +248,8 @@ function kosongkan(flagDetail) {
 function papar(idFail,idStatus) {
 
 	document.${formName}.idFail.value = idFail;
+	document.${formName}.initiateFlagBuka.value = "Y";
+	document.${formName}.flagFrom.value = "failTugasan";	
 
 	if (idStatus == '1610198'){
 		document.${formName}.action = "$EkptgUtil.getTabID("Penguatkuasaan",$portal_role)?_portal_module=ekptg.view.php2.FrmCRBMaklumatPermohonanView";

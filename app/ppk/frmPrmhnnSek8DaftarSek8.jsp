@@ -2716,7 +2716,7 @@ $listFail.id_Suburusanstatus
     #end
   </table>
   </fieldset>
-  <p align="right">CL - 01 - 64d$duplicate</p>
+  <p align="right">CL - 01 - 64</p>
   </fieldset>
   <table width="100%">
     <tr>
@@ -2735,15 +2735,20 @@ $listFail.id_Suburusanstatus
           
           #else
           #if($pendaftaran == "yes")<a href="javascript:kembalidaftar()" class="style2"  ><img src="../img/1enable.png" alt="" border="0" title="Senarai Semak"/></a>#else<a href="javascript:kembalix()" class="style2"  ><img src="../img/1enable.png" alt="" border="0" title="Senarai Semak"/></a>#end<img src="../img/arrowgaris.png" alt="" border="0"/><img src="../img/2current.png" alt="" border="0" title="Pendaftaran Permohonan"/><img src="../img/arrowgaris.png" alt="" border="0"/>
-          #if ($noFail != "")
-          #if (($duplicate != "yes")  && ($id_Status != "152"))
-          <a href="javascript:seterusnya_tab()" class="style2"  >
-          <img src="../img/3enable2.png" alt="" border="0" title="Maklumat Permohonan"/></a>
-          #else
-          <img src="../img/3disable.png" alt="" border="0" title="Maklumat Permohonan"/>
-          #end 
-          #else<img src="../img/3disable.png" alt="" border="0" title="Maklumat Permohonan"/>#end 
-          </span> #end </div></td>
+          	#if ($noFail != "")
+          		#if (($duplicate != "yes")  && ($id_Status != "152"))
+         			 <a href="javascript:seterusnya_tab()" class="style2"  >
+          			 <img src="../img/3enable2.png" alt="" border="0" title="Maklumat Permohonan"/></a>
+          		#else
+          		     
+          			 <img src="../img/3disable.png" alt="" border="0" title="Maklumat Permohonan"/>
+          		#end 
+          	#else
+		       
+          		<img src="../img/3disable.png" alt="" border="0" title="Maklumat Permohonan"/>
+          	#end 
+          </span> 
+          #end </div></td>
     </tr>
   </table>
   <input type="hidden" name="command" />

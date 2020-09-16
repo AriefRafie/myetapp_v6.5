@@ -1070,14 +1070,14 @@ public int setListMaklumatTanahWithSiasatan_count(String idPermohonan,String lot
 		    			}else{
 		    				h.put("jumlah_award", "0.00");
 		    			}
-		    			
-		    			h.put("jumlah_award", rs.getString("JUMLAH_AWARD")== null?"":rs.getDouble("JUMLAH_AWARD"));
+
+		    			h.put("jumlah_award", rs.getString("jumlah_award")== null?"":rs.getDouble("jumlah_award"));
 		    			h.put("tarikh_borangg", rs.getDate("TARIKH_BORANGG")==null?"":Format.format(rs.getDate("TARIKH_BORANGG")));
 						h.put("tarikh_borangh", rs.getDate("TARIKH_BORANGH")==null?"":Format.format(rs.getDate("TARIKH_BORANGH")));
 						h.put("no_siasatan", rs.getString("NO_SIASATAN")== null?"":rs.getString("NO_SIASATAN"));
 												
 		    			dataBorangG.addElement(h);
-		    			myLogger.info("xxx"+h.put("tarikh_borangg", rs.getDate("TARIKH_BORANGG")==null?"":Format.format(rs.getDate("TARIKH_BORANGG"))));
+		    			//myLogger.info("xxx"+	h.put("jumlah_award", rs.getString("jumlah_award")== null?"": Utils.format2Decimal(rs.getDouble("jumlah_award"))));
 		    		
 		    			
 		      }//close while

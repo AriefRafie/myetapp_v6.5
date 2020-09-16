@@ -8432,7 +8432,7 @@ System.out.println("sini======="+sql);
 		
 		//arief add
 		// Data pemohon :: SEKSYEN 8 & SEKSYEN 17
-		public static void setListSemak(String id_permohonan, String usid)
+		public static void setListSemak(String id_permohonan, String userId)
 			throws Exception {
 			Db db = null;
 
@@ -8475,7 +8475,7 @@ System.out.println("sini======="+sql);
 				sql += "AND sstf.id_suburusanstatus = sst.id_suburusanstatus ";
 				sql += "AND sst.id_status = st.id_status ";
 				sql += "AND p.id_Daerahmhn = d.id_Daerah(+) ";
-				sql += "AND ur.user_id = '" + usid + "'";
+				sql += "AND ur.user_id = '" + userId + "'";
 				//sql += " And ur.ID_PEJABATJKPTG = u.ID_PEJABATJKPTG ";
 				sql += " AND p.id_Fail = f.id_Fail ";
 				sql += "AND p.ID_PEMOHON = pm.ID_PEMOHON ";
@@ -8713,7 +8713,7 @@ System.out.println("sini======="+sql);
 				db = new Db();
 				stmt = db.getStatement();
 				
-				String sql = " SELECT SIGNED_TEXT FROM TBLPPKPERINTAH WHERE ID_PERBICARAAN = '" + idPerintah + "'";
+				String sql = " SELECT SIGNED_TEXT FROM TBLPPKPERINTAH WHERE ID_PERINTAH = '" + idPerintah + "'";
 				rs = stmt.executeQuery(sql);
 				System.out.println("data dah signed "+sql);
 				if (rs.next()) {
@@ -8939,4 +8939,55 @@ System.out.println("sini======="+sql);
 						db.close();
 				}
 			}
+		
+		//arief add
+		public static Vector getValidPegawaiPengendali() {
+			return validPegPengendali;
+		}
+		
+		//arief add
+		//checking sama ada user yang login adalah pegawai pengendali
+		private static Vector validPegPengendali = new Vector();
+		public static void setValidPegawaiPengendali(String userId,String idPerbicaraan, String NamaPeg, String username) throws Exception {
+
+			Db db = null;
+			Hashtable h;
+			validPegPengendali.clear();
+			String sql = "";
+			String sql2 = "";
+			String idOBdtl = "";
+
+			try {
+				db = new Db();
+				Statement stmtN = db.getStatement();
+				sql = " SELECT A.USER_ID " +
+						" FROM TBLPPKRUJUNIT A, TBLPPKPERBICARAAN B " +
+						" WHERE A.ID_UNITPSK = B.ID_UNITPSK " +
+						" AND A.USER_ID = '"+userId+"' " +
+						" AND B.ID_PERBICARAAN ='"+idPerbicaraan+"'";
+				ResultSet rs = stmtN.executeQuery(sql);
+				int i = 0;
+				if (rs.next()) {
+					h = new Hashtable();
+					h.put("USER_ID_PEG",rs.getString("USER_ID") == null ? "" : rs.getString("USER_ID"));
+					validPegPengendali.addElement(h);
+				}else{		
+					sql2 = " SELECT A.USER_ID " +
+						" FROM TBLPPKRUJUNIT A, TBLPPKPERBICARAAN B " +
+						" WHERE A.ID_UNITPSK = B.ID_UNITPSK " +
+						" AND A.NAMA_PEGAWAI = '"+username+"' " +
+						" AND B.ID_PERBICARAAN ='"+idPerbicaraan+"' ";
+						rs = stmtN.executeQuery(sql2);
+						System.out.println("sql2b==="+sql2);
+						if (rs.next()) {
+							h = new Hashtable();
+							h.put("USER_ID_PEG",rs.getString("USER_ID") == null ? "" : rs.getString("USER_ID"));
+							validPegPengendali.addElement(h);
+						}
+				}
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}
 }

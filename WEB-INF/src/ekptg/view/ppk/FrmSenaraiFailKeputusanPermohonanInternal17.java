@@ -67,7 +67,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal17 extends VTemplate {
 		mainheader = new FrmHeaderPpk();
 		this.context.put("seksyen_kp","17");
 		String jenisDoc = "99205";
-
+		Vector flag5juta =  new Vector(); //arief add 5 juta
 		HttpSession session = this.request.getSession();
 		String submit = "";
 		submit = getParam("command");
@@ -159,6 +159,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal17 extends VTemplate {
 
 		if ("paparKeputusan".equals(submit)) {
 			String idPermohonan = getParam("id_permohonan");
+			myLogger.info("idPermohonan ===== : "+idPermohonan);
 			logic_A.setSupportingDoc(idPermohonan, jenisDoc);
 			listSupportingDoc = logic_A.setSupportingDoc(idPermohonan, jenisDoc);
 			this.context.put("ViewSupportingDoc", listSupportingDoc);
@@ -258,7 +259,12 @@ public class FrmSenaraiFailKeputusanPermohonanInternal17 extends VTemplate {
 				logic_A.setDataFail(id);
 				listFail = logic_A.getDataFail();
 				this.context.put("ViewFail", listFail);
-
+				
+				//arief add 5 juta
+				FrmPrmhnnSek8KeputusanPermohonanInternalData.checkFlag5Juta(id);
+				flag5juta = FrmPrmhnnSek8KeputusanPermohonanInternalData.getFlag5Juta();
+				this.context.put("flag5juta", flag5juta);
+				
 				FrmPrmhnnSek8KeputusanPermohonanInternalData
 						.setMaklumatMahkamah(id);
 				Vector listMaklumatMahkamah = FrmPrmhnnSek8KeputusanPermohonanInternalData
@@ -2932,7 +2938,9 @@ public class FrmSenaraiFailKeputusanPermohonanInternal17 extends VTemplate {
 			FrmPrmhnnSek8KeputusanPermohonanInternalData.setDataKeputusan(id);
 			int eventStatus = 1;
 			this.context.put("EventStatus", eventStatus);
-
+			logic_A.setSupportingDoc(id, jenisDoc);
+			listSupportingDoc = logic_A.setSupportingDoc(id, jenisDoc);
+			this.context.put("ViewSupportingDoc", listSupportingDoc);
 			FrmSenaraiFailKeputusanPermohonanInternalData.setData(id,
 					(String) session.getAttribute("_ekptg_user_id"));
 			headerppk_baru(session,id,"Y","","T");
@@ -2952,6 +2960,13 @@ public class FrmSenaraiFailKeputusanPermohonanInternal17 extends VTemplate {
 		//			+ listMaklumatMahkamah);
 			this.context.put("listMaklumatMahkamah", listMaklumatMahkamah);
 
+			FrmPrmhnnSek8KeputusanPermohonanInternalData
+			.setMaklumatMahkamahM();
+			Vector listMaklumatMahkamahM = FrmPrmhnnSek8KeputusanPermohonanInternalData
+			.getMaklumatMahkamahM();
+			this.context
+			.put("listMaklumatMahkamahJ", listMaklumatMahkamahM);
+	
 			String mati = getParam("idpermohonansimati");
 
 			logic.setDataHTAX(mati);

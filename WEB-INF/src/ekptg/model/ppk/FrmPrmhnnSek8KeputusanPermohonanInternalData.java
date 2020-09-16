@@ -64,9 +64,8 @@ public class FrmPrmhnnSek8KeputusanPermohonanInternalData {
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next())	{
 				Hashtable h = new Hashtable();
-				if (h.put("flag_5juta", rs.getString(1)==null?"":rs.getString(1)) == "T") {
-					f5j = true;
-				}
+				h.put("flag_5juta", rs.getString(1)==null?"":rs.getString(1));
+				flag5juta.addElement(h);
 			} 
 		}
 		finally {
@@ -1264,7 +1263,7 @@ private static Vector semakMahkamah = new Vector();
 				r.add("id_daerah_mahkamah",idDaerah);
 				r.add("FLAG_SEBABPINDAHMAHKAMAH",tujuanPindah); //razman add
 				r.add("catatan", catatan);
-				r.add("TARIKH_SURATARB",tarikhsuratARB);
+				r.add("TARIKH_SURATARB",r.unquote("sysdate"));
 				sql = r.getSQLInsert("tblppkkeputusanpermohonan");		
 				
 				System.out.println("----1-----");

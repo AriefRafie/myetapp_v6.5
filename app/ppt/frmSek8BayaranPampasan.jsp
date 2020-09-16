@@ -2,6 +2,16 @@
 
 #set($frmtdate = "&nbsp;<i><font color='blue' style='font-size:10px'>dd/mm/yyyy</font></i>")
 
+	#foreach($data in $dataBorangG)
+		#set($txdTarikhBorangH=$data.tarikh_borangh)
+		#set($jumlahAward=$data.jumlah_award)
+	#end
+		<input name="txdTarikhBorangH" type="hidden" id="txdTarikhBorangH" value="$txdTarikhBorangH"/>
+		<input name="jumlahAward" type="hidden" id="jumlahAward" value="$jumlahAward"/>
+		<input name="Date5" type="hidden" id="Date5" value="$Date5"/>
+		<input name="Date8" type="hidden" id="Date8" value="$Date8"/>
+
+
 <fieldset id="top">
 <center>
 
@@ -10,7 +20,7 @@
 <br/>
 
 	<input name="tabId" type="hidden" id="tabId" value="$selectedTab"/>
-
+	
 	<div id="TabbedPanels1" class="TabbedPanels">		
   		<ul class="TabbedPanelsTabGroup">
     		<li class="TabbedPanelsTab" onClick="javascript:setSelected(0);maklumatSuratAgensi('$!id_hakmilik','$!id_siasatan')" tabindex="1">Pembayaran Melalui Cek</li>
@@ -47,7 +57,7 @@
 						<td>&nbsp;</td>
 			            <td>Tarikh Kuatkuasa Caj Lewat</td>
 			            <td>:</td>
-			            <td><input name="txdTarikhLewat" id="txdTarikhLewat" size="11" type="text" value="" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" >
+			            <td><input name="txdTarikhLewat" id="txdTarikhLewat" size="11" type="text" value="" onkeyup="validateTarikh(this,this.value)" onblur="checkDate(); check_date(this);" >
 			            <img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhLewat',false,'dmy');">&nbsp;$!frmtdate</td>
 					</tr>
 					<tr>
@@ -56,6 +66,7 @@
   						<td>:</td>
   						<td>&nbsp;RM&nbsp;<input type="text" name="txtCekLewat" id="txtCekLewat" value="$!Utils.RemoveSymbol($!txtCekLewat)" size="10" maxlength="8" style="text-align:right" onkeyup="validateNilai(this,this.value)" onblur="validateModal(this,this.value,'$!txtCekLewat')" ></td>
   					</tr>	
+  	  				
 					<tr>
 						<td>&nbsp;</td>
 						<td>Tarikh Terima</td>
@@ -1235,4 +1246,67 @@ function RemoveNonNumeric3( strString )
       }
       return strReturn;
 }
+
+function checkDate() {
+	//tarikh pendudukan mula PPT-41
+	var Mula  = document.getElementById("txdTarikhLewat").value;
+	var dt1   = parseInt(Mula.substring(0,2),10);
+	var mon1  = parseInt(Mula.substring(3,5),10)-1;
+	var yr1   = parseInt(Mula.substring(6,10),10);
+	var dateLewat = new Date(yr1, mon1, dt1);
+	//alert(dateLewat);
+	
+	var TarikhH  = document.getElementById("txdTarikhBorangH").value;
+	var dtH   = parseInt(TarikhH.substring(0,2),10);
+	var monH  = parseInt(TarikhH.substring(3,5),10)-1;
+	var yrH   = parseInt(TarikhH.substring(6,10),10);
+	var dateH = new Date(yrH, monH, dtH);
+	//alert(dateH);
+	
+	var Tarikh5  = document.getElementById("Date5").value;
+	var dt5   = parseInt(Tarikh5.substring(0,2),10);
+	var mon5  = parseInt(Tarikh5.substring(3,5),10)-1;
+	var yr5   = parseInt(Tarikh5.substring(6,10),10);
+	var date5 = new Date(yr5, mon5, dt5);
+	//alert(date5);
+	
+	var Tarikh8  = document.getElementById("Date8").value;
+	var dt8   = parseInt(Tarikh8.substring(0,2),10);
+	var mon8  = parseInt(Tarikh8.substring(3,5),10)-1;
+	var yr8   = parseInt(Tarikh8.substring(6,10),10);
+	var date8 = new Date(yr8, mon8, dt8);
+	
+	// get total seconds between two dates
+	var res = Math.abs(dateLewat - dateH) / 1000;
+	var days = Math.floor(res / 86400);
+	//alert(days);
+	
+	var res2 = Math.abs(date8-date5) / 1000;
+	var days2 = Math.floor(res2 / 86400);
+	//alert(days2);
+	
+	var res3 = Math.abs(dateLewat-date8) / 1000;
+	var days3 = Math.floor(res3 / 86400);
+	//alert(days3);
+	
+	var award = document.getElementById("jumlahAward").value;
+	
+	if(dateLewat>date5){
+		//alert(5);
+		var c = Math.abs(5*award)/100;		
+		//alert(c);
+		
+	}
+	if(dateLewat<date8){
+		//alert(8);
+		var c = Math.abs(8*award)/100;		
+		//alert(c);
+		
+	}
+	
+	
+	document.${formName}.txtCekLewat.value = c;
+	
+}
+
 </script>

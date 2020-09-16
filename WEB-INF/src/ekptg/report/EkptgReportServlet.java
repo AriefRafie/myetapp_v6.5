@@ -109,19 +109,18 @@ public abstract class EkptgReportServlet implements IServlet2 {
 		ServletException {		
 		//en azam 14082017		
 		String url = new_url.toString();
-		new_url = url.replace("10.19.144.82", "poc.myetapp.gov.my");
-		
+		new_url = url.replace("10.19.144.82", "poc.myetapp.gov.my");	
 		// Security Check
 		HttpSession session = request.getSession();
 		String user_id = (String) session.getAttribute("_ekptg_user_id");
-		myLogger.info("**************** check USER_ID SESSION : "+user_id);
+//		myLogger.info("**************** check USER_ID SESSION : "+user_id);
 		
 		if(user_id==null){
-			myLogger.info("**************** check USER ID MANUAL : "+(String)request.getAttribute("user_id"));
+//			myLogger.info("**************** check USER ID MANUAL : "+(String)request.getAttribute("user_id"));
 			user_id = (String)request.getAttribute("user_id");
 		}
 		
-		myLogger.info("**************** check USER ID FINAL : "+user_id);
+		myLogger.info("check user_id = "+user_id);
 		this.idmasuk = user_id;
 		if (user_id == null) {
 			usernotvalid(response);
@@ -129,18 +128,26 @@ public abstract class EkptgReportServlet implements IServlet2 {
 			showErrors(response);
 		} else {
 			String contextPath = request.getContextPath();
-			//myLogger.info("contextPath="+contextPath);
+//			myLogger.info("contextPath 1="+contextPath);
 			Map<String, Object> parameters = new HashMap<String, Object>();
 			if (this.parameters != null)
 				parameters = this.parameters;
 
-			String realPathReport = getReportPath(context,"reports");
+//			myLogger.info("contextPath 2="+context.getRealPath("reports"));
+//			String contextRealPath = context.getRealPath("");
 			
-			// parameters.put("BaseDir",new File(context.getRealPath("/img/")));
+//			String realPathReport = context.getRealPath("reports");
+//			String realPathReport = contextRealPath.replaceAll(getAppContext(),"reports");			
+			
+			String realPathReport = getReportPath(context,"reports");
+//			myLogger.info("contextPath 3="+realPathReport);
+
 			parameters.put("BaseDir", context.getRealPath("/img/"));
+			// parameters.put("BaseDir",new File(context.getRealPath("/img/")));
 			// Report folder
 			// parameters.put("ReportDir",context.getRealPath("/reports/"));
-			myLogger.info("146 :realPathReport="+realPathReport);
+//			myLogger.info("146 :realPathReport="+realPathReport);
+			
 			parameters.put("ReportDir", realPathReport);
 			// Get all parameters from query String
 			String name = "";
@@ -2467,23 +2474,23 @@ public abstract class EkptgReportServlet implements IServlet2 {
 	 */
 	private String getReportPath(ServletContext context,String rtype){
 		String realPathReport = context.getRealPath(File.separator + rtype + File.separator)
-			.replace("johor" + File.separator, "")
-			.replace("kedah" + File.separator, "")
-			.replace("ekptgv3" + File.separator, "")
-			.replace("kelantan" + File.separator, "")
-			.replace("melaka" + File.separator, "")
-			.replace("ns" + File.separator, "")
-			.replace("pahang" + File.separator, "")
-			.replace("penang" + File.separator, "")
-			.replace("perak" + File.separator, "")
-			.replace("perlis" + File.separator, "")
-			.replace("selangor" + File.separator, "")
-			.replace("terengganu" + File.separator, "")
-			.replace("hq" + File.separator, "")
-			.replace("ekptgv2" + File.separator, "")
-			.replace("wp" + File.separator, "")
+//			.replace("johor" + File.separator, "")
+//			.replace("kedah" + File.separator, "")
+//			.replace("ekptgv3" + File.separator, "")
+//			.replace("kelantan" + File.separator, "")
+//			.replace("melaka" + File.separator, "")
+//			.replace("ns" + File.separator, "")
+//			.replace("pahang" + File.separator, "")
+//			.replace("penang" + File.separator, "")
+//			.replace("perak" + File.separator, "")
+//			.replace("perlis" + File.separator, "")
+//			.replace("selangor" + File.separator, "")
+//			.replace("terengganu" + File.separator, "")
+//			.replace("hq" + File.separator, "")
+//			.replace("ekptgv2" + File.separator, "")
+//			.replace("wp" + File.separator, "")
 			.replace(getAppContext() + File.separator, "");
-		//myLogger.info("realPathReport="+realPathReport);
+		myLogger.info("realPathReport()="+realPathReport);
 		return realPathReport;
 	
 	}

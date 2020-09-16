@@ -438,12 +438,14 @@ public class FrmPLPMesyuaratView extends AjaxBasedModule{
 	    this.context.put("idMesyuarat", idMesyuarat); 
 	    this.context.put("checkPampasan", checkPampasan);
 	    this.context.put("checkSyor", checkSyor);
-	        
 	    this.context.put("step",step);
 	    
 	    //if ("openNotifikasi".equals(flagNotifikasi)){
         //	vm = "app/php2/frmPLPMesyuaratDetail.jsp";
         //}
+	    if (!"".equals(getParam("flagFrom"))){
+        	session.setAttribute("FLAG_FROM", getParam("flagFrom"));
+        }
 	    
 		return vm;
 	}

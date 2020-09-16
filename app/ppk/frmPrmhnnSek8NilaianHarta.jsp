@@ -19,21 +19,17 @@
 .style4 {
 	color: #0000FF
 }
-.pautan {
-	color: #0000FF
-}
 -->
 </style>
 </head>
-
+#set($disability1 = "")
     #if ($cetakNilaiHarta==1)
     	 <body onload="cetakNilaiHarta2('$NO_FAIL')"> 
     #else
     <body onload="submitForm()">
     #end
-    
-    
-    <!-- 13/8/2020 -->
+
+
 <form id="form1" name="f1" method="post" action="">
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input name="flagFromSenaraiFailSek8" type="hidden" id="flagFromSenaraiFailSek8" value="$flagFromSenaraiFailSek8"/>
@@ -64,6 +60,65 @@
     <input name="id_Suburusanstatusfail" type="hidden"  value="$listFail.id_Suburusanstatusfail"/>
     #end
     
+    #foreach($checkMaklumatSimati in $maklumatSimati)
+    	#set ($CHKTARIKH_MATI = $checkMaklumatSimati.TARIKH_MATI)
+    	#set ($CHKTEMPAT_MATI = $checkMaklumatSimati.TEMPAT_MATI)
+    	#set ($CHKSEBAB_MATI = $checkMaklumatSimati.SEBAB_MATI)
+    	#set ($CHKALAMAT_1 = $checkMaklumatSimati.ALAMAT_1)
+    	#set ($CHKPOSKOD = $checkMaklumatSimati.POSKOD)
+    	#set ($CHKID_NEGERI = $checkMaklumatSimati.ID_NEGERI)
+    	#set ($CHKBANDAR = $checkMaklumatSimati.BANDAR)
+    	#set ($CHKJENIS_WARGA = $checkMaklumatSimati.JENIS_WARGA)
+    #end
+    
+    #foreach($checkMaklumatPemohon in $maklumatPemohon)
+    	#set ($CHKUMUR = $checkMaklumatPemohon.UMUR)
+    	#set ($CHKNO_HP = $checkMaklumatPemohon.NO_HP)
+    	#set ($CHKEMEL = $checkMaklumatPemohon.EMEL)
+    #end
+    
+    #set ($strErrorMaklumatSimati = "")
+    #set ($strErrorMaklumatPemohon = "")
+    #if ($CHKTARIKH_MATI == "")
+    	#set ($strErrorMaklumatSimati = "Maklumat Tarikh Mati tidak diisi. ")
+    #end
+    
+    #if ($CHKJENIS_WARGA == "")
+    	#set ($strErrorMaklumatSimati = $strErrorMaklumatSimati + "Jenis Kewarganageraan Simati tidak diisi. ")
+    #end
+    
+    #if ($CHKTEMPAT_MATI == "")
+    	#set ($strErrorMaklumatSimati = $strErrorMaklumatSimati + "Maklumat Tempat Mati tidak diisi.")
+    #end
+    
+    #if ($CHKSEBAB_MATI == "")
+    	#set ($strErrorMaklumatSimati = $strErrorMaklumatSimati + "Maklumat Sebab Kematian tidak diisi. ")
+    #end
+    
+    #if ($CHKALAMAT_1 == "" || $CHKPOSKOD == "" || $CHKID_NEGERI == "" || $CHKBANDAR == "" )
+    	#set ($strErrorMaklumatSimati = $strErrorMaklumatSimati + "Alamat Lengkap Simati tidak diisi. ")
+    #end
+    
+    #if ($CHKUMUR == "")
+    	#set ($strErrorMaklumatPemohon = $strErrorMaklumatPemohon + "Maklumat Umur Pemohon tidak diisi. ")
+    #end
+    
+    
+    
+    #foreach($listUbah in $listUbah)
+		#set($flagEmail = $listUbah.flag_email_pemohon)
+		#set($flagNoTelefonBimbit = $listUbah.flag_notelefonbimbit_pemohon)
+	#end
+	
+	#if ($CHKNO_HP == "" && $flagNoTelefonBimbit != "F" )
+    	#set ($strErrorMaklumatPemohon = $strErrorMaklumatPemohon + "Maklumat No. Telefon Pemohon tidak diisi. ")
+    #end
+    
+    #if ($CHKEMEL == "" && $flagEmail != "F")
+    	#set ($strErrorMaklumatPemohon = $strErrorMaklumatPemohon + "Maklumat Emel Pemohon tidak diisi. ")
+    #end
+    
+    
     #foreach($list in $View)
     #set ($id = $list.idPermohonan)
     #set ($idPemohon = $list.idPemohon)
@@ -86,6 +141,7 @@
     <input name="idstatus" type="hidden"  value="$list.id_Status"/>
     #set($listnoFail = $list.noFail)
     #set($listidnegeri = $list.idnegeri)
+    <input name="listidnegeri" type="hidden"  value="$listidnegeri"/>
     #set($listnamadaerah = $list.namadaerah)
     #set($listnamaPejabat = $list.namaPejabat)
     #set($listketerangan = $list.keterangan)
@@ -802,9 +858,9 @@ kod :: $listhath.kod_hakmilik
                             <input type="hidden" name="txtJumlahBesarTarikhMati" value="$overalljumlahmati">
                             <input type="hidden" name="txtJumlahBesarTarikhMohon" value="$overalljumlah">
                             <tr class="table_header">
-                              <td  width="76%" colspan="4" ><b>Jumlah Nilai Harta Alih (RM)</b></td>
-                              <td  align="right" width="12%"> #if($sumjumlah == 0) <b> 0.00 </b> #else <b> $Util.formatDecimal($sumjumlah) </b> #end </td>
-                              <td  align="right" width="12%"> #if($sumjumlahmati == 0) <b> 0.00 </b> #else <b> $Util.formatDecimal($sumjumlahmati) </b> #end </td>
+                              <td  width="76%" colspan="4" ><b>Jumlah Nilai Harta Alih (RM) </b></td>
+                              <td  align="right" width="12%"> #if($sumjumlah == 0 ) <b> 0.00 </b> #else <b> $Util.formatDecimal($sumjumlah) </b> #end </td>
+                              <td  align="right" width="12%"> #if($sumjumlahmati == 0  ) <b> 0.00 </b> #else <b> $Util.formatDecimal($sumjumlahmati) </b> #end </td>
                             </tr>
                           </table>
                           </fieldset>
@@ -835,7 +891,7 @@ kod :: $listhath.kod_hakmilik
                               #end </tr>
                             <tr class="row2">
                               <td>2 </td>
-                              <td><strong>Jumlah Nilai Harta Alih</strong></td>
+                              <td><strong>Jumlah Nilai Harta Alih </strong></td>
                               #if($sumjumlah == 0)
                               <td align="right">0.00</td>
                               #else
@@ -843,7 +899,7 @@ kod :: $listhath.kod_hakmilik
                               #end
                               
                               
-                              #if($sumjumlah == 0)
+                              #if($sumjumlahmati == 0  )
                               <td align="right">0.00</td>
                               #else
                               <td align="right">$Util.formatDecimal($sumjumlahmati)</td>
@@ -902,12 +958,22 @@ kod :: $listhath.kod_hakmilik
                                             #if ($jumppkhta.size()>0 && $sumhta >= 0)
                                             #end
                                         #end    
-                                       
+                                      <!-- Kena check sama ada Maklumat Simati dan Pemohon lengkap diisi -->
+                                      	#if ($strErrorMaklumatSimati == "" && $strErrorMaklumatPemohon == "")
+                 							<input type="button" name="button" id="button" value="Seterusnya" onClick="hantar_terus('$listseksyen','$id','$permohonan_mati','$listtarikhMohon','$listidSimati')" />
+                 						#else
+                 						<p align="center"><font color="red">Tidak dapat meneruskan ke proses seterusnya kerana terdapat maklumat berkenaan Simati/Pemohon yang tidak lengkap diisi: $strErrorMaklumatSimati $strErrorMaklumatPemohon</font> </p>
+                 						
+                 						#end	
+                 							
+                 							 #if(($pilihpegawai != "") && ($flag_pengesahanPegawai == "") && ($USER_ROLE != "user_ppk") && (($daftarHTA == "1") || ($daftarHA == "1") ))
+                                            
+                 							<input type="button" name="button" id="button" value="Sahkan" onClick="simpanPengesahan2()" />
+                 							#end
+                 							
                                            
                                             
-                                            <input type="button" name="button" id="button" value="Seterusnya" onClick="hantar_terus('$listseksyen','$id','$permohonan_mati','$listtarikhMohon','$listidSimati')
-                " />
-                 
+                 							
 
                                         #end
                             #end
@@ -924,6 +990,75 @@ kod :: $listhath.kod_hakmilik
                     </table>
                     </fieldset></td>
                 </tr>
+                #if($USER_ROLE == "user_ppk")
+                <tr>
+                <td>
+                <fieldset><legend><strong>Pilihan Pegawai bagi Pengesahan Permohonan</strong></legend>
+               <table width="100%" border="0" cellspacing="2" cellpadding="2" id="table_upload">
+                      <tr >
+                      
+                      <td  valign="top"></td>
+                      <td  valign="top"><font color="red">*</font>Pilih Pegawai</td>
+                      <td   valign="top">:</td>
+                      <td  valign="top">
+                     
+                      #if(($buttonSimpanDisable=="disabled") || ($pilihpegawai != ""))
+                    	#set($disability1 = "disabled")
+                      #end
+                        <select  class="autoselect" name="pilihpegawai" id="pilihpegawai" $disability1>
+                        <option value=""  >SILA PILIH PEGAWAI</option>
+                       
+                        #foreach($list1 in $listTechTeam_aduan) 
+                        
+                        <option value="$!list1.userID" #if($!list1.userID==$!pilihpegawai) selected="selected" #end >$list1.user_name $list1.catatan</option>
+                        
+                        #end 
+                        </select>
+                       
+                      </td>
+                    </tr>
+                    <!-- 
+                    <tr>
+                    	 	<td valign="top"></td>
+                      		<td valign="top"><font color="red">*</font>Tujuan Pindaan</td>
+                      		<td valign="top">:</td>
+                      		<td valign="top">
+                      		
+                      		 <textarea name="txtTujPinda" id="txtTujPinda" cols="50"   rows="4"  placeholder="Sila Masukkan Tujuan Pindaan..."         
+         onBlur="check_length(this,'4000','tujPinda_edit_check','tujPinda_num','normal','yes','keterangan');"  
+         onKeyup="check_length(this,'4000','tujPinda_edit_check','tujPinda_num','normal','yes','keterangan');" 
+         onKeydown="check_length(this,'4000','tujPinda_edit_check','tujPinda_num','normal','yes','keterangan');"                    
+           >$!txtTujPinda</textarea>
+            <div><span id="tujPinda_num" style="color:blue;" ></span><span> Baki Aksara </span></div>
+        
+         <div id="tujPinda_edit_check" class="alert_msg" ></div> 
+                      		
+                      		</td>
+                    
+                    </tr>
+                    
+                    <tr>
+                    <td valign="top"></td>
+                      		<td valign="top"><font color="red">*</font>Tempoh</td>
+                      		<td valign="top">:</td>
+                      		<td valign="top"> <input name="txtMula" type="text" value="$!txtMula">&nbsp; <a href="javascript:displayDatePicker('txtMula',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a>&nbsp; sehingga <input name="txtAkhir" type="text" value="$!txtAkhir"><a href="javascript:displayDatePicker('txtAkhir',false,'dmy');">&nbsp;<img border="0" src="../img/calendar.gif"/></a></td>
+                    </tr>
+                     -->
+                    <tr>
+                    	<td valign="top" colspan=3> &nbsp;</td>
+                    	#if(($buttonSimpanDisable=="disabled") || ($pilihpegawai != ""))
+                    	<td ><input disabled name="cmdSimpanPeg" id="cmdSimpanPeg" value="Simpan" type="button" onClick="javascript:cmdSimpan_Pegawai()"></td>
+                    	#else
+                    	<td ><input name="cmdSimpanPeg" id="cmdSimpanPeg" value="Simpan" type="button" onClick="javascript:simpanPengesahan()"></td>
+                    	#end
+               </table>
+               
+            
+            
+               </fieldset>
+                </td>
+                </tr>
+                #end
 <tr>
 <td>
                  <fieldset  id="tableReport" style="display:none;" >
@@ -1140,10 +1275,10 @@ kod :: $listhath.kod_hakmilik
 	<td width="5%">$semak.lampirans</td>
 	</tr>  
 	       		#end
-	
-</table>	
-</fieldset>
 
+</table>
+</fieldset>
+<br>
 <fieldset>
 <legend>PENGESAHAN PERMOHONAN</legend>
 <!--
@@ -1465,8 +1600,11 @@ kod :: $listhath.kod_hakmilik
 <td></td>
 <td>
 	<label align="left" valign="top"> 
-	<b><font color="BLUE" size="2"><span class="blink">Sekiranya permohonan telah dihantar, pemohon sudah tidak boleh mengemaskini permohonan.
-	<br> Jika terdapat sebarang maklumat yang perlu ditambah, sila mengemaskini permohonan terlebih dahulu sebelum menghantar permohonan.</span></font></b>
+<!-- 	<b><font color="BLUE" size="2"><span class="blink">Sekiranya permohonan telah dihantar, pemohon sudah tidak boleh mengemaskini permohonan. -->
+<!-- 	<br> Jika terdapat sebarang maklumat yang perlu ditambah, sila mengemaskini permohonan terlebih dahulu sebelum menghantar permohonan.</span></font></b> -->
+<!-- 	</label></td> -->
+	<b><font color="BLUE" size="2"><span class="blink">Ambil Perhatian: Sila pastikan maklumat yang diisi pada permohonan adalah TEPAT dan MUKTAMAD. 
+	Permohonan yang telah <br>dihantar TIDAK DIBENARKAN untuk dipinda/dikemaskini.</span></font></b>
 	</label></td>
 </tr>
 </table>
@@ -1724,6 +1862,39 @@ input_box = confirm("Adakah anda pasti?");
 	return;
 	}
 }
+
+function simpanPengesahan(){
+
+	input_box = confirm("Adakah anda pasti?");
+			if (input_box == true) {
+		document.f1.command.value="nilai_harta";
+		document.f1.mode.value="simpanPengesahan";
+		document.f1.eventStatus.value="1";
+		document.f1.action="";
+		document.f1.submit();
+		}
+		else
+		{
+		return;
+		}
+	}
+	
+function simpanPengesahan2(){
+
+	input_box = confirm("Adakah anda pasti?");
+			if (input_box == true) {
+		document.f1.command.value="nilai_harta";
+		document.f1.mode.value="simpanPengesahan2";
+		document.f1.eventStatus.value="1";
+		document.f1.action="";
+		document.f1.submit();
+		}
+		else
+		{
+		return;
+		}
+	}
+	
 function getNilaiHartaBatal(){
 input_box = confirm("Adakah anda pasti?");
 		if (input_box == true) {

@@ -442,12 +442,12 @@
             <td width="4%">
             
             #if ($alasan1=="1") 
-            <input type="checkbox" name="ukuran_luas" id="ukuran_luas" value="Y" tabindex="17" $TEMPchecked1 disabled />
+            	<input type="checkbox" name="ukuran_luas" id="ukuran_luas" value="Y" tabindex="17" $TEMPchecked1 disabled />
             #else
-            <input type="checkbox" name="ukuran_luas" id="ukuran_luas" value="Y" tabindex="17" $TEMPchecked1 />
+            	<input type="checkbox" name="ukuran_luas" id="ukuran_luas" value="Y" tabindex="17" $TEMPchecked1 />
             #end            
             
-            </td>            
+            </td>
             <td width="73%" colspan="4">Ukuran Luas Tanah Tersebut;</td>
         </tr>
 
@@ -458,73 +458,70 @@
             <td>
             
             #if ($alasan2=="2") 
-            <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 disabled />
+            	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 disabled />
             #else
-            <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
+            	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
             #end            
             
             </td>
-            <td colspan="4">Jumlah Pampasan;</td>
-        </tr>  
+            <td colspan="4">Jumlah Pampasan</td>
+        </tr>
         
-        <!-- PPT-35 (i) -->
         <tr>
-            <td valign="top">&nbsp;</td>
-            <td valign="top">&nbsp;</td>
-			<td valign="top">&nbsp;</td>
+          <td width="1%"></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
             <td>
-	        	<table>
+	        	<table id="bantahanpampasan">
 	        		<tr>
-	        		 <!-- PPT-35 (i) -->
-					#set ( $checked = "" )
-				    #foreach ($semak in $senaraiSemakan)
-					    	<td  width="10">
-		                   
-					          #if ( $semakclass.isSemakan("$permohonanInfo.idpermohonan", "$semak.id" ))
-					        	#set ( $checked = "checked" )
-					        #else
-					        	#set ( $checked = "" )
-					    	#end
-					    	#set ( $checked = "" )
-					        	 <input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked>
-					       	</td>
-					        <td >
-					        	$semak.keterangan <!-- $semak.id -->
-					        </td>
-					      
-				    #end	
+	        		 <!-- PPT-35 (i) Jenis Bantahan Pampasan -->
+					 #set ( $checked = "" )
+				     #foreach ($semakan in $senaraiSemakan)
+					 <td  width="10">
+		             
+					 #if ( $semakclass.isSemakan("$permohonanInfo.idpermohonan", "$semakan.id" ))
+					   	#set ( $checked = "checked" )
+					 #else
+					   	#set ( $checked = "" )
+					 #end
+					   	 <input class="cb" type="checkbox" name="jenisbantahanpampasan" value="$semakan.id" onclick="checkJumlahPampasan(true)" $checked>
+					 </td>
+					 <td >
+					 	$semakan.keterangan <!-- $semak.id -->
+					 </td>
+				     #end
 				    </tr>
-				</table>
-            
-
-	            <!-- table>
-					<tr>
+				<!-- /table>
+            	
+	            <table -->
+					<!-- tr>
 		            	<td>
 			            #if ($alasan2=="2") 
-			            <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 disabled />
+			            	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 disabled />
 			            #else
-			            <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
+			            	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
 			            #end            
 			            </td>
-			            <td>Nilai Tanah</td>
+			            	<td>Nilai Tanah</td>
 			            <td>
 			            #if ($alasan2=="2") 
-			            <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 disabled />
+			            	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 disabled />
 			            #else
-			            <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
+			            	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
 			            #end            
 			            </td>
-			            <td>Bangunan</td>
+			            	<td>Bangunan</td>
 			            <td>
 			            #if ($alasan2=="2") 
-			            <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 disabled />
+			            	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 disabled />
 			            #else
-			            <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
-			            #end            
+			            	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
+			            #end
 			            </td>
-			            <td>Kecederaan</td>
-	            	</tr>
-	            </table-->
+			            	<td>Kecederaan</td>
+	            	</tr -->
+	            </table>
 	            
 	            
 	        </td>
@@ -536,14 +533,15 @@
             <td valign="top">&nbsp;</td>
             <td>
             #if ($alasan3=="3") 
-            <input type="checkbox" name="terima_pampasan" id="terima_pampasan" value="Y" tabindex="19" $TEMPchecked3 disabled />
+            	<input type="checkbox" name="terima_pampasan" id="terima_pampasan" value="Y" tabindex="19" $TEMPchecked3 disabled />
             #else
-            <input type="checkbox" name="terima_pampasan" id="terima_pampasan" value="Y" tabindex="19" $TEMPchecked3 />
-            #end            </td>
+            	<input type="checkbox" name="terima_pampasan" id="terima_pampasan" value="Y" tabindex="19" $TEMPchecked3 />
+            #end
+            </td>
             <td colspan="4">Orang-orang yang  menerima pampasan;</td>
       </tr>
       
-        <tr>
+      <tr>
             <td valign="top">&nbsp;</td>
             <td valign="top">&nbsp;</td>
             <td>
@@ -854,6 +852,16 @@ function add_bantahan(){
   		document.${formName}.txtKptgnAtasTnh.focus(); 
 		return;	
 	}	
+	
+	if(document.${formName}.amaun_pampasan.checked == !false) {
+		error = 0;
+  		semakJenisBantahanPampasan();
+  		if (error >= 1) {
+  			document.${formName}.txtKptgnAtasTnh.focus();
+  			return false;
+  		}
+  	}
+	
 	if(document.${formName}.txtAmaunTuntutan.value == ""){
 		alert("Sila masukkan \"Amaun Tuntutan\" terlebih dahulu.");
   		document.${formName}.txtAmaunTuntutan.focus(); 
@@ -868,7 +876,7 @@ function add_bantahan(){
 	if ( !window.confirm("Adakah Anda Pasti?") ) return;
 	document.${formName}.command.value = "add_bantahan";
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian";
-	document.${formName}.submit(); PPT-35
+	document.${formName}.submit(); // PPT-35(i)
 	}
 }
 function UploadDokumen(){
@@ -944,5 +952,32 @@ function RemoveNonNumeric2( strString )
       }
       return strReturn;
 }
+
+// PPT-35 (i) Jenis Bantahan Pampasan Jika Dipilih
+function semakJenisBantahanPampasan() {
+	var checked = 0;
+    for (var i = 0; i < 3; i++) {
+      if(document.${formName}["jenisbantahanpampasan"][i].checked == !false){
+      	checked++;
+      	return checked++;
+      }
+    }
+    
+    if (checked == 0) {
+		alert("Pastikan pilihan 'Jumlah Pampasan' dipilih");
+  		document.${formName}.txtKptgnAtasTnh.focus(); 
+		return error++;
+    }
+    return;
+}
+
+function checkJumlahPampasan(checked) {
+    var elm = document.${formName}.amaun_pampasan;
+    if (checked != elm.checked) {
+        elm.click();
+    }
+}
+
+
 </script>
 

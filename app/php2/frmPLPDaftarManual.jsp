@@ -245,12 +245,13 @@
           <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
           <td width="28%">Jenis Tanah</td>
           <td width="1%">:</td>
-          <td width="70%"><select name="socJenisTanah" id="socJenisTanah" onchange="doChangeJenisTanah()" $inputTextClass class="$inputTextClass">
+          <td width="70%">
+          	<select name="socJenisTanah" id="socJenisTanah" onchange="doChangeJenisTanah()" $inputTextClass class="$inputTextClass">
               <option $selected value="0">SILA PILIH</option>
               <option $selected1 value="1">TANAH MILIK PERSEKUTUAN</option>
               <option $selected2 value="2">TANAH RIZAB PERSEKUTUAN</option>
-              <option $selected3 value="3">BORANG K</option>
-            </select></td>
+            </select>
+          </td>
         </tr>
         #if ($idJenisTanah == '1' || $idJenisTanah == '2')
         #foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
@@ -269,7 +270,7 @@
             #elseif ($idKategoriPemohon != '3')
             #if ($idNegeri != '' && $idNegeri != '99999')
             <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" onblur="doChangePeganganHakmilik();" />
-            <input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Tanah" onclick="pilihTanah('$idKategoriPemohon','99999' , '$idNegeri')"/>
+            <input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Tanah" onclick="pilihTanah('$idKategoriPemohon','99999' , '$idNegeri', '$idJenisTanah')"/>
             #else
             <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" readonly="readonly" class="disabled" />
             #end
@@ -556,7 +557,13 @@
           <td width="1%">&nbsp;</td>
           <td valign="top">Urusan</td>
           <td>:</td>
-          <td>PELEPASAN / PENYERAHANBALIK</td>
+          #if ($idJenisTanah == '1')
+          <td>PELEPASAN</td>
+          #elseif ($idJenisTanah == '2')
+          <td>PENYERAHAN BALIK</td>
+          #else
+          <td></td>
+          #end
         </tr>
 <!--         <tr> -->
 <!--           <td width="1%">&nbsp;</td> -->
@@ -644,8 +651,8 @@ function doChangeKementerian() {
 function doChangeAgensi() {
 	doAjaxCall${formName}("doChangeAgensi");
 }
-function pilihTanah(idKategoriPemohon,idKementerianPemohon,idNegeri) {
-	var url = "../x/${securityToken}/ekptg.view.php2.FrmPLPPopupSenaraiTanahView?idKategoriPemohon="+idKategoriPemohon+"&idKementerianPemohon="+idKementerianPemohon+"&idNegeriPemohon="+idNegeri;
+function pilihTanah(idKategoriPemohon,idKementerianPemohon,idNegeri,idJenisTanahPemohon) {
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmPLPPopupSenaraiTanahView?idKategoriPemohon="+idKategoriPemohon+"&idKementerianPemohon="+idKementerianPemohon+"&idNegeriPemohon="+idNegeri+"&idJenisTanahPemohon="+idJenisTanahPemohon;
     var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
@@ -928,14 +935,13 @@ function janaTajuk() {
 	var tujuanKegunaan = document.${formName}.txtTujuanKegunaan.value;
 	
 	
-	if(document.${formName}.statusRizab.value == "MILIK"){
-		strTajuk = "PERMOHONAN PENYERAHAN BALIK " + luasKegunaan +" TANAH MILIK PERSEKUTUAN " + str2 +", " + str3 + ", "+ str4 + ", " + str5 + " " + str6 +" (" + kegunaanTanah + ")" +" BAGI TUJUAN " + tujuanKegunaan ;
-	} else if(document.${formName}.statusRizab.value == "RIZAB"){
-		if(document.${formName}.socLuasKegunaan.value == "1"){
-			strTajuk = "PERMOHONAN PELEPASAN "+ luasKegunaan +" TANAH RIZAB PERSEKUTUAN " +  str2 +" , " + noWarta +", " + str4 + ", "+ str5 + ", " + str6  +" (" + kegunaanTanah + ")" +" BAGI TUJUAN " + tujuanKegunaan ;
-		} else if(document.${formName}.socLuasKegunaan.value == "2"){
-			strTajuk = "PERMOHONAN PELEPASAN "+ luasKegunaan +" TANAH RIZAB PERSEKUTUAN " +  str2 +" , " + noWarta +", " + str4 + ", "+ str5 + ", " + str6  +" (" + kegunaanTanah + ")" +" BAGI TUJUAN " + tujuanKegunaan;		
-		}
+	if(document.${formName}.statusRizab.value == "MILIK")
+	{
+		strTajuk = "PERMOHONAN PELEPASAN " + luasKegunaan +" TANAH MILIK PERSEKUTUAN " + str2 +", " + str3 + ", "+ str4 + ", " + str5 + " " + str6 +" (" + kegunaanTanah + ")" +" BAGI TUJUAN " + tujuanKegunaan ;
+	} 
+	else if(document.${formName}.statusRizab.value == "RIZAB")
+	{
+		strTajuk = "PERMOHONAN PENYERAHAN BALIK "+ luasKegunaan +" TANAH RIZAB PERSEKUTUAN " +  str2 +" , " + noWarta +", " + str4 + ", "+ str5 + ", " + str6  +" (" + kegunaanTanah + ")" +" BAGI TUJUAN " + tujuanKegunaan ;
 	} 
 	document.${formName}.txtPerkara.value = strTajuk;
 }

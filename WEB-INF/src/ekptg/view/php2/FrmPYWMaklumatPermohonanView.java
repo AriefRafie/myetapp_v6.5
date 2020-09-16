@@ -20,16 +20,21 @@ import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Utils;
+import ekptg.model.htp.FrmSemakan;
 import ekptg.model.php2.FrmPYWHeaderData;
 import ekptg.model.php2.FrmPYWMaklumatPermohonanData;
 import ekptg.model.php2.utiliti.PHPUtilHTML;
+import ekptg.model.utils.lampiran.ILampiran;
 
 public class FrmPYWMaklumatPermohonanView extends AjaxBasedModule {
 	
 	private static final long serialVersionUID = 1L;
+	private ILampiran iLampiran = null;
+	private String[] semaks;
 	
 	FrmPYWHeaderData logicHeader = new FrmPYWHeaderData();
 	FrmPYWMaklumatPermohonanData logic = new FrmPYWMaklumatPermohonanData();
+	FrmSemakan semak = null;
 	
 	String userId = null;
 	String userRole = null;
@@ -40,15 +45,15 @@ public class FrmPYWMaklumatPermohonanView extends AjaxBasedModule {
 
 		HttpSession session = this.request.getSession();
 		
+		userId = (String)session.getAttribute("_ekptg_user_id");
+		userRole = (String)session.getAttribute("myrole");
+		idNegeriUser = (String)session.getAttribute("_ekptg_user_negeri");
+		
 		Boolean postDB = false;
 		String doPost = (String) session.getAttribute("doPost");
 	    if (doPost.equals("true")) {
 	        postDB = true;
 	    }
-	    
-	    userId = (String)session.getAttribute("_ekptg_user_id");
-		userRole = (String)session.getAttribute("myrole");
-		idNegeriUser = (String)session.getAttribute("_ekptg_user_negeri");
 	    
 	    //GET DEFAULT PARAM
 	    String submit = getParam("command");  
@@ -83,10 +88,11 @@ public class FrmPYWMaklumatPermohonanView extends AjaxBasedModule {
         String idPHPBorangK = getParam("idPHPBorangK");
         String idJenisTanah = getParam("idJenisTanah");
         String flagSebabTamat = getParam("flagSebabTamat");
-        String noFail = "";
-        String idDokumen = getParam("idDokumen"); // ADD BY AIN MAKLUMAT LAMPIRAN
+        String idDokumen = getParam("idDokumen"); 
         String tujuan = getParam("tujuan");
-   
+        String step = getParam("step");
+        String noFail = "";
+
         //GET DROPDOWN PARAM
         String idLuasKegunaan = getParam("socLuasKegunaan");
 		if (idLuasKegunaan == null || idLuasKegunaan.trim().length() == 0){
@@ -130,9 +136,7 @@ public class FrmPYWMaklumatPermohonanView extends AjaxBasedModule {
         Vector senaraiSemak = null;
         Vector senaraiLampiran = null;
         Vector beanMaklumatLampiran = null;  
-        
-        String step = getParam("step");
-        
+                
         vm = "app/php2/frmPYWMaklumatPermohonan.jsp";  
 
 		this.context.put("afterSave", "");
@@ -189,8 +193,16 @@ public class FrmPYWMaklumatPermohonanView extends AjaxBasedModule {
         		logic.doSetujuTolakRingkas(idPermohonan,idFail, idNegeriUser, session);
     		}
         	if ("doSimpanKemaskiniSenaraiSemak".equals(hitButton)) {
-        		String semaks [] = this.request.getParameterValues("idsSenaraiSemak");
-    			logic.updateSenaraiSemak(idPermohonan,semaks,session);
+        		String cbsemaks [] = this.request.getParameterValues("idsSenaraiSemak");
+    			//logic.updateSenaraiSemak(idPermohonan,semaks,session);
+    				
+    			FrmSemakan frmSemak = new FrmSemakan();
+    			frmSemak.semakanHapusByPermohonan(idPermohonan);
+    			if (cbsemaks != null) {
+    				for (int i = 0; i < cbsemaks.length; i++) {
+    					FrmSemakan.semakanTambah(cbsemaks[i], String.valueOf(idPermohonan));
+    				}
+    			}
         	}
         	if ("simpanLampiran".equals(hitButton)) {
 				uploadLampiran(idPermohonan, session);
@@ -336,9 +348,21 @@ public class FrmPYWMaklumatPermohonanView extends AjaxBasedModule {
 			beanSyorTolakRingkas = logic.getBeanSyorTolakRingkas();
 			this.context.put("BeanSyorTolakRingkas", beanSyorTolakRingkas);
 			
-			//SENARAI SEMAK
-			senaraiSemak = logic.getSenaraiSemak(idPermohonan, idKategoriPemohon);
-			this.context.put("SenaraiSemak", senaraiSemak);
+			if ("4".equals(selectedTabUpper)) {
+				
+				//SENARAI SEMAK
+				//senaraiSemak = logic.getSenaraiSemak(idPermohonan, idKategoriPemohon);
+				//this.context.put("SenaraiSemak", senaraiSemak);
+				semak = new FrmSemakan();
+				semak.mode = mode;
+				if ("1".equals(idKategoriPemohon)) {
+					senaraiSemak = semak.getSenaraiSemakanAttach("phppywindividu",idPermohonan);
+				} 
+				else if ("2".equals(idKategoriPemohon)) {
+					senaraiSemak = semak.getSenaraiSemakanAttach("phppywsyarikat",idPermohonan);
+				}
+				this.context.put("SenaraiSemak", senaraiSemak);
+			}
 			
 			//POPUP LAMPIRAN
 			if ("5".equals(selectedTabUpper)) {
@@ -387,7 +411,6 @@ public class FrmPYWMaklumatPermohonanView extends AjaxBasedModule {
 			logic.setSenaraiLampiran(idPermohonan);
 			senaraiLampiran = logic.getListLampiran();
 			this.context.put("SenaraiLampiran", senaraiLampiran);
-		
 
         } else if ("update".equals(mode)){ //UPDATE MODE
         	
@@ -461,8 +484,19 @@ public class FrmPYWMaklumatPermohonanView extends AjaxBasedModule {
 			this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), ""," onChange=\"doChangeNegeri();\""));
 			this.context.put("selectBandar", HTML.SelectBandarByNegeri(idNegeri, "socBandar", Long.parseLong(idBandar), ""));
 			
-			senaraiSemak = logic.getSenaraiSemak(idPermohonan, idKategoriPemohon);
-			this.context.put("SenaraiSemak", senaraiSemak);
+			if ("4".equals(selectedTabUpper)) {
+				
+				//SENARAI SEMAK
+				semak = new FrmSemakan();
+				semak.mode = mode;
+				if ("1".equals(idKategoriPemohon)) {
+					senaraiSemak = semak.getSenaraiSemakanAttach("phppywindividu",idPermohonan);
+				} 
+				else if ("2".equals(idKategoriPemohon)) {
+					senaraiSemak = semak.getSenaraiSemakanAttach("phppywsyarikat",idPermohonan);
+				}
+				this.context.put("SenaraiSemak", senaraiSemak);
+			}
 	
         }
         

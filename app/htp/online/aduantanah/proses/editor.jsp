@@ -154,7 +154,7 @@
 							  <td>:</td>
 							  <td>$selectJenisHakmilik
 								<input type="text" class="$inputTextClass" name="txtNoHakmilikTanah" id="txtNoHakmilikTanah" value="$txtNoHakmilikTanah" size="43" maxlength="80" $readonly/>
-							  	<input type="hidden" name="idJenisHakmilik" id="idJenisHakmilik" value="$idJenisHakmilik" />
+							  	<input type="text" name="idJenisHakmilik" id="idJenisHakmilik" value="$idJenisHakmilik" />
 							  </td>
 							</tr>
 							<tr>
@@ -172,7 +172,7 @@
 							  <td colspan="6">&nbsp;</td>
 							  <td>:</td>
 							  <td>
-								<input type="text" name="tarikhWarta" id="tarikhWarta" onBlur="check_date(this);cekTarikhWarta(this)" value="$tarikhWarta" size="9" $readonly class="$inputTextClass"/>
+								<input type="text" name="tarikhWarta" id="tarikhWarta" onblur="check_date(this);cekTarikhWarta(this)" value="$tarikhWarta" size="9" $readonly class="$inputTextClass"/>
 									<a href="javascript:displayDatePicker('tarikhWarta',false,'dmy');">#if ($mode != 'view')<img border="0" src="../img/calendar.gif"/>#end</a>
 							  </td>
 							</tr>
@@ -209,7 +209,7 @@
          onBlur="check_length(this,'4000','aduan_check','aduan_num','normal','yes','keterangan aduan');"
          onKeyup="check_length(this,'4000','aduan_check','aduan_num','normal','yes','keterangan aduan');"
          onKeydown="check_length(this,'4000','aduan_check','aduan_num','normal','yes','keterangan aduan');"
-           ></textarea>
+           >$!keteranganAduan</textarea>
 
          <div><span id="aduan_num" style="color:blue;" ></span><span> Baki Aksara</span></div>
 

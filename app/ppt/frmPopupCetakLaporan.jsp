@@ -1,3 +1,4 @@
+XXX
 <style>
 body{
 background: #f4eff4 !important;
@@ -6,20 +7,22 @@ background: #f4eff4 !important;
 <!-- 18/8/2020 -->
 	<!-- SEKSYEN 4 DAN 8 --><strong></strong>
 <!-- test xxxxx -->
+#parse("app/ppt/tindakanPegawaiSignPPT.jsp")
 #set($frmtdate = "&nbsp;<i><font color='blue' style='font-size:10px'>dd/mm/yyyy</font></i>")
 	
-	<input name="id_borange" type="hidden" id="id_borange" value="$!id_borange"/> 
+	<input name="id_borange" type="hidden" id="id_borange" value="$!id_borange"/>
 	
    <input name="report" type="hidden" id="report" value="$!report"/>
-   <input name="id_fail" type="hidden" id="id_fail" value="$!id_fail"/> 
-   <input name="no_fail" type="hidden" id="no_fail" value="$!no_fail"/> 
+   <input name="id_fail" type="hidden" id="id_fail" value="$!id_fail"/>
+   <input name="no_fail" type="hidden" id="no_fail" value="$!no_fail"/>
    <input name="id_permohonan" type="hidden" id="id_permohonan" value="$!id_permohonan"/> 
-   <input name="id_pegawai" type="hidden" id="id_pegawai" value="$!id_pegawai"/> 
+   <input name="id_pegawai" type="hidden" id="id_pegawai" value="$!id_pegawai"/>
    <input name="nama2Mukim" type="hidden" id="nama2Mukim" value="$!nama2Mukim"/> 
    
    <input name="nama_pegawai" type="hidden" id="nama_pegawai" value="$!nama_pegawai"/> 
    <input name="nama_pegawai1" type="hidden" id="nama_pegawai1" value="$!nama_pegawai1"/> 
    <input name="nama_pegawai2" type="hidden" id="nama_pegawai2" value="$!nama_pegawai2"/> 
+   
    
    
    
@@ -33,7 +36,7 @@ background: #f4eff4 !important;
    <input name="listLOTHM" type="hidden" id="listLOTHM" value="$!listLOTHM"/> 
    <input name="id_negeri" type="hidden" id="id_negeri" value="$!id_negeri"/> 
    <input name="totalHM" type="hidden" id="totalHM" value="$!totalHM"/> 
-   <input name="bilLot" type="text" id="bilLot" value="$!bilLot"/> 
+   <input name="bilLot" type="hidden" id="bilLot" value="$!bilLot"/>
    <input name="flagJenisSuratCara" type="hidden" id="flagJenisSuratCara" value="$!flagJenisSuratCara"/> 
    
    <input name="flagCetakJPBD" type="hidden" id="flagCetakJPBD" value="$!flagCetakJPBD"/> 
@@ -100,6 +103,7 @@ background: #f4eff4 !important;
               
               #if($selectNoFail == 'yes')
              
+             <!-- testing yati v7 penambahbaikan -->
                <tr>
                 <td valign="top">&nbsp;</td>
                 <td valign="top">Nama Pegawai</td>
@@ -209,11 +213,12 @@ background: #f4eff4 !important;
               && $report != 'coveringSijilPU' && $report != 'minitSijilPU' && $report != 'cetakNotis' && $report != 'senaraiKehadiran' 
               && $report != 'senaraiKehadiranKosong' && $report != 'BayaranLainKos_Nofail' && $report != 'sabpn_notis_awam_sek4' && $report != 'sabpn_notis_awam_sek8'  && $report != 'sabpn_notis_borange'  
               && $report != 'sabpn_notis_borangk'  && $report != 'sabpn_notis_borangh')
+            
 <!--               || $report == 'SuratPengosonganTanah' || -->
               <!-- PPT-27 & PPT-30-->
               <tr>
                 <td><font color="red">*</font></td>
-                <td>Nama Pegawai $!id_fail</td>
+                <td>Nama Pegawai</td>
                 <td>:</td>
                 <td>$!selectPegawai</td>
               </tr>
@@ -298,6 +303,22 @@ background: #f4eff4 !important;
               </tr>           
                #end 
                
+               <!-- Masa Siasatan -->
+               #if($report == 'BorangE')
+               <tr>
+               	<td>&nbsp;</td>
+               	<td valign="top">Waktu Siasatan</td>
+               	<td valign="top">:</td>
+               	<td valign="top">
+               		<input type="text" id="masa_siasatan" name="masa_siasatan" value="" style="width:50px"/>
+               		<select name="$!statusBL" style="width:90px">
+      					<option value="" #if($!listTanah.jenis_pilih=="") selected=selected #end >Sila Pilih</option>	
+			      		<option value="1" #if($!listTanah.jenis_pilih=="1") selected=selected #end>PAGI</option>
+			      		<option value="2" #if($!listTanah.jenis_pilih=="2") selected=selected #end>TENGAH HARI</option>	
+			      		<option value="3" #if($!listTanah.jenis_pilih=="3") selected=selected #end>PETANG</option>	
+			      	</select> 
+               </tr>
+               #end
                
                 #if($report == 'BorangH') 
                <tr>
@@ -1311,7 +1332,8 @@ background: #f4eff4 !important;
                 	#end
                 	
                 	#if($report == 'SuratEndorsanBorangK')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratEndorsanBorangK('$!selectNoFail','$!id_permohonan')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratEndorsanBorangK('$!id_hakmilik','$!id_fail')">
+                	id_hakmilik: $id_hakmilik, id_permohonan: $id_permohonan, id_fail: $!id_fail
                 	#end
                 	
                 	#if($report == 'SuratIringanAgensiPemohon')
@@ -1435,6 +1457,16 @@ background: #f4eff4 !important;
                 		<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak Surat Pelupusan" onclick="javascript:cetakSuratPelupusanHakmilik('$!id_hakmilik','$!id_fail', '$!id_permohonan', '$!bilLot','$!nama_pengarah')">
                 	#end
                     
+                    <!--SURAT ENDORSAN BORANG K 1 -->
+                    #if($report == 'SuratEndorsanBorangK1')
+                		<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratEndorsanBorangK1('$!id_hakmilik','$!id_fail','$!nama_pengarah','$!id_jawatan')">
+                	#end
+                	
+                	<!--SURAT IRINGAN AP -->
+                    #if($report == 'SuratIringanAP')
+                		<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratIringanAP('$!id_hakmilik','$!id_fail','$!nama_pengarah','$!id_jawatan')">
+                	#end
+                	
                     <!-- END REPORT SEKSYEN 4 & 8 --------->
                     
                     
@@ -1665,7 +1697,7 @@ function cetakSenaraiKehadiranKosong(selectNoFail,idpermohonan) {
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
-	}else{
+	}	else	{
 
 		var valType = document.${formName}.sorSelectNoFail.value;
 		var nofail = "";
@@ -3513,11 +3545,14 @@ function cetakBorangF(idhakmilik,nama_pengarah) {
 
 function cetakBorangE(id_borange,nama_pengarah) {
 
+	var masa_siasatan = "";
+		
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
 	}
+	
 	else{
 
 		var valType = document.${formName}.sorSelectNoFail.value;
@@ -3535,8 +3570,10 @@ function cetakBorangE(id_borange,nama_pengarah) {
 		}else{
 			nofail = document.${formName}.no_fail.value;
 		}
-
-		var url = "../../servlet/ekptg.report.ppt.BorangE?id_borange="+id_borange+"&namaPegawai="+nama_pengarah+"&no_fail="+nofail+"&id_permohonan="+id_permohonan;
+		
+		masa_siasatan = document.${formName}.masa_siasatan.value;
+		
+		var url = "../../servlet/ekptg.report.ppt.BorangE?id_borange="+id_borange+"&namaPegawai="+nama_pengarah+"&no_fail="+nofail+"&id_permohonan="+id_permohonan+"&masa_siasatan="+masa_siasatan;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -3692,8 +3729,8 @@ function cetakSuratPengosonganTanah(idpermohonan,idfail,idhakmilik,nama_pegawai)
 	}
 }
 
-
-function cetakSuratEndorsanBorangK(idhakmilik, idfail, idpermohonan, nofail) {
+// Hantar Maklumat id_fail, idhakmilik.
+function cetakSuratEndorsanBorangK(idhakmilik, idfail)	{  //(idhakmilik, idfail, idpermohonan, nofail) { // asal
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		
@@ -3718,8 +3755,10 @@ function cetakSuratEndorsanBorangK(idhakmilik, idfail, idpermohonan, nofail) {
 			nofail = document.${formName}.no_fail.value;
 		}
 		
-		alert("Servlet to choose ");	// id fail, idhakmilik.
-		var url = "../../servlet/ekptg.report.ppt.SuratEndorsanBorangK_Perak?idHakmilik="+idhakmilik+"&idfail="+idfail+"&id_permohonan="+idpermohonan+"&no_fail="+nofail;
+		alert("Buka Servlet");
+		var url = "../../servlet/ekptg.report.ppt.SuratEndorsanBorangK_Perak?id_hakmilik="+idhakmilik+"&id_fail="+idfail;
+		//	var url = "../../servlet/ekptg.report.ppt.SuratEndorsanBorangK_Perak?id_permohonan="+idpermohonan+"&no_fail="+nofail;
+		//	var url = "../../servlet/ekptg.report.ppt.SuratEndorsanBorangK_Perak?idHakmilik="+idhakmilik+"&idfail="+idfail+"&id_permohonan="+idpermohonan+"&no_fail="+nofail;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -3729,35 +3768,47 @@ function cetakSuratEndorsanBorangK(idhakmilik, idfail, idpermohonan, nofail) {
 }
 
 
-function cetakSuratIringanAgensiPemohon(idhakmilik,idpermohonan) {
+function cetakSuratEndorsanBorangK1(idhakmilik, idfail, namaPegawai, idjawatan)	{  //(idhakmilik, idfail, idpermohonan, nofail) {
 
-	if (document.${formName}.sorSelectNoFail.value == ""){
-		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
-		document.${formName}.sorSelectNoFail.focus(); 
-		return;
-	}
-	else{
-
-		var valType = document.${formName}.sorSelectNoFail.value;
-		var nofail = "";
+	var id_pegawai = document.${formName}.socPegawai.value;
+	nofail = document.${formName}.no_fail.value;
+	
+	if (document.${formName}.socPegawai.value == "")	{
+	alert("Sila pilih \"Nama Pegawai\" terlebih dahulu.");
+	document.${formName}.socPegawai.focus();
+	return;
+	
+	}else{
 		
-		if(valType=="1"){
-			nofail = document.${formName}.no_fail.value;
-		}else if(valType=="2"){
-			nofail = document.${formName}.no_rujukan_ptg.value;
-		}else if(valType=="3"){
-			nofail = document.${formName}.no_rujukan_ptd.value;
-		}else if(valType=="4"){
-			nofail = document.${formName}.no_rujukan_upt.value;
-		}else{
-			nofail = document.${formName}.no_fail.value;
-		}
-		
-		var url = "../../servlet/ekptg.report.ppt.SuratIringanAgensiPemohon?ID_BAYARAN="+idbayaran+"&no_fail="+nofail;
+		var url = "../../servlet/ekptg.report.ppt.SuratEndorsanBorangK?id_hakmilik="+idhakmilik+"&id_fail="+idfail+"&nama_pegawai="+namaPegawai+"&id_jawatan="+idjawatan;
+		//	var url = "../../servlet/ekptg.report.ppt.SuratEndorsanBorangK_Perak?id_permohonan="+idpermohonan+"&no_fail="+nofail;
+		//	var url = "../../servlet/ekptg.report.ppt.SuratEndorsanBorangK_Perak?idHakmilik="+idhakmilik+"&idfail="+idfail+"&id_permohonan="+idpermohonan+"&no_fail="+nofail;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
 		if (hWnd.focus != null) hWnd.focus();
+		
+	}
+}
+
+function cetakSuratIringanAP(idhakmilik, idfail, namaPegawai, idjawatan) {
+
+	var id_pegawai = document.${formName}.socPegawai.value;
+	nofail = document.${formName}.no_fail.value;
+	
+	if (document.${formName}.socPegawai.value == "")	{
+	alert("Sila pilih \"Nama Pegawai\" terlebih dahulu.");
+	document.${formName}.socPegawai.focus();
+	return;
+	
+	}else{
+		
+		var url = "../../servlet/ekptg.report.ppt.SuratIringanAP?id_hakmilik="+idhakmilik+"&id_fail="+idfail+"&nama_pegawai="+namaPegawai+"&id_jawatan="+idjawatan;
+		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+		if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+		if (hWnd.focus != null) hWnd.focus();
+		
 	}
 }
 //PPT-30(i) END
@@ -4775,8 +4826,9 @@ function cetakBorangA(idfail,nama2mukim) {
 
 		var valType = document.${formName}.sorSelectNoFail.value;
 		var nofail = "";
-		
+
 		if(valType=="1"){
+		
 			nofail = document.${formName}.no_fail.value;
 		}else if(valType=="2"){
 			nofail = document.${formName}.no_rujukan_ptg.value;
@@ -4789,8 +4841,9 @@ function cetakBorangA(idfail,nama2mukim) {
 		}		
 
 		var sysdate = document.${formName}.txtTarikhSuratCetak.value;
-		
-		var url = "../../servlet/ekptg.report.ppt.BorangA?idfail="+idfail+"&namaMukim="+nama2Mukim+"&no_fail="+nofail+"&sysdate="+sysdate;
+
+		var url = "../../servlet/ekptg.report.ppt.BorangA?idfail="+idfail+"&no_fail="+nofail+"&sysdate="+sysdate;		
+		//var url = "../../servlet/ekptg.report.ppt.BorangA?idfail="+idfail+"&namaMukim="+nama2Mukim+"&no_fail="+nofail+"&sysdate="+sysdate;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;

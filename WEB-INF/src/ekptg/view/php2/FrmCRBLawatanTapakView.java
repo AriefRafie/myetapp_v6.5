@@ -35,7 +35,7 @@ public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 
 	// @Override
 	public String doTemplate2() throws Exception {
-
+                                
 		HttpSession session = this.request.getSession();
 
 		Boolean postDB = false;
@@ -286,6 +286,12 @@ public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 				session.setAttribute("MSG", "FAIL TELAH DITUGASKAN KEPADA PENOLONG PENGARAH");
 	    		this.context.put("onload", "gotoSenaraiFail();");
 			}
+			if ("doSimpanAgihanTugas".equals(hitButton)){
+	    		logic.doSimpanAgihanTugas(idFail, idPegawai, getParam("txtCatatan"), idNegeriUser, session);
+	    		session.removeAttribute("ID_FAIL");
+				session.setAttribute("MSG", "FAIL TELAH DITUGASKAN KEPADA PEGAWAI");
+	    		this.context.put("onload", "gotoSenaraiFail();");
+			}
 			if ("doSelesaiPermohonan".equals(hitButton)){
 				logicHeader.doSelesaiPermohonan(idFail, idPermohonan, idStatus, getParam("tarikhSelesai"), getParam("txtSebab"), session);
     			step = "";
@@ -293,19 +299,9 @@ public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 			if ("doBatalPermohonan".equals(hitButton)){
 				logicHeader.doBatalPermohonan(idFail, idPermohonan, idStatus, getParam("tarikhBatal"), getParam("txtSebab"), session);
     			step = "";
-    			
-			} else if ("gotoHantarTugasanPPT".equals(step)){
-    			this.context.put("selectPegawai", HTML.SelectPYWPenolongPegawaiTanahHQ("socPegawai", Long.parseLong(idPegawai), "", ""));
-    			vm = "app/php2/frmPYWAgihanTugas.jsp";
-            
-    		} 
-			if ("doSimpanAgihanTugas".equals(hitButton)){
-	    		logic.doSimpanAgihanTugas(idFail, idPegawai, getParam("txtCatatan"), idNegeriUser, session);
-	    		session.removeAttribute("ID_FAIL");
-				session.setAttribute("MSG", "FAIL TELAH DITUGASKAN KEPADA PEGAWAI");
-	    		this.context.put("onload", "gotoSenaraiFail();");
-			}
-		}// END POSTDB
+			} 
+		}
+		// END POSTDB
 
 		// HEADER
 		beanHeader = new Vector();
@@ -855,9 +851,13 @@ public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 		if ("selesaiPermohonan".equals(step)){
         	vm = "app/php2/frmSelesaiPermohonan.jsp";
         }
-		if ("batalPermohonan".equals(step)){
+		else if ("batalPermohonan".equals(step)){
         	vm = "app/php2/frmBatalPermohonan.jsp";
         }
+		else if ("gotoHantarTugasanPPT".equals(step)){
+			this.context.put("selectPegawai", HTML.SelectPYWPenolongPegawaiTanahHQ("socPegawai", Long.parseLong(idPegawai), "", ""));
+			vm = "app/php2/frmPYWAgihanTugas.jsp";
+		} 
 
 		// SET DEFAULT PARAM
 		this.context.put("actionCRB", actionCRB);

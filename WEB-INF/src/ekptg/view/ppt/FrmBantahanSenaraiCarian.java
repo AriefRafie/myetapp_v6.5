@@ -921,13 +921,14 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			String idPermohonan = getParam("id_permohonan"); // asal: getParam("id_permohonan" + 1)
 			String[] bantahanpampasan = this.request.getParameterValues("jenisbantahanpampasan"); // Nama checkbox dalam jsp
 			// context.put("idPermohonan1", id_permohonan + "1");
-
-
+			
+			
 			myLogger.info("Simpan pushdb, idPermohonan= " +idPermohonan); // debugger at log copy
 			FrmSemakan frmSemak = new FrmSemakan();
 			frmSemak.semakanHapusByPermohonan(idPermohonan); // Kalau dalam satu page ada dua checkbox letak satu sahaja
 			if (bantahanpampasan != null) {
 				for (int i = 0; i < bantahanpampasan.length; i++) {
+					myLogger.info("simpan pilihan Jumlah Pampasan ke tblsenaraihantar");
 					frmSemak = new FrmSemakan();
 					frmSemak.semakanTambah(bantahanpampasan[i], idPermohonan);
 				}
@@ -1407,7 +1408,6 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 				id_bantahan = (String) a.get("id_bantahan");
 				// get JENIS_DOKUMEN
 				listDokumen = model.senaraiDokumenBantahan(id_bantahan, jenisDokumen);
-				myLogger.info("ID Bantahan borangO >>> "+id_bantahan+",Jenis Dokumen borangO >>> "+jenisDoc);
 				context.put("listDokumen", listDokumen);
 				context.put("listDokumen_size", listDokumen.size());
 				
@@ -1486,6 +1486,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 							HTML.SelectBandar("socBandar", Utils.parseLong(id_bandar), "style=width:auto disabled "));
 				}
 
+				
 				context.put("flag", "semak");
 				context.put("mode", "disabled");
 				context.put("clearForm", "");
@@ -2531,6 +2532,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			// :::upload
 			context.put("nama_skrin", getParam("nama_skrin"));
 			myLogger.info("----------------->>  NAMA SKRIN " + getParam("nama_skrin"));
+			
 			// context.put("nama_skrin","XXX");
 
 			vm = "app/ppt/frmBantahanDokumen.jsp";

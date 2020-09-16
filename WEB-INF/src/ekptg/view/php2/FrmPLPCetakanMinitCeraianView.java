@@ -129,6 +129,10 @@ public class FrmPLPCetakanMinitCeraianView extends AjaxBasedModule {
 		this.context.put("idKertasKerja", idKertasKerja);
 		
 		this.context.put("step",step);
+		
+		if (!"".equals(getParam("flagFrom"))){
+	      	session.setAttribute("FLAG_FROM", getParam("flagFrom"));
+	    }
 
 		return vm;
 	}

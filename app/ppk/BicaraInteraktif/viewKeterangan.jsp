@@ -1,5 +1,4 @@
-<form autocomplete="off" action="/app/ppk/BicaraInteraktif/viewKeterangan.jsp"> <!-- arief add bagi tujuan autocomplete bila Pegawai masukkan nama Waris / OB di Keterangan diambil-->
-<div class="viewKeterangan" class="autocomplete" > <!-- arief add class="autocomplete"  -->
+
 <table class="tableEditor classFade" width="100%"  >
 <tr><td colspan="2">
 
@@ -95,10 +94,13 @@
         	   </span>
                #end
                </h4>
+ <form autocomplete="on" action="/app/ppk/BicaraInteraktif/viewKeterangan.jsp"> <!-- arief add bagi tujuan autocomplete bila Pegawai masukkan nama Waris / OB di Keterangan diambil-->
+<div class="viewKeterangan" class="autocomplete" > <!-- arief add class="autocomplete"  -->
 <textarea id="KETERANGAN_$ID_OBPERMOHONAN" name="KETERANGAN_$ID_OBPERMOHONAN"  placeholder="Masukkan Keterangan..." style="width:100%;" spellcheck="false" >$KETERANGAN</textarea>	
 <div id="dummyDivResetupKETERANGAN_$ID_OBPERMOHONAN" style="display:none;" >$KETERANGAN</div>     
 <div id="timer_KETERANGAN_$ID_OBPERMOHONAN" align="right" ></div>
 		<script type="text/javascript">
+		
 		
 		$jquery(document).ready(function () {
 			$jquery('#KETERANGAN_$ID_OBPERMOHONAN').wysihtml5({ 
@@ -110,7 +112,9 @@
 				"image": false, // Button to insert an image.
 				"color": true, // Button to change color of font
 				"blockquote": true, // Blockquote	
-				"size": "small"				  
+				"size": "small"	
+				
+				
 			});
 			
 		});	
@@ -215,6 +219,8 @@
 		//var namaWaris = new Array ("SELECT NAMA_OB FROM TBLPPKOB WHERE ID_PERMOHONANSIMATI ="+ ID_PERMOHONANSIMATI); //arief add 26/6/2020
 		//ArrayList<HashMap<String, String>> assArray= new ArrayList<HashMap<String, String>>(); //arief add 29/6/2020
 		
+		
+		
 		var resizeIframe = function() {
 			fckeditor_word_count(document.getElementById("KETERANGAN_$ID_OBPERMOHONAN"),"wordKETERANGAN_$ID_OBPERMOHONAN");	
 			getTimeAutoSave("timer_KETERANGAN_$ID_OBPERMOHONAN","$ID_OBPERMOHONAN","FOCUS","$ID_BIKEHADIRAN");
@@ -259,7 +265,35 @@
 		
 		reAssignFieldEditorContent('KETERANGAN_$ID_OBPERMOHONAN'); 
 		
+		</script>	
+		<!-- arief add autocomplete OPEN-->
+		<script>
+		autocomplete(document.getElementById("KETERANGAN_$ID_OBPERMOHONAN"), namaWaris, namaOB);
 		</script>
+		<!-- arief add autocomplete CLOSE-->
+		<!-- arief try add Nama OB di Keterangan OPEN -->
+		<ul style="" class="wysihtml5-toolbar">
+		<li><div class="btn-group_OB">
+		<a class="btn btn-small" data-wysihtml5-command="function()" title="CTRL+B" tabindex="-1" href="javascript:;" unselectable="on">Khadijah Binti Yeop</a>
+		<a class="btn btn-small" data-wysihtml5-command="Khalil Bin Yeop" title="CTRL+B" tabindex="-1" href="javascript:;" unselectable="on">Khalil Bin Yeop</a>
+		<a class="btn btn-small" data-wysihtml5-command="Saadah Binti Aziz" title="CTRL+I" tabindex="-1" href="javascript:;" unselectable="on">Saadah Binti Aziz</a>
+		<a class="btn btn-small" data-wysihtml5-command="Salasiah Binti Yeop" title="CTRL+U" tabindex="-1" href="javascript:;" unselectable="on">Salasiah Binti Yeop</a>
+		<a class="btn btn-small" data-wysihtml5-command="Mohd Hafez Bin Idris" title="CTRL+U" tabindex="-1" href="javascript:;" unselectable="on">Mohd Hafez Bin Idris</a>
+		<a class="btn btn-small" data-wysihtml5-command="Mohamad Harif Bin Idrisp" title="CTRL+U" tabindex="-1" href="javascript:;" unselectable="on">Mohamad Harif Bin Idris</a>
+		<a class="btn btn-small" data-wysihtml5-command="Noorhafizah Binti Idris" title="CTRL+U" tabindex="-1" href="javascript:;" unselectable="on">Noorhafizah Binti Idris</a>
+		</div>
+		</li>
+		</ul>
+		<script>
+		$(function(){
+			$('input:button[Khadijah Binti Yeop]').click(function() {
+        		var getInpVal = $('#btn btn-small').val();
+       			$('iframe[name=wysihtml5-sandbox]').contents().find('#KETERANGAN_$ID_OBPERMOHONAN').val(getInpVal);
+    		});
+		}
+		</script>
+		<!-- arief try add Nama OB di Keterangan CLOSE -->
+		
           <div id="infobuttonKeterangan$ID_OBPERMOHONAN" style="display:none"><i><font color='blue'>Info</font> : Sila tekan butang <font color='blue'>'Tab'</font> selepas selesai mengisi keterangan. Butang <font color='blue'>'Simpan Keterangan'</font> akan dipaparkan.</i></div>
 </td>
 </tr>  
@@ -401,8 +435,4 @@ if(flagDisable == "Y")
 	disableInput("buttonKeterangan$ID_OBPERMOHONAN");	
 }
 </script>
-<!-- arief add autocomplete OPEN-->
-<script>
-autocomplete(document.getElementById("KETERANGAN_$ID_OBPERMOHONAN"), namaWaris, namaOB);
-</script>
-<!-- arief add autocomplete CLOSE-->
+

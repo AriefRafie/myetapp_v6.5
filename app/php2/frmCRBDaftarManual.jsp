@@ -33,11 +33,21 @@
 	  		<tr>
 	          <td width="1%">&nbsp;</td>
 	          <td width="28%" valign="top">No. Fail</td>
-	          <td width="1%" >:</td>
+	          <td width="1%">:</td>
 	          <td width="70%"><strong>$beanMaklumatPermohonan.noFail</strong>
 	            <input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />
 	            <input name="idPemohon" type="hidden" value="$beanMaklumatPermohonan.idPemohon" /></td>
 	        </tr>
+	        <tr>
+				<td width="1%">&nbsp;</td>
+				<td width="28%" valign="top">No. Fail Negeri</td>
+				<td width="1%">:</td>
+				<td width="70%">
+					<input name="txtNoFailNegeri" type="text" class="$inputTextClass" id="txtNoFailNegeri"
+						value="$beanMaklumatPermohonan.noFailNegeri" $readonly onblur="this.value=this.value.toUpperCase();" size="40"
+						maxlength="50" />
+				</td>
+			</tr>
 	        <!--tr>
 	          <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
 	          <td>Jenis Fail</td>
@@ -65,12 +75,6 @@
 	          <td width="1%">:</td>
 	          <td width="70%">PENGUATKUASAAN</td>
 	        </tr>
-<!-- 	        <tr> -->
-<!-- 	          <td width="1%">&nbsp;</td> -->
-<!-- 	          <td width="28%" valign="top">Suburusan</td> -->
-<!-- 	          <td width="1%">:</td> -->
-<!-- 	          <td width="70%">PENGUATKUASAAN</td> -->
-<!-- 	        </tr> -->
 	        #end
   		</table>
   	</fieldset></td>
@@ -353,14 +357,14 @@
            #if ($idKategoriPemohon == '3')
             #if ($idKementerian != '' && $idKementerian != '99999')
             <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" onblur="doChangePeganganHakmilik();"/>
-            <input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Tanah" onclick="pilihTanah('$idKategoriPemohon','$idKementerian' , '99999')"/>
+            <input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Tanah" onclick="pilihTanah('$idKategoriPemohon','$idKementerian' , '99999', '$idJenisTanah')"/>
             #else
             <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" readonly="readonly" class="disabled" />
             #end
            #elseif ($idKategoriPemohon != '3')
             #if ($idNegeri != '' && $idNegeri != '99999')
             <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" onblur="doChangePeganganHakmilik();" />
-            <input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Tanah" onclick="pilihTanah('$idKategoriPemohon','99999' , '$idNegeri')"/>
+            <input type="button" name="cmdPilih" id="cmdPilih" value="Pilih Tanah" onclick="pilihTanah('$idKategoriPemohon','99999' , '$idNegeri', '$idJenisTanah')"/>
             #else
             <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" readonly="readonly" class="disabled" />
             #end
@@ -761,8 +765,8 @@ function doChangeMukimTanah(){
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
 } */
-function pilihTanah(idKategoriPemohon,idKementerianPemohon,idNegeri) {
-	var url = "../x/${securityToken}/ekptg.view.php2.FrmCRBPopupSenaraiTanahView?idKategoriPemohon="+idKategoriPemohon+"&idKementerianPemohon="+idKementerianPemohon+"&idNegeriPemohon="+idNegeri;
+function pilihTanah(idKategoriPemohon,idKementerianPemohon,idNegeri, idJenisTanahPemohon) {
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmCRBPopupSenaraiTanahView?idKategoriPemohon="+idKategoriPemohon+"&idKementerianPemohon="+idKementerianPemohon+"&idNegeriPemohon="+idNegeri+"&idJenisTanahPemohon="+idJenisTanahPemohon;
     var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
