@@ -1829,6 +1829,7 @@ public class FrmPembatalanInternalData extends EkptgCache implements
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 			r.add("ID_PENARIKANBALIK", id_pembatalan);
+			r.add("ID_PERMOHONAN", id_permohonan);
 			r.add("TARIKH_PENARIKAN_BALIK", r.unquote("sysdate"));
 
 			/*
@@ -1861,13 +1862,12 @@ public class FrmPembatalanInternalData extends EkptgCache implements
 			}
 			r.add("SEBAB_PENARIKANBALIK", txtSebabPembatalan);
 			r.add("NO_RUJUKAN_SURAT", txtNoRujSurat);
-			r.add("ID_PERMOHONAN", id_permohonan);
 			r.add("ID_STATUS", "");
 			r.add("ID_MASUK", id_Masuk);
 			r.add("ID_KEMASKINI", id_Masuk);
 			r.add("TARIKH_MASUK", r.unquote("sysdate"));
 			r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
-
+			myLogger.info("SQL INSERT BEFORE :" + sql.toUpperCase());
 			sql = r.getSQLInsert("tblpptpenarikanbalik");
 
 			myLogger.info("SQL INSERT PENARIKAN :" + sql.toUpperCase());
@@ -1879,6 +1879,7 @@ public class FrmPembatalanInternalData extends EkptgCache implements
 			r1.add("ID_STATUS", 74);
 			r1.add("ID_KEMASKINI", id_Masuk);
 			r1.add("TARIKH_KEMASKINI", r1.unquote("sysdate"));
+			myLogger.info("SQL UPDATE BEFORE :" + sql1.toUpperCase());
 			sql1 = r1.getSQLUpdate("tblpptpermohonan");
 
 			myLogger.info("SQL UPDATE BATALKAN :" + sql.toUpperCase());
