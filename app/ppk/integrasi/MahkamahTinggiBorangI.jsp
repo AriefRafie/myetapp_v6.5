@@ -109,6 +109,12 @@ input[readonly] {
 				</tr>
 				
 				<tr>
+					<td align="right">Nilai Keseluruhan Harta (RM) </td>
+					<td>:</td>
+					<td colspan="2"><input type="text" name="jumlahharta" value="$!jumlahharta" size="25" readonly="readonly" /></td>
+				</tr>
+				
+				<tr>
 					<td align="right">Dokumen Sokongan</td>
 					<td>:</td>
 					
@@ -170,6 +176,11 @@ input[readonly] {
 						<input type="text" name="noKPPemohon" value="$!noKPLainPemohon" size="25" readonly="readonly" />&nbsp;&nbsp;(Lain-lain)</td>	
 					#end
 					 -->	
+				</tr>
+				<tr>
+					<td align="right">Jenis Pengenalan Pemohon</td>
+					<td>:</td>
+					<td colspan="2"><input type="text" name="jenisPengenalanPemohon" value="$!jeniskpPemohon" size="25" readonly="readonly" /></td>
 				</tr>
 				<tr>
 					<td align="right">Alamat Pemohon</td>
@@ -278,18 +289,18 @@ input[readonly] {
 				
 				
 				</tr>		
-				
+				<!-- 
 				<tr>
 					<td align="right">Kod Pejabat</td>
-					<td>:</td>
+					<td>:</td>-->
 					<!-- #if ($!namaPejabat) #set ($kP=$!kodPejabat) #set ($nP=$!namaPejabat) #else #set ($kP='0') #set ($nP='Tiada Maklumat') #end
 					<td colspan="2"><input type="text" name="kodPejabat" value="$!kP" readonly="readonly" size="9"><br /><font color="FF0000"><i> - $!nP</i></font></td> -->
 					
-					<td colspan="2">
+					<!-- <td colspan="2">  -->
 					
-					
-					<input type="text" name="kodPejabat" value="$!kP" readonly="readonly" size="50"><br /><font color="FF0000"><i> - $!nP</i></font></td> 
-				</tr>		
+					 
+					<input type="hidden" name="kodPejabat" value="$!kP" readonly="readonly" size="50"><!-- <br /><font color="FF0000"><i> - $!nP</i></font></td>   -->
+				<!-- </tr>		 -->
 				<!-- <tr>
 					<td align="right">Jenis Transaksi</td>
 					<td>:</td>

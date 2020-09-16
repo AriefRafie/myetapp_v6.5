@@ -26,8 +26,6 @@ public class PPTHeader {
 		return dataHeader;
 	}
 	
-	
-	
 	private Vector senaraiSubFail = null;	
 	public Vector listPerjalananFail(String id_permohonan) throws Exception {
 	
@@ -956,7 +954,7 @@ public class PPTHeader {
 	    				"P.CATATAN_BORANGK_PTD, P.CATATAN_ENDOSAN_PTG, P.CATATAN_ENDOSAN_PTD, P.FLAG_STATUS_ONLINE," +
 	    				"P.CATATAN_STATUS_ONLINE, P.TARIKH_SURAT,AG.NAMA_AGENSI,PNK.NAMA_NEGERI, P.FLAG_SEMAKAN_ONLINE";
 	    		*/
-				myLogger.info(":::::::::::::::::::::::::::: NEW MAIN HEADER:::::"+sql.toUpperCase());				
+//				myLogger.info(":::::::::::::::::::::::::::: NEW MAIN HEADER:::::"+sql.toUpperCase());				
 	    		ResultSet rs = stmt.executeQuery(sql);
 	     
 	    		Hashtable h;

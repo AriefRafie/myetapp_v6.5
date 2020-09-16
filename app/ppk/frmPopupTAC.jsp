@@ -33,7 +33,7 @@
     			<legend><strong>Pengesahan Permohonan menggunakan TAC</strong></legend>
 	    		<table width="100%" cellspacing="6" cellpadding="1" border="0">
 	   <tr>
-    <td colspan="3">Untuk meneruskan sila klik pada butang<font color="blue" class="blink"><b> <a href="#" onClick="javascript:mohonTAC('$!idFail','$!id_Permohonan')"> Mohon TAC</a> </b></font> untuk pengesahan cetakan perintah</td>
+    <td colspan="3">Untuk meneruskan sila klik pada butang<font color="blue" class="blink"><b> <a href="#" onClick="javascript:mohonTAC('$!idFail','$!id_Permohonan')"> <span><font color="red">Mohon TAC</font></span></a> </b></font> untuk pengesahan cetakan perintah</td>
     
     <!--  <b><a href="#" font color="blue" class="blink" onClick="javascript:cetakSuratPanduanBicara('$!idFail','$!id_Permohonan')">Mohon TAC</a></b> untuk pengesahan cetakan perintah</td>
     -->
