@@ -372,7 +372,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           <input type="checkbox" name="ukuran_luas" id="ukuran_luas" value="Y" disabled $TEMPchecked1  />
           #else
           <input type="checkbox" name="ukuran_luas" id="ukuran_luas" value="Y" tabindex="17" $TEMPchecked1  />
-          #end          </td>
+          #end </td>
           
           <td width="76%">Ukuran Luas Tanah Tersebut</td>
         </tr>
@@ -380,22 +380,20 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           <td width="1%"></td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td>
-          
+          <td>          
            #if($amaun_pampasan=="Y")
-           #set($TEMPchecked2 = "checked")
+           	#set($TEMPchecked2 = "checked")
            #else
-           #set($TEMPchecked2 = "")
+           	#set($TEMPchecked2 = "")
+           #end 
+           #if ($mode=="disabled")
+          	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" disabled $TEMPchecked2  />
+           #elseif ($mode!="disabled"  &&  $alasan2 == "2")
+          	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" disabled $TEMPchecked2  />
+           #else
+          	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
            #end
-           
-           
-          #if ($mode=="disabled")
-          <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" disabled $TEMPchecked2  />
-          #elseif ($mode!="disabled"  &&  $alasan2 == "2")
-          <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" disabled $TEMPchecked2  />
-          #else
-          <input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
-          #end          </td>
+          </td>
           
           <td>Jumlah Pampasan</td>
         </tr>
@@ -412,22 +410,24 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 	        		 <!-- PPT-35 (i) Jenis Bantahan Pampasan-->
 					#set ( $checked = "" )
 				    #foreach ($semakan in $senaraiSemakan)
-					    	<td class="$row" width="10">
+					    <td class="$row" width="10">
 		                   	
-					        #if ($semakanclass.isSemakan("$id_permohonan", "$semakan.id" ))
-					        	#set ( $checked = "checked" )
-					        #else
-					        	#set ( $checked = "" )
-					    	#end
-					    	#if ($mode=="disabled")
-					    		<input class="cb" type="checkbox" name="jenisbantahanpampasan" value="$semakan.id" onclick="checkJumlahPampasan(true)" disabled $checked>
-					    	#elseif ($mode!="disabled")
-					        	<input class="cb" type="checkbox" name="jenisbantahanpampasan" value="$semakan.id" onclick="checkJumlahPampasan(true)" $checked>
-					        #end
-					       	</td>
-					        <td class="$row">
-					        	$semakan.keterangan
-					        </td>
+					    #if ($semakanclass.isSemakan("$id_permohonan", "$semakan.id" ))
+					    	#set ( $checked = "checked" )
+					    #else
+					    	#set ( $checked = "" )
+					    #end
+					    #if ($mode=="disabled")
+					    	<input class="cb" type="checkbox" name="jenisbantahanpampasan" value="$semakan.id" onclick="checkJumlahPampasan(true)" $checked value="Y" disabled $TEMPchecked2 />
+					    #elseif ($mode!="disabled"  &&  $alasan2 == "2")
+					    	<input class="cb" type="checkbox" name="jenisbantahanpampasan" value="$semakan.id" onclick="checkJumlahPampasan(true)" $checked value="Y" disabled $TEMPchecked2 />
+					    #else
+					    	<input class="cb" type="checkbox" name="jenisbantahanpampasan" value="$semakan.id" onclick="checkJumlahPampasan(true)" $checked value="Y" tabindex="18" $TEMPchecked2 />
+					    #end
+					    </td>
+					    <td class="$row">
+					    	$semakan.keterangan
+					    </td>
 					      
 				    #end
 				    </tr>
