@@ -1404,10 +1404,12 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 						+ " ,NVL(O.TARIKH_HANTAR_BORANGO,MT.TARIKH_HANTAR) TARIKH_HANTAR_BORANGO "
 						+ " ,O.NAMA_PENERIMA_BORANGO ";
 					sql += " FROM TBLPPTBORANGO O, TBLRUJPEJABAT A "
-						+ " ,(	SELECT P.ID_RUJUKAN ID_BANTAHAN,TO_CHAR(P.TARIKH_HANTAR,'dd/mm/yyyy') TARIKH_HANTAR, U.USER_NAME NAMA"
-						+ " FROM TBLINTMTPENDAFTARAN P,USERS U"
-						+ " WHERE P.ID_MASUK = U.USER_ID"
-						+ " AND P.NO_KES IS NOT NULL "
+						+ " ,(	SELECT P.ID_RUJUKAN ID_BANTAHAN"
+						+ "		,P.TARIKH_HANTAR"
+						+ "		,U.USER_NAME NAMA"
+						+ " 	FROM TBLINTMTPENDAFTARAN P,USERS U"
+						+ " 	WHERE P.ID_MASUK = U.USER_ID"
+						+ "	 	AND P.NO_KES IS NOT NULL "
 						+ ") MT ";
 									 						 
 					sql += " WHERE O.ID_MAHKAMAH=A.ID_PEJABAT "

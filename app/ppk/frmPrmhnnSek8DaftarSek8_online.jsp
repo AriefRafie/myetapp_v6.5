@@ -447,7 +447,7 @@ Sila gunakan MyID atau No. Rujukan Online untuk mengemaskini permohonan anda.
 
 <div id="info_alert"></div>
 <script>
-parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_online_ppk\"><b><blink>*</blink> Sila lengkapkan maklumat permohonan Tuan/Puan dengan menekan butang <input type='button' name='cmdSeterusnya' value='Borang A' onClick='seterusnya_tab()'><br><blink>*</blink> Sila gunakan MyID atau No. Rujukan Online untuk mengemaskini permohonan anda.</b></div>";
+parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_online_ppk\"><b><blink>*</blink> Sila muat turun dokumen Senarai Semak Permohonan sebelum meneruskan permohonan dengan menekan butang <input type='button' name='cmdSemakan' value='Senarai Semak' onClick='download_senarai()'><br><blink>*</blink> Sila lengkapkan maklumat permohonan Tuan/Puan dengan menekan butang <input type='button' name='cmdSeterusnya' value='Borang A' onClick='seterusnya_tab()'><br><blink>*</blink> Sila gunakan MyID atau No. Rujukan Online untuk mengemaskini permohonan anda.</b></div>";
 </script>
 
 
@@ -2227,6 +2227,16 @@ alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_nama_warga
   	document.f1.action = "";
   	document.f1.submit();
   }
+  
+  function download_senarai() {
+	  	// alert("Senarai Semak");
+  	    var url = "../servlet/ekptg.report.ppk.SenaraiSemakBorangA?idpermohonan=0";
+  	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+  	    if ((document.window != null) && (!hWnd.opener))
+  		hWnd.opener = document.window;
+  	    if (hWnd.focus != null) hWnd.focus();
+	  
+	  }
 
   function Kemaskini() {
   		//document.f1.method = "POST";
