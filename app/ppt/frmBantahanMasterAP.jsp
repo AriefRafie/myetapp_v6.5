@@ -406,7 +406,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           <td>&nbsp;</td>
         	<td>
 	        	<table id="bantahanpampasan">
-	        		<tr>
+	        		<tr> 
 	        		 <!-- PPT-35 (i) Jenis Bantahan Pampasan-->
 					#set ( $checked = "" )
 				    #foreach ($semakan in $senaraiSemakan)

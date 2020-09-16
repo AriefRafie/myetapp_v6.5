@@ -414,9 +414,9 @@
             #else
             	<input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 />
             #end  
-                      
+            
             </td>
-            <td colspan="4">Jumlah Pampasan Daftar</td>
+            <td colspan="4">Jumlah Pampasan</td>
         </tr>
         
         <tr>
@@ -438,7 +438,7 @@
 			 	#set ( $checked = "" )
 			 #end
 			 #if ($alasan2=="2") 
-             	<input class="cb" type="checkbox" name="jenisbantahanpampasan" value="$semakan.id" onclick="checkJumlahPampasan(true)" value="Y" tabindex="18" $TEMPchecked2 class="disabled" readonly />
+             	<input class="cb" type="checkbox" name="jenisbantahanpampasan" value="$semakan.id" onclick="checkJumlahPampasan(true)" value="Y" tabindex="18" $TEMPchecked2 disabled />
              #else
              	<input class="cb" type="checkbox" name="jenisbantahanpampasan" value="$semakan.id" onclick="checkJumlahPampasan(true)" value="Y" tabindex="18" $TEMPchecked2 />
              #end     	 
@@ -448,8 +448,8 @@
 			 	$semakan.keterangan <!-- $semak.id -->
 			 </td>
 			 #end
-				    </tr>
-				</table>
+		</tr>
+		</table>
           
         <tr>
             <td valign="top">&nbsp;</td>
@@ -661,6 +661,14 @@ function add_bantahanAP(){
   		document.${formName}.txtKptgnAtasTnh.focus(); 
 		return;	
 	}
+	if(document.${formName}.amaun_pampasan.checked == !false) {
+		error = 0;
+  		semakJenisBantahanPampasan();
+  		if (error >= 1) {
+  			document.${formName}.txtKptgnAtasTnh.focus();
+  			return false;
+  		}
+  	}
 	/*
 	if(document.${formName}.txtAmaunTuntutan.value == ""){
 		alert("Sila masukkan \"Amaun Tuntutan\" terlebih dahulu.");
@@ -728,8 +736,6 @@ function textCounter(field, countfield, maxlimit) {
 	else 
 		countfield.value = maxlimit - field.value.length;
 }
-
-
 
 // PPT-35 (i) Jenis Bantahan Pampasan Jika Dipilih
 function semakJenisBantahanPampasan() {
