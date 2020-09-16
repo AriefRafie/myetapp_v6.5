@@ -6,7 +6,9 @@ background: #f4eff4 !important;
 <!-- 18/8/2020 -->
 	<!-- SEKSYEN 4 DAN 8 --><strong></strong>
 <!-- test xxxxx -->
+ #if($report == 'BorangA')
 #parse("app/ppt/tindakanPegawaiSignPPT.jsp")
+#end
 #set($frmtdate = "&nbsp;<i><font color='blue' style='font-size:10px'>dd/mm/yyyy</font></i>")
 	
 	<input name="id_borange" type="hidden" id="id_borange" value="$!id_borange"/>
@@ -67,8 +69,84 @@ background: #f4eff4 !important;
   <input name="userlogin" type="hidden" id="userlogin" value="$!userlogin"/>
    <input name="token" type="hidden" id="token" value="$token"/>
   
-  #if($token!="")
 
+#if($token != '' && $report == 'BorangA')
+
+	<fieldset><legend><strong>Cetakan Laporan</strong></legend>
+        	<table width="100%" border="0" cellspacing="2" cellpadding="2" margin="10px">
+        	
+              <tr>
+              	<td width="1%">&nbsp;</td>
+                <td width="30%">&nbsp;</td>
+                <td width="1%">&nbsp;</td>
+                <td width="68%">&nbsp;</td>
+              </tr>
+              
+                <tr>
+                <td><font color="red">*</font></td>
+                <td>No. Fail</td>
+                <td>:</td>
+                <td><select name="sorSelectNoFail" class="autoselect">
+      		
+		      			#if($sorSelectNoFail=="1")
+						<option value="1">NO. RUJUKAN JKPTG</option>
+						<option value="2">NO. RUJUKAN PTG</option>
+						<option value="3">NO. RUJUKAN PTD</option>
+						<option value="4">NO. RUJUKAN UPT</option>
+						<option value="">SILA PILIH</option>
+		      			#elseif($sorSelectNoFail=="2")
+		      			<option value="2">NO. RUJUKAN PTG</option>
+		 				<option value="1">NO. RUJUKAN JKPTG</option>
+						<option value="3">NO. RUJUKAN PTD</option>
+						<option value="4">NO. RUJUKAN UPT</option>
+						<option value="">SILA PILIH</option>
+		 				#elseif($sorSelectNoFail=="3")
+		 				<option value="3">NO. RUJUKAN PTD</option>
+		 				<option value="1">NO. RUJUKAN JKPTG</option>
+						<option value="2">NO. RUJUKAN PTG</option>
+						<option value="4">NO. RUJUKAN UPT</option>
+						<option value="">SILA PILIH</option>
+		 				#elseif($sorSelectNoFail=="4")
+		 				<option value="4">NO. RUJUKAN UPT</option>
+		 				<option value="1">NO. RUJUKAN JKPTG</option>
+						<option value="2">NO. RUJUKAN PTG</option>
+						<option value="3">NO. RUJUKAN PTD</option>
+						<option value="">SILA PILIH</option>
+						#else
+		      			<option value="">SILA PILIH</option>
+		      			<option value="1">NO. RUJUKAN JKPTG</option>
+						<option value="2">NO. RUJUKAN PTG</option>
+						<option value="3">NO. RUJUKAN PTD</option>
+						<option value="4">NO. RUJUKAN UPT</option>
+		      			#end
+		      			
+					</select></td>
+              </tr>
+              
+               <tr>
+                	<td>&nbsp;</td>
+                	<td>
+                    
+                    #if($report == 'MMKSek8WPKL' || $report == 'MMKSek4WPKL')
+                    	Tarikh Kertas MMK Dicetak
+                    #else
+                    
+                    
+                    Tarikh Surat Dicetak
+                    
+                    #end
+                    </td>
+                	<td>:</td>
+                	<td><input type="text" id="txtTarikhSuratCetak" name="txtTarikhSuratCetak" value="$!dateToday" maxlength="30" size="20" /></td>
+              </tr>
+              </table>
+        <table align="center" width="70%" border="0" cellspacing="2" cellpadding="2">
+        	<tr align="center">
+                <td>
+           	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangA('$!id_fail','$!nama2Mukim','$userlogin')">
+             </td></tr></table>   
+               
+#elseif($report != 'BorangA')
     	<fieldset><legend><strong>Cetakan Laporan</strong></legend>
         	<table width="100%" border="0" cellspacing="2" cellpadding="2" margin="10px">
         	
@@ -105,12 +183,6 @@ background: #f4eff4 !important;
               #if($selectNoFail == 'yes')
              
              <!-- testing yati v7 penambahbaikan -->
-               <tr>
-                <td valign="top">&nbsp;</td>
-                <td valign="top">Nama Pegawai</td>
-                <td valign="top">:</td>
-                <td>$!username</td>
-              </tr>
               
               <tr>
                 <td><font color="red">*</font></td>
@@ -1345,7 +1417,7 @@ background: #f4eff4 !important;
                 	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakLaporanAwalSS8('$!id_tanahumum','$!id_negeri')">
                 	#end
                 	
-                	#if($report == 'BorangA')
+                	#if($report == 'BorangA' )
                 	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangA('$!id_fail','$!nama2Mukim','$userlogin')">
                 	#end
                 	
