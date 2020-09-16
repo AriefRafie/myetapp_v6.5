@@ -141,7 +141,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 //				socmt = String.valueOf(vecMT.get(0).get("namaPejabat"));
 				kodmt = im.getKodMT(pejabatMT);
 			}
-			
+			myLog.info("idPermohonan="+idPermohonan);
 			Vector<Tblrujpejabat> vecPejabat = DBPPT.getMTByPermohonan(idPermohonan);
 			idPejabatPTGD = String.valueOf(vecPejabat.get(0).getIdPejabat());
 //			if(vecPejabat.size() > 1) {
