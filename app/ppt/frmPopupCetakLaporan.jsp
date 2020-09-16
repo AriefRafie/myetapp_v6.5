@@ -1,4 +1,3 @@
-XXX
 <style>
 body{
 background: #f4eff4 !important;
@@ -65,8 +64,10 @@ background: #f4eff4 !important;
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input type="hidden" name="user" value='$!{session.getAttribute("_portal_username")}'>
 
-  <input name="tabId" type="text" id="tabId" value="$selectedTab"/>
+  <input name="userlogin" type="hidden" id="userlogin" value="$!userlogin"/>
+   <input name="token" type="hidden" id="token" value="$token"/>
   
+  #if($token!="")
 
     	<fieldset><legend><strong>Cetakan Laporan</strong></legend>
         	<table width="100%" border="0" cellspacing="2" cellpadding="2" margin="10px">
@@ -1345,7 +1346,7 @@ background: #f4eff4 !important;
                 	#end
                 	
                 	#if($report == 'BorangA')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangA('$!id_fail','$!nama2Mukim')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangA('$!id_fail','$!nama2Mukim','$userlogin')">
                 	#end
                 	
                 	#if($report == 'BorangB')
@@ -1615,7 +1616,7 @@ background: #f4eff4 !important;
 
 
 
-
+#end
 <!-- Untuk borang dan surat -->
 <script>
 
@@ -4815,7 +4816,7 @@ function cetakMBPerak(idfail,nama2Mukim) {
 }
 
 
-function cetakBorangA(idfail,nama2mukim) {
+function cetakBorangA(idfail,nama2mukim,userlogin) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
@@ -4842,7 +4843,7 @@ function cetakBorangA(idfail,nama2mukim) {
 
 		var sysdate = document.${formName}.txtTarikhSuratCetak.value;
 
-		var url = "../../servlet/ekptg.report.ppt.BorangA?idfail="+idfail+"&no_fail="+nofail+"&sysdate="+sysdate;		
+		var url = "../../servlet/ekptg.report.ppt.BorangA?idfail="+idfail+"&no_fail="+nofail+"&sysdate="+sysdate+"&userlogin="+userlogin;		
 		//var url = "../../servlet/ekptg.report.ppt.BorangA?idfail="+idfail+"&namaMukim="+nama2Mukim+"&no_fail="+nofail+"&sysdate="+sysdate;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))

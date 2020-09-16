@@ -5541,6 +5541,7 @@ public class FrmPenarikanBalikInternal extends AjaxBasedModule{
 		 
 			Hashtable h = new Hashtable();
 			h.put("txtKerosakanTanah", getParam("txtKerosakanTanah"));
+			h.put("txtKeteranganKerosakan", getParam("txtKeteranganKerosakan"));
 			h.put("txtKerosakanTanaman", getParam("txtKerosakanTanaman"));
 			h.put("txtKerosakanBangunan", getParam("txtKerosakanBangunan"));
 			h.put("txtKosDitanggung", getParam("txtKosDitanggung"));
