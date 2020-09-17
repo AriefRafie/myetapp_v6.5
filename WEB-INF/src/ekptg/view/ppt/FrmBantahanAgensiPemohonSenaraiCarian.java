@@ -88,7 +88,8 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     	Vector getIdSuburusanstatusfail = new Vector();
     	Vector listPageDepan = new Vector();
     	Vector listPageNoLot = new Vector();  	
-    	// PPT-35(i)	Vector semakanSenarai = new Vector();
+    	// PPT-35(i)	
+    	Vector semakanSenarai = new Vector();
     
     	dataNamaPengarah.clear();
     	listPageDepan.clear();
@@ -383,7 +384,17 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
         	
         	//GET TARIKH AWARD & TARIKH BORANG H
     		listF = model.getTarikhPentingAP(id_permohonan,id_hakmilik,id_siasatan);
-    		context.put("getTarikhPenting",listF);    			
+    		context.put("getTarikhPenting",listF);
+
+			// PPT-35 (i) Bantahan Terhadap 160920
+			semakanSenarai = FrmSemakan.getSenaraiSemakan("bantahan");
+			this.context.put("senaraiSemakan", semakanSenarai);
+
+			// Checkbox PPT-35 (i) Jenis Bantahan Pampasan untuk frmBantahanDaftarByAgensiPemohon.jsp DAN frmBantahanMasterAP.jsp (AMBIL DARI DB)
+			Vector listBantahanPampasan = FrmSemakan.getSenaraiSemakan("pptbantahanpampasan"); // Cari pada TBLSEMAKANSENARAI pada KOD_FORM
+			context.put("senaraiSemakan", listBantahanPampasan);
+			context.put("semakclass", new FrmSemakan());	
+    		
    			if(status_bantahan.equals("220")){
    				vm = "app/ppt/frmBantahanMasterAP.jsp";
   			}else{
@@ -669,15 +680,14 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
         			  context.put("alasan4","");					
     				
         		  }
-    				
+    			
         		  // PPT-35 (i) Bantahan Terhadap untuk Agensi
             	  Vector<Hashtable<String,String>> semakanBantahan = FrmSemakan.getSenaraiSemakan("pptbantahan");
             	  this.context.put("semakanBantahan", semakanBantahan);
-
+            	  
             	  // Checkbox PPT-35 (i) Jenis Bantahan Pampasan untuk frmBantahanMaster.jsp
             	  Vector<Hashtable<String,String>> semakanPampasan = FrmSemakan.getSenaraiSemakan("pptpampasan"); // Cari pada TBLSEMAKANSENARAI pada KOD_FORM
             	  context.put("semakanPampasan", semakanPampasan);
-            	  
             	  context.put("semakanclass", new FrmSemakan());
             	  
     			}
@@ -799,7 +809,7 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
 				frmSemak.semakanHapusByPermohonan(idPermohonan); // Kalau dalam satu page ada dua checkbox letak satu sahaja
 				if (bantahanpampasan != null) {
 					for (int i = 0; i < bantahanpampasan.length; i++) {
-						myLogger.info("simpan pilihan Jumlah Pampasan masterAP ke tblsenaraihantar");
+						myLogger.info("simpan pilihan Jumlah Pampasan frmBantahanMasterAP ke tblsenaraihantar");
 						frmSemak = new FrmSemakan();
 						frmSemak.semakanTambah(bantahanpampasan[i], idPermohonan);
 					}
@@ -2665,6 +2675,15 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
         		context.put("selectNoLot",HTML.SelectNoLotByHakmilik(null,"socNoLot","style=width:auto tabindex=7 disabled"));
 //        		context.put("selectNamaPembantah", HTML.SelectNamaPembantahByHakmilik(null, "socNamaPembantah", null, "style=width:auto tabindex=11 disabled", null));   		
         		
+  				// PPT-35 (i) Bantahan Terhadap 160920
+  				semakanSenarai = FrmSemakan.getSenaraiSemakan("bantahan");
+  				this.context.put("senaraiSemakan", semakanSenarai);
+
+  				// Checkbox PPT-35 (i) Jenis Bantahan Pampasan untuk frmBantahanDaftarByAgensiPemohon.jsp (AMBIL DARI DB)
+  				Vector listBantahanPampasan = FrmSemakan.getSenaraiSemakan("pptbantahanpampasan"); // Cari pada TBLSEMAKANSENARAI pada KOD_FORM
+  				context.put("senaraiSemakan", listBantahanPampasan);
+  				context.put("semakclass", new FrmSemakan());
+  				
     			vm = "app/ppt/frmBantahanDaftarByAgensiPemohon.jsp";
   		    		
     		
@@ -2712,6 +2731,18 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
     			context.put("flag", "semak");
     			context.put("clearForm", "yes");
     			context.put("clear", "");
+    			
+
+
+  				// PPT-35 (i) Bantahan Terhadap 
+  				semakanSenarai = FrmSemakan.getSenaraiSemakan("bantahan");
+  				this.context.put("senaraiSemakan", semakanSenarai);
+
+  				// Checkbox PPT-35 (i) Jenis Bantahan Pampasan untuk frmBantahanDaftarByAgensiPemohon.jsp (AMBIL DARI DB)
+  				Vector listBantahanPampasan = FrmSemakan.getSenaraiSemakan("pptbantahanpampasan"); // Cari pada TBLSEMAKANSENARAI pada KOD_FORM
+  				context.put("senaraiSemakan", listBantahanPampasan);
+  				context.put("semakclass", new FrmSemakan());
+  				
 
     			vm = "app/ppt/frmBantahanDaftarByAgensiPemohon.jsp";
     		

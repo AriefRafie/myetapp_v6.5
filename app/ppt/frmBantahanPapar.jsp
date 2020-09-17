@@ -393,14 +393,45 @@
             <td>&nbsp;</td>
             <td><input type="checkbox" name="amaun_pampasan" id="amaun_pampasan" value="Y" tabindex="18" $TEMPchecked2 disabled /></td>
             <td colspan="4">Jumlah Pampasan;</td>
-        </tr>    
+        </tr>
+        
+        <tr>
+          <td width="1%"></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+            <td>
+	        <table id="bantahanpampasan">
+	        <tr>
+	         <!-- PPT-35 (i) Jenis Bantahan Pampasan -->
+			 #set ( $checked = "" )
+			 #foreach ($semakan in $senaraiSemakan)
+			 <td  width="10">
+		             
+			 #if ( $semakclass.isSemakan("$permohonanInfo.idpermohonan", "$semakan.id" ))
+			 	#set ( $checked = "checked" )
+			 #else
+			 	#set ( $checked = "" )
+			 #end
+			 #if ($alasan2=="2") 
+             	<input class="cb" type="checkbox" name="jenisbantahanpampasan" value="$semakan.id" onclick="checkJumlahPampasan(true)" value="Y" tabindex="18" $TEMPchecked2 disabled />
+             #end     	 
+			 </td>
+			 
+			 <td >
+			 	$semakan.keterangan <!-- $semak.id -->
+			 </td>
+			 #end
+		</tr>
+		</table>
+        
         <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td><input type="checkbox" name="terima_pampasan" id="terima_pampasan" value="Y" tabindex="19" $TEMPchecked3 disabled /></td>
             <td colspan="4">Orang-orang yang  menerima pampasan;</td>
       </tr>
-        <tr>
+       <tr>
             <td>&nbsp;</td>
             <td>&nbsp;</td>
             <td><input type="checkbox" name="umpuk_pampasan" id="umpuk_pampasan" value="Y" tabindex="20" $TEMPchecked4 disabled /></td>
@@ -451,5 +482,6 @@ function open_header(id){
 		document.getElementById(id).style.display="none";
 	}
 }
+
 </script>
 
