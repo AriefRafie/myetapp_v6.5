@@ -5,8 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 	
 public class Fungsi {
 	
-	public static int lebar = 0 ;
-	public static int tinggi = 0 ;
+	public static int lebar = 400 ;
+	public static int tinggi = 300 ;
 	
 	public String getParam(HttpServletRequest request, String param) throws Exception {
 		return request.getParameter(param) == null ? "" : request.getParameter(param);

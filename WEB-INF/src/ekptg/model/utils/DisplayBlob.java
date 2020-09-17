@@ -34,12 +34,15 @@ public class DisplayBlob implements IServlet2{
 		            
 					String tableNameReq = request.getParameter("tablename");
 
-					if(tableNameReq.equals("tblphpdokumen"))
-						sql = "select content,jenis_mime from tblphpdokumen where id_dokumen = ?";
-					else if(tableNameReq.equals("simati"))
+//					if(tableNameReq.equals("tblphpdokumen"))
+//						sql = "select content,jenis_mime from tblphpdokumen where id_dokumen = ?";
+//					else if(tableNameReq.equals("tblhtpdokumen"))
+//						sql = "select content,jenis_mime from "+tableNameReq+" where id_dokumen = ?";
+//					else 
+					if(tableNameReq.equals("simati"))
 						sql = "select content,jenis_mime from tblinboxattach where id_dokumen = ?";
 					else
-						sql = "select content,jenis_mime from tblinboxattach where id_inboxattach = ?";
+						sql = "select content,jenis_mime from "+tableNameReq+" where id_dokumen = ?";
 
 		            PreparedStatement ps = con.prepareStatement(sql);
 		            String id = request.getParameter("id");
