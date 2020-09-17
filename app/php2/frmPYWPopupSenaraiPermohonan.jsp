@@ -17,6 +17,29 @@
 
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
+  	<td>
+  		<fieldset>
+      		<legend><b>CARIAN</b></legend>
+      			<table width="100%" align="center" border="0">
+      				<tr>
+          				<td width="30%" height="24" scope="row" align="right">Jenis Permohonan : </td>
+          				<td width="70%">$selectJenisPermohonan</td>
+        			</tr>
+        			<tr>
+          				<td scope="row"></td>
+          				<td>
+          					<input name="cmdCari" id="cmdCari" value="Cari" type="button" onclick="javascript:carian()">
+            				<input name="cmdKosongkan" id="cmdKosongkan" value="Kosongkan" type="reset" onClick="javascript:kosongkan()">
+            			</td>
+        			</tr>
+      			</table>
+      	</fieldset>
+  	</td>
+  </tr>
+</table>
+
+<table width="100%" border="0" cellspacing="2" cellpadding="2">
+  <tr>
     <td><fieldset>
       <legend><b>SENARAI PERMOHONAN</b></legend>
       #parse("app/utils/record_paging_popup.jsp")
@@ -41,7 +64,7 @@
         <tr>
           <td class="$row" align="center">$senaraiFail.bil</td>
           <td class="$row">$senaraiFail.noFail</a></td>
-          <td class="$row">$!senaraiFail.jenisPermohonan</td>
+          <td class="$row">$senaraiFail.jenisPermohonan</td>
           <td class="$row">$senaraiFail.namaPemohon</td>
           <td class="$row" align="center">
           	<input type="checkbox" name="checkPermohonan" id="checkPermohonan$senaraiFail.idPermohonan" value="$senaraiFail.idPermohonan" onclick="$('err_checkPermohonan').innerHTML=''; at(this, event)" />
@@ -67,7 +90,7 @@
 		<td align="left"><div id="err_checkPermohonan" style="color:#CC0000;font-weight:bold;border:2px #000"></div></td>
 		<td align="center">
 			<input type="button" name="btnPilihPermohonan" id="btnPilihPermohonan" value="Pilih" onClick="doPilih()"/>
-			##<input type="button" name="btnTutupPermohonan" id="btnTutupPermohonan" value="Tutup" onClick="doTutup()"/>
+			<!-- <input type="button" name="btnTutupPermohonan" id="btnTutupPermohonan" value="Tutup" onClick="doTutup()"/> -->
 		</td>
 	</tr>
 </table>
@@ -112,5 +135,15 @@ function validatePilihanPermohonan() {
 	}
 	
 	return err_count == 0;
+}
+
+function carian(){
+	document.${formName}.actionPopup.value = "";
+	doAjaxCall${formName}("");
+}
+function kosongkan() {
+	document.${formName}.reset();
+	document.${formName}.socJenisPermohonan.value = "";
+	doAjaxCall${formName}("");
 }
 </script>

@@ -102,6 +102,7 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 		Vector beanMaklumatKehadiran = null;
 		Vector senaraiKehadiran = null;
 		Vector senaraiFailMohonBaru = null;
+		Vector senaraiFailMohonLanjut = null;
 		Vector beanMaklumatPengerusi = null;
 		Vector senaraiImejan = null;
 		Vector beanMaklumatImejan = null;
@@ -281,6 +282,15 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 				senaraiFailMohonBaru = logic.getListPermohonanBaharu();
 				this.context.put("SenaraiFailMohonBaru", senaraiFailMohonBaru);
 				this.context.put("totalRecords", senaraiFailMohonBaru.size());
+				
+				// SENARAI MESYUARAT PERMOHONAN PERLANJUTAN
+				logic.setSenaraiPermohonanLanjut(idMesyuarat);
+				senaraiFailMohonLanjut = logic.getListPermohonanLanjut();
+				this.context.put("SenaraiFailMohonLanjut", senaraiFailMohonLanjut);
+				this.context.put("totalRecords", senaraiFailMohonLanjut.size());
+				
+				// SENARAI MESYUARAT PERMOHONAN LAIN - LAIN
+				
 				
 			} else if ("3".equals(selectedTabUpper)) {
 				
