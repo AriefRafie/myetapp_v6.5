@@ -6604,8 +6604,116 @@ public class FrmRynPermohonanRayuanSek17 extends AjaxBasedModule{
     	//get data
     	String asas_keputusan = getParam("txtAsasKeputusan");
     	String nota_bicara = getParam("txtNotaBicara");
-
+    	String qBorangA = getParam("qBorangA");
+    	String qBorangSA = getParam("qBorangSA");
+    	String qBorangDDA = getParam("qBorangDDA");
+    	String qBorangP = getParam("qBorangP");
+    	String q1BorangP = getParam("q1BorangP");
+    	String q1BorangA = getParam("q1BorangA");
+    	String q1BorangSA = getParam("q1BorangSA");
+    	String q1BorangDDA = getParam("q1BorangDDA");
+    	
+    	String feeLain1 = getParam("textfeeLainHidden");
+    	String feeLaina1 = getParam("feeLaina1");
+    	String qfeeLain1 = getParam("qfeeLain1");
+    	String jumlahfeeLain1 = getParam("jumlahfeeLain1");
+    	
+    	String feeLain2 = getParam("textfeeLainHidden2");
+    	String feeLaina2 = getParam("feeLaina2a");
+    	String qfeeLain2 = getParam("qfeeLain2a");
+    	String jumlahfeeLain2 = getParam("jumlahfeeLain2");
+    	
+    	String feeLain3 = getParam("textfeeLainHidden3");
+    	String feeLaina3 = getParam("feeLaina3a");
+    	String qfeeLain3 = getParam("qfeeLain3a");
+    	String jumlahfeeLain3 = getParam("jumlahfeeLain3");
+    	
+    	String feeLain4 = getParam("textfeeLainHidden4");
+    	String feeLaina4 = getParam("feeLaina4a");
+    	String qfeeLain4 = getParam("qfeeLain4a");
+    	String jumlahfeeLain4 = getParam("jumlahfeeLain4");
+    	
+    	String feeLain5 = getParam("textfeeLainHidden5");
+    	String feeLaina5 = getParam("feeLaina5a");
+    	String qfeeLain5 = getParam("qfeeLain5a");
+    	String jumlahfeeLain5 = getParam("jumlahfeeLain5");
+    	
+    	String feeLain6 = getParam("textfeeLainHidden6");
+    	String feeLaina6 = getParam("feeLaina6a");
+    	String qfeeLain6 = getParam("qfeeLain6a");
+    	String jumlahfeeLain6 = getParam("jumlahfeeLain6");
+    	
+    	String feeLain7 = getParam("textfeeLainHidden7");
+    	String feeLaina7 = getParam("feeLaina7a");
+    	String qfeeLain7 = getParam("qfeeLain7a");
+    	String jumlahfeeLain7 = getParam("jumlahfeeLain7");
+    	
+    	String feeLain8 = getParam("textfeeLainHidden8");
+    	String feeLaina8 = getParam("feeLaina8a");
+    	String qfeeLain8 = getParam("qfeeLain8a");
+    	String jumlahfeeLain8 = getParam("jumlahfeeLain8");
+    	
+    	String textLain1 = getParam("textLainHidden");
+    	String textLain2 = getParam("textLainHidden2");
+    	String textLain3 = getParam("textLainHidden3");
+    	String textLain4 = getParam("textLainHidden4");
+    	String textLain5 = getParam("textLainHidden5");
+    	String textLain6 = getParam("textLainHidden6");
+    	String textLain7 = getParam("textLainHidden7");
+    	String textLain8 = getParam("textLainHidden8");
+    	String jumlahAllfee = getParam("jumlahh");
+    	
     	//send id to model
+    	h.put("F2LAMPIRAN1",feeLain1);
+    	h.put("FLAMPIRAN1",feeLaina1);
+    	h.put("Lampiran1", textLain1);
+    	h.put("qfeeLain1", qfeeLain1);
+    	h.put("qBorangA",qBorangA);
+    	h.put("qBorangP", qBorangP);
+    	h.put("qBorangDDA", qBorangDDA);
+    	h.put("qBorangSA", qBorangSA);
+    	
+    	h.put("q1BorangA",q1BorangA);
+    	h.put("q1BorangP", q1BorangP);
+    	h.put("q1BorangDDA", q1BorangDDA);
+    	h.put("q1BorangSA", q1BorangSA);
+    	h.put("jumlahAllfee" ,jumlahAllfee);
+    	
+    	h.put("FLAMPIRAN2",feeLaina2);
+    	h.put("F2LAMPIRAN2",feeLain2); 	
+    	h.put("qfeeLain2", qfeeLain2);
+    	h.put("Lampiran2", textLain2);
+    	
+    	h.put("FLAMPIRAN3",feeLaina3);
+    	h.put("F2LAMPIRAN3",feeLain3); 	
+    	h.put("qfeeLain3", qfeeLain3);
+    	h.put("Lampiran3", textLain3);
+    	
+    	h.put("FLAMPIRAN4",feeLaina4);
+    	h.put("F2LAMPIRAN4",feeLain4); 	
+    	h.put("qfeeLain4", qfeeLain4);
+    	h.put("Lampiran4", textLain4);
+    	
+    	h.put("FLAMPIRAN5",feeLaina5);
+    	h.put("F2LAMPIRAN5",feeLain5); 	
+    	h.put("qfeeLain5", qfeeLain5);
+    	h.put("Lampiran5", textLain5);
+    	
+    	h.put("FLAMPIRAN6",feeLaina6);
+    	h.put("F2LAMPIRAN6",feeLain6); 	
+    	h.put("qfeeLain6", qfeeLain6);
+    	h.put("Lampiran6", textLain6);
+    	
+    	h.put("FLAMPIRAN7",feeLaina7);
+    	h.put("F2LAMPIRAN7",feeLain7); 	
+    	h.put("qfeeLain7", qfeeLain7);
+    	h.put("Lampiran7", textLain7);
+    	
+    	h.put("FLAMPIRAN8",feeLaina8);
+    	h.put("F2LAMPIRAN8",feeLain8); 	
+    	h.put("qfeeLain8", qfeeLain8);
+    	h.put("Lampiran8", textLain8);
+    	
     	h.put("asas_keputusan",asas_keputusan);
     	h.put("nota_bicara",nota_bicara);
     	h.put("id_rayuan",id_rayuan);

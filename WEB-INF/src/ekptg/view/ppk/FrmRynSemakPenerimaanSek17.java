@@ -2634,6 +2634,7 @@ public class FrmRynSemakPenerimaanSek17 extends AjaxBasedModule{
     	//send id to model
     	h.put("perkara_rayu_memorandum",perkara_rayu_memorandum);
     	h.put("alasan_rayuan",alasan_rayuan);
+    	h.put("alasan_rayuan_memorandum",alasan_rayuan);
     	h.put("id_rayuan",id_rayuan);
     	h.put("id_kemaskini", session.getAttribute("_ekptg_user_id"));
 
