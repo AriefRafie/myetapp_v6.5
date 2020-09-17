@@ -64,7 +64,6 @@
 		    #else
 		    	#set( $row = "row1" )
 		    #end
-    $list.tarikhTerima
         <tr>
           <td class="$row" align="center">$list.bil</td>
           <td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus','$list.idPermohonan')" class="style1">$list.noPermohonan</a>
