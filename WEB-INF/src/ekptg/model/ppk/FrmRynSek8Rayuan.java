@@ -2588,6 +2588,7 @@ public class FrmRynSek8Rayuan {
 		    		Statement stmt = db.getStatement();
 		    		
 		    		sql =  "DELETE FROM TBLPPKRAYUANOB WHERE id_rayuan = '"+id_rayuan+"'";     
+		    		myLogger.info("cbObDelete = "+sql);
 		    		stmt.executeUpdate(sql);
 		      
 		    } finally {
@@ -2757,11 +2758,13 @@ public class FrmRynSek8Rayuan {
 			      r.update("id_rayuan", id_rayuan);
 			      r.add("perkara_rayu_memorandum", perkara_rayu_memorandum);
 			      r.add("alasan_rayuan_memorandum", alasan_rayuan_memorandum);
+			      myLogger.info("alasan_rayuan_memorandum = "+alasan_rayuan_memorandum);
 			      //r.add("nota_bicara", nota_bicara);
 				  r.add("id_kemaskini",id_kemaskini);
 				  r.add("tarikh_kemaskini", r.unquote("sysdate"));	      
 				  sql = r.getSQLUpdate("Tblppkrayuan");
-				  System.out.println("sql :"+sql);
+				  myLogger.info("sql = "+sql);
+				  myLogger.info("updateMemorandumxxxxx");
 				  stmt.executeUpdate(sql);
 		     	      
 		    }//close try 

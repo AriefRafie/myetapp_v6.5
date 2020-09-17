@@ -8,6 +8,46 @@
 #set($no4enable="<img border='0' title='Keputusan rayuan' src='../img/4enable2.png'>")
 #set($no4disable="<img border='0' title='Keputusan rayuan' src='../img/4disable.png'>")
 
+#set ($jumlahfeeBorangA = 0)
+#set ($jumlahfeeBorangP = 0)
+#set ($Borang_A = 0)
+#set ($Borang_1A = 0)
+#set ($Borang_P = 0)
+#set ($Borang_SA = 0)
+#set ($Borang_DDA = 0)
+#set ($FLampiran1 = 0)
+#set ($F2Lampiran1 = 0)
+#set ($QLampiran1 = 0)
+#set ($FLampiran2 = 0)
+#set ($F2Lampiran2 = 0)
+#set ($QLampiran2 = 0)
+
+#set ($FLampiran3 = 0)
+#set ($F2Lampiran3 = 0)
+#set ($QLampiran3 = 0)
+
+#set ($FLampiran4 = 0)
+#set ($F2Lampiran4 = 0)
+#set ($QLampiran4 = 0)
+
+#set ($FLampiran5 = 0)
+#set ($F2Lampiran5 = 0)
+#set ($QLampiran5 = 0)
+
+#set ($FLampiran6 = 0)
+#set ($F2Lampiran6 = 0)
+#set ($QLampiran6 = 0)
+
+#set ($FLampiran7 = 0)
+#set ($F2Lampiran7 = 0)
+#set ($QLampiran7 = 0)
+
+#set ($FLampiran8 = 0)
+#set ($F2Lampiran8 = 0)
+#set ($QLampiran8 = 0)
+
+#set ($nilaiBayaran = 0) 
+
 	<!-- paging -->	
 	#set($pagingMaklumatPP="CL - 01 - 182")
 	#set($pagingMaklumatRayuan="CL - 01 - 183")
@@ -1122,6 +1162,8 @@ document.getElementById("header_lama").style.display="block";
 	#foreach($z in $maklumatRayuan)
 		#set($tarikhRayuan = $z.tarikh_rayuan)
 		#set($perkara = $z.perkara_rayu)
+		
+		
 	#end
 #else
 		#set($tarikhRayuan = "$!tarikh_rayuan")
@@ -1268,6 +1310,56 @@ document.getElementById("header_lama").style.display="block";
 	#foreach($rr in $maklumatRayuan)
 		#set($asasKeputusan = $rr.asas_keputusan)
 		#set($notaBicara = $rr.nota_bicara)
+		
+		#set($asasKeputusan = $rr.asas_keputusan)
+		#set($notaBicara = $rr.nota_bicara)
+		#set($Borang_A = $rr.Borang_A)
+		#set($Borang_SA = $rr.Borang_SA)
+		#set($Borang_DDA = $rr.Borang_DDA)
+		#set($qBorang1P = $rr.qBorang1P)
+		#set($qBorang1A = $rr.qBorang1A)
+		#set($qBorang1SA = $rr.qBorang1SA)
+		#set($qBorang1DDA = $rr.qBorang1DDA)
+		#set($Borang_P = $rr.Borang_P)
+		#set($JUMLAH_BAYARAN = $rr.JUMLAH_BAYARAN)
+		#set($FLampiran1 = $rr.FLampiran1)
+		#set($F2Lampiran1 = $rr.F2Lampiran1)
+		#set($QLampiran1 = $rr.QLampiran1)
+		#set($Lampiran1 = $rr.Lampiran1)
+		#set($FLampiran2 = $rr.FLampiran2)
+		#set($F2Lampiran2 = $rr.F2Lampiran2)
+		#set($QLampiran2 = $rr.QLampiran2)
+		#set($Lampiran2 = $rr.Lampiran2)
+		
+		#set($FLampiran3 = $rr.FLampiran3)
+		#set($F2Lampiran3 = $rr.F2Lampiran3)
+		#set($QLampiran3 = $rr.QLampiran3)
+		#set($Lampiran3 = $rr.Lampiran3)
+		
+		#set($FLampiran4 = $rr.FLampiran4)
+		#set($F2Lampiran4 = $rr.F2Lampiran4)
+		#set($QLampiran4 = $rr.QLampiran4)
+		#set($Lampiran4 = $rr.Lampiran4)
+		
+		#set($FLampiran5 = $rr.FLampiran5)
+		#set($F2Lampiran5 = $rr.F2Lampiran5)
+		#set($QLampiran5 = $rr.QLampiran5)
+		#set($Lampiran5 = $rr.Lampiran5)
+		
+		#set($FLampiran6 = $rr.FLampiran6)
+		#set($F2Lampiran6 = $rr.F2Lampiran6)
+		#set($QLampiran6 = $rr.QLampiran2)
+		#set($Lampiran6 = $rr.Lampiran6)
+		
+		#set($FLampiran7 = $rr.FLampiran7)
+		#set($F2Lampiran7 = $rr.F2Lampiran7)
+		#set($QLampiran7 = $rr.QLampiran7)
+		#set($Lampiran7 = $rr.Lampiran7)
+		
+		#set($FLampiran8 = $rr.FLampiran8)
+		#set($F2Lampiran8 = $rr.F2Lampiran8)
+		#set($QLampiran8 = $rr.QLampiran8)
+		#set($Lampiran8 = $rr.Lampiran8)
 	#end
 #else
 		#set($asasKeputusan = "")
@@ -1454,8 +1546,268 @@ document.getElementById("header_lama").style.display="block";
 	 	
      </table>
 
-<br/>
+<!-- Tambah field baharu (MULA) -->
 
+     <p align="left">
+     Eksibit Dokumen :
+     <br/>
+     <table align ="left" width="80%"  cellpadding="0" cellspacing="0" border="1" id="POITable"> 
+    	
+        <tr class="table_header">
+        	<td align="center" width="40%"><b>Jenis Dokumen</b></td>
+	 		<td align="center" width="20%"><b>Salinan Pertama</b> </td>
+	 		<td align="center" width="20%"><b>Salinan kedua dan seterusnya</b></td>
+	 		<td align="center" width="20%"><b>Jumlah</b></td>
+	 	</tr>
+	 	<tr>
+	 	<td>&nbsp;Borang A</td>
+	 	#set ($jumlahfeeBorangA = $Borang_A * 10)
+	 	
+	 	#set ($jumlahfeeBorangA = $jumlahfeeBorangA + ($qBorang1A * 30) )
+	 	
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" size ="2" name="feeBorangA1" value="30" disabled> x <input type="text" style="text-align:right;" $modeRR2 $modeRRx2 name="q1BorangA" size ="2" value="$qBorang1A" onkeypress='return event.charCode >= 48 && event.charCode <= 49 || event.charCode == 0'></td>
+	 	
+	 	#if($editable=="yes") 
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" size ="2" value="10" disabled name="feeBorangA2"> x <input type="text" style="text-align:right;" $modeRR2 $modeRRx2 name="qBorangA" size ="2" value="$Borang_A" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'></td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" size ="2" value="10" disabled name="feeBorangA2"> x <input type="text" style="text-align:right;" name="qBorangA" size ="2" value="" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'></td>
+	 	#end
+	 	#if($editable=="yes") 
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="$jumlahfeeBorangA" name="jumlahfeeBorangA">&nbsp;&nbsp;<input type="button" $modeRR2 $modeRRx2 name="cmdKiraBorangA" onClick="KiraBorangA()" value="Kira"> </td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="" name="jumlahfeeBorangA">&nbsp;&nbsp;<input type="button" name="cmdKiraBorangA" onClick="KiraBorangA()" value="Kira"> </td>
+	 	#end
+	 	</tr>
+	 	<tr>
+	 	<td>&nbsp;Borang P</td>
+	 	#set ($jumlahfeeBorangP = $Borang_P * 10)
+	 	#set ($jumlahfeeBorangP = $jumlahfeeBorangP + ($qBorang1P * 30) )
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" size ="2" name="feeBorangP1" value="30" disabled> x <input type="text" style="text-align:right;" $modeRR2 $modeRRx2 name="q1BorangP" size ="2" value="$qBorang1P" onkeypress='return event.charCode >= 48 && event.charCode <= 49 || event.charCode == 0' ></td>
+	 	#if($editable=="yes") 
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" size ="2" value="10" disabled name="feeBorangP2"> x <input type="text" style="text-align:right;" $modeRR2 $modeRRx2 name="qBorangP" size ="2" value="$Borang_P" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0' ></td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" size ="2" value="10" disabled name="feeBorangP2"> x <input type="text" style="text-align:right;" name="qBorangP" size ="2" value="" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0' ></td>
+	 	#end
+	 	#if($editable=="yes") 
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="$jumlahfeeBorangP" name="jumlahfeeBorangP">&nbsp;&nbsp;<input type="button" $modeRR2 $modeRRx2 name="cmdKiraBorangP" onClick="KiraBorangP()" value="Kira"> </td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="" name="jumlahfeeBorangP">&nbsp;&nbsp;<input type="button"  name="cmdKiraBorangP" onClick="KiraBorangP()" value="Kira"> </td>
+	 	#end
+	 	</tr>
+	 	<tr>
+	 	<td>&nbsp;Borang DDA</td>
+	 	#set ($jumlahfeeBorangDDA = $Borang_DDA * 10)
+	 	#set ($jumlahfeeBorangDDA = $jumlahfeeBorangDDA + ($qBorang1DDA * 30) )
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" size ="2" name="feeBorangDDA1" value="30" disabled> x <input type="text" style="text-align:right;" $modeRR2 $modeRRx2 name="q1BorangDDA" size ="2" value="$qBorang1DDA" onkeypress='return event.charCode >= 48 && event.charCode <= 49 || event.charCode == 0'> </td>
+	 	#if($editable=="yes")
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" size ="2" value="10" disabled name="feeBorangDDA2"> x <input type="text" style="text-align:right;" $modeRR2 $modeRRx2 name="qBorangDDA" size ="2" value="$Borang_DDA" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'> </td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" size ="2" value="10" disabled name="feeBorangDDA2"> x <input type="text" style="text-align:right;" name="qBorangDDA" size ="2" value="" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'> </td>
+	 	#end
+	 	#if($editable=="yes")
+		<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="$jumlahfeeBorangDDA" name="jumlahfeeBorangDDA">&nbsp;&nbsp;<input type="button" $modeRR2 $modeRRx2 name="cmdKiraBorangDDA" onClick="KiraBorangDDA()" value="Kira"> </td>
+		#else
+		<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="" name="jumlahfeeBorangDDA">&nbsp;&nbsp;<input type="button"  name="cmdKiraBorangDDA" onClick="KiraBorangDDA()" value="Kira"> </td>
+		#end
+	 	</tr>
+	 	
+	 	<tr>
+	 	<td>&nbsp;Surat Akuan Sumpah</td>
+	 	#set ($jumlahfeeBorangSA = $Borang_SA * 10)
+	 	#set ($jumlahfeeBorangSA = $jumlahfeeBorangSA  + ($qBorang1SA * 30) )
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" size ="2" name="feeBorangSA1" value="30" disabled> x <input type="text" style="text-align:right;" $modeRR2 $modeRRx2 name="q1BorangSA" size ="2" value="$qBorang1SA" onkeypress='return event.charCode >= 48 && event.charCode <= 49 || event.charCode == 0'></td>
+	 	#if($editable=="yes")
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" size ="2" value="10" disabled name="feeBorangSA2"> x <input type="text" style="text-align:right;" $modeRR2 $modeRRx2 name="qBorangSA" size ="2" value="$Borang_SA" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'></td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" size ="2" value="10" disabled name="feeBorangSA2"> x <input type="text" style="text-align:right;" name="qBorangSA" size ="2" value="" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'></td>
+	 	#end
+	 	#if($editable=="yes")
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="$jumlahfeeBorangSA" name="jumlahfeeBorangSA">&nbsp;&nbsp;<input type="button" $modeRR2 $modeRRx2 name="cmdKiraBorangSA" onClick="KiraBorangSA()" value="Kira"> </td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="" name="jumlahfeeBorangSA">&nbsp;&nbsp;<input type="button"  name="cmdKiraBorangSA" onClick="KiraBorangSA()" value="Kira"> </td>
+	 	#end
+	 	</tr>
+	 	
+	 	#if ($Lampiran1 != "" || $Lampiran1 !='')
+	 	<tr>
+	 	<td>&nbsp;Lain-lain : <input type="text" $modeRR2 $modeRRx2 value="$Lampiran1" name="textLain1" size="50"></td>
+	 	#set ($jumlahfeeLampiran1 = $F2Lampiran1 * $QLampiran1)
+	 	#set ($jumlahfeeLampiran1 = $FLampiran1 + $jumlahfeeLampiran1)	 	
+	 	<td align="center">RM &nbsp;<input type="text" $modeRR2 $modeRRx2 style="text-align:right;" size ="2" name="feeLain1" value="$FLampiran1"></td>
+	 	#if($editable=="yes")
+	 	<td align="center">RM &nbsp;<input type="text" $modeRR2 $modeRRx2 style="text-align:right;" size ="2" value="$F2Lampiran1" name="feeLaina1"> x <input type="text" style="text-align:right;" $modeRR2 $modeRRx2 name="qfeeLain1" size ="2" value="$QLampiran1" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'> </td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" size ="2" value="10" disabled name="feeLaina1"> x <input type="text" style="text-align:right;" name="qfeeLain1" size ="2" value="" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'> </td>
+	 	#end
+	 	#if($editable=="yes")
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="$jumlahfeeLampiran1" name="jumlahfeeLain1">&nbsp;&nbsp;<input type="button" $modeRR2 $modeRRx2 name="cmdKiraLampiran1" onClick="KiraLain1()" value="Kira"> </td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="" name="jumlahfeeLain1">&nbsp;&nbsp;<input type="button"  name="cmdKiraLampiran1" onClick="KiraLain1()" value="Kira"> </td>
+	 	#end
+	 	</tr>
+	 	#end
+	 	
+	 	#if ($Lampiran2 != "" || $Lampiran2 !='')
+	 	<tr>
+	 	<td>&nbsp;Lain-lain : <input type="text" $modeRR2 $modeRRx2 value="$Lampiran2" name="textLain2" size="50"></td>
+	 	#set ($jumlahfeeLampiran2 = $F2Lampiran2 * $QLampiran2)
+	 	#set ($jumlahfeeLampiran2 = $FLampiran2 + $jumlahfeeLampiran2)	 	
+	 	<td align="center">RM &nbsp;<input type="text" $modeRR2 $modeRRx2 style="text-align:right;" size ="2" name="feeLain2" value="$FLampiran2"></td>
+	 	#if($editable=="yes")
+	 	<td align="center">RM &nbsp;<input type="text" $modeRR2 $modeRRx2 style="text-align:right;" size ="2" value="$F2Lampiran2" name="feeLaina2"> x <input type="text" style="text-align:right;" $modeRR2 $modeRRx2 name="qfeeLain2" size ="2" value="$QLampiran2" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'> </td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" size ="2" value="10" disabled name="feeLaina2"> x <input type="text" style="text-align:right;" name="qfeeLain2" size ="2" value="" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'> </td>
+	 	#end
+	 	#if($editable=="yes")
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="$jumlahfeeLampiran2" name="jumlahfeeLain2">&nbsp;&nbsp;<input type="button" $modeRR2 $modeRRx2 name="cmdKiraLampiran2" onClick="KiraLain2()" value="Kira"> </td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="" name="jumlahfeeLain2">&nbsp;&nbsp;<input type="button"  name="cmdKiraLampiran2" onClick="KiraLain2()" value="Kira"> </td>
+	 	#end
+	 	</tr>
+	 	#end
+	 	
+	 	#if ($Lampiran3 != "" || $Lampiran3 !='')
+	 	<tr>
+	 	<td>&nbsp;Lain-lain : <input type="text" $modeRR2 $modeRRx2 value="$Lampiran3" name="textLain3" size="50"></td>
+	 	#set ($jumlahfeeLampiran3 = $F2Lampiran3 * $QLampiran3)
+	 	#set ($jumlahfeeLampiran3 = $FLampiran3 + $jumlahfeeLampiran3)	 	
+	 	<td align="center">RM &nbsp;<input type="text" $modeRR2 $modeRRx2 style="text-align:right;" size ="2" name="feeLain3" value="$FLampiran3"></td>
+	 	#if($editable=="yes")
+	 	<td align="center">RM &nbsp;<input type="text" $modeRR2 $modeRRx2 style="text-align:right;" size ="2" value="$F2Lampiran3" name="feeLaina3"> x <input type="text" style="text-align:right;" $modeRR2 $modeRRx2 name="qfeeLain3" size ="2" value="$QLampiran3" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'> </td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" size ="2" value="10" disabled name="feeLaina3"> x <input type="text" style="text-align:right;" name="qfeeLain3" size ="2" value="" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'> </td>
+	 	#end
+	 	#if($editable=="yes")
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="$jumlahfeeLampiran3" name="jumlahfeeLain3">&nbsp;&nbsp;<input type="button" $modeRR2 $modeRRx2 name="cmdKiraLampiran3" onClick="KiraLain3()" value="Kira"> </td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="" name="jumlahfeeLain3">&nbsp;&nbsp;<input type="button"  name="cmdKiraLampiran3" onClick="KiraLain3()" value="Kira"> </td>
+	 	#end
+	 	</tr>
+	 	#end
+	 	
+	 	#if ($Lampiran4 != "" || $Lampiran4 !='')
+	 	<tr>
+	 	<td>&nbsp;Lain-lain : <input type="text" $modeRR2 $modeRRx2 value="$Lampiran4" name="textLain4" size="50"></td>
+	 	#set ($jumlahfeeLampiran4 = $F2Lampiran4 * $QLampiran4)
+	 	#set ($jumlahfeeLampiran4 = $FLampiran4 + $jumlahfeeLampiran4)	 	
+	 	<td align="center">RM &nbsp;<input type="text" $modeRR2 $modeRRx2 style="text-align:right;" size ="2" name="feeLain4" value="$FLampiran4"></td>
+	 	#if($editable=="yes")
+	 	<td align="center">RM &nbsp;<input type="text" $modeRR2 $modeRRx2 style="text-align:right;" size ="2" value="$F2Lampiran4" name="feeLaina4"> x <input type="text" style="text-align:right;" $modeRR2 $modeRRx2 name="qfeeLain4" size ="2" value="$QLampiran4" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'> </td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" size ="2" value="10" disabled name="feeLaina4"> x <input type="text" style="text-align:right;" name="qfeeLain4" size ="2" value="" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'> </td>
+	 	#end
+	 	#if($editable=="yes")
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="$jumlahfeeLampiran4" name="jumlahfeeLain4">&nbsp;&nbsp;<input type="button" $modeRR2 $modeRRx2 name="cmdKiraLampiran4" onClick="KiraLain4()" value="Kira"> </td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="" name="jumlahfeeLain4">&nbsp;&nbsp;<input type="button"  name="cmdKiraLampiran4" onClick="KiraLain4()" value="Kira"> </td>
+	 	#end
+	 	</tr>
+	 	#end
+	 	
+	 	#if ($Lampiran5 != "" || $Lampiran5 !='')
+	 	<tr>
+	 	<td>&nbsp;Lain-lain : <input type="text" $modeRR2 $modeRRx2 value="$Lampiran5" name="textLain5" size="50"></td>
+	 	#set ($jumlahfeeLampiran5 = $F2Lampiran5 * $QLampiran5)
+	 	#set ($jumlahfeeLampiran5 = $FLampiran5 + $jumlahfeeLampiran5)	 	
+	 	<td align="center">RM &nbsp;<input type="text" $modeRR2 $modeRRx2 style="text-align:right;" size ="2" name="feeLain5" value="$FLampiran5"></td>
+	 	#if($editable=="yes")
+	 	<td align="center">RM &nbsp;<input type="text" $modeRR2 $modeRRx2 style="text-align:right;" size ="2" value="$F2Lampiran5" name="feeLaina5"> x <input type="text" style="text-align:right;" $modeRR2 $modeRRx2 name="qfeeLain5" size ="2" value="$QLampiran5" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'> </td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" size ="2" value="10" disabled name="feeLaina5"> x <input type="text" style="text-align:right;" name="qfeeLain5" size ="2" value="" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'> </td>
+	 	#end
+	 	#if($editable=="yes")
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="$jumlahfeeLampiran5" name="jumlahfeeLain5">&nbsp;&nbsp;<input type="button" $modeRR2 $modeRRx2 name="cmdKiraLampiran5" onClick="KiraLain5()" value="Kira"> </td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="" name="jumlahfeeLain5">&nbsp;&nbsp;<input type="button"  name="cmdKiraLampiran5" onClick="KiraLain5()" value="Kira"> </td>
+	 	#end
+	 	</tr>
+	 	#end
+	 	
+	 	#if ($Lampiran6 != "" || $Lampiran6 !='')
+	 	<tr>
+	 	<td>&nbsp;Lain-lain : <input type="text" $modeRR2 $modeRRx2 value="$Lampiran6" name="textLain6" size="50"></td>
+	 	#set ($jumlahfeeLampiran6 = $F2Lampiran6 * $QLampiran6)
+	 	#set ($jumlahfeeLampiran6 = $FLampiran6 + $jumlahfeeLampiran6)	 	
+	 	<td align="center">RM &nbsp;<input type="text" $modeRR2 $modeRRx2 style="text-align:right;" size ="2" name="feeLain6" value="$FLampiran6"></td>
+	 	#if($editable=="yes")
+	 	<td align="center">RM &nbsp;<input type="text" $modeRR2 $modeRRx2 style="text-align:right;" size ="2" value="$F2Lampiran6" name="feeLaina6"> x <input type="text" style="text-align:right;" $modeRR2 $modeRRx2 name="qfeeLain6" size ="2" value="$QLampiran6" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'> </td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" size ="2" value="10" disabled name="feeLaina6"> x <input type="text" style="text-align:right;" name="qfeeLain6" size ="2" value="" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'> </td>
+	 	#end
+	 	#if($editable=="yes")
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="$jumlahfeeLampiran6" name="jumlahfeeLain6">&nbsp;&nbsp;<input type="button" $modeRR2 $modeRRx2 name="cmdKiraLampiran6" onClick="KiraLain6()" value="Kira"> </td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="" name="jumlahfeeLain6">&nbsp;&nbsp;<input type="button"  name="cmdKiraLampiran6" onClick="KiraLain6()" value="Kira"> </td>
+	 	#end
+	 	</tr>
+	 	#end
+	 	
+	 	#if ($Lampiran7 != "" || $Lampiran7 !='')
+	 	<tr>
+	 	<td>&nbsp;Lain-lain : <input type="text" $modeRR2 $modeRRx2 value="$Lampiran7" name="textLain7" size="50"></td>
+	 	#set ($jumlahfeeLampiran7 = $F2Lampiran7 * $QLampiran7)
+	 	#set ($jumlahfeeLampiran7 = $FLampiran7 + $jumlahfeeLampiran7)	 	
+	 	<td align="center">RM &nbsp;<input type="text" $modeRR2 $modeRRx2 style="text-align:right;" size ="2" name="feeLain7" value="$FLampiran7"></td>
+	 	#if($editable=="yes")
+	 	<td align="center">RM &nbsp;<input type="text" $modeRR2 $modeRRx2 style="text-align:right;" size ="2" value="$F2Lampiran7" name="feeLaina7"> x <input type="text" style="text-align:right;" $modeRR2 $modeRRx2 name="qfeeLain7" size ="2" value="$QLampiran7" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'> </td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" size ="2" value="10" disabled name="feeLaina7"> x <input type="text" style="text-align:right;" name="qfeeLain7" size ="2" value="" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'> </td>
+	 	#end
+	 	#if($editable=="yes")
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="$jumlahfeeLampiran7" name="jumlahfeeLain7">&nbsp;&nbsp;<input type="button" $modeRR2 $modeRRx2 name="cmdKiraLampiran7" onClick="KiraLain7()" value="Kira"> </td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="" name="jumlahfeeLain7">&nbsp;&nbsp;<input type="button"  name="cmdKiraLampiran7" onClick="KiraLain7()" value="Kira"> </td>
+	 	#end
+	 	</tr>
+	 	#end
+	 	
+	 	#if ($Lampiran8 != "" || $Lampiran8 !='')
+	 	<tr>
+	 	<td>&nbsp;Lain-lain : <input type="text" $modeRR2 $modeRRx2 value="$Lampiran8" name="textLain8" size="50"></td>
+	 	#set ($jumlahfeeLampiran8 = $F2Lampiran8 * $QLampiran8)
+	 	#set ($jumlahfeeLampiran8 = $FLampiran8 + $jumlahfeeLampiran8)	 	
+	 	<td align="center">RM &nbsp;<input type="text" $modeRR2 $modeRRx2 style="text-align:right;" size ="2" name="feeLain8" value="$FLampiran8"></td>
+	 	#if($editable=="yes")
+	 	<td align="center">RM &nbsp;<input type="text" $modeRR2 $modeRRx2 style="text-align:right;" size ="2" value="$F2Lampiran8" name="feeLaina8"> x <input type="text" style="text-align:right;" $modeRR2 $modeRRx2 name="qfeeLain8" size ="2" value="$QLampiran8" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'> </td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" size ="2" value="10" disabled name="feeLaina8"> x <input type="text" style="text-align:right;" name="qfeeLain8" size ="2" value="" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 0'> </td>
+	 	#end
+	 	#if($editable=="yes")
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="$jumlahfeeLampiran8" name="jumlahfeeLain8">&nbsp;&nbsp;<input type="button" $modeRR2 $modeRRx2 name="cmdKiraLampiran8" onClick="KiraLain8()" value="Kira"> </td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" disabled size ="2" value="" name="jumlahfeeLain8">&nbsp;&nbsp;<input type="button"  name="cmdKiraLampiran8" onClick="KiraLain8()" value="Kira"> </td>
+	 	#end
+	 	</tr>
+	 	#end
+	 	<tr>
+	 	<td></td>
+	 	<td align="center"></td>
+	 	<td align="center">Jumlah</td>
+	 	
+	 	#if($editable=="yes")
+	 	<td align="center">RM &nbsp;<input type="hidden" name="BRR" value="$bayaranNB"><input type="text" style="text-align:right;" name="jumlahAllfee" disabled size ="3" value="$JUMLAH_BAYARAN">&nbsp;&nbsp;<input type="button" $modeRR2 $modeRRx2 name="cmdKirajumlahAllfee" onClick="KirajumlahAllfee()" value="Kira"></td>
+	 	#else
+	 	<td align="center">RM &nbsp;<input type="text" style="text-align:right;" name="jumlahAllfee" disabled size ="3" value="">&nbsp;&nbsp;<input type="button"  name="cmdKirajumlahAllfee" onClick="KirajumlahAllfee()" value="Kira"></td>
+	 	#end
+	 	
+	 	</tr>
+	 	<tr>
+	 	<td colspan="4" align="center"><input type="button" $modeRR2 $modeRRx2 name="addRow" id="addmorePOIbutton" name="TambahRow" value="Tambah" onclick="insertRow()"/></td>
+	 	
+	 	</tr>
+        
+	 	<!-- <tr>
+	 		<td>&nbsp;</td>
+            <td colspan="2"><input type="button" value="Papar" onclick="displayHTML(this.form.txtNotaBicara)">&nbsp;#if($editform=="yes")Baki Aksara :&nbsp;<input type="text" readonly class="disabled" name="remLen4" size="3" maxlength="3" value="2000">#end</td>
+        </tr> -->
+	 	
+	 	
+	 	
+     </table>
+
+
+<!-- Tambah field baharu (AKHIR) -->
+<br/>
 
 	 #if($editform=="yes")
 	 <table width="92%"  cellpadding="1" cellspacing="1" border="0">
@@ -2242,6 +2594,403 @@ function disablePOS(){
 	document.getElementById("serah1").disabled=false
 	document.getElementById("serah2").disabled=false
 }
+
+function KiraBorangA()
+{
+	var A = document.${formName}.feeBorangA1.value;
+	var B = document.${formName}.q1BorangA.value;
+	var C = document.${formName}.feeBorangA2.value;
+	var D = document.${formName}.qBorangA.value;
+	if (parseInt(D) > 0 && parseInt(B) == 0)
+		{
+		alert ("Sila masukkan bilangan salinan pertama Borang A");
+		document.${formName}.jumlahfeeBorangA.value = 0;
+		document.${formName}.q1BorangA.focus(); 
+		return;
+		}
+	var jumlahfeeBorangA = (parseInt(A) * parseInt(B))+(parseInt(C)*parseInt(D));
+	document.${formName}.jumlahfeeBorangA.value = jumlahfeeBorangA;
+}
+
+function KiraBorangP()
+{
+	var A = document.${formName}.feeBorangP1.value;
+	var B = document.${formName}.q1BorangP.value;
+	var C = document.${formName}.feeBorangP2.value;
+	var D = document.${formName}.qBorangP.value;
+	if (parseInt(D) > 0 && parseInt(B) == 0)
+	{
+	alert ("Sila masukkan bilangan salinan pertama Borang P");
+	document.${formName}.jumlahfeeBorangP.value = 0;
+	document.${formName}.q1BorangP.focus(); 
+	return;
+	}
+	var jumlahfeeBorangP = (parseInt(A) * parseInt(B))+(parseInt(C)*parseInt(D));
+	document.${formName}.jumlahfeeBorangP.value = jumlahfeeBorangP;
+}
+
+function KiraBorangDDA()
+{
+	var A = document.${formName}.feeBorangDDA1.value;
+	var B = document.${formName}.q1BorangDDA.value;
+	var C = document.${formName}.feeBorangDDA2.value;
+	var D = document.${formName}.qBorangDDA.value;
+	if (parseInt(D) > 0 && parseInt(B) == 0)
+	{
+	alert ("Sila masukkan bilangan salinan pertama Borang DDA");
+	document.${formName}.jumlahfeeBorangDDA.value = 0;
+	document.${formName}.q1BorangDDA.focus(); 
+	return;
+	}
+	var jumlahfeeBorangDDA = (parseInt(A) * parseInt(B))+(parseInt(C)*parseInt(D));
+	document.${formName}.jumlahfeeBorangDDA.value = jumlahfeeBorangDDA;
+}
+
+function KiraBorangSA()
+{
+	var A = document.${formName}.feeBorangSA1.value;
+	var B = document.${formName}.q1BorangSA.value;
+	var C = document.${formName}.feeBorangSA2.value;
+	var D = document.${formName}.qBorangSA.value;
+	if (parseInt(D) > 0 && parseInt(B) == 0)
+	{
+	alert ("Sila masukkan bilangan salinan pertama Surat Akuan Sumpah");
+	document.${formName}.jumlahfeeBorangSA.value = 0;
+	document.${formName}.q1BorangSA.focus(); 
+	return;
+	}
+	var jumlahfeeBorangSA = (parseInt(A) * parseInt(B))+(parseInt(C)*parseInt(D));
+	document.${formName}.jumlahfeeBorangSA.value = jumlahfeeBorangSA;
+}
+
+function KiraLain1()
+{
+	var A = document.${formName}.feeLain1.value;
+	var B = document.${formName}.feeLaina1.value;
+	var C = document.${formName}.qfeeLain1.value;
+	var jumlahfeeLain1 = parseInt(A)+(parseInt(B)*parseInt(C));
+	//alert ("jumlahfeeBorangA = "+ jumlahfeeBorangA);
+	document.${formName}.jumlahfeeLain1.value = jumlahfeeLain1;
+}
+
+function KiraLain2()
+{
+	//alert("index = "+index);
+	var A = document.${formName}.feeLain2.value;
+	var B = document.${formName}.feeLaina2.value;
+	var C = document.${formName}.qfeeLain2.value;
+	var jumlahfeeLain2 = parseInt(A)+(parseInt(B)*parseInt(C));
+	//alert ("jumlahfeeBorangA = "+ jumlahfeeBorangA);
+	document.${formName}.jumlahfeeLain2.value = jumlahfeeLain2;
+}
+
+function KiraLain3()
+{
+	var A = document.${formName}.feeLain3.value;
+	var B = document.${formName}.feeLaina3.value;
+	var C = document.${formName}.qfeeLain3.value;
+	var jumlahfeeLain1 = parseInt(A)+(parseInt(B)*parseInt(C));
+	//alert ("jumlahfeeBorangA = "+ jumlahfeeBorangA);
+	document.${formName}.jumlahfeeLain3.value = jumlahfeeLain1;
+}
+
+function KiraLain4()
+{
+	//alert("index = "+index);
+	var A = document.${formName}.feeLain4.value;
+	var B = document.${formName}.feeLaina4.value;
+	var C = document.${formName}.qfeeLain4.value;
+	var jumlahfeeLain2 = parseInt(A)+(parseInt(B)*parseInt(C));
+	//alert ("jumlahfeeBorangA = "+ jumlahfeeBorangA);
+	document.${formName}.jumlahfeeLain4.value = jumlahfeeLain2;
+}
+
+function KiraLain5()
+{
+	var A = document.${formName}.feeLain5.value;
+	var B = document.${formName}.feeLaina5.value;
+	var C = document.${formName}.qfeeLain5.value;
+	var jumlahfeeLain1 = parseInt(A)+(parseInt(B)*parseInt(C));
+	//alert ("jumlahfeeBorangA = "+ jumlahfeeBorangA);
+	document.${formName}.jumlahfeeLain5.value = jumlahfeeLain1;
+}
+
+function KiraLain6()
+{
+	//alert("index = "+index);
+	var A = document.${formName}.feeLain6.value;
+	var B = document.${formName}.feeLaina6.value;
+	var C = document.${formName}.qfeeLain6.value;
+	var jumlahfeeLain2 = parseInt(A)+(parseInt(B)*parseInt(C));
+	//alert ("jumlahfeeBorangA = "+ jumlahfeeBorangA);
+	document.${formName}.jumlahfeeLain6.value = jumlahfeeLain2;
+}
+
+function KiraLain7()
+{
+	var A = document.${formName}.feeLain7.value;
+	var B = document.${formName}.feeLaina7.value;
+	var C = document.${formName}.qfeeLain7.value;
+	var jumlahfeeLain1 = parseInt(A)+(parseInt(B)*parseInt(C));
+	//alert ("jumlahfeeBorangA = "+ jumlahfeeBorangA);
+	document.${formName}.jumlahfeeLain7.value = jumlahfeeLain1;
+}
+
+function KiraLain8()
+{
+	//alert("index = "+index);
+	var A = document.${formName}.feeLain8.value;
+	var B = document.${formName}.feeLaina8.value;
+	var C = document.${formName}.qfeeLain8.value;
+	var jumlahfeeLain2 = parseInt(A)+(parseInt(B)*parseInt(C));
+	//alert ("jumlahfeeBorangA = "+ jumlahfeeBorangA);
+	document.${formName}.jumlahfeeLain8.value = jumlahfeeLain2;
+}
+
+function KirajumlahAllfee()
+{
+	if (document.${formName}.qBorangA.value > 0 && document.${formName}.q1BorangA.value == 0)
+		{
+		alert ("Sila masukkan bilangan salinan pertama Borang A");
+		document.${formName}.jumlahAllfee.value = 0;
+		document.${formName}.q1BorangA.focus(); 
+		return;
+		}
+	
+	if (document.${formName}.qBorangP.value > 0 && document.${formName}.q1BorangP.value == 0)
+		{
+		alert ("Sila masukkan bilangan salinan pertama Borang P");
+		document.${formName}.jumlahAllfee.value = 0;
+		document.${formName}.q1BorangP.focus(); 
+		return;
+		}
+	
+	if (document.${formName}.qBorangDDA.value > 0 && document.${formName}.q1BorangDDA.value == 0)
+		{
+		alert ("Sila masukkan bilangan salinan pertama Borang DDA");
+		document.${formName}.jumlahAllfee.value = 0;
+		document.${formName}.q1BorangDDA.focus(); 
+		return;
+		}
+	
+	if (document.${formName}.qBorangSA.value > 0 && document.${formName}.q1BorangSA.value == 0)
+		{
+		alert ("Sila masukkan bilangan salinan pertama Surat Akuan Sumpah");
+		document.${formName}.jumlahAllfee.value = 0;
+		document.${formName}.q1BorangSA.focus(); 
+		return;
+		}
+		
+		var A = document.${formName}.jumlahfeeLain1; 
+		if (A === undefined || document.${formName}.jumlahfeeLain1.value =="") {
+			A = 0;
+			}
+		else
+			{
+				A = document.${formName}.jumlahfeeLain1.value;
+			}
+
+		var B = document.${formName}.jumlahfeeLain2;
+		if (B === undefined || document.${formName}.jumlahfeeLain2.value =="") {
+			B = 0;}
+		    else
+			{
+		    	B = document.${formName}.jumlahfeeLain2.value;	
+			}
+		
+	var C = document.${formName}.jumlahfeeBorangSA.value;
+	var D = document.${formName}.jumlahfeeBorangDDA.value;
+	var E = document.${formName}.jumlahfeeBorangP.value;
+	var F = document.${formName}.jumlahfeeBorangA.value;
+	
+
+	var G = document.${formName}.jumlahfeeLain3; 
+	if (G === undefined || document.${formName}.jumlahfeeLain3.value =="") {
+		G = 0;}
+	    else
+		{
+	    	G = document.${formName}.jumlahfeeLain3.value;	
+		}
+	
+	
+
+	var H = document.${formName}.jumlahfeeLain4;
+	if (H === undefined || document.${formName}.jumlahfeeLain4.value =="") {
+		H = 0;}
+	    else
+		{
+	    	H = document.${formName}.jumlahfeeLain4.value;	
+		}
+	
+	
+	var I = document.${formName}.jumlahfeeLain5; 
+	if (I === undefined || document.${formName}.jumlahfeeLain5.value =="") {
+		I = 0;}
+	    else
+		{
+	    	I = document.${formName}.jumlahfeeLain5.value;	
+		}
+	
+	
+	var J = document.${formName}.jumlahfeeLain6;
+	if (J === undefined || document.${formName}.jumlahfeeLain6.value =="") {
+		J = 0;}
+	    else
+		{
+	    	J = document.${formName}.jumlahfeeLain6.value;	
+		}
+	
+	
+	var K = document.${formName}.jumlahfeeLain7; 
+	if (K === undefined || document.${formName}.jumlahfeeLain7.value =="") {
+		K = 0;}
+	    else
+		{
+	    	K = document.${formName}.jumlahfeeLain7.value;	
+		}
+	
+	
+	var L = document.${formName}.jumlahfeeLain8;
+	if (L === undefined || document.${formName}.jumlahfeeLain8.value =="") {
+		L = 0;}
+	    else
+		{
+	    	L = document.${formName}.jumlahfeeLain8.value;	
+		}
+	
+	
+	
+	var jumlahAllfee = parseInt(A) + parseInt(B) + parseInt(C) + parseInt(D) + parseInt(E) + parseInt(F);
+		jumlahAllfee = jumlahAllfee + parseInt(G) + parseInt(H) + parseInt(I) + parseInt(J) + parseInt(K) + parseInt(L);
+	var	jumlahAllfee2 = String(jumlahAllfee);
+	document.${formName}.jumlahAllfee.value = jumlahAllfee2;
+	
+	
+}
+
+var index;
+if (document.${formName}.feeLain1.value !="")
+	{
+	index = 2;
+	}
+if (document.${formName}.feeLain2.value !="")
+{
+index = 3;
+}
+if (document.${formName}.feeLain3.value !="")
+{
+index = 4;
+}
+if (document.${formName}.feeLain4.value !="")
+{
+index = 5;
+}
+if (document.${formName}.feeLain5.value !="")
+{
+index = 6;
+}
+if (document.${formName}.feeLain6.value !="")
+{
+index = 7;
+}
+if (document.${formName}.feeLain7.value !="")
+{
+index = 8;
+}
+if (document.${formName}.feeLain8.value !="")
+{
+index = 9;
+document.getElementById("addmorePOIbutton").disabled = true;
+
+}
+function insertRow(){
+	//alert ("index = "+index);
+	if (index == 8)
+	{
+		document.getElementById("addmorePOIbutton").disabled = true; 
+	}
+            var table=document.getElementById("POITable");
+            var row=table.insertRow(table.rows.length-2);
+            var cell1=row.insertCell(0);
+            var t2b = document.createTextNode("\u00A0");
+            var t2z = document.createTextNode("\u00A0");
+            var t1=document.createElement("input");
+           		t1.setAttribute("type", "text");
+           		t1.size = "50";
+           		t1.id = "textLain"+index;
+            var t1a = document.createTextNode("Lain-lain : ");
+            	cell1.appendChild(t2z);    
+            	cell1.appendChild(t1a);
+                cell1.appendChild(t1);
+                
+            var cell2=row.insertCell(1);
+           		cell2.setAttribute("align","center");
+            var t2=document.createElement("input");
+           		t2.setAttribute("type", "text");
+           		//t2.onkeypress = isNumberKeyDecimal;
+           		t2.setAttribute("onkeypress", "return isNumberKeyDecimal(event)");
+           		t2.size = "2";
+           		t2.style="text-align:right;"
+            var t2a = document.createTextNode("RM ");
+            
+                t2.id = "feeLain"+index;
+                cell2.appendChild(t2a);
+                cell2.appendChild(t2b);
+                cell2.appendChild(t2);
+                
+            var cell3=row.insertCell(2);
+            	cell3.setAttribute("align","center");
+           	var t3a = document.createTextNode("RM ");
+           	var t3b = document.createTextNode("\u00A0");
+           	var t3c = document.createTextNode(" x ");
+            var t3	= document.createElement("input");
+            var t3e	= document.createElement("input");
+           		t3.setAttribute("type", "text");
+           		t3.setAttribute("onkeypress", "return isNumberKeyDecimal(event)");
+       			t3.size = "2";
+       			t3.style="text-align:right;"
+                t3.id = "feeLaina"+index;
+                
+       			t3e.setAttribute("type", "text");
+       			t3e.setAttribute("onkeypress", "return isNumberKeyDecimal(event)");
+       			t3e.size = "2";
+       			t3e.style="text-align:right;"
+                t3e.id = "qfeeLain"+index;
+       			
+       			cell3.appendChild(t3a);
+                cell3.appendChild(t3b);
+                cell3.appendChild(t3);
+                cell3.appendChild(t3c);
+                cell3.appendChild(t3e);
+                
+            var t4a = document.createTextNode("RM\u00A0 ");
+            var t4b = document.createTextNode("\u00A0");
+            var t4z = document.createTextNode("\u00A0");
+            var cell4=row.insertCell(3);
+           		cell4.setAttribute("align","center");
+            var t4=document.createElement("input");
+           		t4.setAttribute("type", "text");
+           		t4.setAttribute('disabled', true);
+   				t4.size = "2";
+   				t4.style="text-align:right;"
+                t4.id = "jumlahfeeLain"+index;
+   			var t4c=document.createElement("input");
+   				t4c.setAttribute('type','button'); 
+   				t4c.setAttribute('value','Kira'); 
+   				t4c.setAttribute('onclick','KiraLain'+index+'();'); // for FF
+   				//t4c.onclick = function() {KiraLain1();}; // for IE
+   
+                cell4.appendChild(t4a);
+                cell4.appendChild(t4b);
+                cell4.appendChild(t4z);
+                cell4.appendChild(t4);
+                cell4.appendChild(t4b);
+                cell4.appendChild(t4z);
+                cell4.appendChild(t4c);
+      index++;
+
+}
+
 function enableT()
 {
 	document.${formName}.txtNamaPenerima.disabled = false;
@@ -3188,6 +3937,7 @@ function DaysArray(n) {
 }
 
 function isDate(dtStr){
+	var dtCh= "/";
 	var daysInMonth = DaysArray(12)
 	var pos1=dtStr.indexOf(dtCh)
 	var pos2=dtStr.indexOf(dtCh,pos1+1)
