@@ -117,7 +117,7 @@
 				      #end  
 				      #if ($mode == 'update')
 				      <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onclick="simpanKemaskiniMesyuarat()"/>
-				      ##<input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onclick="batalKemaskiniMesyuarat()"/>
+				      <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onclick="batalKemaskiniMesyuarat()"/>
 				      #end </td>
 				</tr>
   			#end
@@ -217,7 +217,7 @@
 					          <td width="20%"><strong>No. Fail</strong></td>
 					          <td width="15%"><strong>Jenis Permohonan</strong></td>
 					          <td width="20%"><strong>Nama Pemohon</strong></td>
-					          ##<td width="10%"><strong>Kertas Pertimbangan</strong></td>
+					          <td width="10%"><strong>Kertas Pertimbangan</strong></td>
 					          <td width="10%"><strong>Keputusan</strong></td>
 					          <td width="15%"><strong>Catatan</strong></td>
 					          #foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
@@ -239,11 +239,11 @@
 					        <tr>
 					          <td class="$row" align="center">$senaraiFailMohonBaru.bil</td>
 					          <td class="$row">$senaraiFailMohonBaru.noFailPermohonan</td>
-					          <td class="$row">$senaraiFailMohonBaru.jenisPermohonan</td>
+					          <td class="$row" align="center">$senaraiFailMohonBaru.jenisPermohonan</td>
 					          <td class="$row">$senaraiFailMohonBaru.namaPemohon</td>
-					          ##<td class="$row" align="center"><a href="#" class="style2" onClick="doCetakKertasPertimbangan('$senaraiFailMohonBaru.id')">
-                      		  ##<img border="0" src="../img/print.gif"/></a></td>
-					          <td class="$row">
+					          <td class="$row" align="center"><a href="#" class="style2" onClick="doCetakKertasPertimbangan('$senaraiFailMohonBaru.idFail')">
+                      		  <img border="0" src="../img/print.gif"/></a></td>
+					          <td class="$row" align="center">
 					          		#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
 										#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
 										  <select id="idKeputusan$senaraiFailMohonBaru.id" name="idKeputusan$senaraiFailMohonBaru.id" style="width:100%" onChange="doSaveKeputusanBaru('idKeputusan$senaraiFailMohonBaru.id',$senaraiFailMohonBaru.id)">
@@ -263,7 +263,7 @@
 								    	#end
 								  	#end
 					          </td>
-					          <td class="$row">
+					          <td class="$row" align="center">
 							        #foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
 										#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
 										  <textarea id="catatanKeputusan$senaraiFailMohonBaru.id" name="catatanKeputusan$senaraiFailMohonBaru.id" onBlur="doSaveCatatanKeputusanBaru('catatanKeputusan$senaraiFailMohonBaru.id',$senaraiFailMohonBaru.id)" >$senaraiFailMohonBaru.catatanKeputusan</textarea>
@@ -571,13 +571,14 @@ function doKembaliSenaraiPermohonan(){
 	document.${formName}.submit();
 }
 
-//function doCetakKertasPertimbangan(idMesyuaratPermohonan) {
-//	var url = "../servlet/bph.laporan.rk.KertasPertimbangan?ID_MESYUARAT_PERMOHONAN="+idMesyuaratPermohonan;
-//	var hWnd = window.open(url,'Cetak','full=yes, resizable=yes,scrollbars=yes');
-//	if ((document.window != null) && (!hWnd.opener))
-//		hWnd.opener = document.window;
-//	if (hWnd.focus != null) hWnd.focus();	
-//}
+function doCetakKertasPertimbangan(idFail) {
+	var url = "../servlet/ekptg.report.php2.PYWKertasRingkasan?ID_FAIL="+idFail;
+    var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();	
+}
 
 function doHapus(idMesyuaratPermohonan){
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
