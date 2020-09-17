@@ -141,7 +141,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 //				socmt = String.valueOf(vecMT.get(0).get("namaPejabat"));
 				kodmt = im.getKodMT(pejabatMT);
 			}
-			
+			myLog.info("idPermohonan="+idPermohonan);
 			Vector<Tblrujpejabat> vecPejabat = DBPPT.getMTByPermohonan(idPermohonan);
 			idPejabatPTGD = String.valueOf(vecPejabat.get(0).getIdPejabat());
 //			if(vecPejabat.size() > 1) {
@@ -309,23 +309,23 @@ public class IntegrasiMT extends AjaxBasedModule{
 	        //party[1] = pt02;
 
 	        DeceaseInfoType deceaseInfo = new DeceaseInfoType();
-//	        deceaseInfo.setDeceaseInfoName(name);
-//	        deceaseInfo.setDeceaseInfoType("1");
-//	        deceaseInfo.setDeceaseInfoIDType1("IC");
-//	        deceaseInfo.setDeceaseInfoIDType1No("251202095009");
-//	        deceaseInfo.setDeceaseInfoIDType2("OC");
-//	        deceaseInfo.setDeceaseInfoIDType2No("12345");
-//	        deceaseInfo.setDeathCertNo("12345");
-//	        deceaseInfo.setDeceaseInfoGender("M");
-//	        deceaseInfo.setDeceaseInfoAge("98");
-//	        deceaseInfo.setDateOfDeath("2020-03-01T00:00:00");
-//	        deceaseInfo.setDeceaseInfoAddr1(add);
-//	        deceaseInfo.setDeceaseInfoAddr1(add2);
-//	        deceaseInfo.setDeceaseInfoAddr1(add3);
-//	        deceaseInfo.setDeceaseInfoPostcode("44000");
-//	        deceaseInfo.setDeceaseInfoCity("KUALA LUMPUR");
-//	        deceaseInfo.setDeceaseInfoState(stateCode);
-//	        deceaseInfo.setDeceaseInfoCountry("MYS");
+	        deceaseInfo.setDeceaseInfoName(name);
+	        deceaseInfo.setDeceaseInfoType("1");
+	        deceaseInfo.setDeceaseInfoIDType1("IC");
+	        deceaseInfo.setDeceaseInfoIDType1No("251202095009");
+	        deceaseInfo.setDeceaseInfoIDType2("OC");
+	        deceaseInfo.setDeceaseInfoIDType2No("12345");
+	        deceaseInfo.setDeathCertNo("12345");
+	        deceaseInfo.setDeceaseInfoGender("M");
+	        deceaseInfo.setDeceaseInfoAge("98");
+	        deceaseInfo.setDateOfDeath("2020-03-01T00:00:00");
+	        deceaseInfo.setDeceaseInfoAddr1(add);
+	        deceaseInfo.setDeceaseInfoAddr1(add2);
+	        deceaseInfo.setDeceaseInfoAddr1(add3);
+	        deceaseInfo.setDeceaseInfoPostcode("44000");
+	        deceaseInfo.setDeceaseInfoCity("KUALA LUMPUR");
+	        deceaseInfo.setDeceaseInfoState(stateCode);
+	        deceaseInfo.setDeceaseInfoCountry("MYS");
 
 	        //2020/09/09 - Penambahan Skop
 	        DataCreateReqTypePartyAgency partyAgency = getParty(idPejabatPTGD);

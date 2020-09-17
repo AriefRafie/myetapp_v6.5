@@ -400,6 +400,40 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           <td>Jumlah Pampasan</td>
         </tr>
         
+        <!-- PPT-35(i) Jenis Pampasan-->
+        <tr>
+          <td width="1%"></td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        	<td>
+	        	<table id="bantahanpampasan">
+	        		<tr>
+	        		 <!-- PPT-35 (i) Jenis Bantahan Pampasan-->
+					#set ( $checked = "" )
+				    #foreach ($semakan in $senaraiSemakan)
+					    	<td class="$row" width="10">
+		                   	
+					        #if ($semakanclass.isSemakan("$id_permohonan", "$semakan.id" ))
+					        	#set ( $checked = "checked" )
+					        #else
+					        	#set ( $checked = "" )
+					    	#end
+					    	#if ($mode=="disabled")
+					    		<input class="cb" type="checkbox" name="jenisbantahanpampasan" value="$semakan.id" onclick="checkJumlahPampasan(true)" disabled $checked>
+					    	#elseif ($mode!="disabled")
+					        	<input class="cb" type="checkbox" name="jenisbantahanpampasan" value="$semakan.id" onclick="checkJumlahPampasan(true)" $checked>
+					        #end
+					       	</td>
+					        <td class="$row">
+					        	$semakan.keterangan
+					        </td>
+					      
+				    #end
+				    </tr>
+				</table>
+        	
+        
         <tr>
           <td width="1%"></td>
           <td>&nbsp;</td>
@@ -496,7 +530,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <!------------------------------------------------------ END MAKLUMAT PEMBANTAH ---------------------------------------->  
 
 <!----------------------------------------- SENARAI DOKUMEN YANG DISERTAKAN --------------------------------------------->
-<!-- :::upload -->
+<!-- 
 <input type="hidden" name="nama_skrin" id="nama_skrin" value="main"  />
 
 <fieldset id="senarai_dokumen" >
@@ -548,7 +582,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 	</table>
   
 </fieldset>
-
+-->
         <div align="center"> 
      
           #if($button=="view" && $flag_online=="2" && $id_status_bantahan=="199")
@@ -557,8 +591,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
       
       	  #if($button=="view")
           <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="javascript:kemaskiniBantahan()" /> 
-          <input type="button" name="cmdintegrasimt" id="cmdintegrasimt" value="Integrasi MT" onclick="javascript:hantarBantahan()" /> 
-          <!-- <input type="button" name="cmdintegrasimt1" id="cmdintegrasimt1" value="..." onclick="javascript:hantarBantahan2()" />  -->
+          <!-- <input type="button" name="cmdintegrasimt" id="cmdintegrasimt" value="Integrasi MT" onclick="javascript:hantarBantahan()" /> -->
           <!--<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:setTable('tableReport1')" /> -->
           #end
           
@@ -584,6 +617,8 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <input type=hidden name=selectedtab />
 <!--------------------------------------- END TAB BANTAHAN ------------------------------------------->
 </fieldset>
+
+<!--  3/7/2020 Senarai Dokumen/Integrasi MT Pindah ke Skrin Borang O -->
 
 <!------------------------------------------ OUTPUT LAPORAN/SURAT ----------------------------------------------->
 <br/>
@@ -617,21 +652,6 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 	/**
 	Fungsi hantar maklumat bantahan ke MT
 	*/
-	function hantarBantahan2() {
-		var idBantahan = "&idbantahan="+$jquery('#id_bantahan').val();
-		var idFail = "&idfail=$!id_fail";
-		var idHarta  = "&idharta="+$jquery('#id_hakmilik').val();
-		var idPermohonan  = "&idpermohonan="+$jquery('#id_permohonan').val();
-		var idSiasatan  = "&idsiasatan="+$jquery('#id_siasatan').val();
-		var idWarta  = "&idwarta=$!idWarta";
-		var param = idHarta+idPermohonan+idSiasatan+idWarta+idFail+idBantahan;
-		
-		document.${formName}.command.value = "bantahanap";
-		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanAgensiPemohonSenaraiCarian"+param;
-		document.${formName}.submit();	
-		
-	}
-	
 	function hantarBantahan() {	
 		var idBantahan = "&idbantahan="+$jquery('#id_bantahan').val();
 		var idFail = "&idfail=$!id_fail";
@@ -810,6 +830,16 @@ function simpanBantahan() {
   		document.${formName}.ukuran_luas.focus(); 
 		return;	
 	}
+	
+	if(document.${formName}.amaun_pampasan.checked == !false) {
+		error = 0;
+  		semakJenisBantahanPampasan();
+  		if (error >= 1) {
+  			document.${formName}.txtKptgnAtasTnh.focus();
+  			return false;
+  		}
+  	}
+  	
 	if(document.${formName}.txtAmaunTuntutan.value == ""){
 		alert("Sila masukkan \"Amaun Tuntutan\" terlebih dahulu.");
   		document.${formName}.txtAmaunTuntutan.focus(); 
@@ -908,6 +938,36 @@ function textCounter(field, countfield, maxlimit) {
 	else 
 		countfield.value = maxlimit - field.value.length;
 }
+
+
+
+// PPT-35 (i) Jenis Bantahan Pampasan Jika Dipilih
+function semakJenisBantahanPampasan() {
+	var checked = 0;
+    for (var i = 0; i < 3; i++) {
+      if(document.${formName}["jenisbantahanpampasan"][i].checked == !false){
+      	checked++;
+      	return checked++;
+      }
+    }
+    
+    if (checked == 0) {
+		alert("Pastikan pilihan 'Jumlah Pampasan' dipilih");
+  		document.${formName}.txtKptgnAtasTnh.focus(); 
+		return error++;
+    }
+    return;
+}
+
+
+function checkJumlahPampasan(checked) {
+    var elm = document.${formName}.amaun_pampasan;
+    if (checked != elm.checked) {
+        elm.click();
+    }
+}
+
+
 
 <!--UTK DEFAULTKAN TAB KEPADA TAB BANTAHAN
 var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedtab});

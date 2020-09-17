@@ -1069,6 +1069,7 @@ function simpanBantahan() {
   			return false;
   		}
   	}
+  	
 	if(document.${formName}.txtAmaunTuntutan.value == ""){
 		alert("Sila masukkan \"Amaun Tuntutan\" terlebih dahulu.");
   		document.${formName}.txtAmaunTuntutan.focus(); 

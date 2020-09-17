@@ -124,19 +124,26 @@ public class LampiranBean implements ILampiran{
   		Db db = null;
         try {
         	db = new Db();
-        	long id_Dokumen = DB.getNextID("TBLPPTDOKUMEN_SEQ");
+//       	 	long id_Lampiran = DB.getNextID("TBLPFDRUJLAMPIRAN_SEQ");
+//    	 Connection con = db.getConnection();
+//    	 con.setAutoCommit(false);
+//    	 PreparedStatement ps = con.prepareStatement("insert into TBLPFDRUJLAMPIRAN " +
+//        		"(id_Lampiran,id_Dokumen,nama_fail,jenis_Mime,content,id_masuk,tarikh_masuk,id_kemaskini,tarikh_kemaskini) " +
+//        			"values(?,?,?,?,?,"+userID+",sysdate,"+userID+",sysdate)");
+
+        	long iDokumen = DB.getNextID("TBLPFDRUJLAMPIRAN_SEQ");
         	Connection con = db.getConnection();
         	con.setAutoCommit(false);
         	PreparedStatement ps = con.prepareStatement("insert into TBLPPTDOKUMEN " +
-        			"(id_dokumen,id_permohonan,nama_fail,jenis_mime,content,tajuk,keterangan) " +
-        			"values(?,?,?,?,?,?,?)");
-        	ps.setLong(1, id_Dokumen);
+        			"(id_lampiran,id_dokumen,nama_fail,jenis_mime,content,tarikh_masuk) " +
+        			"values(?,?,?,?,?,sysdate)");
+        	ps.setLong(1, iDokumen);
         	ps.setString(2, request.getParameter("id_permohonan"));
         	ps.setString(3,item.getName());
         	ps.setString(4,item.getContentType());
         	ps.setBinaryStream(5,item.getInputStream(),(int)item.getSize());
-        	ps.setString(6, request.getParameter("nama_dokumen"));
-        	ps.setString(7, request.getParameter("keterangan"));
+//        	ps.setString(6, request.getParameter("userId"));
+//        	ps.setString(7, "sysdate");
         	ps.executeUpdate();
             con.commit();
             
@@ -147,18 +154,18 @@ public class LampiranBean implements ILampiran{
 	    }
         
 	}
-
+	
 	private void saveData(FileItem item,HttpServletRequest request) throws Exception {
   		Db db = null;
         try {
         	db = new Db();
-        	long id_Dokumen = DB.getNextID("TBLPPTDOKUMEN_SEQ");
+        	long iDokumen = DB.getNextID("TBLPPTDOKUMEN_SEQ");
         	Connection con = db.getConnection();
         	con.setAutoCommit(false);
         	PreparedStatement ps = con.prepareStatement("insert into TBLPPTDOKUMEN " +
         			"(id_dokumen,id_permohonan,nama_fail,jenis_mime,content,tajuk,keterangan) " +
         			"values(?,?,?,?,?,?,?)");
-        	ps.setLong(1, id_Dokumen);
+        	ps.setLong(1, iDokumen);
         	ps.setString(2, request.getParameter("id_permohonan"));
         	ps.setString(3,item.getName());
         	ps.setString(4,item.getContentType());
@@ -638,10 +645,10 @@ public class LampiranBean implements ILampiran{
 			sb.append("}");
 			
 			Fungsi.setWin400300();
-			if(jsUpload.equals(""))
+			//if(jsUpload.equals(""))
 				sb.append("function onlineAttach(idPermohonan,idSenarai,idJenisDokumen) {");
-			else
-				sb.append("function "+jsUpload+"(idPermohonan,idSenarai,idJenisDokumen) {");
+			//else
+			//	sb.append("function "+jsUpload+"(idPermohonan,idSenarai,idJenisDokumen) {");
 		
 			sb.append("param = 'actionrefresh=php"+skrin+"&actionPopup=papar&idPermohonan=&flagOnline=$!flagOnline';");
 //			sb.append("param = 'actionrefresh=phpapb&actionPopup=papar&idPermohonan=&flagOnline=$!flagOnline';");
