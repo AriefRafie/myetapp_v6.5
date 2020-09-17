@@ -175,7 +175,7 @@
     PENARIKAN BALIK
     #else
     PEMBATALAN
-    #end</legend>
+    #end</legend> 
     
     <!-- <input name="cmdPapar" type="button" value="Papar" onClick="papar()"> -->
     #if($listdepan_size!=0)

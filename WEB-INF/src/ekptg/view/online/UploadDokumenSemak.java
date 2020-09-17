@@ -27,6 +27,7 @@ public class UploadDokumenSemak extends AjaxBasedModule {
 	private static final long serialVersionUID = 1L;
 	private static Logger myLog = Logger.getLogger(ekptg.view.online.UploadDokumenSemak.class);
 	private ILampiran iLampiran = null;
+	private ILampiran iLampiranHTP = null;
 
 	String readability = "";
 	String disability = "";
@@ -34,6 +35,7 @@ public class UploadDokumenSemak extends AjaxBasedModule {
     String idRujukan = "";
     String idSenarai = "";
     String idJenisDokumen = "";
+    String modul = ""; 
 
 	@Override
 	public String doTemplate2() throws Exception {		
@@ -56,6 +58,9 @@ public class UploadDokumenSemak extends AjaxBasedModule {
 		idUser = (String) session.getAttribute("_ekptg_user_id");
 		ekptg.model.ppk.util.LampiranBean l = new ekptg.model.ppk.util.LampiranBean();
 
+		modul = getParam("actionrefresh").substring(0,3);
+		myLog.info("uploadFiles:actionrefresh="+getParam("actionrefresh").substring(0,3));
+
 		myLog.info("actionPopup="+actionPopup);
 		myLog.info("hitButton="+hitButton);
 		myLog.info("idJenisDokumen="+idJenisDokumen);
@@ -68,7 +73,12 @@ public class UploadDokumenSemak extends AjaxBasedModule {
 			uploadFiles();
 			FrmSemakan.semakanTambah(idSenarai,idRujukan);
 			hitButton = "";
-			
+		
+		}else if(hitButton.equals("simpanhtp")){
+			uploadHTP();
+			//FrmSemakan.semakanTambah(idSenarai,idRujukan);
+			hitButton = "";
+		
 		}else if(hitButton.equals("hapus")){
 			String iDokumen = getParam("idokumen");
 			getDoc().hapus(iDokumen);
@@ -122,7 +132,11 @@ public class UploadDokumenSemak extends AjaxBasedModule {
 				jumLampiran = getParamAsInteger("jumlahlampiran");
 
 			}
-			senaraiDokumen = getDoc().getLampirans(idRujukan, idJenisDokumen);
+			if(modul.equals("htp"))
+				senaraiDokumen = getDocHTP().getLampirans(idRujukan, idJenisDokumen);
+			else if(modul.equals("php"))	
+				senaraiDokumen = getDoc().getLampirans(idRujukan, idJenisDokumen);
+			
 			//dokumens = l.lampiranMengikutHarta(idHarta, null,false);
 			// end Lampiran
 
@@ -185,6 +199,7 @@ public class UploadDokumenSemak extends AjaxBasedModule {
 	    
 	   	this.context.put("RO_General",RO_General);
 	   	this.context.put("actionPopup",actionPopup);
+	   	
 	   	this.context.put("actionRefresh",getParam("actionrefresh"));
 	   	this.context.put("flagOnline",flagOnline);
 	   	this.context.put("hitButton",hitButton);
@@ -219,16 +234,54 @@ public class UploadDokumenSemak extends AjaxBasedModule {
 			if ((!(item.isFormField())) && (item.getName() != null)
 					&& (!("".equals(item.getName())))) {
 //				ekptg.model.php2.utiliti.LampiranBean l = new ekptg.model.php2.utiliti.LampiranBean();
-				getDoc().simpan(item,request);
+				if(modul.equals("php"))
+					getDoc().simpan(item,request);
+				else if(modul.equals("htp"))
+					getDocHTP().simpan(item,request);
+
+			}
+		}
+	}
+	
+	private void uploadHTP() throws Exception {
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		//boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+		Enumeration<?> allparam = request.getParameterNames();
+		String name = "";
+		String value = "";
+		for (; allparam.hasMoreElements();) {
+			// Get the name of the request parameter
+			name = (String) allparam.nextElement();
+			// Get the value of the request parameter
+			value = request.getParameter(name);
+			// System.out.println(name +"="+value);
+			//myLog.info(name + "=" + value);
+		}
+		List<?> items = upload.parseRequest(request);
+		Iterator<?> itr = items.iterator();
+		while (itr.hasNext()) {
+			FileItem item = (FileItem) itr.next();
+			if ((!(item.isFormField())) && (item.getName() != null)
+					&& (!("".equals(item.getName())))) {
+				getDocHTP().simpan(item,request);
 				
 			}
 		}
 	}
+	
 	private ILampiran getDoc(){
 		if(iLampiran == null){
 			iLampiran = new ekptg.model.php2.utiliti.LampiranBean();
 		}
 		return iLampiran;
+			
+	}
+	private ILampiran getDocHTP(){
+		if(iLampiranHTP == null){
+			iLampiranHTP = new ekptg.model.utils.lampiran.LampiranBean();
+		}
+		return iLampiranHTP;
 			
 	}
 	

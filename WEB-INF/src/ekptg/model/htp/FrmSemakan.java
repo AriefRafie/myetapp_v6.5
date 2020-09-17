@@ -152,6 +152,7 @@ public class FrmSemakan {
 		    	  h.put("aturan", Utils.isNull(rs.getString("aturan")));
 		    	  h.put("keterangan", rs.getString("perihal"));
 		    	  h.put("jenisDokumen", jenis);
+		    	  myLog.info(idSimati);
 		    	  
 		    	  if(jenis.equals("99201")) {
 		    		  lampiran = lb.getLampiranSimatiPaparSimati(idSimati,jenis);
@@ -164,6 +165,11 @@ public class FrmSemakan {
 		    	  }else if(jenis.equals("99211")){
 		    		  lampiran = lb.getLampiranSimatiPaparSimati(idSimati,jenis);
 		    		  h.put("lampirans", lampiran);
+		    	  
+		    	  }else if(jenis.equals("99212")){
+		    		  lampiran = lb.getLampiranSimatiPaparSimati(idSimati,jenis);
+		    		  h.put("lampirans", lampiran);
+		    		  myLog.info(lampiran);
 		    	  
 		    	  }else if(jenis.equals("99204")){
 		    		  lampiran = lb.getLampirans(idSimati,"paparLampiran");
@@ -255,6 +261,8 @@ public class FrmSemakan {
 		  
 	private String setLampiran(String modul,String rujukan,String idSenarai,String jenisDokumen) throws Exception {		
 		StringBuffer sb = new StringBuffer("");	
+		myLog.info("setLampiran:mode="+mode);
+//		myLog.info("setLampiran:modul="+modul);
 		if(!mode.equals("view")) {
 			sb.append("<a href=\"javascript:onlineAttach('"+rujukan+"','"+idSenarai+"','"+jenisDokumen+"');\">");
 			sb.append("<img border='0' src='../img/plus.gif' width='20' height='15'/>");
@@ -455,6 +463,7 @@ public class FrmSemakan {
 	 }
 	 
 	 private ILampiran getDoc(){
+		myLog.info("getDoc");
 		if(iLampiran == null){
 			iLampiran = new ekptg.model.utils.lampiran.LampiranBean();
 		}

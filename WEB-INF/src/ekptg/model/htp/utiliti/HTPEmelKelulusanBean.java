@@ -16,7 +16,7 @@ import ekptg.model.utils.emel.EmailConfig;
 import ekptg.model.utils.emel.IEmel;
 
 
-public class HTPEmelSemakanBean implements IEmel {
+public class HTPEmelKelulusanBean implements IEmel {
 	
 	//HTPEmelSemakanBean
  	private IHtp iHTP = null;  
@@ -85,7 +85,6 @@ public class HTPEmelSemakanBean implements IEmel {
 		return bff.toString();
 		
 	}
-	
 	@Override
 	public String setEmailSign(String noFail,String tajuk, String dari){		
 		StringBuffer bff = new StringBuffer();
@@ -95,11 +94,17 @@ public class HTPEmelSemakanBean implements IEmel {
 		bff.append("Tuan/Puan,");
 		bff.append("<br/>");
 		bff.append("<br/>");		  
-	    bff.append("Minta Tuan/Puan  menyemak/mengesahkan permohonan " +
-	    		"<b>"+tajuk+"</b> daripada "+dari+" - <b>"+noFail+"</b>.");
+	    bff.append("Berdasarkan maklumat yang diberikan, Jabatan ini tiada halangan untuk pembelian tapak ini diteruskan dengan syarat-syarat tanah tersebut adalah bebas " +
+	    		"daripada sebarang bebanan dan semua arahan seperti di dalam Surat Pekeliling Perbendaharaan (SPP) 11/2007 dipatuhi sepenuhnya. " +
+	    		"");
 		bff.append("<br/>");
 		bff.append("<br/>");
-		bff.append("Sila <i>login</i> ke <a href=\"http://www.etapp.gov.my\" >www.etapp.gov.my</a> untuk semakan selanjutnya.");
+		bff.append("Nama Perakuan:"+tajuk+"" +
+		"<br/>Tarikh Permohonan:"+noFail+"" +
+		"<br/>Nama Kementerian:"+dari);
+		bff.append("<br/>");
+		bff.append("<br/>");
+		bff.append("Sila <i>login</i> ke <a href=\"http://www.myetapp.gov.my\" >www.myetapp.gov.my</a> untuk semakan selanjutnya.");
 		bff.append("<br/>");
 		bff.append("<br/>");
 		bff.append("Sekian, terima kasih.");
@@ -108,12 +113,17 @@ public class HTPEmelSemakanBean implements IEmel {
 		//bff.append("etapp_webmaster@ekptg.gov.my");
 		bff.append("<br/>");
 		bff.append("<br/>");
-		bff.append("Nota : Email ini adalah dijana oleh sistem MyeTaPP dan tidak perlu dibalas.");
+		bff.append("Nota : Emel ini dijana oleh sistem MyeTaPP dan tidak perlu dibalas.");
 		bff.append("</p>");
 		return bff.toString();
 		
 	}
-	
+//	email.MESSAGE = "<html><table><tr><td>Nama Projek</td><td>:</td><td>"+nama_projek+"</td></tr>" +
+//	"<tr><td>Tarikh Permohonan</td><td>:</td><td>"+tarikh_permohonan+"</td></tr>" +
+//	"<tr><td>Nama Kementerian</td><td>:</td><td>"+nama_kementerian+"</td></tr>" +
+//	"<tr><td>Telah berjaya disahkan</td></tr>" +
+//	"<tr><td>&nbsp;</td><td>&nbsp;</td><td><em>Emel ini dijana oleh sistem MyeTaPP dan tidak perlu dibalas.</em></td></tr>" +
+//	"</table></html>" ;
 	@Override
 	public String setKandungan(String tajuk, String dari){	
 		String kandungan = getSignHeader();

@@ -464,7 +464,7 @@
             #end            
             
             </td>
-            <td colspan="4">Jumlah Pampasan BantahanDaftar;</td>
+            <td colspan="4">Jumlah Pampasan</td>
         </tr>
         
         <tr>
@@ -473,23 +473,22 @@
           <td>&nbsp;</td>
           <td>&nbsp;</td>
             <td>
-	        	<table id="jenisbantahanpampasan">
+	        	<table id="bantahanpampasan">
 	        		<tr>
 	        		 <!-- PPT-35 (i) Jenis Bantahan Pampasan -->
 					 #set ( $checked = "" )
-				     #foreach ($semak in $senaraiSemakan)
+				     #foreach ($semakan in $senaraiSemakan)
 					 <td  width="10">
 		             
-					 #if ( $semakclass.isSemakan("$permohonanInfo.idpermohonan", "$semak.id" ))
+					 #if ( $semakclass.isSemakan("$permohonanInfo.idpermohonan", "$semakan.id" ))
 					   	#set ( $checked = "checked" )
 					 #else
 					   	#set ( $checked = "" )
 					 #end
-					   	#set ( $checked = "" )
-					   	 <input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked>
+					   	 <input class="cb" type="checkbox" name="jenisbantahanpampasan" value="$semakan.id" onclick="checkJumlahPampasan(true)" $checked>
 					 </td>
 					 <td >
-					 	$semak.keterangan <!-- $semak.id -->
+					 	$semakan.keterangan <!-- $semak.id -->
 					 </td>
 				     #end
 				    </tr>
@@ -853,6 +852,16 @@ function add_bantahan(){
   		document.${formName}.txtKptgnAtasTnh.focus(); 
 		return;	
 	}	
+	
+	if(document.${formName}.amaun_pampasan.checked == !false) {
+		error = 0;
+  		semakJenisBantahanPampasan();
+  		if (error >= 1) {
+  			document.${formName}.txtKptgnAtasTnh.focus();
+  			return false;
+  		}
+  	}
+	
 	if(document.${formName}.txtAmaunTuntutan.value == ""){
 		alert("Sila masukkan \"Amaun Tuntutan\" terlebih dahulu.");
   		document.${formName}.txtAmaunTuntutan.focus(); 
@@ -867,7 +876,7 @@ function add_bantahan(){
 	if ( !window.confirm("Adakah Anda Pasti?") ) return;
 	document.${formName}.command.value = "add_bantahan";
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian";
-	document.${formName}.submit(); PPT-35
+	document.${formName}.submit(); // PPT-35(i)
 	}
 }
 function UploadDokumen(){
@@ -942,6 +951,31 @@ function RemoveNonNumeric2( strString )
             }
       }
       return strReturn;
+}
+
+// PPT-35 (i) Jenis Bantahan Pampasan Jika Dipilih
+function semakJenisBantahanPampasan() {
+	var checked = 0;
+    for (var i = 0; i < 3; i++) {
+      if(document.${formName}["jenisbantahanpampasan"][i].checked == !false){
+      	checked++;
+      	return checked++;
+      }
+    }
+    
+    if (checked == 0) {
+		alert("Pastikan pilihan 'Jumlah Pampasan' dipilih");
+  		document.${formName}.txtKptgnAtasTnh.focus(); 
+		return error++;
+    }
+    return;
+}
+
+function checkJumlahPampasan(checked) {
+    var elm = document.${formName}.amaun_pampasan;
+    if (checked != elm.checked) {
+        elm.click();
+    }
 }
 
 
