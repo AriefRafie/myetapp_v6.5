@@ -64,7 +64,7 @@
 		    #else
 		    	#set( $row = "row1" )
 		    #end
-    
+    $list.tarikhTerima
         <tr>
           <td class="$row" align="center">$list.bil</td>
           <td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus','$list.idPermohonan')" class="style1">$list.noPermohonan</a>
@@ -72,7 +72,7 @@
           <font class="blink" ><span class="style2">$!list.statusLesen</span></font>
           <font class="blink" ><span class="style2">$!list.statusKelulusanDasar</span></font></td>
           <td class="$row">$list.namaPemohon</td>
-          <td class="$row" align="center">$list.tarikhTerima</td>
+          <td align="center" class="$row">$list.tarikhTerima</td>
           <td class="$row">$list.kawasanDipohon</td>
           <td class="$row">PERMOHONAN BARU</td>
           <td class="$row">LESEN PASIR DASAR LAUT</td>
