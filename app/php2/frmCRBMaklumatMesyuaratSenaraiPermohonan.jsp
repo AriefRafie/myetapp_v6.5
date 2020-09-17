@@ -303,7 +303,7 @@
           	<table width="100%" border="0" cellspacing="2" cellpadding="2">
 		          	  #if ($flagPopup == 'openPopupDokumen')
 					  <tr>
-					    <td> #parse("app/php2/frmPYWMinitMesyuaratDetail.jsp") </td>
+					    <td> #parse("app/php2/frmCRBMinitMesyuaratDetailSenaraiPermohonan.jsp") </td>
 					  </tr>
 					  <tr>
 					    <td>&nbsp;</td>
@@ -371,7 +371,7 @@
 </script>
 <script>
 function doChangeTab(tabId) {
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmPYWSenaraiMesyuaratView";
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmCRBSenaraiMesyuaratView";
 	document.${formName}.method="POST";
 	document.${formName}.selectedTabUpper.value = tabId;
 	document.${formName}.flagPopup.value = "";
@@ -539,7 +539,7 @@ function simpanKemaskiniKehadiran(){
 }
 
 function pilihSenaraiPermohonanBaru() {
-	var url = "../x/${securityToken}/ekptg.view.php2.FrmPYWPopupSenaraiPermohonanView";
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmCRBPopupSenaraiPermohonanView";
     var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;

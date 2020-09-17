@@ -948,7 +948,7 @@ public class FrmCRBSenaraiMesyuaratData {
 				
 				// TBLPERMOHONAN
 				r.update("ID_PERMOHONAN", idPermohonan);
-				r.add("ID_STATUS", "1610206"); // CETAKAN SURAT KEPUTUSAN
+				r.add("ID_STATUS", "1610216"); // CETAKAN SURAT TINDAKAN
 				r.add("ID_KEMASKINI", userId);
 				r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 				sql = r.getSQLUpdate("TBLPERMOHONAN");
@@ -970,10 +970,7 @@ public class FrmCRBSenaraiMesyuaratData {
 						.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");
 				r.add("ID_SUBURUSANSTATUSFAIL", idSuburusanstatusfail);
 				r.add("ID_PERMOHONAN", idPermohonan);
-				r.add("ID_SUBURUSANSTATUS",
-						getIdSuburusanstatus(idSuburusan, "1610206")); // CETAKAN
-																		// SURAT
-																		// KEPUTUSAN
+				r.add("ID_SUBURUSANSTATUS", getIdSuburusanstatus("56", "1610216")); // CETAKAN SURAT TINDAKAN
 				r.add("AKTIF", "1");
 				r.add("ID_FAIL", idFail);
 				r.add("ID_MASUK", userId);

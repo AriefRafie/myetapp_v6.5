@@ -896,6 +896,102 @@ public class FrmAPBSenaraiMesyuaratData {
 		}
 	}
 	
+	public void updateStatus(String idFail, String idPermohonan,
+			HttpSession session) throws Exception {
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+		
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPERMOHONAN
+			r.update("ID_PERMOHONAN", idPermohonan);
+			r.add("ID_STATUS", "1610213"); // CETAKAN KERTAS RINGKASAN
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			sql = r.getSQLUpdate("TBLPERMOHONAN");
+			stmt.executeUpdate(sql);
+
+			// TBLRUJSUBURUSANSTATUSFAIL
+			r = new SQLRenderer();
+			r.update("ID_PERMOHONAN", idPermohonan);
+			r.update("AKTIF", "1");
+			r.add("AKTIF", "0");
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+			sql = r.getSQLUpdate("TBLRUJSUBURUSANSTATUSFAIL");
+			stmt.executeUpdate(sql);
+			
+			// GET DATA LAMA FROM TBLPFDFAIL
+			sql = "SELECT A.ID_SUBURUSAN FROM TBLPFDFAIL A "
+					+ "WHERE A.ID_FAIL = '" + idFail + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+			rs.next();
+
+			r = new SQLRenderer();
+			long idSuburusanstatusfail = DB
+					.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");
+			r.add("ID_SUBURUSANSTATUSFAIL", idSuburusanstatusfail);
+			r.add("ID_PERMOHONAN", idPermohonan);
+			r.add("ID_SUBURUSANSTATUS", getIdSuburusanstatus("57", "1610213")); // CETAKAN KERTAS RINGKASAN
+			r.add("AKTIF", "1");
+			r.add("ID_FAIL", idFail);
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
+			stmt.executeUpdate(sql);
+			
+			// TBLPHPKERTASKERJAAPB
+			sql = "SELECT FLAG_KERTAS FROM TBLPHPKERTASKERJAAPB WHERE ID_PERMOHONAN = '"
+					+ idPermohonan + "' AND FLAG_KERTAS=2";
+			ResultSet rj = stmt.executeQuery(sql);
+			
+			if (rj.next()) {
+				r = new SQLRenderer();
+				r.update("ID_PERMOHONAN", idPermohonan);
+				r.update("FLAG_KERTAS", "2");
+				sql = r.getSQLDelete("TBLPHPKERTASKERJAAPB");
+				stmt.executeUpdate(sql);
+			}
+			
+			// TBLPHPKERTASKERJAAPB
+			long idKertasKerja = DB.getNextID("TBLPHPKERTASKERJAAPB_SEQ");			
+			sql = "INSERT INTO TBLPHPKERTASKERJAAPB ("
+					+ " ID_KERTASKERJAAPB, ID_PERMOHONAN, ULASAN_JUPEM, ULASAN_JPS, ULASAN_JAB_GEOSAINS, ULASAN_PUSAT_HIDROGRAFI, ULASAN_JAB_PERIKANAN, ULASAN_JAB_LAUT, ULASAN_JAS, ULASAN_PTG, FLAG_KERTAS)" 
+					+ " SELECT '" + idKertasKerja + "', A.ID_PERMOHONAN, A.ULASAN_JUPEM, A.ULASAN_JPS, A.ULASAN_JAB_GEOSAINS, A.ULASAN_PUSAT_HIDROGRAFI, A.ULASAN_JAB_PERIKANAN, A.ULASAN_JAB_LAUT, A.ULASAN_JAS, A.ULASAN_PTG, '2'"
+					+ " FROM TBLPHPKERTASKERJAAPB A WHERE A.ID_PERMOHONAN = '" + idPermohonan + "' AND A.FLAG_KERTAS = '1'";
+			stmt.executeUpdate(sql);			
+
+			conn.commit();
+			
+			AuditTrail.logActivity("1610213", "4", null, session, "UPD",
+					"FAIL [" + idPermohonan + "] PROSES SETERUSNYA");	
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
 	public void updateStatus(String idMesyuaratPermohonan,HttpSession session) throws Exception {
 		Db db = null;
 		Connection conn = null;
@@ -948,7 +1044,7 @@ public class FrmAPBSenaraiMesyuaratData {
 				
 				// TBLPERMOHONAN
 				r.update("ID_PERMOHONAN", idPermohonan);
-				r.add("ID_STATUS", "1610206"); // CETAKAN SURAT KEPUTUSAN
+				r.add("ID_STATUS", "1610213"); // CETAKAN KERTAS RINGKASAN
 				r.add("ID_KEMASKINI", userId);
 				r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 				sql = r.getSQLUpdate("TBLPERMOHONAN");
@@ -964,16 +1060,19 @@ public class FrmAPBSenaraiMesyuaratData {
 
 				sql = r.getSQLUpdate("TBLRUJSUBURUSANSTATUSFAIL");
 				stmt.executeUpdate(sql);
+				
+				// GET DATA LAMA FROM TBLPFDFAIL
+				sql = "SELECT A.ID_SUBURUSAN FROM TBLPFDFAIL A "
+						+ "WHERE A.ID_FAIL = '" + idFail + "'";
+				rs = stmt.executeQuery(sql);
+				rs.next();
 
 				r = new SQLRenderer();
 				long idSuburusanstatusfail = DB
 						.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");
 				r.add("ID_SUBURUSANSTATUSFAIL", idSuburusanstatusfail);
 				r.add("ID_PERMOHONAN", idPermohonan);
-				r.add("ID_SUBURUSANSTATUS",
-						getIdSuburusanstatus(idSuburusan, "1610206")); // CETAKAN
-																		// SURAT
-																		// KEPUTUSAN
+				r.add("ID_SUBURUSANSTATUS", getIdSuburusanstatus("57", "1610213")); // CETAKAN KERTAS RINGKASAN
 				r.add("AKTIF", "1");
 				r.add("ID_FAIL", idFail);
 				r.add("ID_MASUK", userId);
@@ -983,7 +1082,28 @@ public class FrmAPBSenaraiMesyuaratData {
 
 				sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
 				stmt.executeUpdate(sql);
-
+				
+				// TBLPHPKERTASKERJAAPB
+				sql = "SELECT FLAG_KERTAS FROM TBLPHPKERTASKERJAAPB WHERE ID_PERMOHONAN = '"
+						+ idPermohonan + "' AND FLAG_KERTAS=2";
+				ResultSet rj = stmt.executeQuery(sql);
+				
+				if (rj.next()) {
+					r = new SQLRenderer();
+					r.update("ID_PERMOHONAN", idPermohonan);
+					r.update("FLAG_KERTAS", "2");
+					sql = r.getSQLDelete("TBLPHPKERTASKERJAAPB");
+					stmt.executeUpdate(sql);
+				}
+				
+				// TBLPHPKERTASKERJAAPB
+				long idKertasKerja = DB.getNextID("TBLPHPKERTASKERJAAPB_SEQ");			
+				sql = "INSERT INTO TBLPHPKERTASKERJAAPB ("
+						+ " ID_KERTASKERJAAPB, ID_PERMOHONAN, ULASAN_JUPEM, ULASAN_JPS, ULASAN_JAB_GEOSAINS, ULASAN_PUSAT_HIDROGRAFI, ULASAN_JAB_PERIKANAN, ULASAN_JAB_LAUT, ULASAN_JAS, ULASAN_PTG, FLAG_KERTAS)" 
+						+ " SELECT '" + idKertasKerja + "', A.ID_PERMOHONAN, A.ULASAN_JUPEM, A.ULASAN_JPS, A.ULASAN_JAB_GEOSAINS, A.ULASAN_PUSAT_HIDROGRAFI, A.ULASAN_JAB_PERIKANAN, A.ULASAN_JAB_LAUT, A.ULASAN_JAS, A.ULASAN_PTG, '2'"
+						+ " FROM TBLPHPKERTASKERJAAPB A WHERE A.ID_PERMOHONAN = '" + idPermohonan + "' AND A.FLAG_KERTAS = '1'";
+				stmt.executeUpdate(sql);
+				
 				// TBLPHPMESYUARAT
 				r = new SQLRenderer();
 				r.update("ID_MESYUARAT", idMesyuaratPermohonan);
