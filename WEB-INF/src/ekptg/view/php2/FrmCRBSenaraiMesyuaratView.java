@@ -244,7 +244,7 @@ public class FrmCRBSenaraiMesyuaratView extends AjaxBasedModule {
 			
 		} else if ("papar".equals(actionMesyuarat)) {
 			
-			vm = "app/php2/frmPYWMaklumatMesyuarat.jsp";
+			vm = "app/php2/frmCRBMaklumatMesyuaratSenaraiPermohonan.jsp";
 			
 			if ("1".equals(selectedTabUpper)) {
 
@@ -363,7 +363,7 @@ public class FrmCRBSenaraiMesyuaratView extends AjaxBasedModule {
 		} else {
 			
 			// GO TO LIST SENARAI MESYUARAT
-			vm = "app/php2/frmPYWSenaraiFailMesyuarat.jsp";
+			vm = "app/php2/frmCRBSenaraiFailMesyuarat.jsp";
 
 			logic.carianSenaraiMesyuarat(getParam("txtCarianTajukMesyuarat"), getParam("txtCarianBilMesyuarat"), 
 					getParam("txtCarianTarikhMesyuarat"), userId, userRole);

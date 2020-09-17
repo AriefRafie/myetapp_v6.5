@@ -9,9 +9,8 @@ import java.util.Vector;
 import javax.servlet.http.HttpSession;
 
 import lebah.portal.AjaxBasedModule;
-import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
-import ekptg.model.php2.FrmPYWPopupSenaraiPermohonanData;
+import ekptg.model.php2.FrmTKRPopupSenaraiPermohonanData;
 
 /**
  * 
@@ -21,7 +20,7 @@ public class FrmTKRPopupSenaraiPermohonanView extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
 	
-	FrmPYWPopupSenaraiPermohonanData logic = new FrmPYWPopupSenaraiPermohonanData();
+	FrmTKRPopupSenaraiPermohonanData logic = new FrmTKRPopupSenaraiPermohonanData();
 	
 	String idNegeriUser = null;
 
@@ -61,7 +60,7 @@ public class FrmTKRPopupSenaraiPermohonanView extends AjaxBasedModule {
 	    } else {
 	    	
 	    	//GO TO LIST TANAH        	
-        	vm = "app/php2/frmPYWPopupSenaraiPermohonan.jsp";  
+        	vm = "app/php2/frmTKRPopupSenaraiPermohonan.jsp";  
         	senaraiFail = new Vector();
         	logic.setSenaraiFailMesyuarat(idFail);
         	senaraiFail = logic.getSenaraiFailMesyuarat();

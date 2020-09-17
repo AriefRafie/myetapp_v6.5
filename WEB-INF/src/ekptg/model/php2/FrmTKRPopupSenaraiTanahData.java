@@ -10,9 +10,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Hashtable;
 import java.util.Vector;
-
 import javax.servlet.http.HttpSession;
-
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 import ekptg.helpers.DB;
