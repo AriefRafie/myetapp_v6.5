@@ -446,10 +446,11 @@ public class FrmPYWSenaraiMesyuaratData {
 			Statement stmt = db.getStatement();
 
 
-			sql = "select a.ID_MESYUARAT_PERMOHONAN, d.no_fail,e.nama,a.flag_jenis_permohonan,a.FLAG_SYOR ,a.CATATAN, c.id_permohonan from tblphpMesyuaratPermohonan a, tblphpmesyuarat b, tblpermohonan c, tblpfdfail d, tblphppemohon e "
-				 +"where a.flag_jenis_permohonan = 'B' and a.id_mesyuarat = b.id_mesyuarat and a.id_permohonan=c.id_permohonan and c.id_fail=d.id_fail "
-				 +"and c.id_pemohon=e.id_pemohon and a.id_mesyuarat='"+idMesyuarat+"'";	
-			sql = sql + " ORDER BY a.ID_MESYUARAT_PERMOHONAN ASC";
+			sql = "SELECT A.ID_MESYUARAT_PERMOHONAN, D.NO_FAIL,E.NAMA, A.FLAG_JENIS_PERMOHONAN, A.FLAG_SYOR , A.CATATAN, C.ID_PERMOHONAN, D.ID_FAIL "
+				+ "FROM TBLPHPMESYUARATPERMOHONAN A, TBLPHPMESYUARAT B, TBLPERMOHONAN C, TBLPFDFAIL D, TBLPHPPEMOHON E "
+				+ "WHERE A.FLAG_JENIS_PERMOHONAN = 'B' AND A.ID_MESYUARAT = B.ID_MESYUARAT AND A.ID_PERMOHONAN = C.ID_PERMOHONAN AND C.ID_FAIL = D.ID_FAIL "
+				+ "AND C.ID_PEMOHON=E.ID_PEMOHON  AND A.ID_MESYUARAT = '"+idMesyuarat+"'"	
+				+ " ORDER BY A.ID_MESYUARAT_PERMOHONAN ASC";
 
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -478,6 +479,9 @@ public class FrmPYWSenaraiMesyuaratData {
 				h.put("catatanKeputusan",
 						rs.getString("CATATAN") == null ? "" : rs
 								.getString("CATATAN"));
+				h.put("idFail",
+						rs.getString("ID_FAIL") == null ? "" : rs
+								.getString("ID_FAIL"));
 				listPermohonanBaharu.addElement(h);
 				bil++;
 			}
