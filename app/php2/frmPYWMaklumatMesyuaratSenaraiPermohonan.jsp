@@ -149,14 +149,14 @@
       						<tr>
 					          <td colspan="5" scope="row"><input name="cmdDaftarKehadiran" type="button" value="Tambah" onclick="javascript:daftarKehadiran()"/></td>
 					        </tr>
-					        <tr class="table_header">
-					          <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-					          <td width="30%" align="left" ><strong>Nama Pegawai</strong></td>
-					          <td width="30%" align="left"><strong>KJP/Agensi/Syarikat</strong></td>
+					        <tr class="table_header" align="center">
+					          <td scope="row" width="5%"><strong>Bil</strong></td>
+					          <td width="30%"><strong>Nama Pegawai</strong></td>
+					          <td width="30%"><strong>KJP/Agensi/Syarikat</strong></td>
 					          <td width="20%"><strong>Jawatan</strong></td>
 					          <td width="10%"><strong>No Telefon</strong></td>
 					          <td width="10%"><strong>Email</strong></td>
-					          <td width="5%" align="center">&nbsp;</td>
+					          <td width="5%" >&nbsp;</td>
 					        </tr>
 					        #set ($senaraiKehadiran = "")
 					        #if ($SenaraiKehadiran.size() > 0)
@@ -197,21 +197,24 @@
           <!-- END KEHADIRAN -->
           <!-- START SENARAI PERMOHONAN -->
           <div class="TabbedPanelsContent">
-         
+          	<table>
+          		<tr>
+					<td colspan="5" scope="row">
+					#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
+						#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
+					    <input name="cmdPilihPermohonanBaru" type="button" value="Pilih Senarai Permohonan" onclick="javascript:pilihSenaraiPermohonanBaru()"/>
+					    #end
+					#end
+					</td>
+				</tr>
+			</table>
           	<table width="100%" border="0" cellspacing="2" cellpadding="2">
           		<tr>
 			  		<td><fieldset>
-      					<legend><strong>SENARAI PERMOHONAN BARU</strong></legend>
+      					<legend><strong>SENARAI PERMOHONAN BAHARU</strong></legend>
       					#parse("app/utils/record_paging.jsp")
       					<table align="center" width="100%">
-      						<tr>
-					          <td colspan="5" scope="row">
-					          #foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
-										#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
-					          <input name="cmdPilihPermohonanBaru" type="button" value="Pilih Senarai Permohonan Baru" onclick="javascript:pilihSenaraiPermohonanBaru()"/></td>
-					        			#end
-					        	#end
-					        </tr>
+      						
 					        <tr class="table_header" align="center">
 					          <td scope="row" width="5%"><strong>Bil</strong></td>
 					          <td width="20%"><strong>No. Fail</strong></td>
@@ -221,9 +224,9 @@
 					          <td width="10%"><strong>Keputusan</strong></td>
 					          <td width="15%"><strong>Catatan</strong></td>
 					          #foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
-										#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
-					          <td width="10%"><strong>Hapus</strong></td>
-					          #end
+								#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
+					          		<td width="10%"><strong>Hapus</strong></td>
+					          	#end
 					          #end
 					        </tr>
 					        #set ($senaraiFailMohonBaru = "")
@@ -294,6 +297,108 @@
 					</fieldset></td>
 				</tr>
           	</table>
+          	
+          	<table width="100%" border="0" cellspacing="2" cellpadding="2">
+          		<tr>
+			  		<td><fieldset>
+      					<legend><strong>SENARAI PERMOHONAN PERLANJUTAN</strong></legend>
+      					#parse("app/utils/record_paging.jsp")
+      					<table align="center" width="100%">
+					        <tr class="table_header" align="center">
+					          <td scope="row" width="5%"><strong>Bil</strong></td>
+					          <td width="20%"><strong>No. Fail</strong></td>
+					          <td width="15%"><strong>Jenis Permohonan</strong></td>
+					          <td width="20%"><strong>Nama Pemohon</strong></td>
+					          <td width="10%"><strong>Kertas Pertimbangan</strong></td>
+					          <td width="10%"><strong>Keputusan</strong></td>
+					          <td width="15%"><strong>Catatan</strong></td>
+					          #foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
+										#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
+					          <td width="10%"><strong>Hapus</strong></td>
+					          #end
+					          #end
+					        </tr>
+					        #set ($senaraiFailMohonLanjut = "")
+					        #if ($SenaraiFailMohonLanjut.size() > 0)
+					        #foreach ($senaraiFailMohonLanjut in $SenaraiFailMohonLanjut)
+					        #if ($senaraiFailMohonLanjut.bil == '')
+					        #set( $row = "row1" )
+					        #elseif (($senaraiFailMohonLanjut.bil % 2) != 0)
+					        #set( $row = "row1" )
+					        #else 
+					        #set( $row = "row2" )
+					        #end
+					        <tr>
+					          <td class="$row" align="center">$senaraiFailMohonLanjut.bil</td>
+					          <td class="$row">$senaraiFailMohonLanjut.noFailPermohonan</td>
+					          <td class="$row" align="center">$senaraiFailMohonLanjut.jenisPermohonan</td>
+					          <td class="$row">$senaraiFailMohonLanjut.namaPemohon</td>
+					          <td class="$row" align="center"><a href="#" class="style2" onClick="doCetakKertasPertimbangan('$senaraiFailMohonLanjut.idFail')">
+                      		  <img border="0" src="../img/print.gif"/></a></td>
+					          <td class="$row" align="center">
+					          		#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
+										#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
+										  <select id="idKeputusan$senaraiFailMohonLanjut.id" name="idKeputusan$senaraiFailMohonLanjut.id" style="width:100%" onChange="doSaveKeputusanBaru('idKeputusan$senaraiFailMohonLanjut.id',$senaraiFailMohonLanjut.id)">
+										    <option value="">SILA PILIH</option>
+										    <option #if ( "L" == $senaraiFailMohonLanjut.flagKeputusan ) selected #end value="L">LULUS</option>
+										    <option #if ( "T" == $senaraiFailMohonLanjut.flagKeputusan ) selected #end value="T">TOLAK</option>
+										    <option #if ( "G" == $senaraiFailMohonLanjut.flagKeputusan ) selected #end value="G">TANGGUH</option>
+										  </select>
+										#else
+											#if ( "L" == $senaraiFailMohonLanjut.flagKeputusan )
+								    			DILULUSKAN
+								    		#elseif ( "T" == $senaraiFailMohonLanjut.flagKeputusan )
+								    			DITOLAK
+								    		#else
+								    			TANGGUH
+								    		#end
+								    	#end
+								  	#end
+					          </td>
+					          <td class="$row" align="center">
+							        #foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
+										#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
+										  <textarea id="catatanKeputusan$senaraiFailMohonLanjut.id" name="catatanKeputusan$senaraiFailMohonLanjut.id" onBlur="doSaveCatatanKeputusanBaru('catatanKeputusan$senaraiFailMohonLanjut.id',$senaraiFailMohonLanjut.id)" >$senaraiFailMohonLanjut.catatanKeputusan</textarea>
+										#else
+										  $senaraiFailMohonLanjut.catatanKeputusan
+										#end
+									#end
+					          </td>
+					           #foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
+										#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
+                      		  <td class="$row" align="center"><a href="#" class="style2" onClick="doHapus('$senaraiFailMohonLanjut.id')">
+                      		  					<img border="0" src="../img/hapus.gif"/></a></td>
+                      		  					#end #end
+					        </tr>
+					        #end
+					        #else
+					        <tr>
+					          <td class="row1" align="center">&nbsp;</td>
+					          <td class="row1">Tiada Rekod</td>
+					          <td class="row1">&nbsp;</td>
+					          <td class="row1">&nbsp;</td>
+					          <td class="row1">&nbsp;</td>
+					          <td class="row1">&nbsp;</td>
+					          <td class="row1">&nbsp;</td>
+					        </tr>
+					        #end
+					    </table>
+					</fieldset></td>
+				</tr>
+          	</table>
+          	
+          	<table width="100%" border="0" cellspacing="2" cellpadding="2">
+          		<tr>
+			  		<td><fieldset>
+      					<legend><strong>SENARAI PERMOHONAN LAIN-LAIN</strong></legend>
+      					#parse("app/utils/record_paging.jsp")
+      					<table align="center" width="100%">
+      						
+					    </table>
+					</fieldset></td>
+				</tr>
+          	</table>
+          	
           </div>
           <!-- END SENARAI PERMOHONAN -->
           

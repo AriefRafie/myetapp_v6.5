@@ -27,7 +27,6 @@ import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.model.php2.FrmTKRSenaraiMesyuaratData;
-import ekptg.model.php2.utiliti.PHPUtilHTML;
 
 /**
  * @author nurulain
@@ -374,7 +373,6 @@ public class FrmTKRSenaraiMesyuaratView extends AjaxBasedModule {
 			list = logic.getSenaraiMesyuarat();
 			
 			this.context.put("SenaraiMesyurat", list);
-			
 			this.context.put("txtTajukMesyuarat", getParam("txtTajukMesyuarat"));
 			this.context.put("txtBilMesyuarat", getParam("txtBilMesyuarat"));
 			this.context.put("txtTarikhMesyuarat", getParam("txtTarikhMesyuarat"));
