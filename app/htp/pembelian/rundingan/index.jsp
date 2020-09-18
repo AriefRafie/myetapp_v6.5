@@ -98,6 +98,9 @@ function setSelected(tabId,command,mode,tabmode) {
 function papar(id,idhtp){
 	doAjaxCall${formName}("detail",'idPermohonan='+id+'&idHtpPermohonan='+idhtp);
 }
+function tambahRundingan(){
+	doAjaxCall${formName}("tambahRundingan");
+}
 function simpanRundingan(){
 	if(document.${formName}.keputusan.value == ""){
 		alert('Sila pilih " Keputusan " terlebih dahulu.');
@@ -109,7 +112,10 @@ function simpanRundingan(){
 function updateRundingan(){
 	doAjaxCall${formName}("updateRundingan");
 }
-function kemaskiniRundingan(){
+function kemaskiniRundingan(id_){
+//function kemaskiniRundingan(id_){
+	
+	document.${formName}.IDMAKLUMATMSYRT.value = id_;
 	doAjaxCall${formName}("kemaskiniRundingan");
 }
 

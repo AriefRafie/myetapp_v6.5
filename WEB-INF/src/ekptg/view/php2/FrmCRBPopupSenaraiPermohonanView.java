@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import lebah.portal.AjaxBasedModule;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
-import ekptg.model.php2.FrmPYWPopupSenaraiPermohonanData;
+import ekptg.model.php2.FrmCRBPopupSenaraiPermohonanData;
 
 /**
  * 
@@ -21,7 +21,7 @@ public class FrmCRBPopupSenaraiPermohonanView extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
 	
-	FrmPYWPopupSenaraiPermohonanData logic = new FrmPYWPopupSenaraiPermohonanData();
+	FrmCRBPopupSenaraiPermohonanData logic = new FrmCRBPopupSenaraiPermohonanData();
 	
 	String idNegeriUser = null;
 
@@ -61,7 +61,7 @@ public class FrmCRBPopupSenaraiPermohonanView extends AjaxBasedModule {
 	    } else {
 	    	
 	    	//GO TO LIST TANAH        	
-        	vm = "app/php2/frmPYWPopupSenaraiPermohonan.jsp";  
+        	vm = "app/php2/frmCRBPopupSenaraiPermohonan.jsp";  
         	senaraiFail = new Vector();
         	logic.setSenaraiFailMesyuarat(idFail);
         	senaraiFail = logic.getSenaraiFailMesyuarat();

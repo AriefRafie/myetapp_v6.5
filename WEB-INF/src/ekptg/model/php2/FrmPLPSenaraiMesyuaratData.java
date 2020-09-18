@@ -950,9 +950,11 @@ public class FrmPLPSenaraiMesyuaratData {
 				
 				// TBLPERMOHONAN
 				r.update("ID_PERMOHONAN", idPermohonan);
-				r.add("ID_STATUS", "1610206"); // CETAKAN SURAT KEPUTUSAN
+				r.add("ID_STATUS", "1610202"); // CETAKAN MINIT KEWANGAN
+
 				r.add("ID_KEMASKINI", userId);
 				r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
 				sql = r.getSQLUpdate("TBLPERMOHONAN");
 				stmt.executeUpdate(sql);
 
@@ -960,7 +962,9 @@ public class FrmPLPSenaraiMesyuaratData {
 				r = new SQLRenderer();
 				r.update("ID_PERMOHONAN", idPermohonan);
 				r.update("AKTIF", "1");
+
 				r.add("AKTIF", "0");
+
 				r.add("ID_KEMASKINI", userId);
 				r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 
@@ -972,18 +976,28 @@ public class FrmPLPSenaraiMesyuaratData {
 						.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");
 				r.add("ID_SUBURUSANSTATUSFAIL", idSuburusanstatusfail);
 				r.add("ID_PERMOHONAN", idPermohonan);
-				r.add("ID_SUBURUSANSTATUS",
-						getIdSuburusanstatus(idSuburusan, "1610206")); // CETAKAN
-																		// SURAT
-																		// KEPUTUSAN
+				r.add("ID_SUBURUSANSTATUS", getIdSuburusanstatus("34", "1610202")); // CETAKAN
+																					// MINIT
+																					// KEWANGAN
 				r.add("AKTIF", "1");
 				r.add("ID_FAIL", idFail);
+
 				r.add("ID_MASUK", userId);
 				r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 				r.add("ID_KEMASKINI", userId);
 				r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 
 				sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
+				stmt.executeUpdate(sql);
+
+				// TBLPHPKERTASKERJAPELEPASAN
+				r = new SQLRenderer();
+				r.update("ID_PERMOHONAN", idPermohonan);
+				r.update("FLAG_KERTAS", "2");
+				r.add("ID_KEMASKINI", userId);
+				r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+				sql = r.getSQLUpdate("TBLPHPKERTASKERJAPELEPASAN");
 				stmt.executeUpdate(sql);
 
 				// TBLPHPMESYUARAT

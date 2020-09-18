@@ -52,7 +52,7 @@ padding:0 0.25em;
 <link rel="stylesheet" type="text/css" href="../../css/online.css" />
 ##end
   	<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-  	<input type="hidden" name="idpermohonan" id="idpermohonan" value="$idPermohonan"/>
+  	<input type="text" name="idpermohonan" id="idpermohonan" value="$idPermohonan"/>
 
 	<input type="hidden" name="actionPopup" value="$!actionPopup"/>
   	<input type="hidden" name="hitButton" id="hitButton" value="$!hitButton"/>
@@ -64,6 +64,7 @@ padding:0 0.25em;
 	<input type="hidden" name="rujukan" value="$!idRujukan"/>
 	<input type="hidden" name="jenisdokumen" value="$!jenisDokumen"/>
 	<input type="hidden" name="idsenarai" value="$!idSenarai"/>
+	<input type="hidden" name="iduser" value='$!{session.getAttribute("_ekptg_user_id")}'/>
 
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>

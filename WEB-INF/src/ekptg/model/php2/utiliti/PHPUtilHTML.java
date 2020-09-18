@@ -132,41 +132,75 @@ public class PHPUtilHTML {
 	}
 	
 	//yati tambah
-		public static String SelectJenisTujuanAPB(String selectName,
-				Long selectedValue, String disability, String jsFunction)
-				throws Exception {
-			StringBuffer sb = new StringBuffer("");
-			try {
-				sb.append("<select name='" + selectName + "'");
-				if (disability != null)
-					sb.append(disability);
-				if (jsFunction != null)
-					sb.append(jsFunction);
-				sb.append(" > ");
-				sb.append("<option value=>SILA PILIH</option>\n");
-				Vector v = PHPUtilData.getJenistujuanAPB();
-				Tblphprujjenistujuan f = null;
-				String s = "";
-				for (int i = 0; i < v.size(); i++) {
-					f = (Tblphprujjenistujuan) v.get(i);
-					if (f.getIdJenistujuan().equals(selectedValue)) {
-						s = "selected";
-					} else {
-						s = "";
-					}
-					sb.append("<option " + s + " value=" + f.getIdJenistujuan()
-							+ ">" + f.getKodJenistujuan() + " - "
-							+ f.getKeterangan() + "</option>\n");
+	public static String SelectJenisTujuanAPB(String selectName,
+			Long selectedValue, String disability, String jsFunction)
+			throws Exception {
+		StringBuffer sb = new StringBuffer("");
+		try {
+			sb.append("<select name='" + selectName + "'");
+			if (disability != null)
+				sb.append(disability);
+			if (jsFunction != null)
+				sb.append(jsFunction);
+			sb.append(" > ");
+			sb.append("<option value=>SILA PILIH</option>\n");
+			Vector v = PHPUtilData.getJenistujuanAPB();
+			Tblphprujjenistujuan f = null;
+			String s = "";
+			for (int i = 0; i < v.size(); i++) {
+				f = (Tblphprujjenistujuan) v.get(i);
+				if (f.getIdJenistujuan().equals(selectedValue)) {
+					s = "selected";
+				} else {
+					s = "";
 				}
-				sb.append("</select>");
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				throw ex;
+				sb.append("<option " + s + " value=" + f.getIdJenistujuan()
+						+ ">" + f.getKodJenistujuan() + " - "
+						+ f.getKeterangan() + "</option>\n");
 			}
-
-			return sb.toString();
+			sb.append("</select>");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw ex;
 		}
+
+		return sb.toString();
+	}
 	
-	
+	public static String SelectJenisPermohonan(String selectName,
+			Long selectedValue, String disability, String jsFunction)
+			throws Exception {
+		StringBuffer sb = new StringBuffer("");
+		try {
+			sb.append("<select name='" + selectName + "'");
+			if (disability != null)
+				sb.append(disability);
+			if (jsFunction != null)
+				sb.append(jsFunction);
+			sb.append(" > ");
+			sb.append("<option value=>SILA PILIH</option>\n");
+			if (selectedValue.intValue() == 1) {
+				sb.append("<option selected value = 1> PERMOHONAN BAHARU</option>\n");
+			} else {
+				sb.append("<option value = 1> PERMOHONAN BARU</option>\n");
+			}
+			if (selectedValue.intValue() == 2) {
+				sb.append("<option selected value = 2> PERMOHONAN PERLANJUTAN</option>\n");
+			} else {
+				sb.append("<option value = 2> PERMOHONAN PERLANJUTAN</option>\n");
+			}
+			if (selectedValue.intValue() == 3) {
+				sb.append("<option selected value = 3> PERMOHONAN LAIN-LAIN</option>\n");
+			} else {
+				sb.append("<option value = 3> PERMOHONAN LAIN-LAIN</option>\n");
+			}
+			sb.append("</select>");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw ex;
+		}
+
+		return sb.toString();
+	}
 
 }

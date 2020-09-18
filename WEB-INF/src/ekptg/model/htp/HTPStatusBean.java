@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Set;
 import java.util.Vector;
 
 import lebah.db.Db;
@@ -70,6 +72,54 @@ public class HTPStatusBean implements IHTPStatus {
 		return detailsData;
 	  
 	}
+	@Override
+	public Tblrujsuburusanstatus getStatusPermohonanAktif(String idFail,String idPermohonan) throws Exception {		
+		Tblrujsuburusanstatus susf_ = null;
+	    try {	    	
+	    	db = new Db();
+	    	Statement stmt = db.getStatement();	    		
+	    	sql = "SELECT distinct f.id_fail, f.no_fail, a.id_permohonan, ";
+	    	sql += " a.id_status, s.keterangan, stf.id_suburusanstatusfail, stf.aktif,f.id_suburusan ";
+	    	sql += " ,F.ID_MASUK,ST.ID_SUBURUSANSTATUS,STF.URL CATATAN" +
+	    			",TO_CHAR(STF.TARIKH_MASUK,'dd/mm/yyyy') TARIKH_MASUK " +
+	    			",TO_CHAR(STF.TARIKH_KEMASKINI,'dd/mm/yyyy') TARIKH_SELESAI "+
+	    			",st.langkah " +
+	    			"FROM tblpermohonan a, tblpfdfail f, tblrujstatus s, ";
+	    	sql += " tblrujsuburusanstatus st, tblrujsuburusanstatusfail stf  ";
+	    	sql += " WHERE " ;
+	    	sql += " a.id_fail = f.id_fail ";
+	    	sql += " AND st.id_status = s.id_status ";
+	    	sql += " AND stf.id_suburusanstatus = st.id_suburusanstatus ";
+	    	sql += " AND stf.id_permohonan = a.id_permohonan ";
+	    	sql += " AND stf.ID_FAIL = A.ID_FAIL ";
+	    	sql += " AND F.id_status <> '999' ";
+	    	//sql += " AND ST.LANGKAH = '"+langkah+"' ";
+	    	sql += " AND stf.aktif IN ('1','Y') ";
+	    	sql += " AND stf.id_permohonan = '" + idPermohonan + "'";
+	    	sql += " AND stf.id_fail = '" + idFail + "'";
+	    	//myLog.info("getStatusFailPermohonanAktif :sql="+sql);
+	    	ResultSet rs = stmt.executeQuery(sql);	      				 
+	    	while (rs.next()) {
+	    		susf_= new Tblrujsuburusanstatus();
+	    		Set<Tblrujsuburusanstatusfail> rsub = new HashSet<Tblrujsuburusanstatusfail>(0);
+	    		Tblrujsuburusanstatusfail susf = new Tblrujsuburusanstatusfail();
+	    		susf.setIdSuburusanstatusfail(rs.getLong("id_suburusanstatusfail"));
+	    		susf.setIdFail(rs.getLong("id_fail"));
+	    		susf.setIdPermohonan(rs.getLong("id_permohonan"));
+	    		susf.setIdSuburusanstatus(rs.getLong("id_suburusanstatus"));
+		    	susf.setUrl(Utils.isNull(rs.getString("catatan")));
+	    		rsub.add(susf);
+		    	susf_.setLangkah(rs.getInt("langkah"));
+	    		susf_.setTblrujsuburusanstatusfails(rsub);
+
+	    	}	    	  
+	    	return susf_;
+	    	
+	    } finally {
+	      if (db != null) db.close();
+	    }	    
+	    
+	}//close Tblrujsuburusanstatus	
 
 	@Override
 	public Tblrujsuburusanstatusfail getStatusFailPermohonanAktif(String idFail,String idPermohonan) throws Exception {		
@@ -81,8 +131,9 @@ public class HTPStatusBean implements IHTPStatus {
 	    	sql += " a.id_status, s.keterangan, stf.id_suburusanstatusfail, stf.aktif,f.id_suburusan ";
 	    	sql += " ,F.ID_MASUK,ST.ID_SUBURUSANSTATUS,STF.URL CATATAN" +
 	    			",TO_CHAR(STF.TARIKH_MASUK,'dd/mm/yyyy') TARIKH_MASUK " +
-	    			",TO_CHAR(STF.TARIKH_KEMASKINI,'dd/mm/yyyy') TARIKH_SELESAI " +
-	    			"FROM Tblpermohonan a, Tblpfdfail f, Tblrujstatus s, ";
+	    			",TO_CHAR(STF.TARIKH_KEMASKINI,'dd/mm/yyyy') TARIKH_SELESAI "+
+	    			",st.langkah " +
+	    			"FROM tblpermohonan a, tblpfdfail f, tblrujstatus s, ";
 	    	sql += " tblrujsuburusanstatus st, tblrujsuburusanstatusfail stf  ";
 	    	sql += " WHERE " ;
 	    	sql += " a.id_fail = f.id_fail ";
@@ -93,8 +144,8 @@ public class HTPStatusBean implements IHTPStatus {
 	    	sql += " AND F.id_status <> '999' ";
 	    	//sql += " AND ST.LANGKAH = '"+langkah+"' ";
 	    	sql += " AND stf.aktif = 1 ";
-	    	sql += " AND STF.ID_PERMOHONAN = '" + idPermohonan + "'";
-	    	sql += " AND STF.ID_FAIL = '" + idFail + "'";
+	    	sql += " AND stf.id_permohonan = '" + idPermohonan + "'";
+	    	sql += " AND stf.id_fail = '" + idFail + "'";
 	    	//myLog.info("getStatusFailPermohonanAktif :sql="+sql);
 	    	ResultSet rs = stmt.executeQuery(sql);	      				 
 	    	while (rs.next()) {
@@ -103,7 +154,7 @@ public class HTPStatusBean implements IHTPStatus {
 	    		susf.setIdFail(rs.getLong("id_fail"));
 	    		susf.setIdPermohonan(rs.getLong("id_permohonan"));
 	    		susf.setIdSuburusanstatus(rs.getLong("id_suburusanstatus"));
-	    		susf.setUrl(Utils.isNull(rs.getString("CATATAN")));
+	    		susf.setUrl(Utils.isNull(rs.getString("catatan")));
 	    		//susf.setTarikhKemaskini(rs.getString("TARIKH_SELESAI").equals("01/01/1900")?new Date():rs.getDate("TARIKH_SELESAI"));
 
 	    	}	    	  
@@ -113,7 +164,7 @@ public class HTPStatusBean implements IHTPStatus {
 	      if (db != null) db.close();
 	    }	    
 	    
-	  }//close Tblrujsuburusanstatusfail	
+	}//close Tblrujsuburusanstatusfail	
 	@Override
 	public void statusChangeActionL1(String idFail,String idPermohonan,String idSuburusan,String user){
 		try{
@@ -453,22 +504,22 @@ public class HTPStatusBean implements IHTPStatus {
 	    	//SYARAT
 	    	sql = "SELECT distinct f.id_fail, f.no_fail, a.id_permohonan, ";
 	    	sql += " a.id_status, s.keterangan, stf.id_suburusanstatusfail, stf.aktif,f.id_suburusan ";
-	    	sql += " ,F.ID_MASUK,ST.ID_SUBURUSANSTATUS,STF.URL CATATAN" +
-	    			",TO_CHAR(STF.TARIKH_MASUK,'dd/mm/yyyy') TARIKH_MASUK " +
-	    			",TO_CHAR(STF.TARIKH_KEMASKINI,'dd/mm/yyyy') TARIKH_SELESAI " +
-	    			"FROM Tblpermohonan a, Tblpfdfail f, Tblrujstatus s, ";
+	    	sql += " ,f.id_masuk,st.id_suburusanstatus,stf.url_catatan" +
+	    			",TO_CHAR(stf.tarikh_masuk,'dd/mm/yyyy') tarikh_masuk " +
+	    			",TO_CHAR(stf.tarikh_kemaskini,'dd/mm/yyyy') tarikh_selesai " +
+	    			"FROM tblpermohonan a, tblpfdfail f, tblrujstatus s, ";
 	    	sql += " tblrujsuburusanstatus st, tblrujsuburusanstatusfail stf  ";
 	    	sql += " WHERE " ;
 	    	sql += " a.id_fail = f.id_fail ";
 	    	sql += " AND st.id_status = s.id_status ";
 	    	sql += " AND stf.id_suburusanstatus = st.id_suburusanstatus ";
 	    	sql += " AND stf.id_permohonan = a.id_permohonan ";
-	    	sql += " AND stf.ID_FAIL = A.ID_FAIL ";
-	    	sql += " AND F.id_status <> '999' ";
-	    	sql += " AND ST.LANGKAH = '"+langkah+"' ";
+	    	sql += " AND stf.id_fail = a.id_fail ";
+	    	sql += " AND f.id_status <> '999' ";
+	    	sql += " AND st.langkah = '"+langkah+"' ";
 	    	//sql += " AND stf.aktif = 1 ";
-	    	sql += " AND STF.ID_PERMOHONAN = '" + idPermohonan + "'";
-	    	sql += " AND STF.ID_FAIL = '" + idFail + "'";
+	    	sql += " AND stf.id_permohonan = '" + idPermohonan + "'";
+	    	sql += " AND stf.id_fail = '" + idFail + "'";
 	    	myLog.info("getInfoStatusPermohonanFail 2:sql="+sql);
 	    	ResultSet rs = stmt.executeQuery(sql);	      	
 			 
@@ -1137,7 +1188,7 @@ public class HTPStatusBean implements IHTPStatus {
 			}else if(portal_role.contains("PengarahNegeri")){
 					langkah = "3";	    		
 			}
-			Hashtable<String,String> hashStatus =getInfoStatusPermohonanFail(idFail, idPermohonan,langkah);
+			Hashtable<String,String> hashStatus = getInfoStatusPermohonanFail(idFail, idPermohonan,langkah);
 			if(hashStatus != null)
 				statuSemasa = hashStatus.get("langkah");
 				
