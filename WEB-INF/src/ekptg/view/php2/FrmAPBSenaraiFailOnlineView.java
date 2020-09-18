@@ -9,7 +9,7 @@ import lebah.portal.AjaxBasedModule;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.model.php2.FrmAPBSenaraiFailData;
-import ekptg.model.php2.FrmAPBSenaraiFailOnlineData;
+//import ekptg.model.php2.FrmAPBSenaraiFailOnlineData;
 
 @SuppressWarnings("serial")
 public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {

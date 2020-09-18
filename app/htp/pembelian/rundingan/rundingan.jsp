@@ -10,7 +10,6 @@
   <tr>
     <td>
     	
-    
 <fieldset>
 <legend><strong>RUNDINGAN HARGA</strong> </legend><table width="100%">
 <tr>
@@ -23,11 +22,9 @@
             <div id="TabbedPanels1" class="TabbedPanels">
             
               <ul class="TabbedPanelsTabGroup"> 
-
-                          
+                         
                    <li class="TabbedPanelsTab" title="Draf Pembelian" tabindex="0" onclick="javascript:setSelected(0,'detail','drafview',0)"><strong><font size="1">RUNDINGAN PEMBELIAN</font></strong></li>
-                   
-
+                 
                 
               </ul>
               
@@ -35,8 +32,7 @@
     
                 <div class="TabbedPanelsContent">
 				
-          		#if($selectedTab == '0')
-                	
+          		#if($selectedTab == '0')               	
                     	#parse("app/htp/pembelian/rundingan/rundinganDetail.jsp")
                		
                	#end
@@ -58,21 +54,28 @@
 <script>
 // melalui page number
 // STEP 4
-function simpanRundingan(){
-	if(document.${formName}.keputusan.value == ""){
-		alert('Sila pilih " Keputusan " terlebih dahulu.');
-  		document.${formName}.keputusan.focus(); 
-		return; 
+/* 	alert($mode);
+	if($mode != ""){
+		alert('x kosong');		
+	} */
+	function tambahRundingan(){
+		alert('rundingan:');
+		doAjaxCall${formName}("tambahRundingan");
 	}
-	doAjaxCall${formName}("simpanRundingan");
-}
-function updateRundingan(){
-	doAjaxCall${formName}("updateRundingan");
-}
-function kemaskiniRundingan(){
-	doAjaxCall${formName}("kemaskiniRundingan");
-}
-
+	function simpanRundingan(){
+		if(document.${formName}.keputusan.value == ""){
+			alert('Sila pilih " Keputusan " terlebih dahulu.');
+	  		document.${formName}.keputusan.focus(); 
+			return; 
+		}
+		doAjaxCall${formName}("simpanRundingan");
+	}
+	function updateRundingan(){
+		doAjaxCall${formName}("updateRundingan");
+	}
+	function kemaskiniRundingan(){
+		doAjaxCall${formName}("kemaskiniRundingan");
+	}
 	function textCounter(field, countfield, maxlimit) {
 		if (field.value.length > maxlimit) // if too long...trim it!
 			field.value = field.value.substring(0, maxlimit);

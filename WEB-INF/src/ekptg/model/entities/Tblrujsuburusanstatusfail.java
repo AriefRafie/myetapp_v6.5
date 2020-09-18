@@ -13,6 +13,11 @@ public class Tblrujsuburusanstatusfail extends
 	// class Tblrujsuburusanstatusfail
 	// Constructors
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5056727190768361167L;
+
 	/** default constructor */
 	public Tblrujsuburusanstatusfail() {
 	}
@@ -35,4 +40,5 @@ public class Tblrujsuburusanstatusfail extends
 				, idKemaskini, tarikhKemaskini, tarikhKemaskiniStr
 				,idFail);
 	}
+	
 }

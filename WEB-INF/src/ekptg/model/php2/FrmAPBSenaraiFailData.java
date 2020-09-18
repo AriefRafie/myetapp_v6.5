@@ -164,6 +164,9 @@ public class FrmAPBSenaraiFailData {
 				senaraiFail.addElement(h);
 				myLog.info("bil="+bil);
 				bil++;
+				myLog.info(h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "": sdf.format(rs.getDate("TARIKH_TERIMA"))));
+				myLog.info(h.put("status",rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN")));
+				myLog.info(h.put("kawasanDipohon",rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI")));
 			}
 
 		} finally {
@@ -1068,7 +1071,7 @@ public class FrmAPBSenaraiFailData {
 					h.put("idPermohonan", rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN"));
 					h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL").toUpperCase());
 					h.put("noRayuan",rs.getString("NO_RAYUAN") == null ? "0" : rs.getString("NO_RAYUAN"));
-					h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "": sdf.format(rs.getDate("TARIKH_TERIMA")));
+					h.put("tarikhTerima", rs.getString("TARIKH_TERIMA") == null ? "": sdf.format(rs.getDate("TARIKH_TERIMA")));
 					h.put("namaPemohon", rs.getString("NAMA") == null ? "" : rs.getString("NAMA").toUpperCase());
 					h.put("idStatus", rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS"));
 					h.put("status",rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
@@ -1113,7 +1116,7 @@ public class FrmAPBSenaraiFailData {
 			
 		}
 	
-	public Vector<Hashtable<String,String>> getCarianFailOnline(String noPermohonan,String tarikhTerima) 
+	public Vector<Hashtable<String,String>> getCarianFailOnline(String noPermohonan,String tarikhTerima)  // log senarai file online
 			throws Exception {
 
 			Db db = null;
@@ -1168,7 +1171,7 @@ public class FrmAPBSenaraiFailData {
 					h.put("noPermohonan", rs.getString("NO_PERMOHONAN") == null ? "" : rs.getString("NO_PERMOHONAN"));
 					h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL").toUpperCase());
 					h.put("noRayuan",rs.getString("NO_RAYUAN") == null ? "0" : rs.getString("NO_RAYUAN"));
-					h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "": sdf.format(rs.getDate("TARIKH_TERIMA")));
+					h.put("tarikhTerima", rs.getString("TARIKH_TERIMA") == null ? "": sdf.format(rs.getDate("TARIKH_TERIMA")));
 					h.put("namaPemohon", rs.getString("NAMA") == null ? "" : rs.getString("NAMA").toUpperCase());
 					h.put("idStatus", rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS"));
 					h.put("status",rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
@@ -1202,6 +1205,9 @@ public class FrmAPBSenaraiFailData {
 					senaraiFail.addElement(h);
 					myLog.info("bil="+bil);
 					bil++;
+					myLog.info(h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "": sdf.format(rs.getDate("TARIKH_TERIMA"))));
+					myLog.info(h.put("status",rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN")));
+					myLog.info(h.put("kawasanDipohon",rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI")));
 				}
 
 			} finally {

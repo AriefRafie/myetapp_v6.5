@@ -221,6 +221,10 @@ function doChangeKementerian() {
 function doChangeDaerah() {
 	doAjaxCall${formName}("doChangeDaerah");
 }
+//maklumat tanah
+function pilihMukim() {
+	doAjaxCall${formName}("doChangeDaerah");
+}
 function doChangeDaerah2() {
 	doAjaxCall${formName}("doChangeDaerah2");
 }

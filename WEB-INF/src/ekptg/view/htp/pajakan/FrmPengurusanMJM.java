@@ -18,17 +18,19 @@ import ekptg.model.htp.entity.TblMemoMenteriForm;
 import ekptg.model.htp.pajakan.FrmPengurusanMJMData;
 
 public class FrmPengurusanMJM extends AjaxBasedModule{
-	
+
 	private static final String PATH="app/htp/pajakan/pengurusan/";
 	private static Vector<Hashtable<String,String>> docData =  new Vector<Hashtable<String,String>>();
 	private int bil = 1;
 	FrmPengurusanMJMData logic = new FrmPengurusanMJMData();
 	private static Vector<Hashtable<String,String>> listMemo = new Vector<Hashtable<String,String>>();
+	private static Vector<Hashtable<String,String>> listMemobyNoFail = new Vector<Hashtable<String,String>>();
 	private static final long serialVersionUID = 1L;
+	private String socKategori = "";
 
 	@Override
 	public String doTemplate2() throws Exception {
-		
+
 	HttpSession session = this.request.getSession();
 	String vm = "";
 	Hashtable<String,String> h;
@@ -36,10 +38,15 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
 	String hitButton = getParam("hitButton");
 	String action = getParam("action");
 	String pageNow = getParam("pageNow");
-	
+
 	this.context.put("saveNoti", false);
 	this.context.put("mjm", "mjm");
-	
+
+	socKategori = getParam("sockategori");
+
+	System.out.println("socStatus atas >>>> "+ socKategori);
+	System.out.println("hitButton >>>> "+hitButton);
+
 		if(hitButton.equals("carian")){
 			String txtNoMemo = getParam("txtNoMemo");
 	        String txtNoFail = getParam("txtNoFail");
@@ -48,7 +55,7 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
 	        this.context.put("pageNow", "carian");
 	        setupPage(session,action,listMemo);
 			vm = PATH+"index.jsp";
-			
+
 		}else if(hitButton.equals("hapus")){
 			logic.delete(getParam("idTblDocMemo"));
 			TblMemoMenteriForm mmf = logic.findBy(Long.parseLong(getParam("idTblMemoMenteri")));
@@ -63,7 +70,7 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
 			docData = logic.findDocBy(mmf.getIdTblHtpMemoMenteri());
 			setupPage(session,action,docData);
 			vm =  PATH+"frmDaftarMemorandum.jsp";
-			
+
 		}else if(hitButton.equals("simpan")){
 	        Long idMemo = logic.saveMemo(getParam("txtNoMemo")
     				,getParam("txtNoFail")
@@ -93,7 +100,7 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
 			this.context.put("txtCatatan", getParam("txtCatatan"));
 			this.context.put("socStatus", getParam("socStatus"));
 			vm =  PATH+"frmDaftarMemorandum.jsp";
-			
+
 		}else if(hitButton.equals("edit")){
 			bil = 1;
 			TblMemoMenteriForm mmf = logic.findBy(Long.parseLong(getParam("id")));
@@ -103,12 +110,62 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
 			this.context.put("txdTarikh", mmf.getTarikh());
 			this.context.put("txtCatatan", mmf.getCatatan());
 			this.context.put("socStatus", mmf.getStatus());
+			this.context.put("socKategori", mmf.getIdKategori());
 			docData = new Vector<>();
 			docData = logic.findDocBy(mmf.getIdTblHtpMemoMenteri());
 			setupPage(session,action,docData);
+			if (1==mmf.getIdKategori()){
+				String noFail = mmf.getNoFailSeksyen();
+				System.out.println("noFail >>>> "+noFail);
+				if(noFail.equals("null") || noFail.equals("") || noFail.equals("-")){
+
+				}else{
+
+					listMemobyNoFail = logic.findByNoFail(noFail);
+					this.context.put("listMemobyNoFail", listMemobyNoFail);
+				}
+			}else{
+				this.context.put("listMemobyNoFail", "");
+			}
+			if (1==mmf.getIdKategori()) {
+				this.context.put("selected", "");
+				this.context.put("selected1", "selected");
+				this.context.put("selected2", "");
+				this.context.put("selected3", "");
+				this.context.put("selected4", "");
+				this.context.put("sockategori", socKategori);
+        	} else if (2==mmf.getIdKategori()) {
+				this.context.put("selected", "");
+				this.context.put("selected1", "");
+				this.context.put("selected2", "selected");
+				this.context.put("selected3", "");
+				this.context.put("selected4", "");
+				this.context.put("sockategori", socKategori);
+        	} else if (3==mmf.getIdKategori()) {
+				this.context.put("selected", "");
+				this.context.put("selected1", "");
+				this.context.put("selected2", "");
+				this.context.put("selected3", "selected");
+				this.context.put("selected4", "");
+				this.context.put("sockategori", socKategori);
+        	} else if (4==mmf.getIdKategori()) {
+				this.context.put("selected", "");
+				this.context.put("selected1", "");
+				this.context.put("selected2", "");
+				this.context.put("selected3", "");
+				this.context.put("selected4", "selected");
+				this.context.put("sockategori", socKategori);
+        	} else {
+        		this.context.put("selected", "selected");
+				this.context.put("selected1", "");
+				this.context.put("selected2", "");
+				this.context.put("selected3", "");
+				this.context.put("selected4", "");
+				this.context.put("idJenisTanah", "0");
+        	}
 			this.context.put("pageNow", "docMemo");
 			vm =  PATH+"frmDaftarMemorandum.jsp";
-			
+
 		}else if(hitButton.equals("daftarBaru")){
 			bil = 1;
 			this.context.put("txtNoMemo", "");
@@ -122,7 +179,7 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
 			setupPage(session,action,docData);
 			this.context.put("pageNow", "docMemo");
 			vm =  PATH+"frmDaftarMemorandum.jsp";
-			
+
 		}else if(hitButton.equals("addDoc")){
 			for (Object object : docData) {
 				Hashtable<String,String> hashHeader = (Hashtable<String,String>) object;
@@ -142,12 +199,12 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
 					h.put("size",String.valueOf(item.getSize()));
 					docData.addElement(h);
 					bil++;
-					
+
 				}else{
 					docData = new Vector<>();
 				}
 			}
-			setupPage(session,action,docData);	
+			setupPage(session,action,docData);
 			this.context.put("txtNoMemo", getParam("txtNoMemo"));
 			this.context.put("txtNoFail", getParam("txtNoFail"));
 			this.context.put("txdTarikh", getParam("txdTarikh"));
@@ -155,11 +212,11 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
 			this.context.put("socStatus", getParam("socStatus"));
 			this.context.put("pageNow", "docMemo");
 			vm =  PATH+"frmDaftarMemorandum.jsp";
-			
+
 		}else if(hitButton.equals("deleteMemo")){
-			
+
 			logic.deleteMemo(getParam("id"));
-			
+
 			bil = 1;
 	        this.context.put("txtNoMemo", "");
 	        this.context.put("txtNoFail", "");
@@ -169,14 +226,78 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
 	        setupPage(session,action,listMemo);
 	        this.context.put("pageNow", "carian");
 			vm = PATH+"index.jsp";
-			
+
+		}else if(hitButton.equals("doChangeKategori")){
+			bil = 1;
+			this.context.put("txtNoMemo", getParam("txtNoMemo"));
+			this.context.put("txtNoFail", getParam("txtNoFail"));
+			this.context.put("txdTarikh", getParam("txdTarikh"));
+			this.context.put("txtCatatan", getParam("txtCatatan"));
+			this.context.put("socStatus", getParam("socStatus"));
+			this.context.put("sockategori", getParam("sockategori"));
+
+			if ("1".equals(socKategori)) {
+				this.context.put("selected", "");
+				this.context.put("selected1", "selected");
+				this.context.put("selected2", "");
+				this.context.put("selected3", "");
+				this.context.put("selected4", "");
+				this.context.put("sockategori", socKategori);
+        	} else if ("2".equals(socKategori)) {
+				this.context.put("selected", "");
+				this.context.put("selected1", "");
+				this.context.put("selected2", "selected");
+				this.context.put("selected3", "");
+				this.context.put("selected4", "");
+				this.context.put("sockategori", socKategori);
+        	} else if ("3".equals(socKategori)) {
+				this.context.put("selected", "");
+				this.context.put("selected1", "");
+				this.context.put("selected2", "");
+				this.context.put("selected3", "selected");
+				this.context.put("selected4", "");
+				this.context.put("sockategori", socKategori);
+        	} else if ("4".equals(socKategori)) {
+				this.context.put("selected", "");
+				this.context.put("selected1", "");
+				this.context.put("selected2", "");
+				this.context.put("selected3", "");
+				this.context.put("selected4", "selected");
+				this.context.put("sockategori", socKategori);
+        	} else {
+        		this.context.put("selected", "selected");
+				this.context.put("selected1", "");
+				this.context.put("selected2", "");
+				this.context.put("selected3", "");
+				this.context.put("selected4", "");
+				this.context.put("idJenisTanah", "0");
+        	}
+
+
+			System.out.println("socKategori >>>> "+socKategori);
+			if ("1".equals(socKategori)){
+				String noFail = getParam("txtNoFail");
+				System.out.println("noFail >>>> "+noFail);
+				if(noFail.equals("null") || noFail.equals("")){
+
+				}else{
+
+					listMemobyNoFail = logic.findByNoFail(noFail);
+					this.context.put("listMemobyNoFail", listMemobyNoFail);
+				}
+			}else{
+				this.context.put("listMemobyNoFail", "");
+			}
+			vm =  PATH+"frmDaftarMemorandum.jsp";
+			System.out.println("sockategori >>>>> "+socKategori);
+
 		}else{
 			if(action.equals("getPage")){
 				if(pageNow.equals("carian")){
 					setupPage(session,action,listMemo);
 					this.context.put("pageNow", "carian");
 					vm = PATH+"index.jsp";
-					
+
 				}else{
 					setupPage(session,action,docData);
 					this.context.put("pageNow", "docMemo");
@@ -186,7 +307,7 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
 					this.context.put("txtCatatan", getParam("txtCatatan"));
 					this.context.put("socStatus", getParam("socStatus"));
 					vm = PATH+"frmDaftarMemorandum.jsp";
-					
+
 				}
 			}else{
 				bil = 1;
@@ -198,11 +319,11 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
 		        setupPage(session,action,listMemo);
 		        this.context.put("pageNow", "carian");
 		        vm = PATH+"index.jsp";
-		        
+
 			}
 		}
 		return vm;
-		
+
 	}
 
 	private FileItem getItem() throws FileUploadException {
@@ -217,8 +338,8 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
 		  }
 		}
 		return null;
-		
+
 	}
-	
+
 
 }

@@ -48,7 +48,7 @@
     	</td>
         <td width="50%" align="center" valign="top"><table width="100%" border="0">
         	<tr>
-               <td width="35%" style="text-transform:uppercase;"><div align="right">No. Fail Seksyen</div></td>
+               <td width="35%" style="text-transform:uppercase;"><div align="right">No. Fail</div></td>
                 <td width="1%">:</td>
                 <td width="64%">
                 	<div align="left" class="stylelabel">$!htpPermohonan.permohonan.pfdFail.noFail</div> 
