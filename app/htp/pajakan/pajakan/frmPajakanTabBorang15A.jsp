@@ -9,7 +9,7 @@
         <td width="1%">&nbsp;</td>
         <td width="28%">Tarikh Terima Daripada Pemohon</td>
         <td width="1%">:</td>
-        <td width="70%"><input type="text" name="txdTarikhTerimaPemohon" id="txdTarikhTerimaPemohon" size="10" value="$beanMaklumat15A.get('tarikhTerima')" class="$classDis" $readOnly  onblur="check_date(this)"/>
+        <td width="70%"><input type="text" name="txdTarikhTerimaPemohon" id="txdTarikhTerimaPemohon" size="10" value="$!beanMaklumat15A.get('tarikhTerima')" class="$classDis" $readOnly  onblur="check_date(this)"/>
         #if($mode == 'update')
           <img src="../img/calendar.gif" alt="Calendar" border="0" style="display:$Style2" onClick="displayDatePicker('txdTarikhTerimaPemohon',false,'dmy');">
         #end</td>
@@ -18,7 +18,7 @@
         <td>&nbsp;</td>
         <td>Tarikh Tandatangan PTP</td>
         <td>:</td>
-        <td><input type="text" name="txdTarikhTandatanganPTP15A" id="txdTarikhTandatanganPTP15A" size="10" value="$beanMaklumat15A.get('tarikhTandatangan')" class="$classDis" $readOnly  onblur="check_date(this)"/>
+        <td><input type="text" name="txdTarikhTandatanganPTP15A" id="txdTarikhTandatanganPTP15A" size="10" value="$!beanMaklumat15A.get('tarikhTandatangan')" class="$classDis" $readOnly  onblur="check_date(this)"/>
         #if($mode == 'update')
           <img src="../img/calendar.gif" alt="Calendar" border="0" onClick="displayDatePicker('txdTarikhTandatanganPTP15A',false,'dmy');">
          #end
@@ -28,7 +28,7 @@
         <td>&nbsp;</td>
         <td>Tarikh Hantar Ke Pemohon</td>
         <td>:</td>
-        <td><input type="text" name="txdTarikhHantarPemohon" id="txdTarikhHantarPemohon" size="10" value="$beanMaklumat15A.get('tarikhHantar')" class="$classDis" $readOnly  onblur="check_date(this)"/>
+        <td><input type="text" name="txdTarikhHantarPemohon" id="txdTarikhHantarPemohon" size="10" value="$!beanMaklumat15A.get('tarikhHantar')" class="$classDis" $readOnly  onblur="check_date(this)"/>
 
          #if($mode == 'update')
           <img src="../img/calendar.gif" alt="Calendar" border="0" style="display:$Style2" onClick="displayDatePicker('txdTarikhHantarPemohon',false,'dmy');">
@@ -39,7 +39,7 @@
         <td>&nbsp;</td>
         <td>Tarikh Daftar Pajakan</td>
         <td>:</td>
-        <td><input type="text" name="txdTarikhDaftarPajakan" id="txdTarikhDaftarPajakan" size="10" value="$beanMaklumat15A.get('tarikhDaftar')" class="$classDis" $readOnly  onblur="check_date(this)"/>
+        <td><input type="text" name="txdTarikhDaftarPajakan" id="txdTarikhDaftarPajakan" size="10" value="$!beanMaklumat15A.get('tarikhDaftar')" class="$classDis" $readOnly  onblur="check_date(this)"/>
 
         #if($mode == 'update')
           <img src="../img/calendar.gif" alt="Calendar" border="0" onClick="displayDatePicker('txdTarikhDaftarPajakan',false,'dmy');">
@@ -50,7 +50,7 @@
         <td >&nbsp;</td>
         <td >Tarikh Terima Hakmilik</td>
         <td>:</td>
-        <td><input name="txdtarikhTerimaHakmilik" type="text" id="txdtarikhTerimaHakmilik" value="$beanMaklumat15A.get('tarikhTerimaHakmilik')" size="10" class="$classDis" $readOnly  onblur="check_date(this)"/>
+        <td><input name="txdtarikhTerimaHakmilik" type="text" id="txdtarikhTerimaHakmilik" value="$!beanMaklumat15A.get('tarikhTerimaHakmilik')" size="10" class="$classDis" $readOnly  onblur="check_date(this)"/>
         #if($mode == 'update')
         <img src="../img/calendar.gif" alt="Calendar" border="0" onClick="displayDatePicker('txdtarikhTerimaHakmilik',false,'dmy');">
         #end
@@ -60,7 +60,7 @@
         <td>&nbsp;</td>
         <td>Tarikh Kemaskini Hakmilik</td>
         <td>:</td>
-        <td><input name="txdTarikhKemaskiniHakmilik" type="text" id="txdTarikhKemaskiniHakmilik" value="$beanMaklumat15A.get('tarikhKemaskini')" size="10" class="$classDis" $readOnly  onblur="check_date(this)"/>
+        <td><input name="txdTarikhKemaskiniHakmilik" type="text" id="txdTarikhKemaskiniHakmilik" value="$!beanMaklumat15A.get('tarikhKemaskini')" size="10" class="$classDis" $readOnly  onblur="check_date(this)"/>
 
         #if($mode == 'update')
         <img src="../img/calendar.gif" alt="Calendar" border="0" onClick="displayDatePicker('txdTarikhKemaskiniHakmilik',false,'dmy');">

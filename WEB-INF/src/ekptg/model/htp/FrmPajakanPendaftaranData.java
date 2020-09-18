@@ -45,11 +45,12 @@ public class FrmPajakanPendaftaranData {
 				" ,A.NO_HAKMILIK, A.NO_WARTA, E.NAMA_MUKIM, D.NAMA_DAERAH" +
 				" ,C.NAMA_NEGERI, A.ID_JENISHAKMILIK, A.ID_LOT, A.TARIKH_WARTA, A.ID_MUKIM" +
 				" ,A.ID_DAERAH, A.ID_NEGERI,A.LUAS,A.LUAS_BERSAMAAN" +
+				" ,A.ID_SEKSYEN,F.NAMA_SEKSYENUPI" +
 				" ,REPLACE(RJH.KOD_JENIS_HAKMILIK,'00','') KOD_JENIS_HAKMILIK " +
 				" ,RL.KOD_LUAS KOD_LUAS " +
 				" ,RLB.KOD_LUAS KOD_LUASBERSAMAAN " +
 				" ,NVL(GIS.UPI,'N') GIS_HANTAR  ,NVL(GIS.LATITUDE,'N') GIS_CHARTING " +
-				" FROM TBLHTPHAKMILIKURUSAN A, TBLRUJLOT B" +
+				" FROM TBLHTPHAKMILIKURUSAN A, TBLRUJSEKSYENUPI F,TBLRUJLOT B" +
 				", TBLRUJNEGERI C, TBLRUJDAERAH D,TBLRUJMUKIM E " +
 				" ,TBLRUJJENISHAKMILIK RJH, TBLRUJLUAS RL,TBLRUJLUAS RLB,TBLINTGIS GIS " +
 				" ,(   SELECT MT.ID_HAKMILIKURUSAN " +
@@ -70,6 +71,7 @@ public class FrmPajakanPendaftaranData {
 				" AND A.ID_LUAS_BERSAMAAN = RLB.ID_LUAS " +
 				" AND A.ID_HAKMILIKURUSAN = UP.ID_HAKMILIKURUSAN" +
 				" AND UP.UPI = GIS.UPI(+) AND GIS.STATUS_TANAH(+) = 7 " +
+				" AND A.ID_SEKSYEN = F.ID_SEKSYENUPI(+) " +
 				" AND A.ID_PERMOHONAN = '" + idPermohonan + "' ORDER BY A.ID_HAKMILIKURUSAN ASC";
 			myLog.info("setListHakmilik :: sql >>> "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
@@ -94,6 +96,7 @@ public class FrmPajakanPendaftaranData {
 				h.put("kodLuasBersamaan", rs.getString("KOD_LUASBERSAMAAN") == null ? "" : rs.getString("KOD_LUASBERSAMAAN"));
 				h.put("gisHantar", rs.getString("GIS_HANTAR"));
 				h.put("gisCharting", rs.getString("GIS_CHARTING"));
+				h.put("namaSeksyen", rs.getString("NAMA_SEKSYENUPI") == null ? "" : rs.getString("NAMA_SEKSYENUPI"));
 				senaraiHakmilik.addElement(h);
 				bil++;
 
