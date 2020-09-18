@@ -94,9 +94,10 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 				vm = "app/ppk/frmPrmhnnStatusPengunaOnline.jsp";
 			}
 			
-		} else if (submit.equals("dikembalikan")) {
+		} else if (submit.equals("DIKEMBALIKAN")) {
 			senaraiFail = getStatusPPK().getStatusPermohonanByIndividu("382", usid, "50");
 			this.context.put("senaraitugasan", senaraiFail);
+			myLogger.info("list dikembalikan : " + senaraiFail);
 		
 			
 		} else if ("doChanges".equals(submit)) {

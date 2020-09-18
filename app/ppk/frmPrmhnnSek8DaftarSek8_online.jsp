@@ -829,6 +829,42 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
                                   #end  
               </select></td>
           </tr>
+          
+          <tr id="majlisagama" >
+            <td >&nbsp; </td>
+            <td >Majlis Agama Islam Negeri</td>
+            <td >:</td>
+            <td >
+            	<select name="jenis_pej3" id="jenis_pej3" class="largeselect" $setMode style="text-transform:uppercase;" onChange="pilih_majlisagama()" >                
+			#if($!jenis_pej == "" || $!jenis_pej == "0") 
+          			<option value="">SILA PILIH </option>
+     		#else
+        		#foreach($listJ in $listMaklumatMahkamahJ)
+           			#if( $listJ.id_Pejabat == $jenis_pej )              
+           				#set($listJid_Pejabat = $listJ.id_Pejabat)
+           				#set($listJnama_pejabat=$listJ.nama_pejabat)
+           				#set($listJdaerah = $listJ.daerah)  
+           				#set($nama_bandar = $listJ.namabandar)         
+           
+           			#end
+           
+           		#end
+                	<option value="$listJid_Pejabat">$listJnama_pejabat , $nama_bandar </option>
+       		#end        
+        	
+      		#foreach($listJ in $listMaklumatMahkamahJ)
+       			#if($jenis_pej != $listJ.id_Pejabat && $listJ.jenispejabat == '61' )              
+                	<option value="$listJ.id_Pejabat">$listJ.nama_pejabat , $listJ.namabandar </option>
+        		#end 
+                  
+     		#end 
+                  
+     	##if($!jenis_pej != "" || $!jenis_pej != "0"))
+       		<!-- <option value="">SILA PILIH </option> -->
+     	##end                            
+            	</select>
+        	</td>
+          </tr>
  
  
           <tr id="j_pemohon"  >
@@ -874,42 +910,6 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
            </span>                
       	#end
             </td>
-          </tr>
-          
-       	<tr id="majlisagama" >
-            <td >&nbsp; </td>
-            <td >Majlis Agama Islam Negeri</td>
-            <td >:</td>
-            <td >
-            	<select name="jenis_pej3" id="jenis_pej3" class="largeselect" $setMode style="text-transform:uppercase;" onChange="pilih_majlisagama()" >                
-			#if($!jenis_pej == "" || $!jenis_pej == "0") 
-          			<option value="">SILA PILIH </option>
-     		#else
-        		#foreach($listJ in $listMaklumatMahkamahJ)
-           			#if( $listJ.id_Pejabat == $jenis_pej )              
-           				#set($listJid_Pejabat = $listJ.id_Pejabat)
-           				#set($listJnama_pejabat=$listJ.nama_pejabat)
-           				#set($listJdaerah = $listJ.daerah)  
-           				#set($nama_bandar = $listJ.namabandar)         
-           
-           			#end
-           
-           		#end
-                	<option value="$listJid_Pejabat">$listJnama_pejabat , $nama_bandar </option>
-       		#end        
-        	
-      		#foreach($listJ in $listMaklumatMahkamahJ)
-       			#if($jenis_pej != $listJ.id_Pejabat && $listJ.jenispejabat == '62' )              
-                	<option value="$listJ.id_Pejabat">$listJ.nama_pejabat , $listJ.namabandar </option>
-        		#end 
-                  
-     		#end 
-                  
-     	##if($!jenis_pej != "" || $!jenis_pej != "0"))
-       		<!-- <option value="">SILA PILIH </option> -->
-     	##end                            
-            	</select>
-        	</td>
           </tr>
           
 <tr id="individu_warga">
@@ -3046,7 +3046,7 @@ var dtCh= "/";
 	}
 
 	function alamat_raya(){
-		/*
+		
 		if(document.f1.taraf_penting.value == '6'){
 			document.f1.jenis_pej.value = document.f1.jenis_pej1.value;
 		}
@@ -3065,7 +3065,7 @@ var dtCh= "/";
 		  
 		actionName = "getalamat_raya";
 		target = "add_alamat_raya";
-		doAjaxUpdater(document.f1, url, target, actionName); */
+		doAjaxUpdater(document.f1, url, target, actionName);
 		
 	}
 
