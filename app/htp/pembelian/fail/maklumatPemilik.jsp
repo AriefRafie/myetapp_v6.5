@@ -8,7 +8,7 @@
               <td>:</td>
               <td>
                   <select name="ddownHakmilik" id="ddownHakmilik">
-                   <option value="" selected>Sila Pilih</option>
+                   <option value="" selected>SILA PILIH</option>
                   #foreach($mo in $mt)
                   	#if($select == "$!mo.getIdhakmilikurusan()")
                     <option value="$!mo.getIdhakmilikurusan()" selected>$!mo.getKodjenishakmilik()$!mo.nohakmilik </option>
