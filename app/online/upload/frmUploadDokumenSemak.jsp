@@ -46,11 +46,14 @@ padding:0 0.25em;
 }
 -->
 </style>
-##if(!$!flagOnline.equals(''))
+##if(!$!modul.equals(''))
+#if($!modul.equals('php'))
 <!-- <link rel="stylesheet" type="text/css" href="../../css/eTapp_PPK.css" /> -->
-##else
+#elseif($!modul.equals('htp'))
+<link rel="stylesheet" type="text/css" href="../../css/eTapp_HTP.css" />
+#else
 <link rel="stylesheet" type="text/css" href="../../css/online.css" />
-##end
+#end
   	<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   	<input type="text" name="idpermohonan" id="idpermohonan" value="$idPermohonan"/>
 
