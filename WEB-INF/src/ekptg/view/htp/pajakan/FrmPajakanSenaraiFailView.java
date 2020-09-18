@@ -706,8 +706,9 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 	    		this.context.put("idPajakan", idPajakan);
 
 	        }  else if (selectedTab.equals("1")){
-	        	logicper.setMaklumatTabKelulusanJemaahMenteri(idPermohonan);
-				JemaahMenteriView(mode);
+	        	Borang15AView(mode);
+	        	/*logicper.setMaklumatTabKelulusanJemaahMenteri(idPermohonan);
+				JemaahMenteriView(mode);*/
 
 	        }
 			page_ = "8";
