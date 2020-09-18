@@ -790,6 +790,7 @@ public class PembelianBean implements IPembelian {
 			r.add("id_Negeri", urusan.getIdNegeri());
 			r.add("id_Daerah", urusan.getIdDaerah());
 			r.add("id_Mukim", urusan.getIdMukim());
+			r.add("id_seksyen", urusan.getIdSeksyen());
 			r.add("id_JenisHakmilik", urusan.getIdHakmilik());
 			r.add("no_Hakmilik", urusan.getNohakmilik());
 			r.add("no_Lot", urusan.getNolot());

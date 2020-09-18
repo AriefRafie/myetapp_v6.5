@@ -73,7 +73,7 @@
         						<tr>
 						      		<td width="1%"><span class="labelmandatory">##if($pageMode!="update")*#end
 						      		</span></td>
-					        		<td width="30%"><div align="left">No. Fail Seksyen</div></td>
+					        		<td width="30%"><div align="left">No. Fail</div></td>
 					        		<td width="1%"><div align="center">:</div></td>
 					        		<td width="68%">
 					        			<!-- <input type="text" name="txtNoFailSek" size="28" value="$!htpPermohonan.permohonan.pfdFail.noFail" readonly="readonly" $inputstyleread>
