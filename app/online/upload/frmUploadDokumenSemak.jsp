@@ -124,10 +124,10 @@ padding:0 0.25em;
   <tr>
   	<td align="center">
   		#if(!$!disability.equals('disabled'))
-    	<input type="button" class="stylobutton100" name="cmdPilih" id="cmdPilih" value="Simpan" onClick="simpanLampiran()">
+    	<input type="button" name="cmdPilih" id="cmdPilih" value="Simpan" onClick="simpanLampiran()">
     	#end
     	<!-- <input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Senarai Tanah" onClick="kembali()">-->
-    	<input type="button" class="stylobutton100" name="cmdtutup" value="Tutup" onClick="tutup()">
+    	<input type="button" name="cmdtutup" value="Tutup" onClick="tutup()">
     	<!--<input type="button" class="stylobutton100" name="cmdrefrehs" value="Refresh" onClick="refresh()"> -->
     </td>
   </tr>
@@ -135,6 +135,7 @@ padding:0 0.25em;
 
 
 <script>
+	
 	//Hapus dokumen pada senarai harta
 	function deleteDetailImej(iDokumen,lampiran){
 		if ( !window.confirm("Adakah Anda Pasti?")) return;
@@ -180,7 +181,7 @@ padding:0 0.25em;
 		//alert('simpanLampiran:$!jenisdokumen');
 		document.${formName}.action = "?_portal_module=ekptg.view.online.UploadDokumenSemak"+paramsimpan;
 
-/* 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup="+document.${formName}.actionPopup.value
+ 		/*document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup="+document.${formName}.actionPopup.value
 									+"&hitButton="+document.${formName}.hitButton.value
 									+"&idHarta=$!idHarta"
 									+"&actionrefresh=$!actionRefresh"; */
@@ -270,6 +271,9 @@ padding:0 0.25em;
 		else if('$!actionRefresh'=='phpphppelepasan'){
 			window.opener.doChangeTabUpper('5');
 		}
+		else if('$!actionRefresh'=='htppajakanmycoid'){
+				window.opener.doChangeTab('1');			
+			}
 	}
 	//setSelected(1,0,0,1);HtaamViewX('$paramOnline')
 

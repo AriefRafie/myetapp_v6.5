@@ -41,37 +41,70 @@ public class FrmPajakanPendaftaranData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_HAKMILIKURUSAN, A.PEGANGAN_HAKMILIK, B.KETERANGAN, A.NO_LOT" +
-				" ,A.NO_HAKMILIK, A.NO_WARTA, E.NAMA_MUKIM, D.NAMA_DAERAH" +
-				" ,C.NAMA_NEGERI, A.ID_JENISHAKMILIK, A.ID_LOT, A.TARIKH_WARTA, A.ID_MUKIM" +
-				" ,A.ID_DAERAH, A.ID_NEGERI,A.LUAS,A.LUAS_BERSAMAAN" +
-				" ,REPLACE(RJH.KOD_JENIS_HAKMILIK,'00','') KOD_JENIS_HAKMILIK " +
-				" ,RL.KOD_LUAS KOD_LUAS " +
-				" ,RLB.KOD_LUAS KOD_LUASBERSAMAAN " +
-				" ,NVL(GIS.UPI,'N') GIS_HANTAR  ,NVL(GIS.LATITUDE,'N') GIS_CHARTING " +
-				" FROM TBLHTPHAKMILIKURUSAN A, TBLRUJLOT B" +
-				", TBLRUJNEGERI C, TBLRUJDAERAH D,TBLRUJMUKIM E " +
-				" ,TBLRUJJENISHAKMILIK RJH, TBLRUJLUAS RL,TBLRUJLUAS RLB,TBLINTGIS GIS " +
-				" ,(   SELECT MT.ID_HAKMILIKURUSAN " +
-				" ,GETUPI(RN.KOD_NEGERI,RD.KOD_DAERAH_UPI,RM.KOD_MUKIM_UPI,'000',RJH.STATUS_HAKMILIK,MT.NO_LOT,MT.NO_HAKMILIK,RJH.KOD_JENIS_HAKMILIK ) UPI  " +
-				"  FROM TBLHTPHAKMILIKURUSAN MT,TBLRUJJENISHAKMILIK RJH  " +
-				" ,TBLRUJNEGERI RN,TBLRUJDAERAH RD,TBLRUJMUKIM RM  " +
-				" WHERE MT.ID_JENISHAKMILIK = RJH.ID_JENISHAKMILIK  " +
-				" AND MT.ID_NEGERI = RN.ID_NEGERI  " +
-				" AND MT.ID_DAERAH = RD.ID_DAERAH  " +
-				" AND MT.ID_MUKIM = RM.ID_MUKIM  " +
-				" ) UP  	" +
-				" WHERE A.ID_LOT = B.ID_LOT " +
-				" AND A.ID_NEGERI = C.ID_NEGERI " +
-				" AND A.ID_DAERAH = D.ID_DAERAH " +
-				" AND A.ID_MUKIM = E.ID_MUKIM" +
-				" AND A.ID_JENISHAKMILIK = RJH.ID_JENISHAKMILIK " +
-				" AND A.ID_LUAS = RL.ID_LUAS " +
-				" AND A.ID_LUAS_BERSAMAAN = RLB.ID_LUAS " +
-				" AND A.ID_HAKMILIKURUSAN = UP.ID_HAKMILIKURUSAN" +
-				" AND UP.UPI = GIS.UPI(+) AND GIS.STATUS_TANAH(+) = 7 " +
-				" AND A.ID_PERMOHONAN = '" + idPermohonan + "' ORDER BY A.ID_HAKMILIKURUSAN ASC";
-			myLog.info("setListHakmilik :: sql >>> "+sql);
+//			sql = "SELECT A.ID_HAKMILIKURUSAN, A.PEGANGAN_HAKMILIK, B.KETERANGAN, A.NO_LOT,A.NO_HAKMILIK, A.NO_WARTA, E.NAMA_MUKIM, D.NAMA_DAERAH "+
+//	                 ",C.NAMA_NEGERI, A.ID_JENISHAKMILIK, A.ID_LOT, A.TARIKH_WARTA, A.ID_MUKIM,A.ID_DAERAH, A.ID_NEGERI,A.LUAS,A.LUAS_BERSAMAAN "+
+//	                 ",REPLACE(RJH.KOD_JENIS_HAKMILIK,'00','') KOD_JENIS_HAKMILIK,RL.KOD_LUAS KOD_LUAS, RLB.KETERANGAN AS JENIS_LUAS, F.ID_KEMENTERIAN, F.ID_AGENSI "+
+//	                 ",RLB.KOD_LUAS KOD_LUASBERSAMAAN,NVL(GIS.UPI,'N') GIS_HANTAR  ,NVL(GIS.LATITUDE,'N') GIS_CHARTING,L.NAMA_KEMENTERIAN, K.NAMA_AGENSI "+
+//	                                                    
+//	                 "FROM TBLHTPHAKMILIKURUSAN A, TBLRUJLOT B, TBLRUJNEGERI C, TBLRUJDAERAH D,TBLRUJMUKIM E, TBLHTPHAKMILIK F, "+
+//	                 "TBLRUJJENISHAKMILIK RJH, TBLRUJLUAS RL,TBLRUJLUAS RLB,TBLINTGIS GIS, TBLRUJAGENSI K, TBLRUJKEMENTERIAN L, "+
+//	                 
+//	                 "(SELECT MT.ID_HAKMILIKURUSAN "+              
+//	                 ",GETUPI(RN.KOD_NEGERI,RD.KOD_DAERAH_UPI,RM.KOD_MUKIM_UPI,'000',RJH.STATUS_HAKMILIK,MT.NO_LOT,MT.NO_HAKMILIK,RJH.KOD_JENIS_HAKMILIK ) UPI "+       
+//	                 ",FROM TBLHTPHAKMILIKURUSAN MT,TBLRUJJENISHAKMILIK RJH,TBLRUJNEGERI RN,TBLRUJDAERAH RD,TBLRUJMUKIM RM,TBLRUJKEMENTERIAN I, TBLRUJAGENSI J "+        
+//	                 ",WHERE MT.ID_JENISHAKMILIK = RJH.ID_JENISHAKMILIK AND MT.ID_NEGERI = RN.ID_NEGERI AND MT.ID_DAERAH = RD.ID_DAERAH "+           
+//	                 ",AND MT.ID_MUKIM = RM.ID_MUKIM) UP "+      
+//	                
+//	                 "WHERE A.ID_LOT = B.ID_LOT " +               
+//	                 "AND A.ID_NEGERI = C.ID_NEGERI "+ 
+//	                 "AND A.ID_DAERAH = D.ID_DAERAH "+
+//	                 "AND A.ID_MUKIM = E.ID_MUKIM "+
+//	                 "AND A.ID_JENISHAKMILIK = RJH.ID_JENISHAKMILIK " + 
+//	                 "AND A.ID_LUAS = RL.ID_LUAS "+
+//	                 "AND A.ID_LUAS_BERSAMAAN = RLB.ID_LUAS "+
+//	                 "AND A.PEGANGAN_HAKMILIK = F.PEGANGAN_HAKMILIK "+
+//	                 "AND A.ID_HAKMILIKURUSAN = UP.ID_HAKMILIKURUSAN "+
+//	                 "AND F.ID_KEMENTERIAN = L.ID_KEMENTERIAN(+) "+
+//	                 "AND F.ID_AGENSI = k.ID_AGENSI(+) "+ 
+//	                 "AND UP.UPI = GIS.UPI(+) AND GIS.STATUS_TANAH(+) = 7 "+
+//	                 "AND A.ID_PERMOHONAN = '" + idPermohonan + "' "
+//	                 		+ "ORDER BY A.ID_HAKMILIKURUSAN ASC";
+			
+			sql="SELECT A.ID_HAKMILIKURUSAN, A.PEGANGAN_HAKMILIK, B.KETERANGAN, A.NO_LOT, A.NO_HAKMILIK, A.NO_WARTA, E.NAMA_MUKIM, D.NAMA_DAERAH," + 
+					"C.NAMA_NEGERI, A.ID_JENISHAKMILIK, A.ID_LOT, A.TARIKH_WARTA, A.ID_MUKIM, A.ID_DAERAH, A.ID_NEGERI,A.LUAS,A.LUAS_BERSAMAAN," + 
+					"REPLACE(RJH.KOD_JENIS_HAKMILIK,'00','') KOD_JENIS_HAKMILIK, RL.KOD_LUAS KOD_LUAS, " + 
+					"RLB.KOD_LUAS KOD_LUASBERSAMAAN, NVL(GIS.UPI,'N') GIS_HANTAR, NVL(GIS.LATITUDE,'N') GIS_CHARTING," + 
+					"L.NAMA_KEMENTERIAN, K.NAMA_AGENSI, RLB.KETERANGAN AS JENIS_LUAS, F.ID_KEMENTERIAN, F.ID_AGENSI " + 
+					
+					"FROM TBLHTPHAKMILIKURUSAN A, TBLRUJLOT B, TBLRUJNEGERI C, TBLRUJDAERAH D,TBLRUJMUKIM E, " + 
+					"TBLRUJJENISHAKMILIK RJH, TBLRUJLUAS RL,TBLRUJLUAS RLB,TBLINTGIS GIS, " + 
+					"TBLHTPHAKMILIK F, TBLRUJAGENSI K, TBLRUJKEMENTERIAN L, " + 
+					
+					"(SELECT MT.ID_HAKMILIKURUSAN, " + 
+					"GETUPI(RN.KOD_NEGERI,RD.KOD_DAERAH_UPI, RM.KOD_MUKIM_UPI,'000', RJH.STATUS_HAKMILIK, MT.NO_LOT, MT.NO_HAKMILIK,RJH.KOD_JENIS_HAKMILIK ) UPI " + 
+					"FROM TBLHTPHAKMILIKURUSAN MT,TBLRUJJENISHAKMILIK RJH, " + 
+					"TBLRUJNEGERI RN,TBLRUJDAERAH RD,TBLRUJMUKIM RM " + 
+					"WHERE MT.ID_JENISHAKMILIK = RJH.ID_JENISHAKMILIK " + 
+					"AND MT.ID_NEGERI = RN.ID_NEGERI " + 
+					"AND MT.ID_DAERAH = RD.ID_DAERAH " + 
+					"AND MT.ID_MUKIM = RM.ID_MUKIM) UP " + 
+					
+					"WHERE A.ID_LOT = B.ID_LOT " + 
+					"AND A.ID_NEGERI = C.ID_NEGERI " + 
+					"AND A.ID_DAERAH = D.ID_DAERAH " + 
+					"AND A.ID_MUKIM = E.ID_MUKIM " + 
+					"AND A.ID_JENISHAKMILIK = RJH.ID_JENISHAKMILIK " + 
+					"AND A.ID_LUAS = RL.ID_LUAS " + 
+					"AND A.ID_LUAS_BERSAMAAN = RLB.ID_LUAS " + 
+					"AND A.ID_HAKMILIKURUSAN = UP.ID_HAKMILIKURUSAN " + 
+					"AND A.PEGANGAN_HAKMILIK = F.PEGANGAN_HAKMILIK " + 
+					"AND F.ID_KEMENTERIAN = L.ID_KEMENTERIAN(+) " + 
+					"AND F.ID_AGENSI = K.ID_AGENSI(+) " + 
+					"AND UP.UPI = GIS.UPI(+) AND GIS.STATUS_TANAH(+) = 7 " + 
+					"AND A.ID_PERMOHONAN = '" + idPermohonan + "'"
+							+ " ORDER BY A.ID_HAKMILIKURUSAN ASC";
+					
+			myLog.info(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable<String, String> h;
 			int bil = 1;
@@ -88,7 +121,12 @@ public class FrmPajakanPendaftaranData {
 				h.put("daerah", rs.getString("NAMA_DAERAH") == null ? "" : rs.getString("NAMA_DAERAH"));
 				h.put("negeri", rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI"));
 				h.put("kodJenisHakmilik", rs.getString("KOD_JENIS_HAKMILIK") == null ? "" : rs.getString("KOD_JENIS_HAKMILIK"));
-				h.put("luas",rs.getString("LUAS") == null ? "" : rs.getString("LUAS"));
+				h.put("luas",rs.getString("LUAS") == null || rs.getString("JENIS_LUAS") == null ? "" : rs.getString("LUAS") + " " + rs.getString("JENIS_LUAS"));
+				
+				h.put("kementerian", rs.getString("NAMA_KEMENTERIAN") == null ? "" : rs.getString("NAMA_KEMENTERIAN").toUpperCase());
+				h.put("idKementerian", rs.getString("ID_KEMENTERIAN") == null ? "" : rs.getString("ID_KEMENTERIAN"));
+				h.put("agensi", rs.getString("NAMA_AGENSI") == null ? "" : rs.getString("NAMA_AGENSI").toUpperCase());
+				h.put("idAgensi", rs.getString("ID_AGENSI") == null ? "" : rs.getString("ID_AGENSI"));
 				h.put("kodLuas", rs.getString("KOD_LUAS") == null ? "" : rs.getString("KOD_LUAS"));
 				h.put("luasBersamaan", rs.getString("LUAS_BERSAMAAN") == null ? "" : Utils.formatLuas(rs.getDouble("LUAS_BERSAMAAN")));
 				h.put("kodLuasBersamaan", rs.getString("KOD_LUASBERSAMAAN") == null ? "" : rs.getString("KOD_LUASBERSAMAAN"));
@@ -96,13 +134,13 @@ public class FrmPajakanPendaftaranData {
 				h.put("gisCharting", rs.getString("GIS_CHARTING"));
 				senaraiHakmilik.addElement(h);
 				bil++;
-
+				
 			}
 
 		} finally {
 			if (db != null)
 				db.close();
-		}
+		}	
 	}
 
 	public void seterusnya(String idFail, String idPermohonan, String subUrusan, HttpSession session) throws Exception {

@@ -132,7 +132,17 @@ public class UploadDokumenSemak extends AjaxBasedModule {
 			//dokumens = l.lampiranMengikutHarta(idHarta, null,false);
 			// end Lampiran
 
-	    }else if (actionPopup.equals("paparHA")){
+	    }else if (actionPopup.equals("paparhtp")){
+			disability = "";
+		   	readability = "";
+			//Lampiran
+			if (mode.equals("bilampiran")) {
+				RO_General = "";
+				jumLampiran = getParamAsInteger("jumlahlampiran");
+			}
+		senaraiDokumen = getDocHTP().getLampirans(idRujukan, idJenisDokumen);
+		
+		}else if (actionPopup.equals("paparHA")){
 			disability = "";
 		   	readability = "";
 			//Lampiran

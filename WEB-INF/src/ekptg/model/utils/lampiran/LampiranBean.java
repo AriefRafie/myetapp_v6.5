@@ -134,7 +134,7 @@ public class LampiranBean implements ILampiran{
         	long iDokumen = DB.getNextID("TBLPFDRUJLAMPIRAN_SEQ");
         	Connection con = db.getConnection();
         	con.setAutoCommit(false);
-        	PreparedStatement ps = con.prepareStatement("insert into TBLPPTDOKUMEN " +
+        	PreparedStatement ps = con.prepareStatement("insert into TBLPFDRUJLAMPIRAN " +
         			"(id_lampiran,id_dokumen,nama_fail,jenis_mime,content,tarikh_masuk) " +
         			"values(?,?,?,?,?,sysdate)");
         	ps.setLong(1, iDokumen);
