@@ -29,11 +29,11 @@ import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.model.ppt.FrmPembatalanInternalData;
+import ekptg.model.ppt.FrmPembayaranOnlineData;
 import ekptg.model.ppt.FrmPermohonanUPTData;
+import ekptg.model.ppt.FrmSek8PampasanData;
 import ekptg.model.ppt.PPTHeader;
 import ekptg.view.ppt.email.Email_PenarikanBalik;
-
-
 
 
 public class FrmPembayaranOnline extends AjaxBasedModule{	
@@ -43,8 +43,8 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 	Date date = new Date();
 	
 	
-	FrmPembatalanInternalData logic = new FrmPembatalanInternalData();
-	Email_PenarikanBalik email_penarikan = new Email_PenarikanBalik();
+	FrmPembayaranOnlineData logic = new FrmPembayaranOnlineData();
+	// Email_PenarikanBalik email_penarikan = new Email_PenarikanBalik();
 	PPTHeader header = new PPTHeader();
 	FrmPermohonanUPTData modelUPT = new FrmPermohonanUPTData();
 	
@@ -64,6 +64,7 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
     	nameAndId(userIdNeg);
     	String id_pengarah = nameAndId(userIdNeg);
     	
+    	// KJP-PPT Skrin Pembayaran Online
     	kementerian(id_user);
     	String userIdKementerian = kementerian(id_user);
     	myLogger.info("ID kementerian User: " +id_user);
@@ -358,9 +359,11 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 		myLogger.info("BOLEH SIMPAN :"+bolehsimpan);
 		
 		if ("senarai".equals(main_command)){
+			
 			if ("kembali_senarai_depan".equals(sub_command)){
 				vm = "app/ppt/frmPembatalanCarian.jsp";	
-	    	}
+	    	
+			}
 			else if ("papar".equals(sub_command)){
 				this.context.put("first_masuk","yes");	
 				String id_permohonan = getParam("id_permohonan");
@@ -370,7 +373,6 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 				senarai_pembatalan = logic.senarai_penarikan(id_permohonan);
 				this.context.put("senarai_pembatalan", senarai_pembatalan);
 				
-			
 				vm = "app/ppt/frmPenarikanBalikSenarai.jsp";	
 	    	}
 			
@@ -534,9 +536,7 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 				
 				if (id_lot_tarik != null ) 
 				{
-				for (int t = 0; t < id_lot_tarik.length; t++) 
-				{
-					
+				for (int t = 0; t < id_lot_tarik.length; t++) 	{
 					
 						if (bolehsimpan.equals("yes")) 
 						{
@@ -553,20 +553,17 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 					
 						}									
 												
-				}
-				}	
-				if (id_lot_tarik != null ) 
-				{
-				for (int t = 0; t < id_lot_tarik.length; t++) 
-				{
+					}
+				}	if (id_lot_tarik != null )	{
 					
-						if (bolehsimpan.equals("yes")) 
-						{
+				for (int t = 0; t < id_lot_tarik.length; t++)	{
+					
+						if (bolehsimpan.equals("yes"))	{
 						logic.hapus_pilih_penarikan(id_lot_tarik[t]);
-						}									
-												
+						}						
+					}
 				}
-				}
+				
 				logic.deletePenarikanInternal(getParam("id_pembatalan"));
 				maklumat_pembatalan = logic.maklumat_penarikan(getParam("id_pembatalan"));
 				senarai_hakmilik_batal_penarikan_status = logic.senarai_hakmilik_batal_penarikan_status(getParam("id_pembatalan"));
@@ -583,18 +580,19 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 				
 				this.context.put("readmode", "edit");
 				this.context.put("display_error_message","no");	
-				vm = "app/ppt/frmPenarikanInfoSenaraiLot.jsp";	
-	    	}
-			else if ("simpan".equals(sub_command)){
+				vm = "app/ppt/frmPenarikanInfoSenaraiLot.jsp";
+				
+	    	}	else if ("simpan".equals(sub_command))	{
+	    		
 				String id_permohonan = getParam("id_permohonan");
 				maklumat_pembatalan = logic.maklumat_penarikan(getParam("id_pembatalan"));
 				
 				
 				String id_pembatalan = "";
-				if(maklumat_pembatalan.size()==0)
-				{
-					if(bolehsimpan=="yes")
-					{
+				if(maklumat_pembatalan.size()==0)	{
+					
+					if(bolehsimpan=="yes")	{
+						
 					//	addPembatalan(session);
 						long id_pembatalan_long = DB.getNextID("TBLPPTPENARIKANBALIK_SEQ");
 						id_pembatalan = id_pembatalan_long+"";
@@ -614,10 +612,11 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 					
 					updateStatusPenarikan(session);
 					
-				}else
-				{
+				}	else	{
+					
 					updatePembatalan(session);
 					id_pembatalan = getParam("id_pembatalan");
+				
 				}
 				this.context.put("readmode", "view");				
 						
@@ -630,16 +629,14 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 				myLogger.info("LOT TARIK ARRAY:"+id_lot_tarik);	
 				
 				
-				
-				if (ids != null && id_lot_tarik != null ) 
-				{
-					for (int i = 0; i < ids.length; i++) 
-					{					
-							for (int t = 0; t < id_lot_tarik.length; t++) 
-							{
+				if (ids != null && id_lot_tarik != null )	{
+					
+					for (int i = 0; i < ids.length; i++)	{					
+							for (int t = 0; t < id_lot_tarik.length; t++)	{
+								
 								myLogger.info("I:"+ids[i]+";LT:"+lot_tarik[t]);	
-								if(id_lot_tarik[t].equals(ids[i]))
-								{
+								if(id_lot_tarik[t].equals(ids[i]))	{
+									
 									if (bolehsimpan.equals("yes")) 
 									{
 									logic.pilih_penarikan(id_kat[t],id_lot_tarik[t],lot_tarik[t],lot_ambil[t],luas_lot[t],(String) session.getAttribute("_ekptg_user_id"),id_pembatalan);
@@ -647,9 +644,7 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 									logic.update_status_hakmilik(ids[i], getParam("id_permohonan"),
 											(String) session.getAttribute("_ekptg_user_id"),"16102710","add",getParam("id_fail"));
 									
-									
 									}
-									
 								}								
 							}
 						
@@ -666,9 +661,7 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 					senarai_pembatalan = logic.senarai_penarikan(id_permohonan);
 					this.context.put("senarai_pembatalan", senarai_pembatalan);					
 					vm = "app/ppt/frmPenarikanBalikSenarai.jsp";					
-				}
-				else
-				{
+				}	else	{
 					maklumat_pembatalan = logic.maklumat_penarikan(id_pembatalan);
 					this.context.put("maklumat_pembatalan", maklumat_pembatalan);
 					senarai_hakmilik = logic.senarai_hakmilik_penarikan(getParam("id_permohonan"),id_pembatalan);
@@ -683,8 +676,8 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 		    		this.context.put("senarai_hakmilik_batal",senarai_hakmilik_batal);
 					vm = "app/ppt/frmPenarikanInfoSenaraiLot.jsp";	
 				}
-	    	}
-			else if ("batal".equals(sub_command)){
+	    	}	else if ("batal".equals(sub_command))	{
+	    		
 				this.context.put("readmode", "edit");
 				maklumat_pembatalan = logic.maklumat_penarikan(getParam("id_pembatalan"));
 				this.context.put("maklumat_pembatalan", maklumat_pembatalan);	
@@ -4459,15 +4452,10 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
        		this.context.put("maklumat_subpampasan_pb",maklumat_subpampasan_pb);      		
        		
   			
-  		}
- 		
-		
-		else
-		{	
+  		}	else	{	
 					
 		    
-		    if(getParam("list_name").equals("list_pampasan"))
-			{
+		    if(getParam("list_name").equals("list_pampasan"))	{
 		    	
 		    	String txtNamaPB = getParam("txtNamaPB");
 				String txtNoPB = getParam("txtNoPB");
@@ -4504,10 +4492,17 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 				this.context.put("list_mukim_pampasan", list_mukim_pampasan);  
 				setupPagePB(session,paging_action,senarai_pihak_penting_pampasan);				
 			    vm = "app/ppt/frmPenarikanPampasan.jsp";
-			}
-			else
-			{
-				myLogger.info("MASUK");				
+			    
+			}	else	{
+				
+				myLogger.info("KJP-PPT Skrin Pembayaran Online");
+				
+
+	    		//carian
+				ListCarianPembayaranOnline(session,id_user);		
+	    		//listPageDepan = FrmPermohonanUPTData.getListCarianSek8();
+		
+				
 				String txtNoFail = getParam("txtNoFail");
 				String txtNoRujJkptgNegeri = getParam("txtNoRujJkptgNegeri");
 				String socKementerian = getParam("socKementerian");
@@ -4527,15 +4522,14 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 				listdepan = logic.senarai_pembayaran_online((String) session.getAttribute("_ekptg_user_negeri"),txtNoFail,txtNoRujJkptgNegeri,userIdKementerian,socUrusan,socStatus,"2",(String) session.getAttribute("_portal_role"),(String) session.getAttribute("_ekptg_user_negeri"));						
 				this.context.put("listdepan",listdepan);
 				this.context.put("listdepan_size",listdepan.size());
+				
+				// Screen
 				vm = "app/ppt/frmPembayaranOnlineCarian.jsp";	
 			    setupPage(session,paging_action,listdepan);	
 			    //(String) session.getAttribute("_ekptg_user_id")
 			    //(String) session.getAttribute("_portal_role_")
 			    //(String) session.getAttribute("_ekptg_user_negeri")
 			    
-			   
-				
-			
 			}
 		    
 		}
@@ -5487,7 +5481,7 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 	    	checkEmailPengarah.clear();
 	  
 			//check email (pengarah)
-			checkEmailPengarah = email_penarikan.checkEmail(id_pengarah);
+			// checkEmailPengarah = email_penarikan.checkEmail(id_pengarah);
 			String emelPengarah = "";
 			if(checkEmailPengarah.size()!=0){
 				Hashtable ceP = (Hashtable)checkEmailPengarah.get(0);
@@ -5497,7 +5491,7 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 			//EmailTester et = new EmailTester();
 			
 			if(emelPengarah!=""){
-				email_penarikan.setEmail_MMK_Penarikan(emelPengarah,"mmk_penarikanbalik",nofail,nama_projek,tarikh_permohonan,nama_kementerian);
+				// email_penarikan.setEmail_MMK_Penarikan(emelPengarah,"mmk_penarikanbalik",nofail,nama_projek,tarikh_permohonan,nama_kementerian);
 			}
 			
 			//jenis email
@@ -5516,8 +5510,8 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 		    //GET NAMA PENGARAH DAN ID PENGARAH
 		    String nama_pengarah = "";
 		    String id_pengarah = "";
-		    email_penarikan.setNamaPengarah(userIdNeg);
-		    dataNamaPengarah = email_penarikan.getNamaPengarah();
+		    // email_penarikan.setNamaPengarah(userIdNeg);
+		    // dataNamaPengarah = email_penarikan.getNamaPengarah();
 		    if(dataNamaPengarah.size()!=0){
 		    	Hashtable np = (Hashtable)dataNamaPengarah.get(0);
 		    	nama_pengarah = (String)np.get("nama_pengarah");
@@ -5602,13 +5596,13 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 				
 		  }
 			
-		
+		// KJP-PPT: Skrin Pembayaran Online
 			private String kementerian(String id_user) throws Exception {
-
+				
 				Vector dataKementerianOnline = new Vector();
-
+				
 				dataKementerianOnline.clear();
-
+				
 				modelUPT.setDataKementerianOnline(id_user);
 				dataKementerianOnline = modelUPT.getDataKementerianOnline();
 				String userIdKementerian = "";
@@ -5616,10 +5610,26 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 					Hashtable t = (Hashtable) dataKementerianOnline.get(0);
 					userIdKementerian = t.get("id_kementerian").toString();
 				}
-
+				
 				return userIdKementerian;
 
 			}// close nameAndId
 	 
+			
+
+			private void ListCarianPembayaranOnline(HttpSession session,String id_user) throws Exception{
+		    	
+				String nofail = getParam("nofail");
+				String tarikh = getParam("tarikh_permohonan");
+				String status = getParam("carianStatus");
+		    	
+				context.put("nofail", nofail.trim());
+				context.put("carianTarikh", tarikh.trim());
+				context.put("carianStatus", status);
+					
+				FrmSek8PampasanData.setListCarian(nofail,tarikh,status,id_user);
+		      
+			}//close listcarian
+			
 	 
 }// close class
