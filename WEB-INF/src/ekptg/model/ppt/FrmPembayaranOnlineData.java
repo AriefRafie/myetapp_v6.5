@@ -15710,20 +15710,20 @@ public void deleteFail(String id_fail, HttpSession session) throws Exception {
 			// kena filter by status (sudah diwartakan)
 			if (no_fail != "") {
 				if (!no_fail.equals("")) {
-					sql +=	" AND (UPPER(F.NO_FAIL) LIKE '%" + no_fail.toUpperCase() + "%'" +
-							" OR UPPER(P.NO_RUJUKAN_PTG) LIKE '%" + no_fail.toUpperCase() + "%'" +
-							" OR UPPER(P.NO_RUJUKAN_UPT) LIKE '%" + no_fail.toUpperCase() + "%'" +
-							" OR UPPER(P.NO_RUJUKAN_PTD) LIKE '%" + no_fail.toUpperCase() + "%')";
+					sql +=	" AND (UPPER(F.NO_FAIL) LIKE '%" + no_fail.toUpperCase().trim() + "%'" +
+							" OR UPPER(P.NO_RUJUKAN_PTG) LIKE '%" + no_fail.toUpperCase().trim() + "%'" +
+							" OR UPPER(P.NO_RUJUKAN_UPT) LIKE '%" + no_fail.toUpperCase().trim() + "%'" +
+							" OR UPPER(P.NO_RUJUKAN_PTD) LIKE '%" + no_fail.toUpperCase().trim() + "%')";
 				}
 			}
-			/*
+			
+			// Tak boleh pakai pon untuk Skrin Pembayaran Online
 			if (no_jkptg_negeri != "") {
 				if (!no_jkptg_negeri.trim().equals("")) {
 					sql = sql + " AND UPPER(P.NO_RUJUKAN_UPT) LIKE '%"
 							+ no_jkptg_negeri.trim() + "%'";
 				}
 			}
-			*/
 			if (id_urusan != "") {
 				if (!id_urusan.trim().equals("")) {
 					sql = sql + " AND UPPER(F.ID_SUBURUSAN) LIKE '"

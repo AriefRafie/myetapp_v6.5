@@ -4496,7 +4496,7 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 			    
 			}	else	{
 				
-				myLogger.info("KJP-PPT Skrin Pembayaran Online");
+				myLogger.info("Data KJP-PPT: Skrin Pembayaran Online bagi paparan sahaja");
 				
 				String txtNoFail = getParam("txtNoFail");
 				String txtNoRujJkptgNegeri = getParam("txtNoRujJkptgNegeri");
@@ -4518,7 +4518,7 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 				this.context.put("listdepan",listdepan);
 				this.context.put("listdepan_size",listdepan.size());
 				 
-				// Screen
+				// Screen JSP bagi KJP-PPT Pembayaran Online
 				vm = "app/ppt/frmPembayaranOnlineCarian.jsp";
 			    setupPage(session,paging_action,listdepan);	
 			    //(String) session.getAttribute("_ekptg_user_id")
@@ -4537,7 +4537,7 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 		    this.context.put("negeri_user",(String) session.getAttribute("_ekptg_user_negeri"));		
 		    list_pegawai = logic.list_pegawai((String) session.getAttribute("_ekptg_user_negeri"),"1",(String) session.getAttribute("_ekptg_user_negeri"),(String) session.getAttribute("_portal_role"));
    			this.context.put("list_pegawai",list_pegawai);	
-		
+   			
 		    nama_user = logic.nama_user((String) session.getAttribute("_ekptg_user_id"));
 		    this.context.put("nama_user",nama_user);
 		    this.context.put("id_permohonan",idpermohonan);
