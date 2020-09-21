@@ -199,6 +199,7 @@ public class FrmPengurusanMJMData {
 		,String namaPemohon
 		,String txtTanah
 		,String txtPertimbangan
+		,String txtKesimpulan
 		,String txtPajakan,@SuppressWarnings("rawtypes") Vector docData
 		,HttpSession session
 		, String idTblMemoMenteri,int idCat) throws Exception  {
@@ -213,7 +214,7 @@ public class FrmPengurusanMJMData {
 	    	con.setAutoCommit(false);
 	    	PreparedStatement ps;
 	    	if(id != null){
-	    		ps = con.prepareStatement("UPDATE TBLHTPMEMOMENTERI SET NO_MEMO = ?, NO_FAILSEKSYEN = ?, CATATAN = ?,TARIKH = ?, ID_KEMASKINI = ?, TARIKH_KEMASKINI = ?,STATUS = ?,NAMA_PEMOHON = ?,MAKLUMAT_TANAH = ?,ASAS_PERTIMBANGAN = ?,KADAR_PAJAKAN = ?  WHERE ID_TBLHTPMEMOMENTERI = "+id+"");
+	    		ps = con.prepareStatement("UPDATE TBLHTPMEMOMENTERI SET NO_MEMO = ?, NO_FAILSEKSYEN = ?, CATATAN = ?,TARIKH = ?, ID_KEMASKINI = ?, TARIKH_KEMASKINI = ?,STATUS = ?,NAMA_PEMOHON = ?,MAKLUMAT_TANAH = ?,ASAS_PERTIMBANGAN = ?,KADAR_PAJAKAN = ?,KESIMPULAN = ?  WHERE ID_TBLHTPMEMOMENTERI = "+id+"");
 		    	ps.setString(1, txtNoMemo);
 		    	ps.setString(2, txtNoFail);
 		    	ps.setString(3, txtCatatan);
@@ -227,11 +228,12 @@ public class FrmPengurusanMJMData {
 		    	ps.setString(9, txtTanah);
 		    	ps.setString(10, txtPertimbangan);
 		    	ps.setString(11, txtPajakan);
+		    	ps.setString(12, txtKesimpulan);
 	    	}else{
 	    		idMemo = ID_TBLHTPMEMOMENTERI;
 	    		ps = con.prepareStatement("INSERT INTO TBLHTPMEMOMENTERI " +
-						"(ID_TBLHTPMEMOMENTERI,NO_MEMO,NO_FAILSEKSYEN,CATATAN,TARIKH,ID_MASUK,TARIKH_MASUK,STATUS,ID_KATEGORI,NAMA_PEMOHON,MAKLUMAT_TANAH,ASAS_PERTIMBANGAN,KADAR_PAJAKAN) " +
-						"values(?,?,?,?,?,?,?,?,?,?,?,?,?)");
+						"(ID_TBLHTPMEMOMENTERI,NO_MEMO,NO_FAILSEKSYEN,CATATAN,TARIKH,ID_MASUK,TARIKH_MASUK,STATUS,ID_KATEGORI,NAMA_PEMOHON,MAKLUMAT_TANAH,ASAS_PERTIMBANGAN,KADAR_PAJAKAN,KESIMPULAN) " +
+						"values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 	    		ps.setLong(1, ID_TBLHTPMEMOMENTERI);
 		    	ps.setString(2, txtNoMemo);
 		    	ps.setString(3, txtNoFail);
@@ -247,6 +249,7 @@ public class FrmPengurusanMJMData {
 		    	ps.setString(11, txtTanah);
 		    	ps.setString(12, txtPertimbangan);
 		    	ps.setString(13, txtPajakan);
+		    	ps.setString(14, txtKesimpulan);
 
 	    	}
 
@@ -308,6 +311,7 @@ public class FrmPengurusanMJMData {
 			r.add("MAKLUMAT_TANAH");
 			r.add("ASAS_PERTIMBANGAN");
 			r.add("KADAR_PAJAKAN");
+			r.add("KESIMPULAN");
 			r.set("ID_TBLHTPMEMOMENTERI", id);
 			String sql = r.getSQLSelect("TBLHTPMEMOMENTERI");
 			//System.out.println(sql);
@@ -324,6 +328,7 @@ public class FrmPengurusanMJMData {
 				mmf.setMaklumatTanah(rs.getString("MAKLUMAT_TANAH"));
 				mmf.setAsasPertimbangan(rs.getString("ASAS_PERTIMBANGAN"));
 				mmf.setKadarPajakan(rs.getString("KADAR_PAJAKAN"));
+				mmf.setKesimpulan(rs.getString("KESIMPULAN"));
 
 			}
 		} catch (Exception e) {

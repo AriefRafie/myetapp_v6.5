@@ -74,6 +74,13 @@ tr.three {
 	 			            	<input name="txtPajakan" id="txtPajakan" type="text" value="$!txtPajakan" size="43" maxlength="50" onBlur="this.value=this.value.toUpperCase();" >
 	 						</td>
 				         </tr>
+				         <tr>
+				            <td width="29%" scope="row" align="right" valign="top">Kesimpulan</td>
+				            <td valign="top">:</td>
+				            <td width="70%">
+	 			            	<textarea name="txtKesimpulan" id="txtKesimpulan" rows="5" cols="41" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();">$!txtKesimpulan</textarea>
+	 						</td>
+				         </tr>
 		            <tr>
 			            <td width="29%" scope="row" align="right" valign="top">Tajuk</td>
 			            <td valign="top">:</td>

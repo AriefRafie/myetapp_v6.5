@@ -17,6 +17,7 @@ public class TblMemoMenteriForm {
 	private String maklumatTanah;
 	private String asasPertimbangan;
 	private String kadarPajakan;
+	private String kesimpulan;
 
 	public Long getIdKategori() {
 		return idKategori;
@@ -108,6 +109,12 @@ public class TblMemoMenteriForm {
 	}
 	public void setKadarPajakan(String kadarPajakan) {
 		this.kadarPajakan = kadarPajakan;
+	}
+	public String getKesimpulan() {
+		return kesimpulan;
+	}
+	public void setKesimpulan(String kesimpulan) {
+		this.kesimpulan = kesimpulan;
 	}
 
 }

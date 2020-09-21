@@ -80,6 +80,7 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
     				,getParam("namaPemohon")
     				,getParam("txtTanah")
     				,getParam("txtPertimbangan")
+    				,getParam("txtKesimpulan")
     				,getParam("txtPajakan")
     				,docData,session
     				,getParam("idTblMemoMenteri")
@@ -107,6 +108,7 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
 			this.context.put("txtTanah", getParam("txtTanah"));
 			this.context.put("txtPertimbangan", getParam("txtPertimbangan"));
 			this.context.put("txtPajakan", getParam("txtPajakan"));
+			this.context.put("txtKesimpulan", getParam("txtKesimpulan"));
 			this.context.put("listMemobyNoFail", "true");
 			vm =  PATH+"frmDaftarMemorandum.jsp";
 
@@ -124,7 +126,7 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
 			this.context.put("txtTanah", mmf.getMaklumatTanah());
 			this.context.put("txtPertimbangan", mmf.getAsasPertimbangan());
 			this.context.put("txtPajakan", mmf.getAsasPertimbangan());
-			System.out.println("mmf.getAsasPertimbangan() >>>> "+mmf.getAsasPertimbangan());
+			this.context.put("txtKesimpulan", mmf.getKesimpulan());
 			docData = new Vector<>();
 			docData = logic.findDocBy(mmf.getIdTblHtpMemoMenteri());
 			setupPage(session,action,docData);
@@ -230,6 +232,7 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
 			this.context.put("txtTanah", getParam("txtTanah"));
 			this.context.put("txtPertimbangan", getParam("txtPertimbangan"));
 			this.context.put("txtPajakan", getParam("txtPajakan"));
+			this.context.put("txtKesimpulan", getParam("txtKesimpulan"));
 			this.context.put("pageNow", "docMemo");
 			vm =  PATH+"frmDaftarMemorandum.jsp";
 
@@ -330,6 +333,7 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
 					this.context.put("txtTanah", getParam("txtTanah"));
 					this.context.put("txtPertimbangan", getParam("txtPertimbangan"));
 					this.context.put("txtPajakan", getParam("txtPajakan"));
+					this.context.put("txtKesimpulan", getParam("txtKesimpulan"));
 					vm = PATH+"frmDaftarMemorandum.jsp";
 
 				}
