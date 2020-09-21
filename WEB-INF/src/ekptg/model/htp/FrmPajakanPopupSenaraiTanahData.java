@@ -176,7 +176,7 @@ public class FrmPajakanPopupSenaraiTanahData {
 				h.put("mukim",rs.getString("NAMA_MUKIM") == null ? "" : rs.getString("NAMA_MUKIM"));
 				h.put("daerah", rs.getString("NAMA_DAERAH") == null ? "" : rs.getString("NAMA_DAERAH"));
 				h.put("negeri", rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI"));
-				h.put("namaSeksyen", rs.getString("NAMA_SEKSYENUPI") == null ? "" : rs.getString("NAMA_SEKSYENUPI"));
+				h.put("namaSeksyen", rs.getString("NAMA_SEKSYENUPI") == null ? "TIADA SEKSYEN" : rs.getString("NAMA_SEKSYENUPI"));
 				senaraiTanah.addElement(h);
 				bil++;
 			}
@@ -380,7 +380,7 @@ public class FrmPajakanPopupSenaraiTanahData {
 				h.put("sekatan", rs.getString("SEKATAN") == null ? "" : rs.getString("SEKATAN").toUpperCase());
 				h.put("kementerian", rs.getString("NAMA_KEMENTERIAN") == null ? "" : rs.getString("NAMA_KEMENTERIAN").toUpperCase());
 				h.put("agensi", rs.getString("NAMA_AGENSI") == null ? "" : rs.getString("NAMA_AGENSI").toUpperCase());
-				h.put("namaSeksyen", rs.getString("NAMA_SEKSYENUPI") == null ? "" : rs.getString("NAMA_SEKSYENUPI"));beanMaklumatTanah.addElement(h);
+				h.put("namaSeksyen", rs.getString("NAMA_SEKSYENUPI") == null ? "TIADA SEKSYEN" : rs.getString("NAMA_SEKSYENUPI"));beanMaklumatTanah.addElement(h);
 				//bil++;
 			}
 
