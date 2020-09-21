@@ -71,7 +71,7 @@
           <font class="blink" ><span class="style2">$!list.statusLesen</span></font>
           <font class="blink" ><span class="style2">$!list.statusKelulusanDasar</span></font></td>
           <td class="$row">$list.namaPemohon</td>
-          <td align="center" class="$row">$list.tarikhTerima</td>
+          <td class="$row">$list.tarikhTerima</td>
           <td class="$row">$list.kawasanDipohon</td>
           <td class="$row">PERMOHONAN BARU</td>
           <td class="$row">LESEN PASIR DASAR LAUT</td>

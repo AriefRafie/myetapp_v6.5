@@ -82,8 +82,12 @@
       		<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="dokemaskiniSenarai()"/>
             <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="goBack()"/>
       		#end
+      		##end
       		<!--<input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>-->
-      
+      		
+      		#if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
+		    <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
+		    #end
      	 </td>
       </tr>
     </table>
