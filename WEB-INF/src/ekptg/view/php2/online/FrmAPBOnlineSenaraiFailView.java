@@ -1067,6 +1067,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 
 		setupPage(session,action,list); 
 		}
+		
         //SET DEFAULT PARAM
 		this.context.put("actionOnline", actionOnline);
 		this.context.put("hitButton", hitButton);

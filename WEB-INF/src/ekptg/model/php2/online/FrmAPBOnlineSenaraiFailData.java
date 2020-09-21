@@ -3131,6 +3131,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			String sql = "";
 
 			try {
+				
 				beanMaklumatAmbilPasir = new Vector();
 				db = new Db();
 				Statement stmt = db.getStatement();
