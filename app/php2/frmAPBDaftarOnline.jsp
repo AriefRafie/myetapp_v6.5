@@ -45,7 +45,6 @@
           #elseif ($beanMaklumatPermohonan.jenisPermohonan == '2')
           <td width="70%"><strong>PEMBAHARUAN LESEN</strong></td>
           #end
-
         </tr>
         <tr>
           <td width="1%">&nbsp;</td>
@@ -78,8 +77,13 @@
           <td width="1%" valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
           <td valign="top">Perkara</td>
           <td valign="top">:</td>
-          <td><textarea name="txtPerkara" id="txtPerkara" rows="5" cols="50" $readonly class="$inputTextClass" onKeyUp="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizPerkara);" onKeyDown="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizPerkara);" >$beanMaklumatPermohonan.perkara</textarea>
-          #if ($mode != 'view')<input type="button" name="cmdJanaTajuk" id="cmdJanaTajuk" value="Jana Tajuk" onclick="janaTajuk()"/>#end</td>
+          <td>
+          	<textarea name="txtPerkara" id="txtPerkara" rows="5" cols="50" $readonly class="$inputTextClass" onKeyUp="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizPerkara);" 
+          			onKeyDown="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizPerkara);" >$beanMaklumatPermohonan.perkara</textarea>
+          	#if ($mode != 'view')
+          	<input type="button" name="cmdJanaTajuk" id="cmdJanaTajuk" value="Jana Tajuk" onclick="janaTajuk()"/>
+          	#end
+          </td>
         </tr>
          #if ($mode != 'view')
           <tr>
