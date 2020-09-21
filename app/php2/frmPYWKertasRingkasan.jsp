@@ -277,13 +277,13 @@
 <fieldset id="tableReportKertasRingkasan" style="display:none;"-->
 <legend><strong>SENARAI LAPORAN</strong></legend>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
-#if ($idNegeriUser == '')
+#if ($userRole == '(PHP)PYWPenolongPegawaiTanahNegeri' || $userRole == '(PHP)PYWPenolongPengarahNegeri' || $userRole == '(PHP)PYWPengarahNegeri')
   <tr>
-    <td ><a href="#" class="style2" onClick="javascript:cetakPYWKertasRingkasanNegeri('$idFail')">Kertas Ringkasan1</a></td>
+    <td ><a href="#" class="style2" onClick="javascript:cetakPYWKertasRingkasanNegeri('$idFail')">Kertas Ringkasan</a></td>
   </tr>
 #else  
   <tr>
-    <td ><a href="#" class="style2" onClick="javascript:cetakPYWKertasRingkasan('$idFail')">Kertas Ringkasan2</a></td>
+    <td ><a href="#" class="style2" onClick="javascript:cetakPYWKertasRingkasan('$idFail')">Kertas Ringkasan</a></td>
   </tr>
 #end  
   <tr>

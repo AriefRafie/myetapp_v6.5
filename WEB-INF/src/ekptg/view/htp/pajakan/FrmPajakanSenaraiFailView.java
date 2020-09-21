@@ -82,7 +82,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 	private static final long serialVersionUID = 1L;
 	FrmPajakanHeaderData logicHeader = new FrmPajakanHeaderData();
 	FrmPajakanSenaraiFailData logic = new FrmPajakanSenaraiFailData();
-	private static Logger myLog = Logger.getLogger(ekptg.view.htp.pajakan.FrmPajakanSenaraiFailView.class);
+	private static Logger myLog1 = Logger.getLogger(ekptg.view.htp.pajakan.FrmPajakanSenaraiFailView.class);
 	private PfdFail fail = null;
 	//private Permohonan permohonan = null;
 	private HakmilikUrusan urusan = null;
@@ -148,10 +148,10 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
         String page_ = "0";
         //MJM
         String selectedTabLower = getParam("selectedTabLower");
-        myLog.info("doPost="+doPost+",action="+action+",actionpajakan="+actionPajakan+",mode="+mode+",hitButton="+hitButton);
+        myLog1.info("doPost="+doPost+",action="+action+",actionpajakan="+actionPajakan+",mode="+mode+",hitButton="+hitButton);
         userID = String.valueOf(session.getAttribute("_ekptg_user_id"));
         String portal_role = (String)session.getAttribute("myrole");
-        myLog.info("portal_role ros >>>>> "+portal_role);
+        myLog1.info("portal_role ros >>>>> "+portal_role);
 
         //GET ID PARAM
         String idFail = getParam("idFail");
@@ -160,7 +160,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
         idPermohonan = getParam("idPermohonan");
         String idStatus = getParam("idStatus");
         String subUrusan = getParam("subUrusan");
-        myLog.info("idFail="+idFail+",subUrusan:"+subUrusan);
+        myLog1.info("idFail="+idFail+",subUrusan:"+subUrusan);
         //String idHakmilikUrusan = getParam("idHakmilikUrusan");
 
         //VECTOR
@@ -200,7 +200,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 		if (idJenisFail == null || idJenisFail.trim().length() == 0){
 			idJenisFail = "99999";
 		}
-		myLog.info("actionPajakan:0::"+actionPajakan);
+		myLog1.info("actionPajakan:0::"+actionPajakan);
 		//18/08/2010
 		flagAdvSearch = getParam("flagAdvSearch");
         // Pendaftaran Pajakan 24/01/2017
@@ -247,7 +247,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
         String idUlasanTeknikal = getParam("idUlasanTeknikal");
         String idUlasanSPHP = getParam("idUlasanSPHP");
 		idSubUrusan = subUrusan;
-        myLog.info("idSubUrusan:"+idSubUrusan);
+        myLog1.info("idSubUrusan:"+idSubUrusan);
         idFail_ = idFail;
         if(selectedTabLower.equals("") || selectedTabLower.equals(null))
 	        selectedTabLower = "0";
@@ -266,10 +266,10 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 		Hashtable hUser = getIUser().getPengguna(userId);
 		userJawatan = String.valueOf(hUser.get("idJawatan"));
 		idJawatan = userJawatan;
-		myLog.info("idJawatan >>> "+idJawatan);
+		myLog1.info("idJawatan >>> "+idJawatan);
 		context.put("idjawatan", idJawatan);
-		myLog.info("hitButton ros >>>> "+hitButton);
-		myLog.info("actionPajakan ros >>>> "+actionPajakan);
+		myLog1.info("hitButton ros >>>> "+hitButton);
+		myLog1.info("actionPajakan ros >>>> "+actionPajakan);
 		String statusSemasa = "";
 
 		if(portal_role.contains("HQPengguna")){
@@ -279,12 +279,12 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 		}else if(portal_role.contains("HQPengarah")){
 			statusSemasa = "pelulus";
 		}
-		myLog.info("statusSemasa >>> "+statusSemasa);
+		myLog1.info("statusSemasa >>> "+statusSemasa);
 		this.context.put("statusSemasa", statusSemasa);
 
 		//HITBUTTON
 		if (postDB){
-			//myLog.info("HITBUTTON="+hitButton);
+			//myLog1.info("HITBUTTON="+hitButton);
           	/** Pendaftaran*/
     		if (hitButton.equals("simpan")){
          		idFail = logic.simpan(idNegeri, idKementerian, idAgensi, idSuburusan, idStatusTanah, idJenisFail, getParam("txtNoFailKJP"),
@@ -336,7 +336,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 
         	}else if (hitButton.equals("saveMemo")){
         		saveMemo(idPermohonan, session);
-        		//myLog.info(idFail_);
+        		//myLog1.info(idFail_);
         		uploadFiles(session,idFail_);
 
         	}else if (hitButton.equals("hapusmemo")){
@@ -377,12 +377,12 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
     			logicmjm.hapusSPHP(idUlasanSPHP);
 
         	}else if (hitButton.equals("saveDraf")){
-//    			myLog.debug("** save draft **");
+//    			myLog1.debug("** save draft **");
     			//saveDraf(idPermohonan, session);
     			//downloadDraf(idPermohonan , session);
     			//06/09/2010
     			iDeraf = simpanDraf(idPermohonan, session);
-    			//myLog.debug("** save draft **idDerafPerjanjian="+idDerafPerjanjian);
+    			//myLog1.debug("** save draft **idDerafPerjanjian="+idDerafPerjanjian);
     			simpanLampiran(iDeraf);
 
     		}else if (hitButton.equals("downloadDraf")){
@@ -434,7 +434,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
         	//PENAMATAN
         	}else if (hitButton.equals("selesaisimpan")){
 				String langkah = getParam("sockategori");
-        		myLog.info("masuk sini langkah " +langkah);
+        		myLog1.info("masuk sini langkah " +langkah);
 
         		kemaskiniSimpanStatusSelesai(idFail,idPermohonan,subUrusan,langkah);
         		getStatus().kemaskiniStatusPermohonan(idPermohonan,subUrusan,langkah,userID);
@@ -467,8 +467,8 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 			idPermohonan = hashHeader.get("idPermohonan").toString();
 			idStatus = hashHeader.get("idStatus").toString();
 			subUrusan = hashHeader.get("subUrusan").toString();
-	        myLog.info("idFail="+idFail+",idPermohonan 2="+idPermohonan);
-	        myLog.info("idStatus="+idStatus);
+	        myLog1.info("idFail="+idFail+",idPermohonan 2="+idPermohonan);
+	        myLog1.info("idStatus="+idStatus);
 
 	        /*Semakan jika telah disahkan pengarah atau belum (bagi fail baru didaftar selepas penambahbaikan). syaz. 01122014 */
 			String flagMohonFail = hashHeader.get("flagMohonFail").toString();
@@ -510,7 +510,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
         	this.context.put("mode", mode);
 
 		} else if (actionPajakan.equals("daftarbaru")){  //ACTION PAJAKAN
-			myLog.info("daftarBaru");
+			myLog1.info("daftarBaru");
 			//if ("daftarBaru".equals(submit)){
         	//GO TO DAFTAR BARU PAJAKAN
         	//vm = PATH+"frmPajakanPenerimaanPermohonanDaftar.jsp";
@@ -598,17 +598,17 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 
 			}
 			SimpleDateFormat sdfTahun = new SimpleDateFormat("yyyy");
-		    myLog.info("papardaftar:idPermohonan="+idPermohonan);
+		    myLog1.info("papardaftar:idPermohonan="+idPermohonan);
 		    Vector<HtpPermohonan> peringatanBayaran = getIHTPP().getPeringatanJenisBayaranPer(idPermohonan, "3",sdfTahun.format(new Date()),"21");
 		    this.context.put("bayarPajakan", peringatanBayaran);
 		    page_ = "2";
 		// PERMOHON 06/09/2020
         } else if(actionPajakan.equalsIgnoreCase("paparpemohon")){
 	        	vm ="app/htp/pajakan/pemohon/index.jsp";
-	        	myLog.info("paparpemohon...selectedTab="+selectedTab);
-	        	myLog.info("paparpemohon...selectedTabLower="+selectedTabLower);
+	        	myLog1.info("paparpemohon...selectedTab="+selectedTab);
+	        	myLog1.info("paparpemohon...selectedTabLower="+selectedTabLower);
 
-	    		myLog.info("idJawatan paparpemohon >>> "+idJawatan);
+	    		myLog1.info("idJawatan paparpemohon >>> "+idJawatan);
 	    		this.context.put("idjawatan", idJawatan);
 
         		Vector<Hashtable<String, String>> vec = logicmjm.getMaklumatPemohonPajakan(idPermohonan);
@@ -617,8 +617,8 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
         // ULASAN 06/09/2020
         }else if(actionPajakan.equalsIgnoreCase("paparulasan")){
         	vm ="app/htp/pajakan/ulasan/index.jsp";
-        	myLog.info("paparulasan...selectedTab="+selectedTab);
-        	myLog.info("paparulasan...selectedTabLower="+selectedTabLower);
+        	myLog1.info("paparulasan...selectedTab="+selectedTab);
+        	myLog1.info("paparulasan...selectedTabLower="+selectedTabLower);
     		if (selectedTabLower.equals("0")){
         		//ulasan KJP
     			Vector<Hashtable<String, String>> senaraiUlasanKJP = new Vector<Hashtable<String, String>>();
@@ -649,10 +649,10 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 
         }else if(actionPajakan.equalsIgnoreCase("paparmjm")){
         	vm ="app/htp/pajakan/mjm/index.jsp";
-        	myLog.info("paparmjm...selectedTab="+selectedTab);
-        	myLog.info("paparmjm...selectedTabLower="+selectedTabLower);
+        	myLog1.info("paparmjm...selectedTab="+selectedTab);
+        	myLog1.info("paparmjm...selectedTabLower="+selectedTabLower);
 
-			myLog.info(action+",MJM:mode="+mode);
+			myLog1.info(action+",MJM:mode="+mode);
 			this.context.remove("BeanMJM");
 	    	tarikhSemasa = lebah.util.Util.getDateTime(new Date(), "dd/MM/yyyy");
 			Tblhtpjemaahmenteri mjm = (Tblhtpjemaahmenteri)getIPMJM().getMaklumatMemorandumJemaahMenteri(idPermohonan);
@@ -667,8 +667,8 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 
         }else if(actionPajakan.equalsIgnoreCase("paparderaf")){
         	vm ="app/htp/pajakan/deraf/index.jsp";
-        	myLog.info("paparderaf...selectedTab="+selectedTab);
-        	myLog.info("paparderaf...selectedTabLower="+selectedTabLower);
+        	myLog1.info("paparderaf...selectedTab="+selectedTab);
+        	myLog1.info("paparderaf...selectedTabLower="+selectedTabLower);
 
 
     		//draf memorandum jemaah menteri
@@ -684,7 +684,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
         }else if (actionPajakan.equalsIgnoreCase("paparperjanjian")) {
         	vm ="app/htp/pajakan/perjanjian/index.jsp";
         	//vm =PATHPER+"index.jsp";
-			myLog.info("paparperjanjian="+actionPajakan+",mode="+mode);
+			myLog1.info("paparperjanjian="+actionPajakan+",mode="+mode);
 			Vector<Hashtable <String,String>> senaraiDraf = new Vector<Hashtable <String,String>>();
         	//logicper.setListDraf(idPermohonan);
         	//senaraiDraf = logicper.getSenaraiDraf();
@@ -696,7 +696,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 
         }else if (actionPajakan.equalsIgnoreCase("paparpajakan")) {
         	vm ="app/htp/pajakan/pajakan/index.jsp";
-			myLog.info("paparpajakan="+actionPajakan+",mode="+mode);
+			myLog1.info("paparpajakan="+actionPajakan+",mode="+mode);
 			if (selectedTab.equals("0")){
 	        	Vector<Hashtable <String,String>> senaraiPajakan = new Vector<Hashtable <String,String>>();
 	        	logicper.setListPajakan(idPermohonan);
@@ -723,7 +723,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
             vm  = PATHTAM+"index.jsp";
     	    //if(mode.equalsIgnoreCase("selesaiview")){
         	if(mode.equalsIgnoreCase("view")){
-    	    	myLog.info("selesaiview:idPermohonan="+idPermohonan);
+    	    	myLog1.info("selesaiview:idPermohonan="+idPermohonan);
     	    	statusView(idFail,idPermohonan,mode);
 
 //    	    }else if(mode.equalsIgnoreCase("selesaisimpan")){
@@ -735,7 +735,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 
     	    //}else if(mode.equalsIgnoreCase("selesaikemaskini")){
     	    }else if(mode.equalsIgnoreCase("kemaskini")){
-    	    	myLog.info("selesaikemaskini");
+    	    	myLog1.info("selesaikemaskini");
     	    	statusView(idFail,idPermohonan,mode);
     	    	//this.context.put("modeDisplay", "");
     			//this.context.put("classDis", "");
@@ -756,7 +756,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 			page_ = "11";
 
         } else if(actionPajakan.equals("carian")){
-        	myLog.info("carian");
+        	myLog1.info("carian");
         	vm = PATH+"index.jsp";
           	idNegeri = getParam("socnegericarian");
     		if (idNegeri.equals("-1") || idNegeri.trim().length() == 0){
@@ -810,10 +810,10 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 
 
         } else {
-        	myLog.info("default page");
-        	myLog.info("idKementerian="+idKementerian);
-        	myLog.info("idAgensi="+idAgensi);
-        	myLog.info("idSuburusan="+idSuburusan);
+        	myLog1.info("default page");
+        	myLog1.info("idKementerian="+idKementerian);
+        	myLog1.info("idAgensi="+idAgensi);
+        	myLog1.info("idSuburusan="+idSuburusan);
         	//GO TO LIST FAIL PAJAKAN
 			list = new Vector<Hashtable<String, String>>();
         	vm = PATH+"index.jsp";
@@ -852,20 +852,41 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 					, idSuburusan,idStatus);
 
 			}else{ /**Apabila pilih Negeri, Kementerian atau Agensi*/
-				myLog.info("default XY");
+				myLog1.info("default XY");
 //				list = getIHTP().carianFail(getParam("txtNoFail"), getParam("txtTajukFail"), getParam("txdTarikhTerima")
 //					, getParam("txtNamaPemohon")
 //					, idNegeri
 //					, idKementerian, idAgensi);
-				list = getIHTPFail().getSenaraiFail(userID,getParam("txtNoFail"), getParam("txtTajukFail")
-					,idKementerian, idAgensi
-					,"-1","-1","-1"
-					,"3","",""
-					,"-1","-1",false);
+				if(portal_role.contains("HQPengguna")){
+					list = getIHTPFail().getSenaraiFail(userID,getParam("txtNoFail"), getParam("txtTajukFail")
+							,idKementerian, idAgensi
+							,"-1","-1","-1"
+							,"3","",""
+							,"-1","-1",false);
+				}else if(portal_role.contains("HQPegawai")){
+					list = getIHTPFail().getSenaraiFail(null,getParam("txtNoFail"), getParam("txtTajukFail")
+							,idKementerian, idAgensi
+							,"-1","-1","-1"
+							,"3","",""
+							,"-1","-1",false);
+				}else if(portal_role.contains("HQPengarah")){
+					list = getIHTPFail().getSenaraiFail(null,getParam("txtNoFail"), getParam("txtTajukFail")
+							,idKementerian, idAgensi
+							,"-1","-1","-1"
+							,"3","",""
+							,"-1","-1",false);
+				}else{
+					list = getIHTPFail().getSenaraiFail(userID,getParam("txtNoFail"), getParam("txtTajukFail")
+							,idKementerian, idAgensi
+							,"-1","-1","-1"
+							,"3","",""
+							,"-1","-1",false);
+				}
+
 
 			}
 			if (mode.indexOf("change") != -1) {
-				myLog.info("change");
+				myLog1.info("change");
 				list = getIHTP().carianFail(getParam("txtNoFail"), getParam("txtTajukFail"), getParam("txdTarikhTerima")
 						, getParam("txtNamaPemohon")
 						, idNegeri
@@ -1115,7 +1136,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 	}
 	//UPLOAD FILE MJM
 	private void uploadFiles(HttpSession session,String idFail) throws Exception {
-		myLog.info("uploadFiles");
+		myLog1.info("uploadFiles");
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		ServletFileUpload upload = new ServletFileUpload(factory);
 //			boolean isMultipart = ServletFileUpload.isMultipartContent(request);
@@ -1726,7 +1747,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 
     }
 	public void DrafView(String mode, String idDraf) throws Exception{
-		myLog.info("DrafView:idDraf="+idDraf);
+		myLog1.info("DrafView:idDraf="+idDraf);
 		try{
 			Vector<Hashtable<String, String>> beanDraf = null;
 			if (mode.equalsIgnoreCase("newDraf")){
@@ -1805,7 +1826,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 		private void simpanLampiranDraf(String idPerjanjian,FileItem item) throws Exception {
 			Db db = null;
 			PreparedStatement ps = null;
-			myLog.info("simpanLampiranDraf:idPerjanjian="+idPerjanjian);
+			myLog1.info("simpanLampiranDraf:idPerjanjian="+idPerjanjian);
 			try {
 	        	db = new Db();
 	        	Connection con = db.getConnection();
@@ -1911,11 +1932,11 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 		try{
 	    	Vector<Hashtable<String,String>> beanPajakan = null;
 	    	Pajakan pajakan = getIPajakanBayaran().getMaklumatCukai(idPermohonan);
-	   		myLog.info("cukai="+pajakan.getKadarCukaiString());
+	   		myLog1.info("cukai="+pajakan.getKadarCukaiString());
 			this.context.put("pajakanTemp",pajakan);
 
 	    	if (mode.equalsIgnoreCase("newPajakan")){
-	    		myLog.info("mode=newPajakan");
+	    		myLog1.info("mode=newPajakan");
 	    		beanPajakan = new Vector<Hashtable<String,String>>();
 	    		Hashtable<String,String> hashPajakan = new Hashtable<String,String>();
 	    		hashPajakan.put("tarikhTandatangan", getParam("txdTarikhTandatangan") == null ? "" : getParam("txdTarikhTandatangan"));
@@ -1941,7 +1962,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 	        	this.context.put("classDis", "");
 
 	    	} else if (mode.equalsIgnoreCase("viewPajakan")){
-	    		myLog.info("viewPajakan");
+	    		myLog1.info("viewPajakan");
 	    		beanPajakan = new Vector<Hashtable <String,String>>();
 	    		logicper.setMaklumatPajakan(idPajakan);
 	    		beanPajakan = logicper.getBeanMaklumatPajakan();
@@ -1959,7 +1980,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 
 	    		//mode = update
 	    	}else if(mode.equalsIgnoreCase("updatePajakan")){
-	    		myLog.info("updatePajakan:idpajakan="+idPajakan);
+	    		myLog1.info("updatePajakan:idpajakan="+idPajakan);
 	    		beanPajakan = new Vector<Hashtable <String,String>>();
 	    		logicper.setMaklumatPajakan(idPajakan);
 	    		beanPajakan = logicper.getBeanMaklumatPajakan();
@@ -2022,7 +2043,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
     		//Vector<Hashtable <String,String>> beanMaklumat15A = null;
 			//logicper.setMaklumat15A(idPermohonan);
     		beanMaklumat15A = logicper.getMaklumat15A(idPermohonan);
-    		myLog.info("beanMaklumat15A="+beanMaklumat15A);
+    		myLog1.info("beanMaklumat15A="+beanMaklumat15A);
 
     		if (mode.equalsIgnoreCase("view")){
     			//beanMaklumat15A = new Vector<Hashtable <String,String>>();
@@ -2231,7 +2252,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 	    		logicBayaran.setMaklumatBayaran(idBayaran);
 	   			beanBayaran = logicBayaran.getBeanMaklumatBayaran();
 	   			hashBayar = (Hashtable <String,String>)beanBayaran.get(0);
-	   			myLog.info(hashBayar);
+	   			myLog1.info(hashBayar);
 	   			String disabled = "class='disabled' disabled='disabled'";
 
 	   			this.context.put("BeanBayaranList", beanBayaran);
@@ -2433,7 +2454,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 
 	private void kemaskiniSimpanStatusSelesai(String idFail,String idPermohonan,String idSubUrusan,String langkah)
 		throws Exception {
-		myLog.info("kemaskiniSimpanStatusSelesai ::: langkah >>> "+langkah);
+		myLog1.info("kemaskiniSimpanStatusSelesai ::: langkah >>> "+langkah);
 		 try {
 			subUrusanStatusFail = new Tblrujsuburusanstatusfail();
 			subUrusanStatusFail.setIdPermohonan(Long.parseLong(idPermohonan));

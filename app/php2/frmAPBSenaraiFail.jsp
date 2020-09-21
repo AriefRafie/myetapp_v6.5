@@ -102,8 +102,8 @@
           <td class="$row">$list.namaPemohon</td>
           <td class="$row" align="center">$list.tarikhTerima</td>
           <td class="$row">$list.kawasanDipohon</td>
-          <td class="$row">PERMOHONAN BARU</td>
-          <td class="$row">LESEN PASIR DASAR LAUT</td>
+          <td class="$row">$list.jenisPermohonan</td>
+          <td class="$row">$list.jenisLesen</td>
           <td class="$row">$list.status</td>
         </tr>
    		#end

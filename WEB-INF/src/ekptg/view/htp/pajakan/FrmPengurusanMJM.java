@@ -77,6 +77,10 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
     				,getParam("txdTarikh")
     				,getParam("txtCatatan")
     				,getParam("socStatus")
+    				,getParam("namaPemohon")
+    				,getParam("txtTanah")
+    				,getParam("txtPertimbangan")
+    				,getParam("txtPajakan")
     				,docData,session
     				,getParam("idTblMemoMenteri")
     				,Integer.parseInt(getParam("sockategori")));
@@ -99,6 +103,11 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
 			this.context.put("txdTarikh", getParam("txdTarikh"));
 			this.context.put("txtCatatan", getParam("txtCatatan"));
 			this.context.put("socStatus", getParam("socStatus"));
+			this.context.put("namaPemohon", getParam("namaPemohon"));
+			this.context.put("txtTanah", getParam("txtTanah"));
+			this.context.put("txtPertimbangan", getParam("txtPertimbangan"));
+			this.context.put("txtPajakan", getParam("txtPajakan"));
+			this.context.put("listMemobyNoFail", "true");
 			vm =  PATH+"frmDaftarMemorandum.jsp";
 
 		}else if(hitButton.equals("edit")){
@@ -111,11 +120,17 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
 			this.context.put("txtCatatan", mmf.getCatatan());
 			this.context.put("socStatus", mmf.getStatus());
 			this.context.put("socKategori", mmf.getIdKategori());
+			this.context.put("namaPemohon", mmf.getNamaPemohon());
+			this.context.put("txtTanah", mmf.getMaklumatTanah());
+			this.context.put("txtPertimbangan", mmf.getAsasPertimbangan());
+			this.context.put("txtPajakan", mmf.getAsasPertimbangan());
+			System.out.println("mmf.getAsasPertimbangan() >>>> "+mmf.getAsasPertimbangan());
 			docData = new Vector<>();
 			docData = logic.findDocBy(mmf.getIdTblHtpMemoMenteri());
 			setupPage(session,action,docData);
 			if (1==mmf.getIdKategori()){
-				String noFail = mmf.getNoFailSeksyen();
+				this.context.put("listMemobyNoFail", "true");
+				/*String noFail = mmf.getNoFailSeksyen();
 				System.out.println("noFail >>>> "+noFail);
 				if(noFail.equals("null") || noFail.equals("") || noFail.equals("-")){
 
@@ -123,7 +138,7 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
 
 					listMemobyNoFail = logic.findByNoFail(noFail);
 					this.context.put("listMemobyNoFail", listMemobyNoFail);
-				}
+				}*/
 			}else{
 				this.context.put("listMemobyNoFail", "");
 			}
@@ -175,6 +190,7 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
 			this.context.put("socStatus", "");
 			this.context.put("idTblMemoMenteri", "");
 			this.context.put("mode", "new");
+			this.context.put("listMemobyNoFail", "");
 			docData = new Vector<>();
 			setupPage(session,action,docData);
 			this.context.put("pageNow", "docMemo");
@@ -210,6 +226,10 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
 			this.context.put("txdTarikh", getParam("txdTarikh"));
 			this.context.put("txtCatatan", getParam("txtCatatan"));
 			this.context.put("socStatus", getParam("socStatus"));
+			this.context.put("namaPemohon", getParam("namaPemohon"));
+			this.context.put("txtTanah", getParam("txtTanah"));
+			this.context.put("txtPertimbangan", getParam("txtPertimbangan"));
+			this.context.put("txtPajakan", getParam("txtPajakan"));
 			this.context.put("pageNow", "docMemo");
 			vm =  PATH+"frmDaftarMemorandum.jsp";
 
@@ -306,6 +326,10 @@ public class FrmPengurusanMJM extends AjaxBasedModule{
 					this.context.put("txdTarikh", getParam("txdTarikh"));
 					this.context.put("txtCatatan", getParam("txtCatatan"));
 					this.context.put("socStatus", getParam("socStatus"));
+					this.context.put("namaPemohon", getParam("namaPemohon"));
+					this.context.put("txtTanah", getParam("txtTanah"));
+					this.context.put("txtPertimbangan", getParam("txtPertimbangan"));
+					this.context.put("txtPajakan", getParam("txtPajakan"));
 					vm = PATH+"frmDaftarMemorandum.jsp";
 
 				}
