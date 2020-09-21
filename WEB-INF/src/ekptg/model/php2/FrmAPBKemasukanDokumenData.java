@@ -152,12 +152,13 @@ public class FrmAPBKemasukanDokumenData {
 			//sql = "SELECT ID, NAMA_LAPORAN"
 			//		+ " FROM TBLINTMACGDILAPORAN"
 			//		+ " WHERE URUSAN = 'APB'";
-			sql = "SELECT ID, NAMA_DOKUMEN_RUJUKAN"
+			sql = "SELECT DISTINCT ID, NAMA_DOKUMEN_RUJUKAN"
 					+ " FROM TBLINTPHPDOKUMENRUJUKAN"
 					+ " WHERE URUSAN = 'APB'";			
 			
 			sql = sql + " ORDER BY ID ASC";	
 			ResultSet rs = stmt.executeQuery(sql);
+			myLogger.error("tolong keluar: " +sql);
 			
 			while (rs.next()) {
 				h = new Hashtable();

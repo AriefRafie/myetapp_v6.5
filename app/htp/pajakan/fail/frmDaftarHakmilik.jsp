@@ -318,7 +318,7 @@
                             <td class="$row"><a href="javascript:kemaskiniTanah('$!idPermohonan','$!list.idHakmilikUrusan','$!list.noLot');" class="pautanms">$!list.negeri</a></td>
                             <td class="$row">$!list.daerah</td>
                             <td class="$row">$!list.mukim</td>
-                           <td class="$row">Sek 01</td>
+                           <td class="$row">$!list.namaSeksyen</td>
 
                            	<td class="$row">$!list.kodJenisHakmilik $!list.noHakmilik</td>
                             <td class="$row">$!list.noWarta</td>

@@ -448,7 +448,7 @@ public class StatusBeanPPK implements IStatus {
 	    		" ,S.KETERANGAN  "+
 	    		" ,SM.NAMA_SIMATI"+
 	    		" ,ST.ID_SUBURUSANSTATUS,ST.ID_SUBURUSAN "+
-	    		" ,STF.ID_SUBURUSANSTATUSFAIL, STF.AKTIF,STF.URL CATATAN" +
+	    		" ,STF.ID_SUBURUSANSTATUSFAIL, STF.AKTIF,STF.URL_CATATAN" +
 	    		" ,TO_CHAR(STF.TARIKH_MASUK,'dd/mm/yyyy') TARIKH_MASUK " +
 	    		" ,TO_CHAR(STF.TARIKH_KEMASKINI,'dd/mm/yyyy') TARIKH_SELESAI" +
 	    		" ,STF.ID_PERMOHONAN,STF.ID_FAIL " +
@@ -485,13 +485,13 @@ public class StatusBeanPPK implements IStatus {
 	        			h = new Hashtable<String, String>();  
 	    				//h.put("level",rs.getString("ID_MASUK"));	 
 	    	    		h.put("bil", String.valueOf(bil));
-	    				h.put("id_permohonan", rs.getString("id_permohonan"));
+	    				h.put("id_Permohonan", rs.getString("id_permohonan"));
 	    				h.put("id_suburusan", rs.getString("id_suburusan"));
 	    				h.put("id_suburusanstatusfail", rs.getString("id_suburusanstatusfail"));
 	    				h.put("id_suburusanstatus", rs.getString("id_suburusanstatus"));
 	    				//h.put("id_fail", rs.getString("id_fail")==null?"":rs.getString("id_fail"));
 	    				//h.put("no_fail", rs.getString("no_fail")==null?"":rs.getString("no_fail"));
-	    				h.put("catatan", Utils.isNull(rs.getString("CATATAN")));
+	    				h.put("catatan", Utils.isNull(rs.getString("URL_CATATAN")));
 		    		    h.put("nama_pemohon", rs.getString("NAMA_PEMOHON")==null?"":rs.getString("NAMA_PEMOHON"));
 		    		    h.put("nama_simati", rs.getString("NAMA_SIMATI")==null?"":rs.getString("NAMA_SIMATI"));
 	    		    	h.put("seksyen", rs.getString("SEKSYEN")==null?"":rs.getString("SEKSYEN"));

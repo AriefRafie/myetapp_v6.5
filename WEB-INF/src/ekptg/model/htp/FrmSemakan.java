@@ -261,6 +261,8 @@ public class FrmSemakan {
 		  
 	private String setLampiran(String modul,String rujukan,String idSenarai,String jenisDokumen) throws Exception {		
 		StringBuffer sb = new StringBuffer("");	
+		myLog.info("setLampiran:mode="+mode);
+//		myLog.info("setLampiran:modul="+modul);
 		if(!mode.equals("view")) {
 			sb.append("<a href=\"javascript:onlineAttach('"+rujukan+"','"+idSenarai+"','"+jenisDokumen+"');\">");
 			sb.append("<img border='0' src='../img/plus.gif' width='20' height='15'/>");
@@ -461,6 +463,7 @@ public class FrmSemakan {
 	 }
 	 
 	 private ILampiran getDoc(){
+		myLog.info("getDoc");
 		if(iLampiran == null){
 			iLampiran = new ekptg.model.utils.lampiran.LampiranBean();
 		}

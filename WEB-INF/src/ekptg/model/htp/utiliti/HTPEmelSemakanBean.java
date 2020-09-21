@@ -71,16 +71,16 @@ public class HTPEmelSemakanBean implements IEmel {
 		bff.append("Permohonan Tuan/Puan telah diterima dan nombor fail adalah seperti berikut "+noFail+".");
 		bff.append("<br/>");
 		bff.append("<br/>");
-		bff.append("Sila <i>login</i> masuk ke www.etapp.gov.my untuk semakan serta pengesahan dari pihak tuan/puan.");
+		bff.append("Sila <i>login</i> masuk ke www.myetapp.gov.my untuk semakan serta pengesahan dari pihak tuan/puan.");
 		bff.append("<br/>");
 		bff.append("<br/>");
 		bff.append("Sekian, Terima Kasih.");
 		bff.append("<br/>");
 		bff.append("<br/>");
-		bff.append("etapp_webmaster@ekptg.gov.my");
+		//bff.append("etapp_webmaster@ekptg.gov.my");
 		bff.append("<br/>");
 		bff.append("<br/>");
-		bff.append("Nota : Email ini adalah dijana oleh sistem eTapp dan tidak perlu dibalas.");
+		bff.append("Nota : Email ini adalah dijana oleh sistem MyeTaPP dan tidak perlu dibalas.");
 		bff.append("</p>");
 		return bff.toString();
 		
@@ -105,10 +105,10 @@ public class HTPEmelSemakanBean implements IEmel {
 		bff.append("Sekian, terima kasih.");
 		bff.append("<br/>");
 		bff.append("<br/>");
-		bff.append("etapp_webmaster@ekptg.gov.my");
+		//bff.append("etapp_webmaster@ekptg.gov.my");
 		bff.append("<br/>");
 		bff.append("<br/>");
-		bff.append("Nota : Email ini adalah dijana oleh sistem eTapp dan tidak perlu dibalas.");
+		bff.append("Nota : Email ini adalah dijana oleh sistem MyeTaPP dan tidak perlu dibalas.");
 		bff.append("</p>");
 		return bff.toString();
 		

@@ -1,6 +1,6 @@
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
-  <tr class="table_header">
-    <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
+  <tr class="table_header"  align="center">
+    <td scope="row" width="5%"><strong>Bil</strong></td>
     <td width="20%"><strong>Nama Pegawai</strong></td>
     <td width="30%"><strong>KJP/Agensi/Syarikat</strong></td>
     <td width="20%"><strong>Jawatan</strong></td>
@@ -17,17 +17,16 @@
         #else 
         #set( $row = "row1" )
   #end 
-  <tr>
+  <tr align="center">
     <td class="$row" align="center">$i</td>
-    <td class="$row"><input name="txtNama" type="text" id="txtNama" size="30" onBlur="this.value=this.value.toUpperCase();"/>
-    </td>
-    <td class="$row"><input name="txtAgensi" type="text" id="txtAgensi" size="40" onBlur="this.value=this.value.toUpperCase();"/></td>
+    <td class="$row"><input name="txtNama" type="text" id="txtNama" size="40" onBlur="this.value=this.value.toUpperCase();"/></td>
+    <td class="$row"><input name="txtAgensi" type="text" id="txtAgensi" size="60" onBlur="this.value=this.value.toUpperCase();"/></td>
     <td class="$row"><input name="txtJawatan" type="text" id="txtJawatan" size="30" onBlur="this.value=this.value.toUpperCase();"/></td>
     <td class="$row"><input name="txtNoTel" type="text" id="txtNoTel" onkeyup="validateNumber(this,this.value);" size="10" maxlength="10"/></td>
-    <td class="$row"><input name="txtEmail" type="text" id="txtEmail" size="15"/></td>
+    <td class="$row"><input name="txtEmail" type="text" id="txtEmail" size="20"/></td>
     <td class="$row" align="center"><input type="checkbox" value="$i" name="flagPengerusi" onclick="doUpdateCheck('$i')"/></td>
   </tr>
-#end
+  #end
 
   <tr>
     <td></td>

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import lebah.portal.AjaxBasedModule;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
-import ekptg.model.php2.FrmPYWPopupSenaraiPermohonanData;
+import ekptg.model.php2.FrmPNWPopupSenaraiPermohonanData;
 
 /**
  * 
@@ -21,7 +21,7 @@ public class FrmPNWPopupSenaraiPermohonanView extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
 	
-	FrmPYWPopupSenaraiPermohonanData logic = new FrmPYWPopupSenaraiPermohonanData();
+	FrmPNWPopupSenaraiPermohonanData logic = new FrmPNWPopupSenaraiPermohonanData();
 	
 	String idNegeriUser = null;
 

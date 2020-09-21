@@ -29,13 +29,12 @@ import ekptg.helpers.Utils;
  */
 public class FrmPYWSenaraiMesyuaratData {
 
-	private Vector beanMaklumatPemohon = null;
 	private Vector senaraiMesyuarat = null;
 	private Vector beanMaklumatMesyuarat = null;
 	private Vector beanMaklumatKehadiran = null;
 	private Vector listKehadiran = null;
 	private Vector listPermohonanBaharu = null;
-	private Vector senaraiPermohonan = null;
+	private Vector listPermohonanLanjut = null;
 	private Vector listImejan = null;
 	private Vector beanMaklumatImejan = null;
 	
@@ -56,14 +55,10 @@ public class FrmPYWSenaraiMesyuaratData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			//sql = " SELECT B.ID_PERMOHONAN, C.TAJUK AS TAJUK_MESYUARAT, C.BIL_MESYUARAT, C.TARIKH_MESYUARAT, C.ID_LOKASI, E.LOKASI "
-			//	+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPMESYUARAT C, TBLPHPMESYUARATPERMOHONAN D, TBLPFDRUJLOKASIMESYUARAT E "
-			//	+ " WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PERMOHONAN = D.ID_PERMOHONAN AND C.ID_MESYUARAT = D.ID_MESYUARAT "
-			//	+ " AND C.ID_LOKASI = E.ID_LOKASI AND C.ID_URUSAN = 4 ";SELECT A.ID_MESYUARAT, A.TAJUK, A.BIL_MESYUARAT,A.TARIKH_MESYUARAT, B.ID_LOKASI, B.LOKASI, A.STATUS_MESYUARAT 
-			sql = "SELECT A.ID_MESYUARAT, A.TAJUK, A.BIL_MESYUARAT,A.TARIKH_MESYUARAT, B.LOKASI, A.STATUS_MESYUARAT " +
-				      "FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B "+
-				      "WHERE A.ID_LOKASI = B.ID_LOKASI "+
-				      "AND ID_URUSAN='4'";
+			sql = "SELECT A.ID_MESYUARAT, A.TAJUK, A.BIL_MESYUARAT,A.TARIKH_MESYUARAT, B.LOKASI, A.STATUS_MESYUARAT "
+				+ "FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B "
+				+ "WHERE A.ID_LOKASI = B.ID_LOKASI "
+				+ "AND ID_URUSAN='4'";
 			
 			// tajukMesyuarat
 			if (tajukMesyuarat != null) {
@@ -99,22 +94,6 @@ public class FrmPYWSenaraiMesyuaratData {
 
 			Hashtable h;
 			int bil = 1;
-//			while (rs.next()) {
-//				h = new Hashtable();
-//				h.put("bil", bil);
-//				h.put("idPermohonan",
-//						rs.getString("ID_PERMOHONAN") == null ? "" : rs
-//								.getString("ID_PERMOHONAN"));
-//				h.put("tajukMesyuarat", rs.getString("TAJUK_MESYUARAT") == null ? "" : rs
-//						.getString("TAJUK_MESYUARAT").toUpperCase());
-//				h.put("bilMesyuarat", rs.getString("BIL_MESYUARAT") == null ? "" : rs
-//						.getString("BIL_MESYUARAT").toUpperCase());
-//				h.put("tarikhMesyuarat", rs.getDate("TARIKH_MESYUARAT") == null ? ""
-//						: sdf.format(rs.getDate("TARIKH_MESYUARAT")));
-///				senaraiMesyuarat.addElement(h);
-//				bil++;
-//
-//			}
 			while (rs.next()) {
 				h = new Hashtable();
 				h.put("bil", bil);
@@ -446,10 +425,11 @@ public class FrmPYWSenaraiMesyuaratData {
 			Statement stmt = db.getStatement();
 
 
-			sql = "select a.ID_MESYUARAT_PERMOHONAN, d.no_fail,e.nama,a.flag_jenis_permohonan,a.FLAG_SYOR ,a.CATATAN, c.id_permohonan from tblphpMesyuaratPermohonan a, tblphpmesyuarat b, tblpermohonan c, tblpfdfail d, tblphppemohon e "
-				 +"where a.flag_jenis_permohonan = 'B' and a.id_mesyuarat = b.id_mesyuarat and a.id_permohonan=c.id_permohonan and c.id_fail=d.id_fail "
-				 +"and c.id_pemohon=e.id_pemohon and a.id_mesyuarat='"+idMesyuarat+"'";	
-			sql = sql + " ORDER BY a.ID_MESYUARAT_PERMOHONAN ASC";
+			sql = "SELECT A.ID_MESYUARAT_PERMOHONAN, D.NO_FAIL,E.NAMA, A.FLAG_JENIS_PERMOHONAN, A.FLAG_SYOR , A.CATATAN, C.ID_PERMOHONAN, D.ID_FAIL, F.ID_JENIS_PERMOHONAN "
+				+ "FROM TBLPHPMESYUARATPERMOHONAN A, TBLPHPMESYUARAT B, TBLPERMOHONAN C, TBLPFDFAIL D, TBLPHPPEMOHON E, TBLPHPPERMOHONANSEWA F "
+				+ "WHERE A.FLAG_JENIS_PERMOHONAN = 'B' AND A.ID_MESYUARAT = B.ID_MESYUARAT AND A.ID_PERMOHONAN = C.ID_PERMOHONAN AND C.ID_FAIL = D.ID_FAIL "
+				+ "AND C.ID_PERMOHONAN = F.ID_PERMOHONAN AND F.ID_JENIS_PERMOHONAN = 1 AND C.ID_PEMOHON = E.ID_PEMOHON  AND A.ID_MESYUARAT = '"+idMesyuarat+"'"	
+				+ " ORDER BY A.ID_MESYUARAT_PERMOHONAN ASC";
 
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -468,7 +448,7 @@ public class FrmPYWSenaraiMesyuaratData {
 						rs.getString("NAMA") == null ? "" : rs
 								.getString("NAMA"));
 				if(rs.getString("FLAG_JENIS_PERMOHONAN").equals("B")){
-					h.put("jenisPermohonan","PERMOHONAN BARU");
+					h.put("jenisPermohonan","PERMOHONAN BAHARU");
 				}else{
 					h.put("jenisPermohonan","PERMOHONAN TANGGUH");
 				}
@@ -478,7 +458,62 @@ public class FrmPYWSenaraiMesyuaratData {
 				h.put("catatanKeputusan",
 						rs.getString("CATATAN") == null ? "" : rs
 								.getString("CATATAN"));
+				h.put("idFail",
+						rs.getString("ID_FAIL") == null ? "" : rs
+								.getString("ID_FAIL"));
 				listPermohonanBaharu.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public void setSenaraiPermohonanLanjut(String idMesyuarat) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			listPermohonanLanjut = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+
+			sql = "SELECT A.ID_MESYUARAT_PERMOHONAN, D.NO_FAIL,E.NAMA, A.FLAG_JENIS_PERMOHONAN, A.FLAG_SYOR , A.CATATAN, C.ID_PERMOHONAN, D.ID_FAIL, F.ID_JENIS_PERMOHONAN "
+				+ "FROM TBLPHPMESYUARATPERMOHONAN A, TBLPHPMESYUARAT B, TBLPERMOHONAN C, TBLPFDFAIL D, TBLPHPPEMOHON E, TBLPHPPERMOHONANSEWA F "
+				+ "WHERE A.FLAG_JENIS_PERMOHONAN = 'B' AND A.ID_MESYUARAT = B.ID_MESYUARAT AND A.ID_PERMOHONAN = C.ID_PERMOHONAN AND C.ID_FAIL = D.ID_FAIL "
+				+ "AND C.ID_PERMOHONAN = F.ID_PERMOHONAN AND F.ID_JENIS_PERMOHONAN = 2 AND C.ID_PEMOHON = E.ID_PEMOHON  AND A.ID_MESYUARAT = '"+idMesyuarat+"'"	
+				+ " ORDER BY A.ID_MESYUARAT_PERMOHONAN ASC";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("id",
+						rs.getString("ID_MESYUARAT_PERMOHONAN") == null ? "" : rs
+								.getString("ID_MESYUARAT_PERMOHONAN"));
+				h.put("noFailPermohonan",
+						rs.getString("NO_FAIL") == null ? "" : rs
+								.getString("NO_FAIL"));
+				h.put("namaPemohon",
+						rs.getString("NAMA") == null ? "" : rs
+								.getString("NAMA"));
+				h.put("jenisPermohonan","PERMOHONAN PERLANJUTAN");
+				h.put("flagKeputusan",
+						rs.getString("FLAG_SYOR") == null ? "" : rs
+								.getString("FLAG_SYOR"));
+				h.put("catatanKeputusan",
+						rs.getString("CATATAN") == null ? "" : rs
+								.getString("CATATAN"));
+				h.put("idFail",
+						rs.getString("ID_FAIL") == null ? "" : rs
+								.getString("ID_FAIL"));
+				listPermohonanLanjut.addElement(h);
 				bil++;
 			}
 
@@ -514,34 +549,6 @@ public class FrmPYWSenaraiMesyuaratData {
 			if (db != null)
 				db.close();
 		}
-	}
-
-	public Vector getSenaraiMesyuarat() {
-		return senaraiMesyuarat;
-	}
-
-	public void setSenaraiMesyuarat(Vector senaraiMesyuarat) {
-		this.senaraiMesyuarat = senaraiMesyuarat;
-	}
-	
-	public Vector getBeanMaklumatMesyuarat() {
-		return beanMaklumatMesyuarat;
-	}
-
-	public void setBeanMaklumatMesyuarat(Vector beanMaklumatMesyuarat) {
-		this.beanMaklumatMesyuarat = beanMaklumatMesyuarat;
-	}
-	
-	public Vector getBeanMaklumatKehadiran() {
-		return beanMaklumatKehadiran;
-	}
-	
-	public Vector getListKehadiran() {
-		return listKehadiran;
-	}
-	
-	public Vector getListPermohonanBaharu() {
-		return listPermohonanBaharu;
 	}
 	
 	public void listSenaraiMesyuarat()
@@ -1241,6 +1248,39 @@ public class FrmPYWSenaraiMesyuaratData {
 				db.close();
 		}
 	}
+	
+	public Vector getSenaraiMesyuarat() {
+		return senaraiMesyuarat;
+	}
+
+	public void setSenaraiMesyuarat(Vector senaraiMesyuarat) {
+		this.senaraiMesyuarat = senaraiMesyuarat;
+	}
+	
+	public Vector getBeanMaklumatMesyuarat() {
+		return beanMaklumatMesyuarat;
+	}
+
+	public void setBeanMaklumatMesyuarat(Vector beanMaklumatMesyuarat) {
+		this.beanMaklumatMesyuarat = beanMaklumatMesyuarat;
+	}
+	
+	public Vector getBeanMaklumatKehadiran() {
+		return beanMaklumatKehadiran;
+	}
+	
+	public Vector getListKehadiran() {
+		return listKehadiran;
+	}
+	
+	public Vector getListPermohonanBaharu() {
+		return listPermohonanBaharu;
+	}
+	
+	public Vector getListPermohonanLanjut() {
+		return listPermohonanLanjut;
+	}
+	
 	public Vector getListImejan() {
 		return listImejan;
 	}

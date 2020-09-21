@@ -1,8 +1,49 @@
-<table width="98%" border="0" cellspacing="2" cellpadding="2">
-
-  <tr>
+<table style="width:98%">
+	<tr>
+    	<td>
+    		<fieldset><legend>SENARAI MAKLUMAT RUNDING HARGA</legend>
+    			<table style="width:100%" >
+    				<tr >
+						<!-- <td width="3%"></td> -->
+						<td colspan="6" width="97%">
+						<input type="button" class="stylobutton_" name="cmdtambah" id="cmdtambah" value="Tambah" onclick="javascript:tambahRundingan()">
+						</td>
+						
+				  	</tr>
+			    	<tr class="row2">
+						<td width="3%"><b>Bil</b></td>
+						<td width="20%"><b>Nilai Tanah(RM)</b></td>
+						<td width="20%"><b>Nilai Bangunan(RM)</b></td>
+						<td width="20%"><b>Harga Tawaran(RM)</b></td>
+						<td width="20%"><b>Harga Dipersetujui(RM)</b></td>
+						<td width="17%"><b>Keputusan</b></td>
+				  	</tr>
+			#foreach ($rundingan in $senarai)
+	        	#set( $i = $velocityCount )
+	       		#if ( ($i % 2) == 0 )
+	   	        	#set( $row = "row2" )
+	            #else
+	               	#set( $row = "row1" )
+	          	#end
+	          	
+	          		<tr class="$row">
+			        	<td><a class="stylelabel" href="javascript:kemaskiniRundingan($rundingan.idMaklumatMysrt)">$i.</a></td>
+			        	<td><a class="stylelabel" href="javascript:kemaskiniRundingan($rundingan.idMaklumatMysrt)">$!util_.format2Decimal($rundingan.nilaiTanah)</a></td>
+			        	<td>$!util_.format2Decimal($rundingan.nilaiBangunan)</td>
+						<td>$!util_.format2Decimal($rundingan.hargaTawaran)</td>
+			        	<td>$!util_.format2Decimal($rundingan.hargaSetuju)</td>
+			        	<td>$!rundingan.keputusan</td>
+			      	</tr>
+	      	
+	      	#end
+				</table>		
+  			</fieldset>
+  		</td>
+  	</tr>	
+  	
+  	<tr>
     <td>
-    <fieldset><legend>MAKLUMAT RUNDING HARGA</legend>
+    <fieldset id="rundingharga"><legend>MAKLUMAT RUNDING HARGA</legend>
         <table width="100%" align="center" border="0">
                 	<tr>
 						<td valign="top" width="1%">
@@ -35,7 +76,7 @@
 								#end
 							#end	$!unit
 							<input type="text" name="harga_bersamaan" id="harga_bersamaan" size="11" 
-    						value="$!rundingan.hargaBersamaan" onBlur=""  $mode>
+    						value="$!util_.format2Decimal($!rundingan.hargaBersamaan)" onBlur=""  $mode>
 						</td>
 					</tr>
 					
@@ -51,7 +92,7 @@
 				      	<td width="1%">:</td>				        
 				        <td width="68%">
 							<input type="text" name="nilai_tnh" id="nilai_tnh" size="11" 
-    						value="$!rundingan.nilaiTanah" onBlur=""  $mode>
+    						value="$!util_.format2Decimal($!rundingan.nilaiTanah)" onBlur=""  $mode>
 						</td>
 					</tr>
                 	<tr>
@@ -66,7 +107,7 @@
 				      	<td width="1%">:</td>				        
 				        <td width="68%">
 							<input type="text" name="nilai_bgn" id="nilai_bgn" size="11" 
-    						value="$!rundingan.nilaiBangunan" onBlur=""  $mode>
+    						value="$!util_.format2Decimal($!rundingan.nilaiBangunan)" onBlur=""  $mode>
 						</td>
 					</tr>
                 	<tr>
@@ -81,7 +122,7 @@
 				      	<td width="1%">:</td>				        
 				        <td width="68%">
 							<input type="text" name="harga_beli" id="harga_beli" size="11" 
-    						value="$!rundingan.hargaTawaran" onBlur=""  $mode>
+    						value="$!util_.format2Decimal($!rundingan.hargaTawaran)" onBlur=""  $mode>
 						</td>
 					</tr>
                 	<tr>
@@ -96,7 +137,7 @@
 				      	<td width="1%">:</td>				        
 				        <td width="68%">
 							<input type="text" name="harga_setuju" id="harga_setuju" size="11" 
-    						value="$!rundingan.hargaSetuju" onBlur=""  $mode>
+    						value="$!util_.format2Decimal($!rundingan.hargaSetuju)" onBlur=""  $mode>
 						</td>
 					</tr>					            
                 <!--	<tr>
@@ -158,7 +199,7 @@
 					<td valign="top">&nbsp;</td>
 					<td valign="top">&nbsp;</td>
 					<td valign="top">&nbsp;</td>
-					<td valign="top"><input type="text" readonly class="disabled" name="remLen4" size="3" maxlength="3" value="1500"> Baki Aksara</td>
+					<td valign="top"><input type="text" readonly class="disabled" name="remLen4" size="4" maxlength="3" value="1500"> Baki Aksara</td>
 				</tr>
 
               <td scope="row">&nbsp;</td>
@@ -189,12 +230,12 @@
   						<div align="center">
   						
   						#if($rundinganMode == "new")
-  							<input type="button" class="stylobutton" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:simpanRundingan()">
+  							<input type="button" class="stylobutton_" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:simpanRundingan()">
   							
   						#elseif($rundinganMode == "update")
-  							<input type="button" class="stylobutton" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:updateRundingan()">
+  							<input type="button" class="stylobutton_" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:updateRundingan()">
   						#else
-  							<input type="button" class="stylobutton" name="cmdSimpan" id="cmdSimpan" value="Kemaskini" onclick="javascript:kemaskiniRundingan()">
+  							<input type="button" class="stylobutton_" name="cmdSimpan" id="cmdSimpan" value="Kemaskini" onclick="javascript:kemaskiniRundingan()">
   						#end
   						<!-- 
   						<input type="button" class="stylobutton" name="cmdSimpan" id="cmdSimpan" value="Kembali" onclick="skrinSenarai($!rundingan.fail.getNoFail());">
@@ -224,13 +265,13 @@
 	}
 	
 	function validateModal(elmnt,content,content2) {
-	//if it is character, then remove it..
-	if (isNaN(content)) {
-		elmnt.value = content2;
+		//if it is character, then remove it..
+		if (isNaN(content)) {
+			elmnt.value = content2;
+			return;
+		}
+		var num = content * 1;
+		elmnt.value = num.toFixed(2);
 		return;
 	}
-	var num = content * 1;
-	elmnt.value = num.toFixed(2);
-	return;
-}
 </script>

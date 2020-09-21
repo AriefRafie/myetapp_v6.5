@@ -50,7 +50,7 @@
         #end
         #if ($mode == 'view')
 	      <tr class="$row">
-	        <td class="$row" width="3%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" $disabled $checked /></td>
+	        <td class="$row" width="3%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" $checked $disabled /></td>
 	        <td class="$row" width="82%">$i. $list.keterangan</td>
 	        <td class="$row" width="15%">
 	        $!list.lampirans
@@ -82,9 +82,13 @@
       		<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="dokemaskiniSenarai()"/>
             <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="goBack()"/>
       		#end
+      		##end
       		<!--<input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>-->
-      
+      		
+      		#if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
+		    <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
+		    #end
      	 </td>
       </tr>
-    </table>
+</table>
 </fieldset>

@@ -46,13 +46,16 @@ padding:0 0.25em;
 }
 -->
 </style>
-##if(!$!flagOnline.equals(''))
+##if(!$!modul.equals(''))
+#if($!modul.equals('php'))
 <!-- <link rel="stylesheet" type="text/css" href="../../css/eTapp_PPK.css" /> -->
-##else
+#elseif($!modul.equals('htp'))
+<link rel="stylesheet" type="text/css" href="../../css/eTapp_HTP.css" />
+#else
 <link rel="stylesheet" type="text/css" href="../../css/online.css" />
-##end
+#end
   	<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-  	<input type="hidden" name="idpermohonan" id="idpermohonan" value="$idPermohonan"/>
+  	<input type="text" name="idpermohonan" id="idpermohonan" value="$idPermohonan"/>
 
 	<input type="hidden" name="actionPopup" value="$!actionPopup"/>
   	<input type="hidden" name="hitButton" id="hitButton" value="$!hitButton"/>
@@ -64,6 +67,7 @@ padding:0 0.25em;
 	<input type="hidden" name="rujukan" value="$!idRujukan"/>
 	<input type="hidden" name="jenisdokumen" value="$!jenisDokumen"/>
 	<input type="hidden" name="idsenarai" value="$!idSenarai"/>
+	<input type="hidden" name="iduser" value='$!{session.getAttribute("_ekptg_user_id")}'/>
 
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
@@ -124,10 +128,10 @@ padding:0 0.25em;
   <tr>
   	<td align="center">
   		#if(!$!disability.equals('disabled'))
-    	<input type="button" class="stylobutton100" name="cmdPilih" id="cmdPilih" value="Simpan" onClick="simpanLampiran()">
+    	<input type="button" name="cmdPilih" id="cmdPilih" value="Simpan" onClick="simpanLampiran()">
     	#end
     	<!-- <input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Senarai Tanah" onClick="kembali()">-->
-    	<input type="button" class="stylobutton100" name="cmdtutup" value="Tutup" onClick="tutup()">
+    	<input type="button" name="cmdtutup" value="Tutup" onClick="tutup()">
     	<!--<input type="button" class="stylobutton100" name="cmdrefrehs" value="Refresh" onClick="refresh()"> -->
     </td>
   </tr>
@@ -135,6 +139,7 @@ padding:0 0.25em;
 
 
 <script>
+	
 	//Hapus dokumen pada senarai harta
 	function deleteDetailImej(iDokumen,lampiran){
 		if ( !window.confirm("Adakah Anda Pasti?")) return;
@@ -180,7 +185,7 @@ padding:0 0.25em;
 		//alert('simpanLampiran:$!jenisdokumen');
 		document.${formName}.action = "?_portal_module=ekptg.view.online.UploadDokumenSemak"+paramsimpan;
 
-/* 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup="+document.${formName}.actionPopup.value
+ 		/*document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup="+document.${formName}.actionPopup.value
 									+"&hitButton="+document.${formName}.hitButton.value
 									+"&idHarta=$!idHarta"
 									+"&actionrefresh=$!actionRefresh"; */
@@ -270,6 +275,9 @@ padding:0 0.25em;
 		else if('$!actionRefresh'=='phpphppelepasan'){
 			window.opener.doChangeTabUpper('5');
 		}
+		else if('$!actionRefresh'=='htppajakanmycoid'){
+				window.opener.doChangeTab('1');			
+			}
 	}
 	//setSelected(1,0,0,1);HtaamViewX('$paramOnline')
 
