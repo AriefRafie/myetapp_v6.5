@@ -13,7 +13,7 @@
   	<input type="hidden" name="idStatus" id="idStatus" value="$idStatus"/>
   	<input type="hidden" nama="idpemohon" id="idpemohon"/>
   	<input type="hidden" name="idHakmilikUrusan" id="idHakmilikUrusan" value="$idHakmilikUrusan" />
-  	<input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
+  	<input name="idPermohonan" type="text" id="idPermohonan" value="$idPermohonan"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
 	<tr>
