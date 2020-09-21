@@ -4496,7 +4496,7 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 			    
 			}	else	{
 				
-				myLogger.info("Data KJP-PPT: Skrin Pembayaran Online bagi paparan sahaja");
+				myLogger.info("KJP-PPT: Skrin Pembayaran Online");
 				
 				String txtNoFail = getParam("txtNoFail");
 				String txtNoRujJkptgNegeri = getParam("txtNoRujJkptgNegeri");
@@ -4518,7 +4518,7 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 				this.context.put("listdepan",listdepan);
 				this.context.put("listdepan_size",listdepan.size());
 				 
-				// Screen JSP bagi KJP-PPT Pembayaran Online
+				// Skrin Pembayaran Online
 				vm = "app/ppt/frmPembayaranOnlineCarian.jsp";
 			    setupPage(session,paging_action,listdepan);	
 			    //(String) session.getAttribute("_ekptg_user_id")
