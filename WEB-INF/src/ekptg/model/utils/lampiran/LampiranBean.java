@@ -134,18 +134,9 @@ public class LampiranBean implements ILampiran{
         	long iDokumen = DB.getNextID("TBLHTPDOKUMEN_SEQ");
         	Connection con = db.getConnection();
         	con.setAutoCommit(false);
-<<<<<<< HEAD
-        	PreparedStatement ps = con.prepareStatement("insert into TBLPFDRUJLAMPIRAN " +
-        			"(id_lampiran,id_dokumen,nama_fail,jenis_mime,content,tarikh_masuk) " +
-        			"values(?,?,?,?,?,sysdate)");
-=======
           	PreparedStatement ps = con.prepareStatement("insert into tblhtpdokumen " +
         			"(id_dokumen,id_permohonan,nama_dokumen,jenis_mime,content,id_masuk,tarikh_masuk,jenis_dokumen) " +
         			"values(?,?,?,?,?,?,sysdate,?)");
-//        	PreparedStatement ps = con.prepareStatement("insert into TBLHTPDOKUMEN " +
-//        			"(id_lampiran,id_dokumen,nama_fail,jenis_mime,content,tarikh_masuk) " +
-//        			"values(?,?,?,?,?,sysdate)");
->>>>>>> 8070821f3b8329a447d06db8a6b1b90151504f47
         	ps.setLong(1, iDokumen);
         	ps.setString(2, request.getParameter("rujukan"));
         	ps.setString(3,item.getName());
