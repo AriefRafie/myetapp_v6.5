@@ -70,9 +70,6 @@
       <legend><b>SENARAI PERMOHONAN</b></legend>
       #parse("app/utils/record_paging.jsp")
       <table align="center" width="100%">
-        ##<tr>
-        ##  <td colspan="5" scope="row"><input name="cmdDaftar" type="button" value="Daftar Permohonan Baru" onclick="javascript:daftarBaru()"/></td>
-        ##</tr>
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
           <td width="20%"><strong>No Fail</strong></td>
@@ -84,7 +81,7 @@
           <td width="10%"><strong>Status</strong></td>
         </tr>
         #set ($list = "")
-   	#if ($SenaraiFail.size() > 0)
+   		#if ($SenaraiFail.size() > 0)
   		#foreach ($list in $SenaraiFail)
 		  	#set( $i = $velocityCount )
 		    #if ( ($i % 2) != 1 )
@@ -102,13 +99,13 @@
           <td class="$row">$list.namaPemohon</td>
           <td class="$row" align="center">$list.tarikhTerima</td>
           <td class="$row">$list.kawasanDipohon</td>
-          <td class="$row">PERMOHONAN BARU</td>
-          <td class="$row">LESEN PASIR DASAR LAUT</td>
+          <td class="$row">$list.jenisPermohonan</td>
+          <td class="$row">$list.jenisLesen</td>
           <td class="$row">$list.status</td>
         </tr>
    		#end
  	
- 	#else
+ 		#else
         <tr>
           <td class="row1" align="center">&nbsp;</td>
           <td class="row1">Tiada Rekod</td>
@@ -117,7 +114,7 @@
           <td class="row1" align="center">&nbsp;</td>
           <td class="row1">&nbsp;</td>
         </tr>
- 	#end
+ 		#end
       </table>
       </fieldset></td>
   </tr>

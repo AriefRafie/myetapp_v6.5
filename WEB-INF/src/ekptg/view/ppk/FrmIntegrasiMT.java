@@ -781,6 +781,7 @@ public class FrmIntegrasiMT extends VTemplate {
 			context.put("poskodPerayu", poskodPerayu);	
 			context.put("negeriPerayu", negeriPerayu);	
 			context.put("bandarPerayu", bandarPerayu);	
+			context.put("idnegeriPerayu", idnegeriPerayu);  
 			context.put("umurPerayu", umurPerayu);	
 			context.put("idMahkamah", idMahkamah);	
 			context.put("namaMahkamah", namaMahkamah);	
