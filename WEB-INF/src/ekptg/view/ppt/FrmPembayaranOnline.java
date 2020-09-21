@@ -44,6 +44,7 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 	
 	
 	FrmPembayaranOnlineData logic = new FrmPembayaranOnlineData();
+	FrmSek8PampasanData model = new FrmSek8PampasanData();
 	// Email_PenarikanBalik email_penarikan = new Email_PenarikanBalik();
 	PPTHeader header = new PPTHeader();
 	FrmPermohonanUPTData modelUPT = new FrmPermohonanUPTData();
@@ -4497,11 +4498,10 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 				
 				myLogger.info("KJP-PPT Skrin Pembayaran Online");
 				
-
-	    		//carian
-				ListCarianPembayaranOnline(session,id_user);		
-	    		//listPageDepan = FrmPermohonanUPTData.getListCarianSek8();
-		
+				
+	    		// Carian (Asal dari Pampasan)
+				ListCarianPembayaranOnline(session,id_user);
+//				listPageDepan = model.getListCarian();
 				
 				String txtNoFail = getParam("txtNoFail");
 				String txtNoRujJkptgNegeri = getParam("txtNoRujJkptgNegeri");
@@ -4524,7 +4524,7 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 				this.context.put("listdepan_size",listdepan.size());
 				
 				// Screen
-				vm = "app/ppt/frmPembayaranOnlineCarian.jsp";	
+				vm = "app/ppt/frmPembayaranOnlineCarian.jsp";
 			    setupPage(session,paging_action,listdepan);	
 			    //(String) session.getAttribute("_ekptg_user_id")
 			    //(String) session.getAttribute("_portal_role_")
@@ -5628,8 +5628,8 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 				context.put("carianStatus", status);
 					
 				FrmSek8PampasanData.setListCarian(nofail,tarikh,status,id_user);
-		      
-			}//close listcarian
+		    
+			}//close ListCarianPembayaranOnline
 			
 	 
 }// close class

@@ -15666,11 +15666,14 @@ public void deleteFail(String id_fail, HttpSession session) throws Exception {
 		Db db = null;
 		senarai_pembayaran_online.clear();
 		String sql = "";
+		
+		// Ambil dari FrmSek8PampasanData.java dari setListCarian
+		String nofail = no_fail.trim();
 
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
-
+			
 			sql = "SELECT P.ID_PERMOHONAN,P.TARIKH_PERMOHONAN,"
 					+ " F.NO_FAIL, P.NO_RUJUKAN_UPT, P.NO_RUJUKAN_PTG, "
 					+ " K.NAMA_KEMENTERIAN,D.NAMA_DAERAH,S.KETERANGAN,U.NAMA_SUBURUSAN  FROM TBLPPTPERMOHONAN P, "
@@ -15705,25 +15708,22 @@ public void deleteFail(String id_fail, HttpSession session) throws Exception {
     		}
 
 			// kena filter by status (sudah diwartakan)
-
 			if (no_fail != "") {
-				if (!no_fail.trim().equals("")) {
-					sql = sql + " AND (UPPER(F.NO_FAIL) LIKE '%"
-							+ no_fail.toUpperCase().trim() + "%'";					
-					
-					sql = sql + " OR UPPER(P.NO_RUJUKAN_PTG) LIKE '%"
-					+ no_fail.toUpperCase().trim() + "%'";
-					
-					sql = sql + " OR UPPER(P.NO_RUJUKAN_PTD) LIKE '%"
-					+ no_fail.toUpperCase().trim() + "%')";
+				if (!no_fail.equals("")) {
+					sql +=	" AND (UPPER(F.NO_FAIL) LIKE '%" + no_fail.toUpperCase() + "%'" +
+							" OR UPPER(P.NO_RUJUKAN_PTG) LIKE '%" + no_fail.toUpperCase() + "%'" +
+							" OR UPPER(P.NO_RUJUKAN_UPT) LIKE '%" + no_fail.toUpperCase() + "%'" +
+							" OR UPPER(P.NO_RUJUKAN_PTD) LIKE '%" + no_fail.toUpperCase() + "%')";
 				}
 			}
+			/*
 			if (no_jkptg_negeri != "") {
 				if (!no_jkptg_negeri.trim().equals("")) {
 					sql = sql + " AND UPPER(P.NO_RUJUKAN_UPT) LIKE '%"
 							+ no_jkptg_negeri.trim() + "%'";
 				}
 			}
+			*/
 			if (id_urusan != "") {
 				if (!id_urusan.trim().equals("")) {
 					sql = sql + " AND UPPER(F.ID_SUBURUSAN) LIKE '"
