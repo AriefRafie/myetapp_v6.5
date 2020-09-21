@@ -50,7 +50,7 @@
         #end
         #if ($mode == 'view')
 	      <tr class="$row">
-	        <td class="$row" width="3%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" $disabled $checked /></td>
+	        <td class="$row" width="3%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" $checked $disabled /></td>
 	        <td class="$row" width="82%">$i. $list.keterangan</td>
 	        <td class="$row" width="15%">
 	        $!list.lampirans
@@ -90,5 +90,5 @@
 		    #end
      	 </td>
       </tr>
-    </table>
+</table>
 </fieldset>

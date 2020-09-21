@@ -1,4 +1,4 @@
-package ekptg.model.htp;
+package ekptg.model.htp.online;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
  */
 public class FrmOnlinePajakanHeaderData {
 	
-	private static Logger myLog = Logger.getLogger(ekptg.model.htp.FrmOnlinePajakanHeaderData.class);
+	private static Logger myLog = Logger.getLogger(ekptg.model.htp.online.FrmOnlinePajakanHeaderData.class);
 	private Vector<Hashtable<String, String>> beanMaklumatPermohonan = null;
 	private Vector<Hashtable<String,String>> beanMaklumatPemohon = null;
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -51,7 +51,7 @@ public class FrmOnlinePajakanHeaderData {
 				+" AND C.ID_JENISTANAH = H.ID_JENISTANAH(+) AND A.ID_TARAFKESELAMATAN = I.ID_TARAFKESELAMATAN(+) "
 				+" AND B.ID_STATUS = J.ID_STATUS AND A.ID_FAIL = '" + idFail + "'"
 				+" ";		
-			//myLog.info("setMaklumatPermohonan : " + sql);
+			myLog.info("setMaklumatPermohonan : " + sql);
 			ResultSet rs = stmt.executeQuery(sql);	
 			while (rs.next()) {
 				h = new Hashtable<String, String>();

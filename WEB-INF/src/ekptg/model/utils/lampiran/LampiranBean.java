@@ -654,7 +654,7 @@ public class LampiranBean implements ILampiran{
 			else
 				sb.append("function "+jsUpload+"(idPermohonan,idSenarai,idJenisDokumen) {");
 		
-			sb.append("param = 'actionrefresh=htp"+skrin+"&actionPopup=papar&idPermohonan=&flagOnline=$!flagOnline';");
+			sb.append("param = 'actionrefresh=htppajakanmycoid"+skrin+"&actionPopup=papar&idPermohonan=&flagOnline=$!flagOnline';");
 //			sb.append("param = 'actionrefresh=phpapb&actionPopup=papar&idPermohonan=&flagOnline=$!flagOnline';");
 			sb.append("param += '&rujukan='+idPermohonan+'&jenisdokumen='+idJenisDokumen+'&idsenarai='+idSenarai;");
 			sb.append("var url = '../x/"+session.getAttribute("securityToken")+"/ekptg.view.online.UploadDokumenSemak?'+param;");

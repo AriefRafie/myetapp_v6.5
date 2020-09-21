@@ -15718,12 +15718,14 @@ public void deleteFail(String id_fail, HttpSession session) throws Exception {
 			}
 			
 			// Tak boleh pakai pon untuk Skrin Pembayaran Online
+			/*
 			if (no_jkptg_negeri != "") {
 				if (!no_jkptg_negeri.trim().equals("")) {
 					sql = sql + " AND UPPER(P.NO_RUJUKAN_UPT) LIKE '%"
 							+ no_jkptg_negeri.trim() + "%'";
 				}
 			}
+			*/
 			if (id_urusan != "") {
 				if (!id_urusan.trim().equals("")) {
 					sql = sql + " AND UPPER(F.ID_SUBURUSAN) LIKE '"
