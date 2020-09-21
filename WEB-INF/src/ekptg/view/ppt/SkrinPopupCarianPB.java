@@ -315,7 +315,7 @@ public class SkrinPopupCarianPB extends AjaxBasedModule {
 			
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			sql = " SELECT HMPB.ID_PA1, PNGAMANAH.NAMA_PB AS NAMA_PA1, ";			
+			sql = " SELECT DISTINCT HMPB.ID_PA1, PNGAMANAH.NAMA_PB AS NAMA_PA1, ";			
 					sql += " NVL(PB.UMUR,'0')AS UMUR, BPB.KETERANGAN_SYER,BPB.ID_BAHAGIANPB,BPB.SYER_ATAS,BPB.SYER_BAWAH,HMPB.FLAG_BORANGC,HMPB.FLAG_BORANGE,HMPB.FLAG_BORANGG,HMPB.FLAG_BORANGK,HMPB.KETERANGAN_JENIS_PB,HMPB.CATATAN,HMPB.NO_HANDPHONE,HMPB.NO_TEL_RUMAH,HM.ID_HAKMILIK," +
 					//	"S.ID_SIASATAN," +
 						"PBALIK.ID_PERMOHONAN,";
@@ -338,7 +338,8 @@ public class SkrinPopupCarianPB extends AjaxBasedModule {
 							sql += " '' AS NO_LOTPT,'' AS FLAG_ONLINE,'' AS STATUS_BANTAHAN,'' AS KETERANGAN,'' AS NO_BANTAHAN,";
 						}
 						
-						
+						if(!id_permohonan.equals("") && !id_permohonan.equals(null) && flag_skrin.equals("bantahan_mahkamah"))
+							sql += "NVL('NO.KES : '||IP.NO_KES,'') NO_KES,";
 							
 						
 						sql += "HMPB.ID_PIHAKBERKEPENTINGAN,HMPB.CATATAN2,HMPB.ID_HAKMILIKPB,PB.NAMA_PB,"
@@ -354,7 +355,8 @@ public class SkrinPopupCarianPB extends AjaxBasedModule {
 						}
 						else if(!id_permohonan.equals("") && !id_permohonan.equals(null) && flag_skrin.equals("bantahan_mahkamah"))
 						{
-							sql += " TBLPPTBORANGH HH,TBLPPTBORANGG GG,TBLPPTBANTAHAN BAN,TBLRUJSTATUS SB,Tblrujlot LT, ";
+							sql += " TBLPPTBORANGH HH,TBLPPTBORANGG GG,TBLPPTBANTAHAN BAN,TBLRUJSTATUS SB,Tblrujlot LT, "
+								+ " TBLINTMTPENDAFTARAN IP,";
 						}
 							
 						
@@ -401,8 +403,8 @@ public class SkrinPopupCarianPB extends AjaxBasedModule {
 						
 						sql += " AND NVL(HMPB.ID_JENISPB,0) NOT IN ('40','41','42') ";
 						
-
-						
+						if(!id_permohonan.equals("") && !id_permohonan.equals(null) && flag_skrin.equals("bantahan_mahkamah"))
+							sql += " AND BAN.ID_BANTAHAN=IP.ID_RUJUKAN(+) AND IP.NO_KES IS NOT NULL";
 						
 						if(!no_pb.equals("") && !no_pb.equals(null))
 						{
@@ -547,6 +549,8 @@ public class SkrinPopupCarianPB extends AjaxBasedModule {
 		    	h.put("no_bantahan", rs.getString("NO_BANTAHAN")==null?"":rs.getString("NO_BANTAHAN"));
 		    	h.put("no_lotpt", rs.getString("NO_LOTPT")==null?"":rs.getString("NO_LOTPT"));
 		    	h.put("flag_online", rs.getString("FLAG_ONLINE")==null?"":rs.getString("FLAG_ONLINE"));
+		    	//mt
+		    	h.put("noKes", rs.getString("NO_KES")==null?"":rs.getString("NO_KES"));
 
 				list_pb.addElement(h);
 			}
