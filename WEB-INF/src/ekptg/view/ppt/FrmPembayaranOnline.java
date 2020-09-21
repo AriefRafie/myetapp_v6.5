@@ -4517,7 +4517,7 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 				listdepan = logic.senarai_pembayaran_online((String) session.getAttribute("_ekptg_user_negeri"),txtNoFail,txtNoRujJkptgNegeri,userIdKementerian,socUrusan,socStatus,"2",(String) session.getAttribute("_portal_role"),(String) session.getAttribute("_ekptg_user_negeri"));						
 				this.context.put("listdepan",listdepan);
 				this.context.put("listdepan_size",listdepan.size());
-				
+				 
 				// Screen
 				vm = "app/ppt/frmPembayaranOnlineCarian.jsp";
 			    setupPage(session,paging_action,listdepan);	

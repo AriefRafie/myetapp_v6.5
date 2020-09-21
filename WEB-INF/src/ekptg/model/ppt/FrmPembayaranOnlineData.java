@@ -15706,7 +15706,7 @@ public void deleteFail(String id_fail, HttpSession session) throws Exception {
     				sql += "AND f.id_negeri ='"+negeriuser+"'";
     			}		
     		}
-
+ 
 			// kena filter by status (sudah diwartakan)
 			if (no_fail != "") {
 				if (!no_fail.equals("")) {
