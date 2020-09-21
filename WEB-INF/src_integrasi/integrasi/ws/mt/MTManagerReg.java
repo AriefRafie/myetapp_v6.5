@@ -181,6 +181,20 @@ public class MTManagerReg {
 				jantinaPemohon = "F";
 			}	
 			
+			if (jantinasimati.equals("1"))
+			{
+				jantinasimati = "M";
+			}
+			else if (jantinasimati.equals("2"))
+			{
+				jantinasimati = "F";
+			}
+			else
+			{
+				jantinasimati = "U";
+			}
+			
+			
 			if (jenisPengenalanSimati.equals("") || jenisPengenalanSimati.equals("0"))
 			{
 				jenisPengenalanSimati = "IC";
