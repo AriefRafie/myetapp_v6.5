@@ -334,10 +334,7 @@
 <legend><strong>SENARAI CETAKAN</strong></legend>
 	<table width="100%" border="0" cellspacing="2" cellpadding="2">
 	  <tr>
-      	<td><a href="#" onClick="javascript:cetakSuratTawaran('$!idPermohonan')"><font color="blue">SURAT TAWARAN</font></a></td>
-	  </tr>
-	  <tr>
-      	<td><a href="#" onClick="javascript:cetakSuratSetujuTerima('$!idPermohonan')"><font color="blue">SURAT SETUJU TERIMA</font></a></td>
+      	<td><a href="#" onClick="javascript:cetakSuratTawaran('$!idPermohonan')"><font color="blue">SURAT TAWARAN & SURAT SETUJU TERIMA</font></a></td>
 	  </tr>
 	  <tr>
       	<td><a href="#" onClick="javascript:cetakPemajak('$!idPermohonan')"><font color="blue">DERAF PERJANJIAN PAJAKAN</font></a></td>
