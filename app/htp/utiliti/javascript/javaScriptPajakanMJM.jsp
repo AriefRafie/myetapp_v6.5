@@ -41,6 +41,22 @@
 	    if (hWnd.focus != null) hWnd.focus();
 
 	}
+	function cetakSuratSetujuTerima(idpermohonan) {
+	    var url = "../servlet/ekptg.report.htp.NoFailTajukFail?template=SuratSetujuTerima&idpermohonan="+idpermohonan;
+	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+
+	}
+	function cetakSuratTawaran(idpermohonan) {
+	    var url = "../servlet/ekptg.report.htp.NoFailTajukFail?template=SuratTawaran&idpermohonan="+idpermohonan;
+	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+
+	}
 	//javaScriptPajakanMJM.jsp
 	function KemaskiniMemo(){
 		document.${formName}.actionPajakan.value = "paparmjm";
