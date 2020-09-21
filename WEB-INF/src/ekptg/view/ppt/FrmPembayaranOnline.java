@@ -4498,11 +4498,6 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 				
 				myLogger.info("KJP-PPT Skrin Pembayaran Online");
 				
-				
-	    		// Carian (Asal dari Pampasan)
-				ListCarianPembayaranOnline(session,id_user);
-//				listPageDepan = model.getListCarian();
-				
 				String txtNoFail = getParam("txtNoFail");
 				String txtNoRujJkptgNegeri = getParam("txtNoRujJkptgNegeri");
 				String socKementerian = getParam("socKementerian");
@@ -5615,21 +5610,6 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 
 			}// close nameAndId
 	 
-			
-
-			private void ListCarianPembayaranOnline(HttpSession session,String id_user) throws Exception{
-		    	
-				String nofail = getParam("nofail");
-				String tarikh = getParam("tarikh_permohonan");
-				String status = getParam("carianStatus");
-		    	
-				context.put("nofail", nofail.trim());
-				context.put("carianTarikh", tarikh.trim());
-				context.put("carianStatus", status);
-					
-				FrmSek8PampasanData.setListCarian(nofail,tarikh,status,id_user);
-		    
-			}//close ListCarianPembayaranOnline
 			
 	 
 }// close class
