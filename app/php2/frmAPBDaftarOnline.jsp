@@ -16,7 +16,7 @@
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
   <input name="idUrusan" type="hidden" id="idUrusan" value="$idUrusan"/>
   <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
-  ##<input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />
+  <input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />
   <input name="idPemohon" type="hidden" value="$beanMaklumatPermohonan.idPemohon" />
   <input name="noPermohonanLama" type="hidden" id="noPermohonanLama" value="$noPermohonanLama"/>
 </p>
@@ -35,8 +35,6 @@
           <td width="28%" valign="top">No. Fail</td>
           <td width="1%" >:</td>
           <td width="70%"><strong>$beanMaklumatPermohonan.noFail</strong></td>
-          ##<td width="70%"><input type="text" name="txtNoFail" id="txtNoFail" value="$noFailOnline">
-          ##<a href="javascript:generateNoFailAPB('txtNoFail');"><img border="0" src="../img/plus.gif"/>    
         </tr>
         <tr>
           <td width="1%">&nbsp;</td>
