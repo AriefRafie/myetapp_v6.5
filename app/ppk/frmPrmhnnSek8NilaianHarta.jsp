@@ -1552,7 +1552,7 @@ kod :: $listhath.kod_hakmilik
 	<td></td>
 	<td>Borang A</td>
 	<td>:</td>
-	<td>#if($!skrin_deraf == "yes")
+	<td>#if($!skrin_deraf == "yes" || $!skrin_kembali == "yes")
 			#if ($idStatus == "150")
 			<input type="button" name="boranga" id="boranga" size="40" value="Muatnaik Borang A" size="40" onClick="lampiran('$!idSimati','dokumenA')"/>
 			#end
@@ -1576,7 +1576,7 @@ kod :: $listhath.kod_hakmilik
         #set ($noKpBaruPemohon = $View.noKpBaruPemohon)
     #end
     <!--  skrin_deraf= $skrin_deraf-->
-    #if($!skrin_deraf == "yes")
+    #if($!skrin_deraf == "yes" || $!skrin_kembali == "yes")
 	<tr><td>
     		<td width="1%" valign="top"></td>
     		#if ($idStatus == "150")

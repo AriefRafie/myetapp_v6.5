@@ -10,6 +10,8 @@
 <body  onload="submitForm();" >
 #if($!skrin_deraf == "yes")
 	<div align="center" ><font  class="style2">DRAF PERMOHONAN PEMBAHAGIAN PUSAKA KECIL</font></div>
+#elseif($!skrin_kembali == "yes")
+	<div align="center" ><font  class="style2">PERMOHONAN DIKEMBALIKAN PEMBAHAGIAN PUSAKA KECIL</font></div>
 #else
 	<div align="center" ><font  class="style2">STATUS PERMOHONAN PEMBAHAGIAN PUSAKA KECIL</font></div>
 #end
@@ -69,6 +71,8 @@
 	<td width="14%" align="center">
     	#if($!skrin_deraf == "yes")
     		Nama Simati
+    	#elseif($!skrin_kembali == "yes")
+    		Nama Simati
     	#else
     		No Rujukan Online
     	#end
@@ -76,20 +80,26 @@
 	<td width="17%" align="center">
     	#if($!skrin_deraf == "yes")
     		Nama Pemohon
+    	#elseif($!skrin_kembali == "yes")
+    		Nama Pemohon
     	#else
     		No Fail
     	#end
     
     </td>
 	<td width="4%" align="center">Seksyen</td>
+	#if($!skrin_kembali == "yes")
+	<td width="18%" align="center">Sebab Dikembalikan</td>
+	#else
   	<td width="18%" align="center">Status Permohonan</td>
+  	#end
   	#if($!skrin_deraf == "yes")
   	<td width="5%" align="center">Hapus</td>
-  	#end
+  	#elseif($!skrin_kembali == "yes")
+  	#else
+		<td width="10%" align="center">Maklumat Unit Pusaka</td>
+	#end
   	<!-- Tambah column Maklumat unit Pusaka 25/2/2020 -->
-  		#if($!skrin_deraf != "yes")
-  			<td width="10%" align="center">Maklumat Unit Pusaka</td>
-  		#end
   </tr>	
     
 	#foreach ($senarai in $senaraitugasan )
@@ -137,6 +147,8 @@
 	  <td class="$row" align="center">
 		   #if($!skrin_deraf == "yes")
 		   	$!senarai.nama_simati.toUpperCase()
+		   #elseif($!skrin_kembali == "yes")
+		    $!senarai.nama_simati.toUpperCase()
 		   #else
 		   	$!senarai.no.toUpperCase()
 		   #end
@@ -160,6 +172,8 @@
 		    #end -->
 		  
 		  #if($!skrin_deraf == "yes")
+		  	$!senarai.nama_pemohon.toUpperCase()
+		  #elseif($!skrin_kembali == "yes")
 		  	$!senarai.nama_pemohon.toUpperCase()
 		  #else
 		  	#if ($senarai.nofail!="")
@@ -194,7 +208,9 @@
 	  #end</td>-->
 	  
 	  <td class="$row" align="center">$senarai.seksyen</td>
-	  
+	  #if($!skrin_kembali == "yes")
+	  <td class="$row" align="center"><b>$!senarai.catatan</b></td>
+	  #else
 	  <td class="$row" align="center">
 	  		#if($senarai.id_status == '18')
 	  			<a href="#" title="Papar Maklumat Notis Perbicaraan" onClick="javascript:paparMaklumatNotis('$!senarai.tarikh_notis','$!senarai.tarikh_bicara','$!senarai.masa_bicara','$!senarai.tempat_bicara','$!senarai.alamat1','$!senarai.alamat2','$!senarai.alamat3','$!senarai.poskod','$!senarai.bandar','$!senarai.nama_negeri','$!senarai.seksyen','$!senarai.nofail.toUpperCase()','$!senarai.idPerbicaraan','$!senarai.idFail','$!senarai.icSimati','$!senarai.id_Permohonan','notis')"><strong>$senarai.status</strong> <small style="color:blue">(KLIK DI SINI)</small></a>
@@ -244,12 +260,13 @@
 <!-- 				</label> -->
 		  	
 	  </td>
+	  #end
 	  #if($!skrin_deraf =="yes")
 	  <td class="$row" align="center">
 	  		<a href="#" class="style2" onClick="javascript:doHapus('$!senarai.idFail','$!senarai.id_Permohonan')"><img border="0" src="../img/hapus.gif"/></a>
 	  </td>
-	  #end
-	  #if($!skrin_deraf !="yes")
+	  #elseif($!skrin_kembali == "yes")
+	  #else
 	  <td class="$row">$senarai.nama_pejabat</td>
 	  #end
   
