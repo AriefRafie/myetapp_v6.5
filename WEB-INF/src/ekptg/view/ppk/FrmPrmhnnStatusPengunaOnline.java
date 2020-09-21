@@ -56,6 +56,7 @@ public class FrmPrmhnnStatusPengunaOnline extends AjaxBasedModule {
 		String USER_LOGIN_SYSTEM = (String)session.getAttribute("_portal_login");
 
 		this.context.put("skrin_deraf", "");
+		this.context.put("skrin_kembali", "");
 
 		// this.context.put("skrin_online_popup","");
 
