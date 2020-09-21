@@ -56,7 +56,7 @@
           <td width="10%"><strong>Status</strong></td>
         </tr>
         #set ($list = "")
-   	#if ($SenaraiFail.size() > 0)
+   		#if ($SenaraiFail.size() > 0)
   		#foreach ($list in $SenaraiFail)
 		  	#set( $i = $velocityCount )
 		    #if ( ($i % 2) != 1 )
@@ -80,7 +80,7 @@
         </tr>
    		#end
  	
- 	#else
+ 		#else
         <tr>
           <td class="row1" align="center">&nbsp;</td>
           <td class="row1">Tiada Rekod</td>
@@ -89,7 +89,7 @@
           <td class="row1" align="center">&nbsp;</td>
           <td class="row1">&nbsp;</td>
         </tr>
- 	#end
+ 		#end
       </table>
       </fieldset></td>
   </tr>

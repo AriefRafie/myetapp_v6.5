@@ -36,8 +36,7 @@ public class FrmAPBSenaraiFailData {
 	private Vector beanMaklumatPermohonan = null;
 	private Vector beanMaklumatPemohon = null;
 	private Vector beanMaklumatKawasanMohon = null;
-	//untuk sambungan
-	private Vector beanMaklumatPendaftaranSambungan = null;
+	private Vector beanMaklumatPendaftaranSambungan = null; 	//untuk sambungan
 	private Vector listSambungan = null;
 	private Vector beanMaklumatSambungan = null;
 
