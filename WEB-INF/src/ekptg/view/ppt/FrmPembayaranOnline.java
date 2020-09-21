@@ -44,6 +44,7 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 	
 	
 	FrmPembayaranOnlineData logic = new FrmPembayaranOnlineData();
+	FrmSek8PampasanData model = new FrmSek8PampasanData();
 	// Email_PenarikanBalik email_penarikan = new Email_PenarikanBalik();
 	PPTHeader header = new PPTHeader();
 	FrmPermohonanUPTData modelUPT = new FrmPermohonanUPTData();
@@ -4497,12 +4498,6 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 				
 				myLogger.info("KJP-PPT Skrin Pembayaran Online");
 				
-
-	    		//carian
-				ListCarianPembayaranOnline(session,id_user);		
-	    		//listPageDepan = FrmPermohonanUPTData.getListCarianSek8();
-		
-				
 				String txtNoFail = getParam("txtNoFail");
 				String txtNoRujJkptgNegeri = getParam("txtNoRujJkptgNegeri");
 				String socKementerian = getParam("socKementerian");
@@ -4524,7 +4519,7 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 				this.context.put("listdepan_size",listdepan.size());
 				
 				// Screen
-				vm = "app/ppt/frmPembayaranOnlineCarian.jsp";	
+				vm = "app/ppt/frmPembayaranOnlineCarian.jsp";
 			    setupPage(session,paging_action,listdepan);	
 			    //(String) session.getAttribute("_ekptg_user_id")
 			    //(String) session.getAttribute("_portal_role_")
@@ -5615,21 +5610,6 @@ public class FrmPembayaranOnline extends AjaxBasedModule{
 
 			}// close nameAndId
 	 
-			
-
-			private void ListCarianPembayaranOnline(HttpSession session,String id_user) throws Exception{
-		    	
-				String nofail = getParam("nofail");
-				String tarikh = getParam("tarikh_permohonan");
-				String status = getParam("carianStatus");
-		    	
-				context.put("nofail", nofail.trim());
-				context.put("carianTarikh", tarikh.trim());
-				context.put("carianStatus", status);
-					
-				FrmSek8PampasanData.setListCarian(nofail,tarikh,status,id_user);
-		      
-			}//close listcarian
 			
 	 
 }// close class

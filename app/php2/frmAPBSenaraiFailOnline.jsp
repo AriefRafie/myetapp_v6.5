@@ -67,14 +67,15 @@
         <tr>
           <td class="$row" align="center">$list.bil</td>
           <td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus','$list.idPermohonan')" class="style1">$list.noPermohonan</a>
-          <br />
-          <font class="blink" ><span class="style2">$!list.statusLesen</span></font>
-          <font class="blink" ><span class="style2">$!list.statusKelulusanDasar</span></font></td>
+          	<br />
+          	<font class="blink" ><span class="style2">$!list.statusLesen</span></font>
+          	<font class="blink" ><span class="style2">$!list.statusKelulusanDasar</span></font>
+          </td>
           <td class="$row">$list.namaPemohon</td>
           <td class="$row">$list.tarikhTerima</td>
           <td class="$row">$list.kawasanDipohon</td>
-          <td class="$row">PERMOHONAN BARU</td>
-          <td class="$row">LESEN PASIR DASAR LAUT</td>
+          <td class="$row">$list.jenisPermohonan</td>
+          <td class="$row">$list.jenisLesen</td>
           <td class="$row">$list.status</td>
         </tr>
    		#end
