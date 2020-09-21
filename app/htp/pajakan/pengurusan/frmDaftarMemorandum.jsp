@@ -11,7 +11,7 @@ tr.three {
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input name="mode" type="hidden" id="mode" value="$mode"/>
-  <input name="idTblMemoMenteri" type="text" id="idTblMemoMenteri" value="$!idTblMemoMenteri"/>
+  <input name="idTblMemoMenteri" type="hidden" id="idTblMemoMenteri" value="$!idTblMemoMenteri"/>
 </p>
 <table width="100%" border="0" >
 	<tr>
