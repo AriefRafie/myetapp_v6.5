@@ -724,7 +724,7 @@ function gadaian(){
 	document.${formName}.submit();
 }
 function jawatankuasaRuangPejabat(){
-	document.${formName}.action = "$EkptgUtil.getTabID('Harta Tanah Persekutuan',$portalRole)?_portal_module=ekptg.view.online.htp.pajakankecil.FrmKJPJawatankuasaRuangPejabat";
+	document.${formName}.action = "$EkptgUtil.getTabID('Harta Tanah Persekutuan',$portalRole)?_portal_module=ekptg.view.htp.online.jrp.FrmKJPJawatankuasaRuangPejabat";
 	document.${formName}.submit();
 }
 
