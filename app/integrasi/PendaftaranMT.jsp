@@ -109,8 +109,8 @@
 					          <td>Jantina<font color="red">*</font></td>
 					          <td>:</td>
 					          <td colspan="2">
-					          	<select name="jantina" id="jantina" class="mediumselect" style="text-transform:uppercase;" onblur="uppercase()" $!classRead>
-                               		<option value="U" style="text-transform:uppercase;" onblur="uppercase()">Sila Pilih Jantina</option>
+					          	<select name="jantina" id="jantina" class="mediumselect" style="text-transform:uppercase;" onChange="semakUmur();" $!classRead>
+                               		<option value="U" style="text-transform:uppercase;" onblur="uppercase();">Sila Pilih Jantina</option>
                                    	<option value="M" $!janLaki style="text-transform:uppercase;" onblur="uppercase()">Lelaki</option>
                                  	<option value="F" $!janPer style="text-transform:uppercase;" onblur="uppercase()">Perempuan</option>
                                 </select>
@@ -495,4 +495,72 @@
 		window.close();
 	}
 	
+	function semakUmur() {
+		//alert('umur');
+		//getAgeByIC(document.${formName}.noRef,document.${formName}.noRef.value,document.${formName}.umur);
+	}
+		
+	function getAgeByIC(elmnt,content,umurField) {
+		if (content.length == elmnt.maxLength) {
+			
+			var check_year = parseInt(content.substring(0,2));
+			var check_month = content.substring(2,4);
+			var check_day = content.substring(4,6);
+			var check_day_int = 0;
+			
+			
+			if (check_year < 10) {	 		
+				check_year = check_year + 2000;
+	 			
+	 		} else {
+	 			check_year = check_year + 1900
+	 		} 
+			
+			var check_date_str = check_day + '/' + check_month + '/' + check_year ;
+			//alert(check_date_str+ "----------" +isValidDate_V3(check_date_str));
+			if(isValidDate_V3(check_date_str)==true)
+			{
+					var year = 0;
+					
+					if(content.charAt(0)== 0)
+					{
+					year = parseInt(content.charAt(1));
+					}
+					else
+					{	
+					year = parseInt(content.substring(0,2));
+					}
+			    	today = new Date();
+			 		yearStr = today.getFullYear();
+			 		
+			 		if (year < 10) {
+			 		
+			 			year = year + 2000;
+			 			
+			 		} else {
+			 			year = year + 1900
+			 		} 		
+			 		year = parseInt(yearStr) - year;
+			 		
+			 		if(year > 0){ 
+				 		if(year>=99)
+				 		{
+				 			alert("Umur Melebihi 99 Tahun!")
+				 			returnObjById(umurField).value = 0;
+				 		}
+				 		else
+				 		{
+						returnObjById(umurField).value = year ;
+				 		}
+			 		}
+			 		else if(year == 0){ 		
+			 	    returnObjById(umurField).value = 1 ;
+			 	 	}
+			 		else{
+			 		returnObjById(umurField).value = 0 ;	 			
+			 		}
+			}
+		}
+	}
 </script>
+

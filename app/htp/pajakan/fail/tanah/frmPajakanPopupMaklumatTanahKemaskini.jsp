@@ -270,6 +270,7 @@ padding:0 0.25em;
             #set($sekatan = $!beanMaklumatTanah.getSekatan())
             #set($kementerian = $beanMaklumatTanah.getAgensi().getKementerian().getNamaKementerian())
             #set($agensi = $beanMaklumatTanah.getAgensi().getNamaAgensi())
+            #set($namaSeksyen = $!beanMaklumatTanah.getNamaSeksyen())
 
         ##end
 
@@ -326,7 +327,7 @@ padding:0 0.25em;
                             </tr>
                             <tr>
                                   <td align="right">SEKSYEN :</td>
-                                  <td><font color="blue">Sek 01</font></td>
+                                  <td><font color="blue">$namaSeksyen</font></td>
                             </tr>
 
                           </table>

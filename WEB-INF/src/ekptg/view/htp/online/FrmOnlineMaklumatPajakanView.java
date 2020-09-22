@@ -19,13 +19,13 @@ import ekptg.model.htp.online.FrmOnlineMaklumatPajakanData;
  * @author Firzan.Fir
  *
  */
-public class FrmPajakanOnlineMaklumatPajakanView extends AjaxBasedModule {
+public class FrmOnlineMaklumatPajakanView extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
 	
 	FrmPajakanHeaderData logicHeader = new FrmPajakanHeaderData();
 	FrmOnlineMaklumatPajakanData logic = new FrmOnlineMaklumatPajakanData();
-	private static Logger log = Logger.getLogger(FrmPajakanOnlineMaklumatPajakanView.class);
+	private static Logger log = Logger.getLogger(FrmOnlineMaklumatPajakanView.class);
 	
 	@Override
 	public String doTemplate2() throws Exception {

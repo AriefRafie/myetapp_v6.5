@@ -15,9 +15,10 @@
 #set($socStatus="")
 #end
 -->
-
+ 
 #parse("app/ppt/ListFailOnlineExpired.jsp") 
 
+<!-- Carian Bagi KJP-PPT Skrin Pembayaran Online -->
 #if($ModuleName!="ekptg.view.ppt.FrmPenarikanBalikInternalOnline" && $ModuleName!="ekptg.view.ppt.FrmPembatalanInternalOnline")     
     <fieldset>
     <legend>CARIAN</legend>
@@ -30,17 +31,19 @@
       <label>
         <input name="txtNoFail" type="text" id="txtNoFail" size="40" maxlength="100" value="$!txtNoFail" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()" >
         <input name="txtNoRujJkptgNegeri" type="hidden" id="txtNoRujJkptgNegeri" size="70" maxlength="100" value="$!txtNoRujJkptgNegeri" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()" >
-        </label>      </td>
+      </label>
+    </td>
   </tr>
+  
+  
   <!--
   <tr>
     <td>&nbsp;</td>
     <td><div align="left">No Ruj JKPTG Negeri</div></td>
     <td>:</td>
     <td>
-      <label>
-        
-        </label>    </td>
+      <label>        </label>    
+    </td>
   </tr>
   -->
   
@@ -78,7 +81,10 @@
       </label>       </td>
   </tr>
   #end
+  -->
   
+  
+  <!--
   <tr style="display:none">
     <td>&nbsp;</td>
     <td><div align="left">Urusan</div></td>
@@ -108,10 +114,9 @@
         </label>      
         </td>
   </tr>
+  -->
   
-  --> 
-  
-  <!--
+  <!-- Carian Berdasarkan Status Fail -->
   #if($jenis_permohonan != '3'  && $jenis_permohonan != '1')
    <tr>
     <td>&nbsp;</td>
@@ -144,8 +149,6 @@
         </label>       </td>
   </tr> 
   #end
- 
---> 
   
   <tr>
     <td>&nbsp;</td>
@@ -172,7 +175,7 @@
 
     <fieldset>
     <legend>SENARAI PERMOHONAN  #if($jenis_permohonan == '4'  || $jenis_permohonan == '3')
-    PENARIKAN BALIK
+    PEMBAYARAN ONLINE
     #else
     PEMBATALAN
     #end</legend> 
@@ -220,7 +223,7 @@
   </tr>
   
   #if($listdepan_size!=0)
-           #foreach($list in $listdepan)         
+           #foreach($list in $listdepan)
            #set( $i = $velocityCount )
          		#if ( ($i % 2) != 1 )
               		 #set( $row = "row2" )
@@ -273,12 +276,12 @@
 <script>
 function search_data(){
 	document.${formName}.command.value = "xx";
-	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPenarikanBalikInternalOnline";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPembayaranOnlineData";
 	document.${formName}.submit();
 }
 function clearData() {
 	document.${formName}.command.value = "clearValue";
-	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPenarikanBalikInternalOnline";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPembayaranOnlineData";
 	document.${formName}.submit();
 }
 </script>
@@ -286,12 +289,12 @@ function clearData() {
 <script>
 function search_data(){
 	document.${formName}.command.value = "xx";
-	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPembatalanInternalOnline";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPembayaranOnlineData";
 	document.${formName}.submit();
 }
 function clearData() {
 	document.${formName}.command.value = "clearValue";
-	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPembatalanInternalOnline";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPembayaranOnlineData";
 	document.${formName}.submit();
 }
 </script>

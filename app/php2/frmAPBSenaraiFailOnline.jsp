@@ -56,7 +56,7 @@
           <td width="10%"><strong>Status</strong></td>
         </tr>
         #set ($list = "")
-   	#if ($SenaraiFail.size() > 0)
+   		#if ($SenaraiFail.size() > 0)
   		#foreach ($list in $SenaraiFail)
 		  	#set( $i = $velocityCount )
 		    #if ( ($i % 2) != 1 )
@@ -67,19 +67,20 @@
         <tr>
           <td class="$row" align="center">$list.bil</td>
           <td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus','$list.idPermohonan')" class="style1">$list.noPermohonan</a>
-          <br />
-          <font class="blink" ><span class="style2">$!list.statusLesen</span></font>
-          <font class="blink" ><span class="style2">$!list.statusKelulusanDasar</span></font></td>
+          	<br />
+          	<font class="blink" ><span class="style2">$!list.statusLesen</span></font>
+          	<font class="blink" ><span class="style2">$!list.statusKelulusanDasar</span></font>
+          </td>
           <td class="$row">$list.namaPemohon</td>
           <td class="$row">$list.tarikhTerima</td>
           <td class="$row">$list.kawasanDipohon</td>
-          <td class="$row">PERMOHONAN BARU</td>
-          <td class="$row">LESEN PASIR DASAR LAUT</td>
+          <td class="$row">$list.jenisPermohonan</td>
+          <td class="$row">$list.jenisLesen</td>
           <td class="$row">$list.status</td>
         </tr>
    		#end
  	
- 	#else
+ 		#else
         <tr>
           <td class="row1" align="center">&nbsp;</td>
           <td class="row1">Tiada Rekod</td>
@@ -88,7 +89,7 @@
           <td class="row1" align="center">&nbsp;</td>
           <td class="row1">&nbsp;</td>
         </tr>
- 	#end
+ 		#end
       </table>
       </fieldset></td>
   </tr>

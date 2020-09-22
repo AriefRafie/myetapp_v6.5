@@ -137,9 +137,6 @@ public class LampiranBean implements ILampiran{
           	PreparedStatement ps = con.prepareStatement("insert into tblhtpdokumen " +
         			"(id_dokumen,id_permohonan,nama_dokumen,jenis_mime,content,id_masuk,tarikh_masuk,jenis_dokumen) " +
         			"values(?,?,?,?,?,?,sysdate,?)");
-//        	PreparedStatement ps = con.prepareStatement("insert into TBLHTPDOKUMEN " +
-//        			"(id_lampiran,id_dokumen,nama_fail,jenis_mime,content,tarikh_masuk) " +
-//        			"values(?,?,?,?,?,sysdate)");
         	ps.setLong(1, iDokumen);
         	ps.setString(2, request.getParameter("rujukan"));
         	ps.setString(3,item.getName());
@@ -657,7 +654,7 @@ public class LampiranBean implements ILampiran{
 			else
 				sb.append("function "+jsUpload+"(idPermohonan,idSenarai,idJenisDokumen) {");
 		
-			sb.append("param = 'actionrefresh=htp"+skrin+"&actionPopup=papar&idPermohonan=&flagOnline=$!flagOnline';");
+			sb.append("param = 'actionrefresh=htppajakanmycoid"+skrin+"&actionPopup=papar&idPermohonan=&flagOnline=$!flagOnline';");
 //			sb.append("param = 'actionrefresh=phpapb&actionPopup=papar&idPermohonan=&flagOnline=$!flagOnline';");
 			sb.append("param += '&rujukan='+idPermohonan+'&jenisdokumen='+idJenisDokumen+'&idsenarai='+idSenarai;");
 			sb.append("var url = '../x/"+session.getAttribute("securityToken")+"/ekptg.view.online.UploadDokumenSemak?'+param;");

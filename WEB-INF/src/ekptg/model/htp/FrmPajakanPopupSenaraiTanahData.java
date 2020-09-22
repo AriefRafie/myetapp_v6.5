@@ -56,13 +56,14 @@ public class FrmPajakanPopupSenaraiTanahData {
 				" ,E.NAMA_MUKIM, D.NAMA_DAERAH,C.NAMA_NEGERI "+
 				" ,A.ID_JENISHAKMILIK, A.ID_LOT, A.TARIKH_WARTA "+
 				" ,A.ID_MUKIM, A.ID_DAERAH, A.ID_NEGERI "+
+				" ,A.ID_SEKSYENUPI,F.NAMA_SEKSYENUPI " +
 		       	" ,(SELECT RJH.KOD_JENIS_HAKMILIK FROM TBLRUJJENISHAKMILIK RJH "+
 		       	" 	WHERE RJH.ID_JENISHAKMILIK=A.ID_JENISHAKMILIK " +
 		       	" ) KOD_JENIS_HAKMILIK "+
-				" FROM TBLHTPHAKMILIK A, TBLRUJLOT B, TBLRUJNEGERI C, TBLRUJDAERAH D, TBLRUJMUKIM E "+
+				" FROM TBLHTPHAKMILIK A,TBLRUJSEKSYENUPI F, TBLRUJLOT B, TBLRUJNEGERI C, TBLRUJDAERAH D, TBLRUJMUKIM E "+
 				" WHERE A.ID_LOT = B.ID_LOT(+) AND A.ID_NEGERI = C.ID_NEGERI(+) "+
 				" AND A.ID_DAERAH = D.ID_DAERAH(+) AND A.ID_MUKIM = E.ID_MUKIM(+) "+
-				"";
+				" AND A.ID_SEKSYENUPI = F.ID_SEKSYENUPI(+)";
 
 			//idJenisTanah
 			if (idJenisTanah != null) {
@@ -152,6 +153,7 @@ public class FrmPajakanPopupSenaraiTanahData {
 			}
 
 			sql = sql + " ORDER BY A.ID_HAKMILIK ASC";
+			myLog.info("carianTanah :: sql >>> "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable<String,String> h;
 			int bil = 1;
@@ -174,6 +176,7 @@ public class FrmPajakanPopupSenaraiTanahData {
 				h.put("mukim",rs.getString("NAMA_MUKIM") == null ? "" : rs.getString("NAMA_MUKIM"));
 				h.put("daerah", rs.getString("NAMA_DAERAH") == null ? "" : rs.getString("NAMA_DAERAH"));
 				h.put("negeri", rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI"));
+				h.put("namaSeksyen", rs.getString("NAMA_SEKSYENUPI") == null ? "TIADA SEKSYEN" : rs.getString("NAMA_SEKSYENUPI"));
 				senaraiTanah.addElement(h);
 				bil++;
 			}
@@ -343,12 +346,13 @@ public class FrmPajakanPopupSenaraiTanahData {
 				" , F.KOD_JENIS_HAKMILIK, F.KETERANGAN AS JENIS_HAKMILIK" +
 				" , B.KOD_LOT, B.KETERANGAN AS JENIS_LOT"+
 				" , E.NAMA_MUKIM, D.NAMA_DAERAH" +
+				" , A.ID_SEKSYENUPI,F.NAMA_SEKSYENUPI" +
 				" , C.NAMA_NEGERI, G.KETERANGAN AS SUBKATEGORI, H.KETERANGAN AS KATEGORI, A.SYARAT, A.SEKATAN, I.NAMA_KEMENTERIAN, J.NAMA_AGENSI, K.KETERANGAN AS JENIS_LUAS, K.KOD_LUAS AS KOD_LUAS"+
-				" FROM TBLHTPHAKMILIK A, TBLRUJLOT B" +
+				" FROM TBLHTPHAKMILIK A, TBLRUJSEKSYENUPI F, TBLRUJLOT B" +
 				", TBLRUJNEGERI C, TBLRUJDAERAH D, TBLRUJMUKIM E" +
 				", TBLRUJJENISHAKMILIK F, TBLRUJSUBKATEGORI G, TBLRUJKATEGORI H, TBLRUJKEMENTERIAN I, TBLRUJAGENSI J, TBLRUJLUAS K" +
 				" WHERE A.ID_LOT = B.ID_LOT(+) AND A.ID_NEGERI = C.ID_NEGERI(+) AND A.ID_DAERAH = D.ID_DAERAH(+) AND A.ID_MUKIM = E.ID_MUKIM(+) AND A.ID_JENISHAKMILIK = F.ID_JENISHAKMILIK(+) AND A.ID_SUBKATEGORI = G.ID_SUBKATEGORI(+)"
-				+ " AND G.ID_KATEGORI = H.ID_KATEGORI(+) AND A.ID_KEMENTERIAN = I.ID_KEMENTERIAN(+) AND A.ID_AGENSI = J.ID_AGENSI(+) AND A.ID_LUAS = K.ID_LUAS AND A.ID_HAKMILIK = '" + idHakmilik + "'";
+				+ " AND A.ID_SEKSYENUPI = F.ID_SEKSYENUPI(+) AND G.ID_KATEGORI = H.ID_KATEGORI(+) AND A.ID_KEMENTERIAN = I.ID_KEMENTERIAN(+) AND A.ID_AGENSI = J.ID_AGENSI(+) AND A.ID_LUAS = K.ID_LUAS AND A.ID_HAKMILIK = '" + idHakmilik + "'";
 
 			System.out.println("setMaklumatTanah :: sql >>>> "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
@@ -376,7 +380,7 @@ public class FrmPajakanPopupSenaraiTanahData {
 				h.put("sekatan", rs.getString("SEKATAN") == null ? "" : rs.getString("SEKATAN").toUpperCase());
 				h.put("kementerian", rs.getString("NAMA_KEMENTERIAN") == null ? "" : rs.getString("NAMA_KEMENTERIAN").toUpperCase());
 				h.put("agensi", rs.getString("NAMA_AGENSI") == null ? "" : rs.getString("NAMA_AGENSI").toUpperCase());
-				beanMaklumatTanah.addElement(h);
+				h.put("namaSeksyen", rs.getString("NAMA_SEKSYENUPI") == null ? "TIADA SEKSYEN" : rs.getString("NAMA_SEKSYENUPI"));beanMaklumatTanah.addElement(h);
 				//bil++;
 			}
 
@@ -627,6 +631,7 @@ public class FrmPajakanPopupSenaraiTanahData {
 				", K.KOD_LUAS AS KOD_LUAS " +
 				", A.ID_LUAS_BERSAMAAN ID_LUAS_BERSAMAAN,A.LUAS_BERSAMAAN " +
 				", A.SYARAT, A.SEKATAN" +
+				", A.ID_SEKSYEN,F.NAMA_SEKSYENUPI" +
 				", B.ID_LOT,B.KOD_LOT, B.KETERANGAN AS JENIS_LOT" +
 				", C.ID_NEGERI,C.NAMA_NEGERI" +
 				", D.ID_DAERAH,D.NAMA_DAERAH " +
@@ -639,7 +644,7 @@ public class FrmPajakanPopupSenaraiTanahData {
 				", HU.LUAS LUASPAJAKAN,HU.ID_LUAS ID_LUASPAJAKAN "+
 				", HU.LUAS_BERSAMAAN LUASPAJAKANBER,HU.ID_LUAS_BERSAMAAN ID_LUASPAJAKANBER " +
 				" ,HU.ID_HAKMILIKURUSAN"+
-				" FROM TBLHTPHAKMILIK A, TBLRUJLOT B, TBLRUJNEGERI C, TBLRUJDAERAH D, TBLRUJMUKIM E " +
+				" FROM TBLHTPHAKMILIK A, TBLRUJSEKSYENUPI F, TBLRUJLOT B, TBLRUJNEGERI C, TBLRUJDAERAH D, TBLRUJMUKIM E " +
 				" ,TBLRUJJENISHAKMILIK F, TBLRUJSUBKATEGORI G, TBLRUJKATEGORI H, TBLRUJKEMENTERIAN I " +
 				" ,TBLRUJAGENSI J, TBLRUJLUAS K,TBLHTPHAKMILIKURUSAN HU "+
 				" WHERE A.ID_LOT = B.ID_LOT(+) AND A.ID_NEGERI = C.ID_NEGERI(+) AND A.ID_DAERAH = D.ID_DAERAH(+) " +
@@ -649,8 +654,9 @@ public class FrmPajakanPopupSenaraiTanahData {
 				//" AND A.ID_AGENSI = J.ID_AGENSI(+) AND A.ID_LUAS_BERSAMAAN = K.ID_LUAS " +
 				" AND A.ID_AGENSI = J.ID_AGENSI(+) AND A.ID_LUAS = K.ID_LUAS " +
 				" AND HU.PEGANGAN_HAKMILIK = A.PEGANGAN_HAKMILIK "+
+				" AND A.ID_SEKSYEN = F.ID_SEKSYENUPI(+) " +
 				" AND HU.ID_HAKMILIKURUSAN = '" + idHakmilikUrusan + "'";
-			myLog.info(sql);
+			myLog.info("getMaklumatTanahPajakan :: sql >>>> "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {

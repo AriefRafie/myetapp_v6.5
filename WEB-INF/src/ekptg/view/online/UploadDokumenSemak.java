@@ -19,7 +19,6 @@ import org.apache.log4j.Logger;
 import ekptg.model.entities.Tblrujdokumen;
 import ekptg.model.htp.FrmSemakan;
 import ekptg.model.utils.lampiran.ILampiran;
-import ekptg.model.php2.utiliti.LampiranBean;
 
 public class UploadDokumenSemak extends AjaxBasedModule {
 
@@ -59,6 +58,7 @@ public class UploadDokumenSemak extends AjaxBasedModule {
 		ekptg.model.ppk.util.LampiranBean l = new ekptg.model.ppk.util.LampiranBean();
 
 		modul = getParam("actionrefresh").substring(0,3);
+		this.context.put("modul",modul);
 		myLog.info("uploadFiles:actionrefresh="+getParam("actionrefresh").substring(0,3));
 
 		myLog.info("actionPopup="+actionPopup);
@@ -140,7 +140,17 @@ public class UploadDokumenSemak extends AjaxBasedModule {
 			//dokumens = l.lampiranMengikutHarta(idHarta, null,false);
 			// end Lampiran
 
-	    }else if (actionPopup.equals("paparHA")){
+	    }else if (actionPopup.equals("paparhtp")){
+			disability = "";
+		   	readability = "";
+			//Lampiran
+			if (mode.equals("bilampiran")) {
+				RO_General = "";
+				jumLampiran = getParamAsInteger("jumlahlampiran");
+			}
+		senaraiDokumen = getDocHTP().getLampirans(idRujukan, idJenisDokumen);
+		
+		}else if (actionPopup.equals("paparHA")){
 			disability = "";
 		   	readability = "";
 			//Lampiran

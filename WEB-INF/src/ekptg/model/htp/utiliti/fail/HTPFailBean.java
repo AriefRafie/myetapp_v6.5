@@ -23,8 +23,8 @@ import ekptg.model.htp.entity.Permohonan;
 import ekptg.model.htp.entity.PfdFail;
 
 public class HTPFailBean implements IHTPFail{
-	
- 	private IHtp iHTP = null;  
+
+ 	private IHtp iHTP = null;
 	private static Logger myLog = Logger.getLogger(ekptg.model.htp.utiliti.fail.HTPFailBean.class);
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     String sql = "";
@@ -66,24 +66,24 @@ public class HTPFailBean implements IHTPFail{
 			    //"AND F.id_Urusan IN (1,10)  "
 			    " AND ( F.id_status <> '999' OR F.id_status is null) " +
 			    "AND sf.aktif = '1'  ";
-	      
+
 	      if (idUser != null) {
 	    	  sql = sql + " AND f.id_masuk='"+idUser+"'";
 	      }
-	      
+
 	      if (nofail != null && !"".equals(nofail)) {
 	    	  sql = sql + " AND lower(f.no_Fail) like '%"+nofail.toLowerCase()+"%' ";
 	    	  isSearch = true;
 	      }
-	      
+
 	      if (id_urusan != null && !"-1".equals(id_urusan) && !"".equals(id_urusan)) {
 	    	  sql = sql + "AND f.id_urusan = "+id_urusan+" ";
 	      }
-	      
+
 	      if (tajukfail != null && !"".equals(tajukfail)) {
 	    	  sql = sql + " AND lower(f.tajuk_Fail) like '%"+tajukfail.toLowerCase()+"%' ";
 	      }
-	      
+
 	      if (id_kementerian != null && !"-1".equals(id_kementerian) && !"".equals(id_kementerian)) {
 	    	  sql = sql + "AND f.id_kementerian = '"+id_kementerian+"' ";
 	      }
@@ -93,26 +93,26 @@ public class HTPFailBean implements IHTPFail{
 	      if (id_negeri != null && !"-1".equals(id_negeri) && !"".equals(id_negeri)) {
 	    	  sql = sql + "AND f.id_negeri = '"+id_negeri+"' ";
 	      }
-	      
+
 	      if (id_daerah != null && !"-1".equals(id_daerah) && !"".equals(id_daerah)) {
 	    	  sql = sql + "AND pp.id_daerah = '"+id_daerah+"' ";
 	      }
-	      
+
 	      if (id_mukim != null && !"-1".equals(id_mukim) && !"".equals(id_mukim)) {
 	    	  //by rosli 24/02/2011
 	    	  //sql = sql + "AND thmu.id_mukim = '"+id_mukim+"' ";
 	    	  sql = sql + " AND P.ID_PERMOHONAN IN ( "+
 	    	  	" SELECT THMUI.ID_PERMOHONAN FROM Tblhtphakmilikurusan THMUI "+
-	    		" WHERE THMUI.ID_MUKIM = '"+id_mukim+"')"; 
+	    		" WHERE THMUI.ID_MUKIM = '"+id_mukim+"')";
 	      }
 
 	      if (tarikhBukaFail != null && !"-1".equals(tarikhBukaFail) && !"".equals(tarikhBukaFail)) {
 	    	  sql = sql + " AND TO_CHAR(F.TARIKH_DAFTAR_FAIL,'dd/MM/yyyy') = '"+tarikhBukaFail+"' ";
 	      }
-	      
+
 	      if (!isSearch) {
 	    	  //sql = sql + " AND ROWNUM <= 50 ";
-	      }	      
+	      }
 	      //sql = sql + "ORDER BY  f.id_kemaskini DESC";
 	      //sql = sql + "ORDER BY F.TARIKH_DAFTAR_FAIL DESC";
 	      sql = sql + "ORDER BY P.ID_FAIL DESC" +
@@ -139,16 +139,16 @@ public class HTPFailBean implements IHTPFail{
 	    	  h.put("tarikhDaftar", Utils.isNull(rs.getString("tarikh_daftar")));
 	    	  list.addElement(h);
 	    	  bil++;
-	    	  
+
 	      }
 	      return list;
-	    
+
 	    } finally {
 	      if (db != null) db.close();
-	      
+
 	    }
-	    
-	  }	
+
+	  }
 	@Override
 	public  Vector<Hashtable<String, String>> getSenaraiFail(
 			String idUser,String nofail,String tajukfail
@@ -177,51 +177,51 @@ public class HTPFailBean implements IHTPFail{
 			    " AND P.ID_PERMOHONAN = PP.ID_PERMOHONAN "+
 			    " AND ( F.ID_STATUS <> '999' OR F.ID_STATUS IS NULL) " +
 			    "";
-	      
+
 	      if (idUser != null) {
 	    	  sql = sql + " AND F.ID_MASUK = '"+idUser+"'";
 	      }
-	      
+
 	      if (nofail != null && !"".equals(nofail)) {
 	    	  sql = sql + " AND LOWER(F.NO_FAIL) like '%"+nofail.toLowerCase()+"%' ";
 	    	  //isSearch = true;
 	      }
-	      
+
 	      if (id_urusan != null && !"-1".equals(id_urusan) && !"".equals(id_urusan)) {
 	    	  sql = sql + " AND F.ID_URUSAN = "+id_urusan+" ";
 	      }
-	      
+
 	      //if (tajukfail != null && !"".equals(tajukfail)) {
 	    	  sql = sql + " AND LOWER(F.TAJUK_FAIL) like '%"+tajukfail.toLowerCase()+"%' ";
 	      //}
-	      
+
 	      if (id_kementerian != null && !"-1".equals(id_kementerian) && !"".equals(id_kementerian)) {
 	    	  sql = sql + " AND F.ID_KEMENTERIAN = '"+id_kementerian+"' ";
 	      }
 	      if (id_agensi!= null && !"-1".equals(id_agensi) && !"".equals(id_agensi)) {
 	    	  sql = sql + " AND PP.ID_AGENSI = '"+id_agensi+"' ";
 	      }
-	      
+
 	      if (id_negeri != null && !"-1".equals(id_negeri) && !"".equals(id_negeri)) {
 	    	  sql = sql + " AND F.ID_NEGERI = '"+id_negeri+"' ";
-	      }	      
+	      }
 	      if (id_daerah != null && !"-1".equals(id_daerah) && !"".equals(id_daerah)) {
 	    	  sql = sql + " AND PP.ID_DAERAH = '"+id_daerah+"' ";
-	      }	      
+	      }
 	      if (id_mukim != null && !"-1".equals(id_mukim) && !"".equals(id_mukim)) {
 	    	  //sql = sql + " AND thmu.id_mukim = '"+id_mukim+"' ";
 	    	  sql = sql + " AND P.ID_PERMOHONAN IN ( "+
 	    	  	" SELECT THMUI.ID_PERMOHONAN FROM TBLHTPHAKMILIKURUSAN THMUI "+
-	    		" WHERE THMUI.ID_MUKIM = '"+id_mukim+"')"; 
+	    		" WHERE THMUI.ID_MUKIM = '"+id_mukim+"')";
 	      }
 
 	      if (tarikhBukaFail != null && !"-1".equals(tarikhBukaFail) && !"".equals(tarikhBukaFail)) {
 	    	  sql = sql + " AND TO_CHAR(F.TARIKH_DAFTAR_FAIL,'dd/MM/yyyy') = '"+tarikhBukaFail+"' ";
 	      }
-	      
+
 	      if (!isSearch) {
 	    	  sql = sql + " AND ROWNUM <= 50 ";
-	      }	      
+	      }
 	      //sql = sql + "ORDER BY  f.id_kemaskini DESC";
 	      //sql = sql + "ORDER BY F.TARIKH_DAFTAR_FAIL DESC";
 	      sql = sql + " ORDER BY P.ID_FAIL DESC" +
@@ -242,7 +242,7 @@ public class HTPFailBean implements IHTPFail{
 	    	  h.put("idFail", rs.getString("id_Fail"));
 	    	  h.put("no", Utils.isNull(rs.getString("NO_FAIL")));
 	    	  //options Penswastaan
-	    	  h.put("noFail", Utils.isNull(rs.getString("NO_FAIL")));	    	  
+	    	  h.put("noFail", Utils.isNull(rs.getString("NO_FAIL")));
 	    	  h.put("noP", Utils.isNull(rs.getString("NO_PERMOHONAN")));
 	    	  h.put("negeri", Utils.isNull(rs.getString("NEGERI")));
 	    	  h.put("tajuk", Utils.isNull(rs.getString("TAJUK_FAIL")));
@@ -255,13 +255,13 @@ public class HTPFailBean implements IHTPFail{
 	    	  bil++;
 	      }
 	      return list;
-	    
+
 	    } finally {
 	      if (db != null) db.close();
-	      
+
 	    }
-	  }	
-	
+	  }
+
 	@Override
 	public  Vector<Hashtable<String, String>> getSenaraiFail(
 			String idUser,String nofail,String tajukfail
@@ -285,46 +285,46 @@ public class HTPFailBean implements IHTPFail{
 			    " WHERE P.ID_FAIL = F.ID_FAIL  " +
 			    " AND P.ID_PERMOHONAN = PP.ID_PERMOHONAN "+
 			    " AND ( F.ID_STATUS <> '999' OR F.ID_STATUS IS NULL) " +
-			 
+
 	      		" AND SI.ID_STATUS = RSUSI.ID_STATUS "+
 	      		" AND RSUSI.ID_SUBURUSANSTATUS = RSUSFI.ID_SUBURUSANSTATUS "+
 	      		" AND RSUSFI.AKTIF = '1' "+
 	      		" AND RSUSFI.ID_FAIL =P.ID_FAIL  AND RSUSFI.ID_PERMOHONAN=P.ID_PERMOHONAN "+
 			    "";
-	      
+
 	      if (idUser != null) {
 	    	  sql = sql + " AND F.ID_MASUK = '"+idUser+"'";
 	      }
-	      
+
 	      if (nofail != null && !"".equals(nofail)) {
 	    	  sql = sql + " AND LOWER(F.NO_FAIL) like '%"+nofail.toLowerCase()+"%' ";
 	      }
-	      
+
 	      if (id_urusan != null && !"-1".equals(id_urusan) && !"".equals(id_urusan)) {
 	    	  sql = sql + " AND F.ID_URUSAN = "+id_urusan+" ";
 	      }
-	      
+
 	      //if (tajukfail != null && !"".equals(tajukfail)) {
 	    	  sql = sql + " AND LOWER(F.TAJUK_FAIL) like '%"+tajukfail.toLowerCase()+"%' ";
 	      //}
-	      
-	      if (id_kementerian != null && !"-1".equals(id_kementerian) 
+
+	      if (id_kementerian != null && !"-1".equals(id_kementerian)
 	    		  && !"".equals(id_kementerian) && !id_kementerian.equals("99999")) {
 	    	  sql = sql + " AND F.ID_KEMENTERIAN = '"+id_kementerian+"' ";
 	      }
-	      if (id_agensi!= null && !"-1".equals(id_agensi) 
+	      if (id_agensi!= null && !"-1".equals(id_agensi)
 	    		  && !"".equals(id_agensi) && !id_agensi.equals("99999")) {
 	    	  sql = sql + " AND PP.ID_AGENSI = '"+id_agensi+"' ";
-	      }	      
+	      }
 	      if (id_negeri != null && !"-1".equals(id_negeri) && !"".equals(id_negeri)) {
 	    	  sql = sql + " AND F.ID_NEGERI = '"+id_negeri+"' ";
-	      }	      	      
+	      }
 	      if (id_daerah != null && !"-1".equals(id_daerah) && !"".equals(id_daerah)) {
 	    	  sql = sql + " AND PP.ID_DAERAH = '"+id_daerah+"' ";
-	      }	      
+	      }
 	      if (id_mukim != null && !"-1".equals(id_mukim) && !"".equals(id_mukim)) {
 	    	  //sql = sql + " AND thmu.id_mukim = '"+id_mukim+"' ";
-	    	  sql = sql + "AND B.ID_PERMOHONAN IN "+ 
+	    	  sql = sql + "AND B.ID_PERMOHONAN IN "+
 	    	  	" ( SELECT TPHUI.ID_PERMOHONAN FROM TBLHTPHAKMILIKURUSAN TPHUI "+
 	    	  	" WHERE TPHUI.ID_MUKIM='"+id_mukim+"'"+
 	    	  	" ) ";
@@ -338,34 +338,35 @@ public class HTPFailBean implements IHTPFail{
 
 	      if (tarikhBukaFail != null && !"-1".equals(tarikhBukaFail) && !"".equals(tarikhBukaFail)) {
 	    	  sql = sql + " AND TO_CHAR(F.TARIKH_DAFTAR_FAIL,'dd/MM/yyyy') = '"+tarikhBukaFail+"' ";
-	      }	   
+	      }
 	      if (status != null && !"-1".equals(status) && !"".equals(status)) {
-	    	  sql = sql + "AND B.ID_PERMOHONAN IN "+ 
-	    	  	" ( SELECT  "+ 
-	    	  	" RSUSFI.ID_PERMOHONAN "+ 
-	    	  	"       FROM TBLRUJSTATUS RSI, TBLRUJSUBURUSANSTATUS RSUSI, TBLRUJSUBURUSANSTATUSFAIL RSUSFI "+ 
-	    	  	"       WHERE RSUSI.ID_STATUS = RSI.ID_STATUS  "+ 
-	    	  	"       AND RSUSI.ID_SUBURUSANSTATUS = RSUSFI.ID_SUBURUSANSTATUS  "+ 
-	    	  	"       AND RSUSFI.AKTIF ='1' "+ 
+	    	  sql = sql + "AND B.ID_PERMOHONAN IN "+
+	    	  	" ( SELECT  "+
+	    	  	" RSUSFI.ID_PERMOHONAN "+
+	    	  	"       FROM TBLRUJSTATUS RSI, TBLRUJSUBURUSANSTATUS RSUSI, TBLRUJSUBURUSANSTATUSFAIL RSUSFI "+
+	    	  	"       WHERE RSUSI.ID_STATUS = RSI.ID_STATUS  "+
+	    	  	"       AND RSUSI.ID_SUBURUSANSTATUS = RSUSFI.ID_SUBURUSANSTATUS  "+
+	    	  	"       AND RSUSFI.AKTIF ='1' "+
 	    	  	"       AND RSI.ID_STATUS = '"+status+"'"+
 	    		"    ) "+
-	    		"";     
+	    		"";
 	      }
 	      if (pemohon != null && !"-1".equals(pemohon) && !"".equals(pemohon)) {
-	    	  sql = sql + "AND B.ID_PERMOHONAN IN "+ 
-	    	  	" ( SELECT TPPI.ID_PERMOHONAN "+ 
-	    	  	"       FROM TBLHTPPEMOHON TPPI "+ 
-	    	  	"       WHERE "+ 
+	    	  sql = sql + "AND B.ID_PERMOHONAN IN "+
+	    	  	" ( SELECT TPPI.ID_PERMOHONAN "+
+	    	  	"       FROM TBLHTPPEMOHON TPPI "+
+	    	  	"       WHERE "+
 	    	  	"       TPPI.NAMA_PEMOHON LIKE '%"+pemohon+"%'"+
 	    		"    ) "+
-	    		"";     
+	    		"";
 	      }
 	      if (!isSearch) {
 	    	  sql = sql + " AND ROWNUM <= 50 ";
-	      }	      
+	      }
 	      //sql = sql + "ORDER BY  f.id_kemaskini DESC";
 	      //sql = sql + "ORDER BY F.TARIKH_DAFTAR_FAIL DESC";
-	      sql = sql + " ORDER BY P.ID_FAIL DESC" +
+	      //sql = sql + " ORDER BY P.ID_FAIL DESC" +
+	      sql = sql + " ORDER BY P.TARIKH_MASUK DESC" +
 	      "" ;
 	     // 		"--,TARIKH_DAFTAR DESC";
 
@@ -382,7 +383,7 @@ public class HTPFailBean implements IHTPFail{
 	    	  h.put("idFail", rs.getString("id_Fail"));
 	    	  h.put("no", Utils.isNull(rs.getString("NO_FAIL")));
 	    	  //options Penswastaan,Pajakan
-	    	  h.put("noFail", Utils.isNull(rs.getString("NO_FAIL")));	
+	    	  h.put("noFail", Utils.isNull(rs.getString("NO_FAIL")));
 	    	  //options Pajakan
 	    	  h.put("idPermohonan", Utils.isNull(rs.getString("ID_PERMOHONAN")));
 	    	  h.put("noP", Utils.isNull(rs.getString("NO_PERMOHONAN")));
@@ -401,15 +402,15 @@ public class HTPFailBean implements IHTPFail{
 	    	  bil++;
 	      }
 	      return list;
-	    
+
 	    } finally {
 	      if (db != null) db.close();
-	      
+
 	    }
-	  }	
-	
+	  }
+
 	@Override
-	public void XkemaskiniMaklumatAsasTanah(Hashtable<String, String> data) throws Exception{			
+	public void XkemaskiniMaklumatAsasTanah(Hashtable<String, String> data) throws Exception{
 		Connection conn = null;
 		Db db = null;
 	    try {
@@ -425,9 +426,9 @@ public class HTPFailBean implements IHTPFail{
 			String infoPelan = (String)data.get("noPelan");
 			//String infoIdLot = (String)data.get("socLot");
 			String id_luaslama = (String)data.get("socLuas");
-			String Lokasi = (String)data.get("Lokasi");				
-			String luas = (String)data.get("Luas");				
-			String luasBersamaan = (String)data.get("LuasH");				
+			String Lokasi = (String)data.get("Lokasi");
+			String luas = (String)data.get("Luas");
+			String luasBersamaan = (String)data.get("LuasH");
 			//Date now = new Date();
 		    //SimpleDateFormat formatter =  new SimpleDateFormat("dd/MM/yyyy");
 		    //String TBF = "to_date('" + formatter.format(now) + "','dd/MM/yyyy')";
@@ -448,10 +449,10 @@ public class HTPFailBean implements IHTPFail{
 			  	" WHERE id_hakmilikurusan='"+idhakmilikurusan+"'";
 			myLog.info(sql);
 		      stmt.executeUpdate(sql);
-		      
+
 		      SQLRenderer r = new SQLRenderer();
 		      String idDaerahTemp ="";
-		      r.add("ID_PERMOHONAN",idPermohonan);				      
+		      r.add("ID_PERMOHONAN",idPermohonan);
 		      r.add("ID_DAERAH");
 		      sql = r.getSQLSelect("TBLHTPPERMOHONAN");
 		      rs = stmt.executeQuery(sql);
@@ -462,48 +463,48 @@ public class HTPFailBean implements IHTPFail{
 						r.update("ID_PERMOHONAN",idPermohonan);
 						r.add("ID_DAERAH",id_daerah);
 						r.add("ID_KEMASKINI", idUser);
-						r.add("TARIKH_KEMASKINI", r.unquote("sysdate")); 
+						r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
 						sql = r.getSQLUpdate("TBLHTPPERMOHONAN");
-						stmt.executeUpdate(sql);    		  
+						stmt.executeUpdate(sql);
 		    	  }
 		      }else{
 				r = new SQLRenderer();
 				r.update("ID_PERMOHONAN",idPermohonan);
 				r.add("ID_DAERAH",id_daerah);
 				r.add("ID_KEMASKINI", idUser);
-				r.add("TARIKH_KEMASKINI", r.unquote("sysdate")); 
+				r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
 				sql = r.getSQLUpdate("TBLHTPPERMOHONAN");
-				stmt.executeUpdate(sql);		    
-				
+				stmt.executeUpdate(sql);
+
 		      }
 		      conn.commit();
-	      
-		}catch (SQLException se) { 
-	
+
+		}catch (SQLException se) {
+
 			try {
 				conn.rollback();
-			    
+
 			} catch (SQLException se2) {
 				throw new Exception("Rollback error:"+se2.getMessage());
-				
+
 			}
 			throw new Exception("Ralat Update Hakmilik:"+se.getMessage());
-			    
+
 		}catch(Exception ex){
 			 conn.rollback();
 			 ex.printStackTrace();
 			 throw new Exception("Ralat:"+ex.getMessage());
-		
+
 		}finally{
 			if (db != null) db.close();
 			if (conn != null) conn.close();
-	
-		}	
-	    
+
+		}
+
 	}
-	
+
 	@Override
-	public String XkemaskiniMaklumatTanah(Hashtable<String, String> data) throws Exception{			
+	public String XkemaskiniMaklumatTanah(Hashtable<String, String> data) throws Exception{
 		Connection conn = null;
 		Db db = null;
 	    String returnValue = "";
@@ -521,9 +522,9 @@ public class HTPFailBean implements IHTPFail{
 			String infoPelan = (String)data.get("noPelan");
 			//String infoIdLot = (String)data.get("socLot");
 			String id_luaslama = (String)data.get("socLuas");
-			String Lokasi = (String)data.get("Lokasi");				
-			String luas = (String)data.get("Luas");				
-			String luasBersamaan = (String)data.get("LuasH");				
+			String Lokasi = (String)data.get("Lokasi");
+			String luas = (String)data.get("Luas");
+			String luasBersamaan = (String)data.get("LuasH");
 			//Date now = new Date();
 		    //SimpleDateFormat formatter =  new SimpleDateFormat("dd/MM/yyyy");
 		    //String TBF = "to_date('" + formatter.format(now) + "','dd/MM/yyyy')";
@@ -544,10 +545,10 @@ public class HTPFailBean implements IHTPFail{
 			  	" WHERE id_hakmilikurusan='"+idhakmilikurusan+"'";
 			myLog.info(sql);
 		      stmt.executeUpdate(sql);
-		      
+
 		      SQLRenderer r = new SQLRenderer();
 		      String idDaerahTemp ="";
-		      r.add("ID_PERMOHONAN",idPermohonan);				      
+		      r.add("ID_PERMOHONAN",idPermohonan);
 		      r.add("ID_DAERAH");
 		      sql = r.getSQLSelect("TBLHTPPERMOHONAN");
 		      rs = stmt.executeQuery(sql);
@@ -558,48 +559,48 @@ public class HTPFailBean implements IHTPFail{
 						r.update("ID_PERMOHONAN",idPermohonan);
 						r.add("ID_DAERAH",id_daerah);
 						r.add("ID_KEMASKINI", idUser);
-						r.add("TARIKH_KEMASKINI", r.unquote("sysdate")); 
+						r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
 						sql = r.getSQLUpdate("TBLHTPPERMOHONAN");
-						stmt.executeUpdate(sql);    		  
+						stmt.executeUpdate(sql);
 		    	  }
 		      }else{
 				r = new SQLRenderer();
 				r.update("ID_PERMOHONAN",idPermohonan);
 				r.add("ID_DAERAH",id_daerah);
 				r.add("ID_KEMASKINI", idUser);
-				r.add("TARIKH_KEMASKINI", r.unquote("sysdate")); 
+				r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
 				sql = r.getSQLUpdate("TBLHTPPERMOHONAN");
-				stmt.executeUpdate(sql);		    
-				
+				stmt.executeUpdate(sql);
+
 		      }
 		      conn.commit();
-	      
-		}catch (SQLException se) { 
-	
+
+		}catch (SQLException se) {
+
 			try {
 				conn.rollback();
-			    
+
 			} catch (SQLException se2) {
 				throw new Exception("Rollback error:"+se2.getMessage());
-				
+
 			}
 			throw new Exception("Ralat Update Hakmilik:"+se.getMessage());
-			    
+
 		}catch(Exception ex){
 			 conn.rollback();
 			 ex.printStackTrace();
 			 throw new Exception("Ralat:"+ex.getMessage());
-		
+
 		}finally{
 			if (db != null) db.close();
 			if (conn != null) conn.close();
-	
-		}	
+
+		}
 		return returnValue ;
 	}
-	
+
 	@Override
-	public void XsimpanMaklumatAsasTanah(Hashtable<String, String> data) throws Exception{	
+	public void XsimpanMaklumatAsasTanah(Hashtable<String, String> data) throws Exception{
 		Connection conn = null;
 		Db db = null;
 		ResultSet rs = null;
@@ -622,9 +623,9 @@ public class HTPFailBean implements IHTPFail{
 			}
 			int kodluas = Utils.parseInt((String)data.get("socLuas"));
 			String Luas = (String)data.get("Luas");
-			//String LuasH = (String)(data.get("LuasH"));	
+			//String LuasH = (String)(data.get("LuasH"));
 			String Lokasi = (String)data.get("Lokasi");
-			//int jenistanah = Utils.parseInt((String)data.get("jenistanah"));			
+			//int jenistanah = Utils.parseInt((String)data.get("jenistanah"));
 			//myLog.debug("simpanMaklumatAsasTanah :: " + data);
 			db = new Db();
 			conn = db.getConnection();
@@ -647,7 +648,7 @@ public class HTPFailBean implements IHTPFail{
 			r.add("Luas_bersamaan",Luas);
 			r.add("Lokasi",Lokasi);
 			r.add("tarikh_masuk",r.unquote("sysdate"));
-			
+
 			peganganHakmilik = FrmUtilData.getKodNegeri(String.valueOf(idNegeri));
 			peganganHakmilik += FrmUtilData.getKodDaerah(String.valueOf(idDaerah));
 			peganganHakmilik += FrmUtilData.getKodMukim(String.valueOf(idMukim));
@@ -658,10 +659,10 @@ public class HTPFailBean implements IHTPFail{
 			sql = r.getSQLInsert("TBLHTPHAKMILIKURUSAN");
 			myLog.debug("Insert::TBLHTPHAKMILIKURUSAN = sql:"+sql);
 			stmt.executeUpdate(sql);
-			
+
 			r = new SQLRenderer();
 		    String idDaerahTemp ="";
-		    r.add("ID_PERMOHONAN",idPermohonan);				      
+		    r.add("ID_PERMOHONAN",idPermohonan);
 			r.add("ID_DAERAH");
 		    sql = r.getSQLSelect("TBLHTPPERMOHONAN");
 			myLog.debug("SELECT::TBLHTPHAKMILIKURUSAN = sql:"+sql);
@@ -673,50 +674,50 @@ public class HTPFailBean implements IHTPFail{
 					r.update("ID_PERMOHONAN",idPermohonan);
 					r.add("ID_DAERAH",idDaerah);
 					r.add("ID_KEMASKINI", idUser);
-					r.add("TARIKH_KEMASKINI", r.unquote("sysdate")); 
+					r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
 					sql = r.getSQLUpdate("TBLHTPPERMOHONAN");
 					myLog.debug("KEMASKINI X::TBLHTPHAKMILIKURUSAN = sql:"+sql);
-					stmt.executeUpdate(sql);    		  
+					stmt.executeUpdate(sql);
 		    	}
 		    }else{
 				r = new SQLRenderer();
 				r.update("ID_PERMOHONAN",idPermohonan);
 				r.add("ID_DAERAH",idDaerah);
 				r.add("ID_KEMASKINI", idUser);
-				r.add("TARIKH_KEMASKINI", r.unquote("sysdate")); 
+				r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
 				sql = r.getSQLUpdate("TBLHTPPERMOHONAN");
 				myLog.debug("KEMASKINI ELSE::TBLHTPHAKMILIKURUSAN = sql:"+sql);
-				stmt.executeUpdate(sql);		    
-				
+				stmt.executeUpdate(sql);
+
 		      }
 
 			conn.commit();
-		      
-		}catch (SQLException se) { 
-	
+
+		}catch (SQLException se) {
+
 			try {
 				conn.rollback();
-			    
+
 			} catch (SQLException se2) {
 				throw new Exception("Rollback error:"+se2.getMessage());
-				
+
 			}
 			throw new Exception("Ralat Insert Hakmilik:"+se.getMessage());
-			    
+
 		}catch(Exception ex){
 			 conn.rollback();
 			 ex.printStackTrace();
 			 throw new Exception("Ralat:"+ex.getMessage());
-		
+
 		}finally{
 			if (db != null) db.close();
 			if (conn != null) conn.close();
-	
+
 		}
 	}
-	
+
 	@Override
-	public String XsimpanMaklumatTanah(Hashtable<String, String> data) throws Exception{	
+	public String XsimpanMaklumatTanah(Hashtable<String, String> data) throws Exception{
 		Connection conn = null;
 		Db db = null;
 		ResultSet rs = null;
@@ -740,9 +741,9 @@ public class HTPFailBean implements IHTPFail{
 			}
 			int kodLuas = Utils.parseInt((String)data.get("socLuas"));
 			String Luas = (String)data.get("Luas");
-			String LuasH = (String)(data.get("LuasH"));	
+			String LuasH = (String)(data.get("LuasH"));
 			String Lokasi = (String)data.get("Lokasi");
-			//int jenistanah = Utils.parseInt((String)data.get("jenistanah"));			
+			//int jenistanah = Utils.parseInt((String)data.get("jenistanah"));
 			long idHakmilikurusan = DB.getNextID("TBLHTPHAKMILIKURUSAN_SEQ");
 			returnValue = String.valueOf(idHakmilikurusan);
 			//myLog.debug("simpanMaklumatAsasTanah :: " + data);
@@ -769,7 +770,7 @@ public class HTPFailBean implements IHTPFail{
 			r.add("luas_bersamaan",LuasH);
 			r.add("lokasi",Lokasi);
 			r.add("tarikh_masuk",r.unquote("sysdate"));
-			
+
 			peganganHakmilik = FrmUtilData.getKodNegeri(String.valueOf(idNegeri));
 			peganganHakmilik += FrmUtilData.getKodDaerah(String.valueOf(idDaerah));
 			peganganHakmilik += FrmUtilData.getKodMukim(String.valueOf(idMukim));
@@ -780,10 +781,10 @@ public class HTPFailBean implements IHTPFail{
 			sql = r.getSQLInsert("TBLHTPHAKMILIKURUSAN");
 			myLog.debug("Insert::TBLHTPHAKMILIKURUSAN = sql:"+sql);
 			stmt.executeUpdate(sql);
-			
+
 			r = new SQLRenderer();
 		    String idDaerahTemp ="";
-		    r.add("ID_PERMOHONAN",idPermohonan);				      
+		    r.add("ID_PERMOHONAN",idPermohonan);
 			r.add("ID_DAERAH");
 		    sql = r.getSQLSelect("TBLHTPPERMOHONAN");
 			myLog.debug("SELECT::TBLHTPHAKMILIKURUSAN = sql:"+sql);
@@ -795,50 +796,50 @@ public class HTPFailBean implements IHTPFail{
 					r.update("ID_PERMOHONAN",idPermohonan);
 					r.add("ID_DAERAH",idDaerah);
 					r.add("ID_KEMASKINI", idUser);
-					r.add("TARIKH_KEMASKINI", r.unquote("sysdate")); 
+					r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
 					sql = r.getSQLUpdate("TBLHTPPERMOHONAN");
 					myLog.debug("KEMASKINI X::TBLHTPHAKMILIKURUSAN = sql:"+sql);
-					stmt.executeUpdate(sql);    		  
+					stmt.executeUpdate(sql);
 		    	}
 		    }else{
 				r = new SQLRenderer();
 				r.update("ID_PERMOHONAN",idPermohonan);
 				r.add("ID_DAERAH",idDaerah);
 				r.add("ID_KEMASKINI", idUser);
-				r.add("TARIKH_KEMASKINI", r.unquote("sysdate")); 
+				r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
 				sql = r.getSQLUpdate("TBLHTPPERMOHONAN");
 				myLog.debug("KEMASKINI ELSE::TBLHTPHAKMILIKURUSAN = sql:"+sql);
-				stmt.executeUpdate(sql);		    
-				
+				stmt.executeUpdate(sql);
+
 		      }
 
 			conn.commit();
-		      
-		}catch (SQLException se) { 
-	
+
+		}catch (SQLException se) {
+
 			try {
 				conn.rollback();
-			    
+
 			} catch (SQLException se2) {
 				throw new Exception("Rollback error:"+se2.getMessage());
-				
+
 			}
 			throw new Exception("Ralat Insert Hakmilik:"+se.getMessage());
-			    
+
 		}catch(Exception ex){
 			 conn.rollback();
 			 ex.printStackTrace();
 			 throw new Exception("Ralat:"+ex.getMessage());
-		
+
 		}finally{
 			if (db != null) db.close();
 			if (conn != null) conn.close();
-	
+
 		}
     	return returnValue ;
 
-	}	
-	
+	}
+
 	@Override
 	public Hashtable<String, String> XgetMaklumatAsasTanahKemaskini(String idhakmilikurusan)throws Exception {
 		Db db = null;
@@ -850,37 +851,37 @@ public class HTPFailBean implements IHTPFail{
 			sql ="select ID_HAKMILIKURUSAN,ID_NEGERI,ID_DAERAH,ID_MUKIM, " +
 					"NO_LOT,NO_SYIT,NO_PELAN,ID_LOT,ID_LUAS,ID_LUAS_BERSAMAAN, " +
 					"LUAS,LUAS_BERSAMAAN,LOKASI " +
-					"from tblhtphakmilikurusan where id_hakmilikurusan = '"+idhakmilikurusan+"'";		  
+					"from tblhtphakmilikurusan where id_hakmilikurusan = '"+idhakmilikurusan+"'";
 		  myLog.info("getMaklumatAsasTanahKemaskini: sql::"+sql);
-		  
+
 		  ResultSet rs1 = stmt.executeQuery(sql);
-		  int bil = 1;		  
+		  int bil = 1;
 		  while(rs1.next()){
 			  h = new Hashtable<String, String>();
 			  h.put("bil", String.valueOf(bil));
-			  h.put("idhakmilikurusan", Utils.isNull(rs1.getString("ID_HAKMILIKURUSAN"))); 
-			  h.put("idnegeri", Utils.isNull(rs1.getString("ID_NEGERI"))); 
-			  h.put("iddaerah", Utils.isNull(rs1.getString("ID_DAERAH"))); 
-			  h.put("idmukim", Utils.isNull(rs1.getString("ID_MUKIM"))); 
-			  h.put("nolot", Utils.isNull(rs1.getString("NO_LOT"))); 
-			  h.put("nosyit", Utils.isNull(rs1.getString("NO_SYIT"))); 
-			  h.put("nopelan", Utils.isNull(rs1.getString("NO_PELAN"))); 
-			  h.put("idlot", Utils.isNull(rs1.getString("ID_LOT"))); 
-			  h.put("idluas", Utils.isNull(rs1.getString("ID_LUAS"))); 
-			  h.put("idluasbersamaan", Utils.isNull(rs1.getString("ID_LUAS_BERSAMAAN"))); 
-			  h.put("luas", Utils.isNull(rs1.getString("LUAS"))); 
-			  h.put("luasLama", Utils.isNull(rs1.getString("LUAS_BERSAMAAN"))); 
-			  h.put("luasH", Utils.isNull(rs1.getString("LUAS_BERSAMAAN"))); 
-			  h.put("lokasi", Utils.isNull(rs1.getString("LOKASI"))); 
+			  h.put("idhakmilikurusan", Utils.isNull(rs1.getString("ID_HAKMILIKURUSAN")));
+			  h.put("idnegeri", Utils.isNull(rs1.getString("ID_NEGERI")));
+			  h.put("iddaerah", Utils.isNull(rs1.getString("ID_DAERAH")));
+			  h.put("idmukim", Utils.isNull(rs1.getString("ID_MUKIM")));
+			  h.put("nolot", Utils.isNull(rs1.getString("NO_LOT")));
+			  h.put("nosyit", Utils.isNull(rs1.getString("NO_SYIT")));
+			  h.put("nopelan", Utils.isNull(rs1.getString("NO_PELAN")));
+			  h.put("idlot", Utils.isNull(rs1.getString("ID_LOT")));
+			  h.put("idluas", Utils.isNull(rs1.getString("ID_LUAS")));
+			  h.put("idluasbersamaan", Utils.isNull(rs1.getString("ID_LUAS_BERSAMAAN")));
+			  h.put("luas", Utils.isNull(rs1.getString("LUAS")));
+			  h.put("luasLama", Utils.isNull(rs1.getString("LUAS_BERSAMAAN")));
+			  h.put("luasH", Utils.isNull(rs1.getString("LUAS_BERSAMAAN")));
+			  h.put("lokasi", Utils.isNull(rs1.getString("LOKASI")));
 			  bil++;
 			  //list.addElement(h);
 		  }
 			return h;
 		}finally{
 			if (db != null) db.close();
-		}	
+		}
 	}
-	
+
 	@Override
 	public Hashtable<String,String> getMaklumatPermohonan(String idFail) throws Exception {
 		Db db = null;
@@ -898,28 +899,28 @@ public class HTPFailBean implements IHTPFail{
 					" ,NVL((SELECT RAI.ID_AGENSI FROM TBLRUJAGENSI RAI "+
 					" 		WHERE RAI.ID_AGENSI = PP.ID_AGENSI "+
 					" 	),'0') ID_AGENSI "+
-					" ,NVL((SELECT RUI.NAMA_URUSAN FROM TBLRUJURUSAN RUI "+ 
+					" ,NVL((SELECT RUI.NAMA_URUSAN FROM TBLRUJURUSAN RUI "+
 					"  		WHERE RUI.ID_URUSAN = A.ID_URUSAN "+
-					"  ),'TIADA MAKLUMAT URUSAN') NAMA_URUSAN "+ 
+					"  ),'TIADA MAKLUMAT URUSAN') NAMA_URUSAN "+
 					//" ,A.ID_SUBURUSAN, G.NAMA_SUBURUSAN" +
-					" ,NVL((SELECT RSUI.ID_SUBURUSAN FROM TBLRUJSUBURUSAN RSUI "+ 
+					" ,NVL((SELECT RSUI.ID_SUBURUSAN FROM TBLRUJSUBURUSAN RSUI "+
 					" 		WHERE RSUI.ID_SUBURUSAN = A.ID_SUBURUSAN "+
 					" 	),'0') ID_SUBURUSAN "+
-					" ,NVL((SELECT RSUI.NAMA_SUBURUSAN FROM TBLRUJSUBURUSAN RSUI "+ 
+					" ,NVL((SELECT RSUI.NAMA_SUBURUSAN FROM TBLRUJSUBURUSAN RSUI "+
 					" 		WHERE RSUI.ID_SUBURUSAN = A.ID_SUBURUSAN "+
 					" 	),'TIADA MAKLUMAT URUSAN') NAMA_SUBURUSAN "+
 					//" ,H.ID_JENISTANAH, H.KETERANGAN" +
-					" ,NVL((SELECT RJJI.ID_JENISTANAH FROM TBLRUJJENISTANAH RJJI "+ 
+					" ,NVL((SELECT RJJI.ID_JENISTANAH FROM TBLRUJJENISTANAH RJJI "+
 					" 		WHERE RJJI.id_jenistanah = PP.id_jenistanah "+
 					" 	),'0') ID_JENISTANAH "+
-					" ,NVL((SELECT RJJI.KETERANGAN FROM TBLRUJJENISTANAH RJJI "+ 
+					" ,NVL((SELECT RJJI.KETERANGAN FROM TBLRUJJENISTANAH RJJI "+
 					" 		WHERE RJJI.id_jenistanah = PP.id_jenistanah "+
 					" 	),'TIADA MAKLUMAT JENIS TANAH') KETERANGAN "+
 					//" ,I.ID_TARAFKESELAMATAN, I.TARAF_KESELAMATAN "+
-					" ,NVL((SELECT RTKI.ID_TARAFKESELAMATAN FROM TBLPFDRUJTARAFKESELAMATAN RTKI "+ 
+					" ,NVL((SELECT RTKI.ID_TARAFKESELAMATAN FROM TBLPFDRUJTARAFKESELAMATAN RTKI "+
 					" 		WHERE A.ID_TARAFKESELAMATAN = RTKI.ID_TARAFKESELAMATAN "+
 					" 	),'0') ID_TARAFKESELAMATAN "+
-					" ,NVL((SELECT RTKI.TARAF_KESELAMATAN FROM TBLPFDRUJTARAFKESELAMATAN RTKI "+ 
+					" ,NVL((SELECT RTKI.TARAF_KESELAMATAN FROM TBLPFDRUJTARAFKESELAMATAN RTKI "+
 					" 		WHERE A.ID_TARAFKESELAMATAN = RTKI.ID_TARAFKESELAMATAN "+
 					" 	),'TIADA MAKLUMAT STATUS KESELAMATAN FAIL') TARAF_KESELAMATAN "+
 				    " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLHTPPERMOHONAN PP "+
@@ -936,7 +937,7 @@ public class HTPFailBean implements IHTPFail{
 					" AND A.ID_FAIL = '" + idFail + "'" +
 					"";
 
-			ResultSet rs = stmt.executeQuery(sql);	
+			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				h = new Hashtable<String,String>();
 				h.put("idFail", rs.getString("ID_FAIL") == null ? "" : rs.getString("ID_FAIL"));
@@ -947,10 +948,10 @@ public class HTPFailBean implements IHTPFail{
 				h.put("kementerian", rs.getString("NAMA_KEMENTERIAN") == null ? "" : rs.getString("NAMA_KEMENTERIAN").toUpperCase());
 				h.put("idAgensi", rs.getString("ID_AGENSI") == null ? "" : rs.getString("ID_AGENSI").toUpperCase());
 				h.put("agensi", rs.getString("NAMA_AGENSI") == null ? "" : rs.getString("NAMA_AGENSI").toUpperCase());
-				// Header 
+				// Header
 				h.put("urusan", rs.getString("NAMA_URUSAN") == null ? "" : rs.getString("NAMA_URUSAN").toUpperCase());
 				h.put("idSuburusan", rs.getString("ID_SUBURUSAN") == null ? "" : rs.getString("ID_SUBURUSAN").toUpperCase());
-				// Header 
+				// Header
 				h.put("subUrusan", rs.getString("ID_SUBURUSAN") == null ? "" : rs.getString("ID_SUBURUSAN").toUpperCase());
 				h.put("namaSubUrusan", rs.getString("NAMA_SUBURUSAN") == null ? "" : rs.getString("NAMA_SUBURUSAN").toUpperCase());
 				h.put("idStatusTanah", rs.getString("ID_JENISTANAH") == null ? "" : rs.getString("ID_JENISTANAH").toUpperCase());
@@ -963,9 +964,9 @@ public class HTPFailBean implements IHTPFail{
 				h.put("noFailLain", rs.getString("NO_RUJUKAN_LAIN") == null ? "" : rs.getString("NO_RUJUKAN_LAIN").toUpperCase());
 				h.put("tarikhAgihan", rs.getDate("TARIKH_AGIHAN") == null ? "" : sdf.format(rs.getDate("TARIKH_AGIHAN")));
 				h.put("tajuk", rs.getString("TAJUK_FAIL") == null ? "" : rs.getString("TAJUK_FAIL").toUpperCase());
-				
+
 			}
-		}catch(Exception e){	
+		}catch(Exception e){
 			e.printStackTrace();
 			throw new Exception(getIHTP().getErrorHTML("[HTP FAIL] GET FILE"));
 
@@ -975,7 +976,7 @@ public class HTPFailBean implements IHTPFail{
 		}
 		return h;
 	}
-	
+
 	@Override
 	public Vector<Hashtable<String, String>> getMaklumatPermohonans(String idFail) throws Exception {
 		Db db = null;
@@ -995,28 +996,28 @@ public class HTPFailBean implements IHTPFail{
 					" ,NVL((SELECT RAI.ID_AGENSI FROM TBLRUJAGENSI RAI "+
 					" 		WHERE RAI.ID_AGENSI = PP.ID_AGENSI "+
 					" 	),'0') ID_AGENSI "+
-					" ,NVL((SELECT RUI.NAMA_URUSAN FROM TBLRUJURUSAN RUI "+ 
+					" ,NVL((SELECT RUI.NAMA_URUSAN FROM TBLRUJURUSAN RUI "+
 					"  		WHERE RUI.ID_URUSAN = A.ID_URUSAN "+
-					"  ),'TIADA MAKLUMAT URUSAN') NAMA_URUSAN "+ 
+					"  ),'TIADA MAKLUMAT URUSAN') NAMA_URUSAN "+
 					//" ,A.ID_SUBURUSAN, G.NAMA_SUBURUSAN" +
-					" ,NVL((SELECT RSUI.ID_SUBURUSAN FROM TBLRUJSUBURUSAN RSUI "+ 
+					" ,NVL((SELECT RSUI.ID_SUBURUSAN FROM TBLRUJSUBURUSAN RSUI "+
 					" 		WHERE RSUI.ID_SUBURUSAN = A.ID_SUBURUSAN "+
 					" 	),'0') ID_SUBURUSAN "+
-					" ,NVL((SELECT RSUI.NAMA_SUBURUSAN FROM TBLRUJSUBURUSAN RSUI "+ 
+					" ,NVL((SELECT RSUI.NAMA_SUBURUSAN FROM TBLRUJSUBURUSAN RSUI "+
 					" 		WHERE RSUI.ID_SUBURUSAN = A.ID_SUBURUSAN "+
 					" 	),'TIADA MAKLUMAT URUSAN') NAMA_SUBURUSAN "+
 					//" ,H.ID_JENISTANAH, H.KETERANGAN" +
-					" ,NVL((SELECT RJJI.ID_JENISTANAH FROM TBLRUJJENISTANAH RJJI "+ 
+					" ,NVL((SELECT RJJI.ID_JENISTANAH FROM TBLRUJJENISTANAH RJJI "+
 					" 		WHERE RJJI.id_jenistanah = PP.id_jenistanah "+
 					" 	),'0') ID_JENISTANAH "+
-					" ,NVL((SELECT RJJI.KETERANGAN FROM TBLRUJJENISTANAH RJJI "+ 
+					" ,NVL((SELECT RJJI.KETERANGAN FROM TBLRUJJENISTANAH RJJI "+
 					" 		WHERE RJJI.id_jenistanah = PP.id_jenistanah "+
 					" 	),'TIADA MAKLUMAT JENIS TANAH') KETERANGAN "+
 					//" ,I.ID_TARAFKESELAMATAN, I.TARAF_KESELAMATAN "+
-					" ,NVL((SELECT RTKI.ID_TARAFKESELAMATAN FROM TBLPFDRUJTARAFKESELAMATAN RTKI "+ 
+					" ,NVL((SELECT RTKI.ID_TARAFKESELAMATAN FROM TBLPFDRUJTARAFKESELAMATAN RTKI "+
 					" 		WHERE A.ID_TARAFKESELAMATAN = RTKI.ID_TARAFKESELAMATAN "+
 					" 	),'0') ID_TARAFKESELAMATAN "+
-					" ,NVL((SELECT RTKI.TARAF_KESELAMATAN FROM TBLPFDRUJTARAFKESELAMATAN RTKI "+ 
+					" ,NVL((SELECT RTKI.TARAF_KESELAMATAN FROM TBLPFDRUJTARAFKESELAMATAN RTKI "+
 					" 		WHERE A.ID_TARAFKESELAMATAN = RTKI.ID_TARAFKESELAMATAN "+
 					" 	),'TIADA MAKLUMAT STATUS KESELAMATAN FAIL') TARAF_KESELAMATAN "+
 				    " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLHTPPERMOHONAN PP "+
@@ -1033,7 +1034,7 @@ public class HTPFailBean implements IHTPFail{
 					" AND A.ID_FAIL = '" + idFail + "'" +
 					"";
 			myLog.info("sql="+sql);
-			ResultSet rs = stmt.executeQuery(sql);	
+			ResultSet rs = stmt.executeQuery(sql);
 			beanMaklumatPermohonan = new Vector<Hashtable<String, String>>();
 			while (rs.next()) {
 				h = new Hashtable<String, String>();
@@ -1045,10 +1046,10 @@ public class HTPFailBean implements IHTPFail{
 				h.put("kementerian", rs.getString("NAMA_KEMENTERIAN") == null ? "" : rs.getString("NAMA_KEMENTERIAN").toUpperCase());
 				h.put("idAgensi", rs.getString("ID_AGENSI") == null ? "" : rs.getString("ID_AGENSI").toUpperCase());
 				h.put("agensi", rs.getString("NAMA_AGENSI") == null ? "" : rs.getString("NAMA_AGENSI").toUpperCase());
-				// Header 
+				// Header
 				h.put("urusan", rs.getString("NAMA_URUSAN") == null ? "" : rs.getString("NAMA_URUSAN").toUpperCase());
 				h.put("idSuburusan", rs.getString("ID_SUBURUSAN") == null ? "" : rs.getString("ID_SUBURUSAN").toUpperCase());
-				// Header 
+				// Header
 				h.put("subUrusan", rs.getString("ID_SUBURUSAN") == null ? "" : rs.getString("ID_SUBURUSAN").toUpperCase());
 				h.put("namaSubUrusan", rs.getString("NAMA_SUBURUSAN") == null ? "" : rs.getString("NAMA_SUBURUSAN").toUpperCase());
 				h.put("idStatusTanah", rs.getString("ID_JENISTANAH") == null ? "" : rs.getString("ID_JENISTANAH").toUpperCase());
@@ -1064,29 +1065,29 @@ public class HTPFailBean implements IHTPFail{
 				h.put("flagMohonFail", rs.getString("FLAG_MOHON_FAIL") == null ? "" : rs.getString("FLAG_MOHON_FAIL"));
 				beanMaklumatPermohonan.addElement(h);
 				//bil++;
-				
+
 			}
-		}catch(Exception e){	
+		}catch(Exception e){
 			e.printStackTrace();
 			throw new Exception(getIHTP().getErrorHTML("[HTP FAIL] GET FILES"));
-			
+
 		} finally {
 			if (db != null)
 				db.close();
 		}
 		return beanMaklumatPermohonan;
-		
+
 	}
-	
+
 	@Override
-	public HtpPermohonan findPermohonan(String idFail, String idPermohonan,String idHtpPermohonan) 
+	public HtpPermohonan findPermohonan(String idFail, String idPermohonan,String idHtpPermohonan)
 		throws Exception {
 		Db db = null;
 		Connection conn = null;
 		//Date now = new Date();
 		//SimpleDateFormat formatter =  new SimpleDateFormat("dd/MM/yyyy h:MM:ss a");
 		//String tarikhDaftarFail = "to_date('" + formatter.format(now) + "','dd/MM/yyyy HH:MI:SS AM')";
-		
+
 		try {
 			db = new Db();
 			conn = db.getConnection();
@@ -1105,31 +1106,31 @@ public class HTPFailBean implements IHTPFail{
 			" ,NVL((SELECT RAI.ID_AGENSI FROM TBLRUJAGENSI RAI "+
 			" 		WHERE RAI.ID_AGENSI = PP.ID_AGENSI "+
 			" 	),'0') ID_AGENSI "+
-			" ,NVL((SELECT RUI.NAMA_URUSAN FROM TBLRUJURUSAN RUI "+ 
+			" ,NVL((SELECT RUI.NAMA_URUSAN FROM TBLRUJURUSAN RUI "+
 			"  		WHERE RUI.ID_URUSAN = A.ID_URUSAN "+
-			"  ),'TIADA MAKLUMAT URUSAN') NAMA_URUSAN "+ 
+			"  ),'TIADA MAKLUMAT URUSAN') NAMA_URUSAN "+
 			//" ,A.ID_SUBURUSAN, G.NAMA_SUBURUSAN" +
-			" ,NVL((SELECT RSUI.ID_SUBURUSAN FROM TBLRUJSUBURUSAN RSUI "+ 
+			" ,NVL((SELECT RSUI.ID_SUBURUSAN FROM TBLRUJSUBURUSAN RSUI "+
 			" 		WHERE RSUI.ID_SUBURUSAN = A.ID_SUBURUSAN "+
 			" 	),'0') ID_SUBURUSAN "+
-			" ,NVL((SELECT RSUI.NAMA_SUBURUSAN FROM TBLRUJSUBURUSAN RSUI "+ 
+			" ,NVL((SELECT RSUI.NAMA_SUBURUSAN FROM TBLRUJSUBURUSAN RSUI "+
 			" 		WHERE RSUI.ID_SUBURUSAN = A.ID_SUBURUSAN "+
 			" 	),'TIADA MAKLUMAT URUSAN') NAMA_SUBURUSAN "+
-			" ,NVL((SELECT RSUI.KOD_SUBURUSAN FROM TBLRUJSUBURUSAN RSUI "+ 
+			" ,NVL((SELECT RSUI.KOD_SUBURUSAN FROM TBLRUJSUBURUSAN RSUI "+
 			" 		WHERE RSUI.ID_SUBURUSAN = A.ID_SUBURUSAN "+
 			" 	),'TIADA MAKLUMAT URUSAN') KOD_SUBURUSAN "+
 			//" ,H.ID_JENISTANAH, H.KETERANGAN" +
-			" ,NVL((SELECT RJJI.ID_JENISTANAH FROM TBLRUJJENISTANAH RJJI "+ 
+			" ,NVL((SELECT RJJI.ID_JENISTANAH FROM TBLRUJJENISTANAH RJJI "+
 			" 		WHERE RJJI.id_jenistanah = PP.id_jenistanah "+
 			" 	),'0') ID_JENISTANAH "+
-			" ,NVL((SELECT RJJI.KETERANGAN FROM TBLRUJJENISTANAH RJJI "+ 
+			" ,NVL((SELECT RJJI.KETERANGAN FROM TBLRUJJENISTANAH RJJI "+
 			" 		WHERE RJJI.id_jenistanah = PP.id_jenistanah "+
 			" 	),'TIADA MAKLUMAT JENIS TANAH') KETERANGAN "+
 			//" ,I.ID_TARAFKESELAMATAN, I.TARAF_KESELAMATAN "+
-			" ,NVL((SELECT RTKI.ID_TARAFKESELAMATAN FROM TBLPFDRUJTARAFKESELAMATAN RTKI "+ 
+			" ,NVL((SELECT RTKI.ID_TARAFKESELAMATAN FROM TBLPFDRUJTARAFKESELAMATAN RTKI "+
 			" 		WHERE A.ID_TARAFKESELAMATAN = RTKI.ID_TARAFKESELAMATAN "+
 			" 	),'0') ID_TARAFKESELAMATAN "+
-			" ,NVL((SELECT RTKI.TARAF_KESELAMATAN FROM TBLPFDRUJTARAFKESELAMATAN RTKI "+ 
+			" ,NVL((SELECT RTKI.TARAF_KESELAMATAN FROM TBLPFDRUJTARAFKESELAMATAN RTKI "+
 			" 		WHERE A.ID_TARAFKESELAMATAN = RTKI.ID_TARAFKESELAMATAN "+
 			" 	),'TIADA MAKLUMAT STATUS KESELAMATAN FAIL') TARAF_KESELAMATAN "+
 		    " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLHTPPERMOHONAN PP "+
@@ -1153,18 +1154,18 @@ public class HTPFailBean implements IHTPFail{
 			}
 			sql +=" ORDER BY B.id_Permohonan desc";
 //			myLog.info("Permohonan:::findPermohonan::sql::"+sql);
-											
+
 			Statement stmt = db.getStatement();
-			ResultSet rs = stmt.executeQuery(sql);		
+			ResultSet rs = stmt.executeQuery(sql);
 			if(rs.next()){
 				fail = new PfdFail();
 				permohonan = new Permohonan();
-				htpPermohonan = new HtpPermohonan();									 		
+				htpPermohonan = new HtpPermohonan();
 //										 		 String TarikhSurKJP = rs.getString("TARIKH_SURAT");
-//											     String TSKJP = "to_date('" + TarikhSurKJP + "','dd/MM/yyyy')";	
+//											     String TSKJP = "to_date('" + TarikhSurKJP + "','dd/MM/yyyy')";
 //											     String TarikhPermohonan = rs.getString("TARIKH_TERIMA");
 //											     String TP = "to_date('" + TarikhPermohonan + "','dd/MM/yyyy')";
-											     
+
 				htpPermohonan.setIdHtpPermohonan(rs.getString("ID_HTPPERMOHONAN"));
 				htpPermohonan.setIdAgensi(rs.getLong("ID_AGENSI"));
 				htpPermohonan.setIdJenisTanah(rs.getString("ID_JENISTANAH"));
@@ -1193,17 +1194,17 @@ public class HTPFailBean implements IHTPFail{
 				permohonan.setPfdFail(fail);
 				htpPermohonan.setPermohonan(permohonan);
 				conn.commit();
-			
+
 			}
-										    	
+
 		 } finally {
 		      if (db != null) db.close();
 		    }
-		
+
 		return htpPermohonan;
-		
-	}	
-	
+
+	}
+
 	@Override
 	public  Vector<Hashtable<String, String>> getSenaraiFailMengikutUrusans(
 			String idUser,String nofail,String tajukfail
@@ -1221,7 +1222,7 @@ public class HTPFailBean implements IHTPFail{
 	      		" ,TO_CHAR(F.TARIKH_DAFTAR_FAIL,'dd/MM/yyyy') TARIKH_DAFTAR,F.ID_KEMASKINI,F.TARIKH_MASUK  " +
 	      		" ,P.NO_PERMOHONAN, P.TUJUAN " +
 	      		" ,P.ID_PERMOHONAN "+
-	      		" ,PP.NO_RUJUKAN_PTD,PP.NO_RUJUKAN_PTG " +      		
+	      		" ,PP.NO_RUJUKAN_PTD,PP.NO_RUJUKAN_PTG " +
 	      		" ,(select nama_negeri from tblrujnegeri where id_negeri = f.id_negeri) NEGERI"+
 	      		" ,S.KETERANGAN "+
 	      		" FROM Tblpermohonan P,TblHTPPermohonan PP, "+
@@ -1235,20 +1236,20 @@ public class HTPFailBean implements IHTPFail{
 			    " AND SF.ID_SUBURUSANSTATUS= US.ID_SUBURUSANSTATUS  "+
 			    " AND SF.ID_FAIL = F.ID_FAIL "+
 			    " AND US.ID_STATUS = S.ID_STATUS  " +
-			    " AND SF.AKTIF = '1' ";	      
+			    " AND SF.AKTIF = '1' ";
 	      if (idUser != null) {
 	    	  sql = sql + " AND F.ID_MASUK ='"+idUser+"'";
-	      }	      
+	      }
 	      if (nofail != null && !"".equals(nofail)) {
 	    	  sql = sql + " AND lower(f.no_Fail) like '%"+nofail.toLowerCase()+"%' ";
 	    	  isSearch = true;
-	      }      
+	      }
 	      if (id_urusan != null && !"-1".equals(id_urusan) && !"".equals(id_urusan)) {
 	    	  sql = sql + " AND F.ID_URUSAN IN ("+id_urusan+") ";
-	      }	      
+	      }
 	      //if (tajukfail != null && !"".equals(tajukfail)) {
 	    	  sql = sql + " AND lower(f.tajuk_Fail) like '%"+tajukfail.toLowerCase()+"%' ";
-	      //}	      
+	      //}
 	      if (id_kementerian != null && !"-1".equals(id_kementerian) && !"".equals(id_kementerian)) {
 	    	  sql = sql + "AND f.id_kementerian = '"+id_kementerian+"' ";
 	      }
@@ -1257,16 +1258,16 @@ public class HTPFailBean implements IHTPFail{
 	      }
 	      if (id_negeri != null && !"-1".equals(id_negeri) && !"".equals(id_negeri)) {
 	    	  sql = sql + "AND f.id_negeri = '"+id_negeri+"' ";
-	      }      
+	      }
 	      if (id_daerah != null && !"-1".equals(id_daerah) && !"".equals(id_daerah)) {
 	    	  sql = sql + "AND pp.id_daerah = '"+id_daerah+"' ";
-	      }	      
+	      }
 	      if (id_mukim != null && !"-1".equals(id_mukim) && !"".equals(id_mukim)) {
 	    	  //by rosli 24/02/2011
 	    	  //sql = sql + "AND thmu.id_mukim = '"+id_mukim+"' ";
 	    	  sql = sql + " AND P.ID_PERMOHONAN IN ( "+
 	    	  	" SELECT THMUI.ID_PERMOHONAN FROM Tblhtphakmilikurusan THMUI "+
-	    		" WHERE THMUI.ID_MUKIM = '"+id_mukim+"')"; 
+	    		" WHERE THMUI.ID_MUKIM = '"+id_mukim+"')";
 	      }
 	      if (tarikhBukaFail != null && !"-1".equals(tarikhBukaFail) && !"".equals(tarikhBukaFail)) {
 	    	  sql = sql + " AND TO_CHAR(F.TARIKH_DAFTAR_FAIL,'dd/MM/yyyy') = '"+tarikhBukaFail+"' ";
@@ -1274,7 +1275,7 @@ public class HTPFailBean implements IHTPFail{
 	      myLog.info("isSearch="+isSearch);
 	      if (!isSearch) {
 	    	  sql = sql + " AND ROWNUM <= 50 ";
-	      }	      
+	      }
 	      //sql = sql + "ORDER BY  f.id_kemaskini DESC";
 	      //sql = sql + "ORDER BY F.TARIKH_DAFTAR_FAIL DESC";
 	      sql = sql + " ORDER BY P.ID_FAIL DESC" +
@@ -1287,7 +1288,7 @@ public class HTPFailBean implements IHTPFail{
 	      Hashtable<String, String> h;
 	      while (rs.next()) {
 	    	  h = new Hashtable<String, String>();
-	    	  h.put("bil", String.valueOf(bil));    	  
+	    	  h.put("bil", String.valueOf(bil));
 	    	  h.put("id", rs.getString("ID_FAIL"));
 	    	  h.put("idFail", rs.getString("ID_FAIL"));
 	    	  h.put("no", Utils.isNull(rs.getString("NO_FAIL")));
@@ -1304,16 +1305,16 @@ public class HTPFailBean implements IHTPFail{
 	    	  h.put("idPermohonan", rs.getString("ID_PERMOHONAN")==null ? "0" :rs.getString("ID_PERMOHONAN"));
 	    	  list.addElement(h);
 	    	  bil++;
-	    	  
+
 	      }
 	      return list;
-	    
+
 	    } finally {
 	      if (db != null) db.close();
-	      
+
 	    }
-	  }	
-	
+	  }
+
 	@Override
 	public  Vector<Hashtable<String, String>> getSenaraiFailMengikutUrusans(
 			String idUser,String nofail,String tajukfail
@@ -1331,7 +1332,7 @@ public class HTPFailBean implements IHTPFail{
 	      		" ,TO_CHAR(F.TARIKH_DAFTAR_FAIL,'dd/MM/yyyy') TARIKH_DAFTAR,F.ID_KEMASKINI,F.TARIKH_MASUK  " +
 	      		" ,P.NO_PERMOHONAN, P.TUJUAN " +
 	      		" ,P.ID_PERMOHONAN "+
-	      		" ,PP.NO_RUJUKAN_PTD,PP.NO_RUJUKAN_PTG " +      		
+	      		" ,PP.NO_RUJUKAN_PTD,PP.NO_RUJUKAN_PTG " +
 	      		" ,(select nama_negeri from tblrujnegeri where id_negeri = f.id_negeri) NEGERI"+
 	      		" ,S.KETERANGAN "+
 	      		" FROM Tblpermohonan P,TblHTPPermohonan PP, "+
@@ -1345,24 +1346,24 @@ public class HTPFailBean implements IHTPFail{
 			    " AND SF.ID_SUBURUSANSTATUS= US.ID_SUBURUSANSTATUS  "+
 			    " AND SF.ID_FAIL = F.ID_FAIL "+
 			    " AND US.ID_STATUS = S.ID_STATUS  " +
-			    " AND SF.AKTIF = '1' ";	      
+			    " AND SF.AKTIF = '1' ";
 	      if (idUser != null) {
 	    	  sql = sql + " AND F.ID_MASUK ='"+idUser+"'";
-	      }	      
+	      }
 	      if (nofail != null && !"".equals(nofail)) {
 	    	  sql = sql + " AND lower(f.no_Fail) like '%"+nofail.toLowerCase()+"%' ";
 	    	  isSearch = true;
-	      }      
+	      }
 	      if (nofaillain != null && !"".equals(nofaillain)) {
 	    	  sql = sql + " AND lower(PP.no_rujukan_upt) like '%"+nofaillain.toLowerCase()+"%' ";
 	    	  isSearch = true;
-	      }      
+	      }
 	      if (id_urusan != null && !"-1".equals(id_urusan) && !"".equals(id_urusan)) {
 	    	  sql = sql + " AND F.ID_URUSAN IN ("+id_urusan+") ";
-	      }	      
+	      }
 	      //if (tajukfail != null && !"".equals(tajukfail)) {
 	    	  sql = sql + " AND lower(f.tajuk_Fail) like '%"+tajukfail.toLowerCase()+"%' ";
-	      //}	      
+	      //}
 	      if (id_kementerian != null && !"-1".equals(id_kementerian) && !"".equals(id_kementerian)) {
 	    	  sql = sql + "AND f.id_kementerian = '"+id_kementerian+"' ";
 	      }
@@ -1371,16 +1372,16 @@ public class HTPFailBean implements IHTPFail{
 	      }
 	      if (id_negeri != null && !"-1".equals(id_negeri) && !"".equals(id_negeri)) {
 	    	  sql = sql + "AND f.id_negeri = '"+id_negeri+"' ";
-	      }      
+	      }
 	      if (id_daerah != null && !"-1".equals(id_daerah) && !"".equals(id_daerah)) {
 	    	  sql = sql + "AND pp.id_daerah = '"+id_daerah+"' ";
-	      }	      
+	      }
 	      if (id_mukim != null && !"-1".equals(id_mukim) && !"".equals(id_mukim)) {
 	    	  //by rosli 24/02/2011
 	    	  //sql = sql + "AND thmu.id_mukim = '"+id_mukim+"' ";
 	    	  sql = sql + " AND P.ID_PERMOHONAN IN ( "+
 	    	  	" SELECT THMUI.ID_PERMOHONAN FROM Tblhtphakmilikurusan THMUI "+
-	    		" WHERE THMUI.ID_MUKIM = '"+id_mukim+"')"; 
+	    		" WHERE THMUI.ID_MUKIM = '"+id_mukim+"')";
 	      }
 	      if (tarikhBukaFail != null && !"-1".equals(tarikhBukaFail) && !"".equals(tarikhBukaFail)) {
 	    	  sql = sql + " AND TO_CHAR(F.TARIKH_DAFTAR_FAIL,'dd/MM/yyyy') = '"+tarikhBukaFail+"' ";
@@ -1388,7 +1389,7 @@ public class HTPFailBean implements IHTPFail{
 	      myLog.info("isSearch="+isSearch);
 	      if (!isSearch) {
 	    	  sql = sql + " AND ROWNUM <= 50 ";
-	      }	      
+	      }
 	      //sql = sql + "ORDER BY  f.id_kemaskini DESC";
 	      //sql = sql + "ORDER BY F.TARIKH_DAFTAR_FAIL DESC";
 	      sql = sql + " ORDER BY P.ID_FAIL DESC" +
@@ -1401,7 +1402,7 @@ public class HTPFailBean implements IHTPFail{
 	      Hashtable<String, String> h;
 	      while (rs.next()) {
 	    	  h = new Hashtable<String, String>();
-	    	  h.put("bil", String.valueOf(bil));    	  
+	    	  h.put("bil", String.valueOf(bil));
 	    	  h.put("id", rs.getString("ID_FAIL"));
 	    	  h.put("idFail", rs.getString("ID_FAIL"));
 	    	  h.put("no", Utils.isNull(rs.getString("NO_FAIL")));
@@ -1418,21 +1419,21 @@ public class HTPFailBean implements IHTPFail{
 	    	  h.put("idPermohonan", rs.getString("ID_PERMOHONAN")==null ? "0" :rs.getString("ID_PERMOHONAN"));
 	    	  list.addElement(h);
 	    	  bil++;
-	    	  
+
 	      }
 	      return list;
-	    
+
 	    } finally {
 	      if (db != null) db.close();
-	      
+
 	    }
-	  }	
-	  
+	  }
+
 	private IHtp getIHTP(){
 		if(iHTP== null)
 			iHTP = new HtpBean();
 		return iHTP;
-	}	
-	
-	
+	}
+
+
 }

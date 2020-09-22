@@ -182,10 +182,31 @@ function toggle_div(id) {
 																</a>
 															</td>
 														</tr>
-
 														<tr>
 															<td>
-																<a href="javascript:penyewaan()" class="help" title="Penyewaan">
+																<a href="javascript:pembayaranOnline()" class="help" title="Pembayaran Online">
+																	<font color="blue"><li>&nbsp;Pembayaran Online</li></font>
+																</a>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<a href="javascript:siasatanOnline()" class="help" title="Siasatan Online">
+																	<font color="blue"><li>&nbsp;Siasatan Online</li></font>
+																</a>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<a href="javascript:ulasanJPBD()" class="help" title="Ulasan JPBD Online">
+																	<font color="blue"><li>&nbsp;Ulasan JPBD Online</li></font>
+																</a>
+															</td>
+														</tr>
+														
+														<!-- <tr>
+															<td>
+																<a href="javascript:permohonanDikembalikan()" class="help" title="Permohonan Dikembalikan">
 																	<font color="blue"><li>
 																	##if($jumlah_notifikasi_penyewaan > 0)
 																	<label style="background-color:blue" align="center" valign="top" >
@@ -195,7 +216,7 @@ function toggle_div(id) {
 																	Permohonan Dikembalikan</li></font>
 																</a>
 															</td>
-														</tr>
+														</tr> -->
 													</table>
 												</td>
 											</tr>
@@ -617,6 +638,22 @@ function permohonanPembatalan(){
 
 function permohonanDaftarBantahan(){
 	document.${formName}.action = "$EkptgUtil.getTabID('Pengambilan Tanah',$portalRole)?_portal_module=ekptg.view.ppt.FrmBantahanDaftarAPOnline";
+	document.${formName}.submit();
+}
+function pembayaranOnline(){
+	document.${formName}.action = "$EkptgUtil.getTabID('Pengambilan Tanah',$portalRole)?_portal_module=ekptg.view.ppt.FrmPembayaranOnline";
+	document.${formName}.submit();
+}
+function siasatanOnline(){
+	document.${formName}.action = "$EkptgUtil.getTabID('Pengambilan Tanah',$portalRole)?_portal_module=ekptg.view.ppt.FrmSiasatanOnline";
+	document.${formName}.submit();
+}
+function rayuanOnline(){
+	document.${formName}.action = "$EkptgUtil.getTabID('Pengambilan Tanah',$portalRole)?_portal_module=ekptg.view.ppt.FrmRayuanOnline";
+	document.${formName}.submit();
+}
+function ulasanJPBD(){
+	document.${formName}.action = "$EkptgUtil.getTabID('Pengambilan Tanah',$portalRole)?_portal_module=ekptg.view.ppt.FrmUlasanJPBDOnline";
 	document.${formName}.submit();
 }
 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ekptg.model.htp;
+package ekptg.model.htp.online;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -18,12 +18,17 @@ import lebah.db.SQLRenderer;
 
 import org.apache.log4j.Logger;
 
+import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.File;
 import ekptg.helpers.Utils;
 import ekptg.model.entities.Tblrujsuburusanstatusfail;
+import ekptg.model.htp.FrmGadaianHakmilikData;
+import ekptg.model.htp.FrmUtilData;
+import ekptg.model.htp.HakmilikUrusan;
 import ekptg.model.htp.pembelian.IPembelian;
 import ekptg.model.htp.pembelian.PembelianBean;
+import ekptg.view.esaduan.EkptgEmailSender;
 
 /**
  * 
@@ -36,6 +41,7 @@ public class FrmOnlinePajakanSenaraiFailData {
 	private Vector senaraiFailOnline = null;	
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	private IPembelian iPembelian = null;
+	private Vector beanMaklumatPemohon1 = null;
 	
 	@SuppressWarnings("unchecked")
 	/*public void carianFail(String noFail, String tarikhTerima,String tajukFail, String namaPemohon) throws Exception {
@@ -712,10 +718,20 @@ public class FrmOnlinePajakanSenaraiFailData {
 			log.info("sql:TBLHTPPERMOHONAN="+sql);
 			stmt.executeUpdate(sql);
 			
+			//TBLHTPPEMOHON
 			FrmOnlinePajakanHeaderData logicHeader = new FrmOnlinePajakanHeaderData();
 			Vector<Hashtable<String,String>> vec = logicHeader.setMaklumatPemohon(userId);
 	    	Hashtable<String,String> hash = vec.get(0);
-
+	    	
+//	    	sql = " SELECT U.USER_ID, U.USER_NAME, UPPER(UO.KATEGORI) AS KATEGORI, UO.NO_KP_BARU, UO.NO_FAX, UO.NO_HP, UO.EMEL"+
+//					", UO.ALAMAT1, UO.ALAMAT2, UO.ALAMAT3,NVL(UO.ID_NEGERI,0) ID_NEGERI,NVL(UO.ID_BANDAR,0) ID_BANDAR  " +
+//					", UO.POSKOD, RB.KETERANGAN AS NAMA_BANDAR, RN.NAMA_NEGERI  " +
+//					  " FROM USERS U,USERS_ONLINE UO, TBLRUJNEGERI RN, TBLRUJBANDAR RB " +
+//					  " WHERE U.USER_ID = UO.USER_ID "+
+//					  " AND UO.ID_BANDAR = RB.ID_BANDAR(+) "+
+//					  " AND UO.ID_NEGERI = RN.ID_NEGERI(+) " +
+//					  " AND U.USER_ID = '" + userId + "'";
+	    	
 			String idPemohon = String.valueOf(DB.getNextID(db, "TBLHTPPEMOHON_SEQ"));
 			r = new SQLRenderer();
 			r.add("ID_PEMOHON", idPemohon);
@@ -764,7 +780,7 @@ public class FrmOnlinePajakanSenaraiFailData {
 			sql = "SELECT ID_DAERAH, ID_NEGERI, ID_MUKIM, PEGANGAN_HAKMILIK, NO_HAKMILIK, NO_LOT, " +
 					" ID_LOT, ID_JENISHAKMILIK, ID_KATEGORI, LUAS, ID_LUAS" +
 					" FROM TBLHTPHAKMILIK WHERE ID_HAKMILIK = '"+idHakmilik+"'";
-			
+			log.info("TBLHTPHAKMILIKURUSAN = "+sql);
 			r = new SQLRenderer();
 			long idHakmilikUrusan = DB.getNextID(db, "TBLHTPHAKMILIKURUSAN_SEQ");
 			ResultSet rs = stmt.executeQuery(sql);
@@ -814,7 +830,90 @@ public class FrmOnlinePajakanSenaraiFailData {
 		return idFailString;
 	}
 	
+	public void setMaklumatPemohon(String idFail) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			beanMaklumatPemohon1 = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT C.ID_MASUK, C.NAMA_PEMOHON, C.NO_PEMOHON, C.ALAMAT_PEMOHON1, C.ALAMAT_PEMOHON2, C.ALAMAT_PEMOHON3, " + 
+					"C.POSKOD, C.ID_BANDAR, C.ID_NEGERI, C.NO_TEL, C.NO_FAX, " + 
+					"C.EMEL, UPPER(D.KATEGORI) AS KATEGORI " + 
+					"FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLHTPPEMOHON C, USERS_ONLINE D, TBLRUJBANDAR E " + 
+					"WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PERMOHONAN = C.ID_PERMOHONAN AND C.ID_BANDAR = E.ID_BANDAR(+) AND D.USER_ID = C.ID_MASUK AND D.USER_ID = '"+ idFail + "'";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+
+				h = new Hashtable();
+				h.put("idKategori",
+						rs.getString("KATEGORI") == null ? "99999"
+								: rs.getString("KATEGORI"));
+				h.put("namaPemohon",
+						rs.getString("NAMA_PEMOHON") == null ? "" : rs
+								.getString("NAMA_PEMOHON"));
+				
+				h.put("noPemohon",
+						rs.getString("NO_PEMOHON") == null ? "" : rs
+								.getString("NO_PEMOHON"));
+				
+				h.put("alamat1", rs.getString("ALAMAT_PEMOHON1") == null ? ""
+						: rs.getString("ALAMAT_PEMOHON1"));
+				
+				h.put("alamat2", rs.getString("ALAMAT_PEMOHON2") == null ? ""
+						: rs.getString("ALAMAT_PEMOHON2"));
+				
+				h.put("alamat3", rs.getString("ALAMAT_PEMOHON3") == null ? ""
+						: rs.getString("ALAMAT_PEMOHON3"));
+				
+				h.put("poskod",
+						rs.getString("POSKOD") == null ? "" : rs
+								.getString("POSKOD"));
+				
+				h.put("idNegeri",
+						rs.getString("ID_NEGERI") == null ? "99999" : rs
+								.getString("ID_NEGERI"));
+				
+				h.put("idBandar",
+						rs.getString("ID_BANDAR") == null ? "99999" : rs
+								.getString("ID_BANDAR"));
+				
+				h.put("emel",
+						rs.getString("EMEL") == null ? "" : rs
+								.getString("EMEL"));
+				
+				h.put("noTel",
+						rs.getString("NO_TEL") == null ? "" : rs
+								.getString("NO_TEL"));
+				
+				h.put("noFaks",
+						rs.getString("NO_FAX") == null ? "" : rs
+								.getString("NO_FAX"));
+
+				beanMaklumatPemohon1.addElement(h);
+				bil++;
+
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
 	
+	public Vector getBeanMaklumatPemohon() {
+		return beanMaklumatPemohon1;
+	}
+
+	public void setBeanMaklumatPemohon(Vector beanMaklumatPemohon) {
+		this.beanMaklumatPemohon1 = beanMaklumatPemohon;
+	}
 //	public String generateNoFail(String kodUrusan, String kodKementerian, String idKementerian, String kodMampu, String idNegeri) throws Exception{
 //		String noFail = "";
 //		noFail = "JKPTG/101/" + kodUrusan + "/" + kodKementerian + "/" +  kodMampu + "-" + File.getSeqNo(3, 3, Integer.parseInt(idKementerian), Integer.parseInt(idNegeri));
@@ -1141,7 +1240,7 @@ public class FrmOnlinePajakanSenaraiFailData {
 		return senaraiFailOnline;
 	}
 	
-	public void UpdatePermohonan(String idFail,String subUrusan, Hashtable<String,String> hash, HttpSession session) throws Exception {
+	public void UpdatePermohonan(String idFail,String subUrusan, String idPemohon, Hashtable<String,String> hash, HttpSession session) throws Exception {
 		Connection conn = null;
 		String sql = "";
 		Db db = new Db();
@@ -1150,6 +1249,7 @@ public class FrmOnlinePajakanSenaraiFailData {
 			conn = db.getConnection();
 	    	conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
+			String userId = session.getAttribute("_ekptg_user_id").toString();
 			SQLRenderer r = new SQLRenderer();	
 
 			/*Long setIdStatus = 0L;
@@ -1157,6 +1257,14 @@ public class FrmOnlinePajakanSenaraiFailData {
 			Long setIdSuburusanstatus = 0L;
 			setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah("3",subUrusan,"=");
 			*/
+			
+			//TBLHTPPEMOHON
+			r.update("ID_PEMOHON", idPemohon);	
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			sql = r.getSQLUpdate("TBLHTPPEMOHON");
+			stmt.executeUpdate(sql);
+			
 			//TBLPFDFAIL
 			r.update("ID_FAIL", idFail);
 			r.add("TAJUK_FAIL", hash.get("tajuk"));				
@@ -1232,170 +1340,113 @@ public class FrmOnlinePajakanSenaraiFailData {
 	
 	//HANTAR PENGESAHAN
 	public void updatePengesahan(String idFail,String idPermohonan,HttpSession session) throws Exception {
+		log.info(idFail);
 				
-	Db db = null;
-	Connection conn = null;
-	String userId = (String) session.getAttribute("_ekptg_user_id");
-	String sql = "";
-	String namaUser = "";
-	//String emelUser = "";
-	String idhakmilikPermohonan = "";
-	String noPermohonan = "";
-	String idSuburusan = "";
-
-	try {
-		db = new Db();
-		conn = db.getConnection();
-		conn.setAutoCommit(false);
-		Statement stmt = db.getStatement();
-		SQLRenderer r = new SQLRenderer();
-								
-	sql = "SELECT B.ID_HAKMILIKPERMOHONAN, A.NO_PERMOHONAN, C.ID_SUBURUSAN, D.NAMA, D.EMEL " 
-			+ " FROM TBLPERMOHONAN A,TBLHTPHAKMILIKURUSAN B, TBLPFDFAIL C,TBLHTPPEMOHON D "
-			+ " WHERE C.ID_FAIL = A.ID_FAIL AND A.ID_PERMOHONAN = B.ID_PERMOHONAN "
-			+ " AND A.ID_PEMOHON = D.ID_PEMOHON AND A.ID_PERMOHONAN = '" + idPermohonan + "'";
-					
-					
-	ResultSet rsPermohonan = stmt.executeQuery(sql);
-	if (rsPermohonan.next()){
-		idhakmilikPermohonan = rsPermohonan.getString("ID_HAKMILIKPERMOHONAN");
-		noPermohonan = rsPermohonan.getString("NO_PERMOHONAN");
-		idSuburusan = rsPermohonan.getString("ID_SUBURUSAN");
-		namaUser = rsPermohonan.getString("NAMA");
-		//emelUser = rsPermohonan.getString("EMEL");
-	}	
-					
-	//TBLPERMOHONAN
-	Long setIdStatus = 0L;
-	setIdStatus = FrmUtilData.getIdStatusByLangkah("-1",idSuburusan,"=");
-	r.update("ID_PERMOHONAN", idPermohonan);			
-	r.add("ID_JKPTG", "1");
-	r.add("ID_FAIL", idFail);
-	r.add("ID_STATUS",setIdStatus);
-					
-	r.add("ID_KEMASKINI", userId);
-	r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
-
-	sql = r.getSQLUpdate("TBLPERMOHONAN");
-	stmt.executeUpdate(sql);
-					
-	//TBLRUJSUBURUSANSTATUSFAIL
-//	r = new SQLRenderer();
-//	long idSuburusanstatusfail = DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");
-//	r.add("ID_SUBURUSANSTATUSFAIL", idSuburusanstatusfail);
-//	r.add("ID_PERMOHONAN", idPermohonan);
-//	r.add("ID_SUBURUSANSTATUS", getIdSuburusanstatus(idSuburusan, "186")); //PERMOHONAN BARU
-//	r.add("AKTIF", "1");
-//	r.add("ID_FAIL", idFail);
-//					
-//	r.add("ID_MASUK", userId);
-//	r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
-//	r.add("ID_KEMASKINI", userId);
-//	r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
-//
-//	sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
-//					
-//	stmt.executeUpdate(sql);
-					
-	conn.commit();
-					
-	} catch (SQLException ex) { 
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+		String namaUser = "";
+		String emelUser = "";
+		String idhakmilikUrusan = "";
+		String noPermohonan = "";
+		String idSuburusan = "";
+		
 		try {
-			conn.rollback();
-		} catch (SQLException e) {
-			throw new Exception("Rollback error : " + e.getMessage());
-		}
-			throw new Exception("Ralat : Masalah penyimpanan data " + ex.getMessage());
-			    	
-		} finally {
-			if (db != null)
-				db.close();
-			}		
-		}
-			
-			public String getIdSuburusanstatus(String idSuburusan, String idStatus) throws Exception {
-				Db db = null;
-				String sql = "";
-
-				try {
-					db = new Db();
-					Statement stmt = db.getStatement();
-					
-					sql = "SELECT ID_SUBURUSANSTATUS FROM TBLRUJSUBURUSANSTATUS WHERE ID_STATUS = '" + idStatus + "' AND ID_SUBURUSAN = '" + idSuburusan + "'";
-					
-					ResultSet rs = stmt.executeQuery(sql);
-
-					if (rs.next()){
-						return (String)rs.getString("ID_SUBURUSANSTATUS");
-					} else {
-						return "";
-					}
-					
-				}  catch (Exception re) {
-					log.error("Error: ", re);
-					throw re;
-					}	finally {
-					if (db != null)
-						db.close();
-				}
-			}
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+									
+		sql = "SELECT B.ID_HAKMILIKURUSAN, A.NO_PERMOHONAN, C.ID_SUBURUSAN, D.NAMA_PEMOHON, D.EMEL " 
+				+ " FROM TBLPERMOHONAN A,TBLHTPHAKMILIKURUSAN B, TBLPFDFAIL C,TBLHTPPEMOHON D "
+				+ " WHERE C.ID_FAIL = A.ID_FAIL AND A.ID_PERMOHONAN = B.ID_PERMOHONAN "
+				+ " AND A.ID_PEMOHON = D.ID_PEMOHON AND A.ID_PERMOHONAN = '" + idPermohonan + "'";
+						
+						
+		ResultSet rsPermohonan = stmt.executeQuery(sql);
+		log.info("sql update pengesahan="+sql);
+		if (rsPermohonan.next()){
+			idhakmilikUrusan = rsPermohonan.getString("ID_HAKMILIKURUSAN");
+			noPermohonan = rsPermohonan.getString("NO_PERMOHONAN");
+			idSuburusan = rsPermohonan.getString("ID_SUBURUSAN");
+			namaUser = rsPermohonan.getString("NAMA");
+			emelUser = rsPermohonan.getString("EMEL");
+		}	
+						
+		//TBLPERMOHONAN
+		Long setIdStatus = 0L;
+		setIdStatus = FrmUtilData.getIdStatusByLangkah("-1","7","=");
+		r.update("ID_PERMOHONAN", idPermohonan);			
+		r.add("ID_JKPTG", "1");
+		r.add("ID_FAIL", idFail);
+		r.add("ID_STATUS", "1610197");
+						
+		r.add("ID_KEMASKINI", userId);
+		r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 	
-		public boolean checkMaklumatPajakanLengkap(String idPermohonan) throws Exception{
-			Db db = null;
-			String sql = "";
-			boolean bool = true;
+		sql = r.getSQLUpdate("TBLPERMOHONAN");
+		log.info("TBLPERMOHONAN_sql update pengesahan="+sql);
+		stmt.executeUpdate(sql);
+		
+		conn.commit();
+		
+		if (!"".equals(namaUser) && !"".equals(emelUser)){
+			EkptgEmailSender email = EkptgEmailSender.getInstance();
+			email.FROM = "etapp_webmaster@kptg.gov.my";
+			email.RECIEPIENT = emelUser;				
+			email.SUBJECT = "PERMOHONAN HARTA TANAH PERSEKUTUAN - PAJAKAN #" + noPermohonan;
+			email.MESSAGE = namaUser.toUpperCase() + "."
+							+ "<br><br>Permohonan anda telah diterima.Sila gunakan nombor permohonan diatas sebagai rujukan."
+							+ "Anda akan dimaklumkan setelah permohonan ini telah didaftarkan."
+							+ "<br><br>Terima Kasih.";
+			email.sendEmail();
+		}
+						
+		} catch (SQLException ex) { 
 			try {
-				db = new Db();
-				Statement stmt = db.getStatement();
-				
-				sql = "SELECT ID_JENISTANAH FROM TBLHTPPERMOHONAN WHERE ID_PERMOHONAN = '" + idPermohonan + "'";
-				ResultSet rs = stmt.executeQuery(sql);
-					
-				if (rs.next()){
-						
-				//SEBAHAGIAN
-				if("2".equals(rs.getString("ID_JENISTANAH"))){   
-							
-					sql = "SELECT ID_PERMOHONAN FROM TBLHTPPERMOHONAN WHERE "
-							+ "(ID_AGENSI IS NULL OR ID_LUASMHN IS NULL OR LUAS_MHN1 IS NULL OR FLAG_TEMPOHSEWA IS NULL)"
-							+ " AND ID_PERMOHONAN= '" +idPermohonan+ "'";
-				ResultSet rs2 = stmt.executeQuery(sql);
-						if (rs2.next()){
-							bool = false;
-						} else {
-							bool = true;
-						}
-					} else if("1".equals(rs.getString("ID_JENISTANAH"))){
-					sql = "SELECT ID_PERMOHONAN FROM TBLPHPPERMOHONANSEWA WHERE "
-							+ " (LUAS_MHN IS NULL OR FLAG_TEMPOHSEWA IS NULL)"
-							+ " AND ID_PERMOHONAN= '" +idPermohonan+ "'";
-				ResultSet rs1 = stmt.executeQuery(sql);
-						if (rs1.next()){
-							bool = false;
-						} else {
-							bool = true;
-						}
-					}
-					else{
-						bool = true;
-					}
-						
-				} else {
-					bool = true;
-				}
-				
-			} catch (Exception re) {
-				log.error("Error: ", re);
-				throw re;
-				} finally {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+				throw new Exception("Ralat : Masalah penyimpanan data " + ex.getMessage());
+				    	
+			} finally {
 				if (db != null)
 					db.close();
-			}
-			return bool;
-		}
+				}		
+	}
 			
-		public void hapusPermohonan(String idFail) throws Exception {
+	public String getIdSuburusanstatus(String idSuburusan, String idStatus) throws Exception {
+		Db db = null;
+		String sql = "";
 
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+					
+			sql = "SELECT ID_SUBURUSANSTATUS FROM TBLRUJSUBURUSANSTATUS WHERE ID_STATUS = '" + idStatus + "' AND ID_SUBURUSAN = '" + idSuburusan + "'";
+					
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()){
+				return (String)rs.getString("ID_SUBURUSANSTATUS");
+			} else {
+					return "";
+			}
+					
+			}  catch (Exception re) {
+				log.error("Error: ", re);
+				throw re;
+			}	finally {
+			if (db != null)
+				db.close();
+			}
+	}
+		
+	//DELETEPERMOHONAN
+	public void hapusPermohonan(String idFail) throws Exception {
 			Db db = null;
 			Connection conn = null;
 			String sql = "";
@@ -1417,11 +1468,6 @@ public class FrmOnlinePajakanSenaraiFailData {
 					+ "(SELECT ID_PERMOHONAN FROM TBLPERMOHONAN WHERE ID_FAIL IN (" + idFail + "))";
 				stmt.executeUpdate(sql);
 				
-				//TBLRUJSUBURUSANSTATUSFAIL
-				sql="DELETE FROM TBLRUJSUBURUSANSTATUSFAIL WHERE ID_PERMOHONAN IN"
-						+"(SELECT ID_PERMOHONAN FROM TBLPERMOHONAN WHERE ID_FAIL IN (" + idFail + "))";
-				stmt.executeUpdate(sql);
-				
 				//TBLHTPPEMOHON 
 				sql = "DELETE FROM TBLHTPPEMOHON WHERE ID_PEMOHON IN "
 					+ "(SELECT ID_PEMOHON FROM TBLPERMOHONAN WHERE ID_PERMOHONAN IN "
@@ -1431,6 +1477,11 @@ public class FrmOnlinePajakanSenaraiFailData {
 				//TBLPERMOHONAN
 				sql = "DELETE FROM TBLPERMOHONAN WHERE ID_PERMOHONAN IN "
 					+ "(SELECT ID_PERMOHONAN FROM TBLPERMOHONAN WHERE ID_FAIL IN (" + idFail + "))";
+				stmt.executeUpdate(sql);
+				
+				//TBLRUJSUBURUSANSTATUSFAIL
+				sql = "DELETE FROM TBLRUJSUBURUSANSTATUSFAIL WHERE ID_PERMOHONAN IN "
+					+ "(SELECT ID_PERMOHONAN FROM TBLRUJSUBURUSANSTATUSFAIL WHERE ID_FAIL IN (" + idFail + "))";
 				stmt.executeUpdate(sql);
 				
 				//TBLPFDFAIL
@@ -1453,5 +1504,93 @@ public class FrmOnlinePajakanSenaraiFailData {
 			}	
 		}
 		
+	//LAMPIRAN
+	public void simpanKemaskiniLampiran(String idDokumen, String txtNamaLampiran,
+			String txtCatatan, HttpSession session) throws Exception {
+			Db db = null;
+			Connection conn = null;
+			String userId = (String) session.getAttribute("_ekptg_user_id");
+			String sql = "";
+
+			try {
+				db = new Db();
+				conn = db.getConnection();
+				conn.setAutoCommit(false);
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+
+				//TBLHTPDOKUMEN
+				r.update("ID_DOKUMEN", idDokumen);
+				r.add("NAMA_DOKUMEN", txtNamaLampiran);
+				r.add("CATATAN", txtCatatan);
+
+				r.add("ID_KEMASKINI", userId);
+				r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+				sql = r.getSQLUpdate("TBLHTPDOKUMEN");
+				log.info("sql : " +sql);
+				stmt.executeUpdate(sql);
+				
+				conn.commit();
+					
+				/*
+				 * AuditTrail.logActivity("1610198", "4", null, session, "UPD", "FAIL [" +
+				 * idDokumen + "] DIKEMASKINI");
+				 */
+
+			} catch (SQLException ex) {
+				try {
+					conn.rollback();
+				} catch (SQLException e) {
+					throw new Exception("Rollback error : " + e.getMessage());
+				}
+				throw new Exception("Ralat : Masalah penyimpanan data "
+						+ ex.getMessage());
+
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}
 		
+	public void hapusLampiran(String idDokumen, HttpSession session) throws Exception {
+			Db db = null;
+			Connection conn = null;
+			String sql = "";
+
+			try {
+				db = new Db();
+				conn = db.getConnection();
+				conn.setAutoCommit(false);
+				Statement stmt = db.getStatement();
+
+				// TBLHTPDOKUMEN
+				SQLRenderer r = new SQLRenderer();
+				r.add("ID_DOKUMEN", idDokumen);
+
+				sql = r.getSQLDelete("TBLHTPDOKUMEN");
+				log.info("sql : " +sql);
+				stmt.executeUpdate(sql);
+
+				conn.commit();
+					
+				/*
+				 * AuditTrail.logActivity("1610198", "4", null, session, "DEL", "FAIL [" +
+				 * idDokumen + "] DIHAPUSKAN");
+				 */
+
+			} catch (SQLException ex) {
+				try {
+					conn.rollback();
+				} catch (SQLException e) {
+					throw new Exception("Rollback error : " + e.getMessage());
+				}
+				throw new Exception("Ralat : Masalah menghapus data "
+						+ ex.getMessage());
+
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}	
 }
