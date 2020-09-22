@@ -71,6 +71,7 @@ padding:0 0.25em;
     		#if($report == 'SuratKepadaPemohonPajakan' 
     			|| $report == 'HTPajakanSuratJKPTGNegeri'
     			|| $report == 'HTPajakanSuratBayaran'
+    			|| $report == 'HTPajakanSuratBayaranLewat'
     			)
               <tr> 
 		        <td>&nbsp;</td>
@@ -99,9 +100,13 @@ padding:0 0.25em;
         <table align="center" width="70%" border="0" cellspacing="2" cellpadding="2">
         	<tr align="center">
                 <td>
+                	#if($report == 'HTPajakanSuratBayaranLewat')
+                		<input type="button" name="cmdCetak" id="cmdCetak" value="Previu" onclick="javascript:cetakPeringatanBayaranLewat()">
+                	#end  
             		#if($report == 'HTPajakanSuratBayaran')
                 		<input type="button" name="cmdCetak" id="cmdCetak" value="Previu" onclick="javascript:cetakPeringatanBayaran()">
                 	#end                
+                	
                 	#if($report == 'SuratKepadaPemohonPajakan')
                 		<input type="button" name="cmdCetak" id="cmdCetak" value="Previu" onclick="javascript:cetakSuratKepadaPemohon()">
                 	#end
@@ -127,6 +132,39 @@ padding:0 0.25em;
 
 <!-- Untuk borang dan surat -->
 <script>
+
+	function cetakPeringatanBayaranLewat() {	
+		var idpermohonan = document.${formName}.idpermohonan.value;
+		var namaPegawai = document.${formName}.namaPegawai.value;
+		var idJawatan = document.${formName}.idJawatan.value;
+		var jawatanPegawai = document.${formName}.jawatanPegawai.value;
+		var emelPegawai = document.${formName}.emelPegawai.value;
+		var tarikh = document.${formName}.txdMula.value;
+		var userid = document.${formName}.userid.value;
+		var params = "tarikh="+tarikh+"&userid="+userid;
+		
+		if(document.${formName}.socPenolongDanPengarah.value == ""){
+			alert('Sila pilih Nama Pegawai terlebih dahulu.');
+	  		document.${formName}.socPenolongDanPengarah.focus(); 
+			return;
+			
+		}else if(tarikh == ""){
+			alert('Sila pilih Tarikh Hantar terlebih dahulu.');
+		  	document.${formName}.txdMula.focus(); 
+			return;
+				
+		}else{			
+			params += "&idpermohonan="+idpermohonan+"&namaPegawai="+namaPegawai+"&idJawatan="+idJawatan+"&jawatanPegawai="+jawatanPegawai+"&emelPegawai="+emelPegawai;
+			
+			var url = "../../servlet/ekptg.report.htp.SuratPajakanPeringatanBayarLewat?"+params;
+		    var hWnd = window.open(url,'Cetak','full=yes, resizable=yes,scrollbars=yes');
+		    if ((document.window != null) && (!hWnd.opener))
+		   	hWnd.opener = document.window;
+		    if (hWnd.focus != null) hWnd.focus();
+		    
+		}
+		
+	}
 
 	function cetakPeringatanBayaran() {	
 		var idpermohonan = document.${formName}.idpermohonan.value;
