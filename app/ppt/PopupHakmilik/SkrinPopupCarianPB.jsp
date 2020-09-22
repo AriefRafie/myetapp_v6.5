@@ -263,7 +263,8 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                   #if ($list.flag_online == '2')
     	<font color="red"> $senarai.keteranganStatusBantahan (Permohonan Online) </font>
           #else
-          $list.keteranganStatusBantahan <br> <b>$list.noKes</b>
+          $list.keteranganStatusBantahan <br> #if($list.kes != '')<b>$list.noKes</b>
+          #end
           #end
              </td>   
                  
