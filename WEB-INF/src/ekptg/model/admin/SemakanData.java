@@ -940,7 +940,7 @@ public class SemakanData {
 			    }
 		  }	 
 
-	 public static void tambah(String keterangan, String id_masuk) throws Exception {
+	 public static void tambah(String kod,String keterangan, String id_masuk) throws Exception {
 		  Db db = null;
 		  String sql = "";
 		  String strTarikhSemasa="";
@@ -954,6 +954,7 @@ public class SemakanData {
 			  Statement stmt = db.getStatement();
 			  SQLRenderer r = new SQLRenderer();
 			  r.add("id_semakan", Id_KPIKeterangan);
+			  r.add("kod_semak", kod);
 			  r.add("perihal", keterangan);
 			  r.add("id_masuk", id_masuk);
 			  r.add("tarikh_masuk", r.unquote(tarikhMasuk));
