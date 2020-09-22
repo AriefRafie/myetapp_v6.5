@@ -21,10 +21,20 @@
   		<fieldset>
       		<legend><b>CARIAN</b></legend>
       			<table width="100%" align="center" border="0">
+ 				    <tr>
+			          <td width="30%" height="24" scope="row" align="right">No.Fail : </td>
+			          <td width="70%"><input name="txtCarianNoFail" id="txtCarianNoFail" type="text" value="" size="50" maxlength="50" style="text-transform:uppercase;" >
+			          </td>
+			        </tr>
       				<tr>
           				<td width="30%" height="24" scope="row" align="right">Jenis Permohonan : </td>
           				<td width="70%">$selectJenisPermohonan</td>
         			</tr>
+        			<tr>
+			          <td width="30%" height="24" scope="row" align="right">Nama Pemohon : </td>
+			          <td width="70%"><input name="txtCarianNamaPemohon" id="txtCarianNamaPemohon" type="text" value="" size="50" maxlength="50" style="text-transform:uppercase;" >
+			          </td>
+			        </tr>
         			<tr>
           				<td scope="row"></td>
           				<td>

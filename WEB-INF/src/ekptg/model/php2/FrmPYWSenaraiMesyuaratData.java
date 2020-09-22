@@ -461,6 +461,9 @@ public class FrmPYWSenaraiMesyuaratData {
 				h.put("idFail",
 						rs.getString("ID_FAIL") == null ? "" : rs
 								.getString("ID_FAIL"));
+				h.put("idPermohonan",
+						rs.getString("ID_PERMOHONAN") == null ? "" : rs
+								.getString("ID_PERMOHONAN"));
 				listPermohonanBaharu.addElement(h);
 				bil++;
 			}

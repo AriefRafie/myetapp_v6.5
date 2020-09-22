@@ -1052,7 +1052,7 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 			sql += " NVL(B.ID_PIHAKBERKEPENTINGAN,0) ID_PIHAKBERKEPENTINGAN,B.ID_JENISPB,B.NAMA_PB,B.NO_PB,B.UMUR,"+
 							"C.NO_HAKMILIK,C.NO_PT,C.NO_LOT, "+
 							"D.KETERANGAN,";
-			sql += " E.ID_HAKMILIK,E.ALAMAT1,E.ALAMAT2,E.ALAMAT3,E.POSKOD,NVL(E.ID_NEGERI,0) ID_NEGERI,E.ID_BANDAR,"+
+			sql += " E.ID_HAKMILIK,E.ALAMAT1,E.ALAMAT2,E.ALAMAT3,E.POSKOD,NVL(E.ID_NEGERI,0) ID_NEGERI,E.ID_BANDAR, RB.KETERANGAN, "+
 							"E.NO_TEL_RUMAH,E.NO_HANDPHONE,E.NO_FAX,E.FLAG_BANTAHAN,"+
 							"F.ID_WARTA,";
 			sql += " G.KETERANGAN AS DESC_STATUS_BANTAHAN, G.ID_STATUS, ";
@@ -1067,7 +1067,7 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 							",TBLPPTWARTA F " +
 							",TBLRUJSTATUS G "+
 							",TBLPPTSIASATAN S " +
-							",TBLRUJNEGERI RN,TBLRUJJENISNOPB NOPB ";	
+							",TBLRUJNEGERI RN,TBLRUJJENISNOPB NOPB , TBLRUJBANDAR RB";	
 			sql +=	" WHERE E.ID_JENISPB=D.ID_JENISPB(+) "+
 							" AND E.ID_PIHAKBERKEPENTINGAN=B.ID_PIHAKBERKEPENTINGAN ";	
 			sql += 	" AND E.ID_HAKMILIK=C.ID_HAKMILIK "+
@@ -1075,6 +1075,7 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 			sql += 	" AND C.ID_PERMOHONAN = F.ID_PERMOHONAN "+
 							" AND A.STATUS_BANTAHAN = G.ID_STATUS(+) "+
 							" AND E.ID_NEGERI = RN.ID_NEGERI(+) "+
+							" AND E.ID_BANDAR = RB.ID_BANDAR(+) "+
 							" AND B.ID_JENISNOPB = NOPB.ID_JENISNOPB(+) "+
 							" AND A.ID_HAKMILIKPB = '"+id_hakmilikpb+"' " + "AND S.ID_SIASATAN = '"+_MaxIdSiasatan+"' AND F.ID_WARTA = '"+id_warta+"' " +
 							" ";	
@@ -1115,6 +1116,7 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 		    	h.put("poskod", rs.getString("POSKOD")==null?"":rs.getString("POSKOD"));
 			   	h.put("id_negeri", rs.getString("ID_NEGERI")==null?"":rs.getString("ID_NEGERI"));
 			   	h.put("id_bandar", rs.getString("ID_BANDAR")==null?"":rs.getString("ID_BANDAR"));
+				h.put("nama_bandar", rs.getString("KETERANGAN")==null?"":rs.getString("KETERANGAN"));
 			   	h.put("no_hakmilik", rs.getString("NO_HAKMILIK")==null?"":rs.getString("NO_HAKMILIK"));
 		    	h.put("no_pt", rs.getString("NO_PT")==null?"":rs.getString("NO_PT"));
 		    	h.put("no_lot", rs.getString("NO_LOT")==null?"":rs.getString("NO_LOT"));

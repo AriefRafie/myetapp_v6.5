@@ -628,7 +628,7 @@ document.getElementById("header_lama").style.display="block";
         <tr>
       <td colspan="3" width="100%" ><div align="center">
       
-      #if (($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N") && ($!DoNotSave != "1") && ($userRole != "user_ppk"))
+      #if ($userRole != "user_ppk")
           <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript:Simpan_Selesai('$idpermohonan','$id_perbicaraan');" />
       #end
           <input name="cmdKembali" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
@@ -734,7 +734,7 @@ document.getElementById("header_lama").style.display="block";
     </tr>
         <tr>
       <td colspan="2" width="100%" ><div align="center">
-       #if($!DoNotSave != "1" && $userRole != "user_ppk")
+       #if($userRole != "user_ppk")
           <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript:Simpan_Tangguh('$idpermohonan','$id_perbicaraan');" />
        #end
           <input name="cmdKembali" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');"/>
@@ -1022,7 +1022,7 @@ document.getElementById("header_lama").style.display="block";
     
     <tr>
       <td colspan="2" width="100%" ><div align="center">
-      #if($!DoNotSave != "1" && $userRole != "user_ppk")
+      #if($userRole != "user_ppk")
           <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript:Simpan_Batal('$idpermohonan','$id_perbicaraan');" />
       #end
       	  <input type="button" name="cmdKembali"  value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
