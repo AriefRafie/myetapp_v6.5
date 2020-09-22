@@ -339,7 +339,7 @@ public class SkrinPopupCarianPB extends AjaxBasedModule {
 						}
 						
 						if(!id_permohonan.equals("") && !id_permohonan.equals(null) && flag_skrin.equals("bantahan_mahkamah"))
-							sql += "NVL('NO.KES : '||IP.NO_KES,'') NO_KES,";
+							sql += "NVL('NO.KES : '||IP.NO_KES,'') NO_KES, IP.NO_KES NOKES,";
 							
 						
 						sql += "HMPB.ID_PIHAKBERKEPENTINGAN,HMPB.CATATAN2,HMPB.ID_HAKMILIKPB,PB.NAMA_PB,"
@@ -404,7 +404,7 @@ public class SkrinPopupCarianPB extends AjaxBasedModule {
 						sql += " AND NVL(HMPB.ID_JENISPB,0) NOT IN ('40','41','42') ";
 						
 						if(!id_permohonan.equals("") && !id_permohonan.equals(null) && flag_skrin.equals("bantahan_mahkamah"))
-							sql += " AND BAN.ID_BANTAHAN=IP.ID_RUJUKAN(+) AND IP.NO_KES IS NOT NULL";
+							sql += " AND BAN.ID_BANTAHAN=IP.ID_RUJUKAN(+) "; //AND IP.NO_KES IS NOT NULL"; 
 						
 						if(!no_pb.equals("") && !no_pb.equals(null))
 						{
@@ -551,6 +551,7 @@ public class SkrinPopupCarianPB extends AjaxBasedModule {
 		    	h.put("flag_online", rs.getString("FLAG_ONLINE")==null?"":rs.getString("FLAG_ONLINE"));
 		    	//mt
 		    	h.put("noKes", rs.getString("NO_KES")==null?"":rs.getString("NO_KES"));
+		    	h.put("kes", rs.getString("NOKES")==null?"":rs.getString("NOKES"));
 
 				list_pb.addElement(h);
 			}
