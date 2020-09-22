@@ -188,7 +188,7 @@ document.getElementById("header_lama").style.display="block";
         <tr>
           <td width="16%"><font color="red">*</font>&nbsp;Keputusan Perbicaraan</td>
          
-          #if($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N")
+          #if (($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N") && ($listPenerimaNotis_size1 > 0))
 	          <td colspan="5">:&nbsp;
 	            <input name="flag_jenis_keputusan" type="radio" value="0" $TEMPcheckedSelesai onclick="tab_selesai()" />
 	            Selesai
@@ -196,7 +196,10 @@ document.getElementById("header_lama").style.display="block";
 	          Tangguh 
 	          <input name="flag_jenis_keputusan" type="radio" value="2" $TEMPcheckedBatal onclick="tab_batal()" /> 
 	          Batal</td>
-          #else
+         #end
+          
+          #if (($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N") && ($listPenerimaNotis_size1 < 1))
+        	&nbsp;
           
 	          <td colspan="5">:&nbsp;
 	            <input name="flag_jenis_keputusan" type="radio" value="0" $TEMPcheckedSelesai disabled onclick="tab_selesai()" />
@@ -205,7 +208,9 @@ document.getElementById("header_lama").style.display="block";
 	          Tangguh 
 	          <input name="flag_jenis_keputusan" type="radio" value="2" $TEMPcheckedBatal disabled onclick="tab_batal()" /> 
 	          Batal</td>
-          
+          <tr>
+          <td colspan="3"><font color="red"><b>Sila lengkapkan Laporan Penghantaran Notis dahulu.</b></font></td>
+          </tr>
           #end
         </tr>    
         <!--By Mohamad Rosli 22/02/2011-->  
@@ -969,7 +974,7 @@ Sebab-sebab Lain</td>
     
       <tr>
       <td colspan="2" width="100%" ><div align="center">
-      #if($!DoNotSave != "1" && $userRole != "user_ppk")
+      #if($userRole != "user_ppk")
           <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript:Simpan_Batal('$idpermohonan','$id_perbicaraan');" />
       #end
       	  <input type="button" name="cmdKembali"  value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />

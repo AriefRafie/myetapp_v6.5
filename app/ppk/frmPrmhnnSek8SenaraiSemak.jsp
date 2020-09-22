@@ -320,6 +320,144 @@
         
         </td>
       </tr>
+            <tr>
+        <td><table width="100%" border="0">
+          <tr>
+            <td width="20%" >&nbsp;</td>
+            <td width = "3%" valign="top" ><div align="center">
+              <input type="radio" name="cbsemakradio" $chkmode id="radio"  value="5" $checked5 onClick="checkit5()"/>
+            </div></td>
+            <td width="77%"> Sijil Perakuan Kematian <br/>
+              (Surat Mati)
+              <label id="divCheckbox"  style="visibility: hidden;">
+                    <input type="checkbox" name="cbsemaks" $checked5 value="5" id="cbsemaks" />
+                  </label></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td width="7%" ><label></label></td>
+            <td width="73%" >No. Sijil
+              <label>
+              
+              #if($chkmode == "disabled")
+              #set($chkmodeR = "readonly" )
+              #else              
+              #set($chkmodeR = "" )
+              #end
+                    <input type="text" name="txtNomborSijil" id="txtNomborSijil" maxlength="25" $chkmodeR  class="$chkmode" value="$txtchecked5" onKeyUp="checkitA()" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()"  />
+                  </label></td>
+          </tr>
+          <!-- arief comment -->
+          <!--
+          <tr>
+            <td>&nbsp;</td>
+            <td ><div align="center">
+              <input type="radio" name="cbsemakradio" id="radio2" $chkmode value="6" $checked6 onClick="checkit6()"/>
+            </div></td>
+            <td> Surat Sumpah Kematian
+              <label id="divCheckbox"  style="visibility: hidden;">
+                <input type="checkbox" name="cbsemaks" $checked6 value="6" id="cbsemaks" />
+              </label>            
+            </td>
+          </tr> 
+          <tr>
+            <td>&nbsp;</td>
+            <td width="7%" ><label></label></td>
+            <td width="73%" >Tarikh
+              <label>
+                <input type="text" name="txtTahunKematian" id="txtTahunKematian" width="10" maxlength="10" $chkmodeR  class="$chkmode" value="$txtchecked6" onKeyUp="checkitE()" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()"/>
+                <a href="javascript:displayDatePicker('txtTahunKematian',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
+                <span style="font-size:9px;color:blue;font-style:italic">dd/mm/yyyy</span>
+              </label>
+            </td>
+          </tr> -->
+           <tr>
+            <td>&nbsp;</td>
+            <td valign="top"><div align="center">
+              <input type="radio" name="cbsemakradio" $chkmode id="radio2" value="6" $checked6 onClick="checkit6()"/>
+            </div></td>
+            <td> Perintah Mahkamah (Kematian)
+              <label id="divCheckbox"  style="visibility: hidden;">
+                    <input type="checkbox" name="cbsemaks" $checked6 value="6" id="cbsemaks" />
+                  </label></td>
+          </tr>
+          
+          <tr>
+            <td>&nbsp;</td>
+            <td width="7%" ><label></label></td>
+            <td width="73%" >Tarikh Perintah&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <label>
+                <input type="text" name="txtPerintahMahkamah" id="txtPerintahMahkamah" width="10" maxlength="10" $chkmodeR  class="$chkmode" value="$!txtchecked6d" onKeyUp="" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()"/>
+                <a href="javascript:displayDatePicker('txtPerintahMahkamah',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
+                <span style="font-size:9px;color:blue;font-style:italic">dd/mm/yyyy</span>
+              </label>
+            </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td width="7%" ><label></label></td>
+            <td width="73%" >No. Kes Mahkamah
+              <label>
+              
+              #if($chkmode == "disabled")
+              #set($chkmodeR = "readonly" )
+              #else              
+              #set($chkmodeR = "" )
+              #end
+                    <input type="text" name="txtNoKesMahkamah" id="txtNoKesMahkamah" maxlength="25" $chkmodeR  class="$chkmode" value="$!txtchecked6" onKeyUp="" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()"  />
+                  </label></td>
+          </tr>
+          <!-- 
+          <tr>
+            <td>&nbsp;</td>
+            <td ><div align="center">
+              <input type="radio" name="cbsemakradio" id="radio3" $chkmode value="7" $checked7 onClick="checkit7()"/>
+            </div></td>
+            <td> Permit Menguburkan
+              <label id="divCheckbox"  style="visibility: hidden;">
+                    <input type="checkbox" name="cbsemaks" $checked7 value="7" id="cbsemaks" />
+                    </label>            </td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td><div align="center"></div></td>
+            <td>No. Permit
+              <label>
+              #if($chkmode == "disabled")
+              #set($chkmodeR = "readonly" )
+              #else              
+              #set($chkmodeR = "" )
+              #end
+                    <input type="text" name="txtNomborPermit" id="txtNomborPermit" maxlength="10" $chkmodeR class="$chkmode" value="$txtchecked8" onKeyUp="checkitB()" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()"  />
+                  </label></td>
+          </tr>
+           -->
+        </table>
+      
+           #if($listsept.size() > 0)
+  #foreach($List1 in $list2)
+  #set($lepassatusept = $List1.lepassatusept )
+  
+ 
+ #end
+ #else
+ #set($lepassatusept = "no" )
+ #end
+ 
+ 
+           <input type="hidden" name="lepassatusept" id="lepassatusept" value="$lepassatusept" />
+      				 #if($lepassatusept == "no" )
+                    <label id="divCheckbox"  style="visibility: hidden;" >
+                    <input name="cbsemaks" type="checkbox" id="cbsemaks5" checked value="9"  onClick="checkit9()"/>  
+                    <input type="hidden" name="txtNomborResit" id="txtNomborResit" size="15"  maxlength="20" value="" />  
+                    <input type="hidden" name="txdTarikhByrn" id="txdTarikhByrn" size="15"  maxlength="20" value="" />     
+                    </label> 
+     				  #end
+        
+        </td>
+       
+      </tr>
+      <!-- 
       <tr>
         <td><table width="100%" border="0">
           <tr>
@@ -420,7 +558,7 @@
        
       </tr>
      
-      
+     -->
        #if($lepassatusept == "yes" )
       <tr>
         <td><table width="100%" border="0">
