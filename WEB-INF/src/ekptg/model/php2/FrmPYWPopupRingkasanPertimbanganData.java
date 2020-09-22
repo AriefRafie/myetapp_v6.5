@@ -16,11 +16,12 @@ import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
 
-public class FrmPYWPopupSenaraiPermohonanData {
+public class FrmPYWPopupRingkasanPertimbanganData {
 
 	private Vector senaraiFailMesyuarat = null;
 	private Vector senaraiFailPerlanjutanMesyuarat = null;
-
+	private Vector beanKertasRingkasan = null;
+	
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	public void carianFail(String noFail, String idJenisPermohonan, String namaPemohon) throws Exception {
@@ -249,5 +250,118 @@ public class FrmPYWPopupSenaraiPermohonanData {
 	
 	public Vector getSenaraiFailMesyuarat() {
 		return senaraiFailMesyuarat;
+	}
+	
+	public Vector getMaklumatRingkasanPertimbangan() {
+		return beanKertasRingkasan;
+	}
+	
+	public void setMaklumatKertasRingkasan(String idPermohonan)
+			throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			beanKertasRingkasan = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			//sql = "SELECT ID_KERTASKERJA, ULASAN_KJP, ULASAN_JPPH, ULASAN_JKPTGN, ULASAN_KEM_KEWANGAN, ULASAN_KEM_WP, ULASAN_PTG,"
+			//		+ " ULASAN_DBKL, ULASAN_BPH, FLAG_PAJAKAN, FLAG_PENSWASTAAN, NAMA_PEGAWAI_HTP, TARIKH_RUJUKAN_HTP"
+			//		+ " FROM TBLPHPKERTASKERJAPENYEWAAN WHERE FLAG_KERTAS = '1' AND ID_PERMOHONAN = '"
+			//		+ idPermohonan + "'";
+			sql = "SELECT A.ID_KERTASKERJA, A.ULASAN_KJP, A.ULASAN_JPPH, A.ULASAN_JKPTGN, A.ULASAN_KEM_KEWANGAN, A.ULASAN_KEM_WP, A.ULASAN_PTG,"
+					+ " A.ULASAN_DBKL, A.ULASAN_BPH, A.FLAG_PAJAKAN, A.FLAG_PENSWASTAAN, A.NAMA_PEGAWAI_HTP, A.TARIKH_RUJUKAN_HTP, B.CATATAN_RINGKASAN_PERTIMBANGAN"
+					+ " FROM TBLPHPKERTASKERJAPENYEWAAN A, TBLPHPMESYUARATPERMOHONAN B WHERE A.ID_PERMOHONAN=B.ID_PERMOHONAN AND A.FLAG_KERTAS = '1' AND A.ID_PERMOHONAN = '"
+					+ idPermohonan + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("idKertasKerja",
+						rs.getString("ID_KERTASKERJA") == null ? "" : rs
+								.getString("ID_KERTASKERJA"));
+				h.put("ulasanKJP",
+						rs.getString("ULASAN_KJP") == null ? "" : rs
+								.getString("ULASAN_KJP"));
+				h.put("ulasanJPPH", rs.getString("ULASAN_JPPH") == null ? ""
+						: rs.getString("ULASAN_JPPH"));
+				h.put("ulasanJKPTGN",
+						rs.getString("ULASAN_JKPTGN") == null ? "" : rs
+								.getString("ULASAN_JKPTGN"));
+				h.put("ulasanKemKewangan",
+						rs.getString("ULASAN_KEM_KEWANGAN") == null ? "" : rs
+								.getString("ULASAN_KEM_KEWANGAN"));
+				h.put("ulasanKemWP", rs.getString("ULASAN_KEM_WP") == null ? ""
+						: rs.getString("ULASAN_KEM_WP"));
+				h.put("ulasanPTG",
+						rs.getString("ULASAN_PTG") == null ? "" : rs
+								.getString("ULASAN_PTG"));
+				h.put("ulasanDBKL", rs.getString("ULASAN_DBKL") == null ? ""
+						: rs.getString("ULASAN_DBKL"));
+				h.put("ulasanBPH",
+						rs.getString("ULASAN_BPH") == null ? "" : rs
+								.getString("ULASAN_BPH"));
+				h.put("flagPajakan", rs.getString("FLAG_PAJAKAN") == null ? ""
+						: rs.getString("FLAG_PAJAKAN"));
+				h.put("flagPenswastaan",
+						rs.getString("FLAG_PENSWASTAAN") == null ? "" : rs
+								.getString("FLAG_PENSWASTAAN"));
+				h.put("namaPegawai",
+						rs.getString("NAMA_PEGAWAI_HTP") == null ? "" : rs
+								.getString("NAMA_PEGAWAI_HTP"));
+				h.put("tarikhRujukan",
+						rs.getDate("TARIKH_RUJUKAN_HTP") == null ? "" : sdf
+								.format(rs.getDate("TARIKH_RUJUKAN_HTP")));
+				h.put("catatanRingkasanPertimbangan",
+						rs.getString("CATATAN_RINGKASAN_PERTIMBANGAN") == null ? "" : rs
+								.getString("CATATAN_RINGKASAN_PERTIMBANGAN"));
+				beanKertasRingkasan.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public void simpanCatatanRingkasanPertimbangan(String idPermohonan,String catatanRingkasanPertimbangan, HttpSession session) throws Exception {
+		Db db = null;
+		Connection conn = null;
+		String userId = session.getAttribute("_ekptg_user_id").toString();
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// UPDATE
+			r.update("ID_PERMOHONAN", idPermohonan);
+			r.add("CATATAN_RINGKASAN_PERTIMBANGAN", catatanRingkasanPertimbangan);
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			sql = r.getSQLUpdate("TBLPHPMESYUARATPERMOHONAN");
+			stmt.executeUpdate(sql);			
+			conn.commit();
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
 	}
 }
