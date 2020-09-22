@@ -122,6 +122,14 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 		context.put("id_permohonan", id_permohonan);    	
    		myLogger.info("id_permohonan= "+id_permohonan);
    		
+   		// GET LIST DATA
+		listPageDepan = model.getListPemohon(userIdNeg);
+		context.put("PermohonanList", listPageDepan);
+		context.put("list_size", listPageDepan.size());
+		context.put("selectKementerian", HTML.SelectKementerian("socKementerian", null, "style=width:470px"));
+		setupPageBantahan(session, action, listPageDepan);
+
+   		
 		String negeriMMK = "";
 		String id_kementerian = "";
 		String id_fail = "";

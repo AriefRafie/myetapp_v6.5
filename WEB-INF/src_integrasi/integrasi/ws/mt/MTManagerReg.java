@@ -11,6 +11,7 @@ import java.util.Hashtable;
 
 import org.apache.log4j.Logger;
 
+import ekptg.helpers.DB;
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 import my.gov.kehakiman.eip.services.CauseofactionType;
@@ -111,6 +112,64 @@ public class MTManagerReg {
 				,courtLocation,division,jurisdiction,sourceReferenceNo,valueInvolved,partyAgency,transactionID);
 		return msgDaftar;
 	}		
+	//PPT
+	public static String PendaftaranBaharuPPT(String typeReg
+			,String docID,String docName,String docContent
+			,PartyType[] party
+			,String courtLocation,
+			String division, String jurisdiction, String sourceReferenceNo,
+			String valueInvolved, DataCreateReqTypePartyAgency partyAgency,String transactionID){
+			caseCode = typeReg;
+			CauseofactionType cof = null;
+			String docType = "";
+			String cft = "1";
+			if(typeReg.equals("15")){
+				cof = new CauseofactionType();
+				cof.setCauseOfActionRefID(cft);
+				cof.setCauseOfActionID("00FF2689-FA1E-4332-A101-7D7FC9A11C4E");
+				cof.setCauseOfActionDesc("Rujukan Tanah"); 
+				docType ="75559776-2C29-472F-9D96-818E4868D2AE"; //TSP113
+						
+			}else if(typeReg.equals("16A")){
+				cof = new CauseofactionType();
+				cof.setCauseOfActionRefID(cft);
+				cof.setCauseOfActionID("B8BA9758-E1CE-40A2-99FC-01FAD4462FB4");
+				cof.setCauseOfActionDesc("Rayuan di bawah undang-undang bertulis selain daripada rayuan di bawah kod-kod spesifik"); 
+				docType ="48367E28-D18C-4A9D-B078-3D1ED2ED695E";	//TSR013
+			
+			}else if(typeReg.equals("31NCvC")){
+				cof = new CauseofactionType();
+				cof.setCauseOfActionRefID(cft);
+				cof.setCauseOfActionID("9479101A-AB53-4E0A-948A-53C6C7577051");
+				cof.setCauseOfActionDesc("Surat Kuasa Mentadbir"); 
+				docType ="E7DD535E-187F-4D09-9278-EB3B50DD6926";	//TSI034
+			
+			}	
+			
+	        CauseofactionType[] causeofaction = new CauseofactionType[1];
+	        causeofaction[0] = cof;
+	        
+	        DocumentType dt = new DocumentType();
+	        dt.setDocContent(docContent);	//64bit
+	        dt.setDocID(docID);
+	        dt.setDocEnlcNo("1");	//default 1
+	        dt.setDocName(docName);
+	        dt.setDocType(docType);
+	        DocumentType[] document = new DocumentType[1];
+	        document[0] = dt;
+//			<docID>01</docID>
+//			<DocEnlcNo>1</DocEnlcNo>
+//			<docType>75559776-2C29-472F-9D96-818E4868D2AE</docType>
+//			<docName>TestDocSamanPemula15.PDF</docName>
+
+	        msgDaftar = PendaftaranBaharuPPT(causeofaction
+					,document
+					,party
+					//,deceaseInfo
+					,courtLocation,division,jurisdiction,sourceReferenceNo,valueInvolved,partyAgency,transactionID);
+			return msgDaftar;
+		}		
+
 
 	public static String sendMaklumat2Court(String noPetisyen,
 			String namaSimati, String namaSimatiLain, String noKPSimatiBaru,
@@ -412,6 +471,62 @@ public class MTManagerReg {
 		
 	}
 	
+	//YATI
+	public static String PendaftaranBaharuPPT(CauseofactionType[] causeofaction
+			,DocumentType[] document
+			,PartyType[] party
+			//,DeceaseInfoType deceaseInfo
+			,String courtLocation,
+			String division, String jurisdiction, String sourceReferenceNo,
+			String valueInvolved, DataCreateReqTypePartyAgency partyAgency, String transactionID) {		
+			try {			
+				//DATA
+				DataCreateReqType data = new DataCreateReqType();
+				//CauseofactionType[] causeofaction = new CauseofactionType();
+				data.setCauseofaction(causeofaction);
+				
+				//untuk case_code 31NCVC
+				//DeceaseInfoType deceaseInfo = new DeceaseInfoType();
+				//data.setDeceaseInfo(deceaseInfo);
+				
+				//DocumentType document = new DocumentType();
+				data.setDocument(document);
+				
+				//PartyType party = new PartyType();
+				data.setParty(party);
+				
+				data.setCourtLocation(courtLocation);
+				data.setDivision(division);
+				data.setJurisdiction(jurisdiction);
+				data.setSourceReferenceNo(sourceReferenceNo);
+				data.setValueInvolved(valueInvolved);			
+				data.setCaseCode("15");
+				//data.setCaseCode(caseCode);
+//				DataCreateReqTypePartyAgencyPartyCounsel partyAgencyc = new DataCreateReqTypePartyAgencyPartyCounsel();
+//				partyAgencyc.setPartyCounselId("");			
+//				DataCreateReqTypePartyAgency partyAgency = new DataCreateReqTypePartyAgency();
+
+				data.setPartyAgency(partyAgency);
+
+				Civilregistercaseresponse response = submitMT(data, transactionID);			
+				if (response != null) {
+					msg = response.getCode() + "," + response.getDescription() + " , " + response.getDetail();
+					if (response.getData() != null) {
+						//response.getData().getCaseNo()getSourceReferenceNo();
+						if (response.getData().getCaseNo() != null) {
+							caseNo = response.getData().getCaseNo();
+						}
+					}
+				}
+				
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				msg = " " + "," + ex.getMessage();
+			}	
+			return msg;
+			
+		}
+	
 	private static Civilregistercaseresponse submitMT(DataCreateReqType data, String transactionID) 
 		throws RemoteException,MalformedURLException {
 		Civilregistercaseresponse response = new Civilregistercaseresponse();
@@ -568,6 +683,7 @@ public class MTManagerReg {
 	}
 
 	public void simpanPendaftaran(Hashtable<String,String> daftar) throws Exception{
+		myLog.info("data :"+daftar);
 	    Db db = null;
 	    String sql = "";
 	    try {
@@ -575,6 +691,8 @@ public class MTManagerReg {
 	    	Statement stmt = db.getStatement();
 	    	SQLRenderer r = new SQLRenderer();
 
+	    	long idPendaftaran = DB.getNextID("TBLINTMTPENDAFTARAN_SEQ");
+	    	r.add("ID_PENDAFTARAN", idPendaftaran);
 			r.add("ID_FAIL", daftar.get("idFail"));
 			r.add("ID_RUJUKAN", daftar.get("idRujukan"));
 			r.add("KOD_MT", daftar.get("kodMT"));

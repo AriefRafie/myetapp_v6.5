@@ -1,4 +1,4 @@
-
+cc
 <div id="checking_progress"></div>
 #if ($completed)
 <script>

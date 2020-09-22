@@ -117,6 +117,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 
 <div id="TabbedPanels1" class="TabbedPanels">
   <ul class="TabbedPanelsTabGroup">
+ 
     <li class="TabbedPanelsTab" tabindex="0" onclick="setSelectedTab(0);TerimaCek()">Penerimaan Cek</li>
     <li class="TabbedPanelsTab" tabindex="1" onclick="setSelectedTab(1);SerahCek()">Penyerahan Cek</li>
     <li class="TabbedPanelsTab" tabindex="2" onclick="setSelectedTab(2);BayaranEft()">Bayaran Melalui EFT</li>
@@ -127,12 +128,61 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
     <fieldset>
     
     
+    <legend>Caj Bayaran Lewat</legend>
+    	<table width="100%" border="0">
+        	<tr>
+            	<td width="18%">&nbsp;Tarikh Kuatkuasa Caj Lewat</td>
+           	  	<td width="1%">:</td>
+           	  	<td width="41%">
+                
+                #if ($mode=="disabled")
+                <input type="text" name="txdTkhCajLewatBantahan" id="txdTkhCajLewatBantahan" value="$!txdTkhCajLewatBantahan" size="10" class="disabled" readonly  />          
+            	#else
+                <input type="text" name="txdTkhCajLewatBantahan" id="txdTkhCajLewatBantahan" value="$!txdTkhCajLewatBantahan" size="10" onblur="check_date(this);" onkeyup="validateNumber(this,this.value);" tabindex="1" />
+            <img src="../img/calendar.gif" alt="" onclick="displayDatePicker('txdTkhCajLewatBantahan',false,'dmy');" />&nbsp;<i><font color='blue' style='font-size:10px'>dd/mm/yyyy</font></i>
+                #end            
+              </td>
+                
+           	  	<td width="16%">&nbsp;Bil Hari Lewat</td>
+           	  	<td width="1%">:</td>
+           	  	<td width="23%">
+                
+              	#if ($mode=="disabled")
+             <input type="text" name="txtBilLewatBantahan" id="txtBilLewatBantahan" value="$!txtBilLewatBantahan" size="10" class="disabled" readonly />
+                #else
+                    <input type="text" name="txtBilLewatBantahan" id="txtBilLewatBantahan" value="$!txtBilLewatBantahan" size="10" class="disabled" readonly tabindex="2" />
+                #end 
+                           
+              </td>          
+          	</tr>
+        	<tr>
+            	
+                <td>&nbsp;Caj Bayaran Lewat&nbsp;(RM)</td>
+                <td width="1%">:</td>
+           	  	<td>
+                
+              	#if ($mode=="disabled")
+              	<input type="text" name="txtAmaunLewatBantahan" id="txtAmaunLewatBantahan" value="$!Util.formatDecimal($!jumlah_award_bantahan)" maxlength="12" class="disabled" readonly />
+              	#else
+              	<input type="text" name="txtAmaunLewatBantahan" id="txtAmaunLewatBantahan" value="$!Util.formatDecimal($!jumlah_award_bantahan)" maxlength="12" class="disabled" readonly tabindex="5" />              
+         	  	<input type="hidden" name="txtAmaunLewatBantahan" id="txtAmaunLewatBantahan" value="$!jumlah_award_bantahan" />  
+         	  	#end 
+                           
+       		  </td>
+            </tr>
+           
+        </table>   
+    </fieldset>
+    
+    <fieldset>
+    
+    
     <legend>Penerimaan Cek</legend>
     	<table width="100%" border="0">
         	<tr>
-            	<td width="14%"><font color="red">*</font>&nbsp;Tarikh Terima</td>
+            	<td width="18%"><font color="red">*</font>&nbsp;Tarikh Terima</td>
            	  	<td width="1%">:</td>
-           	  	<td width="45%">
+           	  	<td width="41%">
                 
                 #if ($mode=="disabled")
                 <input type="text" name="txdTkhTerima" id="txdTkhTerima" value="$!txdTkhTerima" size="10" class="disabled" readonly  />          
@@ -303,6 +353,12 @@ function TerimaCek(){
 	document.${formName}.submit();
 }
 
+function BayarTambah(){
+	document.${formName}.command.value = "BayarTambah";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanPampasan";
+	document.${formName}.submit();
+}
+
 function SerahCek(){
 	document.${formName}.command.value = "SerahCek";
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanPampasan";
@@ -445,6 +501,67 @@ function RemoveNonNumeric( strString )
       return strReturn;
 }
 
+function checkDate() {
+	
+	var Mula  = document.getElementById("txdTkhCajLewatBantahan").value;
+	var dt1   = parseInt(Mula.substring(0,2),10);
+	var mon1  = parseInt(Mula.substring(3,5),10)-1;
+	var yr1   = parseInt(Mula.substring(6,10),10);
+	var dateLewat = new Date(yr1, mon1, dt1);
+	//alert(dateLewat);
+	
+	var TarikhH  = document.getElementById("txdTarikhBorangH").value;
+	var dtH   = parseInt(TarikhH.substring(0,2),10);
+	var monH  = parseInt(TarikhH.substring(3,5),10)-1;
+	var yrH   = parseInt(TarikhH.substring(6,10),10);
+	var dateH = new Date(yrH, monH, dtH);
+	//alert(dateH);
+	
+	var Tarikh5  = document.getElementById("Date5").value;
+	var dt5   = parseInt(Tarikh5.substring(0,2),10);
+	var mon5  = parseInt(Tarikh5.substring(3,5),10)-1;
+	var yr5   = parseInt(Tarikh5.substring(6,10),10);
+	var date5 = new Date(yr5, mon5, dt5);
+	//alert(date5);
+	
+	var Tarikh8  = document.getElementById("Date8").value;
+	var dt8   = parseInt(Tarikh8.substring(0,2),10);
+	var mon8  = parseInt(Tarikh8.substring(3,5),10)-1;
+	var yr8   = parseInt(Tarikh8.substring(6,10),10);
+	var date8 = new Date(yr8, mon8, dt8);
+	
+	// get total seconds between two dates
+	var res = Math.abs(dateLewat - dateH) / 1000;
+	var days = Math.floor(res / 86400);
+	//alert(days);
+	
+	var res2 = Math.abs(date8-date5) / 1000;
+	var days2 = Math.floor(res2 / 86400);
+	//alert(days2);
+	
+	var res3 = Math.abs(dateLewat-date8) / 1000;
+	var days3 = Math.floor(res3 / 86400);
+	//alert(days3);
+	
+	var award = document.getElementById("jumlahAward").value;
+	
+	if(dateLewat>date5){
+		//alert(5);
+		var c = Math.abs(5*award)/100;		
+		//alert(c);
+		
+	}
+	if(dateLewat<date8){
+		//alert(8);
+		var c = Math.abs(8*award)/100;		
+		//alert(c);
+		
+	}
+	
+	
+	document.${formName}.txtCekLewat.value = c;
+	
+}
 
 
 
