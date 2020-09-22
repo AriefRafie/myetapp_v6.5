@@ -250,7 +250,7 @@ public class MTManagerReg {
 	public static String sendMaklumat2Court16A(String noPetisyen,
 		String namaSimati, String namaSimatiLain, String noKPSimatiBaru,
 		String noKPSimatiLama, String noKPSimatiLain, String tarikhMati,
-		String namaPerayu, String noKPBaruPerayu, String umurPerayu,
+		String namaPerayu, String noKPBaruPerayu, String umurPerayu, String jantinaPerayu,
 		String alamat1Perayu,String alamat2Perayu, String alamat3Perayu,
 		String poskodPerayu, String bandarPerayu, String idbandarPerayu, String idnegeriPerayu,
 		String idMahkamah,  String namaDokumen, String docContent, String applicationType, String transactionID) {//String docContent,
@@ -258,6 +258,19 @@ public class MTManagerReg {
 		String relationship = "";
 		String reldetails = "";
 		String msg = "";		
+		
+		if (jantinaPerayu.equals("1"))
+		{
+			jantinaPerayu = "M";
+		}
+		else if (jantinaPerayu.equals("2"))
+		{
+			jantinaPerayu = "F";
+		}
+		else
+		{
+			jantinaPerayu = "U";
+		}
 		
 		try {						
 			myLog.info("namaPerayu = "+namaPerayu);
@@ -281,7 +294,7 @@ public class MTManagerReg {
 			CauseofactionType[] causetype ={cof};
 				
 			data.setCauseofaction(causetype);
-			PartyType pemohon = new PartyType("1", "CA5A0F64-061E-423D-BB68-04DEC7D28609", namaPerayu, "IC", noKPBaruPerayu, "", alamat1Perayu , alamat2Perayu, alamat3Perayu, poskodPerayu, bandarPerayu, idnegeriPerayu, "MYS", umurPerayu, "", "MYS", "", "");
+			PartyType pemohon = new PartyType("1", "CA5A0F64-061E-423D-BB68-04DEC7D28609", namaPerayu, "IC", noKPBaruPerayu, "", alamat1Perayu , alamat2Perayu, alamat3Perayu, poskodPerayu, bandarPerayu, idnegeriPerayu, "MYS", umurPerayu, "", "MYS", jantinaPerayu, "");
 			
 			PartyType[] partytype = {pemohon};//new PartyType[]{};
 			data.setParty(partytype);
