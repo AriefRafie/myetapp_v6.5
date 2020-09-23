@@ -339,7 +339,7 @@ public class SkrinPopupCarianPB extends AjaxBasedModule {
 						}
 						
 						if(!id_permohonan.equals("") && !id_permohonan.equals(null) && flag_skrin.equals("bantahan_mahkamah"))
-							sql += "NVL('NO.KES : '||IP.NO_KES,'') NO_KES, IP.NO_KES NOKES,";
+							sql += "NVL('NO.KES : '||IP.NO_KES,'') AS NO_KES, IP.NO_KES AS KES,";
 							
 						
 						sql += "HMPB.ID_PIHAKBERKEPENTINGAN,HMPB.CATATAN2,HMPB.ID_HAKMILIKPB,PB.NAMA_PB,"
@@ -550,9 +550,10 @@ public class SkrinPopupCarianPB extends AjaxBasedModule {
 		    	h.put("no_lotpt", rs.getString("NO_LOTPT")==null?"":rs.getString("NO_LOTPT"));
 		    	h.put("flag_online", rs.getString("FLAG_ONLINE")==null?"":rs.getString("FLAG_ONLINE"));
 		    	//mt
+		    	if(flag_skrin.equals("bantahan_mahkamah")) {
 		    	h.put("noKes", rs.getString("NO_KES")==null?"":rs.getString("NO_KES"));
-		    	h.put("kes", rs.getString("NOKES")==null?"":rs.getString("NOKES"));
-
+		    	h.put("kes", rs.getString("KES")==null?"":rs.getString("KES"));
+		    	}
 				list_pb.addElement(h);
 			}
 			return list_pb;
