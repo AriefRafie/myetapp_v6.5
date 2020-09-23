@@ -42,6 +42,7 @@ public class MTManagerReg {
 	private static String msgDaftar = "";
 	private static String referenceNo ="";
 	private static String caseNo ="";
+	private static String mentionDateTime ="";
 
 	public MTManagerReg() throws Exception{	}
 	
@@ -288,15 +289,19 @@ public class MTManagerReg {
 			data.setDocument(doctype);
 					
 			Civilregistercaseresponse response = submitMT(data, transactionID);			
-			//Civilregistercaseresponse response = submitToMT(data, transactionID);			
 			if (response != null) {
 				msg = response.getCode() + "," + response.getDescription() + " , " + response.getDetail();
-				/*if (response.getData() != null) {
-					if (response.getData().getBlueCardID() != null) {
-						idKadBiru = response.getData().getBlueCardID();
+				if (response.getData() != null) {
+					//response.getData().getCaseNo()getSourceReferenceNo();
+					if (response.getData().getCaseNo() != null) {
+						caseNo = response.getData().getCaseNo();
+						mentionDateTime = response.getData().getMentionDateTime();
+						myLog.info("caseNo xxxYYY : "+caseNo);
+						myLog.info("date xxxYYY : "+mentionDateTime);
 					}
-				}*/
-			}				
+				}
+			}	
+			
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -372,6 +377,7 @@ public class MTManagerReg {
 					//response.getData().getCaseNo()getSourceReferenceNo();
 					if (response.getData().getCaseNo() != null) {
 						caseNo = response.getData().getCaseNo();
+						myLog.info("caseNo xxx : "+caseNo);
 					}
 				}
 			}				
@@ -811,6 +817,14 @@ public class MTManagerReg {
 		MTManagerReg.caseNo = caseNo;
 	}
 	
+	public static String getMentionDateTime() {
+		return mentionDateTime;
+	}
+
+    public void setMentionDateTime(java.lang.String mentionDateTime) {
+        this.mentionDateTime = mentionDateTime;
+    }
+
 	public static String getStateCode(int x){
 		String abbrev = "0";
 		switch (x) {

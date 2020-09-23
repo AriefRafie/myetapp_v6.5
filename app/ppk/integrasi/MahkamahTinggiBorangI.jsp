@@ -76,6 +76,16 @@ input[readonly] {
 					</td>
 				</tr>
 				<tr>
+					<td align="right">No. Kes</td>
+					<td>:</td>
+					<td colspan="2"><input type="text" name="noKes" value="$!noKes" size="40" style="text-transform:uppercase;" readonly="readonly" /></td>
+				</tr>
+				<tr>
+					<td align="right">Tarikh Terima</td>
+					<td>:</td>
+					<td colspan="2"><input type="text" name="tarikhTerima" value="$!tarikhTerima" size="25" readonly="readonly" /></td>
+				</tr>
+				<tr>
 					<td align="right">Nama Simati</td>
 					<td>:</td>
 					<td colspan="2"><input type="text" name="namaSimati" value="$!namaSimati" size="40" style="text-transform:uppercase;" readonly="readonly" /></td>
