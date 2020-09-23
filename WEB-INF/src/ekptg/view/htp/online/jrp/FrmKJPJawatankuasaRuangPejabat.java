@@ -1428,10 +1428,9 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					skrin = "4";
 					String semakMode="";
 					String statusSemasa="1";
-//					if(getIOnline().isHantar(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan(),htpPermohonan.getPermohonan().getIdPermohonan()
-//							,htpPermohonan.getPermohonan().getPfdFail().getIdFail(),"4"))
+					myLog.info("idSubUrusanxxxxx====="+idSubUrusan);
 					
-					if (getIOnline().isHantar(Long.parseLong(String.valueOf(permohonan.get("idSuburusan"))),
+					if (getIOnline().isHantar(Long.parseLong(String.valueOf(permohonan.get("idsuburusan"))),
 							Long.parseLong(String.valueOf(permohonan.get("idpermohonan"))),
 							Long.parseLong(String.valueOf(permohonan.get("idfail"))), "4"))
 					{
@@ -1440,21 +1439,21 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 						
 						myLog.info("idpermohonan::"+FrmJRPSenaraiPermohonanData.getPermohonanInfo(id));
 						semakMode = "update";
-						if(getIOnline().isHantarAktif(Long.parseLong(String.valueOf(permohonan.get("idSuburusan"))),
+						if(getIOnline().isHantarAktif(Long.parseLong(String.valueOf(permohonan.get("idsuburusan"))),
 								Long.parseLong(String.valueOf(permohonan.get("idpermohonan"))),
 								Long.parseLong(String.valueOf(permohonan.get("idfail"))), "1")){
 							statusSemasa = "1";	
 		 
 
 						
-						}else if(getIOnline().isHantarAktif(Long.parseLong(String.valueOf(permohonan.get("idSuburusan"))),
+						}else if(getIOnline().isHantarAktif(Long.parseLong(String.valueOf(permohonan.get("idsuburusan"))),
 								Long.parseLong(String.valueOf(permohonan.get("idpermohonan"))),
 								Long.parseLong(String.valueOf(permohonan.get("idfail"))), "2")){
 							statusSemasa = "2";
 
 
 							
-						}else if(getIOnline().isHantarAktif(Long.parseLong(String.valueOf(permohonan.get("idSuburusan"))),
+						}else if(getIOnline().isHantarAktif(Long.parseLong(String.valueOf(permohonan.get("idsuburusan"))),
 								Long.parseLong(String.valueOf(permohonan.get("idpermohonan"))),
 								Long.parseLong(String.valueOf(permohonan.get("idfail"))), "3")){
 							statusSemasa = "3";	
@@ -1531,9 +1530,11 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 		    			
 						if(!getEmelSemak().checkEmail(userId).equals(""))
 							getIHTP().getErrorHTML("[ONLINE-HTP PEMBELIAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
-						//   (HTP)HQPenggunaPembelianPerletakhakan,   (HTP)HQPenggunaPembelian, (HTP)HQPengguna
 
-						ec.hantarPermohonan(getEmelSemak().checkEmail(userId), "(HTP)HQPenggunaPembelianPerletakhakan", emelSubjek, kandungan);
+						ec.sendByRoleKJP(getEmelSemak().checkEmail(userId)
+								, "4"
+								, String.valueOf(String.valueOf(permohonan2.get("idkementerian")))
+								, emelSubjek, kandungan);
 										
 					}
 					Hashtable<?, ?> permohonan3 = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);
@@ -1561,7 +1562,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					rsusf.setIdMasuk(Long.parseLong(userId));
 
 					
-					if(getIOnline().isHantar(Long.parseLong(String.valueOf(permohonan3.get("idSuburusan"))),
+					if(getIOnline().isHantar(Long.parseLong(String.valueOf(permohonan3.get("idsuburusan"))),
 							Long.parseLong(String.valueOf(permohonan3.get("idpermohonan"))),
 							Long.parseLong(String.valueOf(permohonan3.get("idfail"))),langkah)){
 						semakMode = "xupdate";			
@@ -1575,9 +1576,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					template_name = PATH+"frmJRPsemakanPKP.jsp";	
 					//return String.valueOf(getStatus().kemaskiniSimpanStatusAktif(subUrusanStatusFail, subUrusanStatusFailN,getParam("txtarikhkeputusan")));
 					
-					
-					
-				
+
 				}else if(submit.equals("pksemakanpkpseterus")) {
 			    	template_name = PATH+"frmJRPDeraf.jsp";	
 			    	myLog.info("pksemakanpkpseterus ::"+template_name);
