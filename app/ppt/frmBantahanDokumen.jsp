@@ -109,18 +109,20 @@
 		#if($!nama_skrin == "main")
 			<input type="button" name="cmdKembali" id="cmdKembali"  value="Kembali" onclick="Kembali()">
 		#end
-      	#if($!nama_skrin == "borangO")
-      		<input type="button" name="cmdKembali" id="cmdKembali"  value="Kembali" onclick="Kembali()">
-      	#end
       	#if($!nama_skrin == "bantahan")
       		<input type="button" name="cmdKembali" id="cmdKembali"  value="Kembali" onclick="Kembali()">
       	#end
       	
-      	#if($!nama_skrin == "susulanBantahan")
+      	<!-- Butang Kembali mengikut Dokumen -->
+      	#if($!nama_skrin == "pptbantahan")
+      		<input type="button" name="cmdKembali" id="cmdKembali"  value="Kembali" onclick="Kembali()">
+      	#end
+      	
+      	#if($!nama_skrin == "pptperintahbantahan")
       		<input type="button" name="cmdKembali" id="cmdKembali"  value="Kembali" onclick="Kembali()">
       	#end
 		
-      	#if($!nama_skrin == "batalBantahan")
+      	#if($!nama_skrin == "pptpembatalanmt")
        		<input type="button" name="cmdKembali1" id="cmdKembali1"  value="Kembali" onclick="Kembali()">
        	#end
      
@@ -135,9 +137,9 @@
   <tr>
     <td colspan="4">
     <fieldset id="senarai_dokumen" >
-	<!-- jenis dokumen = $jenisDoc -->
-	<!--- jenis skrin = $nama_skrin -->
-	<!-- listDokumen =  $listDokumen -->
+	jenis dokumen = $jenisDoc
+	jenis skrin = $nama_skrin 
+	listDokumen =  $listDokumen
     <legend> SENARAI DOKUMEN YANG DISERTAKAN </legend>
     <input name="cmdTambahDokumen" type="button" value="Tambah" onClick="tambahDokumen()" title="Sila klik untuk tambah dokumen" hidden> 
     #if($listDokumen_size > 0)

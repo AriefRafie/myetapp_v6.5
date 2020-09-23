@@ -247,10 +247,12 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <!-- PPT-35 (ii) -->
 <!----------------------------------------- SENARAI DOKUMEN YANG DISERTAKAN --------------------------------------------->
 
-	<input type="hidden" name="nama_skrin" id="nama_skrin" value="borangO"  />
+	<input type="hidden" name="nama_skrin" id="nama_skrin" value="pptbantahan"  />
 	<fieldset id="senarai_dokumen" >
+	jenis dokumen = '$jenisDoc'
+	jenis skrin = '$nama_skrin'
 	<legend>Senarai Dokumen</legend>
-    
+    $listDokumen
     <input name="cmdTambahDokumen" type="button" value="Tambah" onClick="tambahDokumen()" title="Sila klik untuk tambah dokumen" >    
 #if($listDokumen_size > 0)
 	<input name="cmdHapusDokumen" type="button" value="Hapus" onClick="hapusDokumenMaster('$!readmode')" title="Sila tick untuk hapus dokumen" >
@@ -269,6 +271,45 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
       	#end
       		</td>
   		</tr>
+  		
+  		
+ 
+<!-- listDokumen =  $listDokumen -->
+ #if($listDokumen_size > 0)
+  #set ($cnt=0)
+  #foreach($list1 in $listDokumen)        
+           
+             #set( $i = $velocityCount )
+         		#if ( ($i % 2) != 1 )
+              		 #set( $row = "row2" )
+         		#else
+               		 #set( $row = "row1" )
+         		#end
+	   #if($list1.JENIS_DOKUMEN == "pptperintahbantahan")   <!-- PPT-38 -->  
+	   #set ($cnt=1)
+	  <tr>  
+	    <td class="$row" >$list1.BIL</td>
+	    <td class="$row" ><a href="javascript:view_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.TAJUK</font></a></td>
+	    <td class="$row" >$list1.KETERANGAN</td>
+	    <td class="$row"><a href="javascript:papar_Lampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.NAMA_FAIL</font></a></td>   
+	    <td class="$row" ><div align="center">
+	       <input type="checkbox" name="ids1" id="ids1" onclick="doUpdateCheckAll1()" value="$list1.ID_DOKUMEN" >
+	     </div></td>
+	  </tr>
+	  #end
+ 	 #end
+ 	 #if($cnt==0)
+	  <tr>  
+	    <td colspan="5">Tiada Rekod</td>    
+	  </tr>
+	  #end
+  #else
+  <tr>  
+    <td colspan="5">Tiada Rekod</td>    
+  </tr>
+  #end
+  		
+<!--
 #if($listDokumen_size > 0)
 	
 	#foreach($list1 in $listDokumen)
@@ -278,7 +319,6 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 		#else
 			#set( $row = "row1" )
 		#end
-
 		<tr class="$row" >  
 			<td >$list1.BIL</td>
 			<td ><a href="javascript:viewLampiran('$list1.ID_DOKUMEN')"><font color="blue">$list1.TAJUK</font></a></td>
@@ -296,6 +336,9 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
    			<td colspan="5">Tiada Rekod</td>    
  	 	</tr>
   #end
+	-->
+	
+	
 	</table>
 	</fieldset>
 <!-- PPT-35 (ii) -->
@@ -677,7 +720,7 @@ function tambahDokumen() {
 	var id_hakmilikpb = document.${formName}.id_hakmilikpb.value ;		
 	var id_hakmilik = document.${formName}.id_hakmilik.value ;	
 	var id_pihakberkepentingan = document.${formName}.id_pihakberkepentingan.value ;
-	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=tambah_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilikpb="+id_hakmilikpb+"&id_hakmilik="+id_hakmilik+"&id_pihakberkepentingan="+id_pihakberkepentingan+"&location=maklumat_dokumen&point=txtnamadokumen&jenisDoc=borangO";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=tambah_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilikpb="+id_hakmilikpb+"&id_hakmilik="+id_hakmilik+"&id_pihakberkepentingan="+id_pihakberkepentingan+"&location=maklumat_dokumen&point=txtnamadokumen&jenisDoc=pptbantahan";
 	document.${formName}.submit();
 }
 
