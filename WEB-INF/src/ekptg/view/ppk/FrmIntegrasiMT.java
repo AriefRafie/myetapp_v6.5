@@ -372,6 +372,14 @@ public class FrmIntegrasiMT extends VTemplate {
 				FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatMahkamah(idPermohonan);
 				Vector listMaklumatMahkamah = FrmPrmhnnSek8KeputusanPermohonanInternalData.getMaklumatMahkamah();
 				this.context.put("listMaklumatMahkamah", listMaklumatMahkamah);
+				//context.put(tarikhTerima,unquote("SYSDATE"));
+				
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				Date date = new Date();
+				String reportDate = dateFormat.format(date);
+				String tarikhTerima = reportDate.substring(0, 10) + "T" + reportDate.substring(11) + ".00";
+
+				context.put(tarikhTerima, tarikhTerima);
 			}
 			
 			String formatTarikhMati = tarikhMati + "T00:00:00.00";
@@ -939,11 +947,20 @@ public class FrmIntegrasiMT extends VTemplate {
 
 				String code = returnMessage.substring(0, 1);
 				String details = returnMessage.substring(2);
+				String no_kes = request.getParameter("noKes");
+				
 
 				if (code.equals("0")) {
+					
 					if (manager.getIdKadBiru() != null) {
 						r.add("IDKADBIRU", manager.getIdKadBiru());
 						//r.add("IDKADBIRU", "00001");
+						r.add("NO_KES","000001");
+					}
+					if (MTManagerReg.getReferenceNo() != null) {
+						context.put("noKes",MTManagerReg.getReferenceNo());
+						myLogger.info("no kes : "+MTManagerReg.getReferenceNo());
+						r.add("NO_KES","000001");
 					}
 					sql = r.getSQLInsert("TBLINTMTPERMOHONAN");
 					stmt.executeUpdate(sql);
@@ -981,6 +998,8 @@ public class FrmIntegrasiMT extends VTemplate {
 		else if ("hantarPermohonanBorangI".equals(submit)) {
 			myLogger.info("hantarPermohonanBorangI");
 			String idFail = request.getParameter("idFail");
+			
+			String tarikhTerima = "";
 			Hashtable permohonanMT = getPermohonanMT(user, idFail);
 			String docContent = (String) permohonanMT.get("docContent");//(String) permohonanMT.get("docContent");
 
@@ -1006,6 +1025,7 @@ public class FrmIntegrasiMT extends VTemplate {
 			MTManagerReg manager = new MTManagerReg("MTREG");
 			myLogger.info("hantarPermohonanBorangI22");
 			String returnMessage = "";
+
 			returnMessage = manager.sendMaklumat2Court(
 				    request.getParameter("noPetisyen"),
 					request.getParameter("namaSimati"),
@@ -1058,7 +1078,29 @@ public class FrmIntegrasiMT extends VTemplate {
 				context.put("noKPSimatiLama", request.getParameter("noKPSimatiLama"));
 				context.put("noKPSimatiLain", request.getParameter("noKPSimatiLain"));
 
+				Db db = null;
+				String sql = "";
+
+				db = new Db();
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+				
 				if (code.equals("0")) {
+					if (MTManagerReg.getReferenceNo() != null) {
+						context.put("noKes",MTManagerReg.getReferenceNo());
+						myLogger.info("no kes : "+MTManagerReg.getReferenceNo());
+						
+						r.add("NOKPBARUSIMATI",request.getParameter("noKPSimatiBaru"));
+						r.add("NO_KES",MTManagerReg.getReferenceNo());
+						r.add("TARIKH_HANTAR", r.unquote("SYSDATE"));
+					}
+					
+					sql = r.getSQLInsert("TBLINTMTPERMOHONAN");
+					stmt.executeUpdate(sql);
+					myLogger.info("getSQLInsert NO KES:::: "+sql);
+					
+					context.put(tarikhTerima, r.unquote("SYSDATE"));
+				
 					/*if (manager.getIdKadBiru() != null) {
 						r.add("IDKADBIRU", manager.getIdKadBiru());
 						//r.add("IDKADBIRU", "00001");
@@ -1125,7 +1167,7 @@ public class FrmIntegrasiMT extends VTemplate {
 //			MTManagerReg manager = new MTManagerReg();
 			myLogger.info("hantarPermohonanRayuan2");
 			String returnMessage = "";
-			returnMessage = manager.sendMaklumat2Court16A(
+			returnMessage = manager.sendMaklumat2Court16A( // item tak cukup
 				    request.getParameter("noPetisyen"),
 					request.getParameter("namaSimati"),
 					request.getParameter("namaSimatiLain"),
@@ -1136,6 +1178,7 @@ public class FrmIntegrasiMT extends VTemplate {
 					request.getParameter("namaPerayu"),
 					request.getParameter("noKPBaruPerayu"),
 					request.getParameter("umurPerayu"),
+					request.getParameter("jantinaPerayu"), //yati tambah
 					request.getParameter("alamat1Perayu"),
 					request.getParameter("alamat2Perayu"),
 					request.getParameter("alamat3Perayu"),
@@ -1338,7 +1381,7 @@ public class FrmIntegrasiMT extends VTemplate {
 							stmt.executeUpdate(sql);
 						}
 					}
-
+			
 					if (db != null) { db.close(); }
 					vm = "app/ppk/integrasi/MahkamahTinggiSuccess.jsp";
 					

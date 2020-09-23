@@ -202,13 +202,6 @@ function fGS2A_Simpan() {
 		return; 
 	}
 	
-	if(document.${formName}.txtNoFailSek.value == ""){
-		alert('Sila masukkan No. Fail terlebih dahulu.');
-  		document.${formName}.txtNoFailSek.focus(); 
-		return; 
-	}
-	
-	
 	if ( !window.confirm("Anda Pasti?") ) return;
 		doAjaxCall${formName}('FailBaru','mode=simpan');
 }
