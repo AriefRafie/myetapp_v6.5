@@ -27,15 +27,15 @@ public class FrmKJPSenaraiFailGadaianData {
 	    try {
 	      db = new Db();
 	      Statement stmt = db.getStatement();
-	      sql =   " SELECT F.ID_FAIL, F.NO_FAIL, F.TAJUK_FAIL, S.KETERANGAN, N.NAMA_NEGERI, N.KOD_MAMPU "+ 
-	    		  ",PB.NAMA NAMAPB"+
+	      sql =   " SELECT F.TARIKH_DAFTAR_FAIL, F.ID_FAIL, F.NO_FAIL, F.TAJUK_FAIL, S.KETERANGAN, N.NAMA_NEGERI, N.KOD_MAMPU "+ 
+	    		  //",PB.NAMA NAMAPB"+
 	    		  " FROM TBLPFDFAIL F, TBLRUJSTATUS S, TBLRUJNEGERI n "+ 
 	    		  " ,TBLPERMOHONAN P, tblrujsuburusanstatus ss " + 
 	    		  " ,tblrujsuburusanstatusfail sf "+
-	    		  " ,TBLHTPHAKMILIKURUSAN T, TBLHTPPIHAKBERKEPENTINGAN PB "+
+	    		  //" ,TBLHTPHAKMILIKURUSAN T, TBLHTPPIHAKBERKEPENTINGAN PB "+
 	    		  " WHERE F.ID_FAIL = P.ID_FAIL"+
-	    		  " AND P.ID_PERMOHONAN = T.ID_PERMOHONAN"+
-	    		  " AND T.ID_HAKMILIKURUSAN = PB.ID_HAKMILIKURUSAN"+
+	    		  //" AND P.ID_PERMOHONAN = T.ID_PERMOHONAN"+
+	    		  //" AND T.ID_HAKMILIKURUSAN = PB.ID_HAKMILIKURUSAN"+
 	    		  " AND p.id_permohonan = SF.id_permohonan"+
 	    		  " AND P.id_fail = SF.id_fail"+
 	    		  " AND sf.id_suburusanstatus = ss.id_suburusanstatus"+
@@ -73,7 +73,7 @@ public class FrmKJPSenaraiFailGadaianData {
 	      if(idNegeri != null)
 	    	  sql +=" AND F.ID_NEGERI = "+idNegeri;
     		  					
-	      sql +=  " ORDER BY F.TARIKH_KEMASKINI ";	      
+	      sql +=  " ORDER BY F.ID_FAIL DESC ";	      
 	      log.info("senarai : sql="+sql);
 	      ResultSet rs = stmt.executeQuery(sql);
 	      Hashtable<String,String> h;
@@ -84,7 +84,7 @@ public class FrmKJPSenaraiFailGadaianData {
 	    	  h.put("id", rs.getString("id_Fail"));
 	    	  h.put("no", rs.getString("no_Fail"));
 	    	  h.put("tajuk", rs.getString("tajuk_Fail"));
-	    	  h.put("nama", rs.getString("namapb"));
+	    	  //h.put("nama", rs.getString("namapb"));
 	    	  h.put("negeri", rs.getString("nama_Negeri"));
 	    	  h.put("keterangan", rs.getString("keterangan"));
 	    	  h.put("kodMampu", rs.getString("kod_Mampu"));
@@ -276,7 +276,7 @@ public class FrmKJPSenaraiFailGadaianData {
 	      sql +=" AND pfdf.id_negeri = NEG.ID_NEGERI " ;
 
 	      ResultSet rs = stmt.executeQuery(sql);
-	      log.info(sql);
+	      log.info("SenaraiFailGadaian::"+sql);
 	      Hashtable h;
 	      int bil = 1;
 
