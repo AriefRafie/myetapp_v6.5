@@ -1049,7 +1049,7 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 			sql =  " SELECT A.MAKLUMAT_BANTAHAN_TAMAT_TEMPOH, A.ID_BANTAHAN, A.NO_BANTAHAN, A.JENIS_PEMBANTAH, A.TARIKH_TERIMA, A.TARIKH_BORANGN, A.ID_PIHAKBERKEPENTINGAN, "+
 							"A.FLAG_PENERIMA_PAMPASAN, A.FLAG_BAHAGIAN_PAMPASAN, A.STATUS_BANTAHAN, A.ALASAN, A.KEPENTINGANKEATAS, A.FLAG_ONLINE, "+
 							"A.FLAG_UKUR_LUAS,A.FLAG_PAMPASAN, A.TARIKH_TERIMA_AWARD, S.NO_SIASATAN, A.AMAUN_TUNTUTAN,A.FLAG_SYARAT,"; 
-			sql += " NVL(B.ID_PIHAKBERKEPENTINGAN,0) ID_PIHAKBERKEPENTINGAN,B.ID_JENISPB,B.NAMA_PB,B.NO_PB,B.UMUR,"+
+			sql += " NVL(B.ID_PIHAKBERKEPENTINGAN,0) ID_PIHAKBERKEPENTINGAN,B.ID_JENISPB,B.NAMA_PB,B.NO_PB, SUBSTR(B.NO_PB, -1) AS NOPB, B.UMUR,"+
 							"C.NO_HAKMILIK,C.NO_PT,C.NO_LOT, "+
 							"D.KETERANGAN,";
 			sql += " E.ID_HAKMILIK,E.ALAMAT1,E.ALAMAT2,E.ALAMAT3,E.POSKOD,NVL(E.ID_NEGERI,0) ID_NEGERI,E.ID_BANDAR, RB.KETERANGAN, "+
@@ -1124,6 +1124,7 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 			   	h.put("no_tel_rumah", rs.getString("NO_TEL_RUMAH")==null?"":rs.getString("NO_TEL_RUMAH"));
 			   	h.put("no_hp", rs.getString("NO_HANDPHONE")==null?"":rs.getString("NO_HANDPHONE"));
 			   	h.put("no_fax", rs.getString("NO_FAX")==null?"":rs.getString("NO_FAX"));
+				h.put("nopb", rs.getString("NOPB")==null?"":rs.getString("NOPB"));
 			    h.put("flag_bantahan", rs.getString("FLAG_BANTAHAN")==null?"":rs.getString("FLAG_BANTAHAN"));
 		    	h.put("flag_penerima_pampasan", rs.getString("FLAG_PENERIMA_PAMPASAN")==null?"":rs.getString("FLAG_PENERIMA_PAMPASAN"));
 		    	h.put("flag_bahagian_pampasan", rs.getString("FLAG_BAHAGIAN_PAMPASAN")==null?"":rs.getString("FLAG_BAHAGIAN_PAMPASAN"));
@@ -1404,11 +1405,11 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 					sql += " A.ALAMAT3, A.POSKOD, A.ID_BANDAR, A.ID_NEGERI, A.NO_TEL, A.NO_FAX "
 						+ "	,NVL(O.NAMA_PENGHANTAR_BORANGO,MT.NAMA) NAMA_PENGHANTAR_BORANGO "
 						+ " ,NVL(O.TARIKH_HANTAR_BORANGO,MT.TARIKH_HANTAR) TARIKH_HANTAR_BORANGO "
-						+ " ,O.NAMA_PENERIMA_BORANGO ";
+						+ " ,O.NAMA_PENERIMA_BORANGO, MT.JANTINA ";
 					sql += " FROM TBLPPTBORANGO O, TBLRUJPEJABAT A "
 						+ " ,(	SELECT P.ID_RUJUKAN ID_BANTAHAN"
 						+ "		,P.TARIKH_HANTAR"
-						+ "		,U.USER_NAME NAMA"
+						+ "		,U.USER_NAME NAMA, P.JANTINA JANTINA"
 						+ " 	FROM TBLINTMTPENDAFTARAN P,USERS U"
 						+ " 	WHERE P.ID_MASUK = U.USER_ID"
 						+ "	 	AND P.NO_KES IS NOT NULL "
@@ -1417,7 +1418,7 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 					sql += " WHERE O.ID_MAHKAMAH=A.ID_PEJABAT "
 						+ " AND O.ID_BANTAHAN = MT.ID_BANTAHAN(+)"
 						+ " AND O.ID_BORANGO = '"+ idBorangO +"' ";																				
-//					myLogger.info("getDataBorangO :: "+sql);
+					myLogger.info("getDataBorangO :: "+sql);
 					ResultSet rs = stmt.executeQuery(sql);					
 					Hashtable h;			    
 			     while (rs.next()) {
@@ -1434,6 +1435,7 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 			    	h.put("id_negeri", rs.getString("ID_NEGERI")==null?"":rs.getString("ID_NEGERI"));
 			    	h.put("no_tel", rs.getString("NO_TEL")==null?"":rs.getString("NO_TEL"));
 			    	h.put("no_fax", rs.getString("NO_FAX")==null?"":rs.getString("NO_FAX"));
+			    	h.put("jantina", rs.getString("JANTINA")==null?"":rs.getString("JANTINA"));
 			    	h.put("nama_penghantar_borango", rs.getString("NAMA_PENGHANTAR_BORANGO")==null?"":rs.getString("NAMA_PENGHANTAR_BORANGO"));
 			    	h.put("nama_penerima_borango", rs.getString("NAMA_PENERIMA_BORANGO")==null?"":rs.getString("NAMA_PENERIMA_BORANGO"));
 			    	h.put("tarikh_hantar_borango", rs.getString("TARIKH_HANTAR_BORANGO")==null?"":sdf.format(rs.getDate("TARIKH_HANTAR_BORANGO")));

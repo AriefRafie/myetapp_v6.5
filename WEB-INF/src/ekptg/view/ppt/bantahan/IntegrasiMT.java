@@ -350,10 +350,10 @@ public class IntegrasiMT extends AjaxBasedModule{
 	        }
 	        
 	        String returnMessage = "1 Tidak Berjaya Dihantar";
-	        returnMessage = MTManagerReg. PendaftaranBaharu("15"
+	        returnMessage = MTManagerReg. PendaftaranBaharuPPT("15"
 	        					,doc.getIdDokumen(),renameDoc,doc.getKandungan()
 	        					,party
-	        					,deceaseInfo
+	        					//,deceaseInfo
 	        					, kodMT 	//MT Kangar
 	        					, "3"	//Civil
 	        					, "2"	//High Court
