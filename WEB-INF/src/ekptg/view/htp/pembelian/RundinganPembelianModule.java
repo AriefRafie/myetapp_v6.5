@@ -4,9 +4,12 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import lebah.portal.action.AjaxModule;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
+import ekptg.helpers.Utils;
 import ekptg.model.htp.entity.HtpPermohonan;
 import ekptg.model.htp.entity.Permohonan;
 import ekptg.model.htp.entity.Rundingan;
@@ -16,6 +19,11 @@ import ekptg.model.htp.pembelian.PembelianBean;
 import ekptg.model.htp.pembelian.RundinganBean;
 
 public class RundinganPembelianModule extends AjaxModule {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -836538356940571797L;
+	private static Logger myLog = Logger.getLogger(ekptg.view.htp.pembelian.RundinganPembelianModule.class);
 	private IPembelian iPembelian = null;
 	private IRundingan iRundigan = null;
 	private String selectedTab="0";
@@ -25,11 +33,17 @@ public class RundinganPembelianModule extends AjaxModule {
 	private Permohonan permohonan = null;
 	private HtpPermohonan htpPermohonan = null;
 	private Rundingan rundingan = null;
+	private Vector<Rundingan> senarai = null;
+
 	@Override
 	public String doAction() throws Exception {
 		HttpSession ses = request.getSession();
 		String command = getParam("command");
 		String action = getParam("action");
+		
+		//context.put("utils_",new lebah.util.Util());
+
+		myLog.info("command="+command);
 		if(command.equals("searchFail")){
 			String noFail = getParam("noFail");
 			String carian = getParam("carian");
@@ -40,24 +54,62 @@ public class RundinganPembelianModule extends AjaxModule {
 			context.put("socNegeri",HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri)));
 			setupPage(ses,action, v);
 			vm = PATH+"index.jsp";
-		}
-		else if(command.equals("detail")){
+
+		}else if(command.equals("tambahRundingan")){
 			String rundinganMode = "edit";
 			String mode =" readonly class=\"disabled\"";
 			getPermohonanInfo();
 		
-			rundingan =  getIRundigan().findByPermohonan(getParam("idPermohonan"));
-			if(rundingan == null){
+			senarai = getIRundigan().senaraiRundingan(getParam("idPermohonan"));
+			context.put("senarai", senarai);
+		
+			context.put("util_", new ekptg.helpers.Utils());
+			//if(senarai == null){
 				rundinganMode = "new";
 				mode ="";
-			}
+			//}
+			
+//			rundingan =  getIRundigan().findByPermohonan(getParam("idPermohonan"));
+			//myLog.info(ekptg.helpers.Utils.format2Decimal(rundingan.getHargaBersamaan()));
+
+//			if(rundingan == null){
+//				rundinganMode = "new";
+//				mode ="";
+//			}
 			context.put("mode", mode);
 			context.put("rundinganMode", rundinganMode);
 			context.put("rundingan", rundingan);
 			selectedTab="0";
 			vm = PATH+"rundingan.jsp";
-		}
-		else if(command.equals("simpanRundingan")){
+			
+		}else if(command.equals("detail")){
+			String rundinganMode = "edit";
+			String mode =" readonly class=\"disabled\"";
+			getPermohonanInfo();
+		
+			senarai = getIRundigan().senaraiRundingan(getParam("idPermohonan"));
+			context.put("senarai", senarai);
+		
+			context.put("util_", new ekptg.helpers.Utils());
+			if(senarai == null){
+				rundinganMode = "new";
+				mode ="";
+			}
+			
+//			rundingan =  getIRundigan().findByPermohonan(getParam("idPermohonan"));
+			//myLog.info(ekptg.helpers.Utils.format2Decimal(rundingan.getHargaBersamaan()));
+
+//			if(rundingan == null){
+//				rundinganMode = "new";
+//				mode ="";
+//			}
+			context.put("mode", mode);
+			context.put("rundinganMode", rundinganMode);
+			context.put("rundingan", rundingan);
+			selectedTab="0";
+			vm = PATH+"rundingan.jsp";
+		
+		}else if(command.equals("simpanRundingan")){
 			getPermohonanInfo();
 			getRundinganDetails();
 			rundingan = getIRundigan().saveRundingan(rundingan);
@@ -71,8 +123,11 @@ public class RundinganPembelianModule extends AjaxModule {
 			String rundinganMode = "update";
 			String mode ="";
 			getPermohonanInfo();
-		
-			rundingan =  getIRundigan().findByPermohonan(getParam("idPermohonan"));
+			
+			context.put("util_", new ekptg.helpers.Utils());
+
+			rundingan =  getIRundigan().findByPermohonan(getParam("idPermohonan"),getParam("IDMAKLUMATMSYRT"));
+			//rundingan =  getIRundigan().findByPermohonan(getParam("idPermohonan"));
 			context.put("mode", mode);
 			context.put("rundinganMode", rundinganMode);
 			context.put("rundingan", rundingan);
@@ -101,11 +156,14 @@ public class RundinganPembelianModule extends AjaxModule {
 			//context.put("socNegeri",HTML.SelectNegeri("socNegeri"));
 			selectedTab="0";
 			vm = PATH+"index.jsp";
+			
 		}
 		context.put("page","4");
 		context.put("selectedTab", selectedTab);
 		return vm;
+	
 	}
+	
 	public void getRundinganDetails(){
 		String idRundingan = getParam("IDMAKLUMATMSYRT");
 		String unitBersamaan = getParam("unit_bersamaan");
@@ -121,12 +179,12 @@ public class RundinganPembelianModule extends AjaxModule {
 		permohonan.setIdPermohonan(getParam("idPermohonan"));
 		rundingan = new Rundingan();
 		rundingan.setIdMaklumatMysrt(idRundingan);
-		rundingan.setHargaBersamaan(hargaBersamaan);
+		rundingan.setHargaBersamaan(Utils.RemoveComma(hargaBersamaan));
 		rundingan.setUnitBersamaan(unitBersamaan);
-		rundingan.setNilaiTanah(nilaiTanah);
-		rundingan.setNilaiBangunan(nilaiBangunan);
-		rundingan.setHargaTawaran(hargaBeli);
-		rundingan.setHargaSetuju(hargaSetuju);
+		rundingan.setNilaiTanah(Utils.RemoveComma(nilaiTanah));
+		rundingan.setNilaiBangunan(Utils.RemoveComma(nilaiBangunan));
+		rundingan.setHargaTawaran(Utils.RemoveComma(hargaBeli));
+		rundingan.setHargaSetuju(Utils.RemoveComma(hargaSetuju));
 		rundingan.setTempohSerahan(tempohSerah);
 		rundingan.setKeputusan(keputusan);
 		rundingan.setUlasan(ulasan);

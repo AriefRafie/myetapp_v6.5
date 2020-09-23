@@ -137,13 +137,13 @@
 			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Seterusnya" 
 			    			onclick="permohonanSimpanPengesahan($!list.permohonan.pfdFail.getIdFail())">
 			    		#elseif ($!list.permohonan.pfdFail.getIdUrusan() == '5' ) 
-			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Seterusnya2" 
+			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Seterusnya" 
 			    			onclick="perletakhakanSimpanPengesahan('$!list.permohonan.pfdFail.getIdFail()','$list.permohonan.getIdPermohonan()','$list.idHtpPermohonan','$list.idSuburusanStatusFail')">			    		
 			    		#elseif ($!list.permohonan.pfdFail.getIdUrusan() == '2' ) 
-			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Seterusnya3" 
+			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Seterusnya" 
 			    			onclick="pembelianSimpanPengesahan('$!list.permohonan.pfdFail.getIdFail()','$list.permohonan.getIdPermohonan()','$list.idHtpPermohonan')">			    		
 			    		#elseif ($!list.permohonan.pfdFail.getIdUrusan() == '3' ) 
-			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Seterusnya4" 
+			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Seterusnya" 
 			    			onclick="pajakanSimpanPengesahan('$!list.permohonan.pfdFail.getIdFail()','$list.permohonan.getIdPermohonan()','$list.idHtpPermohonan','$list.idSuburusanStatusFail')">			    		
 			    		#end
 			    		
@@ -166,7 +166,8 @@
     </tr>
         
 </table>
-	<input type="hidden" name="mode" /></td>
+	<input type="hidden" name="mode" />
+	<!-- </td> -->
 
 <script>
 //PAJAKAN
@@ -174,11 +175,12 @@
 		//
 		var mode = 'pajakanviewmaklumat';
 			//doAjaxCall${formName}("perletakhakanviewmaklumat","mode="+mode+"&idfail="+id+"&pagemode=0");
-		//doAjaxCall${formName}("pajakanviewmaklumat","actionPerletakhakan=papar&idfail="+idA+"&idPermohonan="+idB+"&idHtpPermohonan="+idC+"&idSuburusanStatusFail="+idE);
+		doAjaxCall${formName}("pajakanviewmaklumat","actionPerletakhakan=papar&idfail="+idA+"&idPermohonan="+idB+"&idHtpPermohonan="+idC+"&idSuburusanStatusFail="+idE);
+	
 		document.${formName}.command.value = mode;
 		document.${formName}.action = "$EkptgUtil.getTabID('Pajakan',$portal_role)?_portal_module=ekptg.view.online.htp.FrmPermohonanPengesahan&actionPerletakhakan=papar&idfail="+idA+"&idPermohonan="+idB+"&idHtpPermohonan="+idC+"&idSuburusanStatusFail="+idE;
 		document.${formName}.submit();
-
+ /**/
 	}
 	
 //PERLETAKHAKAN
@@ -238,4 +240,6 @@ function pembelianSimpanPengesahan(idA,idB,idC){
 		document.${formName}.action = "$EkptgUtil.getTabID('Permohonan',$portal_role)?_portal_module=ekptg.view.htp.FrmTerimaPohon1&mode="+mode+"&idfail="+idFail+"&pagemode=0";
 		document.${formName}.submit();
 	}
+	
 </script>
+$!javaScriptLampiran
