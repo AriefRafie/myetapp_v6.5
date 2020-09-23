@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
+import ekptg.model.entities.Tblrujsuburusanstatus;
 import ekptg.model.entities.Tblrujsuburusanstatusfail;
 import ekptg.model.htp.FrmSemakan;
 import ekptg.model.htp.FrmSenaraiFailTerimaPohonData;
@@ -32,7 +33,12 @@ import ekptg.model.htp.pembelian.IPemilik;
 import ekptg.model.htp.pembelian.PembelianBean;
 import ekptg.model.htp.pembelian.PemilikBean;
 import ekptg.model.htp.rekod.FrmRekodUtilData;
+import ekptg.model.htp.utiliti.HTPEmelKelulusanBean;
+import ekptg.model.htp.utiliti.HTPEmelSemakanBean;
+import ekptg.model.utils.IUtilHTMLPilihan;
 import ekptg.model.utils.emel.EmailConfig;
+import ekptg.model.utils.emel.IEmel;
+import ekptg.model.utils.rujukan.UtilHTMLPilihanSeksyenUPI;
 import ekptg.model.htp.HTPStatusBean;
 
 public class SenaraiFailModule extends AjaxModule {
@@ -42,14 +48,19 @@ public class SenaraiFailModule extends AjaxModule {
 	private static final long serialVersionUID = 3966088089658329931L;
 	private static final String PATH="app/htp/pembelian/fail/";
 	static Logger myLog = Logger.getLogger(ekptg.view.htp.pembelian.SenaraiFailModule.class);
+	private IEmel emelSemak = null;
+	private IEmel emelulus = null;
 	private String vm = PATH+"index.jsp";
 	private String userID = null;
  	private IHtp iHTP = null;  
+ 	private IUtilHTMLPilihan iPilihan = null;
  	private IPembelian iPembelian = null;
 	private IPemilik iPemilik = null;
 	private IHTPStatus iStatus = null;
+	
 	private String readonly = " disabled class = \"disabled\" ";
 	private String idNegeri ="";
+	private String subModul ="Perakuan Pembelian";
 	private final String IDJENISTANAH = "4"; //TANAH MILIK - TM
 	private final String URUSAN_TANAH = "01";
 	private final String URUSAN_BANGUNAN = "03";
@@ -226,8 +237,7 @@ public class SenaraiFailModule extends AjaxModule {
 			myLog.info("tambahTanah ::"+vm);
 			
 		}
-		else if(command.equalsIgnoreCase("doChangeDaerah")){
-			
+		else if(command.equalsIgnoreCase("doChangeDaerah")){			
 			getValuesMaklumatTanah();
 			tambahTanahDetail();
 			context.put("button", "simpan");
@@ -349,7 +359,7 @@ public class SenaraiFailModule extends AjaxModule {
 			
 			vm = PATH+"tanah.jsp";
 		}else if(command.equals("tambahPemilik")){
-			System.out.println("===tambahPemilik===" +idPermohonan);
+			myLog.info("===tambahPemilik===" +idPermohonan);
 			getPermohonanInfo();
 			Vector<HakmilikUrusan> m = getIPembelian().getHakmilikList(getParam("txtidPermohonan"));
 			Vector<PihakBerkepentingan> p = getIPemilik().findPemilikByPermohonan(getParam("txtidPermohonan"));
@@ -360,8 +370,7 @@ public class SenaraiFailModule extends AjaxModule {
 			context.put("selectJenisNoPB", HTML.SelectJenisNoPb("selectJenisNoPB"));
 			context.put("socNegeri",HTML.SelectNegeri("socNegeri"," onChange=\"doChangeDaerah2()\" "));
 			context.put("socDaerah", HTML.SelectDaerah("socDaerah"));
-			
-			
+						
 			//context.put("socDaerah", "");
 			context.put("buttonMode", 1);
 			context.put("select", 0);
@@ -505,15 +514,13 @@ public class SenaraiFailModule extends AjaxModule {
 				context.put("pemohon", pemohon);
 				
 				isTanah = true;
-				EmailConfig ef = new EmailConfig();
+				EmailConfig ec = new EmailConfig();
 				String userMail = "roslizakariasip@gmail.com";
-				String tajuk = "Modul Perakuan Pembelian: Semakan/ Pengesahan Perakuan";
-				String kandungan = "<br/>" +
-						"<br/<br/>>" +
-						"Sila <i>login</i> masuk ke www.myetapp.gov.my untuk membuat semakan/ pengesahan." +
-						"<br/><br/>" +
-						"";
-				
+				String tajuk = ec.tajukSemakanInt+subModul;
+				//String emelSubjek = ec.tajukSemakan+"Perakuan Pembelian";
+				String kandungan = getEmelSemak().setKandungan(htpPermohonan.getPermohonan().getPfdFail().getTajukFail()
+						,htpPermohonan.getPermohonan().getPfdFail().getNamaKementerian());
+
 				idPermohonan = String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan());
 				String idFail = String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdFail());
 				String IDSUBURUSAN = String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan());
@@ -521,37 +528,55 @@ public class SenaraiFailModule extends AjaxModule {
 				if(portal_role.equals("HQPengguna")){
 		  			langkah = "1";
 	    			kemaskiniSimpanStatusSelesai(idFail,idPermohonan,IDSUBURUSAN,"4");
-	    			ef.sendByRole(userMail, portal_role, null, tajuk, kandungan);
+	    			ec.sendByRole(userMail, portal_role, null, tajuk, kandungan);
 	    					
 	    		}else if(portal_role.equals("HQPegawai")){
 		  			langkah = "4";
 	    			kemaskiniSimpanStatusSelesai(idFail,idPermohonan,IDSUBURUSAN,"5");
-	    			ef.sendByRole(userMail, portal_role, null, tajuk, kandungan);
+	    			ec.sendByRole(userMail, portal_role, null, tajuk, kandungan);
 	    			
 	    		}else if(portal_role.equals("HQPengarah")){
 		  			langkah = "5";
 	    			kemaskiniSimpanStatusSelesai(idFail,idPermohonan,IDSUBURUSAN,"6");
-	    			ef.sendByRole(userMail, portal_role, null, tajuk, kandungan);
-	    		
+	    			tajuk = ec.tajukKelulusan+subModul;
+//	    			email.MESSAGE = "<html><table><tr><td>Nama Projek</td><td>:</td><td>"+nama_projek+"</td></tr>" +
+//	    					"<tr><td>Tarikh Permohonan</td><td>:</td><td>"+tarikh_permohonan+"</td></tr>" +
+//	    					"<tr><td>Nama Kementerian</td><td>:</td><td>"+nama_kementerian+"</td></tr>" +
+//	    					"<tr><td>Telah berjaya disahkan</td></tr>" +
+//	    					"<tr><td>&nbsp;</td><td>&nbsp;</td><td><em>Emel ini dijana oleh sistem MyeTaPP dan tidak perlu dibalas.</em></td></tr>" +
+//	    					"</table></html>" ;
+	    			ec.sendByRole(userMail, portal_role, null, tajuk, kandungan);
+	    			
+	    			kandungan = getEmeLulus().setEmailSign(htpPermohonan.getPermohonan().getTarikhTerima()
+	    					, htpPermohonan.getPermohonan().getPfdFail().getTajukFail()
+	    					, htpPermohonan.getPermohonan().getPfdFail().getNamaKementerian());
+	    			//"4" Pengarah (KJP)
+	    			ec.sendByRoleKJP(getEmelSemak().checkEmail(userID)
+							, "4"
+							, String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdKementerian())
+							, tajuk, kandungan);
+		
 	    		}
 				myLog.info("langkah="+langkah);
+				
+				String statuSemasa = "0";
+				Tblrujsuburusanstatus hashStatus = getStatus().getStatusPermohonanAktif(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdFail())
+													, String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan()));
+
+				if(hashStatus != null)
+					statuSemasa = String.valueOf(hashStatus.getLangkah());
+				
 //				myLog.info("langkah1 ="+htpPermohonan.getPermohonan().getPfdFail().getIdFail());
 //				myLog.info("langkah2="+String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan()));
-				String statuSemasa = "0";
-				Hashtable<String,String> hashStatus = getStatus().getInfoStatusPermohonanFail(
-						String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdFail()), String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan()),langkah);
-				if(hashStatus != null)
-					statuSemasa = hashStatus.get("langkah");
-					
 				//
-				myLog.info("statuSemasa="+statuSemasa);
+				myLog.info("statuSemasa="+statuSemasa+"|portal_role="+portal_role);
 				//this.context.put("idFail", idFail);
 				this.context.put("statuSemasa", statuSemasa);
 
 						
 				vm = PATH+"tanah.jsp";
 		
-			}else if(command.equalsIgnoreCase("viewPenjual")){
+		}else if(command.equalsIgnoreCase("viewPenjual")){
 			myLog.info("==viewPenjual==");
 			getPermohonanInfo();
 			getPenjualDetails();
@@ -593,19 +618,22 @@ public class SenaraiFailModule extends AjaxModule {
 //			myLog.info("langkah="+langkah);
 //			myLog.info("langkah1 ="+htpPermohonan.getPermohonan().getPfdFail().getIdFail());
 //			myLog.info("langkah2="+String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan()));
-//			String statuSemasa = "0";
-//			Hashtable<String,String> hashStatus = getStatus().getInfoStatusPermohonanFail(
-//					String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdFail()), String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan()),langkah);
-//			if(hashStatus != null)
-//				statuSemasa = hashStatus.get("langkah");
-				
-			//
-			myLog.info("statuSemasa="+langkah);
-			//this.context.put("idFail", idFail);
-			this.context.put("statuSemasa", langkah);
+			String statuSemasa = "0";
+			Tblrujsuburusanstatus hashStatus = getStatus().getStatusPermohonanAktif(
+					String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdFail()), String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan()));
 
+			//			Hashtable<String,String> hashStatus = getStatus().getInfoStatusPermohonanFail(
+//					String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdFail()), String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan()),langkah);
+			if(hashStatus != null)
+				statuSemasa = String.valueOf(hashStatus.getLangkah());
+				
+			//myLog.info(isTanah+"|statuSemasa="+langkah+"|portal_role="+portal_role);
+			myLog.info(isTanah+"|statuSemasa="+statuSemasa);
+			//this.context.put("idFail", idFail);
+			this.context.put("statuSemasa", statuSemasa);
 					
 			vm = PATH+"tanah.jsp";
+			
 		}else if(command.equalsIgnoreCase("doChangePenjualNegeri")){
 			System.out.println("==doChangePenjualNegeri==");
 			getPermohonanInfo();
@@ -910,6 +938,7 @@ public class SenaraiFailModule extends AjaxModule {
 		urusan.setIdNegeri(idNegeri);
 		urusan.setIdDaerah(idDaerah);
 		urusan.setIdMukim(idMukim);
+		urusan.setIdSeksyen(getParam("socSeksyen"));
 		urusan.setIdHakmilik(idHakmilik);
 		urusan.setIdLot(idKodLot);
 		urusan.setNolot(noLot);
@@ -986,8 +1015,9 @@ private void getValuesPemilik(){
 	    context.put("selectKementerian",socKementerian);
 		context.put("selectAgensi",socAgensi);
 		context.put("socNegeri",socNegeri);
-		context.put("selectSuburusan", UtilHTML.SelectSuburusanByIdUrusan("2",null,"socSuburusan", null,""));
-//		context.put("selectSuburusan", HTML.SelectSuburusanByIdUrusan("2", "socSuburusan",htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan(),readonly));
+		//2020/09/11 paparan boleh pilih
+//		context.put("selectSuburusan", UtilHTML.SelectSuburusanByIdUrusan("2",null,"socSuburusan", null,""));
+		context.put("selectSuburusan", HTML.SelectSuburusanByIdUrusan("2", "socSuburusan",htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan(),readonly));
 		context.put("statusTanah", HTML.SelectJenisTanah("socStatusTanah", htpPermohonan.getIdJenisTanah(),readonly));
 		context.put("socTarafKeselamatan", HTML.SelectTarafKeselamatan("socTarafKeselamatan", htpPermohonan.getPermohonan().getPfdFail().getIdTarafKeselamatan(),readonly) );
 	}
@@ -997,17 +1027,22 @@ private void getValuesPemilik(){
 		String idHtpPermohonan = getParam("txtidHtpPermohonan")==""?"0":getParam("txtidHtpPermohonan");
 		String socNegeri = getParam("socNegeri")==""?"0":getParam("socNegeri");
 		String socDaerah = getParam("socDaerah") ==""?"0":getParam("socDaerah");
+		String idMukim = getParam("socMukim") ==""?"0":getParam("socMukim");
+		Long idMukimLong = Long.parseLong(idMukim);
 		
 		String socLot = getParam("socLot") ==""?"0":getParam("socLot");
 		htpPermohonan = getIPembelian().findPermohonan(idPermohonan, idHtpPermohonan);
 		context.put("socNegeri",HTML.SelectNegeri("socNegeri",htpPermohonan.getPermohonan().getPfdFail().getIdNegeri(),"disabled"));
 		context.put("socDaerah", HTML.SelectDaerahByNegeri(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdNegeri()), "socDaerah",Long.parseLong(socDaerah),null," onChange=\"doChangeDaerah()\" "));
-		context.put("socMukim",HTML.SelectMukimByDaerah(socDaerah, "socMukim"));
+		context.put("socMukim",HTML.SelectMukimByDaerah(
+				socDaerah, "socMukim",idMukimLong,"","onChange=\"pilihMukim()\" "));
+//		context.put("socMukim",HTML.SelectMukimByDaerah(socDaerah, "socMukim"));
 		context.put("socJenisHakmilik" , HTML.SelectJenisHakmilik("socJenisHakmilik"));
 		context.put("socLot", HTML.SelectLot("socLot", Long.parseLong(socLot), ""));
 		context.put("socRizab", HTML.SelectRizab("socRizab"));
 		context.put("socLuas", HTML.SelectLuas("socLuas"));
 		context.put("socKategori", HTML.SelectKategori("socKategori"));
+		context.put("socseksyen", getPilihan().Pilihan("socSeksyen", "",idMukim));
 
 		context.put("htpPermohonan", htpPermohonan);
 	}
@@ -1247,9 +1282,25 @@ public void setupPage(HttpSession session,String action,Vector list) {
 		}
 		return iStatus;
 	
-	}	
+	}
+	private IUtilHTMLPilihan getPilihan(){
+		if(iPilihan==null){
+			iPilihan = new UtilHTMLPilihanSeksyenUPI();
+		}
+		return iPilihan;
 	
-
+	}
+	
+	private IEmel getEmelSemak(){
+		if(emelSemak == null)
+			emelSemak = new HTPEmelSemakanBean();
+		return emelSemak;
+	}
+	private IEmel getEmeLulus(){
+		if(emelulus == null)
+			emelulus = new HTPEmelKelulusanBean();
+		return emelulus;
+	}
 }
 
 

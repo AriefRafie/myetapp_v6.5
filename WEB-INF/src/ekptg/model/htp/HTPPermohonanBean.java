@@ -306,25 +306,26 @@ public class HTPPermohonanBean implements IHTPPermohonan {
 	    try {
 	    	db = new Db();
 	    	Statement stmt = db.getStatement();
-	    	sql= "SELECT p.id_Permohonan, f.no_Fail, UPPER(p.tujuan) TUJUAN, s.keterangan,RN.NAMA_NEGERI "+
-	      	" FROM Tblpermohonan P, Tblpfdfail F, Tblrujsuburusanstatusfail SF,Tblrujsuburusanstatus US,Tblrujstatus S,TBLRUJNEGERI RN "+
-	      	" WHERE p.id_Fail = f.id_Fail  AND p.id_Permohonan = sf.id_Permohonan AND p.id_Fail=sf.id_Fail "+
-	      	" AND sf.id_Suburusanstatus = us.id_Suburusanstatus AND us.id_Status = s.id_Status  "+
-	      	" AND F.ID_NEGERI=RN.ID_NEGERI AND sf.aktif IN (1) " +
-	      	" AND f.id_Urusan IN ("+ idUrusan +")"+
-	      	" AND US.LANGKAH ="+langkah+" " +
+	    	sql= "SELECT p.id_Permohonan, f.no_Fail, UPPER(p.tujuan) tujuan, s.keterangan,rn.nama_negeri "+
+	      	" FROM tblpermohonan P, tblpfdfail F, tblrujsuburusanstatusfail sf,tblrujsuburusanstatus US,tblrujstatus s,tblrujnegeri rn "+
+	      	" WHERE p.id_fail = f.id_fail  AND p.id_permohonan = sf.id_permohonan AND p.id_fail=sf.id_fail "+
+	      	" AND sf.id_suburusanstatus = us.id_suburusanstatus AND us.id_status = s.id_status  "+
+	      	" AND f.id_negeri = rn.id_negeri AND sf.aktif IN ('1','Y') " +
+	      	" AND f.id_urusan IN ("+ idUrusan +")"+
+	      	" AND US.langkah ="+langkah+" " +
 	      	" ";
-	    	//myLog.info("FrmPajakanKecilSenaraiPermohonanData:sql::"+sql);   
+	    	//
+	    	myLog.info("getPermohonanAktifLangkah:sql="+sql);   
 	    	ResultSet rs = stmt.executeQuery(sql);
 	    	Vector<Hashtable<String, String>> list = new Vector<Hashtable<String, String>>();
 	    	Hashtable<String, String> h;
 	    	while (rs.next()) {
 	    		h = new Hashtable<String, String>();
-	    		h.put("id", Utils.isNull(rs.getString("id_Permohonan")));
-	    		h.put("no", Utils.isNull(rs.getString("no_Fail")));
+	    		h.put("id", Utils.isNull(rs.getString("id_permohonan")));
+	    		h.put("no", Utils.isNull(rs.getString("no_fail")));
 	    		h.put("tajuk", Utils.isNull(rs.getString("tujuan")));
 	    		h.put("keterangan", Utils.isNull(rs.getString("keterangan")));
-	    		h.put("negeri", Utils.isNull(rs.getString("NAMA_NEGERI")));
+	    		h.put("negeri", Utils.isNull(rs.getString("nama_negeri")));
 	    		list.addElement(h);
 	
 	    	}
