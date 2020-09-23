@@ -210,14 +210,14 @@ public class IntegrasiMT extends AjaxBasedModule{
 			transactionID = Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.YEAR)), 4) + Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.MONTH) + 1), 2)
 					+ Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.DATE)), 2) + Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.HOUR_OF_DAY)), 2)
 					+ Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.MINUTE)), 2) + Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.SECOND)), 2);
-			
+			myLog.info("transactionID="+transactionID);
 			Db db = null;
 			//String sql = "";
 			//String sql2 = "";
 
 			db = new Db();
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
+			//Statement stmt = db.getStatement();
+			//SQLRenderer r = new SQLRenderer();
 			
 			String idPejabat = getParam("socmt");
 			//String idPejabatPTGD = getParam("socPejabat");
@@ -278,7 +278,9 @@ public class IntegrasiMT extends AjaxBasedModule{
 //				umur ="0";
 //				refType = "OT";
 			}
-			
+			myLog.info("jantina="+gen);
+			myLog.info("umur"+umur);
+
 			im = new MTManagerReg("MTREG");
 			
 			Hashtable<String,String> daftar = new Hashtable<String,String>();
@@ -348,10 +350,10 @@ public class IntegrasiMT extends AjaxBasedModule{
 	        }
 	        
 	        String returnMessage = "1 Tidak Berjaya Dihantar";
-	        returnMessage = MTManagerReg. PendaftaranBaharuPPT("15"
+	        returnMessage = MTManagerReg. PendaftaranBaharu("15"
 	        					,doc.getIdDokumen(),renameDoc,doc.getKandungan()
 	        					,party
-	        					//,deceaseInfo
+	        					,deceaseInfo
 	        					, kodMT 	//MT Kangar
 	        					, "3"	//Civil
 	        					, "2"	//High Court

@@ -29,6 +29,11 @@ public interface IOnline {
 		,String idNegeri
 		,String idKementerian
 		,String idUrusan);
+	public Vector<HtpPermohonan> findFailOnlineUrusan(String carian
+			,String noFail
+			,String idNegeri
+			,String idKementerian
+			,String idUrusan,String langkah);
 	public HakmilikUrusan simpanHakmilik(HakmilikUrusan urusan);
 	public HakmilikUrusan simpanHakmilikOnline(HakmilikUrusan urusan);
 	public HakmilikUrusan updateHakmilik(HakmilikUrusan urusan);

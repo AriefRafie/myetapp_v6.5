@@ -78,7 +78,8 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		//UNTUK PILIHAN JENIS NO FAIL
     	context.put("selectNoFail", selectNoFail);	
 		//screen
-		vm = "app/htp/utiliti/frmPopupCetakLaporan.jsp";
+		vm = "app/htp/6.0/utiliti/frmPopupCetakLaporan.jsp";
+		//vm = "app/htp/utiliti/frmPopupCetakLaporan.jsp";
 		return vm;
 		
 	}//close template

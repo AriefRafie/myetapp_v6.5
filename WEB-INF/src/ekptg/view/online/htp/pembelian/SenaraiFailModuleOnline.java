@@ -2,6 +2,8 @@ package ekptg.view.online.htp.pembelian;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -27,6 +29,7 @@ import ekptg.engine.EmailSender;
 import ekptg.engine.EmailProperty;
 import ekptg.model.entities.Tblrujsuburusanstatusfail;
 import ekptg.model.entities.UserKementerian;
+import ekptg.model.htp.FrmGadaianSemakan1Data;
 import ekptg.model.htp.FrmSemakan;
 import ekptg.model.htp.FrmSenaraiFailTerimaPohonData;
 import ekptg.model.htp.FrmUtilData;
@@ -62,6 +65,7 @@ import ekptg.model.utils.IUserPegawai;
 import ekptg.model.utils.UserBean;
 import ekptg.model.utils.emel.EmailConfig;
 import ekptg.model.utils.emel.IEmel;
+
 
 public class SenaraiFailModuleOnline extends AjaxModule {
 	/**
@@ -130,6 +134,8 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 		String idPermohonan = getParam("idPermohonan");
 		String idHtpPermohonan = getParam("idHtpPermohonan");
 		String idHakmilikUrusan =  getParam("idHakmilikUrusan");
+		String idNegeriPemohon = "";
+    	String namaPemohon = getParam("namaPemohon");
 		context.put("URUSAN_BANGUNAN",URUSAN_BANGUNAN);
 		context.put("URUSAN_TANAH",ID_URUSANTANAH);
 		context.put("URUSAN_TANAH1",ID_URUSANTANAH1);
@@ -360,7 +366,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			myLog.info("simpanMaklumatTanah ::"+vm);
 			getValuesMaklumatTanah();
 			tambahTanahDetail();
-			urusan = iPembelian.simpanHakmilik(urusan);
+			urusan = iPembelian.simpanHakmilikOnline(urusan);
 			getValues();
 			Vector<HakmilikUrusan> m = getIPembelian().getHakmilikList(String.valueOf(urusan.getPermohonan().getIdPermohonan()));
 			context.put("urusan", urusan);
@@ -974,6 +980,19 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			context.put("semakMode", "");
 			context.put("mode", " disabled");
 		
+		}else if(command.equalsIgnoreCase("rundingan")){
+			getPermohonanInfo();
+			myLog.info("rundingan ::id_permohonan="+htpPermohonan.getPermohonan().getIdPermohonan());	
+			//Vector dokumens = getIOnline().getDataDokumen(String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan()));
+			Vector dokumens = getIOnline().getLampiranByPermohonan(String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan()));
+			context.put("senaraidokumen", dokumens);
+			//Vector lampirans = getIOnline().getLampiranByPermohonan(String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan()));
+			//context.put("senarailapiran", lampirans);
+			getSemakanPerakuanPembelian();
+
+			context.put("selectedTab", 3);
+			vm = PATH+"tanahOnline.jsp";
+			
 		}else if(command.equalsIgnoreCase("viewLampiran")){
 			getPermohonanInfo();
 			myLog.info("viewLampiran ::id_permohonan="+htpPermohonan.getPermohonan().getIdPermohonan());	
@@ -984,7 +1003,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			//context.put("senarailapiran", lampirans);
 			getSemakanPerakuanPembelian();
 
-			context.put("selectedTab", 3);
+			context.put("selectedTab", 4);
 			vm = PATH+"tanahOnline.jsp";
 			
 		}else if(command.equalsIgnoreCase("tambahlampiran")){
@@ -1088,6 +1107,20 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			getPermohonanInfo();
 			myLog.info("viewsemakan ::id_permohonan="+htpPermohonan.getPermohonan().getIdPermohonan());	
 			//getSemakanPerakuanPembelian();
+			
+			Vector listDetailKJP = null;
+			getIdNegeriKJPByUserId(userID);
+			listDetailKJP = getIdNegeriKJPByUserId(userID);
+			Hashtable hashList = (Hashtable) listDetailKJP.get(0);
+			idNegeriPemohon = hashList.get("idNegeri").toString();
+			namaPemohon = (String) hashList.get("namaPemohon");
+			userID = (String) hashList.get("userID");
+			
+			this.context.put("ListdetailKJP", listDetailKJP);
+			this.context.put("namaPemohon", namaPemohon);
+			this.context.put("userID", userID);
+			myLog.info("namaPemohon:: " + namaPemohon);
+			
 			String semakMode="";
 			String statusSemasa="-4";
 			if(getIOnline().isHantar(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan(),htpPermohonan.getPermohonan().getIdPermohonan()
@@ -1382,6 +1415,42 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 		context.put("permohonan", htpPermohonan);
 		
 	}
+	
+	public Vector getIdNegeriKJPByUserId(String userId) throws Exception {
+		Db db = null;
+		String sql = "";
+		Hashtable h;
+		Vector listDetailKJP = new Vector();
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.USER_ID, A.USER_NAME, C.ID_NEGERI, B.ID_KEMENTERIAN, B.ID_AGENSI FROM USERS A, USERS_KEMENTERIAN B, TBLRUJAGENSI C, TBLRUJKEMENTERIAN D "
+					+ " WHERE A.USER_ID = B.USER_ID AND B.ID_AGENSI = C.ID_AGENSI AND B.ID_KEMENTERIAN = D.ID_KEMENTERIAN AND A.USER_ID = '"
+					+ userId + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				h = new Hashtable();
+				h.put("userId", rs.getString("USER_ID").toString());
+				h.put("idNegeri", rs.getString("ID_NEGERI").toString());
+				h.put("idKementerian", rs.getString("ID_KEMENTERIAN").toString());
+				h.put("idAgensi", rs.getString("ID_AGENSI").toString());
+				h.put("namaPemohon", rs.getString("USER_NAME").toString());
+				listDetailKJP.addElement(h);
+
+				return listDetailKJP;
+			} else {
+				return listDetailKJP;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}  
 	
 	private void getValuesMaklumatTanah(){
 		
