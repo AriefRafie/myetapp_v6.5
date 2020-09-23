@@ -312,7 +312,6 @@ public class FrmJRPSenaraiPermohonanData {
 		 }
 	 
 	 }
-	 
 	 public Vector getIdNegeriKJPByUserId(String userId) throws Exception {
 			Db db = null;
 			String sql = "";
@@ -349,7 +348,7 @@ public class FrmJRPSenaraiPermohonanData {
 					db.close();
 			}
 		}
-
+	 
 
 	  public static void add(String kod_cara_bayar, String keterangan, Long id_masuk, 
 			  Date tarikh_masuk) throws Exception {
@@ -469,7 +468,4 @@ public class FrmJRPSenaraiPermohonanData {
 		  return h;
 		  
 	  }
-	  
-	  
-	  
-	}
+	}//close here
