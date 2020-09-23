@@ -777,18 +777,12 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 				if (db != null)
 					db.close();
 			}
-
-		
 			context.put("NO_FAIL", NOFAIL);
 			context.put("id_perintah", idperintah);
 			context.put("id_fail", idfail);
 //			
-				vm = "app/ppk/integrasi/DGCertPerintah.jsp";
-			
-			
+			vm = "app/ppk/integrasi/DGCertPerintah.jsp";	
 		}
-		
-		
 		Template template = this.engine.getTemplate(vm);
 		return template;
 	}
@@ -801,7 +795,6 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 		String sql = "";
 
 		try {
-
 			db = new Db();
 
 			Statement stmt = db.getStatement();
@@ -839,7 +832,6 @@ public class FrmIntegrasiDGCertPerintah extends VTemplate {
 		}
 		// Get alamat tempat bicara
 	}
-	
 }
 
 /**List fail-fail Tandatangan Digital di Perintah:

@@ -8946,8 +8946,10 @@ System.out.println("sini======="+sql);
 		}
 		
 		//arief add
+		
 		//checking sama ada user yang login adalah pegawai pengendali
 		private static Vector validPegPengendali = new Vector();
+		
 		public static void setValidPegawaiPengendali(String userId,String idPerbicaraan, String NamaPeg, String username) throws Exception {
 
 			Db db = null;

@@ -53,6 +53,10 @@
 	</a>
 	<a href = "javascript:emeLewat('$!senarai.permohonan.getIdPermohonan()');"><font color="red">Lewat</font>
 		<img border="0" src="../img/emel.gif" />
+	</a> <br>
+	  	<img src='../img/alert.gif' alt='' border='0'/><b><i>&nbsp;<blink><a href="#"> Bayaran Lewat</a></blink></i></b>
+	  	<a alt="Cetak" href = "javascript:cetakSuratBayaranLewat('$!senarai.permohonan.getIdPermohonan()');">
+		<img border="0" src="../img/print.gif" />
 	</a>
   </td>
   </tr>
@@ -121,7 +125,10 @@
 		doAjaxCall${formName}("");
 		
 	}
-	
+	//22/09/2020
+	function cetakSuratBayaranLewat(idp){
+		cetakSuratExt(idp, "HTPajakanSuratBayaranLewat");
+	}
 	function cetakSuratExt(idPermohonan, laporan){
 		var url = "../x/${securityToken}/ekptg.report.htp.utiliti.FrmPopupPilihPegawaiReportView?idpermohonan="+idPermohonan+"&report="+laporan;	
 	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');

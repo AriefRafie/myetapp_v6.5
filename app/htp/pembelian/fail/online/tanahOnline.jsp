@@ -10,18 +10,18 @@
 	<tr>
 		<td>&nbsp;</td>
 	</tr>
-	
-	<tr> 
-	<td>
-	
-	<fieldset>
-	  <legend>MAKLUMAT PERMOHONAN</legend>
-	  #parse ("app/htp/pembelian/fail/online/fileInfoOnline.jsp")
-	 </fieldset>
-	
-	</td>
-</tr>
-<tr>
+
+	<tr>
+		<td>
+
+			<fieldset>
+				<legend>MAKLUMAT PERMOHONAN</legend>
+				#parse ("app/htp/pembelian/fail/online/fileInfoOnline.jsp")
+			</fieldset>
+
+		</td>
+	</tr>
+	<tr>
 	<td>
 		<table width="100%">
 			<tr>
@@ -33,7 +33,8 @@
 	             		 	<li class="TabbedPanelsTab" title="" tabindex="0" onclick="javascript:setSelected(0,'maklumatanahonline','drafview',0)">MAKLUMAT TANAH</li>          		 	 
 	             		 	<li class="TabbedPanelsTab" title="" tabindex="1" onclick="javascript:setSelected(1,'viewpemilikonline','drafview',0)">NAMA PEMILIK</li>
 	             		 	<li class="TabbedPanelsTab" title="" tabindex="2" onclick="javascript:setSelected(2,'viewpenjualonline','drafview',0)">NAMA PENJUAL</li>
-	             		 	<li class="TabbedPanelsTab" title="" tabindex="3" onclick="javascript:setSelected(3,'viewLampiran','drafview',0)">MUAT NAIK DOKUMEN</li>
+	             		 	<li class="TabbedPanelsTab" title="" tabindex="3" onclick="javascript:setSelected(3,'rundingan','drafview',0)">RUNDINGAN HARGA</li>
+	             		 	<li class="TabbedPanelsTab" title="" tabindex="4" onclick="javascript:setSelected(4,'viewLampiran','drafview',0)">MUAT NAIK DOKUMEN</li>
 	             		 	<!-- <li class="TabbedPanelsTab" title="" tabindex="3" onclick="javascript:setSelected(4,'viewsemakan','drafview',0)">Senarai Semakan</li> -->
   	             		 	 
 	             		 </ul>
@@ -71,6 +72,13 @@
 	               			 
 	               			 <div class="TabbedPanelsContent">
 	               			 	#if($selectedTab == '3')
+	               			 		#parse("app/htp/pembelian/fail/online/rundingan.jsp")              						 	
+                  					
+				               	#end
+	               			 </div>
+	               			 
+	               			 <div class="TabbedPanelsContent">
+	               			 	#if($selectedTab == '4')
                 	
 				                    	##parse("app/htp/pembelian/fail/online/maklumatPenjualOnline.jsp")
 				                    	
@@ -80,7 +88,7 @@
 	               			 </div>
 
 	               			 <div class="TabbedPanelsContent">
-	               			 	#if($selectedTab == '4')
+	               			 	#if($selectedTab == '5')
                 	
 				                    	##parse("app/htp/pembelian/fail/online/dokumenOnline.jsp")
 						                #parse("app/htp/pembelian/fail/online/perakuanPembelianOnline.jsp")
