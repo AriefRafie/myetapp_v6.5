@@ -63,7 +63,7 @@
 <!-- <strong>[CL-02-0403] Pajakan Kecil Tanah/Bangunan</strong>
 <br><br> -->
 <br/> 
-#parse('app/htp/pajakankecil/utiliti/frmPajakanKecilPaging.jsp')
+#parse('app/htp/frmPajakanKecilPaging.jsp')
 
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
 <tr>
