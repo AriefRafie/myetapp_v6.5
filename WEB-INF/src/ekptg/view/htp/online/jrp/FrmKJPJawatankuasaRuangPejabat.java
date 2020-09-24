@@ -2742,6 +2742,4 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			iHTPPermohonan = new HTPPermohonanBean();
 		return iHTPPermohonan;
 	}
-	
-
-}
+}//close here

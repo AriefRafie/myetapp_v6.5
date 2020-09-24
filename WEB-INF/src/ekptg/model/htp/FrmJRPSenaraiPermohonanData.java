@@ -466,6 +466,5 @@ public class FrmJRPSenaraiPermohonanData {
 			  db.close();
 		  }
 		  return h;
-		  
 	  }
-	}//close here
+	}
