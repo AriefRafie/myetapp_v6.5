@@ -86,10 +86,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
      <li class="TabbedPanelsTab" tabindex="0" onclick="setSelectedTab(0);bantahan()">Bantahan</li>
     <li class="TabbedPanelsTab" tabindex="1" onclick="setSelectedTab(1);deposit()">Deposit</li>
     #if($!idBorangO_check != "")
-    <li class="TabbedPanelsTab" tabindex="2" onclick="setSelectedTab(2);borangO()">Borang O
-    
-    </li>
-     
+    <li class="TabbedPanelsTab" tabindex="2" onclick="setSelectedTab(2);borangO()">Borang O</li>
     <li class="TabbedPanelsTab" tabindex="3" onclick="setSelectedTab(3);lanjutanTempoh()">Lanjutan Tempoh</li>
     <li class="TabbedPanelsTab" tabindex="4" onclick="setSelectedTab(4);susulanBantahan()">Perintah</li>
     <li class="TabbedPanelsTab" tabindex="5" onclick="setSelectedTab(5);pemulanganDeposit()">Pemulangan Deposit</li>
@@ -136,7 +133,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
     	  <td>$selectNegeriMahkamah<input type="hidden" name="id_negeriMahkamah" id="id_negeriMahkamah" value="$!id_negeriMahkamah" /></td>
   	    </tr>
         #end
-      
+
     	<tr>
           <td width="1%"></td>
     	  <td>Mahkamah Tinggi</td>
@@ -246,10 +243,12 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <br/>
 <!-- PPT-35 (ii) -->
 <!----------------------------------------- SENARAI DOKUMEN YANG DISERTAKAN --------------------------------------------->
-
-	<input type="hidden" name="nama_skrin" id="nama_skrin" value="borangO"  />
+<!-- <input type="text" name="jenisDoc" id="jenisDoc" value="pptbantahan"  /> -->
 	<fieldset id="senarai_dokumen" >
-	<legend>Senarai Dokumen</legend>
+<!-- 	jenis dokumen = '$jenisDoc' -->
+<!-- 	jenis skrin = '$nama_skrin' -->
+<!-- 	$listDokumen -->
+	<legend>Senarai Dokumen Yang Disertakan</legend>
     
     <input name="cmdTambahDokumen" type="button" value="Tambah" onClick="tambahDokumen()" title="Sila klik untuk tambah dokumen" >    
 #if($listDokumen_size > 0)
@@ -329,6 +328,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
   </div>
 </div>
 <input type=hidden name=selectedtab />
+
 <!--------------------------------------- END TAB BANTAHAN ------------------------------------------->
 </fieldset>
 
@@ -410,6 +410,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <input type="hidden" name="tarikh_cetak" id="tarikh_cetak" value="$!tarikh_cetak" />
 <input type="hidden" name="nama_pengarah" id="nama_pengarah" value="$!nama_pengarah" />
 <input type="hidden" name="id_borange" id="id_borange" value="$!id_borange" />
+<input type="hidden" name="nama_skrin" id="nama_skrin" value="pptbantahan"  />
 
 <script type="text/javascript">
 	
@@ -677,7 +678,7 @@ function tambahDokumen() {
 	var id_hakmilikpb = document.${formName}.id_hakmilikpb.value ;		
 	var id_hakmilik = document.${formName}.id_hakmilik.value ;	
 	var id_pihakberkepentingan = document.${formName}.id_pihakberkepentingan.value ;
-	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=tambah_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilikpb="+id_hakmilikpb+"&id_hakmilik="+id_hakmilik+"&id_pihakberkepentingan="+id_pihakberkepentingan+"&location=maklumat_dokumen&point=txtnamadokumen&jenisDoc=borangO";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=tambah_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilikpb="+id_hakmilikpb+"&id_hakmilik="+id_hakmilik+"&id_pihakberkepentingan="+id_pihakberkepentingan+"&location=maklumat_dokumen&point=txtnamadokumen&nama_skrin=pptbantahan";
 	document.${formName}.submit();
 }
 
