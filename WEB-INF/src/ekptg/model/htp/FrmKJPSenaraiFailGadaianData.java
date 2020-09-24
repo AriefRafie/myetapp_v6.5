@@ -309,4 +309,4 @@ public class FrmKJPSenaraiFailGadaianData {
 		  log.info("FrmSenaraiFailGadaianData list : "+ list.size());
 		  return list;
 	  }
-}
+}//close here
