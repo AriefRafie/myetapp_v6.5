@@ -1,5 +1,7 @@
 package ekptg.view.htp.online.jrp;
 
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -7,6 +9,7 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import lebah.db.Db;
 import lebah.portal.AjaxBasedModule;
 
 import org.apache.log4j.Logger;
@@ -121,7 +124,10 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 		    String socKementerian = "";
 		    String socNegeri = "";
 		    String socUrusan = "";
+		    String idNegeriPemohon = "";
+		    String namaPemohon = getParam("namaPemohon");
 			Vector semakanSenarai = new Vector();
+			Vector listDetailKJP = null;
 
 		    this.context.put("util", new lebah.util.Util());
 		    Vector senaraiFail = null;
@@ -1422,9 +1428,24 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				    //shiqa - pengesahan 25062020
 			    }else if(submit.equalsIgnoreCase("pengesahan")){
 			    	String id = getParam("id_kemaskini");
+			    	
 			    	Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);
 					myLog.info("pengesahan ::idpermohonan="+FrmJRPSenaraiPermohonanData.getPermohonanInfo(id));	
 					//getSemakanPerakuanPembelian();
+					FrmJRPSenaraiPermohonanData logic = new FrmJRPSenaraiPermohonanData();
+					
+					logic.getIdNegeriKJPByUserId(userId);
+					listDetailKJP = logic.getIdNegeriKJPByUserId(userId);
+	    			Hashtable hashList = (Hashtable) listDetailKJP.get(0);
+	    			idNegeriPemohon = hashList.get("idNegeri").toString();
+	    			namaPemohon = (String) hashList.get("namaPemohon");
+	    			userId = (String) hashList.get("userId");
+
+	    			this.context.put("ListdetailKJP", listDetailKJP);
+	    			this.context.put("namaPemohon", namaPemohon);
+	    			this.context.put("userId", userId);
+	    			myLog.info("namaPemohon:: " + namaPemohon);
+					
 					skrin = "4";
 					String semakMode="";
 					String statusSemasa="1";
@@ -1576,7 +1597,9 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					template_name = PATH+"frmJRPsemakanPKP.jsp";	
 					//return String.valueOf(getStatus().kemaskiniSimpanStatusAktif(subUrusanStatusFail, subUrusanStatusFailN,getParam("txtarikhkeputusan")));
 					
-
+					
+					
+				
 				}else if(submit.equals("pksemakanpkpseterus")) {
 			    	template_name = PATH+"frmJRPDeraf.jsp";	
 			    	myLog.info("pksemakanpkpseterus ::"+template_name);
@@ -1992,6 +2015,8 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 		}			
 				
 	}
+	
+	
 	 
 	private void maklumatHakmilikPemilik() throws NumberFormatException, Exception {
 		String noLot = getParam("noLot");
@@ -2717,6 +2742,4 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			iHTPPermohonan = new HTPPermohonanBean();
 		return iHTPPermohonan;
 	}
-	
-
-}
+}//close here
