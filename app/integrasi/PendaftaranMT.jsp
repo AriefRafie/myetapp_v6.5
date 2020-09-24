@@ -49,9 +49,9 @@
 
   
  #if($nopb=="1" || $nopb=="3" || $nopb=="5" || $nopb=="7" || $nopb=="9")
- 	#set ($jantina = "MALE")
+ 	#set ($jantina = "M")
  #else
- 	#set ($jantina = "FEMALE")
+ 	#set ($jantina = "F")
  #end
  
  
@@ -119,7 +119,7 @@
 					          <td colspan="2">
 		
 					            #if($!jantina != "0")
-					              	<input type="text" name="jantina" id="jantina" value="$!jantina" size="30" maxlength="20" tabindex="12" class="disabled" readonly/>					         
+					              	<input type="text" name="jantina" id="jantina" value="$!jantina" size="20" maxlength="20" tabindex="12" class="disabled" readonly/>					         
 					            #else
 					          	<select name="jantina" id="jantina"  class="mediumselect" style="text-transform:uppercase;" onChange="semakUmur();" $!classRead>
                                		<option value="U" style="text-transform:uppercase;" onblur="uppercase();">Sila Pilih Jantina</option>
