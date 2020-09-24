@@ -19,6 +19,7 @@
    	#set ($id_negeri=$senarai.id_negeri)
     #set ($txtNamaNegeri=$senarai.nama_negeri)
     #set ($txtUmur=$senarai.umur)
+    #set ($nopb=$senarai.nopb)
     #set ($jenis_pembantah=$senarai.jenis_pembantah)
 
  	#set ($id_bantahan=$senarai.id_bantahan)
@@ -46,6 +47,13 @@
 #set($labelPem = "Perayu")
 #set($labelResp = "Responden")
 
+  
+ #if($nopb=="1" || $nopb=="3" || $nopb=="5" || $nopb=="7" || $nopb=="9")
+ 	#set ($jantina = "M")
+ #else
+ 	#set ($jantina = "F")
+ #end
+ 
  
  <p>
  <input type="hidden"   name="jenisRef" id="jenisRef" value="$!jenisRef">
@@ -109,11 +117,16 @@
 					          <td>Jantina<font color="red">*</font></td>
 					          <td>:</td>
 					          <td colspan="2">
-					          	<select name="jantina" id="jantina" class="mediumselect" style="text-transform:uppercase;" onChange="semakUmur();" $!classRead>
+		
+					            #if($!jantina != "0")
+					              	<input type="text" name="jantina" id="jantina" value="$!jantina" size="20" maxlength="20" tabindex="12" class="disabled" readonly/>					         
+					            #else
+					          	<select name="jantina" id="jantina"  class="mediumselect" style="text-transform:uppercase;" onChange="semakUmur();" $!classRead>
                                		<option value="U" style="text-transform:uppercase;" onblur="uppercase();">Sila Pilih Jantina</option>
                                    	<option value="M" $!janLaki style="text-transform:uppercase;" onblur="uppercase()">Lelaki</option>
                                  	<option value="F" $!janPer style="text-transform:uppercase;" onblur="uppercase()">Perempuan</option>
                                 </select>
+                                #end
 					          </td>
 					        </tr>  
 		       			 	<tr>

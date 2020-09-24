@@ -724,8 +724,8 @@ public class MTManagerReg {
 	    	Statement stmt = db.getStatement();
 	    	SQLRenderer r = new SQLRenderer();
 
-	    	long idPendaftaran = DB.getNextID("TBLINTMTPENDAFTARAN_SEQ");
-	    	r.add("ID_PENDAFTARAN", idPendaftaran);
+	    	//long idPendaftaran = DB.getNextID("TBLINTMTPENDAFTARAN_SEQ");
+	    	//r.add("ID_PENDAFTARAN", idPendaftaran);
 			r.add("ID_FAIL", daftar.get("idFail"));
 			r.add("ID_RUJUKAN", daftar.get("idRujukan"));
 			r.add("KOD_MT", daftar.get("kodMT"));
