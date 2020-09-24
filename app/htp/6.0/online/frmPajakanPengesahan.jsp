@@ -14,134 +14,123 @@
   <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
 </p>
-<table width="100%" border="0" cellspacing="2" cellpadding="2">
-  <tr>
-    <td colspan="2">
-    
-    <fieldset>
-    <legend><strong>MAKLUMAT PENERIMAAN PERMOHONAN</strong></legend>
-    
-   		<table width="100%" border="0" cellspacing="2" cellpadding="2">
-        #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
-         <tr>
-          	<td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-            <td width="28%">Negeri</td>
-            <td width="1%">:</td>
-            <td width="70%">$selectNegeri</td>
-         </tr>
-         <tr>
-          	<td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-            <td>Kementerian</td>
-            <td>:</td>
-            <td>$selectKementerian</td>
-         </tr>
-         <tr>
-         	<td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-            <td>Agensi</td>
-            <td>:</td>
-            <td>$selectAgensi</td>
-         </tr>
-         <tr>
-         	<td>&nbsp;</td>
-            <td>Urusan</td>
-            <td>:</td>
-            <td>882 - PAJAKAN TANAH</td>
-         </tr>
-         <tr>
-         	<td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-            <td>Sub Urusan</td>
-            <td>:</td>
-            <td>$selectSuburusan</td>
-         </tr>
-         <tr>
-         	<td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-            <td>Status Tanah</td>
-            <td>:</td>
-            <td>$selectStatusTanah</td>
-         </tr>
-         <tr>
-         	<td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-         	<td>Jenis Fail</td>
-            <td>:</td>
-            <td>$selectJenisFail</td>
-         </tr>
-         <tr>
-         	<td width="1%">&nbsp;</td>
-            <td width="28%">No. Fail Jabatan</td>
-            <td width="1%">:</td>
-            <td width="70%"><input type="text" name="txtNoFail" id="txtNoFail" disabled="disabled" class="disabled" value="$beanMaklumatPermohonan.noFail"/></td>
-         </tr>
-         <tr>
-         	<td>
-            	<!--	#if ($mode != 'view')<span class="style1">*</span>#end --> 
-         	</td>
-            <td>No. Fail KJP</td>
-            <td>:</td>
-            <td><input type="text" name="txtNoFailKJP" id="txtNoFailKJP" $readonly class="$inputTextClass" value="$beanMaklumatPermohonan.noFailKJP" onblur="this.value=this.value.toUpperCase();" /></td>
-         </tr>
-         <tr>
-         	<td>
-            	<!--	#if ($mode != 'view')<span class="style1">*</span>#end --> 
-         	</td>
-            <td valign="top">Tarikh Surat KJP</td>
-            <td>:</td>
-            <td><input type="text" size="11" maxlength="10" name="tarikhSuratKJP" id="tarikhSuratKJP" onblur="check_date(this)" $readonly class="$inputTextClass" value="$beanMaklumatPermohonan.tarikhSuratKJP"/>
-            #if ($mode != 'view')
-            <a href="javascript:displayDatePicker('tarikhSuratKJP',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
-            #end            </td>
-         </tr>
-         <tr>
-         <td style="visibility:hidden">#if ($mode != 'view')<span class="style1">*</span>#end </td>
-         <td>No. Fail Lain /  Pemohon</td>
-         <td>:</td>
-         <td><input type="text" name="txtNoFailLain" id="txtNoFailLain" value="$beanMaklumatPermohonan.noFailLain" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();"/></td>
-         </tr>
-         <tr>
-          <td>
-            	<!--	#if ($mode != 'view')<span class="style1">*</span>#end --> 
-          	</td>
-        	<td>Tarikh Surat Pemohon</td>
-            <td>:</td>
-            <td>            	
-            	<input type="text" size="11" maxlength="10" name="tarikhSuratPemohon" class="$classDis" id="tarikhSuratPemohon" onblur="check_date(this)" value="$beanMaklumatPermohonan.tarikhSuratPemohon" readonly="readonly" $readOnly/>
-				#if ($mode != 'view') 
-					<a href="javascript:displayDatePicker('tarikhSuratPemohon',false,'dmy');"><img src="../img/calendar.gif" alt="Calendar" border="0"/> 
-				#end 
-			</td>         
-         </tr>
-         <tr style="display:none">
-         	<td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-            <td valign="top">Tarikh Agihan</td>
-            <td>:</td>
-            <td><input type="text" name="tarikhAgihan" id="tarikhAgihan" onblur="check_date(this)" size="9" $readonly class="$inputTextClass" value="$beanMaklumatPermohonan.tarikhAgihan"/>
-            #if ($mode != 'view')
-            <a href="javascript:displayDatePicker('tarikhAgihan',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
-            #end            
-            </td>
-         </tr>
-         <tr>
-         	<td valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-           <td valign="top">Tajuk</td>
-            <td valign="top">:</td>
-            <td valign="top"><textarea name="txtTajuk" id="txtTajuk" rows="5" cols="41" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();">$beanMaklumatPermohonan.tajuk</textarea></td>
-         </tr>
-         #end
-        </table>
-    </fieldset>    
-    </td>
-  </tr>
-<!--  <tr>
-    <td colspan="2">&nbsp;</td>
-  </tr> -->
+<table style="width:100%">
+	<tr>
+		<td>
+			<fieldset><legend>MAKLUMAT PENERIMAAN PERMOHONAN</legend>
+		#foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
+			<table style="width:100%">
+				<tr>
+					<td width="50%" align="center" valign="top">
+						<table style="width:100%" >
+							<tr>
+					          	<td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+					            <td width="30%">Negeri</td>
+					            <td width="1%">:</td>
+					            <td width="68%">$selectNegeri</td>
+					         </tr>	
+						</table>
+					</td>
+					<td width="50%" align="center" valign="top">
+						<table style="width:100%">
+							<tr>
+					       		<td width="1%">&nbsp;</td>
+					            <td width="30%">No. Rujukan <i>Online</i></td>
+					            <td width="1%">:</td>
+					            <td width="68%"><input type="text" size="35" name="txtNoFail" id="txtNoFail" disabled="disabled" class="disabled" value="$beanMaklumatPermohonan.noP"/></td>
+					    	</tr>
+					      	<tr>
+						         <td style="visibility:hidden">#if ($mode != 'view')<span class="style1">*</span>#end </td>
+						         <td>No. Fail Lain /  Pemohon</td>
+						         <td>:</td>
+						         <td><input type="text" size="35" name="txtNoFailLain" id="txtNoFailLain" value="$beanMaklumatPermohonan.noFailLain" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();"/></td>
+					   		</tr>
+         					<tr>
+					        	<td>
+					          	</td>
+					        	<td>Tarikh Surat Pemohon</td>
+					            <td>:</td>
+					            <td>            	
+					            	<input type="text" size="11" maxlength="10" name="tarikhSuratPemohon" class="$classDis" id="tarikhSuratPemohon" onblur="check_date(this)" value="$beanMaklumatPermohonan.tarikhSuratPemohon" readonly="readonly" $readOnly/>
+									#if ($mode != 'view') 
+										<a href="javascript:displayDatePicker('tarikhSuratPemohon',false,'dmy');"><img src="../img/calendar.gif" alt="Calendar" border="0"/> 
+									#end 
+								</td>         
+					      	</tr>
+						</table>
+					</td>
+				</tr>
+			</table>	
+		#end		
+			</fieldset>	
+		</td>
+	</tr>
+			
+			
   	#if ($mode != 'view')
-  	<tr>
+  	<!-- <tr>
     	<td colspan="2" valign="bottom"><i><font color="#ff0000">Perhatian</font> : Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i></td>
- 	</tr>
+ 	</tr> -->
   	#end
+	<tr>
+		<td>
+			<fieldset><legend>SENARAI DOKUMEN YANG DISERTAKAN</legend>
+			<table style="width:100%">
+		    	<tr class="row2">
+					<td width="3%"><b>Bil.</b></td>
+					<td width="82%"><b>Keterangan</b></td>
+					<td width="15%"><b>Dokumen</b></td>
+				</tr>  
+	#if ($senaraiSemak.size() > 0)
+        #set ($list = "")
+        #foreach ($list in $senaraiSemak)
+          	#set( $i = $velocityCount )
+       		#if ( ($i % 2) == 0 )
+   	        	#set( $row = "row2" )
+            #else
+               	#set( $row = "row1" )
+          	#end
+                	
+        #if($list.flag == 'Y')
+        	#set($checked_ = 'checked')
+        	#set($disabled = 'disabled')
+        #else
+        	#set($checked_ = '')
+        #end
+        
+        #if ($mode == 'update')
+	        <tr class="$row">
+	          <td class="$row" width="3%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" $checked_ /></td>
+	          <td class="$row" width="82%">$i. $list.keterangan</td>
+	          	<td class="$row" width="15%">
+	          	$!list.lampirans
+	        	</td>
+	        </tr>
+	      #end
+	      #if ($mode == 'view')
+	      	<tr class="$row">
+	          <td class="$row" width="3%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" $checked_ $disabled /></td>
+	          <td class="$row" width="82%">$i. $list.keterangan</td>
+	          <td class="$row" width="15%">
+	          $!list.lampirans
+	          </td>
+	        </tr>
+	      #end      
+        #end
+        
+   	#else
+        <tr>
+          <td class="$row" width="3%">&nbsp;</td>
+          <td class="$row" colspan="2" width="95%">Tiada Rekod</td>
+        </tr>
+  	#end        
+			</table>
+			</fieldset>
+		</td>
+	</tr>
 	
 	<tr>
-    	<td width="30%">&nbsp;</td>
-    	<td width="70%">
+		<td align=center>
     	#if ($mode == 'view')
     		<!--<input type="button" class="stylobutton" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="simpan()"/>
     		<input type="button" class="stylobutton" name="cmdBatal" id="cmdBatal" value="Batal" onclick="kembali()"/>
@@ -156,18 +145,10 @@
     	#end
     	</td>
 	</tr>
+	
 </table>
 
 <script>
-
-function pajakanTerima(id){
-	var mode = 'pajakanditerima';
-	//doAjaxCall${formName}("pajakanditerima","mode="+mode+"&idfail="+id+"&pagemode=0");
-	document.${formName}.command.value = mode;
-	document.${formName}.actionPajakan.value = "";
-	document.${formName}.action = "$EkptgUtil.getTabID('Pajakan',$portal_role)?_portal_module=ekptg.view.online.htp.FrmPermohonanPengesahan&actionPerletakhakan=papar&idfail="+id;
-	document.${formName}.submit();
-}
 	
 function doChangeKementerian() {
 	doAjaxCall${formName}("doChangeKementerian");
@@ -256,3 +237,4 @@ function goToNext(){
 	document.${formName}.submit();
 }
 </script>
+$!javaScriptLampiran

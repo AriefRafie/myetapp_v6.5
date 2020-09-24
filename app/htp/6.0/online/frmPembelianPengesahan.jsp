@@ -141,62 +141,47 @@
 	<tr>
 		<td>
 			<fieldset>
-			<legend><strong>SENARAI DOKUMEN YANG DISERTAKAN</strong></legend>
-			<table width="100%">
-				#set ( $checked = "" )
-					    #foreach ( $semak in $perakuanPembelian )
-					        #set( $i = $velocityCount )
-					        #if ( ($i % 2) == 0 )
-					            #set( $row = "row2" )
-					        #else
-					            #set( $row = "row1" )
-					        #end
+			<legend><strong>SENARAI SEMAK/ DOKUMEN YANG DISERTAKAN</strong></legend>
+			<table style="width:100%">
+				<tr class="row2">
+					<td width="3%"><b>Bil</b></td>
+					<td width="75%"><b>Keterangan</b></td>
+					<td width="25%"><b>Dokumen</b></td>
+			  	</tr> 
+		#set ( $checked = "" )
+	#if ($senaraiSemak.size() > 0)
+		
+		#foreach ( $semak in $senaraiSemak )
+			#set( $i = $velocityCount )
+			#if ( ($i % 2) == 0 )
+				#set( $row = "row2" )
+			#else
+				#set( $row = "row1" )
+			#end
+
+        		#if($semak.flag == 'Y')
+        			#set($checked = 'checked')
+					#set($disabled = 'disabled')
+        		#else
+        			#set($checked = '')
+        		#end			
 					        ##if($semak.aturan==1)
-					        	<tr>
-					            <td colspan=4 class="$row" align="left">
-					            <input class="cb" type="checkbox" name="akuans" value="$semak.id" $checked $mode >
-					            	$semak.keterangan
-					            
-					            </td>
-					            </tr>
-        					##end
-        		       #end
-        					
-			<tr>
-				<tr class="table_header">
-					<td scope="col" width="3%">Bil.</td>
-					<td scope="col" width="27%">Nama Dokumen</td>
-					<td scope="col" width="60%">Keterangan</td>
-					<td scope="col" width="10%">Muat Turun</td>
+				<tr>
+						<td class="$row" width="3%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsenaraisemak" $checked /></td>
+		          		<td class="$row" width="82%">$i. $semak.keterangan</td>
+		          		<td class="$row" width="15%">
+		          			$!semak.lampirans
+		          		</td>	
 				</tr>
-				
-				#set ( $cnt = 0 )
- 			   	#if ($senaraidokumen.size() > 0)
- 			    
- 			    #foreach($mo in $senaraidokumen)
-				    #set ( $cnt = $cnt + 1 )
-				    #if ($senarai.bil == '')
-				    #set( $row = "row1" )
-				    #elseif (($senarai.bil % 2) != 0)
-				    #set( $row = "row1" )
-				    #else 
-				    #set( $row = "row2" )
-				    #end
-					<tr>
-					  <td class="$row">$cnt.</td>
-					  <td class="$row">$!mo.perihal</td>
-					  <td class="$row">$!mo.keterangan</td>
-					  <td class="$row"><a href="javascript:javascript:cetakImej($mo.idLampiran)" class="pautanms">$!mo.namaFail</a></td>
-			    	</tr>
-			     #end
-				
-				 #else
-				   	<tr>
-    					<td colspan="4" class="row1">Tiada rekod.</td>
-  					</tr>
-				 
-			     #end
-			
+        					##end
+        		       ##end
+ 		#end
+   	#else
+        <tr>
+	        <td class="$row" width="3%">&nbsp;</td>
+    	    <td class="$row" colspan="2" width="95%">Tiada Rekod</td>
+        </tr>
+   	#end			
 			</table>
 			</fieldset>
 		</td>
@@ -249,4 +234,11 @@
 			document.${formName}.action = "$EkptgUtil.getTabID('Pembelian',$portal_role)?_portal_module=ekptg.view.htp.online.FrmPermohonanPengesahan&actionPerletakhakan=papar&idfail="+id;
 			document.${formName}.submit();
 		}
+	function onlineAttach_(v1,v2,v3){
+		alert('attch');
+	}
+
 	</script>
+
+$javaScriptLampiran
+	

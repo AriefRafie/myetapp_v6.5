@@ -239,10 +239,12 @@
 					        #end
 					        <tr>
 					          <td class="$row" align="center">$senaraiFailMohonBaru.bil</td>
-					          <td class="$row"><a href="javascript:paparRingkasanPertimbangan('$senaraiFailMohonBaru.idPermohonan')" class="style2">$senaraiFailMohonBaru.noFailPermohonan</a></td>
+					          ##<td class="$row"><a href="javascript:paparRingkasanPertimbangan('$senaraiFailMohonBaru.idPermohonan')" class="style2">$senaraiFailMohonBaru.noFailPermohonan</a></td>
+					          <td class="$row"><a href="javascript:doCetakKertasPertimbangan('$senaraiFailMohonBaru.idFail')" class="style2">$senaraiFailMohonBaru.noFailPermohonan</a></td>
 					          <td class="$row" align="center">$senaraiFailMohonBaru.jenisPermohonan</td>
 					          <td class="$row">$senaraiFailMohonBaru.namaPemohon</td>
-					          <td class="$row" align="center"><a href="#" class="style2" onClick="doCetakKertasPertimbangan('$senaraiFailMohonBaru.idFail')">
+					          ##<td class="$row" align="center"><a href="#" class="style2" onClick="doCetakKertasPertimbangan('$senaraiFailMohonBaru.idFail')">
+                      		  <td class="$row" align="center"><a href="#" class="style2" onClick="javascript:paparRingkasanPertimbangan('$senaraiFailMohonBaru.idPermohonan')">
                       		  <img border="0" src="../img/print.gif"/></a></td>
 					          <td class="$row" align="center">
 					          		#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
