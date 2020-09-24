@@ -387,6 +387,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <input type="hidden" name="id_siasatan" id="id_siasatan" value="$id_siasatan" />
 <input type="hidden" name="id_warta" id="id_warta" value="$id_warta" />
 <input type="hidden" name="nama_pengarah" id="nama_pengarah" value="$nama_pengarah" />
+<input type="hidden" name="nama_skrin" id="nama_skrin" value="pptbantahan"  />
 
 <script type="text/javascript">
 	
@@ -654,7 +655,7 @@ function RemoveNonNumeric( strString )
 		var id_bantahan = document.${formName}.id_bantahan.value ;
 		var id_permohonan = document.${formName}.id_permohonan.value ;
 		var id_hakmilik = document.${formName}.id_hakmilik.value ;	
-		dokumen ="&nama_skrin=borangO";
+		dokumen ="&nama_skrin=pptbantahan";
 		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanAgensiPemohonSenaraiCarian&command=tambah_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilik="+id_hakmilik+"&location=maklumat_dokumen&point=txtnamadokumen"+dokumen;	
 		document.${formName}.submit();
 	
