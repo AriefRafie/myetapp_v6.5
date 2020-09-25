@@ -639,7 +639,6 @@ function kemaskiniBorangO() {
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian";
 	document.${formName}.submit();	
 }
-
 function kembaliList(){
 	document.${formName}.command.value = "kembaliList";	
 	document.${formName}.submit();
@@ -651,6 +650,7 @@ function validateNumber(elmnt,content) {
 		return;
 	}
 }
+
 function RemoveNonNumeric( strString )	{
       var strValidCharacters = "1234567890";
       var strReturn = "";
@@ -671,6 +671,7 @@ function RemoveNonNumeric( strString )	{
 var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedtab});
 //-->
 
+
 <!-- PPT-35 (ii) Senarai Dokumen Upload Window -->
 function tambahDokumen() {
 	var id_bantahan = document.${formName}.id_bantahan.value ;
@@ -682,6 +683,7 @@ function tambahDokumen() {
 	document.${formName}.submit();
 }
 
+
 function hapusDokumenMaster(r){
 	input_box = confirm("Adakah anda pasti?");
 		if (input_box == true) {
@@ -691,8 +693,9 @@ function hapusDokumenMaster(r){
 		document.${formName}.submit();
 		}
 	}
-	
-//PPT-35(ii)	
+
+
+//PPT-35(ii)
 function doCheckAll1(){    
     if (document.${formName}.all1.checked == true){
         if (document.${formName}.ids1.length == null){
@@ -713,32 +716,28 @@ function doCheckAll1(){
     }
 }
 
+
 function doUpdateCheckAll1(){  
 	var c = 0;
-	if(document.${formName}.ids1.length > 1)
-	{     
-		  for (i = 0; i < document.${formName}.ids1.length; i++)
-		  {
-	      if (document.${formName}.ids1[i].checked == false)
-		  {	 
+	if(document.${formName}.ids1.length > 1)	{     
+	
+		  for (i = 0; i < document.${formName}.ids1.length; i++)	{
+	      if (document.${formName}.ids1[i].checked == false)	{	 
 		  c++
 	      }
-		  }  
-	}
-	else
-	{
+		}
+		  
+	}	else	{
 
-	if (document.${formName}.ids1.checked == false)
-	{	 
-	c++;
-	}	 	
+	if (document.${formName}.ids1.checked == false)	{	 
+		c++;
+		}	 	
 	}
-		  if(c>0)
-		  {	  
-		  document.${formName}.all1.checked = false;
-		  }
-		  else
-		  {
+	if(c>0)	{	  	
+		document.${formName}.all1.checked = false;
+	
+	}	else	{
+		  
 		  document.${formName}.all1.checked = true;
 		  }      
 	}

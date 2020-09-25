@@ -649,20 +649,20 @@ function RemoveNonNumeric( strString )
       return strReturn;
 }
 
-//Skrin Borang O
 
-	function tambahDokumen(id_permohonan,id_bantahan,id_hakmilik) {
-		var id_bantahan = document.${formName}.id_bantahan.value ;
-		var id_permohonan = document.${formName}.id_permohonan.value ;
-		var id_hakmilik = document.${formName}.id_hakmilik.value ;	
-		dokumen ="&nama_skrin=pptbantahan";
-		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanAgensiPemohonSenaraiCarian&command=tambah_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilik="+id_hakmilik+"&location=maklumat_dokumen&point=txtnamadokumen"+dokumen;	
-		document.${formName}.submit();
+//:::UPLOAD DOCUMENT FUNCTION
+function tambahDokumen(id_permohonan,id_bantahan,id_hakmilik) {
+	var id_bantahan = document.${formName}.id_bantahan.value ;
+	var id_permohonan = document.${formName}.id_permohonan.value ;
+	var id_hakmilik = document.${formName}.id_hakmilik.value ;	
+	dokumen ="&nama_skrin=pptbantahan";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanAgensiPemohonSenaraiCarian&command=tambah_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilik="+id_hakmilik+"&location=maklumat_dokumen&point=txtnamadokumen"+dokumen;	
+	document.${formName}.submit();
 	
-	}
+}
 	
-	function hapusDokumenMaster(r){
-		input_box = confirm("Adakah anda pasti?");
+function hapusDokumenMaster(r){
+	input_box = confirm("Adakah anda pasti?");
 		if (input_box == true) {
 			var id_bantahan = document.${formName}.id_bantahan.value ;
 			var id_permohonan = document.${formName}.id_permohonan.value ;		
@@ -672,12 +672,14 @@ function RemoveNonNumeric( strString )
 		
 	}
 	
-	function view_Lampiran(id_dokumen) {
-	    var id_bantahan = document.${formName}.id_bantahan.value ;
-		var id_permohonan = document.${formName}.id_permohonan.value ;		
-		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanAgensiPemohonSenaraiCarian&command=view_Dokumen_Details&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&location=maklumat_dokumen&point=maklumat_dokumen&id_dokumen="+id_dokumen;		
-		document.${formName}.submit();
-	}
+function view_Lampiran(id_dokumen) {
+    var id_bantahan = document.${formName}.id_bantahan.value ;
+	var id_permohonan = document.${formName}.id_permohonan.value ;		
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanAgensiPemohonSenaraiCarian&command=view_Dokumen_Details&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&location=maklumat_dokumen&point=maklumat_dokumen&id_dokumen="+id_dokumen;		
+	document.${formName}.submit();
+}
+
+
 <!--UTK DEFAULTKAN TAB KEPADA TAB BANTAHAN
 var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedtab});
 //-->
