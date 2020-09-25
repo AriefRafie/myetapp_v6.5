@@ -61,7 +61,7 @@
                 		
                 		#end
                 		
-                	<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="step2Online($!permohonan.get(idpermohonan))" /> 
+                	<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="step2Online($!permohonan.idpermohonan)" /> 
 		    		#else
                     <!-- <input type="button" class="stylobutton100" name="cetakakuan" id="cetakakuan" value="Cetak" onclick="javascript:cetakPengesahan('$!permohonan.idpermohonan');" /> -->
                		<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="step2Online($!permohonan.idpermohonan)" />
