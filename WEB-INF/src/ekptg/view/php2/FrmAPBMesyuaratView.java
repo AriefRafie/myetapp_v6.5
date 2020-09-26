@@ -322,7 +322,7 @@ public class FrmAPBMesyuaratView extends AjaxBasedModule {
 					this.context.put("disabled", "disabled");
 
 					beanMaklumatMesyuarat = new Vector();
-					logic.setMaklumatMesyuarat(idMesyuarat);
+					logic.setMaklumatMesyuarat(idMesyuarat, idPermohonan);
 					beanMaklumatMesyuarat = logic.getBeanMaklumatMesyuarat();
 					this.context.put("BeanMaklumatMesyuarat",
 							beanMaklumatMesyuarat);
@@ -363,7 +363,7 @@ public class FrmAPBMesyuaratView extends AjaxBasedModule {
 					this.context.put("disabled", "");
 
 					beanMaklumatMesyuarat = new Vector();
-					logic.setMaklumatMesyuarat(idMesyuarat);
+					logic.setMaklumatMesyuarat(idMesyuarat, idPermohonan);
 					beanMaklumatMesyuarat = logic.getBeanMaklumatMesyuarat();
 					this.context.put("BeanMaklumatMesyuarat",
 							beanMaklumatMesyuarat);

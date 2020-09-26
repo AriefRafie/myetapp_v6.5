@@ -60,13 +60,12 @@
                             	</div>
                         	</td>
                   			<td width="1%" class="labelinput" >:</td>
-                   			<td width="68%" class="pautanms1" >
- 								<select id=seksyen>
+                   			<td width="68%" class="pautanms1" >$socseksyen
+ 								<!-- <select id=seksyen>
  								<option>SILA PILIH</option>
  								<option>SEKSYEN 01</option>>
- 								<option>SEKSYEN 02</option>>
- 								
- 								</select>
+ 								<option>SEKSYEN 02</option>> 								
+ 								</select> -->
   							</td>
                 		</tr>
                   	<tr>

@@ -65,6 +65,7 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 		String USER_LOGIN_SYSTEM = (String)session.getAttribute("_portal_login");
 
 		this.context.put("skrin_deraf", "yes");
+		this.context.put("skrin_kembali", "");
 
 		// this.context.put("skrin_online_popup","");
 
@@ -94,10 +95,17 @@ public class FrmDraffPermohonanOnlinePPK extends AjaxBasedModule {
 				vm = "app/ppk/frmPrmhnnStatusPengunaOnline.jsp";
 			}
 			
-		} else if (submit.equals("dikembalikan")) {
+		} else if (submit.equals("DIKEMBALIKAN")) {
+			// myLogger.info("testing lalu");
 			senaraiFail = getStatusPPK().getStatusPermohonanByIndividu("382", usid, "50");
 			this.context.put("senaraitugasan", senaraiFail);
-		
+			this.context.put("skrin_deraf", "");
+			this.context.put("skrin_kembali", "yes");
+			myLogger.info("list dikembalikan : " + senaraiFail);
+			myLogger.info("try ::id_permohonan="+getParam("id_permohonan") );
+			
+			vm = "app/ppk/frmPrmhnnStatusPengunaOnline.jsp";
+			setupPage(session, action, senaraiFail);
 			
 		} else if ("doChanges".equals(submit)) {
 			vm = "app/ppk/frmPrmhnnStatusPengunaOnline.jsp";

@@ -6,6 +6,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 </script>
 #end
 
+
 #if ($clearForm == "yes")  
 	#set ($txtAmaunPampasan = "") 
     #set ($txtNoCekPampasan = "") 
@@ -116,6 +117,9 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <legend>Maklumat Pampasan</legend>
     <table width="100%" border="0">
         <tr>
+        #if ($txtAmaunPampasan=="")
+<font color="red" class="blink"  style="font-size:10px">*TIADA MAKLUMAT PENERIMAAN PEMBAYARAN PAMPASAN DIDAFTARKAN.SILA RUJUK PADA MAKLUMAT PENERIMAAN PEMBAYARAN PAMPASAN PADA PAGING 17 SEKSYEN(8).</font>
+#end
            <td width="1%"></td>
             <td width="20%">Amaun&nbsp;(RM)</td>
           	<td width="1%">:</td>

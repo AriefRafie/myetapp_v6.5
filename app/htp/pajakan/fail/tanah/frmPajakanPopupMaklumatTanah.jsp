@@ -269,6 +269,7 @@ padding:0 0.25em;
             #set($sekatan = $beanMaklumatTanah.sekatan)
             #set($kementerian = $beanMaklumatTanah.kementerian)
             #set($agensi = $beanMaklumatTanah.agensi)
+            #set($namaSeksyen = $beanMaklumatTanah.namaSeksyen)
         #end
 
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -323,7 +324,7 @@ padding:0 0.25em;
                             </tr>
                             <tr>
                                   <td align="right">SEKSYEN :</td>
-                                  <td><font color="blue">Sek 01</font></td>
+                                  <td><font color="blue">$namaSeksyen</font></td>
                             </tr>
 
                           </table>

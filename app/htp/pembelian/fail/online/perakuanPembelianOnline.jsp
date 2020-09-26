@@ -9,6 +9,7 @@
 <tr>
 	<td>&nbsp;</td>
 </tr>
+<input name="namaPemohon" type="hidden" id="namaPemohon" value="$namaPemohon"/>
 <tr>
 	<td>
 	
@@ -63,14 +64,17 @@
 
 		    		#if($semakMode == "update")
 		    			#if(($!idjawatan.equals("20")||$!idjawatan.equals("24"))&& $!statussemasa.equals("-4")) 
-		    				<p><input type="checkbox" id="checkme"/><a>&nbsp;Pastikan maklumat yang dimasukkan adalah betul.</a></p>
+		    				<p><input type="checkbox" id="checkme"/><a>&nbsp;Saya, <b>$namaPemohon</b> dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
+   							<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tanpa sebarang keraguan dan paksaan dari mana-mana pihak.</a></p>
 		    				<input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Semakan" onclick="doAjaxCall${formName}('simpanpengesahan')" />
 						#elseif ($!idjawatan.equals("9") && $!statussemasa.equals("-3"))
-							<p><input type="checkbox" id="checkme"/><a>&nbsp;Pastikan maklumat yang dimasukkan adalah betul.</a></p>
+							<p><input type="checkbox" id="checkme"/><a>&nbsp;Saya, <b>$namaPemohon</b> dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
+   							<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tanpa sebarang keraguan dan paksaan dari mana-mana pihak.</a></p>
 		    				<input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Pengesahan" onclick="doAjaxCall${formName}('simpanpengesahan')" />
 						
 						#elseif ($!idjawatan.equals("4")&& $!statussemasa.equals("-2"))
-							<p><input type="checkbox" id="checkme"/><a>&nbsp;Pastikan maklumat yang dimasukkan adalah betul.</a></p>
+							<p><input type="checkbox" id="checkme"/><a>&nbsp;Saya, <b>$namaPemohon</b> dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
+   							<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tanpa sebarang keraguan dan paksaan dari mana-mana pihak.</a></p>
 		    				<input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Permohonan" onclick="doAjaxCall${formName}('simpanpengesahan')" />
                 		
                 		#end

@@ -108,7 +108,8 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
     	Vector getExistDataBayaran = new Vector();
     	Vector listSupportingDoc = null;
     	Vector dataPemohon = new Vector();
-
+    	Vector listPenerimaNotis = new Vector();
+    	
     	list.clear();
     	listPemohon.clear();
        	detailMahkamah.clear();
@@ -221,12 +222,17 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
     		context.put("flag", "");
     		context.put("button", "kembali");
     		context.put("tarikh", "perintah");
-    		
+    		String id_permohonansimati2= String.valueOf(id_permohonansimati);
     		//get info pemohon
     		modelNotis.setListSemak(id,usid);
     		dataPemohon = modelNotis.getListSemak();
     		//headerppk_baru(session,id_permohonan,"Y","","T");
 
+    		// get senarai penerima notis
+    		modelNotis.setListPenerimaNotis(id_perbicaraan, id_permohonansimati2);
+    		listPenerimaNotis = modelNotis.getListPenerimaNotis();
+    					
+    		context.put("listPenerimaNotis_size1", listPenerimaNotis.size());
     		String id_fail2 = "";
     		String id_pemohon = "";
     		String id_negeri = "";

@@ -663,6 +663,22 @@ lain tujuan ::: $lt
 		      </tr>
 	      </table>
       </fieldset>
+      
+      <br>
+      
+      <fieldset>
+      	<table id="" width="100%" border="0">
+      		<tr><td></td></tr>
+      		<tr>
+		      	<td  valign="top">&nbsp;</td>
+				<td  valign="top"></td>
+			    <td  valign="top"></td>
+		      	<td width="1%"></td>
+		      	<td>Sila tekan <a href="#"><span onClick="senaraisemakborangP()" class="pautan"><b>PAUTAN</b></span></a> untuk Senarai Semakan Permohonan Berikutnya (Borang P)</td>
+		      </tr>
+      	</table>
+      </fieldset>
+      
       <!-- syafiqah add ends -->
       
       
@@ -801,6 +817,16 @@ document.getElementById('frmsemakharta').style.display = "";
  
  </body>
 <script>
+
+	function senaraisemakborangP(){
+		// alert("TESTING SYAFIQAH");
+		var url = "../servlet/ekptg.report.ppk.SenaraiSemakBorangP?idpermohonan=0";
+  	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+  	    if ((document.window != null) && (!hWnd.opener))
+  		hWnd.opener = document.window;
+  	    if (hWnd.focus != null) hWnd.focus();
+	}
+	
 
 	function lampiran(idPermohonan,jenisUpload) {	
 		jenisUpload = "paparlampiran";

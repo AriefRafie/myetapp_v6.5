@@ -12,7 +12,7 @@
 <!--<table width="80%">
 <tr>
 <td>-->
-			<fieldset><legend>Maklumat Fail</legend>#parse ("app/htp/pembelian/fail/fileInfo.jsp")</fieldset>
+			<fieldset><legend>MAKLUMAT FAIL</legend>#parse ("app/htp/pembelian/fail/fileInfo.jsp")</fieldset>
 		</td>
 
 	</tr>
@@ -20,7 +20,7 @@
 
 	<tr>
 		<td>
-			<fieldset><legend>Semakan Perakuan Pembelian</legend>
+			<fieldset><legend>SEMAKAN PERAKUAN PEMBELIAN</legend>
 				<table width="100%">
             	<!--<tr>
             		<td colspan="3">

@@ -220,6 +220,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <input type="hidden" name="id_pihakberkepentingan" id="id_pihakberkepentingan" value="$id_pihakberkepentingan" />
 <input type="hidden" name="status_bantahan" id="status_bantahan" value="$status_bantahan" />
 <input type="hidden" name="id_bantahan" id="id_bantahan" value="$id_bantahan" />
+<input type="hidden" name="nama_skrin" id="nama_skrin" value="pptpembatalanmt"  />
 
 <script type="text/javascript">
 

@@ -13,7 +13,12 @@ public class TblMemoMenteriForm {
 	private String tarikhKemaskini;
 	private String status;
 	private Long idKategori;
-	
+	private String namaPemohon;
+	private String maklumatTanah;
+	private String asasPertimbangan;
+	private String kadarPajakan;
+	private String kesimpulan;
+
 	public Long getIdKategori() {
 		return idKategori;
 	}
@@ -80,6 +85,36 @@ public class TblMemoMenteriForm {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getNamaPemohon() {
+		return namaPemohon;
+	}
+	public void setNamaPemohon(String namaPemohon) {
+		this.namaPemohon = namaPemohon;
+	}
+	public String getMaklumatTanah() {
+		return maklumatTanah;
+	}
+	public void setMaklumatTanah(String maklumatTanah) {
+		this.maklumatTanah = maklumatTanah;
+	}
+	public String getAsasPertimbangan() {
+		return asasPertimbangan;
+	}
+	public void setAsasPertimbangan(String asasPertimbangan) {
+		this.asasPertimbangan = asasPertimbangan;
+	}
+	public String getKadarPajakan() {
+		return kadarPajakan;
+	}
+	public void setKadarPajakan(String kadarPajakan) {
+		this.kadarPajakan = kadarPajakan;
+	}
+	public String getKesimpulan() {
+		return kesimpulan;
+	}
+	public void setKesimpulan(String kesimpulan) {
+		this.kesimpulan = kesimpulan;
 	}
 
 }

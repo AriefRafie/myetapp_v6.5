@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
@@ -111,8 +112,9 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		String id_buktipenyampaian = getParam("id_buktipenyampaian");
 		String id_borangh = getParam("id_borangh");
 		String usid = (String) session.getAttribute("_portal_username");
+		String login = (String) session.getAttribute("_ekptg_user_id");
 		context.put("username", usid);
-		myLogger.info("usid : "+usid);
+		myLogger.info("login : "+login);
 		myLogger.info("--------- report :"+report);
 		
 		String bydate = getParam("bydate");
@@ -121,6 +123,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		
 		String listLOT = "";
 		String listLOTHM = "";
+		String userlogin = "";
 		
 		//package helper
 		context.put("Utils", new ekptg.helpers.Utils());
@@ -309,12 +312,24 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		    context.put("showG_ARB", showG_ARB);
 		    
 	    }
+		
+ 
 
 	  //function
 	  		String submit = getParam("command");
 	      	myLogger.info("submit : " + submit);
+	      //yati tambah 16092020 - v7	
+	      	if ("sendDGcert".equals(submit)) {
+	      		
+	      		myLogger.info("send CERT SIGN");
+	      		context.put("token",token);
+	      		context.put("userlogin",login);
+	      		myLogger.info("token adalah :"+token);
+					      	
+	      		
+	      	}
 	    
-			if ("simpanAcc".equals(submit)) {
+	      	else if ("simpanAcc".equals(submit)) {
 				if (showG_ARB.equals("yes")) {
 					Hashtable getAccAmanah = getAccAmanahRaya(id_negeri, "1");
 					if (getAccAmanah.get("CHECK_VAL").toString().equals("1")) {

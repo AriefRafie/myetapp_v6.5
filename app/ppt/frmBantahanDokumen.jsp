@@ -105,22 +105,23 @@
     #end
 
 		<!-- :::upload butang 'Kembali' -->
-		<input type="hidden" name="nama_skrin" id="nama_skrin" value="$!nama_skrin"  />
 		#if($!nama_skrin == "main")
 			<input type="button" name="cmdKembali" id="cmdKembali"  value="Kembali" onclick="Kembali()">
 		#end
-      	#if($!nama_skrin == "borangO")
-      		<input type="button" name="cmdKembali" id="cmdKembali"  value="Kembali" onclick="Kembali()">
-      	#end
       	#if($!nama_skrin == "bantahan")
       		<input type="button" name="cmdKembali" id="cmdKembali"  value="Kembali" onclick="Kembali()">
       	#end
       	
-      	#if($!nama_skrin == "susulanBantahan")
+      	<!-- Butang Kembali bagi skrin Borang O, Perintah dan MT -->
+      	#if($!nama_skrin == "pptbantahan")
+      		<input type="button" name="cmdKembali" id="cmdKembali"  value="Kembali" onclick="Kembali()">
+      	#end
+      	
+      	#if($!nama_skrin == "pptperintahbantahan")
       		<input type="button" name="cmdKembali" id="cmdKembali"  value="Kembali" onclick="Kembali()">
       	#end
 		
-      	#if($!nama_skrin == "batalBantahan")
+      	#if($!nama_skrin == "pptpembatalanmt")
        		<input type="button" name="cmdKembali1" id="cmdKembali1"  value="Kembali" onclick="Kembali()">
        	#end
      
@@ -135,9 +136,9 @@
   <tr>
     <td colspan="4">
     <fieldset id="senarai_dokumen" >
-	<!-- jenis dokumen = $jenisDoc -->
-	<!--- jenis skrin = $nama_skrin -->
-	<!-- listDokumen =  $listDokumen -->
+<!-- 	jenis dokumen = $jenisDoc -->
+<!-- 	jenis skrin = $nama_skrin -->
+<!-- 	listDokumen =  $listDokumen -->
     <legend> SENARAI DOKUMEN YANG DISERTAKAN </legend>
     <input name="cmdTambahDokumen" type="button" value="Tambah" onClick="tambahDokumen()" title="Sila klik untuk tambah dokumen" hidden> 
     #if($listDokumen_size > 0)
@@ -219,6 +220,7 @@
 <input type="hidden" name="id_hakmilikpb" id="id_hakmilikpb" value="$id_hakmilikpb" />
 <input type="hidden" name="id_hakmilik" id="id_hakmilik" value="$id_hakmilik" />
 <input type="hidden" name="id_pihakberkepentingan" id="id_pihakberkepentingan" value="$id_pihakberkepentingan" />
+<input type="hidden" name="nama_skrin" id="nama_skrin" value="$!nama_skrin"  />
 
 
 <script type="text/javascript">

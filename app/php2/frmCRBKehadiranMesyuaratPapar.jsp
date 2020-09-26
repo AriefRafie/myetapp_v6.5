@@ -35,43 +35,22 @@
     <td>&nbsp;</td>
     <td>Pengerusi</td>
     <td>:</td>
-    <td><select name="socPengerusi" id="socPengerusi" style="width:80;" $readonlyPopup class="$inputTextClassPopup" $inputTextClassPopup>
-        
-              
-            #if ($beanMaklumatKehadiran.flagPengerusi == 'Y')
-            	
-              
-              
-        <option>SILA PILIH</option>
-        <option value="Y" selected>YA</option>
-        <option value="T">TIDAK</option>
-        
-              
-              
-            #elseif ($beanMaklumatKehadiran.flagPengerusi == 'T')
-                
-              
-              
-        <option>SILA PILIH</option>
-        <option value="Y">YA</option>
-        <option value="T" selected>TIDAK</option>
-        
-              
-              
-            #else
-                
-              
-              
-        <option selected>SILA PILIH</option>
-        <option value="Y">YA</option>
-        <option value="T">TIDAK</option>
-        
-              
-              
-            #end
-            
-            
-      </select>
+    <td>
+    	<select name="socPengerusi" id="socPengerusi" style="width:80;" $readonlyPopup class="$inputTextClassPopup" $inputTextClassPopup>
+        #if ($beanMaklumatKehadiran.flagPengerusi == 'Y')
+        	<option>SILA PILIH</option>
+        	<option value="Y" selected>YA</option>
+        	<option value="T">TIDAK</option>
+        #elseif ($beanMaklumatKehadiran.flagPengerusi == 'T')
+            <option>SILA PILIH</option>
+        	<option value="Y">YA</option>
+        	<option value="T" selected>TIDAK</option>
+        #else
+            <option selected>SILA PILIH</option>
+        	<option value="Y">YA</option>
+        	<option value="T">TIDAK</option>
+        #end
+	    </select>
     </td>
   </tr>
   <tr>

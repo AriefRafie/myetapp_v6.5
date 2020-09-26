@@ -22,9 +22,9 @@
             </tr>
             <tr>
                 	<td>&nbsp;</td>
-                	<td>Pengesahan Token </td>
+                	<td>Pin </td>
                 	<td>:</td>
-                	<td><input type="text" id="token" name="token" value="1111" maxlength="30" size="50" /></td>
+                	<td><input type="text" id="token" name="token" value="$!token" maxlength="30" size="50" /></td>
             </tr>    
             
             <tr>
@@ -37,14 +37,14 @@
             
              <tr>
              <td width="10%" valign="top">&nbsp;</td>
-             <td colspan=3 align=justify>
+             <td colspan=4 align=center>
              
             
              ##if($!id_perintah!="")
            
              	##if($!enabledPegawai=="yes" && $statusPNB!="yes")
-              		<input type="button" name="cmdHPNB1" id="cmdHPNB1" value="Pengesahan Tandatangan" onClick="sendDGcertPPT('$!id_fail','$id_permohonan','$!token')" />
-              	
+              	<input type="button" name="cmdHPNB1" id="cmdHPNB1" value="Pengesahan Tandatangan" onClick="sendDGcertPPT('$!id_fail','$id_permohonan','$!token','$!username')" />
+             	<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="screen5('$id_permohonan');" />
               	##end
 
               ##end
@@ -63,14 +63,20 @@
 
 <script>
 
-function sendDGcertPPT(id_fail,id_permohonan,token)
+function sendDGcertPPT(id_fail,id_permohonan)
 {
-	alert("xxxxxxx");
-	alert(id_fail);
-	alert(id_permohonan);
-	alert(token);
-	document.${formName}.token.value = token;
-	alert(document.${formName}.token.value);
+	document.${formName}.command.value = "sendDGcert";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPopupPilihPegawaiReportView?&id_permohonan="+'$id_permohonan';
+	document.${formName}.submit();
 	}
+	
+	
+function screen5(id_permohonan)
+{
+
+	  window.close();   // Closes the new window
+}
+
+
 </script>
 

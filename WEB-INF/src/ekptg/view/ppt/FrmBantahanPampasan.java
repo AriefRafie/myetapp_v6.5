@@ -354,6 +354,75 @@ public class FrmBantahanPampasan extends AjaxBasedModule {
 			vm = "app/ppt/frmBantahanPampasanTerimaCek.jsp";
 			
 			
+		}else if("BayarTambah".equals(submit)){ //penambahan yati
+			
+			selectedtab = "0";
+			context.put("selectedtab", selectedtab);
+			
+    		listB = model.getMaklumatPB(id_hakmilikpb);
+    		context.put("getMaklumatPB", listB);
+    		
+    		if(listB.size()!=0){
+    			Hashtable a = (Hashtable) listB.get(0);
+    			String flag_bayar_bantahan = (String)a.get("flag_bayar_bantahan");
+    			myLogger.info("FLAG BAYARAN PERINTAH :: "+flag_bayar_bantahan);
+    			
+    			if(flag_bayar_bantahan.equals("1")){
+    				
+    				Hashtable _methodCaraBayar = model.getMethodCaraBayar(id_hakmilikpb,id_bantahan);
+    				
+    				if(_methodCaraBayar.size()!=0){
+    					
+    					String cara_bayar = (String)_methodCaraBayar.get("cara_bayar");
+    					myLogger.info("CARA BAYAR :: "+cara_bayar);
+    					
+    					if(cara_bayar.equals("1")){
+    						myLogger.info("1 = CEK");
+    						
+    	    				Hashtable _maxIdBayaran = model.getIdBayaran(id_hakmilikpb,id_bantahan);
+    	    				String id_bayaran = (String) _maxIdBayaran.get("id_bayaran");
+    	    				
+    	    				listC = model.getMaklumatTerimaCek(id_bayaran);
+    	    				context.put("getMaklumatTerimaCek",listC);
+    	    				
+    	    				context.put("mode", "disabled");
+    	    				context.put("clearForm","");
+    	    				context.put("button","view");
+    	    				context.put("flag", "semak");
+    						
+    					}else{
+    						
+    	    				context.put("mode", "");
+    	    				context.put("clearForm","");
+    	    				context.put("button","add");
+    	    				context.put("flag", "");
+    						
+    					}	// CLOSE CARA_BAYAR
+    					
+    				}else{
+    					
+	    				context.put("mode", "");
+	    				context.put("clearForm","");
+	    				context.put("button","add");
+	    				context.put("flag", "");   					
+    					
+    				} // CLOSE _methodCaraBayar
+    				
+    			}else{    				
+    				
+    				context.put("mode", "");
+    				context.put("clearForm","yes");
+    				context.put("button","add");
+    				context.put("flag", "");
+    			} // CLOSE flag_bayar_bantahan
+    			
+    		}else{
+    			context.put("status", true);
+    		}
+			
+			vm = "app/ppt/frmBantahanPampasanTerimaCek.jsp";
+			
+			
 		}else if("add_terimaCek".equals(submit)){
 			
 			selectedtab = "0";
@@ -1229,7 +1298,7 @@ public class FrmBantahanPampasan extends AjaxBasedModule {
     		
     	}
     	
-    	
+    	myLogger.info("vm :"+vm);
     	return vm;
     }
 	

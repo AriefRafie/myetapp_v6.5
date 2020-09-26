@@ -49,7 +49,6 @@ public class FrmAPBMesyuaratData {
 			long idMesyuarat = DB.getNextID("TBLPHPMESYUARAT_SEQ");
 			idMesyuaratString = String.valueOf(idMesyuarat);
 			r.add("ID_MESYUARAT", idMesyuarat);
-			r.add("ID_PERMOHONAN", idPermohonan);
 			r.add("TAJUK", tujuan+bilMesyuarat);
 			r.add("BIL_MESYUARAT", bilMesyuarat);
 			if (!"".equals(tarikhMesyuarat)) {
@@ -70,6 +69,20 @@ public class FrmAPBMesyuaratData {
 
 			sql = r.getSQLInsert("TBLPHPMESYUARAT");
 			stmt.executeUpdate(sql);
+			
+			// TBLPHPMESYUARATPERMOHONAN
+			r = new SQLRenderer();
+			long idMesyuaratMohon = DB.getNextID("TBLPHPMESYUARATPERMOHONAN_SEQ");
+			r.add("ID_MESYUARAT_PERMOHONAN", idMesyuaratMohon);
+			r.add("ID_MESYUARAT", idMesyuarat);
+			r.add("ID_PERMOHONAN", idPermohonan);
+			
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPHPMESYUARATPERMOHONAN");
+			stmt.executeUpdate(sql);
+
 
 			conn.commit();
 			
@@ -332,7 +345,7 @@ public class FrmAPBMesyuaratData {
 		}
 	}
 
-	public void setMaklumatMesyuarat(String idMesyuarat) throws Exception {
+	public void setMaklumatMesyuarat(String idMesyuarat, String idPermohonan) throws Exception {
 		Db db = null;
 		String sql = "";
 
@@ -341,10 +354,10 @@ public class FrmAPBMesyuaratData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT ID_MESYUARAT,TAJUK, BIL_MESYUARAT, TARIKH_MESYUARAT, JAM_DARI, MINIT_DARI, JAM_HINGGA, MINIT_HINGGA, ID_LOKASI, CATATAN, "
-					+ " ULASAN_KEPUTUSAN,TINDAKAN_MESYUARAT "
-					+ " FROM TBLPHPMESYUARAT WHERE ID_MESYUARAT = '"
-					+ idMesyuarat + "'";
+			sql = "SELECT A.ID_MESYUARAT, A.TAJUK,  A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.JAM_DARI, A.MINIT_DARI, A.JAM_HINGGA, A.MINIT_HINGGA, A.ID_LOKASI,"
+					+ " A.CATATAN, A.ULASAN_KEPUTUSAN, A.TINDAKAN_MESYUARAT, B.CATATAN AS CATATAN_KEPUTUSAN, B.FLAG_SYOR, B.ID_PERMOHONAN"
+					+ " FROM TBLPHPMESYUARAT A, TBLPHPMESYUARATPERMOHONAN B WHERE A.ID_MESYUARAT = B.ID_MESYUARAT"
+					+ " AND A.ID_MESYUARAT = '" + idMesyuarat + "' AND B.ID_PERMOHONAN = '" + idPermohonan + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -383,6 +396,12 @@ public class FrmAPBMesyuaratData {
 				h.put("tindakanMesyuarat",
 						rs.getString("TINDAKAN_MESYUARAT") == null ? "" : rs
 								.getString("TINDAKAN_MESYUARAT"));
+				h.put("flagKeputusan",
+						rs.getString("FLAG_SYOR") == null ? "" : rs
+								.getString("FLAG_SYOR"));
+				h.put("catatanKeputusan",
+						rs.getString("CATATAN_KEPUTUSAN") == null ? "" : rs
+								.getString("CATATAN_KEPUTUSAN"));
 				beanMaklumatMesyuarat.addElement(h);
 				bil++;
 			}
@@ -401,41 +420,47 @@ public class FrmAPBMesyuaratData {
 			listMesyuarat = new Vector();
 			db = new Db();
 			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
 
-			r.add("ID_MESYUARAT");
-			r.add("TAJUK");
-			r.add("BIL_MESYUARAT");
-			r.add("TARIKH_MESYUARAT");
-			r.add("TINDAKAN_MESYUARAT");
-			r.add("ID_PERMOHONAN", idPermohonan);
+			sql = "SELECT A.ID_MESYUARAT, A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, B.FLAG_SYOR"
+					+ " FROM TBLPHPMESYUARAT A, TBLPHPMESYUARATPERMOHONAN B WHERE A.ID_MESYUARAT = B.ID_MESYUARAT"
+					+ " AND B.ID_PERMOHONAN = '"
+					+ idPermohonan + "'";
 
-			sql = r.getSQLSelect("TBLPHPMESYUARAT", "ID_MESYUARAT ASC");
 			ResultSet rs = stmt.executeQuery(sql);
-
+			
 			Hashtable h;
 			int bil = 1;
 			while (rs.next()) {
 				h = new Hashtable();
 				h.put("bil", bil);
-				h.put("tarikhMesyuarat",
-						rs.getDate("TARIKH_MESYUARAT") == null ? "" : sdf
-								.format(rs.getDate("TARIKH_MESYUARAT")));
 				h.put("idMesyuarat", rs.getString("ID_MESYUARAT") == null ? ""
 						: rs.getString("ID_MESYUARAT"));
 				h.put("tajukMesyuarat",
 						rs.getString("TAJUK") == null ? "" : rs
 								.getString("TAJUK"));
-				h.put("tindakanMesyuarat",
-						rs.getString("TINDAKAN_MESYUARAT") == null ? "" : rs
-								.getString("TINDAKAN_MESYUARAT"));
 				h.put("bilMesyuarat",
 						rs.getString("BIL_MESYUARAT") == null ? "" : rs
 								.getString("BIL_MESYUARAT"));
+				h.put("tarikhMesyuarat",
+						rs.getDate("TARIKH_MESYUARAT") == null ? "" : sdf
+								.format(rs.getDate("TARIKH_MESYUARAT")));
+				if (rs.getString("BIL_MESYUARAT") != null) {
+					if ("L".equals(rs.getString("FLAG_SYOR"))) {
+						h.put("syor", "LULUS");
+					} else if ("T".equals(rs.getString("FLAG_SYOR"))) {
+						h.put("syor", "TOLAK");
+					} else if ("G".equals(rs.getString("FLAG_SYOR"))) {
+						h.put("syor", "TANGGUH");
+					} else {
+						h.put("syor", "");
+					}
+				} else {
+					h.put("syor", "");
+				}
+
 				listMesyuarat.addElement(h);
 				bil++;
 			}
-
 		} finally {
 			if (db != null)
 				db.close();

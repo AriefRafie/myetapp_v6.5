@@ -30,4 +30,5 @@ public interface HakmilikInterface {
 //	
 //	public HakMilik kemaskini(HakMilik hakmilik) throws Exception;
 
+	
 }	

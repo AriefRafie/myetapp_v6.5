@@ -46,7 +46,7 @@
           <li onClick="doChangeTab(2);" class="TabbedPanelsTab" tabindex="0">ULASAN JMG</li>
           <li onClick="doChangeTab(3);" class="TabbedPanelsTab" tabindex="0">ULASAN JABATAN PERIKANAN</li>
           <li onClick="doChangeTab(4);" class="TabbedPanelsTab" tabindex="0">ULASAN JLM</li>
-          <li onClick="doChangeTab(5);" class="TabbedPanelsTab" tabindex="0">ULASAN PHN</li>
+          <li onClick="doChangeTab(5);" class="TabbedPanelsTab" tabindex="0">ULASAN PHM</li>
           <li onClick="doChangeTab(6);" class="TabbedPanelsTab" tabindex="0">ULASAN JPS</li>
           <li onClick="doChangeTab(7);" class="TabbedPanelsTab" tabindex="0">ULASAN PTG</li>
           <li onClick="doChangeTab(8);" class="TabbedPanelsTab" tabindex="0">PERTINDIHAN KOORDINAT</li>

@@ -124,6 +124,7 @@
 
 #set ($catatan_sd = "")
 #set ($txtSuratAkuanARB ="")
+
 #foreach ($ListData in $ViewPemohon)
 
 #set ($jenis_permohonan = $ListData.jenispermohonan)
@@ -954,7 +955,7 @@
   <input name="flagFromSenaraiFailSek8" type="hidden" id="flagFromSenaraiFailSek8" value="$flagFromSenaraiFailSek8"/>
  <input name="flagFromSenaraiPermohonanSek8" type="hidden" id="flagFromSenaraiPermohonanSek8" value="$flagFromSenaraiPermohonanSek8"/>
   <input name="flagForView" type="hidden" id="flagForView" value="$!flagForView"/>
- 
+   
 #if($!headerppk.size()>0)
 #parse("app/ppk/headerppk.jsp")
 #end
@@ -1695,16 +1696,16 @@ Kuning (Ada Permohonan Terdahulu / Kaveat)</td>
         
         #if($salinan_arahan=="1") 
         
-        <td><input type="checkbox" name="salinanArahan" id="salinanArahan" $setMode  checked onClick="javascript:buttonkeHartaAlih(this);">Telah diterima pada <input type="text" name="tarikhsuratARB" id="tarikhsuratARB"  value=$txtSuratAkuanARB $setModeR class="$setMode"/>
+        <td><input type="checkbox" name="salinanArahan" id="salinanArahan" $setMode  checked onClick="javascript:buttonkeHartaAlih(this);">Telah diterima pada <input type="text" name="tarikhsuratARB" id="tarikhsuratARB"  value="$txtSuratAkuanARB" $setModeR class="$setMode"/>
         &nbsp;#if($setMode != "disabled")<img src="../img/calendar.gif" alt="" onclick="displayDatePicker('tarikhsuratARB',false,'dmy');" />#end
         
         <div id="divbuttonkeHartaAlih" style="display: block">
     <input type="button" id="butonkeHartaAlih" value="Ke skrin Harta Alih" onClick="javascript:jumptoHartaAlih('$jenis_permohonan','$idPermohonan','$idPemohon','$idSimati','$idpermohonan_simati','$al_negeri')"/></div></td>
         #else
-        <td><input type="checkbox" name="salinanArahan" id="salinanArahan" $setMode value="1" onclick="checkTarikh()">Telah diterima2</td>
+        <td><input type="checkbox" name="salinanArahan" id="salinanArahan" $setMode value="1" onclick="checkTarikh()">Telah diterima</td>
         #end
       </tr>
-      
+         
       <tr>
       
       <td colspan="4">
@@ -2666,7 +2667,7 @@ Batal Permohonan (Lain - lain kes)</td>
     <input type="hidden" name="mode"/>    
 	<input type="hidden" name="idPermohonan"  value="$idPermohonan"/>
     <input type="hidden" name="idPemohon" />
-    <input type="hidden" name="idSimati" value="$idSimati"/>
+    <input type="text" name="idSimati" value="$idSimati"/>
     <input type="hidden" name="id_Permohonansimati" value="$idpermohonan_simati"/>
    
    <!--

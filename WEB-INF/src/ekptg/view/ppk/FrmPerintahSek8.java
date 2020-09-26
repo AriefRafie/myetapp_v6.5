@@ -2054,14 +2054,14 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		{
 			context.put("open_pupop","");
 		}
-		
 
 		//GET SIGNEDDATA
 		String dataDahSign = logic.getSignedData(getParam("id_perbicaraan"));
 		context.put("dataDahSign", dataDahSign);
-		
+
 		//arief try add close
         
+		
         //SET ID PARAM
 		
         this.context.put("idPermohonanSimati", idPermohonanSimati);
@@ -2458,7 +2458,7 @@ Perintah
 6.	app/ppk/frmPerintahMaklumatPerintahSek8.jsp
 7.	app/ppk/frmSenaraiFailPerintahSek8.jsp
 8.	app/ppk/tindakanPegawaiPerintahSek8.jsp
-9.	FrmIntegrasiDGCertPerintah.java
+9.	FrmIntegrasiDGCertPerintahjava.
 10.	app/ppk/DGCertPerintah.jsp
 11.	FrmPerintahSek8Data.java
 12.	app/ppk/TandatanganSuccessPerintah.jsp

@@ -8,8 +8,6 @@ input[readonly]{
 }
 -->
 </style>
-
-
 #foreach($list in $listSemak)
  	#set($NO_FAIL=$list.noFail)
  	#set($negeri=$list.pmNama_negeri)
@@ -21,8 +19,6 @@ input[readonly]{
  	#set($namaSimati=$list.namaSimati)
  	#set($namaSipemohon=$list.namaPemohon)
 #end
-
-
 <body>
  <head>
 	<script type="text/javascript" src="../../library/js/jquery-1.3.2.min.js" ></script>
@@ -113,14 +109,14 @@ input[readonly]{
                    </td> <input name="tarikh_bicara" type="hidden" id="tarikh_bicara" value="$!tarikh_bicara" >
             </tr>
            
-            <tr>
+           <!-- <tr>
               <td valign="top"><font color="red">*</font></td>
               <td>Tarikh Notis</td>
               <td>:&nbsp;
                    $tarikh_notis
-                   <!--  <input type="text" size="11" name="txdTarikhNotis" id="txdTarikhNotis" maxlength="10" value="$tarikh_notis" readonly /> -->
+                     <input type="text" size="11" name="txdTarikhNotis" id="txdTarikhNotis" maxlength="10" value="$tarikh_notis" readonly /> 
                   </td><input name="tarikh_notis" type="hidden" id="tarikh_notis" value="$!tarikh_notis" >
-            </tr>
+            </tr>-->
                 <tr>
               <td valign="top"><font color="red">*</font></td>
               <td>Masa Bicara</td>

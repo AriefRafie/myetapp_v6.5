@@ -110,6 +110,7 @@ public class FrmKJPGadaianA extends AjaxBasedModule {
 	private Vector<Hashtable<String,String>> senarai = new Vector<Hashtable<String,String>>();
 	private Vector<Hashtable<String,String>> senaraiPermohonan = new Vector<Hashtable<String,String>>();
 	
+	
 	@Override
 	public String doTemplate2() throws Exception {
 		HttpSession session = this.request.getSession();
@@ -121,7 +122,10 @@ public class FrmKJPGadaianA extends AjaxBasedModule {
     	String style1 = "";
     	String style2 = "";
     	Vector<Hashtable<String,String>> list = new Vector<Hashtable<String,String>>();
+    	
     	String id_kementerian = getParam("sockementerian");
+    	String idNegeriPemohon = "";
+    	String namaPemohon = getParam("namaPemohon");
     	
     	if (id_kementerian == null || id_kementerian.trim().length() == 0){
 			uk = getIPengguna().getKementerian(idUser);
@@ -596,6 +600,20 @@ public class FrmKJPGadaianA extends AjaxBasedModule {
 				this.context.put("idSuburusan", h.get("idSuburusan").toString());
 				idNegeri = String.valueOf(h.get("idNegeri"));
 				
+				String userId = (String) session.getAttribute("_ekptg_user_id");
+				Vector listDetailKJP = null;
+				FrmGadaianSemakan1Data logic = new FrmGadaianSemakan1Data();
+				logic.getIdNegeriKJPByUserId(idUser);
+				listDetailKJP = logic.getIdNegeriKJPByUserId(userId);
+    			Hashtable hashList = (Hashtable) listDetailKJP.get(0);
+    			idNegeriPemohon = hashList.get("idNegeri").toString();
+    			namaPemohon = (String) hashList.get("namaPemohon");
+    			userId = (String) hashList.get("userId");
+
+    			this.context.put("ListdetailKJP", listDetailKJP);
+    			this.context.put("namaPemohon", namaPemohon);
+    			this.context.put("userId", userId);
+    			myLog.info("namaPemohon:: " + namaPemohon);
 				
 				
 				getPermohonanInfo();

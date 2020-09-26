@@ -16,7 +16,7 @@
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
   <input name="idUrusan" type="hidden" id="idUrusan" value="$idUrusan"/>
   <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
-  ##<input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />
+  <input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />
   <input name="idPemohon" type="hidden" value="$beanMaklumatPermohonan.idPemohon" />
   <input name="noPermohonanLama" type="hidden" id="noPermohonanLama" value="$noPermohonanLama"/>
 </p>
@@ -35,8 +35,6 @@
           <td width="28%" valign="top">No. Fail</td>
           <td width="1%" >:</td>
           <td width="70%"><strong>$beanMaklumatPermohonan.noFail</strong></td>
-          ##<td width="70%"><input type="text" name="txtNoFail" id="txtNoFail" value="$noFailOnline">
-          ##<a href="javascript:generateNoFailAPB('txtNoFail');"><img border="0" src="../img/plus.gif"/>    
         </tr>
         <tr>
           <td width="1%">&nbsp;</td>
@@ -47,7 +45,6 @@
           #elseif ($beanMaklumatPermohonan.jenisPermohonan == '2')
           <td width="70%"><strong>PEMBAHARUAN LESEN</strong></td>
           #end
-
         </tr>
         <tr>
           <td width="1%">&nbsp;</td>
@@ -80,8 +77,13 @@
           <td width="1%" valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
           <td valign="top">Perkara</td>
           <td valign="top">:</td>
-          <td><textarea name="txtPerkara" id="txtPerkara" rows="5" cols="50" $readonly class="$inputTextClass" onKeyUp="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizPerkara);" onKeyDown="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizPerkara);" >$beanMaklumatPermohonan.perkara</textarea>
-          #if ($mode != 'view')<input type="button" name="cmdJanaTajuk" id="cmdJanaTajuk" value="Jana Tajuk" onclick="janaTajuk()"/>#end</td>
+          <td>
+          	<textarea name="txtPerkara" id="txtPerkara" rows="5" cols="50" $readonly class="$inputTextClass" onKeyUp="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizPerkara);" 
+          			onKeyDown="textCounter(this.form.txtPerkara,this.form.remLen1,$!saizPerkara);" >$beanMaklumatPermohonan.perkara</textarea>
+          	#if ($mode != 'view')
+          	<input type="button" name="cmdJanaTajuk" id="cmdJanaTajuk" value="Jana Tajuk" onclick="janaTajuk()"/>
+          	#end
+          </td>
         </tr>
          #if ($mode != 'view')
           <tr>

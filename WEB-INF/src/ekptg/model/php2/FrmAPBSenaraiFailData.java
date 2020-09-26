@@ -36,8 +36,7 @@ public class FrmAPBSenaraiFailData {
 	private Vector beanMaklumatPermohonan = null;
 	private Vector beanMaklumatPemohon = null;
 	private Vector beanMaklumatKawasanMohon = null;
-	//untuk sambungan
-	private Vector beanMaklumatPendaftaranSambungan = null;
+	private Vector beanMaklumatPendaftaranSambungan = null; 	//untuk sambungan
 	private Vector listSambungan = null;
 	private Vector beanMaklumatSambungan = null;
 
@@ -57,10 +56,10 @@ public class FrmAPBSenaraiFailData {
 			Statement stmt = db.getStatement();
 
 			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, B.TARIKH_TERIMA, C.NAMA, D.KETERANGAN, B.ID_STATUS,B.NO_RAYUAN,"
-					+ " E.TARIKH_MULA_LESEN, E.TARIKH_TAMAT_LESEN, E.NO_LESEN, F.NAMA_NEGERI"
-					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPBYRNSYRTKLLSNLESENAPB E, TBLRUJNEGERI F"
+					+ " E.TARIKH_MULA_LESEN, E.TARIKH_TAMAT_LESEN, E.NO_LESEN, F.NAMA_NEGERI, G.ID_JENISPERMOHONAN, G.ID_JENIS_LESEN"
+					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPBYRNSYRTKLLSNLESENAPB E, TBLRUJNEGERI F, TBLPHPPMOHONNJDUALPERTAMA G"
 					+ " WHERE A.ID_URUSAN = '9' AND A.ID_SUBURUSAN = '57' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS AND B.ID_PEMOHON = C.ID_PEMOHON "
-					+ " AND C.ID_NEGERITETAP = F.ID_NEGERI AND B.ID_PERMOHONAN = E.ID_PERMOHONAN(+) AND E.FLAG_AKTIF(+) = 'Y' AND A.NO_FAIL IS NOT NULL ";
+					+ " AND C.ID_NEGERITETAP = F.ID_NEGERI AND B.ID_PERMOHONAN = E.ID_PERMOHONAN(+) AND B.ID_PERMOHONAN = G.ID_PERMOHONAN(+) AND E.FLAG_AKTIF(+) = 'Y' AND A.NO_FAIL IS NOT NULL ";			
 			
 			// noFail
 			if (noFail != null) {
@@ -161,9 +160,24 @@ public class FrmAPBSenaraiFailData {
 				h.put("statusLesen", statusLesen);
 				//CODING UNTUK CEK TARIKH TAMAT KELULUSAN DASAR
 				h.put("statusKelulusanDasar", getStatusKelulusanDasar(statusID, idPermohonan));
+				if("1".equals(rs.getString("ID_JENISPERMOHONAN"))) {
+					h.put("jenisPermohonan","PERMOHONAN LESEN");
+				} else if("2".equals(rs.getString("ID_JENISPERMOHONAN"))) {
+					h.put("jenisPermohonan","PEMBAHARUAN LESEN");
+				}
+				if("2".equals(rs.getString("ID_JENIS_LESEN"))) {
+					h.put("jenisLesen","BORANG 2");
+				} else if("3".equals(rs.getString("ID_JENIS_LESEN"))) {
+					h.put("jenisLesen","BORANG 3");
+				} else if("4".equals(rs.getString("ID_JENIS_LESEN"))) {
+					h.put("jenisLesen","BORANG 4");
+				}
 				senaraiFail.addElement(h);
 				myLog.info("bil="+bil);
 				bil++;
+				myLog.info(h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "": sdf.format(rs.getDate("TARIKH_TERIMA"))));
+				myLog.info(h.put("status",rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN")));
+				myLog.info(h.put("kawasanDipohon",rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI")));
 			}
 
 		} finally {
@@ -1068,7 +1082,7 @@ public class FrmAPBSenaraiFailData {
 					h.put("idPermohonan", rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN"));
 					h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL").toUpperCase());
 					h.put("noRayuan",rs.getString("NO_RAYUAN") == null ? "0" : rs.getString("NO_RAYUAN"));
-					h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "": sdf.format(rs.getDate("TARIKH_TERIMA")));
+					h.put("tarikhTerima", rs.getString("TARIKH_TERIMA") == null ? "": sdf.format(rs.getDate("TARIKH_TERIMA")));
 					h.put("namaPemohon", rs.getString("NAMA") == null ? "" : rs.getString("NAMA").toUpperCase());
 					h.put("idStatus", rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS"));
 					h.put("status",rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
@@ -1113,7 +1127,7 @@ public class FrmAPBSenaraiFailData {
 			
 		}
 	
-	public Vector<Hashtable<String,String>> getCarianFailOnline(String noPermohonan,String tarikhTerima) 
+	public Vector<Hashtable<String,String>> getCarianFailOnline(String noPermohonan,String tarikhTerima)  // log senarai file online
 			throws Exception {
 
 			Db db = null;
@@ -1125,11 +1139,11 @@ public class FrmAPBSenaraiFailData {
 				db = new Db();
 				Statement stmt = db.getStatement();
 
-				sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN,B.NO_PERMOHONAN, A.NO_FAIL, B.TARIKH_TERIMA, C.NAMA, D.KETERANGAN, B.ID_STATUS,B.NO_RAYUAN,"
-						+ " E.TARIKH_MULA_LESEN, E.TARIKH_TAMAT_LESEN, E.NO_LESEN, F.NAMA_NEGERI"
-						+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPBYRNSYRTKLLSNLESENAPB E, TBLRUJNEGERI F"
+				sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, B.NO_PERMOHONAN, A.NO_FAIL, B.TARIKH_TERIMA, C.NAMA, D.KETERANGAN, B.ID_STATUS, B.NO_RAYUAN,"
+						+ " E.TARIKH_MULA_LESEN, E.TARIKH_TAMAT_LESEN, E.NO_LESEN, F.NAMA_NEGERI, G.ID_JENISPERMOHONAN, G.ID_JENIS_LESEN"
+						+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPBYRNSYRTKLLSNLESENAPB E, TBLRUJNEGERI F, TBLPHPPMOHONNJDUALPERTAMA G"
 						+ " WHERE A.ID_URUSAN = '9' AND A.ID_SUBURUSAN = '57' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS AND B.ID_PEMOHON = C.ID_PEMOHON "
-						+ " AND C.ID_NEGERITETAP = F.ID_NEGERI AND B.ID_PERMOHONAN = E.ID_PERMOHONAN(+) AND E.FLAG_AKTIF(+) = 'Y' AND A.NO_FAIL IS NULL ";
+						+ " AND C.ID_NEGERITETAP = F.ID_NEGERI AND B.ID_PERMOHONAN = E.ID_PERMOHONAN(+) AND B.ID_PERMOHONAN = G.ID_PERMOHONAN(+) AND E.FLAG_AKTIF(+) = 'Y' AND A.NO_FAIL IS NULL ";
 				
 				// noFail
 				if (noPermohonan != null) {
@@ -1168,11 +1182,11 @@ public class FrmAPBSenaraiFailData {
 					h.put("noPermohonan", rs.getString("NO_PERMOHONAN") == null ? "" : rs.getString("NO_PERMOHONAN"));
 					h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL").toUpperCase());
 					h.put("noRayuan",rs.getString("NO_RAYUAN") == null ? "0" : rs.getString("NO_RAYUAN"));
-					h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "": sdf.format(rs.getDate("TARIKH_TERIMA")));
+					h.put("tarikhTerima", rs.getString("TARIKH_TERIMA") == null ? "": sdf.format(rs.getDate("TARIKH_TERIMA")));
 					h.put("namaPemohon", rs.getString("NAMA") == null ? "" : rs.getString("NAMA").toUpperCase());
 					h.put("idStatus", rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS"));
 					h.put("status",rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
-					h.put("kawasanDipohon",rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI"));				
+					h.put("kawasanDipohon",rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI"));	
 
 					String statusLesen = "";
 					int bilHari = 0;
@@ -1199,9 +1213,25 @@ public class FrmAPBSenaraiFailData {
 					h.put("statusLesen", statusLesen);
 					//CODING UNTUK CEK TARIKH TAMAT KELULUSAN DASAR
 					h.put("statusKelulusanDasar", getStatusKelulusanDasar(statusID, idPermohonan));
+					if("1".equals(rs.getString("ID_JENISPERMOHONAN"))) {
+						h.put("jenisPermohonan","PERMOHONAN LESEN");
+					} else if("2".equals(rs.getString("ID_JENISPERMOHONAN"))) {
+						h.put("jenisPermohonan","PEMBAHARUAN LESEN");
+					}
+					if("2".equals(rs.getString("ID_JENIS_LESEN"))) {
+						h.put("jenisLesen","BORANG 2");
+					} else if("3".equals(rs.getString("ID_JENIS_LESEN"))) {
+						h.put("jenisLesen","BORANG 3");
+					} else if("4".equals(rs.getString("ID_JENIS_LESEN"))) {
+						h.put("jenisLesen","BORANG 4");
+					}
+					
 					senaraiFail.addElement(h);
 					myLog.info("bil="+bil);
 					bil++;
+					myLog.info(h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "": sdf.format(rs.getDate("TARIKH_TERIMA"))));
+					myLog.info(h.put("status",rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN")));
+					myLog.info(h.put("kawasanDipohon",rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI")));
 				}
 
 			} finally {
@@ -1352,7 +1382,7 @@ public class FrmAPBSenaraiFailData {
 	}
 	public String generateNoFailAPB() throws Exception {
 		String noFail = "";
-		noFail = "JKPTG(S)/SPHP/8-2 SK " + File.getSeqNo(4, 9);
+		noFail = "JKPTG(S)/BPHP/8-2 SK " + File.getSeqNo(4, 9);
 		return noFail;
 	}
 	

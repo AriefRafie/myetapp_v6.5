@@ -75,6 +75,7 @@ public class FrmJRPSenaraiPermohonanData {
 	    }
 	  }
 	
+	
 	public static Vector getListOnline(String fail)throws Exception {
 	    Db db = null;
 	    String sql = "";
@@ -123,7 +124,7 @@ public class FrmJRPSenaraiPermohonanData {
 	    	  h = new Hashtable();
 	    	  h.put("id", Utils.isNull(rs.getString("id_Permohonan")));
 	    	  h.put("no", Utils.isNull(rs.getString("no_Fail")));
-	    	  h.put("noP", Utils.isNull(rs.getString("no_Permohonan")));
+	    	  /*h.put("noP", Utils.isNull(rs.getString("no_Permohonan")));*/
 	    	  h.put("tajuk", Utils.isNull(rs.getString("tujuan")));
 	    	  h.put("keterangan", Utils.isNull(rs.getString("keterangan")));
 	    	  h.put("negeri", Utils.isNull(rs.getString("NAMA_NEGERI")));
@@ -193,7 +194,7 @@ public class FrmJRPSenaraiPermohonanData {
 			 db = new Db();
 		     Statement stmt = db.getStatement();		      
 		     sql= " " +
-		     	"SELECT p.no_permohonan,trm.nama_mukim, trd.id_daerah, trd.kod_daerah, trd.NAMA_DAERAH, n.nama_negeri,k.nama_kementerian,a.nama_agensi, "+
+		     	"SELECT s.id_suburusan, p.no_permohonan,trm.nama_mukim, trd.id_daerah, trd.kod_daerah, trd.NAMA_DAERAH, n.nama_negeri,k.nama_kementerian,a.nama_agensi, "+
 			    " S.nama_suburusan,f.no_fail,to_char(NVL(f.tarikh_daftar_fail,sysdate),'dd/mm/yyyy') tarikh_daftar_fail ,h.no_rujukan_kjp, "+
 			    " H.no_rujukan_lain,to_char(NVL(p.tarikh_surat,sysdate),'dd/mm/yyyy') tarikh_surat,to_char(NVL(p.tarikh_terima,sysdate),'dd/mm/yyyy') tarikh_terima,p.tujuan," +
 			    " P.ID_PERMOHONAN,F.id_fail,K.id_kementerian,A.id_agensi, "+
@@ -206,7 +207,7 @@ public class FrmJRPSenaraiPermohonanData {
 				" AND H.ID_AGENSI=A.id_agensi AND F.ID_kementerian=K.id_kementerian " +
 				" AND f.ID_SUBURUSAN=s.ID_SUBURUSAN " +
 				" AND P.ID_PERMOHONAN='"+idpermohonan+"'";
-//		      myLog.info("getPermohonanInfo("+idpermohonan+"):SQL test = "+sql);
+		      myLog.info("getPermohonanInfo("+idpermohonan+"):SQL test = "+sql);
 		      ResultSet rs = stmt.executeQuery(sql);
 		      Hashtable h = new Hashtable();
 		      while (rs.next()) {
@@ -233,21 +234,21 @@ public class FrmJRPSenaraiPermohonanData {
 		    	  }else{
 		    		  h.put("fail", rs.getString("no_fail"));
 		    	  }
-		    	  if(rs.getString("no_permohonan")==null){
+		    	 /* if(rs.getString("no_permohonan")==null){
 		    		  h.put("noP",new Date());
 		    	  }else{
 		    		  h.put("noP", rs.getString("no_permohonan"));
-		    	  }
+		    	  }*/
 		    	  if(rs.getString("tarikh_daftar_fail")==null){
 		    		  h.put("tdaftar",new Date());
 		    	  }else{
 		    		  h.put("tdaftar", rs.getString("tarikh_daftar_fail"));
 		    	  }
-		    	  if(rs.getString("no_rujukan_kjp")==null){
+		    	  /*if(rs.getString("no_rujukan_kjp")==null){
 		    		  h.put("rujukankjp", "");
 		    	  }else{
 		    		  h.put("rujukankjp", rs.getString("no_rujukan_kjp"));
-		    	  }
+		    	  }*/
 		    	  if(rs.getString("no_rujukan_lain")==null){
 		    		  h.put("rujukanlain", "");
 		    	  }else{
@@ -272,6 +273,11 @@ public class FrmJRPSenaraiPermohonanData {
 		    		  h.put("idpermohonan", "");
 		    	  }else{
 		    		  h.put("idpermohonan", rs.getString("id_permohonan"));
+		    	  }
+		    	  if(rs.getString("id_suburusan")==null){
+		    		  h.put("idsuburusan", "");
+		    	  }else{
+		    		  h.put("idsuburusan", rs.getString("id_suburusan"));
 		    	  }
 		    	  if(rs.getString("id_fail")==null){
 		    		  h.put("idfail", "");
@@ -306,6 +312,43 @@ public class FrmJRPSenaraiPermohonanData {
 		 }
 	 
 	 }
+	 public Vector getIdNegeriKJPByUserId(String userId) throws Exception {
+			Db db = null;
+			String sql = "";
+			Hashtable h;
+			Vector listDetailKJP = new Vector();
+
+			try {
+				db = new Db();
+				Statement stmt = db.getStatement();
+
+				sql = "SELECT A.USER_ID, A.USER_NAME, C.ID_NEGERI, B.ID_KEMENTERIAN, B.ID_AGENSI FROM USERS A, USERS_KEMENTERIAN B, TBLRUJAGENSI C, TBLRUJKEMENTERIAN D "
+						+ " WHERE A.USER_ID = B.USER_ID AND B.ID_AGENSI = C.ID_AGENSI AND B.ID_KEMENTERIAN = D.ID_KEMENTERIAN AND A.USER_ID = '"
+						+ userId + "'";
+
+				ResultSet rs = stmt.executeQuery(sql);
+				myLog.info("listDetailKJP:: "+sql);
+
+				if (rs.next()) {
+					h = new Hashtable();
+					h.put("userId", rs.getString("USER_ID").toString());
+					h.put("idNegeri", rs.getString("ID_NEGERI").toString());
+					h.put("idKementerian", rs.getString("ID_KEMENTERIAN").toString());
+					h.put("idAgensi", rs.getString("ID_AGENSI").toString());
+					h.put("namaPemohon", rs.getString("USER_NAME").toString());
+					listDetailKJP.addElement(h);
+
+					return listDetailKJP;
+				} else {
+					return listDetailKJP;
+				}
+
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}
+	 
 
 	  public static void add(String kod_cara_bayar, String keterangan, Long id_masuk, 
 			  Date tarikh_masuk) throws Exception {
@@ -409,8 +452,8 @@ public class FrmJRPSenaraiPermohonanData {
 		    	  h.put("tdaftar", rs.getDate("TARIKH_DAFTAR_FAIL") == null ? "" : sdf.format(rs.getDate("TARIKH_DAFTAR_FAIL")));
 		    	  h.put("idkementerian", rs.getString("ID_KEMENTERIAN") == null ? "" : rs.getString("ID_KEMENTERIAN"));
 		    	  h.put("idnegeri", rs.getString("ID_NEGERI") == null ? "" : rs.getString("ID_NEGERI"));
-		    	  h.put("rujukankjp", rs.getString("NO_RUJUKAN_KJP") == null ? "" : rs.getString("NO_RUJUKAN_KJP"));
-		    	  h.put("idagensi", rs.getString("ID_AGENSI") == null ? "" : rs.getString("ID_AGENSI"));		    	 
+/*		    	  h.put("rujukankjp", rs.getString("NO_RUJUKAN_KJP") == null ? "" : rs.getString("NO_RUJUKAN_KJP"));
+*/		    	  h.put("idagensi", rs.getString("ID_AGENSI") == null ? "" : rs.getString("ID_AGENSI"));		    	 
 		    	  h.put("idSuburusan", rs.getString("ID_SUBURUSAN") == null ? "" : rs.getString("ID_SUBURUSAN"));
 		    	  h.put("rtterima", rs.getDate("TARIKH_TERIMA") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMA")));
 		    	  h.put("tujuan", rs.getString("TUJUAN") == null ? "" : rs.getString("TUJUAN"));
@@ -423,9 +466,5 @@ public class FrmJRPSenaraiPermohonanData {
 			  db.close();
 		  }
 		  return h;
-		  
 	  }
-	  
-	  
-	  
 	}

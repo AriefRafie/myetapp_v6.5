@@ -63,7 +63,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 		String transactionID = "";
 		String kodmt ="";
 		String jenisPembantah =""; //1, 2
-		String jenisRef ="";
+		String jenisRef = getParam("jenisRef");
 		String idRujukanPB = "";	
 		String socmt =""; 
 		Vector<Hashtable<String,String>> list = null;
@@ -91,7 +91,9 @@ public class IntegrasiMT extends AjaxBasedModule{
 		context.put("idHarta", idHarta);
 		context.put("idPermohonan", idPermohonan);
 		context.put("idSiasatan", idSiasatan);
-		context.put("idWarta", idWarta);		
+		context.put("idWarta", idWarta);	
+		context.put("jenisRef",jenisRef);
+		myLog.info("jenisRef : : "+jenisRef);
 		this.context.put("usid", idUser);
 		myLog.info("submit = "+submit+",mode="+ request.getParameter("mode"));
 //		String socPejabat =""; 
@@ -112,9 +114,11 @@ public class IntegrasiMT extends AjaxBasedModule{
 			myLog.info("Pembantah:"+jenisPembantah);
 			String id_bantahan = String.valueOf(bdata.get("id_bantahan"));
 //			String idNegeriPer = String.valueOf(bdata.get("id_negeri"));
-			jenisRef = String.valueOf(bdata.get("id_jenispb")); //2=Syarikat, 10-Pertubuhan
+			//jenisRef = String.valueOf(bdata.get("id_jenispb")); //2=Syarikat, 10-Pertubuhan
+			jenisRef = String.valueOf(bdata.get("idJenisNoPB"));
 			idRujukanPB = String.valueOf(bdata.get("idRujukanPB"));
-
+			String namaBandar = String.valueOf(bdata.get("namaBandar"));
+			//context.put(namaBandar, );
 			
 			if((!id_bantahan.equals("")) && (!id_bantahan.equals(null))){
 //				Vector<Tblrujdokumen> listDokumen = getDoc().getLampirans(id_bantahan,"pptbantahan");
@@ -141,7 +145,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 //				socmt = String.valueOf(vecMT.get(0).get("namaPejabat"));
 				kodmt = im.getKodMT(pejabatMT);
 			}
-			
+			myLog.info("idPermohonan="+idPermohonan);
 			Vector<Tblrujpejabat> vecPejabat = DBPPT.getMTByPermohonan(idPermohonan);
 			idPejabatPTGD = String.valueOf(vecPejabat.get(0).getIdPejabat());
 //			if(vecPejabat.size() > 1) {
@@ -206,14 +210,14 @@ public class IntegrasiMT extends AjaxBasedModule{
 			transactionID = Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.YEAR)), 4) + Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.MONTH) + 1), 2)
 					+ Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.DATE)), 2) + Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.HOUR_OF_DAY)), 2)
 					+ Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.MINUTE)), 2) + Utils.digitLastFormatted(String.valueOf(cal.get(Calendar.SECOND)), 2);
-			
+			myLog.info("transactionID="+transactionID);
 			Db db = null;
 			//String sql = "";
 			//String sql2 = "";
 
 			db = new Db();
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
+			//Statement stmt = db.getStatement();
+			//SQLRenderer r = new SQLRenderer();
 			
 			String idPejabat = getParam("socmt");
 			//String idPejabatPTGD = getParam("socPejabat");
@@ -250,14 +254,14 @@ public class IntegrasiMT extends AjaxBasedModule{
 					}
 				}
 			}
-//			myLog.info("jenisRef="+jenisRef);
+			myLog.info("jenisRef="+jenisRef);
 			//Perayu PB (Individu|Syarikat)
 			String gen = "U";
 			String noRef = getParam("noRef");
 			int umur	= 0;
 			String refType = "OT";
 			//String refType = getParam("noRef");
-			
+		
 			if(jenisRef.equals("1")
 				|| jenisRef.equals("3")
 				|| jenisRef.equals("4")
@@ -274,7 +278,9 @@ public class IntegrasiMT extends AjaxBasedModule{
 //				umur ="0";
 //				refType = "OT";
 			}
-			
+			myLog.info("jantina="+gen);
+			myLog.info("umur"+umur);
+
 			im = new MTManagerReg("MTREG");
 			
 			Hashtable<String,String> daftar = new Hashtable<String,String>();
@@ -309,7 +315,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 	        //party[1] = pt02;
 
 	        DeceaseInfoType deceaseInfo = new DeceaseInfoType();
-	        deceaseInfo.setDeceaseInfoName(name);
+	        /*deceaseInfo.setDeceaseInfoName(name);
 	        deceaseInfo.setDeceaseInfoType("1");
 	        deceaseInfo.setDeceaseInfoIDType1("IC");
 	        deceaseInfo.setDeceaseInfoIDType1No("251202095009");
@@ -325,8 +331,9 @@ public class IntegrasiMT extends AjaxBasedModule{
 	        deceaseInfo.setDeceaseInfoPostcode("44000");
 	        deceaseInfo.setDeceaseInfoCity("KUALA LUMPUR");
 	        deceaseInfo.setDeceaseInfoState(stateCode);
-	        deceaseInfo.setDeceaseInfoCountry("MYS");
+	        deceaseInfo.setDeceaseInfoCountry("MYS");*/
 
+	        //komen sebentar
 	        //2020/09/09 - Penambahan Skop
 	        DataCreateReqTypePartyAgency partyAgency = getParty(idPejabatPTGD);
 	        if(partyAgency==null) {
@@ -343,10 +350,10 @@ public class IntegrasiMT extends AjaxBasedModule{
 	        }
 	        
 	        String returnMessage = "1 Tidak Berjaya Dihantar";
-	        returnMessage = MTManagerReg. PendaftaranBaharu("15"
+	        returnMessage = MTManagerReg. PendaftaranBaharuPPT("15"
 	        					,doc.getIdDokumen(),renameDoc,doc.getKandungan()
 	        					,party
-	        					,deceaseInfo
+	        					//,deceaseInfo
 	        					, kodMT 	//MT Kangar
 	        					, "3"	//Civil
 	        					, "2"	//High Court
@@ -414,7 +421,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 		}else{
 			
 		}
-		context.put("jenisRef",jenisRef);
+		
 		context.put("kodmt",kodmt);
 		context.put("socMT",socmt);
 //		context.put("socPejabat",socPejabat);

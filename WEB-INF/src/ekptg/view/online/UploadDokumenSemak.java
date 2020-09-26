@@ -19,7 +19,6 @@ import org.apache.log4j.Logger;
 import ekptg.model.entities.Tblrujdokumen;
 import ekptg.model.htp.FrmSemakan;
 import ekptg.model.utils.lampiran.ILampiran;
-import ekptg.model.php2.utiliti.LampiranBean;
 
 public class UploadDokumenSemak extends AjaxBasedModule {
 
@@ -35,6 +34,7 @@ public class UploadDokumenSemak extends AjaxBasedModule {
     String idRujukan = "";
     String idSenarai = "";
     String idJenisDokumen = "";
+    String modul = ""; 
 
 	@Override
 	public String doTemplate2() throws Exception {		
@@ -56,6 +56,10 @@ public class UploadDokumenSemak extends AjaxBasedModule {
         //Vector<Hashtable<String,String>> beanMaklumatTanah = null;
 		idUser = (String) session.getAttribute("_ekptg_user_id");
 		ekptg.model.ppk.util.LampiranBean l = new ekptg.model.ppk.util.LampiranBean();
+
+		modul = getParam("actionrefresh").substring(0,3);
+		this.context.put("modul",modul);
+		myLog.info("uploadFiles:actionrefresh="+getParam("actionrefresh").substring(0,3));
 
 		myLog.info("actionPopup="+actionPopup);
 		myLog.info("hitButton="+hitButton);
@@ -128,11 +132,25 @@ public class UploadDokumenSemak extends AjaxBasedModule {
 				jumLampiran = getParamAsInteger("jumlahlampiran");
 
 			}
-			senaraiDokumen = getDoc().getLampirans(idRujukan, idJenisDokumen);
+			if(modul.equals("htp"))
+				senaraiDokumen = getDocHTP().getLampirans(idRujukan, idJenisDokumen);
+			else if(modul.equals("php"))	
+				senaraiDokumen = getDoc().getLampirans(idRujukan, idJenisDokumen);
+			
 			//dokumens = l.lampiranMengikutHarta(idHarta, null,false);
 			// end Lampiran
 
-	    }else if (actionPopup.equals("paparHA")){
+	    }else if (actionPopup.equals("paparhtp")){
+			disability = "";
+		   	readability = "";
+			//Lampiran
+			if (mode.equals("bilampiran")) {
+				RO_General = "";
+				jumLampiran = getParamAsInteger("jumlahlampiran");
+			}
+		senaraiDokumen = getDocHTP().getLampirans(idRujukan, idJenisDokumen);
+		
+		}else if (actionPopup.equals("paparHA")){
 			disability = "";
 		   	readability = "";
 			//Lampiran
@@ -191,6 +209,7 @@ public class UploadDokumenSemak extends AjaxBasedModule {
 	    
 	   	this.context.put("RO_General",RO_General);
 	   	this.context.put("actionPopup",actionPopup);
+	   	
 	   	this.context.put("actionRefresh",getParam("actionrefresh"));
 	   	this.context.put("flagOnline",flagOnline);
 	   	this.context.put("hitButton",hitButton);
@@ -225,8 +244,11 @@ public class UploadDokumenSemak extends AjaxBasedModule {
 			if ((!(item.isFormField())) && (item.getName() != null)
 					&& (!("".equals(item.getName())))) {
 //				ekptg.model.php2.utiliti.LampiranBean l = new ekptg.model.php2.utiliti.LampiranBean();
-				getDoc().simpan(item,request);
-				
+				if(modul.equals("php"))
+					getDoc().simpan(item,request);
+				else if(modul.equals("htp"))
+					getDocHTP().simpan(item,request);
+
 			}
 		}
 	}

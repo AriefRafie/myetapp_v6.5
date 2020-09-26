@@ -189,7 +189,9 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 		
 		FrmPrmhnnSek8KeputusanPermohonanInternalData.checkFlag5Juta(id);
 		flag5juta = FrmPrmhnnSek8KeputusanPermohonanInternalData.getFlag5Juta();
-		this.context.put("flag5juta", flag5juta);
+		this.context.put("flag5juta", flag5juta); 
+		
+		
 		
 		if ("paparKeputusan".equals(submit)) {
 			System.out.println("~~~~~~~~ paparKeputusan ~~~~~~~~~~~~~~~~~~~");
@@ -3904,6 +3906,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 
 			// System.out.println("cntid" + cntResult);
 			String ARB = getParam("ARB");
+			String tarikhsuratARB = getParam("tarikhsuratARB");
 			String id = getParam("idPermohonan");
 			
 			String checkSD = getParam("sorPenentuanBidangKuasa");
@@ -3913,7 +3916,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 				if (cntResult.equals("0")) {
 					System.out.println("-------getSimpan_keputusan1----");
 					System.out.println("-------ARB----"+ARB);
-					insertBorang(session,checkSD);
+					insertBorang(session,checkSD,tarikhsuratARB);
 					/*if((checkSD=="107")) {
 						insertSDTable(session);
 					}*/
@@ -4193,11 +4196,11 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 		FrmPrmhnnSek8KptsanBicaraData.add_maklumatPerintah("99991111111",uid,"","","","","","","");
 	}*/
 
-	private void insertBorang(HttpSession session, String checkSD) throws Exception {
+	private void insertBorang(HttpSession session, String checkSD, String tarikhsuratARB) throws Exception {
 
 		String check = getParam("sorPenentuanBidangKuasa");
 		String checkterus = getParam("sorPenentuanBidangKuasaTeruskan");
-		String tarikhsuratARB = getParam("tarikhsuratARB");
+		//tarikhsuratARB = getParam("tarikhsuratARB");
 		String ex = "";
 		if (checkterus != "")// ((check=="53" || check=="50" || check=="63"))
 		{
@@ -4205,7 +4208,7 @@ public class FrmSenaraiFailKeputusanPermohonanInternal extends VTemplate {
 		} else // if((check=="1") && (checkterus=="151" || checkterus=="152"))
 		{
 			ex = check;
-		}
+		} 
 
 		Hashtable h = null;
 		h = new Hashtable();

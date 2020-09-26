@@ -5,16 +5,13 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Hashtable;
-import java.util.Vector;
 
-import javax.servlet.http.HttpSession;
 
 import lebah.db.Db;
 import lebah.portal.AjaxBasedModule;
 
 import org.apache.log4j.Logger;
 
-import ekptg.model.entities.Tblhtppermohonan;
 import ekptg.model.htp.IUtilHTML;
 import ekptg.model.htp.UtilHTMLBean;
 import ekptg.model.htp.entity.HtpPermohonan;
@@ -64,11 +61,13 @@ public class FrmPopupEmel extends AjaxBasedModule{
 		//package helper
 		context.put("Utils", new ekptg.helpers.Utils());
 		HtpPermohonan permohonan = getIPermohonan().findPermohonan(idpermohonan,"");
-		
+		myLog.info("submit -1="+submit);
+
 		EmailConfig ec = new EmailConfig();
 		String tajukEmel = "Peringatan Bayaran "+"("+permohonan.getPermohonan().getPfdFail().getNoFail()+")";
 		context.put("tajukEmel", tajukEmel);
-		
+		myLog.info("submit 0="+submit);
+
 		Hashtable<String,String> paj = getMaklumatPajakan(idpermohonan);
 
 		txtKandungan ="\n Adalah dengan hormatnya saya merujuk kepada perkara di atas.\n\n";
@@ -81,7 +80,7 @@ public class FrmPopupEmel extends AjaxBasedModule{
 				+ "Bayaran pajakan selepas <style isBold='true' pdfFontName='Helvetica-Bold'>" +paj.get("bulanPatut")+" "+ sdfy.format(date)+ "</style> akan menyebabkan pihak "+
 				" tuan dikenakan kadar faedah sebanyak 8% setahun selaras dengan <style isBold='true' pdfFontName='Helvetica-Bold'>Klausa 3(3) perjanjian Pajakan</style>."+
 				"";
-    	txtKandungan += ec.getFooter();
+    	//txtKandungan += ec.getFooter();
 		
 		myLog.info("submit="+submit);
     	if (submit.equals("peringatanbayaran")) {
@@ -158,21 +157,21 @@ public class FrmPopupEmel extends AjaxBasedModule{
 		
 	}
 	
-	private IUserPegawai getIUP(){
-		if(iUserPegawai== null)
-			iUserPegawai = new UserPegawaiBean();
-				
-		return iUserPegawai;
-			
-	}		
-	
-	private IUtilHTML getHTPUtil(){
-		if(iUtil==null){
-			iUtil = new UtilHTMLBean();
-		}
-		return iUtil;
-			
-	}
+//	private IUserPegawai getIUP(){
+//		if(iUserPegawai== null)
+//			iUserPegawai = new UserPegawaiBean();
+//				
+//		return iUserPegawai;
+//			
+//	}		
+//	
+//	private IUtilHTML getHTPUtil(){
+//		if(iUtil==null){
+//			iUtil = new UtilHTMLBean();
+//		}
+//		return iUtil;
+//			
+//	}
     
 	private IPembelian getIPermohonan(){
 		if (iPembelian==null){
@@ -182,3 +181,4 @@ public class FrmPopupEmel extends AjaxBasedModule{
 	} 	
 
 }//close class
+//2020/09/22

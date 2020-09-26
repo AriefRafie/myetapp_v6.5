@@ -15,7 +15,7 @@
 		#parse('app/htp/pajakan/paging.jsp')
 		</td>
     </tr>
-    
+
     <tr>
       <td>#parse("app/htp/frmPajakanHeader.jsp")</td>
     </tr>
@@ -30,14 +30,14 @@
     </td>
   </tr>
   #end
- 
+
 	#if ($mode == 'newBayaran' || $mode == 'updateBayaran' || $mode == 'viewBayaran')
   	<tr>
     	<td>
-    
+
     ##set($totalBayaran = 0)
-    
- #foreach ($beanBayaran in $BeanBayaranList)  
+
+ #foreach ($beanBayaran in $BeanBayaranList)
 	 #set($namaBank = $beanBayaran.namaBank )
   	 #set($NoBayaran = $beanBayaran.NoBayaran )
 	 #set($tarikhTerima = $beanBayaran.tarikhTerima )
@@ -47,7 +47,7 @@
      #set($tarikhHantarResit = $beanBayaran.tarikhHantarResit )
      #set($tarikhCek = $beanBayaran.tarikhCek )
      ##set($totalBayaran = $totalBayaran + $beanBayaran.jumlahBayaran )
- 
+
     <fieldset>
     <legend><strong>MAKLUMAT BAYARAN</strong></legend>
     <table width="100%" border="0">
@@ -92,10 +92,10 @@
         <td width="31%">Tarikh Terima </td>
         <td width="1%">:</td>
         <td width="41%"><input type="text" name="txdTarikhTerima" id="txdTarikhTerima" size="10" value="$tarikhTerima"  class="$classDis" $readOnly onblur="check_date(this); checkDate(document.${formName}.txdTarikhTerima);" />
-          
-          #if($mode == 'updateBayaran' || $mode == 'newBayaran') <img src="../img/calendar.gif" alt="Calendar" border="0" style="display:$Style2" onclick="displayDatePicker('txdTarikhTerima',false,'dmy');" /> 
-          
-          #end 
+
+          #if($mode == 'updateBayaran' || $mode == 'newBayaran') <img src="../img/calendar.gif" alt="Calendar" border="0" style="display:$Style2" onclick="displayDatePicker('txdTarikhTerima',false,'dmy');" />
+
+          #end
           </td>
         <td width="12%">&nbsp;</td>
       </tr>
@@ -118,11 +118,11 @@
         <td>Tarikh Resit</td>
         <td>&nbsp;</td>
         <td><input type="text" name="txdtarikhResit" id="txdtarikhResit" size="10" value="$tarikhResit"  class="$classDis" $readOnly onblur="check_date(this);checkDate(document.${formName}.txdtarikhResit);" />
-        
+
           #if($mode == 'updateBayaran' || $mode == 'newBayaran')
            <img src="../img/calendar.gif" alt="Calendar" border="0" onclick="displayDatePicker('txdtarikhResit',false,'dmy');" />
-            #end 
-            
+            #end
+
             </td>
         <td>&nbsp;</td>
       </tr>
@@ -131,10 +131,10 @@
         <td>Tarikh Hantar Resit</td>
         <td>:</td>
         <td><input type="text" name="txdtarikhHantarResit" id="txdtarikhHantarResit" size="10" value="$tarikhHantarResit"  class="$classDis" $readOnly onblur="check_date(this);checkDate(document.${formName}.txdtarikhHantarResit);" />
-        
+
 #if($mode == 'updateBayaran' || $mode == 'newBayaran')
-<img src="../img/calendar.gif" alt="Calendar" border="0" onclick="displayDatePicker('txdtarikhHantarResit',false,'dmy');" /> 
-#end 
+<img src="../img/calendar.gif" alt="Calendar" border="0" onclick="displayDatePicker('txdtarikhHantarResit',false,'dmy');" />
+#end
 </td>
         <td>&nbsp;</td>
       </tr>
@@ -146,7 +146,7 @@
         <td>&nbsp;</td>
       </tr>
       <tr>
-        <td colspan="5" align="center">        
+        <td colspan="5" align="center">
         #if ($mode == 'newBayaran')
         	<input class="stylobutton100" type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:simpanBayaran()" />
        		<input class="stylobutton100" type="reset" name="cmdReset" id="cmdReset" value="Kosongkan"/>
@@ -159,14 +159,14 @@
         	<input class="stylobutton100" type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:simpanUpdateBayaran()" />
       		<!-- <input class="stylobutton" type="reset" name="cmdBatal" id="cmdBatal" value="Kosongkan"/> -->
        		<input class="stylobutton100" type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="javascript:batalUpdateBayaran()" />
-     	#end 
+     	#end
    		</td>
         </tr>
     </table>
-    
+
     </fieldset>
-  #end 
-    
+  #end
+
     </td>
   </tr>
   <tr>
@@ -175,13 +175,13 @@
 
 #end
 
-#if ( ($idFail != '' && $idStatus != '1' && $idStatus != '6' && $idStatus != '12' && $idStatus != '63' && $idStatus != '65' && $idStatus != '69' && $idStatus != '86' && $idStatus != '87') || ($idFail != '' && $!page == "5"))
+#if ( ($idFail != '' && $idStatus != '1' && $idStatus != '6' && $idStatus != '12' && $idStatus != '63' && $idStatus != '65' && $idStatus != '69' && $idStatus != '86' && $idStatus != '87') || ($idFail != '' && $!page == "9"))
 	<!-- <tr>
     	<td>&nbsp;</td>
 	</tr> -->
   </br>
 	<tr>
-    	<td> 
+    	<td>
     		<fieldset><legend><strong>SENARAI BAYARAN</strong></legend>
 		    <div align="left">
 			      <table width="100%" border="0">
@@ -190,7 +190,7 @@
 			          <td colspan="8" scope="col">
 			          	<input class="stylobutton100" type="button" name="cmdDaftar" id="cmdDaftar" value="Daftar Baru" onclick="javascript:daftarBaruBayaran()" />
 			          	<input class="stylobutton100" type="button" name="cmdcetak" id="cmdcetak" value="Cetak" onclick="javascript:cetakSuratBayaran('$!idPermohonan')" />
-        				
+
         				<a href="javascript:tambahFailLain('$idFail','tambah','jilid')" class="style1">...</a>
 			          </td>
 			        </tr>
@@ -230,7 +230,7 @@
 		          <td colspan="7" align="right" class="$row">
 		            <span class="bayaran">Jumlah Bayaran Keseluruhan = </span>          </td>
 		          <td align="center" class="$row"><span class="bayaran">$totalBayaran</span></td>
-		
+
 		        </tr>
 		        #end
 		        #if ($count == 0)
@@ -240,11 +240,11 @@
 		        #end
 		      </table>
 	    	</div>
-	    	</fieldset>    
+	    	</fieldset>
 		</td>
 	</tr>
 #end
-  
+
   <tr align="">
     <td>&nbsp;</td>
   </tr>
@@ -275,11 +275,11 @@ function daftarBaruBayaran(){
 	document.${formName}.actionPajakan.value = "BayaranPajakan";
 	document.${formName}.mode.value = "newBayaran";
 	doAjaxCall${formName}("");
-	
+
 }
 
 function cetakSuratExt_index(idPermohonan, laporan){
-	var url = "../x/${securityToken}/ekptg.report.htp.utiliti.FrmPopupPilihPegawaiReportView?idpermohonan="+idPermohonan+"&report="+laporan;	
+	var url = "../x/${securityToken}/ekptg.report.htp.utiliti.FrmPopupPilihPegawaiReportView?idpermohonan="+idPermohonan+"&report="+laporan;
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 
 	if ((document.window != null) && (!hWnd.opener))
@@ -291,22 +291,22 @@ function cetakSuratExt_index(idPermohonan, laporan){
 function SimpanBayaran(){
 	if(document.${formName}.socTujuan.value == ""){
 		alert('Sila Pilih Tujuan.');
-  		document.${formName}.socTujuan.focus(); 
-		return; 
+  		document.${formName}.socTujuan.focus();
+		return;
 	}
 	if(document.${formName}.socCaraBayar.value == ""){
 		alert('Sila Pilih Cara Bayar.');
-  		document.${formName}.socCaraBayar.focus(); 
-		return; 
+  		document.${formName}.socCaraBayar.focus();
+		return;
 	}
-	
+
 	/*
 	if(document.${formName}.txdTarikhTerima.value == ""){
 		alert('Sila Masukkan Tarikh Terima.');
-  		document.${formName}.txdTarikhTerima.focus(); 
-		return; 
+  		document.${formName}.txdTarikhTerima.focus();
+		return;
 	}
-	
+
 	*/
 	if(document.${formName}.txdTarikhCek.value != "" ){
 		//return checkDate(document.${formName}.txdTarikhCek);
@@ -314,40 +314,40 @@ function SimpanBayaran(){
 	}
 	if(document.${formName}.txdTarikhTerima.value != "" ){
 		//return checkDate(document.${formName}.txdTarikhTerima);
-		checkDateV01(document.${formName}.txdTarikhTerima);		
-	}	
+		checkDateV01(document.${formName}.txdTarikhTerima);
+	}
 	if(document.${formName}.txtJumlahBayaran.value == ""){
 		alert('Sila Masukkan Jumlah Bayaran.');
-  		document.${formName}.txtJumlahBayaran.focus(); 
-		return; 
+  		document.${formName}.txtJumlahBayaran.focus();
+		return;
 	}
 	/**
 	Kemaskini pada 2017/12/13 - Peringkat awal tiada Maklumat Resit
 	if(document.${formName}.txtNoResit.value == ""){
 		alert('Sila Masukkan No Resit.');
-  		document.${formName}.txtNoResit.focus(); 
-		return; 
+  		document.${formName}.txtNoResit.focus();
+		return;
 	}
 	if(document.${formName}.txdtarikhResit.value == ""){
 		alert('Sila Masukkan Tarikh Resit.');
-  		document.${formName}.txdtarikhResit.focus(); 
-		return; 
+  		document.${formName}.txdtarikhResit.focus();
+		return;
 	}
-	
+
 	if(document.${formName}.txdtarikhResit.value != ''){
 		checkDateV01(document.${formName}.txdtarikhResit);
 	}
-	
+
 	if(document.${formName}.txdtarikhHantarResit.value == ''){
 		alert('Sila Masukkan Tarikh Hantar Resit.');
-  		document.${formName}.txdtarikhHantarResit.focus(); 
-		return; 
+  		document.${formName}.txdtarikhHantarResit.focus();
+		return;
 	}
-	
+
 	if(document.${formName}.txdtarikhHantarResit.value != ''){
 		checkDateV01(document.${formName}.txdtarikhHantarResit);
 	} */
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.actionPajakan.value = "BayaranPajakan";
 		return;
@@ -369,23 +369,23 @@ function KemaskiniBayaran(){
 }
 
 function SimpanUpdateBayaran(){
-	
+
 	if(document.${formName}.socTujuan.value == ""){
 		alert('Sila pilih Tujuan.');
-  		document.${formName}.socTujuan.focus(); 
-		return; 
+  		document.${formName}.socTujuan.focus();
+		return;
 	}
 	if(document.${formName}.socCaraBayar.value == ""){
 		alert('Sila pilih Cara Bayar.');
-  		document.${formName}.socCaraBayar.focus(); 
-		return; 
+  		document.${formName}.socCaraBayar.focus();
+		return;
 	}
-	
+
 	/*
 	if(document.${formName}.txdTarikhTerima.value == ""){
 		alert('Sila Masukkan Tarikh Terima.');
-  		document.${formName}.txdTarikhTerima.focus(); 
-		return; 
+  		document.${formName}.txdTarikhTerima.focus();
+		return;
 	}
 	*/
 	if(document.${formName}.txdTarikhCek.value != "" ){
@@ -395,37 +395,37 @@ function SimpanUpdateBayaran(){
 	if(document.${formName}.txdTarikhTerima.value != "" ){
 		//return checkDate(document.${formName}.txdTarikhTerima);
 		checkDateV01(document.${formName}.txdTarikhTerima);
-		
-	}	
+
+	}
 	if(document.${formName}.txtJumlahBayaran.value == ""){
 		alert('Sila Masukkan Jumlah Bayaran.');
-  		document.${formName}.txtJumlahBayaran.focus(); 
-		return; 
+  		document.${formName}.txtJumlahBayaran.focus();
+		return;
 	}
 	if(document.${formName}.txtNoResit.value == ""){
 		alert('Sila Masukkan No Resit.');
-  		document.${formName}.txtNoResit.focus(); 
-		return; 
+  		document.${formName}.txtNoResit.focus();
+		return;
 	}
 	if(document.${formName}.txdtarikhResit.value == ""){
 		alert('Sila Masukkan Tarikh Resit.');
-  		document.${formName}.txdtarikhResit.focus(); 
-		return; 
+  		document.${formName}.txdtarikhResit.focus();
+		return;
 	}
 	if(document.${formName}.txdtarikhResit.value != ''){
 		checkDateV01(document.${formName}.txdtarikhResit);
 	}
-	
+
 	if(document.${formName}.txdtarikhHantarResit.value == ''){
 		alert('Sila Masukkan Tarikh Hantar Resit.');
-  		document.${formName}.txdtarikhHantarResit.focus(); 
-		return; 
+  		document.${formName}.txdtarikhHantarResit.focus();
+		return;
 	}
-	
+
 	if(document.${formName}.txdtarikhHantarResit.value != ''){
 		checkDateV01(document.${formName}.txdtarikhHantarResit);
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.actionPajakan.value = "BayaranPajakan";
 		return;
@@ -479,11 +479,11 @@ return;
 //semakan Tarikh semasa
 function checkDate(inputfield) {
 	var today = new Date();
-	
+
 	dari_bulan = inputfield.value.substring(3,5);
 	dari_hari = inputfield.value.substring(0,2);
 	dari_tahun = inputfield.value.substring(6,10);
-	var daritemp = dari_bulan+"/"+dari_hari+"/"+dari_tahun;	
+	var daritemp = dari_bulan+"/"+dari_hari+"/"+dari_tahun;
 	var myDate = Date.parse(daritemp);
 
 	if (myDate>today) {
@@ -491,7 +491,7 @@ function checkDate(inputfield) {
   		inputfield.value = "";
   		inputfield.focus();
  		return;
- 	}	
+ 	}
 
 }
 
@@ -501,7 +501,7 @@ function checkDateV01(inputfield) {
 	dari_bulan = inputfield.value.substring(3,5);
 	dari_hari = inputfield.value.substring(0,2);
 	dari_tahun = inputfield.value.substring(6,10);
-	var daritemp = dari_bulan+"/"+dari_hari+"/"+dari_tahun;	
+	var daritemp = dari_bulan+"/"+dari_hari+"/"+dari_tahun;
 	var myDate = Date.parse(daritemp);
 
 	if (myDate>today) {
@@ -551,7 +551,7 @@ function langkah4(permohonan,idFail){
 	document.${formName}.action = "?_portal_module=ekptg.view.htp.pajakan.FrmPajakanPerjanjianView&idPermohonan="+permohonan+"&actionPajakan=papar";
 	document.${formName}.mode.value = "view";
 	document.${formName}.submit();
-} 
+}
 */
 
 </script>

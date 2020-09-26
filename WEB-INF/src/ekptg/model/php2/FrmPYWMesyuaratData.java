@@ -32,7 +32,7 @@ public class FrmPYWMesyuaratData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_MESYUARAT, A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.STATUS_MESYUARAT "
+			sql = "SELECT A.ID_MESYUARAT, A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, B.FLAG_SYOR"
 					+ " FROM TBLPHPMESYUARAT A, TBLPHPMESYUARATPERMOHONAN B WHERE A.ID_MESYUARAT = B.ID_MESYUARAT"
 					+ " AND B.ID_PERMOHONAN = '"
 					+ idPermohonan + "'";
@@ -56,11 +56,11 @@ public class FrmPYWMesyuaratData {
 						rs.getDate("TARIKH_MESYUARAT") == null ? "" : sdf
 								.format(rs.getDate("TARIKH_MESYUARAT")));
 				if (rs.getString("BIL_MESYUARAT") != null) {
-					if ("L".equals(rs.getString("STATUS_MESYUARAT"))) {
+					if ("L".equals(rs.getString("FLAG_SYOR"))) {
 						h.put("syor", "LULUS");
-					} else if ("T".equals(rs.getString("STATUS_MESYUARAT"))) {
+					} else if ("T".equals(rs.getString("FLAG_SYOR"))) {
 						h.put("syor", "TOLAK");
-					} else if ("G".equals(rs.getString("STATUS_MESYUARAT"))) {
+					} else if ("G".equals(rs.getString("FLAG_SYOR"))) {
 						h.put("syor", "TANGGUH");
 					} else {
 						h.put("syor", "");

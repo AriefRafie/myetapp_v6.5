@@ -378,11 +378,11 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <!----------------------------------------- SENARAI DOKUMEN YANG DISERTAKAN --------------------------------------------->
 
 <!-- :::upload -->
-<input type="hidden" name="nama_skrin" id="nama_skrin" value="susulanBantahan"  />
 <fieldset id="senarai_dokumen" >
-<!-- jenis dokumen = '$jenisDoc' --> 
-<!-- jenis skrin = '$nama_skrin' -->
-<legend>Senarai Dokumen Yang Disertakan</legend>
+<!-- 	jenis dokumen = '$jenisDoc'  -->
+<!-- 	jenis skrin = '$nama_skrin' -->
+<!-- 	listDokumen =  $listDokumen -->
+	<legend>Senarai Dokumen Yang Disertakan</legend>
     
     <input name="cmdTambahDokumen" type="button" value="Tambah" onClick="tambahDokumen()" title="Sila klik untuk tambah dokumen" >    
     #if($listDokumen_size > 0)
@@ -416,7 +416,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
          		#else
                		 #set( $row = "row1" )
          		#end
-	   #if($list1.JENIS_DOKUMEN == "susulanBantahan")   <!-- PPT-38 -->  
+	   #if($list1.JENIS_DOKUMEN == "pptperintahbantahan")   <!-- PPT-38 -->  
 	   #set ($cnt=1)
 	  <tr>  
 	    <td class="$row" >$list1.BIL</td>
@@ -507,6 +507,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <input type="hidden" name="status_bantahan" id="status_bantahan" value="$status_bantahan" />
 <input type="hidden" name="id_bantahan" id="id_bantahan" value="$id_bantahan" />
 <input type="hidden" name="id_award" id="id_award" value="$id_award" />
+<input type="hidden" name="nama_skrin" id="nama_skrin" value="pptperintahbantahan"  />
 
 <script type="text/javascript">
 
@@ -517,7 +518,7 @@ function tambahDokumen() {
 	var id_hakmilikpb = document.${formName}.id_hakmilikpb.value ;		
 	var id_hakmilik = document.${formName}.id_hakmilik.value ;	
 	var id_pihakberkepentingan = document.${formName}.id_pihakberkepentingan.value ;
-	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=tambah_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilikpb="+id_hakmilikpb+"&id_hakmilik="+id_hakmilik+"&id_pihakberkepentingan="+id_pihakberkepentingan+"&location=maklumat_dokumen&point=txtnamadokumen&jenisDoc=susulanBantahan";	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=tambah_dokumen&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&id_hakmilikpb="+id_hakmilikpb+"&id_hakmilik="+id_hakmilik+"&id_pihakberkepentingan="+id_pihakberkepentingan+"&location=maklumat_dokumen&point=txtnamadokumen&jenisDoc=pptperintahbantahan";	
 	document.${formName}.submit();
 }
 //:::upload

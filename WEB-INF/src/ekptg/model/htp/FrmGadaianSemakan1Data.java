@@ -459,7 +459,42 @@ public class FrmGadaianSemakan1Data {
 		    return idFail;
 		    
 		  }
-	    
+	  
+		public Vector getIdNegeriKJPByUserId(String userId) throws Exception {
+			Db db = null;
+			String sql = "";
+			Hashtable h;
+			Vector listDetailKJP = new Vector();
+
+			try {
+				db = new Db();
+				Statement stmt = db.getStatement();
+
+				sql = "SELECT A.USER_ID, A.USER_NAME, C.ID_NEGERI, B.ID_KEMENTERIAN, B.ID_AGENSI FROM USERS A, USERS_KEMENTERIAN B, TBLRUJAGENSI C, TBLRUJKEMENTERIAN D "
+						+ " WHERE A.USER_ID = B.USER_ID AND B.ID_AGENSI = C.ID_AGENSI AND B.ID_KEMENTERIAN = D.ID_KEMENTERIAN AND A.USER_ID = '"
+						+ userId + "'";
+
+				ResultSet rs = stmt.executeQuery(sql);
+
+				if (rs.next()) {
+					h = new Hashtable();
+					h.put("userId", rs.getString("USER_ID").toString());
+					h.put("idNegeri", rs.getString("ID_NEGERI").toString());
+					h.put("idKementerian", rs.getString("ID_KEMENTERIAN").toString());
+					h.put("idAgensi", rs.getString("ID_AGENSI").toString());
+					h.put("namaPemohon", rs.getString("USER_NAME").toString());
+					listDetailKJP.addElement(h);
+
+					return listDetailKJP;
+				} else {
+					return listDetailKJP;
+				}
+
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}  
 	  
 	  
 	  

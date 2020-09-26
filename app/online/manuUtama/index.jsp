@@ -479,15 +479,21 @@ goMenuTab('$!nTab');
 		    document.${formName}.submit();
 		
 		}else if(location=='DIKEMBALIKAN'){
-			actionParam = "&_portal_module=ekptg.view.ppk.FrmDraffPermohonanOnlinePPK&command="+location;
+			//actionParam = "&_portal_module=ekptg.view.ppk.FrmDraffPermohonanOnlinePPK&command="+location;
 			//1345099281439
 			//alert("$EkptgUtil.getTabID('Pusaka Kecil','ppk-online-user')");
-			document.${formName}.action = "$EkptgUtil.getTabID('Pusaka Kecil','ppk-online-user')?"+actionParam;
+			//document.${formName}.action = "$EkptgUtil.getTabID('Pusaka Kecil','ppk-online-user')?"+actionParam;
 			/* document.${formName}.action = "?myrole=ppk-online-user"+actionParam;
 		    document.${formName}.namatab.value = "Pusaka Kecil";
 		    document.${formName}.namamodul.value = "ekptg.view.ppk.FrmDraffPermohonanOnlinePPK";
     */
-			document.${formName}.submit();
+			// document.${formName}.submit();
+			
+			
+			document.${formName}.action = "?myrole=ppk-online-user";
+	        document.${formName}.namatab.value = "Pusaka Kecil";
+	        document.${formName}.namamodul.value = "ekptg.view.ppk.FrmDraffPermohonanOnlinePPK&command=DIKEMBALIKAN";
+	        document.${formName}.submit();
         
 		}else if(location=='daftarAduan'){
 			document.${formName}.action = "$EkptgUtil.getTabID("Menu",online)?_portal_module=ekptg.view.online.FrmAduanPublic&fromDashboard=Y";
