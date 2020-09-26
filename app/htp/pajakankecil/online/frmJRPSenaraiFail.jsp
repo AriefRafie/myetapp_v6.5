@@ -245,16 +245,17 @@ function simpanFail(){
     	document.${formName}.txttajuk.focus(); 
     	return; 
     }
+    if ( document.${formName}.txtNoFailLain.value == "" ) { 
+    	alert('Sila masukkan nombor rujukan kami terlebih dahulu.');
+    	document.${formName}.txtNoFailLain.focus(); 
+    	return; 
+    }   
   	if ( document.${formName}.txdTarikhSuratKJP.value == "" ) { 
     	alert('Sila masukkan tarikh surat KJP terlebih dahulu.');
     	document.${formName}.txdTarikhSuratKJP.focus(); 
     	return; 
     }
-    if ( document.${formName}.txtNoFailLain.value == "" ) { 
-    	alert('Sila masukkan nombor rujukan surat terlebih dahulu.');
-    	document.${formName}.txtNoFailLain.focus(); 
-    	return; 
-    }    
+     
     
     //document.${formName}.command.value = "pkfailbaru";
 	if(document.${formName}.pagemode.value == "0"){
@@ -1346,7 +1347,7 @@ function doChangeKementerianCarian() {
 	
 	function simpanTindakanRole(id_,idSusulan) {
 		document.${formName}.id_kemaskini.value = id_;
-		document.${formName}.pagemode.value = 'simpanpengesahan';
+		document.${formName}.pagemode.value = 'simpanpengesahan2';
 		doAjaxCall${formName}('tindakan','&roleparam=$portal_role&idsusulan='+idSusulan);
 	
 	}

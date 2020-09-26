@@ -1434,6 +1434,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					//getSemakanPerakuanPembelian();
 					FrmJRPSenaraiPermohonanData logic = new FrmJRPSenaraiPermohonanData();
 					
+					//24092020
 					logic.getIdNegeriKJPByUserId(userId);
 					listDetailKJP = logic.getIdNegeriKJPByUserId(userId);
 	    			Hashtable hashList = (Hashtable) listDetailKJP.get(0);
@@ -1594,7 +1595,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					context.put("semakMode", semakMode);
 					skrin = "4";
 					//context.put("selectedTab", 4);
-					template_name = PATH+"frmJRPsemakanPKP.jsp";	
+					template_name = PATH+"frmJRPSemakanPKP.jsp";	
 					//return String.valueOf(getStatus().kemaskiniSimpanStatusAktif(subUrusanStatusFail, subUrusanStatusFailN,getParam("txtarikhkeputusan")));
 					
 					
@@ -2742,4 +2743,4 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			iHTPPermohonan = new HTPPermohonanBean();
 		return iHTPPermohonan;
 	}
-}//close here
+}

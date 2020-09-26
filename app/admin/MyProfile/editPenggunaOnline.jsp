@@ -493,7 +493,8 @@
 			
 			
 			<tr>
-				<td valign="top" >			
+				<td valign="top" >
+				<font color="red" >*</font>				
 				</td>			
 				<td valign="top" >
 				No. HP
@@ -509,7 +510,8 @@
 			</tr>
 			
 			<tr>
-				<td valign="top" >			
+				<td valign="top" >
+				<font color="red" >*</font>				
 				</td>			
 				<td valign="top" >
 				No. Tel
