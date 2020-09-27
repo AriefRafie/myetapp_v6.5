@@ -187,7 +187,7 @@ public class FrmJRPSenaraiPermohonanData {
 		    }
 		  }
 	 
-	 public static Hashtable getPermohonanInfo(String idpermohonan)throws Exception {
+	 public static Hashtable<String,String> getPermohonanInfo(String idpermohonan)throws Exception {
 		 Db db = null;
 		 String sql = "";
 		 try {
@@ -209,7 +209,7 @@ public class FrmJRPSenaraiPermohonanData {
 				" AND P.ID_PERMOHONAN='"+idpermohonan+"'";
 		      myLog.info("getPermohonanInfo("+idpermohonan+"):SQL test = "+sql);
 		      ResultSet rs = stmt.executeQuery(sql);
-		      Hashtable h = new Hashtable();
+		      Hashtable<String,String> h = new Hashtable<String,String>();
 		      while (rs.next()) {
 		    	  if(rs.getString("nama_negeri")==null){
 		    		  h.put("negeri", "");
@@ -240,7 +240,7 @@ public class FrmJRPSenaraiPermohonanData {
 		    		  h.put("noP", rs.getString("no_permohonan"));
 		    	  }*/
 		    	  if(rs.getString("tarikh_daftar_fail")==null){
-		    		  h.put("tdaftar",new Date());
+		    		  h.put("tdaftar",String.valueOf(new Date()));
 		    	  }else{
 		    		  h.put("tdaftar", rs.getString("tarikh_daftar_fail"));
 		    	  }
@@ -255,7 +255,7 @@ public class FrmJRPSenaraiPermohonanData {
 		    		  h.put("rujukanlain", rs.getString("no_rujukan_lain"));
 		    	  }
 		    	  if(rs.getString("tarikh_surat")==null){
-		    		  h.put("tsurat",new Date());
+		    		  h.put("tsurat",String.valueOf(new Date()));
 		    	  }else{
 		    		  h.put("tsurat", rs.getString("tarikh_surat"));
 		    	  }
