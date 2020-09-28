@@ -52,7 +52,7 @@
    
    #if ( $session.getAttribute("_ekptg_user_type") == "internal")
 <!--   <tr>
-       <td >No KP Baru</td>
+       <td >No. KP Baru</td>
        <td><input $style name="no_kp_baru" size="25" value="$!no_kp_baru"></td>
    </tr>
 -->
