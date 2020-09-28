@@ -3202,6 +3202,7 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			Paging paging = new Paging(session, listPageDepan, itemsPerPage);
 			if (page > paging.getTotalPages())
 				page = 1; // reset page number
+			
 			this.context.put("PermohonanList", paging.getPage(page));
 			this.context.put("page", new Integer(page));
 			this.context.put("itemsPerPage", new Integer(itemsPerPage));
@@ -3209,6 +3210,11 @@ public class FrmBantahanSenaraiCarian extends AjaxBasedModule {
 			this.context.put("startNumber", new Integer(paging.getTopNumber()));
 			this.context.put("isFirstPage", new Boolean(paging.isFirstPage()));
 			this.context.put("isLastPage", new Boolean(paging.isLastPage()));
+			if (this.context.get("itemsPerPage") == null || this.context.get("itemsPerPage") == "") {
+				itemsPerPage = getParam("itemsPerPage") == "" ? 10 : getParamAsInteger("itemsPerPage");
+			} else {
+				itemsPerPage = (Integer) this.context.get("itemsPerPage");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			this.context.put("error", e.getMessage());
