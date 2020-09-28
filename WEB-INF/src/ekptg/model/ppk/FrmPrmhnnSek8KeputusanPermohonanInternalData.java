@@ -1264,7 +1264,8 @@ private static Vector semakMahkamah = new Vector();
 				r.add("FLAG_SEBABPINDAHMAHKAMAH",tujuanPindah); //razman add
 				r.add("catatan", catatan);
 				r.add("TARIKH_SURATARB",r.unquote("sysdate"));
-				sql = r.getSQLInsert("tblppkkeputusanpermohonan");		
+				sql = r.getSQLInsert("tblppkkeputusanpermohonan");	
+				myLogger.info("sql tblppkkeputusanpermohonan--> "+sql);
 				
 				System.out.println("----1-----");
 				
@@ -1901,7 +1902,7 @@ private static Vector semakMahkamah = new Vector();
 		    	String ntarikhTerimaBorangC = "to_date('" + tarikhTerimaBorangC + "','dd/MM/yyyy')";
 		    	String ntarikhHantarNilaian = "to_date('" + tarikhHantarNilaian + "','dd/MM/yyyy')";
 		    	String ntarikhTerimaNilaian = "to_date('" + tarikhTerimaNilaian + "','dd/MM/yyyy')";
-		    	
+		    	String ntarikhsuratARB = "to_date('" + tarikhsuratARB + "','dd/MM/yyyy')";
 		    	
 		    	 String jenis_pej=(String)data.get("jenis_pej");
 				 String txtNamaKaveat=(String)data.get("txtNamaKaveat");
@@ -1952,7 +1953,7 @@ private static Vector semakMahkamah = new Vector();
 				r.add("tarikh_hantar_nilaian", r.unquote(ntarikhHantarNilaian));
 				r.add("tarikh_terima_nilaian", r.unquote(ntarikhTerimaNilaian));
 				r.add("jenis_borangC", keputusanBorangC);
-				
+				r.add("TARIKH_SURATARB", r.unquote(ntarikhsuratARB));
 		        r.add("keputusan_permohonan", penentuanBidangKuasa);
 		        r.add("flag_salinan_arahan",salinan_arahan);
 		        

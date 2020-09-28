@@ -13,7 +13,6 @@ import lebah.portal.AjaxBasedModule;
 import org.apache.log4j.Logger;
 
 import ekptg.helpers.HTML;
-import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
 import ekptg.engine.EmailSender;
 import ekptg.engine.EmailProperty;
@@ -41,6 +40,8 @@ import ekptg.model.htp.online.IOnline;
 import ekptg.model.htp.online.OnlineBean;
 import ekptg.model.htp.pembelian.IPembelian;
 import ekptg.model.htp.pembelian.PembelianBean;
+import ekptg.model.utils.lampiran.ILampiran;
+import ekptg.model.utils.lampiran.LampiranBean;
 
 public class FrmPermohonanPengesahan extends AjaxBasedModule {
 	/**
@@ -64,7 +65,7 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 	String userId = "";
 	private IPenggunaKementerian iPengguna = null;
 	private IOnline iOnline = null;
-	private UserKementerian uk = null;
+//	private UserKementerian uk = null;
 	String idFail = "";
 	FrmSenaraiFailTerimaPohonData fData = null;
 	String idNegeri = "";
@@ -101,11 +102,12 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 	private PfdFail fail = null;
 	private Permohonan permohonan = null;
 	private String readonly = " disabled class = \"disabled\"";
-
+	private String tabId = "";
 	//Pajakan
 	FrmPajakanHeaderData logicHeader = new FrmPajakanHeaderData();
     Vector beanMaklumatPermohonan = null;
-
+    ILampiran iLampiran = null;
+    
 	@Override
 	public String doTemplate2() throws Exception {
 		
@@ -198,30 +200,64 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 			idSuburusan = "99999";
 		}
 		
-    	if(isTab(portal_role,"Gadaian")){
-    		IDURUSAN = "108";   
-    	}else if(isTab(portal_role,"JRP1")){
+		String tabSemasa = request.getRequestURI().substring(request.getRequestURI().lastIndexOf('/')+1,request.getRequestURI().length());
+//		myLog.info("tabId 1="+request.getRequestURI());
+		int iCount = 0;
+		//Permohonan
+		if(tabSemasa.equals("1586518438767") //HQ
+			|| tabSemasa.equals("1365032518280") //Pegawai1349328130099
+			|| tabSemasa.equals("1346119820484") //KPP
+			|| tabSemasa.equals("1349389007777")	//Pengarah
+			|| tabSemasa.equals("1330411830838") //Admin | Pegawai2 - Server 
+			){
+//			myLog.info("tabId Permohonan="+tabId);
+			IDURUSAN = "1,10";	
+		// Pembelian
+		}else if(tabSemasa.equals("1586518438768") 
+		    || tabSemasa.equals("1356483564813") //HQ Pembelian
+		    || tabSemasa.equals("1357181788404") //HQ Pembelian & Penswastaan
+	    	|| tabSemasa.equals("1349323813314") //Pegawai
+	    	//|| tabSemasa.equals("1586518438768") 
+			|| tabSemasa.equals("1524781377540") //KPP
+		|| tabSemasa.equals("1515369861708")	//Pengarah
+    		){
+			IDURUSAN = "2"; 
+		//Gadaian 
+        }else if(tabSemasa.equals("1592343471300") //
+        	|| tabSemasa.equals("1356483564813") //HQ Gadaian
+    		|| tabSemasa.equals("1349328130095") //Pegawai
+			|| tabSemasa.equals("1524781377543") //KPP
+			|| tabSemasa.equals("1515369861707") //Pengarah
+        	){
+    			IDURUSAN = "108";   
+        //JRP
+    	}else if(tabSemasa.equals("1592343471290")
+    		|| tabSemasa.equals("1592293150193") //HQ Pembelian & Penswastaan
+    		){ //HQ Local|
     		IDURUSAN = "14"; 
-    	}else if(isTab(portal_role,"Pajakan")){
+    	//PAJAKAN
+    	}else if(tabSemasa.equals("1592343471299") //HQ Local| 
+        	|| tabSemasa.equals("1349328130101") //Pegawai1 
+			|| tabSemasa.equals("1382002308484") //Pegawai2 - Server 
+			|| tabSemasa.equals("1586518438768") //Pengarah
+			|| tabSemasa.equals("1357114378377") //Admin
+			){
     		IDURUSAN = "3";
-    	}else if(isTab(portal_role,"Perakuan Pembelian") || isTab(portal_role,"Pembelian")){
-    		IDURUSAN = "2";    		
-    	}else if(isTab(portal_role,"Permohonan")){
-    		IDURUSAN = "1,10";
     	}else{
     		IDURUSAN = "1,2,3,10,14,108";    		
     	}
-		myLog.info("IDURUSAN="+IDURUSAN);
+//		myLog.info("IDURUSAN="+IDURUSAN);
 		myLog.info("command="+submit+",mode="+mode);
 
+		FrmSemakan semak = new FrmSemakan();
+		Vector senaraiSemak = null;
+		
 		Vector<?> list = null;
 		vm = PATH+"index.jsp";
 		if("".equals(submit)){
 			vm = PATH+"index.jsp";	   	   
-			list = getIOnline().findFailOnlineUrusan(getParam("txtTajukFail"), getParam("txtNoFail"), idNegeriC, idkementerianC,IDURUSAN);
-			//logic.getSenaraiFailOnline(getParam("txtNoFail"), getParam("txtTajukFail"), idkementerianC, idAgensiC, idNegeriC, idDaerahC, idMukimC,(String)session.getAttribute("_ekptg_user_id"));
-			//15/09/2010
-//			list = getIOnline().findFailOnline(getParam("txtTajukFail"), getParam("txtNoFail"), idNegeriC, idkementerianC);
+			// 2020/09/05|
+			list = getIOnline().findFailOnlineUrusan(getParam("txtTajukFail"), getParam("txtNoFail"), idNegeriC, idkementerianC,IDURUSAN,"-1");
 			isCarian = getParam("txtcarian");
 			myLog.info("isCarian::"+isCarian);
 			if(isCarian.equals("ya")){
@@ -322,19 +358,20 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 			email.sendEmail();  		
 			
 		}else if ("pajakanviewmaklumat".equals(submit)) {	// PAJAKAN
-			idFail = getParam("idfail");
 			vm = PATH+"frmPajakanPengesahan.jsp";
+			idFail = getParam("idfail");
 			logicHeader.setMaklumatPermohonan(idFail);
+			
 			beanMaklumatPermohonan = new Vector();
-
     		beanMaklumatPermohonan = logicHeader.getBeanMaklumatPermohonan();
 			Hashtable hashHeader = (Hashtable) logicHeader.getBeanMaklumatPermohonan().get(0);
-			idNegeri = String.valueOf(hashHeader.get("idNegeri"));
-			String idKementerian = String.valueOf(hashHeader.get("idKementerian"));
 			idAgensi = String.valueOf(hashHeader.get("idAgensi"));
+			idNegeri = String.valueOf(hashHeader.get("idNegeri"));
 			idSuburusan = String.valueOf(hashHeader.get("subUrusan"));
-			String idStatusTanah = String.valueOf(hashHeader.get("idStatusTanah"));
+			String idKementerian = String.valueOf(hashHeader.get("idKementerian"));
 			String idJenisFail = String.valueOf(hashHeader.get("idJenisFail"));
+			String idStatusTanah = String.valueOf(hashHeader.get("idStatusTanah"));
+			
 			this.context.put("selectNegeri",HTML.SelectNegeriByMahkamah("socNegeri", Long.parseLong(idNegeri), " disabled class=disabled", ""));
 			this.context.put("selectKementerian",HTML.SelectKementerian("socKementerian", Long.parseLong(idKementerian), " disabled class=disabled", " onChange=\"doChangeKementerian();\""));
 			this.context.put("selectAgensi",HTML.SelectAgensiByKementerian("socAgensi", idKementerian ,Long.parseLong(idAgensi), " disabled class=disabled", ""));
@@ -345,6 +382,11 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
         	this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
         	MaklumatPermohonanView("view");
         	this.context.put("mode", "view");
+        	
+			semak.mode = mode;
+			senaraiSemak = semak.getSenaraiSemakanAttach("htppajakanmycoid",idPermohonan);
+   			this.context.put("senaraiSemak", senaraiSemak);
+		
 			   		
 		}else if ("pajakanditolak".equals(submit)) {
 			idFail = getParam("idfail");
@@ -409,14 +451,15 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 			
 			htpPermohonan = getIPembelian().findPermohonan(idPermohonan,idHtpPermohonan);
 			viewDetail2();
+			String pageMode = "update";
 			context.put("htpPermohonan", htpPermohonan);
-			context.put("pageMode", "update");
+			context.put("pageMode", pageMode);
 			context.put("inputstyleread", readonly);
 			context.put("page","1");
-			Vector dokumens = getIOnline().getLampiranByPermohonan(String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan()));
-			context.put("senaraidokumen", dokumens);
+//			Vector dokumens = getIOnline().getLampiranByPermohonan(String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan()));
+//			context.put("senaraidokumen", dokumens);
 			
-			getSemakanPerakuanPembelian();
+			getSemakanPengesahan("htpakuanpembelian",semak,String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan()),pageMode);
 
 			   		
 		}else if ("pembelianditolak".equals(submit)) {
@@ -572,6 +615,8 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 			setupPage(session,action,list);
 		}
 		
+		this.context.put("javaScriptLampiran", getDoc().javascriptUpload("", "paparLampiran", "idDokumen",session,"perakuan"));
+
 		this.context.put("idFail", idFail);
 		//2010/09/21
 		//this.context.put("idfail", idfail);
@@ -582,50 +627,11 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 		this.context.put("kodKementerian", getParam("kodKementerian"));
 		this.context.put("kodNegeri", getParam("kodNegeri"));
 		this.context.put("iscarian", isCarian);
-	  return vm;
+		return vm;
 	  
    }
 	//********************************* SENARAI METHOD *******************************************************************
-//	public void setupPage(HttpSession session,String action,Vector list) {
-//		
-//		try {
-//		
-//			this.context.put("totalRecords",list.size());
-//			int page = getParam("page") == "" ? 1:getParamAsInteger("page");
-//			
-//			int itemsPerPage;
-//			if (this.context.get("itemsPerPage") == null || this.context.get("itemsPerPage") == "") {
-//				itemsPerPage = getParam("itemsPerPage") == "" ? 10:getParamAsInteger("itemsPerPage");
-//			} else {
-//				itemsPerPage = (Integer)this.context.get("itemsPerPage");
-//			}
-//		    
-//		    if ("getNext".equals(action)) {
-//		    	page++;
-//		    } else if ("getPrevious".equals(action)) {
-//		    	page--;
-//		    } else if ("getPage".equals(action)) {
-//		    	page = getParamAsInteger("value");
-//		    } else if ("doChangeItemPerPage".equals(action)) {
-//		       itemsPerPage = getParamAsInteger("itemsPerPage");
-//		    }
-//		    	
-//		    Paging paging = new Paging(session,list,itemsPerPage);
-//			
-//			if (page > paging.getTotalPages()) page = 1; //reset page number
-//				this.context.put("SenaraiFail",paging.getPage(page));
-//			    this.context.put("page", new Integer(page));
-//			    this.context.put("itemsPerPage", new Integer(itemsPerPage));
-//			    this.context.put("totalPages", new Integer(paging.getTotalPages()));
-//			    this.context.put("startNumber", new Integer(paging.getTopNumber()));
-//			    this.context.put("isFirstPage",new Boolean(paging.isFirstPage()));
-//			    this.context.put("isLastPage", new Boolean(paging.isLastPage()));
-//	        
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			this.context.put("error",e.getMessage());
-//		}	
-//	}
+
 	//VIEW PENDAFTARAN PERLETAHAKAN BY ID FAIL
 	private void viewPendaftaranPerletakhakanByIdFail(String actionPerletakhakan,String idFail) throws Exception {
 		
@@ -937,17 +943,36 @@ public void doSimpanMaklumatAsasTanah() throws Exception {
 	private boolean isTab(String role, String tab) throws Exception {
 		boolean returnValue = false;
 		Utils utils = new Utils();
-		if(!utils.getTabID(tab,role).equals(""))
+		tabId = utils.getTabID(tab,role);
+		if(!tabId.equals("")) {
 			returnValue = true;
 			//myLog.info(utils.getTabID(tab,role));
+		}
 		return returnValue;
 		
 	}
 	
-	private void getSemakanPerakuanPembelian()throws Exception{
-		context.put("semakclass", new FrmSemakan());
-		Vector semakList = FrmSemakan.getSenaraiSemakan("frmPajakanSemakan");
-		context.put("perakuanPembelian", semakList);
+	private String tabs(String role, String tab) throws Exception {
+		String returnValue = "";
+		Utils utils = new Utils();
+		//tabId = utils.getTabID(tab,role);
+		//if(!tabId.equals("")) {
+			//returnValue = true;
+			//myLog.info(utils.getTabID(tab,role));
+			returnValue = utils.getTabID(tab,role);
+		//}
+		return returnValue;
+		
+	}
+	
+	private void getSemakanPengesahan(String jenisSemak,FrmSemakan semak,String idPermohonan,String mode)throws Exception{
+		semak.mode = mode;
+		Vector senaraiSemak = semak.getSenaraiSemakanAttach(jenisSemak,idPermohonan);
+		this.context.put("senaraiSemak", senaraiSemak);
+
+//		context.put("semakclass", new FrmSemakan());
+//		Vector semakList = FrmSemakan.getSenaraiSemakan("frmPajakanSemakan");
+//		context.put("perakuanPembelian", semakList);
 	}
 	
 	private IHtp getHTP(){
@@ -972,6 +997,13 @@ public void doSimpanMaklumatAsasTanah() throws Exception {
 		return iStatus;
 		
 	}
-
+	
+	private ILampiran getDoc(){
+		if(iLampiran == null){
+			iLampiran = new LampiranBean();
+		}
+		return iLampiran;
+				
+	}
 	
 }

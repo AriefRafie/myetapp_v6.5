@@ -1,5 +1,6 @@
 <link rel="stylesheet" type="text/css" href="../../css/eTapp_PPT.css" />
- 
+
+
 #set($noPengenalanPemohon = "")
 
 #set($jenisPengenalan = "")
@@ -18,6 +19,7 @@
    	#set ($id_negeri=$senarai.id_negeri)
     #set ($txtNamaNegeri=$senarai.nama_negeri)
     #set ($txtUmur=$senarai.umur)
+    #set ($nopb=$senarai.nopb)
     #set ($jenis_pembantah=$senarai.jenis_pembantah)
 
  	#set ($id_bantahan=$senarai.id_bantahan)
@@ -45,6 +47,17 @@
 #set($labelPem = "Perayu")
 #set($labelResp = "Responden")
 
+  
+ #if($nopb=="1" || $nopb=="3" || $nopb=="5" || $nopb=="7" || $nopb=="9")
+ 	#set ($jantina = "M")
+ #else
+ 	#set ($jantina = "F")
+ #end
+ 
+ 
+ <p>
+ <input type="hidden"   name="jenisRef" id="jenisRef" value="$!jenisRef">
+ </p>
 <body>
 	<!-- <form name="f1"> -->
 		<fieldset><legend><font style="font-family:Verdana; font-size:8pt;	font-weight:bold;">BUTIRAN TERPERINCI PERMOHONAN</font></legend>			
@@ -101,19 +114,24 @@
 						#end
 		       			 <tr>
 					          <td width="1%"></td>
-					          <td>Jantina</td>
+					          <td>Jantina<font color="red">*</font></td>
 					          <td>:</td>
 					          <td colspan="2">
-					          	<select name="jantina" id="jantina" class="mediumselect" style="text-transform:uppercase;" onChange="semakUmur();" $!classRead>
+		
+					            #if($!jantina != "0")
+					              	<input type="text" name="jantina" id="jantina" value="$!jantina" size="20" maxlength="20" tabindex="12" class="disabled" readonly/>					         
+					            #else
+					          	<select name="jantina" id="jantina"  class="mediumselect" style="text-transform:uppercase;" onChange="semakUmur();" $!classRead>
                                		<option value="U" style="text-transform:uppercase;" onblur="uppercase();">Sila Pilih Jantina</option>
                                    	<option value="M" $!janLaki style="text-transform:uppercase;" onblur="uppercase()">Lelaki</option>
                                  	<option value="F" $!janPer style="text-transform:uppercase;" onblur="uppercase()">Perempuan</option>
                                 </select>
+                                #end
 					          </td>
 					        </tr>  
 		       			 	<tr>
 					          <td width="1%"></td>
-					          <td>Umur</td>
+					          <td>Umur<font color="red">*</font></td>
 					          <td>:</td>
 					          <td colspan="2">
 					          #if($!txtUmur != "0")
@@ -380,7 +398,7 @@
 		var bilangan = 0; 
 		
 		//alert(bilangan);
-		
+		//alert($jenisRef);
 		if(document.${formName}.jeniskp.value == "" && "$!jenis_pembantah" == "0"){
 			alert('Sila pastikan maklumat Perayu diisi.');
 	  		//document.${formName}.umur.focus(); 
@@ -388,12 +406,7 @@
 			
 		}
 		
-		if('$jenisRef' == '1' 
-			||'$jenisRef' == '3' 
-			||'$jenisRef' == '4' 
-			||'$jenisRef' == '5' 
-			||'$jenisRef' == '6' 
-			||'$jenisRef' == '11' ){
+		if('$jenisRef' == '1' ||'$jenisRef' == '3' ||'$jenisRef' == '4' ||'$jenisRef' == '5' ||'$jenisRef' == '6' ||'$jenisRef' == '11' ){
 			if(document.${formName}.jantina.value == "U"){
 				alert('Sila pastikan maklumat Jantina $!labelPem telah dipilih.');
 		  		document.${formName}.jantina.focus(); 

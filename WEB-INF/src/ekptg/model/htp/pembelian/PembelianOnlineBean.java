@@ -188,7 +188,5 @@ public class PembelianOnlineBean implements IPembelianOnline {
 		}
 		return htpPermohonan;
 		
-	}	
-
-	
-}
+	}		
+}//close here

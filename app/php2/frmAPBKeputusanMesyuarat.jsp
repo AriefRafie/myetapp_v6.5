@@ -10,7 +10,7 @@
     <td valign="top">&nbsp;</td>
     <td valign="top">Ulasan</td>
     <td valign="top">:</td>
-    <td valign="top"><textarea name="txtUlasanMesyuarat" id="txtUlasanMesyuarat" rows="9" cols="65" $readonly class="$inputTextClass"  onChange="trimUlasan(this.form.txtUlasanMesyuarat)">$beanMaklumatMesyuarat.ulasanMesyuarat</textarea></td>
+    <td valign="top"><textarea name="txtUlasanMesyuarat" id="txtUlasanMesyuarat" rows="9" cols="65" $readonly class="$inputTextClass"  onChange="trimUlasan(this.form.txtUlasanMesyuarat)">$beanMaklumatMesyuarat.catatanKeputusan</textarea></td>
   </tr>
   #if ($mode != 'view')
   <tr>

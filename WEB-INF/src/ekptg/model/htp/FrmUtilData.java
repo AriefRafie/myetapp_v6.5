@@ -3689,7 +3689,7 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 			String currentDate = sdf.format(date);
 			String sql = "";
 			String idHakmilik = "";
-			//modified by rosli on 07/06/2010, romove comment
+			//modified by rosli on 07/06/2010, remove comment
 			try{
 				idHakmilik = String.valueOf(DB.getNextID(db,"TBLHTPHAKMILIK_SEQ"));
 				Statement stmt = db.getStatement();
@@ -3701,7 +3701,7 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 				r.add("ID_DAERAH", data.get("socDaerahHR"));
 				r.add("ID_MUKIM", data.get("socMukimHR"));
 				r.add("ID_JENISHAKMILIK", data.get("socJenisHakmilikHR"));
-				    //add by rosli format 0000000
+				//add by rosli format 0000000
 				//r.add("NO_HAKMILIK", data.get("txtNoHakmilik"));
 				//String ph = ""+data.get("socNegeriHR")+data.get("socDaerahHR")+data.get("socMukimHR")+data.get("socKodJenisHakmilikHR")+data.get("txtNoHakmilik");
 				//comment on 07/06/2010
@@ -3759,7 +3759,8 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 				r.add("SEKATAN", data.get("txtSekatan"));	  
 				r.add("SYARAT", data.get("txtSyarat"));	  
 				r.add("HAKMILIK_BERIKUT", data.get("txtHakmilikBerikut"));
-				r.add("STATUS_SAH", data.get("socStatus"));
+				if(!data.get("socStatus").equals(""))
+					r.add("STATUS_SAH", data.get("socStatus"));
 				//convert date before add
 				//String tarikhKemaskini = currentDate;
 				//String txdTarikhKemaskini = "to_date('" + tarikhKemaskini + "','dd/MM/yyyy')";		    	  

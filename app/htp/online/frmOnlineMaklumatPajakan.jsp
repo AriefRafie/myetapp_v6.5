@@ -445,7 +445,7 @@ function doHapus(){
 		return;
 	}
 	document.${formName}.hitButton.value = "doHapus";
-	document.${formName}.actionPajakan.value = "paparMaklumatPajakan";
+	document.${formName}.actionPajakan.value = "";
 	doAjaxCall${formName}("");
 }
 

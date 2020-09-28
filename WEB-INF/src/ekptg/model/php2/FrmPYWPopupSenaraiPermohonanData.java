@@ -23,7 +23,7 @@ public class FrmPYWPopupSenaraiPermohonanData {
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-	public void carianFail(String idJenisPermohonan) throws Exception {
+	public void carianFail(String noFail, String idJenisPermohonan, String namaPemohon) throws Exception {
 		Db db = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		String sql = "";
@@ -40,12 +40,20 @@ public class FrmPYWPopupSenaraiPermohonanData {
 					+ " AND ID_URUSAN IN (7,12,13) AND B.FLAG_PERJANJIAN = 'U' AND B.ID_STATUS = '1610201'"
 					+ " AND B.ID_PERMOHONAN NOT IN (SELECT ID_PERMOHONAN FROM TBLPHPMESYUARATPERMOHONAN WHERE FLAG_JENIS_PERMOHONAN = 'B')";
 			
+			if (noFail != "") {
+				sql = sql + " AND A.NO_FAIL LIKE '%"+noFail+ "%'";
+			}
+			
 			if (idJenisPermohonan != null) {
 				if (!idJenisPermohonan.trim().equals("")
 						&& !idJenisPermohonan.trim().equals("99999")) {
 					sql = sql + " AND D.ID_JENIS_PERMOHONAN = '"
 							+ idJenisPermohonan.trim() + "'";
 				}
+			}
+			
+			if (namaPemohon != "") {
+				sql = sql + " AND C.NAMA LIKE '%"+namaPemohon+ "%'";
 			}
 			
 			sql = sql + " ORDER BY A.TARIKH_DAFTAR_FAIL DESC";

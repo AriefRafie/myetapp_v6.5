@@ -76,7 +76,7 @@
         						<tr>
 						      		<td width="1%"><span class="labelmandatory">##if($pageMode!="update")*#end
 						      		</span></td>
-					        		<td width="30%"><div align="left">No. Fail Seksyen</div></td>
+					        		<td width="30%"><div align="left">No. Fail</div></td>
 					        		<td width="1%"><div align="center">:</div></td>
 					        		<td width="68%">
 					        			<!-- <input type="text" name="txtNoFailSek" size="28" value="$!htpPermohonan.permohonan.pfdFail.noFail" readonly="readonly" $inputstyleread>
@@ -141,43 +141,39 @@
 	<tr>
 		<td>
 			<fieldset>
-			<legend><strong>SENARAI DOKUMEN YANG DISERTAKAN</strong></legend>
+			<legend><strong>SENARAI SEMAK/ DOKUMEN YANG DISERTAKAN</strong></legend>
 			<table width="100%">
-				
-			<tr>
-				<tr class="table_header">
-					<td scope="col" width="3%">Bil.</td>
-					<td scope="col" width="27%">Nama Dokumen</td>
-					<td scope="col" width="60%">Keterangan</td>
-					<td scope="col" width="10%">Muat Turun</td>
+				<tr class="row2">
+					<td width="3%"><b>Bil</b></td>
+					<td width="75%"><b>Keterangan</b></td>
+					<td width="25%"><b>Dokumen</b></td>
+			  	</tr> 
+		#set ( $checked = "" )
+		#foreach ( $semak in $SenaraiSemak )
+			#set( $i = $velocityCount )
+			#if ( ($i % 2) == 0 )
+				set( $row = "row2" )
+			#else
+				#set( $row = "row1" )
+			#end
+
+        		#if($semak.flag == 'Y')
+        			#set($checked = 'checked')
+					#set($disabled = 'disabled')
+        		#else
+        			#set($checked = '')
+        		#end			
+					        ##if($semak.aturan==1)
+				<tr>
+						<td class="$row" width="3%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsenaraisemak" $checked /></td>
+		          		<td class="$row" width="82%">$i. $semak.keterangan</td>
+		          		<td class="$row" width="15%">
+		          			$!list.lampirans
+		          		</td>	
 				</tr>
-				
-				#set ( $cnt = 0 )
- 			   	#if ($senaraidokumen.size() > 0)
- 			    
- 			    #foreach($mo in $senaraidokumen)
-				    #set ( $cnt = $cnt + 1 )
-				    #if ($senarai.bil == '')
-				    #set( $row = "row1" )
-				    #elseif (($senarai.bil % 2) != 0)
-				    #set( $row = "row1" )
-				    #else 
-				    #set( $row = "row2" )
-				    #end
-					<tr>
-					  <td class="$row">$cnt.</td>
-					  <td class="$row">$!mo.perihal</td>
-					  <td class="$row">$!mo.keterangan</td>
-					  <td class="$row"><a href="javascript:javascript:cetakImej($mo.idLampiran)" class="pautanms">$!mo.namaFail</a></td>
-			    	</tr>
-			     #end
-				
-				 #else
-				   	<tr>
-    					<td colspan="4" class="row1">Tiada rekod.</td>
-  					</tr>
-				 
-			     #end
+        					##end
+        		       ##end
+ 		#end
 			
 			</table>
 			</fieldset>
@@ -190,7 +186,7 @@
 				<input class="stylobutton" type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="simpanFail()">
 				<input class="stylobutton" type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doAjaxCall${formName}('indexPage')">
 			#elseif($pageMode=="update")
-				<input class="stylobutton100" type="button" onclick="javascript:pembelianTerima($!idFail);" value="Simpan & Email 2" />
+				<input class="stylobutton100" type="button" onclick="javascript:pembelianTerima('$!idFail');" value="Simpan & Email" />
 				<!-- <input class="stylobutton" type="button" onclick="javascript:pembelianTolak($!idFail);" value="Tolak" /> -->
           	#else
           		<input class="stylobutton100" type="button" onclick="javascript:pembelianViewMaklumatOnline('$!htpPermohonan.permohonan.getIdPermohonan()','$!htpPermohonan.getIdHtpPermohonan()');" value="Seterusnya" />
@@ -209,27 +205,26 @@
 <input type="hidden" name="txtidHtpPermohonan" value="$!htpPermohonan.getIdHtpPermohonan()"/>
 <input type="hidden" name="pageMode" value="$!pageMode">
 
-
 	
 	<script>
-	function cetakImej(id){
-		//var url = "../servlet/ekptg.view.htp.FrmRekodDisplayImej?id="+id;
-	    var url = "../servlet/ekptg.view.pfd.DisplayBlob?id="+id;
-	    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
-	    if ((document.window != null) && (!hWnd.opener))
-		hWnd.opener=document.window;
-	    if (hWnd.focus != null) hWnd.focus();
-	}
+		function cetakImej(id){
+			//var url = "../servlet/ekptg.view.htp.FrmRekodDisplayImej?id="+id;
+		    var url = "../servlet/ekptg.view.pfd.DisplayBlob?id="+id;
+		    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+		    if ((document.window != null) && (!hWnd.opener))
+			hWnd.opener=document.window;
+		    if (hWnd.focus != null) hWnd.focus();
+		}
 /* 	function pembelianTerima(id){
 		var mode = 'viewMaklumatPermohonan';
 		doAjaxCall${formName}("pembelianditerima","mode="+mode+"&idfail="+id+"&pagemode=0");
 	} */
-function pembelianTerima(id){
-	var mode = 'pembelianditerima';
-	//doAjaxCall${formName}("pajakanditerima","mode="+mode+"&idfail="+id+"&pagemode=0");
-	document.${formName}.command.value = mode;
-	document.${formName}.actionPajakan.value = "";
-	document.${formName}.action = "$EkptgUtil.getTabID('Pembelian',$portal_role)?_portal_module=ekptg.view.online.htp.FrmPermohonanPengesahan&actionPerletakhakan=papar&idfail="+id;
-	document.${formName}.submit();
-}
+		function pembelianTerima(id){
+			var mode = 'pembelianditerima';
+			//doAjaxCall${formName}("pajakanditerima","mode="+mode+"&idfail="+id+"&pagemode=0");
+			document.${formName}.command.value = mode;
+			//document.${formName}.actionPajakan.value = "";
+			document.${formName}.action = "$EkptgUtil.getTabID('Pembelian',$portal_role)?_portal_module=ekptg.view.htp.online.FrmPermohonanPengesahan&actionPerletakhakan=papar&idfail="+id;
+			document.${formName}.submit();
+		}
 	</script>

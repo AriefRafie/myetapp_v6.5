@@ -61,14 +61,15 @@ public class FrmPYWPopupSenaraiPermohonanView extends AjaxBasedModule {
 			
 	    	
 	    } else {
-	    	
+	    	String carianNoFail = getParam("txtCarianNoFail");
 	    	// DROP DOWN CARIAN
 	    	String idJenisPermohonan = getParam("socJenisPermohonan");
 	    	if (idJenisPermohonan == null || idJenisPermohonan.trim().length() == 0) {
 	    		idJenisPermohonan = "99999";
 	    	}
-	    	
-	    	logic.carianFail(idJenisPermohonan);
+	    	String carianNamaPemohon = getParam("txtCarianNamaPemohon");
+
+	    	logic.carianFail(carianNoFail,idJenisPermohonan,carianNamaPemohon);
 	    	
 	    	//GO TO LIST TANAH        	
         	vm = "app/php2/frmPYWPopupSenaraiPermohonan.jsp";  

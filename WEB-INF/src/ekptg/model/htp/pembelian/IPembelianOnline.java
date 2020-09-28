@@ -10,4 +10,4 @@ public interface IPembelianOnline {
 	
 	public HtpPermohonan kemaskiniPermohonan(HtpPermohonan htpPermohonan,String ipPermohonan,String idHtpPermohonan)throws Exception;
 	
-}
+}//close here

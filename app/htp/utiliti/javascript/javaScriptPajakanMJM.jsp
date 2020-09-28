@@ -42,7 +42,7 @@
 
 	}
 	function cetakSuratSetujuTerima(idpermohonan) {
-	    var url = "../servlet/ekptg.report.htp.NoFailTajukFail?template=SuratSetujuTerima&idpermohonan="+idpermohonan;
+	    var url = "../servlet/ekptg.report.htp.NoFailTajukFail?template=HTPajakanJawapanPermohonan&idpermohonan="+idpermohonan;
 	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -50,7 +50,7 @@
 
 	}
 	function cetakSuratTawaran(idpermohonan) {
-	    var url = "../servlet/ekptg.report.htp.NoFailTajukFail?template=SuratTawaran&idpermohonan="+idpermohonan;
+	    var url = "../servlet/ekptg.report.htp.NoFailTajukFail?template=HTPajakanJawapanPermohonan&idpermohonan="+idpermohonan;
 	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;

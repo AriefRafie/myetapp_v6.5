@@ -197,8 +197,8 @@
           <!-- END KEHADIRAN -->
           <!-- START SENARAI PERMOHONAN -->
           <div class="TabbedPanelsContent">
-          	<table>
-          		<tr>
+          	<table width="100%" border="0" cellspacing="2" cellpadding="2">
+          	          		<tr>
 					<td colspan="5" scope="row">
 					#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
 						#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
@@ -207,8 +207,6 @@
 					#end
 					</td>
 				</tr>
-			</table>
-          	<table width="100%" border="0" cellspacing="2" cellpadding="2">
           		<tr>
 			  		<td><fieldset>
       					<legend><strong>SENARAI PERMOHONAN BAHARU</strong></legend>
@@ -241,10 +239,12 @@
 					        #end
 					        <tr>
 					          <td class="$row" align="center">$senaraiFailMohonBaru.bil</td>
-					          <td class="$row">$senaraiFailMohonBaru.noFailPermohonan</td>
+					          ##<td class="$row"><a href="javascript:paparRingkasanPertimbangan('$senaraiFailMohonBaru.idPermohonan')" class="style2">$senaraiFailMohonBaru.noFailPermohonan</a></td>
+					          <td class="$row"><a href="javascript:doCetakKertasPertimbangan('$senaraiFailMohonBaru.idFail')" class="style2">$senaraiFailMohonBaru.noFailPermohonan</a></td>
 					          <td class="$row" align="center">$senaraiFailMohonBaru.jenisPermohonan</td>
 					          <td class="$row">$senaraiFailMohonBaru.namaPemohon</td>
-					          <td class="$row" align="center"><a href="#" class="style2" onClick="doCetakKertasPertimbangan('$senaraiFailMohonBaru.idFail')">
+					          ##<td class="$row" align="center"><a href="#" class="style2" onClick="doCetakKertasPertimbangan('$senaraiFailMohonBaru.idFail')">
+                      		  <td class="$row" align="center"><a href="#" class="style2" onClick="javascript:paparRingkasanPertimbangan('$senaraiFailMohonBaru.idPermohonan')">
                       		  <img border="0" src="../img/print.gif"/></a></td>
 					          <td class="$row" align="center">
 					          		#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
@@ -330,7 +330,7 @@
 					        #end
 					        <tr>
 					          <td class="$row" align="center">$senaraiFailMohonLanjut.bil</td>
-					          <td class="$row">$senaraiFailMohonLanjut.noFailPermohonan</td>
+					          <td class="$row"><a href="javascript:paparRingkasanPertimbangan('$senaraiFailMohonLanjut.idPermohonan')" class="style2">$senaraiFailMohonLanjut.noFailPermohonan</a></td>
 					          <td class="$row" align="center">$senaraiFailMohonLanjut.jenisPermohonan</td>
 					          <td class="$row">$senaraiFailMohonLanjut.namaPemohon</td>
 					          <td class="$row" align="center"><a href="#" class="style2" onClick="doCetakKertasPertimbangan('$senaraiFailMohonLanjut.idFail')">
@@ -806,6 +806,14 @@ function hapusMesyuarat(idMesyuarat){
 	document.${formName}.actionMesyuarat.value = "";
 	document.${formName}.mode.value = "";
 	document.${formName}.submit();
+}
+function paparRingkasanPertimbangan(idPermohonan) {
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmPYWPopupRingkasanPertimbanganView?idPermohonan="+idPermohonan;
+    var hWnd = window.open(url,'printuser','width=1100,height=430, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
 }
 
 </script>

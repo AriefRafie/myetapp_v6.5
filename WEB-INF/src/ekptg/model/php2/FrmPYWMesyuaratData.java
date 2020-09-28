@@ -32,7 +32,7 @@ public class FrmPYWMesyuaratData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_MESYUARAT, A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.FLAG_SYOR"
+			sql = "SELECT A.ID_MESYUARAT, A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, B.FLAG_SYOR"
 					+ " FROM TBLPHPMESYUARAT A, TBLPHPMESYUARATPERMOHONAN B WHERE A.ID_MESYUARAT = B.ID_MESYUARAT"
 					+ " AND B.ID_PERMOHONAN = '"
 					+ idPermohonan + "'";

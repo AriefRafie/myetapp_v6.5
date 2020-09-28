@@ -44,7 +44,8 @@ padding:0 0.25em;
 -->
 </style>
 <script type="text/javascript" src="../../library/js/jquery-1.8.0.js"></script>
-
+<script>var $jquery=jQuery.noConflict();</script>
+  
 <link rel="stylesheet" type="text/css" href="../../css/eTapp_HTP.css" />
    <input type="hidden" name="report" id="report" value="$!report"/>
    <input type="hidden" name="idpermohonan" id="idpermohonan" value="$!idpermohonan"/>   

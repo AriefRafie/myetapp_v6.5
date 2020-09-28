@@ -811,6 +811,7 @@ public class PembelianBean implements IPembelian {
 		    sql = r.getSQLInsert("Tblhtphakmilikurusan");
 		    
 		    stmt.executeUpdate(sql);
+		    myLog.info("Tblhtphakmilikurusan========"+sql);
 		    conn.commit();
 		}
 		catch(Exception e){
