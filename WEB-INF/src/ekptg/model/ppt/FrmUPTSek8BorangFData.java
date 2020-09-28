@@ -600,9 +600,14 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 	    		sql += "  )AS TARIKH_BORANGE ";
 
 //	    		PPT-06	Jenis Waktu
-	    		sql += " ,(SELECT CASE WHEN A1.JENIS_WAKTU = '1' THEN 'PAGI' ";  
-	    		sql += " WHEN A1.JENIS_WAKTU = '2' THEN 'TENGAHARI' ";
-	    		sql += " ELSE 'MALAM' " ; 
+	    		sql += " ,(SELECT CASE WHEN A1.JENIS_WAKTU = '1' THEN 'PAGI'" ; 
+	    		sql += " WHEN A1.JENIS_WAKTU = '2' THEN 'TENGAHARI' " ; 
+	    		sql += " WHEN A1.JENIS_WAKTU = '3' THEN 'PETANG' "; 
+	    		sql += " WHEN B1.JENIS_WAKTU = '0' THEN 'SILA PILIH' " ;
+	    		sql += " WHEN B1.JENIS_WAKTU = '1' THEN 'PAGI' " ;
+	    		sql += " WHEN B1.JENIS_WAKTU = '2' THEN 'TENGAHARI' " ; 
+	    		sql += " WHEN B1.JENIS_WAKTU = '3' THEN 'PETANG' " ;
+	    		sql += " ELSE B1.JENIS_WAKTU ";  	  
 	    		sql += " END AS JW FROM	TBLPPTHAKMILIK M1, TBLPPTBORANGEHAKMILIK A1, TBLPPTBORANGE B1 ";
 	    		sql += " WHERE A1.ID_HAKMILIK = M1.ID_HAKMILIK ";
 	    		sql += " AND A1.ID_BORANGE = B1.ID_BORANGE ";
@@ -610,7 +615,9 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 	    		sql += " )AS JENIS_WAKTU ";
 	    		
 //	    		PPT-06 Masa Siasatan
-	    		sql += " ,(SELECT DISTINCT A1.MASA_SIASATAN AS MS FROM TBLPPTHAKMILIK M1, TBLPPTBORANGEHAKMILIK A1, TBLPPTBORANGE B1 ";
+	    		sql += " ,(SELECT DISTINCT CASE " ; 
+	    		sql += " WHEN A1.MASA_SIASATAN IS NULL THEN B1.MASA_SIASATAN ELSE A1.MASA_SIASATAN " ;
+	    		sql += " END AS MS FROM TBLPPTHAKMILIK M1, TBLPPTBORANGEHAKMILIK A1, TBLPPTBORANGE B1 ";
 	    		sql += " WHERE A1.ID_HAKMILIK = M1.ID_HAKMILIK ";
 	    		sql += " AND A1.ID_BORANGE = B1.ID_BORANGE ";
 	    		sql += " AND M1.ID_HAKMILIK = M.ID_HAKMILIK ";
@@ -641,7 +648,7 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 	    		
 	    		sql += " ORDER BY NO_SUBJAKET_NUM ASC";
 	    		
-	    		myLogger.info("sql[listHakmilikBorangEInBulk] : "+sql);
+	    		myLogger.info("sql SENARAI [listHakmilikBorangEInBulk] : "+sql);
 	    		
 	    		ResultSet rs = stmt.executeQuery(sql);
 	     
@@ -803,7 +810,12 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 	    		db = new Db();
 	    		Statement stmt = db.getStatement();
 	      
-	    		sql =  " SELECT DISTINCT A.ID_HAKMILIK, A.MASA_SIASATAN, CASE WHEN A.JENIS_WAKTU = '1' THEN 'PAGI' WHEN A.JENIS_WAKTU = '2' THEN 'TENGAHARI' ELSE 'MALAM' END AS JENIS_WAKTU, B.ID_BORANGE, B.TARIKH_BORANGF, B.TARIKH_BORANGE, B.TARIKH_SIASATAN,  "; // B.MASA_SIASATAN, B.JENIS_WAKTU,
+	    		sql =  " SELECT DISTINCT A.ID_HAKMILIK, CASE WHEN A.MASA_SIASATAN IS NULL THEN B.MASA_SIASATAN END AS MASA_SIASATAN, "; 
+	    		sql += " CASE WHEN A.JENIS_WAKTU = '1' THEN 'PAGI' "; 
+	    		sql += " WHEN A.JENIS_WAKTU = '2' THEN 'TENGAHARI' ";
+	    		sql += " WHEN A.JENIS_WAKTU = '3' THEN 'MALAM' ";
+	    		sql += " ELSE B.JENIS_WAKTU "; 
+	    		sql += " END AS JENIS_WAKTU, B.ID_BORANGE, B.TARIKH_BORANGF, B.TARIKH_BORANGE, B.TARIKH_SIASATAN,  "; // B.MASA_SIASATAN, B.JENIS_WAKTU,
 				sql += " B.ALAMAT1, B.ALAMAT2, B.ALAMAT3, B.POSKOD, B.ID_BANDAR, B.ID_NEGERI, B.TARIKH_CETAK, B.TARIKH_AKHIR_TAMPAL ";
 	    		sql += " FROM TBLPPTBORANGEHAKMILIK A, TBLPPTBORANGE B, TBLPPTHAKMILIK C ";
 	    		sql += " WHERE A.ID_BORANGE = B.ID_BORANGE ";
