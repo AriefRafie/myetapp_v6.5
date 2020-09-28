@@ -17,28 +17,33 @@ import org.apache.log4j.Logger;
 import ekptg.helpers.Utils;
 
 public class UpdateUserProfileModule extends AjaxBasedModule{
-  static Logger myLog = Logger.getLogger(UpdateUserProfileModule.class);
-  private String user_name = "";
-  private String user_password ="";
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -981199404771733782L;
+	static Logger myLog = Logger.getLogger(UpdateUserProfileModule.class);
+	private String user_name = "";
+	private String user_password ="";
   
-  public String doTemplate2() throws Exception {
-    HttpSession session = this.request.getSession();
-    doJob(session);
-    String template = "vtl/admin/updateuserprofileKJP.vm";
-    return template;
-  }
+	public String doTemplate2() throws Exception {
+	    HttpSession session = this.request.getSession();
+	    doJob(session);
+	    String template = "vtl/admin/updateuserprofileKJP.vm";
+	    return template;
+	  
+	}
 
-  private void doJob(HttpSession session) throws Exception{
-    String userId = (String)session.getAttribute("_ekptg_user_id");
-    this.context.put("operation", "");
-    String submit = getParam("command");
-
-    String user_type = (String)session.getAttribute("_ekptg_user_type");
-    String user_login = (String)session.getAttribute("_portal_login");
-    String user_id = (String)session.getAttribute("_ekptg_user_id");
-    myLog.info("user_type:"+user_type);
-    myLog.info("user_login:"+user_login);
-    myLog.info(user_id);
+	private void doJob(HttpSession session) throws Exception{
+	    String userId = (String)session.getAttribute("_ekptg_user_id");
+	    this.context.put("operation", "");
+	    String submit = getParam("command");
+	
+	    String user_type = (String)session.getAttribute("_ekptg_user_type");
+	    String user_login = (String)session.getAttribute("_portal_login");
+	    String user_id = (String)session.getAttribute("_ekptg_user_id");
+//    	myLog.info("user_type:"+user_type);
+//    	myLog.info("user_login:"+user_login);
+//    	myLog.info(user_id);
     
     if ("update".equals(submit)){
       this.context.put("operation", "update");
@@ -88,15 +93,15 @@ public class UpdateUserProfileModule extends AjaxBasedModule{
     String nama_negeri = user.getNama_negeri();
 //
 //    if ("internal".equals(user_type)) {
-      String nama_seksyen = user.getNama_seksyen();
+    String nama_seksyen = user.getNama_seksyen();
 //      String nama_daerah = user.getNama_daerah();
-      String nama_pejabat = user.getNama_pejabat();
+    String nama_pejabat = user.getNama_pejabat();
 //      String nama_jawatan = user.getNama_jawatan();
 //      String id_pejabatjkptg = user.getId_pejabatjkptg();
 //      String daerah_jagaan = PrepareUser.getDaerahJagaan(id_pejabatjkptg);
-      this.context.put("nama_seksyen", nama_seksyen);
+    this.context.put("nama_seksyen", nama_seksyen);
 //      this.context.put("nama_daerah", nama_daerah);
-      this.context.put("nama_pejabat", nama_pejabat);
+    this.context.put("nama_pejabat", nama_pejabat);
 //      this.context.put("nama_jawatan", nama_jawatan);
 //      this.context.put("daerahJagaan", daerah_jagaan);
 //    }
@@ -177,7 +182,7 @@ public class UpdateUserProfileModule extends AjaxBasedModule{
       }
       return user;
       
-    }
+  }
   
   public static String getTheme(String usrlogin) throws Exception {
 	    String theme = "";
@@ -188,7 +193,7 @@ public class UpdateUserProfileModule extends AjaxBasedModule{
 	      Statement stmt = db.getStatement();
 
 	      sql = "SELECT u.css_name FROM user_css u, page_css p WHERE u.css_name = p.css_name AND user_login = '" + 
-	        usrlogin + "'";
+	    		  usrlogin + "'";
 	      ResultSet rs = stmt.executeQuery(sql);
 	      if(rs.next()){
 	          theme = rs.getString("css_name");
@@ -198,7 +203,7 @@ public class UpdateUserProfileModule extends AjaxBasedModule{
 	    } finally {	if (db != null) db.close();	}
 	    return theme;
 	    
-	  }
+  }
   
   
 }
