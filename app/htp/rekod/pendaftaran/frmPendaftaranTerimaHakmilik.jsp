@@ -105,6 +105,20 @@
  								$txtNamaMukim
   							</td>
                 		</tr>
+                		<tr>
+  							<td width="1%"  >
+  								<span class="labelmandatory">#if ($mode != 'doView' && $mode != 'view') * #end </span>
+				        	</td>				        
+                        	<td width="30%">
+                            	<div align="left">
+                            		<span class="labelinput">Seksyen</span>
+                            	</div>
+                        	</td>
+                  			<td width="1%" class="labelinput" >:</td>
+                   			<td width="68%" class="labelinput" >
+ 								$!socseksyen
+  							</td>
+                		</tr>
 
                  	</table>
            		</td>

@@ -63,7 +63,7 @@ public class UtilHTMLPilihanSeksyenUPI implements IUtilHTMLPilihan{
 	
 	public static Vector<Hashtable<String,String>> getSeksyen(String idMukim) throws Exception {
 		Db db = null;
-		String sql = "select id_seksyenupi,kod_seksyenupi,nama_seksyenupi" + " from tblrujseksyenupi ";
+		String sql = "select distinct id_seksyenupi,kod_seksyenupi,nama_seksyenupi" + " from tblrujseksyenupi ";
 		if(!idMukim.equals("0"))
 			sql += " where id_mukim="+ idMukim;
 		

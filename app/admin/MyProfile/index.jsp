@@ -809,7 +809,18 @@ function valEditPenggunaOnline(internalType,user_id)
 		document.getElementById("TARIKH_LAHIR_"+internalType+user_id).focus();
 		bool_check = false;
 		}
-		
+		else if(document.getElementById("NO_HP_"+internalType+user_id).value=="")
+		{
+		alert("Masukkan No. HP Pengguna!");
+		document.getElementById("NO_HP_"+internalType+user_id).focus();
+		bool_check = false;
+		}
+		else if(document.getElementById("NO_TEL_"+internalType+user_id).value=="")
+		{
+		alert("Masukkan No. TEL Pengguna!");
+		document.getElementById("NO_TEL_"+internalType+user_id).focus();
+		bool_check = false;
+		}
 		else if(document.getElementById("ROLE_MAIN_"+internalType+user_id).value=="")
 		{
 		   alert("Masukkan Peranan Utama Pengguna!");
@@ -958,6 +969,18 @@ function valEditPenggunaInternal(internalType,user_id)
 		   alert("Masukkan Maklumat Pejabat Jkptg!");
 		   document.getElementById("ID_PEJABATJKPTG_"+internalType+user_id).focus();
 		   bool_check = false;
+	   }
+	   else if(document.getElementById("NO_HP_"+internalType+user_id).value=="")
+	   {
+			alert("Masukkan No. HP Pengguna!");
+			document.getElementById("NO_HP_"+internalType+user_id).focus();
+			bool_check = false;
+	   }
+	   else if(document.getElementById("NO_TEL_"+internalType+user_id).value=="")
+	   {
+			alert("Masukkan No. TEL Pengguna!");
+			document.getElementById("NO_TEL_"+internalType+user_id).focus();
+			bool_check = false;
 	   }
 	   /* else if(document.getElementById("ROLE_MAIN_"+internalType+user_id).value=="")
 	   {
@@ -1430,7 +1453,18 @@ function valEditPenggunaINT(internalType,user_id)
 		   document.getElementById("ID_PEJABAT_"+internalType+user_id).focus();
 		   bool_check = false;
 	   }
-	   
+	   else if(document.getElementById("NO_HP_"+internalType+user_id).value=="")
+	   {
+			alert("Masukkan No. HP Pengguna!");
+			document.getElementById("NO_HP_"+internalType+user_id).focus();
+			bool_check = false;
+	   }
+	   else if(document.getElementById("NO_TEL_"+internalType+user_id).value=="")
+	   {
+			alert("Masukkan No. TEL Pengguna!");
+			document.getElementById("NO_TEL_"+internalType+user_id).focus();
+			bool_check = false;
+	   }	   
 	   //alert('bool_check : '+bool_check);
 	   return bool_check;
 }
