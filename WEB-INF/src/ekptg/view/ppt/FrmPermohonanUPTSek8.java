@@ -141,7 +141,8 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
     	context.put("userIdNeg",userIdNeg);
     	
     	//default list
-    	listPageDepan = model.getListPemohonSeksyen8(userIdNeg);
+    	//listPageDepan = model.getListPemohonSeksyen8(userIdNeg);
+    	setupPage(session,action,listPageDepan);
     	
 		//header
     	//String id_masukPermohonan = "";
@@ -387,6 +388,7 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
             		//list depan
             		listPageDepan = model.getListPemohonSeksyen8(userIdNeg);
             		
+            		myLogger.info("masuk sini");
             		context.put("nofail", "");
         			context.put("carianTarikh", "");
         			context.put("carianStatus", "");
@@ -3572,8 +3574,8 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
 	}//close selectedTab
 	
 	private void paging() throws Exception{
-		/*
-		String flagPaging = getParam("paging");
+		
+	/*	String flagPaging = getParam("paging");
     	if(flagPaging!=""){
     		context.put("paging", getParam("paging"));
     	}else{
@@ -3610,7 +3612,8 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
 
 	}//close listcarian
 	
-	@SuppressWarnings("unchecked")
+
+@SuppressWarnings("unchecked")
 	public void setupPage(HttpSession session,String action,Vector list) {
 		
 			try {

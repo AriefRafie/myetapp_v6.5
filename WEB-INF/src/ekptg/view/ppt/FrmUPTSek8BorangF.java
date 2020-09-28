@@ -516,6 +516,7 @@ public class FrmUPTSek8BorangF extends AjaxBasedModule {
 	    	context.put("id_fail", id_fail);
 	    	
     		setupPage(session,action,listPageDepan);
+    		myLogger.info("vm :"+vm);
     		return vm;
     		
 	    }//close public template

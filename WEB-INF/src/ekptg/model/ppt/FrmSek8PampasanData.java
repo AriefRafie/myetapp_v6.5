@@ -2359,7 +2359,7 @@ public int setListMaklumatTanahWithSiasatan_count(String idPermohonan,String lot
 	    		r.add("tarikh_masuk",r.unquote("sysdate"));
 	    		r.add("id_masuk",id_user);    		
 	    		sql = r.getSQLInsert("Tblpptterimabayaran");
-	    		
+	    	
 	    		stmt.executeUpdate(sql);
 	    		
 	    		
@@ -3110,6 +3110,7 @@ public int setListMaklumatTanahWithSiasatan_count(String idPermohonan,String lot
 	    		r.add("tarikh_ambil_cek",r.unquote(TAC));	   
 	    		r.add("tarikh_cek",r.unquote(TC));	    		
 	    		r.add("bil_hari_lewat", txtBilLewat);
+	    		r.add("cara_bayar","1");
 	    		r.add("denda_lewat", txtDendaLewat);
 	    		r.add("jenis_award", sorJenisAward);    
 	    		r.add("flag_serah_cek", sorFlagSerah);
@@ -3122,6 +3123,7 @@ public int setListMaklumatTanahWithSiasatan_count(String idPermohonan,String lot
 	    		r.add("tarikh_masuk",r.unquote("sysdate"));
 	    		r.add("id_masuk",id_user);    		
 	    		sql = r.getSQLInsert("Tblpptbayaran");
+	    		myLogger.info("SQL PPT BAYARAN :"+sql);
 	    		stmt.executeUpdate(sql);
 	    		
 	    } catch (Exception re) {
