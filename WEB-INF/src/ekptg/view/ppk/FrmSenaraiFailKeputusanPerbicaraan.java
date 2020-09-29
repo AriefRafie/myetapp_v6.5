@@ -129,7 +129,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
     	Vector listSupportingDoc = null;
     	Vector flag5juta =  new Vector(); //arief add 5 juta
     	//boolean f5juta = false; //arief add 5 juta
-    	
+    	Vector aksesSkrinKepBicara =  new Vector();
     	//hartaYangDikenakanBayaranPerintah = getParam("txtJumHartaDikenakanBayaranPerintah"); //arief add
     	
     	//bayaranFiSebenar = getParam("txtJumBayaranSebenar"); //arief add
@@ -222,6 +222,11 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
     		
     		context.put("date_kiv","");
     		context.put("catatan_kiv","");
+    		
+    		//check sama ada boleh akses Skrin Keputusan Perbicaraan
+			FrmPrmhnnSek8KeputusanPermohonanInternalData.checkFlagAksesSkrinKepBicara(id);
+			aksesSkrinKepBicara = FrmPrmhnnSek8KeputusanPermohonanInternalData.getFlagAksesSkrinKepBicara();
+			this.context.put("aksesSkrinKepBicara", aksesSkrinKepBicara);
 
 			//get id_keputusanpermohonan - tiada id_perbicaraan
 			FrmPrmhnnSek8KptsanBicaraData.setViewNotis(idpermohonan);
@@ -279,6 +284,10 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
     			System.out.println("TARIKH BICARA LAMBAT LAGI!!!");
     			context.put("DoNotSave", "1");
 	        }
+	        else
+	        {
+	        	context.put("DoNotSave", "0");
+	        }
 			
 			
     		this.context.put("tarikh_bicara",tarikh_bicara);
@@ -321,7 +330,12 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 				Hashtable v = (Hashtable) dataPerintah.get(0);
 				idkp = (String)v.get("id_keputusanpermohonan");
 			}
-
+			
+			//check sama ada boleh akses Skrin Keputusan Perbicaraan
+			FrmPrmhnnSek8KeputusanPermohonanInternalData.checkFlagAksesSkrinKepBicara(id);
+			aksesSkrinKepBicara = FrmPrmhnnSek8KeputusanPermohonanInternalData.getFlagAksesSkrinKepBicara();
+			this.context.put("aksesSkrinKepBicara", aksesSkrinKepBicara);
+			
     		//--data notis
 			logic4.setListSemakWithData(idkp);
     		dataNotis = logic4.getListSemakWithData();
@@ -386,7 +400,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
           						bayaranYuran = 10.00 ;
           					} else if ( (jumlahHartaDeductNilaianAmanahRaya > 1000) && (jumlahHartaDeductNilaianAmanahRaya <= 50000) ){
           						bayaranYuran = 30.00 ;
-          					} else if ( (jumlahHartaDeductNilaianAmanahRaya > 50000) && (jumlahHartaDeductNilaianAmanahRaya <= 5000000) ) {
+          					} else if ( (jumlahHartaDeductNilaianAmanahRaya > 50000) && (jumlahHartaDeductNilaianAmanahRaya <= 2000000) ) {
           						bayaranYuran = (0.002) * jumlahHartaDeductNilaianAmanahRaya ;
           						bayaranYuran = getBundaranBayaran(bayaranYuran);
           					} else {
@@ -413,7 +427,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
       			    				bayaranDenda = 1000;
   	      						}else {
   	      							for (int bilTahun = 1; bilTahun <= bezaTahun; bilTahun++) {
-  	      							bayaranDenda = bayaranDenda + 50;
+  	      							bayaranDenda = bayaranDenda + 20;
   	      							}
   	      						}
   	      					}
@@ -466,7 +480,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
           						bayaranYuran = 10.00 ;
           					} else if ( (jumlah_harta_tarikhmohon > 1000) && (jumlah_harta_tarikhmohon <= 50000) ){
           						bayaranYuran = 30.00 ;
-          					} else if ( (jumlah_harta_tarikhmohon > 50000) && (jumlah_harta_tarikhmohon <= 5000000) ) {
+          					} else if ( (jumlah_harta_tarikhmohon > 50000) && (jumlah_harta_tarikhmohon <= 2000000) ) {
           						bayaranYuran = (0.002) * jumlah_harta_tarikhmohon ;
           						bayaranYuran = getBundaranBayaran(bayaranYuran);
           					} else {
@@ -481,7 +495,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
       			    				bayaranDenda = 1000;
   	      						}else {
   	      							for (int bilTahun = 1; bilTahun <= bezaTahun; bilTahun++) {
-  	      							bayaranDenda = bayaranDenda + 50;
+  	      							bayaranDenda = bayaranDenda + 20;
   	      							}
   	      						}
   	      					}
@@ -1408,16 +1422,22 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 
 		    FrmPrmhnnSek8KptsanBicaraData.setInfoPerintahList(idpermohonan);
 		    getrecord_perintah = FrmPrmhnnSek8KptsanBicaraData.getDataPerintahViewList();
-		    String idUnitPskView = "";
+		    //String  = "";
+		    long idUnitPskView = 0;
 		    String flag_jenis_keputusan = "";
 		    System.out.println("size perintah :: "+getrecord_perintah.size());
 		    if ( getrecord_perintah.size() != 0 ) {
 				Hashtable d = (Hashtable) getrecord_perintah.get(0);
-				idUnitPskView = d.get("id_unitpsk").toString();
-				if ( idUnitPskView != "" ){
+				idUnitPskView = Long.parseLong(d.get("id_unitpsk").toString());
+				//idUnitPsk = Long.parseLong(idn.get("id_unitpsk").toString());
+				if ( idUnitPskView != 0 ){
+					myLogger.info("READ HERE11");
+					myLogger.info("idUnitPskView = "+idUnitPskView);
 					//context.put("selectViewPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"EDITsocPegawaiPengendali",Utils.parseLong(idUnitPskView),""));
-					context.put("selectEditPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"EDITsocPegawaiPengendali",Utils.parseLong(idUnitPskView),"class=mediumselect"));
+					context.put("selectEditPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"EDITsocPegawaiPengendali",idUnitPskView,null));
+					//context.put("selectEditPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"EDITsocPegawaiPengendali",idUnitPsk,null));
 				}else{
+					myLogger.info("READ HERE22");
 					context.put("selectViewPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"EDITsocPegawaiPengendali",null,""));
 				}
 
@@ -1613,7 +1633,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 			    	tambahMaklumatBaitulMalEDIT (usid,idpermohonan);
 			    }
 			}
-
+			myLogger.info("usid = "+usid);
 		    updateMaklumatSelesai(usid,idpermohonan,id_perintah,id_perbicaraan);
 
 			//get info perbicaraan
@@ -3944,7 +3964,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
   						bayaranYuran = 10.00 ;
   					} else if ( (jumlahHartaDeductNilaianAmanahRaya > 1000) && (jumlahHartaDeductNilaianAmanahRaya <= 50000) ){
   						bayaranYuran = 30.00 ;
-  					} else if ( (jumlahHartaDeductNilaianAmanahRaya > 50000) && (jumlahHartaDeductNilaianAmanahRaya <= 5000000) ) {
+  					} else if ( (jumlahHartaDeductNilaianAmanahRaya > 50000) && (jumlahHartaDeductNilaianAmanahRaya <= 2000000) ) {
   						bayaranYuran = (0.002) * jumlahHartaDeductNilaianAmanahRaya ;
   						bayaranYuran = getBundaranBayaran(bayaranYuran);
   					} else {
@@ -3970,7 +3990,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 			    				bayaranDenda = 1000;
     						}else {
     							for (int bilTahun = 1; bilTahun <= bezaTahun; bilTahun++) {
-    							bayaranDenda = bayaranDenda + 50;
+    							bayaranDenda = bayaranDenda + 20;
     							}
     						}
     					}
@@ -4009,7 +4029,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 							bayaranYuran = 10.00 ;
 						} else if ( (jumlah_harta_tarikhmohon > 1000) && (jumlah_harta_tarikhmohon <= 50000) ){
 							bayaranYuran = 30.00 ;
-						} else if ( (jumlah_harta_tarikhmohon > 50000) && (jumlah_harta_tarikhmohon <= 5000000) ) {
+						} else if ( (jumlah_harta_tarikhmohon > 50000) && (jumlah_harta_tarikhmohon <= 2000000) ) {
 							bayaranYuran = (0.002) * jumlah_harta_tarikhmohon ;
 							bayaranYuran = getBundaranBayaran(bayaranYuran);
 						} else {
@@ -4024,7 +4044,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 			    				bayaranDenda = 1000;
     						}else {
     							for (int bilTahun = 1; bilTahun <= bezaTahun; bilTahun++) {
-    							bayaranDenda = bayaranDenda + 50;
+    							bayaranDenda = bayaranDenda + 20;
     							}
     						}
     					}
@@ -7097,7 +7117,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 			getrecord_infoperbicaraan = FrmPrmhnnSek8KptsanBicaraData.setInfoBicara(idpermohonan,id_perbicaraan);
 			if ( getrecord_infoperbicaraan.size() != 0 ){
 				Hashtable h = (Hashtable) getrecord_infoperbicaraan.get(0);
-				context.put("selectEditPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"EDITsocPegawaiPengendali",Long.parseLong(h.get("id_unitpsk").toString()),"class=mediumselect"));
+				context.put("selectEditPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"EDITsocPegawaiPengendali",Long.parseLong(h.get("id_unitpsk").toString()),null));
 			}
 
 			String txtJumBayaranPusaka = getParam("txtJumBayaranPusaka");
@@ -7164,9 +7184,9 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
     			idUnitPsk = d.get("id_unitpsk").toString();
        			flag_jenis_keputusan = (String)d.get("flag_jenis_keputusan");
        			if (idUnitPsk!=""){
-       				context.put("selectViewPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"EDITsocPegawaiPengendali",Utils.parseLong(idUnitPsk),"disabled"));
+       				context.put("selectViewPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"EDITsocPegawaiPengendali",Utils.parseLong(idUnitPsk),null));
        			}else{
-       				context.put("selectViewPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"EDITsocPegawaiPengendali",null,"disabled"));
+       				context.put("selectViewPegawai",HTML.SelectPegawaiPengendaliByNegeri(idNegeriMhn,"EDITsocPegawaiPengendali",null,null));
        			}
     			if (d.get("flag_jenis_keputusan").equals("0")){
     				setValueFlagJenisKeputusan("checked","","");

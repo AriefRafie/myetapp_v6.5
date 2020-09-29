@@ -586,7 +586,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 			if (noFail1 != "")
 				{
 				noFail2 = noFail1;
-				}
+				}  
 			paparLaporanSerahan(noFail2);
 			//<-------------------- SELESAI PERMOHONAN --------------------------->
 			if (logic.checkPerintahKIV(idPerintah)){
