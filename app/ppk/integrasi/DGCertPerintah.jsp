@@ -112,7 +112,7 @@ input[readonly]{
            <!-- <tr>
               <td valign="top"><font color="red">*</font></td>
               <td>Tarikh Notis</td>
-              <td>:&nbsp;
+              <td>:&nbsp;9
                    $tarikh_notis
                      <input type="text" size="11" name="txdTarikhNotis" id="txdTarikhNotis" maxlength="10" value="$tarikh_notis" readonly /> 
                   </td><input name="tarikh_notis" type="hidden" id="tarikh_notis" value="$!tarikh_notis" >

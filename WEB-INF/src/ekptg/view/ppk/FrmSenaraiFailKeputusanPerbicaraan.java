@@ -386,7 +386,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
           						bayaranYuran = 10.00 ;
           					} else if ( (jumlahHartaDeductNilaianAmanahRaya > 1000) && (jumlahHartaDeductNilaianAmanahRaya <= 50000) ){
           						bayaranYuran = 30.00 ;
-          					} else if ( (jumlahHartaDeductNilaianAmanahRaya > 50000) && (jumlahHartaDeductNilaianAmanahRaya <= 5000000) ) {
+          					} else if ( (jumlahHartaDeductNilaianAmanahRaya > 50000) && (jumlahHartaDeductNilaianAmanahRaya <= 2000000) ) {
           						bayaranYuran = (0.002) * jumlahHartaDeductNilaianAmanahRaya ;
           						bayaranYuran = getBundaranBayaran(bayaranYuran);
           					} else {
@@ -413,7 +413,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
       			    				bayaranDenda = 1000;
   	      						}else {
   	      							for (int bilTahun = 1; bilTahun <= bezaTahun; bilTahun++) {
-  	      							bayaranDenda = bayaranDenda + 50;
+  	      							bayaranDenda = bayaranDenda + 20;
   	      							}
   	      						}
   	      					}
@@ -466,7 +466,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
           						bayaranYuran = 10.00 ;
           					} else if ( (jumlah_harta_tarikhmohon > 1000) && (jumlah_harta_tarikhmohon <= 50000) ){
           						bayaranYuran = 30.00 ;
-          					} else if ( (jumlah_harta_tarikhmohon > 50000) && (jumlah_harta_tarikhmohon <= 5000000) ) {
+          					} else if ( (jumlah_harta_tarikhmohon > 50000) && (jumlah_harta_tarikhmohon <= 2000000) ) {
           						bayaranYuran = (0.002) * jumlah_harta_tarikhmohon ;
           						bayaranYuran = getBundaranBayaran(bayaranYuran);
           					} else {
@@ -481,7 +481,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
       			    				bayaranDenda = 1000;
   	      						}else {
   	      							for (int bilTahun = 1; bilTahun <= bezaTahun; bilTahun++) {
-  	      							bayaranDenda = bayaranDenda + 50;
+  	      							bayaranDenda = bayaranDenda + 20;
   	      							}
   	      						}
   	      					}
@@ -3944,7 +3944,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
   						bayaranYuran = 10.00 ;
   					} else if ( (jumlahHartaDeductNilaianAmanahRaya > 1000) && (jumlahHartaDeductNilaianAmanahRaya <= 50000) ){
   						bayaranYuran = 30.00 ;
-  					} else if ( (jumlahHartaDeductNilaianAmanahRaya > 50000) && (jumlahHartaDeductNilaianAmanahRaya <= 5000000) ) {
+  					} else if ( (jumlahHartaDeductNilaianAmanahRaya > 50000) && (jumlahHartaDeductNilaianAmanahRaya <= 2000000) ) {
   						bayaranYuran = (0.002) * jumlahHartaDeductNilaianAmanahRaya ;
   						bayaranYuran = getBundaranBayaran(bayaranYuran);
   					} else {
@@ -3970,7 +3970,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 			    				bayaranDenda = 1000;
     						}else {
     							for (int bilTahun = 1; bilTahun <= bezaTahun; bilTahun++) {
-    							bayaranDenda = bayaranDenda + 50;
+    							bayaranDenda = bayaranDenda + 20;
     							}
     						}
     					}
@@ -4009,7 +4009,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 							bayaranYuran = 10.00 ;
 						} else if ( (jumlah_harta_tarikhmohon > 1000) && (jumlah_harta_tarikhmohon <= 50000) ){
 							bayaranYuran = 30.00 ;
-						} else if ( (jumlah_harta_tarikhmohon > 50000) && (jumlah_harta_tarikhmohon <= 5000000) ) {
+						} else if ( (jumlah_harta_tarikhmohon > 50000) && (jumlah_harta_tarikhmohon <= 2000000) ) {
 							bayaranYuran = (0.002) * jumlah_harta_tarikhmohon ;
 							bayaranYuran = getBundaranBayaran(bayaranYuran);
 						} else {
@@ -4024,7 +4024,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 			    				bayaranDenda = 1000;
     						}else {
     							for (int bilTahun = 1; bilTahun <= bezaTahun; bilTahun++) {
-    							bayaranDenda = bayaranDenda + 50;
+    							bayaranDenda = bayaranDenda + 20;
     							}
     						}
     					}

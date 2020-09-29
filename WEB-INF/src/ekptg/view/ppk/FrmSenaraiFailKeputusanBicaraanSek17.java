@@ -325,9 +325,9 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	    				} else if ( (jumlah_harta17_tarikhmohon > 1000) && (jumlah_harta17_tarikhmohon <= 50000) ){
 	    					bayaranYuranPerintah17 = 30.00 ;
 	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-	    				}else if ( (jumlah_harta17_tarikhmohon > 50000) && (jumlah_harta17_tarikhmohon <= 5000000) ) {
+	    				}else if ( (jumlah_harta17_tarikhmohon > 50000) && (jumlah_harta17_tarikhmohon <= 2000000) ) {
 	    					bayaranYuranPerintah17 = (0.002)* jumlah_harta17_tarikhmohon ;
-	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
+	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);	
 	    				}
 	    				else {
 	    					bayaranYuranPerintah17 = (0.005) * jumlah_harta17_tarikhmohon ;
@@ -1321,7 +1321,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	    					bayaranYuranPerintah17 = 30.00 ;
 	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
 	    					System.out.println("ADA NILAIAN HARTA AMANAH RAYA4");
-	    				} else if ( (jumlah_harta17_tarikhmohon > 50000) && (jumlah_harta17_tarikhmohon <= 5000000) ) {
+	    				} else if ( (jumlah_harta17_tarikhmohon > 50000) && (jumlah_harta17_tarikhmohon <= 2000000) ) {
 	    					bayaranYuranPerintah17 = (0.002) * jumlah_harta17_tarikhmohon ;
 	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
 	    					System.out.println("ADA NILAIAN HARTA AMANAH RAYA5");
@@ -1590,7 +1590,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 	    				} else if ( (jumlah_harta17_tarikhmohon > 1001) && (jumlah_harta17_tarikhmohon <= 50000) ){
 	    					bayaranYuranPerintah17 = 30.00 ;
 	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-	    				}else if ( (jumlah_harta17_tarikhmohon > 50000) && (jumlah_harta17_tarikhmohon <= 5000000) ) {
+	    				}else if ( (jumlah_harta17_tarikhmohon > 50000) && (jumlah_harta17_tarikhmohon <= 2000000) ) {
 	    					bayaranYuranPerintah17 = (0.002) * jumlah_harta17_tarikhmohon ;
 	    					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
 	    				}else {
@@ -3912,7 +3912,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 					} else if ( (jumlahHartaDeductNilaianAmanahRaya > 1000) && (jumlahHartaDeductNilaianAmanahRaya <= 50000) ){
 						bayaranYuranPerintah17 = 30.00 ;
     					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-					}else if ( (jumlahHartaDeductNilaianAmanahRaya > 50000) && (jumlahHartaDeductNilaianAmanahRaya <= 5000000) ) {
+					}else if ( (jumlahHartaDeductNilaianAmanahRaya > 50000) && (jumlahHartaDeductNilaianAmanahRaya <= 2000000) ) {
 						bayaranYuranPerintah17 = (0.002) * jumlahHartaDeductNilaianAmanahRaya ;
     					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
 					}else {
@@ -3944,13 +3944,13 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 						if (batal_p_amanah.equals("Y")){
 							j += 30.00 ;
 						}
-					//double total = (j + bayaranYuranPerintah17);
+					double total_a = (j + bayaranYuranPerintah17);//arief open comment
 					double total = (bayaranYuranPerintah17);
 					if (total < 10)
 					{
 						total = 10;
 					}
-					this.context.put("txtJumBayaran", total);
+					this.context.put("txtJumBayaran", total_a);//arief modified
 					this.context.put("txtJumHarta",jumlah_harta17_tarikhmohon);
 					this.context.put("txtJumHartaDikenakanBayaranPerintah", jumlahHartaDeductNilaianAmanahRaya);
 				}
@@ -3979,7 +3979,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 					} else if ( (jumlah_harta17_tarikhmohon > 1000) && (jumlah_harta17_tarikhmohon <= 50000) ){
 						bayaranYuranPerintah17 = 30.00 ;
     					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-					} else if ( (jumlah_harta17_tarikhmohon > 50000) && (jumlah_harta17_tarikhmohon <= 5000000) ) {
+					} else if ( (jumlah_harta17_tarikhmohon > 50000) && (jumlah_harta17_tarikhmohon <= 2000000) ) {
 						bayaranYuranPerintah17 = (0.002) * jumlah_harta17_tarikhmohon ;
     					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
 					}else {
@@ -7150,7 +7150,7 @@ public class FrmSenaraiFailKeputusanBicaraanSek17 extends AjaxBasedModule {
 				} else if ( (jumlah_harta17_tarikhmohon > 1000) && (jumlah_harta17_tarikhmohon <= 50000) ){
 					bayaranYuranPerintah17 = 30.00 ;
 					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
-				} else if ( (jumlah_harta17_tarikhmohon > 50000) && (jumlah_harta17_tarikhmohon <= 50000) ){
+				} else if ( (jumlah_harta17_tarikhmohon > 50000) && (jumlah_harta17_tarikhmohon <= 2000000) ){
 					bayaranYuranPerintah17 = (0.002) * jumlah_harta17_tarikhmohon ;
 					bayaranYuranPerintah17 = getBundaranBayaran(bayaranYuranPerintah17);
 				}else {
