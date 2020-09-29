@@ -6833,6 +6833,7 @@ public class BicaraInteraktifData {
 		
 		List listKehadiran = listKehadiran(session,ID_PERMOHONANSIMATI,ID_PERMOHONAN,ID_PERBICARAAN,ID_PEMOHON,db);
 		List listTurutHadir = listTurutHadir(session,ID_PERBICARAAN, db);
+		List listSaksi = listSaksi(session,ID_PERBICARAAN, db);//arief add keterangan saksi
 		
 		if(listKehadiran.size()>0)		
 		{		
@@ -6932,6 +6933,40 @@ public class BicaraInteraktifData {
 					}
 				}
 			}
+			
+			//arief add keterangan saksi open
+			if(listSaksi.size()>0)		
+			{		
+				if(flagPrint.equals("N"))
+				{
+					html += htmlListPerubahanTajuk(session,ID_PERBICARAAN,"flagKeteranganSaksi",flagPrint,db);
+				}
+				
+				for(int x=0; x<listSaksi.size(); x++)
+				{
+					Map setupSaksi = (Map) listSaksi.get(x);
+					String NAMA = (String)setupSaksi.get("NAMA");
+					String PENGENALAN = (String)setupSaksi.get("PENGENALAN");
+					String HUBUNGAN = (String)setupSaksi.get("HUBUNGAN");
+					String KETERANGAN = (String)setupSaksi.get("KETERANGAN");
+					String NOTA_PEGAWAI = (String)setupSaksi.get("NOTA_PEGAWAI");
+					if(!KETERANGAN.equals("") || !NOTA_PEGAWAI.equals(""))
+					{
+						if(flagPrint.equals("N"))
+						{
+							html += htmlListKeteranganBySrkin (session,NAMA,PENGENALAN,HUBUNGAN,KETERANGAN,NOTA_PEGAWAI,flagPrint,0,"",
+									"","",db);
+						}
+						else
+						{
+							html += htmlListKeteranganBySrkinPrint(session,NAMA,PENGENALAN,HUBUNGAN,KETERANGAN,NOTA_PEGAWAI,flagPrint,0,"","",fontSize,
+
+									"",db);
+						}
+					}
+				}
+			}
+			//arief add keterangan saksi close
 		}				
 		
 		if(flagPrint.equals("N"))
@@ -6948,10 +6983,11 @@ public class BicaraInteraktifData {
 					" setDivRekodPerubahan(cr,'divCheckRekodKeteranganhadir','tableCetakKeteranganhadir','Tiada Rekod Keterangan'); "+
 					" setDivTajuk(cr,'tajukLaporanflagKeteranganOB'); "+
 					" setDivTajuk(cr,'tajukLaporanflagKeteranganTurutHadir'); "+
+					" setDivTajuk(cr,'tajukLaporanflagKeteranganSaksi'); "+//arief add
 					"</script>";
 		}
 		
-		return html;		
+		return html;
 	}
 		
 	public String htmlListPerubahan(HttpSession session,String formName,String ID_SIMATI,String ID_PERMOHONANSIMATI,String ID_PERBICARAAN,String ID_PERMOHONAN,String ID_PEMOHON,String flagPrint,Db db) throws Exception {

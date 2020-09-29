@@ -2441,7 +2441,18 @@ document.getElementById("header_lama").style.display="block";
   </tr>
   <!-- END PEMBAHAGIAN HARTA --> 
   #end
-  
+  <!-- arief add TANDATANGAN DIGITAL bagi PERINTAH OPEN -->
+  <tr>
+  	<td><a name="Tandatangan Digital Perintah"></a>
+    	<fieldset>
+        	<legend><strong> TANDATANGAN DIGITAL </strong></legend>
+      			<div class="TabbedPanelsContent"> <br/>
+    				#parse("/app/ppk/tindakanPegawaiPerintahSek8.jsp")
+      			</div>
+      	</fieldset>
+    </td>
+</tr>
+<!-- arief add TANDATANGAN DIGITAL bagi PERINTAH CLOSE -->
 
   
   <tr>
@@ -4051,4 +4062,33 @@ function popupEmailPerintah(idFail, idPerintah) {
 	hWnd.focus();	
 }	
 //arief add NOTIFIKASI EMAIL close
+</script>
+<script>
+//arief add Tandatangan Digital OPEN
+function sendDGcertPerintah(NO_FAIL,id_perbicaraan,idfail,id_permohonan,idpermohonansimati,idperintah){
+	var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCertPerintah?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&idperintah="+idperintah+"&commandw=sendDGCertPerintah";
+	var hWnd = window.open(url,'Cetak','width=625,height=400, resizable=no,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+    hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
+function verifyDGcertPerintah(NO_FAIL,id_perbicaraan,idfail,id_permohonan,idpermohonansimati,idperintah){
+    var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCertPerintah?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&idperintah="+idperintah+"&flagVersion=popupPNB&commandw=verify";
+	var hWnd = window.open(url,'Cetak','width=625,height=400, resizable=no,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+    hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+//arief add Tandatangan Digital CLOSE
+
+/**List fail-fail Tandatangan Digital di Perintah:
+	1.	FrmPerintahSek8.java
+	2.	FrmPerintahMaklumatPerintahSek8.jsp
+	3.	tindakanPegawaiPerintahSek8.jsp
+	4.	FrmIntegrasiDGCertPerintah.java
+	5.	DGCertPerintah.jsp
+	6.	FrmPerintahSek8Data.java
+	7.	TandatanganSuccessPerintah.jsp
+*/
 </script>
