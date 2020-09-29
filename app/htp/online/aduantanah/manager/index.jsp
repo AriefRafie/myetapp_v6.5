@@ -94,7 +94,7 @@
 				//document.${formName}.enctype="";
 				//document.${formName}.encoding ="";
 				//document.${formName}.action='?_portal_module=ekptg.view.online.aduan.OnlineComplaintManagerModule&command=viewComplaint&idComplaint=' + "$!noAduan";
-				alert('$!upload_file');
+				//alert('$!upload_file');
 				//document.${formName}.submit();
 				doAjaxCall${formName}("viewComplaint","idComplaint="+"$!noAduan");
 				//doAjaxCall${formName}("viewComplaint","idComplaint=" + "$!noAduan");

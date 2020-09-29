@@ -263,7 +263,7 @@
 
 <iframe id="upload_dokumen" name="upload_dokumen" width="0px" height="0px" style="visibility:hidden"></iframe>
 <script type="text/javascript">
-alert('$!upload_file');
+//alert('$!upload_file');
 if('$!upload_file' == "yes"){
 	window.location.hash='top_upload';
 }
