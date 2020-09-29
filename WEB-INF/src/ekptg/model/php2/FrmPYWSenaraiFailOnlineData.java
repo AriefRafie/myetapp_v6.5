@@ -240,6 +240,7 @@ public class FrmPYWSenaraiFailOnlineData {
 			r.add("TAJUK_FAIL", txtPerkara);
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			r.add("ID_MASUK", userId);
 			sql = r.getSQLUpdate("TBLPFDFAIL");
 			stmt.executeUpdate(sql);
 
