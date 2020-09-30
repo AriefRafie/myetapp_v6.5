@@ -189,7 +189,7 @@ input[readonly]{
 			</fieldset>
            
 			
-			<fieldset><legend><font style="font-family:Verdana; font-size:8pt;	font-weight:bold;">MAKLUMAT TANDANGAN DIGITAL</font></legend>
+			<fieldset><legend><font style="font-family:Verdana; font-size:8pt;	font-weight:bold;">MAKLUMAT TANDATANGAN DIGITAL</font></legend>
     <table width="100%"  cellpadding="1" cellspacing="1" border="0">
                 <tr>
               <td width="1%">&nbsp;</td>
