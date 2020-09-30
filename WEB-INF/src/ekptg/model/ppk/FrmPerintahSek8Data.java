@@ -5932,7 +5932,7 @@ System.out.println("sini======="+sql);
 			if (db != null)
 				db.close();
 		}
-	}
+	}  
 	
 	public boolean checkHAYangBelumDibahagikan(String idPermohonanSimati, String idPerintah) throws Exception{
 		Db db = null;
@@ -8715,7 +8715,7 @@ System.out.println("sini======="+sql);
 				
 				String sql = " SELECT SIGNED_TEXT FROM TBLPPKPERINTAH WHERE ID_PERINTAH = '" + idPerintah + "'";
 				rs = stmt.executeQuery(sql);
-				System.out.println("data dah signed "+sql);
+				System.out.println("data dah signed: "+sql);
 				if (rs.next()) {
 					signedData = rs.getString("SIGNED_TEXT");
 				}

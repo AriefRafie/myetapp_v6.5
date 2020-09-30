@@ -416,7 +416,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
          		#else
                		 #set( $row = "row1" )
          		#end
-	   #if($list1.JENIS_DOKUMEN == "pptperintahbantahan")   <!-- PPT-38 -->  
+	   #if($list1.JENIS_DOKUMEN == "perintah")   <!-- PPT-38 -->  
 	   #set ($cnt=1)
 	  <tr>  
 	    <td class="$row" >$list1.BIL</td>

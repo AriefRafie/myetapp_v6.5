@@ -43,6 +43,7 @@
   <input name="afterSave" type="hidden" id="afterSave" value="$afterSave"/>
   <input id="inputbaru" name="inputbaru" value="$!inputbaru" type="hidden" />
   <input name="idDokumen" type="hidden" id="idDokumen" value="$!idDokumen"/>
+  <input name="idKategoriPemohon" type="hidden" id="idKategoriPemohon" value="$!idKategoriPemohon"/>
 </p>
 #set ($inputbaru = '')
  	#if($afterSave == 'doTangguhMaklumatTambahan')
@@ -76,9 +77,9 @@
           <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TANAH BERKAITAN</li>
           <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PERMOHONAN</li>
           <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PEMOHON</li>
-          <!--           <li onClick="doChangeTabUpper(4);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PENAMATAN PENYEWAAN</li> -->
+          <!-- <li onClick="doChangeTabUpper(4);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PENAMATAN PENYEWAAN</li> -->
           <li onClick="doChangeTabUpper(4);" class="TabbedPanelsTab" tabindex="0">SENARAI SEMAK</li>
-          <li onClick="doChangeTabUpper(5);" class="TabbedPanelsTab" tabindex="0">LAMPIRAN</li>
+          <!--<li onClick="doChangeTabUpper(5);" class="TabbedPanelsTab" tabindex="0">LAMPIRAN</li> -->
         </ul>
         <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent"> #if ($flagBorangK == 'Y') 
@@ -910,7 +911,7 @@ function doSimpanKemaskiniMaklumatPemohon() {
 function doSimpanKemaskiniSenaraiSemak() {
 		
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
-		document.${formName}.mode.value = "update";
+		document.${formName}.mode.value = "view";
 		return;
 	}
 	

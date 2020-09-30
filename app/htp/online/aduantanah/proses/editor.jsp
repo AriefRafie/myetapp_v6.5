@@ -1,12 +1,12 @@
 
 <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-<input type="text" id="flag_buka_upload" name="flag_buka_upload" value="$!flag_buka_upload"  />
+<input type="hidden" id="flag_buka_upload" name="flag_buka_upload" value="$!flag_buka_upload"  />
 <input name="mode" type="hidden" id="mode" value="$mode"/>
 <input value="$!nama_status" type="hidden" name="nama_status" id="nama_status"  />
 <input type="hidden" name="userid" id="userid" value='$!{session.getAttribute("_ekptg_user_id")}'/>
-<input type="text" name="idRespon" value="$!response.id">
-<input type="text" name="ID_ADUANPUBLIC" id="ID_ADUANPUBLIC" value="$!ID_ADUANPUBLIC">
-<input type="text" name="id_phphakmilikaduan" id="id_phphakmilikaduan" value="$!id_phphakmilikaduan">
+<input type="hidden" name="idRespon" value="$!response.id">
+<input type="hidden" name="ID_ADUANPUBLIC" id="ID_ADUANPUBLIC" value="$!ID_ADUANPUBLIC">
+<input type="hidden" name="id_phphakmilikaduan" id="id_phphakmilikaduan" value="$!id_phphakmilikaduan">
 
 
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -128,7 +128,7 @@
 							  <td>:</td>
 							  <td>
 								$selectNegeri
-								<input type="text" name="idNegeri" id="idNegeri" value="$idNegeri" />
+								<input type="hidden" name="idNegeri" id="idNegeri" value="$idNegeri" />
 							</tr>
 							<tr>
 							  <td>&nbsp;</td>
@@ -136,7 +136,7 @@
 							  <td colspan="6">&nbsp;</td>
 							  <td>:</td>
 							  <td>$selectDaerahTanah
-								<input type="text" name="idDaerahTanah" id="idDaerahTanah" value="$idDaerah" /></td>
+								<input type="hidden" name="idDaerahTanah" id="idDaerahTanah" value="$idDaerah" /></td>
 							  </td>
 							</tr>
 							<tr>
@@ -153,8 +153,8 @@
 							  <td colspan="6">&nbsp;</td>
 							  <td>:</td>
 							  <td>$selectJenisHakmilik
-								<input type="text" class="$inputTextClass" name="txtNoHakmilikTanah" id="txtNoHakmilikTanah" value="$txtNoHakmilikTanah" size="43" maxlength="80" $readonly/>
-							  	<input type="text" name="idJenisHakmilik" id="idJenisHakmilik" value="$idJenisHakmilik" />
+								<input type="hidden" class="$inputTextClass" name="txtNoHakmilikTanah" id="txtNoHakmilikTanah" value="$txtNoHakmilikTanah" size="43" maxlength="80" $readonly/>
+							  	<input type="hidden" name="idJenisHakmilik" id="idJenisHakmilik" value="$idJenisHakmilik" />
 							  </td>
 							</tr>
 							<tr>
@@ -183,7 +183,7 @@
 							  <td>:</td>
 							  <td>$selectJenisLot
 								<input type="hidden" name="idJenisLot" id="idJenisLot" value="$idJenisLot" />
-								<input type="text" class="$inputTextClass" name="txtNoLot" id="txtNoLot" value="$txtNoLot" size="43" maxlength="80" $readonly/>
+								<input type="hidden" class="$inputTextClass" name="txtNoLot" id="txtNoLot" value="$txtNoLot" size="43" maxlength="80" $readonly/>
 							  </td>
 							</tr>
 							<tr>

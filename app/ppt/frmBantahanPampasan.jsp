@@ -42,6 +42,7 @@
           <td width="8%" align="center" style="text-transform:uppercase">No PB</td>
           <td width="13%" align="center" style="text-transform:uppercase">No Lot/PT</td>
           <td width="15%" style="text-transform:uppercase">Pampasan Tambahan</td>
+           <td width="15%" style="text-transform:uppercase">Tarikh Borang H</td>
            <td width="15%" style="text-transform:uppercase">Status Bayaran</td>
         </tr>
         
@@ -56,11 +57,12 @@
          		#end
         
         <tr>                                    
-            <td class="$row" align="center" >$senarai.bil</td><input type="hidden" name="id_bantahan" id="id_bantahan" value="$senarai.id_bantahan" />               
-            <td class="$row"><a href="javascript:papar('$senarai.id_hakmilik','$senarai.id_hakmilikpb','$senarai.id_pihakberkepentingan','$senarai.status_bantahan','$senarai.id_permohonan','$senarai.id_bantahan')"><font color="blue">$senarai.nama_pb</font></a></td>           	
+            <td class="$row" align="center" >$senarai.bil</td><input type="hidden" name="id_bantahan" id="id_bantahan" value="$senarai.id_bantahan" />   
+            <td class="$row"><a href="javascript:papar('$senarai.id_hakmilik','$senarai.id_hakmilikpb','$senarai.id_pihakberkepentingan','$senarai.status_bantahan','$senarai.id_permohonan','$senarai.id_bantahan','$senarai.tarikh_borangh')"><font color="blue">$senarai.nama_pb</font></a></td>           	
             <td class="$row">$senarai.no_pb</td>
             <td class="$row" align="center">$senarai.no_lot</td>
             <td class="$row">RM &nbsp;$!Util.formatDecimal($!senarai.amaun_award)</td>
+             <td class="$row" align="center">$senarai.tarikh_borangh</td>
             <td width="14%" class="$row">
             #if ($!senarai.flag_bayar_bantahan == "1")
               <div align="center"><img src="../img/validyes.png" alt="Sudah Terima Bayaran" width="18" height="18" border="0" /></a></div>
@@ -189,13 +191,14 @@ function open_header(id){
 	}
 }
 
-function papar(id_hakmilik,id_hakmilikpb,id_pihakberkepentingan,status_bantahan,id_permohonan){
-
+function papar(id_hakmilik,id_hakmilikpb,id_pihakberkepentingan,status_bantahan,id_permohonan,id_bantahan,tarikh_borangh){
+    
 	document.${formName}.id_hakmilik.value = id_hakmilik;
 	document.${formName}.id_hakmilikpb.value = id_hakmilikpb;
 	document.${formName}.id_pihakberkepentingan.value = id_pihakberkepentingan;
 	document.${formName}.status_bantahan.value = status_bantahan;		
-	document.${formName}.id_permohonan.value = id_permohonan;		
+	document.${formName}.id_permohonan.value = id_permohonan;	
+
 	
 	if ( (status_bantahan == '184') || (status_bantahan == '186') || (status_bantahan == '187') ){		
 		document.${formName}.command.value = "checkingCaraBayar";
@@ -207,6 +210,7 @@ function papar(id_hakmilik,id_hakmilikpb,id_pihakberkepentingan,status_bantahan,
 		alert("Tiada Urusan Pampasan.")
 	}
 
+//	document.${formName}.tarikh_borangh.value = tarikh_borangh;	
 	document.${formName}.method="POST";
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanPampasan";
 	document.${formName}.submit()

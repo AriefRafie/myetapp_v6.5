@@ -35,7 +35,7 @@ public class FrmPrmhnnSek8KeputusanPermohonanInternalData {
 	private static Vector listKeputusan = new Vector();
 	private static Vector listMaklumatMahkamah = new Vector();
 	private static Vector listMaklumatMahkamahJ = new Vector();
-	private static Vector listMaklumatMahkamahJX = new Vector();
+	private static Vector listMaklumatMahkamahJX = new Vector();   
 	private static Vector listMaklumatMahkamahJ_ID = new Vector();
 	private static Vector listMaklumatMahkamahM = new Vector();
 	private static Vector listMaklumatMahkamahMPindah = new Vector();
@@ -43,11 +43,16 @@ public class FrmPrmhnnSek8KeputusanPermohonanInternalData {
 	private static Vector listMaklumatPentadbirTanah = new Vector();
 	private static Vector listMaklumatInsolvensi = new Vector();
 	private static Vector flag5juta = new Vector();
+	private static Vector flagAksesSkrinKepBicara= new Vector();
 		
 	static Logger myLogger = Logger.getLogger(FrmPrmhnnSek8KeputusanPermohonanInternalData.class);
 	
 	public static Vector getFlag5Juta(){
 		return flag5juta;
+	}
+	
+	public static Vector getFlagAksesSkrinKepBicara(){
+		return flagAksesSkrinKepBicara;
 	}
 	
 	public static void checkFlag5Juta (String id) throws Exception {
@@ -66,6 +71,29 @@ public class FrmPrmhnnSek8KeputusanPermohonanInternalData {
 				Hashtable h = new Hashtable();
 				h.put("flag_5juta", rs.getString(1)==null?"":rs.getString(1));
 				flag5juta.addElement(h);
+			} 
+		}
+		finally {
+			if(db != null)db.close();			
+		}
+	}
+	
+	public static void checkFlagAksesSkrinKepBicara (String id) throws Exception {  
+		Db db = null;
+		flagAksesSkrinKepBicara.clear();
+		String sql = "";
+		
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			sql = "SELECT AKSES_SKRIN_KEPBICARA FROM TBLPPKPERUBAHANAKTA";
+			System.out.println("FLAG AKSES_SKRIN_KEPBICARA: "+sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next())	{
+				Hashtable h = new Hashtable();
+				h.put("AKSES_SKRIN_KEPBICARA", rs.getString(1)==null?"":rs.getString(1));
+				flagAksesSkrinKepBicara.addElement(h);
 			} 
 		}
 		finally {

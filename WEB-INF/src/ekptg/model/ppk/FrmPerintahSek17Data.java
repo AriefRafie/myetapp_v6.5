@@ -36,6 +36,8 @@ import ekptg.helpers.Utils;
 public class FrmPerintahSek17Data {
 	static Logger myLogger = Logger.getLogger(FrmPerintahSek17Data.class);
 	
+	private static SimpleDateFormat Format = new SimpleDateFormat("dd/MM/yyyy"); //arief add
+	
 	private Vector senaraiFail = new Vector();
 	private Vector senaraiFail_semakanPerintahHQ = new Vector();
 	
@@ -89,6 +91,22 @@ public class FrmPerintahSek17Data {
 	 
 	 Vector senaraiPembahagianHTAPKTDTL = new Vector();
 	
+	//arief add
+	private static Vector listSemak = new Vector();
+		
+	//arief add
+	private static Vector listSemakWithData = new Vector();
+		
+	//arief add
+	public static Vector getListSemak() {
+		return listSemak;
+	}
+		
+	//arief add
+	public static Vector getListSemakWithData() {
+		return listSemakWithData;
+	}
+	 
 	 public Vector<Hashtable<String,String>> setDataHTAduluPerintah(String idperintah,String idsimati,String bkp,String lp,String bpa,String lpa) throws Exception {
 			Db db = null;
 			listHTAdulu.clear();
@@ -10263,4 +10281,330 @@ public class FrmPerintahSek17Data {
 	public void setSenaraiPembahagianHTAPKTDTL(Vector senaraiPembahagianHTAPKTDTL) {
 		this.senaraiPembahagianHTAPKTDTL = senaraiPembahagianHTAPKTDTL;
 	}
+	
+	//arief add
+	// Data pemohon :: SEKSYEN 8 & SEKSYEN 17
+	public static void setListSemak(String id_permohonan, String userId) throws Exception {
+		Db db = null;
+		listSemak.clear();
+		String sql = "";
+
+		try {
+			db = new Db();
+
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			sql = "SELECT distinct pm.id_negeri, n.id_Negeri, n.nama_Negeri,f.id_Fail, f.no_Fail, d.id_Daerah, p.id_Permohonan, ";
+			sql += "p.tarikh_Mohon, s.no_Kp_Baru, s.no_Kp_Lama, s.jenis_Kp, s.no_Kp_Lain, s.id_Simati, ";
+			sql += "s.nama_Simati, s.tarikh_Mati, pm.id_Pemohon, pm.nama_Pemohon, pm.no_kp_baru, ";
+			sql += "pm.no_kP_lama, pm.jenis_Kp, pm.no_Kp_lain, pm.alamat_1, pm.alamat_2, pm.alamat_3, ";
+			sql += "pm.poskod, pm.bandar, d.nama_Daerah, p.seksyen, st.keterangan, ";
+			sql += "p.id_Status, mosi.id_Permohonansimati, s.umur, s.jantina, ur.id_negeri as id_negeri_jajahan, ";
+			sql += "pm.umur, pm.jantina" +
+					",u.id_pejabatjkptg,u.nama_pejabat, u.id_negeri as id_negeripejabat" +
+					", p.no_subjaket" +
+					", p.tarikh_rayuan ";
+			sql += "FROM Tblpfdfail f,Tblppkpermohonan p, Tblrujnegeri n, Tblrujdaerah d, Tblppksimati s, ";
+			sql += "Tblppkpemohon pm, Tblrujstatus st, tblrujsuburusanstatusfail sstf" +
+					", tblrujsuburusanstatus sst ";
+			sql += "" +
+					", Tblppkpermohonansimati mosi, Users_Internal ur ";
+			sql += ",(SELECT RP.ID_PEJABATJKPTG,RP.NAMA_PEJABAT,RPU.ID_NEGERI,RPU.ID_DAERAHURUS ID_DAERAH FROM "+
+					" TBLRUJPEJABATJKPTG RP, TBLRUJPEJABATURUSAN RPU "+
+					" WHERE RP.ID_PEJABATJKPTG = RPU.ID_PEJABATJKPTG "+
+					" AND RPU.ID_JENISPEJABAT = 22 "+
+					" AND RP.ID_SEKSYEN = 2 "+
+					") U ";
+			sql += "WHERE f.id_Negeri = n.id_Negeri(+) ";
+			sql += "AND sstf.id_permohonan = p.id_permohonan ";
+			sql += "AND sstf.id_suburusanstatus = sst.id_suburusanstatus ";
+			sql += "AND sst.id_status = st.id_status ";
+			sql += "AND p.id_Daerahmhn = d.id_Daerah(+) ";
+			sql += "AND ur.user_id = '" + userId + "'";
+			sql += " AND p.id_Fail = f.id_Fail ";
+			sql += "AND p.ID_PEMOHON = pm.ID_PEMOHON ";
+			sql += "AND s.id_Simati = mosi.id_Simati ";
+			sql += "AND p.id_Permohonan = mosi.id_Permohonan ";
+			sql += "AND st.id_Status = p.id_Status ";
+			sql += "AND d.id_daerah = p.id_daerahmhn ";
+			sql += "AND p.id_daerahmhn = u.id_daerah ";
+
+			sql += " AND p.id_Permohonan = '" + id_permohonan + "'";
+			System.out.println("sql*********** = " + sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("id_permohonansimati", rs
+						.getString("id_Permohonansimati") == null ? "" : rs
+						.getString("id_Permohonansimati"));
+				h.put("idFail", rs.getString("id_Fail") == null ? "" : rs
+						.getString("id_Fail"));
+				h.put("noFail", rs.getString("no_Fail") == null ? "" : rs
+						.getString("no_Fail"));
+				h.put("idDaerah", rs.getString("id_Daerah") == null ? "" : rs
+						.getString("id_Daerah"));
+				h.put("idPermohonan",rs.getString("id_Permohonan") == null ? "" : rs
+						.getString("id_Permohonan"));
+				h.put("tarikhMohon", rs.getDate("tarikh_Mohon") == null ? ""
+						: Format.format(rs.getDate("tarikh_Mohon")));
+				h.put("idSimati", rs.getString("id_Simati") == null ? "" : rs
+						.getString("id_Simati"));
+				h.put("namaSimati", rs.getString("nama_Simati") == null ? ""
+						: rs.getString("nama_Simati"));
+				h.put("tarikhMati", rs.getDate("tarikh_Mati") == null ? ""
+						: Format.format(rs.getDate("tarikh_Mati")));
+				h.put("idPemohon", rs.getString("id_Pemohon") == null ? "" : rs
+						.getString("id_Pemohon"));
+				h.put("namaPemohon", rs.getString("nama_Pemohon") == null ? ""
+						: rs.getString("nama_Pemohon"));
+				h.put("alamat1", rs.getString("alamat_1") == null ? "" : rs
+						.getString("alamat_1"));
+				h.put("alamat2", rs.getString("alamat_2") == null ? "" : rs
+						.getString("alamat_2"));
+				h.put("alamat3", rs.getString("alamat_3") == null ? "" : rs
+						.getString("alamat_3"));
+				h.put("poskod", rs.getString("poskod") == null ? "" : rs
+						.getString("poskod"));
+				h.put("bandar", rs.getString("bandar") == null ? "" : rs
+						.getString("bandar"));
+				h.put("idnegeri", rs.getString(16) == null ? "" : rs
+						.getString(16));
+				h.put("namanegeri", rs.getString("nama_Negeri") == null ? ""
+						: rs.getString("nama_Negeri"));
+				h.put("namadaerah", rs.getString("nama_Daerah") == null ? ""
+						: rs.getString("nama_Daerah"));
+				h.put("seksyen", rs.getString("seksyen") == null ? "" : rs
+						.getString("seksyen"));
+				h.put("keterangan", rs.getString("keterangan") == null ? ""
+						: rs.getString("keterangan"));
+				h.put("id_Status", rs.getString("id_Status") == null ? "" : rs
+						.getString("id_Status"));
+
+				if (rs.getString("id_negeripejabat").equals("7")) {
+					h.put("namaPejabat",
+					rs.getString("nama_pejabat") == null ? "" : rs
+						.getString("nama_pejabat"));
+				} else {
+					h.put("namaPejabat"
+						, rs.getString("nama_pejabat") + ","+ rs.getString("nama_Daerah") == null ? "" : rs.getString("nama_pejabat")+ "," + rs.getString("nama_Daerah"));
+				}
+
+				h.put("id_pejabatjkptg",
+						rs.getString("id_pejabatjkptg") == null ? "" : rs
+							.getString("id_pejabatjkptg"));
+				h.put("tarikh_rayuan", rs.getDate("tarikh_rayuan") == null ? ""
+						: Format.format(rs.getDate("tarikh_rayuan")));
+				if (rs.getString(3) == null || rs.getString(3) == "") {
+					h.put("pmNama_negeri", "");
+				} else {
+					h.put("pmNama_negeri", rs.getString(3));
+				}
+
+				h.put("pmidnegeri",
+					rs.getString("id_negeri_jajahan") == null ? "" : rs
+						.getString("id_negeri_jajahan"));
+
+				listSemak.addElement(h);
+				}
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}
+	
+	//arief add
+	// GET DATA NOTIS :: SEKSYEN 8 & SEKSYEN 17 ::
+	public static void setListSemakWithData(String id_keputusanpermohonan)
+		throws Exception {
+
+			Db db = null;
+
+			listSemakWithData.clear();
+			String sql = "";
+			String sql2 = "";
+			String id_perbicaraan = "";
+
+			try {
+				db = new Db();
+				Statement stmt = db.getStatement();
+
+				sql = " SELECT MAX(id_perbicaraan) as id_perbicaraan FROM (";
+				sql += " SELECT distinct a.id_perbicaraan FROM Tblppkperbicaraan a ";
+				sql += " WHERE ";
+				sql += " tarikh_masuk = (select max(tarikh_masuk) from tblppkperbicaraan b where b.id_keputusanpermohonan=a.id_keputusanpermohonan) ";
+				sql += " and a.id_keputusanpermohonan = '" + id_keputusanpermohonan
+					+ "'";
+				sql += " ) ";
+				System.out.println("setListSemakWithDataA :"+sql);
+				ResultSet rsMT = stmt.executeQuery(sql);
+				while (rsMT.next()) {
+					id_perbicaraan = rsMT.getString("id_perbicaraan");
+				}
+
+				SQLRenderer r = new SQLRenderer();
+				r.add("pb.id_perbicaraan");
+				r.add("pb.id_unitpsk");
+				r.add("pb.id_keputusanpermohonan");
+				r.add("pb.tarikh_notis");
+				r.add("pb.tarikh_bicara");
+				r.add("pb.masa_bicara");
+
+				r.add("pb.tempat_bicara");
+				r.add("pb.bil_bicara");
+				r.add("pb.alamat_bicara1");
+				r.add("pb.alamat_bicara2");
+				r.add("pb.alamat_bicara3");
+
+				r.add("pb.poskod");
+				r.add("pb.id_negeribicara");
+				r.add("pb.peg_pengendali");
+				r.add("pb.tarikh_masuk");
+
+				r.add("pb.jenis_masa_bicara");
+
+				r.add("pb.id_pejabat");
+				r.add("pb.id_jenispejabat");
+				r.add("pb.SIGNED_TEXT");
+				r.add("pb.tarikh_bicara_dahulu");
+				r.add("pb.sebab_pinda_tarikh");
+					
+				r.add("pb.id_keputusanpermohonan", id_keputusanpermohonan);
+				r.add("pb.id_perbicaraan", id_perbicaraan);
+
+				sql2 = r.getSQLSelect("Tblppkperbicaraan pb");
+				System.out.println("setListSemakWithDataB :"+sql2);
+				ResultSet rs = stmt.executeQuery(sql2);
+				Hashtable h;
+
+				while (rs.next()) {
+
+					h = new Hashtable();
+					h.put("id_perbicaraan",
+						rs.getString("id_perbicaraan") == null ? "" : rs
+							.getString("id_perbicaraan"));
+					h.put("id_unitpsk", rs.getString("id_unitpsk") == null ? ""
+						: rs.getString("id_unitpsk"));
+					h.put("tarikh_notis", rs.getDate("tarikh_notis") == null ? ""
+						: Format.format(rs.getDate("tarikh_notis")));
+					h.put("tarikh_bicara", rs.getDate("tarikh_bicara") == null ? ""
+						: Format.format(rs.getDate("tarikh_bicara")));
+
+					h.put("masa_bicara", rs.getString("masa_bicara") == null ? ""
+						: rs.getString("masa_bicara"));
+					h.put("tempat_bicara",
+						rs.getString("tempat_bicara") == null ? "" : rs
+							.getString("tempat_bicara"));
+					h.put("bil_bicara", rs.getString("bil_bicara") == null ? ""
+						: rs.getString("bil_bicara"));
+					h.put("alamat_bicara1",
+						rs.getString("alamat_bicara1") == null ? "" : rs
+							.getString("alamat_bicara1"));
+					h.put("alamat_bicara2",
+						rs.getString("alamat_bicara2") == null ? "" : rs
+							.getString("alamat_bicara2"));
+					h.put("alamat_bicara3",
+						rs.getString("alamat_bicara3") == null ? "" : rs
+							.getString("alamat_bicara3"));
+					h.put("poskod", rs.getString("poskod") == null ? "" : rs
+						.getString("poskod"));
+					h.put("id_negeribicara",
+						rs.getString("id_negeribicara") == null ? "" : rs
+							.getString("id_negeribicara"));
+					h.put("peg_pengendali",
+						rs.getString("peg_pengendali") == null ? "" : rs
+							.getString("peg_pengendali"));
+					h.put("id_pejabat", rs.getString("id_pejabat") == null ? ""
+						: rs.getString("id_pejabat"));
+					h.put("id_jenispejabat",
+						rs.getString("id_jenispejabat") == null ? "" : rs
+							.getString("id_jenispejabat"));
+
+					h.put("jenis_masa_bicara",rs.getString("jenis_masa_bicara") == null ? "" : rs.getString("jenis_masa_bicara"));
+						
+					h.put("SIGNED_TEXT",rs.getString("SIGNED_TEXT") == null ? "" : rs.getString("SIGNED_TEXT"));
+					h.put("tarikh_bicara_dahulu", rs.getDate("tarikh_bicara_dahulu") == null ? ""
+						: Format.format(rs.getDate("tarikh_bicara_dahulu")));
+					h.put("sebab_pinda_tarikh",rs.getString("sebab_pinda_tarikh") == null ? "" : rs.getString("sebab_pinda_tarikh"));
+						
+					listSemakWithData.addElement(h);
+					}
+				} finally {
+					if (db != null)
+						db.close();
+				}
+			}
+	//arief add
+	public String getSignedData(String idPerintah) {
+		String signedData = "";
+		Db db = null;
+		ResultSet rs = null;
+		Statement stmt = null;
+		try {
+			db = new Db();
+			stmt = db.getStatement();
+					
+			String sql = " SELECT SIGNED_TEXT FROM TBLPPKPERINTAH WHERE ID_PERINTAH = '" + idPerintah + "'";
+			rs = stmt.executeQuery(sql);
+			System.out.println("data dah signed "+sql);
+			if (rs.next()) {
+				signedData = rs.getString("SIGNED_TEXT");
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return signedData;
+	}
+	
+	//arief add
+	public static Vector getValidPegawaiPengendali() {
+		return validPegPengendali;
+	}
+	
+	//arief add
+	//checking sama ada user yang login adalah pegawai pengendali
+	private static Vector validPegPengendali = new Vector();
+	public static void setValidPegawaiPengendali(String userId,String idPerbicaraan, String NamaPeg, String username) throws Exception {
+
+		Db db = null;
+		Hashtable h;
+		validPegPengendali.clear();
+		String sql = "";
+		String sql2 = "";
+		String idOBdtl = "";
+		try {
+			db = new Db();
+			Statement stmtN = db.getStatement();
+			sql = " SELECT A.USER_ID " +
+					" FROM TBLPPKRUJUNIT A, TBLPPKPERBICARAAN B " +
+					" WHERE A.ID_UNITPSK = B.ID_UNITPSK " +
+					" AND A.USER_ID = '"+userId+"' " +
+					" AND B.ID_PERBICARAAN ='"+idPerbicaraan+"'";
+			ResultSet rs = stmtN.executeQuery(sql);
+			int i = 0;
+			if (rs.next()) {
+				h = new Hashtable();
+				h.put("USER_ID_PEG",rs.getString("USER_ID") == null ? "" : rs.getString("USER_ID"));
+				validPegPengendali.addElement(h);
+			}else{		
+				sql2 = " SELECT A.USER_ID " +
+						" FROM TBLPPKRUJUNIT A, TBLPPKPERBICARAAN B " +
+						" WHERE A.ID_UNITPSK = B.ID_UNITPSK " +
+						" AND A.NAMA_PEGAWAI = '"+username+"' " +
+						" AND B.ID_PERBICARAAN ='"+idPerbicaraan+"' ";
+						rs = stmtN.executeQuery(sql2);
+						System.out.println("sql2b==="+sql2);
+						if (rs.next()) {
+							h = new Hashtable();
+							h.put("USER_ID_PEG",rs.getString("USER_ID") == null ? "" : rs.getString("USER_ID"));
+							validPegPengendali.addElement(h);
+						}
+					}
+				} finally {
+					if (db != null)
+						db.close();
+				}
+			}
 }
