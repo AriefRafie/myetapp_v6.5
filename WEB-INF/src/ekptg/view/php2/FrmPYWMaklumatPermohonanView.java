@@ -23,6 +23,7 @@ import ekptg.helpers.Utils;
 import ekptg.model.htp.FrmSemakan;
 import ekptg.model.php2.FrmPYWHeaderData;
 import ekptg.model.php2.FrmPYWMaklumatPermohonanData;
+import ekptg.model.php2.utiliti.LampiranBean;
 import ekptg.model.php2.utiliti.PHPUtilHTML;
 import ekptg.model.utils.lampiran.ILampiran;
 
@@ -30,7 +31,6 @@ public class FrmPYWMaklumatPermohonanView extends AjaxBasedModule {
 	
 	private static final long serialVersionUID = 1L;
 	private ILampiran iLampiran = null;
-	private String[] semaks;
 	
 	FrmPYWHeaderData logicHeader = new FrmPYWHeaderData();
 	FrmPYWMaklumatPermohonanData logic = new FrmPYWMaklumatPermohonanData();
@@ -194,7 +194,6 @@ public class FrmPYWMaklumatPermohonanView extends AjaxBasedModule {
     		}
         	if ("doSimpanKemaskiniSenaraiSemak".equals(hitButton)) {
         		String cbsemaks [] = this.request.getParameterValues("idsSenaraiSemak");
-    			//logic.updateSenaraiSemak(idPermohonan,semaks,session);
     				
     			FrmSemakan frmSemak = new FrmSemakan();
     			frmSemak.semakanHapusByPermohonan(idPermohonan);
@@ -351,8 +350,8 @@ public class FrmPYWMaklumatPermohonanView extends AjaxBasedModule {
 			if ("4".equals(selectedTabUpper)) {
 				
 				//SENARAI SEMAK
-				//senaraiSemak = logic.getSenaraiSemak(idPermohonan, idKategoriPemohon);
-				//this.context.put("SenaraiSemak", senaraiSemak);
+				this.context.put("completed", false);
+        		this.context.put("flagPopup", "closePopupLampiran");
 				semak = new FrmSemakan();
 				semak.mode = mode;
 				if ("1".equals(idKategoriPemohon)) {
@@ -362,6 +361,18 @@ public class FrmPYWMaklumatPermohonanView extends AjaxBasedModule {
 					senaraiSemak = semak.getSenaraiSemakanAttach("phppywsyarikat",idPermohonan);
 				}
 				this.context.put("SenaraiSemak", senaraiSemak);
+				
+				if (mode.equals("update")){
+    				
+        			//senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
+	    			//this.context.put("SenaraiSemak", senaraiSemak);
+    			}
+    			else if (mode.equals("view")){
+        			
+        			//senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
+	    			//this.context.put("SenaraiSemak", senaraiSemak);
+	    			
+        		}
 			}
 			
 			//POPUP LAMPIRAN
@@ -486,7 +497,11 @@ public class FrmPYWMaklumatPermohonanView extends AjaxBasedModule {
 			
 			if ("4".equals(selectedTabUpper)) {
 				
+				idKategoriPemohon = getParam("idKategoriPemohon");
+				
 				//SENARAI SEMAK
+				this.context.put("completed", false);
+        		this.context.put("flagPopup", "closePopupLampiran");
 				semak = new FrmSemakan();
 				semak.mode = mode;
 				if ("1".equals(idKategoriPemohon)) {
@@ -496,8 +511,19 @@ public class FrmPYWMaklumatPermohonanView extends AjaxBasedModule {
 					senaraiSemak = semak.getSenaraiSemakanAttach("phppywsyarikat",idPermohonan);
 				}
 				this.context.put("SenaraiSemak", senaraiSemak);
+				
+				if (mode.equals("update")){
+    				
+        			//senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
+	    			//this.context.put("SenaraiSemak", senaraiSemak);
+    			}
+    			else if (mode.equals("view")){
+        			
+        			//senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
+	    			//this.context.put("SenaraiSemak", senaraiSemak);
+	    			
+        		}
 			}
-	
         }
         
         if ("batalPermohonan".equals(step)){
@@ -607,5 +633,13 @@ public class FrmPYWMaklumatPermohonanView extends AjaxBasedModule {
 				db.close();
 		}
 		this.context.put("completed", true);
+	}
+	
+	private ILampiran getDocPHP(){
+		if(iLampiran == null){
+			iLampiran = new LampiranBean();
+		}
+		return iLampiran;
+				
 	}
 }
