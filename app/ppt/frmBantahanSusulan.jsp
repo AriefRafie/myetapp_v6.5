@@ -392,7 +392,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
   <tr class="table_header">
     <td width="5%">Bil</td>
     <td width="30%">Nama Dokumen</td>
-    <td width="30%">Keterangan</td>
+    <td width="30%">Keteranganx</td>
     <td width="30%">Dokumen Sokongan (Papar)</td>
      #if($listDokumen_size > 0)
       <td width="5%">
@@ -416,7 +416,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
          		#else
                		 #set( $row = "row1" )
          		#end
-	   #if($list1.JENIS_DOKUMEN == "perintah")   <!-- PPT-38 -->  
+	   #if($list1.JENIS_DOKUMEN == "pptperintahbantahan")   <!-- PPT-38 -->  
 	   #set ($cnt=1)
 	  <tr>  
 	    <td class="$row" >$list1.BIL</td>

@@ -522,7 +522,7 @@ function RemoveNonNumeric( strString )
       }
       return strReturn;
 }
-
+/*
 function check_date() {
 	
 	var Mula  = document.getElementById("txdTkhCajLewatBantahan").value;
@@ -716,7 +716,7 @@ function check_date() {
 	
 }
 
-
+*/
 
 <!--
 var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedtab});
