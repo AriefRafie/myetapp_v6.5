@@ -195,13 +195,21 @@
           <td width="1%">&nbsp;</td>
           <td width="28%">No. Fail</td>
           <td width="1%">:</td>
-          <td width="70%"><strong>$beanMaklumatPermohonan.noFail </strong></td>
+          <td width="70%"><strong>$beanMaklumatPermohonan.noFail</strong></td>
         </tr>
         <tr>
           <td width="1%">&nbsp;</td>
-          <td width="28%" valign="top">No. Rujukan Online</td>
+          <td width="28%" valign="top">No. Rujukan <i>Online</i></td>
           <td width="1%" >:</td>
-          <td width="70%">$beanMaklumatPermohonan.noPermohonan </td>
+          <td width="70%">$beanMaklumatPermohonan.noPermohonan</td>
+        </tr>
+        <tr>
+          <td width="1%">&nbsp;</td>
+          <td width="28%" valign="top">No. Fail Negeri</td>
+          <td width="1%" >:</td>
+          <td width="70%">
+          	<input name="txtNoFailNegeri" type="text" class="$inputTextClass" id="txtNoFailNegeri" value="$beanMaklumatPermohonan.noFailNegeri" $readonly onblur="this.value=this.value.toUpperCase();" size="50" maxlength="50" />
+		  </td>		  
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -258,6 +266,15 @@
         #end
       </table>
       </fieldset></td>
+  </tr>
+  <tr>
+	<td colspan="2">
+		<fieldset>
+			<legend><strong>MAKLUMAT DOKUMEN</strong></legend>
+			<table width="100%" border="0" cellspacing="2" cellpadding="2">
+			</table>
+		</fieldset>
+		</td>
   </tr>
   #if ($mode == 'new')
   <tr>

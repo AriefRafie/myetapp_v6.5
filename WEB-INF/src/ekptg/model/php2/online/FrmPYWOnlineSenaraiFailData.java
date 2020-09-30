@@ -1746,7 +1746,7 @@ public class FrmPYWOnlineSenaraiFailData {
 			r.add("ID_NEGERI", idNegeriHakmilik);
 			r.add("ID_KEMENTERIAN", idKementerian);	
 			
-			//r.add("ID_MASUK", userId);
+			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLPFDFAIL");
