@@ -143,7 +143,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
                 #if ($mode=="disabled")
                 <input type="text" name="txdTkhCajLewatBantahan" id="txdTkhCajLewatBantahan" value="$!txdTkhCajLewatBantahan" size="10" class="disabled" readonly />          
             	#else
-                <input type="text" name="txdTkhCajLewatBantahan" id="txdTkhCajLewatBantahan" value="$!txdTkhCajLewatBantahan" size="10" onblur="check_date(this);" tabindex="1" />
+                <input type="text" name="txdTkhCajLewatBantahan" id="txdTkhCajLewatBantahan" value="$!txdTkhCajLewatBantahan" size="10"  tabindex="1" />
             <img src="../img/calendar.gif" alt="" onclick="displayDatePicker('txdTkhCajLewatBantahan',false,'dmy');" />&nbsp;<i><font color='blue' style='font-size:10px'>dd/mm/yyyy</font></i>
                 #end            
               </td>
@@ -162,6 +162,18 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
           	</tr>
         	<tr>
             	
+            	<td width="18%">&nbsp;Tarikh</td>
+           	  	<td width="1%">:</td>
+           	  	<td width="41%">
+                
+                #if ($mode=="disabled")
+                <input type="text" name="txdTkhBayarBantah" id="txdTkhBayarBantah" value="$!txdTkhBayarBantah" size="10" class="disabled" readonly />          
+            	#else
+                <input type="text" name="txdTkhBayarBantah" id="txdTkhBayarBantah" value="$!txdTkhBayarBantah" size="10"  tabindex="1" />
+            	<img src="../img/calendar.gif" alt="" onclick="displayDatePicker('txdTkhBayarBantah',false,'dmy');" />&nbsp;<i><font color='blue' style='font-size:10px'>dd/mm/yyyy</font></i>
+                #end            
+              	</td>
+              
                 <td>&nbsp;Caj Bayaran Lewat&nbsp;(RM)</td>
                 <td width="1%">:</td>
            	  	<td>
@@ -528,6 +540,7 @@ function check_date() {
 	var monH  = parseInt(TarikhH.substring(3,5),10)-1;
 	var yrH   = parseInt(TarikhH.substring(6,10),10);
 	var dateH = new Date(yrH, monH, dtH);
+	var leapyrH = yrH%4;
 	//alert("date borang h"+dateH);
 
 	
@@ -562,24 +575,25 @@ function check_date() {
 	//alert(""+date8);
 
 	// get total seconds between two dates
-	var res = Math.abs(dateLewat - Date3bln) / 1000;
+	var res = Math.abs(dateLewat - dateH) / 1000;
 	var days = Math.floor(res / 86400)  ;
 	//alert(days);
 
-	if(yr1 == Date3blnyear)
+	if(yr1 == yrH)
 	{
 		var dta   = 31;
 		var mona  = 12-1;
-		var yra   = Date3blnyear;
+		var yra   = yrH;
 		var datea = new Date(yra, mona, dta);
 		//alert("date a"+datea);
 		//alert("date after 3 bln "+Date3bln);
-		var resa = Math.abs(datea - Date3bln) / 1000;
+		var resa = Math.abs(datea - dateH) / 1000;
 		var daysa = Math.floor(resa / 86400) 
 		//alert("gap day in 2008 "+daysa);
 		var leap3blnyr = yra%4;
+	
 		
-		if(leap3blnyr == "0"){
+		if(leapyrH == "0"){
 			var dayYr = 366;
 		}
 		else{
@@ -600,12 +614,12 @@ function check_date() {
 			//alert("final sini" +finalrs);
 	}
 
-	if(yr1 != Date3blnyear){
+	if(yr1 != yrH){
 		//alert("masuk x sama");
 		var newyr1 = yr1;
-		var newDate3blnyear = Date3blnyear;
-		var diffyear = newyr1 - newDate3blnyear;
-		//alert(diffyear);
+		var newyrH = yrH;
+		var diffyear = newyr1 - newyrH;
+		alert(diffyear);
 		if(diffyear == "1")
 			{
 			//alert("masuk here");
@@ -613,7 +627,7 @@ function check_date() {
 			
 			var dta   = 31;
 			var mona  = 12-1;
-			var yra   = Date3blnyear;
+			var yra   = newyrH;
 			var datea = new Date(yra, mona, dta);
 			
 			var dtb   = 01;
@@ -621,22 +635,25 @@ function check_date() {
 			var yrb   = yr1;
 			var dateb = new Date(yrb, monb, dtb);
 			
-			//alert("date a"+datea);
-			//alert("date b"+dateb);
+			alert("date a"+datea);
+			alert("date b"+dateb);
 			//alert("date after 3 bln "+Date3bln);
 			
-			var resa = Math.abs(datea - Date3bln) / 1000;
+			var resa = Math.abs(datea - dateH) / 1000;
 			var daysa = Math.floor(resa / 86400) 
-			//alert("gap day in 2008 "+daysa);
+			alert("gap day in 1 "+daysa);
+			
+			alert("date b val :"+dateb);
+			alert("dateLewat val :"+dateLewat);
 			
 			var resb = Math.abs(dateb + dateLewat) / 1000;
 			var daysb = Math.floor(resb / 86400) 
-			//alert("gap day in 2009 "+daysb);
+			alert("gap day in 2 "+daysb);
 			
 			var leap3blnyr = yra%4;
 			var leapyr1 = yrb%4;
 			
-			if(leap3blnyr == "0"){
+			if(leapyr1 == "0"){
 				var dayYr = 366;
 			}
 			else{
@@ -662,8 +679,8 @@ function check_date() {
 				var result1 = (award * 0.08 * daysb) / dayYr1;
 				
 			}
-				//alert("result : " +result);
-				//alert("result1 : " +result1);
+				alert("result : " +result);
+				alert("result1 : " +result1);
 				//var resultyr = result.toFixed(2) ;
 				//var resultyr1 =  result1.toFixed(2) ;
 				//alert(resultyr1);
