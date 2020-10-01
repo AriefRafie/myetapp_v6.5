@@ -180,16 +180,28 @@ padding:0 0.25em;
 			document.${formName}.actionPopup.value = "papar";
 		}
 		//alert('simpanLampiran:$!jenisdokumen');
-		if('myid'=='$!jenisdokumen'||'cod'=='$!jenisdokumen'){
-			if('myid'=='$!jenisdokumen')
-				actExt ="&actionPopup=MyID"+"&hitButton=simpanMyID";
-			else if ('cod'=='$!jenisdokumen')
-				actExt ="&actionPopup=cod"+"&hitButton=simpancod";
+// 		if('myid'=='$!jenisdokumen'||'cod'=='$!jenisdokumen'){
+// 			if('myid'=='$!jenisdokumen')
+// 				actExt ="&actionPopup=MyID"+"&hitButton=simpanMyID";
+// 			else if ('cod'=='$!jenisdokumen')
+// 				actExt ="&actionPopup=cod"+"&hitButton=simpancod";
 			
-			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"
-									+"&rujukan=$!idRujukan"
-									+"&actionrefresh=$!actionRefresh"+actExt;
-		}else if('$!jenisdokumen' == '99203'){
+// 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"
+// 									+"&rujukan=$!idRujukan"
+// 									+"&actionrefresh=$!actionRefresh"+actExt;
+// 		}
+		if('$!jenisdokumen' == 'myid'){	
+			actExt ="&jenisdokumen=$!jenisdokumen";
+			actExt +="&actionPopup=$!actionPopup&hitButton=simpanMyID&rujukan=$!idRujukan&actionrefresh=$!actionRefresh";
+			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"+actExt;
+			
+		}else if('$!jenisdokumen' == 'cod'){
+			actExt ="&jenisdokumen=$!jenisdokumen";
+			actExt +="&actionPopup=$!actionPopup&hitButton=simpancod&rujukan=$!idRujukan&actionrefresh=$!actionRefresh";
+			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"+actExt;
+			
+		}
+		else if('$!jenisdokumen' == '99203'){
 			actExt ="&jenisdokumen=$!jenisdokumen";
 			actExt +="&actionPopup=$!actionPopup&hitButton=simpanlampiran&rujukan=$!idRujukan&actionrefresh=$!actionRefresh";
 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"+actExt;
