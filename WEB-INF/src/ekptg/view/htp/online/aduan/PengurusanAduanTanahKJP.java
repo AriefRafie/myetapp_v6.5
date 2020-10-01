@@ -3,14 +3,21 @@ package ekptg.view.htp.online.aduan;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
 import lebah.db.Db;
+import lebah.db.DbException;
 import lebah.db.SQLRenderer;
 import lebah.portal.action.AjaxModule;
 
@@ -22,6 +29,7 @@ import org.apache.log4j.Logger;
 import ekptg.helpers.DB;
 import ekptg.helpers.InternalUserUtil;
 import ekptg.helpers.Paging;
+import ekptg.model.online.aduan.AduanPublic;
 import ekptg.model.online.aduan.ComplainStatus;
 import ekptg.model.online.aduan.Complaint;
 import ekptg.model.online.aduan.ComplaintAgihanBean;
@@ -42,14 +50,13 @@ import ekptg.model.online.aduan.entity.ComplaintTindakan;
 import ekptg.model.online.aduan.setup.ComplaintCategoryBean;
 import ekptg.model.online.aduan.setup.IComplaintCategoryBean;
 
-public class PengurusanAduanTanah extends AjaxModule {
+public class PengurusanAduanTanahKJP extends AjaxModule {
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 8340475343566133197L;
-	private static Logger myLog = Logger.getLogger(ekptg.view.htp.online.aduan.PengurusanAduanTanah.class);
+	private static Logger myLog = Logger.getLogger(ekptg.view.htp.online.aduan.PengurusanAduanTanahKJP.class);
 
-	private final String PATH="app/online/aduan/manager/";
+	private final String PATH="app/htp/online/aduantanah/manager/";
 	private String vm = PATH +"index.jsp";
 	String userId = null;
 	private IEkptgManageComplaintHandler handler;
@@ -60,6 +67,7 @@ public class PengurusanAduanTanah extends AjaxModule {
 	private IComplaintEmailNotification emailNotification;
 	HttpSession session = null;
 	String action = null;
+	List listAduan = null;
 
 	@Override
 	public String doAction() throws Exception {
@@ -84,7 +92,7 @@ public class PengurusanAduanTanah extends AjaxModule {
 			String idComplaint = getParam("idComplaint");
 			viewComplaint(idComplaint);
 			getSeksyenList();
-			getNotificationBean().notifyPengadu(idComplaint);//email notification to pengadu
+			//getNotificationBean().notifyPengadu(idComplaint);//email notification to pengadu
 			String uploadFileStatus = getParam("uploadFiles") != null ?
 									(String) getParam("uploadFiles") : "";
 			System.out.println(getParam("uploadFiles"));
@@ -233,7 +241,7 @@ public class PengurusanAduanTanah extends AjaxModule {
 		String idComplaint = noAduan;
 
 //		System.out.println("Nombor Aduan Sepatutnya keluar ::::::::: " + idComplaint);
-		Complaint complaint = getHandler().getComplaint(idComplaint);
+		AduanPublic complaint = getHandler().getComplaintTanahDetails(idComplaint);
 		context.put("complaint", complaint);
 		getResponseList(idComplaint);
 		//ComplaintResponse response = getHandlerRB().getResponse(idResponse);
@@ -250,11 +258,23 @@ public class PengurusanAduanTanah extends AjaxModule {
 		if(userId == null) throw new Exception("Cannot find login id. Please check with system administrator");
 		InternalUserUtil.getSeksyenId(userId);
 //		System.out.println("GET SEKSYEN BY ROLE:::" + InternalUserUtil.getSeksyenId(userId).getIdSeksyen());
-		Vector<Complaint> v = getHandler().getComplaintByRole(InternalUserUtil.getSeksyenId(userId).getIdSeksyen());
+		//Vector<Complaint> v = getHandler().getComplaintByRole(InternalUserUtil.getSeksyenId(userId).getIdSeksyen());
 //		Vector<Complaint> v = getHandler().getComplaintByRole("17");//for testing purpose;
-		context.put("SenaraiFail", v);
+		Db db = null;
+		try {
+			db = new Db();
+			listAduan = listAduan(userId,session,db);
+		}
+		catch (Exception ex) {
+		throw new DbException(ex.getMessage());
+		}
+		finally {
+			if (db != null)
+				db.close();
+		}
+		context.put("SenaraiFail", listAduan);
 
-		setupPage(session, action, v);
+		setupPage(session, action, listAduan);
 	}
 
 	private void uploadFiles(String idAduan) throws Exception {
@@ -440,5 +460,60 @@ public class PengurusanAduanTanah extends AjaxModule {
 			e.printStackTrace();
 			this.context.put("error", e.getMessage());
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public List listAduan(String USER_ID,HttpSession session,Db db)throws Exception {
+		Db db1 = null;
+
+		ResultSet rs = null;
+		Statement stmt = null;
+		List listJenisAduan = null;
+		String sql = "";
+		SimpleDateFormat formatter =  new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			if(db==null)
+			{
+			db1 = new Db();
+			}
+			else
+			{
+				db1 = db;
+			}
+			stmt = db1.getStatement();
+			sql = "SELECT UPPER(aduan.NAMA_PENGADU) AS FULLNAME,aduan.NO_ADUAN,aduan.ID_PENGADU,tanah.NO_HAKMILIK,aduan.ID_ADUANPUBLIC, "
+					+" aduan.TARIKH_ADUAN, aduan.EMEL_PENGADU, aduan.TARIKH_KEMASKINI, aduan.ID_STATUS, status.KETERANGAN"
+					+" FROM TBLHTPHAKMILIKADUAN tanah, TBLADUANPUBLIC aduan, TBLRUJSTATUSADUANPUBLIC status "+
+					" WHERE tanah.ID_ADUAN = aduan.ID_ADUANPUBLIC AND aduan.ID_STATUS = status.ID_STATUS AND aduan.ID_STATUS NOT IN ('16125')";
+			myLog.info(" ADUAN : SQL listJenisAduan :"+ sql);
+			rs = stmt.executeQuery(sql);
+			listJenisAduan = Collections.synchronizedList(new ArrayList());
+			Map h = null;
+			int bil = 0;
+			while (rs.next()) {
+				h = Collections.synchronizedMap(new HashMap());
+				bil++;
+				h.put("BIL",bil);
+				h.put("id",rs.getString("ID_ADUANPUBLIC") == null ? "" : rs.getString("ID_ADUANPUBLIC").toUpperCase());
+				h.put("namaPengadu",rs.getString("FULLNAME") == null ? "" : rs.getString("FULLNAME").toUpperCase());
+				h.put("tarikhAduan",rs.getDate("TARIKH_ADUAN") == null ? "" : formatter.format(rs.getDate("TARIKH_ADUAN")));
+				h.put("emelPengadu",rs.getString("EMEL_PENGADU") == null ? "" : rs.getString("EMEL_PENGADU"));
+				h.put("tarikhKemaskini",rs.getDate("TARIKH_KEMASKINI") == null ? "" : formatter.format(rs.getDate("TARIKH_KEMASKINI")));
+				h.put("status",rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
+				listJenisAduan.add(h);
+			}
+
+		} finally {
+			if(db==null)
+			{
+				if (rs != null)
+					rs.close();
+				if (stmt != null)
+					stmt.close();
+				if (db1 != null)
+					db1.close();
+			}
+		}
+		return listJenisAduan;
 	}
 }

@@ -145,8 +145,8 @@ public class FrmPYWSenaraiFailOnlineData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_FAIL, A.NO_FAIL, B.ID_PERMOHONAN,B.TARIKH_TERIMA, A.TAJUK_FAIL, B.ID_PEMOHON, B.NO_PERMOHONAN, A.ID_URUSAN, A.ID_SUBURUSAN, " 
-					+ " A.ID_SUBSUBURUSAN, C.CATATAN, C.TUJUAN "
+			sql = "SELECT A.ID_FAIL, A.NO_FAIL, B.ID_PERMOHONAN,B.TARIKH_TERIMA, A.TAJUK_FAIL, B.ID_PEMOHON, B.NO_PERMOHONAN, A.ID_URUSAN, A.ID_SUBURUSAN," 
+					+ " A.ID_SUBSUBURUSAN, C.CATATAN, C.TUJUAN, A.NO_FAIL_NEGERI"
 					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPERMOHONANSEWA C WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PERMOHONAN = C.ID_PERMOHONAN AND A.ID_FAIL = '"
 					+ idFail + "'";
 
@@ -160,6 +160,11 @@ public class FrmPYWSenaraiFailOnlineData {
 						.getString("ID_FAIL").toUpperCase());
 				h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs
 						.getString("NO_FAIL").toUpperCase());
+				h.put("noFailNegeri", rs.getString("NO_FAIL_NEGERI") == null ? "" : rs
+						.getString("NO_FAIL_NEGERI").toUpperCase());
+				h.put("noPermohonan",
+						rs.getString("NO_PERMOHONAN") == null ? "" : rs
+								.getString("NO_PERMOHONAN").toUpperCase());
 				h.put("idPermohonan",
 						rs.getString("ID_PERMOHONAN") == null ? "" : rs
 								.getString("ID_PERMOHONAN").toUpperCase());
@@ -171,9 +176,6 @@ public class FrmPYWSenaraiFailOnlineData {
 						.getString("TAJUK_FAIL").toUpperCase());
 				h.put("catatan", rs.getString("CATATAN") == null ? "" : rs
 						.getString("CATATAN").toUpperCase());
-				h.put("noPermohonan",
-						rs.getString("NO_PERMOHONAN") == null ? "" : rs
-								.getString("NO_PERMOHONAN").toUpperCase());
 				h.put("idUrusan",
 						rs.getString("ID_URUSAN") == null ? "" : rs
 								.getString("ID_URUSAN"));
@@ -194,8 +196,8 @@ public class FrmPYWSenaraiFailOnlineData {
 	}
 
 	public void updateDaftarOnline(String idUrusan, String idFail,
-			String idPermohonan, String txtPerkara, String txtCatatan,
-			String idHakmilikAgensi, String idSuburusan, HttpSession session)
+			String idPermohonan, String txtNoFailNegeri, String txtPerkara,
+			String txtCatatan, String idHakmilikAgensi, String idSuburusan, HttpSession session)
 			throws Exception {
 
 		Db db = null;
@@ -237,6 +239,7 @@ public class FrmPYWSenaraiFailOnlineData {
 					idNegeriHakmilik, idSuburusan);
 			r.add("NO_FAIL", noFail);
 			r.add("NO_FAIL_ROOT", noFail);
+			r.add("NO_FAIL_NEGERI", txtNoFailNegeri);
 			r.add("TAJUK_FAIL", txtPerkara);
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));

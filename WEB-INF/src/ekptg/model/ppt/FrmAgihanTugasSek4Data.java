@@ -373,6 +373,7 @@ public class FrmAgihanTugasSek4Data {
 	    		r.add("tarikh_kemaskini",r.unquote("sysdate"));
 	    		r.add("id_kemaskini",id_user);    		
 	    		sql = r.getSQLUpdate("Tblppttugas");
+	    		myLogger.info("tblppttugas : "+sql);
 	    		stmt.executeUpdate(sql);
 	    		
 	    }//close try 

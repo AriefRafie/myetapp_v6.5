@@ -114,15 +114,15 @@
       	
       	<!-- Butang Kembali bagi skrin Borang O, Perintah dan MT -->
       	#if($!nama_skrin == "pptbantahan")
-      		<input type="button" name="cmdKembali" id="cmdKembali"  value="Kembali" onclick="Kembali()">
+      		<input type="button" name="cmdKembali" id="cmdKembali"  value="Kembali" onclick="KembaliBorangO()">
       	#end
       	
       	#if($!nama_skrin == "pptperintahbantahan")
-      		<input type="button" name="cmdKembali" id="cmdKembali"  value="Kembali" onclick="Kembali()">
+      		<input type="button" name="cmdKembali" id="cmdKembali"  value="Kembali" onclick="KembaliPerintah()">
       	#end
 		
       	#if($!nama_skrin == "pptpembatalanmt")
-       		<input type="button" name="cmdKembali1" id="cmdKembali1"  value="Kembali" onclick="Kembali()">
+       		<input type="button" name="cmdKembali1" id="cmdKembali1"  value="Kembali" onclick="KembaliMahkamahMT()">
        	#end
      
       </label></td>
@@ -344,11 +344,28 @@ input_box = confirm("Adakah anda pasti?");
 	}
 }
 
-function Kembali()	{
+function KembaliBorangO()	{
 	var id_bantahan = document.${formName}.id_bantahan.value;
 	var id_permohonan = document.${formName}.id_permohonan.value;	
 	var senarai_dokumen = document.${formName}.senarai_dokumen.value;
-	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=$nama_skrin&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&location=senarai_dokumen&point="+senarai_dokumen;	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=borangO&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&location=senarai_dokumen&point="+senarai_dokumen;
+	document.${formName}.submit();
+}
+
+
+function KembaliPerintah(){
+	var id_bantahan = document.${formName}.id_bantahan.value ;
+	var id_permohonan = document.${formName}.id_permohonan.value ;	
+	var senarai_dokumen = document.${formName}.senarai_dokumen.value ;	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanAgensiPemohonSenaraiCarian&command=susulanBantahan&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&location=senarai_dokumen&point="+senarai_dokumen;	
+	document.${formName}.submit();
+}
+
+function KembaliMahkamahMT()	{
+	var id_bantahan = document.${formName}.id_bantahan.value;
+	var id_permohonan = document.${formName}.id_permohonan.value;	
+	var senarai_dokumen = document.${formName}.senarai_dokumen.value;
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanSenaraiCarian&command=batalBantahan&id_bantahan="+id_bantahan+"&id_permohonan="+id_permohonan+"&location=senarai_dokumen&point="+senarai_dokumen;
 	document.${formName}.submit();
 }
 

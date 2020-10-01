@@ -75,7 +75,7 @@ public class FrmPYWSenaraiFailOnlineView extends AjaxBasedModule {
        //ACTION BUTTON
 		if (postDB){
         	if ("daftarBaru".equals(hitButton)){
-        		logic.updateDaftarOnline(idUrusan,idFail,idPermohonan,getParam("txtPerkara"),getParam("txtCatatan"),
+        		logic.updateDaftarOnline(idUrusan,idFail,idPermohonan,getParam("txtNoFailNegeri"),getParam("txtPerkara"),getParam("txtCatatan"),
         				idHakmilikAgensi,idSuburusan,session);
         	}
     	}

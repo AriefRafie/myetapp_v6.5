@@ -763,7 +763,7 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 					+ " AND M.ID_LOT = LT.ID_LOT(+)  "
 					+ " AND M.ID_MUKIM = MK.ID_MUKIM(+)  AND NVL(M.FLAG_PEMBATALAN_KESELURUHAN,0) <> 'Y'   "
 					+ " AND NVL(M.FLAG_PENARIKAN_KESELURUHAN,0) <> 'Y' "
-					+ " AND P.ID_MASUK = U.USER_ID AND U.USER_ID = UI.USER_ID(+) ";
+					+ " AND P.ID_MASUK = U.USER_ID(+) AND U.USER_ID = UI.USER_ID(+) ";
 			sql += " AND P.ID_PERMOHONAN = '" + id_permohonan + "' ";
 
 			/*

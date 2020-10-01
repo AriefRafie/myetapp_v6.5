@@ -577,7 +577,9 @@ public class AduanTanah extends AjaxModule {
 				r.add("ID_JENISADUAN", ID_JENISADUAN);
 				r.add("FLAG_HIDE_INFO", FLAG_HIDE_INFO);
 				r.add("KETERANGAN_ADUAN", getParam("aduan").toUpperCase());
-				r.add("NO_FAIL", getParam("no_fail").toUpperCase());
+				if(!getParam("no_fail").equals(""))
+					r.add("NO_FAIL", getParam("no_fail").toUpperCase());
+				
 				r.add("ID_SUMBERADUAN", ID_SUMBERADUAN);
 				r.add("ID_PENGADU", getParam("userid"));
 				r.add("NAMA_PENGADU", getParam("nama_pengadu"));

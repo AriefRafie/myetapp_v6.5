@@ -458,7 +458,7 @@ document.getElementById("header_lama").style.display="block";
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
-                        <td> #if ($mode == 'update')
+                        <td> #if ($mode == 'update' && $userRole != "user_ppk")
                           #if ($modePopup == 'new')
                           <input type="button" name="cmdSimpanHTA1" id="cmdSimpanHTA1" value="Simpan" onClick="javascript:simpanBaruHTATH($listSizeHTAPopup)"/>
                           #if($flag_kemaskini_selesai != "yes") 
@@ -468,7 +468,7 @@ document.getElementById("header_lama").style.display="block";
                           #end
                           <input type="button" name="cmdBatalHTA" id="cmdBatalHTA" value="Kembali" onClick="javascript:batalHTATH()"/>
                           #end
-                          #if ($modePopup == 'update')
+                          #if ($modePopup == 'update' && $userRole != "user_ppk")
                           <input name="cmdSimpanKemaskini2"  id="cmdSimpanKemaskini2" type="button" value="Kemaskini" onClick="javascript:simpanKemaskiniHTATH()"/>
                           #if($flag_kemaskini_selesai != "yes") 
                           <script>
@@ -623,7 +623,7 @@ document.getElementById("header_lama").style.display="block";
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
-                        <td> #if ($mode == 'update')
+                        <td> #if ($mode == 'update' && $userRole != "user_ppk")
                           #if ($modePopup == 'new')
                           <input type="button" name="cmdSimpanHA" id="cmdSimpanHA" value="Simpan" onClick="javascript:simpanBaruHA($listSizeHAPopup)"/>
                           #if($flag_kemaskini_selesai != "yes") 
@@ -1164,7 +1164,7 @@ document.getElementById("header_lama").style.display="block";
                         <td>&nbsp;</td>
                       </tr>
                       <tr>
-                        <td colspan="2" align="center"> #if ($mode == 'update')
+                        <td colspan="2" align="center"> #if ($mode == 'update' && $userRole != "user_ppk")
                           <input type="button" name="cmdSimpanHTAPT" id="cmdSimpanHTAPT" value="Simpan" onClick="javascript:simpanKemaskiniHTAPT()"/>
                           #if($flag_kemaskini_selesai != "yes" ) 
                           <script>
@@ -1389,7 +1389,7 @@ document.getElementById("header_lama").style.display="block";
                         <td>&nbsp;</td>
                       </tr>
                       <tr>
-                        <td colspan="2" align="center"> #if ($mode == 'update')
+                        <td colspan="2" align="center"> #if ($mode == 'update' && $userRole != "user_ppk")
                           <input type="button" name="cmdSimpanHAPT" id="cmdSimpanHAPT" value="Simpan" onClick="javascript:simpanKemaskiniHAPT()"/>
                           #if($flag_kemaskini_selesai != "yes") 
                           <script>
@@ -1634,7 +1634,7 @@ document.getElementById("header_lama").style.display="block";
                           </table></td>
                       </tr>
                       <tr>
-                        <td align="center" colspan="2"> #if ($mode == 'update')
+                        <td align="center" colspan="2"> #if ($mode == 'update' && $userRole != "user_ppk")
                           #if ($modePopup == 'update')
                           <input name="cmdSimpanKemaskiniHTAPKT" id="cmdSimpanKemaskiniHTAPKT" type="button" value="Simpan" onClick="javascript:simpanKemaskiniHTAPKT()"/>
                           #if($flag_kemaskini_selesai != "yes") 
@@ -1791,7 +1791,7 @@ document.getElementById("header_lama").style.display="block";
                               <td>&nbsp;</td>
                             </tr>
                             <tr>
-                              <td align="center"> #if ($mode == 'update')
+                              <td align="center"> #if ($mode == 'update' && $userRole != "user_ppk")
                                 #if ($modePopup == 'update')
                                 <input name="cmdSimpanKemaskiniHAPKT1" id="cmdSimpanKemaskiniHAPKT1" type="button" value="Simpan" onClick="javascript:simpanKemaskiniHAPKT()"/>
                                 #if($flag_kemaskini_selesai != "yes") 
@@ -1911,7 +1911,7 @@ document.getElementById("header_lama").style.display="block";
                       <tr>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
-                        <td colspan="2"> #if ($mode == 'update')
+                        <td colspan="2"> #if ($mode == 'update' && $userRole != "user_ppk")
                           #if ($modePopup == 'update')
                           <input name="cmdSimpanKemaskiniHTAPL"  id="cmdSimpanKemaskiniHTAPL" type="button" value="Simpan" onClick="javascript:simpanKemaskiniHTAPL()"/>
                           #if($flag_kemaskini_selesai != "yes") 
@@ -2044,7 +2044,7 @@ document.getElementById("header_lama").style.display="block";
                       <tr>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
-                        <td colspan="2"> #if ($mode == 'update')
+                        <td colspan="2"> #if ($mode == 'update' && $userRole != "user_ppk")
                           #if ($modePopup == 'update')
                           <input name="cmdSimpanKemaskiniHAPL" id="cmdSimpanKemaskiniHAPL" type="button" value="Simpan" onClick="javascript:simpanKemaskiniHAPL()"/>
                           #if($flag_kemaskini_selesai != "yes") 
@@ -2193,7 +2193,7 @@ document.getElementById("header_lama").style.display="block";
                         <td>&nbsp;</td>
                       </tr>
                       <tr>
-                        <td colspan="2" align="center"> #if($mode == 'update')
+                        <td colspan="2" align="center"> #if($mode == 'update' && $userRole != "user_ppk")
                           <input name="cmdSimpanKemaskiniHTAPF" id="cmdSimpanKemaskiniHTAPF" type="button" value="Simpan" onClick="javascript:simpanKemaskiniHTAPF()"/>
                           #if($flag_kemaskini_selesai != "yes") 
                           <script>
@@ -2325,7 +2325,7 @@ document.getElementById("header_lama").style.display="block";
                         <td>&nbsp;</td>
                       </tr>
                       <tr>
-                        <td colspan="2" align="center"> #if($mode == 'update')
+                        <td colspan="2" align="center"> #if($mode == 'update' && $userRole != "user_ppk")
                           <input name="cmdSimpanKemaskiniHAPF" id="cmdSimpanKemaskiniHAPF" type="button" value="Simpan" onClick="javascript:simpanKemaskiniHAPF()"/>
                           #if($flag_kemaskini_selesai != "yes") 
                           <script>
@@ -2849,12 +2849,20 @@ document.getElementById("header_lama").style.display="block";
     <td><fieldset>
         <legend><strong>CATATAN PERINTAH</strong></legend>
         <table width="100%" border="0" cellspacing="2" cellpadding="2">
+         #if ($userRole == "user_ppk")
+          	#set ($classDisabled = "disabled")
+          #end
           <tr>
-            <td align="center"><textarea name="txtCatatanPerintah" cols="100" rows="10" id="txtCatatanPerintah" >$catatanPerintah</textarea></td>
+            <td align="center"><textarea $classDisabled name="txtCatatanPerintah" cols="100" rows="10" id="txtCatatanPerintah" >$catatanPerintah</textarea></td>
           </tr>
           <tr>
-            <td align="center"><input type="button" name="cmdKemaskiniCatatan" id="cmdKemaskiniCatatan" value="Kemaskini Catatan" onClick="javascript:kemaskiniCatatan()"/>
-              #if($flag_kemaskini_selesai != "yes" ) 
+         	
+            <td align="center"> 
+            #if($userRole == "adminppk")
+            <input type="button"  name="cmdKemaskiniCatatan" id="cmdKemaskiniCatatan" value="Kemaskini Catatan" onClick="javascript:kemaskiniCatatan()"/>
+            #end  
+              #if($flag_kemaskini_selesai != "yes") 
+              
               <script>
                                         document.getElementById('cmdKemaskiniCatatan').style.display = "none";
                                         </script> 

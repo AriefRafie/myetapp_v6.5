@@ -112,7 +112,7 @@ input[readonly]{
            <!-- <tr>
               <td valign="top"><font color="red">*</font></td>
               <td>Tarikh Notis</td>
-              <td>:&nbsp;
+              <td>:&nbsp;9
                    $tarikh_notis
                      <input type="text" size="11" name="txdTarikhNotis" id="txdTarikhNotis" maxlength="10" value="$tarikh_notis" readonly /> 
                   </td><input name="tarikh_notis" type="hidden" id="tarikh_notis" value="$!tarikh_notis" >
@@ -189,7 +189,7 @@ input[readonly]{
 			</fieldset>
            
 			
-			<fieldset><legend><font style="font-family:Verdana; font-size:8pt;	font-weight:bold;">MAKLUMAT TANDANGAN DIGITAL</font></legend>
+			<fieldset><legend><font style="font-family:Verdana; font-size:8pt;	font-weight:bold;">MAKLUMAT TANDATANGAN DIGITAL</font></legend>
     <table width="100%"  cellpadding="1" cellspacing="1" border="0">
                 <tr>
               <td width="1%">&nbsp;</td>
