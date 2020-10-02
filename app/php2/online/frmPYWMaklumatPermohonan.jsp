@@ -85,7 +85,7 @@
                 <td>:</td>
                 <td>$beanMaklumatTanah.noHakmilik</td>
               </tr>
-             <tr>
+             <!--<tr>
                 <td>&nbsp;</td>
                 <td>No. Warta</td>
                 <td>:</td>
@@ -96,7 +96,7 @@
                 <td>Tarikh Warta</td>
                 <td>:</td>
                 <td>$beanMaklumatTanah.tarikhWarta</td>
-              </tr>
+              </tr>-->
               <tr>
                 <td>&nbsp;</td>
                 <td>Mukim</td>
@@ -1073,7 +1073,7 @@ function setTable(id){
 	}
 }
 function cetakBorangPermohonan(idPermohonan) {
-	var url = "../servlet/ekptg.report.php2.online.PYWBorangPermohonan?ID_PERMOHONAN="+idPermohonan;
+	var url = "../servlet/ekptg.report.php2.online.PengesahanOnline?template=PYWBorangPermohonan&folder=ONLINE&ID_PERMOHONAN="+idPermohonan;	
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
@@ -1081,13 +1081,20 @@ function cetakBorangPermohonan(idPermohonan) {
 	hWnd.focus();
 }
 function cetakPengesahanPermohonan(idPermohonan) {
-	var url = "../servlet/ekptg.report.php2.online.PYWPengesahanPermohonanOnline?ID_PERMOHONAN="+idPermohonan;
+	var url = "../servlet/ekptg.report.php2.online.PengesahanOnline?template=PYWPengesahanPermohonanOnline&folder=ONLINE&ID_PERMOHONAN="+idPermohonan;	
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
 }
+
+function batalProjek() {
+	document.${formName}.mode.value = "view";
+	document.${formName}.submit();
+// 	doAjaxCall${formName}("");
+}
+
 </script>
 
 <script>
@@ -1116,9 +1123,11 @@ function doSimpanKemaskiniSenaraiSemak() {
 }
 
 function kemaskiniPermohonan() {
+	document.${formName}.actionPenyewaan.value = "paparMaklumatPenyewaan";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniSenaraiSemak";
 	document.${formName}.mode.value = "update";
 	document.${formName}.submit();	
  //	doAjaxCall${formName}("");//comment jap ye
 }
 </script>
+$javascriptLampiran
