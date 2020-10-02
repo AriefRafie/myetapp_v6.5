@@ -199,7 +199,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 		#end
 
 		<tr>
-			<td><font color="red">*</font></td>
+			<td></td>
 			<td>No.PT</td>
 			<td>:</td>
 			<td>$!selectKodLot</td>
@@ -884,8 +884,8 @@ Maklumat Hakmilik telah berjaya disimpan.
 	</table>
 </fieldset>
 
-
 <!-- ****************** START UNTUK MAKLUMAT PEMBAYARAN ************************* -->
+#if($no_fail != "")
 <fieldset>
 	<legend>Maklumat Pembayaran</legend>
 	<table width="100%" border="0">
@@ -917,7 +917,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 			<td></td>
 			<td>
 				<input type="button" name="cmdUpdate" value="Simpan" onClick="javascript:simpanMD('$!id_permohonan', '$!mode')">
-				<input type="button" name="cmdBatal" value="Batal" onClick="javascript:batalMaklumatDokumen('$!id_permohonan')">
+				<input name="cmdKembali" type="button" value="Kembali" onClick="kembali('$!id_permohonan')" />
 			</td>
 		</tr>
 		</table>
@@ -927,6 +927,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 <input type="hidden" name="flag_subjaket" value="$!flag_subjaket">
 <input type="hidden" name="txtNamaDokumenHidden">
 <input type="hidden" name="txtKeteranganHidden" value="$!txtKeterangan">
+<input type="hidden" name="no_fail" value="$!no_fail">
 
 
 <!-- ****************** END UNTUK MAKLUMAT PEMBAYARAN *************************** -->
@@ -975,6 +976,7 @@ Maklumat Hakmilik telah berjaya disimpan.
        </table>        	
     </fieldset>	
 <!-- ****************** END SEBARAI MAKLUMAT PEMBAYARAN *************************** -->
+#end
 #end
 
 
@@ -1696,11 +1698,11 @@ function simpanHM(id_permohonan, id_hakmilik, flagSubjaket, hideFieldHakmilik, m
 	    document.${formName}.txtNoSyit.focus(); 
 		return;
 	}
-	else if((document.${formName}.socKodLot.value != "" && document.${formName}.txtNoPT.value == "") || (document.${formName}.socKodLot.value == "" && document.${formName}.txtNoPT.value != "")){
+	/* else if((document.${formName}.socKodLot.value != "" && document.${formName}.txtNoPT.value == "") || (document.${formName}.socKodLot.value == "" && document.${formName}.txtNoPT.value != "")){
 		alert("Sila lengkapkan maklumat \"No.PT\" terlebih dahulu.");
   		document.${formName}.txtNoPT.focus(); 
 		return;
-	}
+	} */
 	else if(document.${formName}.txtNoLot.value == "" && document.${formName}.txtNoPT.value == ""){
 		alert("Sila masukkan salah satu \"No.PT atau No.LOT\" terlebih dahulu.");
   		document.${formName}.txtNoLot.focus(); 
@@ -2133,24 +2135,13 @@ return true
 
 //simpan maklumat dokumen
 function simpanMD(id_permohonan, mode){
-	alert("Baca simpanMD ---- 1");
 	//var txtNamaDokumen = document.${formName}.txtNamaDokumenHidden.value;
 	var txdTarikhPembayaran = document.${formName}.txdTarikhPembayaranHidden.value;
-	alert("Baca simpanMD ---- 2");
-	
-	
 	
 	var command = document.${formName}.command.value;
 	var command2 = document.${formName}.command2.value;
-	alert("Baca simpanMD ---- 3");
-	
 	
 	( !window.confirm("Adakah Anda Pasti?") ) 
-	alert("Baca simpanMD ---- 4");
-		
-		
-	
-			
 	
 			
 		//var txtNamaDokumen = document.${formName}.txtNamaDokumenHidden.value;		
