@@ -161,19 +161,20 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
               </td>          
           	</tr>
         	<tr>
-            	
-            	<td width="18%">&nbsp;Tarikh</td>
-           	  	<td width="1%">:</td>
-           	  	<td width="41%">
+            	  <td>&nbsp;Peratus Caj Lewat</td>
+                <td width="1%">:</td>
+           	  	<td>
                 
-                #if ($mode=="disabled")
-                <input type="text" name="txdTkhBayarBantah" id="txdTkhBayarBantah" value="$!txdTkhBayarBantah" size="10" class="disabled" readonly />          
-            	#else
-                <input type="text" name="txdTkhBayarBantah" id="txdTkhBayarBantah" value="$!txdTkhBayarBantah" size="10"  tabindex="1" />
-            	<img src="../img/calendar.gif" alt="" onclick="displayDatePicker('txdTkhBayarBantah',false,'dmy');" />&nbsp;<i><font color='blue' style='font-size:10px'>dd/mm/yyyy</font></i>
-                #end            
-              	</td>
-              
+              	#if ($mode=="disabled")
+              	<input type="text" name="txtPeratusCaj" id="txtPeratusCaj" value="$!txtPeratusCaj" maxlength="3" class="disabled" readonly />
+              	#else
+              	<input type="text" name="txtPeratusCaj" id="txtPeratusCaj" value="$!txtPeratusCaj" maxlength="3" />              
+         	  	<input type="hidden" name="txtPeratusCaj" id="txtPeratusCaj" value="$!txtPeratusCaj" />  
+         	  	#end 
+                           
+       		  </td>
+            	
+            	
                 <td>&nbsp;Caj Bayaran Lewat&nbsp;(RM)</td>
                 <td width="1%">:</td>
            	  	<td>
@@ -186,6 +187,20 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
          	  	#end 
                            
        		  </td>
+            </tr>
+            <tr>
+             <td width="18%">&nbsp;Tarikh</td>
+           	  	<td width="1%">:</td>
+           	  	<td width="41%">
+                
+                #if ($mode=="disabled")
+                <input type="text" name="txdTkhBayarBantah" id="txdTkhBayarBantah" value="$!txdTkhBayarBantah" size="10" class="disabled" readonly />          
+            	#else
+                <input type="text" name="txdTkhBayarBantah" id="txdTkhBayarBantah" value="$!txdTkhBayarBantah" size="10" onblur="dateBantah(this);" tabindex="1" />
+            	<img src="../img/calendar.gif" alt="" onclick="displayDatePicker('txdTkhBayarBantah',false,'dmy');" />&nbsp;<i><font color='blue' style='font-size:10px'>dd/mm/yyyy</font></i>
+                #end            
+              	</td>
+              
             </tr>
            
         </table>   
@@ -521,6 +536,10 @@ function RemoveNonNumeric( strString )
             }
       }
       return strReturn;
+}
+
+function dateBantah(){
+	
 }
 /*
 function check_date() {
