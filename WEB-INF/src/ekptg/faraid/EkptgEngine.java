@@ -828,8 +828,11 @@ public class EkptgEngine {
 			try {
 				db = new Db(); 
 				sql ="select count(*)+1 as jumWaris from TBLPPKOB where "+
-					"ID_SIMATI='"+id_simati+"' AND "+
-					"ID_PERMOHONANSIMATI NOT IN (SELECT ID_PERMOHONANSIMATI FROM tblppkfailpindah) ";
+						"id_permohonansimati='"+id_permohonan+"' "+
+						"";
+//				sql ="select count(*)+1 as jumWaris from TBLPPKOB where "+
+//					"ID_SIMATI='"+id_simati+"' AND "+
+//					"ID_PERMOHONANSIMATI NOT IN (SELECT ID_PERMOHONANSIMATI FROM tblppkfailpindah) ";
 				if (debugmode) myLogger.info("getJumWaris sql+" + sql);
 				//ekptgEngine.setHTMLBuilder(sql);
 				ResultSet rs = db.getStatement().executeQuery(sql); 
@@ -849,12 +852,16 @@ public class EkptgEngine {
 			int lapisan = 0;
 			try {
 				db = new Db(); 
+				//20201001, query baru
 				sql ="select count(*)+1 as lapisan from TBLPPKOB where "+
-					"ID_SIMATI = '"+id_simati+"' "+
-					"AND ID_PERMOHONANSIMATI NOT IN (SELECT ID_PERMOHONANSIMATI FROM tblppkfailpindah) "+
-					//"ID_PERMOHONANSIMATI=(SELECT ID_PERMOHONANSIMATI FROM TBLPPKPERMOHONANSIMATI WHERE " +
-					//"ID_PERMOHONAN='"+id_permohonan+"') "+
-					"AND lapis = 1 And status_hidup = 1";
+					" lapis = 1 and status_hidup = 1"+
+					" and id_permohonansimati= '"+id_permohonan+"'"+
+					"";
+
+//				sql ="select count(*)+1 as lapisan from TBLPPKOB where "+
+//					"ID_SIMATI = '"+id_simati+"' "+
+//					"AND ID_PERMOHONANSIMATI NOT IN (SELECT ID_PERMOHONANSIMATI FROM tblppkfailpindah) "+
+//					"AND lapis = 1 And status_hidup = 1";
 				if (debugmode) myLogger.info(sql);
 				//ekptgEngine.setHTMLBuilder(sql);
 				ResultSet rs = db.getStatement().executeQuery(sql); 
@@ -876,7 +883,7 @@ public class EkptgEngine {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			try {
 				db = new Db(); 
-				sql ="Select a.id_simati,nama_simati," +
+				sql ="select a.id_simati,nama_simati," +
 						"CASE WHEN NO_KP_BARU IS NOT NULL THEN  NO_KP_BARU "+
 					    "WHEN NO_KP_BARU IS NULL AND NO_KP_LAMA IS NOT NULL THEN  NO_KP_LAMA "+
 					    "WHEN NO_KP_BARU IS NULL AND NO_KP_LAMA IS NULL THEN  NO_KP_LAIN "+
@@ -884,9 +891,10 @@ public class EkptgEngine {
 						",tarikh_mati, " +
 						"CASE WHEN a.jantina = '1' THEN 'Lelaki' WHEN a.jantina = '2' THEN 'Perempuan' " +
 						"ELSE 'X' END AS Jantina,b.ID_PERMOHONANSIMATI " +
-						"from tblppksimati a,Tblppkpermohonansimati b where a.ID_SIMATI = b.ID_SIMATI " +
+						"from tblppksimati a,tblppkpermohonansimati b where a.ID_SIMATI = b.ID_SIMATI " +
 						"AND a.id_simati='"+sm.id_simati+"' "+
-						"AND id_permohonan='"+sm.id_permohonan+"' "; 
+						"AND b.id_permohonansimati='"+sm.id_permohonan+"' "; 
+//						"AND id_permohonan='"+sm.id_permohonan+"' "; 
 						//Removed this part since our record will be based on simati
 						//"AND id_permohonan='"+sm.id_permohonan+"'"; 
 				

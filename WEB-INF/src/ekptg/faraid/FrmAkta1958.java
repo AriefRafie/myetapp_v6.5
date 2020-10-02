@@ -14,6 +14,10 @@ import org.apache.log4j.Logger;
 import ekptg.faraid.EkptgEngine.Simati;
 
 public class FrmAkta1958 extends AjaxBasedModule{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -42904356721393331L;
 	static Logger myLogger = Logger.getLogger(FrmAkta1958.class);
 	private static boolean debugmode = true;
 	
@@ -42,45 +46,42 @@ public class FrmAkta1958 extends AjaxBasedModule{
 				setupPage(session,action,null);
 			}
 			
-		} else {
-		
-		vm = "app/ppk/frmAkta1958.jsp";
-		//this.context.put("wait","true");
-		//myLogger.info("submit:"+submit);
-		if ("".equals(submit)) {
-			this.context.put("wait","true");
-		} else {
-			this.context.put("wait","false");
-			long start = System.currentTimeMillis(); 
-			
-			
-			EkptgEngine ekptgEngine = new EkptgEngine();
-			Simati sm = ekptgEngine.new Simati();
-			Vector hasilFaraid = new Vector();
-			Akta1958 a = new Akta1958();
-			hasilFaraid = a.doAllAkta1958Processing(ekptgEngine,sm,id_simati,id_permohonan);
-			
-			// Everything is been done here..
-			//hasilFaraid = ekptgEngine.doAllAkta1958Processing(id_simati,id_permohonan,ekptgEngine,sm);
-			
-			//Simati Information
-		 	this.context.put("namaSiMati", sm.getNamaSimati());
-		 	this.context.put("noKp", sm.getNoKp());
-		 	this.context.put("tarikhMati",sm.getTarikhMati());
-		 	this.context.put("idSimati",sm.getId_simati());
-		 	this.context.put("idPermohonanSimati",sm.getId_permohonansimati());
-		 	this.context.put("lapisan",sm.getLapisan());
-		 	//-------------
-		 	
-		 	this.context.put("Senarai",hasilFaraid);
-		 	
-			this.context.put("idPermohonan",id_permohonan);
-		    this.context.put("action",action);
-		    
-		    long elapsedTimeMillis = System.currentTimeMillis() - start; 
-		    float elapsedTimeSecond = elapsedTimeMillis/1000f; 
-		    this.context.put("timetaken",elapsedTimeSecond);
-		    this.context.put("detailFaraidCalculation",ekptgEngine.getHTMLBuilder());
+		} else {	
+			vm = "app/ppk/frmAkta1958.jsp";
+			//this.context.put("wait","true");
+			//myLogger.info("submit:"+submit);
+			if ("".equals(submit)) {
+				this.context.put("wait","true");
+			} else {
+				this.context.put("wait","false");
+				long start = System.currentTimeMillis(); 
+				
+				EkptgEngine ekptgEngine = new EkptgEngine();
+				Simati sm = ekptgEngine.new Simati();
+				Vector hasilFaraid = new Vector();
+				Akta1958 a = new Akta1958();
+				hasilFaraid = a.doAllAkta1958Processing(ekptgEngine,sm,id_simati,id_permohonan);		
+				// Everything is been done here..
+				//hasilFaraid = ekptgEngine.doAllAkta1958Processing(id_simati,id_permohonan,ekptgEngine,sm);
+				
+				//Simati Information
+			 	this.context.put("namaSiMati", sm.getNamaSimati());
+			 	this.context.put("noKp", sm.getNoKp());
+			 	this.context.put("tarikhMati",sm.getTarikhMati());
+			 	this.context.put("idSimati",sm.getId_simati());
+			 	this.context.put("idPermohonanSimati",sm.getId_permohonansimati());
+			 	this.context.put("lapisan",sm.getLapisan());
+			 	//-------------
+			 	
+			 	this.context.put("Senarai",hasilFaraid);
+			 	
+				this.context.put("idPermohonan",id_permohonan);
+			    this.context.put("action",action);
+			    
+			    long elapsedTimeMillis = System.currentTimeMillis() - start; 
+			    float elapsedTimeSecond = elapsedTimeMillis/1000f; 
+			    this.context.put("timetaken",elapsedTimeSecond);
+			    this.context.put("detailFaraidCalculation",ekptgEngine.getHTMLBuilder());
 			}
 		}
 		return vm;	
