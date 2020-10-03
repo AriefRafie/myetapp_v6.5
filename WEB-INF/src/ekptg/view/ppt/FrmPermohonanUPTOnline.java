@@ -274,6 +274,13 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 			String submit = getParam("command");
 			myLogger.info("submit : " + submit);
+			
+			listPageDepan = modelOnline.getListPemohon(id_user, portal_role, "");
+			context.put("id_fail", id_fail);
+			context.put("no_fail", no_fail);
+			myLogger.info("no_fail======="+no_fail);
+			myLogger.info("id_fail======="+id_fail);
+			
 
 			if ("pendaftaran".equals(submit)) {
 
@@ -931,9 +938,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				uploadFiles(id_permohonan, txdTarikhPembayaran, session);
 				
 				context.put("mode", "view");
-				context.put("mode", "readonly");
 				
-				vm = screenTanah;
+				vm = screenUtama;
 			}
 			
 			else if ("viewHM".equals(submit)) {
@@ -1869,6 +1875,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			context.put("catatan_status_online", catatan_status_online);
 			context.put("flag_semakan_online", flag_semakan_online);
 			// context.put("ulasanjt", ulasanjt);
+			
+			
 
 			this.context.put("selectedTab", selectedTab);
 			setupPage(session, action, listPageDepan);

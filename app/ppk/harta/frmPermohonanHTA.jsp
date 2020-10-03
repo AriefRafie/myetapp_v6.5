@@ -222,11 +222,6 @@
                         				<td width="50%"> 
               						#if($show_htaa_add_table=="yes")
                           					<fieldset><legend>HARTA TAK ALIH (ADA HAKMILIK)</legend>
-                          					#if($!skrin_online == "yes")
-                          					<div id="info_skrin_daftar_sek8"></div>
-															      <script>
-															 						parent.document.getElementById("info_skrin_daftar_sek8").innerHTML="<div class=\"warning_online_ppk\"><table><tr><b><blink>*</blink> Harta Tak Alih : Tanah, rumah dan kepentingan-kepentingan, hak atau faedah yang terdapat atau yang akan didapati daripada tanah.</b><br><b><blink>*</blink> Harta Tak Alih (Ada Hakmilik): Harta tak alih yang mempunyai hakmilik/geran yang berdaftar nama si mati sebagai pemilik.</br></b></div>";
-															 			</script> #end
                           					<table width="100%" border="0">
 					                  		#if($!skrin_online != "yes") 
 					                          	<tr>
@@ -264,6 +259,10 @@
 						                                    	<td><div align="right">:</div></td>
 						                                    	<td>$!socDaerah
 							                                      	<span id="check_daerah_harta" style="color:red" ></span> 
+							                                      	#if($!skrin_online == "yes")
+																									<a href="javascript:info('daerah')" class="help" title="info">					
+									                            			<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+									                            			</a>#end
 							                           			</td>
 							                            	</tr>
 							                            	
@@ -273,7 +272,11 @@
 							                                        <div align="left">Mukim</div>
 							                                      </div></td>
 							                                    <td><div align="right">:</div></td>
-							                                    <td>$!socMukim</td>
+							                                    <td>$!socMukim
+							                                    #if($!skrin_online == "yes")
+																									<a href="javascript:info('mukim')" class="help" title="info">					
+									                            			<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+									                            			</a>#end</td>
                                   							</tr>
                                   							
 						                                  	<tr>
@@ -559,7 +562,7 @@
                            		<tr>
                                     <td class="style38"><div align="left">Tanggungan</div></td>
                                     <td width="1%"><div align="right">:</div></td>
-                                    <td><input name="txtTanggunganHtaam" type="text" id="txtTanggunganHtaam" value="$tanggungan" size="15" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" /></td>
+                                    <td><input name="txtTanggunganHtaam" type="text" id="txtTanggunganHtaam" value="$tanggungan" size="15" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" readonly="readonly" class="disabled"/></td>
                              	</tr>
                              	
                            		<tr>
@@ -1211,7 +1214,7 @@
                        		<tr>
                             	<td class="style38"><div align="left">Tanggungan </div></td>
                              	<td>:</td>
-                              	<td><input name="txtTanggunganHtaamUp" type="text" id="txtTanggunganHtaam2" value="$!htaHash.tanggungan" size="15"$readmodeR class="$readmode" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" /></td>
+                              	<td><input name="txtTanggunganHtaamUp" type="text" id="txtTanggunganHtaam2" value="$!htaHash.tanggungan" size="15"$readmodeR style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" class="disabled" readonly/></td>
                           	</tr>
                           	
                       		<tr>
@@ -1381,6 +1384,12 @@
                    	<tr>
                       	<td>
                         	<fieldset><legend>SENARAI HARTA TAK ALIH (ADA HAKMILIK) </legend>
+                        	#if($!skrin_online == "yes")
+                          		<div id="info_skrin_daftar_sek8"></div>
+								<script>
+									parent.document.getElementById("info_skrin_daftar_sek8").innerHTML="<div class=\"warning_online_ppk\"><font color=\"black\"><b>* Harta Tak Alih : Tanah, rumah dan kepentingan-kepentingan, hak atau faedah yang terdapat atau yang akan didapati daripada tanah.</b><br><b><blink>*</blink> Harta Tak Alih (Ada Hakmilik): Harta tak alih yang mempunyai hakmilik/geran yang berdaftar nama si mati sebagai pemilik.</br></b></font></div>";
+								</script> 
+							#end
                           	<table width="100%">
                             	<tr>
                               		<td align="left">
@@ -1459,7 +1468,9 @@
 					       			#set( $row = "row1" )
 					    		#end      
 	                        	<tr bgcolor="white" class="$row">
-					    	   		<td><input type="checkbox" name="selectHTA" id="selectHTA" value="$listam.idhta" /></td>
+					    	   		<td><input type="checkbox" name="selectHTA" id="selectHTA" value="$listam.idhta" />
+<!-- 					    	   			<input type="hidden" name="idhtaamid" value="$listam.idhta" /> -->
+					    	   		</td>
 	                           		<td><div align="center" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()">$!i</div></td>
 	                           		<td><div align="left" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()"> <a href="javascript:get_htaam('$!idPermohonanSimati','$!listam.idhta','$!listam.idDokumen')" class="style42">$!listam.namaNegeri</a></div></td>
 	                           		<td><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$!listam.namaDaerah</div></td>
@@ -1908,7 +1919,7 @@ function nktambah(paramOnline) {
 	function get_htaam( idPermohonanSimati, idhtaam , idDokumen) {
 		document.f1.id_Permohonansimati.value= idPermohonanSimati;
 	    document.f1.command.value = "Htaam";
-		document.f1.idhtaam.value = idhtaam;
+		document.f1.idhtaamid.value = idhtaam;
 		document.f1.idDokumen.value = idDokumen;
 		document.f1.mode.value = "getHtaam";
 	
