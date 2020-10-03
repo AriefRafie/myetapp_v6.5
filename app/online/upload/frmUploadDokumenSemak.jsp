@@ -55,7 +55,7 @@ padding:0 0.25em;
 <link rel="stylesheet" type="text/css" href="../../css/online.css" />
 #end
   	<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-  	<input type="text" name="idpermohonan" id="idpermohonan" value="$idPermohonan"/>
+  	<input type="hidden" name="idpermohonan" id="idpermohonan" value="$!idPermohonan"/>
 
 	<input type="hidden" name="actionPopup" value="$!actionPopup"/>
   	<input type="hidden" name="hitButton" id="hitButton" value="$!hitButton"/>
@@ -264,20 +264,17 @@ padding:0 0.25em;
 
 		}else if('$!actionRefresh'=='phpapb'){
 			window.opener.doChangeTab('2');			
-		}
-		else if('$!actionRefresh'=='phppnw'){
+		}else if('$!actionRefresh'=='phppnw'){
 		//	alert("masuk actionRefresh phppnw");
 			window.opener.doChangeTabUpper('2');
-		}
-		else if('$!actionRefresh'=='phpphptkr'){
+		}else if('$!actionRefresh'=='phpphptkr'){
 			window.opener.doChangeTabUpper('2');
-		}
-		else if('$!actionRefresh'=='phpphppelepasan'){
+		}else if('$!actionRefresh'=='phpphppelepasan'){
 			window.opener.doChangeTabUpper('5');
+		}else if('$!actionRefresh'=='htppajakanmycoid'){
+			window.opener.doChangeTab('1');			
 		}
-		else if('$!actionRefresh'=='htppajakanmycoid'){
-				window.opener.doChangeTab('1');			
-			}
+	
 	}
 	//setSelected(1,0,0,1);HtaamViewX('$paramOnline')
 
