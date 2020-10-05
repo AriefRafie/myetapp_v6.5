@@ -39,6 +39,7 @@ public class FrmPopupTolakPermohonan extends AjaxBasedModule {
     	myLogger.info("submit=" + submit);
 		String userId = (String)session.getAttribute("_ekptg_user_id");
     	String modul = getParam("modul");
+    	context.put("modul",modul);
     	myLogger.info("modul : " + modul);
 
     	//NEW FORM
@@ -64,6 +65,7 @@ public class FrmPopupTolakPermohonan extends AjaxBasedModule {
     		    	hash.put("catatan", getParam("txtCatatan"));
     				hash.put("idUser", userId);
     				hash.put("langkah", "50");
+    				hash.put("modul", modul);
     				
     				hash.put("idPermohonan",hashPermohonan.get("idPermohonan"));
 					hash.put("idFail", hashPermohonan.get("idFail"));
@@ -81,7 +83,10 @@ public class FrmPopupTolakPermohonan extends AjaxBasedModule {
 //    				susf.setTarikhMasuk("sysdate");
 //    				susf.setIdKemaskini(Long.parseLong(userId));
 //    				susf.setTarikhKemaskini("sysdate");
-    				getStatus().simpan(hashPermohonan);
+					if(modul.equals("php"))
+						getStatus().simpanPhp(hash);
+					else
+						getStatus().simpan(hash);
     				
     			}else if(jenisTolak.equals("pelulus") || jenisTolak.equals("penyemak")){
     					//simpanCatatanTolak(session,id_permohonan);
@@ -95,7 +100,12 @@ public class FrmPopupTolakPermohonan extends AjaxBasedModule {
     		
     		//data
     		if(jenisTolak.equals("internal")){
-    			getDataTolakPermohonan(id_permohonan);
+    			context.put("modul",modul);
+    			if(modul.equals("php"))
+    				getDataTolakPermohonanPhp(id_permohonan);
+    			else 
+    				getDataTolakPermohonan(id_permohonan);
+    			
     		}else if(jenisTolak.equals("pelulus") || jenisTolak.equals("penyemak")){
     			getDataTolakPermohonanKJP(id_permohonan,jenisTolak);
 			}
@@ -115,7 +125,12 @@ public class FrmPopupTolakPermohonan extends AjaxBasedModule {
             	if("updateCatatanTolak".equals(submit2)){            		
             		//simpanCatatanTolak(session,id_permohonan);            		
             		if(jenisTolak.equals("internal")){
-        				simpanCatatanTolak(session,id_permohonan);
+            			if(modul.equals("php"))
+            				simpanCatatanTolakPhp(session,id_permohonan);
+            				
+            			else
+            				simpanCatatanTolak(session,id_permohonan);
+            			
         			}else if(jenisTolak.equals("pelulus") || jenisTolak.equals("penyemak")){
         				//simpanCatatanTolak(session,id_permohonan);
         				modelUPT.simpanCatatanTolakKJP((String)session.getAttribute("_ekptg_user_id"),id_permohonan,jenisTolak, getParam("txtCatatan").toUpperCase());
@@ -166,7 +181,7 @@ public class FrmPopupTolakPermohonan extends AjaxBasedModule {
 	@SuppressWarnings({ "unchecked", "static-access" })
 	private void getDataTolakPermohonan(String id_permohonan) throws Exception{	
 		Vector dataTolakPermohonan = new Vector();
-		dataTolakPermohonan.clear();		
+		dataTolakPermohonan.clear();
 		dataTolakPermohonan = modelUPT.getDataTolakPermohonan(id_permohonan);		
 		//data
 		context.put("dataTolakPermohonan",dataTolakPermohonan);
@@ -183,6 +198,24 @@ public class FrmPopupTolakPermohonan extends AjaxBasedModule {
 		
 	}//close getDataTolakPermohonan
 	
+	private void getDataTolakPermohonanPhp(String id_permohonan) throws Exception{
+		Vector dataTolakPermohonan = new Vector();
+		dataTolakPermohonan.clear();		
+		dataTolakPermohonan = modelUPT.getDataTolakPermohonanPhp(id_permohonan);
+		
+		context.put("dataTolakPermohonan",dataTolakPermohonan);
+		
+		String catatan_status_online = "";
+		if (dataTolakPermohonan.size() != 0) {
+			Hashtable h = (Hashtable) dataTolakPermohonan.get(0);
+			catatan_status_online = h.get("catatan_status_online").toString();
+		}
+		
+		if(!catatan_status_online.equals("")){
+			context.put("mode","view");
+		}
+	}
+	
 	private void simpanCatatanTolak(HttpSession session,String id_permohonan) throws Exception{		
 		Hashtable<String,String> h = new Hashtable<String,String>();		
 		h.put("id_permohonan", id_permohonan);
@@ -192,6 +225,15 @@ public class FrmPopupTolakPermohonan extends AjaxBasedModule {
 		FrmPermohonanUPTData.simpanCatatanTolak(h);
 		
 	}//close simpanCatatanTolak
+	
+	private void simpanCatatanTolakPhp(HttpSession session,String id_permohonan) throws Exception{		
+		Hashtable<String,String> h = new Hashtable<String,String>();		
+		h.put("id_permohonan", id_permohonan);
+		h.put("txtCatatan", getParam("txtCatatan").toUpperCase());
+		h.put("id_user", String.valueOf(session.getAttribute("_ekptg_user_id")));	
+		FrmPermohonanUPTData.simpanCatatanTolakPhp(h);
+		
+	}
 	
 	private IStatus getStatus(){
 		if (iStatus==null){

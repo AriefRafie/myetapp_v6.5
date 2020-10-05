@@ -1,6 +1,7 @@
-
---2020/09/30
-ALTER TABLE TBLHTPHAKMILIK ADD CATATAN_PELEPASAN VARCHAR2(250);
+--2020/10/01
+====================================================================================================
+ALTER TABLE TBLONLINEEADUAN ADD NO_FAIL VARCHAR2(100);
+ALTER TABLE TBLHTPHAKMILIKADUAN ADD ID_SEKSYEN NUMBER;
 
 --2020/09/21
 ====================================================================================================
