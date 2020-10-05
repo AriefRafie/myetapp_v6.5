@@ -8,14 +8,19 @@ import javax.servlet.http.HttpSession;
 import lebah.portal.AjaxBasedModule;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
+import ekptg.model.htp.FrmSemakan;
 import ekptg.model.php2.FrmPYWSenaraiFailOnlineData;
+import ekptg.model.php2.utiliti.LampiranBean;
 import ekptg.model.php2.utiliti.PHPUtilHTML;
+import ekptg.model.utils.lampiran.ILampiran;
 
 public class FrmPYWSenaraiFailOnlineView extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
 	
 	FrmPYWSenaraiFailOnlineData logic = new FrmPYWSenaraiFailOnlineData();
+	private ILampiran iLampiran = null;
+	FrmSemakan semak = null;
 	
 	String userId = null;
 	String idNegeriUser = null;
@@ -58,6 +63,7 @@ public class FrmPYWSenaraiFailOnlineView extends AjaxBasedModule {
         Vector beanMaklumatPermohonan = null;
         Vector beanMaklumatTanah = null;
         Vector beanMaklumatPemohon = null;
+        Vector senaraiSemak = null;
         
         String idKategoriPemohon = getParam("socKategoriPemohon");
 		if (idKategoriPemohon == null || idKategoriPemohon.trim().length() == 0) {
@@ -173,7 +179,17 @@ public class FrmPYWSenaraiFailOnlineView extends AjaxBasedModule {
    			logic.setMaklumatTanah(idHakmilikAgensi);
    			beanMaklumatTanah = logic.getBeanMaklumatTanah();
    			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
-   
+   			
+   			//SENARAI SEMAK
+			semak = new FrmSemakan();
+			if ("1".equals(idKategoriPemohon)) {
+				senaraiSemak = semak.getSenaraiSemakanAttach("phppywindividu",idPermohonan);
+			} 
+			else if ("2".equals(idKategoriPemohon)) {
+				senaraiSemak = semak.getSenaraiSemakanAttach("phppywsyarikat",idPermohonan);
+			}
+			this.context.put("SenaraiSemak", senaraiSemak);
+			
         }
         else {
         	
@@ -200,6 +216,7 @@ public class FrmPYWSenaraiFailOnlineView extends AjaxBasedModule {
 		
 		//SET DEFAULT ID PARAM
 		this.context.put("actionOnline", actionOnline);
+//		this.context.put("mode", mode);
 		this.context.put("idFail", idFail);
 		this.context.put("idStatus", idStatus);
 		this.context.put("idPermohonan", idPermohonan);
@@ -209,6 +226,14 @@ public class FrmPYWSenaraiFailOnlineView extends AjaxBasedModule {
 	    this.context.put("idSuburusan", idSuburusan);
 	    this.context.put("idSubsuburusan", idSubsuburusan);
 		return vm;
+	}
+	
+	private ILampiran getDocPHP(){
+		if(iLampiran == null){
+			iLampiran = new LampiranBean();
+		}
+		return iLampiran;
+				
 	}
 	
 	public void setupPage(HttpSession session,String action,Vector list) {

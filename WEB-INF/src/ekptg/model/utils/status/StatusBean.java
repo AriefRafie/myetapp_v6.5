@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -14,6 +15,8 @@ import org.apache.log4j.Logger;
 
 import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
+import ekptg.model.entities.Tblpermohonan;
+import ekptg.model.entities.Tblphppermohonansewa;
 import ekptg.model.entities.Tblrujsuburusanstatusfail;
 import ekptg.model.htp.HtpBean;
 import ekptg.model.htp.IHtp;
@@ -358,6 +361,64 @@ public class StatusBean implements IStatus {
 		return idSuburusanstatusfail;
 		
 	}
+	
+	public String simpanStatusAktifPhp(Tblrujsuburusanstatusfail susf, Tblpermohonan tp) throws Exception {
+		String idSuburusanstatusfail = "0";
+		try{
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			//TBLRUJSUBURUSANSTATUSfAIL
+			idSuburusanstatusfail = String.valueOf(DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ"));		  
+			r = new SQLRenderer();		  
+			r.add("id_suburusanstatusfail", idSuburusanstatusfail);
+			r.add("id_fail",r.unquote(String.valueOf(susf.getIdFail())));
+			r.add("id_permohonan", String.valueOf(susf.getIdPermohonan()));
+			r.add("id_suburusanstatus", r.unquote(String.valueOf(susf.getIdSuburusanstatus())));
+			r.add("aktif",susf.getAktif());
+			r.add("url",susf.getUrl());
+			r.add("id_masuk", String.valueOf(susf.getIdMasuk()));
+			r.add("tarikh_Masuk", r.unquote(susf.getTarikhMasukStr()));
+			r.add("id_kemaskini", String.valueOf(susf.getIdMasuk()));
+			r.add("tarikh_kemaskini", r.unquote(susf.getTarikhKemaskiniStr()));
+			sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
+			
+			// TBLPERMOHONAN
+			r = new SQLRenderer();
+			r.update("id_permohonan", String.valueOf(tp.getIdPermohonan()));
+			r.add("catatan_status_online",String.valueOf(tp.getCatatanOnline()));
+			r.add("id_kemaskini", String.valueOf(tp.getIdKemaskini()));
+			r.add("tarikh_kemaskini", r.unquote("sysdate"));
+			sql = r.getSQLUpdate("TBLPERMOHONAN");
+			
+		    stmt.executeUpdate(sql);
+		    conn.commit();
+	
+		}catch (SQLException se) { 
+			try {
+				conn.rollback();
+			    
+			} catch (SQLException se2) {
+				throw new Exception("Rollback error:"+se2.getMessage());
+				
+			}
+			throw new Exception("Ralat kemasukan status fail:"+se.getMessage());
+			    
+		}catch(Exception ex){
+			 conn.rollback();
+			 ex.printStackTrace();
+			 throw new Exception("Ralat:"+ex.getMessage());
+		
+		}finally{
+			if (db != null) db.close();
+	
+		}		
+		return idSuburusanstatusfail;
+		
+	}
 	/**
 	 Sebagai jumlah bilangan tugasan dan senarai fail/ maklumat yang berkaitan
 	 dengan tugasan yang perlu dibuat.
@@ -551,10 +612,38 @@ public class StatusBean implements IStatus {
 		susf.setTarikhMasuk("sysdate");
 		susf.setIdKemaskini(Long.parseLong(String.valueOf(hash.get("idUser"))));
 		susf.setTarikhKemaskini("sysdate");
+				
 		return simpanStatusAktif(susf);
 	
 	}
 	
+	@Override
+	public String simpanPhp(Hashtable<String,String> hash) throws Exception {
+		String idSuburusanStatus = getIdSuburusanStatusByLangkah(String.valueOf(hash.get("langkah"))
+									,String.valueOf(hash.get("idSuburusan")), "=");
+	
+		Tblrujsuburusanstatusfail susf = new Tblrujsuburusanstatusfail();
+		susf.setIdFail(Long.parseLong(String.valueOf(hash.get("idFail"))));
+		susf.setIdPermohonan(Long.parseLong(String.valueOf(hash.get("idPermohonan"))));
+		susf.setIdSuburusanstatus(Long.parseLong(idSuburusanStatus));
+		susf.setUrl("Kembalikan Permohonan");
+		susf.setAktif("1");
+		susf.setIdMasuk(Long.parseLong(String.valueOf(hash.get("idUser"))));
+		susf.setTarikhMasuk("sysdate");
+		susf.setIdKemaskini(Long.parseLong(String.valueOf(hash.get("idUser"))));
+		susf.setTarikhKemaskini("sysdate");
+		
+		Tblpermohonan tp = new Tblpermohonan();
+		tp.setIdPermohonan(Long.parseLong(String.valueOf(hash.get("idPermohonan"))));
+		tp.setCatatanOnline(String.valueOf(hash.get("catatan")));
+		tp.setIdMasuk(Long.parseLong(String.valueOf(hash.get("idUser"))));
+//		tp.setTarikhMasuk(Date.parse(String.valueOf("sysdate")));
+		tp.setIdKemaskini(Long.parseLong(String.valueOf(hash.get("idUser"))));
+//		tp.setTarikhKemaskini("sysdate");
+		
+		return simpanStatusAktifPhp(susf, tp);
+	}
+		
 	private IHtp getIHTP(){
 		if(iHTP== null)
 			iHTP = new HtpBean();

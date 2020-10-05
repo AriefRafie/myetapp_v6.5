@@ -269,12 +269,8 @@
   </tr>
   <tr>
 	<td colspan="2">
-		<fieldset>
-			<legend><strong>MAKLUMAT DOKUMEN</strong></legend>
-			<table width="100%" border="0" cellspacing="2" cellpadding="2">
-			</table>
-		</fieldset>
-		</td>
+		#parse("app/php2/frmPYWDaftarManualSenaraiSemak.jsp")
+	</td>
   </tr>
   #if ($mode == 'new')
   <tr>
@@ -287,13 +283,16 @@
           <td width="1%"></td>
           <td width="28%"></td>
           <td width="1%"></td>
-          <td width="70%"> #if ($mode == 'new')
-            <input type="button" name="cmdDaftar" id="cmdDaftar" value="Daftar" onclick="daftar()"/>
-            <input type="button" name="cmdKembali" id="cmdKembali" value="Batal" onclick="kembali()"/>
+          <td width="70%"> 
+          	#if ($mode == 'new')
+            	<input type="button" name="cmdDaftar" id="cmdDaftar" value="Daftar" onclick="daftar()"/>
+            	<input type="button" name="cmdKembalikanFail" id="cmdKembalikanFail" value="Kembalikan Permohonan" onclick="kembalikanFailOnline('$idPermohonan', 'yes')"/>
+            	<input type="button" name="cmdKembali" id="cmdKembali" value="Batal" onclick="kembali()"/>
             #else
-            <input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onclick="seterusnya()"/>
-            <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembali()"/>
-            #end </td>
+            	<input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onclick="seterusnya()"/>
+            	<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembali()"/>
+            #end 
+          </td>
         </tr>
       </table></td>
   </tr>
@@ -318,6 +317,18 @@ function seterusnya() {
 	document.${formName}.action = "$EkptgUtil.getTabID("Penyewaan",$portal_role)?_portal_module=ekptg.view.php2.FrmPYWSenaraiFailView";
 	document.${formName}.actionPenyewaan = "";
 	document.${formName}.submit();
+}
+function kembalikanFailOnline(id_permohonan,formnew) {	
+	var w = "400";
+	var h = "200";
+	var left = (screen.width/2)-(w/2);
+	var top = (screen.height/2)-(h/2);
+	var url = "../x/${securityToken}/FrmPopupTolakPermohonan?id_permohonan="+id_permohonan+"&formnew="+formnew+"&modul=php&jenisTolak=internal";
+		
+	var hWnd = window.open(url, "Permohonan Online Dikembalikan", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+	if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();		
 }
 function kembali() {	
 	document.${formName}.actionOnline.value = "";

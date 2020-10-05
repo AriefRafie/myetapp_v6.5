@@ -647,7 +647,7 @@ public class FrmPYWJabatanTeknikalView extends AjaxBasedModule {
 	    			hashMaklumatJPPH.put("tarikhJangkaTerima", getParam("txtTarikhJangkaTerima"));
 	    			hashMaklumatJPPH.put("tarikhTerima", getParam("txtTarikhTerima"));
 	    			hashMaklumatJPPH.put("tarikhSurat", getParam("txtTarikhSurat"));
-	    			hashMaklumatJPPH.put("noRujukan", getParam("txtNoRujukanSurat"));
+	    			hashMaklumatJPPH.put("noRujukan", getParam("txtNoRujukan"));
 	    			hashMaklumatJPPH.put("ulasan", getParam("txtUlasan"));
 	    			hashMaklumatJPPH.put("kadarSewaBulan", getParam("txtKadarSewaBulan"));
 	    			hashMaklumatJPPH.put("kadarSewaTahun", getParam("txtKadarSewaTahun"));

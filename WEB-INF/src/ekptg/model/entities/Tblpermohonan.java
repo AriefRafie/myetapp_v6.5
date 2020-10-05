@@ -25,10 +25,10 @@ public class Tblpermohonan extends AbstractTblpermohonan implements
 	public Tblpermohonan(Long idPermohonan, Long idFail, Long idJkptg,
 			String noPermohonan, String noPerserahan, Date tarikhSurat,
 			Date tarikhTerima, String tujuan, Long idMasuk, Date tarikhMasuk,
-			Long idKemaskini, Date tarikhKemaskini) {
+			Long idKemaskini, Date tarikhKemaskini, String catatanOnline) {
 		super(idPermohonan, idFail, idJkptg, noPermohonan, noPerserahan,
 				tarikhSurat, tarikhTerima, tujuan, idMasuk, tarikhMasuk,
-				idKemaskini, tarikhKemaskini);
+				idKemaskini, tarikhKemaskini, catatanOnline);
 	}
 
 }
