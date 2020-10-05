@@ -13,7 +13,7 @@ import ekptg.model.entities.Tblrujnegeri;
 public class EkptgProcessComplainHandler extends ComplaintHandler implements IEkptgManageComplaintHandler{
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-	
+
 	public Vector<Complaint> getComplaintByRole(String role) {
 		Vector<Complaint> v = new Vector<Complaint>();
 		Db db = null;
@@ -31,7 +31,7 @@ public class EkptgProcessComplainHandler extends ComplaintHandler implements IEk
 				type.setId(rs.getLong("ID_JENISADUAN"));
 				type.setCode(rs.getString("KOD_JENIS_ADUAN"));
 				type.setDescription(rs.getString("JENIS_ADUAN"));
-				
+
 				comp.setType(type);
 				comp.setId(rs.getLong("ID_EADUAN"));
 				comp.setNamaPengadu(rs.getString("NAMA_PENGADU"));
@@ -59,7 +59,7 @@ public class EkptgProcessComplainHandler extends ComplaintHandler implements IEk
 
 	@Override
 	public Complaint processComplaint(Complaint complaint) {
-		
+
 		return complaint;
 	}
 
@@ -77,9 +77,9 @@ public class EkptgProcessComplainHandler extends ComplaintHandler implements IEk
 				negeri.setIdNegeri(rs.getLong("ID_NEGERI"));
 				negeri.setKodNegeri(rs.getString("KOD_NEGERI"));
 				negeri.setNamaNegeri(rs.getString("NAMA_NEGERI"));
-				
+
 				v.addElement(negeri);
-			}			
+			}
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -116,4 +116,9 @@ public class EkptgProcessComplainHandler extends ComplaintHandler implements IEk
 		return null;
 	}
 
+	@Override
+	public Vector<Complaint> getComplaintTanah() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

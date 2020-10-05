@@ -152,7 +152,7 @@ public class FrmSemakan {
 		    	  h.put("aturan", Utils.isNull(rs.getString("aturan")));
 		    	  h.put("keterangan", rs.getString("perihal"));
 		    	  h.put("jenisDokumen", jenis);
-		    	  myLog.info(idSimati);
+		    	  myLog.info("5-10-2020 "+idPermohonanSimati);
 		    	  
 		    	  if(jenis.equals("99201")) {
 		    		  lampiran = lb.getLampiranSimatiPaparSimati(idSimati,jenis);
@@ -173,6 +173,14 @@ public class FrmSemakan {
 		    	  
 		    	  }else if(jenis.equals("99204")){
 		    		  lampiran = lb.getLampirans(idSimati,"paparLampiran");
+		    		  h.put("lampirans", lampiran);
+		    		  
+		    	  }else if(jenis.equals("1107")){
+		    		  lampiran = lb.getLampiranHAOnline(idPermohonanSimati);
+		    		  h.put("lampirans", lampiran);
+		    		  
+		    	  }else if(jenis.equals("1108")){
+		    		  lampiran = lb.getLampiranHTAOnline(idPermohonanSimati);
 		    		  h.put("lampirans", lampiran);
 		    	  }
 		    	  else {

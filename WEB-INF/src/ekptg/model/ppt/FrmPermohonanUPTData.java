@@ -45,6 +45,7 @@ public class FrmPermohonanUPTData {
 	
 	private static  Vector list = new Vector();
 	private static  Vector listDokumen = new Vector();
+	private static  Vector listDokumenPembayaran = new Vector();
 	private  Vector listPohon = new Vector();
 	private  Vector listAgensi = new Vector();
 	private  Vector listPohon2 = new Vector();
@@ -81,6 +82,9 @@ public class FrmPermohonanUPTData {
 	}
 	public Vector getListDokumen(){
 		return listDokumen;
+	}
+	public Vector getListDokumenPembayaran(){
+		return listDokumenPembayaran;
 	}
 	public Vector getListAgensi(){
 		return listAgensi;
@@ -2624,6 +2628,43 @@ public void setListMaklumatTanahSeksyen8(String idPermohonan,String lot,String i
 				if (db != null) db.close();
 			}
 		}
+		
+		public Vector getIdNegeriKJPByUserId(String userId) throws Exception {
+			Db db = null;
+			String sql = "";
+			Hashtable h;
+			Vector listDetailKJP = new Vector();
+
+			try {
+				db = new Db();
+				Statement stmt = db.getStatement();
+
+				sql = "SELECT A.USER_ID, A.USER_NAME, C.ID_NEGERI, B.ID_KEMENTERIAN, B.ID_AGENSI FROM USERS A, USERS_KEMENTERIAN B, TBLRUJAGENSI C, TBLRUJKEMENTERIAN D "
+						+ " WHERE A.USER_ID = B.USER_ID AND B.ID_AGENSI = C.ID_AGENSI AND B.ID_KEMENTERIAN = D.ID_KEMENTERIAN AND A.USER_ID = '"
+						+ userId + "'";
+
+				ResultSet rs = stmt.executeQuery(sql);
+				myLogger.info("listDetailKJP:: "+sql);
+
+				if (rs.next()) {
+					h = new Hashtable();
+					h.put("userId", rs.getString("USER_ID").toString());
+					h.put("idNegeri", rs.getString("ID_NEGERI").toString());
+					h.put("idKementerian", rs.getString("ID_KEMENTERIAN").toString());
+					h.put("idAgensi", rs.getString("ID_AGENSI").toString());
+					h.put("namaPemohon", rs.getString("USER_NAME").toString());
+					listDetailKJP.addElement(h);
+
+					return listDetailKJP;
+				} else {
+					return listDetailKJP;
+				}
+
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}
 
 
 
@@ -4268,6 +4309,57 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 		    }
 		}
 	 
+	 @SuppressWarnings("unchecked")
+		public static void  setListDokumenPembayaran(String id) throws Exception {
+			    Db db = null;
+			    listDokumenPembayaran.clear();
+			    String sql = "";
+			    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			    
+			    try {
+			      db = new Db();
+			      Statement stmt = db.getStatement();
+			      SQLRenderer r = new SQLRenderer();		      
+			    
+			      sql = " SELECT a.id_permohonan, a.id_Dokumen, a.nama_dokumen, a.kandungan, a.tarikh_pembayaran "+
+				    		" FROM TBLPPTDOKUMENHAKMILIK a "+
+				    		" WHERE a.id_permohonan = '"+id+"' ORDER BY a.tarikh_masuk DESC ";
+			      
+			      /*sql = " SELECT a.id_permohonan, a.id_Dokumen, a.nama_dokumen, a.kandungan, b.tarikh_pembayaran "+
+				    		" FROM TBLPPTDOKUMENHAKMILIK a, TBLPPTHAKMILIK b "+
+				    		" WHERE a.id_permohonan = b.id_permohonan "
+				    		+ " AND a.id_permohonan = '"+id+"'  ";*/
+			      
+			     
+			      ResultSet rs = stmt.executeQuery(sql);
+			      myLogger.info(" sql TBLPPTDOKUMENHAKMILIK==="+sql);
+			     
+			      Hashtable h;
+			      int bil = 1;
+			    
+			      while (rs.next()) {
+			    	  
+			    	  h = new Hashtable();
+			    	 
+			    	  h.put("bil", bil);
+			    	  h.put("id_permohonan", rs.getString("id_permohonan")== null?"":rs.getString("id_permohonan"));
+			    	  h.put("id_Dokumen", rs.getString("id_Dokumen")== null?"":rs.getString("id_Dokumen"));
+			    	  h.put("nama_dokumen", rs.getString("nama_dokumen")== null?"":rs.getString("nama_dokumen"));
+			    	  h.put("kandungan",rs.getString("kandungan")== null?"":rs.getString("kandungan"));
+			    	  h.put("txdTarikhPembayaran",rs.getDate("tarikh_pembayaran")== null?"": sdf.format(rs.getDate("tarikh_pembayaran")));
+			          
+			    	  listDokumenPembayaran.addElement(h);
+			    	  bil++;	    	
+			      }			    
+			      //return list;
+			    }  catch (Exception re) {
+			    	log.error("Error: ", re);
+			    	throw re;
+			    	}finally {		    	
+			    if (db != null) db.close();
+			    }
+			}
+	 
 	 public Vector dropdown_jenisdokumen() throws Exception {
 			Vector jenis_dokumen = new Vector();
 			Db db = null;
@@ -4750,6 +4842,28 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 	    	String iddokumen = (String)data.get("id_dokumen");
 	    	sql = "DELETE FROM tblpptdokumen where id_dokumen = '"+iddokumen+"'";
 	    	stmt.executeUpdate(sql);
+	    
+	    } catch (Exception re) {
+	    	log.error("Error: ", re);
+	    	throw re;
+	    }
+	    finally {
+	    	if (db != null) db.close();
+	    }
+	  
+	}//close hapus
+	
+	@SuppressWarnings("unchecked")
+	public static void hapusDokumenPembayaran(Hashtable data) throws Exception {	   
+		Db db = null;
+	    String sql = "";	   
+	    try{	    	
+	    	db = new Db();
+	    	Statement stmt = db.getStatement();
+	    	String iddokumen = (String)data.get("id_dokumen");
+	    	sql = "DELETE FROM tblpptdokumenhakmilik where id_dokumen = '"+iddokumen+"'";
+	    	stmt.executeUpdate(sql);
+	    	myLogger.info("hapusDokumenPembayaran==="+sql);
 	    
 	    } catch (Exception re) {
 	    	log.error("Error: ", re);
@@ -6212,6 +6326,38 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 	    }
 	  }//close simpanCatatanTolak
 	
+	@SuppressWarnings("unchecked")
+	public static void simpanCatatanTolakPhp(Hashtable data) throws Exception {
+		Db db = null;
+	    String sql = "";
+	   
+	    try
+	    {
+	    	db = new Db();
+	    	 Statement stmt = db.getStatement();
+	    	 
+	    	 String id_user = (String)data.get("id_user");
+	    	 String id_permohonan = (String)data.get("id_permohonan");
+	    	 String txtCatatan = (String)data.get("txtCatatan");
+	    	 String id_status = "";
+	    	 
+	    	 SQLRenderer r = new SQLRenderer();
+	    	 r.update("id_permohonan", id_permohonan);
+	    	 r.add("catatan_status_online", txtCatatan);	
+	    	 r.add("id_status",id_status);
+	    	 r.add("tarikh_kemaskini",r.unquote("sysdate"));
+		     r.add("id_kemaskini",id_user);
+	    	 sql = r.getSQLUpdate("Tblpermohonan");
+	    	 stmt.executeUpdate(sql);
+	    	 
+	    } catch (Exception re) {
+	    	log.error("Error: ", re);
+	    	throw re;
+	    	}
+	    finally {
+	    if (db != null) db.close();
+	    }
+	}
 	
 	public void simpanCatatanTolakKJP(String user_id,String id_permohonan,String jenisTolak,String catatan) throws Exception {
 		
@@ -6320,6 +6466,37 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 			 } finally {
 		    if (db != null) db.close();
 		    }
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static Vector getDataTolakPermohonanPhp(String id_permohonan) throws Exception {
+	    
+	Db db = null;
+	String sql = "";
+	
+	try {
+	     db = new Db();
+	      Statement stmt = db.getStatement();
+	      
+	      sql = "SELECT CATATAN_STATUS_ONLINE FROM TBLPERMOHONAN WHERE ID_PERMOHONAN = '"+id_permohonan+"'";
+
+	      ResultSet rs = stmt.executeQuery(sql);
+	      Vector list = new Vector();
+	      
+	      Hashtable h = null;
+
+	      while (rs.next()) {
+	    	  h = new Hashtable();
+	    	  h.put("catatan_status_online", rs.getString("CATATAN_STATUS_ONLINE")==null?"":rs.getString("CATATAN_STATUS_ONLINE"));
+	    	  list.addElement(h);
+	      }
+	      return list;
+	 	} catch (Exception re) {
+	 		log.error("Error: ", re);
+	 		throw re;
+		 } finally {
+	    if (db != null) db.close();
+	    }
 	}
 	
 	@SuppressWarnings("unchecked")

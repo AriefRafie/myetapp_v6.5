@@ -481,7 +481,12 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                                       
                                       
                                       </select>
-                                      #end <span id="check_daerah_harta" style="color:red" ></span> </td>
+                                      #end <span id="check_daerah_harta" style="color:red" ></span> 
+                                      #if($!skrin_online_17 == "yes")
+										<a href="javascript:info('daerah')" class="help" title="info">					
+			                          		<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+			                          	</a>
+			                          #end</td>
                                   </tr>
                                   <tr>
                                     <td valign="top" class="style47" >*</td>
@@ -589,7 +594,13 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                                       
                                       
                                       </select>
-                                      #end </td>
+                                      #end 
+                                      #if($!skrin_online_17 == "yes")
+										<a href="javascript:info('mukim')" class="help" title="info">					
+			                          		<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+			                          	</a>
+			                          #end
+			                          </td>
                                   </tr>
                                   <tr>
                                     <td valign="top" class="style47" >*</td>
@@ -1379,7 +1390,7 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                                   <tr>
                                     <td class="style38"><div align="left">Tanggungan</div></td>
                                     <td width="1%"><div align="right">:</div></td>
-                                    <td><input name="txtTanggunganHtaam" type="text" id="txtTanggunganHtaam" value="$tanggungan" size="15" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" /></td>
+                                    <td><input name="txtTanggunganHtaam" type="text" id="txtTanggunganHtaam" value="$tanggungan" size="15" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" readonly="readonly"  class="disabled"/></td>
                                   </tr>
                                   <tr>
                                     <td class="style38"><div align="left">Jenis Tanah</div></td>
@@ -2928,7 +2939,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                   <tr>
                                     <td class="style38"><div align="left">Tanggungan </div></td>
                                     <td>:</td>
-                                    <td><input name="txtTanggunganHtaamUp" type="text" id="txtTanggunganHtaam2" value="$listamid.tanggungan" size="15"$readmodeR class="$readmode" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" /></td>
+                                    <td><input name="txtTanggunganHtaamUp" type="text" id="txtTanggunganHtaam2" value="$listamid.tanggungan" size="15" $readmodeR class="$readmode disabled" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" readonly="readonly" /></td>
                                   </tr>
                                   <tr>
                                     <td class="style38"><div align="left">#if($readmode != "disabled")<span class="style41">*</span>#end Jenis Tanah</div></td>

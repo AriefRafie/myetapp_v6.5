@@ -15,6 +15,7 @@ public interface IStatus {
 	
 	public String getIdSuburusanStatusByLangkah(String langkah, String idsuburusan, String op) throws Exception;
 	public String simpan(Hashtable<String,String> hash) throws Exception;
+	public String simpanPhp(Hashtable<String,String> hash) throws Exception;
 	public String simpanStatusAktif(Tblrujsuburusanstatusfail susf) throws Exception;
 	public Tblrujsuburusanstatusfail getStatusFailPermohonanAktif(String idFail,String idPermohonan) throws Exception;	
 //	public Tblrujsuburusanstatusfail kemaskiniSimpanStatusPermohonanAktif(Tblrujsuburusanstatusfail rsusf,Tblrujsuburusanstatusfail rsusfb) 

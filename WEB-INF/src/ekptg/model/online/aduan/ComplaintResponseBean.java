@@ -12,7 +12,7 @@ public class ComplaintResponseBean extends ComplaintResponseFacade implements IC
 	private IEkptgManageComplaintHandler complaintHandler;
 	private long idAduan;
 	private String idMasuk;
-	
+
 	public ComplaintResponseBean(){
 		if(complaintHandler == null)
 			complaintHandler = new EkptgProcessComplainHandler();
@@ -42,25 +42,25 @@ public class ComplaintResponseBean extends ComplaintResponseFacade implements IC
 				idNegeri = rs.getInt("id_negeri");
 				idSeksyen = rs.getInt("id_seksyen");
 			}
-			
+
 			switch(idNegeri){
 				case 16://HQ
-					query ="SELECT ID_ADUANTINDAKAN FROM TBLONLINEADUANTINDAKAN WHERE ID_NEGERI=16 AND ID_RUJSEKSYEN="+idSeksyen; 
+					query ="SELECT ID_ADUANTINDAKAN FROM TBLONLINEADUANTINDAKAN WHERE ID_NEGERI=16 AND ID_RUJSEKSYEN="+idSeksyen;
 				break;
 				default://STATE
 					query ="SELECT ID_ADUANTINDAKAN FROM TBLONLINEADUANTINDAKAN WHERE ID_NEGERI="+idNegeri;
 				break;
-					
+
 			}
 			rs =stat.executeQuery(query);
 			if(rs.next()){
 				idTindakan = rs.getLong("ID_ADUANTINDAKAN");
 			}
-			
+
 		}
 		catch(Exception e){
 			e.printStackTrace();
-			
+
 		}finally{
 			db.close();
 		}
@@ -89,10 +89,10 @@ public class ComplaintResponseBean extends ComplaintResponseFacade implements IC
 				response.setComplaint(complaint);
 				v.addElement(response);
 			}
-			
+
 		}catch(Exception e){
 			e.printStackTrace();
-			
+
 		}finally{
 			db.close();
 		}
