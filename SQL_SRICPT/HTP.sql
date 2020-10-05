@@ -1,3 +1,7 @@
+
+--2020/09/30
+ALTER TABLE TBLHTPHAKMILIK ADD CATATAN_PELEPASAN VARCHAR2(250);
+
 --2020/09/21
 ====================================================================================================
 ALTER TABLE TBLHTPMEMOMENTERI ADD NAMA_PEMOHON VARCHAR2(100);
