@@ -1361,9 +1361,16 @@ public class FrmBantahanPampasan extends AjaxBasedModule {
 		String id_bantahan = getParam("id_bantahan");
 		String txdTkhAmbilCek = getParam("txdTkhAmbilCek");
 		String txtMasaAmbilCek = getParam("txtMasaAmbilCek");
+		//yati tambah
+		String txdTkhCajLewatBantahan = getParam("txdTkhCajLewatBantahan");
+		String txdTkhBayarBantah = getParam("txdTkhBayarBantah");
+		String txtPeratusCaj = getParam("txtPeratusCaj");
+		String txtAmaunLewatBantahan = getParam("txtAmaunLewatBantahan");
+		String txtBilLewatBantahan = getParam("txtBilLewatBantahan");
+		
 		modelOperations.add_terimaCek(usid,no_pb,id_hakmilik,id_pihakberkepentingan,txdTkhTerima,
 				txtPenamaCek,txtNoCek,txdTkhCek,txtAmaunCek,txdTkhAkhirCek,id_hakmilikpb,id_bantahan,
-				txdTkhAmbilCek,txtMasaAmbilCek);
+				txdTkhAmbilCek,txtMasaAmbilCek,txdTkhCajLewatBantahan,txdTkhBayarBantah,txtPeratusCaj,txtAmaunLewatBantahan,txtBilLewatBantahan);
 	}
 	
 	private void add_terimaCekAgensi(String usid) throws Exception {
@@ -1396,9 +1403,15 @@ public class FrmBantahanPampasan extends AjaxBasedModule {
 		String txdTkhCek = getParam("txdTkhCek");
 		String txdTkhAkhirCek = getParam("txdTkhAkhirCek");
 		String txdTkhAmbilCek = getParam("txdTkhAmbilCek");
-		String txtMasaAmbilCek = getParam("txtMasaAmbilCek");		
+		String txtMasaAmbilCek = getParam("txtMasaAmbilCek");
+		//yati tambah
+		String txdTkhCajLewatBantahan = getParam("txdTkhCajLewatBantahan");
+		String txdTkhBayarBantah = getParam("txdTkhBayarBantah");
+		String txtPeratusCaj = getParam("txtPeratusCaj");
+		String txtAmaunLewatBantahan = getParam("txtAmaunLewatBantahan");
+		String txtBilLewatBantahan = getParam("txtBilLewatBantahan");
 		modelOperations.update_terimaCek(usid,id_bayaran,txdTkhTerima,txtNoCek,txdTkhCek,
-				txdTkhAkhirCek,txdTkhAmbilCek,txtMasaAmbilCek);		
+				txdTkhAkhirCek,txdTkhAmbilCek,txtMasaAmbilCek,txdTkhCajLewatBantahan,txdTkhBayarBantah,txtPeratusCaj,txtAmaunLewatBantahan,txtBilLewatBantahan);		
 	}
 	
 	private void update_serahCek(String usid, String id_bayaran, String id_bantahan) throws Exception {

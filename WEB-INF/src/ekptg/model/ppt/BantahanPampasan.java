@@ -502,6 +502,7 @@ public class BantahanPampasan {
 				Statement stmt = db.getStatement();
 				SQLRenderer r = new SQLRenderer();				
 				sql =  " SELECT A.ID_BAYARAN,A.NO_BAYARAN,A.AMAUN_BAYARAN,A.TARIKH_TERIMA,A.TARIKH_CEK,A.JENIS_AWARD, "; 
+				sql += "A.AMAUN_BANTAH, A.HARI_LEWAT, A.PERATUS_BANTAH, A.TARIKH_CAJLEWAT, A.TARIKH_BANTAH " ; 
 				sql += " A.NO_PB,A.ID_PIHAKBERKEPENTINGAN,A.FLAG_SERAH_CEK,A.TARIKH_AKHIR_CEK,A.CARA_BAYAR,A.TARIKH_AMBIL_CEK,A.MASA_AMBIL_CEK ";
 				sql += " FROM TBLPPTBAYARAN A WHERE A.ID_BAYARAN = "+ id_bayaran +" ";				
 											
@@ -524,6 +525,11 @@ public class BantahanPampasan {
 		    	h.put("cara_bayar", rs.getString("CARA_BAYAR")==null?"":rs.getString("CARA_BAYAR"));
 		    	h.put("tarikh_ambil_cek", rs.getString("TARIKH_AMBIL_CEK")==null?"":sdf.format(rs.getDate("TARIKH_AMBIL_CEK")));
 		    	h.put("masa_ambil_cek", rs.getString("MASA_AMBIL_CEK")==null?"":rs.getString("MASA_AMBIL_CEK"));
+		    	h.put("tarikh_lewat", rs.getString("TARIKH_CAJLEWAT")==null?"":sdf.format(rs.getDate("TARIKH_CAJLEWAT")));
+		    	h.put("tarikh_bantah", rs.getString("TARIKH_BANTAH")==null?"":sdf.format(rs.getDate("TARIKH_BANTAH")));
+		    	h.put("amaun_bantah", rs.getString("AMAUN_BANTAH")==null?"":Double.parseDouble(rs.getString("AMAUN_BANTAH")));
+		    	h.put("hari_lewat", rs.getString("HARI_LEWAT")==null?"":rs.getString("HARI_LEWAT"));
+		    	h.put("peratus_bantah", rs.getString("PERATUS_BANTAH")==null?"":rs.getString("PERATUS_BANTAH"));
 		    	getMaklumatTerimaCek.addElement(h);
 		      	}      
 			}
