@@ -55,6 +55,7 @@ public class FrmPYWPopupSenaraiPermohonanView extends AjaxBasedModule {
 				 idPermohonan=cbPilihan[i].toString();
 				 logic.simpanPilihanBaru(idMesyuarat, idPermohonan, session);
 			}
+			this.context.put("close_window", "yes");
 		}	
 		
 		if ("tutup".equals(actionPopup)){
