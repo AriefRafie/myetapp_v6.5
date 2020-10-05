@@ -4854,6 +4854,28 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 	}//close hapus
 	
 	@SuppressWarnings("unchecked")
+	public static void hapusDokumenPembayaran(Hashtable data) throws Exception {	   
+		Db db = null;
+	    String sql = "";	   
+	    try{	    	
+	    	db = new Db();
+	    	Statement stmt = db.getStatement();
+	    	String iddokumen = (String)data.get("id_dokumen");
+	    	sql = "DELETE FROM tblpptdokumenhakmilik where id_dokumen = '"+iddokumen+"'";
+	    	stmt.executeUpdate(sql);
+	    	myLogger.info("hapusDokumenPembayaran==="+sql);
+	    
+	    } catch (Exception re) {
+	    	log.error("Error: ", re);
+	    	throw re;
+	    }
+	    finally {
+	    	if (db != null) db.close();
+	    }
+	  
+	}//close hapus
+	
+	@SuppressWarnings("unchecked")
 	public static void updateFlagSah(Hashtable data) throws Exception {
 		
 	    Db db = null;
