@@ -54,7 +54,7 @@
  	#set ($jantina = "F")
  #end
  
- 
+
  <p>
  <input type="hidden"   name="jenisRef" id="jenisRef" value="$!jenisRef">
  </p>
@@ -94,16 +94,11 @@
 					        </tr> 
 					#end
 					
-					#if($jenisRef.equals("1") 
-						|| $jenisRef.equals("11")
-						|| $jenisRef.equals("3")
-						|| $jenisRef.equals("4")
-						|| $jenisRef.equals("5")
-						|| $jenisRef.equals("6")) 
+					##if($jenisRef.equals("1") || $jenisRef.equals("11") || $jenisRef.equals("4") || $jenisRef.equals("5") || $jenisRef.equals("6")) 
 						
-						#set ($janLaki = "")
-						#set($janPer = "")
-						#if($!jantina.equals("M")) 
+						##set ($janLaki = "")
+						##set($janPer = "")
+						##if($!jantina.equals("M")) 
 							#set($janPer = "")
 							#set($janLaki = "selected")
 							
@@ -111,24 +106,28 @@
 							##set($janLaki = "")
 							##set($janPer = "selected")
 							
-						#end
+						##end
+						
+						
 		       			 <tr>
 					          <td width="1%"></td>
 					          <td>Jantina<font color="red">*</font></td>
 					          <td>:</td>
 					          <td colspan="2">
 		
-					            #if($!jantina != "0")
+					           #if($jenisRef=="1")
 					              	<input type="text" name="jantina" id="jantina" value="$!jantina" size="20" maxlength="20" tabindex="12" class="disabled" readonly/>					         
 					            #else
+					          
 					          	<select name="jantina" id="jantina"  class="mediumselect" style="text-transform:uppercase;" onChange="semakUmur();" $!classRead>
-                               		<option value="U" style="text-transform:uppercase;" onblur="uppercase();">Sila Pilih Jantina</option>
-                                   	<option value="M" $!janLaki style="text-transform:uppercase;" onblur="uppercase()">Lelaki</option>
-                                 	<option value="F" $!janPer style="text-transform:uppercase;" onblur="uppercase()">Perempuan</option>
+                               		<option value="U" style="text-transform:uppercase;" onblur="uppercase();">SILA PILIH JANTINA</option>
+                                   	<option value="M" style="text-transform:uppercase;" onblur="uppercase()">LELAKI</option>
+                                 	<option value="F" style="text-transform:uppercase;" onblur="uppercase()">PEREMPUAN</option>
                                 </select>
                                 #end
 					          </td>
 					        </tr>  
+
 		       			 	<tr>
 					          <td width="1%"></td>
 					          <td>Umur<font color="red">*</font></td>
@@ -141,7 +140,7 @@
 					          #end
 					          </td>
 					        </tr>         		
-			 		#end
+			 		##end
 					        
 					        <tr>
 					          <td width="1%"></td>
@@ -397,6 +396,7 @@
 	function hantarPermohonan() {	
 		var bilangan = 0; 
 		
+		//alert(document.${formName}.jantina.value);
 		//alert(bilangan);
 		//alert($jenisRef);
 		if(document.${formName}.jeniskp.value == "" && "$!jenis_pembantah" == "0"){
@@ -419,16 +419,20 @@
 			}
 			
 		}
-		
-		if(document.${formName}.txtAlamat1.value == ""){
+		if(document.${formName}.umur.value == "" || document.${formName}.umur.value == "1"){
+			alert('Sila pastikan maklumat Umur $!labelPem diisi.');
+	  		document.${formName}.umur.focus(); 
+		 	return;
+		}
+		else if(document.${formName}.txtAlamat1.value == ""){
 			alert('Sila pastikan maklumat Alamat $!labelPem diisi.');
 	  		document.${formName}.txtAlamat1.focus(); 
 			return; 
-		}else if(document.${formName}.txtAlamat2.value == ""){
+		}/*else if(document.${formName}.txtAlamat2.value == ""){
 			alert('Sila pastikan maklumat Alamat $!labelPem  diisi.');
 	  		document.${formName}.txtAlamat2.focus(); 
-			return; 
-		}else if(document.${formName}.txtPoskod.value == ""){
+			return;
+		}*/else if(document.${formName}.txtPoskod.value == ""){
 			alert('Sila pastikan maklumat Poskod $!labelPem diisi.');
 	  		document.${formName}.txtPoskod.focus(); 
 			return; 

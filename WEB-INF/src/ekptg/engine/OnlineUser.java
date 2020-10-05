@@ -8,7 +8,12 @@ public class OnlineUser implements Serializable {
 	private String email;
 	private String name;
 	private String kategori;
-	
+	private String jawatan;
+	private String seksyen;
+	private String pejabat;
+	private String negeri;
+	private String daerah;
+
 	public String getId() {
 		return id;
 	}
@@ -39,5 +44,35 @@ public class OnlineUser implements Serializable {
 	public void setKategori(String kategori) {
 		this.kategori = kategori;
 	}
-	
+	public String getJawatan() {
+		return jawatan;
+	}
+	public void setJawatan(String jawatan) {
+		this.jawatan = jawatan;
+	}
+	public String getSeksyen() {
+		return seksyen;
+	}
+	public void setSeksyen(String seksyen) {
+		this.seksyen = seksyen;
+	}
+	public String getPejabat() {
+		return pejabat;
+	}
+	public void setPejabat(String pejabat) {
+		this.pejabat = pejabat;
+	}
+	public String getNegeri() {
+		return negeri;
+	}
+	public void setNegeri(String negeri) {
+		this.negeri = negeri;
+	}
+	public String getDaerah() {
+		return daerah;
+	}
+	public void setDaerah(String daerah) {
+		this.daerah = daerah;
+	}
+
 }

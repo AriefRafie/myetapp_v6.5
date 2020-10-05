@@ -11,7 +11,4 @@ public interface IEkptgManageComplaintHandler {
 	public Vector<Tblrujnegeri> getAvailableNegeri();
 	public Vector<Complaint> search(String noAduan,String status,String tarikh);
 	public Vector<Complaint> getComplaintTanah();
-	public AduanPublic getComplaintTanahDetails(String idComplaint);
-
-
 }
