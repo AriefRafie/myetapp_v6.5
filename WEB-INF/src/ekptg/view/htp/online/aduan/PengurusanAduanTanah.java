@@ -49,7 +49,8 @@ public class PengurusanAduanTanah extends AjaxModule {
 	private static final long serialVersionUID = 8340475343566133197L;
 	private static Logger myLog = Logger.getLogger(ekptg.view.htp.online.aduan.PengurusanAduanTanah.class);
 
-	private final String PATH="app/online/aduan/manager/";
+	//private final String PATH="app/online/aduan/manager/";
+	private final String PATH="app/htp/online/aduantanah/manager/";
 	private String vm = PATH +"index.jsp";
 	String userId = null;
 	private IEkptgManageComplaintHandler handler;
