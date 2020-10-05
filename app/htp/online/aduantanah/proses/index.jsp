@@ -32,10 +32,9 @@
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>No</strong></td>
           <td width="25%"><strong>Nama Pengadu</strong></td>
-          <td width="20%"><strong>No. Aduan</strong></td>
           <td width="20%"><strong>Tarikh Aduan</strong></td>
           <td width="10%"  align="center"><strong>No Hakmilik</strong></td>
-          <td width="10%"  align="center"><strong>Tindakan</strong></td>
+          <td width="10%"  align="center"><strong>Status</strong></td>
 
         </tr>
            #set ($count = 0)
@@ -50,15 +49,14 @@
         <tr>
        		<td class="$row">$!count</td>
         	<td class="$row"><a href="javascript:detail('$fail.ID','$fail.ID_PENGADU')" class="style1">$fail.FULLNAME</a></td>
-        	<td class="$row">$!fail.NO_ADUAN </td>
-        	<td class="$row">$!fail.TARIKH_ADUAN </td>
+        	<td class="$row">$!fail.TARIKH_MASUK </td>
         	<td class="$row">$!fail.NO_HAKMILIK</td>
-        	<td class="$row">
-	        	#if($fail.NO_ADUAN == "")
-	        	<a href="javascript:kemaskini('$fail.ID','$fail.ID_PENGADU')" class="style1">Kemaskini</a>
-	        	#else
-	        	#end
-        	</td>
+        	<td class="$row">$!fail.STATUS</td>
+        </tr>
+        #end
+        #if($count == 0)
+        <tr>
+        	<td colspan="5">Tiada Maklumat</td>
         </tr>
         #end
       </table>
@@ -110,7 +108,11 @@
 
   function hantar() {
 
-		doAjaxCall${formName}("simpanComplaint");
+		//doAjaxCall${formName}("simpanComplaint");
+		document.${formName}.enctype= "multipart/form-data";
+		document.${formName}.encoding = "multipart/form-data";
+		document.${formName}.action='?_portal_module=ekptg.view.htp.online.aduan.AduanTanah&command=simpanComplaint';
+		document.${formName}.submit();
 
 		}
 /*    		function simpan(){
@@ -171,13 +173,17 @@
 	}
 
 	function simpan() {
+		document.${formName}.enctype= "multipart/form-data";
+		document.${formName}.encoding = "multipart/form-data";
+		document.${formName}.action='?_portal_module=ekptg.view.htp.online.aduan.AduanTanah&command=simpanDraf';
+		document.${formName}.submit();
 
 // 		if(document.${formName}.ulasanBalas.value==""){
 // 	   	   alert('Sila Isi Ulasan');
 // 	   	   return;
 // 	   	 }
 
-		doAjaxCall${formName}("simpanDraf");
+		//doAjaxCall${formName}("simpanDraf");
 
 		}
 

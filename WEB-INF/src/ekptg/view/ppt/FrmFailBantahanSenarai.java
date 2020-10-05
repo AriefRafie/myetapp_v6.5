@@ -71,7 +71,7 @@ public class FrmFailBantahanSenarai extends AjaxBasedModule {
 		this.context.put("txtNoFail", getParam("txtNoFail"));
 		String idKementerian = getParam("socKementerian");
 		context.put("selectKementerian",HTML.SelectKementerian("socKementerian",Utils.parseLong(idKementerian),"style=width:470px"));
-		setupPage(session,action,list);
+		setupPageBantahan(session,action,list);
 		
 			
 		return vm;
@@ -82,6 +82,51 @@ public class FrmFailBantahanSenarai extends AjaxBasedModule {
 		String idKementerian = getParam("socKementerian");
 		model.setCarianFailBantahan(usid,txtNoFail,idKementerian,userIdNeg);		
 	}
+		
+		 protected void setupPageBantahan(HttpSession session, String action, Vector lists)
+		    {
+		        if(lists == null) {
+		            context.put("totalRecords", Integer.valueOf(0));
+		            context.remove("SenaraiFail");
+		            context.put("page", Integer.valueOf(0));
+		            context.put("itemsPerPage", Integer.valueOf(0));
+		            context.put("totalPages", Integer.valueOf(0));
+		            context.put("startNumber", Integer.valueOf(0));
+		            context.put("isFirstPage", Boolean.valueOf(true));
+		            context.put("isLastPage", Boolean.valueOf(true));
+		        } else {
+		            context.put("totalRecords", Integer.valueOf(lists.size()));
+		            int page = getParam("page") != "" ? getParamAsInteger("page") : 1;
+		            int itemsPerPage;
+		            if(context.get("itemsPerPage") == null || "".equals(context.get("itemsPerPage")) || "0".equals(context.get("itemsPerPage")))
+		                itemsPerPage = getParam("itemsPerPage") != "" ? getParamAsInteger("itemsPerPage") : 10;
+		            else
+		                itemsPerPage = ((Integer)context.get("itemsPerPage")).intValue();
+		            if("getNext".equals(action))
+		                page++;
+		            else
+		            if("getPrevious".equals(action))
+		                page--;
+		            else
+		            if("getPage".equals(action))
+		                page = getParamAsInteger("value");
+		            else
+		            if("doChangeItemPerPage".equals(action))
+		                itemsPerPage = getParamAsInteger("itemsPerPage");
+		            if(itemsPerPage == 0)
+		                itemsPerPage = 10;
+		            Paging paging = new Paging(session, lists, itemsPerPage);
+		            if(page > paging.getTotalPages())
+		                page = 1;
+		            context.put("SenaraiFail", paging.getPage(page));
+		            context.put("page", new Integer(page));
+		            context.put("itemsPerPage", new Integer(itemsPerPage));
+		            context.put("totalPages", new Integer(paging.getTotalPages()));
+		            context.put("startNumber", new Integer(paging.getTopNumber()));
+		            context.put("isFirstPage", new Boolean(paging.isFirstPage()));
+		            context.put("isLastPage", new Boolean(paging.isLastPage()));
+		        }
+		    }
 
 }
 

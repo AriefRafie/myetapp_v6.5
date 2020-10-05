@@ -147,6 +147,15 @@
 			<table>
 				<tr>
 					<td>
+						Kod:
+						<br>
+						<label>
+                  			<input type="text" name="txtkod">
+                		</label>
+                	</td>
+				</tr>
+				<tr>
+					<td>
 						Keterangan:
 						<br>
 						<label>
@@ -586,7 +595,7 @@ function doChangeSubUrusan() {
 	if(document.${formName}.socSuburusan.value=="")
 		return;
 	document.${formName}.pagemode.value = "bysuburusan";
- 	doAjaxCall${formName}("byurusandefault");
+ 	//doAjaxCall${formName}("byurusandefault");
 }
 
 function doChangeDesc() {
@@ -701,21 +710,20 @@ function doChangeSubUrusanStatus() {
 		
 	}
 
-function deleteKeteranganStatus(id) {
-	if ( !window.confirm("Adakah anda pasti?") ) return;
-	document.${formName}.command.value = "bystatus";
-	document.${formName}.pagemode.value = "delete";
-	
-	document.${formName}.idkpiketerangan.value = id;
-	document.${formName}.action = "";
-	document.${formName}.submit();
-}
+	function deleteKeteranganStatus(id) {
+		if ( !window.confirm("Adakah anda pasti?") ) return;
+		document.${formName}.command.value = "bystatus";
+		document.${formName}.pagemode.value = "delete";
+		
+		document.${formName}.idkpiketerangan.value = id;
+		document.${formName}.action = "";
+		document.${formName}.submit();
+	}
 
-function setSelected(tabId) {
+	function setSelected(tabId) {
+	    document.${formName}.tabId.value = tabId;
+	}
 
-    document.${formName}.tabId.value = tabId;
-}
-
-var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedTab});
+	var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedTab});
 
 </script>
