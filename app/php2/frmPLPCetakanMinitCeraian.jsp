@@ -150,7 +150,7 @@
         </tr>
         <tr>
           <td colspan="2"><fieldset>
-            <legend>PERAKUAN KETUA SETIAUSAHA KEMENTERIAN SUMBER ASLI DAN ALAM SEKITAR</legend>
+            <legend>PERAKUAN KETUA SETIAUSAHA KEMENTERIAN TANAH & SUMBER ASLI (KeTSA)</legend>
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
               <tr>
                 <td width="20%">&nbsp;</td>
@@ -161,7 +161,7 @@
         </tr>
         <tr>
           <td colspan="2"><fieldset>
-            <legend>KEPUTUSAN MENTERI SUMBER ASLI DAN ALAM SEKITAR</legend>
+            <legend>KEPUTUSAN MENTERI TANAH & SUMBER ASLI (KeTSA)</legend>
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
               <tr>
                 <td width="20%">&nbsp;</td>
