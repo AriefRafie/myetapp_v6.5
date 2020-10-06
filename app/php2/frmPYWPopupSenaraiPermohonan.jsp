@@ -14,7 +14,9 @@
 	<input type="hidden" name="hitButton" id="hitButton"/>
 	<input type="hidden" name="step" id="step" value='$!step'/>
 </p>
-
+#if ($close_window == 'yes')
+<body onLoad = closeWin();>
+#end
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
   	<td>
@@ -155,5 +157,9 @@ function kosongkan() {
 	document.${formName}.reset();
 	document.${formName}.socJenisPermohonan.value = "";
 	doAjaxCall${formName}("");
+}
+function closeWin(){
+	window.opener.refreshFromPilihPermohonan();
+	window.close();
 }
 </script>

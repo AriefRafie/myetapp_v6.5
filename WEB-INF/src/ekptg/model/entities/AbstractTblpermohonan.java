@@ -25,6 +25,7 @@ public abstract class AbstractTblpermohonan implements java.io.Serializable {
 	private Date tarikhMasuk;
 	private Long idKemaskini;
 	private Date tarikhKemaskini;
+	private String catatanOnline;
 
 	// Constructors
 
@@ -43,7 +44,7 @@ public abstract class AbstractTblpermohonan implements java.io.Serializable {
 	public AbstractTblpermohonan(Long idPermohonan, Long idFail, Long idJkptg,
 			String noPermohonan, String noPerserahan, Date tarikhSurat,
 			Date tarikhTerima, String tujuan, Long idMasuk, Date tarikhMasuk,
-			Long idKemaskini, Date tarikhKemaskini) {
+			Long idKemaskini, Date tarikhKemaskini, String catatanOnline) {
 		this.idPermohonan = idPermohonan;
 		this.idFail = idFail;
 		this.idJkptg = idJkptg;
@@ -56,6 +57,7 @@ public abstract class AbstractTblpermohonan implements java.io.Serializable {
 		this.tarikhMasuk = tarikhMasuk;
 		this.idKemaskini = idKemaskini;
 		this.tarikhKemaskini = tarikhKemaskini;
+		this.catatanOnline = catatanOnline;
 	}
 
 	// Property accessors
@@ -154,6 +156,14 @@ public abstract class AbstractTblpermohonan implements java.io.Serializable {
 
 	public void setTarikhKemaskini(Date tarikhKemaskini) {
 		this.tarikhKemaskini = tarikhKemaskini;
+	}
+
+	public String getCatatanOnline() {
+		return catatanOnline;
+	}
+
+	public void setCatatanOnline(String catatanOnline) {
+		this.catatanOnline = catatanOnline;
 	}
 
 }

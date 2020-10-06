@@ -28,18 +28,21 @@
 		    	<tr class="$row">
 		          <td class="$row" width="3%"><input type="checkbox" value="$list.id" name="idsSenaraiSemak" $checked /></td>
 		          <td class="$row" width="82%">$i. $list.keterangan</td>
-		          	<td class="$row" width="15%">
-		          	$!list.lampirans
-		        	</td>
+		          <td class="$row" width="15%">$!list.lampirans</td>
 		        </tr>
 		    #end
 		    #if ($mode == 'view')
 		      	<tr class="$row">
 		          <td class="$row" width="3%"><input type="checkbox" value="$list.id" name="idsSenaraiSemak" $checked $disabled /></td>
 		          <td class="$row" width="82%">$i. $list.keterangan</td>
-		          <td class="$row" width="15%">
-		          $!list.lampirans
-		          </td>
+		          <td class="$row" width="15%">$!list.lampirans</td>
+		        </tr>
+		    #end      
+		    #if ($mode == 'new')
+		      	<tr class="$row">
+		          <td class="$row" width="3%"></td>
+		          <td class="$row" width="82%">$i. $list.keterangan</td>
+		          <td class="$row" width="15%">$!list.lampirans</td>
 		        </tr>
 		    #end      
 	    	#end
@@ -56,23 +59,24 @@
   </tr>
   <tr>
     <td width="30%">&nbsp;</td>
-    <td width="70%">#if ($mode == 'update')
-      <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniSenaraiSemak()"/>
-      <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskini()"/>
-      #end
-      #if ($mode == 'view')
-      #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
-      <!-- <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>  -->
-      #if($idStatus == '1610198')
-      <input type="button" name="cmdSeterusnya" id="cmdHantar" value="Ke Jabatan Teknikal" onClick="doSeterusnya()"/>
-      <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
-      #end
-      #end
-      <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
+    <td width="70%">
+    	#if ($mode == 'update')
+      		<input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniSenaraiSemak()"/>
+      		<input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskini()"/>
+      	#end
+      	#if ($mode == 'view')
+      		#if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
+      			<!-- <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/> -->
+      				#if($idStatus == '1610198')
+      					<input type="button" name="cmdSeterusnya" id="cmdHantar" value="Ke Jabatan Teknikal" onClick="doSeterusnya()"/>
+      					<input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
+      				#end
+      		#end
       #end
       #if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
-      <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
-      #end </td>
+      		<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
+      #end 
+    </td>
   </tr>
 </table>
 </fieldset>

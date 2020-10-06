@@ -199,7 +199,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 		#end
 
 		<tr>
-			<td><font color="red">*</font></td>
+			<td></td>
 			<td>No.PT</td>
 			<td>:</td>
 			<td>$!selectKodLot</td>
@@ -884,10 +884,13 @@ Maklumat Hakmilik telah berjaya disimpan.
 	</table>
 </fieldset>
 
-
+<!-- ****************** START UNTUK MAKLUMAT PEMBAYARAN ************************* -->
+#if($no_fail != "")
+	#if($listDPem_size < 1)
 <fieldset>
+	<legend>Maklumat Pembayaran</legend>
 	<table width="100%" border="0">
-		<tr>
+	<tr>
 			<td width="1%"></td>
 			<td valign="top" width="23%">Tarikh Pembayaran</td>
 			<td valign="top" width="1%">:</td>
@@ -898,28 +901,85 @@ Maklumat Hakmilik telah berjaya disimpan.
 				<img src="../img/calendar.gif"
 				onclick="displayDatePicker('txdTarikhPembayaran',false,'dmy');">&nbsp;$!frmtdate</td>
 		</tr>
+		<tr>
+			<td></td>
+			<td>
+					<div align="left">Bukti Pembayaran (baucer)</div>
+			
+			</td>
+			<td>:</td>
+			<td ><input class="texts" id="txtNamaDokumen2" name="txtNamaDokumen2" type="file"></td>
+			
+		</tr>
+		<table align="center">
+		<tr width="100%" border="0">
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>
+				<input type="button" name="cmdUpdate" value="Simpan" onClick="javascript:simpanMD('$!id_permohonan', '$!mode')">
+				<input name="cmdKembali" type="button" value="Kembali" onClick="kembali('$!id_permohonan')" />
+			</td>
+		</tr>
+		</table>
 		
-		<tr>
-			<td valign="top">
-			<td valign="top" width="23%">Buku Pembayaran (baucer)</td>
-			<td valign="top">:</td>
-			<td><input id="fileupload" name="fileupload" type=file size=40 /></td>
-			<br />
-		</tr>
 	</table>
-	#if($isEdit=="yes")
-	<table width="100%" border="0">
-	
-		<tr>
-			<td>&nbsp;</td>
-		</tr>
-		
-		<tr>
-			<td>$!perhatian3</td>
-		</tr>
-	</table>
-	#end
 </fieldset>
+<input type="hidden" name="flag_subjaket" value="$!flag_subjaket">
+<input type="hidden" name="txtNamaDokumenHidden">
+<input type="hidden" name="txtKeteranganHidden" value="$!txtKeterangan">
+<input type="hidden" name="no_fail" value="$!no_fail">
+
+#else
+
+<!-- ****************** END UNTUK MAKLUMAT PEMBAYARAN *************************** -->
+
+<!-- ****************** START SEBARAI MAKLUMAT PEMBAYARAN *************************** -->
+<fieldset>
+    <legend><strong>&nbsp;Senarai Maklumat Pembayaran</strong></legend>
+    
+       	<table width="100%"  cellpadding="0" cellspacing="2" border="0">   
+        	<tr class="table_header">
+           		<td width="4%" align="center"><b>Bil</b></td>
+                <td width="42%" align="center"><b>Tarikh Pembayaran</b></td>
+                <td width="42%" align="center"><b>Muat Turun</b></td>
+                <td width="12%" align="center"><b>Tindakan</b></td>
+                #if($listDPem_size!=0)
+                #end
+            </tr>
+              
+         #if($listDPem_size!=0)
+          
+             #foreach($listD in $listDokumenPembayaran)  
+                   
+                    #set( $i = $velocityCount )       	
+         		#if ( ($i % 2) != 1 )
+              		#set( $row = "row2" )
+         		#else
+               		#set( $row = "row1" )
+         		#end
+         		      
+          	<tr>
+                <td class="$row" align="center">$listD.bil</td>
+                <td class="$row" align="center">$listD.txdTarikhPembayaran</td>
+                <td class="$row" align="center"><a href="javascript:papar_Lampiran('$!listD.id_Dokumen')"><font color="blue">$listD.nama_dokumen</font></a></td>
+                #if($listDPem_size!=0)
+                <td class="$row" align="center"><input type="button" name="cmdHapusDoc" value ="Hapus" onClick="hapusDokumenPembayaran('$!listD.id_Dokumen')"></td>	
+                #end
+            </tr>
+             #end  
+              		 
+         #else
+            <tr>
+                <td colspan="4">Tiada rekod</td>
+            </tr>
+         #end
+                    
+       </table>        	
+    </fieldset>	
+<!-- ****************** END SEBARAI MAKLUMAT PEMBAYARAN *************************** -->
+#end
+#end
 #end
 
 
@@ -1177,6 +1237,8 @@ Maklumat Hakmilik telah berjaya disimpan.
 <input type="hidden" name="id_pihakberkepentingan">
 <input type="hidden" name="id_hakmilik" value="$!id_hakmilik">
 <input type="hidden" name="id_permohonan" value="$!id_permohonan">
+<input type="hidden" name="id_Dokumen" value="$!id_Dokumen">
+<input type="hidden" name="nama_dokumen" value="$!nama_dokumen">
 <input type="hidden" name="command2">
 <input type="hidden" name="command3">
 <input type="hidden" name="command4">
@@ -1641,11 +1703,11 @@ function simpanHM(id_permohonan, id_hakmilik, flagSubjaket, hideFieldHakmilik, m
 	    document.${formName}.txtNoSyit.focus(); 
 		return;
 	}
-	else if((document.${formName}.socKodLot.value != "" && document.${formName}.txtNoPT.value == "") || (document.${formName}.socKodLot.value == "" && document.${formName}.txtNoPT.value != "")){
+	/* else if((document.${formName}.socKodLot.value != "" && document.${formName}.txtNoPT.value == "") || (document.${formName}.socKodLot.value == "" && document.${formName}.txtNoPT.value != "")){
 		alert("Sila lengkapkan maklumat \"No.PT\" terlebih dahulu.");
-  		document.${formName}.socKodLot.focus(); 
+  		document.${formName}.txtNoPT.focus(); 
 		return;
-	}
+	} */
 	else if(document.${formName}.txtNoLot.value == "" && document.${formName}.txtNoPT.value == ""){
 		alert("Sila masukkan salah satu \"No.PT atau No.LOT\" terlebih dahulu.");
   		document.${formName}.txtNoLot.focus(); 
@@ -2074,5 +2136,36 @@ function isDate(dtStr){
 		return false
 	}
 return true
+}
+
+//simpan maklumat dokumen
+function simpanMD(id_permohonan, mode){
+	//var txtNamaDokumen = document.${formName}.txtNamaDokumenHidden.value;
+	
+	var txdTarikhPembayaran = document.${formName}.txdTarikhPembayaranHidden.value;
+	var command = document.${formName}.command.value;
+	var command2 = document.${formName}.command2.value;
+	( !window.confirm("Adakah Anda Pasti?") ) 
+			
+		var txdTarikhPembayaran = document.${formName}.txdTarikhPembayaranHidden.value;
+		//document.${formName}.id_permohonan.value = id_permohonan;
+		document.${formName}.enctype = "multipart/form-data";
+		document.${formName}.encoding = "multipart/form-data";
+		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline&command=uploadDoc&command2=simpanMaklumatDokumen&id_permohonan="+id_permohonan+"&txdTarikhPembayaran="+txdTarikhPembayaran;
+		document.${formName}.submit();
+}
+function hapusDokumenPembayaran(id_dokumen) {
+	
+	document.${formName}.ScreenLocation.value = "middle";
+	if ( !window.confirm("Adakah Anda Pasti?")) return;
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline&command=hapusDokumenPembayaran&id_dokumen="+id_dokumen;
+	document.${formName}.submit();
+}
+function papar_Lampiran(id_dokumen) {
+    var url = "../servlet/ekptg.view.ppt.DisplayBlob?id="+id_dokumen;
+    var hWnd = window.open(url,'displayfile','width=800,height=600, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+    hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
 }
 </script>

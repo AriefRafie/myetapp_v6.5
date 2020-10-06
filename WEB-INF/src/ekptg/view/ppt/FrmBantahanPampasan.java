@@ -48,6 +48,9 @@ public class FrmBantahanPampasan extends AjaxBasedModule {
     	Vector listE = null; //getMaklumatViaEFT    
     	Vector listF = null; // getMaklumatAP    
     	
+      	Vector listTkhBorangH = null; //getTarikhBorangH
+      	Vector listB2 = null; //getTarikhBorangH
+    	
     	Vector dataSuburusanHakmilik = new Vector();
     	Vector getIdSuburusanstatusfail = new Vector();
    		
@@ -78,6 +81,14 @@ public class FrmBantahanPampasan extends AjaxBasedModule {
    		
    		String id_bantahan = getParam("id_bantahan");
    		context.put("id_bantahan", id_bantahan);
+   		
+   		String Date5 = "";
+        context.put("Date5","01/12/2017");
+        myLogger.info(" Date5 :"+Date5);
+        
+    	String Date8 = "";
+        context.put("Date8","11/30/2017");
+        myLogger.info(" Date8 :"+Date8);
    		
    		myLogger.info("id_hakmilik :: "+id_hakmilik);
    		myLogger.info("id_pihakberkepentingan :: "+id_pihakberkepentingan);
@@ -188,6 +199,15 @@ public class FrmBantahanPampasan extends AjaxBasedModule {
      		vm = "app/ppt/frmBantahanPampasan.jsp";		     		
 			
     	}else if("checkingCaraBayar".equals(submit)){
+    		
+    		listB2 = model.getMaklumatTkhH(id_hakmilikpb);
+    		context.put("getMaklumatTkhH", listB2);
+    		
+    		if(listB2.size()!=0){
+    			Hashtable a = (Hashtable) listB2.get(0);
+    			String tarikhBorangH = (String)a.get("tarikh_borangh");
+    			myLogger.info("tarikhBorangH :: "+tarikhBorangH);
+    		}
     		
     		listB = model.getMaklumatPB(id_hakmilikpb);
     		context.put("getMaklumatPB", listB);
@@ -1341,9 +1361,16 @@ public class FrmBantahanPampasan extends AjaxBasedModule {
 		String id_bantahan = getParam("id_bantahan");
 		String txdTkhAmbilCek = getParam("txdTkhAmbilCek");
 		String txtMasaAmbilCek = getParam("txtMasaAmbilCek");
+		//yati tambah
+		String txdTkhCajLewatBantahan = getParam("txdTkhCajLewatBantahan");
+		String txdTkhBayarBantah = getParam("txdTkhBayarBantah");
+		String txtPeratusCaj = getParam("txtPeratusCaj");
+		String txtAmaunLewatBantahan = getParam("txtAmaunLewatBantahan");
+		String txtBilLewatBantahan = getParam("txtBilLewatBantahan");
+		
 		modelOperations.add_terimaCek(usid,no_pb,id_hakmilik,id_pihakberkepentingan,txdTkhTerima,
 				txtPenamaCek,txtNoCek,txdTkhCek,txtAmaunCek,txdTkhAkhirCek,id_hakmilikpb,id_bantahan,
-				txdTkhAmbilCek,txtMasaAmbilCek);
+				txdTkhAmbilCek,txtMasaAmbilCek,txdTkhCajLewatBantahan,txdTkhBayarBantah,txtPeratusCaj,txtAmaunLewatBantahan,txtBilLewatBantahan);
 	}
 	
 	private void add_terimaCekAgensi(String usid) throws Exception {
@@ -1376,9 +1403,15 @@ public class FrmBantahanPampasan extends AjaxBasedModule {
 		String txdTkhCek = getParam("txdTkhCek");
 		String txdTkhAkhirCek = getParam("txdTkhAkhirCek");
 		String txdTkhAmbilCek = getParam("txdTkhAmbilCek");
-		String txtMasaAmbilCek = getParam("txtMasaAmbilCek");		
+		String txtMasaAmbilCek = getParam("txtMasaAmbilCek");
+		//yati tambah
+		String txdTkhCajLewatBantahan = getParam("txdTkhCajLewatBantahan");
+		String txdTkhBayarBantah = getParam("txdTkhBayarBantah");
+		String txtPeratusCaj = getParam("txtPeratusCaj");
+		String txtAmaunLewatBantahan = getParam("txtAmaunLewatBantahan");
+		String txtBilLewatBantahan = getParam("txtBilLewatBantahan");
 		modelOperations.update_terimaCek(usid,id_bayaran,txdTkhTerima,txtNoCek,txdTkhCek,
-				txdTkhAkhirCek,txdTkhAmbilCek,txtMasaAmbilCek);		
+				txdTkhAkhirCek,txdTkhAmbilCek,txtMasaAmbilCek,txdTkhCajLewatBantahan,txdTkhBayarBantah,txtPeratusCaj,txtAmaunLewatBantahan,txtBilLewatBantahan);		
 	}
 	
 	private void update_serahCek(String usid, String id_bayaran, String id_bantahan) throws Exception {

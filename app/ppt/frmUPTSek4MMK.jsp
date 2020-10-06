@@ -513,8 +513,8 @@
 <script>
 
 	function popupEtanah(id_fail,id_permohonan,jenis_skrin,command) {	
-		var url = "../x/${securityToken}/etanah.ppt.sek4?id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&jenis_skrin="+jenis_skrin+"&command="+command;	
-		//var url = "../x/${securityToken}/ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah?id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&jenis_skrin="+jenis_skrin+"&command="+command;	
+		//var url = "../x/${securityToken}/etanah.ppt.sek4?id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&jenis_skrin="+jenis_skrin+"&command="+command;	
+		var url = "../x/${securityToken}/ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah?id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&jenis_skrin="+jenis_skrin+"&command="+command;	
 	    var hWnd = window.open(url,'printuser','width=1200,height=1000, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 	       hWnd.opener = document.window;

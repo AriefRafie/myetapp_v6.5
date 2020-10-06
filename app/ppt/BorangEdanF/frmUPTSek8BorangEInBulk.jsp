@@ -73,7 +73,7 @@
 			</tr>
 
 			<tr>
-				<td>&nbsp;</td>
+				<td width="1%"><font color="red">*</font></td>
 				<td>Tarikh Siasatan</td>
 				<td>:</td>
 				<td><input $disability $disabilityx name="txdTarikhSiasatan"
@@ -107,7 +107,7 @@
 			</tr -->
 
 			<tr>
-				<td>&nbsp;</td>
+				<td width="1%"><font color="red">*</font></td>
 				<td>Alamat</td>
 				<td>:</td>
 				<td><input $disability $disabilityx type="text"
@@ -130,7 +130,7 @@
 			</tr>
 
 			<tr>
-				<td>&nbsp;</td>
+				<td width="1%"><font color="red">*</font></td>
 				<td>Poskod</td>
 				<td>:</td>
 				<td><input $disability $disabilityx type="text"
@@ -140,14 +140,14 @@
 			</tr>
 
 			<tr>
-				<td>&nbsp;</td>
+				<td width="1%"><font color="red">*</font></td>
 				<td>Negeri</td>
 				<td>:</td>
 				<td>$!selectNegeri</td>
 			</tr>
 
 			<tr>
-				<td>&nbsp;</td>
+				<td width="1%"><font color="red">*</font></td>
 				<td>Bandar</td>
 				<td>:</td>
 				<td>$!selectBandar</td>
@@ -158,7 +158,7 @@
 
 	<fieldset id="center">
 			<legend>
-				<strong><font color="red">$M</font>Senarai Pilihan	Hakmilik</strong>
+				<strong><font color="red">$M</font>Senarai Pilihan Hakmilik</strong>
 			</legend>
 
 			#if($saiz_listHakmilikBorangEInBulk > 10)

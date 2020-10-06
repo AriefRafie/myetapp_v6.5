@@ -303,7 +303,8 @@ function parseSignResult(msg){
 			var NO_FAIL = $("#NO_FAIL").val();
 			var id_perbicaraan = $("#id_perbicaraan").val();
 			var id_fail = $("#id_fail").val();
-			openPopupPNB(NO_FAIL,id_perbicaraan,id_fail,signedData);
+			var id_perbicaraan = $("#id_perbicaraan").val();//arief add
+			openPopupPNB(NO_FAIL,id_perbicaraan,id_fail,id_perbicaraan,signedData);
 
 		}else if(statusCode == "12"){
 		Gpki.alert("ID not found");

@@ -88,7 +88,7 @@ public class SkrinPopupHantarEmail extends AjaxBasedModule {
 		if ("hantarEmail".equals(hitButt)) {
 			myLogger.info("Read here SkrinPopupHantarEmail");
 			//hantarEmail();
-			vm = PATH +"skrinPopupHantarEmailsuccess.jsp";
+			vm = PATH +"skrinPopupHantarEmailsuccess.jsp";  //note: tiada source ini. ada di en.zam
 		}
 		
 		return vm;
@@ -111,7 +111,7 @@ public void hantarEmail() throws Exception
 	EmailSender email = EmailSender.getInstance();
 	email.FROM = pro.getFrom();	
 	
-	email.RECIEPIENT = "salnizam2015@gmail.com";
+	email.RECIEPIENT = "binaryadh91@gmail.com";
 	email.SUBJECT = "PERCUBAAN MENGHANTAR EMAIL";
 	email.MESSAGE = "PENGHANTARAN PERINTAH YANG TELAH SELESAI";
 	

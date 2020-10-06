@@ -25,7 +25,7 @@
                       <td width="1%">&nbsp;</td>
                       <td width="28%">No Aduan</td>
                       <td width="1%">:</td>
-                      <td width="70%">$!complaint.noAduan </td>
+                      <td width="70%">$!complaint.id </td>
                     </tr>
                     <tr>
                       <td>&nbsp;</td>
@@ -39,21 +39,63 @@
                       <td>:</td>
                       <td>$!complaint.namaPengadu </td>
                     </tr>
-                    <tr>
-                      <td >&nbsp;</td>
-                      <td >Emel</td>
-                      <td>:</td>
-                      <td>$!complaint.emailPengadu</td>
-                    </tr>
-                    <tr>
-                      <td >&nbsp;</td>
-                      <td>No Telefon</td>
-                      <td>:</td>
-                      <td>$!complaint.phonePengadu</td>
-                    </tr>
+			        <tr>
+			          <td>&nbsp;</td>
+			          <td>Jawatan</td>
+			          <td>:</td>
+			          <td>$!complaint.jawatanPengadu</td>
+			        </tr>
+			        <tr>
+			          <td>&nbsp;</td>
+			          <td>Emel</td>
+			          <td>:</td>
+			          <td>$!complaint.emailPengadu </td>
+			        </tr>
+			        <tr>
+			          <td>&nbsp;</td>
+			          <td>No Telefon</td>
+			          <td>:</td>
+			          <td>$!complaint.phonePengadu </td>
+			        </tr>
+			        <tr>
+			          <td>&nbsp;</td>
+			          <td>Seksyen</td>
+			          <td>:</td>
+			          <td>$!complaint.seksyenPengadu</td>
+			        </tr>
+			        <tr>
+			          <td>&nbsp;</td>
+			          <td>Pejabat</td>
+			          <td>:</td>
+			          <td>$!complaint.pejabatPengadu</td>
+			        </tr>
+			        <tr>
+			          <td>&nbsp;</td>
+			          <td>Negeri</td>
+			          <td>:</td>
+			          <td>$!complaint.negeriPengadu</td>
+			        </tr>
+			        <tr>
+			          <td>&nbsp;</td>
+			          <td>Daerah</td>
+			          <td>:</td>
+			          <td>$!complaint.daerahPengadu</td>
+			        </tr>
+			        <tr>
+			          <td>&nbsp;</td>
+			          <td>No. Fail</td>
+			          <td>:</td>
+			          <td>$!complaint.noFail</td>
+			        </tr>
+			        <tr>
+			          <td>&nbsp;</td>
+			          <td>Jenis Aduan</td>
+			          <td>:</td>
+			          <td>$!complaint.type.code -  $!complaint.type.description </td>
+			        </tr>
                     <tr>
                       <td>&nbsp;</td>
-                      <td>Kandungan</td>
+                      <td>Keterangan Aduan</td>
                       <td>:</td>
                       <td>$!complaint.catatan </td>
                     </tr>
@@ -263,7 +305,7 @@
 
 <iframe id="upload_dokumen" name="upload_dokumen" width="0px" height="0px" style="visibility:hidden"></iframe>
 <script type="text/javascript">
-alert('$!upload_file');
+//alert('$!upload_file');
 if('$!upload_file' == "yes"){
 	window.location.hash='top_upload';
 }

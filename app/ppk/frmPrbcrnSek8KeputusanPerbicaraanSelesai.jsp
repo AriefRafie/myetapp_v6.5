@@ -6,6 +6,10 @@
 	#set($check5juta = $Listflag5juta.flag_5juta )
 #end
 
+#foreach ($ListaksesSkrinKepBicara in $aksesSkrinKepBicara)
+	#set($checkaksesSkrinKepBicara = $ListaksesSkrinKepBicara.AKSES_SKRIN_KEPBICARA )
+#end
+
 #if($size_M!=0)
 	#foreach($m in $listMahkamah)
 		#set($alamatM1=$m.alamat1)
@@ -628,7 +632,7 @@ document.getElementById("header_lama").style.display="block";
         <tr>
       <td colspan="3" width="100%" ><div align="center">
       
-      #if ($userRole != "user_ppk")
+      #if (($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N") && ($!DoNotSave != "1") && ($userRole != "user_ppk") && ($checkaksesSkrinKepBicara =="T"))
           <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript:Simpan_Selesai('$idpermohonan','$id_perbicaraan');" />
       #end
           <input name="cmdKembali" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
@@ -734,7 +738,7 @@ document.getElementById("header_lama").style.display="block";
     </tr>
         <tr>
       <td colspan="2" width="100%" ><div align="center">
-       #if($userRole != "user_ppk")
+       #if($!DoNotSave != "1" && $userRole != "user_ppk")
           <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript:Simpan_Tangguh('$idpermohonan','$id_perbicaraan');" />
        #end
           <input name="cmdKembali" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');"/>
@@ -1022,7 +1026,8 @@ document.getElementById("header_lama").style.display="block";
     
     <tr>
       <td colspan="2" width="100%" ><div align="center">
-      #if($userRole != "user_ppk")
+      
+      #if($!DoNotSave != "1" && $userRole != "user_ppk")
           <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript:Simpan_Batal('$idpermohonan','$id_perbicaraan');" />
       #end
       	  <input type="button" name="cmdKembali"  value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
@@ -1579,7 +1584,7 @@ document.getElementById("header_lama").style.display="block";
           #if($idstatus == "41" || $idstatus == "25" )
             
             
-            #if ($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N" && $userRole != "user_ppk")
+            #if ($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N" && $userRole != "user_ppk" && $checkaksesSkrinKepBicara =="T") 
             <input type="button" name="Kemaskini" id="Kemaskini" value="Kemaskini" onclick="javascript:Skrin_Kemaskini('$idpermohonan','$id_perbicaraan','$id_bayaran_perintah');" />
           	#end
           

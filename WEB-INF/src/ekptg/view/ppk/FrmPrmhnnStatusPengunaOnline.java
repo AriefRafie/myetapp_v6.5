@@ -25,6 +25,7 @@ import ekptg.model.ppk.online.StatusPermohonanFacade;
 public class FrmPrmhnnStatusPengunaOnline extends AjaxBasedModule {
 	static Logger myLogger = Logger
 			.getLogger(FrmPrmhnnStatusPengunaOnline.class);
+	static FrmPrmhnnStatusPengunaOnlineData myInfo = new FrmPrmhnnStatusPengunaOnlineData();
 
 	FrmPrmhnnSek8SecaraOnlineData logiconline = new FrmPrmhnnSek8SecaraOnlineData();
 	FrmBorangPSek17OnlineData logic = new FrmBorangPSek17OnlineData();
@@ -4302,11 +4303,27 @@ public class FrmPrmhnnStatusPengunaOnline extends AjaxBasedModule {
 		String IDpemohon = (String) get_userID.get("NO_KP_BARU");*/
 		
 		//Vector icPemohon = logiconline.getICpemohon((String) session.getAttribute("_ekptg_user_id"));
+		
+		Vector checkUser = new Vector();
+		checkUser.clear();
+		checkUser = myInfo.checkUserInternal(usid);
+		
+		if(checkUser.size()!=0){
+			senaraiFail = FrmPrmhnnStatusPengunaOnlineData.getSenaraiTugasanInternal("",
+					(String) session.getAttribute("_ekptg_user_id"),
+					(String) session.getAttribute("_portal_role"),
+					getParam("kppemohon"), getParam("kpsimati"), USER_LOGIN_SYSTEM, "no");
+			myLogger.info("PEGAWAI");
+			
+		}
+		else {
 
 		senaraiFail = FrmPrmhnnStatusPengunaOnlineData.getSenaraiTugasan("",
 				(String) session.getAttribute("_ekptg_user_id"),
 				(String) session.getAttribute("_portal_role"),
 				getParam("kppemohon"), getParam("kpsimati"), USER_LOGIN_SYSTEM, "no");
+		myLogger.info("ORANG AWAM");
+		}
 		
 		senaraiPraPerbicaraan = FrmPrmhnnStatusPengunaOnlineData.getMaklumatPraPerbicaraan("",
 				(String) session.getAttribute("_ekptg_user_id"),

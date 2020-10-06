@@ -578,6 +578,25 @@ public class StatusBeanPPK implements IStatus {
 	
 	}
 	
+	@Override
+	public String simpanPhp(Hashtable<String,String> hash) throws Exception {
+		String idSuburusanStatus = getIdSuburusanStatusByLangkah(String.valueOf(hash.get("langkah"))
+									,String.valueOf(hash.get("idSuburusan")), "=");
+	
+		Tblrujsuburusanstatusfail susf = new Tblrujsuburusanstatusfail();
+		susf.setIdFail(Long.parseLong(String.valueOf(hash.get("idFail"))));
+		susf.setIdPermohonan(Long.parseLong(String.valueOf(hash.get("idPermohonan"))));
+		susf.setIdSuburusanstatus(Long.parseLong(idSuburusanStatus));
+		susf.setUrl(String.valueOf(hash.get("catatan")));
+		susf.setAktif("1");
+		susf.setIdMasuk(Long.parseLong(String.valueOf(hash.get("idUser"))));
+		susf.setTarikhMasuk("sysdate");
+		susf.setIdKemaskini(Long.parseLong(String.valueOf(hash.get("idUser"))));
+		susf.setTarikhKemaskini("sysdate");
+		return simpanStatusAktif(susf);
+	
+	}
+	
 	private IHtp getIHTP(){
 		if(iHTP== null)
 			iHTP = new HtpBean();

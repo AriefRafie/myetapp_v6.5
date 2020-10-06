@@ -61,6 +61,7 @@ public class FrmAPBSenaraiMesyuaratView extends AjaxBasedModule {
 		this.context.put("userId", userId);
 		this.context.put("userRole", userRole);
 		this.context.put("idNegeriUser", idNegeriUser);
+		this.context.put("close_window", "NO");
 
 		// GET DEFAULT PARAM
 		String vm = "";
@@ -71,6 +72,7 @@ public class FrmAPBSenaraiMesyuaratView extends AjaxBasedModule {
 		String mode = getParam("mode");
 		String actionMesyuarat = getParam("actionMesyuarat");
 		String selectedTabUpper = getParam("selectedTabUpper").toString();
+		String refreshPaparan = getParam("refreshPaparan").toString();
 		
 		if (selectedTabUpper == null || "".equals(selectedTabUpper)) {
 			selectedTabUpper = "0";
@@ -102,6 +104,7 @@ public class FrmAPBSenaraiMesyuaratView extends AjaxBasedModule {
 		Vector beanMaklumatKehadiran = null;
 		Vector senaraiKehadiran = null;
 		Vector senaraiFailMohonBaru = null;
+		Vector senaraiFailMohonLanjut = null;
 		Vector beanMaklumatPengerusi = null;
 		Vector senaraiImejan = null;
 		Vector beanMaklumatImejan = null;
@@ -282,6 +285,18 @@ public class FrmAPBSenaraiMesyuaratView extends AjaxBasedModule {
 				this.context.put("SenaraiFailMohonBaru", senaraiFailMohonBaru);
 				this.context.put("totalRecords", senaraiFailMohonBaru.size());
 				
+				// SENARAI MESYUARAT PERMOHONAN PERLANJUTAN
+				logic.setSenaraiPermohonanLanjut(idMesyuarat);
+				senaraiFailMohonLanjut = logic.getListPermohonanLanjut();
+				this.context.put("SenaraiFailMohonLanjut", senaraiFailMohonLanjut);
+				this.context.put("totalLanjutRecords", senaraiFailMohonLanjut.size());
+				
+				if(refreshPaparan.equals("true")){
+					beanMaklumatMesyuarat = new Vector();
+					logic.setMaklumatMesyuarat(idMesyuarat);
+					beanMaklumatMesyuarat = logic.getBeanMaklumatMesyuarat();
+					this.context.put("BeanMaklumatMesyuarat", beanMaklumatMesyuarat);
+				}		
 			} else if ("3".equals(selectedTabUpper)) {
 				
 				if ("openPopupDokumen".equals(flagPopup)) {
