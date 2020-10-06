@@ -886,6 +886,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 
 <!-- ****************** START UNTUK MAKLUMAT PEMBAYARAN ************************* -->
 #if($no_fail != "")
+	#if($listDPem_size < 1)
 <fieldset>
 	<legend>Maklumat Pembayaran</legend>
 	<table width="100%" border="0">
@@ -929,6 +930,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 <input type="hidden" name="txtKeteranganHidden" value="$!txtKeterangan">
 <input type="hidden" name="no_fail" value="$!no_fail">
 
+#else
 
 <!-- ****************** END UNTUK MAKLUMAT PEMBAYARAN *************************** -->
 
@@ -962,7 +964,7 @@ Maklumat Hakmilik telah berjaya disimpan.
                 <td class="$row" align="center">$listD.txdTarikhPembayaran</td>
                 <td class="$row" align="center"><a href="javascript:papar_Lampiran('$!listD.id_Dokumen')"><font color="blue">$listD.nama_dokumen</font></a></td>
                 #if($listDPem_size!=0)
-                <td class="$row" align="center"><input type="button" name="cmdHapusDoc" value ="Hapus" onClick="hapusDokumen('$!listD.id_Dokumen')"></td>	
+                <td class="$row" align="center"><input type="button" name="cmdHapusDoc" value ="Hapus" onClick="hapusDokumenPembayaran('$!listD.id_Dokumen')"></td>	
                 #end
             </tr>
              #end  
@@ -976,6 +978,7 @@ Maklumat Hakmilik telah berjaya disimpan.
        </table>        	
     </fieldset>	
 <!-- ****************** END SEBARAI MAKLUMAT PEMBAYARAN *************************** -->
+#end
 #end
 #end
 
@@ -1234,6 +1237,8 @@ Maklumat Hakmilik telah berjaya disimpan.
 <input type="hidden" name="id_pihakberkepentingan">
 <input type="hidden" name="id_hakmilik" value="$!id_hakmilik">
 <input type="hidden" name="id_permohonan" value="$!id_permohonan">
+<input type="hidden" name="id_Dokumen" value="$!id_Dokumen">
+<input type="hidden" name="nama_dokumen" value="$!nama_dokumen">
 <input type="hidden" name="command2">
 <input type="hidden" name="command3">
 <input type="hidden" name="command4">
@@ -2136,20 +2141,31 @@ return true
 //simpan maklumat dokumen
 function simpanMD(id_permohonan, mode){
 	//var txtNamaDokumen = document.${formName}.txtNamaDokumenHidden.value;
-	var txdTarikhPembayaran = document.${formName}.txdTarikhPembayaranHidden.value;
 	
+	var txdTarikhPembayaran = document.${formName}.txdTarikhPembayaranHidden.value;
 	var command = document.${formName}.command.value;
 	var command2 = document.${formName}.command2.value;
-	
 	( !window.confirm("Adakah Anda Pasti?") ) 
-	
 			
-		//var txtNamaDokumen = document.${formName}.txtNamaDokumenHidden.value;		
 		var txdTarikhPembayaran = document.${formName}.txdTarikhPembayaranHidden.value;
-		document.${formName}.enctype='multipart/form-data';
-		document.${formName}.encoding ='multipart/form-data';
-		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline&command=uploadDoc&command2=simpanMaklumatDokumen&txdTarikhPembayaran="+txdTarikhPembayaran+"&id_permohonan="+id_permohonan;
+		//document.${formName}.id_permohonan.value = id_permohonan;
+		document.${formName}.enctype = "multipart/form-data";
+		document.${formName}.encoding = "multipart/form-data";
+		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline&command=uploadDoc&command2=simpanMaklumatDokumen&id_permohonan="+id_permohonan+"&txdTarikhPembayaran="+txdTarikhPembayaran;
 		document.${formName}.submit();
+}
+function hapusDokumenPembayaran(id_dokumen) {
 	
+	document.${formName}.ScreenLocation.value = "middle";
+	if ( !window.confirm("Adakah Anda Pasti?")) return;
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline&command=hapusDokumenPembayaran&id_dokumen="+id_dokumen;
+	document.${formName}.submit();
+}
+function papar_Lampiran(id_dokumen) {
+    var url = "../servlet/ekptg.view.ppt.DisplayBlob?id="+id_dokumen;
+    var hWnd = window.open(url,'displayfile','width=800,height=600, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+    hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
 }
 </script>

@@ -14,6 +14,41 @@
 	<input type="hidden" name="hitButton" id="hitButton"/>
 	<input type="hidden" name="step" id="step" value='$!step'/>
 </p>
+#if ($close_window == 'yes')
+<body onLoad = closeWin();>
+#end
+<table width="100%" border="0" cellspacing="2" cellpadding="2">
+  <tr>
+  	<td>
+  		<fieldset>
+      		<legend><b>CARIAN</b></legend>
+      			<table width="100%" align="center" border="0">
+ 				    <tr>
+			          <td width="30%" height="24" scope="row" align="right">No.Fail : </td>
+			          <td width="70%"><input name="txtCarianNoFail" id="txtCarianNoFail" type="text" value="" size="50" maxlength="50" style="text-transform:uppercase;" >
+			          </td>
+			        </tr>
+      				<tr>
+          				<td width="30%" height="24" scope="row" align="right">Jenis Permohonan : </td>
+          				<td width="70%">$selectJenisPermohonan</td>
+        			</tr>
+        			<tr>
+			          <td width="30%" height="24" scope="row" align="right">Nama Pemohon : </td>
+			          <td width="70%"><input name="txtCarianNamaPemohon" id="txtCarianNamaPemohon" type="text" value="" size="50" maxlength="50" style="text-transform:uppercase;" >
+			          </td>
+			        </tr>
+        			<tr>
+          				<td scope="row"></td>
+          				<td>
+          					<input name="cmdCari" id="cmdCari" value="Cari" type="button" onclick="javascript:carian()">
+            				<input name="cmdKosongkan" id="cmdKosongkan" value="Kosongkan" type="reset" onClick="javascript:kosongkan()">
+            			</td>
+        			</tr>
+      			</table>
+      	</fieldset>
+  	</td>
+  </tr>
+</table>
 
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
@@ -112,5 +147,19 @@ function validatePilihanPermohonan() {
 	}
 	
 	return err_count == 0;
+}
+
+function carian(){
+	document.${formName}.actionPopup.value = "";
+	doAjaxCall${formName}("");
+}
+function kosongkan() {
+	document.${formName}.reset();
+	document.${formName}.socJenisPermohonan.value = "";
+	doAjaxCall${formName}("");
+}
+function closeWin(){
+	window.opener.refreshFromPilihPermohonan();
+	window.close();
 }
 </script>

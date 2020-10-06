@@ -12,6 +12,7 @@ import lebah.portal.AjaxBasedModule;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.model.php2.FrmAPBPopupSenaraiPermohonanData;
+import ekptg.model.php2.utiliti.PHPUtilHTML;
 
 /**
  * 
@@ -22,6 +23,7 @@ public class FrmAPBPopupSenaraiPermohonanView extends AjaxBasedModule {
 	private static final long serialVersionUID = 1L;
 	
 	FrmAPBPopupSenaraiPermohonanData logic = new FrmAPBPopupSenaraiPermohonanData();
+	//FrmAPBSenaraiMesyuaratView b= new FrmAPBSenaraiMesyuaratView();
 	
 	String idNegeriUser = null;
 
@@ -54,18 +56,31 @@ public class FrmAPBPopupSenaraiPermohonanView extends AjaxBasedModule {
 				 idPermohonan=cbPilihan[i].toString();
 				 logic.simpanPilihanBaru(idMesyuarat, idPermohonan, session);
 			}
+			this.context.put("close_window", "yes");
 		}	    
 		if ("tutup".equals(actionPopup)){
 			
 	    	
 	    } else {
-	    	
+	    	String carianNoFail = getParam("txtCarianNoFail");
+	    	// DROP DOWN CARIAN
+	    	String idJenisPermohonan = getParam("socJenisPermohonan");
+	    	if (idJenisPermohonan == null || idJenisPermohonan.trim().length() == 0) {
+	    		idJenisPermohonan = "99999";
+	    	}
+	    	String carianNamaPemohon = getParam("txtCarianNamaPemohon");
+
+	    	logic.carianFail(carianNoFail,idJenisPermohonan,carianNamaPemohon);
+	
 	    	//GO TO LIST TANAH        	
         	vm = "app/php2/frmAPBPopupSenaraiPermohonan.jsp";  
+        	
         	senaraiFail = new Vector();
-        	logic.setSenaraiFailMesyuarat(idFail);
+        	//logic.setSenaraiFailMesyuarat(idFail);
         	senaraiFail = logic.getSenaraiFailMesyuarat();
-			this.context.put("SenaraiFail", senaraiFail);   	
+			this.context.put("SenaraiFail", senaraiFail); 
+			
+			this.context.put("selectJenisPermohonan", PHPUtilHTML.SelectJenisPermohonan("socJenisPermohonan", Long.parseLong(idJenisPermohonan), "", ""));
         	setupPage(session,action,senaraiFail);
 	    }
 	    this.context.put("actionPopup", actionPopup);

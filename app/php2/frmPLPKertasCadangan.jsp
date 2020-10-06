@@ -118,7 +118,8 @@ function setTable(id){
 }
 function kemaskiniCadangan() {
 	document.${formName}.mode.value = "update";
-	doAjaxCall${formName}("");	
+	//doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function simpanKemaskiniCadangan(){
 
@@ -133,6 +134,7 @@ function simpanKemaskiniCadangan(){
 }
 function batalCadangan(){
 	document.${formName}.mode.value = "view";
-	doAjaxCall${formName}("");
+	//doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 </script>

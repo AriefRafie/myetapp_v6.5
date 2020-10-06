@@ -35,6 +35,7 @@ public class FrmAPBSenaraiMesyuaratData {
 	private Vector beanMaklumatKehadiran = null;
 	private Vector listKehadiran = null;
 	private Vector listPermohonanBaharu = null;
+	private Vector listPermohonanLanjut = null;
 	private Vector senaraiPermohonan = null;
 	private Vector listImejan = null;
 	private Vector beanMaklumatImejan = null;
@@ -484,6 +485,58 @@ public class FrmAPBSenaraiMesyuaratData {
 		}
 	}
 	
+	public void setSenaraiPermohonanLanjut(String idMesyuarat) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			listPermohonanLanjut = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+
+			sql = "select a.ID_MESYUARAT_PERMOHONAN, d.no_fail,e.nama,a.flag_jenis_permohonan,a.FLAG_SYOR ,a.CATATAN, c.id_permohonan from tblphpMesyuaratPermohonan a, tblphpmesyuarat b, tblpermohonan c, tblpfdfail d, tblphppemohon e "
+				 +"where a.flag_jenis_permohonan = 'L' and a.id_mesyuarat = b.id_mesyuarat and a.id_permohonan=c.id_permohonan and c.id_fail=d.id_fail "
+				 +"and c.id_pemohon=e.id_pemohon and a.id_mesyuarat='"+idMesyuarat+"'";	
+			sql = sql + " ORDER BY a.ID_MESYUARAT_PERMOHONAN ASC";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("id",
+						rs.getString("ID_MESYUARAT_PERMOHONAN") == null ? "" : rs
+								.getString("ID_MESYUARAT_PERMOHONAN"));
+				h.put("noFailPermohonan",
+						rs.getString("NO_FAIL") == null ? "" : rs
+								.getString("NO_FAIL"));
+				h.put("namaPemohon",
+						rs.getString("NAMA") == null ? "" : rs
+								.getString("NAMA"));
+				if(rs.getString("FLAG_JENIS_PERMOHONAN").equals("B")){
+					h.put("jenisPermohonan","PERMOHONAN BARU");
+				}else{
+					h.put("jenisPermohonan","PERMOHONAN TANGGUH");
+				}
+				h.put("flagKeputusan",
+						rs.getString("FLAG_SYOR") == null ? "" : rs
+								.getString("FLAG_SYOR"));
+				h.put("catatanKeputusan",
+						rs.getString("CATATAN") == null ? "" : rs
+								.getString("CATATAN"));
+				listPermohonanBaharu.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
 	
 	public String getNoFailByIdPermohonan(String idPermohonan) throws Exception {
 		Db db = null;
@@ -538,6 +591,10 @@ public class FrmAPBSenaraiMesyuaratData {
 	
 	public Vector getListPermohonanBaharu() {
 		return listPermohonanBaharu;
+	}
+	
+	public Vector getListPermohonanLanjut() {
+		return listPermohonanLanjut;
 	}
 	
 	public void listSenaraiMesyuarat()

@@ -735,6 +735,32 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				// list dokumen
 				ListDokumen(idpermohonan);
 				
+
+				// screen
+				vm = screenUtama;
+
+			} // close hapusDokumen
+			
+			else if ("hapusDokumenPembayaran".equals(submit)) {
+
+				hapusDokumenPembayaran(session);
+
+				// form validation
+				context.put("mode", "view");
+				context.put("isEdit", "no");
+
+				// list hakmilik
+				ListHakmilik(idpermohonan, noLOT, idpegawai);
+
+				// senarai semak
+				ListCheckBox(idpermohonan);
+
+				// data pendaftaran
+				DataPermohonan(idpermohonan, "disabled");
+
+				// list dokumen
+				ListDokumen(idpermohonan);
+				
 				// list dokumen pembayaran
 				ListDokumenPembayaran(idpermohonan);
 
@@ -936,7 +962,6 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				myLogger.debug("session=" + session);
 
 				uploadFiles(id_permohonan, txdTarikhPembayaran, session);
-				
 				context.put("mode", "view");
 				
 				vm = screenUtama;
@@ -4334,40 +4359,38 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 	}// close hapusdokumen
 	
+	@SuppressWarnings("unchecked")
+	private void hapusDokumenPembayaran(HttpSession session) throws Exception {
+
+		Hashtable h = new Hashtable();
+		h.put("id_dokumen", getParam("id_dokumen"));
+		FrmPermohonanUPTData.hapusDokumenPembayaran(h);
+
+	}// close hapusdokumenpembayaran
+	
 	private void uploadFiles(String id_permohonan, String txdTarikhPembayaran,
-			 HttpSession session) throws FileUploadException {
-		
+			 HttpSession session) throws Exception {
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		ServletFileUpload upload = new ServletFileUpload(factory);
-		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-		
-		
-		if (isMultipart != false) {
-			
-			List items = upload.parseRequest(request);
-			Iterator itr = items.iterator();
-			while (itr.hasNext()) {
-				
-				
-				FileItem item = (FileItem) itr.next();
-				
-				if ((!(item.isFormField())) && (item.getName() != null)	&& (!("".equals(item.getName())))) {
-					
-					saveData(item, id_permohonan, txdTarikhPembayaran, session);
-				}
+		List items = upload.parseRequest(request);
+		Iterator itr = items.iterator();
+		while (itr.hasNext()) {
+			FileItem item = (FileItem) itr.next();
+			if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
+				saveData(item, id_permohonan, txdTarikhPembayaran, session);
 			}
-		}		
+		}
 	}
 	
 	private void saveData(FileItem item, String id_permohonan,
-			String txdTarikhPembayaran, HttpSession session) {
+			String txdTarikhPembayaran, HttpSession session) throws Exception {
 		//System.out.println("saveDAta ");
 		Db db = null;
 		Date date = null;
+		long id_Dokumen = DB.getNextID("TBLPPTDOKUMENHAKMILIK_SEQ");
 		String userId = (String) session.getAttribute("_ekptg_user_id"); 
 		//String TP = "to_date('" + txdTarikhPembayaran + "','dd/MM/yyyy')";
 		DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
-		
 		try {
 			 date = format.parse(txdTarikhPembayaran);
 		} catch (ParseException e) {
@@ -4382,27 +4405,27 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			con.setAutoCommit(false);
 			PreparedStatement ps = con
 					.prepareStatement("INSERT INTO TBLPPTDOKUMENHAKMILIK"
-							+ " (ID_PERMOHONAN, NAMA_DOKUMEN, KANDUNGAN, FORMAT, ID_MASUK, TARIKH_PEMBAYARAN, TARIKH_MASUK)"
-							+ " VALUES(?,?,?,?,?,?,SYSDATE)");
+							+ " (ID_DOKUMEN, ID_PERMOHONAN, NAMA_DOKUMEN, KANDUNGAN, FORMAT, ID_MASUK, TARIKH_PEMBAYARAN, TARIKH_MASUK)"
+							+ " VALUES(?,?,?,?,?,?,?,SYSDATE)");
 			
-			//ps.setLong(1, idDokumen);
+			ps.setLong(1, id_Dokumen);
 			//ps.setLong(1, Long.valueOf(id_permohonan));
-			ps.setString(1, id_permohonan);
+			ps.setString(2, id_permohonan);
 			//ps.setString(3, namaDokumen);
-			ps.setString(2, item.getName());
-			ps.setBinaryStream(3, item.getInputStream(), (int) item.getSize()); //content
-			ps.setString(4, item.getContentType()); //jenis mime
-			ps.setString(5, userId);
-			ps.setDate(6, new java.sql.Date(date.getTime()));
+			ps.setString(3, item.getName());
+			ps.setBinaryStream(4, item.getInputStream(), (int) item.getSize()); //content
+			ps.setString(5, item.getContentType()); //jenis mime
+			ps.setString(6, userId);
+			ps.setDate(7, new java.sql.Date(date.getTime()));
 			//ps.setString(6, txdTarikhPembayaran);
 			//System.out.println("ps : " + ps.toString());
 			ps.executeUpdate();
-
 			con.commit();
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (SQLException se) {
+			throw new Exception("Ralat : Masalah muatnaik fail");
 		} finally {
-			if (db != null) db.close();
+			if (db != null)
+				db.close();
 		}
 		
 		context.put("id_permohonan", id_permohonan);

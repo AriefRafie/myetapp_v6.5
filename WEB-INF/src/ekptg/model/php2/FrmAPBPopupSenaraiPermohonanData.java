@@ -7,21 +7,85 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Hashtable;
 import java.util.Vector;
-
 import javax.servlet.http.HttpSession;
-
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
-import ekptg.helpers.Utils;
 
 public class FrmAPBPopupSenaraiPermohonanData {
 
 	private Vector senaraiFailMesyuarat = null;
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	
+	//FrmPYWSenaraiMesyuaratView parent=new FrmPYWSenaraiMesyuaratView();
+	
+	public void carianFail(String noFail, String idJenisPermohonan, String namaPemohon) throws Exception {
+		Db db = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		String sql = "";
 
+		try {
+			senaraiFailMesyuarat = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = " SELECT A.ID_FAIL,  A.NO_FAIL, B.ID_PERMOHONAN, C.NAMA AS NAMA_PEMOHON,D.ID_JENISPERMOHONAN "
+					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLPHPPMOHONNJDUALPERTAMA D "
+					+ " WHERE A.ID_URUSAN = '9' AND A.ID_SUBURUSAN = '57' AND A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON AND B.ID_PERMOHONAN = D.ID_PERMOHONAN "
+					+ "AND A.NO_FAIL IS NOT NULL  AND B.ID_STATUS = '1610201' ";
+
+			if (noFail != "") {
+				sql = sql + " AND A.NO_FAIL LIKE '%"+noFail+ "%'";
+			}
+			
+			if (idJenisPermohonan != null) {
+				if (!idJenisPermohonan.trim().equals("")
+						&& !idJenisPermohonan.trim().equals("99999")) {
+					sql = sql + " AND D.ID_JENISPERMOHONAN = '"
+							+ idJenisPermohonan.trim() + "'";
+				}
+			}
+			
+			if (namaPemohon != "") {
+				sql = sql + " AND C.NAMA LIKE '%"+namaPemohon+ "%'";
+			}
+			
+			sql = sql + " ORDER BY A.TARIKH_DAFTAR_FAIL DESC";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("idFail",
+						rs.getString("ID_FAIL") == null ? "" : rs
+								.getString("ID_FAIL"));
+				h.put("idPermohonan",
+						rs.getString("ID_PERMOHONAN") == null ? "" : rs
+								.getString("ID_PERMOHONAN"));
+				h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs
+						.getString("NO_FAIL").toUpperCase());
+				if("1".equals(rs.getString("ID_JENISPERMOHONAN"))) {
+					h.put("jenisPermohonan", "PERMOHONAN BAHARU");
+				} else if ("2".equals(rs.getString("ID_JENISPERMOHONAN"))) {
+					h.put("jenisPermohonan", "PERMOHONAN PERLANJUTAN");
+				}
+				h.put("namaPemohon", rs.getString("NAMA_PEMOHON") == null ? "" : rs
+						.getString("NAMA_PEMOHON").toUpperCase());
+				senaraiFailMesyuarat.addElement(h);
+				bil++;
+			}
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
 	public void setSenaraiFailMesyuarat(String idFail) throws Exception {
 		
 		Db db = null;

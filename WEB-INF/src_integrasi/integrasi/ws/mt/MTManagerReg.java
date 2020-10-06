@@ -472,6 +472,11 @@ public class MTManagerReg {
 			//PartyType party = new PartyType();
 			data.setParty(party);
 			
+			//PartyType perayu = new PartyType("1", "CA5A0F64-061E-423D-BB68-04DEC7D28609", namaPerayu, "IC", noKPBaruPerayu, "", alamat1Perayu , alamat2Perayu, alamat3Perayu, poskodPerayu, bandarPerayu, idnegeriPerayu, "MYS", umurPerayu, "", "MYS", jantinaPerayu, "");
+			
+			//PartyType[] partytype = {perayu};//new PartyType[]{};
+			//data.setParty(partytype);
+			
 			data.setCourtLocation(courtLocation);
 			data.setDivision(division);
 			data.setJurisdiction(jurisdiction);
@@ -524,8 +529,7 @@ public class MTManagerReg {
 				
 				//DocumentType document = new DocumentType();
 				data.setDocument(document);
-				
-				//PartyType party = new PartyType();
+
 				data.setParty(party);
 				
 				data.setCourtLocation(courtLocation);
@@ -598,10 +602,11 @@ public class MTManagerReg {
 	}
 	
 	public static PartyType getPartyPerayu(String idRuj
-		,String name,String umur,String gen,String noRef,String refType
+		,String name,String umur,String gen,String noRef,String refType, String partyTypeNo
 		,String add,String add2,String add3,String postcode,String stateCode,String city){
 	    PartyType pt = new PartyType();
 	    pt.setPartyID(idRuj);
+	    //pt.setPartyIDNo1(partyTypeNo);
 	    pt.setPartyAddr1(add);
 	    pt.setPartyAddr2(add2);
 	    pt.setPartyAddr3(add3);
@@ -622,7 +627,12 @@ public class MTManagerReg {
 	    pt.setPartyIDType(refType);	//IC = NRIC (Remove dash -)
 	    //pt.setPartyIDNo1("760908035336");	//Identity No of Party If PartyIDType !=IC
 	    //NO IC
-	    pt.setPartyIDNo2(noRef);	    
+	    if(refType=="IC") {
+	    pt.setPartyIDNo1(noRef);	    
+	    }
+	    else {
+	    pt.setPartyIDNo2(noRef);		
+	    }
 	    pt.setPartyTypeID("CA5A0F64-061E-423D-BB68-04DEC7D28609"); //Perayu (15)
 	    pt.setPartyName(name);
 	    
