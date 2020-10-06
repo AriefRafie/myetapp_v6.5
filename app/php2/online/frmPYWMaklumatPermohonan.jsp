@@ -185,6 +185,7 @@
           		<td>:</td>
           		<td>$selectSuburusan</td>
         	  </tr>
+        	  #if($idSuburusan != 1613119)
               <tr>
 				<td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
 				<td>Tujuan Penyewaan</td>
@@ -192,6 +193,18 @@
 				<td>$selectSubSuburusan</td>
 				<input type="hidden" name="namatujuan" id="namatujuan" value="$beanMaklumatSewa.tujuan" />
 			  </tr>
+			  #end
+			  #if($idSuburusan == 1613119 || $idSubsuburusan == 992016 || $idSubsuburusan == 992048 || $idSubsuburusan == 992022)
+			  <tr>
+	            <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
+	            <td>Keterangan Tujuan</td>
+	            <td>:</td>
+	            <td>
+	          	  <textarea name="txtTujuanLain" id="txtTujuanLain" rows="5" cols="50" $readonly class="$inputTextClass" onKeyUp="textCounter(this.form.txtTujuanLain,this.form.remLen1,$!saiztxtTujuanLain);" 
+          		onKeyDown="textCounter(this.form.txtTujuanLain,this.form.remLen1,$!saiztxtTujuanLain);" >$beanMaklumatSewa.tujuanLain</textarea>
+        		</td>
+          	  </tr>
+          	  #end
               <tr>
                 <td width="1%">#if ($mode == 'update')<span class="style1">*</span>#end</td>
                 <td valign="top" width="28%">Tempoh Sewa</td>
@@ -544,11 +557,16 @@ function doSimpanKemaskiniMaklumatPenyewaan(idLuas) {
   		document.${formName}.socSubsuburusan.focus(); 
 		return; 
 	}
+	if(document.${formName}.txtTujuanLain.value == ""){
+		alert('Sila masukkan keterangan tujuan.');
+  		document.${formName}.txtTujuanLain.focus(); 
+		return; 
+	}
 	if(document.${formName}.socTempohSewa.value == "SILA PILIH"){
 		alert('Sila pilih Tempoh Sewa.');
   		document.${formName}.socTempohSewa.focus(); 
 		return; 
-	}
+	} 
 	if(document.${formName}.socLuasKegunaan.value == ""){
 		alert('Sila pilih Luas Kegunaan.');
   		document.${formName}.socLuasKegunaan.focus(); 
