@@ -19,7 +19,7 @@ import ekptg.helpers.DB;
 
 public class FrmPopupPilihPegawaiReportData {
 	
-	static Logger myLogger = Logger.getLogger(ekptg.report.ppk.FrmPopupPilihPegawaiReportData.class);
+	static Logger myLogger = Logger.getLogger(FrmPopupPilihPegawaiReportData.class);
 
 	private Vector beanMaklumatPermohonan = new Vector();
 	private Vector beanMaklumatPegawai = new Vector();
@@ -58,19 +58,19 @@ public class FrmPopupPilihPegawaiReportData {
 			if (db != null)
 				db.close();
 		}
-		
 	}
 
-	public void updateStatusBatal(String noFail, String user_id ) throws Exception {
-//		System.out.println("***********updateStatusBatal*************"); 
-//		System.out.println("noFail = " + noFail);
+	public void updateStatusBatal(String noFail, String user_id ) throws Exception
+	  {
+		System.out.println("***********updateStatusBatal*************"); 
+		System.out.println("noFail = " + noFail);
 	    Db db = null;
 	    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	    String sql = "";
 	    String sql2 = "";
 	    String sql3 = "";
 		try {
-//			System.out.println("noFail2 = " + noFail);
+			System.out.println("noFail2 = " + noFail);
 			String IdPermohonan = getIdPermohonan(noFail);
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -82,7 +82,7 @@ public class FrmPopupPilihPegawaiReportData {
 			r.add("TARIKH_KEMASKINI", r.unquote("sysdate")); 
 			 
 		    sql = r.getSQLUpdate("tblppkpermohonan");
-//		    System.out.println("***********sql1 = *************"+sql);
+		    System.out.println("***********sql1 = *************"+sql);
 		    stmt.executeUpdate(sql);
 		    
 		    /*
@@ -104,26 +104,27 @@ public class FrmPopupPilihPegawaiReportData {
 				bil++;
 				
 			}
-//			System.out.println("bil = "+bil);
+			System.out.println("bil = "+bil);
 			
-			if (bil < 0)
+			if (bil == 0)
 			{
 				sql2 = "UPDATE TBLRUJSUBURUSANSTATUSFAIL SET AKTIF = '0', ID_KEMASKINI = '"+user_id+"' , TARIKH_KEMASKINI = sysdate   WHERE id_permohonan = '"+IdPermohonan+"' AND AKTIF ='1'";
-//				System.out.println("***********sql2 = *************"+sql2);
+				System.out.println("***********sql2 = *************"+sql2);
 			    stmt.executeQuery(sql2);
 			    
 			    sql3 = " INSERT INTO TBLRUJSUBURUSANSTATUSFAIL (ID_PERMOHONAN, ID_SUBURUSANSTATUS, AKTIF, ID_MASUK, TARIKH_MASUK, ID_KEMASKINI, TARIKH_KEMASKINI, ID_FAIL) "+
 					   " VALUES ('"+IdPermohonan+"', '454', '1', '"+ user_id +"',sysdate, '"+ user_id +"', sysdate, (SELECT ID_FAIL FROM TBLPFDFAIL WHERE NO_FAIL = '"+noFail+"')) "; 
-//			    System.out.println("***********sql3 = *************"+sql);
+			    System.out.println("***********sql3 = *************"+sql);
 				stmt.executeQuery(sql3); 
 			}
-   			
+   
+			
 		} finally {
 			if (db != null)
 				db.close();
 		}
-	
-	}
+	    
+	  }
 	
 	public void setMaklumatPermohonan(String noFail) throws Exception {
 		Db db = null;
@@ -160,7 +161,6 @@ public class FrmPopupPilihPegawaiReportData {
 			if (db != null)
 				db.close();
 		}
-	
 	}
 
 	public void setMaklumatPegawai(String idUnitPSK, String flagReport) throws Exception {
@@ -179,7 +179,7 @@ public class FrmPopupPilihPegawaiReportData {
 			r.add("ID_UNITPSK", idUnitPSK);
 
 			sql = r.getSQLSelect("TBLPPKRUJUNIT");
-//			System.out.println("getPegawai :"+sql);
+			System.out.println("getPegawai :"+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			int bil = 1;
@@ -207,7 +207,6 @@ public class FrmPopupPilihPegawaiReportData {
 			if (db != null)
 				db.close();
 		}
-	
 	}
 
 	public void setMaklumatPejabatJKPTG(String idPejabatJKPTG) throws Exception {
@@ -261,7 +260,6 @@ public class FrmPopupPilihPegawaiReportData {
 			if (db != null)
 				db.close();
 		}
-	
 	}
 
 	public String getDaerahMohon(String noFail, String flagReport) throws Exception {
@@ -369,7 +367,6 @@ public class FrmPopupPilihPegawaiReportData {
 			if (db != null)
 				db.close();
 		}
-		
 	}
 
 	public String getIdFail(String noFail) throws Exception {
@@ -394,7 +391,6 @@ public class FrmPopupPilihPegawaiReportData {
 			if (db != null)
 				db.close();
 		}
-		
 	}
 	
 	public String getIdPermohonan(String noFail) throws Exception {
@@ -407,7 +403,7 @@ public class FrmPopupPilihPegawaiReportData {
 					+ noFail + "'";
 
 			Statement stmt = db.getStatement();
-//			System.out.println("sql = "+sql);
+			System.out.println("sql = "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			String temp = "";
 
@@ -420,7 +416,6 @@ public class FrmPopupPilihPegawaiReportData {
 			if (db != null)
 				db.close();
 		}
-		
 	}
 
 	public String getFlagBorangF(String idfail) throws Exception {
@@ -509,7 +504,7 @@ public class FrmPopupPilihPegawaiReportData {
 					+ " AND G.ID_PERBICARAAN = E.ID_PERBICARAAN"
 					+ " AND A.ID_FAIL = '" + idfail + "'";
 
-//			System.out.println(sql);
+			System.out.println(sql);
 			Statement stmt = db.getStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -521,7 +516,6 @@ public class FrmPopupPilihPegawaiReportData {
 				db.close();
 		}
 		return flagBorangF;
-		
 	}
 
 	// delete checked ob
@@ -648,7 +642,6 @@ public class FrmPopupPilihPegawaiReportData {
 			if (db != null)
 				db.close();
 		}
-		
 	}// close OB cbsemak
 
 	public void setSenaraiOBPentadbir_OLD(String idfail) throws Exception {
@@ -1307,7 +1300,7 @@ public class FrmPopupPilihPegawaiReportData {
                           " AND E.ID_FAIL ='" + idfail + "'";
 			
 
-//			System.out.println("sqlIdOB==========="+sqlIdOB);
+			System.out.println("sqlIdOB==========="+sqlIdOB);
 			Statement stmt = db.getStatement();
 			ResultSet rsIdOB = stmt.executeQuery(sqlIdOB);
 			String temp = "";
@@ -1397,10 +1390,16 @@ public class FrmPopupPilihPegawaiReportData {
 					h3.put("maklumatPentadbirUtkBorangE", temp4);
 					beanSenaraiOBPentadbir.addElement(h3);
 				}
-			}			
-			//AISHAH MASUKKAN 13102017
-			//setMaklumatPentadbir( idfail);
+			}
 			
+			
+				//AISHAH MASUKKAN 13102017
+				//setMaklumatPentadbir( idfail);
+				
+
+			
+			
+
 		} finally {
 			if (db != null)
 				db.close();
@@ -1480,6 +1479,7 @@ public class FrmPopupPilihPegawaiReportData {
 					+ " END  AS NO_KP,"
 					+ " CASE "
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 4 THEN ' No.Pasport :'"
+					+ " WHEN AAA.NO_KP1 IS NOT NULL AND D.JENIS_KP = 4 THEN ' No.Pasport :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 5 THEN ' Tentera :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 6 THEN ' Polis :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 7 THEN ' Lain-lain :'"
@@ -1557,6 +1557,7 @@ public class FrmPopupPilihPegawaiReportData {
 					+ " END  AS NO_KP,"
 					+ " CASE "
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 4 THEN ' No.Pasport :'"
+					+ " WHEN AAA.NO_KP1 IS NOT NULL AND D.JENIS_KP = 4 THEN ' No.Pasport :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 5 THEN ' Tentera :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 6 THEN ' Polis :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 7 THEN ' Lain-lain :'"
@@ -1636,6 +1637,7 @@ public class FrmPopupPilihPegawaiReportData {
 					+ " END  AS NO_KP,"
 					+ " CASE "
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 4 THEN ' No.Pasport :'"
+					+ " WHEN AAA.NO_KP1 IS NOT NULL AND D.JENIS_KP = 4 THEN ' No.Pasport :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 5 THEN ' Tentera :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 6 THEN ' Polis :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 7 THEN ' Lain-lain :'"
@@ -1713,6 +1715,7 @@ public class FrmPopupPilihPegawaiReportData {
 					+ " END  AS NO_KP,"
 					+ " CASE "
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 4 THEN ' No.Pasport :'"
+					+ " WHEN AAA.NO_KP1 IS NOT NULL AND D.JENIS_KP = 4 THEN ' No.Pasport :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 5 THEN ' Tentera :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 6 THEN ' Polis :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 7 THEN ' Lain-lain :'"
@@ -1789,6 +1792,7 @@ public class FrmPopupPilihPegawaiReportData {
 					+ " END  AS NO_KP,"
 					+ " CASE "
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 4 THEN ' No.Pasport :'"
+					+ " WHEN AAA.NO_KP1 IS NOT NULL AND D.JENIS_KP = 4 THEN ' No.Pasport :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 5 THEN ' Tentera :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 6 THEN ' Polis :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 7 THEN ' Lain-lain :'"
@@ -1866,6 +1870,7 @@ public class FrmPopupPilihPegawaiReportData {
 					+ " END  AS NO_KP,"
 					+ " CASE "
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 4 THEN ' No.Pasport :'"
+					+ " WHEN AAA.NO_KP1 IS NOT NULL AND D.JENIS_KP = 4 THEN ' No.Pasport :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 5 THEN ' Tentera :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 6 THEN ' Polis :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 7 THEN ' Lain-lain :'"
@@ -1941,6 +1946,7 @@ public class FrmPopupPilihPegawaiReportData {
 					+ " END  AS NO_KP,"
 					+ " CASE "
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 4 THEN ' No.Pasport :'"
+					+ " WHEN AAA.NO_KP1 IS NOT NULL AND D.JENIS_KP = 4 THEN ' No.Pasport :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 5 THEN ' Tentera :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 6 THEN ' Polis :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 7 THEN ' Lain-lain :'"
@@ -2016,6 +2022,7 @@ public class FrmPopupPilihPegawaiReportData {
 					+ " END  AS NO_KP,"
 					+ " CASE "
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 4 THEN ' No.Pasport :'"
+					+ " WHEN AAA.NO_KP1 IS NOT NULL AND D.JENIS_KP = 4 THEN ' No.Pasport :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 5 THEN ' Tentera :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 6 THEN ' Polis :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 7 THEN ' Lain-lain :'"
@@ -2093,6 +2100,7 @@ public class FrmPopupPilihPegawaiReportData {
 					+ " END  AS NO_KP,"
 					+ " CASE "
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 4 THEN ' No.Pasport :'"
+					+ " WHEN AAA.NO_KP1 IS NOT NULL AND D.JENIS_KP = 4 THEN ' No.Pasport :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 5 THEN ' Tentera :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 6 THEN ' Polis :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 7 THEN ' Lain-lain :'"
@@ -2169,6 +2177,7 @@ public class FrmPopupPilihPegawaiReportData {
 					+ " END  AS NO_KP,"
 					+ " CASE "
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 4 THEN ' No.Pasport :'"
+					+ " WHEN AAA.NO_KP1 IS NOT NULL AND D.JENIS_KP = 4 THEN ' No.Pasport :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 5 THEN ' Tentera :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 6 THEN ' Polis :'"
 					+ " WHEN AAA.NO_KP1 IS NULL AND D.JENIS_KP = 7 THEN ' Lain-lain :'"
@@ -2222,7 +2231,7 @@ public class FrmPopupPilihPegawaiReportData {
 
 			Statement stmt = db1.getStatement();
 			ResultSet rsIdOB = stmt.executeQuery(sqlIdOB);
-//			System.out.println("SQL OB:" + sqlIdOB);
+			System.out.println("SQL OB:" + sqlIdOB);
 			String temp = "";
 			String temp3 = "";
 			Hashtable h1;
@@ -2343,7 +2352,7 @@ public class FrmPopupPilihPegawaiReportData {
 							+ " WHERE B.ID_BANDAR(+) = A.ID_BANDARSURAT" + " AND C.ID_NEGERI = A.ID_NEGERISURAT" + " AND A.ID_OB = " + h2.get("ob");
 	
 					ResultSet rsAlamat = stmt.executeQuery(sqlAlamat);
-//					System.out.println("sqlAlamat:" + sqlAlamat);
+					System.out.println("sqlAlamat:" + sqlAlamat);
 					Hashtable h3;
 					String temp2 = "";
 					String temp4 = "";
@@ -2571,7 +2580,7 @@ public class FrmPopupPilihPegawaiReportData {
 			Statement stmt = db.getStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
-//			System.out.println("sql======="+sql);
+			System.out.println("sql======="+sql);
 			while (rs.next()) {
 				h = new Hashtable();/*
 				h.put("maklumatPentadbir", rs.getString("NAMA_OB")
@@ -2726,7 +2735,7 @@ public class FrmPopupPilihPegawaiReportData {
 						+ " yang beralamat di "
 						+ rs.getString("ALAMAT_PENUH_OB"));
 				
-//				System.out.println("NAMA_OB"+rs.getString("NAMA_OB"));
+				System.out.println("NAMA_OB"+rs.getString("NAMA_OB"));
 
 				beanMaklumatPentadbir.addElement(h);
 
@@ -2747,7 +2756,7 @@ public class FrmPopupPilihPegawaiReportData {
 
 			sql = "SELECT NO_FAIL FROM TBLPFDFAIL WHERE ID_FAIL = '" + idFail
 					+ "'";
-//			System.out.println("getNoFailByIdFail"+sql);
+			System.out.println("getNoFailByIdFail"+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			if (rs.next()) {
@@ -2771,7 +2780,7 @@ public class FrmPopupPilihPegawaiReportData {
 			sql = "SELECT REPLACE(SUBSTR(NO_FAIL,1,INSTR(NO_FAIL,'/S17-')-1),'&','&#38;') AS NO_FAIL "+
 				  " FROM TBLPFDFAIL WHERE ID_FAIL = '" + idFail
 					+ "'";
-//			System.out.println("getNoFailS17ByIdFail"+sql);
+			System.out.println("getNoFailS17ByIdFail"+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			if (rs.next()) {
@@ -2797,7 +2806,7 @@ public class FrmPopupPilihPegawaiReportData {
 					+ "WHERE C.FLAG_JENIS_KEPUTUSAN = '0' AND A.ID_FAIL = B.ID_FAIL AND D.ID_PERBICARAAN = C.ID_PERBICARAAN AND E.ID_KEPUTUSANPERMOHONAN = D.ID_KEPUTUSANPERMOHONAN "
 					+ "AND B.ID_PERMOHONAN = E.ID_PERMOHONAN AND A.ID_FAIL = '"
 					+ idFail + "'";
-
+			myLogger.info("getIdUnitPSKByIdFail :"+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			if (rs.next()) {
@@ -2824,10 +2833,11 @@ public class FrmPopupPilihPegawaiReportData {
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
+
 			sql = "SELECT A.HARTA_TINGGAL, A.BATAL_KUASA_PENTADBIR, A.LANTIK_PENTADBIR, A.BATAL_P_AMANAH, A.LANTIK_P_AMANAH, B.ID_PERMOHONANSIMATI, A.SEKSYEN,A.LAIN_TUJUAN "
 					+ " FROM TBLPPKPERMOHONAN A, TBLPPKPERMOHONANSIMATI B"
 					+ " WHERE A.SEKSYEN = 17 AND A.ID_PERMOHONAN = B.ID_PERMOHONAN AND A.ID_FAIL = '" + idFail + "'";
-//			System.out.println("SELECT GET SEBAB :::::::::::::::"+sql);
+			System.out.println("SELECT GET SEBAB :::::::::::::::"+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			if (rs.next()) {
@@ -2845,7 +2855,9 @@ public class FrmPopupPilihPegawaiReportData {
 				myLogger.info("batalPA :"+batalPA);
 				myLogger.info("lantikPA :"+lantikPA);
 				myLogger.info("lain_tujuan :"+lain_tujuan);
-						
+			
+				
+				
 				//if (hartaTertinggal.equals("Y")){
 				if ("Y".equals(hartaTertinggal)){
 					
@@ -3103,7 +3115,7 @@ public class FrmPopupPilihPegawaiReportData {
 					
 					while (rsLainTujuan.next()){
 											
-							sebabLainTujuan = rsLainTujuan.getString("catatan") == null ? "" : rsLainTujuan.getString("catatan");
+						sebabLainTujuan = rsLainTujuan.getString("catatan") == null ? "" : rsLainTujuan.getString("catatan").toUpperCase();
 						
 					}
 					
@@ -3147,9 +3159,9 @@ public class FrmPopupPilihPegawaiReportData {
 		}
 	
 		
+		myLogger.info("sebab2 :"+sebab);
 		
-		
-		return sebab;
+		return sebab.toUpperCase();
 	}
 	
 	
@@ -3273,7 +3285,7 @@ public class FrmPopupPilihPegawaiReportData {
 			boolean hasPemohon = false;
 			while (rsFailTerdahulu.next()){				
 				if(rsFailTerdahulu.getString("ID_FAIL").trim().length() > 0){
-					sqlPemohon = "SELECT DISTINCT G.NAMA_PEMOHON,  NVL(g.no_kp_baru,g.NO_KP_LAMA) as NO_KP_BARU , " 
+					sqlPemohon = "SELECT DISTINCT REPLACE(REPLACE(UPPER(G.NAMA_PEMOHON),','),'&','&#38;') AS NAMA_PEMOHON,  NVL(g.no_kp_baru,g.NO_KP_LAMA) as NO_KP_BARU , " 
 							//" G.NO_KP_BARU,"
 							+ " CASE"
 							+ " WHEN G.ALAMAT_1 IS NULL THEN 'TIADA'"
@@ -3320,7 +3332,7 @@ public class FrmPopupPilihPegawaiReportData {
 					ResultSet rsPemohon = stmt.executeQuery(sqlPemohon);
 					
 					
-					//System.out.println("====sqlPemohon==="+sqlPemohon);
+					System.out.println("====sqlPemohon==="+sqlPemohon);
 					if (rsPemohon.next()) {
 						hasPemohon = true;
 						
@@ -3343,13 +3355,13 @@ public class FrmPopupPilihPegawaiReportData {
 			if (!hasPemohon) {				
 				sqlPermohonanTerdahulu = "SELECT NVL(A.ID_PERMOHONANTERDAHULU,'0')AS ID_PERMOHONANTERDAHULU FROM TBLPPKPERMOHONAN A,TBLPFDFAIL B"
 					+ " WHERE B.ID_FAIL = A.ID_FAIL AND A.ID_FAIL = '" + idfail + "'";
-//				System.out.println("====sqlPermohonanTerdahulu bbbb===");	
+				System.out.println("====sqlPermohonanTerdahulu bbbb===");	
 				
 					ResultSet rsPermohonanTerdahulu = stmt.executeQuery(sqlPermohonanTerdahulu);
-//					System.out.println("====sqlPermohonanTerdahulu==="+sqlPermohonanTerdahulu);	
+					System.out.println("====sqlPermohonanTerdahulu==="+sqlPermohonanTerdahulu);	
 					while(rsPermohonanTerdahulu.next()){
 						if(!"0".equals(rsPermohonanTerdahulu.getString("ID_PERMOHONANTERDAHULU"))){
-							sqlPemohon = "SELECT G.NAMA_PEMOHON,G.NO_KP_BARU,"
+							sqlPemohon = "SELECT REPLACE(REPLACE(UPPER(G.NAMA_PEMOHON),','),'&','&#38;') AS NAMA_PEMOHON,G.NO_KP_BARU,"
 									+ " CASE"
 									+ " WHEN G.ALAMAT_1 IS NULL THEN 'TIADA'"
 									+ " WHEN G.ALAMAT_2 IS NULL AND G.ALAMAT_3 IS NULL THEN  REPLACE(REPLACE(UPPER(G.ALAMAT_1),','),'&','&#38;') || ', ' || REPLACE(REPLACE(UPPER(G.POSKOD),','),'&','&#38;') || ' ' || REPLACE(REPLACE(UPPER(BANDARPEMOHON.KETERANGAN),','),'&','&#38;') ||', '|| REPLACE(REPLACE(UPPER(NEGERIPEMOHON.NAMA_NEGERI),','),'&','&#38;')"
@@ -3392,9 +3404,9 @@ public class FrmPopupPilihPegawaiReportData {
 									+ " AND NEGERIPEMOHON.ID_NEGERI = G.ID_NEGERI"
 									+ " AND BANDARPEMOHON.ID_BANDAR(+) = G.ID_BANDAR"
 									+ " AND B.ID_FAIL = '" + idfail + "'";
-//							System.out.println("====sqlPemohon 222222222===");	
+							System.out.println("====sqlPemohon 222222222===");	
 							ResultSet rsPemohon = stmt.executeQuery(sqlPemohon);
-//							System.out.println("====sqlPemohon==="+sqlPemohon);	
+							System.out.println("====sqlPemohon==="+sqlPemohon);	
 							
 							if (rsPemohon.next()) {
 								hasPemohon = true;
@@ -3408,7 +3420,7 @@ public class FrmPopupPilihPegawaiReportData {
 							}
 						} else {
 							//--------------- pemohon yang tidak ada fail terdahulu-----------------------
-							sqlPemohon = "SELECT G.NAMA_PEMOHON,G.NO_KP_BARU,"
+							sqlPemohon = "SELECT REPLACE(REPLACE(UPPER(G.NAMA_PEMOHON),','),'&','&#38;') AS NAMA_PEMOHON,G.NO_KP_BARU,"
 									+ " CASE"
 									+ " WHEN G.ALAMAT_1 IS NULL THEN 'TIADA'"
 									+ " WHEN G.ALAMAT_2 IS NULL AND G.ALAMAT_3 IS NULL THEN  REPLACE(REPLACE(UPPER(G.ALAMAT_1),','),'&','&#38;') || ', ' || REPLACE(REPLACE(UPPER(G.POSKOD),','),'&','&#38;') || ' ' || REPLACE(REPLACE(UPPER(BANDARPEMOHON.KETERANGAN),','),'&','&#38;') ||', '|| REPLACE(REPLACE(UPPER(NEGERIPEMOHON.NAMA_NEGERI),','),'&','&#38;')"
@@ -3450,9 +3462,10 @@ public class FrmPopupPilihPegawaiReportData {
 									+ " AND BANDARPEMOHON.ID_BANDAR(+) = G.ID_BANDAR"
 									+ " AND B.ID_FAIL = '" + idfail + "'";
 							
-//							System.out.println("====sblm===");
+							System.out.println("====sblm===");
 							ResultSet rsPemohon = stmt.executeQuery(sqlPemohon);
-//							System.out.println("sqlPemohon==="+sqlPemohon);
+							
+							System.out.println("sqlPemohon==="+sqlPemohon);
 							
 							if (rsPemohon.next()) {
 								hasPemohon = true;
@@ -3642,7 +3655,7 @@ public class FrmPopupPilihPegawaiReportData {
 					+ idPermohonan + "'";
 
 			Statement stmt = db.getStatement();
-//			System.out.println("sql = "+sql);
+			System.out.println("sql = "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			String temp = "";
 
@@ -3667,7 +3680,6 @@ public class FrmPopupPilihPegawaiReportData {
 			sql = "SELECT A.SIGNED_TEXT FROM TBLPPKPERBICARAAN A WHERE A.ID_PERBICARAAN ="+ idPerbicaraan;
 
 			Statement stmt = db.getStatement();
-			myLogger.info("sql = "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			String temp = "";
 
@@ -3681,6 +3693,4 @@ public class FrmPopupPilihPegawaiReportData {
 				db.close();
 		}
 	}
-	
-	
 }
