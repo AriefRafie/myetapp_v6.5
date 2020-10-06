@@ -643,7 +643,7 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 					+
 					// "SELECT *    FROM ( "+
 					" SELECT  ROW_NUMBER () OVER (ORDER BY MK.NAMA_MUKIM ASC, LPAD (M.NO_LOT, 20) ASC, LPAD (M.NO_PT, 20) ASC, LPAD (M.NO_SUBJAKET, 20) ASC) AS RN, UI.ID_JAWATAN, "
-					+ " M.FLAG_SEGERA_SEBAHAGIAN, m.flag_pembatalan_keseluruhan,m.flag_penarikan_keseluruhan,k.tarikh_borangk, P.NO_RUJUKAN_PTG, P.ID_STATUS, F.NO_FAIL, M.CATATAN, P.ID_PERMOHONAN, LS.KETERANGAN AS UNIT1, LT.KETERANGAN AS UNIT2, M.ID_HAKMILIK, M.ID_NEGERI," 
+					+ " M.FLAG_SEGERA_SEBAHAGIAN, m.flag_pembatalan_keseluruhan,m.flag_penarikan_keseluruhan,k.tarikh_borangk, g.tarikh_borangh, P.NO_RUJUKAN_PTG, P.ID_STATUS, F.NO_FAIL, M.CATATAN, P.ID_PERMOHONAN, LS.KETERANGAN AS UNIT1, LT.KETERANGAN AS UNIT2, M.ID_HAKMILIK, M.ID_NEGERI," 
 					+ " M.TARIKH_MASUK AS TARIKH_MASUK,  ";
 
 			if (!idpegawai.equals("") && idpegawai != null) {
@@ -751,9 +751,12 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 				sql += " Tblpptborangl LL, ";
 			}
 
-			sql += "TBLRUJLUAS LS, TBLRUJMUKIM MK, TBLRUJNEGERI N, TBLPPTHAKMILIK M, TBLPPTBORANGK K, TBLRUJJENISHAKMILIK JH,  TBLRUJDAERAH D, USERS U, USERS_INTERNAL UI  "
+			sql += "TBLPPTPERMOHONAN A, TBLPPTSIASATAN B, TBLPPTBORANGG G, TBLRUJLUAS LS, TBLRUJMUKIM MK, TBLRUJNEGERI N, TBLPPTHAKMILIK M, TBLPPTBORANGK K, TBLRUJJENISHAKMILIK JH,  TBLRUJDAERAH D, USERS U, USERS_INTERNAL UI  "
 					+ " WHERE M.ID_PERMOHONAN = P.ID_PERMOHONAN  "
-					+ " AND M.ID_PERMOHONAN = K.ID_PERMOHONAN  "
+					+ " AND M.ID_PERMOHONAN = A.ID_PERMOHONAN "
+					+ " AND A.ID_PERMOHONAN = B.ID_PERMOHONAN(+)  "
+					+ " AND A.ID_PERMOHONAN = K.ID_PERMOHONAN(+) "
+					+ " AND B.ID_SIASATAN = G.ID_SIASATAN(+) "
 					+ " AND M.ID_NEGERI = N.ID_NEGERI  "
 					+ " AND P.ID_FAIL = F.ID_FAIL  "
 					+ " AND M.ID_DAERAH = D.ID_DAERAH "
@@ -1287,6 +1290,7 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 				h.put("flag_online", rs.getString("FLAG_ONLINE") == null ? ""
 						: rs.getString("FLAG_ONLINE"));
 				h.put("tarikh_borangk",rs.getDate("tarikh_borangk") == null?"": sdf.format(rs.getDate("tarikh_borangk")));
+				h.put("tarikh_borangh",rs.getDate("tarikh_borangh") == null?"": sdf.format(rs.getDate("tarikh_borangh")));
 
 				list_hakmilik.addElement(h);
 			}
