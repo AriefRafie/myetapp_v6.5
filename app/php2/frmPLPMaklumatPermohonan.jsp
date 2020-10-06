@@ -742,11 +742,12 @@ function gotoKembali(){
 	document.${formName}.submit();
 } */
 function doChangeTabUpper(tabId) {
-	document.${formName}.selectedTabUpper.value = tabId;
 	document.${formName}.mode.value = "view";
+	document.${formName}.selectedTabUpper.value = tabId;
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
-	doAjaxCall${formName}("");
+	//doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function validateLuas(elmnt,content,content2) {
 	//if it is character, then remove it..

@@ -990,7 +990,6 @@ public class FrmPYWSenaraiFailData {
 				h.put("flagJenisFail",
 						rs.getString("FLAG_JENIS_FAIL") == null ? "" : rs
 								.getString("FLAG_JENIS_FAIL"));
-				
 				senaraiFail.addElement(h);
 				bil++;
 			}
