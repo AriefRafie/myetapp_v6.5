@@ -3158,7 +3158,7 @@ document.getElementById("header_lama").style.display="block";
     	<fieldset>
         	<legend><strong> TANDATANGAN DIGITAL </strong></legend>
       			<div class="TabbedPanelsContent"> <br/>
-    				#parse("/app/ppk/tindakanPegawaiPerintahSek8.jsp")
+    				#parse("/app/ppk/tindakanPegawaiPerintahSek17.jsp")
       			</div>
       	</fieldset>
     </td>
