@@ -85,6 +85,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 		String idTujuanPermohonan = getParam("idTujuanPermohonan");
 		String idPermohonanLama = getParam("idPermohonan");
         String kategori = getParam("kategori");
+        String tujuanLain = getParam("tujuanLain");
 		String mode = getParam("mode");
         if (mode.isEmpty()){
         	mode = "view";
@@ -149,19 +150,18 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 		//SAVE TO DB
 		if (postDB) {
 			if ("doDaftarBaru".equals(hitButton)) {
-				idFail = logic.daftarBaru(idUrusan, idSuburusan, idSubsuburusan, idHakmilikAgensi, idHakmilikSementara,
+				idFail = logic.daftarBaru(idUrusan, idSuburusan, idSubsuburusan, getParam("txtTujuanLain"), idHakmilikAgensi, idHakmilikSementara,
 				getParam("txtNoRujukanSurat"), getParam("txttarikhSurat"), idJenisTanah, idPHPBorangK, idPPTBorangK,
 				getParam("idKementerianTanah"), getParam("idNegeriTanah"), idHakmilikUrusan, getParam("tarikhTerima"),
-				idJenisPermohonan,session,idPermohonanLama);
+				idJenisPermohonan, session,idPermohonanLama);
 			}
 			if ("doSimpanKemaskiniMaklumatTnh".equals(hitButton)){
         		logic.updateTanah(idPermohonan,idHakmilikAgensi,session);	
             }
 			if ("doSimpanKemaskiniMaklumatPenyewaan".equals(hitButton)){
-        		logic.updatePermohonanSewa(idPermohonanSewa, idTujuanPermohonan, idSubsuburusan, getParam("socTempohSewa"), 
+        		logic.updatePermohonanSewa(idPermohonanSewa, idTujuanPermohonan, getParam("txtTujuanLain"), idSubsuburusan, getParam("socTempohSewa"), 
         				idLuasKegunaan, idLuas, getParam("txtLuasMohon1"), getParam("txtLuasMohon2"), getParam("txtLuasMohon3"),
-						getParam("txtLuasBersamaan"), getParam("txtBakiLuas"),
-						session);
+						getParam("txtLuasBersamaan"), getParam("txtBakiLuas"),session);
         	}
 			if ("doHantarEmel".equals(hitButton)){
 				
@@ -260,6 +260,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     			this.context.put("BeanMaklumatSewa", beanMaklumatSewa);
     			if (beanMaklumatSewa.size() != 0){
         			Hashtable hashMaklumatSewa = (Hashtable) logic.getBeanMaklumatSewa().get(0);
+        			tujuanLain = (String)(hashMaklumatSewa.get("tujuanLain"));
         			idPermohonanSewa = (String)(hashMaklumatSewa.get("idPermohonanSewa"));
         			idTujuanPermohonan = (String)(hashMaklumatSewa.get("idTujuanPermohonan"));
         			idUrusan = (String)(hashMaklumatSewa.get("idUrusan"));
@@ -375,6 +376,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
         		logic.setMaklumatSewa(idPermohonan);
         		Hashtable hashMaklumatSewaDB = (Hashtable) logic.getBeanMaklumatSewa().get(0);
     			Hashtable hashMaklumatSewa = new Hashtable();
+    			hashMaklumatSewa.put("tujuanLain", getParam("txtTujuanLain"));
     			hashMaklumatSewa.put("tarikhTerima", getParam("tarikhTerima"));
     			hashMaklumatSewa.put("tarikhSurat", getParam("tarikhSurat"));
     			hashMaklumatSewa.put("perkara", getParam("txtPerkara"));
@@ -477,6 +479,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 				this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "disabled", " class=\"disabled\" style=\"width:auto\""));
 			}		
 			senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
+			
 		//DAFTAR PERMOHONAN BARU
 		} else if ("daftarBaru".equals(actionPenyewaan)) {
 			
@@ -486,6 +489,8 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 			this.context.put("mode", "new");
         	this.context.put("readonly", "");
         	this.context.put("inputTextClass", "");
+        	this.context.put("idUrusan", idUrusan);
+        	this.context.put("idSuburusan", idSuburusan);
         	
         	// JENIS PERMOHONAN
         	if ("1".equals(idJenisPermohonan)) {
@@ -534,6 +539,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     			hashPermohonan.put("tarikhSurat", getParam("txttarikhSurat") == null ? "" : getParam("txttarikhSurat"));
     			hashPermohonan.put("tarikhTerima",getParam("tarikhTerima") == null || "".equals(getParam("tarikhTerima"))? sdf.format(currentDate) : getParam("tarikhTerima"));
     			//hashPermohonan.put("idSubsuburusan",getParam("socSubsuburusan") == null ? "": getParam("socSubsuburusan"));
+    			hashPermohonan.put("tujuanLain", getParam("txtTujuanLain") == null ? "" : getParam("txtTujuanLain"));
     			beanMaklumatPermohonan.addElement(hashPermohonan);
     			this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);		
     			

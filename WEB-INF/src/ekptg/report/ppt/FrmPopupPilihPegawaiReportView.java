@@ -576,7 +576,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
     	// END
     	    	
 		//screen
-		vm = "app/ppt/frmPopupCetakLaporan.jsp";
+		vm = "app/ppt/frmPopupCetakLaporanNew.jsp";
 		return vm;
 		
 	}//close template

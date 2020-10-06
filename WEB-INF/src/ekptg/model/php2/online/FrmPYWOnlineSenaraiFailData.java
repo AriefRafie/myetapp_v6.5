@@ -1687,7 +1687,7 @@ public class FrmPYWOnlineSenaraiFailData {
 		}
 	}
 	
-	public String daftarBaru(String idUrusan, String idSuburusan, String idSubsuburusan, String idHakmilikAgensi,
+	public String daftarBaru(String idUrusan, String idSuburusan, String idSubsuburusan, String tujuanLain, String idHakmilikAgensi,
 			String idHakmilikSementara, String noRujukanSurat, String tarikhSurat, String idJenisTanah, String idPHPBorangK, 
 			String idPPTBorangK, String idHakmilikUrusan, String idKementerianTanah, String idNegeriTanah, String tarikhTerima, 
 			String idJenisPermohonan, HttpSession session, String idPermohonanLama) throws Exception {
@@ -1722,6 +1722,7 @@ public class FrmPYWOnlineSenaraiFailData {
 				+ " AND TBLHTPHAKMILIKAGENSI.ID_HAKMILIKAGENSI = '" + idHakmilikAgensi + "'";
 
 			ResultSet rsTanah = stmt.executeQuery(sql);
+			log.info(" SQL daftar :"+sql);
 			if (rsTanah.next()){
 				idKementerian = rsTanah.getString("ID_KEMENTERIAN");
 				idNegeriHakmilik = rsTanah.getString("ID_NEGERI");
@@ -1744,7 +1745,7 @@ public class FrmPYWOnlineSenaraiFailData {
 			r.add("ID_LOKASIFAIL", "2"); //UNIT PHP DI TINGKAT 2
 			r.add("FLAG_JENIS_FAIL", "4"); //ONLINE ETAPP
 			r.add("ID_NEGERI", idNegeriHakmilik);
-			r.add("ID_KEMENTERIAN", idKementerian);	
+			r.add("ID_KEMENTERIAN", idKementerian);
 			
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
@@ -1758,7 +1759,7 @@ public class FrmPYWOnlineSenaraiFailData {
 				+ " WHERE A.USER_ID = B.USER_ID AND A.USER_ID = '" + userId + "'";
 			
 			ResultSet rsUser = stmt.executeQuery(sql);
-
+			log.info(" SQL daftar fail :"+sql);
 			//TBLPHPPEMOHON
 			r = new SQLRenderer();
 			long idPemohon = DB.getNextID("TBLPHPPEMOHON_SEQ");
@@ -1801,6 +1802,7 @@ public class FrmPYWOnlineSenaraiFailData {
 					+ " WHERE ID_SEKSYEN = '4' AND ID_NEGERI = '" + idNegeriHakmilik + "'";
 				
 			ResultSet rsJKPTG = stmt.executeQuery(sql);
+			log.info(" SQL daftar PEMOHON :"+sql);
 			if (rsJKPTG.next()){
 				idPejabatJKPTG = rsJKPTG.getString("ID_PEJABATJKPTG");
 			}
@@ -1828,6 +1830,7 @@ public class FrmPYWOnlineSenaraiFailData {
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLPERMOHONAN");
+			log.info(" SQL daftar permohonan :"+sql);
 			stmt.executeUpdate(sql);
 				
 			//TBLPHPHAKMILIKPERMOHONAN
@@ -1844,6 +1847,7 @@ public class FrmPYWOnlineSenaraiFailData {
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLPHPHAKMILIKPERMOHONAN");
+			log.info(" SQL daftar hakmilikpermohonan :"+sql);
 			stmt.executeUpdate(sql);
 				
 			//TBLPHPPERMOHONANSEWA
@@ -1869,6 +1873,7 @@ public class FrmPYWOnlineSenaraiFailData {
 		
 			r.add("ID_PERMOHONANLAMA", idPermohonanLama);	
 			sql = r.getSQLInsert("TBLPHPPERMOHONANSEWA");
+			log.info(" SQL daftar TBLPHPPERMOHONANSEWA :"+sql);
 			stmt.executeUpdate(sql);
 			
 			//TBLPHPPERMOHONANTUJUAN
@@ -1877,11 +1882,13 @@ public class FrmPYWOnlineSenaraiFailData {
 			r.add("ID_PHPPERMOHONANTUJUAN", idTujuanPermohonan);
 			r.add("ID_PHPPERMOHONANSEWA", idPHPPermohonanSewa);	
 			r.add("ID_JENISTUJUAN", idSubsuburusan);
+			r.add("TUJUAN_LAIN", tujuanLain);
 			
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 			
 			sql = r.getSQLInsert("TBLPHPPERMOHONANTUJUAN");
+			log.info(" SQL daftar TBLPHPPERMOHONANTUJUAN :"+sql);
 			stmt.executeUpdate(sql);
 
 			// TBLPHPHAKMILIK
@@ -2240,8 +2247,8 @@ public class FrmPYWOnlineSenaraiFailData {
 			Statement stmt = db.getStatement();
 
 			sql = " SELECT A.ID_URUSAN, A.ID_SUBURUSAN, A.ID_SUBSUBURUSAN, A.NO_FAIL, A.ID_FAIL, B.ID_PERMOHONAN, B.NO_PERMOHONAN, " 
-				+ " B.TARIKH_SURAT, B.TARIKH_TERIMA, B.NO_RUJ_SURAT, A.TAJUK_FAIL, B.TUJUAN AS TUJUAN_PERMOHONAN, D.ID_JENISTUJUAN,"
-				+ " B.ID_PEMOHON, A.ID_URUSAN, A.ID_SUBURUSAN, C.FLAG_PROSESFAIL, C.CATATAN, C.TUJUAN, B.ID_PERMOHONAN "
+				+ " B.TARIKH_SURAT, B.TARIKH_TERIMA, B.NO_RUJ_SURAT, A.TAJUK_FAIL, A.KETERANGAN_TUJUAN, B.TUJUAN AS TUJUAN_PERMOHONAN, D.ID_JENISTUJUAN,"
+				+ " B.ID_PEMOHON, A.ID_URUSAN, A.ID_SUBURUSAN, C.FLAG_PROSESFAIL, C.CATATAN, C.TUJUAN, B.ID_PERMOHONAN, D.TUJUAN_LAIN "
 				+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPERMOHONANSEWA C, TBLPHPPERMOHONANTUJUAN D "  
 				+ " WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PERMOHONAN = C.ID_PERMOHONAN"
 				+ " AND C.ID_PHPPERMOHONANSEWA = D.ID_PHPPERMOHONANSEWA"
@@ -2266,6 +2273,7 @@ public class FrmPYWOnlineSenaraiFailData {
 				h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "": sdf.format(rs.getDate("TARIKH_TERIMA")));
 				h.put("tujuan", rs.getString("TUJUAN_PERMOHONAN") == null ? "" : rs.getString("TUJUAN_PERMOHONAN").toUpperCase());
 				h.put("idTujuan", rs.getString("ID_JENISTUJUAN") == null ? "" : rs.getString("ID_JENISTUJUAN"));
+				h.put("tujuanLain", rs.getString("TUJUAN_LAIN") == null ? "" : rs.getString("TUJUAN_LAIN"));
 				beanMaklumatPermohonan.addElement(h);
 				
 				bil++;
@@ -2318,7 +2326,7 @@ public class FrmPYWOnlineSenaraiFailData {
 
 			sql = "SELECT C.ID_PHPPERMOHONANSEWA, E.ID_PHPPERMOHONANTUJUAN, B.TARIKH_TERIMA, B.TARIKH_SURAT, B.NO_RUJ_SURAT, A.TAJUK_FAIL, C.TUJUAN, C.FLAG_TEMPOHSEWA, "
 				+ " D.KETERANGAN, C.FLAG_GUNA, C.ID_LUASMHN, C.LUAS_MHN1, C.LUAS_MHN2, C.LUAS_MHN3, C.ID_LUASMHNBERSAMAAN, A.ID_URUSAN, " 
-				+ " C.LUAS_MHNBERSAMAAN, C.ID_LUASBAKI, C.LUAS_BAKI, C.ID_LUASASAL, C.LUAS_ASAL, E.ID_JENISTUJUAN, A.ID_SUBURUSAN "
+				+ " C.LUAS_MHNBERSAMAAN, C.ID_LUASBAKI, C.LUAS_BAKI, C.ID_LUASASAL, C.LUAS_ASAL, E.ID_JENISTUJUAN, A.ID_SUBURUSAN, E.TUJUAN_LAIN "
 				+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPERMOHONANSEWA C, TBLRUJLUAS D, TBLPHPPERMOHONANTUJUAN E"
 				+ " WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PERMOHONAN = C.ID_PERMOHONAN AND C.ID_PHPPERMOHONANSEWA = E.ID_PHPPERMOHONANSEWA" 
 				+ " AND C.ID_LUASASAL = D.ID_LUAS(+) AND B.ID_PERMOHONAN = '" + idPermohonan + "'";
@@ -2350,6 +2358,7 @@ public class FrmPYWOnlineSenaraiFailData {
 				h.put("idUrusan", rs.getString("ID_URUSAN") == null ? "" : rs.getString("ID_URUSAN"));
 				h.put("idSuburusan", rs.getString("ID_SUBURUSAN") == null ? "" : rs.getString("ID_SUBURUSAN"));
 				h.put("idTujuan", rs.getString("ID_JENISTUJUAN") == null ? "" : rs.getString("ID_JENISTUJUAN"));
+				h.put("tujuanLain", rs.getString("TUJUAN_LAIN") == null ? "" : rs.getString("TUJUAN_LAIN"));
 				beanMaklumatSewa.addElement(h);
 				bil++;
 				
@@ -2502,7 +2511,7 @@ public class FrmPYWOnlineSenaraiFailData {
 		}		
 	}
 	
-	public void updatePermohonanSewa(String idPermohonanSewa, String idTujuanPermohonan, String idSubsuburusan,  
+	public void updatePermohonanSewa(String idPermohonanSewa, String idTujuanPermohonan, String idSubsuburusan, String tujuanLain, 
 			String socTempohSewa, String idLuasKegunaan, String idLuas, String txtLuasMohon1, String txtLuasMohon2,
 			String txtLuasMohon3, String txtLuasBersamaan, String txtBakiLuas, HttpSession session) throws Exception {
 		
@@ -2544,6 +2553,7 @@ public class FrmPYWOnlineSenaraiFailData {
 			
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			r.add("TUJUAN_LAIN",r.unquote("tujuanLain"));
 			
 			sql = r.getSQLUpdate("TBLPHPPERMOHONANTUJUAN");
 			stmt.executeUpdate(sql);
