@@ -159,7 +159,7 @@
 		#end
         #if($idSuburusan == 1613119 || $idSubsuburusan == 992016 || $idSubsuburusan == 992048 || $idSubsuburusan == 992022)
         <tr>
-          <td width="1%"></td>
+          <td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>
           <td width="28%">Keterangan Tujuan</td>
           <td width="1%">:</td>
           <td width="70%">
@@ -561,11 +561,11 @@ function daftar() {
   		document.${formName}.socSuburusan.focus(); 
 		return; 
 	}
-	/*if(document.${formName}.txtTujuanLain.value == ""){
+	if(document.${formName}.txtTujuanLain.value == ""){
 		alert('Sila masukkan keterangan.');
   		document.${formName}.txtTujuanLain.focus(); 
 		return; 
-	}*/
+	}
 	if(document.${formName}.idHakmilikAgensi.value == ""){
 		alert('Sila pilih Pegangan Hakmilik.');
 		return; 
