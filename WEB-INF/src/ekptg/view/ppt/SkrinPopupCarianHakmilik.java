@@ -751,10 +751,10 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 			}
 			
 			if (flag_skrin.equals("daftar_sek8_online") || flag_skrin.equals("skrin_hakmilik_sek8_kjp")) {
-				sql += " TBLPPTBORANGK K,  " ;
-				sql += " AND M.ID_PERMOHONAN = A.ID_PERMOHONAN ";
-				sql += " AND A.ID_PERMOHONAN = B.ID_PERMOHONAN(+)  ";
-				sql += " AND A.ID_PERMOHONAN = K.ID_PERMOHONAN(+) ";
+				sql += " TBLPPTBORANGK K, TBLPPTSIASATAN B, TBLPPTBORANGG G, " ;
+				sql += " AND P.ID_PERMOHONAN = B.ID_PERMOHONAN(+)  ";
+				sql += " AND B.ID_PERMOHONAN = K.ID_PERMOHONAN(+) ";
+				sql += " AND B.ID_SIASATAN = G.ID_SIASATAN(+) " ;
 			}
 					
 			//if (!flag_skrin.equals("daftar_sek8_online") || !flag_skrin.equals("skrin_hakmilik_sek8_kjp")) {
