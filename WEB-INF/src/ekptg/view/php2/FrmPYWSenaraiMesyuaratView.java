@@ -11,14 +11,11 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
-
 import javax.servlet.http.HttpSession;
-
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
-
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 import lebah.portal.AjaxBasedModule;
@@ -27,7 +24,6 @@ import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.model.php2.FrmPYWSenaraiMesyuaratData;
-import ekptg.model.php2.utiliti.PHPUtilHTML;
 
 /**
  * @author nurulain
@@ -61,7 +57,8 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 		this.context.put("userId", userId);
 		this.context.put("userRole", userRole);
 		this.context.put("idNegeriUser", idNegeriUser);
-
+		this.context.put("close_window", "NO");
+		
 		// GET DEFAULT PARAM
 		String vm = "";
 		String action = getParam("action"); // * ACTION NI HANYA UTK SETUP PAGING SHJ
@@ -71,6 +68,7 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 		String mode = getParam("mode");
 		String actionMesyuarat = getParam("actionMesyuarat");
 		String selectedTabUpper = getParam("selectedTabUpper").toString();
+		String refreshPaparan = getParam("refreshPaparan").toString();
 		
 		if (selectedTabUpper == null || "".equals(selectedTabUpper)) {
 			selectedTabUpper = "0";
@@ -289,6 +287,13 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 				this.context.put("SenaraiFailMohonLanjut", senaraiFailMohonLanjut);
 				this.context.put("totalRecords", senaraiFailMohonLanjut.size());
 				
+				if(refreshPaparan.equals("true")){
+					beanMaklumatMesyuarat = new Vector();
+					logic.setMaklumatMesyuarat(idMesyuarat);
+					beanMaklumatMesyuarat = logic.getBeanMaklumatMesyuarat();
+					this.context.put("BeanMaklumatMesyuarat", beanMaklumatMesyuarat);
+					this.context.put("refreshPaparan", "no");
+				}		
 				// SENARAI MESYUARAT PERMOHONAN LAIN - LAIN
 				
 				

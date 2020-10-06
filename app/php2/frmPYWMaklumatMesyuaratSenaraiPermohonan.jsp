@@ -28,7 +28,8 @@
   <input type="hidden" name="idMesyuaratPermohonan" id="idMesyuaratPermohonan" value="$idMesyuaratPermohonan">
   <input type="hidden" name="flagResult" id="flagResult" value="$flagResult"/>
   <input type="hidden" name="catatan" id="catatan" value="$catatan"/>
-    <input name="idDokumen" type="hidden" id="idDokumen" value="$idDokumen"/>
+  <input name="idDokumen" type="hidden" id="idDokumen" value="$idDokumen"/>
+  <input type="hidden" name="refreshPaparan" id="refreshPaparan" value="$refreshPaparan"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
@@ -815,5 +816,12 @@ function paparRingkasanPertimbangan(idPermohonan) {
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
 }
-
+function refreshFromPilihPermohonan() {
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmPYWSenaraiMesyuaratView";
+	document.${formName}.method="POST";
+	document.${formName}.flagPopup.value = "";
+	document.${formName}.modePopup.value = "";
+	document.${formName}.refreshPaparan.value = "true";
+	doAjaxCall${formName}("");
+}
 </script>

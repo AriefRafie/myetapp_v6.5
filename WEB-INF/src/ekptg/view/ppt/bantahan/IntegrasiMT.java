@@ -258,12 +258,12 @@ public class IntegrasiMT extends AjaxBasedModule{
 			//Perayu PB (Individu|Syarikat)
 			String gen = "U";
 			String noRef = getParam("noRef");
+			String partyTypeNo = "";
 			int umur	= 0;
 			String refType = "OT";
 			//String refType = getParam("noRef");
 		
 			if(jenisRef.equals("1")
-				|| jenisRef.equals("3")
 				|| jenisRef.equals("4")
 				|| jenisRef.equals("5")
 				|| jenisRef.equals("6")
@@ -271,15 +271,28 @@ public class IntegrasiMT extends AjaxBasedModule{
 				gen = getParam("jantina");
 				noRef = Utils.RemoveDash(noRef);
 				refType = "IC";
-				umur	= Integer.parseInt(getParam("umur"));
+			
+				if(refType == "IC") {
+					partyTypeNo = "1";
+				}
+				
+				
 				
 //			}else if(jenisRef.equals("2") || jenisRef.equals("10")) {
 //				gen = "U";
 //				umur ="0";
 //				refType = "OT";
 			}
+			if(jenisRef.equals("3")){
+				refType = "OC";
+				partyTypeNo = "2";
+			}
+			
+			umur	= Integer.parseInt(getParam("umur"));
+			gen 	= getParam("jantina");
 			myLog.info("jantina="+gen);
 			myLog.info("umur"+umur);
+			myLog.info("partyTypeNo :"+partyTypeNo);
 
 			im = new MTManagerReg("MTREG");
 			
@@ -288,6 +301,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 			daftar.put("idRujukan",idBantahan);
 			daftar.put("kodMT",kodMT);
 			daftar.put("gen",gen);
+			daftar.put("partyTypeNo",partyTypeNo);
 			daftar.put("umur",String.valueOf(umur));
 			daftar.put("tarikHantar",sdf.format(cal.getTime()));
 			daftar.put("idUser",String.valueOf(umur));
@@ -305,7 +319,7 @@ public class IntegrasiMT extends AjaxBasedModule{
 			}else {
 				//,String name,String umur,String gen,String noRef
 				pt = MTManagerReg.getPartyPerayu(idRujukanPB //id rujukan party
-						,name, String.valueOf(umur), gen, noRef,refType
+						,name, String.valueOf(umur), gen, noRef,refType,partyTypeNo
 						,add,add2,add3,postcode,stateCode,city);
 			}
 			//PartyType pt02 = MTRegManager.getPartyResponden(idPejabatPTGD);

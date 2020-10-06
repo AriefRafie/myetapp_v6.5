@@ -36,10 +36,10 @@ public class BorangDLebih extends EkptgReportServlet {
 		}	
 		
 		
-		if(id_negeri.equals("10"))
-		{
-			super.setReportName("Borang D_lebihDrpdSatuHakmilik");
-		}
+//		if(id_negeri.equals("10"))
+//		{
+//			super.setReportName("Borang D_lebihDrpdSatuHakmilik");
+//		}
 		/*else if(id_negeri.equals("11"))
 		{
 			super.setReportName("Borang D_PTG_TGANU_v6");
@@ -48,10 +48,10 @@ public class BorangDLebih extends EkptgReportServlet {
 		{
 			super.setReportName("Borang D_lebihDrpdSatuHakmilik_PTG Penang");
 		}*/
-		else
-		{
+//		else
+//		{
 			 super.setReportName("Borang D_lebihDrpdSatuHakmilik_PTG");
-		}
+//		}
 		
         
 		super.setFolderName("ppt");
