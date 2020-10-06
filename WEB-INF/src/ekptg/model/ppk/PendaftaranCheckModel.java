@@ -71,7 +71,7 @@ public class PendaftaranCheckModel {
 					" WHERE SM.ID_SIMATI = MS.ID_SIMATI AND MS.ID_PERMOHONAN = P.ID_PERMOHONAN " +
 					" AND P.ID_FAIL = F.ID_FAIL AND D.ID_NEGERI = N.ID_NEGERI(+) " +
 					" AND PEJ.ID_DAERAHURUS(+) = P.ID_DAERAHMHN AND P.ID_DAERAHMHN = D.ID_DAERAH(+) " +
-					" AND P.ID_STATUS NOT IN  (999,169,50,47,70,152) ";
+					" AND P.ID_STATUS NOT IN  (999,169,50,47,70,152,21) ";
 						
 			if (kpbaru != "") {
 				sql += " AND SM.NO_KP_BARU = '" + kpbaru + "'";
@@ -91,7 +91,7 @@ public class PendaftaranCheckModel {
 			
 
 				
-				if (rs.getInt("C_SIMATI") > 1) {
+				if (rs.getInt("C_SIMATI") > 0) {
 					System.out.println("MATI 2xxx:"+ rs.getString("C_SIMATI"));
 					a = true;
 					System.out.println("A = "+a);
@@ -165,7 +165,7 @@ public class PendaftaranCheckModel {
 					" WHERE SM.ID_SIMATI = MS.ID_SIMATI AND MS.ID_PERMOHONAN = P.ID_PERMOHONAN " +
 					" AND P.ID_FAIL = F.ID_FAIL AND D.ID_NEGERI = N.ID_NEGERI(+) " +
 					" AND PEJ.ID_DAERAHURUS(+) = P.ID_DAERAHMHN AND P.ID_DAERAHMHN = D.ID_DAERAH(+) " +
-					" AND P.ID_STATUS NOT IN  (999,169,50,47,70,152) ";
+					" AND P.ID_STATUS NOT IN  (999,169,50,47,70,152,21) ";
 			
 			if (kplama != "") {
 				sql += " AND SM.NO_KP_LAMA = '" + kplama + "'";
@@ -247,7 +247,7 @@ public class PendaftaranCheckModel {
 					" WHERE SM.ID_SIMATI = MS.ID_SIMATI AND MS.ID_PERMOHONAN = P.ID_PERMOHONAN " +
 					" AND P.ID_FAIL = F.ID_FAIL AND D.ID_NEGERI = N.ID_NEGERI(+) " +
 					" AND PEJ.ID_DAERAHURUS(+) = P.ID_DAERAHMHN AND P.ID_DAERAHMHN = D.ID_DAERAH(+) " +
-					" AND P.ID_STATUS NOT IN  (999,169,50,47,70,152) ";
+					" AND P.ID_STATUS NOT IN  (999,169,50,47,70,152,21) ";
 
 			if (kplain != "") {
 				sql += " AND SM.NO_KP_LAIN = '" + kplain + "'";

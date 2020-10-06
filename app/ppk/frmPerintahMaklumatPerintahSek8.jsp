@@ -278,7 +278,7 @@ document.getElementById("header_lama").style.display="block";
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
-                        <td> #if ($mode == 'update' && $userRole != "user_ppk")
+                        <td> #if ($mode == 'update')
                           #if ($modePopup == 'new')
                           <input type="button" name="cmdSimpanHTA" id="cmdSimpanHTA" value="Simpan" onClick="javascript:simpanBaruHTA($listSizeHTAPopup)"/>
                           #if($flag_kemaskini_selesai != "yes") 
@@ -288,7 +288,7 @@ document.getElementById("header_lama").style.display="block";
                           #end
                           <input type="button" name="cmdBatalHTA" id="cmdBatalHTA" value="Kembali" onClick="javascript:batalHTA()"/>
                           #end
-                          #if ($modePopup == 'update' && $userRole != "user_ppk")
+                          #if ($modePopup == 'update')
                           <input name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" type="button" value="Kemaskini" onClick="javascript:simpanKemaskiniHTA()"/>
                           #if($flag_kemaskini_selesai != "yes") 
                           <script>
@@ -458,7 +458,7 @@ document.getElementById("header_lama").style.display="block";
                       <tr>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
-                        <td> #if ($mode == 'update' && $userRole != "user_ppk")
+                        <td> #if ($mode == 'update')
                           <input name="cmdWSPusakaTH" type="button" value="Simpan Maklumat Harta ke Sistem eTanah" onClick="javascript:sendWSPusaka($idHTA)"/>
                           #if ($modePopup == 'update')
                           <input id="cmdSimpanKemaskini1" name="cmdSimpanKemaskini1" type="button" value="Kemaskini" onClick="javascript:simpanKemaskiniHTATH()"/>
@@ -617,7 +617,7 @@ document.getElementById("header_lama").style.display="block";
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
-                        <td> #if ($mode == 'update' && $userRole != "user_ppk")
+                        <td> #if ($mode == 'update')
                           #if ($modePopup == 'new')
                           <input type="button" name="cmdSimpanHA" id="cmdSimpanHA" value="Simpan" onClick="javascript:simpanBaruHA($listSizeHAPopup)"/>
                           #if($flag_kemaskini_selesai != "yes") 
@@ -627,7 +627,7 @@ document.getElementById("header_lama").style.display="block";
                           #end
                           <input type="button" name="cmdBatalHA" id="cmdBatalHA" value="Kembali" onClick="javascript:batalHA()"/>
                           #end
-                          #if ($modePopup == 'update' && $userRole != "user_ppk")
+                          #if ($modePopup == 'update')
                           <input name="cmdSimpanKemaskini2" id="cmdSimpanKemaskini2" type="button" value="Kemaskini" onClick="javascript:simpanKemaskiniHA()"/>
                           #if($flag_kemaskini_selesai != "yes") 
                           <script>
@@ -1165,7 +1165,7 @@ document.getElementById("header_lama").style.display="block";
                             </tr>
                             <tr>
                               <td colspan="3"><i><font color="#ff0000">Perhatian</font> : Sila simpan pembahagian harta terlebih dahulu dan klik pada nama waris untuk melantik pemegang amanah / pentadbir bagi waris yang menerima bahagian.</i></td>
-                              <td align="center"> #if ($mode == 'update' && $userRole != "user_ppk")
+                              <td align="center"> #if ($mode == 'update')
                                 <input type="button" name="cmdSamakanPembawah" id="cmdSamakanPembawah" value="Samakan Pembawah" onClick="javascript:samakanPembawah()"/>
                                 #if($flag_kemaskini_selesai != "yes") 
                                 <script>
@@ -1184,7 +1184,7 @@ document.getElementById("header_lama").style.display="block";
                         <td>&nbsp;</td>
                       </tr>
                       <tr>
-                        <td colspan="2" align="center"> #if ($mode == 'update' && $userRole != "user_ppk")
+                        <td colspan="2" align="center"> #if ($mode == 'update')
                           <input type="button" name="cmdSimpanHTAPT" id="cmdSimpanHTAPT" value="Simpan" onClick="javascript:simpanKemaskiniHTAPT()"/>
                           #if($flag_kemaskini_selesai != "yes") 
                           <script>
@@ -1396,7 +1396,7 @@ document.getElementById("header_lama").style.display="block";
                         <td>&nbsp;</td>
                       </tr>
                       <tr>
-                        <td colspan="2" align="center"> #if ($mode == 'update' && $userRole != "user_ppk")
+                        <td colspan="2" align="center"> #if ($mode == 'update')
                           <input type="button" name="cmdSimpanHAPT1" id="cmdSimpanHAPT1" value="Simpan" onClick="javascript:simpanKemaskiniHAPT()"/>
                           #if($flag_kemaskini_selesai != "yes") 
                           <script>
@@ -1672,7 +1672,7 @@ document.getElementById("header_lama").style.display="block";
                       	#end
                       	 
                       #end-->
-                        <td align="center" colspan="2"> #if ($mode == 'update' && $userRole != "user_ppk")
+                        <td align="center" colspan="2"> #if ($mode == 'update')
                           #if ($modePopup == 'update')
                           <input name="cmdSimpanKemaskiniHTAPKT" id="cmdSimpanKemaskiniHTAPKT" type="button" value="Simpan" onClick="javascript:simpanKemaskiniHTAPKT()"/>
                           #if($flag_kemaskini_selesai != "yes") 
@@ -1832,7 +1832,7 @@ document.getElementById("header_lama").style.display="block";
                               <td>&nbsp;</td>
                             </tr>
                             <tr>
-                              <td align="center"> #if ($mode == 'update' && $userRole != "user_ppk")
+                              <td align="center"> #if ($mode == 'update')
                                 #if ($modePopup == 'update')
                                 <input name="cmdSimpanKemaskiniHAPKT"  id="cmdSimpanKemaskiniHAPKT" type="button" value="Simpan" onClick="javascript:simpanKemaskiniHAPKT()"/>
                                 #if($flag_kemaskini_selesai != "yes") 
@@ -1952,7 +1952,7 @@ document.getElementById("header_lama").style.display="block";
                       <tr>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
-                        <td colspan="2"> #if ($mode == 'update' && $userRole != "user_ppk")
+                        <td colspan="2"> #if ($mode == 'update')
                           #if ($modePopup == 'update')
                           <input name="cmdSimpanKemaskiniHTAPL" id="cmdSimpanKemaskiniHTAPL" type="button" value="Simpan" onClick="javascript:simpanKemaskiniHTAPL()"/>
                           #if($flag_kemaskini_selesai != "yes") 
@@ -2091,7 +2091,7 @@ document.getElementById("header_lama").style.display="block";
                       <tr>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>
-                        <td colspan="2"> #if ($mode == 'update' && $userRole != "user_ppk")
+                        <td colspan="2"> #if ($mode == 'update')
                           #if ($modePopup == 'update')
                           <input name="cmdSimpanKemaskiniHAPL" id="cmdSimpanKemaskiniHAPL"  type="button" value="Simpan" onClick="javascript:simpanKemaskiniHAPL()"/>
                           #if($flag_kemaskini_selesai != "yes") 
@@ -2240,7 +2240,7 @@ document.getElementById("header_lama").style.display="block";
                         <td>&nbsp;</td>
                       </tr>
                       <tr>
-                        <td colspan="2" align="center"> #if($mode == 'update' && $userRole != "user_ppk")
+                        <td colspan="2" align="center"> #if($mode == 'update')
                           <input name="cmdSimpanKemaskiniHTAPF" id="cmdSimpanKemaskiniHTAPF" type="button" value="Simpan" onClick="javascript:simpanKemaskiniHTAPF()"/>
                           #if($flag_kemaskini_selesai != "yes") 
                           <script>
@@ -2372,7 +2372,7 @@ document.getElementById("header_lama").style.display="block";
                         <td>&nbsp;</td>
                       </tr>
                       <tr>
-                        <td colspan="2" align="center"> #if($mode == 'update' && $userRole != "user_ppk")
+                        <td colspan="2" align="center"> #if($mode == 'update')
                           <input name="cmdSimpanKemaskiniHAPF" id="cmdSimpanKemaskiniHAPF" type="button" value="Simpan" onClick="javascript:simpanKemaskiniHAPF()"/>
                           #if($flag_kemaskini_selesai != "yes") 
                           <script>
@@ -2719,18 +2719,7 @@ document.getElementById("header_lama").style.display="block";
   
   <!-- END PEMBAHAGIAN HARTA --> 
   #end
-  <!-- arief add TANDATANGAN DIGITAL bagi PERINTAH OPEN -->
-  <tr>
-  	<td><a name="Tandatangan Digital Perintah"></a>
-    	<fieldset>
-        	<legend><strong> TANDATANGAN DIGITAL </strong></legend>
-      			<div class="TabbedPanelsContent"> <br/>
-    				#parse("/app/ppk/tindakanPegawaiPerintahSek8.jsp")
-      			</div>
-      	</fieldset>
-    </td>
-</tr>
-<!-- arief add TANDATANGAN DIGITAL bagi PERINTAH CLOSE -->
+  
 
   
   <tr>
@@ -3200,7 +3189,7 @@ function simpanBaruHTA(param) {
 		return; 
 	}
 	
-	if((document.${formName}.adaKIV.value == "1") && (document.${formName}.socJenisPerintahHTA.value == "2")){
+	if(((document.${formName}.adaKIV.value == "1") || (document.${formName}.adaKIV.value == "3")) && (document.${formName}.socJenisPerintahHTA.value == "2")){
 		alert('Fail ini mempunyai KIV. Perintah perlantikan pentadbir tidak dapat dilakukan. Sila pilih Jenis Perintah yang lain.');
   		document.${formName}.socJenisPerintahHTA.focus(); 
 		return; 
@@ -4435,33 +4424,4 @@ function popupEmailPerintah(idFail, idPerintah) {
 	hWnd.focus();	
 }	
 //arief add NOTIFIKASI EMAIL close
-</script>
-<script>
-//arief add Tandatangan Digital OPEN
-function sendDGcertPerintah(NO_FAIL,id_perbicaraan,idfail,id_permohonan,idpermohonansimati,idperintah){
-	var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCertPerintah?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&idperintah="+idperintah+"&commandw=sendDGCertPerintah";
-	var hWnd = window.open(url,'Cetak','width=625,height=400, resizable=no,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-    hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-}
-
-function verifyDGcertPerintah(NO_FAIL,id_perbicaraan,idfail,id_permohonan,idpermohonansimati,idperintah){
-    var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCertPerintah?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&idperintah="+idperintah+"&flagVersion=popupPNB&commandw=verify";
-	var hWnd = window.open(url,'Cetak','width=625,height=400, resizable=no,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-    hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-}
-//arief add Tandatangan Digital CLOSE
-
-/**List fail-fail Tandatangan Digital di Perintah:
-	1.	FrmPerintahSek8.java
-	2.	FrmPerintahMaklumatPerintahSek8.jsp
-	3.	tindakanPegawaiPerintahSek8.jsp
-	4.	FrmIntegrasiDGCertPerintah.java
-	5.	DGCertPerintah.jsp
-	6.	FrmPerintahSek8Data.java
-	7.	TandatanganSuccessPerintah.jsp
-*/
 </script>
