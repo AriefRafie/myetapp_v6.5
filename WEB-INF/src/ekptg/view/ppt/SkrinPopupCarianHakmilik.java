@@ -749,7 +749,15 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 					|| flag_skrin.equals("hakmilik_borangL")) {
 				sql += " Tblpptborangl LL, ";
 			}
-			if (!flag_skrin.equals("daftar_sek8_online") || !flag_skrin.equals("skrin_hakmilik_sek8_kjp")) {
+			
+			if (flag_skrin.equals("daftar_sek8_online") || flag_skrin.equals("skrin_hakmilik_sek8_kjp")) {
+				sql += " TBLPPTBORANGK K,  " ;
+				sql += " AND M.ID_PERMOHONAN = A.ID_PERMOHONAN ";
+				sql += " AND A.ID_PERMOHONAN = B.ID_PERMOHONAN(+)  ";
+				sql += " AND A.ID_PERMOHONAN = K.ID_PERMOHONAN(+) ";
+			}
+					
+			//if (!flag_skrin.equals("daftar_sek8_online") || !flag_skrin.equals("skrin_hakmilik_sek8_kjp")) {
 			sql += "TBLRUJLUAS LS, TBLRUJMUKIM MK, TBLRUJNEGERI N, TBLPPTHAKMILIK M, TBLRUJJENISHAKMILIK JH,  TBLRUJDAERAH D, USERS U, USERS_INTERNAL UI  "
 					+ " WHERE M.ID_PERMOHONAN = P.ID_PERMOHONAN  "
 					+ " AND M.ID_NEGERI = N.ID_NEGERI  "
@@ -765,29 +773,9 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 					+ " AND NVL(M.FLAG_PENARIKAN_KESELURUHAN,0) <> 'Y' "
 					+ " AND P.ID_MASUK = U.USER_ID(+) AND U.USER_ID = UI.USER_ID(+) ";
 			sql += " AND P.ID_PERMOHONAN = '" + id_permohonan + "' ";
-			}
+			//}
 			
-			if (flag_skrin.equals("daftar_sek8_online") || flag_skrin.equals("skrin_hakmilik_sek8_kjp")) {
-			sql += "TBLPPTPERMOHONAN A, TBLPPTSIASATAN B, TBLPPTBORANGG G, TBLRUJLUAS LS, TBLRUJMUKIM MK, TBLRUJNEGERI N, TBLPPTHAKMILIK M, TBLPPTBORANGK K, TBLRUJJENISHAKMILIK JH,  TBLRUJDAERAH D, USERS U, USERS_INTERNAL UI  "
-					+ " WHERE M.ID_PERMOHONAN = P.ID_PERMOHONAN  "
-					+ " AND M.ID_PERMOHONAN = A.ID_PERMOHONAN "
-					+ " AND A.ID_PERMOHONAN = B.ID_PERMOHONAN(+)  "
-					+ " AND A.ID_PERMOHONAN = K.ID_PERMOHONAN(+) "
-					+ " AND B.ID_SIASATAN = G.ID_SIASATAN(+) "
-					+ " AND M.ID_NEGERI = N.ID_NEGERI  "
-					+ " AND P.ID_FAIL = F.ID_FAIL  "
-					+ " AND M.ID_DAERAH = D.ID_DAERAH "
-					+ " AND TEMP_COUNTPB.ID_HAKMILIK(+) = M.ID_HAKMILIK "
-					+ " AND LS.ID_LUAS(+) = M.ID_UNITLUASLOT   "
-					+
-					// " AND M.ID_PEGAWAI = U.USER_ID(+) " +
-					" AND M.ID_JENISHAKMILIK = JH.ID_JENISHAKMILIK(+) "
-					+ " AND M.ID_LOT = LT.ID_LOT(+)  "
-					+ " AND M.ID_MUKIM = MK.ID_MUKIM(+)  AND NVL(M.FLAG_PEMBATALAN_KESELURUHAN,0) <> 'Y'   "
-					+ " AND NVL(M.FLAG_PENARIKAN_KESELURUHAN,0) <> 'Y' "
-					+ " AND P.ID_MASUK = U.USER_ID(+) AND U.USER_ID = UI.USER_ID(+) ";
-			sql += " AND P.ID_PERMOHONAN = '" + id_permohonan + "' ";
-			}
+		
 			/*
 			 * if(flag_skrin.equals("daftar_sementara") ||
 			 * flag_skrin.equals("senarai_siasatan_sementara") ||
