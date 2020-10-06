@@ -91,7 +91,7 @@ public class PendaftaranCheckModel {
 			
 
 				
-				if (rs.getInt("C_SIMATI") > 1) {
+				if (rs.getInt("C_SIMATI") > 0) {
 					System.out.println("MATI 2xxx:"+ rs.getString("C_SIMATI"));
 					a = true;
 					System.out.println("A = "+a);

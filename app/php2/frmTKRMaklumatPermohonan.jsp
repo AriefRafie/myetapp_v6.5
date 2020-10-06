@@ -59,7 +59,7 @@
           <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PEMOHON</li>
           <li onClick="doChangeTabUpper(4);" class="TabbedPanelsTab" tabindex="0">TANAH GANTI</li>
           <li onClick="doChangeTabUpper(5);" class="TabbedPanelsTab" tabindex="0">SENARAI SEMAK</li>
-          <li onClick="doChangeTabUpper(6);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT LAMPIRAN</li>
+          <!-- <li onClick="doChangeTabUpper(6);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT LAMPIRAN</li> -->
         </ul>
         <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent"> #if ($flagBorangK == 'Y') 
@@ -445,11 +445,11 @@
             #end 
           </div>
           
-          <div class="TabbedPanelsContent"> <br>
+          <!-- <div class="TabbedPanelsContent"> <br>
             #if($selectedTabUpper==6)
             	#parse("app/php2/frmTKRPelan.jsp")
             #end 
-          </div>
+          </div> -->
           
         </div>
       </div></td>
