@@ -794,14 +794,13 @@ public class FrmPYWSenaraiFailData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, A.NO_FAIL_NEGERI, B.TARIKH_TERIMA, C.NAMA, D.KETERANGAN, B.ID_STATUS, B.NO_SAMBUNGAN, G.FLAG_BUKA,"
-					+ " G.FLAG_MT, G.FLAG_PINDAAN, H.USER_NAME, G.FLAG_PEMBETULAN"
-					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, TBLPHPHAKMILIK F, TBLPHPLOGTUGASAN G, USERS H"
-					+ " WHERE A.ID_SEKSYEN = 4 AND A.ID_URUSAN IN (7,12,13) AND B.FLAG_PERJANJIAN = 'U' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS"
-					+ " AND E.ID_HAKMILIKPERMOHONAN = F.ID_HAKMILIKPERMOHONAN(+)"
+			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, A.NO_FAIL_NEGERI, B.TARIKH_TERIMA, C.NAMA, D.KETERANGAN, A.FLAG_JENIS_FAIL,"
+					+ " B.ID_STATUS, B.NO_SAMBUNGAN, G.FLAG_BUKA, G.FLAG_MT, G.FLAG_PINDAAN, H.USER_NAME, G.FLAG_PEMBETULAN, I.USER_NAME AS USER_DAFTAR"
+					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, TBLPHPHAKMILIK F, TBLPHPLOGTUGASAN G, USERS H, USERS I"
+					+ " WHERE A.ID_SEKSYEN = 4 AND A.ID_URUSAN IN (7,12,13) AND B.FLAG_PERJANJIAN = 'U'"
+					+ " AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS AND E.ID_HAKMILIKPERMOHONAN = F.ID_HAKMILIKPERMOHONAN(+)"
 					+ " AND B.ID_PEMOHON = C.ID_PEMOHON AND B.ID_PERMOHONAN = E.ID_PERMOHONAN AND B.FLAG_AKTIF = 'Y' AND A.NO_FAIL IS NOT NULL"
-					+ " AND A.ID_MASUK = H.USER_ID(+)"
-					+ " AND E.FLAG_HAKMILIK = 'U'";
+					+ " AND A.ID_MASUK = H.USER_ID(+) AND A.ID_KEMASKINI = I.USER_ID(+) AND E.FLAG_HAKMILIK = 'U'";
 
 			// SENARAI TUGASAN
 			if ("(PHP)PYWPenolongPegawaiTanahNegeri".equals(userRole)
@@ -983,11 +982,16 @@ public class FrmPYWSenaraiFailData {
 				h.put("flagPembetulan", rs.getString("FLAG_PEMBETULAN") == null ? ""
 						: rs.getString("FLAG_PEMBETULAN"));
 				h.put("userLogin",
-						rs.getString("USER_NAME") == null ? "" : rs
-								.getString("USER_NAME"));
+							rs.getString("USER_NAME") == null ? "" : rs
+									.getString("USER_NAME"));
+				h.put("userDaftar",
+						rs.getString("USER_DAFTAR") == null ? "" : rs
+								.getString("USER_DAFTAR"));
+				h.put("flagJenisFail",
+						rs.getString("FLAG_JENIS_FAIL") == null ? "" : rs
+								.getString("FLAG_JENIS_FAIL"));
 				senaraiFail.addElement(h);
 				bil++;
-
 			}
 
 		} finally {

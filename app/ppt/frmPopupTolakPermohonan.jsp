@@ -53,8 +53,13 @@
 					<input type="button" name="cmdBatal" value ="Batal" onClick="javascript:batalKemaskini('$!id_permohonan','$jenisTolak')">
 					#end
 				#end
-			
+				
+				#if($modul=="php")
+					<input type="button" name="cmdKembali" value ="Sila Meninggal" onClick="javascript:kembaliDashboardPhp()">
+				#else
 					<input type="button" name="cmdKembali" value ="Kembali" onClick="javascript:kembaliScreenUtama('$!id_permohonan','$jenisTolak')">
+				#end
+				
 			</td>
 		</tr>
 	</table>
@@ -64,6 +69,7 @@
 <!-- START HIDDEN VALUE -->
 	<!-- Main Id -->
 <input type="hidden" name="id_permohonan" value="$!id_permohonan">
+<input type="hidden" name="modul" value="$!modul">
 <input type="hidden" name="formnew">
 	<!-- Others -->
 <input type="hidden" name="command2">
@@ -72,6 +78,7 @@
 <!-- START MAIN JAVASCRIPT -->
 <script>
 function kembaliScreenUtama(id_permohonan,jenisTolak) {
+alert("aaa :");
 	if(jenisTolak=="internal"){
 		window.opener.kembaliScreenUtama(id_permohonan);
 	}else if(jenisTolak=="pelulus"){
@@ -81,6 +88,13 @@ function kembaliScreenUtama(id_permohonan,jenisTolak) {
 	}
 	window.close();
 
+}
+
+function kembaliDashboardPhp(){
+	if ( !window.confirm("Adakah Anda Pasti?") ){
+			return;
+	}
+	window.close();
 }
 
 function batalKemaskini(id_permohonan,jenisTolak) {

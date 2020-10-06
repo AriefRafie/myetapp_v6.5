@@ -38,6 +38,13 @@
 		          <td class="$row" width="15%">$!list.lampirans</td>
 		        </tr>
 		    #end      
+		    #if ($mode == 'new')
+		      	<tr class="$row">
+		          <td class="$row" width="3%"></td>
+		          <td class="$row" width="82%">$i. $list.keterangan</td>
+		          <td class="$row" width="15%">$!list.lampirans</td>
+		        </tr>
+		    #end      
 	    	#end
 	    	#else
 	    	<tr>
@@ -65,7 +72,6 @@
       					<input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
       				#end
       		#end
-      		<input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
       #end
       #if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
       		<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>

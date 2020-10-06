@@ -162,7 +162,7 @@
 										<td>:</td>
 										<td><select name="socKadarSewa" id="socKadarSewa"
 											style="width: 145px;" $readonlyPopup class="$inputTextClassPopup"
-											onchange="javascript:doChangeJenisKadarSewa(this.value)" $disabled>
+											onchange="javascript:doChangeJenisKadarSewa(this.value)">
 											#if ($beanMaklumatJPPH.jenisKadarSewa == 'B')
 												<option>SILA PILIH</option>
 												<option value="B" selected="selected">BULANAN</option>

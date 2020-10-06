@@ -34,7 +34,5 @@ public interface ITanahCarian{
 			, String idStatus) throws Exception ;
 	
 	public Hashtable<String, String> getCarianHakmilikRizab(String idHakmilik) throws Exception ;
-
 	
-	
-}	
+}	//close here

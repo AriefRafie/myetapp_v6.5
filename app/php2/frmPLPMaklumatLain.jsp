@@ -129,7 +129,8 @@
 <script>
 function kemaskiniMaklumatLain() {
 	document.${formName}.mode.value = "update";
-	doAjaxCall${formName}("");
+	//doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function simpanKemaskiniMaklumatLain() {
 	if(document.${formName}.txtJalanHubungan.value == ""){
@@ -154,10 +155,12 @@ function simpanKemaskiniMaklumatLain() {
 	}
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "simpanKemaskiniMaklumatLain";
-	doAjaxCall${formName}("");
+	//doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function batalKemaskiniMaklumatLain() {
 	document.${formName}.mode.value = "view";
+	//document.${formName}.submit();
 	document.${formName}.submit();
 }
 </script>
