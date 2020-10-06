@@ -73,6 +73,7 @@
           <td width="11%"><strong>Tarikh Mesyuarat</strong></td>
           <td width="20%"><strong>Lokasi</strong></td>
           <td width="13%"><strong>Status Mesyuarat</strong></td>
+          <td width="13%"><strong></strong></td>
           
         </tr>
         #set ($list = "")
@@ -92,6 +93,8 @@
           <td class="$row" align="center">$list.tarikhMesyuarat</td>
           <td class="$row" align="center">$list.lokasiMesyuarat</td>
           <td class="$row" align="center">$list.statusMesyuarat</td>
+          <td class="$row" align="center"><a href="#" class="style2" onClick="javascript:paparLaporanMesyuarat('$list.idMesyuarat')">
+          <img border="0" src="../img/print.gif"/></a></td>
         </tr>
         #end
         #else
@@ -162,5 +165,15 @@ function daftarBaruMesyuarat(){
 	document.${formName}.actionMesyuarat.value = "daftarBaru";
 	document.${formName}.mode.value = "new";
 	document.${formName}.submit();
+}
+function paparLaporanMesyuarat(idMesyuarat) {
+	//var url = "../x/${securityToken}/ekptg.view.php2.PYWRingkasanKeputusanMesyuarat?idMesyuarat="+idMesyuarat;
+	//var url = "../servlet/ekptg.report.php2.APNRingkasanKeputusanMesyuarat?idMesyuarat="+idMesyuarat;
+	var url = "../servlet/ekptg.report.php2.PYWRingkasanKeputusanMesyuarat?idMesyuarat="+idMesyuarat;
+	var hWnd = window.open(url,'printuser','width=1100,height=430, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
 }
 </script>

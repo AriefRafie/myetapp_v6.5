@@ -24,20 +24,20 @@ public class BorangE extends EkptgReportServlet {
 			HttpServletResponse response, ServletContext context, Map parameters)
 			throws Exception {
 	
-		String masa_siasatan = "";
+		String masa_siasatan_awal = "";
 	
-		if (parameters.get("masa_siasatan") != null || parameters.get("masa_siasatan") != ""){
-			masa_siasatan = (String)parameters.get("masa_siasatan");
+		if (parameters.get("masa_siasatan_awal") != null || parameters.get("masa_siasatan_awal") != ""){
+			masa_siasatan_awal = (String)parameters.get("masa_siasatan_awal");
 		}
 		else {
-			masa_siasatan = null;
+			masa_siasatan_awal = null;
 		}
 		
-		if(masa_siasatan.isEmpty()) {
+		if(masa_siasatan_awal.isEmpty()) {
 			super.setReportName("Borang E");
 		}
 		
-		else if(masa_siasatan != null || masa_siasatan != ""){
+		else if(masa_siasatan_awal != null || masa_siasatan_awal != ""){
 			super.setReportName("Borang E Perlis");
 		}
 	}

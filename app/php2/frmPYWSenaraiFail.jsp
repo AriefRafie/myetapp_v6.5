@@ -173,9 +173,9 @@
           <td class="$row">$list.namaPemohon</td>
           <td class="$row" align="center">$list.tarikhTerima</td>
           <td class="$row">$list.status</td>
-          #if($list.flagJenisFail == '1')
+          #if($list.flagJenisFail != '4')
           <td class="$row">$list.userLogin</td>
-          #elseif($list.flagJenisFail == '4')
+          #else
           <td class="$row">$list.userDaftar</td>
           #end
         </tr>

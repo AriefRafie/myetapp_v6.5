@@ -16,7 +16,6 @@ import org.apache.log4j.Logger;
 import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
 import ekptg.model.entities.Tblpermohonan;
-import ekptg.model.entities.Tblphppermohonansewa;
 import ekptg.model.entities.Tblrujsuburusanstatusfail;
 import ekptg.model.htp.HtpBean;
 import ekptg.model.htp.IHtp;

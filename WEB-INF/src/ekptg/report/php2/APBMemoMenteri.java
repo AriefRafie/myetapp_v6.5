@@ -11,7 +11,7 @@ import ekptg.report.EkptgReportServlet;
 public class APBMemoMenteri extends EkptgReportServlet {
 
 	public APBMemoMenteri() {
-		super.setReportName("APBMemoMenteri");
+		super.setReportName("APBBorang2Perenggan4");
 		super.setFolderName("php2\\APB");
 	}
 
