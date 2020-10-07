@@ -43,7 +43,7 @@
           </td>
         </tr>
         <tr>
-          <td width="30%" height="24" scope="row" align="right">No Siri Perjanjian : </td>
+          <td width="30%" height="24" scope="row" align="right">No. Siri Perjanjian : </td>
           <td width="70%"><input name="txtNoRujukan" id="txtNoRujukan" type="text" value="$txtNoRujukan" size="50" maxlength="50" style="text-transform:uppercase;">
           </td>
         </tr>
@@ -52,7 +52,7 @@
           <td>$selectBankC</td>
         </tr>
         <tr>
-          <td width="30%" height="24" scope="row" align="right">No Cek : </td>
+          <td width="30%" height="24" scope="row" align="right">No. Cek : </td>
           <td width="70%"><input name="txtNoCek" id="txtNoCek" type="text" value="$txtNoCek" size="50" maxlength="50" style="text-transform:uppercase;">
           </td>
         </tr>
@@ -82,7 +82,7 @@
         </tr>
         #if($flagDetail == 'buka')
         <tr>
-          <td scope="row" align="right">No Pegangan Hakmilik :</td>
+          <td scope="row" align="right">No. Pegangan Hakmilik :</td>
           <td><input name="txtNoPegangan" id="txtNoPegangan" type="text" value="$txtNoPegangan" size="30" maxlength="50"/></td>
         </tr>
         <tr>
@@ -90,11 +90,11 @@
           <td>$selectJenisHakmilik</td>
         </tr>
         <tr>
-          <td scope="row" align="right"> No Hakmilik :</td>
+          <td scope="row" align="right"> No. Hakmilik :</td>
           <td><input name="txtNoHakmilik" id="txtNoHakmilik" type="text" value="$txtNoHakmilik" size="30" maxlength="50" /></td>
         </tr>
         <tr>
-          <td scope="row" align="right"> No Warta :</td>
+          <td scope="row" align="right"> No. Warta :</td>
           <td><input name="txtNoWarta" id="txtNoWarta" type="text" value="$txtNoWarta" size="30" maxlength="50"/></td>
         </tr>
         <tr>
