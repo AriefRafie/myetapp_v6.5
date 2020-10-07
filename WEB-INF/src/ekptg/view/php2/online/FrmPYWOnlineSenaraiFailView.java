@@ -85,7 +85,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 		String idTujuanPermohonan = getParam("idTujuanPermohonan");
 		String idPermohonanLama = getParam("idPermohonan");
         String kategori = getParam("kategori");
-        String tujuanLain = getParam("tujuanLain");
+        String tujuanLain = getParam("tujuan");
 		String mode = getParam("mode");
         if (mode.isEmpty()){
         	mode = "view";
@@ -260,7 +260,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
     			this.context.put("BeanMaklumatSewa", beanMaklumatSewa);
     			if (beanMaklumatSewa.size() != 0){
         			Hashtable hashMaklumatSewa = (Hashtable) logic.getBeanMaklumatSewa().get(0);
-        			tujuanLain = (String)(hashMaklumatSewa.get("tujuanLain"));
+        			String txtTujuanLain = (String)(hashMaklumatSewa.get("tujuanLain"));
         			idPermohonanSewa = (String)(hashMaklumatSewa.get("idPermohonanSewa"));
         			idTujuanPermohonan = (String)(hashMaklumatSewa.get("idTujuanPermohonan"));
         			idUrusan = (String)(hashMaklumatSewa.get("idUrusan"));

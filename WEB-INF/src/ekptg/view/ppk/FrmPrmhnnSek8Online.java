@@ -106,7 +106,7 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 		String mode = getParam("mode");
 		String idAlert = getParam("idAlert");
 		String action = getParam("action");
-
+		myLogger.info("submit:" + submit);
 		System.out.println("submit:" + submit);
 		System.out.println("mode:" + mode);
 
@@ -477,8 +477,8 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 
 				// System.out.print("list2:" + list2);
 				if (list2.size() > 0) {
-					Hashtable h = (Hashtable) list2.get(0);
-					if (h.get("noFail").toString() != "") {
+					Hashtable i = (Hashtable) list2.get(0);
+					if (i.get("noFail").toString() != "") {
 						this.context.put("nofail", "yes");
 					}
 
@@ -509,9 +509,12 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 			this.context.put("EventStatus", eventstatus);
 			simpanStatus = 1;
 			this.context.put("SimpanStatus", simpanStatus);
-
+			myLogger.info("idPermohonan = "+idPermohonan);
 			this.context.put("IdPermohonan", idPermohonan);
 
+			
+			//cari dokumen ic pemohon
+			//logic_C.setDataSemakanICPemohon(idPermohonan,idPemohon);
 			// listSemak2.clear();
 			// FrmPrmhnnSek8SenaraiSemakOnlineData frm = new
 			// FrmPrmhnnSek8SenaraiSemakOnlineData();
@@ -527,8 +530,8 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 			headerppk_baru(session, getParam("idtemp"), "Y", "", "T");
 
 			if (list2.size() > 0) {
-				Hashtable h = (Hashtable) list2.get(0);
-				if (h.get("noFail").toString() != "") {
+				Hashtable i = (Hashtable) list2.get(0);
+				if (i.get("noFail").toString() != "") {
 					this.context.put("nofail", "yes");
 				}
 			}
@@ -542,6 +545,12 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 
 			// System.out.print("list2:" + list2);
 			this.context.put("daftar", "yes");
+			
+			Vector ll_mati = null;
+			logic.setDataSijilMati(getParam("idpermohonan"));
+			ll_mati = logic.getDataSijilMati();
+			myLogger.info("ll_mati");
+			this.context.put("listsijilmati", ll_mati);
 
 			vm = "app/ppk/frmPraPrmhnnSek8SenaraiSemak.jsp";
 
@@ -882,10 +891,10 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 			logic.setDataPemohonOB(idpp);
 			listPemohonOB = logic.getDataPemohonOB();
 			this.context.put("listPemohonOB", listPemohonOB);
-			
+			/*
 			logic_A.setSupportingDoc(idpp, "99201");
 			listSupportingDoc = logic_A.setSupportingDoc(idpp, "99201");
-			this.context.put("ViewSupportingDoc", listSupportingDoc);
+			this.context.put("ViewSupportingDoc", listSupportingDoc);*/
 			
 			vm = "app/ppk/frmPraPrmhnnSek8DaftarSek8.jsp";
 
@@ -1133,13 +1142,14 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 			String sel_jeniskp_simati = getParam("socJenisKPLainSimati");
 			String no_kplain_simati = getParam("txtNoKPLainSimati");
 
-			if (logic_F.checkKPSimati(idppp, no_kpbaru_simati,
+			/*if (logic_F.checkKPSimati(idppp, no_kpbaru_simati,
 					no_kplama_simati, no_kplain_simati) == true) {
+				myLogger.info("checkKPSimati=true");
 
-				/*
+				
 				 * view1 = logic_A.getJenisKp(); this.context.put("listkp",
 				 * view1);
-				 */
+				 
 
 				this.context.put("tarikhmohon", currentDate);
 				int evenstatus = 0;
@@ -1233,9 +1243,12 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 				this.context.put("IdPermohonan", getParam("idPermohonan"));
 
 				this.context.put("duplicate", "yes");
-
-			} else {
+*/
+			//} else {
+				myLogger.info("else");
+				bolehsimpan = "yes";
 				if (bolehsimpan.equals("yes")) {
+					myLogger.info("bolehsimpan = yes");
 					updatePermohonan(session, userIdNeg, userIdPejabat,
 							userIdKodDaerah, userIdKodNegeri, id_Daerah);
 				}
@@ -1295,7 +1308,7 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 				this.context.put("", "");
 				this.context.put("tarikhmohon", tarikhMohonm);
 
-			}
+			//}
 			String ido = getParam("idPermohonan");
 			logic_A.setDataFail(ido);
 			listFail = logic_A.getDataFail();

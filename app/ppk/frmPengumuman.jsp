@@ -9,7 +9,7 @@
 }
 </style>
 
-<marquee onmouseover='this.stop();' onmouseout='this.start();' height="280"  direction="up"  scrollamount="2">
+<marquee onmouseover='this.stop();' onmouseout='this.start();' height="240"  direction="up"  scrollamount="2">
 
 
 #foreach ( $fail in $list_memo_aktif )

@@ -68,6 +68,34 @@ tr.tr_class td {
 				</select>
       			</td>
     		</tr>
+    		<tr>
+      			<td align="left">Akses Skrin Keputusan Perbicaraan : </td>
+      			<td width="15%" align="left">
+      			<select name="flagAksesKepBicara" id="flagAksesKepBicara" $disabled>
+      			<#if ($AKSES_SKRIN_KEPBICARA == "T")
+ 					 <option value="T" selected>True</option>
+ 					 <option value="F">False</option>
+ 				#else
+ 					 <option value="T">True</option>
+ 					 <option value="F" selected>False</option>
+ 				#end
+				</select>
+      			</td>
+    		</tr>
+    		<tr>
+      			<td align="left">PT boleh kemaskini Perintah : </td>
+      			<td width="15%" align="left">
+      			<select name="flagKemaskiniPerintahPT" id="flagKemaskiniPerintahPT" $disabled>
+      			<#if ($FLAG_KEMASKINIPERINTAH_PT == "T")
+ 					 <option value="T" selected>True</option>
+ 					 <option value="F">False</option>
+ 				#else
+ 					 <option value="T">True</option>
+ 					 <option value="F" selected>False</option>
+ 				#end
+				</select>
+      			</td>
+    		</tr>
     		
     		<tr>
     		

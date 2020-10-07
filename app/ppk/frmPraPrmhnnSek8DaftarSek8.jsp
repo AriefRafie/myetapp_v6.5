@@ -223,14 +223,7 @@
 #end
 
 
-#if ($duplicate == "yes")
-<script type="text/javascript">
-	//window.location="?_portal_module=ekptg.view.ppk.FrmPrmhnnSek8SenaraiSemakInternal";	
-	alert("Minta maaf. No KP Simati telah wujud.")
-	
-	
-</script>
-#end
+
 <body onLoad="submitForm();calcDate();check_kp();check_kp_lama();check_kp_lain();check_pengenalan_simati_1_onload();check_pengenalan_simati_2_onload();check_pengenalan_simati_3_onload();pilih_taraf();check_kp_pemohon_onload();selectPelbagaiNegara('$negeri','div_mesejpelbagagainegara','tr_pelbagainegara','nama_pelbagainegara');">
 
 
@@ -2462,13 +2455,19 @@ function checkSumaICsimati(command)
       		alert("Sila pastikan tarikh mati tidak melebihi dari tarikh mohon.");	 
       		document.f1.txtTarikhMati.focus();
    		
-   		} else if(document.f1.no_kp1.value == 'yes'){
+   		} 
+		//comment kat bawah ni
+		/*
+   		else if(document.f1.no_kp1.value == 'yes'){
 			alert("No kp baru simati telah wujud!");	 
 		//} else if(document.f1.no_kp2.value == 'yes'){
 		//	alert("No kp lama simati telah wujud!");	 
-		}else if(document.f1.no_kp3.value == 'yes'){
-			alert("No kp lain simati telah wujud!");	 
 		}
+		else if(document.f1.no_kp3.value == 'yes'){
+			alert("No kp lain simati telah wujud!");	
+			
+		}
+		*/
 
 		   /* else if(document.f1.no_kp1 != null && document.f1.no_kp1.value == 'yes')
 		   {
