@@ -95,7 +95,7 @@
         </tr>
         #if($flagDetail == 'buka')
         <tr style="display:none">
-          <td scope="row" align="right">No Pegangan Hakmilik :</td>
+          <td scope="row" align="right">No. Pegangan Hakmilik :</td>
           <td><input name="txtNoPegangan" id="txtNoPegangan" type="text" value="$txtNoPegangan" size="30" maxlength="50"/></td>
         </tr>
         <tr style="display:none">
@@ -107,7 +107,7 @@
           <td>$selectLot</td>
         </tr>
         <tr>
-          <td scope="row" align="right">No Lot :</td>
+          <td scope="row" align="right">No. Lot :</td>
           <td><input name="txtNoLot" id="txtNoLot" type="text" value="$txtNoLot" size="30" maxlength="50"/></td>
         </tr>
         <tr>
