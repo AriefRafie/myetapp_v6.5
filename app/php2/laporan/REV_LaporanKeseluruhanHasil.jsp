@@ -113,9 +113,9 @@ function janaLaporan() {
 	} 
 	else if (idKategori == '2') {
 		bulan = document.${formName}.socBulan.value;
-		tahun = document.${formName}.socTahun.value;
+		tahun = document.${formName}.tahun.value;
 		var bulanSE = document.${formName}.socBulanHingga.value;
-		var tahunSE = document.${formName}.socTahunHingga.value;
+		var tahunSE = document.${formName}.tahunHingga.value;
 		var bulantahun = bulan+"/"+tahun;
 		var bulantahunSE = bulanSE+"/"+tahunSE;
 		
@@ -146,7 +146,6 @@ function janaLaporan() {
 	
 	} else if (idKategori == '3') {
 		tahun = document.${formName}.tahun.value;
-		alert("1");
 		//tahunHingga = document.${formName}.tahunHingga.value;
 		var tahunSE = document.${formName}.tahunHingga.value;
 		if(tahun == ""){
