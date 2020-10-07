@@ -99,14 +99,14 @@ function toggle_div(id) {
 							  <td width="15%">Negeri</td>
 							  <td width="1%">:</td>
 							  <td width="73%">$selectNegeri
-								<input type="text" name="idNegeriTanah" id="idNegeriTanah" value="$idNegeriTanah" />
+								<input type="hidden" name="idNegeriTanah" id="idNegeriTanah" value="$idNegeriTanah" />
 							</tr>
 							<tr>
 							  <td>&nbsp;</td>
 							  <td>Daerah</td>
 							  <td>:</td>
 							  <td>$selectDaerah
-								<input type="text" name="idDaerahTanah" id="idDaerahTanah" value="$idDaerahTanah" />
+								<input type="hidden" name="idDaerahTanah" id="idDaerahTanah" value="$idDaerahTanah" />
 							  </td>
 							</tr>
 							<tr>
@@ -114,7 +114,7 @@ function toggle_div(id) {
 							  <td>Mukim</td>
 							  <td>:</td>
 							  <td>$selectMukim
-								<input type="text" name="idMukimTanah" id="idMukimTanah" value="$idMukimTanah" /></td>
+								<input type="hidden" name="idMukimTanah" id="idMukimTanah" value="$idMukimTanah" /></td>
 							</tr>
 							<tr>
 							  <td>&nbsp;</td>
@@ -128,7 +128,7 @@ function toggle_div(id) {
 							  <td>Jenis Hakmilik</td>
 							  <td>:</td>
 							  <td>$selectJenisHakmilik
-							  	<input type="text" name="idJenisHakmilikTanah" id="idJenisHakmilikTanah" value="$idJenisHakmilikTanah" />
+							  	<input type="hidden" name="idJenisHakmilikTanah" id="idJenisHakmilikTanah" value="$idJenisHakmilikTanah" />
 							  </td>
 							</tr>
 							<tr>
@@ -136,7 +136,7 @@ function toggle_div(id) {
 							  <td>No. Hakmilik</td>
 							  <td>:</td>
 							  <td>
-							  	<input type="text" class="$inputTextClass" name="nohakmilikTanah" id="nohakmilikTanah" value="$nohakmilikTanah" size="43" maxlength="80" $readonly onblur="this.value=this.value.toUpperCase();"/>
+							  	<input type="text" class="$inputTextClass" name="nohakmilikTanah" id="nohakmilikTanah" value="$!nohakmilikTanah" size="43" maxlength="80" $readonly onblur="this.value=this.value.toUpperCase();"/>
 							  </td>
 							</tr>
 							<tr>
@@ -152,7 +152,7 @@ function toggle_div(id) {
 							  <td>No. PT/ LOT</td>
 							  <td>:</td>
 							  <td>
-								<input type="text" class="$inputTextClass" name="nolotTanah" id="nolotTanah" value="$nolotTanah" size="43" maxlength="80" $readonly/>
+								<input type="text" class="$inputTextClass" name="nolotTanah" id="nolotTanah" value="$!nolotTanah" size="43" maxlength="80" $readonly/>
 							   </td>
 							</tr>
 					</table>

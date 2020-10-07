@@ -69,8 +69,6 @@ public class AduanTanah extends AjaxModule {
 	Db db1 = null;
 	List aduanDetails = null;
 
-
-
 	@Override
 	public String doAction() throws Exception {
 		HttpSession session = request.getSession();
@@ -161,7 +159,7 @@ public class AduanTanah extends AjaxModule {
 			vm = PATH+"index.jsp";
 			displayComplaint();
 		}
-		System.out.println("<<<command>>"+command);
+		myLog.info("<<<command>>"+command);
 
 		getProsesStatus();
 		return vm;
@@ -182,9 +180,11 @@ public class AduanTanah extends AjaxModule {
 		this.context.put("selectDaerah", HTML.SelectDaerahByIdNegeri(idNegeri, "socDaerahTanah", Long.parseLong(idDaerahTanah), "", "onChange=\"doChangeDaerahTanah();\""));
 		this.context.put("selectMukim", HTML.SelectMukimNoKodByDaerah(idDaerahTanah, "socMukimTanah", Long.parseLong(idMukimTanah), "", "onChange=\"doChangeMukimTanah();\""));
 		this.context.put("selectSeksyen", getPilihan().Pilihan("socSeksyen", "",idMukimTanah));
+		this.context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("socJenisHakmilik", Long.parseLong(idJenisHakmilik), "", ""));
+		this.context.put("selectJenisLot", HTML.SelectLot("socJenisLot", Long.parseLong(idJenisLot), "", ""));
 
-		this.context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("socJenisHakmilik", Long.parseLong(idJenisHakmilik), "", "onChange=\"doChangeJenisHakmilik();\""));
-		this.context.put("selectJenisLot", HTML.SelectLot("socJenisLot", Long.parseLong(idJenisLot), "", "onChange=\"doChangeJenisLot();\""));
+//		this.context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("socJenisHakmilik", Long.parseLong(idJenisHakmilik), "", "onChange=\"doChangeJenisHakmilik();\""));
+//		this.context.put("selectJenisLot", HTML.SelectLot("socJenisLot", Long.parseLong(idJenisLot), "", "onChange=\"doChangeJenisLot();\""));
 
 		myLog.info("getSelectedVal idNegeri>>>> "+idNegeri);
 		myLog.info("getSelectedVal idJenisHakmilik>>>> "+idJenisHakmilik);
@@ -415,10 +415,10 @@ public class AduanTanah extends AjaxModule {
 	}
 	private void viewComplaint()throws Exception{
 		String idRespon = getParam("idRespon");
-		System.out.println("idRespon >>>> "+idRespon);
+		myLog.info("idRespon >>>> "+idRespon);
 		ComplaintResponse response =  getRespone().getResponse(idRespon);
 
-		System.out.println("response >>>> "+response);
+		myLog.info("response >>>> "+response);
 		context.put("response",response);
 		Complaint complaint = getHandler().getComplaint(String.valueOf(idRespon));
 		context.put("complaint", complaint);
@@ -435,7 +435,7 @@ public class AduanTanah extends AjaxModule {
 			if (db != null)
 				db.close();
 		}
-		System.out.println("aduanDetails >>> "+ aduanDetails);
+		myLog.info("aduanDetails >>> "+ aduanDetails);
 		context.put("tanah", aduanDetails);
 		context.put("editable", false);
 
