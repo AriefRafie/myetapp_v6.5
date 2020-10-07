@@ -62,10 +62,10 @@ public class FrmPLPHeaderData {
 						.getString("NO_FAIL_NEGERI").toUpperCase());
 				
 				if(rs.getString("TAJUK_FAIL").contains("TANAH MILIK")) {
-					h.put("subUrusan", "PELEPASAN");
+					h.put("subUrusan", "PENYERAHAN BALIK");
 					
 				} else if(rs.getString("TAJUK_FAIL").contains("TANAH RIZAB")) {
-					h.put("subUrusan", "PENYERAHAN BALIK");
+					h.put("subUrusan", "PELEPASAN");
 					
 				}
 				h.put("idPermohonan",
