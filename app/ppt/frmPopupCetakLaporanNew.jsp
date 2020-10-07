@@ -1,4 +1,4 @@
-
+XXX
 <!--  <style>
 body{
 background: #f4eff4 !important;
@@ -75,8 +75,8 @@ background: #f4eff4 !important;
    <input name="token" type="hidden" id="token" value="$token"/>
   
                
-#if($token != "" && ($report == 'BorangE' || $report == 'BorangF' || $report == 'BorangG' || $report == 'BorangH' 
-|| $report == 'BorangJ' || $report == 'BorangK' || $report == 'BorangL' || $report == 'BorangLB' || $report == 'BorangLC') )
+#if(($token != "" && ($report == 'BorangE' || $report == 'BorangF' || $report == 'BorangG' || $report == 'BorangH' 
+|| $report == 'BorangJ' || $report == 'BorangK' || $report == 'BorangL' || $report == 'BorangLB' || $report == 'BorangLC') ) || $report =='BorangA')
     	<fieldset><legend><strong>Cetakan Laporan</strong></legend>
         	<table width="100%" border="0" cellspacing="2" cellpadding="2" margin="10px">
         	
@@ -313,13 +313,20 @@ background: #f4eff4 !important;
                	<td valign="top">Waktu Siasatan</td>
                	<td valign="top">:</td>
                	<td valign="top">
-               		<input type="text" id="masa_siasatan" name="masa_siasatan" value="" style="width:50px"/>
+               		<input type="text" id="masa_siasatan_awal" name="masa_siasatan_awal" value="" style="width:50px"/>
                		<select name="$!statusBL" style="width:90px">
       					<option value="" #if($!listTanah.jenis_pilih=="") selected=selected #end >Sila Pilih</option>	
 			      		<option value="1" #if($!listTanah.jenis_pilih=="1") selected=selected #end>PAGI</option>
 			      		<option value="2" #if($!listTanah.jenis_pilih=="2") selected=selected #end>TENGAH HARI</option>	
 			      		<option value="3" #if($!listTanah.jenis_pilih=="3") selected=selected #end>PETANG</option>	
-			      	</select> 
+			      	</select> Hingga 
+			      	<input type="text" id="masa_siasatan_akhir" name="masa_siasatan_akhir" value="" style="width:50px"/>
+               		<select name="$!statusBL" style="width:90px">
+      					<option value="" #if($!listTanah.jenis_pilih=="") selected=selected #end >Sila Pilih</option>	
+			      		<option value="1" #if($!listTanah.jenis_pilih=="1") selected=selected #end>PAGI</option>
+			      		<option value="2" #if($!listTanah.jenis_pilih=="2") selected=selected #end>TENGAH HARI</option>	
+			      		<option value="3" #if($!listTanah.jenis_pilih=="3") selected=selected #end>PETANG</option>	
+			      	</select>
                </tr>
                #end
                
