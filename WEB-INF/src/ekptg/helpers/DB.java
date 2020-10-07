@@ -1020,7 +1020,7 @@ public class DB extends EkptgCache implements Serializable {
 				r.add("id_suburusan");
 				r.add("kod_suburusan");
 				r.add("nama_suburusan");
-				//r.add("flag_aktif","1");
+				r.add("flag_aktif","1");
 				r.add("id_urusan", Integer.parseInt(idUrusan));
 				v = new Vector<Tblrujsuburusan>();
 				sql = r.getSQLSelect("tblrujsuburusan", "nama_suburusan ASC");
