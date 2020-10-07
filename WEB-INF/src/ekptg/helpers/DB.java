@@ -2890,7 +2890,7 @@ public class DB extends EkptgCache implements Serializable {
 			if (db != null)
 				db.close();
 		}
-		
+
 	}
 
 	public static Vector<Tblrujjenisnopb> getRujJenisNoPBIndividu() throws Exception {
@@ -3381,6 +3381,58 @@ public class DB extends EkptgCache implements Serializable {
 				db.close();
 		}
 
+	}
+
+	public static Vector<Tblrujpejabatjkptg> getPejabatJKPTGN() throws Exception {
+		Db db = null;
+		String sql = "Select id_pejabatjkptg,nama_pejabat,alamat1 from tblrujpejabatjkptg";
+		sql += " where id_seksyen = 3 and id_jenispejabat = 22";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector<Tblrujpejabatjkptg> v = new Vector<Tblrujpejabatjkptg>();
+			Tblrujpejabatjkptg s = null;
+			while (rs.next()) {
+				s = new Tblrujpejabatjkptg();
+				s.setIdPejabatjkptg(rs.getLong(1));
+				s.setNamaPejabat(Utils.isNull(rs.getString(2)));
+				s.setAlamat1(Utils.isNull(rs.getString(3)));
+
+				v.addElement(s);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
+	public static Vector<Tblrujpejabat> getPejabatJTG() throws Exception {
+		Db db = null;
+		String sql = "Select id_pejabatjkptg,nama_pejabat,alamat1 from tblrujpejabat";
+		sql += " where id_seksyen = 1 and id_jenispejabat = 1";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector<Tblrujpejabat> v = new Vector<Tblrujpejabat>();
+			Tblrujpejabat s = null;
+			while (rs.next()) {
+				s = new Tblrujpejabat();
+				s.setIdPejabat(rs.getLong(1));
+				s.setNamaPejabat(Utils.isNull(rs.getString(2)));
+				s.setAlamat1(Utils.isNull(rs.getString(3)));
+
+				v.addElement(s);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
 	}
 
 	public static Vector<Tblpdtrujdokumenpekeliling> getKategoriPekeliling(String user_role) throws Exception {

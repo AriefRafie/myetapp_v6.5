@@ -76,7 +76,8 @@
                           #end
                         </table></td>
                     </tr>
-                   <tr>
+                    #foreach ( $tanahs in $tanah )
+                    <tr>
 		    <td colspan="4" align="left">
 				<fieldset>
 				  <legend><strong>MAKLUMAT TANAH</strong></legend>
@@ -85,54 +86,55 @@
 							  <td width="1%">&nbsp;</td>
 							  <td width="28%">Negeri</td>
 							  <td width="1%">:</td>
-							  <td width="70%">$!complaint.namaNegeriTanah</td>
+							  <td width="70%">$!tanahs.nama_negeritanah</td>
 							</tr>
 							<tr>
 							  <td>&nbsp;</td>
 							  <td>Daerah</td>
 							  <td>:</td>
-							  <td>$!complaint.namaDaerahTanah</td>
+							  <td>$!tanahs.nama_daerahtanah</td>
 							</tr>
 							<tr>
 							  <td>&nbsp;</td>
 							  <td>Mukim</td>
 							  <td>:</td>
-							  <td>$!complaint.namaMukimTanah</td>
+							  <td>$!tanahs.nama_mukimtanah</td>
+							</tr>
+							<tr>
+							  <td>&nbsp;</td>
+							  <td>Seksyen</td>
+							  <td>:</td>
+							  <td>$!tanahs.nama_seksyentanah</td>
+							</tr>
+							<tr>
+							  <td>&nbsp;</td>
+							  <td>Janis Hakmilik</td>
+							  <td>:</td>
+							  <td>$!tanahs.nama_hakmilik</td>
 							</tr>
 							<tr>
 							  <td>&nbsp;</td>
 							  <td>No. Hakmilik</td>
 							  <td>:</td>
-							  <td>$!complaint.noHakmilik</td>
+							  <td>$!tanahs.NO_HAKMILIK</td>
 							</tr>
 							<tr>
 							  <td>&nbsp;</td>
-							  <td>No. Warta</td>
+							  <td>Jenis PT/ LOT</td>
 							  <td>:</td>
-							  <td>$!complaint.noWarta</td>
+							  <td>$!tanahs.nama_lot</td>
 							</tr>
 							<tr>
 							  <td>&nbsp;</td>
-							  <td>Tarikh Warta</td>
+							  <td>No. PT/ LOT</td>
 							  <td>:</td>
-							  <td>$!complaint.tarikhWarta</td>
-							</tr>
-							<tr>
-							  <td>&nbsp;</td>
-							  <td>No. Lot</td>
-							  <td>:</td>
-							  <td>$!complaint.noLot</td>
-							</tr>
-							<tr>
-							  <td>&nbsp;</td>
-							  <td>Luas Lot</td>
-							  <td>:</td>
-							  <td>$!complaint.luas</td>
+							  <td>$!tanahs.NO_LOT</td>
 							</tr>
 					</table>
 				</fieldset>
 			</td>
 		</tr>
+		#end
                  </table>
           </div>
         </div>
@@ -152,47 +154,29 @@
                       <td>&nbsp;</td>
                       <td>Untuk Tindakan</td>
                       <td>:</td>
-                      <td><SELECT name="idCategory" onchange="doChangeTindakan()">
-                          <option value="">SILA PILIH</option>
-
-
-
-							#foreach($category in $categories)
-
-
-
-                          <option value="$category.id" #if($category.id == $idCategory) selected #end>$category.name</option>
-
-
-
-
-							#end
-
-
-
-
+                      <td>
+   						<SELECT name="idCategory" onchange="doChangeTindakan()">
+							<option $selected value="0">SILA PILIH</option>
+		                    <option $selectedL1 value="1">HQ</option>
+		                    <option $selectedL2 value="2">JKPTGN</option>
+		                    <option $selectedL3 value="3">PTG</option>
+		                    <option $selectedL4 value="4">AGENSI LAIN</option>
                         </SELECT></td>
          </tr>
-          <TR>
+          <tr>
                       <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
             <td>Seksyen / Bahagian</td>
                       <td>:</td>
-                      <td><select name="idTindakan">
-
-
-          		#foreach($tindakan in $aduanTindakan)
-
-
-
-                          <option value="$tindakan.id">$tindakan.name</option>
-
-
-          		#end
-
-
-                        </select>
+                      <td>$selectTindakan
                       </td>
-          </TR>
+          </tr>
+          <tr>
+                      <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
+            <td>Pegawai</td>
+                      <td>:</td>
+                      <td>$!selectPegawai
+                      </td>
+          </tr>
 
           <tr>
                       <td valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
