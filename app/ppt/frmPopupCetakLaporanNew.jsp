@@ -10,7 +10,7 @@ background: #f4eff4 !important;
 <!-- test xxxxx -->
 
  #if($report == 'BorangE' || $report == 'BorangF' || $report == 'BorangG' || $report == 'BorangH' || $report == 'BorangJ' 
- || $report == 'BorangK' || $report == 'BorangL' || $report == 'BorangLB' || $report == 'BorangLC' || $report == 'BorangM'
+ || $report == 'BorangK' || $report == 'BorangL' || $report == 'BorangLB' || $report == 'BorangLC' 
  || $report == 'BorangO' || $report == 'BorangP' || $report == 'BorangR')
 #parse("app/ppt/tindakanPegawaiSignPPT.jsp")
 #end
@@ -75,7 +75,8 @@ background: #f4eff4 !important;
    <input name="token" type="hidden" id="token" value="$token"/>
   
                
-#if($token != "" && $report == 'BorangE')
+#if($token != "" && ($report == 'BorangE' || $report == 'BorangF' || $report == 'BorangG' || $report == 'BorangH' 
+|| $report == 'BorangJ' || $report == 'BorangK' || $report == 'BorangL' || $report == 'BorangLB' || $report == 'BorangLC') )
     	<fieldset><legend><strong>Cetakan Laporan</strong></legend>
         	<table width="100%" border="0" cellspacing="2" cellpadding="2" margin="10px">
         	
