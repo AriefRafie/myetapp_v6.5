@@ -22,6 +22,7 @@
     #set($negeri = $beanHeader.negeri)
     #set($noTel = $beanHeader.noTel)
     #set($noFax = $beanHeader.noFax)
+    #set($emel = $beanHeader.emel)
     #end
     <td width="50%" valign="top"><fieldset>
       <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
@@ -86,11 +87,11 @@
       <legend><strong>MAKLUMAT PENYEWA</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         <tr valign="top">
-          <td width="37%" align="right" valign="top">NAMA PENYEWA/ NAMA SYARIKAT :</td>
+          <td width="37%" align="right" valign="top">NAMA PENYEWA :</td>
           <td width="63%"><font color="blue" valign="top">$namaPemohon</font></td>
         </tr>
         <tr>
-          <td align="right">NO. PENGENALAN/ PENDAFTARAN :</td>
+          <td align="right">NO. PENGENALAN/ SSM/ ROS/ SKM :</td>
           <td><font color="blue">$noPengenalan</font></td>
         </tr>
         <tr>
@@ -128,6 +129,10 @@
         <tr>
           <td align="right">NO. FAX :</td>
           <td><font color="blue">$noFax</font></td>
+        </tr>
+        <tr>
+          <td align="right">EMEL :</td>
+          <td><font color="blue">$emel</font></td>
         </tr>
         <tr>
           <td align="right">&nbsp;</td>
