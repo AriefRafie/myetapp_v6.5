@@ -4,7 +4,7 @@
 
 <tr>
 <td>    
-
+ $flag_pinda_selesai
 #if($!headerppk.ID_STATUS == "21" || $!headerppk.ID_STATUS == "47" || $!headerppk.ID_STATUS == "70" || $!headerppk.ID_STATUS == "169" || $!headerppk.ID_STATUS == "50" || $!headerppk.ID_STATUS == "999")
   
 #if($!role == "adminppk")
@@ -18,7 +18,7 @@
  <tr>
  <td colspan="3">
  <font color="blue">
- <i>Ruanganan ini bertujuan untuk <b>Pegawai</b> memberi kebenaran bagi membuat pengemaskinian maklumat</i>
+ <i>Ruangan ini bertujuan untuk <b>Pegawai</b> memberi kebenaran bagi membuat pengemaskinian maklumat</i>
  </font>
  </td>
  </tr>
@@ -41,35 +41,55 @@
                 <td width="1%" valign="top">: </td>
       			<td width="69%" valign="top"> <textarea name="txtTujPinda" id="txtTujPinda" cols="50"   rows="4" disabled>$!txtTujPinda</textarea></td>
     		</tr>
-               
+      
+      <!-- Tambah Tempoh -->   
+      
+       <tr>
+                   
+                      		<td scope="row" width="30%" valign="top">Tempoh</td>
+                      		<td valign="top">:</td>
+                      		<td valign="top"> 
+                      		#if($flag_pinda_selesai == "on")
+                      			<input name="txtMula" type="text" value="$txtMula" disabled>&nbsp; sehingga <input  name="txtAkhir" type="text" value="$txtAkhir" disabled>
+                      		#else
+                      			<input name="txtMula" type="text" value="$txtMula">&nbsp; <a href="javascript:displayDatePicker('txtMula',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a>&nbsp; sehingga <input  name="txtAkhir" type="text" value="$txtAkhir"><a href="javascript:displayDatePicker('txtAkhir',false,'dmy');">&nbsp;<img border="0" src="../img/calendar.gif"/></a>
+                      		#end
+                      		
+                      		</td>
+                    </tr>      
  
  <tr>
       			<td scope="row" width="30%">Pengesahan Kebenaran Pengemaskinian Fail</td>
                 <td width="1%">:              
                 </td>
       			<td width="69%">
-                
+                #if($flag_pinda_selesai == "on")
+                  	#set($disabledkan="disabled")
+                #else
+                  	#set($disabledkan="")
+                #end
+                  
                 #if($flag_kebenaran_edit == "1")
                 
                    #if($usid == $user_id_kebenaran_edit)
                         #if($!flag_kebenaran_edit == "1")
                         #set($check = "checked")
                         #end
-                        <input  type="checkbox" name="check_flag_kebenaran_edit"  id="check_flag_kebenaran_edit" $check onClick="check_flag()" >
+                        <input  type="checkbox" $disabledkan name="check_flag_kebenaran_edit"  id="check_flag_kebenaran_edit" $check onClick="check_flag()" >
                    
                    #else
                         <font color="blue">Dibenarkan</font>               
                         #if($!flag_kebenaran_edit == "1")
                         #set($check = "checked")
                         #end
-                        <input  type="checkbox" name="check_flag_kebenaran_edit" style="display:none" id="check_flag_kebenaran_edit" $check onClick="check_flag()" >
+                        <input  type="checkbox" $disabledkan name="check_flag_kebenaran_edit" style="display:none" id="check_flag_kebenaran_edit" $check onClick="check_flag()" >
                    #end
                 #else
                     #set($check = "")
                     #if($!flag_kebenaran_edit == "1")
                     #set($check = "checked")
                     #end
-                     <input type="checkbox" name="check_flag_kebenaran_edit" id="check_flag_kebenaran_edit" $check onClick="check_flag()" >
+                     <input type="checkbox" $disabledkan name="check_flag_kebenaran_edit" id="check_flag_kebenaran_edit" $check onClick="check_flag()" >
                  
                 #end 
                 
@@ -99,8 +119,14 @@
                 :                              
                 </td>                
       			<td  valign="top">
+      			#if($flag_pinda_selesai == "on")
+                  	#set($disabledkan="disabled")
+                #else
+                  	#set($disabledkan="")
+                #end
                   #if($usid == $user_id_kebenaran_edit)
-             <textarea name="catatan_kebenaran_edit" id="catatan_kebenaran_edit" cols="50"   rows="4"  placeholder="Sila Masukkan Catatan..."         
+                  
+             <textarea name="catatan_kebenaran_edit" $disabledkan id="catatan_kebenaran_edit" cols="50"   rows="4"  placeholder="Sila Masukkan Catatan..."         
          onBlur="check_length(this,'4000','catatan_kebenaran_edit_check','catatan_kebenaran_edit_num','normal','yes','keterangan');"  
          onKeyup="check_length(this,'4000','catatan_kebenaran_edit_check','catatan_kebenaran_edit_num','normal','yes','keterangan');" 
          onKeydown="check_length(this,'4000','catatan_kebenaran_edit_check','catatan_kebenaran_edit_num','normal','yes','keterangan');"                    
@@ -174,12 +200,17 @@
             <td></td>
             <td></td>
  <td>
+       			#if($flag_pinda_selesai == "on")
+                  	#set($disabledkan="disabled")
+                #else
+                  	#set($disabledkan="")
+                #end
   #if($flag_kebenaran_edit == "1") 
        #if($usid == $user_id_kebenaran_edit)
-       <input name="cmdSimpan" id="cmdSimpan" value="Simpan" type="button" onClick="javascript:cmdSimpan_flag()">
+       <input name="cmdSimpan" id="cmdSimpan" $disabledkan value="Simpan" type="button" onClick="javascript:cmdSimpan_flag()">
        #end
   #else
- <input name="cmdSimpan" id="cmdSimpan" value="Simpan" type="button" onClick="javascript:cmdSimpan_flag()">
+ <input name="cmdSimpan" id="cmdSimpan" value="Simpan" $disabledkan type="button" onClick="javascript:cmdSimpan_flag()">
  
 <!--   <input name="cmdSimpan" id="cmdSimpan" value="Cetak Surat Pembetulan/Pindaan ke atas Perintah" type="button" onClick="javascript:cetakSuratKemaskiniPerintah()"> -->
  #end
@@ -203,7 +234,7 @@
  <tr>
  <td colspan="4">
  <font color="blue">
- <i>Ruanganan ini bertujuan untuk <b>Pegawai</b> memberi kebenaran bagi membuat pengemaskinian maklumat</i>
+ <i>Ruangan ini bertujuan untuk <b>Pegawai</b> memberi kebenaran bagi membuat pengemaskinian maklumat</i>
  </font>
  </td>
  </tr>

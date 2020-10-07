@@ -4405,7 +4405,7 @@ function popupIntergrasiPerintahEtanah(idFail, idPerintah) {
 }
 
 //arief add NOTIFIKASI EMAIL open	
-function emailPerintah(idFail) {
+function emailPerintah(idFail) { 
 	var url = "../x/${securityToken}/ekptg.view.ppk.SkrinPopupHantarEmail?idFail="+idFail+"&commandw=emailPerintah";
     var hWnd = window.open(url,'printuser','width=500,height=350, resizable=yes,scrollbars=yes');
 	document.${formName}.hitButt.value = "emailPerintah";	

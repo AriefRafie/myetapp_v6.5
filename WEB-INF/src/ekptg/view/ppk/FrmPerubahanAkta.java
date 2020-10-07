@@ -70,6 +70,8 @@ public class FrmPerubahanAkta extends AjaxBasedModule{
 		context.put("FLAG_NOTELEFONBIMBIT_PEMOHON",(String)perubahan_akta.get("FLAG_NOTELEFONBIMBIT_PEMOHON"));
 		context.put("FLAG_EMAIL_WARIS",(String)perubahan_akta.get("FLAG_EMAIL_WARIS"));
 		context.put("FLAG_5JUTA",(String)perubahan_akta.get("FLAG_5JUTA"));
+		context.put("AKSES_SKRIN_KEPBICARA",(String)perubahan_akta.get("AKSES_SKRIN_KEPBICARA"));
+		context.put("FLAG_KEMASKINIPERINTAH_PT",(String)perubahan_akta.get("FLAG_KEMASKINIPERINTAH_PT"));
 		
 		String submit = getParam("command");
 		action = getParam("action");
@@ -96,8 +98,10 @@ public class FrmPerubahanAkta extends AjaxBasedModule{
 			String hphone= getParam("hphone");
 			String emelWaris= getParam("emelWaris");
 			String flag5juta= getParam("flag5juta");
+			String aksesSkrinKepBicara= getParam("flagAksesKepBicara");
+			String flagKemaskiniPerintahPT= getParam("flagKemaskiniPerintahPT");
 			
-			setFlagPerubahanAkta(emelPemohon,hphone,emelWaris,flag5juta);
+			setFlagPerubahanAkta(emelPemohon,hphone,emelWaris,flag5juta,aksesSkrinKepBicara,flagKemaskiniPerintahPT);
 			context.put("disabled","disabled");
 			context.put("buttonKemaskini", "yes");
 			context.put("buttonSimpan", "no");
@@ -107,6 +111,8 @@ public class FrmPerubahanAkta extends AjaxBasedModule{
 			context.put("FLAG_NOTELEFONBIMBIT_PEMOHON",(String)perubahan_akta.get("FLAG_NOTELEFONBIMBIT_PEMOHON"));
 			context.put("FLAG_EMAIL_WARIS",(String)perubahan_akta.get("FLAG_EMAIL_WARIS"));
 			context.put("FLAG_5JUTA",(String)perubahan_akta.get("FLAG_5JUTA"));
+			context.put("AKSES_SKRIN_KEPBICARA",(String)perubahan_akta.get("AKSES_SKRIN_KEPBICARA"));
+			context.put("FLAG_KEMASKINIPERINTAH_PT",(String)perubahan_akta.get("FLAG_KEMASKINIPERINTAH_PT"));
 			
 		}
 		
@@ -156,6 +162,16 @@ public class FrmPerubahanAkta extends AjaxBasedModule{
 				} else {
 					h.put("FLAG_5JUTA", rs.getString("FLAG_5JUTA"));
 				}	
+				if (rs.getString("AKSES_SKRIN_KEPBICARA") == null) {
+					h.put("AKSES_SKRIN_KEPBICARA", "");
+				} else {
+					h.put("AKSES_SKRIN_KEPBICARA", rs.getString("AKSES_SKRIN_KEPBICARA"));
+				}	
+				if (rs.getString("FLAG_KEMASKINIPERINTAH_PT") == null) {
+					h.put("FLAG_KEMASKINIPERINTAH_PT", "");
+				} else {
+					h.put("FLAG_KEMASKINIPERINTAH_PT", rs.getString("FLAG_KEMASKINIPERINTAH_PT"));
+				}	
 			}
 			return h;
 		} finally {
@@ -170,7 +186,7 @@ public class FrmPerubahanAkta extends AjaxBasedModule{
 	
 
 	
-	private void setFlagPerubahanAkta(String emelPemohon,String hphone,String emelWaris,String flag5juta) throws Exception {		 	
+	private void setFlagPerubahanAkta(String emelPemohon,String hphone,String emelWaris,String flag5juta, String aksesSkrinKepBicara, String flagKemaskiniPerintahPT) throws Exception {		 	
 	 	Connection conn = null;
 		Db db = null;			
 		String sql1="";		
@@ -185,6 +201,8 @@ public class FrmPerubahanAkta extends AjaxBasedModule{
 					r.add("FLAG_NOTELEFONBIMBIT_PEMOHON",hphone);
 					r.add("FLAG_EMAIL_WARIS",emelWaris);
 					r.add("FLAG_5JUTA",flag5juta);
+					r.add("AKSES_SKRIN_KEPBICARA",aksesSkrinKepBicara);
+					r.add("FLAG_KEMASKINIPERINTAH_PT",flagKemaskiniPerintahPT);
 											
 					sql1 = r.getSQLUpdate("TBLPPKPERUBAHANAKTA");
 					myLogger.info("UPDATE FLAG PERUBAHAN AKTA:"+sql1);

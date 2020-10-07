@@ -43,6 +43,7 @@
 	#set($alamat3 =$data.alamat_3)
 	#set($bandar =$data.id_bandar)
 	#set($poskod =$data.poskod)
+	
 #end
 <input type="hidden" name="btxtNamaPenjaga" value="$nama">
 <input type="hidden" name="btxtNoKPBaru1" value="$nokp1">
@@ -82,6 +83,8 @@
 	#set($bandar ="")
 	#set($poskod ="")
 	#set($catatanPenjaga="")
+	#set($txdTarikhPerlantikanPenjaga="")
+	
   #end
   	
 #end
@@ -339,6 +342,13 @@
 					<td>:&nbsp;</td>
 					<td>$!selectBandar</td>
 				</tr>
+				<tr>
+					<td>Tarikh Perlantikan Penjaga</td>
+					<td>:&nbsp;</td>
+					<td><input name="txdTarikhPerlantikanPenjaga" value="$!txdTarikhPerlantikanPenjaga" maxlength="10" size="11" id="txdTarikhPerlantikanPenjaga" type="text" 
+				onblur="check_date(this);" onkeyup="validateNumber(this,this.value);" />
+                <img src="../img/calendar.gif" alt="" onclick="displayDatePicker('txdTarikhPerlantikanPenjaga',false,'dmy');" /></td>
+				</tr>
 				#if($disabilityMode=="no")
 				<tr>
 					<td valign="top">Catatan</td>
@@ -405,6 +415,7 @@
 		#set($agama=$data.jenis_agama)
 		#set($jantina=$data.jantina)
 		#set($jenis_kp=$data.jenis_kp)
+		#set($txdTarikhPerlantikanPenjaga = $data.tarikh_perlantikanpenjaga)
 	#end
   #else
   		#set($noKPBaru1=$noKPBaru1x)
@@ -609,6 +620,12 @@
 					<td>Bandar</td>
 					<td>:&nbsp;</td>
 					<td>$selectBandar</td>
+				</tr>
+				<tr>
+					<td>Tarikh Perlantikan Penjaga</td>
+					<td>:&nbsp;</td>
+					<td><input name="txdTarikhPerlantikanPenjaga" $disability1 value="$!txdTarikhPerlantikanPenjaga" maxlength="10" size="11" id="$!txdTarikhPerlantikanPenjaga" type="text" />
+                </td>
 				</tr>
 				#if($editable=="yes")
 				<tr>
@@ -1352,7 +1369,7 @@ function cetakBorangH(idfail,idobminor) {
 	*/
 		
 	//var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+NO_FAIL+"&idobminor="+idobminor+"&report=BorangH&flagReport=B";
-	var url = "../servlet/ekptg.report.ppk.BorangHNotis?idfail="+idfail+"&idobminor="+idobminor;
+	var url = "../servlet/ekptg.report.ppk.BorangHNotis?idfail="+idfail+"&idobminor="+idobminor+"&BorangH_Notis=Y";
 	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
