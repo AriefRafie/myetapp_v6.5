@@ -116,7 +116,7 @@
    	   			alert('Sila Pilih Seksyen / Bahagian');
 	   	   		return;
    	   		} */
-			else if(document.${formName}.ulasan.value==""){
+			if(document.${formName}.ulasan.value==""){
    	   	   		alert('Sila Isi Arahan');
    	   	   		return;
    	   		}
