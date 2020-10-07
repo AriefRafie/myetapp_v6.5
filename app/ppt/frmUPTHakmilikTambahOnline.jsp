@@ -214,7 +214,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 		</tr>
 
 		<tr>
-			<td><font color="red">*</font></td>
+			<td><font color="red"></font></td>
 			<td>No.LOT</td>
 			<td>:</td>
 			<td><input type="text" name="txtNoLot" id="txtNoLot"
@@ -1708,11 +1708,11 @@ function simpanHM(id_permohonan, id_hakmilik, flagSubjaket, hideFieldHakmilik, m
   		document.${formName}.txtNoPT.focus(); 
 		return;
 	} */
-	else if(document.${formName}.txtNoLot.value == "" && document.${formName}.txtNoPT.value == ""){
+	/* else if(document.${formName}.txtNoLot.value == "" && document.${formName}.txtNoPT.value == ""){
 		alert("Sila masukkan salah satu \"No.PT atau No.LOT\" terlebih dahulu.");
   		document.${formName}.txtNoLot.focus(); 
 		return;
-	}
+	} */
 	else
 	if(hideFieldHakmilik=="no" && document.${formName}.socKategoriTanah.value == ""){
 		alert("Sila pilih \"Kategori Tanah\" terlebih dahulu.");
@@ -2162,7 +2162,7 @@ function hapusDokumenPembayaran(id_dokumen) {
 	document.${formName}.submit();
 }
 function papar_Lampiran(id_dokumen) {
-    var url = "../servlet/ekptg.view.ppt.DisplayBlob?id="+id_dokumen;
+    var url = "../servlet/ekptg.view.ppt.DisplayBlob2?id="+id_dokumen;
     var hWnd = window.open(url,'displayfile','width=800,height=600, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
     hWnd.opener = document.window;
