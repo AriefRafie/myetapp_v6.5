@@ -2,6 +2,7 @@ package ekptg.report.ppk;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Vector;
@@ -30,6 +31,7 @@ public class BorangH extends EkptgReportServlet {
 	Vector penjaga = null;
 	Vector dataPenjaga = null;
 	static Logger myLogger = Logger.getLogger(BorangH.class);
+	private static SimpleDateFormat Format = new SimpleDateFormat("dd/MM/yyyy");
 	public BorangH() {
 		super.setReportName("BorangH");
 		super.setFolderName("ppk");
@@ -66,7 +68,7 @@ public class BorangH extends EkptgReportServlet {
 			sql +=" FROM TBLPFDFAIL A, ";
 			sql +=" TBLPPKPERMOHONAN B, ";
 			sql +=" TBLPPKPERMOHONANSIMATI C, ";
-			sql +=" TBLPPKOB D, ";    
+			sql +=" TBLPPKOBPERMOHONAN D, ";    
 			sql +=" (SELECT ";
 			sql +=" CASE ";
 			sql +=" WHEN TBLPPKOB.NO_KP_BARU IS NULL AND TBLPPKOB.NO_KP_LAMA IS NOT NULL THEN  TBLPPKOB.NO_KP_LAMA ";
@@ -96,8 +98,8 @@ public class BorangH extends EkptgReportServlet {
 			sql +=" END AS NO_KP42, ID_OB ";    
 			sql +=" FROM TBLPPKOB ) DDD2 ";  
 			sql +=" WHERE A.ID_FAIL = B.ID_FAIL ";
-			sql +=" AND B.ID_PERMOHONAN = C.ID_PERMOHONAN ";
-			sql +=" AND C.ID_SIMATI = D.ID_SIMATI ";
+			sql +=" AND B.ID_PERMOHONAN = C.ID_PERMOHONAN  ";
+			sql +=" AND C.ID_SIMATI = D.ID_SIMATI AND c.id_permohonansimati = d.id_permohonansimati ";
 			sql +=" AND D.ID_OB = DDD.ID_OB ";
 			sql +=" AND D.ID_OB = DDD2.ID_OB ";
 			sql +=" AND D.STATUS_OB IN (2,4) ";
@@ -257,7 +259,7 @@ public class BorangH extends EkptgReportServlet {
 			sql +=" FROM TBLPFDFAIL A, ";
 			sql +=" TBLPPKPERMOHONAN B, ";
 			sql +=" TBLPPKPERMOHONANSIMATI C, ";
-			sql +=" TBLPPKOB D, ";    
+			sql +=" TBLPPKOBPERMOHONAN D, ";    
 			sql +=" (SELECT ";
 			sql +=" CASE ";
 			sql +=" WHEN TBLPPKOB.NO_KP_BARU IS NULL AND TBLPPKOB.NO_KP_LAMA IS NOT NULL THEN  TBLPPKOB.NO_KP_LAMA ";
@@ -288,7 +290,7 @@ public class BorangH extends EkptgReportServlet {
 			sql +=" FROM TBLPPKOB ) DDD2 ";  
 			sql +=" WHERE A.ID_FAIL = B.ID_FAIL ";
 			sql +=" AND B.ID_PERMOHONAN = C.ID_PERMOHONAN ";
-			sql +=" AND C.ID_SIMATI = D.ID_SIMATI ";
+			sql +=" AND C.ID_SIMATI = D.ID_SIMATI  AND C.id_permohonansimati = D.id_permohonansimati ";
 			sql +=" AND D.ID_OB = DDD.ID_OB ";
 			sql +=" AND D.ID_OB = DDD2.ID_OB ";
 			sql +=" AND D.STATUS_OB IN (2) ";
@@ -333,7 +335,7 @@ public Vector getGroupPenjaga(String id_fail, String jenis_ob)throws Exception{
 			db = new Db();
 			Vector list = new Vector();
 			
-			sql  = " SELECT OB.ID_OB, NVL(COUNT(PENJAGA.ID_OBMINOR),0) AS JUMLAH_MINOR, "+
+			sql  = " SELECT OB.ID_OB, NVL(COUNT(PENJAGA.ID_OBMINOR),0) AS JUMLAH_MINOR, penjaga.tarikh_perlantikanpenjaga,"+
 					" RTRIM (XMLAGG (XMLELEMENT (E, PENJAGA.ID_OBMINOR || ',')).EXTRACT ('//text()'), ',') AS SET_ID_MINOR,  "+
 					" UPPER(OB.NAMA_OB) AS NAMA_PENJAGA, 	(CASE 	WHEN OB.NO_KP_BARU IS NOT NULL AND LENGTH(OB.NO_KP_BARU) = 12  "+
 					" THEN SUBSTR(OB.NO_KP_BARU,1,6) || '-' || SUBSTR(OB.NO_KP_BARU,7,2) || '-' || SUBSTR(OB.NO_KP_BARU,9,4)  "+
@@ -363,7 +365,7 @@ public Vector getGroupPenjaga(String id_fail, String jenis_ob)throws Exception{
 					" WHERE P.ID_PERMOHONAN = PSM.ID_PERMOHONAN AND P.ID_FAIL = F.ID_FAIL AND OB.ID_SIMATI = PSM.ID_SIMATI AND PENJAGA.ID_OBMINOR = OBMINOR.ID_OB "+
 					" AND PENJAGA.ID_OB = OB.ID_OB AND OB.JENIS_KP = JPB.ID_JENISNOPB(+) AND OB.ID_NEGERI = N.ID_NEGERI(+) AND OB.ID_BANDAR = B.ID_BANDAR(+) "+
 					" AND F.ID_FAIL = '"+id_fail+"' AND OBMINOR.STATUS_OB = '"+jenis_ob+"' "+
-					" GROUP BY OB.ID_OB, OB.NAMA_OB, OB.NO_KP_BARU, OB.NO_KP_LAMA, OB.NO_KP_LAIN, OB.JENIS_KP,OB.ALAMAT_1,OB.ALAMAT_2,OB.ALAMAT_3,OB.POSKOD, B.KETERANGAN, N.NAMA_NEGERI "; 
+					" GROUP BY OB.ID_OB, OB.NAMA_OB, OB.NO_KP_BARU, OB.NO_KP_LAMA, OB.NO_KP_LAIN, OB.JENIS_KP,OB.ALAMAT_1,OB.ALAMAT_2,OB.ALAMAT_3,OB.POSKOD, penjaga.tarikh_perlantikanpenjaga, B.KETERANGAN, N.NAMA_NEGERI "; 
 			
 													
 			Statement stmt = db.getStatement();
@@ -380,6 +382,7 @@ public Vector getGroupPenjaga(String id_fail, String jenis_ob)throws Exception{
 				h.put("NAMA_PENJAGA",rs.getString("NAMA_PENJAGA")==null?"":rs.getString("NAMA_PENJAGA"));				
 				h.put("KP_PENJAGA",rs.getString("KP_PENJAGA")==null?"":rs.getString("KP_PENJAGA"));
 				h.put("ALAMAT_PENUH_PENJAGA",rs.getString("ALAMAT_PENUH_PENJAGA")==null?"":rs.getString("ALAMAT_PENUH_PENJAGA"));
+				h.put("TARIKH_PERLANTIKANPENJAGA", rs.getDate("TARIKH_PERLANTIKANPENJAGA") == null ? "" : Format.format(rs.getDate("TARIKH_PERLANTIKANPENJAGA")));
 				list.addElement(h);			
 			}			
 				
@@ -714,7 +717,15 @@ public Vector getGroupPenjaga(String id_fail, String jenis_ob)throws Exception{
 					belum_dewasa = belum_dewasa + " dan " + hP.get("NAMA_PENJAGA")+" " +hP.get("KP_PENJAGA") + " yang beralamat di " +hP.get("ALAMAT_PENUH_PENJAGA")+ " MENJADI PENJAGA kepada "+getListMinor(hP.get("SET_ID_MINOR").toString(), "2");
 				}
 			}
-			
+			myLogger.debug("TARIKH_PERLANTIKANPENJAGA = "+hP.get("TARIKH_PERLANTIKANPENJAGA"));
+			//String TARIKH_PERLANTIKANPENJAGA_DATE = (String) hP.get("TARIKH_PERLANTIKANPENJAGA");
+			String TARIKH_PERLANTIKANPENJAGA_DATE = "09/06/2020";
+			String TARIKH_PERLANTIKANPENJAGA_DAY = TARIKH_PERLANTIKANPENJAGA_DATE.substring(0,2);
+			String TARIKH_PERLANTIKANPENJAGA_MONTH = TARIKH_PERLANTIKANPENJAGA_DATE.substring(3,5);
+			String TARIKH_PERLANTIKANPENJAGA_YEAR = TARIKH_PERLANTIKANPENJAGA_DATE.substring(6,10);
+			parameters.put("TARIKH_PERLANTIKANPENJAGA_DAY" ,TARIKH_PERLANTIKANPENJAGA_DAY);
+			parameters.put("TARIKH_PERLANTIKANPENJAGA_MONTH" ,TARIKH_PERLANTIKANPENJAGA_MONTH);
+			parameters.put("TARIKH_PERLANTIKANPENJAGA_YEAR" ,TARIKH_PERLANTIKANPENJAGA_YEAR);
 		}		
 		//close razman kumpul penjaga belum dewasa dlu
 		
@@ -842,8 +853,9 @@ public Vector getGroupPenjaga(String id_fail, String jenis_ob)throws Exception{
 				
 				temp3 = "";
 				*/
+				
 			}
-							
+					
 		}
 		myLogger.debug("dataObMinorTakSempurnaAkal:"+dataObMinorTakSempurnaAkal);
 		if(dataObMinorTakSempurnaAkal.size() != 0){

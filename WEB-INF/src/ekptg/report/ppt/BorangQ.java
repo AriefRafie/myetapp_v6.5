@@ -25,7 +25,7 @@ public class BorangQ extends EkptgReportServlet{
 		
 		
 		
-		String idfail = "";
+	/*	String idfail = "";
 		String id_negeri = "";
 		Vector maklumat_negeri_fail_panggil = null;
 		
@@ -84,6 +84,77 @@ public class BorangQ extends EkptgReportServlet{
 		}
 	}
 	
+	
+
+}*/
+		
+		
+		String idfail = "";
+		String id_hakmilik = "";
+		String id_negeri = "";
+		Vector maklumat_negeri_fail_panggil = null;
+		
+		if (parameters.get("id_hakmilik") != null){
+			id_hakmilik = (String)parameters.get("id_hakmilik");			
+			maklumat_negeri_fail_panggil = maklumat_negeri_fail(id_hakmilik);			
+			Hashtable h = (Hashtable) maklumat_negeri_fail_panggil.get(0);			
+			id_negeri = (String)h.get("ID_NEGERI");
+		}	
+		
+		
+		System.out.println("id_negeri report :"+id_negeri);
+		
+		/*if(id_negeri.equals("5"))
+		{
+			super.setReportName("Borang K_N9");
+		}
+		else if(id_negeri.equals("7"))
+		{
+			super.setReportName("Borang K_Penang");
+		}
+		else
+		{*/
+			super.setReportName("BorangQ");
+		//}
+		
+       	
+        
+		super.setFolderName("ppt");
+	}
+	
+	
+	
+	
+	Vector maklumat_negeri_fail = null;
+	public Vector maklumat_negeri_fail(String id_hakmilik) throws Exception {
+		maklumat_negeri_fail = new Vector();
+		Db db = null;
+		maklumat_negeri_fail.clear();
+		String sql = "";
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT DISTINCT F.ID_NEGERI FROM TBLPFDFAIL F," +
+					"TBLPPTPERMOHONAN P,TBLPPTHAKMILIK H" +
+					" WHERE P.ID_FAIL = F.ID_FAIL" +
+					" AND P.ID_PERMOHONAN = H.ID_PERMOHONAN" +
+					" AND H.ID_HAKMILIK = '"+id_hakmilik+"'";
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("ID_NEGERI", rs.getString("ID_NEGERI") == null ? ""
+						: rs.getString("ID_NEGERI"));
+				
+				maklumat_negeri_fail.addElement(h);
+			}
+			return maklumat_negeri_fail;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
 	
 
 }

@@ -7420,7 +7420,9 @@ System.out.println("idPejabatJKPTG=="+idPejabatJKPTG);
 			String txtposkod = getParam("btxtposkod");
 			String socNegeri = getParam("bsocNegeri");
 			String txtcatatan = "";
-
+			String tarikhPerlantikanPenjaga = getParam("txdTarikhPerlantikanPenjaga");
+			myLogger.info("tarikhPerlantikanPenjaga1 = "+tarikhPerlantikanPenjaga);
+			i.put("tarikhPerlantikanPenjaga", tarikhPerlantikanPenjaga);
 			i.put("id_ob", id_ob);
 			i.put("txtNoKPBaru", txtNoKPBaru);
 			i.put("txtNoKPLama", txtNoKPLama);
@@ -7463,8 +7465,10 @@ System.out.println("idPejabatJKPTG=="+idPejabatJKPTG);
 			String txtposkod = getParam("txtposkod");
 			String socNegeri = getParam("socNegeri");
 			String txtcatatan = getParam("txtcatatan");
-
+			String tarikhPerlantikanPenjaga = getParam("txdTarikhPerlantikanPenjaga");
+			myLogger.info("tarikhPerlantikanPenjaga2 = "+tarikhPerlantikanPenjaga);
 			String no = "0";
+			i.put("tarikhPerlantikanPenjaga", tarikhPerlantikanPenjaga);
 			i.put("id_ob", no);
 			i.put("txtNoKPBaru", txtNoKPBaru);
 			i.put("txtNoKPLama", txtNoKPLama);

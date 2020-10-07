@@ -112,11 +112,11 @@
    	   		doAjaxCall${formName}("viewComplaint","idComplaint="+id);
    		}
    		function simpan(){
-   	   		if(document.${formName}.idTindakan.value==""){
+   	   		/* if(document.${formName}.idTindakan.value==""){
    	   			alert('Sila Pilih Seksyen / Bahagian');
 	   	   		return;
-   	   		}
-			else if(document.${formName}.ulasan.value==""){
+   	   		} */
+			if(document.${formName}.ulasan.value==""){
    	   	   		alert('Sila Isi Arahan');
    	   	   		return;
    	   		}
@@ -163,6 +163,9 @@
    		}
 		function doChangeTindakan() {
 			doAjaxCall${formName}("doChangeTindakan");
+		}
+		function doChangePegawai() {
+			doAjaxCall${formName}("doChangePegawai");
 		}
 		function tutupAduan() {
 			doAjaxCall${formName}("tutupAduan");

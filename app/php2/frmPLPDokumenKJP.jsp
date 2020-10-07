@@ -129,13 +129,15 @@ function paparMaklumatKJP(idUlasanTeknikal){
 	document.${formName}.flagPopup.value = "openKJP";
 	document.${formName}.modePopup.value = "view";
 	document.${formName}.idUlasanTeknikal.value = idUlasanTeknikal;
-	doAjaxCall${formName}("");
+	//doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function doDaftarMaklumatKJP(){
 	document.${formName}.flagPopup.value = "openKJP";
 	document.${formName}.modePopup.value = "new";
 	document.${formName}.flagStatus.value = "1";
-	doAjaxCall${formName}("");
+	//doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function doSimpanMaklumatKJP(){
 	
@@ -146,7 +148,8 @@ function doSimpanMaklumatKJP(){
 	document.${formName}.flagPopup.value = "openKJP";
 	document.${formName}.modePopup.value = "view";
 	document.${formName}.hitButton.value = "simpanMaklumatKJP";
-	doAjaxCall${formName}("");
+	//doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function doSimpanMaklumatUlanganKJP(){	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
@@ -156,22 +159,26 @@ function doSimpanMaklumatUlanganKJP(){
 	document.${formName}.flagPopup.value = "openKJP";
 	document.${formName}.modePopup.value = "view";
 	document.${formName}.hitButton.value = "simpanMaklumatUlanganKJP";
-	doAjaxCall${formName}("");
+	//doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function doBatalMaklumatKJP(){
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
-	doAjaxCall${formName}("");
+	//doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function doKemaskiniMaklumatKJP(){
 	document.${formName}.flagPopup.value = "openKJP";
 	document.${formName}.modePopup.value = "update";
-	doAjaxCall${formName}("");
+	//doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function doBatalKemaskiniMaklumatKJP(){
 	document.${formName}.flagPopup.value = "openKJP";
 	document.${formName}.modePopup.value = "view";
-	doAjaxCall${formName}("");
+	//doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function doSimpanKemaskiniMaklumatKJP(){
 	
@@ -203,7 +210,8 @@ function doSimpanKemaskiniMaklumatKJP(){
 	document.${formName}.flagPopup.value = "openKJP";
 	document.${formName}.modePopup.value = "view";
 	document.${formName}.hitButton.value = "simpanKemaskiniMaklumatKJP";
-	doAjaxCall${formName}("");
+	//doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function doHapusMaklumatKJP(){
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
@@ -213,18 +221,21 @@ function doHapusMaklumatKJP(){
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
 	document.${formName}.hitButton.value = "hapusMaklumatKJPKJT";
-	doAjaxCall${formName}("");
+	//doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function doTerimaKJP(){
 	document.${formName}.flagPopup.value = "openKJP";
 	document.${formName}.modePopup.value = "update";
 	document.${formName}.flagStatus.value = "2";
-	doAjaxCall${formName}("");
+	//doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function doUlanganKJP(){
 	document.${formName}.flagPopup.value = "openKJP";
 	document.${formName}.modePopup.value = "newUlangan";
 	document.${formName}.flagStatus.value = "1";
-	doAjaxCall${formName}("");
+	//doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 </script>

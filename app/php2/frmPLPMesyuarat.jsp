@@ -169,18 +169,18 @@ function paparMesyuarat(id){
 	document.${formName}.flagPopup.value = "openMesyuarat";
 	document.${formName}.modePopup.value = "view";
 	document.${formName}.idMesyuarat.value = id;
-	doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function daftarMesyuarat(){
 	document.${formName}.flagPopup.value = "openMesyuarat";
 	document.${formName}.modePopup.value = "new";
-	doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function daftarNotifikasi(){
 	document.${formName}.flagPopup.value = "openMesyuarat";
 	document.${formName}.flagNotifikasi.value = "openNotifikasi";
 	document.${formName}.modePopup.value = "view";
-	doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function simpanMesyuarat(){
 	
@@ -227,17 +227,17 @@ function simpanMesyuarat(){
 	document.${formName}.flagPopup.value = "openMesyuarat";
 	document.${formName}.modePopup.value = "view";
 	document.${formName}.hitButton.value = "simpanMesyuarat";
-	doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function batalMesyuarat(){
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
-	doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function kemaskiniMesyuarat(){
 	document.${formName}.flagPopup.value = "openMesyuarat";
 	document.${formName}.modePopup.value = "update";
-	doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function hapusMesyuarat(){
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
@@ -247,7 +247,7 @@ function hapusMesyuarat(){
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
 	document.${formName}.hitButton.value = "hapusMesyuarat";
-	doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function simpanKemaskiniMesyuarat(){
 	
@@ -294,17 +294,17 @@ function simpanKemaskiniMesyuarat(){
 	document.${formName}.flagPopup.value = "openMesyuarat";
 	document.${formName}.modePopup.value = "view";
 	document.${formName}.hitButton.value = "simpanKemaskiniMesyuarat";
-	doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function batalKemaskiniMesyuarat(){
 	document.${formName}.flagPopup.value = "openMesyuarat";
 	document.${formName}.modePopup.value = "view";
-	doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function kembali(){
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
-	doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function doChangeTabUpper(tabId) {
 	document.${formName}.mode.value = "view";
@@ -321,11 +321,11 @@ function onChangeValue(str){
 }
 function kemaskiniPampasan() {
 	document.${formName}.mode.value = "update";
-	doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function batalPampasan() {
 	document.${formName}.mode.value = "view";
-	doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function simpanKemaskiniPampasan(){
 
@@ -411,7 +411,7 @@ function doSimpanRekodNotifikasiEmail(){
 	document.${formName}.flagPopup.value = "openMesyuarat";
 	document.${formName}.modePopup.value = "view";
 	document.${formName}.hitButton.value = "simpanRekodNotifikasiEmail";
-	doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function gotoSenaraiFailKeseluruhan() {
 	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPSenaraiFailKeseluruhanView";

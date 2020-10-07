@@ -27,7 +27,7 @@ public class OnlineEAduanMobile {
 	private String phonePengadu;
 	@Column(name="CATATAN")
 	private String catatan;
-	
+
 	@ManyToOne
 	@JoinColumn(name="ID_JENISADUAN")
 	private RujJenisAduanMobile jenisAduan;
@@ -47,7 +47,7 @@ public class OnlineEAduanMobile {
 	@ManyToOne
 	@JoinColumn(name="ID_SUMBERADUAN")
 	private RujSumberAduanMobile sumberAduan;
-	
+
 	@Column(name="TARIKH_SELESAI")
 	@Temporal(TemporalType.DATE)
 	private Date tarikhSelesai;
@@ -58,15 +58,19 @@ public class OnlineEAduanMobile {
 	private String flagOnline;
 	@Column(name="STATUS_PENYELESAIAN")
 	private String statusPenyelesaian;
-	
+
 	@ManyToOne
 	@JoinColumn(name="ID_NEGERI")
 	private RujNegeriMobile negeri;
-	
+
+
+	@Column(name="NO_FAIL")
+	private String noFail;
+
 	public OnlineEAduanMobile() {
 		setId(lebah.db.UniqueID.get());
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -168,5 +172,11 @@ public class OnlineEAduanMobile {
 	}
 	public void setNegeri(RujNegeriMobile negeri) {
 		this.negeri = negeri;
+	}
+	public String getNoFail() {
+		return noFail;
+	}
+	public void setNoFail(String noFail) {
+		this.noFail = noFail;
 	}
 }

@@ -91,7 +91,7 @@
                     
                     <tr>
                     	 	<td valign="top"></td>
-                      		<td valign="top"><font color="red">*</font>Tujuan Pindaan</td>
+                      		<td valign="top"><font color="red">*</font>Tujuan Pindaan1</td>
                       		<td valign="top">:</td>
                       		<td valign="top">
                       		
@@ -109,9 +109,19 @@
                     </tr>
                     
                     <tr>
+                    <td valign="top"></td>
+                      		<td valign="top"><font color="red">*</font>Tempoh</td>
+                      		<td valign="top">:</td>
+                      		<td valign="top"> <input name="txtMula" type="text" value="$txtMula">&nbsp; <a href="javascript:displayDatePicker('txtMula',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a>&nbsp; sehingga <input name="txtAkhir" type="text" value="$txtAkhir"><a href="javascript:displayDatePicker('txtAkhir',false,'dmy');">&nbsp;<img border="0" src="../img/calendar.gif"/></a></td>
+                    </tr>
+                    
+                    <tr>
                     	<td valign="top" colspan=3> &nbsp;</td>
+                    	#if($disableButtonSimpan=="disable")
+                    	<td ><input disabled name="cmdSimpanPeg" id="cmdSimpanPeg" value="Simpan" type="button" onClick="javascript:cmdSimpan_Pegawai()"></td>
+                    	#else
                     	<td ><input name="cmdSimpanPeg" id="cmdSimpanPeg" value="Simpan" type="button" onClick="javascript:cmdSimpan_Pegawai()"></td>
-                    	
+                    	#end
                </table>
                
             
@@ -123,7 +133,33 @@
                #end
               
   #end
+  <!--  
+  <tr>
+  <td>
+  <fieldset><legend><strong>Selesai</strong></legend>
+  <table width="25%" border="0" cellspacing="2">
+  <tr>
+                      		<td valign="top"><font color="red">*</font>Selesai</td>
+                      		<td valign="top">:</td>
+                      		#if(#$flag_pinda_selesai == "on") 
+                      		<td valign="top"><input  type="checkbox" name="check_selesai"  id="check_selesai" disabled checked >&nbsp;  </td>
+                      		#else
+                      		<td valign="top"><input  type="checkbox" name="check_selesai"  id="check_selesai" $check  >&nbsp; <input name="cmdSimpanSelesai" id="cmdSimpanSelesai" value="Simpan" type="button" onClick="javascript:cmdSimpan_Selesai()"> </td>
+                      		#end
+  </tr>
   
+  #if($flag_pinda_selesai == "on")
+    <tr>
+                      		<td valign="top"><font color="red">*</font>Pengesahan semakan</td>
+                      		<td valign="top">:</td>
+                      		<td colspan="5" align="left"><input type="checkbox" name="telahDisemak" id="telahDisemak"></td>
+  </tr>
+    #end
+  </table>
+  </fieldset>
+  </td>
+  </tr>
+  -->
   <tr >
     
     <td >
@@ -185,13 +221,37 @@ function cmdSimpan_Pegawai()
 	}else if(document.${formName}.txtTujPinda.value == ""){
 		alert("Sila masukkan Tujuan Pindaan");
 		return;
-	}else{
+	}
+	
+	else if(document.${formName}.txtMula.value == ""){
+		alert("Sila masukkan Tarikh Mula");
+		return;
+	}
+	else if(document.${formName}.txtAkhir.value == ""){
+		alert("Sila masukkan Tarikh Ahkir");
+		return;
+	}
+	else{
 	
 		document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmKebenaranKemaskiniFail";
 		document.${formName}.command.value = "simpanPilihanPegawai";
 		SaveScrollXY();
 		     document.${formName}.submit();	
 	}
+
+}
+
+
+function cmdSimpan_Selesai()
+{
+	
+	
+	
+		document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmKebenaranKemaskiniFail";
+		document.${formName}.command.value = "simpanSelesaiPinda";
+		SaveScrollXY();
+		     document.${formName}.submit();	
+	
 
 }
 
