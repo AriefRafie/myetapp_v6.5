@@ -6869,7 +6869,7 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 						//" AND p.id_permohonan(+)= ut.id_permohonan ";
 				sql += " AND p.id_permohonan = '"+idpermohonan+"'";
 				
-				System.out.println("***SQL setDataPermohonan = "+sql);
+				//System.out.println("***SQL setDataPermohonan = "+sql);
 				ResultSet rs = stmt.executeQuery(sql);
 				Hashtable h;
 		
