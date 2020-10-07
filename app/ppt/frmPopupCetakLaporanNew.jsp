@@ -1430,7 +1430,7 @@ background: #f4eff4 !important;
                 	#end
                 	
                 	#if($report == 'BorangQ')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangQ('$!id_hakmilik')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangQ('$!id_permohonan','$!id_hakmilik')">
                 	#end
                 	
                 	#if($report == 'BorangL')
@@ -2730,8 +2730,9 @@ function cetakBorangK(idfail,idhakmilik) {
 }
 
 
-function cetakBorangQ(idfail,idhakmilik) {
+function cetakBorangQ(id_permohonan,idhakmilik) {
 
+	alert
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
@@ -2754,7 +2755,7 @@ function cetakBorangQ(idfail,idhakmilik) {
 			nofail = document.${formName}.no_fail.value;
 		}
 
-		var url = "../../servlet/ekptg.report.ppt.BorangQ?id_hakmilik="+idhakmilik+"&id_Fail="+idfail+"&no_fail="+nofail;
+		var url = "../../servlet/ekptg.report.ppt.BorangQ?idhakmilik="+idhakmilik;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
