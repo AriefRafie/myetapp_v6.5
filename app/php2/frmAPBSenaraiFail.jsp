@@ -50,7 +50,7 @@
           <td><input type="text" name="txtNoLesen" id="txtNoLesen" value="$noLesen" size="30"/></td>
         </tr>
         <tr>
-          <td scope="row" align="right">Status :</td>
+          <td scope="row" align="right">Status : </td>
           <td>$selectStatus</td>
         </tr>
         <tr>

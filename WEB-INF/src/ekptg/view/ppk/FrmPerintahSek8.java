@@ -1785,7 +1785,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 					
 					myLogger.info("Sini1");
 					//disablekan dulu sbb semua HA dia register perintah secara auto
-					//logic.saveHA("1", "", id_HAARB, idPerintah, idPermohonan, idSimati, idPermohonanSimati, session);
+					logic.saveHA("1", "", id_HAARB, idPerintah, idPermohonan, idSimati, idPermohonanSimati, session);
 					myLogger.info("Sini2");
 					}
 					//cari perintahhaobmst

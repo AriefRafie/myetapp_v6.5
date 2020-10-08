@@ -57,6 +57,7 @@
           <td>Tempoh Lesen Dipohon</td>
           <td>:</td>
           <td><select name="socTempoh" id="socTempoh" style="width:90px;" $readonly class="$disabled" $disabled >
+          		$beanMaklumatPermohonan.socTempoh
                    
             #if ($beanMaklumatPermohonan.tempoh == '1')
                 
@@ -233,7 +234,7 @@ TAHUN </td>
       </fieldset></td>
   </tr>
   
- <!-- <tr>
+  <tr>
     <td colspan="2">
     <fieldset>
       <legend><strong>KEUPAYAAN KEWANGAN</strong></legend>
@@ -261,7 +262,7 @@ TAHUN </td>
       #end
       </fieldset>
     </td>
-  </tr>-->
+  </tr>
   #end 
   
   <tr>
@@ -391,10 +392,12 @@ TAHUN </td>
           <td><fieldset>
             <legend><strong>SENARAI PENGARAH</strong></legend>
             <table align="center" width="100%">
+            #if ($idStatus == '')
               #if ($mode == 'view')
               <tr>
                 <td colspan="5" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onclick="javascript:tambahPengarah()"/></td>
               </tr>
+              #end
               #end
               <tr class="table_header">
                 <td scope="row" width="5%" align="center"><strong>Bil</strong></td>

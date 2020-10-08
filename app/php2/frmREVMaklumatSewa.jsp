@@ -29,6 +29,9 @@
           <td><a href="#" class="style2" onclick="javascript:janaPenyataAkaun('$idHasil')"> Penyata Akaun </a></td>
         </tr>
         <tr>
+          <td><a href="#" class="style2" onclick="javascript:janaSuratIringanResit('$idHasil')"> Surat Kuiri Cek </a></td>
+        </tr>
+        <tr>
           <td><a href="#" class="style2" onclick="javascript:janaSuratIringanResit('$idHasil')"> Surat Iringan Resit</a></td>
         </tr>
         <tr>

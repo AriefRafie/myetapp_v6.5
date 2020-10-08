@@ -3,14 +3,20 @@ package ekptg.view.htp.online.aduan;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
 import lebah.db.Db;
+import lebah.db.DbException;
 import lebah.db.SQLRenderer;
 import lebah.portal.action.AjaxModule;
 
@@ -20,6 +26,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 
 import ekptg.helpers.DB;
+import ekptg.helpers.HTML;
 import ekptg.helpers.InternalUserUtil;
 import ekptg.helpers.Paging;
 import ekptg.model.online.aduan.ComplainStatus;
@@ -61,6 +68,8 @@ public class PengurusanAduanTanah extends AjaxModule {
 	private IComplaintEmailNotification emailNotification;
 	HttpSession session = null;
 	String action = null;
+	Db db1 = null;
+	List aduanDetails = null;
 
 	@Override
 	public String doAction() throws Exception {
@@ -95,13 +104,87 @@ public class PengurusanAduanTanah extends AjaxModule {
 		else if(command.equals("simpanComplaint")){
 			simpanComplaint();
 		}
-		else if(command.equals("daftarAgih") || command.equals("doChangeTindakan")){
+		else if(command.equals("daftarAgih") || command.equals("doChangeTindakan") || command.equals("doChangePegawai")){
 			mode ="update";
 			String idComplaint = getParam("idComplaint");
 			viewComplaint(idComplaint);
+			String idCategory = getParam("idCategory");
+			myLog.info("idCategory >>> "+idCategory);
+
+			String idPejabatJKPTGN = getParam("socPejabatJkptgn").equals("")?"-1":getParam("socPejabatJkptgn");
+			String idKementerian = getParam("socKementerian").equals("")?"-1":getParam("socKementerian");
+			String idSeksyen = getParam("socSeksyen").equals("")?"-1":getParam("socSeksyen");
+			String idPtg = getParam("socPtg").equals("")?"-1":getParam("socPtg");
+			String idPegawai = getParam("socPegawai").equals("")?"-1":getParam("socPegawai");
+			if(idCategory.equals("1")){
+				myLog.info("masuk sini tak 1 ");
+				context.put("selectTindakan", HTML.SelectSeksyen("socSeksyen",
+						Long.parseLong(idSeksyen), "",
+						" onChange=\"doChangeTindakan();\""));
+				context.put("selectPegawai", HTML.SelectPegawaiMengikutSeksyen(idSeksyen,"0","socPegawai", Long.parseLong(idPegawai), "",
+						"onChange=\"doChangePegawai()\" style=\"width:240\""));
+			}
+			else if(idCategory.equals("2")){
+				myLog.info("masuk sini tak 2 ");
+				context.put("selectTindakan", HTML.SelectPejabatJKPTGN("socPejabatJkptgn",
+						Long.parseLong(idPejabatJKPTGN), "",
+						" onChange=\"doChangeTindakan();\""));
+				context.put("selectPegawai", "");
+			}
+			else if(idCategory.equals("3")){
+				myLog.info("masuk sini tak 3 ");
+				context.put("selectTindakan", HTML.SelectPejabatPTG("socPtg",
+						Long.parseLong(idPtg), "",
+						" onChange=\"doChangeTindakan();\""));
+				context.put("selectPegawai", "");
+			}
+			else if(idCategory.equals("4")){
+				myLog.info("masuk sini tak 4 ");
+				context.put("selectTindakan", HTML.SelectKementerian("socKementerian",
+						Long.parseLong(idKementerian), "",
+						" onChange=\"doChangeTindakan();\""));
+				context.put("selectPegawai", "");
+
+			}else{
+				myLog.info("masuk sini tak else");
+				context.put("selectTindakan", "");
+			}
+			context.put("idCategory", idCategory);
+			if ("1".equals(idCategory)) {
+				this.context.put("selected", "");
+				this.context.put("selectedL1", "selected");
+				this.context.put("selectedL2", "");
+				this.context.put("selectedL3", "");
+				this.context.put("selectedL4", "");
+	    	} else if ("2".equals(idCategory)) {
+				this.context.put("selected", "");
+				this.context.put("selectedL1", "");
+				this.context.put("selectedL2", "selected");
+				this.context.put("selectedL3", "");
+				this.context.put("selectedL4", "");
+	    	} else if ("3".equals(idCategory)) {
+				this.context.put("selected", "");
+				this.context.put("selectedL1", "");
+				this.context.put("selectedL2", "");
+				this.context.put("selectedL3", "selected");
+				this.context.put("selectedL4", "");
+	    	} else if ("4".equals(idCategory)) {
+				this.context.put("selected", "");
+				this.context.put("selectedL1", "");
+				this.context.put("selectedL2", "");
+				this.context.put("selectedL3", "");
+				this.context.put("selectedL4", "selected");
+	    	} else {
+	    		this.context.put("selected", "selected");
+				this.context.put("selectedL1", "");
+				this.context.put("selectedL2", "");
+				this.context.put("selectedL3", "");
+				this.context.put("selectedL4", "");
+	    	}
+
 			context.put("categories",getCategoryAduan().getComplaintCategory());
 			context.put("idCategory",idKategori);
-			if (!"".equals(idKategori)){
+			if (!"".equals(idKategori) && !"0".equals(idKategori)){
 				context.put("aduanTindakan",getCategoryAduan().getCategory(idKategori).getActions());
 			}
 			vm = PATH+"agihan.jsp";
@@ -199,7 +282,7 @@ public class PengurusanAduanTanah extends AjaxModule {
 			displayComplaint();
 			getProsesStatus();
 		}
-
+		myLog.info("command >>> "+command);
 		context.put("mode", mode);
 		return vm;
 	}
@@ -240,6 +323,21 @@ public class PengurusanAduanTanah extends AjaxModule {
 		//ComplaintResponse response = getHandlerRB().getResponse(idResponse);
 		//context.put("response", response);
 		//getHandler().processComplaint(complaint);
+
+		Db db = null;
+		try {
+			db = new Db();
+			aduanDetails = aduanDetails(idComplaint,idComplaint,session,db);
+		}
+		catch (Exception ex) {
+		throw new DbException(ex.getMessage());
+		}
+		finally {
+			if (db != null)
+				db.close();
+		}
+		System.out.println("aduanDetails >>> "+ aduanDetails);
+		context.put("tanah", aduanDetails);
 	}
 	private void displayAgihan(){
 		String idResponse = getParam("idResponse");
@@ -340,13 +438,14 @@ public class PengurusanAduanTanah extends AjaxModule {
 		//String idComplaint = getParam("idComplaint");
 		String idTindakan = getParam("idTindakan");
 		String arahan = getParam("ulasan");
+		String idPegawai = getParam("socPegawai");
 		ComplaintResponse response = new ComplaintResponse();
 		ComplaintTindakan tindakan = new ComplaintTindakan();
 		tindakan.setId(Long.parseLong(idTindakan));
 		Complaint complaint = new Complaint();
 		complaint.setId(Long.parseLong(idComplaint));
 		complaint.setLoginName(userId);
-		complaint.setIdPegawai(userId);
+		complaint.setIdPegawai(idPegawai);
 		response.setArahan(arahan);
 		response.setJawapan("");
 		response.setComplaint(complaint);
@@ -441,5 +540,98 @@ public class PengurusanAduanTanah extends AjaxModule {
 			e.printStackTrace();
 			this.context.put("error", e.getMessage());
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public List aduanDetails(String idAduan,String USER_ID,HttpSession session,Db db)throws Exception {
+		Db db1 = null;
+
+		ResultSet rs = null;
+		Statement stmt = null;
+		List listJenisAduan = null;
+		String sql = "";
+		try {
+			if(db==null)
+			{
+			db1 = new Db();
+			}
+			else
+			{
+				db1 = db;
+			}
+			stmt = db1.getStatement();
+			sql = " SELECT aduan.NO_FAIL," +
+					" tanah.ID_HAKMILIKADUAN,tanah.ID_ADUAN,tanah.ID_LUAS,tanah.NO_HAKMILIK,tanah.NO_WARTA,tanah.TARIKH_WARTA,tanah.NO_LOT," +
+					" tanah.LUAS,tanah.ID_DAERAH,tanah.ID_NEGERI,tanah.ID_MUKIM,tanah.ID_LOT,tanah.ID_JENISHAKMILIK,N1.NAMA_NEGERI AS NAMA_NEGERITANAH," +
+					" D1.NAMA_DAERAH AS NAMA_DAERAHTANAH,M.NAMA_MUKIM AS NAMA_MUKIMTANAH, J.KETERANGAN AS NAMA_HAKMILIK, L.KETERANGAN AS NAMA_LOT, "+
+					" tanah.ID_SEKSYEN, S.NAMA_SEKSYENUPI AS NAMA_SEKSYENTANAH "+
+					" FROM TBLONLINEEADUAN aduan,TBLHTPHAKMILIKADUAN tanah,TBLRUJNEGERI N1," +
+					" TBLRUJDAERAH D1,TBLRUJMUKIM M,TBLRUJJENISHAKMILIK J,TBLRUJLOT L ,TBLRUJSEKSYENUPI S"+
+					" WHERE tanah.ID_NEGERI = N1.ID_NEGERI(+) AND tanah.ID_DAERAH = D1.ID_DAERAH(+) AND tanah.ID_MUKIM = M.ID_MUKIM(+) AND tanah.ID_SEKSYEN = S.ID_SEKSYENUPI(+)" +
+					" AND tanah.ID_JENISHAKMILIK = J.ID_JENISHAKMILIK(+) AND tanah.ID_LOT = L.ID_LOT(+) "+
+					" AND aduan.ID_EADUAN = '"+idAduan+"' "+
+					" AND tanah.ID_ADUAN = '"+idAduan+"'  ";
+			myLog.info(" ADUAN : SQL aduanDetails :"+ sql);
+			rs = stmt.executeQuery(sql);
+			listJenisAduan = Collections.synchronizedList(new ArrayList());
+			Map h = null;
+			int bil = 0;
+			while (rs.next()) {
+				h = Collections.synchronizedMap(new HashMap());
+				bil++;
+				h.put("BIL",bil);
+				h.put("NO_HAKMILIK",rs.getString("NO_HAKMILIK") == null ? "" : rs.getString("NO_HAKMILIK").toUpperCase());
+				h.put("ID_HAKMILIKADUAN",rs.getString("ID_HAKMILIKADUAN") == null ? "" : rs.getString("ID_HAKMILIKADUAN"));
+				h.put("NO_LOT",rs.getString("NO_LOT") == null ? "" : rs.getString("NO_LOT"));
+				h.put("ID_LOT",rs.getString("ID_LOT") == null ? "" : rs.getString("ID_LOT"));
+				h.put("NO_FAIL",rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL"));
+
+				if (rs.getString("NAMA_NEGERITANAH") == null) {
+					h.put("nama_negeritanah", "");
+				} else {
+					h.put("nama_negeritanah", rs.getString("NAMA_NEGERITANAH").toUpperCase());
+				}
+				if (rs.getString("NAMA_DAERAHTANAH") == null) {
+					h.put("nama_daerahtanah", "");
+				} else {
+					h.put("nama_daerahtanah", rs.getString("NAMA_DAERAHTANAH").toUpperCase());
+				}
+				if (rs.getString("NAMA_MUKIMTANAH") == null) {
+					h.put("nama_mukimtanah", "");
+				} else {
+					h.put("nama_mukimtanah", rs.getString("NAMA_MUKIMTANAH").toUpperCase());
+				}
+				if (rs.getString("NAMA_SEKSYENTANAH") == null) {
+					h.put("nama_seksyentanah", "");
+				} else {
+					h.put("nama_seksyentanah", rs.getString("NAMA_SEKSYENTANAH").toUpperCase());
+				}
+				if (rs.getString("NAMA_HAKMILIK") == null) {
+					h.put("nama_hakmilik", "");
+				} else {
+					h.put("nama_hakmilik", rs.getString("NAMA_HAKMILIK").toUpperCase());
+				}
+				if (rs.getString("NAMA_LOT") == null) {
+					h.put("nama_lot", "");
+				} else {
+					h.put("nama_lot", rs.getString("NAMA_LOT").toUpperCase());
+				}
+
+
+				listJenisAduan.add(h);
+			}
+
+		} finally {
+			if(db==null)
+			{
+				if (rs != null)
+					rs.close();
+				if (stmt != null)
+					stmt.close();
+				if (db1 != null)
+					db1.close();
+			}
+		}
+		return listJenisAduan;
 	}
 }

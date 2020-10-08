@@ -10,7 +10,7 @@ background: #f4eff4 !important;
 <!-- test xxxxx -->
 
  #if($report == 'BorangE' || $report == 'BorangF' || $report == 'BorangG' || $report == 'BorangH' || $report == 'BorangJ' 
- || $report == 'BorangK' || $report == 'BorangL' || $report == 'BorangLB' || $report == 'BorangLC' || $report == 'BorangM'
+ || $report == 'BorangK' || $report == 'BorangL' || $report == 'BorangLB' || $report == 'BorangLC' || $report == 'BorangQ'
  || $report == 'BorangO' || $report == 'BorangP' || $report == 'BorangR')
 #parse("app/ppt/tindakanPegawaiSignPPT.jsp")
 #end
@@ -75,7 +75,11 @@ background: #f4eff4 !important;
    <input name="token" type="hidden" id="token" value="$token"/>
   
                
-#if($token != "" && $report == 'BorangE')
+#if(($token != "" && ($report == 'BorangE' || $report == 'BorangF' || $report == 'BorangG' || $report == 'BorangH' 
+|| $report == 'BorangJ' || $report == 'BorangK' || $report == 'BorangL' || $report == 'BorangLB' || $report == 'BorangLC' 
+|| $report == 'BorangQ') ) || ($token == "" && ($report !='BorangE' && $report != 'BorangF' && $report != 'BorangG' 
+&& $report != 'BorangH' && $report != 'BorangJ' && $report != 'BorangK' && $report != 'BorangL' && $report != 'BorangLB' 
+&& $report != 'BorangLC' && $report != 'BorangQ')))
     	<fieldset><legend><strong>Cetakan Laporan</strong></legend>
         	<table width="100%" border="0" cellspacing="2" cellpadding="2" margin="10px">
         	
@@ -312,13 +316,20 @@ background: #f4eff4 !important;
                	<td valign="top">Waktu Siasatan</td>
                	<td valign="top">:</td>
                	<td valign="top">
-               		<input type="text" id="masa_siasatan" name="masa_siasatan" value="" style="width:50px"/>
+               		<input type="text" id="masa_siasatan_awal" name="masa_siasatan_awal" value="" style="width:50px"/>
                		<select name="$!statusBL" style="width:90px">
       					<option value="" #if($!listTanah.jenis_pilih=="") selected=selected #end >Sila Pilih</option>	
 			      		<option value="1" #if($!listTanah.jenis_pilih=="1") selected=selected #end>PAGI</option>
 			      		<option value="2" #if($!listTanah.jenis_pilih=="2") selected=selected #end>TENGAH HARI</option>	
 			      		<option value="3" #if($!listTanah.jenis_pilih=="3") selected=selected #end>PETANG</option>	
-			      	</select> 
+			      	</select> Hingga 
+			      	<input type="text" id="masa_siasatan_akhir" name="masa_siasatan_akhir" value="" style="width:50px"/>
+               		<select name="$!statusBL" style="width:90px">
+      					<option value="" #if($!listTanah.jenis_pilih=="") selected=selected #end >Sila Pilih</option>	
+			      		<option value="1" #if($!listTanah.jenis_pilih=="1") selected=selected #end>PAGI</option>
+			      		<option value="2" #if($!listTanah.jenis_pilih=="2") selected=selected #end>TENGAH HARI</option>	
+			      		<option value="3" #if($!listTanah.jenis_pilih=="3") selected=selected #end>PETANG</option>	
+			      	</select>
                </tr>
                #end
                
@@ -1416,6 +1427,10 @@ background: #f4eff4 !important;
                 	
                 	#if($report == 'BorangK')
                 	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangK('$!id_fail','$!id_hakmilik')">
+                	#end
+                	
+                	#if($report == 'BorangQ')
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangQ('$!id_permohonan','$!id_hakmilik')">
                 	#end
                 	
                 	#if($report == 'BorangL')
@@ -2714,6 +2729,40 @@ function cetakBorangK(idfail,idhakmilik) {
 	
 }
 
+
+function cetakBorangQ(id_permohonan,idhakmilik) {
+
+	alert
+	if (document.${formName}.sorSelectNoFail.value == ""){
+		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
+		document.${formName}.sorSelectNoFail.focus(); 
+		return;
+	}
+	else{
+
+		var valType = document.${formName}.sorSelectNoFail.value;
+		var nofail = "";
+		
+		if(valType=="1"){
+			nofail = document.${formName}.no_fail.value;
+		}else if(valType=="2"){
+			nofail = document.${formName}.no_rujukan_ptg.value;
+		}else if(valType=="3"){
+			nofail = document.${formName}.no_rujukan_ptd.value;
+		}else if(valType=="4"){
+			nofail = document.${formName}.no_rujukan_upt.value;
+		}else{
+			nofail = document.${formName}.no_fail.value;
+		}
+
+		var url = "../../servlet/ekptg.report.ppt.BorangQ?idhakmilik="+idhakmilik;
+		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+		if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+		if (hWnd.focus != null) hWnd.focus();
+	}
+	
+}
 
 function cetakAfidavit(idhakmilikpb) {
 

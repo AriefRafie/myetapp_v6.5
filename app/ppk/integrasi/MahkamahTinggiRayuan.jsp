@@ -168,7 +168,13 @@ input[readonly] {
 						<input type="text" name="noKPPemohon" value="$!noKPLainPemohon" size="25" readonly="readonly" />&nbsp;&nbsp;(Lain-lain)</td>	
 					#end
 					 -->	
+				</tr><!-- jantinaPerayu -->
+				<tr>
+					<td align="right">Jantina Perayu</td>
+					<td>:</td>
+					<td colspan="2"><input type="text" name="jantinaPerayu" value="$!jantinaPerayu" size="25" style="text-transform:uppercase;" readonly="readonly" /></td>
 				</tr>
+				
 				<tr>
 					<td align="right">Umur Perayu</td>
 					<td>:</td>

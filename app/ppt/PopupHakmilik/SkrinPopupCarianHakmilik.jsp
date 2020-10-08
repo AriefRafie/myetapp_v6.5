@@ -37,7 +37,7 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
     <td>
 <fieldset>
 <legend>CARIAN HAKMILIK
-</legend>`
+</legend>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
 
 <tr>

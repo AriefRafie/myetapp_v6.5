@@ -29,8 +29,12 @@ import org.apache.log4j.Logger;
 import ekptg.engine.EmailSender;
 import ekptg.helpers.DB;
 import ekptg.helpers.Paging;
-import ekptg.engine.EmailSender;
-import ekptg.engine.EmailProperty;
+//import ekptg.intergration.EkptgEmailSender;
+//import ekptg.intergration.EmailProperty;
+
+import ekptg.view.esaduan.EkptgEmailSender;
+import ekptg.view.esaduan.EmailProperty;
+
 import ekptg.model.esaduan.EtappSupportAduanData;
 import ekptg.model.ppk.FrmHeaderPpk;
 import ekptg.model.ppk.FrmKebenaranKemaskiniFailData;
@@ -173,8 +177,8 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 		context.put("pemohonedit", "");
 		context.put("getMainFail", "");
 		context.put("txtTujPinda","");
-		
-	
+		context.put("txtMula", "");
+		context.put("txtAkhir", "");
 
 		if (command.equals("bukaMaklumbalasTeknikal")) {
 			
@@ -331,6 +335,432 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 			}
 		}
 		
+		else if (command.equals("simpanSelesaiPinda")) {
+			String id_permohonan = "";
+			String check_selesai = getParam("check_selesai");
+			setSimpanSelesaiPinda(getParam("id_fail_carian"),session, getParam("id_permohonan_kebenaran"),check_selesai );
+
+			
+			context.put("id_fail_carian", getParam("id_fail_carian"));
+			String txtNoFailSub = getParam("txtNoFailSub");
+			
+			updateNotification(session,getParam("id_fail_carian"),usid); 
+
+			if (logic.getMainFail(getParam("id_fail_carian")).get("NO_FAIL") != null) {
+				context.put(
+						"txtNoFailSub_selected",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"NO_FAIL"));
+			}
+			context.put("txtNoFailSub",
+					logic.getMainFail(getParam("id_fail_carian"))
+							.get("NO_FAIL"));
+
+			// logic.setListSub(getParam("id_fail_carian"));
+			// list_sub = logic.getListSub();
+			context.put("list_sub", "");
+			context.put(
+					"list_fail",
+					logic.search_nofail(
+							logic.getMainFail(getParam("id_fail_carian")).get(
+									"NO_FAIL")
+									+ "", usid));
+			context.put("cari_sub", "yes");
+			// list_status = logic.list_status(getParam("id_fail_carian"));
+			context.put("list_status", "");
+			context.put("view_list_fail", "yes");
+			
+			if (logic.getMainFail(getParam("id_fail_carian")).get("ID_FAIL") != null) {
+				id_permohonan = logic.getMainFail(getParam("id_fail_carian"))
+						.get("ID_PERMOHONAN") + "";
+				context.put(
+						"ID_FAIL_TEMP",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"ID_FAIL"));
+				context.put(
+						"ID_PERMOHONAN_TEMP",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"ID_PERMOHONAN"));
+				context.put(
+						"NO_FAIL_TEMP",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"NO_FAIL"));
+				context.put(
+						"ID_SUBURUSAN_TEMP",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"ID_SUBURUSAN"));
+
+			} else {
+				context.put("ID_FAIL_TEMP", "");
+				context.put("ID_PERMOHONAN_TEMP", "");
+				context.put("NO_FAIL_TEMP", "");
+				context.put("ID_SUBURUSAN_TEMP", "");
+
+			}
+			headerppk_baru(session, id_permohonan, "Y", "", "T");
+			context.put("getMainFail", logic.getMainFail(getParam("id_fail_carian")));
+			// urusan_status_selesai(session);
+
+			context.put("listSemak", "");
+			context.put("listSemak_size", "");
+			context.put("nofail", "");
+			context.put("id_permohonan", "");
+			context.put("id_fail", "");
+			context.put("id_status", "");
+			context.put("id_suburusanstatusfail", "");
+			context.put("keterangan_status", "");
+			context.put("seksyen", "");
+			context.put("id_perintah", "");
+			context.put("id_keputusanpermohonan", "");
+			context.put("id_perbicaraan", "");
+			context.put("id_permohonan", "");
+
+			context.put("open_aduancarian", "yes");
+			context.put("log_aduan_cari", "");
+			context.put("user_id_cari", "");
+			context.put("no_fail_cari", "");
+			context.put("tarikh_aduan_hantar_date_cari", "");
+			context.put("id_statusesaduan_cari", "");
+			context.put("id_jenismodulesaduan_cari", "");
+			context.put("view_skrin", "aduan");
+
+			// paparAduan();
+			context.put("open_aduancarian", "yes");
+			context.put("open_maklumat_aduan", "yes");
+			context.put("open_upload", "yes");
+			context.put("open_maklumbalas", "yes");
+			context.put("open_agihan", "yes");
+
+			context.put("open_maklumat_teknikal", "yes");
+
+			String id_fail_atheader = getParam("id_fail_carian");
+			if (!id_fail_atheader.equals("") && !id_fail_atheader.equals(null)) {
+				listComment_aduan_tech = logic.senarai_comment_aduan(
+						id_fail_atheader, "2");
+				context.put("listComment_aduan_tech", listComment_aduan_tech);
+				listAgihan_aduan = logic.senarai_agihan_aduan(id_fail_atheader);
+				context.put("listAgihan_aduan", listAgihan_aduan);
+				listTechTeam_aduan = logic.senarai_admin_team(user_negeri_login,
+						role, userId,"all",id_fail_atheader);
+				context.put("listTechTeam_aduan", listTechTeam_aduan);
+			}
+
+			if (logic.getMainFail(getParam("id_fail_carian")).get("ID_STATUS") != null) {
+				context.put(
+						"latest_idstatus",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"ID_STATUS"));
+			}
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"ID_PERMOHONAN") != null) {
+				context.put(
+						"id_permohonan_kebenaran",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"ID_PERMOHONAN"));
+			}
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"FLAG_KEBENARAN_EDIT") != null) {
+				context.put(
+						"flag_kebenaran_edit",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"FLAG_KEBENARAN_EDIT"));
+			}
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"USER_ID_KEBENARAN_EDIT") != null) {
+				context.put(
+						"user_id_kebenaran_edit",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"USER_ID_KEBENARAN_EDIT"));
+			}
+			if (logic.getMainFail(getParam("id_fail_carian")).get("USER_NAME") != null) {
+				context.put(
+						"nama_user_yg_beri_kebenaran",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"USER_NAME"));
+			}
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"CATATAN_KEBENARAN_EDIT") != null) {
+				context.put(
+						"catatan_kebenaran_edit",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"CATATAN_KEBENARAN_EDIT"));
+			}
+
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"ID_PEGAWAI_MOHON_EDIT") != null) {
+				context.put(
+						"pilihpegawai",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"ID_PEGAWAI_MOHON_EDIT"));
+			}
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"ID_PEMOHON_MOHON_EDIT") != null) {
+				context.put(
+						"pemohonedit",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"ID_PEMOHON_MOHON_EDIT"));
+			}
+			
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"TUJUAN_PINDAAN") != null) {
+				context.put(
+						"txtTujPinda",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"TUJUAN_PINDAAN"));
+			}
+			
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"TARIKH_MULA_PINDA") != null) {
+				context.put(
+						"txtMula",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"TARIKH_MULA_PINDA"));
+			}
+			
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"TARIKH_AKHIR_PINDA") != null) {
+				context.put(
+						"txtAkhir",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"TARIKH_AKHIR_PINDA"));
+			}
+			
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"TARIKH_SELESAI_PINDA") != null) {
+				context.put(
+						"check_selesai",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"TARIKH_SELESAI_PINDA"));
+			}
+			
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"FLAG_PINDA_SELESAI") != null) {
+				context.put(
+						"flag_pinda_selesai",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"FLAG_PINDA_SELESAI"));
+			}
+			
+			System.out.println("flag_pinda ==="+logic.getMainFail(getParam("id_fail_carian")).get("FLAG_PINDA_SELESAI"));
+
+
+			
+			
+		}
+		
+		else if (command.equals("simpanSemak")) {
+			String id_permohonan = "";
+			String check_selesai = getParam("check_selesai");
+			setSimpanSelesaiPinda(getParam("id_fail_carian"),session, getParam("id_permohonan_kebenaran"),check_selesai );
+
+			
+			context.put("id_fail_carian", getParam("id_fail_carian"));
+			String txtNoFailSub = getParam("txtNoFailSub");
+			
+			updateNotification(session,getParam("id_fail_carian"),usid); 
+
+			if (logic.getMainFail(getParam("id_fail_carian")).get("NO_FAIL") != null) {
+				context.put(
+						"txtNoFailSub_selected",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"NO_FAIL"));
+			}
+			context.put("txtNoFailSub",
+					logic.getMainFail(getParam("id_fail_carian"))
+							.get("NO_FAIL"));
+
+			// logic.setListSub(getParam("id_fail_carian"));
+			// list_sub = logic.getListSub();
+			context.put("list_sub", "");
+			context.put(
+					"list_fail",
+					logic.search_nofail(
+							logic.getMainFail(getParam("id_fail_carian")).get(
+									"NO_FAIL")
+									+ "", usid));
+			context.put("cari_sub", "yes");
+			// list_status = logic.list_status(getParam("id_fail_carian"));
+			context.put("list_status", "");
+			context.put("view_list_fail", "yes");
+			
+			if (logic.getMainFail(getParam("id_fail_carian")).get("ID_FAIL") != null) {
+				id_permohonan = logic.getMainFail(getParam("id_fail_carian"))
+						.get("ID_PERMOHONAN") + "";
+				context.put(
+						"ID_FAIL_TEMP",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"ID_FAIL"));
+				context.put(
+						"ID_PERMOHONAN_TEMP",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"ID_PERMOHONAN"));
+				context.put(
+						"NO_FAIL_TEMP",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"NO_FAIL"));
+				context.put(
+						"ID_SUBURUSAN_TEMP",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"ID_SUBURUSAN"));
+
+			} else {
+				context.put("ID_FAIL_TEMP", "");
+				context.put("ID_PERMOHONAN_TEMP", "");
+				context.put("NO_FAIL_TEMP", "");
+				context.put("ID_SUBURUSAN_TEMP", "");
+
+			}
+			headerppk_baru(session, id_permohonan, "Y", "", "T");
+			context.put("getMainFail", logic.getMainFail(getParam("id_fail_carian")));
+			// urusan_status_selesai(session);
+
+			context.put("listSemak", "");
+			context.put("listSemak_size", "");
+			context.put("nofail", "");
+			context.put("id_permohonan", "");
+			context.put("id_fail", "");
+			context.put("id_status", "");
+			context.put("id_suburusanstatusfail", "");
+			context.put("keterangan_status", "");
+			context.put("seksyen", "");
+			context.put("id_perintah", "");
+			context.put("id_keputusanpermohonan", "");
+			context.put("id_perbicaraan", "");
+			context.put("id_permohonan", "");
+
+			context.put("open_aduancarian", "yes");
+			context.put("log_aduan_cari", "");
+			context.put("user_id_cari", "");
+			context.put("no_fail_cari", "");
+			context.put("tarikh_aduan_hantar_date_cari", "");
+			context.put("id_statusesaduan_cari", "");
+			context.put("id_jenismodulesaduan_cari", "");
+			context.put("view_skrin", "aduan");
+
+			// paparAduan();
+			context.put("open_aduancarian", "yes");
+			context.put("open_maklumat_aduan", "yes");
+			context.put("open_upload", "yes");
+			context.put("open_maklumbalas", "yes");
+			context.put("open_agihan", "yes");
+
+			context.put("open_maklumat_teknikal", "yes");
+
+			String id_fail_atheader = getParam("id_fail_carian");
+			if (!id_fail_atheader.equals("") && !id_fail_atheader.equals(null)) {
+				listComment_aduan_tech = logic.senarai_comment_aduan(
+						id_fail_atheader, "2");
+				context.put("listComment_aduan_tech", listComment_aduan_tech);
+				listAgihan_aduan = logic.senarai_agihan_aduan(id_fail_atheader);
+				context.put("listAgihan_aduan", listAgihan_aduan);
+				listTechTeam_aduan = logic.senarai_admin_team(user_negeri_login,
+						role, userId,"all",id_fail_atheader);
+				context.put("listTechTeam_aduan", listTechTeam_aduan);
+			}
+
+			if (logic.getMainFail(getParam("id_fail_carian")).get("ID_STATUS") != null) {
+				context.put(
+						"latest_idstatus",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"ID_STATUS"));
+			}
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"ID_PERMOHONAN") != null) {
+				context.put(
+						"id_permohonan_kebenaran",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"ID_PERMOHONAN"));
+			}
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"FLAG_KEBENARAN_EDIT") != null) {
+				context.put(
+						"flag_kebenaran_edit",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"FLAG_KEBENARAN_EDIT"));
+			}
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"USER_ID_KEBENARAN_EDIT") != null) {
+				context.put(
+						"user_id_kebenaran_edit",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"USER_ID_KEBENARAN_EDIT"));
+			}
+			if (logic.getMainFail(getParam("id_fail_carian")).get("USER_NAME") != null) {
+				context.put(
+						"nama_user_yg_beri_kebenaran",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"USER_NAME"));
+			}
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"CATATAN_KEBENARAN_EDIT") != null) {
+				context.put(
+						"catatan_kebenaran_edit",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"CATATAN_KEBENARAN_EDIT"));
+			}
+
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"ID_PEGAWAI_MOHON_EDIT") != null) {
+				context.put(
+						"pilihpegawai",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"ID_PEGAWAI_MOHON_EDIT"));
+			}
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"ID_PEMOHON_MOHON_EDIT") != null) {
+				context.put(
+						"pemohonedit",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"ID_PEMOHON_MOHON_EDIT"));
+			}
+			
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"TUJUAN_PINDAAN") != null) {
+				context.put(
+						"txtTujPinda",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"TUJUAN_PINDAAN"));
+			}
+			
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"TARIKH_MULA_PINDA") != null) {
+				context.put(
+						"txtMula",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"TARIKH_MULA_PINDA"));
+			}
+			
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"TARIKH_AKHIR_PINDA") != null) {
+				context.put(
+						"txtAkhir",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"TARIKH_AKHIR_PINDA"));
+			}
+			
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"TARIKH_SELESAI_PINDA") != null) {
+				context.put(
+						"check_selesai",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"TARIKH_SELESAI_PINDA"));
+			}
+			
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"FLAG_PINDA_SELESAI") != null) {
+				context.put(
+						"flag_pinda_selesai",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"FLAG_PINDA_SELESAI"));
+			}
+			
+			System.out.println("flag_pinda ==="+logic.getMainFail(getParam("id_fail_carian")).get("FLAG_PINDA_SELESAI"));
+
+
+			
+			
+		}
+		
 		else if (command.equals("simpanPilihanPegawai")) {
 			
 			context.put("id_fail_carian", getParam("id_fail_carian"));
@@ -358,15 +788,19 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 			context.put("list_status", "");
 			context.put("view_list_fail", "yes");
 
+			String tarikhMula = getParam("txtMula");
+			String tarikhAkhir = getParam("txtAkhir");
+			
 			setSimpanPilihanPegawai(getParam("id_fail_carian"),session, getParam("id_permohonan_kebenaran"),
 					getParam("user_id_kebenaran_edit"),
 					getParam("flag_kebenaran_edit"),
-					getParam("catatan_kebenaran_edit"),getParam("pilihpegawai"),getParam("txtTujPinda"));
+					getParam("catatan_kebenaran_edit"),getParam("pilihpegawai"),getParam("txtTujPinda"), tarikhMula, tarikhAkhir );
 			
 			
 			String tujuan = "Pemakluman Memohon Kebenaran Mengemaskini Fail "+txtNoFailSub+" oleh Pegawai";
 			String pegawaiAgihan = getParam("pilihpegawai");
 			String idpegawaiMemohon = getParam("userId");
+
 			String namaPegawaiMemohon = (String) user_name.get("USER_NAME");
 			
 			SimpleDateFormat sdfDate = new SimpleDateFormat("dd/MM/yyyy");//dd/MM/yyyy
@@ -375,7 +809,7 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 		    String namaSiMati = logic.getNamaSiMati(getParam("id_permohonan_kebenaran"));
 		    
 			//aishah 27/02/2017
-			hantarEmel("content","Tindakan Pengarah/Pegawai untuk Permohonan Kebenaran Kemaskini Fail",txtNoFailSub, tujuan,pegawaiAgihan ,idpegawaiMemohon,namaPegawaiMemohon,tarikMohon,namaSiMati);	
+			//salnizam disablekan dulu hantar email ---> hantarEmel("content","Tindakan Pengarah/Pegawai untuk Permohonan Kebenaran Kemaskini Fail",txtNoFailSub, tujuan,pegawaiAgihan ,idpegawaiMemohon,namaPegawaiMemohon,tarikMohon,namaSiMati);	
 			
 			
 			defaultList("");
@@ -402,6 +836,7 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 			context.put("id_statusesaduan_cari", "");
 			context.put("id_jenismodulesaduan_cari", "");
 			context.put("view_skrin", "aduan");
+			context.put("disableButtonSimpan", "disable");
 
 			// paparAduan();
 			context.put("open_aduancarian", "yes");
@@ -456,6 +891,7 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 
 			}
 			headerppk_baru(session, id_permohonan, "Y", "", "T");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			context.put("getMainFail", logic.getMainFail(getParam("id_fail_carian")));
 			if (logic.getMainFail(getParam("id_fail_carian")).get("ID_STATUS") != null) {
 				context.put(
@@ -531,6 +967,22 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 						logic.getMainFail(getParam("id_fail_carian")).get(
 								"TUJUAN_PINDAAN"));
 			}
+			
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"TARIKH_MULA_PINDA") != null) {
+				context.put(
+						"txtMula",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"TARIKH_MULA_PINDA"));
+			}
+			
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"TARIKH_AKHIR_PINDA") != null) {
+				context.put(
+						"txtAkhir",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"TARIKH_AKHIR_PINDA"));
+			}
 
 			
 			
@@ -565,12 +1017,13 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 			// list_status = logic.list_status(getParam("id_fail_carian"));
 			context.put("list_status", "");
 			context.put("view_list_fail", "yes");
-
+			String tarikhMula = getParam("txtMula");
+			String tarikhAkhir = getParam("txtAkhir");
 			setFlagKebenaran(getParam("id_fail_carian"),session, getParam("id_permohonan_kebenaran"),
 					getParam("user_id_kebenaran_edit"),
 					getParam("flag_kebenaran_edit"),
-					getParam("catatan_kebenaran_edit"));
-
+					getParam("catatan_kebenaran_edit"),tarikhMula,tarikhAkhir);
+//tambah tempoh
 			defaultList("");
 			String id_fail_atheader = getParam("id_fail_atheader");
 			if (!id_fail_atheader.equals("") && !id_fail_atheader.equals(null)) {
@@ -702,13 +1155,39 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 						logic.getMainFail(getParam("id_fail_carian")).get(
 								"ID_PEMOHON_MOHON_EDIT"));
 			}
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"TUJUAN_PINDAAN") != null) {
+				context.put(
+						"txtTujPinda",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"TUJUAN_PINDAAN"));
+			}
+			
+			//tambah tempoh		
+			
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"TARIKH_MULA_PINDA") != null) {
+				context.put(
+						"txtMula",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"TARIKH_MULA_PINDA"));
+			}
+			
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"TARIKH_AKHIR_PINDA") != null) {
+				context.put(
+						"txtAkhir",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"TARIKH_AKHIR_PINDA"));
+			}
 		}
 
 		else if (command.equals("daftarAgih")) {
 			
 			context.put("id_fail_carian", getParam("id_fail_carian"));
 			String txtNoFailSub = getParam("txtNoFailSub");
-
+			String tarikhMula = getParam("txtMula");
+			String tarikhAkhir = getParam("txtAkhir");
 			if (logic.getMainFail(getParam("id_fail_carian")).get("NO_FAIL") != null) {
 				context.put(
 						"txtNoFailSub_selected",
@@ -733,7 +1212,7 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 			context.put("list_status", "");
 			context.put("view_list_fail", "yes");
 
-			daftarAgih(logic.getMainFail(getParam("id_fail_carian")).get("ID_PEGAWAI_MOHON_EDIT").toString(),logic.getMainFail(getParam("id_fail_carian")).get("ID_PEMOHON_MOHON_EDIT").toString());
+			daftarAgih(logic.getMainFail(getParam("id_fail_carian")).get("ID_PEGAWAI_MOHON_EDIT").toString(),logic.getMainFail(getParam("id_fail_carian")).get("ID_PEMOHON_MOHON_EDIT").toString(),tarikhMula,tarikhAkhir);
 			defaultList("");
 			String id_fail_atheader = getParam("id_fail_atheader");
 			if (!id_fail_atheader.equals("") && !id_fail_atheader.equals(null)) {
@@ -1278,6 +1757,7 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 			context.put("id_keputusanpermohonan", "");
 			context.put("id_perbicaraan", "");
 			context.put("id_permohonan", "");
+			context.put("disableButtonSimpan", "");
 
 			context.put("open_aduancarian", "yes");
 			context.put("log_aduan_cari", "");
@@ -1294,6 +1774,7 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 			context.put("open_upload", "yes");
 			context.put("open_maklumbalas", "yes");
 			context.put("open_agihan", "yes");
+			context.put("papar_selesai", "yes");
 
 			context.put("open_maklumat_teknikal", "yes");
 
@@ -1373,6 +1854,30 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 								"TUJUAN_PINDAAN"));
 			}
 			
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"TARIKH_MULA_PINDA") != null) {
+				context.put(
+						"txtMula",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"TARIKH_MULA_PINDA"));
+			}
+			
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"TARIKH_AKHIR_PINDA") != null) {
+				context.put(
+						"txtAkhir",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"TARIKH_AKHIR_PINDA"));
+			}
+			
+			if (logic.getMainFail(getParam("id_fail_carian")).get(
+					"FLAG_PINDA_SELESAI") != null) {
+				context.put(
+						"flag_pinda_selesai",
+						logic.getMainFail(getParam("id_fail_carian")).get(
+								"FLAG_PINDA_SELESAI"));
+			}
+			
 			//System.out.println("tujuan pindaan ==="+logic.getMainFail(getParam("id_fail_carian")).get("TUJUAN_PINDAAN"));
 
 		} else {
@@ -1402,6 +1907,8 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 			context.put("list_sub", "");
 			context.put("list_fail", "");
 			context.put("txtTujPinda", "");
+			context.put("txtMula", "");
+			context.put("txtAkhir", "");
 			
 
 			context.put("view_skrin", "aduan");
@@ -1429,7 +1936,7 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 		setupPage(session, action, list_aduan);
 	}
 
-	private void daftarAgih(String id_pegawai,String id_pemohon) throws Exception {
+	private void daftarAgih(String id_pegawai,String id_pemohon, String tarikhMula, String tarikhAkhir) throws Exception {
 		if (!getParam("id_fail_atheader").equals("")) {
 			String[] selectagih = this.request.getParameterValues("selectagih");
 			String[] catatan_agihan = this.request
@@ -1444,7 +1951,7 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 					myLogger.info("selectagih :" + selectagih[i]);
 					myLogger.info("catatan_agihan :" + catatan_agihan[i]);
 					addAgihan(session, selectagih[i], catatan_agihan[i],
-							id_fail_atheader,id_pegawai,id_pemohon);
+							id_fail_atheader,id_pegawai,id_pemohon, tarikhMula, tarikhAkhir);
 
 					//id_penerima_agihan_array.add(selectagih[i]);
 					
@@ -1574,7 +2081,7 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 
 	
 	private void addAgihan(HttpSession session, String user_agih_id,
-			String catatan_agihan, String id_fail,String id_pegawai,String id_pemohon) throws Exception {
+			String catatan_agihan, String id_fail,String id_pegawai,String id_pemohon, String tarikhMula, String tarikhAkhir) throws Exception {
 		Connection conn = null;
 		Db db = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -1599,6 +2106,8 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 			r.add("ID_KEMASKINI", user_id);
 			r.add("TARIKH_MASUK", r.unquote("sysdate"));
 			r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
+			r.add("TARIKH_MULA_PINDA", tarikhMula);
+			r.add("TARIKH_AKHIR_PINDA", tarikhAkhir);
 			sql = r.getSQLInsert("TBLEDITAGIHAN");
 			myLogger.info("INSERT AGIHAN " + sql.toUpperCase());
 			stmt.executeUpdate(sql);
@@ -1848,7 +2357,7 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 						} else {
 							sql1 = r.getSQLInsert("TBLEDITNOTIFIKASI");
 						}
-						myLogger.info("UPDATE/INSERT NOTIFY :"+sql);
+						myLogger.info("UPDATE/INSERT NOTIFY :"+sql1);
 						stmt.executeUpdate(sql1);
 						conn.commit();
 
@@ -2377,7 +2886,7 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 		EmailProperty pro = EmailProperty.getInstance();
 		String EMAIL_HOST = pro.getHost();
 
-		EmailSender email = EmailSender.getInstance();
+		EkptgEmailSender email = EkptgEmailSender.getInstance();
 
 		/*
 		 * if(EMAIL_HOST.equals("mail.hla-group.com")){ email.FROM =
@@ -2787,7 +3296,7 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 
 	private void setFlagKebenaran(String id_fail,HttpSession session, String id_permohonan,
 			String user_id_kebenaran_edit, String flag_kebenaran_edit,
-			String catatan_kebenaran_edit) throws Exception {
+			String catatan_kebenaran_edit, String tarikhMula, String tarikhAkhir) throws Exception {
 		Connection conn = null;
 		Db db = null;
 		String sql1 = "";
@@ -2804,6 +3313,8 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 			} else {
 				r.add("user_id_kebenaran_edit", user_id_kebenaran_edit);
 				r.add("catatan_kebenaran_edit", catatan_kebenaran_edit);
+				r.add("tarikh_mula_pinda", tarikhMula);
+				r.add("tarikh_akhir_pinda", tarikhAkhir);
 			}
 			r.add("flag_kebenaran_edit", flag_kebenaran_edit);
 			sql1 = r.getSQLUpdate("TBLPPKPERMOHONAN");
@@ -2836,11 +3347,60 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 		}
 
 	}
+	
+	private void setSimpanSelesaiPinda(String id_fail,HttpSession session, String id_permohonan,
+			String flag_selesai_pinda) throws Exception {
+		Connection conn = null;
+		Db db = null;
+		String sql1 = "";
+		String user_id_login = (String) session.getAttribute("_ekptg_user_id");
+		
+		
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			r.update("ID_PERMOHONAN", id_permohonan);
+			
+			//r.add("TARIKH_MULA_PINDA", tarikh_selesai);
+			r.add("TARIKH_SELESAI_PINDA", r.unquote("sysdate"));
+			r.add("FLAG_PINDA_SELESAI", flag_selesai_pinda);
+			
+			sql1 = r.getSQLUpdate("TBLPPKPERMOHONAN");
+			myLogger.info("UPDATE TARIKH dan FLAG SELESAI" + sql1);
+			stmt.executeUpdate(sql1);			
+			conn.commit();
+			
+			
+			
+			//setNotificationPegawaiEdit(session, id_fail,user_id_login, "2",id_pegawai);
+			
+			
+		} catch (SQLException se) {
+			try {
+				conn.rollback();
+			} catch (SQLException se2) {
+				throw new Exception("Rollback error:" + se2.getMessage());
+			}
+			se.printStackTrace();
+			throw new Exception("Ralat Simpan Aduan:" + se.getMessage());
+			
+			
+			
+		} finally {
+			if (conn != null)
+				conn.close();
+			if (db != null)
+				db.close();
+		}
 
+	}
 	
 	private void setSimpanPilihanPegawai(String id_fail,HttpSession session, String id_permohonan,
 			String user_id_kebenaran_edit, String flag_kebenaran_edit,
-			String catatan_kebenaran_edit,String id_pegawai, String tujuan_pindaan) throws Exception {
+			String catatan_kebenaran_edit,String id_pegawai, String tujuan_pindaan, String tarikhMula, String tarikhAkhir) throws Exception {
 		Connection conn = null;
 		Db db = null;
 		String sql1 = "";
@@ -2867,7 +3427,8 @@ public class FrmKebenaranKemaskiniFail extends AjaxBasedModule {
 			}
 			
 			r.add("TUJUAN_PINDAAN", tujuan_pindaan);
-			
+			r.add("TARIKH_MULA_PINDA", tarikhMula);
+			r.add("TARIKH_AKHIR_PINDA", tarikhAkhir);
 			sql1 = r.getSQLUpdate("TBLPPKPERMOHONAN");
 			myLogger.info("UPDATE PILIHAN PEGAWAI" + sql1);
 			stmt.executeUpdate(sql1);			
