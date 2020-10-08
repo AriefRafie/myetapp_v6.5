@@ -160,8 +160,8 @@
     #else
     #if($idStatus == '1610207') <!-- 1610207 -->
     <input type="button" name="cmdRenewLesen" id="cmdRenewLesen" value="Pembaharuan Lesen" onClick="javascript:daftarPembaharuan('$!idFail','$!idPermohonan','$!idStatus') "/>  
-    <input type="button" name="cmdBorangA" id="cmdBorangA" value="Pembaharuan Borang A" onClick="javascript:daftarPembaharuanBorangA('$!idFail','$!idPermohonan','$!idStatus','$!namaPemohon','$!idJadualKeduaLesen','$!noLesen') "/>   
-    <input type="button" name="cmdBorangB" id="cmdBorangB" value="Pembaharuan Borang B" onClick="javascript:daftarPembaharuanBorangB('$!idFail','$!idPermohonan','$!idStatus','$!namaPemohon','$!idJadualKeduaLesen','$!noLesen') "/>    	 
+    <input type="button" name="cmdBorangA" id="cmdBorangA" value="Borang A" onClick="javascript:daftarPembaharuanBorangA('$!idFail','$!idPermohonan','$!idStatus','$!namaPemohon','$!idJadualKeduaLesen','$!noLesen') "/>   
+    <input type="button" name="cmdBorangB" id="cmdBorangB" value="Borang B" onClick="javascript:daftarPembaharuanBorangB('$!idFail','$!idPermohonan','$!idStatus','$!namaPemohon','$!idJadualKeduaLesen','$!noLesen') "/>    	 
     #else
     #if ($idStatus !='' && $idStatus != '1610207')
     <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
@@ -208,6 +208,55 @@ function doBacklist() {
 function doChangeNegeri() {
 // 	document.${formName}.submit("doChangeNegeri");
  	doAjaxCall${formName}("doChangeNegeri");
+}
+//Baru Add 29092020
+/*function doChangeWarganegara() {
+	doAjaxCall${formName}("doChangeWarganegara");
+}*/
+
+function getLainlain(id) {
+
+	if (document.${formName}.socWarganegara.value == "13")
+	{
+
+		document.getElementById(id).style.display="";
+	}
+	
+	else
+	{
+
+		document.getElementById(id).style.display="none";
+	}
+}
+
+function sembunyikanLainLainNegara(id) {
+
+	document.getElementById(id).style.display="none";
+}
+
+function getLainlainBangsa(id) {
+
+	if (document.${formName}.socBangsa.value == "7")
+	{
+
+		document.getElementById(id).style.display="";
+	}
+	
+	else
+	{
+
+		document.getElementById(id).style.display="none";
+	}
+}
+
+function LainLainBangsa(id) {
+
+	document.getElementById(id).style.display="none";
+}
+//END ADD
+
+function doChangeBangsa() {
+	doAjaxCall${formName}("doChangeBangsa");
 }
 function validateCurrency(elmnt,content,content2) {
 	content = content.replace(/,/g,'');
@@ -423,6 +472,22 @@ function simpanPengarah(){
   		document.${formName}.txtNamaPengarah.focus(); 
 		return; 
 	}
+	if(document.${formName}.socJenisPengenalan.value == ""){
+		alert('Sila pilih Jenis Pengenalan.');
+  		document.${formName}.socJenisPengenalan.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtNoPengenalan.value == ""){
+		alert('Sila masukkan No. Pengenalan.');
+  		document.${formName}.txtNoPengenalan.focus(); 
+		return; 
+	}
+	if(document.${formName}.socBangsa.value == ""){
+		alert('Sila pilih Bangsa.');
+  		document.${formName}.socBangsa.focus(); 
+		return; 
+	}
+	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "newPengarah";
 		return;
@@ -521,11 +586,11 @@ function batalKemaskiniPermohonan() {
 }
 function simpanKemaskiniPermohonan() {
 	
-	if(document.${formName}.socJenisTujuan.value == ""){
+	/*if(document.${formName}.socJenisTujuan.value == ""){
 		alert('Sila pilih Jenis Tujuan.');
   		document.${formName}.socJenisTujuan.focus(); 
 		return; 
-	}
+	}*/
 	if(document.${formName}.socKaitanTujuan.value == ""){
 		alert('Sila pilih Kaitan Tujuan.');
   		document.${formName}.socKaitanTujuan.focus(); 
@@ -799,11 +864,11 @@ function simpanKoordinat(){
   		document.${formName}.txtMinitU.focus(); 
 		return; 
 	}
-	if(document.${formName}.txtSaatU.value == ""){
+	/*if(document.${formName}.txtSaatU.value == ""){
 		alert('Sila masukkan Saat U.');
   		document.${formName}.txtSaatU.focus(); 
 		return; 
-	}
+	}*/
 	if(document.${formName}.txtDarjahT.value == ""){
 		alert('Sila masukkan Darjah T.');
   		document.${formName}.txtDarjahT.focus(); 
@@ -814,11 +879,11 @@ function simpanKoordinat(){
   		document.${formName}.txtMinitT.focus(); 
 		return; 
 	}
-	if(document.${formName}.txtSaatT.value == ""){
+	/*if(document.${formName}.txtSaatT.value == ""){
 		alert('Sila masukkan Saat T.');
   		document.${formName}.txtSaatT.focus(); 
 		return; 
-	}
+	}*/
 	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "newKoordinat";
