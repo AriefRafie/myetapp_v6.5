@@ -29,7 +29,7 @@
                         &prime;</td>
                     </tr>
                     <tr>
-                      <td>#if ($mode == 'newKoordinat' ||  $mode == 'updateKoordinat')<span class="style1">*</span>#end</td>
+                      <td>#if ($mode == 'newKoordinat' ||  $mode == 'updateKoordinat')<!--<span class="style1">*</span>-->#end</td>
                       <td>Saat U</td>
                       <td>:
                         <input type="text" name="txtSaatU" id="txtSaatU" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatKoordinat.saatU" onkeyup="validateNumber(this,this.value);">
@@ -52,7 +52,7 @@
                         &prime;</td>
                     </tr>
                     <tr>
-                      <td>#if ($mode == 'newKoordinat' ||  $mode == 'updateKoordinat')<span class="style1">*</span>#end</td>
+                      <td>#if ($mode == 'newKoordinat' ||  $mode == 'updateKoordinat')<!--<span class="style1">*</span>-->#end</td>
                       <td>Saat T</td>
                       <td>:
                         <input type="text" name="txtSaatT" id="txtSaatT" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatKoordinat.saatT" onkeyup="validateNumber(this,this.value);">
