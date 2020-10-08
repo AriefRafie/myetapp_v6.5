@@ -5332,5 +5332,4 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			iEmel = new EmelSemakanBean();
 		return iEmel;
 	}
-
-}// close class
+}
