@@ -323,16 +323,11 @@ public class MTManagerReg {
 		String reldetails = "";
 		String msg = "";		
 		
-		if (jantinaPerayu.equals("1"))
-		{
+		if (jantinaPerayu.equals("1")){
 			jantinaPerayu = "M";
-		}
-		else if (jantinaPerayu.equals("2"))
-		{
+		}else if (jantinaPerayu.equals("2")){
 			jantinaPerayu = "F";
-		}
-		else
-		{
+		}else{
 			jantinaPerayu = "U";
 		}
 		
