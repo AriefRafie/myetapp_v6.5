@@ -198,17 +198,17 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>              
                 <td>
-                   ##if (($idStatus == '' || $idStatus != '1610195') && $mode == 'view' && $selectedTabUpper =='0') <!-- TAB MAKLUMAT TANAH -->
-<!--                   <input type="button" name="cmdKemaskiniTnh" id="cmdKemaskiniTnh" value="Kemaskini" onClick="doKemaskini()"/> -->
-<!--                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>   -->
-                  ##elseif (($idStatus == '' || $idStatus != '1610195') && $mode == 'update' && $selectedTabUpper =='0')
-<!--                   <input type="button" name="cmdSimpanKemaskiniTnh" id="cmdSimpanKemaskiniTnh" value="Simpan" onClick="doSimpanKemaskiniMaklumatTnh()"/> -->
-<!--                   <input type="button" name="cmdBatalKemaskiniTnh" id="cmdBatalKemaskiniTnh" value="Batal" onClick="doBatalKemaskini()"/> -->
-                  ##else
-<!--                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>   -->
-                  ##end
+                   #if (($idStatus == '' || $idStatus != '1610195') && $mode == 'view' && $selectedTabUpper =='0') <!-- TAB MAKLUMAT TANAH -->
+                  <input type="button" name="cmdKemaskiniTnh" id="cmdKemaskiniTnh" value="Kemaskini" onClick="doKemaskini()"/>
+                  <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>  
+                  #elseif (($idStatus == '' || $idStatus != '1610195') && $mode == 'update' && $selectedTabUpper =='0')
+                  <input type="button" name="cmdSimpanKemaskiniTnh" id="cmdSimpanKemaskiniTnh" value="Simpan" onClick="doSimpanKemaskiniMaklumatTnh()"/>
+                  <input type="button" name="cmdBatalKemaskiniTnh" id="cmdBatalKemaskiniTnh" value="Batal" onClick="doBatalKemaskini()"/>
+                  #else
+                  <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>  
+                  #end
                   
-                  <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
+<!--                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/> -->
                 </td>
               </tr>    
               #end    
@@ -334,13 +334,13 @@
                 <td><input type="text" name="txtLuasBersamaan" id="txtLuasBersamaan" value="$beanMaklumatSewa.luasBersamaan"  style="text-align:right" readonly="readonly" class="disabled"/>
                   HEKTAR</td>
               </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>Baki Luas</td>
-                <td>:</td>
-                <td><input type="text" name="txtBakiLuas" id="txtBakiLuas" value="$beanMaklumatSewa.luasBaki" readonly="readonly" class="disabled" style="text-align:right"/>
-                  HEKTAR</td>
-              </tr>
+<!--               <tr> -->
+<!--                 <td>&nbsp;</td> -->
+<!--                 <td>Baki Luas</td> -->
+<!--                 <td>:</td> -->
+<!--                 <td><input type="text" name="txtBakiLuas" id="txtBakiLuas" value="$beanMaklumatSewa.luasBaki" readonly="readonly" class="disabled" style="text-align:right"/> -->
+<!--                   HEKTAR</td> -->
+<!--               </tr> -->
               <tr>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
