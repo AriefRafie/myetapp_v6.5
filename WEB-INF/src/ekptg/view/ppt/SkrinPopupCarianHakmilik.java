@@ -1469,5 +1469,4 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 			// db.close();
 		}
 	}
-
-}
+}// close here
