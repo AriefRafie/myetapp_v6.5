@@ -51,10 +51,6 @@ import ekptg.model.utils.emel.IEmel;
 import ekptg.model.utils.rujukan.UtilHTMLPilihanJenisHakmilik;
 import ekptg.view.ppt.email.EmailOnline;
 
-/*
- * @author 
- * Muhamad Syazreen bin Yahaya
- */
 public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
@@ -5332,4 +5328,4 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			iEmel = new EmelSemakanBean();
 		return iEmel;
 	}
-}
+}//close here
