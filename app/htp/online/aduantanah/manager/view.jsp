@@ -213,11 +213,11 @@
 					                    #end
 					                    <tr>
 					                      <td class="$row" align="center">$!count</td>
-					                       <td class="$row" align="center">$!vectorResponse.tarikhMasuk</td>
-					                      <td class="$row" align="center"><a href="javascript:detailAgihan('$vectorResponse.id')" class="style1 style2">$vectorResponse.id</a></td>
-					                      <td class="$row">$!vectorResponse.responseStatus.desc</td>
-					                      <td class="$row">$!vectorResponse.tindakan.name</td>
-					                      <td class="$row">$!vectorResponse.arahan</td>
+					                       <td class="$row" align="center">$!vectorResponse.TARIKH_MASUK</td>
+					                      <td class="$row" align="center"><a href="javascript:detailAgihan('$vectorResponse.id')" class="style1 style2">$vectorResponse.ID</a></td>
+					                      <td class="$row">$!vectorResponse.STATUS</td>
+					                      <td class="$row">$!vectorResponse.NAMA_PEGAWAI</td>
+					                      <td class="$row">$!vectorResponse.ARAHAN</td>
 					                    </tr>
 					                    #end
 					                    #if($count == 0)

@@ -4,10 +4,13 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +73,7 @@ public class PengurusanAduanTanah extends AjaxModule {
 	String action = null;
 	Db db1 = null;
 	List aduanDetails = null;
+	List listAgihan = null;
 
 	@Override
 	public String doAction() throws Exception {
@@ -99,6 +103,19 @@ public class PengurusanAduanTanah extends AjaxModule {
 									(String) getParam("uploadFiles") : "";
 			System.out.println(getParam("uploadFiles"));
 			context.put("upload_file", uploadFileStatus);
+			Db db = null;
+			try {
+				db = new Db();
+				listAgihan = listAgihan(idComplaint,session,db);
+			}
+			catch (Exception ex) {
+			throw new DbException(ex.getMessage());
+			}
+			finally {
+				if (db != null)
+					db.close();
+			}
+			context.put("categories", listAgihan);
 			vm = PATH+"view.jsp";
 		}
 		else if(command.equals("simpanComplaint")){
@@ -123,6 +140,8 @@ public class PengurusanAduanTanah extends AjaxModule {
 						" onChange=\"doChangeTindakan();\""));
 				context.put("selectPegawai", HTML.SelectPegawaiMengikutSeksyen(idSeksyen,"0","socPegawai", Long.parseLong(idPegawai), "",
 						"onChange=\"doChangePegawai()\" style=\"width:240\""));
+
+				this.context.put("idTindakan", Long.parseLong(idPegawai));
 			}
 			else if(idCategory.equals("2")){
 				myLog.info("masuk sini tak 2 ");
@@ -130,6 +149,7 @@ public class PengurusanAduanTanah extends AjaxModule {
 						Long.parseLong(idPejabatJKPTGN), "",
 						" onChange=\"doChangeTindakan();\""));
 				context.put("selectPegawai", "");
+				this.context.put("idTindakan", Long.parseLong(idPejabatJKPTGN));
 			}
 			else if(idCategory.equals("3")){
 				myLog.info("masuk sini tak 3 ");
@@ -137,6 +157,7 @@ public class PengurusanAduanTanah extends AjaxModule {
 						Long.parseLong(idPtg), "",
 						" onChange=\"doChangeTindakan();\""));
 				context.put("selectPegawai", "");
+				this.context.put("idTindakan", Long.parseLong(idPtg));
 			}
 			else if(idCategory.equals("4")){
 				myLog.info("masuk sini tak 4 ");
@@ -144,6 +165,7 @@ public class PengurusanAduanTanah extends AjaxModule {
 						Long.parseLong(idKementerian), "",
 						" onChange=\"doChangeTindakan();\""));
 				context.put("selectPegawai", "");
+				this.context.put("idTindakan", Long.parseLong(idKementerian));
 
 			}else{
 				myLog.info("masuk sini tak else");
@@ -187,6 +209,7 @@ public class PengurusanAduanTanah extends AjaxModule {
 			if (!"".equals(idKategori) && !"0".equals(idKategori)){
 				context.put("aduanTindakan",getCategoryAduan().getCategory(idKategori).getActions());
 			}
+
 			vm = PATH+"agihan.jsp";
 		}
 		else if(command.equals("simpanAgih")){
@@ -197,14 +220,40 @@ public class PengurusanAduanTanah extends AjaxModule {
 //			context.put("test_ajax", "OK");
 //			context.put("noAduan", idComplaint);
 			viewComplaint(idComplaint);
+			Db db = null;
+			try {
+				db = new Db();
+				listAgihan = listAgihan(idComplaint,session,db);
+			}
+			catch (Exception ex) {
+			throw new DbException(ex.getMessage());
+			}
+			finally {
+				if (db != null)
+					db.close();
+			}
+			context.put("categories", listAgihan);
 			vm = PATH+"view.jsp";
 		}
 		else if(command.equals("viewAgihan")){
 			mode = "view";
 			String idComplaint = getParam("idComplaint");
 			viewComplaint(idComplaint);
-			displayAgihan();
-			context.put("categories",getCategoryAduan().getComplaintCategory());
+			//displayAgihan();
+			//context.put("categories",getCategoryAduan().getComplaintCategory());
+			Db db = null;
+			try {
+				db = new Db();
+				listAgihan = listAgihan(idComplaint,session,db);
+			}
+			catch (Exception ex) {
+			throw new DbException(ex.getMessage());
+			}
+			finally {
+				if (db != null)
+					db.close();
+			}
+			context.put("categories", listAgihan);
 			vm = PATH+"agihanTask.jsp";
 		}
 		else if(command.equals("updateResponPTG")){
@@ -430,15 +479,33 @@ public class PengurusanAduanTanah extends AjaxModule {
 	}
 	private void getResponseList(String idAduan)throws Exception{
 
-		Vector<ComplaintResponse> vectorResponse = getHandlerRB().getComplaintResponse(idAduan);
-		context.put("responses", vectorResponse);
+		//Vector<ComplaintResponse> vectorResponse = getHandlerRB().getComplaintResponse(idAduan);
 
+
+		Db db = null;
+		try {
+			db = new Db();
+			listAgihan = listAgihan(idAduan,session,db);
+		}
+		catch (Exception ex) {
+		throw new DbException(ex.getMessage());
+		}
+		finally {
+			if (db != null)
+				db.close();
+		}
+		myLog.info("listAgihan >>>> "+listAgihan);
+		context.put("responses", listAgihan);
 	}
 	private void simpanAgih(String idComplaint) throws Exception {
 		//String idComplaint = getParam("idComplaint");
 		String idTindakan = getParam("idTindakan");
 		String arahan = getParam("ulasan");
 		String idPegawai = getParam("socPegawai");
+		String idPejabatJkptgn =getParam("socPejabatJkptgn");
+		String idPtg =getParam("socPtg");
+		String idKementerian =getParam("socKementerian");
+		String idCategory = getParam("idCategory");
 		ComplaintResponse response = new ComplaintResponse();
 		ComplaintTindakan tindakan = new ComplaintTindakan();
 		tindakan.setId(Long.parseLong(idTindakan));
@@ -453,6 +520,232 @@ public class PengurusanAduanTanah extends AjaxModule {
 		response.setTindakan(tindakan);
 		getHandlerRB().doResponse(response);
 		getResponseList(idComplaint);
+		simpanAgihan(arahan,idComplaint,idTindakan,idPegawai,idCategory,idPejabatJkptgn,idPtg,idKementerian);
+	}
+
+	public String simpanAgihan(String arahan,String idComplaint,String idTindakan, String idPegawai,
+			String idCategory, String idPejabatJkptgn, String idPtg, String idKementerian) throws Exception {
+
+		Connection conn = null;
+
+		 String ID_ADUANRESPON = getParam("id_aduanRespon");
+		 SQLRenderer r2 = new SQLRenderer();
+		 String sql2 = "";
+		long idAduanRespon = 0;
+		String namaPegawai = "";
+		if("1".equals(idCategory)){
+			namaPegawai = MaklumatPegawai(idPegawai);
+		}else if("2".equals(idCategory)){
+			namaPegawai = MaklumatPegawai(idPegawai);
+		}else if("3".equals(idCategory)){
+			namaPegawai = MaklumatPegawai(idPegawai);
+		}else if("4".equals(idCategory)){
+			namaPegawai = MaklumatKementerian(idKementerian);
+		}
+		myLog.info("namaPegawai >>>> "+namaPegawai);
+		try {
+			Db db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+		if(!ID_ADUANRESPON.equals(""))
+		{
+			r2.update("ID_ADUANRESPON", ID_ADUANRESPON);
+		}
+		else
+		{
+			idAduanRespon = DB.getNextID(db, "TBLONLINEADUANRESPON_SEQ");
+			r2.add("ID_ADUANRESPON", idAduanRespon);
+		}
+
+		r2.add("ID_EADUAN", idComplaint);
+		r2.add("ID_ADUANTINDAKAN", idTindakan);
+		r2.add("STATUS", "BARU");
+		r2.add("ARAHAN", arahan);
+		r2.add("NAMA_PEGAWAI",namaPegawai);
+		r2.add("ID_MASUK", userId);
+		r2.add("TARIKH_MASUK", r2.unquote("sysdate"));
+		r2.add("ID_KEMASKINI", userId);
+		r2.add("TARIKH_KEMASKINI", r2.unquote("sysdate"));
+
+		if(!ID_ADUANRESPON.equals(""))
+		{
+			sql2 = r2.getSQLUpdate("TBLONLINEADUANRESPON");
+		}
+		else
+		{
+			sql2 = r2.getSQLInsert("TBLONLINEADUANRESPON");
+		}
+
+		myLog.info("aduan Respon :: sql >>>> "+sql2);
+		stmt.executeUpdate(sql2);
+		conn.commit();
+		}
+		catch (SQLException se) {
+			myLog.error(se);
+	    	try {
+	    		conn.rollback();
+	    	} catch (SQLException se2) {
+	    		throw new Exception("Rollback error:"+se2.getMessage());
+	    	}
+	    	throw new Exception("Ralat Pendaftaran :"+se.getMessage());
+		}
+		catch (Exception re) {
+			throw re;
+		}finally {
+		}
+		return ID_ADUANRESPON;
+	}
+
+	public String MaklumatPegawai(String idPegawai) throws Exception {
+
+		Connection conn = null;
+		 SQLRenderer r2 = new SQLRenderer();
+		long idAduanRespon = 0;
+		String namaPegawai ="";
+		try {
+			Db db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			String sql = "SELECT DISTINCT(UPPER(U.USER_NAME)) USER_NAME,RP.NO_TEL_PEJABAT,RP.EMEL,RP.ID_PEGAWAI "+
+					" ,RS.NAMA_SEKSYEN,RS.KOD_SEKSYEN "+
+					" FROM TBLRUJPEGAWAI RP,USERS U,USERS_INTERNAL UI,TBLRUJSEKSYEN RS "+
+					" WHERE "+
+					" UI.USER_ID = U.USER_ID "+
+					" AND U.USER_ID = RP.USER_ID " +
+					" AND RS.ID_SEKSYEN = UI.ID_SEKSYEN"+
+					" AND RP.FLAG_AKTIF = 'Y' "+
+					" AND RP.ID_PEGAWAI = "+idPegawai;
+
+		myLog.info("aduan Respon :: sql >>>> "+sql);
+		ResultSet rs = stmt.executeQuery(sql);
+		Hashtable<String, String> h;
+		while (rs.next()) {
+			h = new Hashtable<String, String>();
+			h.put("namapegawai", rs.getString("USER_NAME") == null ? "" : rs.getString("USER_NAME"));
+			namaPegawai = rs.getString("USER_NAME") == null ? "" : rs.getString("USER_NAME");
+		}
+		}
+		catch (SQLException se) {
+			myLog.error(se);
+	    	try {
+	    		conn.rollback();
+	    	} catch (SQLException se2) {
+	    		throw new Exception("Rollback error:"+se2.getMessage());
+	    	}
+	    	throw new Exception("Ralat Pendaftaran :"+se.getMessage());
+		}
+		catch (Exception re) {
+			throw re;
+		}finally {
+		}
+		return namaPegawai;
+	}
+	public String MaklumatKementerian(String idPegawai) throws Exception {
+
+		Connection conn = null;
+		String namaPegawai ="";
+		try {
+			Db db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			String sql = "SELECT NAMA_KEMENTERIAN FROM TBLRUJKEMENTERIAN WHERE ID_KEMENTERIAN = "+idPegawai;
+
+		myLog.info("aduan Respon :: sql >>>> "+sql);
+		ResultSet rs = stmt.executeQuery(sql);
+		Hashtable<String, String> h;
+		while (rs.next()) {
+			h = new Hashtable<String, String>();
+			h.put("namapegawai", rs.getString("NAMA_KEMENTERIAN") == null ? "" : rs.getString("NAMA_KEMENTERIAN"));
+			namaPegawai = rs.getString("NAMA_KEMENTERIAN") == null ? "" : rs.getString("NAMA_KEMENTERIAN");
+		}
+		}
+		catch (SQLException se) {
+			myLog.error(se);
+	    	try {
+	    		conn.rollback();
+	    	} catch (SQLException se2) {
+	    		throw new Exception("Rollback error:"+se2.getMessage());
+	    	}
+	    	throw new Exception("Ralat Pendaftaran :"+se.getMessage());
+		}
+		catch (Exception re) {
+			throw re;
+		}finally {
+		}
+		return namaPegawai;
+	}
+	public String MaklumatPejabatJKPTGN(String idPegawai) throws Exception {
+
+		Connection conn = null;
+		String namaPegawai ="";
+		try {
+			Db db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			String sql = "SELECT NAMA_PEJABAT FROM TBLRUJPEJABATJKPTG WHERE ID_PEJABATJKPTG = "+idPegawai;
+
+		myLog.info("aduan Respon :: sql >>>> "+sql);
+		ResultSet rs = stmt.executeQuery(sql);
+		Hashtable<String, String> h;
+		while (rs.next()) {
+			h = new Hashtable<String, String>();
+			h.put("namapegawai", rs.getString("NAMA_PEJABAT") == null ? "" : rs.getString("NAMA_PEJABAT"));
+			namaPegawai = rs.getString("NAMA_PEJABAT") == null ? "" : rs.getString("NAMA_PEJABAT");
+		}
+		}
+		catch (SQLException se) {
+			myLog.error(se);
+	    	try {
+	    		conn.rollback();
+	    	} catch (SQLException se2) {
+	    		throw new Exception("Rollback error:"+se2.getMessage());
+	    	}
+	    	throw new Exception("Ralat Pendaftaran :"+se.getMessage());
+		}
+		catch (Exception re) {
+			throw re;
+		}finally {
+		}
+		return namaPegawai;
+	}
+	public String MaklumatPTG(String idPegawai) throws Exception {
+
+		Connection conn = null;
+		String namaPegawai ="";
+		try {
+			Db db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			String sql = "SELECT NAMA_PEJABAT FROM TBLRUJPEJABAT WHERE ID_PEJABAT = "+idPegawai;
+
+		myLog.info("aduan Respon :: sql >>>> "+sql);
+		ResultSet rs = stmt.executeQuery(sql);
+		Hashtable<String, String> h;
+		while (rs.next()) {
+			h = new Hashtable<String, String>();
+			h.put("namapegawai", rs.getString("NAMA_PEJABAT") == null ? "" : rs.getString("NAMA_PEJABAT"));
+			namaPegawai = rs.getString("NAMA_PEJABAT") == null ? "" : rs.getString("NAMA_PEJABAT");
+		}
+		}
+		catch (SQLException se) {
+			myLog.error(se);
+	    	try {
+	    		conn.rollback();
+	    	} catch (SQLException se2) {
+	    		throw new Exception("Rollback error:"+se2.getMessage());
+	    	}
+	    	throw new Exception("Ralat Pendaftaran :"+se.getMessage());
+		}
+		catch (Exception re) {
+			throw re;
+		}finally {
+		}
+		return namaPegawai;
 	}
 	private IComplaintCategoryBean getCategoryAduan(){
 		IComplaintCategoryBean categoryBean = new ComplaintCategoryBean();
@@ -618,6 +911,58 @@ public class PengurusanAduanTanah extends AjaxModule {
 				}
 
 
+				listJenisAduan.add(h);
+			}
+
+		} finally {
+			if(db==null)
+			{
+				if (rs != null)
+					rs.close();
+				if (stmt != null)
+					stmt.close();
+				if (db1 != null)
+					db1.close();
+			}
+		}
+		return listJenisAduan;
+	}
+
+	public List listAgihan(String idAduan,HttpSession session,Db db)throws Exception {
+		Db db1 = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		ResultSet rs = null;
+		Statement stmt = null;
+		List listJenisAduan = null;
+		String sql = "";
+		try {
+			if(db==null)
+			{
+			db1 = new Db();
+			}
+			else
+			{
+				db1 = db;
+			}
+			stmt = db1.getStatement();
+			sql ="SELECT A.ID_ADUANRESPON,A.STATUS,A.JAWAPAN,A.ARAHAN,A.TARIKH_MASUK,A.ID_ADUANTINDAKAN,A.NAMA_PEGAWAI FROM TBLONLINEADUANRESPON A" +
+					" WHERE ID_EADUAN="+idAduan+
+					" ORDER BY A.TARIKH_MASUK";
+			myLog.info(" ADUAN : SQL listAgihan :"+ sql);
+			rs = stmt.executeQuery(sql);
+			listJenisAduan = Collections.synchronizedList(new ArrayList());
+			Map h = null;
+			int bil = 0;
+			while (rs.next()) {
+				h = Collections.synchronizedMap(new HashMap());
+				bil++;
+				h.put("BIL",bil);
+				h.put("ID",rs.getString("ID_ADUANRESPON") == null ? "" : rs.getString("ID_ADUANRESPON").toUpperCase());
+				h.put("JAWAPAN",rs.getString("JAWAPAN") == null ? "" : rs.getString("JAWAPAN").toUpperCase());
+				h.put("ARAHAN",rs.getString("ARAHAN") == null ? "" : rs.getString("ARAHAN").toUpperCase());
+				h.put("NAMA_PEGAWAI",rs.getString("NAMA_PEGAWAI") == null ? "" : rs.getString("NAMA_PEGAWAI").toUpperCase());
+				h.put("TARIKH_MASUK",rs.getDate("TARIKH_MASUK") == null ? "": sdf.format(rs.getDate("TARIKH_MASUK")));
+				h.put("STATUS",rs.getString("STATUS") == null ? "" : rs.getString("STATUS").toUpperCase());
 				listJenisAduan.add(h);
 			}
 
