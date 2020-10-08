@@ -168,6 +168,7 @@
             <td>Seksyen / Bahagian</td>
                       <td>:</td>
                       <td>$selectTindakan
+                      <input type="text" name="idTindakan" id="idTindakan" value="$idTindakan" />
                       </td>
           </tr>
           <tr>

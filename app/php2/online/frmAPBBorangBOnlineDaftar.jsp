@@ -61,12 +61,16 @@
     
     #if ($mode=="disabled")
     <input type="text" name="txtJumKuantiti" id="txtJumKuantiti" value="$!txtJumKuantiti" size="5" class="disabled" readonly />
+    #elseif ($mode=="disabled")
+    <input type="text" name="txtJumKuantiti" id="txtJumKuantiti" value="$!txtJumKuantiti" size="5" class="disabled" readonly />
     #else
     <input type="text" name="txtJumKuantiti" id="txtJumKuantiti" value="$!txtJumKuantiti" size="5" onblur="getAnggaranRoyalti()" />
     #end
     
     <!-- <input type="hidden" name="jumKuantitiHidden" id="jumKuantitiHidden" value="$!txtJumKuantiti" /> -->
     #if ($mode=="disabled")
+    x RM <select name="socRoyalti" id="socRoyalti" style="width:50px;" class="disabled" readonly><option value="3">1.00</option><option value="0.7" selected="selected">0.70</option></select> 
+    #elseif ($mode=="disabled")
     x RM <select name="socRoyalti" id="socRoyalti" style="width:50px;" class="disabled" readonly><option value="3">3.00</option><option value="0.7" selected="selected">0.70</option></select> 
     #else
     x RM <select name="socRoyalti" id="socRoyalti" onchange="getAnggaranRoyalti()" style="width:50px;" class=$mode><option value="3">3.00</option><option value="0.7" selected="selected">0.70</option></select> 
@@ -90,6 +94,8 @@
     <td>
     
     #if ($mode=="disabled")
+    <input type="text" name="txtJumRoyalti" id="txtJumRoyalti" value="$!txtJumRoyalti" size="10" class="disabled" readonly/>
+    #elseif ($mode=="disabled")
     <input type="text" name="txtJumRoyalti" id="txtJumRoyalti" value="$!txtJumRoyalti" size="10" class="disabled" readonly/>
     #else
     <input type="text" name="txtJumRoyalti" id="txtJumRoyalti" value="$!txtJumRoyalti" size="10" onblur="validateNumber(this,this.value)" onkeyup="validateNumber(this,this.value);" maxlength="12"  />
@@ -204,7 +210,7 @@
     #if ($button=="view")
     	<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskiniLaporan('$id_laporanpasir')"/>
     	<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onclick="hapusLaporan('$id_laporanpasir')"/> 
-    <!--    <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:setTable('tableReport1')" />  -->    
+        <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:setTable('tableReport1')" />   
     #end        
     
       <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembali_pelesen('$id_jadualkedualesenAPB')" />    
@@ -306,7 +312,6 @@
 
 <!------------------------------------------ OUTPUT LAPORAN/SURAT ----------------------------------------------->
 <br/>
-<!--
 <fieldset id="tableReport1" style="display:none;">
 <legend><strong>Senarai Laporan</strong></legend>
 	<table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -315,7 +320,6 @@
       </tr>           
     </table>
 </fieldset>
-  -->
 <!------------------------------------------ END OUTPUT LAPORAN/SURAT ------------------------------------------>
 
 

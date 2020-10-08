@@ -79,7 +79,7 @@ public class FrmAPBOnlineSenaraiFailData {
 	public String daftarBaru(String idKaitanTujuan, String idJenistujuan, String idJenisLesen, String tujuanPengambilan, String tempoh,
 			String pengalaman, String idNegeri, String lokasi,String luas, String idLuas, String idJenisPengenalanIndividu, 
 			String idKategoriIndividu, String idKategoriPemohon, String idJantina, String idBangsa, String idBandar, 
-			String idNegeriSykt, String idBandarSykt, String idJenisPermohonan, String idPermohonanLama, HttpSession session) throws Exception {
+			String idNegeriSykt, String idBandarSykt, String idJenisPermohonan, String idPermohonanLama, String undang, HttpSession session) throws Exception {
 		
 		Db db = null;
 		Connection conn = null;
@@ -122,8 +122,8 @@ public class FrmAPBOnlineSenaraiFailData {
 			r.add("ID_PEMOHON", idPemohon);
 			r.add("ID_KATEGORIPEMOHON", "2");
 			sql = "SELECT A.USER_NAME,B.ALAMAT1, B.ALAMAT2, B.ALAMAT3, B.POSKOD, B.ID_NEGERI,B.NO_FAX, B.NO_HP," 
-				+ " B.NO_KP_BARU, B.NO_TEL, B.EMEL, B.ID_BANDAR"
-				+ " FROM USERS A, USERS_ONLINE B"
+				+ " B.NO_KP_BARU, B.NO_TEL, B.EMEL, B.ID_BANDAR C.UNDANG_UNDANG_DIPERBADANKAN"
+				+ " FROM USERS A, USERS_ONLINE B, TBLPHPPEMOHON C"
 				+ " WHERE A.USER_ID = B.USER_ID AND A.USER_ID = '" + userId + "'";
 			ResultSet rsUserOnline = stmt.executeQuery(sql);
 			
@@ -140,6 +140,7 @@ public class FrmAPBOnlineSenaraiFailData {
 				r.add("NO_FAX", rsUserOnline.getString("NO_FAX") == null ? "" : rsUserOnline.getString("NO_FAX"));
 				r.add("NO_PENGENALAN", rsUserOnline.getString("NO_KP_BARU") == null ? "" : rsUserOnline.getString("NO_KP_BARU"));
 				r.add("NO_TEL", rsUserOnline.getString("NO_TEL") == null ? "" : rsUserOnline.getString("NO_TEL"));
+				r.add("UNDANG_UNDANG_DIPERBADANKAN", rsUserOnline.getString("UNDANG_UNDANG_DIPERBADANKAN") == null ? "" : rsUserOnline.getString("UNDANG_UNDANG_DIPERBADANKAN"));
 				
 				if (rsUserOnline.getString("EMEL") != null){
 					emelUser = rsUserOnline.getString("EMEL");
@@ -417,7 +418,7 @@ public void setMaklumatHeader(String idFail) throws Exception {
 		Hashtable h;
 
 		sql = "SELECT A.ID_FAIL, A.NO_FAIL, B.ID_PERMOHONAN, B.TARIKH_TERIMA, B.NO_PERMOHONAN, B.TUJUAN,B.FLAG_AKTIF, C.ID_PEMOHON, C.ID_KATEGORIPEMOHON, C.NAMA,B.NO_RAYUAN, "
-			+ " C.ALAMAT1_TETAP, C.ALAMAT2_TETAP, C.ALAMAT3_TETAP, C.POSKOD_TETAP, D.NAMA_NEGERI, C.NO_TEL, C.NO_FAX, B.ID_STATUS, E.KETERANGAN, F.FLAG_SAMBUNGAN, F.TUJUAN_PENGAMBILAN"
+			+ " C.ALAMAT1_TETAP, C.ALAMAT2_TETAP, C.ALAMAT3_TETAP, C.POSKOD_TETAP, D.NAMA_NEGERI, C.NO_TEL, C.NO_FAX, C.UNDANG_UNDANG_DIPERBADANKAN, B.ID_STATUS, E.KETERANGAN, F.FLAG_SAMBUNGAN, F.TUJUAN_PENGAMBILAN"
 			+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJNEGERI D, TBLRUJSTATUS E, TBLPHPPMOHONNJDUALPERTAMA F, USERS U"
 			+ " WHERE B.ID_PERMOHONAN = F.ID_PERMOHONAN AND A.ID_URUSAN = '9' AND A.ID_SUBURUSAN = '57' " 
 			+ " AND A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON AND B.ID_MASUK = U.USER_ID AND "
@@ -781,7 +782,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 					+ "') AS TOTAL, "
 					+ " ROUND(A.PEGANGAN_SAHAM/(SELECT SUM(PEGANGAN_SAHAM) FROM TBLPHPPENGARAH WHERE ID_PEMOHON = '"
 					+ idPemohon
-					+ "')*100) AS PERCENTAGE "
+					+ "')*100) AS PERCENTAGE, A.WARGANEGARA_LAIN, A.BANGSA_LAIN "
 					+ " FROM TBLPHPPENGARAH A, TBLRUJWARGANEGARA B "
 					+ " WHERE A.ID_PEMOHON = '"
 					+ idPemohon
@@ -816,6 +817,10 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 								.getString("PERCENTAGE"));
 				h.put("warganegara", rs.getString("KETERANGAN") == null ? ""
 						: rs.getString("KETERANGAN").toUpperCase());
+				h.put("warga", rs.getString("WARGANEGARA_LAIN") == null ? ""
+						: rs.getString("WARGANEGARA_LAIN").toUpperCase());
+				h.put("bangsa", rs.getString("BANGSA_LAIN") == null ? ""
+						: rs.getString("BANGSA_LAIN").toUpperCase());
 
 				listPengarah.addElement(h);
 				bil++;
@@ -929,6 +934,8 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			r.add("ID_WARGANEGARA");
 			r.add("ID_BANGSA");			
 			r.add("PEGANGAN_SAHAM");
+			r.add("WARGANEGARA_LAIN");
+			r.add("BANGSA_LAIN");
 
 			r.add("ID_PENGARAH", idPengarah);
 
@@ -948,6 +955,8 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				h.put("idWarganegara",rs.getString("ID_WARGANEGARA") == null ? "99999" : rs.getString("ID_WARGANEGARA"));
 				h.put("idBangsa",rs.getString("ID_BANGSA") == null ? "99999" : rs.getString("ID_BANGSA"));				
 				h.put("saham", rs.getString("PEGANGAN_SAHAM") == null ? "" : Util.formatDecimal(Double.valueOf(rs.getString("PEGANGAN_SAHAM"))));
+				h.put("warga", rs.getString("WARGANEGARA_LAIN") == null ? "" : rs.getString("WARGANEGARA_LAIN"));
+				h.put("bangsa", rs.getString("BANGSA_LAIN") == null ? "" : rs.getString("BANGSA_LAIN"));
 				
 				beanMaklumatPengarah.addElement(h);
 				count++;
@@ -1236,7 +1245,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 		}
 	}
 
-	public String savePengarah(String idPemohon, String idWarganegara, String nama, String idJenisPengenalan, String idBangsa, String noPengenalan, String saham, HttpSession session) throws Exception {
+	public String savePengarah(String idPemohon, String idWarganegara, String nama, String idJenisPengenalan, String noPengenalan, String idBangsa, String saham, String warga, String bangsa, HttpSession session) throws Exception {
 		Db db = null;
 		Connection conn = null;
 		String userId = session.getAttribute("_ekptg_user_id").toString();
@@ -1259,7 +1268,9 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			r.add("ID_JENISPENGENALAN", idJenisPengenalan);
 			r.add("NO_PENGENALAN", noPengenalan);
 			r.add("ID_WARGANEGARA", idWarganegara);
+			r.add("WARGANEGARA_LAIN", warga);
 			r.add("ID_BANGSA", idBangsa);
+			r.add("BANGSA_LAIN",bangsa);
 			r.add("PEGANGAN_SAHAM", saham);
 			
 			r.add("ID_MASUK", userId);
@@ -1285,7 +1296,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 		return idPengarahString;
 	}
 	
-	public void updatePengarah(String idPengarah, String idWarganegara, String nama, String idJenisPengenalan, String idBangsa, String noPengenalan, String saham, HttpSession session) throws Exception {
+	public void updatePengarah(String idPengarah, String idWarganegara, String nama, String idJenisPengenalan, String idBangsa, String noPengenalan, String saham, String warga, String bangsa, HttpSession session) throws Exception {
 		Db db = null;
 		Connection conn = null;
 		String userId = session.getAttribute("_ekptg_user_id").toString();
@@ -1306,11 +1317,14 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			r.add("ID_WARGANEGARA", idWarganegara);
 			r.add("ID_BANGSA", idBangsa);
 			r.add("PEGANGAN_SAHAM", Utils.RemoveSymbol((String)saham));
+			r.add("WARGANEGARA_LAIN", warga);
+			r.add("BANGSA_LAIN",bangsa);
 			
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
-
 			sql = r.getSQLUpdate("TBLPHPPENGARAH");
+			myLog.info("sql = "+sql);
+
 			stmt.executeUpdate(sql);
 			
 			conn.commit();
@@ -1971,6 +1985,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			r.add("A.ID_FAIL", r.unquote("C.ID_FAIL"));
 			r.add("C.ID_PEMOHON", r.unquote("D.ID_PEMOHON"));
 			r.add("B.ID_PERMOHONAN", idPermohonan);
+			r.add("D.UNDANG_UNDANG_DIPERBADANKAN");
 
 			sql = r.getSQLSelect("TBLPFDFAIL A,TBLPHPPMOHONNJDUALPERTAMA B, TBLPERMOHONAN C,TBLPHPPEMOHON D ");
 			ResultSet rs = stmt.executeQuery(sql);
@@ -1999,6 +2014,8 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				h.put("lokasi",rs.getString("LOKASI_PERMOHONAN") == null ? "" : rs.getString("LOKASI_PERMOHONAN"));				
 				h.put("modalBenar", rs.getString("MODAL_DIBENARKAN") == null ? "" : Util.formatDecimal(Double.valueOf(rs.getString("MODAL_DIBENARKAN"))));
 				h.put("modalJelas", rs.getString("MODAL_JELAS") == null ? "" : Util.formatDecimal(Double.valueOf(rs.getString("MODAL_JELAS"))));
+				//baru tambah 29092020
+				h.put("undang", rs.getString("UNDANG_UNDANG_DIPERBADANKAN") == null ? "" : Util.formatDecimal(Double.valueOf(rs.getString("UNDANG_UNDANG_DIPERBADANKAN"))));
 				beanMaklumatPermohonan.addElement(h);
 				count++;
 			}
@@ -2051,7 +2068,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 	
 	public void updatePermohonan(String idFail,String idPermohonan,String idPemohon,String idKaitanTujuan, String tujuanPengambilan,
 			String tempoh, String pengalaman,String idNegeri, String lokasi,
-			String luas, String idLuas,String modalBenar, String modalJelas,String idJenistujuan,String idJenisPermohonan, String idJenisLesen, HttpSession session) throws Exception {
+			String luas, String idLuas,String modalBenar, String modalJelas,String idJenistujuan,String idJenisPermohonan, String idJenisLesen, String undang, HttpSession session) throws Exception {
 
 
 		Db db = null;
@@ -2072,6 +2089,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			r.add("MODAL_JELAS", Utils.RemoveSymbol(modalJelas));
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			r.add("UNDANG_UNDANG_DIPERBADANKAN", Utils.RemoveSymbol(undang));
 			sql = r.getSQLUpdate("TBLPHPPEMOHON");
 			stmt.executeUpdate(sql);
 						

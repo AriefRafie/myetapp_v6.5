@@ -28,7 +28,7 @@
   <tr>
     <td><fieldset>
       <legend><strong>MAKLUMAT PENGAMBILAN PASIR</strong></legend>
-      #parse("app/php2/frmAPBBorangAAmbilPasirDetail.jsp")
+      #parse("app/php2/online/frmAPBBorangAOnlineAmbilPasirDetail.jsp")
       </fieldset></td>
   </tr>
   #end
@@ -49,7 +49,7 @@
 <legend><strong>Senarai Laporan</strong></legend>
 	<table width="100%" border="0" cellspacing="2" cellpadding="2">
        <tr>
-        <td><a href="#" class="style2" onClick="javascript:cetakAPBLaporanBorangA('$idBorangA')"><font color="blue"> Laporan Borang A </font></a></td>
+        <td><a href="#" class="style2" onClick="javascript:cetakAPBLaporanBorangA('$idBorangA')"><font color="blue"> Borang A </font></a></td>
       </tr>           
     </table>
 </fieldset>
@@ -106,6 +106,56 @@ function doSimpanMaklumatPasir(){
 	if(document.${formName}.txtTahun.value == ""){
 		alert('Sila masukkan Tahun.');
   		document.${formName}.txtTahun.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtAnggaranPasir.value == ""){
+		alert('Sila masukkan Anggaran Pasir.');
+  		document.${formName}.txtAnggaranPasir.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtKontraktor.value == ""){
+		alert('Sila masukkan maklumat Kontraktor.');
+  		document.${formName}.txtKontraktor.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtTujuanAmbil.value == ""){
+		alert('Sila masukkan Tujuan Pengambilan.');
+  		document.${formName}.txtTujuanAmbil.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtDestinasiDihantar.value == ""){
+		alert('Sila masukkan Destinasi Pasir Dihantar.');
+  		document.${formName}.txtDestinasiDihantar.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtPembeli.value == ""){
+		alert('Sila masukkan Nama Syarikat Pembeli.');
+  		document.${formName}.txtPembeli.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtTarikhMula.value == ""){
+		alert('Sila masukkan Tarikh Mula Operasi.');
+  		document.${formName}.txtTarikhMula.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtTarikhTamat.value == ""){
+		alert('Sila masukkan Tarikh Tamat Operasi.');
+  		document.${formName}.txtTarikhTamat.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtLaluan.value == ""){
+		alert('Sila masukkan Laluan.');
+  		document.${formName}.txtLaluan.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtKaedah.value == ""){
+		alert('Sila masukkan Kaedah Pengambilan Pasir.');
+  		document.${formName}.txtKaedah.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtKawasan.value == ""){
+		alert('Sila masukkan Kawasan Pelepusan.');
+  		document.${formName}.txtKawasan.focus(); 
 		return; 
 	}
 	
@@ -185,6 +235,26 @@ function doSimpanMaklumatBarge(){
 	if(document.${formName}.txtNamaDaftar.value == ""){
 		alert('Sila masukkan Nama Didaftarkan.');
   		document.${formName}.txtNamaDaftar.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtJenis.value == ""){
+		alert('Sila masukkan Jenis Kapal.');
+  		document.${formName}.txtJenis.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtNoPendaftaran.value == ""){
+		alert('Sila masukkan No. Pendaftaran.');
+  		document.${formName}.txtNoPendaftaran.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtNoTel.value == ""){
+		alert('Sila masukkan No. Tel.');
+  		document.${formName}.txtNoTel.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtKapasiti.value == ""){
+		alert('Sila masukkan Kapasiti.');
+  		document.${formName}.txtKapasiti.focus(); 
 		return; 
 	}
 	
