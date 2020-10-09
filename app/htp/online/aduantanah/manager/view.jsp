@@ -118,6 +118,7 @@
 
 
                     </tr>
+                    #foreach ( $tanahs in $tanah )
                     <tr>
 		    <td colspan="4" align="left">
 				<fieldset>
@@ -127,54 +128,55 @@
 							  <td width="1%">&nbsp;</td>
 							  <td width="28%">Negeri</td>
 							  <td width="1%">:</td>
-							  <td width="70%">$!complaint.namaNegeriTanah</td>
+							  <td width="70%">$!tanahs.nama_negeritanah</td>
 							</tr>
 							<tr>
 							  <td>&nbsp;</td>
 							  <td>Daerah</td>
 							  <td>:</td>
-							  <td>$!complaint.namaDaerahTanah</td>
+							  <td>$!tanahs.nama_daerahtanah</td>
 							</tr>
 							<tr>
 							  <td>&nbsp;</td>
 							  <td>Mukim</td>
 							  <td>:</td>
-							  <td>$!complaint.namaMukimTanah</td>
+							  <td>$!tanahs.nama_mukimtanah</td>
+							</tr>
+							<tr>
+							  <td>&nbsp;</td>
+							  <td>Seksyen</td>
+							  <td>:</td>
+							  <td>$!tanahs.nama_seksyentanah</td>
+							</tr>
+							<tr>
+							  <td>&nbsp;</td>
+							  <td>Janis Hakmilik</td>
+							  <td>:</td>
+							  <td>$!tanahs.nama_hakmilik</td>
 							</tr>
 							<tr>
 							  <td>&nbsp;</td>
 							  <td>No. Hakmilik</td>
 							  <td>:</td>
-							  <td>$!complaint.noHakmilik</td>
+							  <td>$!tanahs.NO_HAKMILIK</td>
 							</tr>
 							<tr>
 							  <td>&nbsp;</td>
-							  <td>No. Warta</td>
+							  <td>Jenis PT/ LOT</td>
 							  <td>:</td>
-							  <td>$!complaint.noWarta</td>
+							  <td>$!tanahs.nama_lot</td>
 							</tr>
 							<tr>
 							  <td>&nbsp;</td>
-							  <td>Tarikh Warta</td>
+							  <td>No. PT/ LOT</td>
 							  <td>:</td>
-							  <td>$!complaint.tarikhWarta</td>
-							</tr>
-							<tr>
-							  <td>&nbsp;</td>
-							  <td>No. Lot</td>
-							  <td>:</td>
-							  <td>$!complaint.noLot</td>
-							</tr>
-							<tr>
-							  <td>&nbsp;</td>
-							  <td>Luas Lot</td>
-							  <td>:</td>
-							  <td>$!complaint.luas</td>
+							  <td>$!tanahs.NO_LOT</td>
 							</tr>
 					</table>
 				</fieldset>
 			</td>
 		</tr>
+		#end
 
                 </table>
 
@@ -211,11 +213,11 @@
 					                    #end
 					                    <tr>
 					                      <td class="$row" align="center">$!count</td>
-					                       <td class="$row" align="center">$!vectorResponse.tarikhMasuk</td>
-					                      <td class="$row" align="center"><a href="javascript:detailAgihan('$vectorResponse.id')" class="style1 style2">$vectorResponse.id</a></td>
-					                      <td class="$row">$!vectorResponse.responseStatus.desc</td>
-					                      <td class="$row">$!vectorResponse.tindakan.name</td>
-					                      <td class="$row">$!vectorResponse.arahan</td>
+					                       <td class="$row" align="center">$!vectorResponse.TARIKH_MASUK</td>
+					                      <td class="$row" align="center"><a href="javascript:detailAgihan('$vectorResponse.id')" class="style1 style2">$vectorResponse.ID</a></td>
+					                      <td class="$row">$!vectorResponse.STATUS</td>
+					                      <td class="$row">$!vectorResponse.NAMA_PEGAWAI</td>
+					                      <td class="$row">$!vectorResponse.ARAHAN</td>
 					                    </tr>
 					                    #end
 					                    #if($count == 0)

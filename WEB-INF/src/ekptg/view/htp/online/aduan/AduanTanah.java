@@ -69,8 +69,6 @@ public class AduanTanah extends AjaxModule {
 	Db db1 = null;
 	List aduanDetails = null;
 
-
-
 	@Override
 	public String doAction() throws Exception {
 		HttpSession session = request.getSession();
@@ -108,29 +106,19 @@ public class AduanTanah extends AjaxModule {
 		}
 
 		getUserDetail(userId);
-
-
+		myLog.info("userId nak add "+ userId);
 		if(command.equals("viewComplaint")){
+			userId = getParam("userid");
+			myLog.info("userId nak view "+userId);
 			viewComplaint();
 			getSeksyenList();
+			getUserDetail(userId);
 			vm = PATH+"view.jsp";
 		}
 		else if (command.equals("daftarBaru")) {
 			getSelectedVal();
 			vm = PATH + "editor.jsp";
-			//submitAduan();
 		}
-		/*else if (command.equals("doAduan")) {
-
-			submitAduan();
-		}*/
-
-		/*else if(command.equals("simpanComplaint")){
-			//simpanComplaint();
-			//displayComplaint();
-			submitAduan();
-			vm = PATH+"index.jsp";
-		}*/
 		else if(command.equals("simpanDraf")){
 			//simpanDraf();
 			simpanAduan();
@@ -161,7 +149,7 @@ public class AduanTanah extends AjaxModule {
 			vm = PATH+"index.jsp";
 			displayComplaint();
 		}
-		System.out.println("<<<command>>"+command);
+		myLog.info("<<<command>>"+command);
 
 		getProsesStatus();
 		return vm;
@@ -169,6 +157,10 @@ public class AduanTanah extends AjaxModule {
 	}
 
 	private void getSelectedVal() throws Exception{
+		String no_fail = getParam("no_fail").equals("")?"":getParam("no_fail");
+		String nohakmilikTanah = getParam("nohakmilikTanah").equals("")?"":getParam("nohakmilikTanah");
+		String nolotTanah = getParam("nolotTanah").equals("")?"":getParam("nolotTanah");
+		String ulasanBalas = getParam("ulasanBalas").equals("")?"":getParam("ulasanBalas");
 		String idNegeri = getParam("socNegeri").equals("")?"-1":getParam("socNegeri");
 		String idDaerahTanah = getParam("socDaerahTanah").equals("")?"-1":getParam("socDaerahTanah");
 		String idMukimTanah = getParam("socMukimTanah").equals("")?"-1":getParam("socMukimTanah");
@@ -182,17 +174,24 @@ public class AduanTanah extends AjaxModule {
 		this.context.put("selectDaerah", HTML.SelectDaerahByIdNegeri(idNegeri, "socDaerahTanah", Long.parseLong(idDaerahTanah), "", "onChange=\"doChangeDaerahTanah();\""));
 		this.context.put("selectMukim", HTML.SelectMukimNoKodByDaerah(idDaerahTanah, "socMukimTanah", Long.parseLong(idMukimTanah), "", "onChange=\"doChangeMukimTanah();\""));
 		this.context.put("selectSeksyen", getPilihan().Pilihan("socSeksyen", "",idMukimTanah));
+		this.context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("socJenisHakmilik", Long.parseLong(idJenisHakmilik), "", ""));
+		this.context.put("selectJenisLot", HTML.SelectLot("socJenisLot", Long.parseLong(idJenisLot), "", ""));
 
-		this.context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("socJenisHakmilik", Long.parseLong(idJenisHakmilik), "", "onChange=\"doChangeJenisHakmilik();\""));
-		this.context.put("selectJenisLot", HTML.SelectLot("socJenisLot", Long.parseLong(idJenisLot), "", "onChange=\"doChangeJenisLot();\""));
 
 		myLog.info("getSelectedVal idNegeri>>>> "+idNegeri);
 		myLog.info("getSelectedVal idJenisHakmilik>>>> "+idJenisHakmilik);
+
+		this.context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("socJenisHakmilik", Long.parseLong(idJenisHakmilik), "", "onChange=\"doChangeJenisHakmilik();\""));
+		this.context.put("selectJenisLot", HTML.SelectLot("socJenisLot", Long.parseLong(idJenisLot), "", "onChange=\"doChangeJenisLot();\""));
 		this.context.put("idNegeriTanah", Long.parseLong(idNegeri));
 		this.context.put("idDaerahTanah", Long.parseLong(idDaerahTanah));
 		this.context.put("idMukimTanah", Long.parseLong(idMukimTanah));
 		this.context.put("idJenisHakmilikTanah", Long.parseLong(idJenisHakmilik));
 		this.context.put("idJenisLotTanah", Long.parseLong(idJenisLot));
+		this.context.put("no_fail", no_fail);
+		this.context.put("nohakmilikTanah", nohakmilikTanah);
+		this.context.put("nolotTanah",nolotTanah);
+		this.context.put("ulasanBalas", ulasanBalas);
 
 	 }
 
@@ -206,11 +205,13 @@ public class AduanTanah extends AjaxModule {
 	}
 
 	private void simpanAduan() throws Exception{
+		myLog.info("simpanAduan");
 		 DiskFileItemFactory factory = new DiskFileItemFactory();
 		 ServletFileUpload upload = new ServletFileUpload(factory);
 		 List items = upload.parseRequest(request);
 		    Iterator itr = items.iterator();
 
+			myLog.info("simpanAduan2");
 		    Date now = new Date();
 		    long idPengadu =  Long.parseLong(userId);
 		    String namaPengadu = "";
@@ -233,15 +234,18 @@ public class AduanTanah extends AjaxModule {
 			String nolotTanah = "";
 			String idMukim = "";
 			String idSekyen = "";
+			String no_fail ="";
 
 		    while (itr.hasNext()) {
 				FileItem item = (FileItem)itr.next();
 				if ( ((item.isFormField())) ) {
+
+					myLog.info("simpanAduan3");
 					if ( "name".equals((String)item.getFieldName())) namaPengadu = (String) item.getString();
 					if ( "email".equals((String)item.getFieldName())) emailPengadu = (String) item.getString();
 					if ( "phone".equals((String)item.getFieldName())) phonePengadu = (String) item.getString();
 					if ( "idJenisAduan".equals(item.getFieldName())) idJenisAduan = Long.parseLong(item.getString());
-					if ( "catatan".equals((String)item.getFieldName())) catatan = (String) item.getString();
+					if ( "ulasanBalas".equals((String)item.getFieldName())) catatan = (String) item.getString();
 					if ( "socNegeri".equals((String)item.getFieldName())) idNegeri = (String) item.getString();
 					if ( "socDaerahTanah".equals((String)item.getFieldName())) idDaerah = (String) item.getString();
 					if ( "socJenisHakmilik".equals((String)item.getFieldName())) idHakmilikAduan = (String) item.getString();
@@ -250,6 +254,7 @@ public class AduanTanah extends AjaxModule {
 					if ( "nolotTanah".equals((String)item.getFieldName())) nolotTanah = (String) item.getString();
 					if ( "socMukimTanah".equals((String)item.getFieldName())) idMukim = (String) item.getString();
 					if ( "socSeksyen".equals((String)item.getFieldName())) idSekyen = (String) item.getString();
+					if ( "no_fail".equals((String)item.getFieldName())) no_fail = (String) item.getString();
 				} else if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
 					uploadData = item.getInputStream();
 					uploadName = item.getName();
@@ -258,6 +263,8 @@ public class AduanTanah extends AjaxModule {
 				}
 			}
 
+
+			myLog.info("simpanAduan4");
 			RujJenisAduanMobile jenisAduan = db.find(RujJenisAduanMobile.class, idJenisAduan);
 
 			Long idSumber = Long.parseLong("16101");
@@ -278,6 +285,7 @@ public class AduanTanah extends AjaxModule {
 				aduan.setStatusPenyelesaian(statusPenyelesaian.toUpperCase());
 				aduan.setSumberAduan(sumberAduan);
 				aduan.setTarikhMasuk(now);
+				aduan.setNoFail(no_fail);
 				db.persist(aduan);
 				db.commit();
 
@@ -300,6 +308,7 @@ public class AduanTanah extends AjaxModule {
 					e.getMessage();
 				}
 
+				myLog.info("simpanAduan5");
 				aduanTanah(session,String.valueOf(idAduan),db1,idNegeri,idDaerah,idHakmilikAduan,noHakmilikAduan,idJenisLotTanah,nolotTanah,idMukim,idSekyen);
 				context.put("complaintID", idAduan);
 				context.put("pengaduID", idPengadu);
@@ -310,6 +319,9 @@ public class AduanTanah extends AjaxModule {
 
 	public String aduanTanah(HttpSession session,String ID_ADUANPUBLIC,Db db,String idNegeri,String idDaerah,String idHakmilikAduan,
 			String noHakmilik,String idJenisLotTanah,String nolotTanah,String idMukim,String idSekyen) throws Exception {
+
+
+		myLog.info("aduanTanah");
 
 		Connection conn = null;
 
@@ -322,6 +334,8 @@ public class AduanTanah extends AjaxModule {
 			conn = db.getConnection();
 			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
+
+			myLog.info("aduanTanah2");
 		if(!ID_TANAH.equals(""))
 		{
 			r2.update("ID_HAKMILIKADUAN", ID_TANAH);
@@ -415,11 +429,13 @@ public class AduanTanah extends AjaxModule {
 	}
 	private void viewComplaint()throws Exception{
 		String idRespon = getParam("idRespon");
-		System.out.println("idRespon >>>> "+idRespon);
+
+		myLog.info("idRespon >>>> "+idRespon);
 		ComplaintResponse response =  getRespone().getResponse(idRespon);
 
-		System.out.println("response >>>> "+response);
+		myLog.info("response >>>> "+response);
 		context.put("response",response);
+
 		Complaint complaint = getHandler().getComplaint(String.valueOf(idRespon));
 		context.put("complaint", complaint);
 
@@ -435,7 +451,7 @@ public class AduanTanah extends AjaxModule {
 			if (db != null)
 				db.close();
 		}
-		System.out.println("aduanDetails >>> "+ aduanDetails);
+		myLog.info("aduanDetails >>> "+ aduanDetails);
 		context.put("tanah", aduanDetails);
 		context.put("editable", false);
 
@@ -468,10 +484,12 @@ public class AduanTanah extends AjaxModule {
 			sql = " SELECT aduan.NO_FAIL," +
 					" tanah.ID_HAKMILIKADUAN,tanah.ID_ADUAN,tanah.ID_LUAS,tanah.NO_HAKMILIK,tanah.NO_WARTA,tanah.TARIKH_WARTA,tanah.NO_LOT," +
 					" tanah.LUAS,tanah.ID_DAERAH,tanah.ID_NEGERI,tanah.ID_MUKIM,tanah.ID_LOT,tanah.ID_JENISHAKMILIK,N1.NAMA_NEGERI AS NAMA_NEGERITANAH," +
-					" D1.NAMA_DAERAH AS NAMA_DAERAHTANAH,M.NAMA_MUKIM AS NAMA_MUKIMTANAH"+
+					" D1.NAMA_DAERAH AS NAMA_DAERAHTANAH,M.NAMA_MUKIM AS NAMA_MUKIMTANAH, J.KETERANGAN AS NAMA_HAKMILIK, L.KETERANGAN AS NAMA_LOT, "+
+					" tanah.ID_SEKSYEN, S.NAMA_SEKSYENUPI AS NAMA_SEKSYENTANAH "+
 					" FROM TBLONLINEEADUAN aduan,TBLHTPHAKMILIKADUAN tanah,TBLRUJNEGERI N1," +
-					" TBLRUJDAERAH D1,TBLRUJMUKIM M"+
-					" WHERE tanah.ID_NEGERI = N1.ID_NEGERI(+) AND tanah.ID_DAERAH = D1.ID_DAERAH(+) AND tanah.ID_MUKIM = M.ID_MUKIM(+)" +
+					" TBLRUJDAERAH D1,TBLRUJMUKIM M,TBLRUJJENISHAKMILIK J,TBLRUJLOT L ,TBLRUJSEKSYENUPI S"+
+					" WHERE tanah.ID_NEGERI = N1.ID_NEGERI(+) AND tanah.ID_DAERAH = D1.ID_DAERAH(+) AND tanah.ID_MUKIM = M.ID_MUKIM(+) AND tanah.ID_SEKSYEN = S.ID_SEKSYENUPI(+)" +
+					" AND tanah.ID_JENISHAKMILIK = J.ID_JENISHAKMILIK(+) AND tanah.ID_LOT = L.ID_LOT(+) "+
 					" AND aduan.ID_EADUAN = '"+idAduan+"' "+
 					" AND tanah.ID_ADUAN = '"+idAduan+"'  ";
 			myLog.info(" ADUAN : SQL aduanDetails :"+ sql);
@@ -503,6 +521,21 @@ public class AduanTanah extends AjaxModule {
 					h.put("nama_mukimtanah", "");
 				} else {
 					h.put("nama_mukimtanah", rs.getString("NAMA_MUKIMTANAH").toUpperCase());
+				}
+				if (rs.getString("NAMA_SEKSYENTANAH") == null) {
+					h.put("nama_seksyentanah", "");
+				} else {
+					h.put("nama_seksyentanah", rs.getString("NAMA_SEKSYENTANAH").toUpperCase());
+				}
+				if (rs.getString("NAMA_HAKMILIK") == null) {
+					h.put("nama_hakmilik", "");
+				} else {
+					h.put("nama_hakmilik", rs.getString("NAMA_HAKMILIK").toUpperCase());
+				}
+				if (rs.getString("NAMA_LOT") == null) {
+					h.put("nama_lot", "");
+				} else {
+					h.put("nama_lot", rs.getString("NAMA_LOT").toUpperCase());
 				}
 
 				listJenisAduan.add(h);

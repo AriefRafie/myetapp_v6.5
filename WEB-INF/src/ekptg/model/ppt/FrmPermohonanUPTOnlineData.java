@@ -375,7 +375,7 @@ public class FrmPermohonanUPTOnlineData {
 			    		sql += " WHERE UT.ID_JABATANTEKNIKAL = JT.ID_JABATANTEKNIKAL ";
 			    		sql += " AND UT.ID_PERMOHONAN = '"+abc+"' ";
 			    		
-			    		System.out.println("*** PRINTLN setJabatanTeknikal = "+sql);
+			    		//System.out.println("*** PRINTLN setJabatanTeknikal = "+sql);
 
 						ResultSet rs = stmt.executeQuery(sql);
 						
@@ -394,7 +394,7 @@ public class FrmPermohonanUPTOnlineData {
 			    			listJabatanTeknikal.addElement(h);	
 							bil++;
 						}
-						System.out.println(" setJabatanTeknikal :"+listJabatanTeknikal);
+						//System.out.println(" setJabatanTeknikal :"+listJabatanTeknikal);
 						return listJabatanTeknikal;
 					}catch (Exception re) {
 						throw re;
@@ -423,7 +423,7 @@ public class FrmPermohonanUPTOnlineData {
 	    		//modified 21112011 : Papar senarai kesemua fail by kementerian
 	    		
 	    		sql = " SELECT UI.ID_JAWATAN FROM USERS U, USERS_INTERNAL UI WHERE U.USER_ID = UI.USER_ID AND U.USER_ID = '"+userId+"' ";
-	    		System.out.println("*** PRINTLN JAWATAN = "+sql);
+	    		//System.out.println("*** PRINTLN JAWATAN = "+sql);
 				ResultSet rs1 = stmt.executeQuery(sql);
 				
 	    		String id_jawatan = "";
@@ -564,7 +564,7 @@ public class FrmPermohonanUPTOnlineData {
 				myLogger.info("sql carian : "+sql);
 	    		ResultSet rs = stmt.executeQuery(sql);
 	    		
-	    		System.out.println("*** CARIAN OUTPUT = "+sql);
+	    		//System.out.println("*** CARIAN OUTPUT = "+sql);
 	      
 	    		Hashtable h;
 	    		int bil = 1;
@@ -684,8 +684,9 @@ public class FrmPermohonanUPTOnlineData {
 						//" AND p.id_permohonan(+)= ut.id_permohonan ";
 				sql += " AND p.id_permohonan = '"+idpermohonan+"'";
 				
-				System.out.println("***SQL setDataPermohonan = "+sql);
+				//System.out.println("***SQL setDataPermohonan = "+sql);
 				ResultSet rs = stmt.executeQuery(sql);
+				myLogger.info("setDataPermohonan====="+sql);
 				Hashtable h;
 		
 				while(rs.next()) {
@@ -1490,7 +1491,7 @@ public class FrmPermohonanUPTOnlineData {
 	@SuppressWarnings("unchecked")
 	public static void update(Hashtable data) throws Exception {
 		
-		System.out.println("**** data : "+data);
+		//System.out.println("**** data : "+data);
 
 		
 	    Db db = null;
@@ -1698,7 +1699,7 @@ public class FrmPermohonanUPTOnlineData {
 	    		
 	    } catch (Exception re) {
 	    	log.error("Error: ", re);
-	    	System.out.println("SQL LIST ::: "+sql);
+	    	//System.out.println("SQL LIST ::: "+sql);
 	    	throw re;
 	    	}
 	    finally {

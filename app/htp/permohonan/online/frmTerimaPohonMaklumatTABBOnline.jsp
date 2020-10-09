@@ -201,6 +201,8 @@
 			     #end
 			#else
 				<label>$!statusInfo</label>
+				<input class="stylobutton100_" type="button" onclick="javascript:cetakPengesahan('$idPermohonan');" value="Cetakan Pengesahan" />	
+				
 			#end
 			<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Senarai Fail" onclick="kembali()"/>
 		</td>

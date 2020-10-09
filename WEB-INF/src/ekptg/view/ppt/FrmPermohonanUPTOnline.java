@@ -51,10 +51,6 @@ import ekptg.model.utils.emel.IEmel;
 import ekptg.model.utils.rujukan.UtilHTMLPilihanJenisHakmilik;
 import ekptg.view.ppt.email.EmailOnline;
 
-/*
- * @author 
- * Muhamad Syazreen bin Yahaya
- */
 public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
@@ -962,9 +958,46 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				myLogger.debug("session=" + session);
 
 				uploadFiles(id_permohonan, txdTarikhPembayaran, session);
-				context.put("mode", "view");
+				//context.put("mode", "view");
 				
-				vm = screenUtama;
+				// form validation
+				context.put("mode", "view");
+				context.put("isEdit", "no");
+
+				// check field validation
+				checkFieldValidation(idHakmilik);
+
+				noLOT = getParam("carianNoLot2");
+				context.put("carianNoLot2", noLOT.trim());
+				
+				// list dokumenhakmilik
+				ListDokumenPembayaran(id_permohonan);
+
+				// list hakmilik
+				ListHakmilik(idpermohonan, noLOT, idpegawai);
+
+				// data hakmilik
+				dataHakmilik(idHakmilik, "disabled");
+
+				// carian nama pb
+				namaPB = getParam("carianPB");
+				context.put("carianPB", namaPB.trim());
+
+				// carian no serah
+				noSerah = getParam("carianNoSerah");
+				context.put("carianNoSerah", noSerah.trim());
+
+				// get total
+				getTotalSyer(idHakmilik, "");
+
+				// list PB
+				listPB(session, idHakmilik, namaPB);
+
+				// list Bebanan
+				listBebanan(session, idHakmilik, noSerah);
+				
+				
+				vm = screenTanah;
 			}
 			
 			else if ("viewHM".equals(submit)) {
@@ -5295,5 +5328,4 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			iEmel = new EmelSemakanBean();
 		return iEmel;
 	}
-
-}// close class
+}//close here

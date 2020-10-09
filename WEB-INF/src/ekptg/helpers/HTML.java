@@ -854,7 +854,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdSeksyen() + ">"
-						+ f.getKodSeksyen() + " - " + f.getNamaSeksyen()
+						+ f.getNamaSeksyen()
 						+ "</option>\n");
 			}
 			sb.append("</select>");
@@ -2757,6 +2757,40 @@ public class HTML {
 				}
 				sb.append("<option " + s + " value=" + f.getIdPejabat() + ">"
 						+ f.getNamaPejabat() + "</option>\n");
+			}
+			sb.append("</select>");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw ex;
+		}
+
+		return sb.toString();
+	}
+
+	public static String SelectPejabatJKPTGN(String selectName,
+			Long selectedValue, String disability, String jsFunction)
+			throws Exception {
+		StringBuffer sb = new StringBuffer("");
+		try {
+			sb.append("<select name='" + selectName + "'");
+			if (disability != null)
+				sb.append(disability);
+			if (jsFunction != null)
+				sb.append(jsFunction);
+			sb.append(" > ");
+			sb.append("<option value=>SILA PILIH</option>\n");
+			Vector v = DB.getPejabatJKPTGN();
+			Tblrujpejabatjkptg f = null;
+			String s = "";
+			for (int i = 0; i < v.size(); i++) {
+				f = (Tblrujpejabatjkptg) v.get(i);
+				if (f.getIdPejabatjkptg().equals(selectedValue)) {
+					s = "selected";
+				} else {
+					s = "";
+				}
+				sb.append("<option " + s + " value=" + f.getIdPejabatjkptg()
+						+ ">" + f.getNamaPejabat() + "</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {
@@ -7622,7 +7656,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdPejabat() + ">"
-						+ f.getKodPejabat() + " - " + f.getNamaPejabat()
+						+ f.getNamaPejabat()
 						+ "</option>\n");
 			}
 			sb.append("</select>");

@@ -12,7 +12,7 @@
   <tr>
     <td><fieldset>
       <legend><strong>MAKLUMAT BARGE</strong></legend>
-      #parse("app/php2/frmAPBBorangAMaklumatBargeDetail.jsp")
+      #parse("app/php2/online/frmAPBBorangAOnlineMaklumatBargeDetail.jsp")
       </fieldset></td>
   </tr>
   #end
@@ -77,7 +77,7 @@ function daftarMaklumatBarge(idJadualKedua,idBorangA){
 	//alert(idJadualKedua);
 	document.${formName}.submit();
 }
-function doSimpanMaklumatBarge(){
+/*function doSimpanMaklumatBarge(){
 	
 	if(document.${formName}.txtNamaDaftar.value == ""){
 		alert('Sila masukkan Nama Didaftarkan.');
@@ -93,7 +93,7 @@ function doSimpanMaklumatBarge(){
 	document.${formName}.mode.value = "viewBarge";
 	document.${formName}.hitButton.value = "simpanMaklumatBarge";
 	document.${formName}.submit();
-}
+}*/
 function simpanKemaskiniMaklumatBarge(){
 	
 	if(document.${formName}.txtNamaDaftar.value == ""){

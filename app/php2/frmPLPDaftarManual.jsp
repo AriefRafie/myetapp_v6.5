@@ -557,9 +557,9 @@
           <td width="1%">&nbsp;</td>
           <td valign="top">Urusan</td>
           <td>:</td>
-          #if ($idJenisTanah == '1')
+          #if ($idJenisTanah == '2')
           <td>PELEPASAN</td>
-          #elseif ($idJenisTanah == '2')
+          #elseif ($idJenisTanah == '1')
           <td>PENYERAHAN BALIK</td>
           #else
           <td></td>
