@@ -147,6 +147,16 @@
 </table>
 
 <script>
+
+	function cetakPengesahan(idpermohonan) {
+	    var url = "../servlet/ekptg.report.htp.NoFailTajukFail?template=PengesahanPermohonanOnline&idpermohonan="+idpermohonan;
+	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+	
+	
+	}
 	function carianFail(){
 		var command = 'terimapohoncarian';
 		doAjaxCall${formName}(command);	

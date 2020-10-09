@@ -55,12 +55,12 @@
         </tr>
         <tr class="table_header">
           <td scope="row" width="3%" align="center"><strong>Bil</strong></td>
-          <td width="20%"><strong>No Rujukan Online</strong></td>
-          <td width="20%"><strong>No Fail</strong></td>
-          <td width="20%"><strong>Jenis Permohonan</strong></td>
+          <td width="15%"><strong>No Rujukan Online</strong></td>
+          <td width="15%"><strong>No Fail</strong></td>
+          <td width="18%"><strong>Jenis Permohonan</strong></td>
           <td width="30%"><strong>Tujuan</strong></td>
           <td width="8%" align="center"><strong>Tarikh Mohon</strong></td>
-          <td width="20%"><strong>Status</strong></td>
+          <td width="25%"><strong>Status</strong></td>
         </tr>
         #set ($list = "")
         #if ($SenaraiFail.size() > 0)

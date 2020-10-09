@@ -1,50 +1,4 @@
 <body onLoad="refreshPage('$!test_ajax')">
-<fieldset><legend>Carian</legend>
-<table width="100%" border="0" cellspacing="2" cellpadding="2">
-	<tr>
-		<td>
-			No Aduan :
-		</td>
-		<td>
-			<input type="text" name="noAduan">
-		</td>
-	</tr>
-	<tr>
-		<td>
-			Tarikh Aduan
-		</td>
-		<td>
-			<input type="text" name="tarikhAduan">
-		</td>
-	</tr>
-	<tr>
-		<td>
-			Status Aduan :
-		</td>
-		<td>
-			<select name="responseStatus">
-			<option value="">Sila Pilih</option>
-			#foreach($statuses in $statuses)
-			#if ($statusPilihan == $statuses)
-				#set ( $selected = "selected" )
-			#else
-				#set ( $selected = "" )
-			#end
-			<option value="$statuses" $selected>$statuses.desc</option>
-			#end
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td>&nbsp;
-
-		</td>
-		<td colspan="2" align="left">
-			<input type="button" value="Cari" onClick="cariAduan()"/>
-		</td>
-	</tr>
-</table>
-</fieldset>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
 	<tr>
 		<td><fieldset><legend><b>SENARAI ADUAN</b></legend>
@@ -55,11 +9,8 @@
 				</tr>
 				<tr class="table_header">
 					<td scope="row" width="5%" align="center"><strong>No</strong></td>
-					<td width="25%"><strong>Nama Pengadu</strong></td>
-					<td width="20%"><strong>Emel</strong></td>
-					<td width="10%"  align="center"><strong>Tarikh Aduan</strong></td>
-					<td width="10%"><strong>Status Aduan</strong></td>
-					<td width="10%" align="center"><strong>Tarikh Dikemaskini</strong></td>
+					<td width="25%"><strong>Id</strong></td>
+					<td width="25%"><strong>Arahan</strong></td>
 				</tr>
 				#set ($count = 0)
 				#foreach ( $fail in $SenaraiFail )
@@ -72,11 +23,8 @@
 				#end
 				<tr>
 					<td class="$row" align="center">$!count</td>
-					<td class="$row"><a href="javascript:detail('$fail.id')" class="style1">$fail.namaPengadu</a></td>
-					<td class="$row">$!fail.emelPengadu</td>
-					<td class="$row">$!fail.tarikhAduan</td>
-					<td class="$row">$!fail.status</td>
-					<td class="$row">$!fail.tarikhKemaskini</td>
+					<td class="$row"><a href="javascript:detail('$fail.idAduan')" class="style1">$fail.id</a></td>
+					<td class="$row">$!fail.arahan</td>
 				</tr>
 				#end
 			</table>
