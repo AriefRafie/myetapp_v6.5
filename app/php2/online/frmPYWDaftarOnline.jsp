@@ -415,7 +415,8 @@
             #elseif ($idLuas == '8' || $idLuas == '4')
             <input type="text" name="txtLuas1" id="txtLuas1" onkeyup="validateNumber(this,this.value);" size="4" $readonlyPopup class="$inputTextClassPopup" onBlur="kiraLuas('$idLuas')"/>
             <input type="text" name="txtLuas2" id="txtLuas2" onkeyup="validateNumber(this,this.value);" size="4" $readonlyPopup class="$inputTextClassPopup" onBlur="kiraLuas('$idLuas')"/>
-            <input type="text" name="txtLuas3" id="txtLuas3" onKeyUp="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6" $readonlypopup class="$inputTextClassPopup"/></td>
+            <input type="text" name="txtLuas3" id="txtLuas3" onKeyUp="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6" $readonlypopup class="$inputTextClassPopup"/>
+          </td>
         </tr>
         #end
         <tr>
