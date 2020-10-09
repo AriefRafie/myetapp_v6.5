@@ -205,11 +205,13 @@ public class AduanTanah extends AjaxModule {
 	}
 
 	private void simpanAduan() throws Exception{
+		myLog.info("simpanAduan");
 		 DiskFileItemFactory factory = new DiskFileItemFactory();
 		 ServletFileUpload upload = new ServletFileUpload(factory);
 		 List items = upload.parseRequest(request);
 		    Iterator itr = items.iterator();
 
+			myLog.info("simpanAduan2");
 		    Date now = new Date();
 		    long idPengadu =  Long.parseLong(userId);
 		    String namaPengadu = "";
@@ -237,6 +239,8 @@ public class AduanTanah extends AjaxModule {
 		    while (itr.hasNext()) {
 				FileItem item = (FileItem)itr.next();
 				if ( ((item.isFormField())) ) {
+
+					myLog.info("simpanAduan3");
 					if ( "name".equals((String)item.getFieldName())) namaPengadu = (String) item.getString();
 					if ( "email".equals((String)item.getFieldName())) emailPengadu = (String) item.getString();
 					if ( "phone".equals((String)item.getFieldName())) phonePengadu = (String) item.getString();
@@ -259,6 +263,8 @@ public class AduanTanah extends AjaxModule {
 				}
 			}
 
+
+			myLog.info("simpanAduan4");
 			RujJenisAduanMobile jenisAduan = db.find(RujJenisAduanMobile.class, idJenisAduan);
 
 			Long idSumber = Long.parseLong("16101");
@@ -302,6 +308,7 @@ public class AduanTanah extends AjaxModule {
 					e.getMessage();
 				}
 
+				myLog.info("simpanAduan5");
 				aduanTanah(session,String.valueOf(idAduan),db1,idNegeri,idDaerah,idHakmilikAduan,noHakmilikAduan,idJenisLotTanah,nolotTanah,idMukim,idSekyen);
 				context.put("complaintID", idAduan);
 				context.put("pengaduID", idPengadu);
@@ -312,6 +319,9 @@ public class AduanTanah extends AjaxModule {
 
 	public String aduanTanah(HttpSession session,String ID_ADUANPUBLIC,Db db,String idNegeri,String idDaerah,String idHakmilikAduan,
 			String noHakmilik,String idJenisLotTanah,String nolotTanah,String idMukim,String idSekyen) throws Exception {
+
+
+		myLog.info("aduanTanah");
 
 		Connection conn = null;
 
@@ -324,6 +334,8 @@ public class AduanTanah extends AjaxModule {
 			conn = db.getConnection();
 			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
+
+			myLog.info("aduanTanah2");
 		if(!ID_TANAH.equals(""))
 		{
 			r2.update("ID_HAKMILIKADUAN", ID_TANAH);

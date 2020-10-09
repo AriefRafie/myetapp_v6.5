@@ -29,16 +29,16 @@
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   #if ($idFail != '')
-  <tr>
-    <td> #parse("app/php2/frmAPBHeader.jsp") </td>
-  </tr>
+	  <tr>
+	    <td> #parse("app/php2/frmAPBHeader.jsp") </td>
+	  </tr>
   #else
-  <tr>
-    <td><div class="warning">SILA PILIH FAIL DI SENARAI FAIL TERLEBIH DAHULU</div></td>
-  </tr>
+	  <tr>
+	    <td><div class="warning">SILA PILIH FAIL DI SENARAI FAIL TERLEBIH DAHULU</div></td>
+	  </tr>
   #end
   
-  #if ($idFail != '' && $flagOpenDetail)  
+  #if ($idFail != '' && $flagOpenDetail)
   #foreach ($beanMaklumatKertasRingkasPermohonan in $BeanMaklumatKertasRingkasPermohonan)
   <tr>
     <td><fieldset>
@@ -231,64 +231,21 @@
           <td>&nbsp;</td>
           <td valign="top">Syor</td>
           <td valign="top">:</td>
-          <td valign="top"><select name="socSyor" id="socSyor" style="width:200px;" $readonly class="$inputTextClass" onChange="doChangeSyor()" $inputTextClass> 
-			#if($beanMaklumatKertasRingkasPermohonan.syorJabatan == 'L')
-              <option value="">SILA PILIH</option>
-              <option value="L" selected="selected">LULUS</option>
-              <option value="D">LULUS SECARA DASAR</option>
-              <option value="LB">LULUS BERSYARAT</option>
-              <option value="T">TOLAK</option>
-              <option value="G">TANGGUH</option>
-             #elseif($beanMaklumatKertasRingkasPermohonan.syorJabatan == 'D')
-              <option value="">SILA PILIH</option>
-              <option value="L">LULUS</option>
-              <option value="D" selected="selected">LULUS SECARA DASAR</option>
-              <option value="LB">LULUS BERSYARAT</option>
-              <option value="T">TOLAK</option>
-              <option value="G">TANGGUH</option>
-            #elseif($beanMaklumatKertasRingkasPermohonan.syorJabatan == 'T')
-              <option value="">SILA PILIH</option>
-              <option value="L">LULUS</option>
-              <option value="D">LULUS SECARA DASAR</option>
-              <option value="LB">LULUS BERSYARAT</option>
-              <option value="T" selected="selected">TOLAK</option>
-              <option value="G">TANGGUH</option>
-            #elseif($beanMaklumatKertasRingkasPermohonan.syorJabatan == 'G')
-              <option value="">SILA PILIH</option>
-              <option value="L">LULUS</option>
-              <option value="D">LULUS SECARA DASAR</option>
-              <option value="LB">LULUS BERSYARAT</option>
-              <option value="T">TOLAK</option>
-              <option value="G" selected="selected">TANGGUH</option>
-            #elseif($beanMaklumatKertasRingkasPermohonan.syorJabatan == 'LB')
-              <option value="">SILA PILIH</option>
-              <option value="L">LULUS</option>
-              <option value="D">LULUS SECARA DASAR</option>
-              <option value="LB" selected="selected">LULUS BERSYARAT</option>
-              <option value="T">TOLAK</option>
-              <option value="G">TANGGUH</option>
-            #else
-              <option value="" selected="selected">SILA PILIH</option>
-              <option value="L">LULUS</option>
-              <option value="D">LULUS SECARA DASAR</option>
-              #if ($paparan == 'lulusbersyarat')
-              <option value="LB" selected="selected">LULUS BERSYARAT</option>
-              #else
-              <option value="LB">LULUS BERSYARAT</option>
-              #end
-              <option value="T">TOLAK</option>
-              <option value="G">TANGGUH</option>
-            #end
-            </select></td>
+          <td valign="top"><select name="socSyor" id="socSyor" style="width:200px;" $readonly class="$inputTextClass" onChange="doChangeSyor(this)" $inputTextClass>
+            <option value="" #if($beanMaklumatKertasRingkasPermohonan.syorJabatan == "") selected="selected" #else'' #end>SILA PILIH</option>            
+            <option value="L" #if($beanMaklumatKertasRingkasPermohonan.syorJabatan == "L") selected="selected" #else'' #end>LULUS</option>
+            <option value="D" #if($beanMaklumatKertasRingkasPermohonan.syorJabatan == "D") selected="selected" #else'' #end>LULUS SECARA DASAR</option>
+            <option value="LB" #if($beanMaklumatKertasRingkasPermohonan.syorJabatan == "LB") selected="selected" #else'' #end>LULUS BERSYARAT</option>
+            <option value="T" #if($beanMaklumatKertasRingkasPermohonan.syorJabatan == "T") selected="selected" #else'' #end>TOLAK</option>
+            <option value="G" #if($beanMaklumatKertasRingkasPermohonan.syorJabatan == "G") selected="selected" #else'' #end>TANGGUH</option>
+          </select></td>
         </tr>
-        #if ($paparan == 'lulusbersyarat' || $beanMaklumatKertasRingkasPermohonan.syorJabatan == 'LB')
-        <tr>
+        <tr id="catatan" style="#if($beanMaklumatKertasRingkasPermohonan.syorJabatan != 'LB') display:none #end">
           <td width="1%" valign="top">&nbsp;</td>
-          <td width="28%" valign="top">Catatan Bersyarat</td>
+          <td width="28%" valign="top">Catatan</td>
           <td width="1%" valign="top">:</td>
           <td width="70%" valign="top"><textarea name="txtUlasanLulusBersyarat" id="txtUlasanLulusBersyarat" cols="100" rows="5" $readonly class="$inputTextClass">$beanMaklumatKertasRingkasPermohonan.catatanBersyarat</textarea></td>
         </tr>
-        #end
       </table>
       </fieldset></td>
   </tr>
@@ -322,16 +279,17 @@
           <td width="1%">&nbsp;</td>
           <td width="28%">&nbsp;</td>
           <td width="1%">&nbsp;</td>
-          <td width="70%"> #if ($mode == 'view')
-            <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>
-            #if($idStatus =='1610213')
-            <input type="button" name="cmdSeterusnya" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
-            <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
-            #end
-            <input type="button" name="cdmCetak3" id="cdmCetak3" value="Cetak" onClick="javascript:setTable('tableReport')"/>
+          <td width="70%">
+          	#if ($mode == 'view')
+	            <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>
+	            #if($idStatus =='1610213')
+		            <input type="button" name="cmdSeterusnya" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
+		            <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
+	            #end
+	            <input type="button" name="cdmCetak3" id="cdmCetak3" value="Cetak" onClick="javascript:setTable('tableReport')"/>
             #elseif ($mode == 'update')
-            <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onclick="doSimpanKemaskiniMaklumatKertasRingkasPermohonan()"/>
-            <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskini()"/>
+	            <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onclick="doSimpanKemaskiniMaklumatKertasRingkasPermohonan()"/>
+	            <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskini()"/>
             #end </td>
         </tr>
       </table></td>
@@ -354,15 +312,24 @@
   </tr>
 </table>
 </fieldset>
+
+<input name="step" type="hidden" id="step"/>
+
+
 <script>
+// KEMASKINI
 function doKemaskini() {
 	document.${formName}.mode.value = "update";
 	document.${formName}.submit();
 }
+
+// BATAL KEMASKINI
 function doBatalKemaskini() {
 	document.${formName}.mode.value = "view";
 	document.${formName}.submit();
 }
+
+// SIMPAN KEMASKINI
 function doSimpanKemaskiniMaklumatKertasRingkasPermohonan() {
 	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
@@ -374,6 +341,8 @@ function doSimpanKemaskiniMaklumatKertasRingkasPermohonan() {
 	document.${formName}.hitButton.value = "doSimpanKemaskiniMaklumatKertasRingkasPermohonan";
 	document.${formName}.submit();
 }
+
+// SETERUSNYA
 function doSeterusnya(){
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "view";
@@ -382,6 +351,8 @@ function doSeterusnya(){
 	document.${formName}.hitButton.value = "doSeterusnya";
 	document.${formName}.submit();
 }
+
+// TEXT COUNTER
 function textCounter(field, countfield, maxlimit) {
    if (field.value.length > maxlimit) // if too long...trim it!
 		 field.value = field.value.substring(0, maxlimit);
@@ -389,6 +360,8 @@ function textCounter(field, countfield, maxlimit) {
 	else
 	 countfield.value = maxlimit - field.value.length;
 }
+
+// VALIDATE CURRENCY
 function validateCurrency(elmnt,content,content2) {
 	//if it is character, then remove it..
 	if (isNaN(content)) {
@@ -405,8 +378,8 @@ function validateCurrency(elmnt,content,content2) {
 		return;
 	}
 }
-</script>
-<script>
+
+// SET TABLE
 function setTable(id){
 	if(document.getElementById(id).style.display=="none"){
 		document.getElementById(id).style.display="block";
@@ -415,6 +388,8 @@ function setTable(id){
 		document.getElementById(id).style.display="none";
 	}
 }
+
+// CETAK MINIT BEBAS
 function cetakMinitBebas(idFail) {
 	var url = "../servlet/ekptg.report.php2.APBMinitBebas?ID_FAIL="+idFail;
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
@@ -423,6 +398,8 @@ function cetakMinitBebas(idFail) {
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
 }
+
+// CETAK KERTAS RINGKASAN
 function cetakKertasRingkasan(idFail) {
 	var url = "../servlet/ekptg.report.php2.APBKertasRingkasan?ID_FAIL="+idFail;
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
@@ -431,18 +408,19 @@ function cetakKertasRingkasan(idFail) {
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
 }
-</script>
-<input name="step" type="hidden" id="step"/>
-<script>
+
+// BATAL PERMOHONAN
 function gotoBatalPermohonan(){	
 	document.${formName}.step.value = "batalPermohonan";
 	document.${formName}.submit();
 }
-function doChangeSyor() {
-	document.${formName}.mode.value = "update";
-	if(document.${formName}.socSyor.value=="LB"){
-		document.${formName}.paparan.value = "lulusbersyarat";
-		document.${formName}.submit();
-	}
+
+// CHANGE SYOR
+function doChangeSyor(props) {
+	if (props.value == "LB") {
+		$('catatan').style.display = 'table-row';
+	} else {
+		$('catatan').style.display = 'none';
+	};
 }
 </script>
