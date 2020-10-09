@@ -1405,3 +1405,5 @@ function doChangeKementerianCarian() {
 
 </script>
 #parse("app/htp/utiliti/javaScriptUmum.jsp")
+<!-- Senarai Semak -->
+$javaScriptLampiran

@@ -145,6 +145,9 @@
 			    		#elseif ($!list.permohonan.pfdFail.getIdUrusan() == '3' ) 
 			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Seterusnya" 
 			    			onclick="pajakanSimpanPengesahan('$!list.permohonan.pfdFail.getIdFail()','$list.permohonan.getIdPermohonan()','$list.idHtpPermohonan','$list.idSuburusanStatusFail')">			    		
+			    		#elseif ($!list.permohonan.pfdFail.getIdUrusan() == '14' ) 
+			    			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Seterusnya" 
+			    			onclick="jrpSimpanPengesahan('$!list.permohonan.pfdFail.getIdFail()','$list.permohonan.getIdPermohonan()','$list.idHtpPermohonan','$list.idSuburusanStatusFail')">			    		
 			    		#end
 			    		
 			    		#end
@@ -170,6 +173,18 @@
 	<!-- </td> -->
 
 <script>
+	//JRP
+	function jrpSimpanPengesahan(idA,idB,idC,idE){
+		//
+		var mode = 'jrpviewmaklumat';
+			//doAjaxCall${formName}("perletakhakanviewmaklumat","mode="+mode+"&idfail="+id+"&pagemode=0");
+		//doAjaxCall${formName}("jrpviewmaklumat","actionjrp=papar&idfail="+idA+"&idPermohonan="+idB+"&idHtpPermohonan="+idC+"&idSuburusanStatusFail="+idE);
+	
+		document.${formName}.command.value = mode;
+		document.${formName}.action = "$EkptgUtil.getTabID('JRP',$portal_role)?_portal_module=ekptg.view.online.htp.FrmPermohonanPengesahan&actionPerletakhakan=papar&idfail="+idA+"&idPermohonan="+idB+"&idHtpPermohonan="+idC+"&idSuburusanStatusFail="+idE;
+		document.${formName}.submit();
+	/**/
+	}
 //PAJAKAN
 	function pajakanSimpanPengesahan(idA,idB,idC,idE){
 		//
