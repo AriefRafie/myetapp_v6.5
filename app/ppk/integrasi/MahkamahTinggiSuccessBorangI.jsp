@@ -34,6 +34,11 @@
 			    		<td>$!noPetisyen</td>
 		    		</tr>
 		    		<tr>
+			    		<td align="right">No. Kes</td>
+			    		<td>:</td>
+			    		<td>$!noKes</td>
+		    		</tr>
+		    		<tr>
 			    		<td align="right">Nama Simati</td>
 			    		<td>:</td>
 			    		<td>$!namaSimati</td>

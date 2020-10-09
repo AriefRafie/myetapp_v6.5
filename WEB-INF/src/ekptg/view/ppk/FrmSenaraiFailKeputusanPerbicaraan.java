@@ -970,8 +970,17 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
     				this.context.put("dataListMahkamah", "");
     			}
     			
+    			logic_A.setSupportingDoc(idpermohonan, jenisDoc);
+    			listSupportingDoc = logic_A.setSupportingDoc(idpermohonan, jenisDoc);
+    			this.context.put("ViewSupportingDoc", listSupportingDoc);
     			
+    			//String id = getParam("id_permohonan");
+    			FrmSenaraiFailKeputusanPermohonanInternalData.setData(idpermohonan,
+    					(String) session.getAttribute("_ekptg_user_id"));
     			
+    			Vector listPemohon2 = FrmSenaraiFailKeputusanPermohonanInternalData
+    					.getData();
+    			this.context.put("ViewPemohon", listPemohon2);
     			
     			
     	    	//--data notis 

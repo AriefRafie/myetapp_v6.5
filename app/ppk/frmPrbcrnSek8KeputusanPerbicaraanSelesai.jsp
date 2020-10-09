@@ -993,28 +993,27 @@ document.getElementById("header_lama").style.display="block";
     <legend>Dokumen Sokongan</legend>
     <table width="60%" border="0">
     <tr>
-     <td width="25%" align ="right" scope="col">Dokumen Sokongan</td>
+     <td width="25%" align ="right" scope="col">Dokumen Sokongan </td>
         <td width="1%" scope="col">:</td>
         <td width="74%" colspan="2" scope="col">
          <input type="text" disabled value=$!namaDoC>&nbsp;
-         #if ($namaDoC != '')
-         <input type="button" name="cmdUpload" disabled id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
-         #else
-         <input type="button" name="cmdUpload" id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
+         #if ($namaDoC != '' && $mode == "view")
+         	<input type="button" name="cmdUpload" disabled id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
+         #end
+         #if ($namaDoC != '' && $mode != "view")
+         	<input type="button" name="cmdUpload" id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
          #end
          #if ($namaDoC != '')
-         <input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;
+         	<input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;
          #end
          
-         <!-- <input name="cetak" disabled type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;  -->
-         
-        
-   		 
-   		 #if ($namaDoC != '')
-   		 <input name="deleteSuppDoc1" type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
+         #if ($namaDoC != '' && $mode == "view")
+   		 	<input name="deleteSuppDoc1"  disabled type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
    		 #end
    		 
-   		 <!-- <input name="deleteSuppDoc1" disabled type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />  -->
+   		 #if ($namaDoC != '' && $mode != "view")
+   		 	<input name="deleteSuppDoc1"   type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
+   		 #end
    		 
    		 
        
@@ -1908,24 +1907,25 @@ document.getElementById("header_lama").style.display="block";
         <td width="1%" scope="col">:</td>
         <td width="74%" colspan="2" scope="col">
          <input type="text" disabled value=$!namaDoC>&nbsp;
-         #if ($namaDoC != '')
-         <input type="button" name="cmdUpload" disabled id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
-         #else
-         <input type="button" name="cmdUpload" id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
+         #if ($namaDoC != '' && $mode == "view")
+         	<input type="button" name="cmdUpload" disabled id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
+         #end
+         #if ($namaDoC != '' && $mode != "view")
+         	<input type="button" name="cmdUpload" id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
          #end
          #if ($namaDoC != '')
-         <input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;
+         	<input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;
          #end
          
-         <!-- <input name="cetak" disabled type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;  -->
-         
-        
-   		 
-   		 #if ($namaDoC != '')
-   		 <input name="deleteSuppDoc1" type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
+         #if ($namaDoC != '' && $mode == "view")
+   		 	<input name="deleteSuppDoc1"  disabled type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
    		 #end
    		 
-   		 <!-- <input name="deleteSuppDoc1" disabled type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />  -->
+   		 #if ($namaDoC != '' && $mode != "view")
+   		 	<input name="deleteSuppDoc1"   type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
+   		 #end
+   		 
+   		 
    		 
    		 
        
@@ -2675,24 +2675,23 @@ document.getElementById("header_lama").style.display="block";
         <td width="1%" scope="col">:</td>
         <td width="74%" colspan="2" scope="col">
          <input type="text" disabled value=$!namaDoC>&nbsp;
-         #if ($namaDoC != '')
-         <input type="button" name="cmdUpload" disabled id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
-         #else
-         <input type="button" name="cmdUpload" id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
+         #if ($namaDoC != '' && $mode == "view")
+         	<input type="button" name="cmdUpload" disabled id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
+         #end
+         #if ($namaDoC != '' && $mode != "view")
+         	<input type="button" name="cmdUpload" id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
          #end
          #if ($namaDoC != '')
-         <input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;
+         	<input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;
          #end
          
-         <!-- <input name="cetak" disabled type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;  -->
-         
-        
-   		 
-   		 #if ($namaDoC != '')
-   		 <input name="deleteSuppDoc1" type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
+         #if ($namaDoC != '' && $mode == "view")
+   		 	<input name="deleteSuppDoc1"  disabled type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
    		 #end
    		 
-   		 <!-- <input name="deleteSuppDoc1" disabled type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />  -->
+   		 #if ($namaDoC != '' && $mode != "view")
+   		 	<input name="deleteSuppDoc1"   type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
+   		 #end
    		 
    		 
        
