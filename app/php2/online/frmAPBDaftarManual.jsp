@@ -15,8 +15,8 @@
   <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
   <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
   <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
-   <input name="idPermohonanLama" type="hidden" id="idPermohonanLama" value="$idPermohonanLama"/>
-   <input name="checkId" type="hidden" id="checkId" value="$checkId"/>
+  <input name="idPermohonanLama" type="hidden" id="idPermohonanLama" value="$idPermohonanLama"/>
+  <input name="checkId" type="hidden" id="checkId" value="$checkId"/>
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
   <input name="idJenisPermohonan" type="hidden" id="idJenisPermohonan" value="$idJenisPermohonan"/>
   <input name="idNegeriPemohon" type="hidden" id="idNegeriPemohon" value="$idNegeriPemohon"/>
@@ -172,8 +172,17 @@
   		<td>:</td>
   		<td>$!pemohon.get("emel")</td>
   	</tr>
-  	</fieldset>
-  	</table>
+  	</tr>
+  	  	<tr>
+  		<td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>
+  		<td width="28%">Undang-Undang Diperbadankan</td>
+  		<td width="1%">:</td>
+  		<td width="78%">
+            <input name="txtUndang" type="text" class="$inputTextClass" id="txtUndang" value="$beanMaklumatPermohonan.txtUndang" size="50" maxlength="250" $readonly />
+        </td>
+    </tr>
+  </fieldset>
+ </table>
   	</td>
   </tr>
   
@@ -189,10 +198,10 @@
           <td width="70%"><strong>$beanMaklumatPermohonan.noPermohonan</strong>
             <input name="idPermohonan" type="hidden" value="$beanMaklumatPermohonan.idPermohonan" />
             <input name="idPemohon" type="hidden" value="$beanMaklumatPermohonan.idPemohon" /></td>
-        </tr>
-         -->
-         #if ($idStatus != '')
-        <tr>
+        </tr>-->
+        
+     #if ($idStatus != '')
+     <tr>
         <td width="1%">&nbsp;</td>
   		<td>No. Permohonan</td>
   		<td width = "1%">:</td>
@@ -200,50 +209,62 @@
   	</tr>
   	#end
         <tr>
-          <td>&nbsp;</td>
-          <td >Urusan</td>
-          <td>:</td>
-          <td>AKTA PELANTAR BENUA
+          <td width="1%">&nbsp;</td>
+          <td width="28%" valign="top">Urusan</td>
+          <td width="1%">:</td>
+          <td width="70%">AKTA PELANTAR BENUA
             <input type="hidden" name="idUrusan" id="idUrusan" value="9"/>
-             <input type="hidden" name="idSubUrusan" id="idSubUrusan" value="57"/></td>
+            <input type="hidden" name="idSubUrusan" id="idSubUrusan" value="57"/></td>
         </tr>
         <tr>
           <td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>
-          <td valign="top">Jenis Lesen</td>
-          <td>:</td>
-          <td>$selectJenisLesen</td>
+          <td width="28%" valign="top">Jenis Lesen</td>
+          <td width="1%">:</td>
+          <td width="70%">$selectJenisLesen</td>
+          <td><input type="hidden" name="idJenisLesen" id="idJenisLesen" value="$idJenisLesen"/></td>
         </tr>
         <tr>
-           <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
-          <td>Jenis Tujuan</td>
-          <td>:</td>
-          <td width="70%">$selectJenisTujuan</td>
+           <td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>
+	       <td width="28%">Jenis Tujuan</td>
+	       <td width="1%">:</td>
+	       #if($idJenisLesen == 2)
+	       <td width="70%">MENGOREK</td>
+	       #elseif($idJenisLesen == 3 || $idJenisLesen == 4)
+	       <td width="70%">MENCARI GALI/MENJELAJAH</td>
+	       #else
+	       <td></td>
+	       #end
         </tr>
         <tr>
-          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
-          <td>Kaitan Tujuan</td>
-          <td>:</td>
-          <td>$selectTujuanKaitan</td>
+          <td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>
+          <td width="28%">Kaitan Tujuan</td>
+          <td width="1%">:</td>
+          <td width="70%">$selectTujuanKaitan
+			<a href="javascript:open_info()" class="help" title="info">							
+				<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+			</a>
+				<br/>
+		  </td>
         </tr>
         <tr>
-          <td valign="top">#if ($mode == 'new')<span class="style1">*</span>#end</td>
-          <td valign="top">Tujuan</td>
-          <td valign="top">:</td>
-          <td valign="top"><textarea name="txtTujuanPengambilan" id="txtTujuanPengambilan" cols="43" rows="5" $readonly class="$inputTextClass" onKeyUp="textCounter(this.form.txtTujuanPengambilan,this.form.remLen1,$!saizTxtTujuanPengambilan);" onKeyDown="textCounter(this.form.txtTujuanPengambilan,this.form.remLen1,$!saizTxtTujuanPengambilan);" >$beanMaklumatPermohonan.tujuanPengambilan</textarea></td>
+          <td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>
+          <td width="28%">Tujuan</td>
+          <td width="1%">:</td>
+          <td width="70%"><textarea name="txtTujuanPengambilan" id="txtTujuanPengambilan" cols="43" rows="5" $readonly class="$inputTextClass" onKeyUp="textCounter(this.form.txtTujuanPengambilan,this.form.remLen1,$!saizTxtTujuanPengambilan);" onKeyDown="textCounter(this.form.txtTujuanPengambilan,this.form.remLen1,$!saizTxtTujuanPengambilan);" >$beanMaklumatPermohonan.tujuanPengambilan</textarea></td>
         </tr>
         #if ($mode == 'new')
         <tr>
           <td valign="top">&nbsp;</td>
           <td valign="top">&nbsp;</td>
           <td valign="top">&nbsp;</td>
-          <td valign="top">Baki Aksara :&nbsp;
+          <td width="28%">Baki Aksara :&nbsp;
           <input type="text" readonly="readonly" class="disabled" name="remLen1" size="3" maxlength="3" value="$!saizTxtTujuanPengambilan" /></td>
         </tr>
         #end
         <tr>
-          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
-          <td>Tempoh Lesen Dipohon</td>
-          <td>:</td>
+          <td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>
+          <td width="28%">Tempoh Lesen Dipohon</td>
+          <td width="1%">:</td>
           <td><!--<input name="txtTempoh" type="text" size="1" maxlength="2" onkeyup="validateNumber(this,this.value);" value="$beanMaklumatPermohonan.tempoh" $readonly class="$inputTextClass"/>
             $selectTempoh-->            
             <select name="socTempoh" id="socTempoh" style="width:90px;" $readonly class="$disabled" $disabled >   
@@ -299,21 +320,21 @@
           <td valign="top">&nbsp;</td>
           <td valign="top">&nbsp;</td>
           <td valign="top">&nbsp;</td>
-          <td valign="top"><i><font color="#ff0000">* </font>Maksimum Tempoh Lesen Dipohon adalah 5 tahun.</i></td>
+          <td width="28%"><i><font color="#ff0000">* </font>Maksimum Tempoh Lesen Dipohon adalah 5 tahun.</i></td>
         </tr>
         #end
         <tr>
-          <td valign="top">#if ($mode == 'new')<span class="style1">*</span>#end</td>
-          <td valign="top">Ringkasan Pengalaman Pemohon</td>
-          <td valign="top">:</td>
-          <td valign="top"><textarea name="txtRingkasanPengalaman" id="txtRingkasanPengalaman" cols="43" rows="5" onKeyUp="textCounter(this.form.txtRingkasanPengalaman,this.form.remLen2,$!saizTxtRingkasanPengalaman);" onKeyDown="textCounter(this.form.txtRingkasanPengalaman,this.form.remLen2,$!saizTxtRingkasanPengalaman);" $readonly class="$inputTextClass">$beanMaklumatPermohonan.pengalaman</textarea></td>
+          <td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>
+          <td width="28%">Ringkasan Pengalaman Pemohon</td>
+          <td width="1%">:</td>
+          <td width="70%"><textarea name="txtRingkasanPengalaman" id="txtRingkasanPengalaman" cols="43" rows="5" onKeyUp="textCounter(this.form.txtRingkasanPengalaman,this.form.remLen2,$!saizTxtRingkasanPengalaman);" onKeyDown="textCounter(this.form.txtRingkasanPengalaman,this.form.remLen2,$!saizTxtRingkasanPengalaman);" $readonly class="$inputTextClass">$beanMaklumatPermohonan.pengalaman</textarea></td>
         </tr>
         #if ($mode == 'new')
         <tr>
           <td valign="top">&nbsp;</td>
           <td valign="top">&nbsp;</td>
           <td valign="top">&nbsp;</td>
-          <td valign="top">Baki Aksara :&nbsp;
+          <td width="1%">Baki Aksara :&nbsp;
               <input type="text" readonly="readonly" class="disabled" name="remLen2" size="3" maxlength="3" value="$!saizTxtRingkasanPengalaman" /></td>
         </tr>
         #end
@@ -387,11 +408,19 @@
 function doChangeJenisPermohonan() {
 	doAjaxCall${formName}("doChangeJenisPermohonan");
 }
+function doChangeJenisLesen() {
+	doAjaxCall${formName}("doChangeJenisLesen");
+}
 function doChangeNoFailAPB() {
 	doAjaxCall${formName}("doChangeNoFailAPB");
 }
 function daftarBaru() {
 
+	if(document.${formName}.txtUndang.value == ""){
+		alert('Sila masukkan maklumat Undang-undang.');
+  		document.${formName}.txtUndang.focus(); 
+		return; 
+	}
 	if(document.${formName}.socJenisLesen.value == ""){
 		alert('Sila pilih Jenis Lesen.');
   		document.${formName}.socJenisLesen.focus(); 
@@ -466,5 +495,33 @@ function textCounter(field, countfield, maxlimit) {
     // otherwise, update 'Baki Aksara' counter
 	else
 	 countfield.value = maxlimit - field.value.length;
+}
+function open_info() {
+	var width  = 550;
+	var height = 300;
+	var left   = (screen.width  - width)/2;
+	var top    = (screen.height - height)/2;
+ 
+	var params = 'width='+width+', height='+height;
+ 	params += ', top='+top+', left='+left;
+	params += ', directories=no';
+	params += ', location=front';
+	params += ', menubar=no';
+	params += ', resizable=no';
+	params += ', scrollbars=no';
+	params += ', status=no';
+	params += ', toolbar=no';
+	new_window = open("","title",params);
+	new_window.document.open();
+
+	new_window.document.write("<html><title>Info Kaitan Tujuan</title>");
+	new_window.document.write("<body bgcolor=\"#FFFFFF\">");
+	new_window.document.write("<table><tr><td><b><u>Jenis-Jenis Lesen</u></b></td></tr></table>");
+	
+	new_window.document.write("<table width='100%'><tr><td width='50%' valign='top'>");
+	
+	new_window.document.write("<table><tr><td align='justify'><b>Borang 2(Lesen Pasir)</b> pilih 'Menjalankan operasi', <b>Borang 3(Lesen Menjelajah/Mencari Gali/Menggerek)</b> pilih 'Mencari gali', <b>Borang 4(Lesen galian selain pasir)</b> pilih 'Melombong'. </td></tr></table>");
+	new_window.document.write("</body></html>");
+	new_window.document.close();
 }
 </script>
