@@ -200,6 +200,7 @@ public class AduanTanah extends AjaxModule {
 		OnlineUser user = getUtility().getUserInternal(user_login);
 		if(user == null)
 			user = getUtility().getUserKJP(user_login);
+		myLog.info("user data >>> "+user);
 		context.put("user", user);
 
 	}
@@ -235,6 +236,7 @@ public class AduanTanah extends AjaxModule {
 			String idMukim = "";
 			String idSekyen = "";
 			String no_fail ="";
+			long idAduan =0;
 
 		    while (itr.hasNext()) {
 				FileItem item = (FileItem)itr.next();
@@ -265,56 +267,57 @@ public class AduanTanah extends AjaxModule {
 
 
 			myLog.info("simpanAduan4");
-			RujJenisAduanMobile jenisAduan = db.find(RujJenisAduanMobile.class, idJenisAduan);
-
-			Long idSumber = Long.parseLong("16101");
-			RujSumberAduanMobile sumberAduan = db.find(RujSumberAduanMobile.class, idSumber);
-
+			Connection conn = null;
+			SQLRenderer r2 = new SQLRenderer();
+			String sql2 = "";
 			try {
-				//db = new DbPersistence();
-				db.begin();
-				OnlineEAduanMobile aduan = new OnlineEAduanMobile();
-				aduan.setIdPengadu(idPengadu);
-				aduan.setNamaPengadu(namaPengadu);
-				aduan.setEmailPengadu(emailPengadu);
-				aduan.setPhonePengadu(phonePengadu);
-				aduan.setJenisAduan(jenisAduan);
-				aduan.setCatatan(catatan.toUpperCase());
-				aduan.setStatus(status.toUpperCase());
-				aduan.setFlagOnline(flagOnline.toUpperCase());
-				aduan.setStatusPenyelesaian(statusPenyelesaian.toUpperCase());
-				aduan.setSumberAduan(sumberAduan);
-				aduan.setTarikhMasuk(now);
-				aduan.setNoFail(no_fail);
-				db.persist(aduan);
-				db.commit();
+				Db db = new Db();
+				conn = db.getConnection();
+				conn.setAutoCommit(false);
+				Statement stmt = db.getStatement();
 
-				Long idAduan = aduan.getId();
+				myLog.info("aduanTanah2");
 
-				try{
 
-				OnlineEAduanMobile aduanOnline = db.find(OnlineEAduanMobile.class, idAduan);
+				idAduan = DB.getNextID(db, "TBLONLINEEADUAN_SEQ");
+				r2.add("ID_EADUAN", idAduan);
+				r2.add("NAMA_PENGADU", namaPengadu);
+				r2.add("EMAIL_PENGADU", emailPengadu);
+				r2.add("CATATAN", catatan);
+				r2.add("ID_JENISADUAN", idJenisAduan);
+				r2.add("STATUS", status);
+				r2.add("PHONE_PENGADU", phonePengadu);
+				r2.add("ID_PENGADU", idPengadu);
+				r2.add("ID_SUMBERADUAN", 16101);
+				r2.add("NO_FAIL", no_fail);
+				r2.add("FLAG_ONLINE", flagOnline);
+				r2.add("TARIKH_MASUK", r2.unquote("sysdate"));
 
-				db.begin();
-				OnlineLampiranEAduanMobile lampiran = new OnlineLampiranEAduanMobile();
-				lampiran.setEAduan(aduanOnline);
-				lampiran.setContent(IOUtils.toByteArray(uploadData));
-				lampiran.setJenisMime(uploadType);
-				lampiran.setTarikhMasuk(now);
-				lampiran.setNamaFail(uploadName);
-				db.persist(lampiran);
-				db.commit();
-				} catch(Exception e){
-					e.getMessage();
+				sql2 = r2.getSQLInsert("TBLONLINEEADUAN");
+
+				myLog.info("save aduan :: sql >>>> "+sql2);
+				stmt.executeUpdate(sql2);
+				conn.commit();
+				}
+				catch (SQLException se) {
+					myLog.error(se);
+			    	try {
+			    		conn.rollback();
+			    	} catch (SQLException se2) {
+			    		throw new Exception("Rollback error:"+se2.getMessage());
+			    	}
+			    	throw new Exception("Ralat Pendaftaran :"+se.getMessage());
+				}
+				catch (Exception re) {
+					throw re;
+				}finally {
 				}
 
-				myLog.info("simpanAduan5");
-				aduanTanah(session,String.valueOf(idAduan),db1,idNegeri,idDaerah,idHakmilikAduan,noHakmilikAduan,idJenisLotTanah,nolotTanah,idMukim,idSekyen);
-				context.put("complaintID", idAduan);
-				context.put("pengaduID", idPengadu);
-			} catch(Exception e){
-				e.getMessage();
-			}
+
+			myLog.info("simpanAduan5");
+			aduanTanah(session,String.valueOf(idAduan),db1,idNegeri,idDaerah,idHakmilikAduan,noHakmilikAduan,idJenisLotTanah,nolotTanah,idMukim,idSekyen);
+			context.put("complaintID", idAduan);
+			context.put("pengaduID", idPengadu);
 	 }
 
 	public String aduanTanah(HttpSession session,String ID_ADUANPUBLIC,Db db,String idNegeri,String idDaerah,String idHakmilikAduan,

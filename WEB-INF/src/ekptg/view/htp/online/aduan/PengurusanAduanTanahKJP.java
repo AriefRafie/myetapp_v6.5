@@ -56,7 +56,7 @@ public class PengurusanAduanTanahKJP extends AjaxModule {
 	 */
 	private static Logger myLog = Logger.getLogger(ekptg.view.htp.online.aduan.PengurusanAduanTanahKJP.class);
 
-	private final String PATH="app/htp/online/aduantanah/manager/";
+	private final String PATH="app/htp/online/aduantanah/kjp/";
 	private String vm = PATH +"index.jsp";
 	String userId = null;
 	private IEkptgManageComplaintHandler handler;
@@ -68,6 +68,7 @@ public class PengurusanAduanTanahKJP extends AjaxModule {
 	HttpSession session = null;
 	String action = null;
 	List listAduan = null;
+	List aduanDetails = null;
 
 	@Override
 	public String doAction() throws Exception {
@@ -90,6 +91,7 @@ public class PengurusanAduanTanahKJP extends AjaxModule {
 			context.put("selectedTabUpper", selectedTabUpper);
 		if(command.equals("viewComplaint")){
 			String idComplaint = getParam("idComplaint");
+			myLog.info("idComplaint >>>> "+idComplaint);
 			viewComplaint(idComplaint);
 			getSeksyenList();
 			//getNotificationBean().notifyPengadu(idComplaint);//email notification to pengadu
@@ -242,7 +244,24 @@ public class PengurusanAduanTanahKJP extends AjaxModule {
 
 //		System.out.println("Nombor Aduan Sepatutnya keluar ::::::::: " + idComplaint);
 //		AduanPublic complaint = getHandler().getComplaintTanahDetails(idComplaint);
-//		context.put("complaint", complaint);
+
+		Complaint complaint = getHandler().getComplaint(idComplaint);
+		getResponseList(idComplaint);
+
+		Db db = null;
+		try {
+			db = new Db();
+			aduanDetails = aduanDetails(idComplaint,idComplaint,session,db);
+		}
+		catch (Exception ex) {
+		throw new DbException(ex.getMessage());
+		}
+		finally {
+			if (db != null)
+				db.close();
+		}
+		myLog.info("aduanDetails >>> "+aduanDetails);
+		context.put("tanah", aduanDetails);
 		getResponseList(idComplaint);
 		//ComplaintResponse response = getHandlerRB().getResponse(idResponse);
 		//context.put("response", response);
@@ -481,10 +500,12 @@ public class PengurusanAduanTanahKJP extends AjaxModule {
 				db1 = db;
 			}
 			stmt = db1.getStatement();
-			sql = "SELECT UPPER(aduan.NAMA_PENGADU) AS FULLNAME,aduan.NO_ADUAN,aduan.ID_PENGADU,tanah.NO_HAKMILIK,aduan.ID_ADUANPUBLIC, "
-					+" aduan.TARIKH_ADUAN, aduan.EMEL_PENGADU, aduan.TARIKH_KEMASKINI, aduan.ID_STATUS, status.KETERANGAN"
-					+" FROM TBLHTPHAKMILIKADUAN tanah, TBLADUANPUBLIC aduan, TBLRUJSTATUSADUANPUBLIC status "+
-					" WHERE tanah.ID_ADUAN = aduan.ID_ADUANPUBLIC AND aduan.ID_STATUS = status.ID_STATUS AND aduan.ID_STATUS NOT IN ('16125')";
+			sql = "SELECT A.ID_ADUANRESPON,A.STATUS,A.JAWAPAN,A.ARAHAN,A.TARIKH_MASUK,A.ID_ADUANTINDAKAN,A.NAMA_PEGAWAI,"+
+			" B.ID_KEMENTERIAN,C.ID_KEMENTERIAN,C.USER_ID,D.USER_ID,A.ID_EADUAN"+
+			" FROM TBLONLINEADUANRESPON A,TBLRUJKEMENTERIAN B,USERS_KEMENTERIAN C,USERS D"+
+			" WHERE A.ID_ADUANTINDAKAN = B.ID_KEMENTERIAN AND B.ID_KEMENTERIAN = C.ID_KEMENTERIAN AND C.USER_ID = D.USER_ID"+
+			" AND D.USER_ID = '"+USER_ID+"' "+
+			" ORDER BY A.TARIKH_MASUK";
 			myLog.info(" ADUAN : SQL listJenisAduan :"+ sql);
 			rs = stmt.executeQuery(sql);
 			listJenisAduan = Collections.synchronizedList(new ArrayList());
@@ -494,12 +515,102 @@ public class PengurusanAduanTanahKJP extends AjaxModule {
 				h = Collections.synchronizedMap(new HashMap());
 				bil++;
 				h.put("BIL",bil);
-				h.put("id",rs.getString("ID_ADUANPUBLIC") == null ? "" : rs.getString("ID_ADUANPUBLIC").toUpperCase());
-				h.put("namaPengadu",rs.getString("FULLNAME") == null ? "" : rs.getString("FULLNAME").toUpperCase());
-				h.put("tarikhAduan",rs.getDate("TARIKH_ADUAN") == null ? "" : formatter.format(rs.getDate("TARIKH_ADUAN")));
-				h.put("emelPengadu",rs.getString("EMEL_PENGADU") == null ? "" : rs.getString("EMEL_PENGADU"));
-				h.put("tarikhKemaskini",rs.getDate("TARIKH_KEMASKINI") == null ? "" : formatter.format(rs.getDate("TARIKH_KEMASKINI")));
-				h.put("status",rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
+				h.put("id",rs.getString("ID_ADUANRESPON") == null ? "" : rs.getString("ID_ADUANRESPON"));
+				h.put("arahan",rs.getString("ARAHAN") == null ? "" : rs.getString("ARAHAN").toUpperCase());
+				h.put("idAduan",rs.getString("ID_EADUAN") == null ? "" : rs.getString("ID_EADUAN"));
+				listJenisAduan.add(h);
+			}
+
+		} finally {
+			if(db==null)
+			{
+				if (rs != null)
+					rs.close();
+				if (stmt != null)
+					stmt.close();
+				if (db1 != null)
+					db1.close();
+			}
+		}
+		return listJenisAduan;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List aduanDetails(String idAduan,String USER_ID,HttpSession session,Db db)throws Exception {
+		Db db1 = null;
+
+		ResultSet rs = null;
+		Statement stmt = null;
+		List listJenisAduan = null;
+		String sql = "";
+		try {
+			if(db==null)
+			{
+			db1 = new Db();
+			}
+			else
+			{
+				db1 = db;
+			}
+			stmt = db1.getStatement();
+			sql = " SELECT aduan.NO_FAIL," +
+					" tanah.ID_HAKMILIKADUAN,tanah.ID_ADUAN,tanah.ID_LUAS,tanah.NO_HAKMILIK,tanah.NO_WARTA,tanah.TARIKH_WARTA,tanah.NO_LOT," +
+					" tanah.LUAS,tanah.ID_DAERAH,tanah.ID_NEGERI,tanah.ID_MUKIM,tanah.ID_LOT,tanah.ID_JENISHAKMILIK,N1.NAMA_NEGERI AS NAMA_NEGERITANAH," +
+					" D1.NAMA_DAERAH AS NAMA_DAERAHTANAH,M.NAMA_MUKIM AS NAMA_MUKIMTANAH, J.KETERANGAN AS NAMA_HAKMILIK, L.KETERANGAN AS NAMA_LOT, "+
+					" tanah.ID_SEKSYEN, S.NAMA_SEKSYENUPI AS NAMA_SEKSYENTANAH "+
+					" FROM TBLONLINEEADUAN aduan,TBLHTPHAKMILIKADUAN tanah,TBLRUJNEGERI N1," +
+					" TBLRUJDAERAH D1,TBLRUJMUKIM M,TBLRUJJENISHAKMILIK J,TBLRUJLOT L ,TBLRUJSEKSYENUPI S"+
+					" WHERE tanah.ID_NEGERI = N1.ID_NEGERI(+) AND tanah.ID_DAERAH = D1.ID_DAERAH(+) AND tanah.ID_MUKIM = M.ID_MUKIM(+) AND tanah.ID_SEKSYEN = S.ID_SEKSYENUPI(+)" +
+					" AND tanah.ID_JENISHAKMILIK = J.ID_JENISHAKMILIK(+) AND tanah.ID_LOT = L.ID_LOT(+) "+
+					" AND aduan.ID_EADUAN = '"+idAduan+"' "+
+					" AND tanah.ID_ADUAN = '"+idAduan+"'  ";
+			myLog.info(" ADUAN : SQL aduanDetails :"+ sql);
+			rs = stmt.executeQuery(sql);
+			listJenisAduan = Collections.synchronizedList(new ArrayList());
+			Map h = null;
+			int bil = 0;
+			while (rs.next()) {
+				h = Collections.synchronizedMap(new HashMap());
+				bil++;
+				h.put("BIL",bil);
+				h.put("NO_HAKMILIK",rs.getString("NO_HAKMILIK") == null ? "" : rs.getString("NO_HAKMILIK").toUpperCase());
+				h.put("ID_HAKMILIKADUAN",rs.getString("ID_HAKMILIKADUAN") == null ? "" : rs.getString("ID_HAKMILIKADUAN"));
+				h.put("NO_LOT",rs.getString("NO_LOT") == null ? "" : rs.getString("NO_LOT"));
+				h.put("ID_LOT",rs.getString("ID_LOT") == null ? "" : rs.getString("ID_LOT"));
+				h.put("NO_FAIL",rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL"));
+
+				if (rs.getString("NAMA_NEGERITANAH") == null) {
+					h.put("nama_negeritanah", "");
+				} else {
+					h.put("nama_negeritanah", rs.getString("NAMA_NEGERITANAH").toUpperCase());
+				}
+				if (rs.getString("NAMA_DAERAHTANAH") == null) {
+					h.put("nama_daerahtanah", "");
+				} else {
+					h.put("nama_daerahtanah", rs.getString("NAMA_DAERAHTANAH").toUpperCase());
+				}
+				if (rs.getString("NAMA_MUKIMTANAH") == null) {
+					h.put("nama_mukimtanah", "");
+				} else {
+					h.put("nama_mukimtanah", rs.getString("NAMA_MUKIMTANAH").toUpperCase());
+				}
+				if (rs.getString("NAMA_SEKSYENTANAH") == null) {
+					h.put("nama_seksyentanah", "");
+				} else {
+					h.put("nama_seksyentanah", rs.getString("NAMA_SEKSYENTANAH").toUpperCase());
+				}
+				if (rs.getString("NAMA_HAKMILIK") == null) {
+					h.put("nama_hakmilik", "");
+				} else {
+					h.put("nama_hakmilik", rs.getString("NAMA_HAKMILIK").toUpperCase());
+				}
+				if (rs.getString("NAMA_LOT") == null) {
+					h.put("nama_lot", "");
+				} else {
+					h.put("nama_lot", rs.getString("NAMA_LOT").toUpperCase());
+				}
+
+
 				listJenisAduan.add(h);
 			}
 

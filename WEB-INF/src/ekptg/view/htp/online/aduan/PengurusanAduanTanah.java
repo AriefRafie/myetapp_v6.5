@@ -236,15 +236,16 @@ public class PengurusanAduanTanah extends AjaxModule {
 			vm = PATH+"view.jsp";
 		}
 		else if(command.equals("viewAgihan")){
+			myLog.info("amsuk x sini");
 			mode = "view";
-			String idComplaint = getParam("idComplaint");
-			viewComplaint(idComplaint);
+			String idAgihan = getParam("idResponse");
+			//viewComplaint(idComplaint);
 			//displayAgihan();
 			//context.put("categories",getCategoryAduan().getComplaintCategory());
 			Db db = null;
 			try {
 				db = new Db();
-				listAgihan = listAgihan(idComplaint,session,db);
+				listAgihan = agihanDetails(idAgihan,session,db);
 			}
 			catch (Exception ex) {
 			throw new DbException(ex.getMessage());
@@ -253,7 +254,7 @@ public class PengurusanAduanTanah extends AjaxModule {
 				if (db != null)
 					db.close();
 			}
-			context.put("categories", listAgihan);
+			context.put("responses", listAgihan);
 			vm = PATH+"agihanTask.jsp";
 		}
 		else if(command.equals("updateResponPTG")){
@@ -947,6 +948,58 @@ public class PengurusanAduanTanah extends AjaxModule {
 			stmt = db1.getStatement();
 			sql ="SELECT A.ID_ADUANRESPON,A.STATUS,A.JAWAPAN,A.ARAHAN,A.TARIKH_MASUK,A.ID_ADUANTINDAKAN,A.NAMA_PEGAWAI FROM TBLONLINEADUANRESPON A" +
 					" WHERE ID_EADUAN="+idAduan+
+					" ORDER BY A.TARIKH_MASUK";
+			myLog.info(" ADUAN : SQL listAgihan :"+ sql);
+			rs = stmt.executeQuery(sql);
+			listJenisAduan = Collections.synchronizedList(new ArrayList());
+			Map h = null;
+			int bil = 0;
+			while (rs.next()) {
+				h = Collections.synchronizedMap(new HashMap());
+				bil++;
+				h.put("BIL",bil);
+				h.put("ID",rs.getString("ID_ADUANRESPON") == null ? "" : rs.getString("ID_ADUANRESPON").toUpperCase());
+				h.put("JAWAPAN",rs.getString("JAWAPAN") == null ? "" : rs.getString("JAWAPAN").toUpperCase());
+				h.put("ARAHAN",rs.getString("ARAHAN") == null ? "" : rs.getString("ARAHAN").toUpperCase());
+				h.put("NAMA_PEGAWAI",rs.getString("NAMA_PEGAWAI") == null ? "" : rs.getString("NAMA_PEGAWAI").toUpperCase());
+				h.put("TARIKH_MASUK",rs.getDate("TARIKH_MASUK") == null ? "": sdf.format(rs.getDate("TARIKH_MASUK")));
+				h.put("STATUS",rs.getString("STATUS") == null ? "" : rs.getString("STATUS").toUpperCase());
+				listJenisAduan.add(h);
+			}
+
+		} finally {
+			if(db==null)
+			{
+				if (rs != null)
+					rs.close();
+				if (stmt != null)
+					stmt.close();
+				if (db1 != null)
+					db1.close();
+			}
+		}
+		return listJenisAduan;
+	}
+
+	public List agihanDetails(String idAgihan,HttpSession session,Db db)throws Exception {
+		Db db1 = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		ResultSet rs = null;
+		Statement stmt = null;
+		List listJenisAduan = null;
+		String sql = "";
+		try {
+			if(db==null)
+			{
+			db1 = new Db();
+			}
+			else
+			{
+				db1 = db;
+			}
+			stmt = db1.getStatement();
+			sql ="SELECT A.ID_ADUANRESPON,A.STATUS,A.JAWAPAN,A.ARAHAN,A.TARIKH_MASUK,A.ID_ADUANTINDAKAN,A.NAMA_PEGAWAI FROM TBLONLINEADUANRESPON A" +
+					" WHERE ID_ADUANRESPON="+idAgihan+
 					" ORDER BY A.TARIKH_MASUK";
 			myLog.info(" ADUAN : SQL listAgihan :"+ sql);
 			rs = stmt.executeQuery(sql);

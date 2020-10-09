@@ -1035,7 +1035,8 @@ public class FrmPYWOnlineSenaraiFailData {
 					+ " RUJLUAS.KETERANGAN AS JENIS_LUAS, HMS.NO_WARTA, HMS.TARIKH_WARTA, HMS.ID_MUKIM, RUJMUKIM.NAMA_MUKIM,"
 					+ " HMS.ID_DAERAH, RUJDAERAH.NAMA_DAERAH, HMS.ID_NEGERI, RUJNEGERI.NAMA_NEGERI, HMS.ID_KATEGORI AS ID_KATEGORI,"
 					+ " RUJKATEGORI.KETERANGAN AS KATEGORI, HMS.ID_SUBKATEGORI, RUJSUBKATEGORI.KETERANGAN AS SUBKATEGORI, HMS.KEGUNAAN_TANAH,"
-					+ " HMS.SYARAT, HMS.SEKATAN, HMS.ID_AGENSI, RUJAGENSI.NAMA_AGENSI, RUJAGENSI.ID_KEMENTERIAN, RUJKEMENTERIAN.NAMA_KEMENTERIAN"
+					+ " HMS.SYARAT, HMS.SEKATAN, HMS.ID_AGENSI, RUJAGENSI.NAMA_AGENSI, RUJAGENSI.ID_KEMENTERIAN, RUJKEMENTERIAN.NAMA_KEMENTERIAN,"
+					+ " HMS.UNIT_LUAS, HMS.LUAS_1, HMS.LUAS_2, HMS.LUAS_3"
 					+ " FROM TBLPHPHAKMILIKSEMENTARA HMS, TBLRUJJENISHAKMILIK RUJJENISHM, TBLRUJLOT RUJLOT, TBLRUJLUAS RUJLUAS,"
 					+ " TBLRUJMUKIM RUJMUKIM, TBLRUJDAERAH RUJDAERAH, TBLRUJNEGERI RUJNEGERI, TBLRUJKATEGORI RUJKATEGORI, TBLRUJSUBKATEGORI RUJSUBKATEGORI,"
 					+ " TBLRUJAGENSI RUJAGENSI, TBLRUJKEMENTERIAN RUJKEMENTERIAN"
@@ -1091,6 +1092,10 @@ public class FrmPYWOnlineSenaraiFailData {
 				h.put("idSubKategori",rs.getString("ID_SUBKATEGORI") == null ? "" : rs.getString("ID_SUBKATEGORI"));
 				h.put("idKementerian", rs.getString("ID_KEMENTERIAN") == null ? "" : rs.getString("ID_KEMENTERIAN"));
 				h.put("idAgensi", rs.getString("ID_AGENSI") == null ? "" : rs.getString("ID_AGENSI"));
+				h.put("unitLuas", rs.getString("UNIT_LUAS") == null ? "" : rs.getString("UNIT_LUAS"));
+				h.put("luas_1", rs.getString("LUAS_1") == null ? "" : rs.getString("LUAS_1"));
+				h.put("luas_2", rs.getString("LUAS_2") == null ? "" : rs.getString("LUAS_2"));
+				h.put("luas_3", rs.getString("LUAS_3") == null ? "" : rs.getString("LUAS_3"));
 				
 				if (rs.getString("NO_HAKMILIK") != null && rs.getString("NO_WARTA") == null){
 					h.put("statusRizab", "MILIK");
@@ -1123,7 +1128,10 @@ public class FrmPYWOnlineSenaraiFailData {
 				h.put("kementerian", "");
 				h.put("agensi", "");
 				h.put("kegunaanTanah", "");
-				h.put("statusRizab", "");
+				h.put("luas_1", "");
+				h.put("luas_2", "");
+				h.put("luas_3", "");
+				
 				beanMaklumatTanah.addElement(h);
 			}
 
@@ -2138,7 +2146,7 @@ public class FrmPYWOnlineSenaraiFailData {
 		   String idPHPBorangK, String idPPTBorangK, 
 		   String idJenisTanah, String idNegeri, String idDaerah, String idMukim, String jenisHakmilik, String txtNoHakmilik, String jenisLot, String txtNoLot, String txtLuasBersamaan,
 		   String idHakmilikUrusan, String tarikhTerima, 
-		   String idJenisPermohonan, HttpSession session, String idPermohonanLama) throws Exception {
+		   String idJenisPermohonan, HttpSession session, String idPermohonanLama, String idLuas, String txtLuas1, String txtLuas2, String txtLuas3) throws Exception {
 		
 		Db db = null;
 		Connection conn = null;
@@ -2148,7 +2156,7 @@ public class FrmPYWOnlineSenaraiFailData {
 		String idHakmilikHtp = "";
 		String idKementerian = "";
 		String idNegeriHakmilik = "";
-		String idLuas = "";
+		// String idLuas = "";
 		String luas = "";
 		String namaUser = "";
 		String IdKategoriUser = "";
@@ -2285,6 +2293,10 @@ public class FrmPYWOnlineSenaraiFailData {
 			r.add("NO_LOT", txtNoLot);
 			r.add("ID_LUAS", "2");
 			r.add("LUAS", txtLuasBersamaan);
+			r.add("UNIT_LUAS", idLuas);
+			r.add("LUAS_1", txtLuas1);
+			r.add("LUAS_2", txtLuas2);
+			r.add("LUAS_3", txtLuas3);
 			// r.add("ID_KATEGORI", idKategori);
 			// r.add("ID_SUBKATEGORI", idSubKategori);
 
@@ -2890,7 +2902,8 @@ public class FrmPYWOnlineSenaraiFailData {
 	}
 	
 	public void updateTanahSewa(String idPermohonan, String idHakmilikSementara, String idJenisTanah, String idNegeri, String idDaerah, String idMukim, 
-			String jenisHakmilik, String txtNoHakmilik, String jenisLot, String txtNoLot, String txtLuasBersamaan, HttpSession session) throws Exception {
+			String jenisHakmilik, String txtNoHakmilik, String jenisLot, String txtNoLot, String txtLuasBersamaan, HttpSession session,
+			String idLuas, String txtLuas1, String txtLuas2, String txtLuas3) throws Exception {
 
 
 		Db db = null;
@@ -2899,6 +2912,7 @@ public class FrmPYWOnlineSenaraiFailData {
 		String sql = "";
 		String sql_= "";
 		String sql_b= "";
+		String flag_guna="";
 	
 		try {
 			db = new Db();
@@ -2936,10 +2950,26 @@ public class FrmPYWOnlineSenaraiFailData {
 			r_.add("NO_LOT", txtNoLot);
 			r_.add("ID_LUAS", "2");
 			r_.add("LUAS", txtLuasBersamaan);
+			r_.add("UNIT_LUAS", idLuas);
+			r_.add("LUAS_1", txtLuas1);
+			r_.add("LUAS_2", txtLuas2);
+			r_.add("LUAS_3", txtLuas3);
 			
 			sql_ = r_.getSQLUpdate("TBLPHPHAKMILIKSEMENTARA");
 			log.info("TBLPHPHAKMILIKSEMENTARA :"+ sql_);
 			stmt.executeUpdate(sql_);
+			
+			sql_b = "SELECT B.FLAG_GUNA " 
+					+ " FROM TBLPERMOHONAN A,TBLPHPPERMOHONANSEWA B "
+					+ " WHERE A.ID_PERMOHONAN = B.ID_PERMOHONAN AND A.ID_PERMOHONAN = '" + idPermohonan + "' AND FLAG_GUNA = '1' ";
+				
+				
+			ResultSet rsPermohonan = stmt.executeQuery(sql_b);
+			if (rsPermohonan.next()){
+				flag_guna = rsPermohonan.getString("FLAG_GUNA");
+				r_b.add("LUAS_MHNBERSAMAAN", txtLuasBersamaan);
+			}
+			log.info("SQL FLAG: "+ sql_b + " FLAG:" + flag_guna);
 			
 			//TBLPHPPERMOHONANSEWA
 			r_b.update("ID_PERMOHONAN", idPermohonan);

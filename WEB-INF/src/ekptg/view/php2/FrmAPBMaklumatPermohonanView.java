@@ -59,6 +59,7 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
         String idKoordinat = getParam("idKoordinat");
         String idKategoriPemohon = getParam("idKategoriPemohon");
         String noPermohonan = getParam("noPermohonan");
+        String idKoordinat_original = getParam("idKoordinat_original");
         
         //VECTOR
         Vector beanHeader = null;
@@ -66,6 +67,7 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
         Vector senaraiPembeliPasir = null;
         Vector senaraiProjek = null;
         Vector senaraiKoordinat = null;
+        Vector senaraiKoordinatHistory = null;
         Vector senaraiPakar = null;
         
 		String step = getParam("step");
@@ -124,7 +126,7 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
         		logic.removePakar(idPakar, session);
         	}        	
         	if ("doSimpanKoordinat".equals(hitButton)){
-        		idKoordinat = logic.saveKoordinat(idPermohonan, getParam("txtLabelTitik"), getParam("txtDarjahU"), 
+        		idKoordinat = logic.saveKoordinat(idKoordinat_original, idPermohonan, getParam("txtLabelTitik"), getParam("txtDarjahU"), 
         				getParam("txtMinitU"), getParam("txtSaatU"), getParam("txtDarjahT"), getParam("txtMinitT"), getParam("txtSaatT"), session);
         	}
         	if ("doSimpanKemaskiniKoordinat".equals(hitButton)){
@@ -176,6 +178,11 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
 			logic.setSenaraiKoordinat(idPermohonan);
 			senaraiKoordinat = logic.getListKoordinat();
 			this.context.put("SenaraiKoordinat", senaraiKoordinat);
+			
+			//SENARAI TITIK KOORDINAT (LAMA)
+			logic.setSenaraiKoordinatHistory(idPermohonan);
+			senaraiKoordinatHistory = logic.getListKoordinatHistory();
+			this.context.put("SenaraiKoordinatHistory", senaraiKoordinatHistory);
     		
     		//SENARAI PAKAR
 			logic.setSenaraiPakar(idPermohonan);
