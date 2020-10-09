@@ -241,8 +241,8 @@ public class PengurusanAduanTanahKJP extends AjaxModule {
 		String idComplaint = noAduan;
 
 //		System.out.println("Nombor Aduan Sepatutnya keluar ::::::::: " + idComplaint);
-		AduanPublic complaint = getHandler().getComplaintTanahDetails(idComplaint);
-		context.put("complaint", complaint);
+//		AduanPublic complaint = getHandler().getComplaintTanahDetails(idComplaint);
+//		context.put("complaint", complaint);
 		getResponseList(idComplaint);
 		//ComplaintResponse response = getHandlerRB().getResponse(idResponse);
 		//context.put("response", response);
