@@ -214,7 +214,7 @@
 					                    <tr>
 					                      <td class="$row" align="center">$!count</td>
 					                       <td class="$row" align="center">$!vectorResponse.TARIKH_MASUK</td>
-					                      <td class="$row" align="center"><a href="javascript:detailAgihan('$vectorResponse.id')" class="style1 style2">$vectorResponse.ID</a></td>
+					                      <td class="$row" align="center">$vectorResponse.ID<!-- <a href="javascript:detailAgihan('$vectorResponse.ID')" class="style1 style2">$vectorResponse.ID</a> --></td>
 					                      <td class="$row">$!vectorResponse.STATUS</td>
 					                      <td class="$row">$!vectorResponse.NAMA_PEGAWAI</td>
 					                      <td class="$row">$!vectorResponse.ARAHAN</td>
