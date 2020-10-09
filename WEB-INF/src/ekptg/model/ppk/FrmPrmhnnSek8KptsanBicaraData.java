@@ -63,6 +63,7 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 	private Vector selectedWaris = new Vector();
 	private Vector selectedWaris17 = new Vector();
 	private Vector existingWaris = new Vector();
+	private static Vector checkNamaMahkamah = new Vector();
 	private Vector listUploadFail = new Vector();
 	private static Vector ListSelectedWaris = new Vector();
 	private static Vector ListSelectedWaris17 = new Vector();
@@ -104,6 +105,10 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 	 public Vector getMaklumatWaris() {
 		return existingWaris;
 	 }	
+	 public Vector getNamaMahkamah() {
+			return checkNamaMahkamah;
+		 }	
+	 
 	 public Vector getSelectedWaris() {
 		return selectedWaris;
 	 }	
@@ -2974,6 +2979,43 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 	    	} finally {
 	    		if (db != null) db.close();
 	    	}
+	  	}
+	
+	public static Vector checkNamaMahkamah(String id_perintah) throws Exception	{
+		
+		Db db = null;
+		checkNamaMahkamah.clear();
+	    
+		String sql = " SELECT NAMA_PEJABAT FROM TBLRUJPEJABAT WHERE ID_PEJABAT = (SELECT id_pejabatmahkamah FROM TBLPPKPERINTAH WHERE ID_PERINTAH = '"+id_perintah+"')";
+	   
+		
+		
+		
+		
+	    
+	    try {
+	      db = new Db();
+	      Statement stmt = db.getStatement();
+	      SQLRenderer r = new SQLRenderer();
+      
+	      myLogger.info("checkNamaMahkamah = "+sql);
+	      ResultSet rs = stmt.executeQuery(sql);
+	      
+			Hashtable h;
+
+	      
+	      while (rs.next()) {
+	    	h = new Hashtable();
+	    	h.put("NAMA_PEJABAT", rs.getString("NAMA_PEJABAT")==null?"":rs.getString("NAMA_PEJABAT"));
+    	
+	    	checkNamaMahkamah.addElement(h);
+			
+	      }
+	      return checkNamaMahkamah;
+	    }
+	    finally {
+	      if (db != null) db.close();
+	    }
 	  	}
 
 		public static void add_MaklumatBatal(String usid,String idpermohonan,String id_perbicaraan,String txdTarikhPerintah,

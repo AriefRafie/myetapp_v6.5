@@ -2,6 +2,16 @@
 #set ( $idFail = $data.get("id_fail") )
 #set($perhatian="<i><font color=red >Perhatian</font><font >: Sila pastikan label bertanda</font>&nbsp;<font color=red >*</font>&nbsp;<font >diisi.</font></i>")
 
+#set ($namaMahkamahTinggi = "")
+#foreach ($namaMahkamah in $dataListMahkamah )
+	#set($namaMahkamahTinggi = $namaMahkamah.NAMA_PEJABAT)
+#end
+
+#if($namaMahkamahTinggi != '')
+	#set($namaMahkamah = $namaMahkamahTinggi)
+	
+#end
+
 #foreach ($Listflag5juta in $flag5juta)
 	#set($check5juta = $Listflag5juta.flag_5juta )
 #end
@@ -632,7 +642,7 @@ document.getElementById("header_lama").style.display="block";
         <tr>
       <td colspan="3" width="100%" ><div align="center">
       
-      #if (($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N") && ($!DoNotSave != "1") && ($userRole != "user_ppk") && ($checkaksesSkrinKepBicara =="T"))
+      #if (($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N") && ($!DoNotSave != "1") && ($userRole != "user_ppk"))
           <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript:Simpan_Selesai('$idpermohonan','$id_perbicaraan');" />
       #end
           <input name="cmdKembali" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
@@ -738,7 +748,7 @@ document.getElementById("header_lama").style.display="block";
     </tr>
         <tr>
       <td colspan="2" width="100%" ><div align="center">
-       #if($!DoNotSave != "1" && $userRole != "user_ppk")
+        #if($!DoNotSave != "1" && $userRole != "user_ppk")
           <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript:Simpan_Tangguh('$idpermohonan','$id_perbicaraan');" />
        #end
           <input name="cmdKembali" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');"/>
@@ -1034,7 +1044,7 @@ document.getElementById("header_lama").style.display="block";
         </div></td>
     </tr>
   </table>
-    </fieldset>
+    </fieldset> 
     
  
 
@@ -1584,7 +1594,7 @@ document.getElementById("header_lama").style.display="block";
           #if($idstatus == "41" || $idstatus == "25" )
             
             
-            #if ($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N" && $userRole != "user_ppk" && $checkaksesSkrinKepBicara =="T") 
+            #if ($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N" && $userRole != "user_ppk") 
             <input type="button" name="Kemaskini" id="Kemaskini" value="Kemaskini" onclick="javascript:Skrin_Kemaskini('$idpermohonan','$id_perbicaraan','$id_bayaran_perintah');" />
           	#end
           
@@ -1793,7 +1803,7 @@ document.getElementById("header_lama").style.display="block";
     <tr align="center">
       <td >&nbsp;</td>
       <td align="left"><input name="flag_batal" id="flag_batal" $ type="radio" value="1" $TEMPcheckedMahkamahTinggiWasiat  disabled>
-        Pindah ke Mahkamah Tinggi kerana ada wasiat  #if($batalWasiat == '1')($namaMahkamah)#end </td>
+        Pindah ke Mahkamah Tinggi kerana ada wasiat #if($batalWasiat == '1' || $TEMPcheckedMahkamahTinggiWasiat == 'checked' )($namaMahkamah)#end </td>
     
     					
     <tr align="center">
@@ -1809,7 +1819,7 @@ document.getElementById("header_lama").style.display="block";
     <tr align="center">
       <td >&nbsp;</td>
       <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="4" $TEMPcheckedMahkamahTinggi2Juta disabled>
-        Pindah ke Mahkamah Tinggi kerana harta melebihi #if($check5juta=='T')RM5 juta #else RM2 juta #end #if($batal2juta == '1')($namaMahkamah)#end</td>
+        Pindah ke Mahkamah Tinggi kerana harta melebihi #if($check5juta=='T')RM5 juta #else RM2 juta #end #if($batal2juta == '1' || $TEMPcheckedMahkamahTinggi2Juta == 'checked' )($namaMahkamah)#end</td>
     </tr>
     <tr align="center">
       <td >&nbsp;</td>
@@ -1926,11 +1936,12 @@ document.getElementById("header_lama").style.display="block";
     </table>
     
     </fieldset>  
-    
+    <br>
+
      #if($namaMahkamah != '') 
     <table width="100%" border="0">
     <tr>
-      <td colspan="2" width="100%" ><div align="center"> #if ( $flagFromSenaraiFailSek8 == '' && $flagFromSenaraiPermohonanSek8 == '' && $flagForView == '' )
+      <td colspan="2" width="100%" ><div align="center"> #if ( $flagFromSenaraiFailSek8 == '' || $flagFromSenaraiPermohonanSek8 == '' || $flagForView == '' )
           <input type="button" name="Kemaskini" id="Kemaskini" value="Kemaskini" onclick="javascript:Skrin_KemaskiniBatal('$idpermohonan','$id_perbicaraan');" />
            #if($flag_kemaskini_selesai != "yes")
 			<script>
@@ -2443,7 +2454,7 @@ document.getElementById("header_lama").style.display="block";
       </tr>
       <tr>
         <td colspan="3" width="100%" ><div align="center">
-        #if($userRole != "user_ppk")
+       #if($userRole != "user_ppk")
             <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript: kemaskini_selesai('$idpermohonan','$id_perbicaraan','$id_perintah');" />
         #end 
             <input name="cmdKembali" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
@@ -2644,7 +2655,7 @@ document.getElementById("header_lama").style.display="block";
       </tr>
       <tr>
         <td colspan="2" width="100%" ><div align="center">
-        #if($userRole != "user_ppk")
+      #if($userRole != "user_ppk")
             <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript: Simpan_Edit_Batal('$idpermohonan','$id_perbicaraan');" />
         #end
             <input name="cmdKembali" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />

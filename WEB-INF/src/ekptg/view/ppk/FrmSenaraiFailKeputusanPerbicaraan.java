@@ -118,6 +118,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
     	Vector PermohonanROTS = new Vector();
     	Vector PermohonanMufti = new Vector();
     	Vector senarai_waris = new Vector();
+    	Vector namaMahkamah = new Vector();
     	Vector getIdPerintah = new Vector();
     	Vector PermohonanROTSkeputusan = new Vector();
     	Vector PerintahTangguhROTS = new Vector();
@@ -269,12 +270,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 			
 			context.put("listPenerimaNotis_size1", listPenerimaNotis.size());
     		
-			/*int dt5   = Integer.parseInt(tarikh_bicara.substring(0,2),10);
-		   	int mon5  = Integer.parseInt(tarikh_bicara.substring(3,5),10);
-		   	int yr5   = Integer.parseInt(tarikh_bicara.substring(6,10),10);
-			@SuppressWarnings("deprecation")
-			Date date5 = new Date(yr5, mon5, dt5);
-			Date harini = new Date();*/
+
 			Date harini = new Date();
 			DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 	        Date tarikh_bicara2 = df.parse(tarikh_bicara);
@@ -321,7 +317,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
     		vm = "app/ppk/frmPrbcrnSek8KeputusanPerbicaraanSelesai.jsp";
 
     	}else if("papar_selesai".equals(submit)){
-
+    		System.out.println("papar_selesai");
 			//get id_keputusanpermohonan - tiada id_perbicaraan
 			FrmPrmhnnSek8KptsanBicaraData.setViewNotis(idpermohonan);
 			dataPerintah = FrmPrmhnnSek8KptsanBicaraData.getViewNotis();
@@ -330,7 +326,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 				Hashtable v = (Hashtable) dataPerintah.get(0);
 				idkp = (String)v.get("id_keputusanpermohonan");
 			}
-			
+			System.out.println("akses Skrin Keputusan Perbicaraan");
 			//check sama ada boleh akses Skrin Keputusan Perbicaraan
 			FrmPrmhnnSek8KeputusanPermohonanInternalData.checkFlagAksesSkrinKepBicara(id);
 			aksesSkrinKepBicara = FrmPrmhnnSek8KeputusanPermohonanInternalData.getFlagAksesSkrinKepBicara();
@@ -461,10 +457,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
       			    		//this.context.put("txtJumBayaranSebenar", bayaranSebenar);
       			    		this.context.put("txtJumHarta", jumlah_harta_tarikhmohon);
       						this.context.put("txtJumHartaDikenakanBayaranPerintah", jumlahHartaDeductNilaianAmanahRaya); //arief add
-      						System.out.println("txtJumBayaran = "+bayaranYuran);
-      						System.out.println("txtJumHarta = "+jumlah_harta_tarikhmohon);
-      						System.out.println("txtJumHartaDikenakanBayaranPerintah = "+jumlahHartaDeductNilaianAmanahRaya);
-      						System.out.println("txtJumDendaLewat = "+bayaranDenda);
+
       					}
 
       				}else{
@@ -501,17 +494,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
   	      					}
       			    		bayaranYuran = bayaranYuran + bayaranDenda;
       			    			
-      			    			/**yang asal
-      			    			 * 
-      			    			 * if ( jumlah_harta_tarikhmohon <= 1000 ) {
-      								bayaranYuran = 10.00 ;
-      							} else if ( (jumlah_harta_tarikhmohon >= 1001) && (jumlah_harta_tarikhmohon <= 50000) ){
-      								bayaranYuran = 30.00 ;
-      							} else {
-      								bayaranYuran = (0.2/100) * jumlah_harta_tarikhmohon ;
-      								//ADD BY PEJE
-      								bayaranYuran = getBundaranBayaran(bayaranYuran);
-      							}**/
+      			    			
       			    		this.context.put("txtJumBayaran", bayaranYuran);
       			    		this.context.put("txtJumHarta", jumlah_harta_tarikhmohon);
       			    		this.context.put("txtJumHartaDikenakanBayaranPerintah", jumlah_harta_tarikhmohon);//arief add
@@ -969,14 +952,28 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
        			FrmPrmhnnSek8KptsanBicaraData.setViewPerintahList(idpermohonan);
     			dataPerintah = FrmPrmhnnSek8KptsanBicaraData.getViewPerintahList();
     			String idkp = "";
+    			String idPerintah = "";
     			if (dataPerintah.size()!=0){
     				Hashtable v = (Hashtable) dataPerintah.get(0);
     				idkp = (String)v.get("id_keputusanpermohonan");
     				this.context.put("id_perintah",v.get("id_perintah"));
+    				idPerintah = (String) v.get("id_perintah");
     			}
     			this.context.put("dataPerintahView", dataPerintah);
     			
-
+    			
+    			namaMahkamah = FrmPrmhnnSek8KptsanBicaraData.checkNamaMahkamah(idPerintah);
+    			if ( namaMahkamah.size() != 0 ){
+    				Hashtable a1  = (Hashtable) namaMahkamah.get(0);
+    				this.context.put("dataListMahkamah", namaMahkamah);
+    			}else{
+    				this.context.put("dataListMahkamah", "");
+    			}
+    			
+    			
+    			
+    			
+    			
     	    	//--data notis 
     			logic4.setListSemakWithData(idkp);
         		dataNotis = logic4.getListSemakWithData();
@@ -8112,6 +8109,8 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 	    FrmPrmhnnSek8KptsanBicaraData.updateDataMahkamah(usid,id_perintah,id_perbicaraan,
 	    		jenisPerintah,txdTarikhPerintahEdit,id_pejabat,id_unitpsk);
 	}
+	
+
 
 	//*Menunggu Keputusan Rujukan Mahkamah Tinggi
 	private void insertMahkamah(String usid, String id_perbicaraan) throws Exception {
