@@ -8,6 +8,7 @@
           <td><table width="100%" border="0" cellspacing="2" cellpadding="2">
               <tr>
                 <td width="50%" valign="top"><table width="100%" border="0" cellspacing="2" cellpadding="2">
+                	<input type="hidden" name="idKoordinat_original" value="$beanMaklumatKoordinat.idKoordinat_original">
                     <tr>
                       <td width="1%">#if ($mode == 'newKoordinat' ||  $mode == 'updateKoordinat')<span class="style1">*</span>#end</td>
                       <td width="29%">Label Titik</td>
