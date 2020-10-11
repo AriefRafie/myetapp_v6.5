@@ -36,6 +36,7 @@ import ekptg.model.htp.HakmilikUrusan;
 import ekptg.model.htp.HtpBean;
 import ekptg.model.htp.IHTPStatus;
 import ekptg.model.htp.IHtp;
+import ekptg.model.htp.UtilHTML;
 import ekptg.model.htp.entity.HtpPermohonan;
 import ekptg.model.htp.entity.Permohonan;
 import ekptg.model.htp.entity.PfdFail;
@@ -46,8 +47,10 @@ import ekptg.model.htp.pembelian.IPembelian;
 import ekptg.model.htp.pembelian.IPemilik;
 import ekptg.model.htp.pembelian.PembelianBean;
 import ekptg.model.php2.FrmPYWHeaderData;
+import ekptg.model.utils.IUtilHTMLPilihan;
 import ekptg.model.utils.lampiran.ILampiran;
 import ekptg.model.utils.lampiran.LampiranBean;
+import ekptg.model.utils.rujukan.UtilHTMLPilihanSeksyenUPI;
 /**
  * 
  *
@@ -74,6 +77,7 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 	private IHtp iHTP = null;  
  	private IHTPStatus iStatus = null;
 	private IOnline iOnline = null;
+ 	private IUtilHTMLPilihan iPilihan = null;
 	private String idUser = null;
 	private int i;
 
@@ -406,7 +410,15 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 			beanMaklumatPermohonan.addElement(hashPermohonan);
 			this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
 			
-			this.context.put("selectNegeri",HTML.SelectNegeriByMahkamah("socNegeri", Long.parseLong(idNegeri), "", ""));
+	        String idDaerahTanah = getParam("socDaerahTanah") == null ? "0" : getParam("socDaerahTanah");
+	        String idMukimTanah = getParam("socMukimTanah") == null ? "0" : getParam("socMukimTanah");
+//	        String idDaerahTanah = getParam("socDaerahTanah") == null ? "0" : getParam("socDaerahTanah");
+
+			this.context.put("selectNegeri",UtilHTML.SelectNegeri("socNegeri", Long.parseLong(idNegeri), "","onChange=\"doChangeNegeriTanah();\"",null));
+			this.context.put("selectDaerah", HTML.SelectDaerahByIdNegeri(idNegeri, "socDaerahTanah", Long.parseLong(idDaerahTanah), "", "onChange=\"doChangeDaerahTanah();\""));
+			this.context.put("selectMukim", HTML.SelectMukimNoKodByDaerah(idDaerahTanah, "socMukimTanah", Long.parseLong(idMukimTanah), "", "onChange=\"doChangeMukimTanah();\""));
+			this.context.put("selectSeksyen", getPilihan().Pilihan("socSeksyen", "",idMukimTanah));
+
 			this.context.put("selectKementerian",HTML.SelectKementerian("socKementerian", Long.parseLong(idKementerian), "", " onChange=\"doChangeKementerian();\""));
 			this.context.put("selectAgensi",HTML.SelectAgensiByKementerian("socAgensi", idKementerian ,Long.parseLong(idAgensi), "", ""));
 			this.context.put("selectSuburusan",HTML.SelectSuburusanByIdUrusan("3", "socSuburusan" ,Long.parseLong(idSuburusan), "", ""));
@@ -426,15 +438,7 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 			beanMaklumatTanah = logicMaklumat.getBeanMaklumatTanah();
 			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 			
-        }
-//		else if("BayaranPajakan".equals(actionPajakan)){
-//            vm  = PATHBAY+"index.jsp";
-//            logicBayaran.setListMaklumatBayaran(idFail);
-//        	BayaranView(mode, idBayaran);
-//			page_ = "9";
-//
-//        }
-		else {       	
+        }else {       	
         	//GO TO LIST FAIL PAJAKAN        	
         	vm = "app/htp/online/frmPajakanSenaraiFail.jsp";
         	log.info("Else :: "+vm);
@@ -733,4 +737,12 @@ public class FrmPajakanOnlineSenaraiFailView extends AjaxBasedModule {
 	    }
 
     }
+	private IUtilHTMLPilihan getPilihan(){
+		if(iPilihan==null){
+			iPilihan = new UtilHTMLPilihanSeksyenUPI();
+		}
+		return iPilihan;
+
+	}
+    
 }
