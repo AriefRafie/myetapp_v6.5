@@ -58,7 +58,7 @@
           <div class="TabbedPanelsContent">
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
               #foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
-              <tr>
+              <!-- <tr>
                 <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
                 <td width="28%">Pegangan Hakmilik</td>
                 <td width="1%">:</td>
@@ -90,7 +90,7 @@
                 <td>:</td>
                 <td>$beanMaklumatTanah.noHakmilik</td>
               </tr>
-             <!--  <tr>
+              <tr>
                 <td>&nbsp;</td>
                 <td>No. Warta</td>
                 <td>:</td>
@@ -101,7 +101,7 @@
                 <td>Tarikh Warta</td>
                 <td>:</td>
                 <td>$beanMaklumatTanah.tarikhWarta</td>
-              </tr> -->
+              </tr>
               <tr>
                 <td>&nbsp;</td>
                 <td>Mukim</td>
@@ -143,7 +143,98 @@
                 <td>Kegunaan Tanah</td>
                 <td>:</td>
                 <td>$beanMaklumatTanah.kegunaanTanah</td>
-              </tr>
+              </tr> -->
+              <tr>
+          				<td width="1%">#if ($mode == 'update')<span class="style1">*</span>#end</td>
+          				<td>No. Lot</td>
+          				<td>:</td>
+          				<td>
+          					#if ($mode == 'update')
+          						<input type="text" name="txtnoLot" id="txtnoLot" value="$beanMaklumatTanah.noLot">
+          					#else
+          						<input type="text" name="txtnoLot" id="txtnoLot" value="$beanMaklumatTanah.noLot" readonly="readonly" class="disabled">
+          					#end
+          						<input type="hidden" name="noLotTanah" id="noLotTanah" value="$beanMaklumatTanah.lot" /></td>
+        			</tr>
+
+        			<tr>
+          				<td width="1%">#if ($mode == 'update')<span class="style1">*</span>#end</td>
+          				<td>No. Hakmilik</td>
+          				<td>:</td>
+          				<td>
+          				#if ($mode == 'update')
+          						<input type="text" name="txtnoHakmilik" id="txtnoHakmilik" value="$beanMaklumatTanah.noHakmilik" onblur="doChangePeganganHakmilik();">
+          					#else
+          						<input type="text" name="txtnoHakmilik" id="txtnoHakmilik" value="$beanMaklumatTanah.noHakmilik" readonly="readonly" class="disabled">
+          					#end
+
+          					<input type="hidden" name="noMilikTanah" id="noMilikTanah" value="$beanMaklumatTanah.hakmilik" /><span class="style1">$errorPeganganHakmilik</span> </td>
+        			</tr>
+        			<tr>
+        				<td width="1%"></td>
+          				<td width="28%">Pegangan Hakmilik</td>
+          				<td width="1%">:</td>
+          				<td width="70%"> $beanMaklumatTanah.peganganHakmilik
+          						<!-- #if ($mode == 'new')
+            					<input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" onblur="doChangePeganganHakmilik();">
+            					<input class="stylobutton100" name="cmdDaftar" type="button" value="Carian Tanah" onClick="pilihTanah('$idPermohonan')">
+          						#else
+            					<input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" readonly="readonly" class="disabled">
+          						#end
+            					<input type="hidden" name="idHakmilikAgensi" id="idHakmilikAgensi" value="$idHakmilikAgensi">
+            					<span class="style1">$errorPeganganHakmilik</span>
+            					<span class="style4"><i><font color="#ff0000">Contoh</font> : </i><span class="style5">160140GRN00000576</span></span>
+            				-->
+            				</td>
+        			</tr>
+
+        				<tr>
+          					<td>&nbsp;</td>
+          					<td>Luas Lot</td>
+          					<td>:</td>
+          					<td>$beanMaklumatTanah.luas
+          						<input type="hidden" name="idLuasTanah" id="idLuasTanah" value="$beanMaklumatTanah.idLuas" />
+          						<input type="hidden" name="luasTanah" id="luasTanah" value="$beanMaklumatTanah.luasBersamaan" /></td>
+        				</tr>
+        				<tr>
+          					<td>&nbsp;</td>
+			          		<td>Mukim</td>
+          					<td>:</td>
+          					<td>$beanMaklumatTanah.mukim
+          						<input type="hidden" name="namaMukimTanah" id="namaMukimTanah" value="$beanMaklumatTanah.mukim" /></td>
+        				</tr>
+        				<tr>
+          					<td>&nbsp;</td>
+          					<td>Daerah</td>
+          					<td>:</td>
+          					<td>$beanMaklumatTanah.daerah
+          						<input type="hidden" name="namaDerahTanah" id="namaDerahTanah" value="$beanMaklumatTanah.daerah" /></td>
+        				</tr>
+        				<tr>
+          					<td>&nbsp;</td>
+          					<td>Negeri</td>
+          					<td>:</td>
+          					<td>$beanMaklumatTanah.negeri
+            					<input type="hidden" name="idNegeriTanah" id="idNegeriTanah" value="$beanMaklumatTanah.idNegeriTanah">
+            					<input type="hidden" name="namaNegeriTanah" id="namaNegeriTanah" value="$$beanMaklumatTanah.negeri">
+          					</td>
+        				</tr>
+        				<!-- <tr>
+          					<td>&nbsp;</td>
+          					<td>Kementerian</td>
+          					<td>:</td>
+          					<td>$beanMaklumatTanah.kementerian
+            					<input type="hidden" name="idKementerianTanah" id="idKementerianTanah" value="$beanMaklumatTanah.idKementerian">
+            					<input type="hidden" name="kodKementerian" id="kodKementerian" value="$beanMaklumatTanah.kodKementerian">
+          					</td>
+        				</tr>
+        				<tr>
+          					<td>&nbsp;</td>
+          					<td>Agensi</td>
+          					<td>:</td>
+          					<td>$beanMaklumatTanah.agensi
+          						<input type="hidden" name="idAgensiTanah" id="idAgensiTanah" value="$beanMaklumatTanah.idAgensi">
+        				</tr> -->
               <tr>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
@@ -232,39 +323,27 @@
                 <td>&nbsp;</td>
                 <td>Keluasan Asal</td>
                 <td>:</td>
-                <td>$beanMaklumatTanah.luas
-                  <input type="hidden" name="txtLuasAsal" id="txtLuasAsal" value="$!beanMaklumatTukarguna1.luasAsal"/></td>
+                <td>$beanMaklumatTanah.luas</td>
               </tr>
               #end
-              #if ($idLuasKegunaan == '2')
 
-              <!-- #if ($mode == 'update')
+        #if ($idLuasKegunaan == '2')
+
               <tr>
-                <td><span class="style1">*</span></td>
+                <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
                 <td>Unit Luas</td>
                 <td>:</td>
                 <td>#parse("app/php2/unit_luas.jsp") </td>
               </tr>
-              #else -->
-              <tr>
-                <td><span class="style1"></span></td>
-                <td>Unit Luas</td>
-                <td>:</td>
-                <td><select name="socLuas" id="socLuas" $inputTextClass class="$inputTextClass">
-                    <option $selected value="0">SILA PILIH</option>
-                    <option $selectedL1 value="1">H - HEKTAR</option>
-                    <option $selectedL2 value="2">M - METER PERSEGI</option>
-                    <option $selectedL3 value="3">P - EKAR PERPULUHAN</option>
-                  </select></td>
-              </tr>
-              <!-- #end -->
 
               #if ($idLuas != '99999' && $idLuas != '')
               <tr>
                 <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
                 <td>Luas Mohon</td>
                 <td>:</td>
-                <td> #if ($idLuas == '0' || $idLuas == '1' || $idLuas == '2' || $idLuas == '3' || $idLuas == '5' || $idLuas == '6' || $idLuas == '9')
+                <td>
+                #foreach ($beanMaklumatTukarguna in $beanMaklumatTukarguna)
+                #if ($idLuas == '0' || $idLuas == '1' || $idLuas == '2' || $idLuas == '3' || $idLuas == '5' || $idLuas == '6' || $idLuas == '9')
                   <input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$beanMaklumatTukarguna.luas1" style="text-align:right" onKeyUp="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6"  $readonly class="$inputTextClass"/ >
                   #elseif ($idLuas == '7')
                   <input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$beanMaklumatTukarguna.luas1" style="text-align:right" onKeyUp="validateNumber(this,this.value);" size="6" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
@@ -273,7 +352,8 @@
                   <input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$beanMaklumatTukarguna.luas1" style="text-align:right" onKeyUp="validateNumber(this,this.value);" size="6" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
                   <input type="text" name="txtLuasMohon2" id="txtLuasMohon2" value="$beanMaklumatTukarguna.luas2" style="text-align:right" onKeyUp="validateNumber(this,this.value);" size="6" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
                   <input type="text" name="txtLuasMohon3" id="txtLuasMohon3" value="$beanMaklumatTukarguna.luas3" style="text-align:right" onKeyUp="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6"  $readonly class="$inputTextClass"/>
-                  #end </td>
+                  #end
+                 	#end</td>
               </tr>
               #end
               #end
@@ -376,7 +456,8 @@
 			<input type="checkbox" name="pengesahan" id="pengesahan">&nbsp&nbsp
         	Saya, <b>$!namaPemohon</b>, $!kadPengenalanPemohon dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
    			<br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
-   			<p align="center"><input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Permohonan" onclick="doAjaxCall${formName}('simpanpengesahan2')" /></p>
+   			<p align="center"><input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Permohonan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
+   			<input type="button" name="cmdPindaan" id="cmdPindaan" $buttonSend value="Pindaan Penyemak" onclick="doAjaxCall${formName}('simpanpengesahan3')" /></p>
       		</td>
 
 
@@ -425,14 +506,24 @@
 <script>
 var checker = document.getElementById('pengesahan');
 var sendbtn = document.getElementById('cmdSimpan');
+var pindaanbtn = document.getElementById('cmdPindaan',true);
 // when unchecked or checked, run the function
 checker.onchange = function(){
 sendbtn.disabled = true;
+if(pindaanbtn !=null){
+pindaanbtn.disabled = true;
+}
 
 if(this.checked){
    sendbtn.disabled = false;
+   if(pindaanbtn !=null){
+   	pindaanbtn.disabled = false;
+   }
 } else {
    sendbtn.disabled = true;
+   if(pindaanbtn !=null){
+   	pindaanbtn.disabled = true;
+   }
 }
 
 }
@@ -512,6 +603,7 @@ function doChangeLuasKegunaan() {
 	doAjaxCall${formName}("doChangeLuasKegunaan");
 }
 function doChangeLuas() {
+	document.${formName}.submit2.value = "seterusnya";
 	doAjaxCall${formName}("doChangeLuas");
 }
 function calculate(valueMohon,valueBaki){
@@ -876,7 +968,9 @@ function kiraLuas(idLuas){
 			luasM = document.${formName}.txtLuasMohon1.value*1;
 		}
   	  	var luasH = (luasM*0.0001);
-
+		alert("luasM >>> "+luasM);
+		alert(" luasH >>> "+luasH+" document.${formName}.txtLuasAsal.value >>> "+document.${formName}.txtLuasAsal.value);
+		alert("luasH > (document.${formName}.txtLuasAsal.value)*1 >>> "+luasH > (document.${formName}.txtLuasAsal.value)*1);
 		if (luasH > (document.${formName}.txtLuasAsal.value)*1){
 			alert('Luas dipohon telah melebihi luas asal.')
 			document.${formName}.txtLuasMohon1.value = "";
