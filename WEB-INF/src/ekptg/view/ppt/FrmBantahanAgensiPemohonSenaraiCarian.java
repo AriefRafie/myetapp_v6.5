@@ -2821,7 +2821,7 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
 			context.put("idBorangO_check", idBorangO_check);
 			
 	
-			
+			myLogger.info("Vm :"+vm);
         	return vm;
     }
 	
