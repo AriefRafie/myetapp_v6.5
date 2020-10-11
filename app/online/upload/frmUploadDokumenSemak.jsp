@@ -137,7 +137,6 @@ padding:0 0.25em;
   </tr>
 </table>
 
-
 <script>
 	
 	//Hapus dokumen pada senarai harta
@@ -287,5 +286,6 @@ padding:0 0.25em;
 	//setSelected(1,0,0,1);HtaamViewX('$paramOnline')
 
 </script>
+
 #parse("app/htp/utiliti/javaScriptUmum.jsp")
 
