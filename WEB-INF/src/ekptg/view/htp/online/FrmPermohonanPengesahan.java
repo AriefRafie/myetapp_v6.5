@@ -16,8 +16,9 @@ import ekptg.helpers.HTML;
 import ekptg.helpers.Utils;
 import ekptg.engine.EmailSender;
 import ekptg.engine.EmailProperty;
+import ekptg.model.entities.Tblrujsuburusanstatus;
 import ekptg.model.entities.Tblrujsuburusanstatusfail;
-import ekptg.model.entities.UserKementerian;
+import ekptg.model.htp.FrmJRPSenaraiPermohonanData;
 import ekptg.model.htp.FrmPajakanHeaderData;
 import ekptg.model.htp.FrmPerletakhakanPendaftaranData;
 import ekptg.model.htp.FrmSemakan;
@@ -40,6 +41,9 @@ import ekptg.model.htp.online.IOnline;
 import ekptg.model.htp.online.OnlineBean;
 import ekptg.model.htp.pembelian.IPembelian;
 import ekptg.model.htp.pembelian.PembelianBean;
+import ekptg.model.htp.utiliti.HTPEmelKelulusanBean;
+import ekptg.model.utils.emel.EmailConfig;
+import ekptg.model.utils.emel.IEmel;
 import ekptg.model.utils.lampiran.ILampiran;
 import ekptg.model.utils.lampiran.LampiranBean;
 
@@ -57,11 +61,13 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 	private final String PATH = PATHVER+"online/";
 //	private final String PATHPERMOHONAN="app/htp/permohonan/";	
 	
+	private IEmel emelulus = null;
 	FrmPerletakhakanPendaftaranData logic = new FrmPerletakhakanPendaftaranData(); //data tuk view
 	private String IDURUSAN = "";
 	private String noFail = "";
+	private String subModul ="";
 	private String tajukFail = "";
-    String isCarian = "tidak";
+	String isCarian = "tidak";
 	String userId = "";
 	private IPenggunaKementerian iPengguna = null;
 	private IOnline iOnline = null;
@@ -203,8 +209,10 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 		String tabSemasa = request.getRequestURI().substring(request.getRequestURI().lastIndexOf('/')+1,request.getRequestURI().length());
 //		myLog.info("tabId 1="+request.getRequestURI());
 		int iCount = 0;
+		String defaultLangkah ="-1";
 		//Permohonan
 		if(tabSemasa.equals("1586518438767") //HQ
+			|| tabSemasa.equals("1352353744653") //HQ | Penyedia 			
 			|| tabSemasa.equals("1365032518280") //Pegawai1349328130099
 			|| tabSemasa.equals("1346119820484") //KPP
 			|| tabSemasa.equals("1349389007777")	//Pengarah
@@ -233,8 +241,10 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
         //JRP
     	}else if(tabSemasa.equals("1592343471290")
     		|| tabSemasa.equals("1592293150193") //HQ Pembelian & Penswastaan
+    		|| tabSemasa.equals("1601238745477") //(HTP)HQPenggunaPajakanKecil - local
     		){ //HQ Local|
     		IDURUSAN = "14"; 
+    		defaultLangkah = "4";
     	//PAJAKAN
     	}else if(tabSemasa.equals("1592343471299") //HQ Local| 
         	|| tabSemasa.equals("1349328130101") //Pegawai1 
@@ -257,7 +267,7 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 		if("".equals(submit)){
 			vm = PATH+"index.jsp";	   	   
 			// 2020/09/05|
-			list = getIOnline().findFailOnlineUrusan(getParam("txtTajukFail"), getParam("txtNoFail"), idNegeriC, idkementerianC,IDURUSAN,"-1");
+			list = getIOnline().findFailOnlineUrusan(getParam("txtTajukFail"), getParam("txtNoFail"), idNegeriC, idkementerianC,IDURUSAN,defaultLangkah);
 			isCarian = getParam("txtcarian");
 			myLog.info("isCarian::"+isCarian);
 			if(isCarian.equals("ya")){
@@ -279,9 +289,77 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 			this.context.put("selectAgensiC", HTML.SelectAgensiByKementerian("socAgensiC", idkementerianC, Utils.parseLong(idAgensiC), "   style=\"width:400\""));
 			    
 			setupPage(session,action,list);
+		
+		// JRP	
+		}else if (submit.equals("jrpviewmaklumat")) {
+				idFail = getParam("idfail");
+			mode= "view";
 			
+				this.context.put("readOnly", readonly);
+				this.context.put("disabled", "disabled");	
+				context.put("inputstyleread", readonly);
+				
+				Hashtable permohonan = FrmJRPSenaraiPermohonanData.getFailInfo(idFail);
+				idPermohonan = (String)permohonan.get("idpermohonan");
+				myLog.info("idPermohonan="+idPermohonan);
+				//permohonanSetMaklumat(TerimaPohonInfo);
+				
+				this.context.put("permohonanInfo", permohonan);
+				this.context.put("beanMaklumatPermohonan", permohonan);
+
+			    socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(permohonan.get("idnegeri").toString()),"disabled class=disabled");
+		    	socKementerian = HTML.SelectKementerian("sockementerian",Long.parseLong(permohonan.get("idkementerian").toString()),"disabled class=disabled");
+		    	socAgensi = HTML.SelectAgensi("socAgensi",Long.parseLong(permohonan.get("idagensi").toString()),"disabled='disabled' class='disabled'");
+		    	socUrusan = HTML.SelectUrusan("socUrusan",Long.parseLong("309"),"disabled='disabled' class='disabled'");
+		    	
+		    	this.context.put("socNegeri",socNegeri);	    
+		    	this.context.put("socKementerian",socKementerian);	    
+		    	this.context.put("socAgensi",socAgensi);	    
+		    	//this.context.put("socUrusan",socUrusan);	    
+		    	this.context.put("socUrusan",socUrusan);	    
+			
+				
+				FrmSemakan frmSemak = new FrmSemakan();
+//	        	Vector semakanSenarai = frmSemak.getSenaraiSemakanAttach("htpjrp",idPermohonan);
+//				this.context.put("senaraiSemak", semakanSenarai);
+//			    this.context.put("semakclass", new ekptg.model.htp.FrmSemakan());			    
+				getSemakanPengesahan("htpjrp",frmSemak,idPermohonan,mode);
+
+		    	this.context.put("mode",mode);	 
+		    	
+//		    	PERMOHONAN ONLINE	4
+//		    	TINDAKAN PENYEDIA	5
+//		    	TINDAKAN PEGAWAI	6
+//		    	TINDAKAN PENGARAH	7
+//		    	PENERIMAAN PERMOHONAN	8
+//		    	if(portal_role.equals("HQPengguna")){
+//					langkah = langkah;
+//					kemaskiniSimpanStatusSelesai(idFail,idPermohonan,idsuburusan,langkahSeterus);
+//					ec.sendByRole(userMail, portal_role, null, tajuk, kandungan);
+//						
+//				}else if(portal_role.equals("HQPegawai")){
+//					langkah = langkah;
+//					kemaskiniSimpanStatusSelesai(idFail,idPermohonan,idsuburusan,langkahSeterus);
+//					ec.sendByRole(userMail, portal_role, null, tajuk, kandungan);
+//				
+//				}else if(portal_role.equals("HQPengarah")){
+//				}
+//		    	viewPengesahan(String langkah,String langkahSeterus,String portal_role,EmailConfig ec,String idPermohonan
+//		    			,String userMail,String tajuk,String kandungan);
+				
+//				String statuSemasa = "0";
+//				Hashtable<String,String> hashStatus = getStatusRekod().getInfoStatusPermohonanFail(idTanah, idPermohonan,langkah);
+//				if(hashStatus != null)
+//					statuSemasa = hashStatus.get("langkah");
+//
+//					this.context.put("statuSemasa", statuSemasa);
+//		    	
+				vm = PATH+"frmJRPPengesahan.jsp";
+				myLog.info("vm="+vm);
+
 		// PERMOHONAN	
-		}else if ("permohonanviewmaklumat".equals(submit)) {
+		}else if ("permohonanviewmaklumat".equals(submit)
+				|| (submit.equals("viewMaklumatPermohonan"))) {
 			idFail = getParam("idfail");
 
 			this.context.put("readOnly", "readonly");
@@ -289,15 +367,19 @@ public class FrmPermohonanPengesahan extends AjaxBasedModule {
 			context.put("inputstyleread", readonly);
 			//setPaging(false,true,true,false,false);
 			vm = PATH+"frmPermohonanPengesahan.jsp";
-			Hashtable TerimaPohonInfo = fData.getTerimaPohonInfo(idFail);
+			Hashtable<String, String> TerimaPohonInfo = FrmSenaraiFailTerimaPohonData.getTerimaPohonInfo(idFail);
 			idPermohonan = (String)TerimaPohonInfo.get("lblIdPermohonan");
 			permohonanSetMaklumat(TerimaPohonInfo);
 			
+			FrmSemakan frmSemak = new FrmSemakan();
+			mode= !mode.equals("")?mode:"view";
+			getSemakanPengesahan("htpermohonan",frmSemak,idPermohonan,mode);
+
    		
 		}else if ("permohonanditolak".equals(submit)) {
 			idFail = getParam("idfail");
 			vm = PATH+"frmSenaraiFailPengesahan.jsp";
-			Hashtable TerimaPohonInfo = fData.getTerimaPohonInfo(idFail);
+			Hashtable<String, String> TerimaPohonInfo = FrmSenaraiFailTerimaPohonData.getTerimaPohonInfo(idFail);
 			idPermohonan = (String)TerimaPohonInfo.get("lblIdPermohonan");
 			idSubUrusan = (String)TerimaPohonInfo.get("lblidSubUrusan");
 			
@@ -965,15 +1047,89 @@ public void doSimpanMaklumatAsasTanah() throws Exception {
 		
 	}
 	
-	private void getSemakanPengesahan(String jenisSemak,FrmSemakan semak,String idPermohonan,String mode)throws Exception{
+	private void getSemakanPengesahan(String jenisSemak,FrmSemakan semak,String idPermohonan,String mode) throws Exception{
 		semak.mode = mode;
 		Vector senaraiSemak = semak.getSenaraiSemakanAttach(jenisSemak,idPermohonan);
-		this.context.put("senaraiSemak", senaraiSemak);
+		
+    	this.context.put("mode",mode);
+    	this.context.put("senaraiSemak", senaraiSemak);
 
 //		context.put("semakclass", new FrmSemakan());
 //		Vector semakList = FrmSemakan.getSenaraiSemakan("frmPajakanSemakan");
 //		context.put("perakuanPembelian", semakList);
 	}
+	
+	private void viewPengesahan(String langkah,String langkahSeterus,String portal_role,EmailConfig ec,String idPermohonan
+		,String userMail,String tajuk,String kandungan) throws Exception{
+		//String langkah = "0";
+		if(portal_role.equals("HQPengguna")){
+			//langkah = langkah;
+			kemaskiniSimpanStatusSelesai(idFail,idPermohonan,idsuburusan,langkahSeterus);
+			ec.sendByRole(userMail, portal_role, null, tajuk, kandungan);
+				
+		}else if(portal_role.equals("HQPegawai")){
+			//langkah = langkah;
+			kemaskiniSimpanStatusSelesai(idFail,idPermohonan,idsuburusan,langkahSeterus);
+			ec.sendByRole(userMail, portal_role, null, tajuk, kandungan);
+		
+		}else if(portal_role.equals("HQPengarah")){
+			//langkah = langkah;
+			kemaskiniSimpanStatusSelesai(idFail,idPermohonan,idsuburusan,langkahSeterus);
+			tajuk = ec.tajukKelulusan+subModul;
+			ec.sendByRole(userMail, portal_role, null, tajuk, kandungan);
+		
+			kandungan = getEmeLulus().setEmailSign(htpPermohonan.getPermohonan().getTarikhTerima()
+				, htpPermohonan.getPermohonan().getPfdFail().getTajukFail()
+				, htpPermohonan.getPermohonan().getPfdFail().getNamaKementerian());
+			//"4" Pengarah (KJP)
+			ec.sendByRoleKJP(getEmeLulus().checkEmail(userId)
+					, "4"
+					, String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdKementerian())
+					, tajuk, kandungan);
+
+		}
+		myLog.info("langkah="+langkah);
+	
+		String statuSemasa = "0";
+		Tblrujsuburusanstatus hashStatus = getStatus().getStatusPermohonanAktif(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdFail())
+											, String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan()));
+	
+		if(hashStatus != null)
+			statuSemasa = String.valueOf(hashStatus.getLangkah());
+		
+	//	myLog.info("langkah1 ="+htpPermohonan.getPermohonan().getPfdFail().getIdFail());
+	//	myLog.info("langkah2="+String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan()));
+		//
+		myLog.info("statuSemasa="+statuSemasa+"|portal_role="+portal_role);
+		//this.context.put("idFail", idFail);
+		this.context.put("statuSemasa", statuSemasa);
+	
+	}
+	//Skrin Tindakan
+	private String kemaskiniSimpanStatusSelesai(String idFail
+		,String idPermohonan
+		,String idSubUrusan
+		,String langkah) throws Exception {
+		try {				
+			
+			Tblrujsuburusanstatusfail subUrusanStatusFail = new Tblrujsuburusanstatusfail();
+			subUrusanStatusFail.setIdPermohonan(Long.parseLong(idPermohonan));
+			subUrusanStatusFail.setIdFail(Long.parseLong(idFail));
+			subUrusanStatusFail.setAktif("0");
+		
+			Tblrujsuburusanstatusfail subUrusanStatusFailN = new Tblrujsuburusanstatusfail();
+			long setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah(langkah,idSubUrusan,"=");
+			subUrusanStatusFailN.setIdSuburusanstatus(setIdSuburusanstatus);
+			subUrusanStatusFailN.setAktif("1");
+			subUrusanStatusFailN.setUrl("-");
+			subUrusanStatusFailN.setIdMasuk(Long.parseLong(userId));
+			return String.valueOf(getStatus().kemaskiniSimpanStatusAktif(subUrusanStatusFail, subUrusanStatusFailN));
+				
+		} catch (Exception e) {
+			throw new Exception(getHTP().getErrorHTML("Ralat Pengesahan, kemaskiniSimpanStatusSelesai:"+e.getMessage()));
+		}
+	
+	}	
 	
 	private IHtp getHTP(){
 		if(iHtp == null)
@@ -990,6 +1146,12 @@ public void doSimpanMaklumatAsasTanah() throws Exception {
 		
 	}	
 	
+	private IEmel getEmeLulus(){
+		if(emelulus == null)
+			emelulus = new HTPEmelKelulusanBean();
+		return emelulus;
+	}
+	
 	private IHTPStatus getStatus(){
 		if(iStatus == null)
 			iStatus = new HTPStatusBean();
@@ -1005,5 +1167,6 @@ public void doSimpanMaklumatAsasTanah() throws Exception {
 		return iLampiran;
 				
 	}
+	
 	
 }

@@ -482,11 +482,11 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
         
         <tr>
           <td width="1%">#if ($mode=="")<font color="red">*</font>#end</td>
-          <td>Amaun Pampasan Ditawarkan (RM)         </td>
+          <td>Amaun Tuntutan (RM)         </td>
           <td>:</td>
           <td colspan="2">
           #if ($mode=="disabled")
-          <input type="text" size="15" name="txtAmaunTuntutan" id="txtAmaunTuntutan" value="$!txtAmaunTuntutanF" maxlength="12" class="disabled" readonly />
+          <input type="text" size="15" name="txtAmaunTuntutan" id="txtAmaunTuntutan" value="$!txtAmaunTuntutan" maxlength="12" class="disabled" readonly />
           #else
           <input type="text" size="15" name="txtAmaunTuntutan" id="txtAmaunTuntutan" value="$txtAmaunTuntutan" maxlength="12" onblur="validateNumber(this,this.value);validateModal(this,this.value,'$txtAmaunTuntutan')" onkeyup="validateNumber(this,this.value);"  />          
           #end          </td>

@@ -86,7 +86,7 @@ function simpanPelan(idPermohonan) {
 	var dp = document.${formName}.form_token.value ;
 	var dopost = "&form_token="+dp;
 	
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmAPBCetakSuratKelulusanLesenKepadaPemohon&hitButton=simpanPelan&namaPelan="+namaPelan+"&catatanPelan="+catatanPelan+"&idFail="+idFail+"&selectedTabUpper=1"+dopost+"&mode=view&flagPopup=openPopupPelan&modePopup=new&idPermohonan="+idPermohonan;
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmAPBCetakSuratKelulusanLesenKepadaPemohon&hitButton=simpanPelan&namaPelan="+namaPelan+"&catatanPelan="+catatanPelan+"&selectedTabUpper=1"+dopost+"&mode=view&flagPopup=openPopupPelan&modePopup=new&idPermohonan="+idPermohonan;
 	document.${formName}.method="post";
 	document.${formName}.enctype="multipart/form-data";
     document.${formName}.encoding="multipart/form-data";

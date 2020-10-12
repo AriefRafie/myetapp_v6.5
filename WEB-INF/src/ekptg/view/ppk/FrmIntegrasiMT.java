@@ -1195,6 +1195,14 @@ public class FrmIntegrasiMT extends VTemplate {
 
 				if (code.equals("0")) {
 					
+					myLogger.info("MTManagerReg.getReferenceNo1()");
+					myLogger.info("MTManagerReg.getReferenceNo1() = "+MTManagerReg.getReferenceNo());
+						if (MTManagerReg.getReferenceNo() != null) {
+							myLogger.info("MTManagerReg.getReferenceNo2()");
+							context.put("noKes",MTManagerReg.getReferenceNo());
+							myLogger.info("MTManagerReg.getReferenceNo3()");
+						}			
+					
 					vm = "app/ppk/integrasi/MahkamahTinggiSuccessRayuan.jsp";
 					
 					IntLogManager.recordLogMT("JKPTG", "I", "O", "Y", "SUCCESS");

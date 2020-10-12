@@ -80,7 +80,10 @@
           <td>&nbsp;</td>
           <td>No. Fail</td>
           <td>:</td>
-          <td>$!complaint.noFail</td>
+          <td>
+           #foreach ( $tanahs in $tanah )
+           $!tanahs.NO_FAIL
+           #end</td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -120,13 +123,31 @@
 							</tr>
 							<tr>
 							  <td>&nbsp;</td>
+							  <td>Seksyen</td>
+							  <td>:</td>
+							  <td>$!tanahs.nama_seksyentanah</td>
+							</tr>
+							<tr>
+							  <td>&nbsp;</td>
+							  <td>Janis Hakmilik</td>
+							  <td>:</td>
+							  <td>$!tanahs.nama_hakmilik</td>
+							</tr>
+							<tr>
+							  <td>&nbsp;</td>
 							  <td>No. Hakmilik</td>
 							  <td>:</td>
 							  <td>$!tanahs.NO_HAKMILIK</td>
 							</tr>
 							<tr>
 							  <td>&nbsp;</td>
-							  <td>No. Lot</td>
+							  <td>Jenis PT/ LOT</td>
+							  <td>:</td>
+							  <td>$!tanahs.nama_lot</td>
+							</tr>
+							<tr>
+							  <td>&nbsp;</td>
+							  <td>No. PT/ LOT</td>
 							  <td>:</td>
 							  <td>$!tanahs.NO_LOT</td>
 							</tr>

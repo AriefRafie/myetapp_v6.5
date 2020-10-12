@@ -363,18 +363,17 @@ public class Utils extends EkptgCache implements Serializable {
 	}
 
 	public boolean isSimatiNonMuslim(String id_simati) throws Exception {
-		boolean output = false;
+		boolean output = true;
 		String sql = "";
 		Db db = null;
 		try {
 			db = new Db();
-			sql = "Select jenis_agama from TBLPPKSimati Where id_simati='"
-					+ id_simati + "' ";
+			sql = "select NVL(jenis_agama,0) jenis_agama from tblppksimati where id_simati='"+ id_simati + "' ";
 			// myLogger.info(sql);
 			ResultSet rs = db.getStatement().executeQuery(sql);
 			if (rs.next()) {
-				if ("2".equals(rs.getString("jenis_agama"))) {
-					output = true;
+				if ("1".equals(rs.getString("jenis_agama"))) {
+					output = false;
 				}
 
 			}

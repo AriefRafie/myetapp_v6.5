@@ -1,4 +1,4 @@
-XXX
+
 <!--  <style>
 body{
 background: #f4eff4 !important;
@@ -10,7 +10,7 @@ background: #f4eff4 !important;
 <!-- test xxxxx -->
 
  #if($report == 'BorangE' || $report == 'BorangF' || $report == 'BorangG' || $report == 'BorangH' || $report == 'BorangJ' 
- || $report == 'BorangK' || $report == 'BorangL' || $report == 'BorangLB' || $report == 'BorangLC' 
+ || $report == 'BorangK' || $report == 'BorangL' || $report == 'BorangLB' || $report == 'BorangLC' || $report == 'BorangQ'
  || $report == 'BorangO' || $report == 'BorangP' || $report == 'BorangR')
 #parse("app/ppt/tindakanPegawaiSignPPT.jsp")
 #end
@@ -76,7 +76,10 @@ background: #f4eff4 !important;
   
                
 #if(($token != "" && ($report == 'BorangE' || $report == 'BorangF' || $report == 'BorangG' || $report == 'BorangH' 
-|| $report == 'BorangJ' || $report == 'BorangK' || $report == 'BorangL' || $report == 'BorangLB' || $report == 'BorangLC') ) || $report =='BorangA')
+|| $report == 'BorangJ' || $report == 'BorangK' || $report == 'BorangL' || $report == 'BorangLB' || $report == 'BorangLC' 
+|| $report == 'BorangQ') ) || ($token == "" && ($report !='BorangE' && $report != 'BorangF' && $report != 'BorangG' 
+&& $report != 'BorangH' && $report != 'BorangJ' && $report != 'BorangK' && $report != 'BorangL' && $report != 'BorangLB' 
+&& $report != 'BorangLC' && $report != 'BorangQ')))
     	<fieldset><legend><strong>Cetakan Laporan</strong></legend>
         	<table width="100%" border="0" cellspacing="2" cellpadding="2" margin="10px">
         	
@@ -1426,6 +1429,10 @@ background: #f4eff4 !important;
                 	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangK('$!id_fail','$!id_hakmilik')">
                 	#end
                 	
+                	#if($report == 'BorangQ')
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangQ('$!id_permohonan','$!id_hakmilik')">
+                	#end
+                	
                 	#if($report == 'BorangL')
                 	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangL('$!id_hakmilik','$!totalHM')">
 					#end
@@ -2723,6 +2730,40 @@ function cetakBorangK(idfail,idhakmilik) {
 }
 
 
+function cetakBorangQ(id_permohonan,idhakmilik) {
+
+	alert
+	if (document.${formName}.sorSelectNoFail.value == ""){
+		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
+		document.${formName}.sorSelectNoFail.focus(); 
+		return;
+	}
+	else{
+
+		var valType = document.${formName}.sorSelectNoFail.value;
+		var nofail = "";
+		
+		if(valType=="1"){
+			nofail = document.${formName}.no_fail.value;
+		}else if(valType=="2"){
+			nofail = document.${formName}.no_rujukan_ptg.value;
+		}else if(valType=="3"){
+			nofail = document.${formName}.no_rujukan_ptd.value;
+		}else if(valType=="4"){
+			nofail = document.${formName}.no_rujukan_upt.value;
+		}else{
+			nofail = document.${formName}.no_fail.value;
+		}
+
+		var url = "../../servlet/ekptg.report.ppt.BorangQ?idhakmilik="+idhakmilik;
+		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+		if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+		if (hWnd.focus != null) hWnd.focus();
+	}
+	
+}
+
 function cetakAfidavit(idhakmilikpb) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
@@ -3555,7 +3596,8 @@ function cetakBorangF(idhakmilik,nama_pengarah) {
 
 function cetakBorangE(id_borange,nama_pengarah) {
 
-	var masa_siasatan = "";
+	var masa_siasatan_awal = "";
+	var masa_siasatan_akhir = "";
 		
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
@@ -3581,9 +3623,10 @@ function cetakBorangE(id_borange,nama_pengarah) {
 			nofail = document.${formName}.no_fail.value;
 		}
 		
-		masa_siasatan = document.${formName}.masa_siasatan.value;
+		masa_siasatan_awal = document.${formName}.masa_siasatan_awal.value;
+		masa_siasatan_akhir = document.${formName}.masa_siasatan_akhir.value;
 		
-		var url = "../../servlet/ekptg.report.ppt.BorangE?id_borange="+id_borange+"&namaPegawai="+nama_pengarah+"&no_fail="+nofail+"&id_permohonan="+id_permohonan+"&masa_siasatan="+masa_siasatan;
+		var url = "../../servlet/ekptg.report.ppt.BorangE?id_borange="+id_borange+"&namaPegawai="+nama_pengarah+"&no_fail="+nofail+"&id_permohonan="+id_permohonan+"&masa_siasatan_awal="+masa_siasatan_awal+"&masa_siasatan_akhir="+masa_siasatan_akhir;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;

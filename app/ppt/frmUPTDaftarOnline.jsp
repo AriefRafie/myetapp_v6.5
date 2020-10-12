@@ -803,20 +803,20 @@ Maklumat Permohonan telah berjaya disimpan.
         	<legend><strong>Maklumat Tanah Terlibat</strong>
             
             
-            			#if($roleAgensi=="no")
-            			            			
+            			#if($roleAgensi=="no")            			
                 		#if($id_status=="8" || $flagStatusOnline=="1")
 	                		
 	                    	#if($id_jawatan_user == $layer1 && ($flag_semakan_online=="" || $flag_semakan_online=="4"))
 	                    	<input type="button" name="cmdTambah" value ="Tambah" onClick="javascript:tambahHakmilik('$!flag_subjaket');">
-                            
+                            #if($txtJumHM != $saiz_listTanah)
                             #if($sorUrusan=="52")                                                     
-                            <input  name="cmdPupupHakmilik" id="cmdPupupHakmilik" onClick="popupGetHakmilik('$id_permohonan','8','salin_hakmilik_sek8_KJP')" type="button" value="POPUP SALIN HAKMILIK SEKSYEN 4" />
+                            <input  name="cmdPupupHakmilik" id="cmdPupupHakmilik" onClick="popupGetHakmilik('$id_hakmilik','$id_permohonan','8','salin_hakmilik_sek8_KJP')" type="button" value="POPUP SALIN HAKMILIK SEKSYEN 4" />
                             #end
                             #if($sorUrusan=="51")                                                     
-                            <input  name="cmdPupupHakmilik" id="cmdPupupHakmilik" onClick="popupGetHakmilik('$id_permohonan','4','salin_hakmilik_sek8_KJP')" type="button" value="POPUP SALIN HAKMILIK SEKSYEN 8" />
+                            <input  name="cmdPupupHakmilik" id="cmdPupupHakmilik" onClick="popupGetHakmilik('$id_hakmilik','$id_permohonan','4','salin_hakmilik_sek8_KJP')" type="button" value="POPUP SALIN HAKMILIK SEKSYEN 8" />
                             #end
            
+    						#end
     						#end
     					#end
     					#end
@@ -1267,7 +1267,7 @@ Maklumat Permohonan telah berjaya disimpan.
 <input type="hidden" name="id_permohonan" value="$!id_permohonan">
 <input type="hidden" name="id_status" value="$!id_status">
 <input type="hidden" name="id_fail" value="$!id_fail">
-<input type="hidden" name="id_hakmilik">
+<input type="hidden" name="id_hakmilik" value="$!id_hakmilik">
 <input type="hidden" name="id_senaraisemak" value="$!id_senaraisemak">
 <input type="hidden" name="user_id" value="$!user_id">
 
@@ -1310,14 +1310,14 @@ function popupBorangI(id_permohonan,jenis_seksyen,flag_skrin)
 	
 }
 
-function popupGetHakmilik(id_permohonan,jenis_seksyen,flag_skrin)
+function popupGetHakmilik(id_hakmilik,id_permohonan,jenis_seksyen,flag_skrin)
 {
 	var id_negeri = document.${formName}.socNegeriProjek.value;
 	var id_daerah = document.${formName}.socDaerah.value;
 	
 	//alert("id_negeri :"+id_negeri);
 	//alert("id_daerah :"+id_daerah);
-	var url = "../x/${securityToken}/ekptg.view.ppt.SkrinPopupHakmilik?id_permohonan="+id_permohonan+"&id_negeri="+id_negeri+"&id_daerah="+id_daerah+"&jenis_seksyen="+jenis_seksyen+"&flag_skrin="+flag_skrin;
+	var url = "../x/${securityToken}/ekptg.view.ppt.SkrinPopupHakmilikKJP?id_hakmilik="+id_hakmilik+"&id_permohonan="+id_permohonan+"&id_negeri="+id_negeri+"&id_daerah="+id_daerah+"&jenis_seksyen="+jenis_seksyen+"&flag_skrin="+flag_skrin;
 	var hWnd = window.open(url,'printuser','width=1200,height=800, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;

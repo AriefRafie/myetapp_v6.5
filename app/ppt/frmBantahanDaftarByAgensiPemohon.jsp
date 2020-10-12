@@ -180,7 +180,7 @@
            <tr>
              <td style="text-transform:uppercase">Agensi</td>
              <td>:</td>
-             <td>$!nama_agensi<input type="text" name="id_agensi" id="id_agensi" value="$!id_agensi" /> </td>
+             <td>$!nama_agensi<input type="hidden" name="id_agensi" id="id_agensi" value="$!id_agensi" /> </td>
            </tr>           
            <tr>
              <td style="text-transform:uppercase">Tarikh Dikehendaki</td>
@@ -483,7 +483,7 @@
                   
                                    
         <tr>
-          <td>&nbsp;&nbsp;&nbsp;Amaun Pampasan Ditawarkan (RM)</td>
+          <td>&nbsp;&nbsp;&nbsp;Amaun Tuntutan (RM)</td>
           <td>:</td>
           <td colspan="5"><input type="text" size="11" name="txtAmaunTuntutan" id="txtAmaunTuntutan" value="$!txtAmaunTuntutan" maxlength="12" onblur="validateNumber(this,this.value);validateModal(this,this.value,'$txtAmaunTuntutan')" onkeyup="validateNumber(this,this.value);" /></td>
         </tr>       
