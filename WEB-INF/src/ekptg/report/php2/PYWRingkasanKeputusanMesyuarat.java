@@ -19,16 +19,14 @@ public class PYWRingkasanKeputusanMesyuarat extends EkptgReportServlet {
 
 	public PYWRingkasanKeputusanMesyuarat() {
 		super.setReportName("PYWLaporanRingkasanKeputusanMesyuarat");
-		super.setFolderName("php2\\PYW");
+		super.setFolderName("php2//PYW");
 	}
 
 	@Override
-	public void doProcessing(HttpServletRequest request,
-			HttpServletResponse response, ServletContext context, Map parameters)
-			throws Exception {
+	public void doProcessing(HttpServletRequest request, HttpServletResponse response, ServletContext context,
+			Map parameters) throws Exception {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
-

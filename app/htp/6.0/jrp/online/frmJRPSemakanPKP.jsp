@@ -39,7 +39,54 @@
 		<td>		
 	</tr>
 
-	
+		<tr>
+		<td>
+			<fieldset>
+			<legend><strong>SENARAI SEMAK/ DOKUMEN YANG DISERTAKAN</strong></legend>
+			<table style="width:100%">
+				<tr class="row2">
+					<td width="3%"><b>Bil</b></td>
+					<td width="75%"><b>Keterangan</b></td>
+					<td width="25%"><b>Dokumen</b></td>
+			  	</tr> 
+			  			#set ( $checked = "" )
+	#if ($senaraiSemak.size() > 0)
+		
+		#foreach ( $semak in $senaraiSemak )
+			#set( $i = $velocityCount )
+			#if ( ($i % 2) == 0 )
+				#set( $row = "row2" )
+			#else
+				#set( $row = "row1" )
+			#end
+
+        		#if($semak.flag == 'Y')
+        			#set($checked = 'checked')
+					#set($disabled = 'disabled')
+        		#else
+        			#set($checked = '')
+        		#end			
+					        ##if($semak.aturan==1)
+				<tr>
+						<td class="$row" width="3%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsenaraisemak" $checked /></td>
+		          		<td class="$row" width="82%">$i. $semak.keterangan</td>
+		          		<td class="$row" width="15%">
+		          			$!semak.lampirans
+		          		</td>	
+				</tr>
+        					##end
+        		       ##end
+ 		#end
+   	#else
+        <tr>
+	        <td class="$row" width="3%">&nbsp;</td>
+    	    <td class="$row" colspan="2" width="95%">Tiada Rekod</td>
+        </tr>
+   	#end
+			</table>
+			</fieldset>
+		</td>
+		</tr>
 		
 </table>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -68,18 +115,22 @@
 		    		#end
 		    </td>
 </table>
+
 <script>
-var checker = document.getElementById('checkme');
-var sendbtn = document.getElementById('cmdSimpan');
-// when unchecked or checked, run the function
-checker.onchange = function(){
-sendbtn.disabled = true;
-
-if(this.checked){
-   sendbtn.disabled = false;
-} else {
-   sendbtn.disabled = true;
-}
-
-}
+	var checker = document.getElementById('checkme');
+	var sendbtn = document.getElementById('cmdSimpan');
+	// when unchecked or checked, run the function
+	checker.onchange = function(){
+		sendbtn.disabled = true;
+	
+		if(this.checked){
+	   		sendbtn.disabled = false;
+		} else {
+		   sendbtn.disabled = true;
+		}
+	
+	}
+	
 </script>
+
+

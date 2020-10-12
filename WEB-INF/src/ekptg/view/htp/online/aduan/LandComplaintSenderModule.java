@@ -85,91 +85,97 @@ public class LandComplaintSenderModule extends AjaxModule {
 		context.put("user", user);
 		
 	}
+	
 	private void getJenisAduan(){
 		Vector<ComplaintType> v =getHandler().getComplaintType();
 		context.put("types", v);
 	}
-	 private void submitAduan() throws Exception{
+	 
+	private void submitAduan() throws Exception{
 		 DiskFileItemFactory factory = new DiskFileItemFactory();
 		 ServletFileUpload upload = new ServletFileUpload(factory);
 
 		 List items = upload.parseRequest(request);
-		    Iterator itr = items.iterator();
+		 Iterator itr = items.iterator();
 		    
-		    Date now = new Date();
-		    long idPengadu = 12345;
-		    String namaPengadu = "";
-		    String emailPengadu = "";
-		    String phonePengadu = "";
-		    Long idJenisAduan = null;
-		    String status = "DALAM PROSES";
-		    String statusPenyelesaian = "DALAM PROSES";
-		    String flagOnline = "Y";
-		    String catatan = "";
-			InputStream uploadData = null;
-			String uploadName = "";
-			String uploadType = "";
-			long uploadSize = 0;
+		 Date now = new Date();
+		 long idPengadu = 12345;
+		 String namaPengadu = "";
+		 String emailPengadu = "";
+		 String phonePengadu = "";
+		 Long idJenisAduan = null;
+		 String status = "DALAM PROSES";
+		 String statusPenyelesaian = "DALAM PROSES";
+		 String flagOnline = "Y";
+		 String catatan = "";
+		 InputStream uploadData = null;
+		 String uploadName = "";
+		 String uploadType = "";
+		 long uploadSize = 0;
 		 
-		    while (itr.hasNext()) {
-				FileItem item = (FileItem)itr.next();
-				if ( ((item.isFormField())) ) {
-					if ( "name".equals((String)item.getFieldName())) namaPengadu = (String) item.getString();
-					if ( "email".equals((String)item.getFieldName())) emailPengadu = (String) item.getString();
-					if ( "phone".equals((String)item.getFieldName())) phonePengadu = (String) item.getString();
-					if ( "idJenisAduan".equals(item.getFieldName())) idJenisAduan = Long.parseLong(item.getString());
-					if ( "catatan".equals((String)item.getFieldName())) catatan = (String) item.getString();
-				} else if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
-					uploadData = item.getInputStream();
-					uploadName = item.getName();
-					uploadType = item.getContentType();
-					uploadSize = item.getSize();
-				}
-			}
+		 while (itr.hasNext()) {
+			 FileItem item = (FileItem)itr.next();
+			 if ( ((item.isFormField())) ) {
+				if ( "name".equals((String)item.getFieldName())) namaPengadu = (String) item.getString();
+				if ( "email".equals((String)item.getFieldName())) emailPengadu = (String) item.getString();
+				if ( "phone".equals((String)item.getFieldName())) phonePengadu = (String) item.getString();
+				if ( "idJenisAduan".equals(item.getFieldName())) idJenisAduan = Long.parseLong(item.getString());
+				if ( "catatan".equals((String)item.getFieldName())) catatan = (String) item.getString();
+			
+			 } else if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
+				 uploadData = item.getInputStream();
+				 uploadName = item.getName();
+				 uploadType = item.getContentType();
+				 uploadSize = item.getSize();
+				
+			 }
+			
+		 }
 		    
-			RujJenisAduanMobile jenisAduan = db.find(RujJenisAduanMobile.class, idJenisAduan);
+		 RujJenisAduanMobile jenisAduan = db.find(RujJenisAduanMobile.class, idJenisAduan);
 	
-			Long idSumber = Long.parseLong("16101");
-			RujSumberAduanMobile sumberAduan = db.find(RujSumberAduanMobile.class, idSumber);
+		 Long idSumber = Long.parseLong("16101");
+		 RujSumberAduanMobile sumberAduan = db.find(RujSumberAduanMobile.class, idSumber);
 	
-			try {
+		 try {
 				//db = new DbPersistence();
-				db.begin();
-				OnlineEAduanMobile aduan = new OnlineEAduanMobile();
-				aduan.setIdPengadu(idPengadu);
-				aduan.setNamaPengadu(namaPengadu);
-				aduan.setEmailPengadu(emailPengadu);
-				aduan.setPhonePengadu(phonePengadu);
-				aduan.setJenisAduan(jenisAduan);
-				aduan.setCatatan(catatan.toUpperCase());
-				aduan.setStatus(status.toUpperCase());
-				aduan.setFlagOnline(flagOnline.toUpperCase());
-				aduan.setStatusPenyelesaian(statusPenyelesaian.toUpperCase());
-				aduan.setSumberAduan(sumberAduan);
-				aduan.setTarikhMasuk(now);
-				db.persist(aduan);
-				db.commit();
+			db.begin();
+			OnlineEAduanMobile aduan = new OnlineEAduanMobile();
+			aduan.setIdPengadu(idPengadu);
+			aduan.setNamaPengadu(namaPengadu);
+			aduan.setEmailPengadu(emailPengadu);
+			aduan.setPhonePengadu(phonePengadu);
+			aduan.setJenisAduan(jenisAduan);
+			aduan.setCatatan(catatan.toUpperCase());
+			aduan.setStatus(status.toUpperCase());
+			aduan.setFlagOnline(flagOnline.toUpperCase());
+			aduan.setStatusPenyelesaian(statusPenyelesaian.toUpperCase());
+			aduan.setSumberAduan(sumberAduan);
+			aduan.setTarikhMasuk(now);
+			db.persist(aduan);
+			db.commit();
 				
-				Long idAduan = aduan.getId();
+			Long idAduan = aduan.getId();
 				
-				OnlineEAduanMobile aduanOnline = db.find(OnlineEAduanMobile.class, idAduan);
+			OnlineEAduanMobile aduanOnline = db.find(OnlineEAduanMobile.class, idAduan);
 				
-				db.begin();
-				OnlineLampiranEAduanMobile lampiran = new OnlineLampiranEAduanMobile(); 
-				lampiran.setEAduan(aduanOnline);
-				lampiran.setContent(IOUtils.toByteArray(uploadData));
-				lampiran.setJenisMime(uploadType);
-				lampiran.setTarikhMasuk(now);
-				lampiran.setNamaFail(uploadName);
-				db.persist(lampiran);
-				db.commit();	
+			db.begin();
+			OnlineLampiranEAduanMobile lampiran = new OnlineLampiranEAduanMobile(); 
+			lampiran.setEAduan(aduanOnline);
+			lampiran.setContent(IOUtils.toByteArray(uploadData));
+			lampiran.setJenisMime(uploadType);
+			lampiran.setTarikhMasuk(now);
+			lampiran.setNamaFail(uploadName);
+			db.persist(lampiran);
+			db.commit();		
 				
-				
-				
-				context.put("complaintID", idAduan);
-			} catch(Exception e){
-				e.getMessage();
-			}
+			context.put("complaintID", idAduan);
+			
+			
+		
+		 } catch(Exception e){
+			 e.getMessage();
+		}
 
 	 }
 	 

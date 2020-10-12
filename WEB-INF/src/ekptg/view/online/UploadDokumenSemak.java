@@ -242,8 +242,7 @@ public class UploadDokumenSemak extends AjaxBasedModule {
 		while (itr.hasNext()) {
 			FileItem item = (FileItem) itr.next();
 			if ((!(item.isFormField())) && (item.getName() != null)
-					&& (!("".equals(item.getName())))) {
-//				ekptg.model.php2.utiliti.LampiranBean l = new ekptg.model.php2.utiliti.LampiranBean();
+				&& (!("".equals(item.getName())))) {
 				if(modul.equals("php"))
 					getDoc().simpan(item,request);
 				else if(modul.equals("htp"))
@@ -294,5 +293,6 @@ public class UploadDokumenSemak extends AjaxBasedModule {
 		return iLampiranHTP;
 			
 	}
+
 	
 }

@@ -137,7 +137,6 @@ padding:0 0.25em;
   </tr>
 </table>
 
-
 <script>
 	
 	//Hapus dokumen pada senarai harta
@@ -261,31 +260,26 @@ padding:0 0.25em;
 
 		}else if('lampiransimati'=='$!actionRefresh'){
 			window.opener.semakLampiran('socBandar');
-
 		}else if('$!actionRefresh'=='phpapb'){
-			window.opener.doChangeTab('2');	
-					
+			window.opener.doChangeTab('2');					
 		}else if('$!actionRefresh'=='phpphppywindividu'){
-		//alert("masuk actionRefresh tutup");
 			window.opener.doChangeTabUpper('2');			
 		}else if('$!actionRefresh'=='phpphppnw'){
-		//	alert("masuk actionRefresh phppnw");
 			window.opener.doChangeTabUpper('2');
 		}else if('$!actionRefresh'=='phpphptkr'){
 			window.opener.doChangeTabUpper('2');
 		}else if('$!actionRefresh'=='phpphppelepasan'){
 			window.opener.doChangeTabUpper('5');
 		}else if('$!actionRefresh'=='htppajakanmycoid'){
-	/* 	}else if('$!actionRefresh'=='1'){
-				window.opener.doChangeTab('2');			
-		} */
 			window.opener.doChangeTab('1');		
-
+		}else if('$!actionRefresh'=='1'){
+			window.opener.doChangeTab('2');			
 		}
 	
 	}
 	//setSelected(1,0,0,1);HtaamViewX('$paramOnline')
 
 </script>
+
 #parse("app/htp/utiliti/javaScriptUmum.jsp")
 

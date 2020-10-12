@@ -181,59 +181,6 @@
                 </table>
 
                 <table width="100%">
-
-                	<tr>
-					    <td><fieldset>
-					      <legend><strong>AGIHAN TUGAS</strong></legend>
-					      <table width="100%" border="0" cellspacing="2" cellpadding="2">
-					              <tr>
-					                <td><table align="center" width="100%">
-					                  <tr>
-					                      <td colspan="4" scope="row">
-
-					                      	<input name="cmdDaftarAgih" type="button" value="Agih" #if($complaint.statusPenyelesaian =="SELESAI") onClick="notAllowed()" #else onClick="daftarAgih()" #end/>
-					                      </td>
-					                    </tr>
-					                    <tr class="table_header">
-					                      <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-					                      <td width="15%" align="center"><strong>Tarikh</strong></td>
-					                      <td width="15%" align="center"><strong>No Agihan</strong></td>
-					                      <td width="10%"><strong>Status</strong></td>
-					                       <td width="30%"><strong>Seksyen/Bahagian Bertanggungjawab</strong></td>
-					                      <td width="40%"><strong>Arahan</strong></td>
-					                    </tr>
-					                    #set ($count = 0)
-					                    #foreach ( $vectorResponse in $responses)
-					                    #set ($count = $count+1)
-					                    #set( $i = $velocityCount )
-					                    #if ( ($i % 2) != 1 )
-					                    #set( $row = "row2" )
-					                    #else
-					                    #set( $row = "row1" )
-					                    #end
-					                    <tr>
-					                      <td class="$row" align="center">$!count</td>
-					                       <td class="$row" align="center">$!vectorResponse.TARIKH_MASUK</td>
-					                      <td class="$row" align="center">$vectorResponse.ID<!-- <a href="javascript:detailAgihan('$vectorResponse.ID')" class="style1 style2">$vectorResponse.ID</a> --></td>
-					                      <td class="$row">$!vectorResponse.STATUS</td>
-					                      <td class="$row">$!vectorResponse.NAMA_PEGAWAI</td>
-					                      <td class="$row">$!vectorResponse.ARAHAN</td>
-					                    </tr>
-					                    #end
-					                    #if($count == 0)
-					                     <tr>
-
-					                      <td class="$row" colspan="6" align="center">Aduan Masih Belum Diagihkan</td>
-
-					                    </tr>
-					                    #end
-					                  </table></td>
-					              </tr>
-					            </table>
-					      </fieldset></td>
-					  </tr>
-
-
                 	<tr>
 						<td>
 						<FIELDSET id="top_upload">

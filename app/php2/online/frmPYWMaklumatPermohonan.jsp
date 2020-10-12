@@ -123,30 +123,71 @@
                 	#end
                 </td>
               </tr>
-<!--               <tr> -->
-<!--                 <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td> -->
-<!--                 <td>Unit Luas</td> -->
-<!--                 <td>:</td> -->
-<!--                 <td></td> -->
-<!--               </tr> -->
-<!--               <tr> -->
-<!--                 <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td> -->
-<!--                 <td>Luas Ambil</td> -->
-<!--                 <td>:</td> -->
-<!--                 <td> -->
-<!--             	</td> -->
-<!--               </tr> -->
               <tr>
                 <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-                <td>Luas</td>
+                <td>Unit Luas</td>
                 <td>:</td>
                 <td>
-                	#if ($mode == 'update')
-                	<input type="text" name="txtLuasBersamaan_" id="txtLuasBersamaan_" value="$beanMaklumatTanah.luasLot_"/>
-                	#else
-                	<input type="text" name="txtLuasBersamaan_" id="txtLuasBersamaan_" value="$beanMaklumatTanah.luasLot_" readonly="readonly" class="disabled"/> 
-                	#end
+                	<select name="socLuas_" style="width:200px;" $readonly class="$disabled" $disabled onchange="javascript:doChangeLuas_(this.value)">  
+					#set ($listUnitLuas_ = ["SILA PILIH",
+							       "KM - KILOMETER PERSEGI",
+							       "H - HEKTAR",
+							       "M - METER PERSEGI",
+							       "E - EKAR,ROOD,POLE",
+							       "K - KAKI PERSEGI",
+							       "P - EKAR PERPULUHAN",
+							       "D - EKAR,DEPA",
+							       "R - RELONG,JEMBA,KAKI PERSEGI",
+							       "BN - BATU NAUTIKA"]
+					      )
+					#set( $counter = 0 )
+					#foreach ($i in $listUnitLuas_)
+					
+					#if ($idLuas_ == $counter) 
+		              <option selected value="$counter">$i</option>
+		            #else
+					  <option value="$counter">$i</option>
+		            #end
+		
+					#set ($counter = $counter+1)
+		
+					#end
+					</select> 
+                </td>
+              </tr>
+              #if ($idLuas_ != '99999' && $idLuas_ != '')
+              <tr>
+                <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+                <td>Luas Asal</td>
+                <td>:</td>
+                <td>
+                	#if ($idLuas_ == '0' || $idLuas_ == '1' || $idLuas_ == '2' || $idLuas_ == '3' || $idLuas_ == '5' || $idLuas_ == '6' || $idLuas_ == '9')
+		            <input type="text" name="txtLuas1_" id="txtLuas1_" value="$beanMaklumatTanah.luas_1" onkeyup="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas_('$idLuas_')" size="6" $readonly class="$inputTextClass"/ >
+		            #elseif ($idLuas_ == '7')
+		            <input type="text" name="txtLuas1_" id="txtLuas1_" value="$beanMaklumatTanah.luas_1" onkeyup="validateNumber(this,this.value);" size="4" $readonly class="$inputTextClass" onBlur="kiraLuas_('$idLuas_')"/>
+		            <input type="text" name="txtLuas2_" id="txtLuas2_" value="$beanMaklumatTanah.luas_2" style="text-align:right" onkeyup="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas_('$idLuas_')" size="6"/ $readonly class="$inputTextClass">
+		            #elseif ($idLuas_ == '8' || $idLuas_ == '4')
+		            <input type="text" name="txtLuas1_" id="txtLuas1_" value="$beanMaklumatTanah.luas_1" onkeyup="validateNumber(this,this.value);" size="4" $readonly class="$inputTextClass" onBlur="kiraLuas_('$idLuas_')"/>
+		            <input type="text" name="txtLuas2_" id="txtLuas2_" value="$beanMaklumatTanah.luas_2" onkeyup="validateNumber(this,this.value);" size="4" $readonly class="$inputTextClass" onBlur="kiraLuas_('$idLuas_')"/>
+		            <input type="text" name="txtLuas3_" id="txtLuas3_" value="$beanMaklumatTanah.luas_3" onKeyUp="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas_('$idLuas_')" size="6" $readonly class="$inputTextClass"/>
+		        	#end
+		        </td>
+              </tr>
+              #end
+              <tr>
+                <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+                <td>Luas Bersamaan</td>
+                <td>:</td>
+                <td>
+                	<input type="text" name="txtLuasBersamaan_" id="txtLuasBersamaan_" value="$beanMaklumatTanah.luasLot_" style="text-align:right" readonly="readonly" class="disabled"/>
             		HEKTAR
+            		#foreach ($beanMaklumatSewa in $BeanMaklumatSewa)
+            			#if ($idLuasKegunaan == '1') 
+            			<input type="hidden" name="txtLuasMohon" id="txtLuasMohon" value="0" />
+            			#else
+            			<input type="hidden" name="txtLuasMohon" id="txtLuasMohon" value="$beanMaklumatSewa.luasBersamaan" />
+            			#end
+            		#end
             	</td>
               </tr>
              <!--<tr>
@@ -520,6 +561,9 @@ function doChangeLuasKegunaan() {
 function doChangeLuas() {
 	doAjaxCall${formName}("doChangeLuas");
 }
+function doChangeLuas_() {
+	doAjaxCall${formName}("doChangeLuas_");
+}
 function pilihTanahPYW() {
 	var url = "../x/${securityToken}/ekptg.view.php2.online.FrmPYWOnlinePopupSenaraiTanahView";
     var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
@@ -538,6 +582,12 @@ function doSimpanKemaskiniMaklumatTnh() {
 // 		alert('Sila pilih Pegangan Hakmilik.');
 // 		return; 
 // 	}
+
+
+	if( (document.${formName}.txtLuasMohon.value) > (document.${formName}.txtLuasBersamaan_.value) ){
+		alert("Luas asal tidak boleh kurang dari luas yang dimohon. Sila kemaskini luas mohon terlebih dahulu.");
+		return;
+	}
 	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.actionPenyewaan.value = "paparMaklumatPenyewaan";
@@ -1073,6 +1123,106 @@ function kiraLuas(idLuas){
 		}
 	}
 }
+
+function kiraLuas_(idLuas_){
+	var jenisLuas = idLuas_;
+  
+  	// KILOMETER PERSEGI
+  	if(jenisLuas == "1"){
+
+		var luasK = 0;
+		if (document.${formName}.txtLuas1_.value != ''){
+			luasK = document.${formName}.txtLuas1_.value*1;
+		}
+		var luasH = luasK*100;		
+		document.${formName}.txtLuasBersamaan_.value = luasH.toFixed(5);
+
+   	} else if(jenisLuas == "2"){ //HEKTER
+  		
+		var luasH = 0;
+		if (document.${formName}.txtLuas1_.value != ''){
+			luasH = document.${formName}.txtLuas1_.value*1;
+		}
+		document.${formName}.txtLuasBersamaan_.value = luasH.toFixed(5);
+
+   	} else if(jenisLuas == "3"){ // METER PERSEGI
+    	
+		var luasM = 0;
+		if (document.${formName}.txtLuas1_.value != ''){
+			luasM = document.${formName}.txtLuas1_.value*1;
+		}
+  	  	var luasH = (luasM*0.0001);
+	  	document.${formName}.txtLuasBersamaan_.value = luasH.toFixed(5);
+
+   	} else if(jenisLuas == "4"){  //EKAR, ROOD, POLE
+
+	  	var luasE = 0;
+		if (document.${formName}.txtLuas1_.value != ''){
+			luasE = document.${formName}.txtLuas1_.value*1;
+		}
+	  	var luasR = 0;
+		if (document.${formName}.txtLuas2_.value != ''){
+			luasR = document.${formName}.txtLuas2_.value*1;
+		}
+	  	var luasP = 0;
+		if (document.${formName}.txtLuas3_.value != ''){
+			luasP = document.${formName}.txtLuas3_.value*1;
+		}
+	  	var luasH = (luasE*0.4046864)+(luasR*0.1011716)+(luasP*0.00252929);
+  	  	document.${formName}.txtLuasBersamaan_.value = luasH.toFixed(5);
+
+   	} else if(jenisLuas == "5"){ //KAKI PERSEGI
+  	  
+	  var luasAsal = 0;
+	  if (document.${formName}.txtLuas1_.value != ''){
+		  luasAsal = document.${formName}.txtLuas1_.value*1;
+	  }
+	  var luasH = luasAsal*0.0000092;
+  	  document.${formName}.txtLuasBersamaan_.value = luasH.toFixed(5);
+
+   	} else if(jenisLuas == "6"){	//EKAR PERPULUHAN
+  	  
+	  var luasAsal = 0;
+	  if (document.${formName}.txtLuas1_.value != ''){
+		  luasAsal = document.${formName}.txtLuas1_.value*1;
+	  }
+	  var luasH = luasAsal*0.405;
+	  document.${formName}.txtLuasBersamaan_.value = luasH.toFixed(5);
+  	  
+   	} else if(jenisLuas == "7"){ //EKAR,DEPA
+  	  
+	  var luasE = 0;
+	  if (document.${formName}.txtLuas1_.value != ''){
+		  luasE = document.${formName}.txtLuas1_.value*1;
+	  }
+	  var luasD = 0;
+	  if (document.${formName}.txtLuas2_.value != ''){
+		  luasD = document.${formName}.txtLuas2_.value*1;
+	  }
+	  
+	  var luasH = (luasE*0.4046864)+(luasD*0.00040469);
+	  document.${formName}.txtLuasBersamaan_.value = luasH.toFixed(5);
+
+   	} else if(jenisLuas == "8"){ //RELONG,JEMBA,KAKI PERSEGI
+  	  
+	  var luasR = 0;
+	  if (document.${formName}.txtLuas1_.value != ''){
+		  luasR = document.${formName}.txtLuas1_.value*1;
+	  }
+	  var luasJ = 0;
+	  if (document.${formName}.txtLuas2_.value != ''){
+		  luasJ = document.${formName}.txtLuas2_.value*1;
+	  }
+	  var luasK = 0;
+	  if (document.${formName}.txtLuas3_.value != ''){
+		  luasK = document.${formName}.txtLuas3_.value*1;
+	  }
+	  
+	  var luasH = (luasR*0.2877764)+(luasJ*0.0005945)+(luasK*0.0000092);
+	  document.${formName}.txtLuasBersamaan_.value = luasH.toFixed(5);
+	}
+}
+
 function textCounter(field, countfield, maxlimit) {
    if (field.value.length > maxlimit) // if too long...trim it!
 		 field.value = field.value.substring(0, maxlimit);

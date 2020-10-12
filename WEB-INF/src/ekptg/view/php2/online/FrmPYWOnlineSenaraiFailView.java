@@ -127,6 +127,10 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 		if (idLuas == null || idLuas.trim().length() == 0){
 			idLuas = "99999";
 		}
+		String idLuas_ = getParam("socLuas_");
+		if (idLuas_ == null || idLuas_.trim().length() == 0){
+			idLuas_ = "99999";
+		}
 		String idJenisTanah = getParam("socJenisTanah");
 		if (idJenisTanah == null || idJenisTanah.trim().length() == 0){
 			idJenisTanah = "99999";
@@ -177,12 +181,12 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 				idFail = logic.daftarBaruSewa(idUrusan, idSuburusan, idSubsuburusan, getParam("txtTujuanLain"), getParam("txtNoRujukanSurat"), getParam("txttarikhSurat"), 
 						idPHPBorangK, idPPTBorangK,
 						idJenisTanah, idNegeri, idDaerah, idMukim, jenisHakmilik, getParam("noMilikTanah"), jenisLot, getParam("noLotTanah"), getParam("txtLuasBersamaan"),
-						idHakmilikUrusan, getParam("tarikhTerima"), idJenisPermohonan, session,idPermohonanLama);
+						idHakmilikUrusan, getParam("tarikhTerima"), idJenisPermohonan, session,idPermohonanLama, idLuas, getParam("txtLuas1"), getParam("txtLuas2"),getParam("txtLuas3"));
 			}
 			if ("doSimpanKemaskiniMaklumatTnh".equals(hitButton)){
         		// logic.updateTanah(idPermohonan,idHakmilikAgensi,session);
         		logic.updateTanahSewa(idPermohonan,idHakmilikSementara,idJenisTanah, idNegeri, idDaerah, idMukim, jenisHakmilik, getParam("noMilikTanah"), 
-        				jenisLot, getParam("noLotTanah"), getParam("txtLuasBersamaan_"),session);
+        				jenisLot, getParam("noLotTanah"), getParam("txtLuasBersamaan_"),session, idLuas_, getParam("txtLuas1_"), getParam("txtLuas2_"),getParam("txtLuas3_"));
             }
 			if ("doSimpanKemaskiniMaklumatPenyewaan".equals(hitButton)){
         		logic.updatePermohonanSewa(idPermohonanSewa, idTujuanPermohonan, idSubsuburusan, getParam("txtTujuanLain"), getParam("socTempohSewa"), 
@@ -282,6 +286,11 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
         			idMukim = (String)(hashMaklumatTanah.get("idMukim"));
         			jenisHakmilik = (String)(hashMaklumatTanah.get("jenisHakmilik"));
         			jenisLot = (String)(hashMaklumatTanah.get("jenisLot"));
+        			if (hashMaklumatTanah.get("unitLuas") != null && hashMaklumatTanah.get("unitLuas").toString().trim().length() != 0){
+            			idLuas_ = (String) hashMaklumatTanah.get("unitLuas");
+            		} else {
+            			idLuas_ = "99999";
+            		}
     			}
     			
     			this.context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("socJenisHakmilik", Long.parseLong(jenisHakmilik), "disabled", " class=\"disabled\""));
@@ -393,7 +402,21 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
         		beanMaklumatTanah = new Vector();
     			// logic.setMaklumatTanah(idHakmilikAgensi, idHakmilikSementara);
     			logic.setMaklumatTanahSewa(idHakmilikSementara);
-    			beanMaklumatTanah = logic.getBeanMaklumatTanah();
+    			//beanMaklumatTanah = logic.getBeanMaklumatTanah();
+    			Hashtable hashMaklumatTanah = (Hashtable) logic.getBeanMaklumatTanah().get(0);
+    			if ("doChangeLuas_".equals(submit)){
+    				hashMaklumatTanah.put("luas_1", "");
+    				hashMaklumatTanah.put("luas_2", "");
+    				hashMaklumatTanah.put("luas_3", "");
+    				// hashMaklumatTanah.put("luasBersamaan", "");
+    			} else {
+    				hashMaklumatTanah.put("luas_1", getParam("txtLuas1_"));
+    				hashMaklumatTanah.put("luas_2", getParam("txtLuas2_"));
+    				hashMaklumatTanah.put("luas_3", getParam("txtLuas3_"));
+					// hashMaklumatTanah.put("luasBersamaan", getParam("txtLuasBersamaan"));	
+    			}
+    			
+    			beanMaklumatTanah.addElement(hashMaklumatTanah);
     			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
     			
     			this.context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("socJenisHakmilik", Long.parseLong(jenisHakmilik), ""));
@@ -732,6 +755,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 		this.context.put("idHakmilikSementara", idHakmilikSementara);
 		this.context.put("idLuasKegunaan", idLuasKegunaan);
 	    this.context.put("idLuas", idLuas);
+	    this.context.put("idLuas_", idLuas_);
 	    this.context.put("idPermohonanSewa", idPermohonanSewa);
 	    this.context.put("idTujuanPermohonan", idTujuanPermohonan);
 		this.context.put("idPPTBorangK", idPPTBorangK);

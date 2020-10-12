@@ -415,7 +415,8 @@
             #elseif ($idLuas == '8' || $idLuas == '4')
             <input type="text" name="txtLuas1" id="txtLuas1" onkeyup="validateNumber(this,this.value);" size="4" $readonlyPopup class="$inputTextClassPopup" onBlur="kiraLuas('$idLuas')"/>
             <input type="text" name="txtLuas2" id="txtLuas2" onkeyup="validateNumber(this,this.value);" size="4" $readonlyPopup class="$inputTextClassPopup" onBlur="kiraLuas('$idLuas')"/>
-            <input type="text" name="txtLuas3" id="txtLuas3" onKeyUp="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6" $readonlypopup class="$inputTextClassPopup"/></td>
+            <input type="text" name="txtLuas3" id="txtLuas3" onKeyUp="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6" $readonlypopup class="$inputTextClassPopup"/>
+          </td>
         </tr>
         #end
         <tr>
@@ -559,7 +560,7 @@
   <tr>
     <td width="100%" align="center"> 
     #if ($mode == 'new')
-      <input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Seterusnya" onclick="daftar()"/>
+      <input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Seterusnya" onclick="daftar('$idLuas')"/>
       <input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="kembali()"/>
     #end 
     </td>
@@ -717,8 +718,8 @@ function kiraLuas(idLuas){
 	  document.${formName}.txtLuasBersamaan.value = luasH.toFixed(5);
 	}
 }
-function daftar() {
-	if(document.${formName}.socJenisPermohonan.value == ""){
+function daftar(idLuas) {
+	if(document.${formName}.socJenisPermohonan.value == "0"){
 		alert('Sila pilih Jenis Permohonan.');
   		document.${formName}.socJenisPermohonan.focus(); 
 		return; 
@@ -742,6 +743,92 @@ function daftar() {
 // 		alert('Sila pilih Pegangan Hakmilik.');
 // 		return; 
 // 	}
+
+	if(document.${formName}.socJenisTanah.value == "0"){
+		alert('Sila pilih Jenis Tanah.');
+  		document.${formName}.socJenisTanah.focus(); 
+		return; 
+	}
+	if(document.${formName}.socNegeri.value == ""){
+		alert('Sila pilih Negeri.');
+  		document.${formName}.socNegeri.focus(); 
+		return; 
+	}
+	if(document.${formName}.socDaerah.value == ""){
+		alert('Sila pilih Daerah.');
+  		document.${formName}.socDaerah.focus(); 
+		return; 
+	}
+	if(document.${formName}.socMukim.value == ""){
+		alert('Sila pilih Mukim.');
+  		document.${formName}.socMukim.focus(); 
+		return; 
+	}
+	if(document.${formName}.socJenisHakmilik.value == ""){
+		alert('Sila pilih Jenis Hakmilik.');
+  		document.${formName}.socJenisHakmilik.focus(); 
+		return; 
+	}
+	if(document.${formName}.noMilikTanah.value == ""){
+		alert('Sila isi No. Hakmilik.');
+  		document.${formName}.noMilikTanah.focus(); 
+		return; 
+	}
+	if(document.${formName}.socJenisLot.value == ""){
+		alert('Sila pilih Jenis Lot.');
+  		document.${formName}.socJenisLot.focus(); 
+		return; 
+	}
+	if(document.${formName}.noLotTanah.value == ""){
+		alert('Sila isi No. Lot.');
+  		document.${formName}.noLotTanah.focus(); 
+		return; 
+	}
+	if(document.${formName}.socLuas.value == "0"){
+		alert('Sila pilih Unit Luas Ambil.');
+  		document.${formName}.socLuas.focus(); 
+		return; 
+	}
+	
+	if(idLuas == '1' || idLuas == '2' || idLuas == '3' || idLuas == '5' || idLuas == '6' || idLuas == '9'){
+		if(document.${formName}.txtLuas1.value == ""){
+			alert('Sila masukkan Luas Ambil.');
+			document.${formName}.txtLuas1.focus(); 
+			return; 
+		}
+	}
+	else
+	if(idLuas == '4' || idLuas == '8'){
+		if(document.${formName}.txtLuas1.value == ""){
+			alert('Sila masukkan Luas Ambil.');
+			document.${formName}.txtLuas1.focus(); 
+			return; 
+		}
+		if(document.${formName}.txtLuas2.value == ""){
+			alert('Sila masukkan Luas Ambil.');
+			document.${formName}.txtLuas2.focus(); 
+			return; 
+		}
+		if(document.${formName}.txtLuas3.value == ""){
+			alert('Sila masukkan Luas Ambil.');
+			document.${formName}.txtLuas3.focus(); 
+			return; 
+		}
+	} 
+	else
+	if(idLuas == '7'){
+		if(document.${formName}.txtLuas1.value == ""){
+			alert('Sila masukkan Luas Ambil.');
+			document.${formName}.txtLuas1.focus(); 
+			return; 
+		}
+		if(document.${formName}.txtLuas2.value == ""){
+			alert('Sila masukkan Luas Ambil.');
+			document.${formName}.txtLuas2.focus(); 
+			return; 
+		}
+	}
+	
 	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.actionPenyewaan.value = "daftarBaru";

@@ -23,7 +23,7 @@
           </td>
         </tr>
         <tr class="table_header">
-          <td scope="row" width="5%" align="center"><strong>No</strong></td>
+          <td scope="row" width="5%" align="center"><strong>No.</strong></td>
           <td width="25%"><strong>Nama Pengadu</strong></td>
           <td width="20%"><strong>No. Aduan</strong></td>
           <td width="10%"  align="center"><strong>Tarikh Agihan Aduan</strong></td>
