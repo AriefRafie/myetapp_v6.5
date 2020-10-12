@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 import ekptg.model.entities.Tblrujdokumen;
 import ekptg.model.htp.FrmSemakan;
 import ekptg.model.utils.lampiran.ILampiran;
+import ekptg.model.php2.utiliti.LampiranBean;
 
 public class UploadDokumenSemak extends AjaxBasedModule {
 
@@ -58,7 +59,6 @@ public class UploadDokumenSemak extends AjaxBasedModule {
 		ekptg.model.ppk.util.LampiranBean l = new ekptg.model.ppk.util.LampiranBean();
 
 		modul = getParam("actionrefresh").substring(0,3);
-		this.context.put("modul",modul);
 		myLog.info("uploadFiles:actionrefresh="+getParam("actionrefresh").substring(0,3));
 
 		myLog.info("actionPopup="+actionPopup);
