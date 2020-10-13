@@ -165,6 +165,9 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
                            
               </td>          
           	</tr>
+          	<tr>
+            	<td width="18%">&nbsp;(mengikut perintah mahkamah)</td>
+            	</tr>
         	<tr>
             	  <td>&nbsp;Peratus Caj Lewat</td>
                 <td width="1%">:</td>
@@ -193,7 +196,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
        		  </td>
             </tr>
             <tr>
-             <td width="18%">&nbsp;Tarikh</td>
+             <td width="18%">&nbsp;Tarikh Bayaran Pampasan</td>
            	  	<td width="1%">:</td>
            	  	<td width="41%">
                 
