@@ -72,6 +72,7 @@ public class FrmAPBPopupSenaraiPermohonanView extends AjaxBasedModule {
 
 	    	logic.carianFail(carianNoFail,idJenisPermohonan,carianNamaPemohon);
 	
+	    	
 	    	//GO TO LIST TANAH        	
         	vm = "app/php2/frmAPBPopupSenaraiPermohonan.jsp";  
         	
