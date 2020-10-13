@@ -798,6 +798,7 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 					|| (flag_skrin.equals("bantahan_mahkamah"))
 					|| (flag_skrin.equals("papar_lot_borangE"))
 					|| (flag_skrin.equals("laporan_tanah_terperinci_sementara"))
+					|| (flag_skrin.equals("senarai_siasatan_sementara"))
 					) {
 				
 				sql += " TBLRUJLUAS LS, TBLRUJMUKIM MK, TBLRUJNEGERI N, TBLPPTHAKMILIK M, "
