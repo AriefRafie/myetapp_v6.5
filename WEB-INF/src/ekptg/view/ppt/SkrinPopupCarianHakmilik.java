@@ -18,12 +18,10 @@ import org.apache.log4j.Logger;
 import ekptg.helpers.DB;
 import ekptg.helpers.Paging2;
 import ekptg.helpers.Utils;
-import ekptg.model.ppt.FrmPermohonanUPTOnlineData;
 import ekptg.model.ppt.PPTHeader;
 
 public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 	static Logger myLogger = Logger.getLogger(SkrinPopupCarianHakmilik.class);
-	FrmPermohonanUPTOnlineData modelOnline = new FrmPermohonanUPTOnlineData();
 	private static SimpleDateFormat Format = new SimpleDateFormat("dd/MM/yyyy");
 	private final String PATH = "app/ppt/PopupHakmilik/";
 	private String vm = PATH + "SkrinPopupCarianHakmilik.jsp";
@@ -607,14 +605,7 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 		String no_lot, String nama_pb, String no_pb, Db db,
 		String idpegawai, String id_borange) throws Exception {
 		// temp
-		String id_user = (String) session.getAttribute("_ekptg_user_id");
-		String portal_role = (String) session.getAttribute("_portal_role");
-		String id_fail = "";
-		Vector listHakmilik = new Vector();
-		listHakmilik = modelOnline.getListPemohon(id_user, portal_role, "");
-		context.put("id_fail", id_fail);
 
-		
 		String noLOT = no_lot.trim();
 		String nama2Mukim = "";
 		String listLOT = "";
@@ -718,15 +709,6 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 					+ "' "
 					+ " GROUP BY PHM.ID_HAKMILIK) TEMP_COUNTPB, ";
 
-			
-			if  (flag_skrin.equals("daftar_sek8_online") || flag_skrin.equals("skrin_hakmilik_sek8_KJP")&& id_fail != null) {
-				sql += " (SELECT S1.STATUS_SIASATAN AS STATUS_SIASATAN FROM TBLPPTSIASATAN S1 WHERE S1.STATUS_SIASATAN = '6' "
-						+ " AND S1.ID_PERMOHONAN = '"
-						+ id_permohonan
-						+ "') status ";
-			}
-			
-			
 			if (!id_permohonan.equals("") && id_permohonan != null
 					&& flag_skrin.equals("bantahan_mahkamah")) {
 				sql += " TBLPPTBANTAHAN BAN, TBLRUJSTATUS SB, ";
@@ -772,21 +754,9 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 					|| flag_skrin.equals("hakmilik_borangL")) {
 				sql += " Tblpptborangl LL, ";
 			}
-	
-			if (flag_skrin.equals("senarai_pampasan_sementara")
-					|| (flag_skrin.equals("kemasukan_borangF"))
-					|| (flag_skrin.equals("senarai_siasatan"))
-					|| (flag_skrin.equals("hakmilik_pampasan"))
-					|| (flag_skrin.equals("hakmilik_borangk"))
-					|| (flag_skrin.equals("hakmilik_borangL"))
-					|| (flag_skrin.equals("bukti_notis_borangK"))
-					|| (flag_skrin.equals("senarai_pu"))
-					|| (flag_skrin.equals("laporan_awal_tanah"))
-					|| (flag_skrin.equals("bantahan_mahkamah"))
-					|| (flag_skrin.equals("papar_lot_borangE"))
-					|| (flag_skrin.equals("laporan_tanah_terperinci_sementara"))
-					|| (flag_skrin.equals("senarai_siasatan_sementara"))
-					) {
+			
+			if (flag_skrin.equals("daftar_sek8_online") || flag_skrin.equals("skrin_hakmilik_sek8_KJP")) {
+				sql += " TBLPPTBORANGK K, TBLPPTSIASATAN B, TBLPPTBORANGG G, " ;
 				
 			}
 					
