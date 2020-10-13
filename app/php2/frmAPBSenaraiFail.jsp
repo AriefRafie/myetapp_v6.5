@@ -73,11 +73,11 @@
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
           <td width="20%"><strong>No Fail</strong></td>
-          <td width="30%"><strong>Nama Pemohon/Syarikat</strong></td>
+          <td width="28%"><strong>Nama Pemohon/Syarikat</strong></td>
           <td width="8%" align="center"><strong>Tarikh Terima</strong></td>
           <td width="10%"><strong>Kawasan Dipohon</strong></td>
           <td width="10%"><strong>Jenis Permohonan</strong></td>
-          <td width="8%"><strong>Jenis Lesen</strong></td>
+          <td width="10%"><strong>Jenis Lesen</strong></td>
           <td width="10%"><strong>Status</strong></td>
         </tr>
         #set ($list = "")
