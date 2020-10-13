@@ -3076,6 +3076,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 				context.put("txtNoWartaRizab", "");
 				context.put("txdTarikhWarta", "");
 				context.put("txtCatatan", "");
+				context.put("txtcatatan", "");
 				
 				context.put("txtLuasLotAsalSebelumConvert", "");
 				context.put("sorDropdownUnitAsal", "");

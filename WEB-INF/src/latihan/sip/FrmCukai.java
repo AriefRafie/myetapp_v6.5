@@ -548,7 +548,7 @@ public class FrmCukai extends AjaxBasedModule{
     			String Daerah = getParam("socDaerah")==""?"0":getParam("socDaerah");
     			long idDaerah = Long.parseLong(Daerah);
     			statusPeringkatBayar = false;
-    			int idBaucer = 0;
+    			String idBaucer = "0";
 				BaucerCukai bCukai = null;
     			vector = getICukaiPenyata().getPenyata("11", "",String.valueOf(permohonan.get("fail")), String.valueOf(permohonan.get("idnegeri")),null);
     			//myLog.info("vector.isEmpty()="+vector.isEmpty());
@@ -614,7 +614,7 @@ public class FrmCukai extends AjaxBasedModule{
     			
     			}else if("view".equals(pageMode)){
     				myLog.info("baucer : pageMode="+pageMode);
-    				idBaucer = Integer.parseInt(getParam("idBaucer"));
+    				idBaucer = getParam("idBaucer");
     				this.context.put("idbaucer", idBaucer);
     				this.context.put("idDaerah", getParam("idDaerah"));
     				style2 = "none";
@@ -624,7 +624,7 @@ public class FrmCukai extends AjaxBasedModule{
 
     			}else if("kemaskinibaucer".equals(pageMode)){
     				myLog.info("Baucer::kemaskinibaucer");
-    				idBaucer = Integer.parseInt(getParam("idBaucer"));
+    				idBaucer =getParam("idBaucer");
        				this.context.put("idbaucer", idBaucer);
     				this.context.put("idDaerah", getParam("idDaerah"));
     				style2 = "none";
@@ -649,7 +649,7 @@ public class FrmCukai extends AjaxBasedModule{
         	String negeri = getParam("negeri");
         	String Daerah = getParam("socDaerah")==""?"0":getParam("socDaerah");
         	long idDaerah = Long.parseLong(Daerah);
-        	int idBaucer = 0;
+        	String idBaucer = "0";
         	int idBayaranCukai = 0;
         	statusPeringkatBayar = false;
 
@@ -717,9 +717,9 @@ public class FrmCukai extends AjaxBasedModule{
 				style2 = "none";
 				String idBayaran = simpanBayaran(session,idPeringkatBayaran);
 				if(getParam("socBaucer") != ""){
-					idBaucer = Integer.parseInt(getParam("socBaucer"));
+					idBaucer = getParam("socBaucer");
 				}else{
-				  	idBaucer = Integer.parseInt(getParam("idBaucer"));
+				  	idBaucer = (getParam("idBaucer"));
 				}
 				BayaranCukai bCukai = null;
 				bCukai = getICukai().bayaranView(idBayaran);
@@ -734,7 +734,7 @@ public class FrmCukai extends AjaxBasedModule{
 				myLog.info("Bayaran::viewBay");
 				idBayaranCukai = Integer.parseInt(getParam("idBayaranCukai"));
 				String idBayaran = getParam("idBayaranCukai");
-				idBaucer = Integer.parseInt(getParam("idBaucer"));
+				idBaucer = getParam("idBaucer");
 				this.context.put("idBayaranCukai", idBayaranCukai);
 				this.context.put("idBaucer", idBaucer);
 				BayaranCukai bCukai = null;
@@ -755,7 +755,7 @@ public class FrmCukai extends AjaxBasedModule{
 				myLog.info("CukaiProcess::Bayaran::BayaranView");
 				idBayaranCukai = Integer.parseInt(getParam("idBayaranCukai"));
 				String idBayaran = getParam("idBayaranCukai");
-				idBaucer = Integer.parseInt(getParam("idBaucer"));
+				idBaucer = getParam("idBaucer");
 				this.context.put("idBayaranCukai", idBayaranCukai);
 				this.context.put("idBaucer", idBaucer);
 				style2 = "none";
@@ -1225,8 +1225,8 @@ public class FrmCukai extends AjaxBasedModule{
 		  
 	  }
 	  
-	  private int SimpanTBaucer(HttpSession session,int idPeringkatbayaran) throws Exception {
-		  int idBaucer = 0;
+	  private String SimpanTBaucer(HttpSession session,int idPeringkatbayaran) throws Exception {
+		  String idBaucer = "0";
 		  if(getParam("idBaucer") == ""){
 			  //baucer baru
 			  Hashtable h = new Hashtable();
@@ -1248,7 +1248,7 @@ public class FrmCukai extends AjaxBasedModule{
 			//kemaskini baucer
 			//System.out.println("CukaiProcess::SimpanTBaucer::kemaskini");
 			Hashtable h = new Hashtable();
-			idBaucer = Integer.parseInt(getParam("idBaucer"));
+			idBaucer = getParam("idBaucer");
 			h.put("idBaucer", idBaucer);
 			h.put("idPeringkatbayaran", idPeringkatbayaran);
 			h.put("tkh_baucer", getParam("txdTarikhBaucer"));
@@ -1271,7 +1271,7 @@ public class FrmCukai extends AjaxBasedModule{
 		}
 	}
 		
-	private void DataTBaucer(HttpSession session,int idNegeri, int idBaucer, int idPeringkatbayaran, String disability, String readability, String style1, String style2) throws Exception {
+	private void DataTBaucer(HttpSession session,int idNegeri, String idBaucer, int idPeringkatbayaran, String disability, String readability, String style1, String style2) throws Exception {
 	  	Vector list = new Vector();
 		list.clear();					    
 		try{

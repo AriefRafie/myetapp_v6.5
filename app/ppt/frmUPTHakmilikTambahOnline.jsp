@@ -14,7 +14,10 @@ $jumlah_hakmilik
 Maklumat Hakmilik telah berjaya disimpan.
 </div>
 #end -->
-
+		#if ($simpanMD == 'true')
+<div class="success">Maklumat pembayaran telah berjaya disimpan.</div>
+		
+        #end
 
 #if($mode=="new") #if($maklumat_Hakmilik_Salin.size()>0)
 
@@ -123,14 +126,14 @@ Maklumat Hakmilik telah berjaya disimpan.
 <fieldset>
 	<table width="100%" border="0">
 		<tr>
-			<td width="1%">#if($hideFieldHakmilik=="no")<font color="red">*</font>#end
+			<td width="1%">#if($hideFieldHakmilik=="no")<font color="red"></font>#end
 			</td>
 			<td width="23%">Jenis Hakmilik</td>
 			<td width="1%">:</td>
 			<td width="75%">$!selectJenisHakmilik</td>
 		</tr>
 		<tr>
-			<td>#if($hideFieldHakmilik=="no")<font color="red">*</font>#end
+			<td>#if($hideFieldHakmilik=="no")<font color="red"></font>#end
 			</td>
 			<td>No.Hakmilik</td>
 			<td>:</td>
@@ -190,7 +193,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 		#end
 
 		<tr>
-			<td><font color="red">*</font></td>
+			<td><font color="red"></font></td>
 			<td>No.Syit</td>
 			<td>:</td>
 			<td><input type="text" name="txtNoSyit" id="txtNoSyit" value="$!txtNoSyit" size="12" maxlength="40"	onblur="javascript:updatetxtNoSyit('$!txtNoSyit')"></td>
@@ -225,21 +228,21 @@ Maklumat Hakmilik telah berjaya disimpan.
 		
 
 		<tr>
-			<td><font color="red">*</font></td>
+			<td><font color="red"></font></td>
 			<td>Kategori Tanah</td>
 			<td>:</td>
 			<td>$!selectKategoriTanah</td>
 		</tr>
 		
 		<tr>
-			<td><font color="red">*</font></td>
+			<td><font color="red"></font></td>
 			<td>Unit Luas Asal</td>
 			<td>:</td>
 			<td>$!selectUnitLuasLot</td>
 		</tr>
 		
 		<tr>
-			<td valign="top"><font color="red">*</font></td>
+			<td valign="top"><font color="red"></font></td>
 			<td valign="top">Luas Asal</td>
 			<td valign="top">:</td>
 			<td>#if($showFieldAsalBeforeConvert=="yes") <input type="text"
@@ -291,14 +294,14 @@ Maklumat Hakmilik telah berjaya disimpan.
 		#end
 
 		<tr>
-			<td><font color="red">*</font></td>
+			<td><font color="red"></font></td>
 			<td>Unit Luas Ambil</td>
 			<td>:</td>
 			<td>$!selectUnitLuasAmbil</td>
 		</tr>
 		
 		<tr>
-			<td valign="top"><font color="red">*</font></td>
+			<td valign="top"><font color="red"></font></td>
 			<td valign="top">Luas Diambil</td>
 			<td valign="top">:</td>
 			<td>#if($showFieldAmbilBeforeConvert=="yes") <input type="text"
@@ -541,7 +544,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 <fieldset>
 	<table width="100%" border="0">
 		<tr>
-			<td width="1%">#if($hideFieldHakmilik=="no")<font color="red">$!M</font>#end
+			<td width="1%">#if($hideFieldHakmilik=="no")<font color="red"></font>#end
 			</td>
 			<td width="23%">Jenis Hakmilik</td>
 			<td width="1%">:</td>
@@ -549,7 +552,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 		</tr>
 		
 		<tr>
-			<td>#if($hideFieldHakmilik=="no")<font color="red">$!M</font>#end
+			<td>#if($hideFieldHakmilik=="no")<font color="red"></font>#end
 			</td>
 			<td>No.Hakmilik</td>
 			<td>:</td>
@@ -609,7 +612,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 		#end
 
 		<tr>
-			<td><font color="red">$!M</font></td>
+			<td><font color="red"></font></td>
 			<td>No. Syit</td>
 			<td>:</td>
 			<td><input $disability $disabilityx type="text" name="txtNoSyit"
@@ -619,7 +622,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 		#end
 
 		<tr>
-			#if($hideFieldHakmilik=="no")<font color="red">$!M</font>#end
+			#if($hideFieldHakmilik=="no")<font color="red"></font>#end
 			<td>&nbsp;</td>
 			<td>No. PT</td>
 			<td>:</td>
@@ -644,21 +647,21 @@ Maklumat Hakmilik telah berjaya disimpan.
 
 		##if($hideFieldHakmilik=="no")
 		<tr>
-			<td><font color="red">$!M</font></td>
+			<td><font color="red"></font></td>
 			<td>Kategori Tanah</td>
 			<td>:</td>
 			<td>$!selectKategoriTanah</td>
 		</tr>
 		
 		<tr>
-			<td><font color="red">$!M</font></td>
+			<td><font color="red"></font></td>
 			<td>Unit Luas Asal</td>
 			<td>:</td>
 			<td>$!selectUnitLuasLot</td>
 		</tr>
 		
 		<tr>
-			<td valign="top"><font color="red">$!M</font></td>
+			<td valign="top"><font color="red"></font></td>
 			<td valign="top">Luas Asal</td>
 			<td valign="top">:</td>
 			<td>#if($showFieldAsalBeforeConvert=="yes") <input type="text"
@@ -715,14 +718,14 @@ Maklumat Hakmilik telah berjaya disimpan.
 		#end
 		
 		<tr>
-			<td><font color="red">$!M</font></td>
+			<td><font color="red"></font></td>
 			<td>Unit Luas Ambil</td>
 			<td>:</td>
 			<td>$!selectUnitLuasAmbil</td>
 		</tr>
 		
 		<tr>
-			<td valign="top"><font color="red">$!M</font></td>
+			<td valign="top"><font color="red"></font></td>
 			<td valign="top">Luas Diambil</td>
 			<td valign="top">:</td>
 			<td>#if($showFieldAmbilBeforeConvert=="yes") <input type="text"
@@ -1681,7 +1684,7 @@ function simpanHM(id_permohonan, id_hakmilik, flagSubjaket, hideFieldHakmilik, m
 		document.${formName}.socMukim.focus(); 
 		return;
 	}
-	else if(hideFieldHakmilik=="no" && document.${formName}.socJenisHakmilik.value == ""){
+	/* else if(hideFieldHakmilik=="no" && document.${formName}.socJenisHakmilik.value == ""){
 		alert("Sila pilih \"Jenis Hakmilik\" terlebih dahulu.");
   		document.${formName}.socJenisHakmilik.focus(); 
 		return;
@@ -1703,16 +1706,16 @@ function simpanHM(id_permohonan, id_hakmilik, flagSubjaket, hideFieldHakmilik, m
 	    document.${formName}.txtNoSyit.focus(); 
 		return;
 	}
-	/* else if((document.${formName}.socKodLot.value != "" && document.${formName}.txtNoPT.value == "") || (document.${formName}.socKodLot.value == "" && document.${formName}.txtNoPT.value != "")){
+	else if((document.${formName}.socKodLot.value != "" && document.${formName}.txtNoPT.value == "") || (document.${formName}.socKodLot.value == "" && document.${formName}.txtNoPT.value != "")){
 		alert("Sila lengkapkan maklumat \"No.PT\" terlebih dahulu.");
   		document.${formName}.txtNoPT.focus(); 
 		return;
-	} */
-	/* else if(document.${formName}.txtNoLot.value == "" && document.${formName}.txtNoPT.value == ""){
+	}
+	else if(document.${formName}.txtNoLot.value == "" && document.${formName}.txtNoPT.value == ""){
 		alert("Sila masukkan salah satu \"No.PT atau No.LOT\" terlebih dahulu.");
   		document.${formName}.txtNoLot.focus(); 
 		return;
-	} */
+	}
 	else
 	if(hideFieldHakmilik=="no" && document.${formName}.socKategoriTanah.value == ""){
 		alert("Sila pilih \"Kategori Tanah\" terlebih dahulu.");
@@ -1759,7 +1762,7 @@ function simpanHM(id_permohonan, id_hakmilik, flagSubjaket, hideFieldHakmilik, m
 		alert ("Sila 'Convert' nilai luas ambil terlebih dahulu");
 		return;
 		
-	}	else	{
+	} */	else	{
 		
 		if ( !window.confirm("Adakah Anda Pasti?") ) return;
 		

@@ -197,7 +197,8 @@ public class FrmChecklistSetup extends AjaxBasedModule{
 	
 	  private void simpanKeterangan() throws Exception {
 		    String keterangan = getParam("keterangan");
-		    SemakanData.tambah(keterangan, userId);
+		    String kod = getParam("txtkod");
+		    SemakanData.tambah(kod,keterangan, userId);
 		    
 	  }
 	  
