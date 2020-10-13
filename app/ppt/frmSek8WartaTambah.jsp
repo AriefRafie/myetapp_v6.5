@@ -402,6 +402,10 @@ alert("Sila Klik Butang Kembali Dan Klik 'Paging' No.11 Untuk Proses Endorsan");
                         #if($ID_NEGERIPROJEK == "4" || $ID_NEGERIPROJEK == "5")          
                         <input type="button" name="cmdPopupeTanah" value="Integrasi eTanah (Hantar Borang D & Maklumat Warta)" onClick="popupEtanah('$id_fail','$id_permohonan','WartaS8','')">
                         #end
+                         <!-- ETANAH WPKL -->
+                        #if($ID_NEGERIPROJEK == "14")          
+                        <input type="button" name="cmdPopupeTanah" value="Integrasi eTanah (Hantar Borang D & Maklumat Warta)" onClick="popupEtanahWPKL('$!id_fail','$!id_permohonan','$!id_warta','WartaS8')">
+                        #end
                     
                     #else
 					<input type="button" name="cmdUpdate" value ="Simpan" onClick="javascript:simpanWarta('$!id_permohonan','$!id_warta','$!mode')">
