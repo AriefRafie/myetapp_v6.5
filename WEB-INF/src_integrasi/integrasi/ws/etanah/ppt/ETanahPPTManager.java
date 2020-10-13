@@ -1,6 +1,9 @@
 package integrasi.ws.etanah.ppt;
 
 import integrasi.IntegrasiManager;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.BorangCdanMMK;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.BorangCdanMMKE;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.BorangCdanMMKResponse;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.DaftarPermohonanSek8;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.DaftarPermohonanSek8E;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.DaftarPermohonanSek8Response;
@@ -132,19 +135,39 @@ public class ETanahPPTManager {
 		
 	}
 	
+	public String BorangC( String idPermohonan
+		,LampiranForm lampiranMMK
+		,LampiranForm[] lampiran
+		) throws Exception{
+		//MaklumatPermohonanSek8Form permohonan = null;
+		stub = getStub();
+		
+		BorangCdanMMK request = new BorangCdanMMK();
+		request.setIdPermohonan(idPermohonan);
+		request.setDrafMMk(lampiranMMK);
+		request.setAttachment(lampiran);
+			
+		BorangCdanMMKE temp = new BorangCdanMMKE();
+		temp.setBorangCdanMMK(request);
+			
+		BorangCdanMMKResponse response = stub.borangCdanMMK(temp).getBorangCdanMMKResponse();
+		return response.get_return();
+			
+	}
+	
 	public String endorsanD( Hashtable<String,String> hash,LampiranForm[] lampiran) throws Exception{
 		//MaklumatPermohonanSek8Form permohonan = null;
 		stub = getStub();
-		EndorsBorangDMaklumatWarta requestb = new EndorsBorangDMaklumatWarta();
+		EndorsBorangDMaklumatWarta request = new EndorsBorangDMaklumatWarta();
 		//Hashtable<String,String> hash = new Hashtable<String,String>;
 			
-		requestb.setIdPermohonan(hash.get("idPermohonan"));
-		requestb.setNoWarta(hash.get("noWarta"));
-		requestb.setTarikhWarta(hash.get("tarikhWarta"));
-		requestb.setAttachment(lampiran);
+		request.setIdPermohonan(hash.get("idPermohonan"));
+		request.setNoWarta(hash.get("noWarta"));
+		request.setTarikhWarta(hash.get("tarikhWarta"));
+		request.setAttachment(lampiran);
 			
 		EndorsBorangDMaklumatWartaE temp = new EndorsBorangDMaklumatWartaE();
-		temp.setEndorsBorangDMaklumatWarta(requestb);
+		temp.setEndorsBorangDMaklumatWarta(request);
 			
 		EndorsBorangDMaklumatWartaResponse response = stub.endorsBorangDMaklumatWarta(temp).getEndorsBorangDMaklumatWartaResponse();
 		return response.get_return();
