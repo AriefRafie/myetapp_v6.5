@@ -511,7 +511,7 @@ background: #E0F2F7;
             </tr>
            	<tr>
            		<td>&nbsp;</td>
-            	<td>Tempoh Pendudukan (Bulan) </td>
+            	<td>Tempoh Pendudukan (Hari) </td>
             	<td>:</td>
             	<td><input type="text" $disability $disabilityx name="txtTempohPendudukan" id="txtTempohPendudukan"  value="$!txtTempohPendudukan" size="15" ></td>
             </tr>
