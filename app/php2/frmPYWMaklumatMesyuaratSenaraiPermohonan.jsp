@@ -331,10 +331,11 @@
 					        #end
 					        <tr>
 					          <td class="$row" align="center">$senaraiFailMohonLanjut.bil</td>
-					          <td class="$row"><a href="javascript:paparRingkasanPertimbangan('$senaraiFailMohonLanjut.idPermohonan')" class="style2">$senaraiFailMohonLanjut.noFailPermohonan</a></td>
+					          ##<td class="$row"><a href="javascript:paparRingkasanPertimbangan('$senaraiFailMohonLanjut.idPermohonan')" class="style2">$senaraiFailMohonLanjut.noFailPermohonan</a></td>
+					          <td class="$row"><a href="javascript:doCetakKertasPertimbangan('$senaraiFailMohonLanjut.idFail')" class="style2">$senaraiFailMohonLanjut.noFailPermohonan</a></td>
 					          <td class="$row" align="center">$senaraiFailMohonLanjut.jenisPermohonan</td>
 					          <td class="$row">$senaraiFailMohonLanjut.namaPemohon</td>
-					          <td class="$row" align="center"><a href="#" class="style2" onClick="doCetakKertasPertimbangan('$senaraiFailMohonLanjut.idFail')">
+					          <td class="$row" align="center"><a href="#" class="style2" onClick="javascript:paparRingkasanPertimbangan('$senaraiFailMohonLanjut.idPermohonan')">
                       		  <img border="0" src="../img/print.gif"/></a></td>
 					          <td class="$row" align="center">
 					          		#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
@@ -393,8 +394,86 @@
 			  		<td><fieldset>
       					<legend><strong>SENARAI PERMOHONAN LAIN-LAIN</strong></legend>
       					#parse("app/utils/record_paging.jsp")
-      					<table align="center" width="100%">
-      						
+      					<table align="center" width="100%">    					
+					        <tr class="table_header" align="center">
+					          <td scope="row" width="5%"><strong>Bil</strong></td>
+					          <td width="20%"><strong>No. Fail</strong></td>
+					          <td width="15%"><strong>Jenis Permohonan</strong></td>
+					          <td width="20%"><strong>Nama Pemohon</strong></td>
+					          <td width="10%"><strong>Kertas Pertimbangan</strong></td>
+					          <td width="10%"><strong>Keputusan</strong></td>
+					          <td width="15%"><strong>Catatan</strong></td>
+					          #foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
+								#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
+					               <td width="10%"><strong>Hapus</strong></td>
+					            #end
+					          #end
+					        </tr>
+					        #set ($senaraiFailMohonLain = "")
+					        #if ($SenaraiFailMohonLain.size() > 0)
+					        #foreach ($senaraiFailMohonLain in $SenaraiFailMohonLain)
+					        #if ($senaraiFailMohonLain.bil == '')
+					        #set( $row = "row1" )
+					        #elseif (($senaraiFailMohonLain.bil % 2) != 0)
+					        #set( $row = "row1" )
+					        #else 
+					        #set( $row = "row2" )
+					        #end
+					        <tr>
+					          <td class="$row" align="center">$senaraiFailMohonLain.bil</td>
+					          ##<td class="$row"><a href="javascript:paparRingkasanPertimbangan('$senaraiFailMohonLain.idPermohonan')" class="style2">$senaraiFailMohonLain.noFailPermohonan</a></td>
+					          <td class="$row"><a href="javascript:doCetakKertasPertimbangan('$senaraiFailMohonLain.idFail')" class="style2">$senaraiFailMohonLain.noFailPermohonan</a></td>
+					          <td class="$row" align="center">$senaraiFailMohonLain.jenisPermohonan</td>
+					          <td class="$row">$senaraiFailMohonLain.namaPemohon</td>
+					          <td class="$row" align="center"><a href="#" class="style2" onClick="javascript:paparRingkasanPertimbangan('$senaraiFailMohonLain.idPermohonan')">
+                      		  <img border="0" src="../img/print.gif"/></a></td>
+					          <td class="$row" align="center">
+					          		#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
+										#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
+										  <select id="idKeputusan$senaraiFailMohonLain.id" name="idKeputusan$senaraiFailMohonLain.id" style="width:100%" onChange="doSaveKeputusanBaru('idKeputusan$senaraiFailMohonLain.id',$senaraiFailMohonLain.id)">
+										    <option value="">SILA PILIH</option>
+										    <option #if ( "L" == $senaraiFailMohonLain.flagKeputusan ) selected #end value="L">LULUS</option>
+										    <option #if ( "T" == $senaraiFailMohonLain.flagKeputusan ) selected #end value="T">TOLAK</option>
+										    <option #if ( "G" == $senaraiFailMohonLain.flagKeputusan ) selected #end value="G">TANGGUH</option>
+										  </select>
+										#else
+											#if ( "L" == $senaraiFailMohonLain.flagKeputusan )
+								    			DILULUSKAN
+								    		#elseif ( "T" == $senaraiFailMohonLain.flagKeputusan )
+								    			DITOLAK
+								    		#else
+								    			TANGGUH
+								    		#end
+								    	#end
+								  	#end
+					          </td>
+					          <td class="$row" align="center">
+							        #foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
+										#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
+										  <textarea id="catatanKeputusan$senaraiFailMohonLain.id" name="catatanKeputusan$senaraiFailMohonLain.id" onBlur="doSaveCatatanKeputusanBaru('catatanKeputusan$senaraiFailMohonLain.id',$senaraiFailMohonLain.id)" >$senaraiFailMohonLain.catatanKeputusan</textarea>
+										#else
+										  $senaraiFailMohonLain.catatanKeputusan
+										#end
+									#end
+					          </td>
+					           #foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
+										#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
+                      		  <td class="$row" align="center"><a href="#" class="style2" onClick="doHapus('$senaraiFailMohonLain.id')">
+                      		  					<img border="0" src="../img/hapus.gif"/></a></td>
+                      		  					#end #end
+					        </tr>
+					        #end
+					        #else
+					        <tr>
+					          <td class="row1" align="center">&nbsp;</td>
+					          <td class="row1">Tiada Rekod</td>
+					          <td class="row1">&nbsp;</td>
+					          <td class="row1">&nbsp;</td>
+					          <td class="row1">&nbsp;</td>
+					          <td class="row1">&nbsp;</td>
+					          <td class="row1">&nbsp;</td>
+					        </tr>
+					        #end
 					    </table>
 					</fieldset></td>
 				</tr>

@@ -9,7 +9,7 @@ import java.util.Vector;
 import javax.servlet.http.HttpSession;
 
 import lebah.portal.AjaxBasedModule;
-import ekptg.helpers.HTML;
+//import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.model.php2.FrmPYWPopupSenaraiPermohonanData;
 import ekptg.model.php2.utiliti.PHPUtilHTML;
@@ -35,25 +35,37 @@ public class FrmPYWPopupSenaraiPermohonanView extends AjaxBasedModule {
 	    String action = getParam("action"); //* ACTION NI HANYA UTK SETUP PAGING SHJ
 	    String vm = "";
 	    String actionPopup = getParam("actionPopup");
-	    String submit = getParam("command");
+	    //String submit = getParam("command");
 	    String hitButton = getParam("hitButton");
-	    String idFail = getParam("idFail");
+	    //String idFail = getParam("idFail");
 	    String step = getParam("step");
 	    String idMesyuarat = getParam("idMesyuarat");
 	    
 	    idNegeriUser = (String)session.getAttribute("_ekptg_user_negeri");		
 	    
 	    //VECTOR
-        Vector senaraiFail = null;
+        @SuppressWarnings("rawtypes")
+		Vector senaraiFail = null;
 	    		
 		//SEND TO MODEL
 		if ("doSimpanPilihan".equals(hitButton)) {
 			
 			String idPermohonan="";
+			String idJenisPermohonan="";
 			String[] cbPilihan = request.getParameterValues("checkPermohonan");
+			String ddJenisPermohonan = getParam("socJenisPermohonan");
 			for(int i = 0; i < cbPilihan.length; i++){
 				 idPermohonan=cbPilihan[i].toString();
-				 logic.simpanPilihanBaru(idMesyuarat, idPermohonan, session);
+				 idJenisPermohonan = logic.getJenisPermohonan(idPermohonan);
+				 if(ddJenisPermohonan.equals("3")){
+					 logic.simpanPilihanLain(idMesyuarat, idPermohonan, session);
+				 }else{
+					 if (idJenisPermohonan.equals("1")){
+						 logic.simpanPilihanBaru(idMesyuarat, idPermohonan, session);
+					 }else if (idJenisPermohonan.equals("2")){
+						logic.simpanPilihanLanjutan(idMesyuarat, idPermohonan, session);
+					 } 
+				 }
 			}
 			this.context.put("close_window", "yes");
 		}	
@@ -76,7 +88,7 @@ public class FrmPYWPopupSenaraiPermohonanView extends AjaxBasedModule {
         	vm = "app/php2/frmPYWPopupSenaraiPermohonan.jsp";  
         	
         	senaraiFail = new Vector();
-//        	logic.setSenaraiFailMesyuarat(idFail);
+        	//logic.setSenaraiFailMesyuarat(idFail);
         	senaraiFail = logic.getSenaraiFailMesyuarat();
 			this.context.put("SenaraiFail", senaraiFail);   
 			
