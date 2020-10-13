@@ -35,6 +35,7 @@ public class FrmPYWSenaraiMesyuaratData {
 	private Vector listKehadiran = null;
 	private Vector listPermohonanBaharu = null;
 	private Vector listPermohonanLanjut = null;
+	private Vector listPermohonanLain = null;
 	private Vector listImejan = null;
 	private Vector beanMaklumatImejan = null;
 	
@@ -447,11 +448,7 @@ public class FrmPYWSenaraiMesyuaratData {
 				h.put("namaPemohon",
 						rs.getString("NAMA") == null ? "" : rs
 								.getString("NAMA"));
-				if(rs.getString("FLAG_JENIS_PERMOHONAN").equals("B")){
-					h.put("jenisPermohonan","PERMOHONAN BAHARU");
-				}else{
-					h.put("jenisPermohonan","PERMOHONAN TANGGUH");
-				}
+				h.put("jenisPermohonan","PERMOHONAN BAHARU");
 				h.put("flagKeputusan",
 						rs.getString("FLAG_SYOR") == null ? "" : rs
 								.getString("FLAG_SYOR"));
@@ -486,7 +483,7 @@ public class FrmPYWSenaraiMesyuaratData {
 
 			sql = "SELECT A.ID_MESYUARAT_PERMOHONAN, D.NO_FAIL,E.NAMA, A.FLAG_JENIS_PERMOHONAN, A.FLAG_SYOR , A.CATATAN, C.ID_PERMOHONAN, D.ID_FAIL, F.ID_JENIS_PERMOHONAN "
 				+ "FROM TBLPHPMESYUARATPERMOHONAN A, TBLPHPMESYUARAT B, TBLPERMOHONAN C, TBLPFDFAIL D, TBLPHPPEMOHON E, TBLPHPPERMOHONANSEWA F "
-				+ "WHERE A.FLAG_JENIS_PERMOHONAN = 'B' AND A.ID_MESYUARAT = B.ID_MESYUARAT AND A.ID_PERMOHONAN = C.ID_PERMOHONAN AND C.ID_FAIL = D.ID_FAIL "
+				+ "WHERE A.FLAG_JENIS_PERMOHONAN = 'L' AND A.ID_MESYUARAT = B.ID_MESYUARAT AND A.ID_PERMOHONAN = C.ID_PERMOHONAN AND C.ID_FAIL = D.ID_FAIL "
 				+ "AND C.ID_PERMOHONAN = F.ID_PERMOHONAN AND F.ID_JENIS_PERMOHONAN = 2 AND C.ID_PEMOHON = E.ID_PEMOHON  AND A.ID_MESYUARAT = '"+idMesyuarat+"'"	
 				+ " ORDER BY A.ID_MESYUARAT_PERMOHONAN ASC";
 
@@ -516,6 +513,9 @@ public class FrmPYWSenaraiMesyuaratData {
 				h.put("idFail",
 						rs.getString("ID_FAIL") == null ? "" : rs
 								.getString("ID_FAIL"));
+				h.put("idPermohonan",
+						rs.getString("ID_PERMOHONAN") == null ? "" : rs
+								.getString("ID_PERMOHONAN"));
 				listPermohonanLanjut.addElement(h);
 				bil++;
 			}
@@ -526,7 +526,60 @@ public class FrmPYWSenaraiMesyuaratData {
 		}
 	}
 	
-	
+	public void setSenaraiPermohonanLain(String idMesyuarat) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			listPermohonanLain = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.ID_MESYUARAT_PERMOHONAN, D.NO_FAIL,E.NAMA, A.FLAG_JENIS_PERMOHONAN, A.FLAG_SYOR , A.CATATAN, C.ID_PERMOHONAN, D.ID_FAIL, F.ID_JENIS_PERMOHONAN "
+				+ "FROM TBLPHPMESYUARATPERMOHONAN A, TBLPHPMESYUARAT B, TBLPERMOHONAN C, TBLPFDFAIL D, TBLPHPPEMOHON E, TBLPHPPERMOHONANSEWA F "
+				+ "WHERE A.FLAG_JENIS_PERMOHONAN = 'LL' AND A.ID_MESYUARAT = B.ID_MESYUARAT AND A.ID_PERMOHONAN = C.ID_PERMOHONAN AND C.ID_FAIL = D.ID_FAIL "
+				+ "AND C.ID_PERMOHONAN = F.ID_PERMOHONAN AND F.ID_JENIS_PERMOHONAN IN ('1','2') AND C.ID_PEMOHON = E.ID_PEMOHON  AND A.ID_MESYUARAT = '"+idMesyuarat+"' "	
+				+ "AND C.ID_STATUS = '1610206'"
+				+ " ORDER BY A.ID_MESYUARAT_PERMOHONAN ASC";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("id",
+						rs.getString("ID_MESYUARAT_PERMOHONAN") == null ? "" : rs
+								.getString("ID_MESYUARAT_PERMOHONAN"));
+				h.put("noFailPermohonan",
+						rs.getString("NO_FAIL") == null ? "" : rs
+								.getString("NO_FAIL"));
+				h.put("namaPemohon",
+						rs.getString("NAMA") == null ? "" : rs
+								.getString("NAMA"));
+				h.put("jenisPermohonan","PERMOHONAN LAIN-LAIN");
+				h.put("flagKeputusan",
+						rs.getString("FLAG_SYOR") == null ? "" : rs
+								.getString("FLAG_SYOR"));
+				h.put("catatanKeputusan",
+						rs.getString("CATATAN") == null ? "" : rs
+								.getString("CATATAN"));
+				h.put("idFail",
+						rs.getString("ID_FAIL") == null ? "" : rs
+								.getString("ID_FAIL"));
+				h.put("idPermohonan",
+						rs.getString("ID_PERMOHONAN") == null ? "" : rs
+								.getString("ID_PERMOHONAN"));
+				listPermohonanLain.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
 	public String getNoFailByIdPermohonan(String idPermohonan) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -918,6 +971,9 @@ public class FrmPYWSenaraiMesyuaratData {
 		String sql = "";
 		String sqla = "";
 		String flagSyor="";
+		String flagMesyuaratSemula="";
+		String flagSelesaiMesyuarat="";
+		String flagAktif="";
 		String idPermohonan="";
 		String idSuburusan="";
 		String idFail="";
@@ -929,8 +985,8 @@ public class FrmPYWSenaraiMesyuaratData {
 			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			
-			sql = "SELECT A.ID_MESYUARAT_PERMOHONAN, D.NO_FAIL,E.NAMA,A.FLAG_JENIS_PERMOHONAN,A.FLAG_SYOR ,A.CATATAN, C.ID_PERMOHONAN "+
-			"FROM TBLPHPMESYUARATPERMOHONAN A, TBLPHPMESYUARAT B, TBLPERMOHONAN C, TBLPFDFAIL D, TBLPHPPEMOHON E WHERE A.FLAG_JENIS_PERMOHONAN = 'B' "+
+			sql = "SELECT A.ID_MESYUARAT_PERMOHONAN, D.NO_FAIL,E.NAMA,A.FLAG_JENIS_PERMOHONAN,A.FLAG_SYOR ,A.CATATAN, C.ID_PERMOHONAN, A.FLAG_MESYUARAT_SEMULA, A.FLAG_SELESAI_MESYUARAT, A.FLAG_AKTIF "+
+			"FROM TBLPHPMESYUARATPERMOHONAN A, TBLPHPMESYUARAT B, TBLPERMOHONAN C, TBLPFDFAIL D, TBLPHPPEMOHON E WHERE A.FLAG_AKTIF = '1' "+
 			"AND A.ID_MESYUARAT = B.ID_MESYUARAT AND A.ID_PERMOHONAN=C.ID_PERMOHONAN AND C.ID_FAIL=D.ID_FAIL AND C.ID_PEMOHON=E.ID_PEMOHON "+
 			"AND A.ID_MESYUARAT='"+idMesyuaratPermohonan+"'";
 			sql = sql + " ORDER BY TARIKH_MESYUARAT DESC";
@@ -941,15 +997,21 @@ public class FrmPYWSenaraiMesyuaratData {
 			while (rs.next()) {			
 				flagSyor=rs.getString("FLAG_SYOR");
 				idPermohonan=rs.getString("ID_PERMOHONAN");
-				list.add(new String[]{flagSyor, idPermohonan});
+				flagMesyuaratSemula=rs.getString("FLAG_MESYUARAT_SEMULA");
+				flagSelesaiMesyuarat=rs.getString("FLAG_SELESAI_MESYUARAT");
+				flagAktif=rs.getString("FLAG_AKTIF");
+				list.add(new String[]{flagSyor, idPermohonan, flagMesyuaratSemula, flagSelesaiMesyuarat, flagAktif});	
 			}	
 			
 			for (int i = 0; i < list.size(); i++) {
-				String[] myString= new String[2];
+				String[] myString= new String[5];
 				myString=list.get(i);
 				flagSyor=myString[0];
-				idPermohonan=myString[1];;
-							
+				idPermohonan=myString[1];
+				flagMesyuaratSemula=myString[2];
+				flagSelesaiMesyuarat=myString[3];
+				flagAktif=myString[4];
+				
 				//query untuk dapatkan id suburusan dan no.fail
 				sqla = "SELECT A.ID_FAIL,A.ID_SUBURUSAN FROM TBLPFDFAIL A, TBLPERMOHONAN B "+
 						  "WHERE B.ID_FAIL=A.ID_FAIL AND B.ID_PERMOHONAN='"+idPermohonan+"'";
@@ -961,7 +1023,34 @@ public class FrmPYWSenaraiMesyuaratData {
 					idFail=rsa.getString("ID_FAIL");
 				}
 				
+				// TBLPHPMESYUARATPERMOHONAN
+				r = new SQLRenderer();
+				
+				if(flagMesyuaratSemula.equals("1") && flagAktif.equals("1")  ){
+					
+					r.update("ID_PERMOHONAN", idPermohonan);
+					r.update("FLAG_AKTIF","1");
+					r.add("FLAG_MESYUARAT_SEMULA", "0");
+					r.add("FLAG_SELESAI_MESYUARAT", "1");
+					r.add("ID_KEMASKINI", userId);
+					r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+					sql = r.getSQLUpdate("TBLPHPMESYUARATPERMOHONAN");
+					stmt.executeUpdate(sql);
+					
+				}else if(flagMesyuaratSemula.equals("0") && flagAktif.equals("1")  ){
+					
+					r.update("ID_PERMOHONAN", idPermohonan);
+					r.update("FLAG_AKTIF","1");
+					r.add("FLAG_MESYUARAT_SEMULA", "0");
+					r.add("FLAG_SELESAI_MESYUARAT", "1");
+					r.add("ID_KEMASKINI", userId);
+					r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+					sql = r.getSQLUpdate("TBLPHPMESYUARATPERMOHONAN");
+					stmt.executeUpdate(sql);
+				}
+				
 				// TBLPERMOHONAN
+				r = new SQLRenderer();
 				r.update("ID_PERMOHONAN", idPermohonan);
 				r.add("ID_STATUS", "1610206"); // CETAKAN SURAT KEPUTUSAN
 				r.add("ID_KEMASKINI", userId);
@@ -976,7 +1065,6 @@ public class FrmPYWSenaraiMesyuaratData {
 				r.add("AKTIF", "0");
 				r.add("ID_KEMASKINI", userId);
 				r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
-
 				sql = r.getSQLUpdate("TBLRUJSUBURUSANSTATUSFAIL");
 				stmt.executeUpdate(sql);
 
@@ -1027,6 +1115,7 @@ public class FrmPYWSenaraiMesyuaratData {
 				db.close();
 		}
 	}
+	
 	public String getIdSuburusanstatus(String idSuburusan, String idStatus)
 			throws Exception {
 		Db db = null;
@@ -1282,6 +1371,10 @@ public class FrmPYWSenaraiMesyuaratData {
 	
 	public Vector getListPermohonanLanjut() {
 		return listPermohonanLanjut;
+	}
+	
+	public Vector getListPermohonanLain() {
+		return listPermohonanLain;
 	}
 	
 	public Vector getListImejan() {

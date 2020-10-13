@@ -101,6 +101,7 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 		Vector senaraiKehadiran = null;
 		Vector senaraiFailMohonBaru = null;
 		Vector senaraiFailMohonLanjut = null;
+		Vector senaraiFailMohonLain = null;
 		Vector beanMaklumatPengerusi = null;
 		Vector senaraiImejan = null;
 		Vector beanMaklumatImejan = null;
@@ -286,6 +287,12 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 				senaraiFailMohonLanjut = logic.getListPermohonanLanjut();
 				this.context.put("SenaraiFailMohonLanjut", senaraiFailMohonLanjut);
 				this.context.put("totalRecords", senaraiFailMohonLanjut.size());
+				
+				// SENARAI MESYUARAT PERMOHONAN LAIN LAIN
+				logic.setSenaraiPermohonanLain(idMesyuarat);
+				senaraiFailMohonLain = logic.getListPermohonanLain();
+				this.context.put("SenaraiFailMohonLain", senaraiFailMohonLain);
+				this.context.put("totalRecords", senaraiFailMohonLain.size());
 				
 				if(refreshPaparan.equals("true")){
 					beanMaklumatMesyuarat = new Vector();
