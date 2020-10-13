@@ -78,7 +78,7 @@
 <!-- START MAIN JAVASCRIPT -->
 <script>
 function kembaliScreenUtama(id_permohonan,jenisTolak) {
-alert("aaa :");
+
 	if(jenisTolak=="internal"){
 		window.opener.kembaliScreenUtama(id_permohonan);
 	}else if(jenisTolak=="pelulus"){

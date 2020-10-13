@@ -49,7 +49,7 @@
 	#set($luas=$data.luas_lot)
 	#set($luasAmbil=$data.luas_ambil)
 	#set($seksyen=$data.seksyen)
-	#set($txtcatatan=$data.catatan)
+	#set($txtCatatan=$data.catatan)
     #set($id_fail=$data.id_fail)
     #set($txtNoBangunan=$data.no_bangunan)
     #set($txtNoPetak=$data.no_petak)
@@ -537,7 +537,7 @@
             <tr>
             	<td valign="top">Catatan</td>
             	<td valign="top">:</td>
-            	<td><textarea name="txtCatatan" id="txtCatatan" cols="90%" rows="15" readonly class="disabled">$!txtcatatan</textarea></td>
+            	<td><textarea name="txtCatatan" id="txtCatatan" cols="90%" rows="15" readonly class="disabled">$!txtCatatan</textarea></td>
             </tr>
             
         #end    
@@ -545,7 +545,7 @@
         #if($wantedit=="yes")
         	
              <tr>
-            	<td width="20%">Negerix</td>
+            	<td width="20%">Negeri</td>
             	<td width="1%">:</td>
                 <td width="79%"><input type="text" name="existNegeri" value="$existNegeri" size="42" class="disabled" readonly>
                 	<input type="hidden" name="id_existNegeri" value="$id_existNegeri"></td>
@@ -755,7 +755,7 @@
            	<tr>
             	<td valign="top">Catatan</td>
             	<td valign="top">:</td>
-            	<td><textarea name="txtCatatan" id="txtCatatan" cols="90%" rows="15" onKeyUp="textCounter(this.form.txtCatatan,this.form.remLen1,4000);" onKeyDown="textCounter(this.form.txtCatatan,this.form.remLen1,4000);" >$!txtcatatan</textarea></td>
+            	<td><textarea name="txtCatatan" id="txtCatatan" cols="90%" rows="15" onKeyUp="textCounter(this.form.txtCatatan,this.form.remLen1,4000);" onKeyDown="textCounter(this.form.txtCatatan,this.form.remLen1,4000);" >$!txtCatatan</textarea></td>
             </tr>
             <tr>
         		<td>&nbsp;</td>
@@ -1004,12 +1004,16 @@ function update_maklumat(id_hakmilik) {
 	{	
 	alert_lot = "N";	
 	}else
-	{
+	{	
 	alert_lot =	document.${formName}.check_lot.value;
 	}
-
-	document.${formName}.ScreenLocation.value = "changeTanah";
+	if(alert_lot=="Y")
+	{
+	alert("No. Lot telah wujud di dalam permohonan ini!");
+	return;
+	}
 	
+	document.${formName}.ScreenLocation.value = "changeTanah";
 /*	Editluas = parseInt(document.${formName}.edit_luas_lot.value);
 	EditluasAmbil = parseInt(document.${formName}.edit_anggaran_luas.value);
 
@@ -1043,12 +1047,13 @@ function update_maklumat(id_hakmilik) {
   		document.${formName}.editLuas.focus(); 
 		return;
 	}*/
-	else if((document.${formName}.editLot.value != "" && document.${formName}.txtnopt.value == "") || (document.${formName}.editLot.value == "" && document.${formName}.txtnopt.value != "")){
+	if((document.${formName}.txtnolot.value != "" && document.${formName}.txtnopt.value == "") 
+		|| (document.${formName}.txtnolot.value == "" && document.${formName}.txtnopt.value != "")){
 		alert("Sila lengkapkan maklumat \"No.PT\" terlebih dahulu.");
-  		document.${formName}.editLot.focus(); 
+  		document.${formName}.txtnolot.focus(); 
 		return;
 	}
-	else if(document.${formName}.txtnolot.value == "" && document.${formName}.txtnopt.value == ""){
+	if(document.${formName}.txtnolot.value == "" && document.${formName}.txtnopt.value == ""){
 		alert("Sila masukkan salah satu \"No.PT atau No.LOT\" terlebih dahulu.");
   		document.${formName}.txtnolot.focus(); 
 		return;
@@ -1059,11 +1064,7 @@ function update_maklumat(id_hakmilik) {
 		return;
 	} */
 	
-	else if(alert_lot=="Y")
-	{
-	alert("No. Lot telah wujud di dalam permohonan ini!");
-	return;
-	}
+
 	else
 	{
 	if ( !window.confirm("Adakah Anda Pasti?") ) return;

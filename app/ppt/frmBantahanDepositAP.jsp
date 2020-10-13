@@ -1,4 +1,4 @@
-cc
+
 <div id="checking_progress"></div>
 #if ($completed)
 <script>
@@ -46,8 +46,11 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 #set ( $id_status = $statusFail.get("id_status") )
 
 #foreach ( $senaraiPampasan in $getMaklumatBantahan )
-    #set ($txtAmaunPampasan=$senaraiPampasan.amaun_tuntutan)
     #set ($txtAmaunTuntutan=$senaraiPampasan.amaun_tuntutan)
+#end
+
+#foreach ( $senaraiPampasan in $getMaklumatPampasan)
+    #set ($txtAmaunPampasan=$senaraiPampasan.amaun_bayaran)
 #end
 
 
@@ -219,9 +222,9 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
          
         <tr>
           <td width="1%"></td>
-          <td>Pampasan yang Ditawarkan (RM)</td>
+          <td>Amaun Tuntutan (RM)</td>
           <td>:</td>
-          <td><input type="text" size="11" name="txtAmaunTuntutan" id="txtAmaunTuntutan" value="$!Util.formatDecimal($!txtAmaunTuntutan)" maxlength="12" class="disabled" readonly /></td>
+          <td><input type="text" size="11" name="txtAmaunTuntutan" id="txtAmaunTuntutan" value="$!txtAmaunTuntutan" maxlength="12" class="disabled" readonly /></td>
           <td>&nbsp;</td>
           
          #if($idcarabayar!="1")  

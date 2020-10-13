@@ -133,7 +133,8 @@ public class FrmAPBSenaraiFailData {
 				h.put("namaPemohon", rs.getString("NAMA") == null ? "" : rs.getString("NAMA").toUpperCase());
 				h.put("idStatus", rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS"));
 				h.put("status",rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
-				h.put("kawasanDipohon",rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI"));				
+				h.put("kawasanDipohon",rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI"));		
+				h.put("statusKelulusanDasar", getStatusKelulusanDasar(statusID, idPermohonan));
 
 				String statusLesen = "";
 				int bilHari = 0;
@@ -158,26 +159,27 @@ public class FrmAPBSenaraiFailData {
 					}
 				}
 				h.put("statusLesen", statusLesen);
-				//CODING UNTUK CEK TARIKH TAMAT KELULUSAN DASAR
-				h.put("statusKelulusanDasar", getStatusKelulusanDasar(statusID, idPermohonan));
+				
+				String jenisPermohonan = "";			
 				if("1".equals(rs.getString("ID_JENISPERMOHONAN"))) {
-					h.put("jenisPermohonan","PERMOHONAN LESEN");
+					jenisPermohonan = "PERMOHONAN LESEN";
 				} else if("2".equals(rs.getString("ID_JENISPERMOHONAN"))) {
-					h.put("jenisPermohonan","PEMBAHARUAN LESEN");
+					jenisPermohonan = "PEMBAHARUAN LESEN";
 				}
+				h.put("jenisPermohonan",jenisPermohonan);
+				
+				String jenisLesen = "";
 				if("2".equals(rs.getString("ID_JENIS_LESEN"))) {
-					h.put("jenisLesen","BORANG 2");
+					jenisLesen = "BORANG 2";
 				} else if("3".equals(rs.getString("ID_JENIS_LESEN"))) {
-					h.put("jenisLesen","BORANG 3");
+					jenisLesen = "BORANG 3";
 				} else if("4".equals(rs.getString("ID_JENIS_LESEN"))) {
-					h.put("jenisLesen","BORANG 4");
+					jenisLesen = "BORANG 4";
 				}
+				h.put("jenisLesen",jenisLesen);
+				
 				senaraiFail.addElement(h);
-				myLog.info("bil="+bil);
 				bil++;
-				myLog.info(h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "": sdf.format(rs.getDate("TARIKH_TERIMA"))));
-				myLog.info(h.put("status",rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN")));
-				myLog.info(h.put("kawasanDipohon",rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI")));
 			}
 
 		} finally {
@@ -999,38 +1001,6 @@ public class FrmAPBSenaraiFailData {
 				db.close();
 		}
 	}
-
-	public Vector getSenaraiFail() {
-		return senaraiFail;
-	}
-
-	public void setSenaraiFail(Vector senaraiFail) {
-		this.senaraiFail = senaraiFail;
-	}
-
-	public Vector getBeanMaklumatPermohonan() {
-		return beanMaklumatPermohonan;
-	}
-
-	public void setBeanMaklumatPermohonan(Vector beanMaklumatPermohonan) {
-		this.beanMaklumatPermohonan = beanMaklumatPermohonan;
-	} 
-	
-	public Vector getBeanMaklumatKawasanMohon() {
-		return beanMaklumatKawasanMohon;
-	}
-
-	public void setBeanMaklumatKawasanMohon(Vector beanMaklumatKawasanMohon) {
-		this.beanMaklumatKawasanMohon = beanMaklumatKawasanMohon;
-	}
-
-	public Vector getBeanMaklumatPemohon() {
-		return beanMaklumatPemohon;
-	}
-
-	public void setBeanMaklumatPemohon(Vector beanMaklumatPemohon) {
-		this.beanMaklumatPemohon = beanMaklumatPemohon;
-	}
 	
 	public Vector<Hashtable<String,String>> getCarianFailSyarikat(String noFail,String noLesen) 
 			throws Exception {
@@ -1125,7 +1095,7 @@ public class FrmAPBSenaraiFailData {
 			}
 			return senaraiFail;
 			
-		}
+	}
 	
 	public Vector<Hashtable<String,String>> getCarianFailOnline(String noPermohonan,String tarikhTerima)  // log senarai file online
 			throws Exception {
@@ -1187,7 +1157,9 @@ public class FrmAPBSenaraiFailData {
 					h.put("idStatus", rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS"));
 					h.put("status",rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
 					h.put("kawasanDipohon",rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI"));	
-
+					//CODING UNTUK CEK TARIKH TAMAT KELULUSAN DASAR
+					h.put("statusKelulusanDasar", getStatusKelulusanDasar(statusID, idPermohonan));
+					
 					String statusLesen = "";
 					int bilHari = 0;
 					if (statusID != null && statusID.equals("1610207")) {
@@ -1211,27 +1183,27 @@ public class FrmAPBSenaraiFailData {
 						}
 					}
 					h.put("statusLesen", statusLesen);
-					//CODING UNTUK CEK TARIKH TAMAT KELULUSAN DASAR
-					h.put("statusKelulusanDasar", getStatusKelulusanDasar(statusID, idPermohonan));
+					
+					String jenisPermohonan = "";			
 					if("1".equals(rs.getString("ID_JENISPERMOHONAN"))) {
-						h.put("jenisPermohonan","PERMOHONAN LESEN");
+						jenisPermohonan = "PERMOHONAN BAHARU";
 					} else if("2".equals(rs.getString("ID_JENISPERMOHONAN"))) {
-						h.put("jenisPermohonan","PEMBAHARUAN LESEN");
+						jenisPermohonan = "PEMBAHARUAN LESEN";
 					}
+					h.put("jenisPermohonan",jenisPermohonan);
+					
+					String jenisLesen = "";
 					if("2".equals(rs.getString("ID_JENIS_LESEN"))) {
-						h.put("jenisLesen","BORANG 2");
+						jenisLesen = "BORANG 2";
 					} else if("3".equals(rs.getString("ID_JENIS_LESEN"))) {
-						h.put("jenisLesen","BORANG 3");
+						jenisLesen = "BORANG 3";
 					} else if("4".equals(rs.getString("ID_JENIS_LESEN"))) {
-						h.put("jenisLesen","BORANG 4");
+						jenisLesen = "BORANG 4";
 					}
+					h.put("jenisLesen",jenisLesen);
 					
 					senaraiFail.addElement(h);
-					myLog.info("bil="+bil);
 					bil++;
-					myLog.info(h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "": sdf.format(rs.getDate("TARIKH_TERIMA"))));
-					myLog.info(h.put("status",rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN")));
-					myLog.info(h.put("kawasanDipohon",rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI")));
 				}
 
 			} finally {
@@ -1240,7 +1212,7 @@ public class FrmAPBSenaraiFailData {
 			}
 			return senaraiFail;
 			
-		}
+	}
 	
 	public void updateDaftarOnline(String idFail, String idPermohonan,
 			String txtPerkara, HttpSession session) throws Exception {
@@ -1380,6 +1352,42 @@ public class FrmAPBSenaraiFailData {
 				db.close();
 		}
 	}
+
+	public Vector getSenaraiFail() {
+		return senaraiFail;
+	}
+
+	public void setSenaraiFail(Vector senaraiFail) {
+		this.senaraiFail = senaraiFail;
+	}
+
+	public Vector getBeanMaklumatPermohonan() {
+		return beanMaklumatPermohonan;
+	}
+
+	public void setBeanMaklumatPermohonan(Vector beanMaklumatPermohonan) {
+		this.beanMaklumatPermohonan = beanMaklumatPermohonan;
+	} 
+	
+	public Vector getBeanMaklumatKawasanMohon() {
+		return beanMaklumatKawasanMohon;
+	}
+
+	public void setBeanMaklumatKawasanMohon(Vector beanMaklumatKawasanMohon) {
+		this.beanMaklumatKawasanMohon = beanMaklumatKawasanMohon;
+	}
+
+	public Vector getBeanMaklumatPemohon() {
+		return beanMaklumatPemohon;
+	}
+
+	public void setBeanMaklumatPemohon(Vector beanMaklumatPemohon) {
+		this.beanMaklumatPemohon = beanMaklumatPemohon;
+	}
+		
+	
+	
+	
 	public String generateNoFailAPB() throws Exception {
 		String noFail = "";
 		noFail = "JKPTG(S)/BPHP/8-2 SK " + File.getSeqNo(4, 9);
@@ -1387,7 +1395,8 @@ public class FrmAPBSenaraiFailData {
 	}
 	
 	public void simpanSambungan(String idFail,
-			String idPermohonan, String tarikhTerima,String tarikhSurat, String idFailLama, String idPermohonanLama, HttpSession session) throws Exception {
+			String idPermohonan, String tarikhTerima,String tarikhSurat, String idFailLama, String idPermohonanLama, 
+			HttpSession session) throws Exception {
 		Db db = null;
 		Connection conn = null;
 		String userId = session.getAttribute("_ekptg_user_id").toString();
@@ -1575,7 +1584,6 @@ public class FrmAPBSenaraiFailData {
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 			sql = r.getSQLUpdate("TBLPHPPMOHONNJDUALPERTAMA");
-			System.out.println(sql);
 			stmt.executeUpdate(sql);
 			;
 
