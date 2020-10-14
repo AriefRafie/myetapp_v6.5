@@ -20,14 +20,14 @@ public interface ILampiran {
 	public Tblrujdokumen getLampiran(String iDokumen
 		,String colNama,String colJenis,String colCont
 		,String namaTab) throws Exception;
-	
+
 	public Vector<Tblrujdokumen> getLampirans(String idRujukan,String jenis) throws Exception;
 
 	public void hapus(String idDokumen) throws Exception;
 	public void simpanDokumenInt(Tblrujdokumen data) throws Exception;
 	public void simpan(FileItem item,HttpServletRequest request) throws Exception;
-	
-	
+
+
 }
 //20200917
 //20200822

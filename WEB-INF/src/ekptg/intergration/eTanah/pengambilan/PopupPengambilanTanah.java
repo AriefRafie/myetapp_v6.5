@@ -1,9 +1,11 @@
 /**
  * AUTHOR : RAZMAN BIN MD ZAINAL
+ * MODIFIED : YATI -13102020
  */
 package ekptg.intergration.eTanah.pengambilan;
 
 import integrasi.ws.etanah.melaka_ns.ppt.CustomDataSource;
+
 import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub;
 import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.InsertDerafMMKTajuk_byObject;
 import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.InsertDerafMMKTajuk_byObjectE;
@@ -26,6 +28,16 @@ import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.Tblintpptwa
 import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.UploadDokumen;
 import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.UploadDokumenE;
 
+
+import integrasi.rest.etanah.wpkl.ppk.EtanahWPKLPPKManager;
+import integrasi.ws.etanah.ppt.ETanahCarianManager;
+
+import ekptg.model.integrasi.CapaianHakmilikeTanahHTP;
+import ekptg.model.integrasi.CapaianHakmilikeTanahPPK;
+import ekptg.model.integrasi.FrmPopupCapaianHakmilikeTanahData;
+import ekptg.model.integrasi.IIntegrasieTanahCarian;
+
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,6 +56,7 @@ import java.util.Map;
 
 import javax.activation.DataHandler;
 import javax.servlet.http.HttpSession;
+import javax.xml.rpc.ServiceException;
 
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
@@ -58,6 +71,8 @@ import org.apache.log4j.Logger;
 import com.Ostermiller.util.Base64;
 
 import ekptg.helpers.DB;
+import etanah.ws.MyEtappPengambilan;
+import etanah.ws.MyEtappPengambilanServiceLocator;
 
 public class PopupPengambilanTanah extends AjaxBasedModule {
 
@@ -585,13 +600,16 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			kod_negeri_kjp = (hash_maklumatProjek.get("KOD_NEGERI_KJP").toString());
 			
 			Integer checkMaklumatPPTdihantar = logic.derafMaklumatPengambilanLog_COUNT(id_fail_etapp, jenis_skrin_etapp, db,return_new_turutan (id_fail_etapp,id_permohonan, id_hakmilik_etapp, jenis_skrin_etapp,db));
+			myLogger.info("checkMaklumatPPTdihantar :"+checkMaklumatPPTdihantar);
 			if (checkMaklumatPPTdihantar == 0) {
+				myLogger.info("masukkk");
 				Tblintpptmaklumatpengambilan tblintpptmaklumatpengambilan[] = new Tblintpptmaklumatpengambilan[1];
 				tblintpptmaklumatpengambilan[0] =  addMaklumatPengambilan_return_obj( tarikh_permohonan_mp, nama_kementerian_mp,  tujuan_dalam_english_mp,  tujuan_mp,  no_fail_jkptg_mp,  kod_negeri_pengambilan_mp, 
 						 nama_negeri_pengambilan_mp,  kod_daerah_pengambilan_mp,  nama_daerah_pengambilan_mp,  jenis_pengambilan_mp,  jenis_projek_pengambilan_mp,  no_rujukan_surat_kjp_mp, 
 						 tarikh_surat_kjp_mp,  no_rujukan_ptg_mp,  no_rujukan_ptd_mp,  id_kementerian_myetapp_mp,  nama_agensi_mp,  id_agensi_myetapp_mp,  jenis_pengambilan_segera_mp, flag_permohonan_segera_mp, 
 						turutan_mp, flag_proses_mp, session,kod_agensi,kod_kementerian,alamat1_kjp,alamat2_kjp,alamat3_kjp,poskod_kjp,kod_negeri_kjp);
 				
+				myLogger.info("addMaklumatPengambilan_return_obj :"+tblintpptmaklumatpengambilan[0]);
 				addDerafMaklumatPengambilan_List(tblintpptmaklumatpengambilan,id_fail_etapp, session, db);
 				saveLogMaklumatPengambilan(id_fail_etapp, jenis_skrin_etapp,
 						session, db,turutan);
@@ -663,10 +681,10 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 				Integer checkWartadihantar = logic.derafMaklumatWartaLog_COUNT(
 						id_fail_etapp, jenis_skrin_etapp, db);
 				if (checkWartadihantar == 0) {
-					Tblintpptwarta tblintpptwarta_arr[] = new Tblintpptwarta[1];
-					tblintpptwarta_arr[0] = addDerafMaklumatWarta_return_obj(id_fail_etapp, jenis_skrin_etapp,NO_FAIL_DERAF, dateNow,
-							NO_WARTA, TARIKH_WARTA,session, db,turutan);
-					addDerafMaklumatWarta_List(tblintpptwarta_arr,id_fail_etapp, session, db);
+					//Tblintpptwarta tblintpptwarta_arr[] = new Tblintpptwarta[1];
+					//tblintpptwarta_arr[0] = addDerafMaklumatWarta_return_obj(id_fail_etapp, jenis_skrin_etapp,NO_FAIL_DERAF, dateNow,
+							//NO_WARTA, TARIKH_WARTA,session, db,turutan);
+					//addDerafMaklumatWarta_List(tblintpptwarta_arr,id_fail_etapp, session, db);
 					saveLogMaklumatWarta(id_fail_etapp, jenis_skrin_etapp,
 							session, db,turutan);
 				}				
@@ -1022,7 +1040,29 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 				}
 				addHakmilik_List(tblintppthakmilik_arr,id_fail_etapp, session, db,turutan);
 
-			} /*else if (jenis_skrin_etapp.equals("TarikBalik")) {
+			} 
+			
+			/*MyEtappPengambilanServiceLocator locator = new MyEtappPengambilanServiceLocator();
+			
+			try {
+				MyEtappPengambilan myEtappPengambilanPort = locator.getMyEtappPengambilanPort();
+				
+				//String ret1 = myEtappPengambilanPort.daftarPermohonanBorangAMMk(maklumatPermohonan, maklumatHakmilik, listMMK, attachment);
+				
+				String ret = myEtappPengambilanPort.borangCdanMMK(id_permohonan, listMMK, attachment);
+				
+				System.out.println("result "+ret);
+				//System.out.println("result "+ret1);
+				
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
+			
+			
+			
+			
+			/*else if (jenis_skrin_etapp.equals("TarikBalik")) {
 				List listSenaraiLotTarikBalik_PULL = logic
 						.listSenaraiLotTarikBalik_PULL(id_fail_etapp, db,
 								id_penarikan);
@@ -2444,7 +2484,8 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		String url = "";		
 		if(id_negeri.equals("4"))
 		{
-			url = "http://etanah.melaka.gov.my/etanahwsa/EtappPengambilanService";
+			//url = "http://etanah.melaka.gov.my/etanahwsa/EtappPengambilanService";
+			url ="http://kjsb.zapto.org/etanahwsa/MyEtappPengambilanService?wsdl"; //yati
 		}
 		else if(id_negeri.equals("5"))
 		{
@@ -2500,7 +2541,8 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		String url = "";		
 		if(id_negeri.equals("4"))
 		{
-			url = "http://etanah.melaka.gov.my/etanahwsa/EtappPengambilanService";
+			//url = "http://etanah.melaka.gov.my/etanahwsa/EtappPengambilanService";
+			url ="http://kjsb.zapto.org/etanahwsa/MyEtappPengambilanService?wsdl";
 		}
 		else if(id_negeri.equals("5"))
 		{
@@ -2555,7 +2597,8 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		String url = "";		
 		if(id_negeri.equals("4"))
 		{
-			url = "http://etanah.melaka.gov.my/etanahwsa/EtappPengambilanService";
+			//url = "http://etanah.melaka.gov.my/etanahwsa/EtappPengambilanService";
+			url ="http://kjsb.zapto.org/etanahwsa/MyEtappPengambilanService?wsdl";
 		}
 		else if(id_negeri.equals("5"))
 		{
@@ -2610,7 +2653,8 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		String url = "";		
 		if(id_negeri.equals("4"))
 		{
-			url = "http://etanah.melaka.gov.my/etanahwsa/EtappPengambilanService";
+			//url = "http://etanah.melaka.gov.my/etanahwsa/EtappPengambilanService";
+			url ="http://kjsb.zapto.org/etanahwsa/MyEtappPengambilanService?wsdl";
 		}
 		else if(id_negeri.equals("5"))
 		{
@@ -2663,7 +2707,8 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		String url = "";		
 		if(id_negeri.equals("4"))
 		{
-			url = "http://etanah.melaka.gov.my/etanahwsa/EtappPengambilanService";
+			//url = "http://etanah.melaka.gov.my/etanahwsa/EtappPengambilanService";
+			url ="http://kjsb.zapto.org/etanahwsa/MyEtappPengambilanService?wsdl";
 		}
 		else if(id_negeri.equals("5"))
 		{
@@ -2766,7 +2811,8 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		
 		if(id_negeri.equals("4"))
 		{
-			url = "http://etanah.melaka.gov.my/etanahwsa/EtappPengambilanService";
+			//url = "http://etanah.melaka.gov.my/etanahwsa/EtappPengambilanService";
+			url ="http://kjsb.zapto.org/etanahwsa/MyEtappPengambilanService?wsdl";
 		}
 		else if(id_negeri.equals("5"))
 		{

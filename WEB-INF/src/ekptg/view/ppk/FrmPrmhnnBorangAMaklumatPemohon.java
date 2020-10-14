@@ -3981,7 +3981,29 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			myLogger.info("Syafiqah test :" +simati);
 			LampiranBean lBean = new LampiranBean();
 			this.context.put("lampirans", lBean.getLampiranSimatiPapar(simati, "99211"));
-
+			
+			// Checking mandatori file upload 14/10/2020
+			if (logiconline.getDokumenHTA(mati).size() == logiconline.getBilanganHTA(mati).size()) {
+				this.context.put("bil_hta", "1");
+			}
+			else {
+				this.context.put("bil_hta", "0");
+			}
+			
+			if (logiconline.getDokumenHA(mati).size() == logiconline.getBilanganHA(mati).size()) {
+				this.context.put("bil_ha", "1");
+			}
+			else {
+				this.context.put("bil_ha", "0");
+			}
+			
+			if (logiconline.getDokumenIC(mati).size() == logiconline.getBilanganWaris(mati).size()) {
+				this.context.put("bil_ic", "1");
+			}
+			else {
+				this.context.put("bil_ic", "0");
+			}
+			
 			vm = "app/ppk/frmPrmhnnSek8NilaianHarta.jsp";
 
 		// START HTAAM

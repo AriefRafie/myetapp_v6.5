@@ -4136,6 +4136,7 @@ public class FrmPrmhnnSek17Senarai extends VTemplate {
 				this.context.put("tambahharta", "yes");
 				this.context.put("kembaliharta", "yes");
 				this.context.put("nowpast", "now");
+				
 			} else if ("Simpan_pilihan".equals(mode)) {
 
 				simpanpilihanHTA(session, bolehsimpan);
