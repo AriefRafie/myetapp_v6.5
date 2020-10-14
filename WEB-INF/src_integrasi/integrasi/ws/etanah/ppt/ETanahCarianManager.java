@@ -135,7 +135,7 @@ public class ETanahCarianManager {
 		
 	}
 	//START 1ST POINT OF INTERGRATION - GET MAKLUMAT HAKMILIK FROM ETANAH
-	public static void getMaklumatHakmilikeTanahPPK(String idPermohonanSimati, String noResit, String idHakmilik, String kodNegeri) {
+	public static void getMaklumatHakmilikeTanahPPK(String noResit, String idHakmilik, String idPermohonanSimati, String kodNegeri) {
 		//DEFAULT MSG
 		flagMsg = "Y";
 		outputMsg = "CAPAIAN HAKMILIK BERJAYA";
