@@ -27,7 +27,9 @@
              <td colspan=3 align=justify>
              #if($!id_perintah!="")
              	#if($!enabledPegawai=="yes" && $statusPNB!="yes")
-              		<input type="button" name="cmdHPNB1" id="cmdHPNB1" value="Pengesahan Tandatangan" onClick="sendDGcertPerintah('$!NO_FAIL','$!id_perintah','$!id_fail','$id_permohonan','$idpermohonansimati','$idperintah')" />
+             		#if ($idStatus == "21")
+              			<input type="button" name="cmdHPNB1" id="cmdHPNB1" value="Pengesahan Tandatangan" onClick="sendDGcertPerintah('$!NO_FAIL','$!id_perintah','$!id_fail','$id_permohonan','$idpermohonansimati','$idperintah')" />
+              		#end
               	#end
               #end
               </td></tr>
