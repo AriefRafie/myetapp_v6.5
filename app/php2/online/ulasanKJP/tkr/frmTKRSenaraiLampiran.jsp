@@ -38,7 +38,7 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
         #set( $row = "row1" )
         #elseif (($senaraiLampiran.bil % 2) != 0)
         #set( $row = "row1" )
-        #else 
+        #else
         #set( $row = "row2" )
         #end
         <tr>
@@ -63,24 +63,24 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
 function simpanLampiran(idPermohonan) {
 	if(document.${formName}.txtNamaLampiran.value == ""){
 		alert('Sila masukkan Nama Lampiran.');
-  		document.${formName}.txtNamaLampiran.focus(); 
-		return; 
+  		document.${formName}.txtNamaLampiran.focus();
+		return;
 	}
 	if(document.${formName}.fileupload.value == ""){
 		alert('Sila pilih Lampiran yang Ingin Dimuatnaik.');
-  		document.${formName}.fileupload.focus(); 
-		return; 
+  		document.${formName}.fileupload.focus();
+		return;
 	}
 
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}
-	
+
 	var namaLampiran = document.${formName}.txtNamaLampiran.value;
  	var catatanLampiran = document.${formName}.txtCatatanLampiran.value ;
 	var dp = document.${formName}.form_token.value ;
 	var dopost = "&form_token=" + dp;
-	
+
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPYWOnlineSenaraiFailView&hitButton=simpanLampiran&namaLampiran="+namaLampiran+"&catatanLampiran="+catatanLampiran+"&idPermohonan="+idPermohonan+"&actionPenyewaan=paparMaklumatPenyewaan&mode=view&selectedTabUpper=3"+dopost+"&flagPopup=openPopupLampiran&modePopup=new";
 	document.${formName}.method="post";
 	document.${formName}.enctype="multipart/form-data";
@@ -101,10 +101,10 @@ function simpanKemaskiniLampiran() {
 
 	if(document.${formName}.txtNamaLampiran.value == ""){
 		alert('Sila masukkan Nama Lampiran.');
-  		document.${formName}.txtNamaLampiran.focus(); 
-		return; 
+  		document.${formName}.txtNamaLampiran.focus();
+		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}
@@ -123,11 +123,11 @@ function paparLampiran(idDokumen){
 	document.${formName}.modePopup.value = "view";
 	document.${formName}.submit();
 }
-function hapusLampiran(){	
+function hapusLampiran(){
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
-	}	
-	
+	}
+
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
 	document.${formName}.hitButton.value = "hapusLampiran";

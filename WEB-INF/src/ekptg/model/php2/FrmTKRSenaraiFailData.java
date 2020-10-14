@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package ekptg.model.php2;
 
@@ -20,7 +20,7 @@ import ekptg.helpers.File;
 import ekptg.helpers.Utils;
 
 /**
- * 
+ *
  *
  */
 public class FrmTKRSenaraiFailData {
@@ -255,19 +255,19 @@ public class FrmTKRSenaraiFailData {
 				db1.close();
 		}
 	}
-	
+
 	private String getFlagTerimaUlasanKJP(String idPermohonan, Db db) {
 		String flagTerimaUlasanKJP = "T";
 		String sql = "";
 		try {
 			Statement stmt = db.getStatement();
 			sql = "SELECT ID_ULASANTEKNIKAL FROM TBLPHPULASANTEKNIKAL WHERE FLAG_KJP = 'KJP' AND FLAG_AKTIF = 'Y' AND FLAG_STATUS = '2'"
-					+ " AND ID_PERMOHONAN = '" + idPermohonan + "'";	
+					+ " AND ID_PERMOHONAN = '" + idPermohonan + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {
 				flagTerimaUlasanKJP = "Y";
 			}
-				
+
 		} catch (Exception ex){
 			ex.printStackTrace();
 		}
@@ -1020,6 +1020,7 @@ public class FrmTKRSenaraiFailData {
 	public String generateNoFail(HttpSession session, String kodUrusan, String kodKementerian,
 			String idKementerian, String kodNegeri, String idNegeri)
 			throws Exception {
+		System.out.println("masu sini ke utk generate");
 		String noFail = "";
 		noFail = "JKPTG/SPHP/"
 				+ kodUrusan
@@ -1358,12 +1359,12 @@ public class FrmTKRSenaraiFailData {
 			String idHakmilikUrusan, String idPHPBorangK) throws Exception {
 		Db db = null;
 		String sql = "";
-		
+
 		try {
 			beanMaklumatBorangK = new Vector();
 			db = new Db();
 			Statement stmt = db.getStatement();
-			
+
 			// SENARAI BORANG K PPT
 			sql = "SELECT TO_CHAR(PPTBK.ID_BORANGK) AS ID_PPTBORANGK, '' AS " +
 					"ID_HAKMILIKURUSAN, '' AS ID_PHPBORANGK, '' AS PEGANGAN_HAKMILIK, " +
@@ -1626,7 +1627,7 @@ public class FrmTKRSenaraiFailData {
 				h.put("tarikhTerima", "");
 				beanMaklumatBorangK.addElement(h);
 			}
-			
+
 		} finally {
 			if (db != null)
 				db.close();
@@ -1709,7 +1710,7 @@ public class FrmTKRSenaraiFailData {
 				db.close();
 		}
 	}
-	
+
 	public String getKategoriPemohonTukarguna() throws Exception {
 		Db db = null;
 		String sql = "";
@@ -1717,18 +1718,18 @@ public class FrmTKRSenaraiFailData {
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
-			
+
 			sql = "SELECT ID_KATEGORIPEMOHON, KOD_KATEGORIPEMOHON, KETERANGAN FROM TBLRUJKATEGORIPEMOHON"
 					+ " WHERE ID_KATEGORIPEMOHON IN (3) ORDER BY KOD_KATEGORIPEMOHON ASC";
-			
+
 			ResultSet rs = stmt.executeQuery(sql);
-			
+
 			if (rs.next()) {
 				return (String) rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN").toUpperCase();
 			} else {
 				return "";
 			}
-			
+
 		} finally {
 			if (db != null)
 				db.close();
