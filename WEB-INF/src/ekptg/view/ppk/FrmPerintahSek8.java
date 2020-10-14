@@ -2093,7 +2093,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 	    	db = new Db();
 	    	Connection con = db.getConnection();
 	    	Statement stmt = db.getStatement();
-	    	String noFail1 = noFail;
+	    	String noFail1 = noFail;	
 	    	sqlPaparTblLaporanHantarPerintah = "SELECT NO_FAIL,JENIS_PENGHANTARAN, TARIKH_SERAHAN, NAMA_PENYERAH, NAMA_PENERIMA, NO_KP_BARU, NO_KP_LAMA, NO_KP_LAIN, CATATAN, ID_PERINTAH, ID_PENGHANTARAN FROM TBLPPKHANTARPERINTAH WHERE NO_FAIL='" + noFail1 + "' AND ID_PENGHANTARAN=(SELECT MAX(ID_PENGHANTARAN) FROM TBLPPKHANTARPERINTAH WHERE NO_FAIL = '" + noFail1 + "')";
 	    
 	    	System.out.println("sqlPaparTblLaporanHantarPerintah = " + sqlPaparTblLaporanHantarPerintah);
