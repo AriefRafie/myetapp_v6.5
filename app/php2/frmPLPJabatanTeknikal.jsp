@@ -66,7 +66,7 @@
            <div class="TabbedPanelsContent">
            #parse("app/php2/frmPLPNilaianJPPH.jsp") </div>
            <div class="TabbedPanelsContent">
-           #parse("app/php2/frmPLPDokumenKJP.jsp") </div>
+           #parse("app/php2/frmPLPDokumenKJP.jsp") </div> 
            <div class="TabbedPanelsContent">
            #parse("app/php2/frmPLPKertasCadangan.jsp") </div>
         </div>

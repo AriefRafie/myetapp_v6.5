@@ -1,4 +1,4 @@
-<table width="100%" border="0" cellspacing="2" cellpadding="2">
+<table width="100%" border="0" cellspacing="2" cellpadding="2"> 
   <tr>
     <td colspan="2"><fieldset>
       <legend>MAKLUMAT KJP</legend>

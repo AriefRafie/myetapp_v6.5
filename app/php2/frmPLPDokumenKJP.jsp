@@ -1,7 +1,7 @@
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   #if ($flagPopup == 'openKJP')
   <tr>
-    <td> #parse("app/php2/frmPLPMaklumatKJP.jsp") </td>
+    <td> #parse("app/php2/frmPLPMaklumatKJP.jsp") </td> 
   </tr>
   <tr>
     <td>&nbsp;</td>
