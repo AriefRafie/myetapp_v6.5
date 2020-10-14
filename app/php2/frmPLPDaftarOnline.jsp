@@ -70,7 +70,7 @@
             <input type="button" name="cmdJanaTajukPNW" id="cmdJanaTajukPNW" value="Jana Tajuk" onclick="janaTajukPNW()"/>
             #elseif ($idSuburusan =='33')
             <input type="button" name="cmdJanaTajukTKR" id="cmdJanaTajukTKR" value="Jana Tajuk" onclick="janaTajukTKR()"/>
-            #end 
+            #end
            #end </td>
         </tr>
         #if ($mode != 'view')
@@ -215,7 +215,7 @@
           <td>:</td>
           <td>$beanMaklumatAgensi.negeri</td>
         </tr>
-        #end        
+        #end
         #end
         #end
       </table>
@@ -230,7 +230,7 @@
              MAKLUMAT PENAWARAN
          #elseif ($idSuburusan =='33')
              MAKLUMAT TUKARGUNA
-         #end  
+         #end
       </strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         #foreach ($beanMaklumatPelepasan in $BeanMaklumatPelepasan)
@@ -239,7 +239,7 @@
           <td width="1%" valign="top">&nbsp;</td>
           <td width="28%" valign="top">Tujuan Kegunaan</td>
           <td width="1%" valign="top">:</td>
-          <td width="70%" valign="top">$beanMaklumatPelepasan.namaProjek 
+          <td width="70%" valign="top">$beanMaklumatPelepasan.namaProjek
           <input type="hidden" name="txtTujuanKegunaan" id="txtTujuanKegunaan" value="$beanMaklumatPelepasan.namaProjek" /></td>
         </tr>
         #elseif ($idSuburusan =='33')
@@ -271,20 +271,22 @@
           <td>:</td>
           <td>#parse("app/php2/unit_luas.jsp") </td>
         </tr>
-        #if ($idLuas != '99999' && $idLuas != '')
+        $beanMaklumatPelepasan.idLuasMohon
+
+        #if ($beanMaklumatPelepasan.idLuas != '99999' && $beanMaklumatPelepasan.idLuas != '')
         <tr>
           <td>&nbsp;</td>
           <td>Luas Mohon</td>
           <td>:</td>
-          <td> #if ($idLuas == '0' || $idLuas == '1' || $idLuas == '2' || $idLuas == '3' || $idLuas == '5' || $idLuas == '6' || $idLuas == '9')
-            <input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$beanMaklumatPelepasan.luas1" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" onBlur="kiraLuas('$idLuas')" $readonly class="$inputTextClass"/ >
-            #elseif ($idLuas == '7')
-            <input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$beanMaklumatPelepasan.luas1" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
-            <input type="text" name="txtLuasMohon2" id="txtLuasMohon2" value="$beanMaklumatPelepasan.luas2" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" onBlur="kiraLuas('$idLuas')"/ $readonly class="$inputTextClass">
-            #elseif ($idLuas == '8' || $idLuas == '4')
-            <input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$beanMaklumatPelepasan.luas1" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
-            <input type="text" name="txtLuasMohon2" id="txtLuasMohon2" value="$beanMaklumatPelepasan.luas2" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
-            <input type="text" name="txtLuasMohon3" id="txtLuasMohon3" value="$beanMaklumatPelepasan.luas3" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" onBlur="kiraLuas('$idLuas')" $readonly class="$inputTextClass"/>
+          <td> #if ($beanMaklumatPelepasan.idLuas == '0' || $beanMaklumatPelepasan.idLuas == '1' || $beanMaklumatPelepasan.idLuas == '2' || $beanMaklumatPelepasan.idLuas == '3' || $beanMaklumatPelepasan.idLuas == '5' || $beanMaklumatPelepasan.idLuas == '6' || $beanMaklumatPelepasan.idLuas == '9')
+            <input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$beanMaklumatPelepasan.luas1" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" onBlur="kiraLuas('$beanMaklumatPelepasan.idLuas')" $readonly class="$inputTextClass"/>
+            #elseif ($beanMaklumatPelepasan.idLuas == '7')
+            <input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$beanMaklumatPelepasan.luas1" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" $readonly class="$inputTextClass" onBlur="kiraLuas('$beanMaklumatPelepasan.idLuas')"/>
+            <input type="text" name="txtLuasMohon2" id="txtLuasMohon2" value="$beanMaklumatPelepasan.luas2" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" onBlur="kiraLuas('$beanMaklumatPelepasan.idLuas')" $readonly class="$inputTextClass"/>
+            #elseif ($beanMaklumatPelepasan.idLuas == '8' || $beanMaklumatPelepasan.idLuas == '4')
+            <input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$beanMaklumatPelepasan.luas1" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" $readonly class="$inputTextClass" onBlur="kiraLuas('$beanMaklumatPelepasan.idLuas')"/>
+            <input type="text" name="txtLuasMohon2" id="txtLuasMohon2" value="$beanMaklumatPelepasan.luas2" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" $readonly class="$inputTextClass" onBlur="kiraLuas('$beanMaklumatPelepasan.idLuas')"/>
+            <input type="text" name="txtLuasMohon3" id="txtLuasMohon3" value="$beanMaklumatPelepasan.luas3" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" onBlur="kiraLuas('$beanMaklumatPelepasan.idLuas')" $readonly class="$inputTextClass"/>
             #end </td>
         </tr>
         #end
@@ -405,6 +407,11 @@
       </table>
       </fieldset></td>
   </tr>
+  <tr>
+	<td colspan="2">
+		#parse("app/php2/frmPLPDaftarManualSenaraiSemak.jsp")
+	</td>
+  </tr>
   #if ($mode == 'new')
   <tr>
     <td colspan="2" valign="bottom"><i><font color="#ff0000">Perhatian</font> : Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i> </td>
@@ -424,19 +431,19 @@
 function daftarBaru() {
 	if(document.${formName}.txtPerkara.value == ""){
 		alert('Sila masukkan Perkara.');
-  		document.${formName}.txtPerkara.focus(); 
-		return; 
+  		document.${formName}.txtPerkara.focus();
+		return;
 	}
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.actionOnline.value = "daftarBaru";
 		return;
 	}
-	
+
 	document.${formName}.actionOnline.value = "papar";
 	document.${formName}.hitButton.value = "daftarBaru";
 	document.${formName}.submit();
 }
-function kembali() {	
+function kembali() {
 	document.${formName}.actionOnline.value = "";
 	document.${formName}.submit();
 }
@@ -448,47 +455,47 @@ function textCounter(field, countfield, maxlimit) {
 	 countfield.value = maxlimit - field.value.length;
 }
 function janaTajukPLP() {
-		
+
 	var strTajuk = " ";
 	var str2  = document.${formName}.noLotTanah.value;
 	var str3  = document.${formName}.noMilikTanah.value;
 	var noWarta  = document.${formName}.noWartaTanah.value;
 	var str4  = document.${formName}.namaMukimTanah.value;
-	var str5  = document.${formName}.namaDerahTanah.value;	
+	var str5  = document.${formName}.namaDerahTanah.value;
 	var str6  = document.${formName}.namaNegeriTanah.value;
 	var kegunaanTanah = document.${formName}.txtKegunaanTanah.value;
 	var tujuanKegunaan = document.${formName}.txtTujuanKegunaan.value;
-	
+
 	if(document.${formName}.socLuasKegunaan.value == "1") {
 		luasKegunaan = "KESELURUHAN";
 	}
 	else if(document.${formName}.socLuasKegunaan.value == "2"){
 		luasKegunaan = "SEBAHAGIAN";
 	}
-	
+
 	if(document.${formName}.statusRizab.value == "MILIK"){
 		strTajuk = "PERMOHONAN PENYERAHAN BALIK " + luasKegunaan +" TANAH MILIK PERSEKUTUAN " + str2 +", " + str3 + ", "+ str4 + ", " + str5 + ", " + str6 +" ( " + kegunaanTanah + " )" +" BAGI TUJUAN " + tujuanKegunaan ;
 	} else if(document.${formName}.statusRizab.value == "RIZAB"){
-			
+
 				if(document.${formName}.socLuasKegunaan.value == "1"){
-				
+
 		strTajuk = "PERMOHONAN PELEPASAN TANAH RIZAB PERSEKUTUAN " +  str2 +" , " + noWarta +", " + str4 + ", "+ str5 + ", " + str6  +" ( " + kegunaanTanah + " )" +" BAGI TUJUAN " + tujuanKegunaan ;
-				} 
+				}
 				else if(document.${formName}.socLuasKegunaan.value == "2"){
-		strTajuk = "PERMOHONAN PEMBATALAN TANAH RIZAB PERSEKUTUAN " +  str2 +" , " + noWarta +", " + str4 + ", "+ str5 + ", " + str6  +" ( " + kegunaanTanah + " )" +" BAGI TUJUAN " + tujuanKegunaan;		
+		strTajuk = "PERMOHONAN PEMBATALAN TANAH RIZAB PERSEKUTUAN " +  str2 +" , " + noWarta +", " + str4 + ", "+ str5 + ", " + str6  +" ( " + kegunaanTanah + " )" +" BAGI TUJUAN " + tujuanKegunaan;
 				}
 	}
 	document.${formName}.txtPerkara.value = strTajuk;
 }
 function janaTajukPNW() {
-	
+
 	var strTujuan = " ";
 	var strTajuk = " ";
 	var luasKegunaan = " ";
 	var milikOrRizab = " ";
 	var pemohon = " ";
 
-		
+
 	var str1 = document.${formName}.noLotTanah.value;
 	var str2 = document.${formName}.noMilikTanah.value;
 	var str3 = document.${formName}.noWartaTanah.value;
@@ -498,23 +505,23 @@ function janaTajukPNW() {
 	var kegunaanTanah = document.${formName}.txtKegunaanTanah.value;
 	var statusRizabTnh = document.${formName}.statusRizab.value;
 	var kjpTnh = document.${formName}.namaKementerianTnh.value;
-		
+
 	if(statusRizabTnh == 'MILIK') {
 		milikOrRizab = str2;
 	} else if(statusRizabTnh == 'RIZAB') {
 		milikOrRizab = str3;
 	}
 	strTajuk = "PENAWARAN TANAH " + statusRizabTnh + " PERSEKUTUAN DI ATAS " + str1 +", " + milikOrRizab + ", "+ str4 + ", " + str5+ ", " + str6 +" ( " + kegunaanTanah + " )" + " KEGUNAAN  " + kjpTnh;
-	
+
 	document.${formName}.txtPerkara.value = strTajuk;
 }
 function janaTajukTKR() {
-	
+
 	var strTujuan = " ";
 	var strTajuk = " ";
 	var milikOrRizab = " ";
-	var	pemohon = document.${formName}.namaAgensiKem.value;	
-	
+	var	pemohon = document.${formName}.namaAgensiKem.value;
+
 	var str1 = document.${formName}.noLotTanah.value;
 	var str2 = document.${formName}.noMilikTanah.value;
 	var str3 = document.${formName}.noWartaTanah.value;
@@ -525,25 +532,26 @@ function janaTajukTKR() {
 	var statusRizabTnh = document.${formName}.statusRizab.value;
 	var kjpTnh = document.${formName}.namaKementerianTnh.value;
 	var tujuanKegunaan = document.${formName}.txtCadanganKegunaan.value;
-		
+
 	if(document.${formName}.socLuasKegunaan.value == "1") {
 		luasKegunaan = "KESELURUHAN";
 	}
 	else if(document.${formName}.socLuasKegunaan.value == "2"){
 		luasKegunaan = "SEBAHAGIAN";
 	}
-	
+
 	if(statusRizabTnh == 'MILIK') {
 		milikOrRizab = str2;
 	} else if(statusRizabTnh == 'RIZAB') {
 		milikOrRizab = str3;
 	}
-		
+
 	strTajuk = "PERMOHONAN TUKARGUNA " + luasKegunaan +" TANAH " + statusRizabTnh + " PERSEKUTUAN " + str1 +", " + milikOrRizab + ", "+ str4 + ", " + str5+ ", " + str6 +" ( " + kegunaanTanah + " )" + " DARIPADA " + kjpTnh + " KEPADA " + pemohon +" BAGI TUJUAN " + tujuanKegunaan;
-	
-	
+
+
 	document.${formName}.txtPerkara.value = strTajuk;
-	
-	
+
+
 }
 </script>
+$javascriptLampiran

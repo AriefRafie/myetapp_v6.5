@@ -1,3 +1,4 @@
+PU
 <script type="text/javascript"  src="../library/js/fraction.js"></script>
 
 #parse("app/ppt/frmLabelSet.jsp")

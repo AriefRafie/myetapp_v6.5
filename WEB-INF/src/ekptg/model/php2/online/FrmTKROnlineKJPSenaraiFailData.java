@@ -3034,7 +3034,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 
 		public void updateMaklumatPermohonan(String idFail,String idPermohonan,String tarikhTerima,
 				String tarikhSurat, String idLuasKegunaan, String txtTujuanKegunaan,
-				String idLuasTanah, String luasTanah, String luasMohon, String bakiLuas) throws Exception {
+				String idLuasTanah, String luasTanah, String luasMohon, String bakiLuas, String idLuas, String txtLuasBersamaan) throws Exception {
 
 			Db db = null;
 			Connection conn = null;
@@ -3068,8 +3068,9 @@ public class FrmTKROnlineKJPSenaraiFailData {
 				}
 				if ("2".equals(idLuasKegunaan)) {
 					r.add("LUAS_MHN1", luasMohon);
-					r.add("LUAS_MHNBERSAMAAN", luasTanah);
+					r.add("LUAS_MHNBERSAMAAN", txtLuasBersamaan);
 					r.add("ID_UNITLUASBAKI", idLuasTanah);
+					r.add("ID_LUASMHN",idLuas);
 					r.add("LUAS_BAKI", bakiLuas);
 				}
 				r.add("CADANGAN_KEGUNAAN", txtTujuanKegunaan);
