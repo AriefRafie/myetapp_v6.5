@@ -248,7 +248,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 			if ("doSimpanKemaskiniMaklumatPermohonan".equals(hitButton)) {
 				logic.updateMaklumatPermohonan(idFail,idPermohonan,getParam("tarikhTerima"), getParam("tarikhSurat"),
 						idLuasKegunaan,getParam("txtTujuanKegunaan"),getParam("idLuasTanah"), getParam("luasTanah"),
-						getParam("txtLuasMohon1"),getParam("txtBakiLuas"));
+						getParam("txtLuasMohon1"),getParam("txtBakiLuas"),idLuas,getParam("txtLuasBersamaan"));
 			}
 			if("doSimpanSenaraiSemak".equals(hitButton)){
 				logic.simpanKemaskiniLampiran(idDokumen, getParam("txtNamaLampiran"), getParam("txtCatatanLampiran"),
@@ -572,33 +572,8 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 					beanMaklumatPermohonan = new Vector();
 					logic.setMaklumatPermohonan(idFail);
 					beanMaklumatPermohonan = logic.getBeanMaklumatPermohonan();
-					if (beanMaklumatPermohonan.size() != 0){
-		    			Hashtable hashMaklumatPelepasan = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
-		    			idLuasKegunaan = (String) hashMaklumatPelepasan.get("flagGuna");
-					}
-					//myLog.info("idLuasKegunaan >>>> "+idLuasKegunaan);
-					Hashtable hashMaklumatPelepasan = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
-					this.context.put("selectLuasKegunaan", HTML.SelectLuasKegunaan("socLuasKegunaan",
-							Long.parseLong(idLuasKegunaan), "disabled", " class=\"disabled\""));
 					this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
 
-					/*//MAKLUMAT HEADER
-					logicHeader = new FrmTKRHeaderData();
-	    			Vector<Hashtable<String,String>> vec = logicHeader.setMaklumatPemohon(userId);
-	    			this.context.put("pemohon", vec.get(0));
-
-					// MAKLUMAT PEMOHON
-					beanMaklumatPemohon = new Vector();
-					logic.setMaklumatPemohon(idFail);
-					if (logic.getBeanMaklumatPemohon().size() != 0) {
-						Hashtable hashPemohon = (Hashtable) logic.getBeanMaklumatPemohon().get(0);
-						idKategoriPemohon = (String) hashPemohon.get("idKategoriPemohon");
-						idPejabat = (String) hashPemohon.get("idPejabat");
-						idKementerian = (String) hashPemohon.get("idKementerian");
-						idAgensi = (String) hashPemohon.get("idAgensi");
-						namaKementerian = (String) hashPemohon.get("namaKementerian");
-						beanMaklumatPemohon = logic.getBeanMaklumatPemohon();
-					}*/
 					idKategoriPemohon = logic.getKategoriPemohonTukarguna();
 					this.context.put("idKategoriPemohon", idKategoriPemohon);
 					this.context.put("selectKementerian", HTML.SelectKementerian("socKementerian",
@@ -645,7 +620,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 					if (beanMaklumatTukarguna.size() != 0){
 		    			Hashtable hashMaklumatTukarguna = (Hashtable) logic.getBeanMaklumatTukarguna().get(0);
-		    			//idPermohonanPelepasan = (String)(hashMaklumatTukarguna.get("idPermohonanPelepasan"));
 		        		if (hashMaklumatTukarguna.get("flagGuna") != null && hashMaklumatTukarguna.get("flagGuna").toString().trim().length() != 0){
 		        			idLuasKegunaan = (String) hashMaklumatTukarguna.get("flagGuna");
 		        		} else {
@@ -658,37 +632,133 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 		        		}
 		    		}
+					this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "disabled", " class=\"disabled\""));
 					myLog.info("idLuas >>> "+idLuas);
 					if ("1".equals(idLuas)) {
 						this.context.put("selected", "");
 						this.context.put("selectedL1", "selected");
 						this.context.put("selectedL2", "");
 						this.context.put("selectedL3", "");
+						this.context.put("selectedL4", "");
+						this.context.put("selectedL5", "");
+						this.context.put("selectedL6", "");
+						this.context.put("selectedL7", "");
+						this.context.put("selectedL8", "");
+						this.context.put("selectedL9", "");
 						this.context.put("idLuas", idLuas);
 			    	} else if ("2".equals(idLuas)) {
 						this.context.put("selected", "");
 						this.context.put("selectedL1", "");
 						this.context.put("selectedL2", "selected");
 						this.context.put("selectedL3", "");
+						this.context.put("selectedL4", "");
+						this.context.put("selectedL5", "");
+						this.context.put("selectedL6", "");
+						this.context.put("selectedL7", "");
+						this.context.put("selectedL8", "");
+						this.context.put("selectedL9", "");
 						this.context.put("idLuas", idLuas);
 			    	} else if ("3".equals(idLuas)) {
 						this.context.put("selected", "");
 						this.context.put("selectedL1", "");
 						this.context.put("selectedL2", "");
 						this.context.put("selectedL3", "selected");
+						this.context.put("selectedL4", "");
+						this.context.put("selectedL5", "");
+						this.context.put("selectedL6", "");
+						this.context.put("selectedL7", "");
+						this.context.put("selectedL8", "");
+						this.context.put("selectedL9", "");
 						this.context.put("idLuas", idLuas);
-			    	} else {
+			    	}  else if ("4".equals(idLuas)) {
+						this.context.put("selected", "");
+						this.context.put("selectedL1", "");
+						this.context.put("selectedL2", "");
+						this.context.put("selectedL3", "");
+						this.context.put("selectedL4", "selected");
+						this.context.put("selectedL5", "");
+						this.context.put("selectedL6", "");
+						this.context.put("selectedL7", "");
+						this.context.put("selectedL8", "");
+						this.context.put("selectedL9", "");
+						this.context.put("idLuas", idLuas);
+			    	} else if ("5".equals(idLuas)) {
+						this.context.put("selected", "");
+						this.context.put("selectedL1", "");
+						this.context.put("selectedL2", "");
+						this.context.put("selectedL3", "");
+						this.context.put("selectedL4", "");
+						this.context.put("selectedL5", "selected");
+						this.context.put("selectedL6", "");
+						this.context.put("selectedL7", "");
+						this.context.put("selectedL8", "");
+						this.context.put("selectedL9", "");
+						this.context.put("idLuas", idLuas);
+			    	} else if ("6".equals(idLuas)) {
+						this.context.put("selected", "");
+						this.context.put("selectedL1", "");
+						this.context.put("selectedL2", "");
+						this.context.put("selectedL3", "");
+						this.context.put("selectedL4", "");
+						this.context.put("selectedL5", "");
+						this.context.put("selectedL6", "selected");
+						this.context.put("selectedL7", "");
+						this.context.put("selectedL8", "");
+						this.context.put("selectedL9", "");
+						this.context.put("idLuas", idLuas);
+			    	} else if ("7".equals(idLuas)) {
+						this.context.put("selected", "");
+						this.context.put("selectedL1", "");
+						this.context.put("selectedL2", "");
+						this.context.put("selectedL3", "");
+						this.context.put("selectedL4", "");
+						this.context.put("selectedL5", "");
+						this.context.put("selectedL6", "");
+						this.context.put("selectedL7", "selected");
+						this.context.put("selectedL8", "");
+						this.context.put("selectedL9", "");
+						this.context.put("idLuas", idLuas);
+			    	} else if ("8".equals(idLuas)) {
+						this.context.put("selected", "");
+						this.context.put("selectedL1", "");
+						this.context.put("selectedL2", "");
+						this.context.put("selectedL3", "");
+						this.context.put("selectedL4", "");
+						this.context.put("selectedL5", "");
+						this.context.put("selectedL6", "");
+						this.context.put("selectedL7", "");
+						this.context.put("selectedL8", "selected");
+						this.context.put("selectedL9", "");
+						this.context.put("idLuas", idLuas);
+			    	} else if ("9".equals(idLuas)) {
+						this.context.put("selected", "");
+						this.context.put("selectedL1", "");
+						this.context.put("selectedL2", "");
+						this.context.put("selectedL3", "");
+						this.context.put("selectedL4", "");
+						this.context.put("selectedL5", "");
+						this.context.put("selectedL6", "");
+						this.context.put("selectedL7", "");
+						this.context.put("selectedL8", "");
+						this.context.put("selectedL9", "selected");
+						this.context.put("idLuas", idLuas);
+			    	}else {
 			    		this.context.put("selected", "selected");
 						this.context.put("selectedL1", "");
 						this.context.put("selectedL2", "");
 						this.context.put("selectedL3", "");
+						this.context.put("selectedL4", "");
+						this.context.put("selectedL5", "");
+						this.context.put("selectedL6", "");
+						this.context.put("selectedL7", "");
+						this.context.put("selectedL8", "");
+						this.context.put("selectedL9", "");
 						this.context.put("idLuas", "0");
 			    	}
 
 					// SET DEFAULT ID PARAM
 					this.context.put("idFail", idFail);
 					this.context.put("idStatus", idStatus);
-					this.context.put("idLuasKegunaan", idLuasKegunaan);
 					this.context.put("idNegeriPemohon", idNegeriPemohon);
 					this.context.put("idHakmilikAgensi", idHakmilikAgensi);
 
@@ -844,12 +914,38 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 					}
 
-					//MAKLUMAT TUKARGUNA
+
+
+
+		           	this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "", "onChange=\"doChangeLuasKegunaan()\" style=\"width:auto\""));
+
+		           	beanMaklumatPermohonan = new Vector();
+					logic.setMaklumatPermohonan(idFail);
+					beanMaklumatPermohonan = logic.getBeanMaklumatPermohonan();
+					String idKegunaan = getParam("socLuasKegunaan");
+
+		           	myLog.info("idLuasKegunaan 2>>> "+idLuasKegunaan);
+		           	if ("doChangeLuasKegunaan".equals(submit)){
+		           		idLuasKegunaan = idKegunaan;
+		           	}else{
+		           		if (beanMaklumatPermohonan.size() != 0){
+			    			Hashtable hashMaklumatPelepasan = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
+			    			idLuasKegunaan = (String) hashMaklumatPelepasan.get("flagGuna");
+						}
+		           	}
+		           	myLog.info("idLuasKegunaan 1>>> "+idLuasKegunaan);
+
+		          //MAKLUMAT TUKARGUNA
 		        	beanMaklumatTukarguna = new Vector();
 		    		logic.setMaklumatTukarguna(idPermohonan);
 		    		Hashtable hashMaklumatTukargunaDB = (Hashtable) logic.getBeanMaklumatTukarguna().get(0);
 					Hashtable hashMaklumatTukarguna = new Hashtable();
-					hashMaklumatTukarguna.put("idLuas", hashMaklumatTukargunaDB.get("idLuas"));
+					hashMaklumatTukarguna.put("tujuanLain", getParam("txtTujuanLain"));
+					hashMaklumatTukarguna.put("tarikhTerima", getParam("tarikhTerima"));
+					hashMaklumatTukarguna.put("tarikhSurat", getParam("tarikhSurat"));
+					hashMaklumatTukarguna.put("perkara", getParam("txtPerkara"));
+					hashMaklumatTukarguna.put("luasAsal", hashMaklumatTukargunaDB.get("luasAsal"));
+					hashMaklumatTukarguna.put("keteranganLuasAsal", hashMaklumatTukargunaDB.get("keteranganLuasAsal"));
 					if ("doChangeLuas".equals(submit)){
 						myLog.info("masuk x sini do change luas");
 						hashMaklumatTukarguna.put("luas1", "");
@@ -857,6 +953,9 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 						hashMaklumatTukarguna.put("luas3", "");
 						hashMaklumatTukarguna.put("luasBersamaan", "");
 						hashMaklumatTukarguna.put("luasBaki", "");
+						idLuasKegunaan = idKegunaan;
+						myLog.info("idLuas >>>> "+idLuas);
+						//this.context.put("socLuas", idLuas);
 					} else {
 						hashMaklumatTukarguna.put("luas1", getParam("txtLuasMohon1"));
 						hashMaklumatTukarguna.put("luas2", getParam("txtLuasMohon2"));
@@ -868,22 +967,12 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 							hashMaklumatTukarguna.put("luasBersamaan", getParam("txtLuasBersamaan"));
 							hashMaklumatTukarguna.put("luasBaki", getParam("txtBakiLuas"));
 						}
+						idLuasKegunaan = idKegunaan;
 					}
 
 					beanMaklumatTukarguna.addElement(hashMaklumatTukarguna);
 		           	this.context.put("BeanMaklumatTukarguna", beanMaklumatTukarguna);
 
-					beanMaklumatPermohonan = new Vector();
-					logic.setMaklumatPermohonan(idFail);
-					beanMaklumatPermohonan = logic.getBeanMaklumatPermohonan();
-					if (beanMaklumatPermohonan.size() != 0){
-		    			Hashtable hashMaklumatPelepasan = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
-		    			idLuasKegunaan = (String) hashMaklumatPelepasan.get("flagGuna");
-					}
-					myLog.info("idLuas >>>> "+idLuas);
-					this.context.put("socLuas", idLuas);
-					this.context.put("selectLuasKegunaan", HTML.SelectLuasKegunaan("socLuasKegunaan",
-							Long.parseLong(idLuasKegunaan), "", ""));
 					this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
 					myLog.info("update beanMaklumatPermohonan >>>> "+beanMaklumatPermohonan);
 
@@ -1323,8 +1412,9 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				 * -3 untuk status - Tindakan Pelulus
 				 * -4 untuk status - Permohonan Online (Pengesahan)
 				 * -5  untuk status - Penerimaan Permohonan
+				 * -11 untuk status - Tindakan Penyedia
 				*/
-				String langkah2 = "2";
+				String langkah2 = "11";
 				EmailConfig ec = new EmailConfig();
 
 				//myLog.info("from="+email.FROM);
@@ -1335,7 +1425,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 					this.context.put("idKementerian", idKementerian);
 
-					langkah2 = "2";
+					langkah2 = "11";
 					//email remove bler push
 
 
@@ -1527,6 +1617,8 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 		}
 		this.context.put("idFail", idFail);
 		this.context.put("selectedTabUpper", selectedTabUpper);
+		this.context.put("idLuasKegunaan", idLuasKegunaan);
+	    this.context.put("idLuas", idLuas);
 
 		return templateDir + vm;
 
