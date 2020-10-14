@@ -11,6 +11,7 @@ import lebah.portal.element.User;
 import org.apache.log4j.Logger;
 
 import ekptg.helpers.HTML;
+import ekptg.helpers.Utils;
 import ekptg.model.entities.Tblrujpejabatjkptg;
 import ekptg.model.htp.FrmUtilData;
 import ekptg.model.htp.UtilHTML;
@@ -39,19 +40,29 @@ public class LaporanBaitulmalPBN1a extends AjaxBasedModule {
 		//String userRole = (String)session.getAttribute("_portal_role");
 		String userId = (String)session.getAttribute("_portal_login");
 		int userLevel = 6;
-
+		String selectUnit = "";
 		Vector<?> vecHash = null;
 		Vector<?> vecRekod = null;
 		User user = null;
 		user = PrepareUser.getUserById(userId);
+		String selectNegeri = "";
 		Tblrujpejabatjkptg pej = null;
 		pej = (Tblrujpejabatjkptg)PPKUtilData.getPejabatMengikutId(user.getId_pejabatjkptg());
-		String idNegeri = pej.getIdNegeri().toString();
+		String idNegeri = getParam("socNegeri").equals("")
+				?String.valueOf(session.getAttribute("_ekptg_user_negeri")):getParam("socNegeri");
+				String idUnit = getParam("socUnit").equals("")
+						?String.valueOf(session.getAttribute("_ekptg_user_unit")):getParam("socUnit");
+		if (idUnit == null || idUnit.trim().length() == 0){
+		idUnit = "0";
+		}
+		if (idNegeri == null || idNegeri.trim().length() == 0){
+			idNegeri = "-1";
+		}
 		
     	if ("doChangeSelect".equals(submit)){
 
     	}else{ 
-    		//myLog.info("userLevel="+userLevel);
+    		myLog.info("userLevel="+userLevel);
 			if(userLevel==1){
     			vm = PATH+"frmSenaraiLaporanUnitBaitulmalPBN.jsp?";
      			socDaerah =  UtilHTML.SelectDaerahByUnitPPKXKod("socDaerah", null, "style=width:340", "", user.getId_pejabatjkptg());
@@ -74,9 +85,13 @@ public class LaporanBaitulmalPBN1a extends AjaxBasedModule {
     			
     		}else if(userLevel==6){
     			System.out.println("userLevel==6");
-    			socNegeri = UtilHTML.SelectNegeri("socNegeri",0L," style=width:340  onChange=\"doChangeNegeri();\"");
-    			socUnit = PPKUtilHTML.SelectUnitPPK("socUnit",Long.parseLong(socIdUnit)," style=width:340",null);
-    			socDaerah = UtilHTML.SelectDaerah("socDaerah",null," style=width:340");
+    			socNegeri = UtilHTML.selectNegeriLaporan("socNegeri",Long.parseLong(idNegeri),""," onChange=\"doChangeNegeri();\"",null);
+    			selectNegeri = getHTMLNegeri(false,socNegeri);	
+    			//socUnit = PPKUtilHTML.SelectUnitPPK("socUnit",Long.parseLong(socIdUnit)," style=width:340",null);
+    			socUnit = PPKUtilHTML.SelectUnitPPKLaporan(
+    					"socUnit",Utils.parseLong(idUnit),"","style=width:400 onChange=\"doChangeUnit();\"",idNegeri);
+    			selectUnit = getHTMLUnit(false,"",socUnit);
+    			socDaerah =  UtilHTML.SelectDaerahByUnitPPKXKod("socDaerah", null, "style=width:340", "", user.getId_pejabatjkptg());
     			//vecHash = FrmUtilData.getLaporanMengikutSeksyen("",null,"L");
     			vecHash = getILaporan().getLaporanMengikutSeksyen(ID_SEKSYEN,null,"L");
     			vecRekod = FrmUtilData.getLaporanMengikutSeksyen("",null,"R");
@@ -86,13 +101,13 @@ public class LaporanBaitulmalPBN1a extends AjaxBasedModule {
     	    		//myLog.info("idNegeriPilih="+getParam("socNegeri"));
     	    		//myLog.info("socIdUnit="+socIdUnit);
     	    		String idNegeriPilih = getParam("socNegeri").equals("")?"0":getParam("socNegeri");
-        			socNegeri = UtilHTML.SelectNegeri("socNegeri",Long.parseLong(idNegeriPilih)," style=width:340  onChange=\"doChangeNegeri();\"");
+        			socNegeri = UtilHTML.selectNegeriLaporan("socNegeri",Long.parseLong(idNegeriPilih)," style=width:340  onChange=\"doChangeNegeri();\"");
         			socUnit = HTML.SelectUnitPPKByNegeri("socUnit",Long.parseLong(socIdUnit)," style=width:340"," onChange=\"doChangeNegeri();\"",idNegeriPilih);
     				socDaerah =  HTML.SelectDaerahByUnitPPK("socDaerah", null, "", " style=width:340",socIdUnit);
     				
     	    	}
-    			context.put("selectNegeri",socNegeri);
-    			context.put("selectUnit",socUnit);
+    			context.put("selectNegeri",selectNegeri);
+    			context.put("selectUnit",selectUnit);
     			
     		}else{
     			vm = PATH+"frmSenaraiLaporanUnitBaitulmalPBN.jsp";
@@ -120,6 +135,32 @@ public class LaporanBaitulmalPBN1a extends AjaxBasedModule {
 		return iLaporan;
 		
 	}	
+	
+	private String getHTMLUnit(boolean dsable,String idUnit,String unit){
+		 String htmlUnit = "<tr>";
+		 htmlUnit += "<td width=\"30%\" align=\"right\"><span class=\"style1\">Unit</span></td>";
+		 htmlUnit += "<td width=\"70%\">: "+unit+"</td>";
+		 htmlUnit += "</tr>";
+		 if(dsable)
+			 htmlUnit += "<input type=\"hidden\" name=\"socUnit\" value=\""+idUnit+"\">";
+
+		 return htmlUnit;
+		 
+	}	
+	
+	private String getHTMLNegeri(boolean dsable,String negeri){
+        String htmlNegeri = "<tr> ";
+        htmlNegeri += "<td width=\"30%\" align=\"right\"><span class=\"style1\">Negeri</span></td>";
+        htmlNegeri += "<td width=\"70%\">: "+negeri+"</td>";
+        htmlNegeri += "</tr>";
+        if(dsable)
+            htmlNegeri = "<input type=\"hidden\" name=\"socNegeri\" value=\""+negeri+"\">";
+
+        	
+        return htmlNegeri;
+      
+	}
+
 	
 	
 }
