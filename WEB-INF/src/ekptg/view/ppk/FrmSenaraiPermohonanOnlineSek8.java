@@ -45,12 +45,12 @@ public class FrmSenaraiPermohonanOnlineSek8 extends AjaxBasedModule{
 		myLog.info("nofailoperasi = "+getParam("nofailoperasi"));
 		String seksyen = getParam("seksyen");
 		String idNegeri = getParam("socNegeri").equals("")
-		
-		
+
+
 				?String.valueOf(session.getAttribute("_ekptg_user_negeri")):getParam("socNegeri");
-if (idNegeri == null || idNegeri.trim().length() == 0){
-idNegeri = "-1";
-}
+				if (idNegeri == null || idNegeri.trim().length() == 0){
+					idNegeri = "-1";
+				}
 		
 		String negeri = getParam("socNegeri");
 		String txdMula = getParam("txdMula");
@@ -67,9 +67,9 @@ idNegeri = "-1";
 	
 		String idUnit = getParam("socUnit").equals("")
 				?String.valueOf(session.getAttribute("_ekptg_user_unit")):getParam("socUnit");
-if (idUnit == null || idUnit.trim().length() == 0){
-idUnit = "0";
-}
+				if (idUnit == null || idUnit.trim().length() == 0){
+					idUnit = "0";
+				}
 	
 		String daerah = getParam("socDaerah");
 		if (daerah == null || daerah.trim().length() == 0){
@@ -77,6 +77,8 @@ idUnit = "0";
 		}
 		
 		String reportRole = String.valueOf(session.getAttribute("myrole"));
+		myLog.info("idUnitxxxxxx = "+idUnit);
+		myLog.info("reportRole = "+reportRole);
 		String selectNegeri = "";
 		String selectUnit = "";
 		
@@ -128,7 +130,15 @@ idUnit = "0";
 		//context.put("selectUnit",HTML.SelectTempatBicaraByNegeri(negeri,"socUnit",Long.parseLong(unit),"style=width:340"," onChange=\"doChangeUnit()\""));
 		
 	    //context.put("selectDaerah",HTML.SelectDaerahByUnitPPK("socDaerah", Long.parseLong(daerah), "", "",unit));
-	    socDaerah =  UtilHTML.SelectDaerahByUnitPPKXKod("socDaerah", null, "style=width:340", "", user.getId_pejabatjkptg());
+	    if (!"0".equals(daerah))
+	    {
+	    	socDaerah =  UtilHTML.SelectDaerahByUnitPPKXKod("socDaerah", Long.parseLong(daerah), "style=width:340", "", idUnit);//user.getId_pejabatjkptg());
+	    }
+	    else
+	    {
+	    	socDaerah =  UtilHTML.SelectDaerahByUnitPPKXKod("socDaerah", null, "style=width:340", "", idUnit);//user.getId_pejabatjkptg());
+	    }
+	    myLog.info("socDaerah = "+socDaerah);
 	    context.put("selectDaerah",socDaerah);
 		
 		if (!"".equals(getParam("socNegeri")));
@@ -249,7 +259,7 @@ public void  setCarianFailTarikhMohonTiadaFailOperasi(String negeri,String daera
 		      Statement stmt = db.getStatement();
 		      SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		      
-		      sql= "SELECT A.NO_PERMOHONAN_ONLINE,B.NAMA_SIMATI,A.TARIKH_MOHON,C.NO_FAIL"+
+		      sql= "SELECT A.NO_PERMOHONAN_ONLINE,B.NAMA_SIMATI,A.TARIKH_MOHON_ONLINE,C.NO_FAIL"+
 
 				   " FROM TBLPPKPERMOHONAN A,"+
 				   " TBLPPKSIMATI B,"+
@@ -272,7 +282,7 @@ public void  setCarianFailTarikhMohonTiadaFailOperasi(String negeri,String daera
 		      {
 			       sql = sql + " AND A.SEKSYEN = '"+seksyen+"'";
 		      }
-				   sql = sql + " AND A.TARIKH_MOHON BETWEEN TO_DATE('"+tarikhmula+"','dd/mm/yyyy')"+
+				   sql = sql + " AND A.TARIKH_MOHON_ONLINE BETWEEN TO_DATE('"+tarikhmula+"','dd/mm/yyyy')"+
 				   " AND TO_DATE('"+tarikhakhir+"','dd/mm/yyyy')";
 				   
 		      
@@ -301,7 +311,7 @@ public void  setCarianFailTarikhMohonTiadaFailOperasi(String negeri,String daera
 		    	  h.put("bil", bil);
 		    	  h.put("NO_PERMOHONAN_ONLINE", rs.getString("NO_PERMOHONAN_ONLINE"));
 		    	  h.put("NAMA_SIMATI", rs.getString("NAMA_SIMATI"));
-		    	  h.put("TARIKH_MOHON", rs.getString("TARIKH_MOHON")!=null?sdf.format(rs.getDate("TARIKH_MOHON")):"");
+		    	  h.put("TARIKH_MOHON", rs.getString("TARIKH_MOHON_ONLINE")!=null?sdf.format(rs.getDate("TARIKH_MOHON_ONLINE")):"");
 		    	  h.put("NO_FAIL", rs.getString("NO_FAIL")!=null?rs.getString("NO_FAIL"):"-");
 		    	  list.addElement(h);
 		    	  bil++;
@@ -337,7 +347,7 @@ public void  setCarianFailTarikhMohon(String negeri,String daerah,String tarikhm
 	      Statement stmt = db.getStatement();
 	      SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	      
-	      sql= "SELECT A.NO_PERMOHONAN_ONLINE,B.NAMA_SIMATI,A.TARIKH_MOHON,C.NO_FAIL"+
+	      sql= "SELECT A.NO_PERMOHONAN_ONLINE,B.NAMA_SIMATI,A.TARIKH_MOHON_ONLINE,C.NO_FAIL"+
 
 			   " FROM TBLPPKPERMOHONAN A,"+
 			   " TBLPPKSIMATI B,"+
@@ -361,7 +371,7 @@ public void  setCarianFailTarikhMohon(String negeri,String daerah,String tarikhm
 		       sql = sql + " AND A.SEKSYEN = '"+seksyen+"'";
 	      }
 		       
-			   sql = sql + " AND A.TARIKH_MOHON BETWEEN TO_DATE('"+tarikhmula+"','dd/mm/yyyy')"+
+			   sql = sql + " AND A.TARIKH_MOHON_ONLINE BETWEEN TO_DATE('"+tarikhmula+"','dd/mm/yyyy')"+
 			   " AND TO_DATE('"+tarikhakhir+"','dd/mm/yyyy')";
 			   
 	      
@@ -390,7 +400,7 @@ public void  setCarianFailTarikhMohon(String negeri,String daerah,String tarikhm
 	    	  h.put("bil", bil);
 	    	  h.put("NO_PERMOHONAN_ONLINE", rs.getString("NO_PERMOHONAN_ONLINE"));
 	    	  h.put("NAMA_SIMATI", rs.getString("NAMA_SIMATI"));
-	    	  h.put("TARIKH_MOHON", rs.getString("TARIKH_MOHON")!=null?sdf.format(rs.getDate("TARIKH_MOHON")):"");
+	    	  h.put("TARIKH_MOHON", rs.getString("TARIKH_MOHON_ONLINE")!=null?sdf.format(rs.getDate("TARIKH_MOHON_ONLINE")):"");
 	    	  h.put("NO_FAIL", rs.getString("NO_FAIL")!=null?rs.getString("NO_FAIL"):"-");
 	    	  list.addElement(h);
 	    	  bil++;
@@ -425,7 +435,7 @@ public void  setCarianFailTarikhMohon(String negeri,String daerah,String tarikhm
 		      Statement stmt = db.getStatement();
 		      SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		      
-		      sql= "SELECT A.NO_PERMOHONAN_ONLINE,B.NAMA_SIMATI,A.TARIKH_MOHON,C.NO_FAIL"+
+		      sql= "SELECT A.NO_PERMOHONAN_ONLINE,B.NAMA_SIMATI,A.TARIKH_MOHON_ONLINE,C.NO_FAIL"+
 
 				   " FROM TBLPPKPERMOHONAN A,"+
 				   " TBLPPKSIMATI B,"+
@@ -476,7 +486,7 @@ public void  setCarianFailTarikhMohon(String negeri,String daerah,String tarikhm
 		    	  h.put("bil", bil);
 		    	  h.put("NO_PERMOHONAN_ONLINE", rs.getString("NO_PERMOHONAN_ONLINE"));
 		    	  h.put("NAMA_SIMATI", rs.getString("NAMA_SIMATI"));
-		    	  h.put("TARIKH_MOHON", rs.getString("TARIKH_MOHON")!=null?sdf.format(rs.getDate("TARIKH_MOHON")):"");
+		    	  h.put("TARIKH_MOHON", rs.getString("TARIKH_MOHON_ONLINE")!=null?sdf.format(rs.getDate("TARIKH_MOHON_ONLINE")):"");
 		    	  h.put("NO_FAIL", rs.getString("NO_FAIL")!=null?rs.getString("NO_FAIL"):"-");
 		    	  list.addElement(h);
 		    	  bil++;
@@ -511,7 +521,7 @@ public void  setCarianFail(String negeri,String daerah, String seksyen)throws Ex
 		      Statement stmt = db.getStatement();
 		      SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		      
-		      sql= "SELECT A.NO_PERMOHONAN_ONLINE,B.NAMA_SIMATI,A.TARIKH_MOHON,C.NO_FAIL"+
+		      sql= "SELECT A.NO_PERMOHONAN_ONLINE,B.NAMA_SIMATI,A.TARIKH_MOHON_ONLINE,C.NO_FAIL"+
 
 				   " FROM TBLPPKPERMOHONAN A,"+
 				   " TBLPPKSIMATI B,"+
@@ -564,7 +574,7 @@ public void  setCarianFail(String negeri,String daerah, String seksyen)throws Ex
 		    	  h.put("bil", bil);
 		    	  h.put("NO_PERMOHONAN_ONLINE", rs.getString("NO_PERMOHONAN_ONLINE"));
 		    	  h.put("NAMA_SIMATI", rs.getString("NAMA_SIMATI"));
-		    	  h.put("TARIKH_MOHON", rs.getString("TARIKH_MOHON")!=null?sdf.format(rs.getDate("TARIKH_MOHON")):"");
+		    	  h.put("TARIKH_MOHON", rs.getString("TARIKH_MOHON_ONLINE")!=null?sdf.format(rs.getDate("TARIKH_MOHON_ONLINE")):"");
 		    	  h.put("NO_FAIL", rs.getString("NO_FAIL")!=null?rs.getString("NO_FAIL"):"-");
 		    	  list.addElement(h);
 		    	  bil++;
