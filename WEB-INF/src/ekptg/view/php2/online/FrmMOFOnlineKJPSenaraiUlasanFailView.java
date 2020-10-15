@@ -390,4 +390,4 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailView extends AjaxBasedModule {
 			this.context.put("error", e.getMessage());
 		}
 	}
-}
+}//close here

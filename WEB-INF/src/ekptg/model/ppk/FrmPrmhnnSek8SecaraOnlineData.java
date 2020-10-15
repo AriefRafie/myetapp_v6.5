@@ -5373,5 +5373,159 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 	}
 	
 	
+	// syafiqah add 14/10/2020
+	
+	// QUERY BIL DOKUMEN HTA
+	public static Vector getDokumenHTA(String id) throws Exception {
+		Db db = null;
+		String sql = "";
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			sql = "SELECT D.ID_DOKUMEN FROM TBLPPKHTA H, TBLPPKDOKUMENHTA D WHERE H.ID_HTA = D.ID_HTA AND H.ID_PERMOHONANSIMATI = "+id;
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector v = new Vector();
+			while (rs.next()) {
+				Hashtable h = new Hashtable();
+				//h.put("ID_DOKUMEN", rs.getString("ID_DOKUMEN") == null ? "" : rs
+						//.getString("ID_DOKUMEN"));
+				
+				v.addElement(h);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	// QUERY BIL HARTA TAK ALIH
+	public static Vector getBilanganHTA(String id) throws Exception {
+		Db db = null;
+		String sql = "";
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			sql = "SELECT H.ID_HTA FROM TBLPPKHTA H WHERE H.ID_PERMOHONANSIMATI = "+id;
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector v = new Vector();
+			while (rs.next()) {
+				Hashtable h = new Hashtable();
+				//h.put("ID_DOKUMEN", rs.getString("ID_DOKUMEN") == null ? "" : rs
+						//.getString("ID_DOKUMEN"));
+				
+				v.addElement(h);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	// QUERY BIL DOKUMEN HA
+	public static Vector getDokumenHA(String id) throws Exception {
+		Db db = null;
+		String sql = "";
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			sql = "SELECT D.ID_DOKUMEN FROM TBLPPKHA H, TBLPPKDOKUMENHA D WHERE H.ID_HA = D.ID_HA AND H.ID_PERMOHONANSIMATI = "+id;
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector v = new Vector();
+			while (rs.next()) {
+				Hashtable h = new Hashtable();
+				//h.put("ID_DOKUMEN", rs.getString("ID_DOKUMEN") == null ? "" : rs
+						//.getString("ID_DOKUMEN"));
+				
+				v.addElement(h);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	// QUERY BIL HARTA ALIH
+	public static Vector getBilanganHA(String id) throws Exception {
+		Db db = null;
+		String sql = "";
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			sql = "SELECT H.ID_HA FROM TBLPPKHA H WHERE H.ID_PERMOHONANSIMATI = "+id;
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector v = new Vector();
+			while (rs.next()) {
+				Hashtable h = new Hashtable();
+				//h.put("ID_DOKUMEN", rs.getString("ID_DOKUMEN") == null ? "" : rs
+						//.getString("ID_DOKUMEN"));
+				
+				v.addElement(h);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	// QUERY BIL DOKUMEN IC WARIS
+	public static Vector getDokumenIC(String id) throws Exception {
+		Db db = null;
+		String sql = "";
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			sql = "SELECT D.ID_DOKUMEN FROM TBLPPKOB O, TBLPPKDOKUMENSIMATI D WHERE D.ID_JENISDOKUMEN = '99212' AND O.ID_OB = D.NO_RUJUKAN AND O.ID_PERMOHONANSIMATI = "+id;
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector v = new Vector();
+			while (rs.next()) {
+				Hashtable h = new Hashtable();
+				//h.put("ID_DOKUMEN", rs.getString("ID_DOKUMEN") == null ? "" : rs
+						//.getString("ID_DOKUMEN"));
+				
+				v.addElement(h);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	// QUERY BIL WARIS
+	public static Vector getBilanganWaris(String id) throws Exception {
+		Db db = null;
+		String sql = "";
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			sql = "SELECT O.ID_OB FROM TBLPPKOB O WHERE O.ID_PERMOHONANSIMATI = "+id;
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector v = new Vector();
+			while (rs.next()) {
+				Hashtable h = new Hashtable();
+				//h.put("ID_DOKUMEN", rs.getString("ID_DOKUMEN") == null ? "" : rs
+						//.getString("ID_DOKUMEN"));
+				
+				v.addElement(h);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	// syafiqah add ends
+	
 }
 //20200824 20:36

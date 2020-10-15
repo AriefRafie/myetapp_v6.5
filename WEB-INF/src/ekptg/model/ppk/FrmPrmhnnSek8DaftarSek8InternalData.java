@@ -1110,13 +1110,7 @@ public Vector setSupportingDoc(String id, String jenisDoc) throws Exception {
 				h.put("ht",
 						rs.getString("HARTA_TINGGAL") == null ? "" : rs
 								.getString("HARTA_TINGGAL"));
-				h.put("lt",
-						rs.getString("LAIN_TUJUAN") == null ? "" : rs
-								.getString("LAIN_TUJUAN"));
-
-				h.put("lt",
-						rs.getString("LAIN_TUJUAN") == null ? "" : rs
-								.getString("LAIN_TUJUAN"));
+				h.put("lt",rs.getString("LAIN_TUJUAN") == null ? "" : rs.getString("LAIN_TUJUAN"));
 				h.put("taraf_penting",
 						rs.getString("ID_TARAFKPTG") == null ? "" : rs
 								.getString("ID_TARAFKPTG"));

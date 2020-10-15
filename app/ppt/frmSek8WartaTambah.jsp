@@ -384,6 +384,10 @@ alert("Sila Klik Butang Kembali Dan Klik 'Paging' No.11 Untuk Proses Endorsan");
                         #if($ID_NEGERIPROJEK == "4" || $ID_NEGERIPROJEK == "5")          
                         <input type="button" name="cmdPopupeTanah" value="Integrasi eTanah (Hantar Borang D & Maklumat Warta)" onClick="popupEtanah('$id_fail','$id_permohonan','WartaS8','')">
                         #end
+                        <!-- ETANAH WPKL -->
+                        #if($ID_NEGERIPROJEK == "14")          
+                        <input type="button" name="cmdPopupeTanah" value="Integrasi eTanah (Hantar Borang D & Maklumat Warta)" onClick="popupEtanahWPKL('$!id_fail','$!id_permohonan','$!id_warta','WartaS8')">
+                        #end
 				#end
 				
 				#if($mode=="view")
@@ -397,6 +401,10 @@ alert("Sila Klik Butang Kembali Dan Klik 'Paging' No.11 Untuk Proses Endorsan");
                   
                         #if($ID_NEGERIPROJEK == "4" || $ID_NEGERIPROJEK == "5")          
                         <input type="button" name="cmdPopupeTanah" value="Integrasi eTanah (Hantar Borang D & Maklumat Warta)" onClick="popupEtanah('$id_fail','$id_permohonan','WartaS8','')">
+                        #end
+                         <!-- ETANAH WPKL -->
+                        #if($ID_NEGERIPROJEK == "14")          
+                        <input type="button" name="cmdPopupeTanah" value="Integrasi eTanah (Hantar Borang D & Maklumat Warta)" onClick="popupEtanahWPKL('$!id_fail','$!id_permohonan','$!id_warta','WartaS8')">
                         #end
                     
                     #else
@@ -523,6 +531,16 @@ function popupEtanah(id_fail,id_permohonan,jenis_skrin,command) {
 	
 }
 */
+
+function popupEtanahWPKL(idFail, idPermohonan, idPPTWarta, jenisSkrin) {
+	var url = "../x/${securityToken}/ekptg.intergration.eTanah.pengambilan.PopupETanahPPTWPKL?idFail="+idFail+"&idPermohonan="+idPermohonan+"&idPPTWarta="+idPPTWarta+"&jenisSkrin="+jenisSkrin;	
+    var hWnd = window.open(url,'printuser','width=1200,height=1000, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+
 function popupEtanah(id_fail,id_permohonan,jenis_skrin,command) {
 
 	var url = "../x/${securityToken}/ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah?id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&jenis_skrin="+jenis_skrin+"&command="+command;	

@@ -83,7 +83,7 @@
                     <td valign="top">&nbsp;</td>
                     <td valign="top">Ulasan</td>
                     <td valign="top">:</td>
-                    <td valign="top"><textarea name="txtUlasan" id="txtUlasan" rows="5" cols="50">$!maklumatUlasan.ulasan</textarea></td>
+                    <td valign="top"><textarea name="txtUlasan" id="txtUlasan" rows="5" cols="50" onblur="this.value=this.value.toUpperCase()">$!maklumatUlasan.ulasan</textarea></td>
                   </tr>
                   <tr>
                     <td><font color="#ff0000">*</font></td>
