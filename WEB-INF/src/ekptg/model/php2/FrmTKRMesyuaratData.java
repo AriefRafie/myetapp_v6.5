@@ -33,17 +33,12 @@ public class FrmTKRMesyuaratData {
 			listMesyuarat = new Vector();
 			db = new Db();
 			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
 
-			r.add("ID_MESYUARAT");
-			r.add("TAJUK");
-			r.add("BIL_MESYUARAT");
-			r.add("TARIKH_MESYUARAT");
-			r.add("STATUS_MESYUARAT");
-			r.add("ID_PERMOHONAN", idPermohonan);
-			r.add("FLAG_MESYUARAT", "1");
+			sql = "SELECT A.ID_MESYUARAT, A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, B.FLAG_SYOR"
+					+ " FROM TBLPHPMESYUARAT A, TBLPHPMESYUARATPERMOHONAN B WHERE A.ID_MESYUARAT = B.ID_MESYUARAT"
+					+ " AND B.ID_PERMOHONAN = '"
+					+ idPermohonan + "'";
 
-			sql = r.getSQLSelect("TBLPHPMESYUARAT", "ID_MESYUARAT ASC");
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -63,11 +58,11 @@ public class FrmTKRMesyuaratData {
 						rs.getDate("TARIKH_MESYUARAT") == null ? "" : sdf
 								.format(rs.getDate("TARIKH_MESYUARAT")));
 				if (rs.getString("BIL_MESYUARAT") != null) {
-					if ("L".equals(rs.getString("STATUS_MESYUARAT"))) {
+					if ("L".equals(rs.getString("FLAG_SYOR"))) {
 						h.put("syor", "LULUS");
-					} else if ("T".equals(rs.getString("STATUS_MESYUARAT"))) {
+					} else if ("T".equals(rs.getString("FLAG_SYOR"))) {
 						h.put("syor", "TOLAK");
-					} else if ("G".equals(rs.getString("STATUS_MESYUARAT"))) {
+					} else if ("G".equals(rs.getString("FLAG_SYOR"))) {
 						h.put("syor", "TANGGUH");
 					} else {
 						h.put("syor", "");
@@ -130,14 +125,14 @@ public class FrmTKRMesyuaratData {
 
 			sql = r.getSQLInsert("TBLPHPMESYUARAT");
 			stmt.executeUpdate(sql);
-			
+
 			// TBLPHPMESYUARATPERMOHONAN
 			r = new SQLRenderer();
 			long idMesyuaratMohon = DB.getNextID("TBLPHPMESYUARATPERMOHONAN_SEQ");
 			r.add("ID_MESYUARAT_PERMOHONAN", idMesyuaratMohon);
 			r.add("ID_MESYUARAT", idMesyuarat);
 			r.add("ID_PERMOHONAN", idPermohonan);
-			
+
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
@@ -146,7 +141,7 @@ public class FrmTKRMesyuaratData {
 
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610201", "4", null, session, "INS",
 					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] DIDAFTARKAN");
@@ -210,7 +205,7 @@ public class FrmTKRMesyuaratData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610201", "4", null, session, "UPD",
 					"FAIL [" + idMesyuarat
 							+ "] DIKEMASKINI");
@@ -251,7 +246,7 @@ public class FrmTKRMesyuaratData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610201", "4", null, session, "DEL",
 					"FAIL [" + idMesyuarat
 							+ "] DIHAPUSKAN");
@@ -312,7 +307,7 @@ public class FrmTKRMesyuaratData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610201", "4", null, session, "INS",
 					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] DIDAFTARKAN");
@@ -423,7 +418,7 @@ public class FrmTKRMesyuaratData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610206", "4", null, session, "UPD",
 					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] PROSES SETERUSNYA");
@@ -588,7 +583,7 @@ public class FrmTKRMesyuaratData {
 					   + " A.ULASAN_PEMOHON, A.FLAG_KEPUTUSAN_PEMOHON, B.LOKASI"
 					   + " FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B"
 					   + " WHERE A.ID_LOKASI = B.ID_LOKASI AND ID_MESYUARAT = '" + idMesyuarat + "'";
-			
+
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -632,7 +627,7 @@ public class FrmTKRMesyuaratData {
 				db.close();
 		}
 	}
-	
+
 	public void hapusDokumen(String idMesyuarat, HttpSession session) throws Exception {
 		Db db = null;
 		Connection conn = null;
@@ -652,7 +647,7 @@ public class FrmTKRMesyuaratData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610201", "4", null, session, "DEL",
 					"FAIL [" + idMesyuarat
 							+ "] DIHAPUSKAN");
@@ -671,7 +666,7 @@ public class FrmTKRMesyuaratData {
 				db.close();
 		}
 	}
-	
+
 	public void setMaklumatDokumen(String idMesyuarat) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -727,7 +722,7 @@ public class FrmTKRMesyuaratData {
 	public void setBeanMaklumatPampasan(Vector beanMaklumatPampasan) {
 		this.beanMaklumatPampasan = beanMaklumatPampasan;
 	}
-	
+
 	public Vector getBeanMaklumatDokumen() {
 		return beanMaklumatDokumen;
 	}
