@@ -307,7 +307,7 @@ public class FrmPLPSenaraiFailOnlineData {
 			throws Exception {
 		String noFail = "";
 		//JKPTG/SPHP/
-		noFail = "JKPTG/BAHP/"
+		noFail = "JKPTG/BPHP/"
 				+ kodUrusan
 				+ "/"
 				+ kodKementerian
