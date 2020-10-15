@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -2885,7 +2884,7 @@ function sendNilaianHTA(idPermohonan,noFail) {
 	  document.f1.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.integrasi.FrmViewNilaianHartaTakAlih&selectedHartaTakAlih="+selectedHartaTakAlihAdaHakmilik+"&idSimati="+idSimati+"&idPermohonan="+idPermohonan+"&action2=viewNilaianHTA&method=post&command=nilai_harta&mode=simpan_HTAHA";
 	  document.f1.submit();
   }
-  
+
 function sendNilaianJPPH(idPermohonanSimati, idhta) {
 		//alert("Permohonan mati: " + idPermohonanSimati + ", id hta: " + idhta);
 		//var idhta  = $jquery('#idhta').val();
