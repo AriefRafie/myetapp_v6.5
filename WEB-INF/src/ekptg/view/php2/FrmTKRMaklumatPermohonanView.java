@@ -22,10 +22,13 @@ import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Utils;
+import ekptg.model.htp.FrmSemakan;
 import ekptg.model.php2.FrmPYWMaklumatPermohonanData;
 import ekptg.model.php2.FrmTKRHeaderData;
 import ekptg.model.php2.FrmTKRMaklumatPermohonanData;
 import ekptg.model.php2.FrmTKRPopupSenaraiTanahData;
+import ekptg.model.php2.utiliti.LampiranBean;
+import ekptg.model.utils.lampiran.ILampiran;
 
 public class FrmTKRMaklumatPermohonanView extends AjaxBasedModule{
 
@@ -36,6 +39,8 @@ private static final long serialVersionUID = 1L;
 	FrmTKRMaklumatPermohonanData logic = new FrmTKRMaklumatPermohonanData();
 	FrmTKRPopupSenaraiTanahData logicTanah = new FrmTKRPopupSenaraiTanahData();
 	FrmPYWMaklumatPermohonanData logicPYWData = new FrmPYWMaklumatPermohonanData();
+	FrmSemakan semak = null;
+	private ILampiran iLampiran = null;
 
 	@Override
 	public String doTemplate2() throws Exception {
@@ -294,6 +299,9 @@ private static final long serialVersionUID = 1L;
     		}
     	}
 
+
+		this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("", "paparLampiran", "idDokumen",session, "phptkr"));
+
     	//HEADER
         beanHeader = new Vector();
         logicHeader.setMaklumatPermohonan(idFail, session);
@@ -393,8 +401,15 @@ private static final long serialVersionUID = 1L;
 
 		//SENARAI SEMAK
 		if("5".equals(selectedTabUpper)){
-			senaraiSemak = logic.getSenaraiSemak(idPermohonan);
+			/*senaraiSemak = logic.getSenaraiSemak(idPermohonan);
+			this.context.put("SenaraiSemak", senaraiSemak);*/
+
+			semak = new FrmSemakan();
+			senaraiSemak = semak.getSenaraiSemakanAttach2("phptukar",idPermohonan);
 			this.context.put("SenaraiSemak", senaraiSemak);
+
+
+			myLog.info("senaraiSemak ="+senaraiSemak);
 		}
 
 		if("6".equals(selectedTabUpper)){
@@ -989,5 +1004,13 @@ private static final long serialVersionUID = 1L;
 				db.close();
 		}
 		this.context.put("completed", true);
+	}
+
+	private ILampiran getDocPHP(){
+		if(iLampiran == null){
+			iLampiran = new LampiranBean();
+		}
+		return iLampiran;
+
 	}
 }
