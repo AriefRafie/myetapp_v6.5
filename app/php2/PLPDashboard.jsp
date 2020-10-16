@@ -181,14 +181,27 @@ a.nav:visited {
                           </tr>
                           <tr>
                             <td>
-	                           <a href="javascript:gotoOnline()" class="help" title="Fail Tugasan Online">
+	                           <a href="javascript:gotoOnlinePenawaran()" class="help" title="Fail Tugasan Online">
 									<font color="blue"><li>
-									#if($jumlahNotifikasiOnline > 0)
+									#if($jumlahNotifikasiOnlinePenawaran > 0)
 									<label style="background-color:blue" align="center" valign="top" >
-										<b><font color="WHITE"><blink>$jumlahNotifikasiOnline</blink></font></b>
+										<b><font color="WHITE"><blink>$jumlahNotifikasiOnlinePenawaran</blink></font></b>
 									</label>&nbsp;
 									#end
-									Semakan Permohonan <i>Online</i></li></font>
+									Semakan Permohonan <i>Online</i> Penawaran</li></font>
+								</a>
+							</td>
+                          </tr>
+                          <tr>
+                            <td>
+	                           <a href="javascript:gotoOnlineTukarguna()" class="help" title="Fail Tugasan Online">
+									<font color="blue"><li>
+									#if($jumlahNotifikasiOnlineTukarguna > 0)
+									<label style="background-color:blue" align="center" valign="top" >
+										<b><font color="WHITE"><blink>$jumlahNotifikasiOnlineTukarguna</blink></font></b>
+									</label>&nbsp;
+									#end
+									Semakan Permohonan <i>Online</i> Tukarguna</li></font>
 								</a>
 							</td>
                           </tr>
@@ -546,6 +559,14 @@ function gotoSenaraiTugasan() {
 }
 function gotoOnline() {
 	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPSenaraiFailOnlineView";
+	document.${formName}.submit();
+}
+function gotoOnlinePenawaran() {
+	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmPNWSenaraiFailOnlineView";
+	document.${formName}.submit();
+}
+function gotoOnlineTukarguna() {
+	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmTKRSenaraiFailOnlineView";
 	document.${formName}.submit();
 }
 function gotoPelepasan() {
