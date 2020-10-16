@@ -389,7 +389,7 @@ public class FrmPYWPopupSenaraiPermohonanData {
 					+ " AND A.ID_SEKSYEN = '4' AND B.FLAG_AKTIF = 'Y' AND ID_URUSAN IN (7,12,13) AND B.FLAG_PERJANJIAN = 'U' AND B.ID_STATUS = '1610201'"
 					//+ " AND B.ID_PERMOHONAN NOT IN (SELECT ID_PERMOHONAN FROM TBLPHPMESYUARATPERMOHONAN)"
 					+ " AND B.ID_PERMOHONAN='"+idPermohonan+"'";
-		 
+		
 			sql = sql + " ORDER BY A.TARIKH_DAFTAR_FAIL DESC";
 
 			ResultSet rs = stmt.executeQuery(sql);

@@ -449,6 +449,7 @@ public class FrmPYWSenaraiMesyuaratData {
 						rs.getString("NAMA") == null ? "" : rs
 								.getString("NAMA"));
 				h.put("jenisPermohonan","PERMOHONAN BAHARU");
+				
 				h.put("flagKeputusan",
 						rs.getString("FLAG_SYOR") == null ? "" : rs
 								.getString("FLAG_SYOR"));
