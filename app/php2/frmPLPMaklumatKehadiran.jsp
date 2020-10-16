@@ -93,26 +93,22 @@ function simpanKehadiran(){
 	document.${formName}.flagPopup.value = "openPopupKehadiran";
 	document.${formName}.modePopup.value = "new";
 	document.${formName}.hitButton.value = "simpanKehadiran";
-	//doAjaxCall${formName}("");
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function batalKehadiran() {
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
-	//doAjaxCall${formName}("");
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function kemaskiniKehadiran() {
 	document.${formName}.flagPopup.value = "openPopupKehadiran";
 	document.${formName}.modePopup.value = "update";
-	//doAjaxCall${formName}("");
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function batalKemaskiniKehadiran() {
 	document.${formName}.flagPopup.value = "openPopupKehadiran";
 	document.${formName}.modePopup.value = "view";
-	//doAjaxCall${formName}("");
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function simpanKemaskiniKehadiran(){
 	if(document.${formName}.txtNamaPegawai.value == ""){
@@ -138,8 +134,7 @@ function simpanKemaskiniKehadiran(){
 	document.${formName}.flagPopup.value = "openPopupKehadiran";
 	document.${formName}.modePopup.value = "view";
 	document.${formName}.hitButton.value = "simpanKemaskiniKehadiran";
-	//doAjaxCall${formName}("");
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function hapusKehadiran(){
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
@@ -149,7 +144,6 @@ function hapusKehadiran(){
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
 	document.${formName}.hitButton.value = "hapusKehadiran";
-	//doAjaxCall${formName}("");
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 </script>
