@@ -862,6 +862,9 @@ alert("Sila Klik 'Paging' No.2 Untuk Penambahan Hakmilik dan Pihak Berkepentinga
         <div class="TabbedPanelsContent">
         	<fieldset>
         	<legend><strong>Maklumat Tanah Terlibat</strong>
+        	  #if($!negeriIntegrasi == "4")
+       		<input type="button" name="cmdsemakanhakmilik" value="Capaian Hakmilik e-Tanah" onclick="javascript:semakanHakmilikeTanah('ppt','$id_permohonan')">
+      	#end 
            
             #if($ModuleName=="ekptg.view.ppt.FrmPermohonanUPTSek8" || $ModuleName=="ekptg.view.ppt.FrmUPTSek8Hakmilik")
             #end
@@ -1416,6 +1419,18 @@ function cetakSuratKPTG(idpermohonan) {
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
+
+//yati tambah
+	//Skrin Maklumat Tanah
+	function semakanHakmilikeTanah(modul,idPermohonan) {
+		var url = "../x/${securityToken}/FrmPopupCapaianHakmilikeTanah?modul="+modul+"&idPermohonan="+idPermohonan;
+	    var hWnd = window.open(url,'printuser','width=1000,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
+	
+	}
 function cetakLampiranA(idpermohonan,namaMukim) {
 	/*var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+NO_FAIL+"&idpermohonansimati="+idpermohonansimati+"&report=BorangDD&flagReport=B";
     var url = "../servlet/ekptg.report.ppt.LampiranASek8?idfail="+idfail+"&nama_mukim="+namaMukim;
