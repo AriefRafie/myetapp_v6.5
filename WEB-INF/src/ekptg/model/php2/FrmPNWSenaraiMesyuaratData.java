@@ -466,7 +466,7 @@ public class FrmPNWSenaraiMesyuaratData {
 						rs.getString("NAMA") == null ? "" : rs
 								.getString("NAMA"));
 				if(rs.getString("FLAG_JENIS_PERMOHONAN").equals("B")){
-					h.put("jenisPermohonan","PERMOHONAN BARU");
+					h.put("jenisPermohonan","PERMOHONAN BAHARU");
 				}else{
 					h.put("jenisPermohonan","PERMOHONAN TANGGUH");
 				}

@@ -61,7 +61,7 @@ public class FrmPNWPopupSenaraiPermohonanView extends AjaxBasedModule {
 	    } else {
 	    	
 	    	//GO TO LIST TANAH        	
-        	vm = "app/php2/frmPYWPopupSenaraiPermohonan.jsp";  
+        	vm = "app/php2/frmPLPPopupSenaraiPermohonan.jsp";  
         	senaraiFail = new Vector();
         	logic.setSenaraiFailMesyuarat(idFail);
         	senaraiFail = logic.getSenaraiFailMesyuarat();

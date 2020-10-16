@@ -118,6 +118,9 @@
     	#set ($strErrorMaklumatPemohon = $strErrorMaklumatPemohon + "Maklumat Emel Pemohon tidak diisi. ")
     #end
     
+   <input type="hidden" name="txtbilhta" id="txtbilhta" value="$bil_hta"></input>
+   <input type="hidden" name="txtbilha" id="txtbilha" value="$bil_ha"></input>
+   <input type="hidden" name="txtbilic" id="txtbilic" value="$bil_ic"></input>
     
     #foreach($list in $View)
     #set ($id = $list.idPermohonan)
@@ -2059,42 +2062,41 @@ function hantar_terus(seksyen,idPermohonan,idPermohonanSimati,tarikhMohon,idSima
 }
 
 function getUnitPPK(idpermohonan,nopermohonanonline) {
-
-    if (document.f1.socNegeriPengesahan.value=="0")
-		{
-			alert("Sila pilih Negeri");
-			socNegeriPengesahan.focus();
-		}
-		else if (document.f1.socDaerahPengesahan.value=="0")
-		{
-			alert("Sila pilih Daerah");
-			socDaerahPengesahan.focus();
-		}
-// 		else if (document.f1.boranga.value=="")
-// 		{
-// 			alert("Sila cetak dan muatnaik semula Borang A untuk meneruskan permohonan");
-// 			boranga.focus();
-// 		}
-		 else if(document.f1.namaDoc1.value == "0"){
-	    	alert('Sila muatnaik Borang A untuk meneruskan permohonan.');
-	     	document.f1.uploadmyid.focus(); 
-	    }
-		else if(namecb1.checked == false)
- 		{
+	if (document.f1.socNegeriPengesahan.value=="0"){
+		alert("Sila pilih Negeri");
+		socNegeriPengesahan.focus();
+	}
+	else if (document.f1.socDaerahPengesahan.value=="0"){
+		alert("Sila pilih Daerah");
+		socDaerahPengesahan.focus();
+	}
+	else if (document.f1.txtbilhta.value=="0"){
+		alert("Sila muatnaik dokumen bagi setiap Harta Tak Alih.");
+	}
+	else if (document.f1.txtbilha.value=="0"){
+		alert("Sila muatnaik dokumen bagi setiap Harta Alih.");
+	}
+	else if (document.f1.txtbilic.value=="0"){
+		alert("Sila muatnaik dokumen bagi setiap waris.");
+	}
+	else if(document.f1.namaDoc1.value == "0"){
+	    alert('Sila muatnaik Borang A untuk meneruskan permohonan.');
+	    document.f1.uploadmyid.focus(); 
+	}
+	else if(namecb1.checked == false){
     	alert('Sila tanda pada checkbox untuk teruskan permohonan.');
     	return;
- 		}
-		else
+ 	}
+	else{
+		input_box=confirm("Adakah anda pasti?");
+		if (input_box == true) 
 		{
-			input_box=confirm("Adakah anda pasti?");
-			if (input_box == true) 
-			{
-				document.f1.method="post";
-				document.f1.command.value="nilai_harta";
-				document.f1.mode.value="cetak_surat";
-				//doAjaxCall${formName}("cetak_surat");
-	    	document.f1.submit();
-			}
+			document.f1.method="post";
+			document.f1.command.value="nilai_harta";
+			document.f1.mode.value="cetak_surat";
+			//doAjaxCall${formName}("cetak_surat");
+    	document.f1.submit();
+		}
 	}
 }
 

@@ -72,245 +72,270 @@
           
           <!-- START MAKLUMAT TANAH BERKAITAN -->
           <div class="TabbedPanelsContent">
-            <table width="100%" border="0" cellspacing="2" cellpadding="2">
-              <tr>
-                <td><fieldset>
-                  <legend><b>SENARAI TANAH BERKAITAN</b></legend>
-                  <table align="center" width="100%">
-					#if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
-                    <tr>
-                      <td colspan="8" scope="row">
-						<input name="cmdDaftar" type="button" value="Pilih Hakmilik" onClick="javascript:doDaftarHakmilik('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/>
-                        <!-- <input name="cmdDaftar" type="button" value="Pilih Borang K" onClick="javascript:doDaftarBorangK('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/> -->
-					  </td>
-                    </tr>
-					#end
-                    <tr class="table_header">
-                      <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-                      <td width="15%"><strong>Pegangan Hakmilik</strong></td>
-                      <td width="10%"><strong>Lot</strong></td>
-                      <td width="10%"><strong>No. Hakmilik</strong></td>
-                      <td width="10%"><strong>No. Warta</strong></td>
-                      <td width="15%"><strong>Mukim</strong></td>
-                      <td width="15%"><strong>Daerah</strong></td>
-                      <td width="15%"><strong>Negeri</strong></td>
-                      <td width="5%"><strong></strong></td>
-                    </tr>
-                    #set ($senaraiTanahBerkaitan = "")
-                    #if ($SenaraiTanahBerkaitan.size() > 0)
-                    #foreach ($senaraiTanahBerkaitan in $SenaraiTanahBerkaitan)
-                    #if ($senaraiTanahBerkaitan.bil == '')
-                    #set( $row = "row1" )
-                    #elseif (($senaraiTanahBerkaitan.bil % 2) != 0)
-                    #set( $row = "row1" )
-                    #else 
-                    #set( $row = "row2" )
-                    #end
-                    <tr>
-                      <td class="$row" align="center">$senaraiTanahBerkaitan.bil</td>
-                      <td class="$row">$senaraiTanahBerkaitan.peganganHakmilik</td>
-                      <td class="$row">$senaraiTanahBerkaitan.noLot</td>
-                      <td class="$row">$senaraiTanahBerkaitan.noHakmilik</td>
-                      <td class="$row">$senaraiTanahBerkaitan.noWarta</td>
-                      <td class="$row">$senaraiTanahBerkaitan.mukim</td>
-                      <td class="$row">$senaraiTanahBerkaitan.daerah</td>
-                      <td class="$row">$senaraiTanahBerkaitan.negeri</td>
-                      <td class="$row" align="center"><a href="#" class="style2" onClick="javascript:doHapus('$senaraiTanahBerkaitan.idHakmilikPermohonan')"><img border="0" src="../img/hapus.gif"/></a></td>
-                    </tr>
-                    #end
-                    #else
-                    <tr>
-                      <td class="row1" align="center">&nbsp;</td>
-                      <td class="row1">Tiada Rekod</td>
-                      <td class="row1">&nbsp;</td>
-                      <td class="row1">&nbsp;</td>
-                      <td class="row1">&nbsp;</td>
-                      <td class="row1">&nbsp;</td>
-                      <td class="row1">&nbsp;</td>
-                      <td class="row1">&nbsp;</td>
-                      <td class="row1">&nbsp;</td>
-                    </tr>
-                    #end
-                    <tr>
-                      <td colspan="8">&nbsp;</td>
-                    </tr>
-                    #if ($flagPopup == '')
-                    <tr>
-                      <td colspan="8" align="center">
-                        #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
-                        #if($idStatus == '1610198')
-                        <input type="button" name="cmdSeterusnya" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
-                        <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
-                        #end
-                        #end
-                        <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
-                        #if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
-                        <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
-                        #end </td>
-                        </td>
-                    </tr>
-                    #end
-                  </table>
-                  </fieldset></td>
-              </tr>
-            </table>
+          	<table width="100%" border="0" cellspacing="2" cellpadding="2">
+          		<tr>
+          			<td><fieldset>
+          				<legend><b>SENARAI TANAH BERKAITAN</b></legend>
+          				<table align="center" width="100%">
+          					#if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
+          					<tr>
+          						<td colspan="8" scope="row">
+									<input name="cmdDaftar" type="button" value="Pilih Hakmilik" onClick="javascript:doDaftarHakmilik('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/>
+                        			<!-- <input name="cmdDaftar" type="button" value="Pilih Borang K" onClick="javascript:doDaftarBorangK('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/> -->
+					  			</td>
+          					</tr>
+          					#end
+          					<tr class="table_header">
+		                      	<td scope="row" width="5%" align="center"><strong>Bil</strong></td>
+		                      	<td width="15%"><strong>Pegangan Hakmilik</strong></td>
+		                      	<td width="10%"><strong>Lot</strong></td>
+		                      	<td width="10%"><strong>No. Hakmilik</strong></td>
+		                      	<td width="10%"><strong>No. Warta</strong></td>
+		                      	<td width="15%"><strong>Mukim</strong></td>
+		                      	<td width="15%"><strong>Daerah</strong></td>
+		                      	<td width="15%"><strong>Negeri</strong></td>
+		                      	<td width="5%"><strong></strong></td>
+		                    </tr>
+		                    #set ($senaraiTanahBerkaitan = "")
+		                    #if ($SenaraiTanahBerkaitan.size() > 0)
+		                    #foreach ($senaraiTanahBerkaitan in $SenaraiTanahBerkaitan)
+		                    #if ($senaraiTanahBerkaitan.bil == '')
+		                    #set( $row = "row1" )
+		                    #elseif (($senaraiTanahBerkaitan.bil % 2) != 0)
+		                    #set( $row = "row1" )
+		                    #else 
+		                    #set( $row = "row2" )
+		                    #end
+		                    <tr>
+		                      	<td class="$row" align="center">$senaraiTanahBerkaitan.bil</td>
+		                      	<td class="$row">$senaraiTanahBerkaitan.peganganHakmilik</td>
+		                      	<td class="$row">$senaraiTanahBerkaitan.noLot</td>
+		                      	<td class="$row">$senaraiTanahBerkaitan.noHakmilik</td>
+		                      	<td class="$row">$senaraiTanahBerkaitan.noWarta</td>
+		                      	<td class="$row">$senaraiTanahBerkaitan.mukim</td>
+		                      	<td class="$row">$senaraiTanahBerkaitan.daerah</td>
+		                      	<td class="$row">$senaraiTanahBerkaitan.negeri</td>
+		                      	<td class="$row" align="center">
+		                      		<a href="#" class="style2" onClick="javascript:doHapus('$senaraiTanahBerkaitan.idHakmilikPermohonan')"><img border="0" src="../img/hapus.gif"/></a>
+		                      	</td>
+		                    </tr>
+		                    #end
+		                    #else
+		                    <tr>
+		                      	<td class="row1" align="center">&nbsp;</td>
+		                      	<td class="row1">Tiada Rekod</td>
+		                      	<td class="row1">&nbsp;</td>
+		                      	<td class="row1">&nbsp;</td>
+		                      	<td class="row1">&nbsp;</td>
+		                      	<td class="row1">&nbsp;</td>
+		                      	<td class="row1">&nbsp;</td>
+		                      	<td class="row1">&nbsp;</td>
+		                      	<td class="row1">&nbsp;</td>
+		                    </tr>
+		                    #end
+		                    <tr>
+                      			<td colspan="8">&nbsp;</td>
+                    		</tr>
+                    		#if ($flagPopup == '')
+                    		<tr>
+		                    	<td colspan="8" align="center">
+		                        #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
+		                        	#if($idStatus == '1610198')
+		                        	<input type="button" name="cmdSeterusnya" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
+		                        	<input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
+		                        	#end
+		                        #end
+		                        <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
+		                        #if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
+		                        <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
+		                        #end 
+		                        </td>
+		                    </tr>
+		                    #end
+          				</table>
+          			</fieldset></td>
+          		</tr>
+          	</table>
           </div>
           <!-- END MAKLUMAT TANAH BERKAITAN -->
           <!-- MAKLUMAT PELEPASAN -->
           <div class="TabbedPanelsContent">
-            <table width="100%" border="0" cellspacing="2" cellpadding="2">
-              #foreach ($beanMaklumatPelepasan in $BeanMaklumatPelepasan)
-              <tr>
-                <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
-                <td valign="top">Tarikh Surat</td>
-                <td>:</td>
-                <td><input type="text" name="tarikhSurat" id="tarikhSurat" value="$beanMaklumatPelepasan.tarikhSurat" onBlur="check_date(this);cekTarikhSurat(this)" size="9" $readonly class="$inputTextClass"/>
-                  #if ($mode == 'update')<a href="javascript:displayDatePicker('tarikhSurat',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a>#end</td>
-              </tr>
-              <tr>
-                <td width="1%">#if ($mode == 'update')<span class="style1">*</span>#end</td>
-                <td valign="top" width="28%">Tarikh Terima</td>
-                <td width="1%">:</td>
-                <td width="70%"><input type="text" name="tarikhTerima" id="tarikhTerima" value="$beanMaklumatPelepasan.tarikhTerima" onBlur="check_date(this);cekTarikhTerima(this)" size="9" $readonly class="$inputTextClass"/>
-                  #if ($mode == 'update') <a href="javascript:displayDatePicker('tarikhTerima',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a>#end</td>
-              </tr>
-              <tr>
-                <td width="1%">&nbsp;</td>
-                <td valign="top">No. Rujukan Surat</td>
-                <td>:</td>
-                <td><input name="txtNoRujukanSurat" type="text" class="$inputTextClass" id="txtNoRujukanSurat" value="$beanMaklumatPelepasan.noRujukanSurat" $readonly onblur="this.value=this.value.toUpperCase();" size="50" maxlength="50"/></td>
-              </tr>
-              <tr>
-                <td width="1%">&nbsp;</td>
-                <td valign="top">No. Fail Negeri</td>
-                <td>:</td>
-                <td><input name="txtNoFailNegeri" type="text" class="$inputTextClass" id="txtNoFailNegeri" value="$beanMaklumatPelepasan.noFailNegeri" $readonly onblur="this.value=this.value.toUpperCase();" size="50" maxlength="50"/></td>
-              </tr>
-              <tr>
-                <td valign="top">#if ($mode == 'update')<span class="style1">*</span>#end</td>
-                <td valign="top">Perkara</td>
-                <td valign="top">:</td>
-                <td><textarea name="txtPerkara" id="txtPerkara" rows="5" cols="50" $readonly class="$inputTextClass" onBlur="this.value=this.value.toUpperCase();" onKeyUp="textCounter(this.form.txtPerkara,this.form.remLen,$!saizTxtPerkara);" onKeyDown="textCounter(this.form.txtPerkara,this.form.remLen,$!saizTxtPerkara);" >$beanMaklumatPelepasan.perkara</textarea></td>
-              </tr>
-              #if ($mode == 'update')
-              <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>Baki Aksara :&nbsp;
-                  <input type="text" readonly="readonly" class="disabled" name="remLen" size="3" maxlength="3" value="$!saizTxtPerkara" /></td>
-              </tr>
-              #end
-              <tr>
-                <td width="1%">#if ($mode == 'update')<span class="style1">*</span>#end</td>
-                <td width="28%">Jenis Projek</td>
-                <td width="1%">:</td>
-                <td width="70%">$selectJenisProjek</td>
-              </tr>
-              <tr>
-                <td valign="top">#if ($mode == 'update')<span class="style1">*</span>#end</td>
-                <td valign="top">Nama Projek</td>
-                <td valign="top">:</td>
-                <td valign="top"><textarea name="txtNamaProjek" id="txtNamaProjek" rows="5" cols="50" $readonly class="$inputTextClass" onKeyUp="textCounter(this.form.txtNamaProjek,this.form.remLen1,$!saizTxtNamaProjek);" onKeyDown="textCounter(this.form.txtNamaProjek,this.form.remLen1,$!saizTxtNamaProjek);" >$beanMaklumatPelepasan.namaProjek</textarea></td>
-              </tr>
-              #if ($mode == 'update')
-              <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>Baki Aksara :&nbsp;
-                  <input type="text" readonly="readonly" class="disabled" name="remLen1" size="3" maxlength="3" value="$!saizTxtNamaProjek" /></td>
-              </tr>
-              #end
-              <tr>
-                <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
-                <td>Luas Permohonan</td>
-                <td>:</td>
-                <td >$selectLuasKegunaan</td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>Keluasan Asal</td>
-                <td>:</td>
-                <td>$beanMaklumatPelepasan.luasAsal $beanMaklumatPelepasan.keteranganLuasAsal
-                  <input type="hidden" name="txtLuasAsal" id="txtLuasAsal" value="$beanMaklumatPelepasan.luasAsal"/></td>
-              </tr>
-              #if ($idLuasKegunaan == '2')
-              <tr>
-                <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
-                <td>Unit Luas</td>
-                <td>:</td>
-                <td>#parse("app/php2/unit_luas_new.jsp") </td>
-              </tr>
-              #if ($idLuas != '99999' && $idLuas != '')
-              <tr>
-                <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
-                <td>Luas Mohon</td>
-                <td>:</td>
-                <td> #if ($idLuas == '0' || $idLuas == '1' || $idLuas == '2' || $idLuas == '3' || $idLuas == '5' || $idLuas == '6' || $idLuas == '9')
-                  <input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$beanMaklumatPelepasan.luas1" style="text-align:right" onkeyup="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6"  $readonly class="$inputTextClass"/ >
-                  #elseif ($idLuas == '7')
-                  <input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$beanMaklumatPelepasan.luas1" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
-                  <input type="text" name="txtLuasMohon2" id="txtLuasMohon2" value="$beanMaklumatPelepasan.luas2" style="text-align:right" onkeyup="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6" / $readonly class="$inputTextClass">
-                  #elseif ($idLuas == '8' || $idLuas == '4')
-                  <input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$beanMaklumatPelepasan.luas1" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
-                  <input type="text" name="txtLuasMohon2" id="txtLuasMohon2" value="$beanMaklumatPelepasan.luas2" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
-                  <input type="text" name="txtLuasMohon3" id="txtLuasMohon3" value="$beanMaklumatPelepasan.luas3" style="text-align:right" onkeyup="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6"  $readonly class="$inputTextClass"/>
-                  #end </td>
-              </tr>
-              #end
-              #end
-              <tr>
-                <td>&nbsp;</td>
-                <td>Luas Bersamaan</td>
-                <td>:</td>
-                <td><input type="text" name="txtLuasBersamaan" id="txtLuasBersamaan" value="$beanMaklumatPelepasan.luasBersamaan"  style="text-align:right" readonly="readonly" class="disabled"/>
-                  HEKTAR</td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>Baki Luas</td>
-                <td>:</td>
-                <td><input type="text" name="txtBakiLuas" id="txtBakiLuas" value="$beanMaklumatPelepasan.luasBaki" readonly="readonly" class="disabled" style="text-align:right"/>
-                  HEKTAR</td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-              </tr>
-              #if ($mode == 'update')
-              <tr>
-                <td colspan="4" valign="bottom"><i><font color="#ff0000">Perhatian</font> : Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i></td>
-              </tr>
-              #end
-              <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>
-                  #if ($mode == 'update')
-                  <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniMaklumatPelepasan('$idLuas')"/>
-                  <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskini()"/>
-                  #end
-                  #if ($mode == 'view')
-                  #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
-                  <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>
-                  #if($idStatus == '1610198')
-                  <input type="button" name="cmdSeterusnya" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
-                  <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
-                  #end
-                  #end
-                  <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
-                  #end 
-                  #if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
-                  <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
-                  #end </td>
-                </td>
-              </tr>
-              #end
-            </table>
+          	<table width="100%" border="0" cellspacing="2" cellpadding="2">
+          		#foreach ($beanMaklumatPelepasan in $BeanMaklumatPelepasan)
+              	<tr>
+                	<td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
+                	<td valign="top">Tarikh Surat</td>
+                	<td>:</td>
+                	<td>
+                		<input type="text" name="tarikhSurat" id="tarikhSurat" value="$beanMaklumatPelepasan.tarikhSurat" onBlur="check_date(this);cekTarikhSurat(this)" size="9" $readonly class="$inputTextClass"/>
+                  		#if ($mode == 'update')
+                  		<a href="javascript:displayDatePicker('tarikhSurat',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a>
+                  		#end
+                  	</td>
+              	</tr>
+              	<tr>
+                	<td width="1%">#if ($mode == 'update')<span class="style1">*</span>#end</td>
+                	<td valign="top" width="28%">Tarikh Terima</td>
+                	<td width="1%">:</td>
+                	<td width="70%">
+                		<input type="text" name="tarikhTerima" id="tarikhTerima" value="$beanMaklumatPelepasan.tarikhTerima" onBlur="check_date(this);cekTarikhTerima(this)" size="9" $readonly class="$inputTextClass"/>
+                  		#if ($mode == 'update') 
+                  			<a href="javascript:displayDatePicker('tarikhTerima',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a>
+                  		#end
+                  	</td>
+              	</tr>
+              	<tr>
+                	<td width="1%">&nbsp;</td>
+                	<td valign="top">No. Rujukan Surat</td>
+                	<td>:</td>
+                	<td>	
+                		<input name="txtNoRujukanSurat" type="text" class="$inputTextClass" id="txtNoRujukanSurat" value="$beanMaklumatPelepasan.noRujukanSurat" $readonly onblur="this.value=this.value.toUpperCase();" size="50" maxlength="50"/>
+                	</td>
+              	</tr>
+              	<tr>
+                	<td width="1%">&nbsp;</td>
+                	<td valign="top">No. Fail Negeri</td>
+                	<td>:</td>
+                	<td>
+                		<input name="txtNoFailNegeri" type="text" class="$inputTextClass" id="txtNoFailNegeri" value="$beanMaklumatPelepasan.noFailNegeri" $readonly onblur="this.value=this.value.toUpperCase();" size="50" maxlength="50"/>
+                	</td>
+              	</tr>
+              	<tr>
+                	<td valign="top">#if ($mode == 'update')<span class="style1">*</span>#end</td>
+                	<td valign="top">Perkara</td>
+                	<td valign="top">:</td>
+                	<td>
+                		<textarea name="txtPerkara" id="txtPerkara" rows="5" cols="50" $readonly class="$inputTextClass" onBlur="this.value=this.value.toUpperCase();" onKeyUp="textCounter(this.form.txtPerkara,this.form.remLen,$!saizTxtPerkara);" onKeyDown="textCounter(this.form.txtPerkara,this.form.remLen,$!saizTxtPerkara);" >$beanMaklumatPelepasan.perkara</textarea>
+                	</td>
+              	</tr>
+              	#if ($mode == 'update')
+              	<tr>
+                	<td>&nbsp;</td>
+                	<td>&nbsp;</td>
+                	<td>&nbsp;</td>
+                	<td>Baki Aksara :&nbsp;
+                  		<input type="text" readonly="readonly" class="disabled" name="remLen" size="3" maxlength="3" value="$!saizTxtPerkara" />
+                  	</td>
+              	</tr>
+              	#end
+              	<tr>
+                	<td width="1%">#if ($mode == 'update')<span class="style1">*</span>#end</td>
+                	<td width="28%">Jenis Projek</td>
+                	<td width="1%">:</td>
+                	<td width="70%">$selectJenisProjek</td>
+              	</tr>
+              	<tr>
+                	<td valign="top">#if ($mode == 'update')<span class="style1">*</span>#end</td>
+                	<td valign="top">Nama Projek</td>
+                	<td valign="top">:</td>
+                	<td valign="top"><textarea name="txtNamaProjek" id="txtNamaProjek" rows="5" cols="50" $readonly class="$inputTextClass" onKeyUp="textCounter(this.form.txtNamaProjek,this.form.remLen1,$!saizTxtNamaProjek);" onKeyDown="textCounter(this.form.txtNamaProjek,this.form.remLen1,$!saizTxtNamaProjek);" >$beanMaklumatPelepasan.namaProjek</textarea></td>
+              	</tr>
+              	#if ($mode == 'update')
+              	<tr>
+                	<td>&nbsp;</td>
+                	<td>&nbsp;</td>
+                	<td>&nbsp;</td>
+                	<td>Baki Aksara :&nbsp;
+                  		<input type="text" readonly="readonly" class="disabled" name="remLen1" size="3" maxlength="3" value="$!saizTxtNamaProjek" />
+                  	</td>
+              	</tr>
+              	#end
+              	<tr>
+                	<td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
+                	<td>Luas Permohonan</td>
+                	<td>:</td>
+                	<td >$selectLuasKegunaan</td>
+              	</tr>
+              	<tr>
+                	<td>&nbsp;</td>
+                	<td>Keluasan Asal</td>
+                	<td>:</td>
+                	<td>$beanMaklumatPelepasan.luasAsal $beanMaklumatPelepasan.keteranganLuasAsal
+                  		<input type="hidden" name="txtLuasAsal" id="txtLuasAsal" value="$beanMaklumatPelepasan.luasAsal"/>
+                  	</td>
+              	</tr>
+              	#if ($idLuasKegunaan == '2')
+              	<tr>
+                	<td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
+                	<td>Unit Luas</td>
+                	<td>:</td>
+                	<td>#parse("app/php2/unit_luas_new.jsp") </td>
+              	</tr>
+              	#if ($idLuas != '99999' && $idLuas != '')
+              	<tr>
+                	<td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
+                	<td>Luas Mohon</td>
+                	<td>:</td>
+                	<td> 
+                		#if ($idLuas == '0' || $idLuas == '1' || $idLuas == '2' || $idLuas == '3' || $idLuas == '5' || $idLuas == '6' || $idLuas == '9')
+                  			<input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$beanMaklumatPelepasan.luas1" style="text-align:right" onkeyup="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6"  $readonly class="$inputTextClass"/ >
+                  		#elseif ($idLuas == '7')
+                  			<input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$beanMaklumatPelepasan.luas1" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
+                  			<input type="text" name="txtLuasMohon2" id="txtLuasMohon2" value="$beanMaklumatPelepasan.luas2" style="text-align:right" onkeyup="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6" / $readonly class="$inputTextClass">
+                  		#elseif ($idLuas == '8' || $idLuas == '4')
+                  			<input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$beanMaklumatPelepasan.luas1" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
+                  			<input type="text" name="txtLuasMohon2" id="txtLuasMohon2" value="$beanMaklumatPelepasan.luas2" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
+                  			<input type="text" name="txtLuasMohon3" id="txtLuasMohon3" value="$beanMaklumatPelepasan.luas3" style="text-align:right" onkeyup="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6"  $readonly class="$inputTextClass"/>
+                  		#end 
+                  	</td>
+              	</tr>
+              	#end
+              	#end
+              	<tr>
+                	<td>&nbsp;</td>
+                	<td>Luas Bersamaan</td>
+                	<td>:</td>
+                	<td>
+                		<input type="text" name="txtLuasBersamaan" id="txtLuasBersamaan" value="$beanMaklumatPelepasan.luasBersamaan"  style="text-align:right" readonly="readonly" class="disabled"/>
+                  		HEKTAR
+                  	</td>
+              	</tr>
+              	<tr>
+                	<td>&nbsp;</td>
+                	<td>Baki Luas</td>
+                	<td>:</td>
+                	<td>
+                		<input type="text" name="txtBakiLuas" id="txtBakiLuas" value="$beanMaklumatPelepasan.luasBaki" readonly="readonly" class="disabled" style="text-align:right"/>
+                  		HEKTAR
+                  	</td>
+              	</tr>
+              	<tr>
+                	<td>&nbsp;</td>
+                	<td>&nbsp;</td>
+                	<td>&nbsp;</td>
+                	<td>&nbsp;</td>
+              	</tr>
+              	#if ($mode == 'update')
+              	<tr>
+                	<td colspan="4" valign="bottom"><i><font color="#ff0000">Perhatian</font> : Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i></td>
+              	</tr>
+              	#end
+              	<tr>
+                	<td>&nbsp;</td>
+                	<td>&nbsp;</td>
+                	<td>&nbsp;</td>
+                	<td>
+                		#if ($mode == 'update')
+                  		<input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniMaklumatPelepasan('$idLuas')"/>
+                  		<input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskini()"/>
+                  		#end
+                  		#if ($mode == 'view')
+                  			#if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
+                  				<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>
+                  				#if($idStatus == '1610198')
+                  					<input type="button" name="cmdSeterusnya" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
+                  					<input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
+                 	 			#end
+                  			#end
+                  		<input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
+                  		#end 
+                  		#if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
+                  			<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
+                  		#end
+                	</td>
+                </tr>
+                #end
+          	</table>
           </div>
           <!-- MAKLUMAT PEMOHON -->
           <div class="TabbedPanelsContent">
@@ -733,20 +758,11 @@ function gotoKembali(){
 	document.${formName}.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.php2.FrmMaklumatTanahDanLaporanTanahView";
 	document.${formName}.submit();
 }
-/* function gotoHapusFail(){
-	if ( !window.confirm("Adakah Anda Pasti ?") ){
-		return;
-	}
-// 	document.${formName}.step.value = "hapusFail";
-	document.${formName}.hitButton.value = "hapusFail";
-	document.${formName}.submit();
-} */
 function doChangeTabUpper(tabId) {
 	document.${formName}.mode.value = "view";
 	document.${formName}.selectedTabUpper.value = tabId;
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
-	//doAjaxCall${formName}("");
 	document.${formName}.submit();
 }
 function validateLuas(elmnt,content,content2) {
@@ -766,37 +782,37 @@ function validateLuas(elmnt,content,content2) {
 	}
 }
 function doChangeKategori() {
-	doAjaxCall${formName}("doChangeKategori");
+	document.${formName}.submit("doChangeKategori");
 }
 function doChangeKementerian() {
-	doAjaxCall${formName}("doChangeKementerian");
+	document.${formName}.submit("doChangeKementerian");
 }
 function doChangeAgensi() {
-	doAjaxCall${formName}("doChangeAgensi");
+	document.${formName}.submit("doChangeAgensi");
 }
 function doChangePejabat() {
-	doAjaxCall${formName}("doChangePejabat");
+	document.${formName}.submit("doChangePejabat");
 }
 function doChangeNegeri() {
-	doAjaxCall${formName}("doChangeNegeri");
+	document.${formName}.submit("doChangeNegeri");
 }
 function doChangeDaerah() {
-	doAjaxCall${formName}("doChangeDaerah");
+	document.${formName}.submit("doChangeDaerah");
 }
 function doChangeLuasKegunaan() {
-	doAjaxCall${formName}("doChangeLuasKegunaan");
+	document.${formName}.submit("doChangeLuasKegunaan");
 }
 function doChangeLuas() {
-	doAjaxCall${formName}("doChangeLuas");
+	document.${formName}.submit("doChangeLuas");
 }
 
 function doKemaskini() {
 	document.${formName}.mode.value = "update";
-	doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function doBatalKemaskini() {
 	document.${formName}.mode.value = "view";
-	doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function doSimpanKemaskiniMaklumatPelepasan(idLuas) {
 	//CHECK DATE   
@@ -1143,7 +1159,7 @@ function doPaparTanahGanti(idTanahGanti){
 function doKemaskiniTanahGanti(){
 	document.${formName}.flagPopup.value = "openPopupTanahGanti";
 	document.${formName}.modePopup.value = "update";
-	doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function doBatalKemaskiniTanahGanti(){
 	document.${formName}.flagPopup.value = "openPopupTanahGanti";
@@ -1457,7 +1473,7 @@ function doHapus(idHakmilikPermohonan) {
 	document.${formName}.idHakmilikPermohonan.value = idHakmilikPermohonan;
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doHapus";
-	doAjaxCall${formName}("");
+	document.${formName}.submit();
 }
 function doDaftarHakmilik(idPermohonan,idKategoriPemohon,idNegeriPemohon,idKementerianPemohon) {
 	var url = "../x/${securityToken}/ekptg.view.php2.FrmPLPPopupSenaraiTanahBerkaitanView?idPermohonan="+idPermohonan+"&idKategoriPemohon="+idKategoriPemohon+"&idNegeriPemohon="+idNegeriPemohon+"&idKementerianPemohon="+idKementerianPemohon;

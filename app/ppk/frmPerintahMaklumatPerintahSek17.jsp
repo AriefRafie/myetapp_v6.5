@@ -3204,6 +3204,11 @@ document.getElementById("header_lama").style.display="block";
       	#end
       #end
       <!-- END INTERGRASI ETANAH -->
+      <!-- arief add open NOTIFIKASI EMAIL-->
+      #if ($idStatus == "21")
+      	<input type="button" name="cmdNotiEmail" id="cmdNotiEmail" value="Email Perintah" onClick="javascript:emailPerintah('$idFail')"/>
+      #end
+      <!-- arief add close NOTIFIKASI EMAIL-->
       <br>
       <br>
       <span class="style2"><blink>$systemMsg</blink></span></td>
@@ -4742,4 +4747,43 @@ function popupIntergrasiPerintahEtanah(idFail, idPerintah) {
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
 }
+</script>
+<script>
+//arief add Tandatangan Digital OPEN
+function sendDGcertPerintah(NO_FAIL,id_perbicaraan,idfail,id_permohonan,idpermohonansimati){
+	var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCertPerintahSek17?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&commandw=sendDGCertPerintah";
+	var hWnd = window.open(url,'Cetak','width=625,height=400, resizable=no,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+    hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
+function verifyDGcertPerintah(NO_FAIL,id_perbicaraan,idfail,id_permohonan,idpermohonansimati){
+    var url = "../x/${securityToken}/ekptg.view.ppk.FrmIntegrasiDGCertPerintahSek17?nofail="+NO_FAIL+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&id_permohonan="+id_permohonan+"&idpermohonansimati="+idpermohonansimati+"&flagVersion=popupPNB&commandw=verify";
+	var hWnd = window.open(url,'Cetak','width=625,height=400, resizable=no,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+    hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+//arief add Tandatangan Digital CLOSE
+//arief add NOTIFIKASI EMAIL open	
+function emailPerintah(idFail) { 
+	var url = "../x/${securityToken}/ekptg.view.ppk.SkrinPopupHantarEmail?idFail="+idFail+"&commandw=emailPerintah";
+    var hWnd = window.open(url,'printuser','width=500,height=350, resizable=yes,scrollbars=yes');
+	document.${formName}.hitButt.value = "emailPerintah";	
+	if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
+}	
+function popupEmailPerintah(idFail, idPerintah) {	
+	var url = ""+idPerintah+"&idFail="+idFail;	
+		
+    var hWnd = window.open(url,'printuser','width=1000,height=350, resizable=yes,scrollbars=yes');	
+    if ((document.window != null) && (!hWnd.opener))	
+       hWnd.opener = document.window;	
+    if (hWnd.focus != null) hWnd.focus();	
+	hWnd.focus();	
+}	
+//arief add NOTIFIKASI EMAIL close
 </script>

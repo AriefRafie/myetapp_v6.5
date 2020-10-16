@@ -200,6 +200,7 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailData {
 			
 			sql = r.getSQLUpdate("TBLPHPKERTASKERJAPELEPASAN");
 			stmt.executeUpdate(sql);
+			myLogger.info("TBLPHPKERTASKERJAPELEPASAN======="+sql);
 
 			conn.commit();
 			flagStatus = "Y";
@@ -260,23 +261,24 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailData {
 			SQLRenderer r = new SQLRenderer();
 
 			// TBLPHPKERTASKERJAPELEPASAN
-			r.update("ID_ULASANTEKNIKAL", idKertasKerja);			
+			r.update("ID_KERTASKERJA", idKertasKerja);			
 			if (!"".equals(txtTarikhTerima)) {
 				r.add("TARIKH_TERIMA_KEWANGAN",
 						r.unquote("to_date('" + txtTarikhTerima
 								+ "','dd/MM/yyyy')"));
 			}
-			r.add("ULASAN", txtUlasan);
-			r.add("FLAG_KEPUTUSAN", txtKeputusan);
+			r.add("ULASAN_KEWANGAN", txtUlasan);
+			r.add("KEPUTUSAN_KEWANGAN", txtKeputusan);
 			r.add("NAMA_PEGAWAI", txtNamaPengulas);
 			r.add("NO_TELEFON_PEGAWAI", txtNoTelPengulas);
-			r.add("TARIKH_TERIMA_KEWANGAN", r.unquote("SYSDATE"));
-			r.add("FLAG_STATUS", "2");
+			r.add("TARIKH_HANTAR_KEWANGAN", r.unquote("SYSDATE"));
+			r.add("FLAG_KERTAS", "2");
 
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 			
 			sql = r.getSQLUpdate("TBLPHPKERTASKERJAPELEPASAN");
+			myLogger.info("TBLPHPKERTASKERJAPELEPASAN===="+sql);
 			stmt.executeUpdate(sql);
 			
 			conn.commit();

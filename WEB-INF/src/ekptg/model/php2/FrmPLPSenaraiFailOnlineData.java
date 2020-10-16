@@ -306,7 +306,8 @@ public class FrmPLPSenaraiFailOnlineData {
 			String idKementerian, String kodNegeri, String idNegeri)
 			throws Exception {
 		String noFail = "";
-		noFail = "JKPTG/SPHP/"
+		//JKPTG/SPHP/
+		noFail = "JKPTG/BPHP/"
 				+ kodUrusan
 				+ "/"
 				+ kodKementerian
@@ -411,7 +412,7 @@ public class FrmPLPSenaraiFailOnlineData {
 					+ " FROM TBLHTPHAKMILIK A, TBLRUJLOT B, TBLRUJNEGERI C, TBLRUJDAERAH D, TBLRUJMUKIM E, TBLRUJJENISHAKMILIK F, TBLRUJSUBKATEGORI G, TBLRUJKATEGORI H, TBLRUJKEMENTERIAN I,TBLRUJAGENSI J, TBLRUJLUAS K, TBLHTPHAKMILIKAGENSI L"
 					+ " WHERE A.ID_HAKMILIK = L.ID_HAKMILIK AND A.ID_LOT = B.ID_LOT(+) AND A.ID_NEGERI = C.ID_NEGERI(+) AND A.ID_DAERAH = D.ID_DAERAH(+) AND A.ID_MUKIM = E.ID_MUKIM(+) AND A.ID_JENISHAKMILIK = F.ID_JENISHAKMILIK(+)"
 					+ " AND A.ID_SUBKATEGORI = G.ID_SUBKATEGORI(+) AND G.ID_KATEGORI = H.ID_KATEGORI(+) AND L.ID_KEMENTERIAN = I.ID_KEMENTERIAN(+) AND L.ID_AGENSI = J.ID_AGENSI(+) AND L.ID_LUAS_BERSAMAAN = K.ID_LUAS"
-					+ " AND L.ID_HAKMILIKAGENSI = '" + idHakmilikAgensi + "'";
+					+ " AND L.ID_HAKMILIK = '" + idHakmilikAgensi + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
 

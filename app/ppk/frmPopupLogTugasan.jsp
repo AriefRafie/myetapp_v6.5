@@ -9,7 +9,7 @@
 -->
 </style>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
-  <!--  <tr>
+  <tr>
     <td><fieldset>
       <legend><strong>TUGASAN SEMASA</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -35,7 +35,7 @@
         </tr>
       </table>
       </fieldset></td>
-  </tr>-->
+  </tr>
   <tr>
     <td><fieldset>
       <legend><b>SENARAI LOG TUGASAN</b></legend>

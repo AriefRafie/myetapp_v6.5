@@ -16,8 +16,11 @@
 #set($bg = "#8BE75A")
 #end
 
-<table border="0" align="center" width="60%" >      
-     <tbody> 
+<table width="100%" border="0">      
+    
+     $selectNegeri
+$selectUnit
+<!-- 
      <tr> 
         <td scope="row" align="left">&nbsp;Negeri </td>
         <td>:&nbsp;</td>
@@ -27,10 +30,10 @@
         <td scope="row" align="left">&nbsp;Unit </td>
         <td>:&nbsp;</td>
         <td>$selectUnit</td>
-      </tr>
+      </tr>  -->
       <tr> 
-        <td scope="row" align="left">&nbsp;Daerah </td>
-        <td>:&nbsp;</td>
+        <td width="30%"><div align="right">Daerah :</div></td>
+        
         <td>$selectDaerah</td>
       </tr>  
       
@@ -38,8 +41,8 @@
    		#set ($txdAkhir = "")
       
       <tr> 
-        <td scope="row" align="left">&nbsp;Tarikh </td>
-        <td>:&nbsp;</td>
+        <td width="30%"><div align="right">Tarikh :</div></td>
+        
         <td>
        		<label>
       			<input name="txdMula" type="text" id="txdMula" value="$txdMula" size="10"onblur="check_date(this);" />
@@ -54,7 +57,7 @@
 		</td>
       </tr>  
 
-   </tbody>
+  
  </table>
 </fieldset>	
 <fieldset>
