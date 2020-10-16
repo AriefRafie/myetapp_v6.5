@@ -28,7 +28,6 @@ public class FrmPopupCapaianHakmilikeTanah extends AjaxBasedModule {
 	
  	private IIntegrasieTanahCarian carianHTP = null;  
  	private IIntegrasieTanahCarian carianPPK = null;  
-// 	private String idHarta = "";
  	FrmPopupCapaianHakmilikeTanahData logic = new FrmPopupCapaianHakmilikeTanahData();	
 
 	@Override
@@ -42,7 +41,7 @@ public class FrmPopupCapaianHakmilikeTanah extends AjaxBasedModule {
 		String vm = "";
 		String actionPopup = getParam("actionPopup");
 		String hitButt = getParam("hitButt");
-		String submit = getParam("command");
+//		String submit = getParam("command");
 		String idPermohonan = getParam("idPermohonan");
 		
 		String noResit = getParam("txtNoResit").trim();

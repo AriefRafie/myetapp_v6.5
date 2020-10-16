@@ -27,9 +27,9 @@
   #end
   <tr>
     <td class="$row" align="center"> $counter </td>
-    <td class="$row"> <a href="javascript:paparDokumen($!listD.idDokumenPermohonan)" class="style2"><strong>$!listD.namaDokumen</strong></a></td>
+    <td class="$row"> <a href="javascript:paparDokumen($!listD.getIdDokumen())" class="style2"><strong>$!listD.getNamaDokumen()</strong></a></td>
     #if ($!maklumatPermohonan.flagHantar == 'T')
-    <td class="$row" align="center"><span id="hapusDoc"> <a href="javascript:void()" onClick="deleteDokumen($!listD.idDokumenPermohonan)" ><img src="../../img/delete.gif" border="0"></a> </span></td>
+    <td class="$row" align="center"><span id="hapusDoc"> <a href="javascript:void()" onClick="deleteDokumen($!listD.getIdDokumen())" ><img src="../../img/delete.gif" border="0"></a> </span></td>
     #end
   </tr>
   #end  
@@ -41,44 +41,45 @@
 </table>
 
 <script>
-function simpanDokumen() {
 
-	var idFail = document.${formName}.idFail.value;
-	var idPermohonan = document.${formName}.idPermohonan.value;
-	var jenisSkrin = document.${formName}.jenisSkrin.value;
-	var idPermohonanIntegrasi = document.${formName}.idPermohonanIntegrasi.value;
-	var idPPTWarta = document.${formName}.idPPTWarta.value;
-	var idPPTHakmilik = document.${formName}.idPPTHakmilik.value;
-	var idPPTPenarikanBalik = document.${formName}.idPPTPenarikanBalik.value;
-
-	if(document.${formName}.jenisDokumen.value == ""){
-		alert('Sila pilih Jenis Dokumen.');
-  		document.${formName}.jenisDokumen.focus(); 
-		return; 
-	}
-	if(document.${formName}.dokumen.value == ""){
-		alert('Sila pilih Dokumen yang Ingin Dimuatnaik.');
-  		document.${formName}.dokumen.focus(); 
-		return; 
-	}
+	function simpanDokumen() {
+		var idFail = document.${formName}.idFail.value;
+		var idPermohonan = document.${formName}.idPermohonan.value;
+		var jenisSkrin = document.${formName}.jenisSkrin.value;
+		var idPermohonanIntegrasi = document.${formName}.idPermohonanIntegrasi.value;
+		var idPPTWarta = document.${formName}.idPPTWarta.value;
+		var idPPTHakmilik = document.${formName}.idPPTHakmilik.value;
+		var idPPTPenarikanBalik = document.${formName}.idPPTPenarikanBalik.value;
 	
-	if ( !window.confirm("Adakah Anda Pasti ?") ){
-		return;
+		if(document.${formName}.jenisDokumen.value == ""){
+			alert('Sila pilih Jenis Dokumen.');
+	  		document.${formName}.jenisDokumen.focus(); 
+			return; 
+		}
+		if(document.${formName}.dokumen.value == ""){
+			alert('Sila pilih Dokumen yang Ingin Dimuatnaik.');
+	  		document.${formName}.dokumen.focus(); 
+			return; 
+		}
+		
+		if ( !window.confirm("Adakah Anda Pasti ?") ){
+			return;
+		}
+		
+		var jenisDokumen = document.${formName}.jenisDokumen.value;
+		var dp = document.${formName}.form_token.value ;
+		var dopost = "&form_token="+dp;
+		var param = "&id_permohonan="+idPermohonan+"&idPermohonan="+idPermohonan+"&jenisSkrin="+jenisSkrin+"&nama_dokumen="+jenisSkrin;
+		param = param+"&command=muatNaikDokumen&idFail="+idFail+"&idPPTWarta="+idPPTWarta+"&idPPTHakmilik="+idPPTHakmilik+"&idPPTPenarikanBalik="+idPPTPenarikanBalik+"&idPermohonanIntegrasi="+idPermohonanIntegrasi+"&jenisDokumen="+jenisDokumen+dopost;
+		//alert(param);
+		document.${formName}.action = "?_portal_module=ekptg.view.integrasi.etanah.PermohonanPengambilan"+param;
+		//document.${formName}.action = "?_portal_module=ekptg.intergration.eTanah.pengambilan.PopupETanahPPTWPKL&command=muatNaikDokumen&idFail="+idFail+"&idPermohonan="+idPermohonan+"&idPPTWarta="+idPPTWarta+"&idPPTHakmilik="+idPPTHakmilik+"&idPPTPenarikanBalik="+idPPTPenarikanBalik+"&jenisSkrin="+jenisSkrin+"&idPermohonanIntegrasi="+idPermohonanIntegrasi+"&jenisDokumen="+jenisDokumen+dopost;
+		document.${formName}.method="post";
+		document.${formName}.enctype="multipart/form-data";
+	    document.${formName}.encoding="multipart/form-data";
+		document.${formName}.submit();
+		
 	}
-	
-	var jenisDokumen = document.${formName}.jenisDokumen.value;
-	var dp = document.${formName}.form_token.value ;
-	var dopost = "&form_token="+dp;
-	var param = "&id_permohonan="+idPermohonan+"&idPermohonan="+idPermohonan;
-	var param += "&command=muatNaikDokumen&idFail="+idFail+"&idPPTWarta="+idPPTWarta+"&idPPTHakmilik="+idPPTHakmilik+"&idPPTPenarikanBalik="+idPPTPenarikanBalik+"&jenisSkrin="+jenisSkrin+"&idPermohonanIntegrasi="+idPermohonanIntegrasi+"&jenisDokumen="+jenisDokumen+dopost;
-	//alert(param);
-	document.${formName}.action = "?_portal_module=ekptg.view.integrasi.etanah.PermohonanPengambilan"+param;
-	//document.${formName}.action = "?_portal_module=ekptg.intergration.eTanah.pengambilan.PopupETanahPPTWPKL&command=muatNaikDokumen&idFail="+idFail+"&idPermohonan="+idPermohonan+"&idPPTWarta="+idPPTWarta+"&idPPTHakmilik="+idPPTHakmilik+"&idPPTPenarikanBalik="+idPPTPenarikanBalik+"&jenisSkrin="+jenisSkrin+"&idPermohonanIntegrasi="+idPermohonanIntegrasi+"&jenisDokumen="+jenisDokumen+dopost;
-	document.${formName}.method="post";
-	document.${formName}.enctype="multipart/form-data";
-    document.${formName}.encoding="multipart/form-data";
-	document.${formName}.submit();
-}
 
 	function paparDokumen(id){
 		var url = "../../servlet/ekptg.intergration.eTanah.pengambilan.FrmDisplayDokumenIntegrasiPPT?id="+id;

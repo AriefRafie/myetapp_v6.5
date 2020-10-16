@@ -1148,7 +1148,8 @@ alert("Sila Klik 'Paging' No.2 Untuk Penambahan Hakmilik dan Pihak Berkepentinga
                     
                     
 					<input type="button" name="cmdKemaskini" value="Kemaskini" onClick="javascript:kemaskiniPendaftaran('$!id_permohonan')">
-                    
+                  	
+                  	<input type="button" name="cmdPopupeTanah" value="Integrasi e-Tanah (Hantar Permohonan)" onClick="eTanahPermohonan('$id_fail','$id_permohonan','WartaS8','')">
                     <!--
                     <input type="button" name="cmdPopupeTanah" value="Integrasi eTanah (Hantar Pelan untuk Charting)" onClick="popupEtanah('$id_fail','$id_permohonan','hantarPelanChartingS8','')">
                     -->
@@ -1217,8 +1218,6 @@ alert("Telah wujud no. fail "+'$!showNoRujukan'+" di dalam rekod");
 	
 <script>
 
-
-
 function HandlePopup_from_copy_hakmilik(id_permohonan) {
 	//document.${formName}.ScreenLocation.value = "top";
 	//document.${formName}.CursorPoint.value = "";
@@ -1270,6 +1269,16 @@ function popupCarianDokumen(id_permohonan,flag_skrin)
 }
 
 
+	function eTanahPermohonan(id_fail,id_permohonan,jenis_skrin,command) {	
+		var url = "../x/${securityToken}/ekptg.view.integrasi.etanah.PermohonanPengambilan?idFail="+id_fail+"&idPermohonan="+id_permohonan+"&jenisSkrin="+jenis_skrin+"&command="+command;	
+	    var hWnd = window.open(url,'printuser','width=1200,height=1000, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
+		
+	}
+
 function popupEtanah(id_fail,id_permohonan,jenis_skrin,command) {
 
 	var url = "../x/${securityToken}/ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah?id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&jenis_skrin="+jenis_skrin+"&command="+command;	
@@ -1280,7 +1289,6 @@ function popupEtanah(id_fail,id_permohonan,jenis_skrin,command) {
 	hWnd.focus();
 	
 }
-
 
 function onchangeJenisKodDaerah(mode,isEdit) {
 
