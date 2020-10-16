@@ -152,7 +152,7 @@
   							<input name="cmdKemaskini" type="button" value="Kemaskini" onClick="kemaskini_penyediaan()">
                             
                             #if($ID_NEGERIPROJEK == "4" || $ID_NEGERIPROJEK == "5")          
-                            <input type="button" name="cmdPopupeTanah" value="Integrasi e-Tanah (Hantar Borang A)" onClick="popupEtanah('$!id_fail','$!id_permohonan','$!id_mmk','WartaS8')">
+                            <input type="button" name="cmdPopupeTanah" value="Integrasi e-Tanah (Hantar Borang A)" onClick="popupEtanah('$!id_fail','$!id_permohonan','$!id_mmk','BorangA')">
                             #end
                   	<!-- <input type="button" name="cmdPopupeTanah" value="Integrasi eTanah Deraf MMK (Syor Pentadbir Tanah)" onClick="popupEtanah('$id_fail','$id_permohonan','','MMK_S4','')"> -->
                             
