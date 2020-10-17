@@ -53,16 +53,20 @@ public class FrmTKRPopupSenaraiPermohonanView extends AjaxBasedModule {
 				 idPermohonan=cbPilihan[i].toString();
 				 logic.simpanPilihanBaru(idMesyuarat, idPermohonan, session);
 			}
+			this.context.put("close_window", "yes");
 		}	    
 		if ("tutup".equals(actionPopup)){
 			
 	    	
 	    } else {
-	    	
+	    	String carianNoFail = getParam("txtCarianNoFail");
+	    	String carianNamaPemohon = getParam("txtCarianNamaPemohon");
+
+	    	logic.carianFail(carianNoFail,carianNamaPemohon);   
 	    	//GO TO LIST TANAH        	
-        	vm = "app/php2/frmTKRPopupSenaraiPermohonan.jsp";  
+        	vm = "app/php2/frmPLPPopupSenaraiPermohonan.jsp";  
         	senaraiFail = new Vector();
-        	logic.setSenaraiFailMesyuarat(idFail);
+        	//logic.setSenaraiFailMesyuarat(idFail);
         	senaraiFail = logic.getSenaraiFailMesyuarat();
 			this.context.put("SenaraiFail", senaraiFail);   	
         	setupPage(session,action,senaraiFail);
@@ -99,7 +103,7 @@ public class FrmTKRPopupSenaraiPermohonanView extends AjaxBasedModule {
 		    Paging paging = new Paging(session,list,itemsPerPage);
 			
 			if (page > paging.getTotalPages()) page = 1; //reset page number
-				this.context.put("SenaraiTanah",paging.getPage(page));
+				this.context.put("SenaraiFail",paging.getPage(page));
 			    this.context.put("page", new Integer(page));
 			    this.context.put("itemsPerPage", new Integer(itemsPerPage));
 			    this.context.put("totalPages", new Integer(paging.getTotalPages()));
