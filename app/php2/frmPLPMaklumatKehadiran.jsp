@@ -60,14 +60,12 @@ function paparKehadiran(id) {
 	document.${formName}.idPegawaiLaporanTanah.value = id;
 	document.${formName}.flagPopup.value = "openPopupKehadiran";
 	document.${formName}.modePopup.value = "view";
-	//doAjaxCall${formName}("");
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function daftarKehadiran() {
 	document.${formName}.flagPopup.value = "openPopupKehadiran";
 	document.${formName}.modePopup.value = "new";
-	//doAjaxCall${formName}("");
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function simpanKehadiran(){
 	if(document.${formName}.txtNamaPegawai.value == ""){

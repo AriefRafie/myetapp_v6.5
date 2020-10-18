@@ -1048,12 +1048,12 @@ function doDaftarBaruTanahGanti(idNegeriPemohon){
 	document.${formName}.flagPopup.value = "openPopupTanahGanti";
 	document.${formName}.modePopup.value = "new";
 	document.${formName}.mode.value = "view";
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function doBatalTanahGanti(){
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function doSimpanTanahGanti(){
 	if(document.${formName}.socJenisHakmilikTG.value == ""){
@@ -1286,7 +1286,7 @@ function doSeterusnya(){
 }
 function gotoBatalPermohonan(){	
 	document.${formName}.step.value = "batalPermohonan";
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function gotoHapusFail(){
  	document.${formName}.step.value = "hapusFail";
