@@ -211,7 +211,6 @@ public class FrmPLPMaklumatPermohonanData {
 			sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN FROM TBLPHPDOKUMEN WHERE FLAG_DOKUMEN = 'P' AND ID_DOKUMEN = '"
 					+ idDokumen + "'";
 			ResultSet rs = stmt.executeQuery(sql);
-			System.out.println("Pelan mana pelan? "+sql);
 
 			Hashtable h;
 			while (rs.next()) {
