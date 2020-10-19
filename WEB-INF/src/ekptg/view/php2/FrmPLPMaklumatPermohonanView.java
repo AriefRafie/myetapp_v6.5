@@ -272,7 +272,7 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
     					FrmSemakan.semakanTambah(cbsemaks[i], String.valueOf(idPermohonan));
     				}
     			}
-        	}
+        	}   
         	if ("simpanLampiran".equals(hitButton)) {
 				uploadLampiran(idPermohonan, session);
 			}
