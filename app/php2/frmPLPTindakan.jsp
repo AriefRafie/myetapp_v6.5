@@ -17,7 +17,6 @@
 			</td>		
 			<td width="47%" align="right" valign="top"></td>
 		</tr>  
-</table>
+	</table>
 </fieldset>
-
 #end

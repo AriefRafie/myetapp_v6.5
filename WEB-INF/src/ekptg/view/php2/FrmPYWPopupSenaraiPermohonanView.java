@@ -84,7 +84,7 @@ public class FrmPYWPopupSenaraiPermohonanView extends AjaxBasedModule {
 
 	    	logic.carianFail(carianNoFail,idJenisPermohonan,carianNamaPemohon);
 	    	
-	    	//GO TO LIST TANAH        	
+	    	       	
         	vm = "app/php2/frmPYWPopupSenaraiPermohonan.jsp";  
         	
         	senaraiFail = new Vector();
@@ -128,7 +128,7 @@ public class FrmPYWPopupSenaraiPermohonanView extends AjaxBasedModule {
 		    Paging paging = new Paging(session,list,itemsPerPage);
 			
 			if (page > paging.getTotalPages()) page = 1; //reset page number
-				this.context.put("SenaraiTanah",paging.getPage(page));
+				this.context.put("SenaraiFail",paging.getPage(page));
 			    this.context.put("page", new Integer(page));
 			    this.context.put("itemsPerPage", new Integer(itemsPerPage));
 			    this.context.put("totalPages", new Integer(paging.getTotalPages()));
