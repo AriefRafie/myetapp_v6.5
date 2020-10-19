@@ -3,7 +3,7 @@
 <table width="100%">
 	<tr>
 	  <td colspan="8">
-	    <input type="button" name="cmdsemakanhakmilik" value="Capaian Hakmilik e-Tanah" onclick="javascript:semakanHakmilikeTanah('htp','$!htpPermohonan.permohonan.getIdPermohonan()')"/>
+		<input type="button" name="cmdsemakanhakmilik" value="Capaian Hakmilik e-Tanah(Melaka)" onclick="javascript:semakanHakmilikeTanah('htp','$!htpPermohonan.permohonan.getIdPermohonan()')"/>
 	    <input type="button" class="stylobutton100_" name="cmdSimpan" id="cmdSimpan" value="Tambah" onclick="doAjaxCall${formName}('tambahTanah')">      
 	  
 	  </td>

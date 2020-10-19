@@ -21,6 +21,7 @@ Skrin Parent : frmTerimaPohonMaklumatTABB2.jsp
 	<table width="100%" border="0">
 	  <tr>
 	    <td colspan="10" >
+	    	<input type="button" name="cmdsemakanhakmilik" value="Capaian Hakmilik e-Tanah(Melaka)" onclick="javascript:semakanHakmilikeTanah('htp','$!idpermohonan')"/>
 	    	<input class="stylobutton100" type="button" name="btnTambahAsasTanah" id="btnTambahAsasTanah" value="Tambah" onclick="TambahAsasTanah(0,1,'kemaskinipermohonan','MakAsasTanah')"/>
 	  	</td>
 	  </tr>
