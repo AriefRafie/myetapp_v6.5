@@ -31,7 +31,7 @@
           <td width="28%">No. Rujukan Surat KJP</td>
           <td width="1%">:</td>
           <td width="63%">
-         	<input type="text" name="txtNoRujukanKJP" id="txtNoRujukanKJP" value="$beanMaklumatAgensi.noRujukanSuratKJP" $readonlyPopup 
+         	<input type="text" name="txtNoRujukanKJP" id="txtNoRujukanKJP" value="$!beanMaklumatAgensi.noRujukanSuratKJP" $readonlyPopup 
          			class="$inputTextClassPopup" size="43" onblur="this.value=this.value.toUpperCase();"/>
           </td>
         </tr>
