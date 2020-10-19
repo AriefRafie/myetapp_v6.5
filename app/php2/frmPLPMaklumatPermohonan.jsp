@@ -65,9 +65,9 @@
           		#parse("app/php2/frmPLPMaklumatBorangK.jsp") 
           	#else 
           		#parse("app/php2/frmPLPMaklumatTanah.jsp")
-          	  #if ($userRole == '(PHP)PYWPenolongPegawaiTanahHQ' || $userRole == '(PHP)PYWPenolongPengarahHQ' || $userRole == '(PHP)PYWPengarahHQ')
-          		#parse("app/php2/frmPLPTindakan.jsp") 
-          	  #end
+          	  	#if ($userRole != '(PHP)PYWPenolongPegawaiTanahNegeri')
+          			#parse("app/php2/frmPLPTindakan.jsp") 
+          	  	#end
           	#end
           </div>
           
