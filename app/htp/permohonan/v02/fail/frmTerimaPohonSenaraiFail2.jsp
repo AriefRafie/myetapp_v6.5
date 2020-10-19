@@ -1679,6 +1679,17 @@ function Hapus(){
 		
 	}
 		
+	//Skrin Maklumat Tanah
+	function semakanHakmilikeTanah(modul,idPermohonan) {
+		var url = "../x/${securityToken}/FrmPopupCapaianHakmilikeTanah?modul="+modul+"&idPermohonan="+idPermohonan;
+	    var hWnd = window.open(url,'printuser','width=1000,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
+
+	}
+	
 </script>
 #parse("app/htp/permohonan/utiliti/javaScriptMaklumatPermohonan.jsp")
 #parse("app/htp/utiliti/javaScriptUmum.jsp")
