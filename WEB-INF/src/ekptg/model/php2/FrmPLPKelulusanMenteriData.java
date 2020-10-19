@@ -31,14 +31,18 @@ public class FrmPLPKelulusanMenteriData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT TARIKH_TERIMA_MENTERI, KEPUTUSAN_MENTERI, ULASAN_MENTERI,FLAG_KEPUTUSAN_PEMOHON, ULASAN_PEMOHON FROM TBLPHPKERTASKERJAPELEPASAN WHERE FLAG_KERTAS = '3' AND ID_PERMOHONAN = '"
-					+ idPermohonan + "'";
+			sql = "SELECT ID_KERTASKERJA, TARIKH_TERIMA_MENTERI, KEPUTUSAN_MENTERI, ULASAN_MENTERI,FLAG_KEPUTUSAN_PEMOHON, ULASAN_PEMOHON "
+				+ "FROM TBLPHPKERTASKERJAPELEPASAN WHERE FLAG_KERTAS = '3' AND ID_PERMOHONAN = '"
+				+ idPermohonan + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
 			int bil = 1;
 			while (rs.next()) {
 				h = new Hashtable();
+				h.put("idKertaskerja",
+						rs.getString("ID_KERTASKERJA") == null ? "" : rs
+								.getString("ID_KERTASKERJA"));
 				h.put("tarikhTerima",
 						rs.getDate("TARIKH_TERIMA_MENTERI") == null ? "" : sdf
 								.format(rs.getDate("TARIKH_TERIMA_MENTERI")));
@@ -139,6 +143,50 @@ public class FrmPLPKelulusanMenteriData {
 			if (db != null)
 				db.close();
 		}
+	}
+	
+	public Vector getBeanMaklumatLampiran(String idKertaskerja)
+			throws Exception {
+		Db db = null;
+		String sql = "";
+		Vector beanMaklumatLampiran = null;
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT * FROM TBLPHPDOKUMEN WHERE ID_ULASANTEKNIKAL = '"
+					+ idKertaskerja + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			while (rs.next()) {
+				beanMaklumatLampiran = new Vector();
+				h = new Hashtable();
+				h.put("idDokumen",
+						rs.getString("ID_DOKUMEN") == null ? "" : rs
+								.getString("ID_DOKUMEN"));
+				h.put("namaDokumen", rs.getString("NAMA_DOKUMEN") == null ? ""
+						: rs.getString("NAMA_DOKUMEN"));
+				h.put("catatan",
+						rs.getString("CATATAN") == null ? "" : rs
+								.getString("CATATAN"));
+				h.put("namaFail",
+						rs.getString("NAMA_FAIL") == null ? "" : rs
+								.getString("NAMA_FAIL"));
+				h.put("idKertaskerja",
+						rs.getString("ID_ULASANTEKNIKAL") == null ? "" : rs
+								.getString("ID_ULASANTEKNIKAL"));
+				beanMaklumatLampiran.addElement(h);
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+
+		return beanMaklumatLampiran;
 	}
 
 	public void updateStatus(String idFail, String idPermohonan,
