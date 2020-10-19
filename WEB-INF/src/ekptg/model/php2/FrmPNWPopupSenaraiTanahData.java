@@ -78,7 +78,6 @@ public class FrmPNWPopupSenaraiTanahData {
 					+ " AND HMS.ID_AGENSI = RUJAGENSI.ID_AGENSI(+) AND RUJAGENSI.ID_KEMENTERIAN = RUJKEMENTERIAN.ID_KEMENTERIAN(+)"
 					+ " AND HMS.ID_HAKMILIKSEMENTARA = '" + idHakmilikSementara
 					+ "'";
-			System.out.println("cek senarai berkaitan = " + sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
