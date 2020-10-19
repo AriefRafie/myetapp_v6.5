@@ -61,7 +61,8 @@ public class FrmCRBSenaraiMesyuaratView extends AjaxBasedModule {
 		this.context.put("userId", userId);
 		this.context.put("userRole", userRole);
 		this.context.put("idNegeriUser", idNegeriUser);
-
+		this.context.put("close_window", "NO");
+		
 		// GET DEFAULT PARAM
 		String vm = "";
 		String action = getParam("action"); // * ACTION NI HANYA UTK SETUP PAGING SHJ
@@ -71,6 +72,7 @@ public class FrmCRBSenaraiMesyuaratView extends AjaxBasedModule {
 		String mode = getParam("mode");
 		String actionMesyuarat = getParam("actionMesyuarat");
 		String selectedTabUpper = getParam("selectedTabUpper").toString();
+		String refreshPaparan = getParam("refreshPaparan").toString();
 		
 		if (selectedTabUpper == null || "".equals(selectedTabUpper)) {
 			selectedTabUpper = "0";
@@ -282,6 +284,12 @@ public class FrmCRBSenaraiMesyuaratView extends AjaxBasedModule {
 				this.context.put("SenaraiFailMohonBaru", senaraiFailMohonBaru);
 				this.context.put("totalRecords", senaraiFailMohonBaru.size());
 				
+				if(refreshPaparan.equals("true")){
+					beanMaklumatMesyuarat = new Vector();
+					logic.setMaklumatMesyuarat(idMesyuarat);
+					beanMaklumatMesyuarat = logic.getBeanMaklumatMesyuarat();
+					this.context.put("BeanMaklumatMesyuarat", beanMaklumatMesyuarat);
+				}		
 			} else if ("3".equals(selectedTabUpper)) {
 				
 				if ("openPopupDokumen".equals(flagPopup)) {

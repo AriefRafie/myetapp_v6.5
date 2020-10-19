@@ -125,14 +125,12 @@ function simpanDokumen(idLaporanTanah,idHakmilikPermohonan,idTanahGanti,flagJeni
 function batalDokumen(){
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
-	//doAjaxCall${formName}("");
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function kemaskiniDokumen(){
 	document.${formName}.flagPopup.value = "openPopupDokumen";
 	document.${formName}.modePopup.value = "update";
-	//doAjaxCall${formName}("");
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function simpanKemaskiniDokumen() {
 
@@ -149,8 +147,7 @@ function simpanKemaskiniDokumen() {
 	document.${formName}.flagPopup.value = "openPopupDokumen";
 	document.${formName}.modePopup.value = "view";
 	document.${formName}.hitButton.value = "simpanKemaskiniDokumen";
-	//doAjaxCall${formName}("");
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function paparDokumen(idDokumen){
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmPLPLawatanTapakView";
@@ -172,8 +169,7 @@ function hapusDokumen(){
 }
 function batalKemaskiniDokumen(){
 	document.${formName}.modePopup.value = "view";
-	//doAjaxCall${formName}("");
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function cetakLaporanTanahAsal(idFail,idLaporanTanah) {
 	var url = "../servlet/ekptg.report.php2.PLPLaporanTanahAsal?ID_FAIL="+idFail+"&ID_LAPORANTANAH="+idLaporanTanah;

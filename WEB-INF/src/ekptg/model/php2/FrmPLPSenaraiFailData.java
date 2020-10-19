@@ -1471,6 +1471,7 @@ public class FrmPLPSenaraiFailData {
 				db.close();
 		}
 		session.setAttribute("ID_FAIL", idFailString);
+		session.setAttribute("FLAG_FROM", "failTugasan");
 		return idFailString;
 	}
 

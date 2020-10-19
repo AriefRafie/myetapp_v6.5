@@ -152,11 +152,13 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
         		idUlasanTeknikal = logic.simpanMaklumatKJP(idPermohonan, idKementerianTanah, idAgensiTanah, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
         		logic.sendEmailtoKJP(idPermohonan, idKementerianTanah, session);
+        		session.setAttribute("MSG", "EMEL TELAH DIHANTAR KEPADA KEMENTERIAN BERKENAAN");
     		}
         	if ("simpanMaklumatUlanganKJP".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatUlanganKJP(idUlasanTeknikal, idPermohonan, idKementerianTanah, idAgensiTanah, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
         		logic.sendEmailtoKJP(idPermohonan, idKementerianTanah, session);
+        		session.setAttribute("MSG", "EMEL ULANGAN TELAH DIHANTAR KEPADA KEMENTERIAN BERKENAAN");
     		}
         	if ("simpanKemaskiniMaklumatKJP".equals(hitButton)){
         		logic.simpanKemaskiniMaklumatKJP(idUlasanTeknikal, idKementerianTanah, idAgensiTanah, getParam("txtTarikhHantar"), 
@@ -182,11 +184,14 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
         		idUlasanTeknikal = logic.simpanMaklumatJPPH(idPermohonan, idPejabatJPPH, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
         		logic.sendEmailtoJPPH(idPermohonan, idPejabatJPPH, session);
+        		session.setAttribute("MSG", "EMEL TELAH DIHANTAR KEPADA JABATAN PENILAIAN & PERKHIDMATAN HARTA BERKENAAN");
         		
     		}
         	if ("simpanMaklumatUlanganJPPH".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatUlanganJPPH(idUlasanTeknikal, idPermohonan, idPejabatJPPH, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
+        		logic.sendEmailtoJPPH(idPermohonan, idPejabatJPPH, session);
+        		session.setAttribute("MSG", "EMEL ULANGAN TELAH DIHANTAR KEPADA JABATAN PENILAIAN & PERKHIDMATAN HARTA BERKENAAN");
     		}
         	if ("simpanKemaskiniMaklumatJPPH".equals(hitButton)){
         		logic.simpanKemaskiniMaklumatJPPH(idUlasanTeknikal, idPejabatJPPH, getParam("txtTarikhHantar"), 
@@ -741,10 +746,16 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
         this.context.put("idUlasanTeknikal", idUlasanTeknikal);
         this.context.put("idKertasKerja", idKertasKerja);
         this.context.put("idDokumen", idDokumen);
-        
         this.context.put("flagStatus", flagStatus);
         this.context.put("flagAktif", flagAktif);
         this.context.put("step",step);
+        
+        if (session.getAttribute("MSG") != null){
+			this.context.put("errMsg", session.getAttribute("MSG"));
+			session.removeAttribute("MSG");
+		} else {
+			this.context.put("errMsg", "");
+		}
   	  	
   	  	if (!"".equals(getParam("flagFrom"))){
         	session.setAttribute("FLAG_FROM", getParam("flagFrom"));

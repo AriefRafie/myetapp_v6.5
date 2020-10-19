@@ -119,7 +119,7 @@
   </tr>
   
   #set ( $cnt = 0 )			
-  #foreach ( $senarai in $SenaraiFail )
+  #foreach ( $senarai in $senaraiFail )
   				#set ( $cnt = $cnt + 1 )
                 #set( $i = $velocityCount )
                 #if ( ($i % 2) == 0 )
@@ -1620,6 +1620,7 @@ function Hapus(){
 		var button = "doSahkan"; */
 		doAjaxCall${formName}(command);
 	}
+	
 		
 </script>
 #parse("app/htp/permohonan/utiliti/javaScriptMaklumatPermohonan.jsp")

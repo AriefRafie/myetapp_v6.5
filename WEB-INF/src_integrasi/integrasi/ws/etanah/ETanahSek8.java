@@ -160,8 +160,8 @@ public class ETanahSek8 implements IntegrationInternal{
 		form.setNama_daerah_pengambilan(permohonan.get("namaDaerah"));
 		form.setNama_kementerian(permohonan.get("namaKementerian"));
 		form.setNama_negeri_pengambilan(permohonan.get("namaNegeri"));
-		form.setNo_fail_jkptg("JKPTG(S).MLK/03/881/24/2019/5");
-		//form.setNo_fail_jkptg(permohonan.get("noFail"));
+		//form.setNo_fail_jkptg("JKPTG(S).MLK/03/881/24/2019/5");
+		form.setNo_fail_jkptg(permohonan.get("noFail"));
 		form.setPoskod(permohonan.get("poskod"));
 		//KJP ATAU JKPTG?
 		form.setTarikh_permohonan(permohonan.get("tarikhPermohonan")); 

@@ -135,9 +135,13 @@
                 <td>&nbsp;</td>
                 <td valign="top">Lampiran</td>
                 <td valign="top">:</td>
-                <td valign="top"> #if ($idLampiran != '')<a href="javascript:cetakLampiran($idLampiran)" class="style2">$namaFailLampiran</a> #end
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input name="cmdUpload" type="button" onclick="uploadDoc($idUlasanTeknikal)" value="Muat Naik Lampiran" /></td>
+                <td valign="top"> 
+                	#if ($idLampiran != '')
+                		<a href="javascript:cetakLampiran($idLampiran)" class="style2">$namaFailLampiran</a> 
+                	#end
+                	&nbsp;&nbsp;&nbsp;&nbsp;
+                	<input name="cmdUpload" type="button" onclick="uploadDoc($idUlasanTeknikal)" value="Muat Naik Lampiran" />
+                </td>
               </tr>
               #end
             </table>

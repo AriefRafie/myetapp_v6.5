@@ -5,16 +5,15 @@
 }
 -->
 </style>
-
+<p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
   <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
   <input name="idSuburusan" type="hidden" id="idSuburusan" value="$idSuburusan"/>
    <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
   <input name="step" type="hidden" id="step" value="$step"/>
-  
   <input name="hitButton" type="hidden" id="hitButton" />
-
+</p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td><fieldset>

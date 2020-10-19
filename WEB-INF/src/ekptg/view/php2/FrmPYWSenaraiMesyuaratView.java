@@ -275,7 +275,7 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 				this.context.put("SenaraiKehadiran", senaraiKehadiran);
 
 			} else if ("2".equals(selectedTabUpper)) {
-				
+				this.context.put("close_window", "no");
 				// SENARAI MESYUARAT PERMOHONAN BAHARU
 				logic.setSenaraiPermohonanBaharu(idMesyuarat);
 				senaraiFailMohonBaru = logic.getListPermohonanBaharu();

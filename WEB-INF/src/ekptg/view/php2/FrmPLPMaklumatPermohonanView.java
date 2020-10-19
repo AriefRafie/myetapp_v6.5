@@ -272,7 +272,7 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
     					FrmSemakan.semakanTambah(cbsemaks[i], String.valueOf(idPermohonan));
     				}
     			}
-        	}
+        	}   
         	if ("simpanLampiran".equals(hitButton)) {
 				uploadLampiran(idPermohonan, session);
 			}
@@ -401,7 +401,6 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
             			hashTanahGanti.put("sekatan", getParam("txtSekatanTG"));
             			hashTanahGanti.put("kegunaanTanah", getParam("txtKegunaanTanahTG"));
         			}
-        			
         			
         			beanMaklumatTanahGanti.addElement(hashTanahGanti);
     				this.context.put("BeanMaklumatTanahGanti", beanMaklumatTanahGanti);
@@ -556,7 +555,7 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
 				this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), "disabled", " class=\"disabled\""));
 				if ("8".equals(idKategoriPemohon)) {
 					
-					this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeri("socPejabat", Long.parseLong(idPejabat), "disabled", " class=\"disabled\"" ,idNegeri));
+					this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat), "disabled", " class=\"disabled\"", idNegeri, "4"));
 					beanMaklumatPejabat = new Vector();
 					logic.setMaklumatPejabatJKPTG(idPejabat);
 					beanMaklumatPejabat = logic.getBeanMaklumatPejabat();
@@ -667,7 +666,9 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
 			hashMaklumatPelepasan.put("namaProjek", getParam("txtNamaProjek"));
 			hashMaklumatPelepasan.put("cadanganKegunaan", getParam("txtCadanganKegunaan"));
 			hashMaklumatPelepasan.put("luasAsal", Utils.RemoveSymbol((String)hashMaklumatPelepasanDB.get("luasAsal")));
-			hashMaklumatPelepasan.put("keteranganLuasAsal", hashMaklumatPelepasanDB.get("keteranganLuasAsal"));			
+			hashMaklumatPelepasan.put("keteranganLuasAsal", hashMaklumatPelepasanDB.get("keteranganLuasAsal"));
+			hashMaklumatPelepasan.put("socLuasKegunaan", getParam("idLuasKegunaan"));
+			
 			if ("doChangeLuas".equals(submit)){
 				hashMaklumatPelepasan.put("luas1", "");
 				hashMaklumatPelepasan.put("luas2", "");
@@ -742,7 +743,7 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
 				this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), ""," onChange=\"doChangeNegeri();\""));
 				if ("8".equals(idKategoriPemohon)) {
 					
-					this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeri("socPejabat", Long.parseLong(idPejabat), ""," onChange=\"doChangePejabat();\"",idNegeri));
+					this.context.put("selectPejabat", HTML.SelectPejabatKPTGByIdNegeriIdSeksyen("socPejabat", Long.parseLong(idPejabat), ""," onChange=\"doChangePejabat();\"",idNegeri, "4"));
 					beanMaklumatPejabat = new Vector();
 					logic.setMaklumatPejabatJKPTG(idPejabat);
 					beanMaklumatPejabat = logic.getBeanMaklumatPejabat();
