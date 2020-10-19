@@ -100,9 +100,14 @@
                 <td width="1%">&nbsp;</td>
                 <td width="28%">Muat Turun Minit Mesyuarat</td>
                 <td width="1%">:</td>
-                <td width="70%">#if ($idDokumen != '') <a href="#" onclick="cetakDokumen($idDokumen)" class="style2">$namaFail</a> &nbsp;&nbsp; #end</td>
+                <td width="70%">
+                	#if ($idDokumen != '') 
+                		<a href="#" onclick="cetakDokumen($idDokumen)" class="style1">$namaFail</a> 
+                		&nbsp;&nbsp; 
+                	#end
+                </td>
               </tr>
-              <tr>
+              <!-- <tr>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
@@ -119,7 +124,7 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td><input name="cmdSimpan" type="button" value="Simpan Dokumen" onclick="simpanDokumenMM('$idMesyuarat','$idPermohonan')" /></td>
-              </tr>
+              </tr> -->
             </table>
             </fieldset></td>
         </tr>
@@ -144,8 +149,8 @@
             <input name="cmdBatal" type="button" value="Batal" onClick="batalMesyuarat()" />
             #end
             #if ($modePopup == 'view')
-            <input name="cmdKemaskini" type="button" value="Kemaskini" onClick="kemaskiniMesyuarat()" >
-            <input name="cmdHapus" type="button" value="Hapus" onClick="hapusMesyuarat()" >
+            ##<input name="cmdKemaskini" type="button" value="Kemaskini" onClick="kemaskiniMesyuarat()" >
+            ##<input name="cmdHapus" type="button" value="Hapus" onClick="hapusMesyuarat()" >
             <input name="cmdKembali" type="button" value="Kembali" onClick="kembali()" >
             #end 
             #if ($modePopup == 'update')

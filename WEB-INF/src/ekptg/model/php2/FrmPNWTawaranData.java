@@ -43,7 +43,8 @@ public class FrmPNWTawaranData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_PENAWARANKJP, B.NAMA_KEMENTERIAN, C.NAMA_AGENSI, A.TARIKH_TERIMA, A.NO_RUJUKAN FROM TBLPHPPENAWARANKJP A, TBLRUJKEMENTERIAN B, TBLRUJAGENSI C"
+			sql = "SELECT A.ID_PENAWARANKJP, B.NAMA_KEMENTERIAN, C.NAMA_AGENSI, A.TARIKH_TERIMA, A.NO_RUJUKAN_JKPTG, A.NO_RUJUKAN_KJP"
+					+ " FROM TBLPHPPENAWARANKJP A, TBLRUJKEMENTERIAN B, TBLRUJAGENSI C"
 					+ " WHERE A.ID_KEMENTERIAN = B.ID_KEMENTERIAN AND A.ID_AGENSI = C.ID_AGENSI AND A.ID_PERMOHONAN = '"
 					+ idPermohonan + "'";
 			ResultSet rs = stmt.executeQuery(sql);
@@ -64,8 +65,10 @@ public class FrmPNWTawaranData {
 				h.put("tarikhTerima",
 						rs.getString("TARIKH_TERIMA") == null ? "" : sdf
 								.format(rs.getDate("TARIKH_TERIMA")));
-				h.put("noRujukan", rs.getString("NO_RUJUKAN") == null ? "" : rs
-						.getString("NO_RUJUKAN").toUpperCase());
+				h.put("noRujukan", rs.getString("NO_RUJUKAN_JKPTG") == null ? "" : rs
+						.getString("NO_RUJUKAN_JKPTG").toUpperCase());
+				h.put("noRujukanSuratKJP", rs.getString("NO_RUJUKAN_KJP") == null ? "" : rs
+						.getString("NO_RUJUKAN_KJP").toUpperCase());
 				listAgensi.addElement(h);
 				bil++;
 			}
@@ -88,7 +91,7 @@ public class FrmPNWTawaranData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT ID_PENAWARANKJP, ID_KEMENTERIAN, ID_AGENSI, TARIKH_TERIMA, NO_RUJUKAN, TUJUAN_KEGUNAAN FROM TBLPHPPENAWARANKJP"
+			sql = "SELECT ID_PENAWARANKJP, ID_KEMENTERIAN, ID_AGENSI, TARIKH_TERIMA, NO_RUJUKAN_JKPTG, NO_RUJUKAN_KJP, TUJUAN_KEGUNAAN FROM TBLPHPPENAWARANKJP"
 					+ " WHERE ID_PENAWARANKJP = '" + idPenawaranKJP + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -108,8 +111,10 @@ public class FrmPNWTawaranData {
 				h.put("tarikhTerima",
 						rs.getString("TARIKH_TERIMA") == null ? "" : sdf
 								.format(rs.getDate("TARIKH_TERIMA")));
-				h.put("noRujukan", rs.getString("NO_RUJUKAN") == null ? "" : rs
-						.getString("NO_RUJUKAN").toUpperCase());
+				h.put("noRujukan", rs.getString("NO_RUJUKAN_JKPTG") == null ? "" : rs
+						.getString("NO_RUJUKAN_JKPTG").toUpperCase());
+				h.put("noRujukanSuratKJP", rs.getString("NO_RUJUKAN_KJP") == null ? "" : rs
+						.getString("NO_RUJUKAN_KJP").toUpperCase());
 				h.put("tujuanKegunaan",
 						rs.getString("TUJUAN_KEGUNAAN") == null ? "" : rs
 								.getString("TUJUAN_KEGUNAAN"));
@@ -127,8 +132,8 @@ public class FrmPNWTawaranData {
 	}
 
 	public String simpanAgensi(String idPermohonan, String txtNoRujukan,
-			String txtTarikhTerima, String idKementerian, String idAgensi,
-			String txtTujuanKegunaan, HttpSession session) throws Exception {
+			String txtNoRujukanKJP, String txtTarikhTerima, String idKementerian, 
+			String idAgensi, String txtTujuanKegunaan, HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -148,7 +153,8 @@ public class FrmPNWTawaranData {
 			idPenawaranKJPString = String.valueOf(idPenawaranKJP);
 			r.add("ID_PENAWARANKJP", idPenawaranKJP);
 			r.add("ID_PERMOHONAN", idPermohonan);
-			r.add("NO_RUJUKAN", txtNoRujukan);
+			r.add("NO_RUJUKAN_JKPTG", txtNoRujukan);
+			r.add("NO_RUJUKAN_KJP", txtNoRujukanKJP);
 			if (!"".equals(txtTarikhTerima)) {
 				r.add("TARIKH_TERIMA",
 						r.unquote("to_date('" + txtTarikhTerima
@@ -187,8 +193,8 @@ public class FrmPNWTawaranData {
 		return idPenawaranKJPString;
 	}
 
-	public void simpanKemaskiniAgensi(String idPenawaranKJP,
-			String txtNoRujukan, String txtTarikhTerima, String idKementerian,
+	public void simpanKemaskiniAgensi(String idPenawaranKJP, String txtNoRujukan,
+			String txtNoRujukanKJP, String txtTarikhTerima, String idKementerian,
 			String idAgensi, String txtTujuanKegunaan, HttpSession session)
 			throws Exception {
 
@@ -206,7 +212,8 @@ public class FrmPNWTawaranData {
 
 			// TBLPHPPENAWARANKJP
 			r.update("ID_PENAWARANKJP", idPenawaranKJP);
-			r.add("NO_RUJUKAN", txtNoRujukan);
+			r.add("NO_RUJUKAN_JKPTG", txtNoRujukan);
+			r.add("NO_RUJUKAN_KJP", txtNoRujukanKJP);
 			if (!"".equals(txtTarikhTerima)) {
 				r.add("TARIKH_TERIMA",
 						r.unquote("to_date('" + txtTarikhTerima

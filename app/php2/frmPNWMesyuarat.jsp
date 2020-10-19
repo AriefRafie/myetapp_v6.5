@@ -43,9 +43,9 @@
     <td><fieldset>
       <legend><strong>SENARAI MESYUARAT</strong></legend>
       <table align="center" width="100%">
-        <tr>
-          <td colspan="5" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:daftarMesyuarat()"/></td>
-        </tr>
+        ##<tr>
+        ##  <td colspan="5" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:daftarMesyuarat()"/></td>
+        ##</tr>
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
           <td width="60%"><strong>Tajuk Mesyuarat</strong></td>
