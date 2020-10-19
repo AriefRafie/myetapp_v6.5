@@ -429,7 +429,7 @@ public class PopupeTanahData {
 		try {
 			Statement stmt = db.getStatement();
 			sql = "SELECT F.NO_FAIL,P.ID_PERMOHONAN,TO_CHAR(P.TARIKH_PERMOHONAN,'DD/MM/YYYY') TARIKH_PERMOHONAN "+
-			" ,RK.KOD_KEMENTERIAN,RK.NAMA_KEMENTERIAN,P.TUJUAN NAMA_PROJEK,P.TUJUAN_BI NAMA_PROJEKBI"+
+			" ,RK.ID_KEMENTERIAN,RK.KOD_KEMENTERIAN,RK.NAMA_KEMENTERIAN,P.TUJUAN NAMA_PROJEK,P.TUJUAN_BI NAMA_PROJEKBI"+
 			" ,PI.NO_PERMOHONAN,PI.TARIKH_HANTAR "+
 			" ,PI.TARIKH_TERIMA,PI.NO_JILID "+
 			" ,PI.FLAG_AKTIF,PI.FLAG_ENDORSAN,PI.FLAG_HANTAR,PI.FLAG_TRANSAKSI,PI.FLAG_URUSAN,PI.KETERANGAN_TRANSAKSI "+
@@ -481,6 +481,7 @@ public class PopupeTanahData {
 				maklumatPermohonan.put("kodAgensi", rs.getString("KOD_AGENSI") == null ? "" : rs.getString("KOD_AGENSI"));
 				maklumatPermohonan.put("namaAgensi", rs.getString("NAMA_AGENSI") == null ? "" : rs.getString("NAMA_AGENSI"));
 
+				maklumatPermohonan.put("idKementerian", rs.getString("ID_KEMENTERIAN") == null ? "" : rs.getString("ID_KEMENTERIAN"));
 				maklumatPermohonan.put("kodKementerian", rs.getString("KOD_KEMENTERIAN") == null ? "" : rs.getString("KOD_KEMENTERIAN"));
 				maklumatPermohonan.put("namaKementerian", rs.getString("NAMA_KEMENTERIAN") == null ? "" : rs.getString("NAMA_KEMENTERIAN"));
 				
