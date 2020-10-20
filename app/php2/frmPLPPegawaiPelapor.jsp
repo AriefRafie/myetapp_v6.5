@@ -52,13 +52,11 @@
 <script>
 function kemaskiniPelapor() {
 	document.${formName}.mode.value = "update";
-	//doAjaxCall${formName}("");
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function batalKemaskiniPelapor() {
 	document.${formName}.mode.value = "view";
-	//doAjaxCall${formName}("");
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function simpanKemaskiniPelapor(){
 	if(document.${formName}.txtNama.value == ""){
@@ -83,7 +81,6 @@ function simpanKemaskiniPelapor(){
 	
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "simpanKemaskiniPelapor";
-	//doAjaxCall${formName}("");
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 </script>

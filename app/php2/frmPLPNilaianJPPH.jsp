@@ -205,8 +205,7 @@ function total1(){
 }
 function kemaskiniNilaian() {
 	document.${formName}.mode.value = "update";
-	//doAjaxCall${formName}("");	
-	document.${formName}.submit();
+	doAjaxCall${formName}("");	
 }
 function simpanKemaskiniNilaian(){
 
@@ -221,7 +220,6 @@ function simpanKemaskiniNilaian(){
 }
 function batalNilaian(){
 	document.${formName}.mode.value = "view";
-	//doAjaxCall${formName}("");
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 </script>

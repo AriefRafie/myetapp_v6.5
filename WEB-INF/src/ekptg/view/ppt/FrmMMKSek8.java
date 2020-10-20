@@ -79,10 +79,7 @@ public class FrmMMKSek8 extends AjaxBasedModule {
    	
     	//get user login detail
     	//String id_user = (String) session.getAttribute("_ekptg_user_id");
-    	String userIdNeg = (String) session.getAttribute("_ekptg_user_negeri");
-    	
-    
-    	
+    	String userIdNeg = (String) session.getAttribute("_ekptg_user_negeri");    	
     	
     	//screen jsp
     	String listdepan = "app/ppt/frmMMKSek8Senarai.jsp";
@@ -934,13 +931,11 @@ public class FrmMMKSek8 extends AjaxBasedModule {
 		h.put("txtJenisPenggunaan", getParam("txtJenisPenggunaan"));
 		h.put("txtLokasi", getParam("txtLokasi"));
 		h.put("txtKedudukan", getParam("txtKedudukan"));
-		h.put("txtKeadaan", getParam("txtKeadaan"));
-		
+		h.put("txtKeadaan", getParam("txtKeadaan"));	
 		h.put("id_user", id_user);
 		
 		FrmMMKSek8Data.simpanPenyediaan(h,id_mmk);
-		
-		
+				
 		// TUJUAN
     	String[] txtUlasanTUJUAN_MAIN = this.request.getParameterValues("txtUlasanTUJUAN_MAIN");
 		if (txtUlasanTUJUAN_MAIN != null ) 

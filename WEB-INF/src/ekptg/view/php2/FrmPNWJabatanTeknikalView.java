@@ -10,6 +10,7 @@ import ekptg.helpers.HTML;
 import ekptg.helpers.Utils;
 import ekptg.model.php2.FrmPNWHeaderData;
 import ekptg.model.php2.FrmPNWJabatanTeknikalData;
+import ekptg.model.php2.FrmTKRJabatanTeknikalData;
 
 public class FrmPNWJabatanTeknikalView extends AjaxBasedModule{
 
@@ -17,6 +18,7 @@ private static final long serialVersionUID = 1L;
 	
 	FrmPNWHeaderData logicHeader = new FrmPNWHeaderData();
 	FrmPNWJabatanTeknikalData logic = new FrmPNWJabatanTeknikalData();
+	FrmTKRJabatanTeknikalData logicTKR = new FrmTKRJabatanTeknikalData();
 
 	@Override
 	public String doTemplate2() throws Exception {
@@ -88,6 +90,7 @@ private static final long serialVersionUID = 1L;
         	if ("simpanMaklumatKJT".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatKJT(idPermohonan, "4", idKementerian, idAgensi, idPejabat, idNegeri, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
+        		logicTKR.sendEmailtoPejabatJKPTG(idPermohonan, idPejabat, session);
     		}
         	if ("simpanMaklumatUlanganKJT".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatUlanganKJT(idUlasanTeknikal, idPermohonan, "4", idKementerian, idAgensi, idPejabat, idNegeri, getParam("txtTarikhHantar"), 

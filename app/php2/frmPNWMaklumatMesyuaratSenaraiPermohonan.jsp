@@ -29,7 +29,9 @@
   <input type="hidden" name="flagResult" id="flagResult" value="$flagResult"/>
   <input type="hidden" name="catatan" id="catatan" value="$catatan"/>
     <input name="idDokumen" type="hidden" id="idDokumen" value="$idDokumen"/>
+    <input type="hidden" name="refreshPaparan" id="refreshPaparan" value="$refreshPaparan"/>
 </p>
+
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td>&nbsp;</td>
@@ -217,7 +219,7 @@
 					          <td width="20%"><strong>No. Fail</strong></td>
 					          <td width="15%"><strong>Jenis Permohonan</strong></td>
 					          <td width="20%"><strong>Nama Pemohon</strong></td>
-					          ##<td width="10%"><strong>Kertas Pertimbangan</strong></td>
+					          <td width="10%"><strong>Kertas Pertimbangan</strong></td>
 					          <td width="10%"><strong>Keputusan</strong></td>
 					          <td width="15%"><strong>Catatan</strong></td>
 					          #foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
@@ -241,8 +243,8 @@
 					          <td class="$row">$senaraiFailMohonBaru.noFailPermohonan</td>
 					          <td class="$row">$senaraiFailMohonBaru.jenisPermohonan</td>
 					          <td class="$row">$senaraiFailMohonBaru.namaPemohon</td>
-					          ##<td class="$row" align="center"><a href="#" class="style2" onClick="doCetakKertasPertimbangan('$senaraiFailMohonBaru.id')">
-                      		  ##<img border="0" src="../img/print.gif"/></a></td>
+					          <td class="$row" align="center"><a href="#" class="style2" onClick="doCetakKertasPertimbangan('$senaraiFailMohonBaru.id')">
+                      		  <img border="0" src="../img/print.gif"/></a></td>
 					          <td class="$row">
 					          		#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
 										#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
@@ -371,7 +373,7 @@
 </script>
 <script>
 function doChangeTab(tabId) {
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmPYWSenaraiMesyuaratView";
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmPNWSenaraiMesyuaratView";
 	document.${formName}.method="POST";
 	document.${formName}.selectedTabUpper.value = tabId;
 	document.${formName}.flagPopup.value = "";
@@ -700,6 +702,24 @@ function hapusMesyuarat(idMesyuarat){
 	document.${formName}.actionMesyuarat.value = "";
 	document.${formName}.mode.value = "";
 	document.${formName}.submit();
+}
+
+function refreshFromPilihPermohonan() {
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmPNWSenaraiMesyuaratView";
+	document.${formName}.method="POST";
+	document.${formName}.flagPopup.value = "";
+	document.${formName}.modePopup.value = "";
+	document.${formName}.refreshPaparan.value = "true";
+	doAjaxCall${formName}("");
+}
+
+function doCetakKertasPertimbangan(idFail) {
+	var url = "../servlet/ekptg.report.php2.PNWKertasRingkasan?ID_FAIL="+idFail;
+    var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();	
 }
 
 </script>

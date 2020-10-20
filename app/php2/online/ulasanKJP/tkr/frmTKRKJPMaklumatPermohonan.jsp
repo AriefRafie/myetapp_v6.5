@@ -487,7 +487,7 @@
         	Saya, <b>$!namaPemohon</b>, $!kadPengenalanPemohon dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
    			<br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
    			<p align="center"><input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Permohonan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
-   			<input type="button" name="cmdPindaan" id="cmdPindaan" $buttonSend value="Pindaan Penyedia" onclick="doAjaxCall${formName}('simpanpengesahan3')" /></p>
+   			<input type="button" name="cmdPindaan" id="cmdPindaan" $buttonSend value="Kembalikan kepada penyedia" onclick="doAjaxCall${formName}('simpanpengesahan3')" /></p>
       		</td>
 
 

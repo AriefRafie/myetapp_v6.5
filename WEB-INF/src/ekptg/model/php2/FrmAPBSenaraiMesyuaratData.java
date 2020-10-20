@@ -443,7 +443,7 @@ public class FrmAPBSenaraiMesyuaratData {
 			Statement stmt = db.getStatement();
 
 
-			sql = "select a.ID_MESYUARAT_PERMOHONAN, d.no_fail,e.nama,a.flag_jenis_permohonan,a.FLAG_SYOR ,a.CATATAN, c.id_permohonan from tblphpMesyuaratPermohonan a, tblphpmesyuarat b, tblpermohonan c, tblpfdfail d, tblphppemohon e "
+			sql = "select a.ID_MESYUARAT_PERMOHONAN, c.id_permohonan, d.no_fail,e.nama,a.flag_jenis_permohonan,a.FLAG_SYOR ,a.CATATAN, c.id_permohonan, D.ID_FAIL from tblphpMesyuaratPermohonan a, tblphpmesyuarat b, tblpermohonan c, tblpfdfail d, tblphppemohon e "
 				 +"where a.flag_jenis_permohonan = 'B' and a.id_mesyuarat = b.id_mesyuarat and a.id_permohonan=c.id_permohonan and c.id_fail=d.id_fail "
 				 +"and c.id_pemohon=e.id_pemohon and a.id_mesyuarat='"+idMesyuarat+"'";	
 			sql = sql + " ORDER BY a.ID_MESYUARAT_PERMOHONAN ASC";
@@ -467,7 +467,7 @@ public class FrmAPBSenaraiMesyuaratData {
 				if(rs.getString("FLAG_JENIS_PERMOHONAN").equals("B")){
 					h.put("jenisPermohonan","PERMOHONAN BARU");
 				}else{
-					h.put("jenisPermohonan","PERMOHONAN TANGGUH");
+					h.put("jenisPermohonan","PERMOHONAN LANJUTAN");
 				}
 				h.put("flagKeputusan",
 						rs.getString("FLAG_SYOR") == null ? "" : rs
@@ -475,6 +475,12 @@ public class FrmAPBSenaraiMesyuaratData {
 				h.put("catatanKeputusan",
 						rs.getString("CATATAN") == null ? "" : rs
 								.getString("CATATAN"));
+				h.put("idFail",
+						rs.getString("ID_FAIL") == null ? "" : rs
+								.getString("ID_FAIL"));
+				h.put("idPermohonan",
+						rs.getString("ID_PERMOHONAN") == null ? "" : rs
+								.getString("ID_PERMOHONAN"));
 				listPermohonanBaharu.addElement(h);
 				bil++;
 			}
@@ -495,7 +501,7 @@ public class FrmAPBSenaraiMesyuaratData {
 			Statement stmt = db.getStatement();
 
 
-			sql = "select a.ID_MESYUARAT_PERMOHONAN, d.no_fail,e.nama,a.flag_jenis_permohonan,a.FLAG_SYOR ,a.CATATAN, c.id_permohonan from tblphpMesyuaratPermohonan a, tblphpmesyuarat b, tblpermohonan c, tblpfdfail d, tblphppemohon e "
+			sql = "select a.ID_MESYUARAT_PERMOHONAN, d.no_fail,e.nama,a.flag_jenis_permohonan,a.FLAG_SYOR ,a.CATATAN, c.id_permohonan, d.id_fail from tblphpMesyuaratPermohonan a, tblphpmesyuarat b, tblpermohonan c, tblpfdfail d, tblphppemohon e "
 				 +"where a.flag_jenis_permohonan = 'L' and a.id_mesyuarat = b.id_mesyuarat and a.id_permohonan=c.id_permohonan and c.id_fail=d.id_fail "
 				 +"and c.id_pemohon=e.id_pemohon and a.id_mesyuarat='"+idMesyuarat+"'";	
 			sql = sql + " ORDER BY a.ID_MESYUARAT_PERMOHONAN ASC";
@@ -519,7 +525,7 @@ public class FrmAPBSenaraiMesyuaratData {
 				if(rs.getString("FLAG_JENIS_PERMOHONAN").equals("B")){
 					h.put("jenisPermohonan","PERMOHONAN BARU");
 				}else{
-					h.put("jenisPermohonan","PERMOHONAN TANGGUH");
+					h.put("jenisPermohonan","PERMOHONAN LANJUTAN");
 				}
 				h.put("flagKeputusan",
 						rs.getString("FLAG_SYOR") == null ? "" : rs
@@ -527,7 +533,13 @@ public class FrmAPBSenaraiMesyuaratData {
 				h.put("catatanKeputusan",
 						rs.getString("CATATAN") == null ? "" : rs
 								.getString("CATATAN"));
-				listPermohonanBaharu.addElement(h);
+				h.put("idFail",
+						rs.getString("ID_FAIL") == null ? "" : rs
+								.getString("ID_FAIL"));
+				h.put("idPermohonan",
+						rs.getString("ID_PERMOHONAN") == null ? "" : rs
+								.getString("ID_PERMOHONAN"));
+				listPermohonanLanjut.addElement(h);
 				bil++;
 			}
 
@@ -1056,6 +1068,9 @@ public class FrmAPBSenaraiMesyuaratData {
 		String sql = "";
 		String sqla = "";
 		String flagSyor="";
+		String flagMesyuaratSemula="";
+		String flagSelesaiMesyuarat="";
+		String flagAktif="";
 		String idPermohonan="";
 		String idSuburusan="";
 		String idFail="";
@@ -1067,7 +1082,7 @@ public class FrmAPBSenaraiMesyuaratData {
 			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			
-			sql = "SELECT A.ID_MESYUARAT_PERMOHONAN, D.NO_FAIL,E.NAMA,A.FLAG_JENIS_PERMOHONAN,A.FLAG_SYOR ,A.CATATAN, C.ID_PERMOHONAN "+
+			sql = "SELECT A.ID_MESYUARAT_PERMOHONAN, D.NO_FAIL,E.NAMA,A.FLAG_JENIS_PERMOHONAN,A.FLAG_SYOR ,A.CATATAN, C.ID_PERMOHONAN, A.FLAG_MESYUARAT_SEMULA, A.FLAG_SELESAI_MESYUARAT, A.FLAG_AKTIF "+
 			"FROM TBLPHPMESYUARATPERMOHONAN A, TBLPHPMESYUARAT B, TBLPERMOHONAN C, TBLPFDFAIL D, TBLPHPPEMOHON E WHERE A.FLAG_JENIS_PERMOHONAN = 'B' "+
 			"AND A.ID_MESYUARAT = B.ID_MESYUARAT AND A.ID_PERMOHONAN=C.ID_PERMOHONAN AND C.ID_FAIL=D.ID_FAIL AND C.ID_PEMOHON=E.ID_PEMOHON "+
 			"AND A.ID_MESYUARAT='"+idMesyuaratPermohonan+"'";
@@ -1079,7 +1094,10 @@ public class FrmAPBSenaraiMesyuaratData {
 			while (rs.next()) {			
 				flagSyor=rs.getString("FLAG_SYOR");
 				idPermohonan=rs.getString("ID_PERMOHONAN");
-				list.add(new String[]{flagSyor, idPermohonan});
+				flagMesyuaratSemula=rs.getString("FLAG_MESYUARAT_SEMULA");
+				flagSelesaiMesyuarat=rs.getString("FLAG_SELESAI_MESYUARAT");
+				flagAktif=rs.getString("FLAG_AKTIF");
+				list.add(new String[]{flagSyor, idPermohonan, flagMesyuaratSemula, flagSelesaiMesyuarat, flagAktif});
 			}	
 			
 			for (int i = 0; i < list.size(); i++) {
@@ -1099,7 +1117,20 @@ public class FrmAPBSenaraiMesyuaratData {
 					idFail=rsa.getString("ID_FAIL");
 				}
 				
+				// TBLPHPMESYUARATPERMOHONAN
+				r = new SQLRenderer();
+				r.update("ID_PERMOHONAN", idPermohonan);
+				r.update("FLAG_AKTIF","1");
+				r.add("FLAG_MESYUARAT_SEMULA", "0");
+				r.add("FLAG_SELESAI_MESYUARAT", "1");
+				r.add("ID_KEMASKINI", userId);
+				r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+				sql = r.getSQLUpdate("TBLPHPMESYUARATPERMOHONAN");
+				stmt.executeUpdate(sql);
+			
+				
 				// TBLPERMOHONAN
+				r = new SQLRenderer();
 				r.update("ID_PERMOHONAN", idPermohonan);
 				r.add("ID_STATUS", "1610213"); // CETAKAN KERTAS RINGKASAN
 				r.add("ID_KEMASKINI", userId);

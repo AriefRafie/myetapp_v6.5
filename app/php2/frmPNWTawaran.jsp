@@ -72,7 +72,7 @@
         </tr>
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-          <td width="20%"><strong>No Rujukan</strong></td>
+          <td width="20%"><strong>No. Rujukan KJP</strong></td>
           <td width="35%"><strong>Kementerian</strong></td>
           <td width="30%"><strong>Agensi</strong></td>
           <td width="10%" align="center"><strong>Tarikh Terima</strong></td>
@@ -221,11 +221,11 @@ function daftarAgensi() {
 	doAjaxCall${formName}("");
 }
 function simpanAgensi(){
-// 	if(document.${formName}.txtNoRujukan.value == ""){
-// 		alert('Sila masukkan No Rujukan Surat.');
-//   		document.${formName}.txtNoRujukan.focus(); 
-// 		return; 
-// 	}
+ 	if(document.${formName}.txtNoRujukanKJP.value == ""){
+ 		alert('Sila masukkan No. Rujukan Surat.');
+   		document.${formName}.txtNoRujukanKJP.focus(); 
+ 		return; 
+ 	}
 	if(document.${formName}.txtTarikhTerima.value == ""){
 		alert('Sila masukkan Tarikh Terima.');
   		document.${formName}.txtTarikhTerima.focus(); 
@@ -285,11 +285,11 @@ function batalKemaskiniAgensi() {
 	doAjaxCall${formName}("");
 }
 function simpanKemaskiniAgensi(){
-// 	if(document.${formName}.txtNoRujukan.value == ""){
-// 		alert('Sila masukkan No Rujukan Surat.');
-//   		document.${formName}.txtNoRujukan.focus(); 
-// 		return; 
-// 	}
+ 	if(document.${formName}.txtNoRujukanKJP.value == ""){
+ 		alert('Sila masukkan No. Rujukan Surat.');
+   		document.${formName}.txtNoRujukanKJP.focus(); 
+ 		return; 
+ 	}
 	if(document.${formName}.txtTarikhTerima.value == ""){
 		alert('Sila masukkan Tarikh Terima.');
   		document.${formName}.txtTarikhTerima.focus(); 

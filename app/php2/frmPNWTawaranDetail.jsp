@@ -3,25 +3,17 @@
     <td><fieldset>
       <legend>MAKLUMAT PENERIMA TAWARAN</legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
-       #foreach($beanHeader in $BeanHeader)
-       
+        #foreach($beanHeader in $BeanHeader)
         <tr>
-          <td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
-          <td width="28%">No Rujukan Surat</td>
+          <td width="1%">&nbsp;</td>
+          <td width="28%">No. Rujukan Surat JKPTG</td>
           <td width="1%">:</td>
-         <td width="63%">$beanHeader.noFail
-         	<input type="hidden" name="txtNoRujukan" id="txtNoRujukan" value="$beanHeader.noFail"/>
+          <td width="63%">$beanHeader.noFail
+         	<input type="hidden" name="txtNoRujukanJKPTG" id="txtNoRujukanJKPTG" value="$beanHeader.noFail"/>
           </td>
         </tr>
         #end
-         #foreach ($beanMaklumatAgensi in $BeanMaklumatAgensi)
-        <tr>
-          <td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
-          <td width="28%">Tarikh Surat</td>
-          <td width="1%">:</td>
-          <td width="70%"><input type="text" name="txtTarikhTerima" id="txtTarikhTerima" value="$beanMaklumatAgensi.tarikhTerima" onblur="check_date(this)" size="9" $readonlyPopup class="$inputTextClassPopup"/>
-            #if ($modePopup != 'view') <a href="javascript:displayDatePicker('txtTarikhTerima',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a>#end </td>
-        </tr>
+        #foreach ($beanMaklumatAgensi in $BeanMaklumatAgensi)
         <tr>
           <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
           <td>Kementerian</td>
@@ -35,13 +27,28 @@
           <td>$selectAgensi</td>
         </tr>
         <tr>
+          <td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td width="28%">No. Rujukan Surat KJP</td>
+          <td width="1%">:</td>
+          <td width="63%">
+         	<input type="text" name="txtNoRujukanKJP" id="txtNoRujukanKJP" value="$!beanMaklumatAgensi.noRujukanSuratKJP" $readonlyPopup 
+         			class="$inputTextClassPopup" size="43" onblur="this.value=this.value.toUpperCase();"/>
+          </td>
+        </tr>
+        <tr>
+          <td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td width="28%">Tarikh Surat</td>
+          <td width="1%">:</td>
+          <td width="70%"><input type="text" name="txtTarikhTerima" id="txtTarikhTerima" value="$beanMaklumatAgensi.tarikhTerima" onblur="check_date(this)" size="9" $readonlyPopup class="$inputTextClassPopup"/>
+            #if ($modePopup != 'view') <a href="javascript:displayDatePicker('txtTarikhTerima',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a>#end </td>
+        </tr>
+        <tr>
           <td valign="top">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
           <td valign="top">Tujuan Kegunaan</td>
           <td valign="top">:</td>
           <td valign="top"><textarea name="txtTujuanKegunaan" id="txtTujuanKegunaan" rows="5" cols="50" $readonlyPopup class="$inputTextClassPopup">$beanMaklumatAgensi.tujuanKegunaan</textarea></td>
         </tr>
         #end
-        
         #foreach ($beanMaklumatImejan in $BeanMaklumatImejan)
    		<tr>
    			#if ($modeDokumen == 'addDokumen')

@@ -53,7 +53,7 @@
           <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TANAH BERKAITAN</li>
           <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PERMOHONAN</li>
           <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">SENARAI SEMAK</li>
-          <li onClick="doChangeTabUpper(4);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT LAMPIRAN</li>
+          ##<li onClick="doChangeTabUpper(4);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT LAMPIRAN</li>
         </ul>
         <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent">#if ($flagBorangK == 'Y') #parse("app/php2/frmPLPMaklumatBorangK.jsp") #else #parse("app/php2/frmPLPMaklumatTanah.jsp") #end</div>
@@ -68,7 +68,6 @@
                     <tr>
                       <td colspan="8" scope="row">
                       	<input name="cmdDaftar" type="button" value="Pilih Hakmilik" onClick="javascript:doDaftarHakmilik('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/>
-                        <input name="cmdDaftar" type="button" value="Pilih Borang K" onClick="javascript:doDaftarBorangK('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/>
                       </td>
                     </tr>
                     <tr class="table_header">

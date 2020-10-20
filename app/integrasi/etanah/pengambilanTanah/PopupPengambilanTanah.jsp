@@ -1,3 +1,4 @@
+xxx
 <script type="text/javascript" src="../../library/js/jquery-1.3.2.min.js" ></script>
 <script>var $jquery = jQuery.noConflict();</script>
 
@@ -355,8 +356,7 @@ JKPTG(S).MLK/02/881/04/2010/9-->
                           #else
                           <font color="red">Sila Pastikan Maklumat Ini Diisi!</font>
                           #set($check_maklumat_PU = "X") 
-                          #end  
-                         
+                          #end                     
                          
                           </td>
 			          	</tr>
@@ -689,35 +689,35 @@ $!maklumat_mmk
        
 </fieldset>
 
-
-#if($!display_button_hantar == "Y")       
+::$display_button_hantar
+##if($!display_button_hantar == "Y")       
        	  <table width="100%" border="0" align="center"	 cellspacing="2" cellpadding="2" >
            <tr>
            <td  valign="top" align="center"> 
            
-           	   #set($disable_button_hantar = "")
-                     
-               #if($!jenis_skrin == "PU" && $check_maklumat_PU == "X")
+           	   ##set($disable_button_hantar = "")
+
+               ##if($!jenis_skrin == "PU" && $check_maklumat_PU == "X")
                <font color="red">Sila Pastikan Maklumat <b>Hakmilik Sambungan</b> Lengkap Diisi!</font>
-               #set($disable_button_hantar = "disabled")                
-               #elseif(($!jenis_skrin == "WartaS4" || $!jenis_skrin == "WartaS8") && $check_maklumat_warta == "X")                 
+               ##set($disable_button_hantar = "disabled")                
+               ##elseif(($!jenis_skrin == "WartaS4" || $!jenis_skrin == "WartaS8") && $check_maklumat_warta == "X")                 
                <font color="red">Sila Pastikan Maklumat <b>Warta</b> Lengkap Diisi!</font>
-               #set($disable_button_hantar = "disabled")
-               #else 
-               #set($disable_button_hantar = "")
-               #end 
+               ##set($disable_button_hantar = "disabled")
+               ##else 
+               ##set($disable_button_hantar = "")
+               ##end 
                
                
-               #if($check_dokumen_complete == "X")  
+               ##if($check_dokumen_complete == "X")  
                <font color="red">Sila Pastikan Dokumen Wajib Lengkap Dimuat Naik!</font>
-               #set($disable_button_hantar = "disabled")
-               #end           
+               ##set($disable_button_hantar = "disabled")
+               ##end           
                
                <input type="button" name="cmdHantarRekod" id="cmdHantarRekod" value="Hantar Rekod ke e-Tanah" $disable_button_hantar onClick="hantar('$id_permohonan','$jenis_skrin','$id_penarikan')">
            </td>
            </tr>
            </table>       
-       #end
+       ##end
        <br />
 
  
@@ -832,6 +832,7 @@ function hapusDokumenEtanah(id_dokumen,id_button) {
 
 
 	function hantar(id_permohonan,jenis_skrin,id_penarikan) {		
+		//alert("masuk sini hantar");
 
 		if ( !window.confirm("Adakah Anda Pasti ?") ){
 			return;

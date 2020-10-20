@@ -244,7 +244,11 @@ public class FrmPLPSenaraiFailOnlineView extends AjaxBasedModule {
 			this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "disabled", " class=\"disabled\" style=\"width:auto\""));
 
 			semak = new FrmSemakan();
-			senaraiSemak = semak.getSenaraiSemakanAttach2("phptukar",idPermohonan);
+			if(idSuburusan.equals("32")){
+				senaraiSemak = semak.getSenaraiSemakanAttach2("phppnw",idPermohonan);
+			}else{
+				senaraiSemak = semak.getSenaraiSemakanAttach2("phptukar",idPermohonan);
+			}
 			this.context.put("SenaraiSemak", senaraiSemak);
         }
         else {

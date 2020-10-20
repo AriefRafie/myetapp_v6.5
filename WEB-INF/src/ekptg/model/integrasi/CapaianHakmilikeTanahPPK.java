@@ -181,8 +181,7 @@ public class CapaianHakmilikeTanahPPK implements IIntegrasieTanahCarian {
 				String statusPemilikan = rs.getString("STATUS_PEMILIKAN") == null ? "" : getJenisPB(rs.getString("STATUS_PEMILIKAN"));
 				String syaratNyata = rs.getString("SYARAT_NYATA") == null ? "" : rs.getString("SYARAT_NYATA");
 				String sekatan = rs.getString("SEKATAN") == null ? "" : rs.getString("SEKATAN");
-				
-				
+						
 				if (hakmilikRegistered(noResit, idHakmilik, idPermohonanSimati)){
 					myLog.info("//UPDATE");
 					r.update("ID_HTA", this.getIdHTA());
@@ -253,7 +252,7 @@ public class CapaianHakmilikeTanahPPK implements IIntegrasieTanahCarian {
 					this.flagMsg = "Y";
 					
 				} else {
-					myLog.info("//INSERT");
+					myLog.info("INSERT");
 					//INSERT
 					long idHTA = DB.getNextID("TBLPPKHTA_SEQ");
 					r.add("ID_HTA", idHTA);

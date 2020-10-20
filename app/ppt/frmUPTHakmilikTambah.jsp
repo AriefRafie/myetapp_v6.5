@@ -1037,9 +1037,9 @@ function update_maklumat(id_hakmilik) {
   		document.${formName}.edit_no_lot.focus(); 
 		return;
 	} */
-	if(document.${formName}.editMukim.value == ""){
+	if(document.${formName}.socMukim.value == ""){
 		alert("Sila pilih \"Bandar/Pekan/Mukim\" terlebih dahulu.");
-  		document.${formName}.editMukim.focus(); 
+  		document.${formName}.socMukim.focus(); 
 		return;
 	}
 /*	if(document.${formName}.editLuas.value == ""){
@@ -1047,17 +1047,17 @@ function update_maklumat(id_hakmilik) {
   		document.${formName}.editLuas.focus(); 
 		return;
 	}*/
-	if((document.${formName}.txtnolot.value != "" && document.${formName}.txtnopt.value == "") 
+	/*if((document.${formName}.txtnolot.value != ""  document.${formName}.txtnopt.value == "") 
 		|| (document.${formName}.txtnolot.value == "" && document.${formName}.txtnopt.value != "")){
 		alert("Sila lengkapkan maklumat \"No.PT\" terlebih dahulu.");
   		document.${formName}.txtnolot.focus(); 
 		return;
-	}
-	if(document.${formName}.txtnolot.value == "" && document.${formName}.txtnopt.value == ""){
+	}*/
+/*	if(document.${formName}.txtnolot.value == "" || document.${formName}.txtnopt.value == ""){
 		alert("Sila masukkan salah satu \"No.PT atau No.LOT\" terlebih dahulu.");
   		document.${formName}.txtnolot.focus(); 
 		return;
-	}
+	}*/
 /*	else if(document.${formName}.txtCatatan.value == ""){
 		alert("Sila masukkan \"Catatan\" terlebih dahulu.");
   		document.${formName}.txtCatatan.focus(); 
@@ -1293,10 +1293,10 @@ function convertNilaiAmbilUpdate(){
 }
 function onchangeUnitLuasAmbilUpdate(){
 	document.${formName}.ScreenLocation.value = "top";
-	document.${formName}.command.value = "viewHM";
-	document.${formName}.command2.value = "kemaskiniHM";
-	document.${formName}.command3.value = "doOnchangeUpdate";
-	document.${formName}.command4.value = "onchangeUnitLuasAmbilUpdate";
+	document.${formName}.command.value = "kemaskiniTanah";
+	document.${formName}.command2.value = "doOnchangeUpdate";
+	document.${formName}.command3.value = "onchangeUnitLuasAsalUpdate";
+	document.${formName}.command4.value = "onchangeUnitAsalUpdate";
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTSek4";
 	document.${formName}.submit();
 }

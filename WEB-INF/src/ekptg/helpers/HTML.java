@@ -11009,8 +11009,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + h.get("id") + ">"
-						+ h.get("kod") + " - " + h.get("keterangan")
-						+ "</option>\n");
+						+ h.get("keterangan") + "</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {

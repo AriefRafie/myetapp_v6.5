@@ -671,8 +671,6 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 	    				semakMode="";
 	    				
 	    				
-
-	    				
 	    				/*
 	    				 * 1 untuk status - Pra-daftar
 	    				 * 2 untuk status - Tindakan Penyemak 
@@ -766,8 +764,168 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 	    				this.context.put("BeanHeader", beanHeader);
 	    				
 	    				
-	    				vm = "app/php2/online/frmPNWMaklumatPermohonan.jsp";			
+	    				
+	    				String jenisHakmilik = getParam("socJenisHakmilik");
+	    				if (jenisHakmilik == null || jenisHakmilik.trim().length() == 0) {
+	    					jenisHakmilik = "99999";
+	    				}
+	    				String jenisLot = getParam("socJenisLot");
+	    				if (jenisLot == null || jenisLot.trim().length() == 0) {
+	    					jenisLot = "99999";
+	    				}
+	    				String idNegeriC = getParam("socNegeriC");
+	    				if (idNegeriC == null || idNegeriC.trim().length() == 0) {
+	    					idNegeriC = "99999";
+	    				}
+	    				String idDaerahC = getParam("socDaerahC");
+	    				if (idDaerahC == null || idDaerahC.trim().length() == 0) {
+	    					idDaerahC = "99999";
+	    				}
+	    				String idMukimC = getParam("socMukimC");
+	    				if (idMukimC == null || idMukimC.trim().length() == 0) {
+	    					idMukimC = "99999";
+	    				}
+
+	    				String idStatusC = getParam("socStatusC");
+	    				if (idStatusC == null || idStatusC.trim().length() == 0) {
+	    					idStatusC = "99999";
+	    				}
+	    				String flagDetail = getParam("flagDetail");
+
+	    				// GO TO LIST FAIL PENAWARAN
+	    				vm = "app/php2/online/ulasanKJP/pnw/senaraiFail.jsp";
+
+	    				logic.carianFail(userId, userRole, getParam("txtNoFail"), getParam("txtTajukFail"), getParam("txtNoPermohonan"),
+	    						getParam("txdTarikhTerima"), idNegeriC, idDaerahC, idMukimC, jenisHakmilik,
+	    						getParam("txtNoHakmilik"), getParam("txtNoWarta"), jenisLot, getParam("txtNoLot"),
+	    						getParam("txtNoPegangan"), idStatusC);
+	    				list = new Vector();
+	    				list = logic.getSenaraiFail();
+	    				this.context.put("SenaraiFail", list);
+	    	
+	    				this.context.put("flagDetail", flagDetail);
+	    				setupPage(session, action, list);
+
+	    				
+	    				//vm = "app/php2/online/ulasanKJP/pnw/senaraiFail.jsp";			
 	    			
+	    			} else if ("simpanpengesahan3".equals(submit)){
+	    				context.put("buttonSend", "disabled");
+	    				myLog.info("simpanpengesahan2 :::::::::::idpermohonan=" + logic.getBeanMaklumatHeader().get(0));
+	    				logic.setMaklumatHeader(idFail);
+	    				beanHeader = logic.getBeanMaklumatHeader();
+	    				idPermohonan = getParam("idPermohonan");
+	    				Hashtable permohonan2 = (Hashtable) logic.getBeanMaklumatHeader().get(0);
+	    				myLog.info("simpanpengesahan1 ::id_permohonan="+permohonan2);	
+	    		    	myLog.info("simpanpengesahan2 ::idpermohonan="+logic.getBeanMaklumatHeader().get(0));	
+	    				semakMode="";
+	    				String langkah2 = "11";
+	    				
+	    				
+	    				/*
+	    				 * 1 untuk status - Pra-daftar
+	    				 * 2 untuk status - Tindakan Penyemak 
+	    				 * 3 untuk status - Tindakan Pelulus
+	    				 * 4 untuk status - Permohonan Online (Pengesahan) 
+	    				 * 5  untuk status - Penerimaan Permohonan
+	    				 * 11 untuk status - Tindakan Penyedia
+	    				*/
+	    				
+	    				EmailConfig ec = new EmailConfig();
+
+	    				String emelSubjek = ec.tajukSemakan+"Penawaran";
+	    				String kandungan = "";
+	    				if (idJawatan.equals("4")){
+	    					langkah2 = "11";				
+	    					
+	    					kandungan = getEmelSemak().setKandungan(String.valueOf(permohonan2.get("namaAgensi")), String.valueOf(hUser.get("nama")));
+	    	    			
+	    					if(!getEmelSemak().checkEmail(userId).equals(""))
+	    						getIHTP().getErrorHTML("[ONLINE-HTP PENAWARAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
+
+	    					ec.sendByRoleKJP(getEmelSemak().checkEmail(userId)
+	    							, "9"
+	    							, String.valueOf(String.valueOf(permohonan2.get("idKementerian")))
+	    							, emelSubjek, kandungan);
+	    								
+	    				}
+	    				Hashtable permohonan3 = (Hashtable) logic.getBeanMaklumatHeader().get(0);
+	    				idPermohonan = String.valueOf(permohonan3.get("idPermohonan"));
+
+	    			
+	    				Tblrujsuburusanstatusfail rsusf = new Tblrujsuburusanstatusfail();
+	    				long setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah(langkah2,idSubUrusan,"=");
+	    				rsusf.setIdPermohonan(Long.parseLong(idPermohonan));
+	    				rsusf.setIdFail(Long.parseLong(idFail));
+	    				rsusf.setIdSuburusanstatusfail(Long.parseLong(idSubUrusan));
+	    				rsusf.setIdSuburusanstatus(setIdSuburusanstatus);
+	    				rsusf.setUrl("-");
+	    				rsusf.setIdMasuk(Long.parseLong(userId));
+	    			
+	    				simpanPengesahan(rsusf,langkah2,userId);
+	    				
+	    				long setIdstatus = FrmUtilData.getIdStatusByLangkah (langkah2,idSubUrusan,"=");
+	    				FrmUtilData utildata = new FrmUtilData();
+	    				utildata.kemaskiniStatusPermohonan(idPermohonan,String.valueOf(setIdstatus));
+
+	    				
+	    				if(getIOnline().isHantar(Long.parseLong(String.valueOf(permohonan3.get("idSubUrusan"))),
+	    						Long.parseLong(String.valueOf(permohonan3.get("idPermohonan"))),
+	    						Long.parseLong(String.valueOf(permohonan3.get("idFail"))),langkah)){
+	    					semakMode = "xupdate";			
+	    				}else{
+	    					semakMode = "update";
+	    				}
+	    				context.put("semakMode", semakMode);
+	    				context.put("statussemasa", langkah2);
+	    				idFail = (String) permohonan2.get("idFail");
+	    				idPermohonan = (String) permohonan2.get("idPermohonan");
+	    				idStatus = (String) permohonan2.get("idStatus");
+	    				this.context.put("BeanHeader", beanHeader);
+	    				
+	    				
+	    				
+	    				String jenisHakmilik = getParam("socJenisHakmilik");
+	    				if (jenisHakmilik == null || jenisHakmilik.trim().length() == 0) {
+	    					jenisHakmilik = "99999";
+	    				}
+	    				String jenisLot = getParam("socJenisLot");
+	    				if (jenisLot == null || jenisLot.trim().length() == 0) {
+	    					jenisLot = "99999";
+	    				}
+	    				String idNegeriC = getParam("socNegeriC");
+	    				if (idNegeriC == null || idNegeriC.trim().length() == 0) {
+	    					idNegeriC = "99999";
+	    				}
+	    				String idDaerahC = getParam("socDaerahC");
+	    				if (idDaerahC == null || idDaerahC.trim().length() == 0) {
+	    					idDaerahC = "99999";
+	    				}
+	    				String idMukimC = getParam("socMukimC");
+	    				if (idMukimC == null || idMukimC.trim().length() == 0) {
+	    					idMukimC = "99999";
+	    				}
+
+	    				String idStatusC = getParam("socStatusC");
+	    				if (idStatusC == null || idStatusC.trim().length() == 0) {
+	    					idStatusC = "99999";
+	    				}
+	    				String flagDetail = getParam("flagDetail");
+
+	    				// GO TO LIST FAIL PENAWARAN
+	    				vm = "app/php2/online/ulasanKJP/pnw/senaraiFail.jsp";
+
+	    				logic.carianFail(userId, userRole, getParam("txtNoFail"), getParam("txtTajukFail"), getParam("txtNoPermohonan"),
+	    						getParam("txdTarikhTerima"), idNegeriC, idDaerahC, idMukimC, jenisHakmilik,
+	    						getParam("txtNoHakmilik"), getParam("txtNoWarta"), jenisLot, getParam("txtNoLot"),
+	    						getParam("txtNoPegangan"), idStatusC);
+	    				list = new Vector();
+	    				list = logic.getSenaraiFail();
+	    				this.context.put("SenaraiFail", list);
+	    	
+	    				this.context.put("flagDetail", flagDetail);
+	    				setupPage(session, action, list);
+
 	    			}
 	            }
 			}

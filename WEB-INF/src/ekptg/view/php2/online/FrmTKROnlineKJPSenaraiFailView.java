@@ -888,6 +888,10 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 					senaraiSemak = semak.getSenaraiSemakanAttach("phptukar",idPermohonan);
 	    			this.context.put("SenaraiSemak", senaraiSemak);
 	    			this.context.put("mode", mode);
+	    			
+	    			this.context.put("readonly", "");
+	        		this.context.put("inputTextClass", "");
+	        		this.context.put("disabled", "");
 
 	    			// MAKLUMAT TANAH
 					beanMaklumatTanah = new Vector();
@@ -913,9 +917,6 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 							}
 
 					}
-
-
-
 
 		           	this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "", "onChange=\"doChangeLuasKegunaan()\" style=\"width:auto\""));
 
@@ -945,6 +946,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 					hashMaklumatTukarguna.put("tarikhSurat", getParam("tarikhSurat"));
 					hashMaklumatTukarguna.put("perkara", getParam("txtPerkara"));
 					hashMaklumatTukarguna.put("luasAsal", hashMaklumatTukargunaDB.get("luasAsal"));
+					hashMaklumatTukarguna.put("idLuas", hashMaklumatTukargunaDB.get("idLuas"));
 					hashMaklumatTukarguna.put("keteranganLuasAsal", hashMaklumatTukargunaDB.get("keteranganLuasAsal"));
 					if ("doChangeLuas".equals(submit)){
 						myLog.info("masuk x sini do change luas");

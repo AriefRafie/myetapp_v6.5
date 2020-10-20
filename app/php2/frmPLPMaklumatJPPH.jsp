@@ -134,6 +134,36 @@
                 <td valign="top">:</td>
                 <td valign="top"><textarea name="txtUlasan" id="txtUlasan" rows="5" cols="50" $readonlyPopup class="$inputTextClassPopup">$beanMaklumatJPPH.ulasan</textarea></td>
               </tr>
+              #if ($modePopup == 'view')
+	          	#set($idLampiran = "")
+    			#set($namaLampiran = "")
+			    #set($catatanLampiran = "")
+			    #set($namaFailLampiran = "")
+			  	#foreach($beanMaklumatLampiran in $BeanMaklumatLampiran)
+					#set($idLampiran = $beanMaklumatLampiran.idDokumen)
+				    #set($namaLampiran = $beanMaklumatLampiran.namaDokumen)
+				    #set($catatanLampiran = $beanMaklumatLampiran.catatan)
+				    #set($namaFailLampiran = $beanMaklumatLampiran.namaFail)
+			  	#end
+              <tr>
+                <td>&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td valign="top">Lampiran</td>
+                <td valign="top">:</td>
+                <td valign="top"> 
+                	#if ($idLampiran != '')
+                		<a href="javascript:cetakLampiran($idLampiran)" class="style2">$!namaFailLampiran</a> 
+                	#end
+                	&nbsp;&nbsp;&nbsp;&nbsp;
+                	<input name="cmdUpload" type="button" onclick="uploadDoc($idUlasanTeknikal)" value="Muat Naik Lampiran" />
+                </td>
+              </tr>
+              #end
             </table>
             </fieldset></td>
         </tr>

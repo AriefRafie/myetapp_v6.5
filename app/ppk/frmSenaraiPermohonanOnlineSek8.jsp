@@ -2,7 +2,7 @@
 <legend><strong>Carian</strong></legend>
 <table width="100%" border="0">
 $selectNegeri
-$selectUnit
+$selectUnit 
 <!-- 
   <tr>
     <td width="29%"><div align="right">Negeri</div></td>
@@ -21,7 +21,7 @@ $selectUnit
   </tr>
   <tr>
 
-    <td><div align="right">Tarikh Permohonan :</div></td>
+    <td><div align="right">Tarikh Permohonan Online:</div></td>
     <td>&nbsp;<label>
       			<input name="txdMula" type="text" id="txdMula" value="$!txdMula" size="10"onblur="check_date(this);" />
         	</label>

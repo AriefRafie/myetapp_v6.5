@@ -84,8 +84,7 @@
 <script>
 function kemaskiniMaklumatLaporanTanah() {
 	document.${formName}.mode.value = "update";
-	//doAjaxCall${formName}("");
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function simpanKemaskiniMaklumatLaporanTanah() {
 	if(document.${formName}.txtTarikhLawatan.value == ""){
@@ -110,12 +109,10 @@ function simpanKemaskiniMaklumatLaporanTanah() {
 	}
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "simpanKemaskiniMaklumatLaporanTanah";
-	//doAjaxCall${formName}("");
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function batalKemaskiniMaklumatLaporanTanah() {
 	document.${formName}.mode.value = "view";
-	//doAjaxCall${formName}("");
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 </script>
