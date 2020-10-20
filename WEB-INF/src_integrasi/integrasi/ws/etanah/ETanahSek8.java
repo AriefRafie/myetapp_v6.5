@@ -18,6 +18,7 @@ import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumatPermohonanS
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -33,21 +34,21 @@ import org.apache.log4j.Logger;
 
 import ekptg.helpers.DB;
 import ekptg.model.entities.Tblrujdokumen;
-import ekptg.model.utils.lampiran.ILampiran;
 import ekptg.view.integrasi.etanah.PermohonanPengambilan;
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
-import my.gov.kehakiman.eip.services.PartyType;
 
 public class ETanahSek8 implements IntegrationInternal{
 
+	private static Logger myLog = Logger.getLogger(ETanahSek8.class);
 	private static String flagMsg = null;
 	private static String outputMsg = null;
 	private Vector vecHakmilik = null;
 	MaklumatPermohonanSek8Form form = null;
 	MaklumatHakmilikForm[] hakmiliks = null;
 	LampiranForm[] lampirans = null;
-	private static Logger myLog = Logger.getLogger(ETanahSek8.class);
+	private String URUSAN = "C";
+	private Calendar cal = new GregorianCalendar();
 
 	
 	public void hantar(ETanahPPTManager pptManager
@@ -58,7 +59,6 @@ public class ETanahSek8 implements IntegrationInternal{
 		flagMsg = "Y";
 		outputMsg = "MAKLUMAT PERMOHONAN BERJAYA DIHANTAR";
 		
-		Calendar cal = new GregorianCalendar();
 		cal.setTime(new Date());
 		//PermohonanDForm permohonan = null;
 		
@@ -73,8 +73,6 @@ public class ETanahSek8 implements IntegrationInternal{
 			response = pptManager.permohonanSek8(form, hakmiliks, lampirans);
 			myLog.info("response="+response);
 			
-//			permohonan = preparePermohonanD(idPermohonan, db);	
-//			ResponseForm response = RESTInvoker.hantarBorangD(idPermohonan, permohonan, cal, idPengguna);
 			if (!response.equals("")) {
 				updateFlagHantar(permohonan_.get("idPermohonan"), cal.getTime(), response,db, idPengguna);
 			}
@@ -149,6 +147,9 @@ public class ETanahSek8 implements IntegrationInternal{
 		form.setAlamat2(permohonan.get("alamat2"));
 		form.setAlamat3(permohonan.get("alamat3"));
 		//form.setAlamat4(permohonan.get("noFail"));
+		form.setPoskod(permohonan.get("poskod"));
+		form.setKodNegeri(permohonan.get("kodNegeriA"));
+
 		form.setId_agensi_myetapp(permohonan.get("idAgensi"));
 		form.setJenis_pengambilan(permohonan.get("jenisPengambilan"));
 		form.setJenis_projek_pengambilan(permohonan.get("jenisProjek"));
@@ -162,9 +163,16 @@ public class ETanahSek8 implements IntegrationInternal{
 		form.setNama_negeri_pengambilan(permohonan.get("namaNegeri"));
 		//form.setNo_fail_jkptg("JKPTG(S).MLK/03/881/24/2019/5");
 		form.setNo_fail_jkptg(permohonan.get("noFail"));
-		form.setPoskod(permohonan.get("poskod"));
+		form.setNo_rujukan_surat_kjp(permohonan.get("noRujukanSurat"));
+		form.setTarikh_surat_kjp(permohonan.get("tarikhRujukanSurat"));
+
 		//KJP ATAU JKPTG?
-		form.setTarikh_permohonan(permohonan.get("tarikhPermohonan")); 
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		form.setTarikh_surat_kjp(sdf.format(cal.getTime()));
+		
+		form.setTarikh_permohonan(sdf.format((cal.getTime()))); 
+
+		//form.setTarikh_permohonan(permohonan.get("tarikhPermohonan")); 
 		form.setTujuan(permohonan.get("namaProjek"));
 		form.setTujuan_dalam_english(permohonan.get("namaProjekBI"));
 		//form.set
@@ -630,7 +638,7 @@ public class ETanahSek8 implements IntegrationInternal{
 		return hakmilikPermohonan;
 	}
 	
-	private static void updateFlagHantar(String idPermohonan, Date tarikhHantar, String response, Db db, String idPengguna) {
+	private void updateFlagHantar(String idPermohonan, Date tarikhHantar, String response, Db db, String idPengguna) {
 		String sql = "";	
 		try {
 			Statement stmt = db.getStatement();
@@ -642,6 +650,20 @@ public class ETanahSek8 implements IntegrationInternal{
 				+ ", TARIKH_KEMASKINI = SYSDATE "
 				+ ", TARIKH_HANTAR = SYSDATE "
 				+ " WHERE ID_PERMOHONAN = '" + idPermohonan + "'";
+			stmt.executeUpdate(sql);
+			
+			SQLRenderer r = new SQLRenderer();
+			String idRujukan = String.valueOf(DB.getNextID(db, "INTETANAHPPT_SEQ"));
+			r.add("ID_ETANAHPPT", idRujukan);
+			r.add("FLAG_URUSAN", URUSAN);
+			r.add("NO_PERMOHONAN", response);
+//			r.add("NAMA_KEMENTERIAN", permohonan.get("namaKementerian"));
+//			r.add("NAMA_PROJEK", permohonan.get("namaProjek"));
+			r.add("TARIKH_HANTAR", r.unquote("sysdate"));
+			r.add("ID_MASUK", idPengguna);	
+			r.add("TARIKH_MASUK", r.unquote("sysdate"));	
+			sql = r.getSQLInsert("TBLINTANAHPPT");
+			myLog.info("TBLINTANAHPPT:"+sql);
 			stmt.executeUpdate(sql);
 			
 		} catch (Exception e) {
@@ -668,26 +690,37 @@ public class ETanahSek8 implements IntegrationInternal{
 	
 	private void setPermohonan(Hashtable<String,String> permohonan,String idPengguna, Db db) {
 		String sql = "";
+		String idPermohonan = permohonan.get("idPermohonan");
+		
 		try {
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			String idRujukan = String.valueOf(DB.getNextID(db, "INTANAHPERMOHONAN_SEQ"));
-			r.add("ID_PERMOHONANINT", idRujukan);
-			r.add("FLAG_URUSAN", 'D');
-			r.add("ID_PERMOHONAN", permohonan.get("idPermohonan"));
-			r.add("NAMA_KEMENTERIAN", permohonan.get("namaKementerian"));
-			r.add("NAMA_PROJEK", permohonan.get("namaProjek"));
-			r.add("TARIKH_HANTAR", r.unquote("sysdate"));
-			r.add("ID_MASUK", idPengguna);	
-			r.add("TARIKH_MASUK", r.unquote("sysdate"));	
-			sql = r.getSQLInsert("TBLINTANAHPERMOHONAN");
-			myLog.info("setPermohonan:"+sql);
-			stmt.executeUpdate(sql);
+			
+			sql = "SELECT * FROM TBLINTANAHPERMOHONAN WHERE ID_PERMOHONAN = '" + idPermohonan + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			if (rs.next() == false) {
+	
+				String idRujukan = String.valueOf(DB.getNextID(db, "INTANAHPERMOHONAN_SEQ"));
+				r.add("ID_PERMOHONANINT", idRujukan);
+				r.add("FLAG_URUSAN", URUSAN);
+				r.add("ID_PERMOHONAN", idPermohonan);
+				r.add("NAMA_KEMENTERIAN", permohonan.get("namaKementerian"));
+				r.add("NAMA_PROJEK", permohonan.get("namaProjek"));
+				r.add("TARIKH_HANTAR", r.unquote("sysdate"));
+				r.add("ID_MASUK", idPengguna);	
+				r.add("TARIKH_MASUK", r.unquote("sysdate"));	
+				sql = r.getSQLInsert("TBLINTANAHPERMOHONAN");
+				myLog.info("setPermohonan:"+sql);
+				stmt.executeUpdate(sql);
+			
+			}
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		
 	}
+	
 	
 }

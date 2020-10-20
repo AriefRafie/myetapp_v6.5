@@ -140,39 +140,37 @@ function paparLampiran(id_dokumen) {
 function kembali() {	
 	window.close();
 }
-function simpan(id_permohonan,jenis_skrin) {
+	function simpan(id_permohonan,jenis_skrin) {
 	
-	if(document.${formName}.tajuk.value == ""){
-		alert('Sila pastikan tajuk dokumen diisi.');
-  		document.${formName}.tajuk.focus(); 
-		return; 
+		if(document.${formName}.tajuk.value == ""){
+			alert('Sila pastikan tajuk dokumen diisi.');
+  			document.${formName}.tajuk.focus(); 
+			return; 
+		}
+	
+		if(document.${formName}.fileupload.value == ""){
+			alert('Sila pilih Lampiran yang Ingin Dimuatnaik.');
+  			document.${formName}.fileupload.focus(); 
+			return; 
+		}
+	
+		var dp = document.${formName}.form_token.value ;
+		var dopost = "&form_token="+dp;
+		var id_permohonan_set =  document.${formName}.id_permohonan.value;
+		var id_fail_set =  document.${formName}.id_fail.value;
+		var jenis_skrin_set =  document.${formName}.jenis_skrin.value;
+		var tajuk_set =  document.${formName}.tajuk.value;
+		var id_hakmilik_set =  document.${formName}.id_hakmilik.value;
+		var param = "&nama_dokumen="+jenis_skrin_set+"&jenisDokumen="+document.${formName}.kategori_lampiran.value;
+		
+		document.${formName}.action = "?_portal_module=ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah&hitButton=simpanDokumen&id_permohonan="+id_permohonan_set+"&jenis_skrin="+jenis_skrin_set+""+dopost+"&id_fail="+id_fail_set+"&tajuk="+tajuk_set+"&id_hakmilik="+id_hakmilik_set+param;
+		
+		document.${formName}.method="post";
+		document.${formName}.enctype="multipart/form-data";
+	    document.${formName}.encoding="multipart/form-data";
+		document.${formName}.submit();
+		
 	}
-	
-	if(document.${formName}.fileupload.value == ""){
-		alert('Sila pilih Lampiran yang Ingin Dimuatnaik.');
-  		document.${formName}.fileupload.focus(); 
-		return; 
-	}
-	
-	
-
-	
-	
-	var dp = document.${formName}.form_token.value ;
-	var dopost = "&form_token="+dp;
-	var id_permohonan_set =  document.${formName}.id_permohonan.value;
-	var id_fail_set =  document.${formName}.id_fail.value;
-	var jenis_skrin_set =  document.${formName}.jenis_skrin.value;
-	var tajuk_set =  document.${formName}.tajuk.value;
-	var id_hakmilik_set =  document.${formName}.id_hakmilik.value;
-	
-	document.${formName}.action = "?_portal_module=ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah&hitButton=simpanDokumen&id_permohonan="+id_permohonan_set+"&jenis_skrin="+jenis_skrin_set+""+dopost+"&id_fail="+id_fail_set+"&tajuk="+tajuk_set+"&id_hakmilik="+id_hakmilik_set;
-	
-	document.${formName}.method="post";
-	document.${formName}.enctype="multipart/form-data";
-    document.${formName}.encoding="multipart/form-data";
-	document.${formName}.submit();
-}
 
 function hapusDokumen(id_dokumen) {
 	

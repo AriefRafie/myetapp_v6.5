@@ -108,7 +108,7 @@ JKPTG(S).MLK/02/881/04/2010/9-->
  <fieldset>
       <legend><strong><font color="white">$tajuk_popup</font></strong></legend>
 <div id="mainContainer">
-#parse("app/integrasi/etanah/pengambilanTanah/PopupPengambilanTanah_maklumbalas.jsp")
+#parse("app/integrasi/etanah/pengambilanTanah/PopupPengambilanTanah_maklumbalas.jsp") 
 #parse("app/integrasi/etanah/pengambilanTanah/PopupPengambilanTanah_status_log.jsp")      
 
 
@@ -689,29 +689,29 @@ $!maklumat_mmk
        
 </fieldset>
 
-::$display_button_hantar
+
 ##if($!display_button_hantar == "Y")       
        	  <table width="100%" border="0" align="center"	 cellspacing="2" cellpadding="2" >
            <tr>
            <td  valign="top" align="center"> 
            
-           	   ##set($disable_button_hantar = "")
+           	   #set($disable_button_hantar = "")
 
-               ##if($!jenis_skrin == "PU" && $check_maklumat_PU == "X")
+               #if($!jenis_skrin == "PU" && $check_maklumat_PU == "X")
                <font color="red">Sila Pastikan Maklumat <b>Hakmilik Sambungan</b> Lengkap Diisi!</font>
-               ##set($disable_button_hantar = "disabled")                
-               ##elseif(($!jenis_skrin == "WartaS4" || $!jenis_skrin == "WartaS8") && $check_maklumat_warta == "X")                 
+               #set($disable_button_hantar = "disabled")                
+               #elseif(($!jenis_skrin == "WartaS4" || $!jenis_skrin == "WartaS8") && $check_maklumat_warta == "X")                 
                <font color="red">Sila Pastikan Maklumat <b>Warta</b> Lengkap Diisi!</font>
-               ##set($disable_button_hantar = "disabled")
-               ##else 
-               ##set($disable_button_hantar = "")
-               ##end 
+               #set($disable_button_hantar = "disabled")
+               #else 
+               #set($disable_button_hantar = "")
+               #end 
                
                
-               ##if($check_dokumen_complete == "X")  
+               #if($check_dokumen_complete == "X")  
                <font color="red">Sila Pastikan Dokumen Wajib Lengkap Dimuat Naik!</font>
-               ##set($disable_button_hantar = "disabled")
-               ##end           
+               #set($disable_button_hantar = "disabled")
+               #end           
                
                <input type="button" name="cmdHantarRekod" id="cmdHantarRekod" value="Hantar Rekod ke e-Tanah" $disable_button_hantar onClick="hantar('$id_permohonan','$jenis_skrin','$id_penarikan')">
            </td>
