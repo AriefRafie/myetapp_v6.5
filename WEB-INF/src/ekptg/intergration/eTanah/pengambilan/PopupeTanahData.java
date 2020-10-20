@@ -435,7 +435,19 @@ public class PopupeTanahData {
 			" ,PI.FLAG_AKTIF,PI.FLAG_ENDORSAN,PI.FLAG_HANTAR,PI.FLAG_TRANSAKSI,PI.FLAG_URUSAN,PI.KETERANGAN_TRANSAKSI "+
 			" ,RA.NAMA_AGENSI, RA.ID_AGENSI,RA.KOD_AGENSI "+
 			" ,RD.KOD_DAERAH,RD.NAMA_DAERAH "+
-		    ",RK.ALAMAT1,RK.ALAMAT2,RK.ALAMAT3,RK.POSKOD,RN.KOD_NEGERI,RN.NAMA_NEGERI" + 
+		    ",RK.ALAMAT1,RK.ALAMAT2,RK.ALAMAT3,RK.POSKOD"
+		    + " ,CASE "
+		    + "		WHEN RNA.KOD_NEGERI = '16' "
+		    + "			THEN '17'"
+		    + " 	ELSE "
+		    + "			RNA.KOD_NEGERI "
+		    + " END KOD_NEGERIA "
+		    + " ,CASE "
+		    + "		WHEN RN.KOD_NEGERI = '16' "
+		    + "			THEN '17'"
+		    + " 	ELSE "
+		    + "			RN.KOD_NEGERI "
+		    + " END KOD_NEGERI,RN.NAMA_NEGERI" + 
 			" ,(" + 
 			" CASE WHEN F.ID_SUBURUSAN = 51" + 
 			"  THEN 'PENGAMBILAN TANAH DI BAWAH SEKSYEN 4'" + 
@@ -444,7 +456,7 @@ public class PopupeTanahData {
 			"END ) JENIS_PENGAMBILAN" + 
 			",(CASE WHEN  P.FLAG_JENISPERMOHONAN = '1' THEN 'JAJARAN' " + 
 			"	WHEN  P.FLAG_JENISPERMOHONAN = '2' THEN 'TAPAK' ELSE '' " + 
-			"END) JENIS_PROJEK_PENGAMBILAN "+
+			"END) JENIS_PROJEK_PENGAMBILAN,P.NO_RUJUKAN_SURAT,P.TARIKH_SURAT P.TARIKH_SURATKJP "+
 			" FROM TBLPFDFAIL F,TBLPPTPERMOHONAN P "+
 			" ,TBLINTANAHPERMOHONAN PI "+
 			" ,TBLRUJKEMENTERIAN RK,TBLRUJAGENSI RA "+
@@ -469,6 +481,7 @@ public class PopupeTanahData {
 				maklumatPermohonan.put("alamat2", rs.getString("ALAMAT2") == null ? "" : rs.getString("ALAMAT2"));
 				maklumatPermohonan.put("alamat3", rs.getString("ALAMAT3") == null ? "" : rs.getString("ALAMAT3"));
 				maklumatPermohonan.put("poskod", rs.getString("POSKOD") == null ? "" : rs.getString("POSKOD"));
+				maklumatPermohonan.put("kodNegeriA", rs.getString("KOD_NEGERIA") == null ? "" : rs.getString("KOD_NEGERIA"));
 
 				maklumatPermohonan.put("idPermohonan", rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN"));
 				maklumatPermohonan.put("kodNegeri", rs.getString("KOD_NEGERI") == null ? "" : rs.getString("KOD_NEGERI"));
@@ -484,7 +497,9 @@ public class PopupeTanahData {
 				maklumatPermohonan.put("idKementerian", rs.getString("ID_KEMENTERIAN") == null ? "" : rs.getString("ID_KEMENTERIAN"));
 				maklumatPermohonan.put("kodKementerian", rs.getString("KOD_KEMENTERIAN") == null ? "" : rs.getString("KOD_KEMENTERIAN"));
 				maklumatPermohonan.put("namaKementerian", rs.getString("NAMA_KEMENTERIAN") == null ? "" : rs.getString("NAMA_KEMENTERIAN"));
-				
+				maklumatPermohonan.put("noRujukanSurat", rs.getString("NO_RUJUKAN_SURAT") == null ? "" : rs.getString("NO_RUJUKAN_SURAT"));
+				maklumatPermohonan.put("tarikhRujukanSurat", rs.getString("TARIKH_SURATKJP") == null ? "" : sdf.format(rs.getString("TARIKH_SURATKJP")));
+
 				maklumatPermohonan.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL"));
 				maklumatPermohonan.put("noJilid", rs.getString("NO_JILID") == null ? "" : rs.getString("NO_JILID"));
 				maklumatPermohonan.put("namaProjek", rs.getString("NAMA_PROJEK") == null ? "" : rs.getString("NAMA_PROJEK"));
