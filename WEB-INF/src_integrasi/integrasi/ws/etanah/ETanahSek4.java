@@ -53,7 +53,7 @@ public class ETanahSek4 implements IntegrationInternal{
 	LampiranForm lampiran = null;
 	private static Logger myLog = Logger.getLogger(ETanahSek4.class);
 	Calendar cal = new GregorianCalendar();
-
+	private String URUSAN = "mmk";
 	
 	public void hantar(ETanahPPTManager pptManager
 		,Hashtable<String,String> permohonan_
@@ -67,6 +67,7 @@ public class ETanahSek4 implements IntegrationInternal{
 		//PermohonanDForm permohonan = null;
 		
 		try {
+			
 			form = getPermohonan(permohonan_);
 			hakmiliks = getHakmilik();
 			lampirans = getLampiran(vecDok);
@@ -74,7 +75,7 @@ public class ETanahSek4 implements IntegrationInternal{
 			setPermohonan(permohonan_,idPengguna,db);
 			
 			PopupeTanahData logic = new PopupeTanahData();
-			lampiran = getLampiran1(logic.getSenaraiDokumen(permohonan_.get("idPermohonan"),"mmk",db));
+			lampiran = getLampiran1(logic.getSenaraiDokumen(permohonan_.get("idPermohonan"),URUSAN,db));
 			
 			String response = "";
 			response = pptManager.permohonanSek4(form,hakmiliks,lampiran,lampirans);
@@ -149,7 +150,7 @@ public class ETanahSek4 implements IntegrationInternal{
 			hakmilik.setKod_unit_hakmilik(tanah.get("kodHakmilik"));
 			hakmilik.setLuas_ambil(tanah.get("luasAmbil"));
 			hakmilik.setLuas_asal(tanah.get("luasAsal"));
-			//hakmilik.setNo_fail_jkptg(tanah.get("kodLuasAsal"));
+			hakmilik.setNo_fail_jkptg(tanah.get("noFail"));
 			hakmilik.setNo_hakmilik(tanah.get("noHakmilik"));
 			hakmilik.setNo_lot(tanah.get("noLot"));
 			//hakmilik.setNo_warta(tanah.get("kodLuasAsal"));
@@ -175,6 +176,7 @@ public class ETanahSek4 implements IntegrationInternal{
 		form.setAlamat2(permohonan.get("alamat2"));
 		form.setAlamat3(permohonan.get("alamat3"));
 		//form.setAlamat4(permohonan.get("noFail"));
+		
 		form.setId_agensi_myetapp(permohonan.get("idAgensi"));
 		form.setJenis_pengambilan(permohonan.get("jenisPengambilan"));
 		form.setJenis_projek_pengambilan(permohonan.get("jenisProjek"));
@@ -189,8 +191,10 @@ public class ETanahSek4 implements IntegrationInternal{
 		form.setNama_negeri_pengambilan(permohonan.get("namaNegeri"));
 		//form.setNo_fail_jkptg("JKPTG(S).MLK/03/881/24/2019/5");
 		form.setNo_fail_jkptg(permohonan.get("noFail"));
-		form.setNo_rujukan_surat_kjp("Fail_KJP");
+		form.setTarikh_surat_kjp(permohonan.get("tarikhRujukanSurat"));
+		form.setNo_rujukan_surat_kjp(permohonan.get("noRujukanSurat"));
 		form.setPoskod(permohonan.get("poskod"));
+		form.setKodNegeri(permohonan.get("kodNegeriA"));
 		//KJP ATAU JKPTG?
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		form.setTarikh_surat_kjp(sdf.format(cal.getTime()));
@@ -200,6 +204,7 @@ public class ETanahSek4 implements IntegrationInternal{
 		form.setTujuan(permohonan.get("namaProjek"));
 		form.setTujuan_dalam_english(permohonan.get("namaProjekBI"));
 		//form.set
+		myLog.info("Maklumat Sek 4 Daerah="+permohonan.get("kodDaerah"));
 		myLog.info("Maklumat Sek 4 Negeri="+form.getKod_negeri_pengambilan());
 		return form;
 		
@@ -663,7 +668,7 @@ public class ETanahSek4 implements IntegrationInternal{
 		return hakmilikPermohonan;
 	}
 	
-	private static void updateFlagHantar(String idPermohonan, Date tarikhHantar, String response, Db db, String idPengguna) {
+	private void updateFlagHantar(String idPermohonan, Date tarikhHantar, String response, Db db, String idPengguna) {
 		String sql = "";	
 		try {
 			Statement stmt = db.getStatement();
@@ -676,6 +681,22 @@ public class ETanahSek4 implements IntegrationInternal{
 				+ ", TARIKH_HANTAR = SYSDATE "
 				+ " WHERE ID_PERMOHONAN = '" + idPermohonan + "'";
 			stmt.executeUpdate(sql);
+			
+			
+			SQLRenderer r = new SQLRenderer();
+			String idRujukan = String.valueOf(DB.getNextID(db, "INTETANAHPPT_SEQ"));
+			r.add("ID_ETANAHPPT", idRujukan);
+			r.add("FLAG_URUSAN", URUSAN);
+			r.add("NO_PERMOHONAN", response);
+//			r.add("NAMA_KEMENTERIAN", permohonan.get("namaKementerian"));
+//			r.add("NAMA_PROJEK", permohonan.get("namaProjek"));
+			r.add("TARIKH_HANTAR", r.unquote("sysdate"));
+			r.add("ID_MASUK", idPengguna);	
+			r.add("TARIKH_MASUK", r.unquote("sysdate"));	
+			sql = r.getSQLInsert("TBLINTANAHPPT");
+			myLog.info("TBLINTANAHPPT:"+sql);
+			stmt.executeUpdate(sql);
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -701,21 +722,31 @@ public class ETanahSek4 implements IntegrationInternal{
 	
 	private void setPermohonan(Hashtable<String,String> permohonan,String idPengguna, Db db) {
 		String sql = "";
+		String idPermohonan = permohonan.get("idPermohonan");
+		
 		try {
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			String idRujukan = String.valueOf(DB.getNextID(db, "INTANAHPERMOHONAN_SEQ"));
-			r.add("ID_PERMOHONANINT", idRujukan);
-			r.add("FLAG_URUSAN", 'D');
-			r.add("ID_PERMOHONAN", permohonan.get("idPermohonan"));
-			r.add("NAMA_KEMENTERIAN", permohonan.get("namaKementerian"));
-			r.add("NAMA_PROJEK", permohonan.get("namaProjek"));
-			r.add("TARIKH_HANTAR", r.unquote("sysdate"));
-			r.add("ID_MASUK", idPengguna);	
-			r.add("TARIKH_MASUK", r.unquote("sysdate"));	
-			sql = r.getSQLInsert("TBLINTANAHPERMOHONAN");
-			myLog.info("setPermohonan:"+sql);
-			stmt.executeUpdate(sql);
+			
+			sql = "SELECT * FROM TBLINTANAHPERMOHONAN WHERE ID_PERMOHONAN = '" + idPermohonan + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			if (rs.next() == false) {
+				r = new SQLRenderer();
+				String idRujukan = String.valueOf(DB.getNextID(db, "INTANAHPERMOHONAN_SEQ"));
+				r.add("ID_PERMOHONANINT", idRujukan);
+				r.add("FLAG_URUSAN", URUSAN);
+				r.add("ID_PERMOHONAN", permohonan.get("idPermohonan"));
+				r.add("NAMA_KEMENTERIAN", permohonan.get("namaKementerian"));
+				r.add("NAMA_PROJEK", permohonan.get("namaProjek"));
+				r.add("TARIKH_HANTAR", r.unquote("sysdate"));
+				r.add("ID_MASUK", idPengguna);	
+				r.add("TARIKH_MASUK", r.unquote("sysdate"));	
+				sql = r.getSQLInsert("TBLINTANAHPERMOHONAN");
+				myLog.info("setPermohonan:"+sql);
+				stmt.executeUpdate(sql);
+								
+			}
 			
 		} catch (Exception ex) {
 			ex.printStackTrace();
