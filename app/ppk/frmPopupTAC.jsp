@@ -109,7 +109,7 @@ function hantarTAC(idFail,id_Permohonan) {
 		document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmPopupTAC&command=hantar";	
 		document.${formName}.submit();			
 	
- 		var url = "../../servlet/ekptg.report.ppk.BorangF?idfail="+idFail;
+ 		var url = "../../servlet/ekptg.report.ppk.BorangE?idfail=99191115318&flagVersion=view&flag_batal=Y&idborang=99191253813";
 		//var url = "../servlet/ekptg.report.ppk.BorangF?idfail="+idFail;
 		//var url = "../x/${securityToken}/ekptg.view.ppk.BorangF?idFail="+idFail+"&id_Permohonan="+id_Permohonan;
 		//var url = "../x/${securityToken}/ekptg.report.ppk.BorangF?idfail="+idFail;

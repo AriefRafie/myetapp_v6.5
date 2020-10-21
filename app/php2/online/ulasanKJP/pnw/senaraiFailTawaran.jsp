@@ -350,17 +350,17 @@ function daftarAgensi() {
 	doAjaxCall${formName}("");
 }
 function simpanAgensi(){
-// 	if(document.${formName}.txtNoRujukan.value == ""){
-// 		alert('Sila masukkan No Rujukan Surat.');
-//   		document.${formName}.txtNoRujukan.focus(); 
-// 		return; 
-// 	}
+ 	if(document.${formName}.txtNoRujukanKJP.value == ""){
+ 		alert('Sila masukkan No Rujukan KJP.');
+   		document.${formName}.txtNoRujukanKJP.focus(); 
+ 		return; 
+ 	}
 	if(document.${formName}.txtTarikhTerima.value == ""){
-		alert('Sila masukkan Tarikh Terima.');
+		alert('Sila masukkan Tarikh Surat.');
   		document.${formName}.txtTarikhTerima.focus(); 
 		return; 
 	}
-	if(document.${formName}.socKementerian.value == ""){
+	/* if(document.${formName}.socKementerian.value == ""){
 		alert('Sila pilih Kementerian.');
   		document.${formName}.socKementerian.focus(); 
 		return; 
@@ -369,7 +369,7 @@ function simpanAgensi(){
 		alert('Sila pilih Agensi.');
   		document.${formName}.socAgensi.focus(); 
 		return; 
-	}
+	} */
 	if(document.${formName}.txtTujuanKegunaan.value == ""){
 		alert('Sila masukkan Tujuan Kegunaan.');
   		document.${formName}.txtTujuanKegunaan.focus(); 
@@ -398,6 +398,16 @@ function simpanAgensi(){
     document.${formName}.encoding="multipart/form-data";
 	document.${formName}.submit();
 }
+function hapusAgensi(){
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+	
+	document.${formName}.flagPopup.value = "";
+	document.${formName}.modePopup.value = "";
+	document.${formName}.hitButton.value = "hapusAgensi";
+	doAjaxCall${formName}("");
+}
 function batalAgensi() {
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
@@ -414,11 +424,11 @@ function batalKemaskiniAgensi() {
 	doAjaxCall${formName}("");
 }
 function simpanKemaskiniAgensi(){
-// 	if(document.${formName}.txtNoRujukan.value == ""){
-// 		alert('Sila masukkan No Rujukan Surat.');
-//   		document.${formName}.txtNoRujukan.focus(); 
-// 		return; 
-// 	}
+ 	if(document.${formName}.txtNoRujukanKJP.value == ""){
+ 		alert('Sila masukkan No Rujukan Surat KJP.');
+   		document.${formName}.txtNoRujukanKJP.focus(); 
+ 		return; 
+ 	}
 	if(document.${formName}.txtTarikhTerima.value == ""){
 		alert('Sila masukkan Tarikh Terima.');
   		document.${formName}.txtTarikhTerima.focus(); 
@@ -449,16 +459,7 @@ function simpanKemaskiniAgensi(){
 	document.${formName}.hitButton.value = "simpanKemaskiniAgensi";
 	doAjaxCall${formName}("");
 }
-function hapusAgensi(){
-	if ( !window.confirm("Adakah Anda Pasti ?") ){
-		return;
-	}
-	
-	document.${formName}.flagPopup.value = "";
-	document.${formName}.modePopup.value = "";
-	document.${formName}.hitButton.value = "hapusAgensi";
-	doAjaxCall${formName}("");
-}
+
 
 function seterusnya(){
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
@@ -495,6 +496,10 @@ function cetakImej(id){
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener=document.window;
     if (hWnd.focus != null) hWnd.focus();
+}
+function kembali() {
+	document.${formName}.hitButton.value = "";
+	document.${formName}.submit();
 }
 
 </script>

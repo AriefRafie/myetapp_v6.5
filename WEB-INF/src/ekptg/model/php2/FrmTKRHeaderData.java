@@ -323,7 +323,7 @@ public class FrmTKRHeaderData {
 				db.close();
 		}
 	}
-	
+
 	public String getIdHakmilikAgensiByIdFail(String idFail)
 			throws Exception {
 		Db db = null;
@@ -362,17 +362,20 @@ public class FrmTKRHeaderData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT MTA.ID_HAKMILIK FROM TBLPERMOHONAN MOHON, TBLPHPHAKMILIKPERMOHONAN PHPHMP, TBLPHPHAKMILIK PHPHM"
+			/*sql = "SELECT MTA.ID_HAKMILIK FROM TBLPERMOHONAN MOHON, TBLPHPHAKMILIKPERMOHONAN PHPHMP, TBLPHPHAKMILIK PHPHM"
 					+",TBLHTPHAKMILIKAGENSI MTA"
 					+ " WHERE MOHON.ID_PERMOHONAN = PHPHMP.ID_PERMOHONAN AND PHPHMP.ID_HAKMILIKPERMOHONAN = PHPHM.ID_HAKMILIKPERMOHONAN"
                     + " AND PHPHMP.ID_HAKMILIKAGENSI = MTA.ID_HAKMILIKAGENSI "
 					+ " AND MOHON.ID_FAIL = '"
+					+ idFail + "'";*/
+			sql = "SELECT PHPHMP.ID_HAKMILIKPERMOHONAN FROM TBLPERMOHONAN MOHON, TBLPHPHAKMILIKPERMOHONAN PHPHMP"
+					+ " WHERE MOHON.ID_PERMOHONAN = PHPHMP.ID_PERMOHONAN AND MOHON.ID_FAIL = '"
 					+ idFail + "'";
-
+			log.info("getIdHakmilikByIdFail ::sql >> "+sql );
 			ResultSet rs = stmt.executeQuery(sql);
 
 			if (rs.next()) {
-				return (String) rs.getString("ID_HAKMILIK");
+				return (String) rs.getString("ID_HAKMILIKPERMOHONAN");
 			} else {
 				return "";
 			}
