@@ -390,7 +390,7 @@ function cetakBorangR(idfail) {
     var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener=document.window;
-    if (hWnd.focus != null) hWnd.focus();
+    if (hWnd.focus != null) hWnd.focus();  
 }
 
 function setTable(id){
