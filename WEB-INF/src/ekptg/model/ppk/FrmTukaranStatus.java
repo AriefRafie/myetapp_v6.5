@@ -681,6 +681,7 @@ public class FrmTukaranStatus {
 						
 				sql += " AND S.ID_SIMATI = PS.ID_SIMATI "+
 					   " AND P.ID_PEMOHON = PM.ID_PEMOHON "+
+					   " AND P.SEKSYEN = 8 "+
 				       " AND P.ID_STATUS = ST.ID_STATUS(+) ";
 				sql += " AND P.ID_DAERAHMHN in ( select distinct u.id_daerahurus from  TBLRUJPEJABATURUSAN u, users_internal ur "+
 						   " where u.id_pejabatjkptg=ur.id_pejabatjkptg and ur.user_id= '"+usid+"' ";
