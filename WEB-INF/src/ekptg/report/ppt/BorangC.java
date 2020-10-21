@@ -51,8 +51,6 @@ public class BorangC extends EkptgReportServlet {
 			super.setReportName("Borang C");
 		//}
 		
-       	
-        
 		super.setFolderName("ppt");
 	}
 	

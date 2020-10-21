@@ -6234,7 +6234,7 @@ function cetakSuratPelupusanHakmilik(idhakmilik, idfail, idpermohonan, bilLot, n
 	
 	var valType = document.${formName}.sorSelectNoFail.value;
 		var nofail = "";
-		
+		alert(valType);
 		if(valType=="1"){
 			nofail = document.${formName}.no_fail.value;
 		}else if(valType=="2"){
