@@ -224,17 +224,55 @@ function getLainlain(id) {
 	
 	else
 	{
-
+		
 		document.getElementById(id).style.display="none";
+		
 	}
 }
 
-function sembunyikanLainLainNegara(id) {
+function sembunyikanLainLainNegara(id,id2) {
 
-	document.getElementById(id).style.display="none";
+	if (document.${formName}.socWarganegara.value == "13")
+	{
+
+		document.getElementById(id).style.display="";
+	}
+	
+	else
+	{
+		
+		document.getElementById(id).style.display="none";
+		
+	}
+	
+	if (document.${formName}.socBangsa.value == "7")
+	{
+
+		document.getElementById(id2).style.display="";
+	}
+	
+	else
+	{
+		
+		document.getElementById(id).style.display="none";
+		
+	}
+	if (document.${formName}.socBangsa.value == "")
+	{
+
+		document.getElementById(id3).style.display="";
+	}
+	
+	else
+	{
+		
+		document.getElementById(id3).style.display="none";
+		
+	}
+	
 }
 
-function getLainlainBangsa(id) {
+function getLainLainBangsa(id) {
 
 	if (document.${formName}.socBangsa.value == "7")
 	{
@@ -249,15 +287,23 @@ function getLainlainBangsa(id) {
 	}
 }
 
-function LainLainBangsa(id) {
+/*function sembnyknLainLainBangsa(id) {
 
-	document.getElementById(id).style.display="none";
-}
+	if (document.${formName}.socBangsa.value == "7")
+	{
+
+		document.getElementById(id).style.display="";
+	}
+	
+	else
+	{
+		
+		document.getElementById(id).style.display="none";
+		
+	}
+}*/
 //END ADD
 
-function doChangeBangsa() {
-	doAjaxCall${formName}("doChangeBangsa");
-}
 function validateCurrency(elmnt,content,content2) {
 	content = content.replace(/,/g,'');
 	content2 = content2.replace(/,/g,'');
@@ -461,7 +507,7 @@ function checkPercentage(){;
 }
 
 function simpanPengarah(){
-	
+
 	if(document.${formName}.socWarganegara.value == ""){
 		alert('Sila pilih Warganegara.');
   		document.${formName}.socWarganegara.focus(); 
@@ -512,6 +558,14 @@ function kemaskiniPengarah(){
 }
 
 function simpanKemaskiniPengarah(){
+
+	if(document.${formName}.socWarganegara.value != "13"){
+		document.${formName}.txtWarga.value="";
+	}
+	
+	if(document.${formName}.socBangsa.value != "7"){
+		document.${formName}.txtBangsa.value="";
+	}
 
 	if(document.${formName}.socWarganegara.value == ""){
 		alert('Sila pilih Warganegara.');
