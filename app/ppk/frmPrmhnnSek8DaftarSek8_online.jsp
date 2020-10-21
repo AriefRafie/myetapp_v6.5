@@ -1972,9 +1972,9 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
 					<input type="button" id="fileupload" name="fileupload" value="Lampiran" onClick="lampiran(this.value,'cod')">
 					<br>
 					#if($lampiranSijil != "")
-						<input type = "hidden" name="namaDoc2" id="namaDoc2" value="1" />
+						<input type = "text" name="namaDoc2" id="namaDoc2" value="1" />
 					#else
-						<input type = "hidden" name="namaDoc2" id="namaDoc2" value="0" />
+						<input type = "text" name="namaDoc2" id="namaDoc2" value="0" />
 					#end
 					$!lampiranSijil     
 				</td>
@@ -2858,6 +2858,7 @@ var dtCh= "/";
     }else{
       window.location.hash='tab_Daftar';
       //goTo('tab_Daftar');
+      document.f1.namaDoc2.value = "0";
     }
     
   } 
