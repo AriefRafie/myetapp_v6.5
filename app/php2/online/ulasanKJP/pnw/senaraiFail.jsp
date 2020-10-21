@@ -12,6 +12,7 @@
   <input type="hidden" name="actionOnline" />
   <input type="hidden" name="idFail" />
   <input type="hidden" name="idStatus" />
+  <input type="hidden" id="idPermohonan" value="$idPermohonan"/>
   <input type="hidden" name="idPemohon" />
 </p>
 
@@ -195,12 +196,14 @@ function kosongkan(flagDetail) {
 	doAjaxCall${formName}("");
 }
 function papar(idFail,idStatus) {
-
 	document.${formName}.idFail.value = idFail;
 	document.${formName}.idStatus.value = idStatus;
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView";
 	document.${formName}.actionOnline.value = "seterusnya";
+	document.${formName}.method="POST";
 	document.${formName}.submit();
 }
+
 function daftarBaru(){
 	document.${formName}.actionOnline.value = "daftarBaru";
 	document.${formName}.submit();

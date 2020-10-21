@@ -13,6 +13,7 @@ import integrasi.utils.IntegrationInternal;
 import integrasi.ws.etanah.ppt.ETanahPPTManager;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.LampiranForm;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumatHakmilikForm;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumatPermohonanSek4Form;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumatPermohonanSek8Form;
 
 import java.sql.ResultSet;
@@ -33,23 +34,26 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 import ekptg.helpers.DB;
+import ekptg.intergration.eTanah.pengambilan.PopupeTanahData;
 import ekptg.model.entities.Tblrujdokumen;
+import ekptg.model.utils.lampiran.ILampiran;
 import ekptg.view.integrasi.etanah.PermohonanPengambilan;
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
+import my.gov.kehakiman.eip.services.PartyType;
 
-public class ETanahSek8 implements IntegrationInternal{
+public class ETanahSek4 implements IntegrationInternal{
 
-	private static Logger myLog = Logger.getLogger(ETanahSek8.class);
 	private static String flagMsg = null;
 	private static String outputMsg = null;
 	private Vector vecHakmilik = null;
-	MaklumatPermohonanSek8Form form = null;
+	MaklumatPermohonanSek4Form form = null;
 	MaklumatHakmilikForm[] hakmiliks = null;
 	LampiranForm[] lampirans = null;
-	private String URUSAN = "C";
-	private Calendar cal = new GregorianCalendar();
-
+	LampiranForm lampiran = null;
+	private static Logger myLog = Logger.getLogger(ETanahSek4.class);
+	Calendar cal = new GregorianCalendar();
+	private String URUSAN = "mmk";
 	
 	public void hantar(ETanahPPTManager pptManager
 		,Hashtable<String,String> permohonan_
@@ -63,16 +67,22 @@ public class ETanahSek8 implements IntegrationInternal{
 		//PermohonanDForm permohonan = null;
 		
 		try {
+			
 			form = getPermohonan(permohonan_);
 			hakmiliks = getHakmilik();
 			lampirans = getLampiran(vecDok);
 			
 			setPermohonan(permohonan_,idPengguna,db);
 			
+			PopupeTanahData logic = new PopupeTanahData();
+			lampiran = getLampiran1(logic.getSenaraiDokumen(permohonan_.get("idPermohonan"),URUSAN,db));
+			
 			String response = "";
-			response = pptManager.permohonanSek8(form, hakmiliks, lampirans);
+			response = pptManager.permohonanSek4(form,hakmiliks,lampiran,lampirans);
 			myLog.info("response="+response);
 			
+//			permohonan = preparePermohonanD(idPermohonan, db);	
+//			ResponseForm response = RESTInvoker.hantarBorangD(idPermohonan, permohonan, cal, idPengguna);
 			if (!response.equals("")) {
 				updateFlagHantar(permohonan_.get("idPermohonan"), cal.getTime(), response,db, idPengguna);
 			}
@@ -107,6 +117,25 @@ public class ETanahSek8 implements IntegrationInternal{
 		return lf;
 		
 	}
+	
+	private LampiranForm getLampiran1(Vector<Tblrujdokumen> vecDok) {
+		//LampiranForm[] lf = new LampiranForm[vecDok.size()];
+		LampiranForm lampiran = null;
+		Tblrujdokumen dokumen =null;
+		for (int i = 0; i < vecDok.size(); i++) {
+			dokumen = (Tblrujdokumen)vecDok.get(i);
+			lampiran = new LampiranForm();
+			lampiran.setBytes(dokumen.getKandungan());
+			lampiran.setDocType(dokumen.getIdJenis());
+			lampiran.setFilename(dokumen.getNamaDokumen());
+			lampiran.setKodDokumen(dokumen.getIdDokumen()); //rujukan
+			//myLog.info(i+"."+cbsemaks[i]);
+			
+			//lf[i] = lampiran;
+		}
+		return lampiran;
+		
+	}
 
 	private MaklumatHakmilikForm[] getHakmilik() {
 		MaklumatHakmilikForm[] mhf = new MaklumatHakmilikForm[vecHakmilik.size()];
@@ -121,7 +150,7 @@ public class ETanahSek8 implements IntegrationInternal{
 			hakmilik.setKod_unit_hakmilik(tanah.get("kodHakmilik"));
 			hakmilik.setLuas_ambil(tanah.get("luasAmbil"));
 			hakmilik.setLuas_asal(tanah.get("luasAsal"));
-			//hakmilik.setNo_fail_jkptg(tanah.get("kodLuasAsal"));
+			hakmilik.setNo_fail_jkptg(tanah.get("noFail"));
 			hakmilik.setNo_hakmilik(tanah.get("noHakmilik"));
 			hakmilik.setNo_lot(tanah.get("noLot"));
 			//hakmilik.setNo_warta(tanah.get("kodLuasAsal"));
@@ -140,22 +169,21 @@ public class ETanahSek8 implements IntegrationInternal{
 		return mhf;
 	}
 
-	private MaklumatPermohonanSek8Form getPermohonan(Hashtable<String,String> permohonan) {
-		MaklumatPermohonanSek8Form form = null;
-		form = new MaklumatPermohonanSek8Form();
+	private MaklumatPermohonanSek4Form getPermohonan(Hashtable<String,String> permohonan) {
+		MaklumatPermohonanSek4Form form = null;
+		form = new MaklumatPermohonanSek4Form();
 		form.setAlamat1(permohonan.get("alamat1"));
 		form.setAlamat2(permohonan.get("alamat2"));
 		form.setAlamat3(permohonan.get("alamat3"));
 		//form.setAlamat4(permohonan.get("noFail"));
-		form.setPoskod(permohonan.get("poskod"));
-		form.setKodNegeri(permohonan.get("kodNegeriA"));
-
+		
 		form.setId_agensi_myetapp(permohonan.get("idAgensi"));
 		form.setJenis_pengambilan(permohonan.get("jenisPengambilan"));
 		form.setJenis_projek_pengambilan(permohonan.get("jenisProjek"));
 		form.setKod_daerah_pengambilan(permohonan.get("kodDaerah"));
 		form.setKod_negeri_pengambilan(permohonan.get("kodNegeri"));
 		form.setKodAgensi(permohonan.get("kodAgensi"));
+		form.setId_kementerian_myetapp(permohonan.get("idKementerian"));
 		form.setKodKementerian(permohonan.get("kodKementerian"));
 		form.setNama_agensi(permohonan.get("namaAgensi"));
 		form.setNama_daerah_pengambilan(permohonan.get("namaDaerah"));
@@ -163,22 +191,21 @@ public class ETanahSek8 implements IntegrationInternal{
 		form.setNama_negeri_pengambilan(permohonan.get("namaNegeri"));
 		//form.setNo_fail_jkptg("JKPTG(S).MLK/03/881/24/2019/5");
 		form.setNo_fail_jkptg(permohonan.get("noFail"));
-		form.setNo_rujukan_surat_kjp(permohonan.get("noRujukanSurat"));
 		form.setTarikh_surat_kjp(permohonan.get("tarikhRujukanSurat"));
-
+		form.setNo_rujukan_surat_kjp(permohonan.get("noRujukanSurat"));
+		form.setPoskod(permohonan.get("poskod"));
+		form.setKodNegeri(permohonan.get("kodNegeriA"));
 		//KJP ATAU JKPTG?
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		form.setTarikh_surat_kjp(sdf.format(cal.getTime()));
 		
 		form.setTarikh_permohonan(sdf.format((cal.getTime()))); 
-
 		//form.setTarikh_permohonan(permohonan.get("tarikhPermohonan")); 
 		form.setTujuan(permohonan.get("namaProjek"));
 		form.setTujuan_dalam_english(permohonan.get("namaProjekBI"));
-		
-		myLog.info("Maklumat Sek8 no fail="+permohonan.get("noFail"));
-		myLog.info("Maklumat Sek8 Daerah="+permohonan.get("kodDaerah"));
-		myLog.info("Maklumat Sek8 Negeri="+form.getKod_negeri_pengambilan());
+		//form.set
+		myLog.info("Maklumat Sek 4 Daerah="+permohonan.get("kodDaerah"));
+		myLog.info("Maklumat Sek 4 Negeri="+form.getKod_negeri_pengambilan());
 		return form;
 		
 	}
@@ -655,6 +682,7 @@ public class ETanahSek8 implements IntegrationInternal{
 				+ " WHERE ID_PERMOHONAN = '" + idPermohonan + "'";
 			stmt.executeUpdate(sql);
 			
+			
 			SQLRenderer r = new SQLRenderer();
 			String idRujukan = String.valueOf(DB.getNextID(db, "INTETANAHPPT_SEQ"));
 			r.add("ID_ETANAHPPT", idRujukan);
@@ -668,6 +696,7 @@ public class ETanahSek8 implements IntegrationInternal{
 			sql = r.getSQLInsert("TBLINTANAHPPT");
 			myLog.info("TBLINTANAHPPT:"+sql);
 			stmt.executeUpdate(sql);
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -703,11 +732,11 @@ public class ETanahSek8 implements IntegrationInternal{
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			if (rs.next() == false) {
-	
+				r = new SQLRenderer();
 				String idRujukan = String.valueOf(DB.getNextID(db, "INTANAHPERMOHONAN_SEQ"));
 				r.add("ID_PERMOHONANINT", idRujukan);
 				r.add("FLAG_URUSAN", URUSAN);
-				r.add("ID_PERMOHONAN", idPermohonan);
+				r.add("ID_PERMOHONAN", permohonan.get("idPermohonan"));
 				r.add("NAMA_KEMENTERIAN", permohonan.get("namaKementerian"));
 				r.add("NAMA_PROJEK", permohonan.get("namaProjek"));
 				r.add("TARIKH_HANTAR", r.unquote("sysdate"));
@@ -716,7 +745,7 @@ public class ETanahSek8 implements IntegrationInternal{
 				sql = r.getSQLInsert("TBLINTANAHPERMOHONAN");
 				myLog.info("setPermohonan:"+sql);
 				stmt.executeUpdate(sql);
-			
+								
 			}
 			
 		} catch (Exception ex) {
@@ -724,6 +753,5 @@ public class ETanahSek8 implements IntegrationInternal{
 		}
 		
 	}
-	
 	
 }

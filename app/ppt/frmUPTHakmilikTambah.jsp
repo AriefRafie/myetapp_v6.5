@@ -166,7 +166,7 @@
         </tr>
 			
         <tr>
-            	<td>No.PT <font color="red">*</font></td>
+            	<td>No.PT</td>
             	<td>:</td>
             	<td>$!selectLot</td>
        </tr>
@@ -178,7 +178,7 @@
        </tr>
              
        <tr>
-            	<td>No.LOT <font color="red">*</font></td>
+            	<td>No.LOT</td>
             	<td>:</td>
                 <td>
                 <!-- defaultLOT() -->
@@ -191,18 +191,18 @@
        </tr>
             <!-- PENAMBAHBAIKAN V7 yati -->
        <tr>
-				<td>Kategori Tanah<font color="red">*</font></td>
+				<td>Kategori Tanah</td>
 				<td>:</td>
 				<td>$!selectKategoriTanah</td>
 	   </tr>
        <tr>
-			<td>Unit Luas Asal<font color="red">*</font></td>
+			<td>Unit Luas Asal</td>
 			<td>:</td>
 			<td>$!selectUnitLuasLot</td>
 	   </tr>
 		
 		<tr>
-			<td valign="top">Luas Asal<font color="red">*</font></td>
+			<td valign="top">Luas Asal</td>
 			<td valign="top">:</td>
 			<td>
 			
@@ -250,7 +250,7 @@
 		#end
 
 		<tr>
-			<td>Unit Luas Ambil<font color="red">*</font></td>
+			<td>Unit Luas Ambil</td>
 			<td>:</td>
 			<td>$!selectUnitLuasAmbil</td>
 		</tr>

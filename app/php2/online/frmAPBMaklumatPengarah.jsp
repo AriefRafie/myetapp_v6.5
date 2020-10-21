@@ -10,7 +10,93 @@
           <td width="28%">Warganegara</td>
           <td width="1%">:</td>
           <!-- <td width="70%">$selectWarganegara</td> -->
-          <td width="70%"><select name="socWarganegara" onchange="getLainlain('LainLainNegara');" > 
+          <td width="70%"><select name="socWarganegara" onchange="getLainlain('LainLainNegara');" class="$inputTextClass" $disabled > 
+          		#if ($socWarganegara == "16")
+          			<option value="16">NZL - NEW ZEALAND</option>
+          		#end
+          		#if ($socWarganegara == "27")
+          			<option value="27">USA - AMERIKA SYARIKAT</option>
+          		#end
+          		#if ($socWarganegara == "20")
+          			<option value="20">SAU - ARAB SAUDI</option>
+          		#end
+          		#if ($socWarganegara == "2")
+          			<option value="2">AUS - AUSTRALIA</option>
+          		#end
+          		#if ($socWarganegara == "3")
+          			<option value="3">BGL - BANGLADESH</option>
+          		#end
+          		#if ($socWarganegara == "4")
+          			<option value="4">BRU - BRUNEI</option>
+          		#end
+          		#if ($socWarganegara == "18")
+          			<option value="18">PHI - FILIPINA</option>
+          		#end
+          		#if ($socWarganegara == "7")
+          			<option value="7">HK - HONG KONG</option>
+          		#end
+          		#if ($socWarganegara == "9")
+          			<option value="9">IND - INDIA</option>
+          		#end
+          		#if ($socWarganegara == "8")
+          			<option value="8">INA - INDONESIA</option>
+          		#end
+          		#if ($socWarganegara == "10")
+          			<option value="10">ITA - ITALI</option>
+          		#end
+          		#if ($socWarganegara == "11")
+          			<option value="11">JPN - JEPUN</option>
+          		#end
+          		#if ($socWarganegara == "6")
+          			<option value="6">GER - JERMAN BARAT</option>
+          		#end
+          		#if ($socWarganegara == "12")
+          			<option value="12">KOR - KOREA SELATAN</option>
+          		#end
+          		#if ($socWarganegara == "13")
+          			<option value="13">LN - LAIN-LAIN</option>
+          		#end
+          		#if ($socWarganegara == "14")
+          			<option value="14">MAL - MALAYSIA</option>
+          		#end
+          		#if ($socWarganegara == "15")
+          			<option value="15">MAU - MAURITIUS</option>
+          		#end
+          		#if ($socWarganegara == "16")
+          			<option value="16">NZL - NEW ZEALAND</option>
+          		#end
+          		#if ($socWarganegara == "17")
+          			<option value="17">PAK - PAKISTAN</option>
+          		#end
+          		#if ($socWarganegara == "19")
+          			<option value="19">PT - PENDUDUK TETAP</option>
+          		#end
+          		#if ($socWarganegara == "5")
+          			<option value="5">FRA - PERANCHIS</option>
+          		#end
+          		#if ($socWarganegara == "21")
+          			<option value="21">SIN - SINGAPURA</option>
+          		#end
+          		#if ($socWarganegara == "22")
+          			<option value="22">SRI - SRI LANKA</option>
+          		#end
+          		#if ($socWarganegara == "23")
+          			<option value="23">SWI - SWITZERLAND</option>
+          		#end
+          		#if ($socWarganegara == "25")
+          			<option value="19">TPE - TAIWAN</option>
+          		#end
+          		
+          		#if ($socWarganegara == "24")
+          			<option value="24">THA - THAILAND</option>
+          		#end
+          		#if ($socWarganegara == "1")
+          			<option value="1">0 - TIDAK BERKENAAN</option>
+          		#end
+          		#if ($socWarganegara == "26")
+          			<option value="26">UK - UNITED KINGDOM</option>
+          		#end
+          		
           		<option value="">SILA PILIH</option>
 				<option value="27">USA - AMERIKA SYARIKAT</option>
 				<option value="20">SAU - ARAB SAUDI</option>
@@ -63,7 +149,36 @@
           <td>#if ($mode == 'newPengarah' ||  $mode == 'updatePengarah')<span class="style1">*</span>#end</td>
           <td>Jenis Pengenalan</td>
           <td>:</td>
-          <td>$selectJenisPengenalan</td>
+         <!-- <td>$selectJenisPengenalan</td>-->
+          <td width="70%"><select name="socJenisPengenalan" onchange="getJenisPengenalan('JenisPengenalan');" class="$inputTextClass" $disabled > 
+          		#if ($socWarganegara == "1")
+          			<option value="1">B - NO.K/P BARU</option>
+          		#end
+          		#if ($socWarganegara == "3")
+          			<option value="3">L - NO.K/P LAMA</option>
+          		#end
+          		#if ($socWarganegara == "4")
+          			<option value="4">P - NO PASPORT</option>
+          		#end
+          		#if ($socWarganegara == "5")
+          			<option value="5">T - NO TENTERA</option>
+          		#end
+          		#if ($socWarganegara == "6")
+          			<option value="6">I - NO POLIS</option>
+          		#end
+          		#if ($socWarganegara == "11")
+          			<option value="11">A - SURAT BERANAK</option>
+          		#end
+          		
+	         	<option value="">SILA PILIH</option>
+				<option value="1">B - NO.K/P BARU</option>
+				<option value="3">L - NO.K/P LAMA</option>
+				<option value="4">P - NO PASPORT</option>
+				<option value="5">T - NO TENTERA</option>
+				<option value="6">I - NO POLIS</option>
+				<option value="11">A - SURAT BERANAK</option>
+			</select>
+		  </td>
         </tr>
         <tr>
           <td>#if ($mode == 'newPengarah' ||  $mode == 'updatePengarah')<span class="style1">*</span>#end</td>
@@ -74,9 +189,22 @@
         <tr>  
           <td>#if ($mode == 'newPengarah' ||  $mode == 'updatePengarah')<span class="style1">*</span>#end</td>
           <td>Bangsa</td>
-          <td>:</td>
+          <td>: </td>
           <!--<td>$selectBangsa</td>-->
-           <td width="70%"><select name="socBangsa" onchange="getLainlainBangsa('LainLainBangsa');"> 
+           <td width="70%"><select name="socBangsa" onchange="getLainLainBangsa('LainLainBangsa');" class="$inputTextClass" $disabled> 
+                #if ($socBangsa == "1")
+          			<option value="1">MEL - PERSEORANGAN MELAYU</option>
+          		#end
+          		#if ($socBangsa == "2")
+          			<option value="2">CIN - PERSEORANGAN CINA</option>
+          		#end
+          		#if ($socBangsa == "3")
+          			<option value="3">IND - PERSEORANGAN INDIA</option>
+          		#end
+          		#if ($socBangsa == "7")
+          			<option value="7">LN - LAIN-LAIN</option>
+          		#end
+          		
            		<option value="">SILA PILIH</option>
 				<option value="1">MEL - PERSEORANGAN MELAYU</option>
 				<option value="2">CIN - PERSEORANGAN CINA</option>

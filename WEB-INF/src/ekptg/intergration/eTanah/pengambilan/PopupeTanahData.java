@@ -429,13 +429,25 @@ public class PopupeTanahData {
 		try {
 			Statement stmt = db.getStatement();
 			sql = "SELECT F.NO_FAIL,P.ID_PERMOHONAN,TO_CHAR(P.TARIKH_PERMOHONAN,'DD/MM/YYYY') TARIKH_PERMOHONAN "+
-			" ,RK.KOD_KEMENTERIAN,RK.NAMA_KEMENTERIAN,P.TUJUAN NAMA_PROJEK,P.TUJUAN_BI NAMA_PROJEKBI"+
+			" ,RK.ID_KEMENTERIAN,RK.KOD_KEMENTERIAN,RK.NAMA_KEMENTERIAN,P.TUJUAN NAMA_PROJEK,P.TUJUAN_BI NAMA_PROJEKBI"+
 			" ,PI.NO_PERMOHONAN,PI.TARIKH_HANTAR "+
 			" ,PI.TARIKH_TERIMA,PI.NO_JILID "+
 			" ,PI.FLAG_AKTIF,PI.FLAG_ENDORSAN,PI.FLAG_HANTAR,PI.FLAG_TRANSAKSI,PI.FLAG_URUSAN,PI.KETERANGAN_TRANSAKSI "+
 			" ,RA.NAMA_AGENSI, RA.ID_AGENSI,RA.KOD_AGENSI "+
 			" ,RD.KOD_DAERAH,RD.NAMA_DAERAH "+
-		    ",RK.ALAMAT1,RK.ALAMAT2,RK.ALAMAT3,RK.POSKOD,RN.KOD_NEGERI,RN.NAMA_NEGERI" + 
+		    ",RK.ALAMAT1,RK.ALAMAT2,RK.ALAMAT3,RK.POSKOD"
+		    + " ,CASE "
+		    + "		WHEN RNA.KOD_NEGERI = '16' "
+		    + "			THEN '17'"
+		    + " 	ELSE "
+		    + "			RNA.KOD_NEGERI "
+		    + " END KOD_NEGERIA "
+		    + " ,CASE "
+		    + "		WHEN RN.KOD_NEGERI = '16' "
+		    + "			THEN '17'"
+		    + " 	ELSE "
+		    + "			RN.KOD_NEGERI "
+		    + " END KOD_NEGERI,RN.NAMA_NEGERI" + 
 			" ,(" + 
 			" CASE WHEN F.ID_SUBURUSAN = 51" + 
 			"  THEN 'PENGAMBILAN TANAH DI BAWAH SEKSYEN 4'" + 
@@ -444,7 +456,7 @@ public class PopupeTanahData {
 			"END ) JENIS_PENGAMBILAN" + 
 			",(CASE WHEN  P.FLAG_JENISPERMOHONAN = '1' THEN 'JAJARAN' " + 
 			"	WHEN  P.FLAG_JENISPERMOHONAN = '2' THEN 'TAPAK' ELSE '' " + 
-			"END) JENIS_PROJEK_PENGAMBILAN "+
+			"END) JENIS_PROJEK_PENGAMBILAN,P.NO_RUJUKAN_SURAT,P.TARIKH_SURAT TARIKH_SURATKJP "+
 			" FROM TBLPFDFAIL F,TBLPPTPERMOHONAN P "+
 			" ,TBLINTANAHPERMOHONAN PI "+
 			" ,TBLRUJKEMENTERIAN RK,TBLRUJAGENSI RA "+
@@ -469,6 +481,7 @@ public class PopupeTanahData {
 				maklumatPermohonan.put("alamat2", rs.getString("ALAMAT2") == null ? "" : rs.getString("ALAMAT2"));
 				maklumatPermohonan.put("alamat3", rs.getString("ALAMAT3") == null ? "" : rs.getString("ALAMAT3"));
 				maklumatPermohonan.put("poskod", rs.getString("POSKOD") == null ? "" : rs.getString("POSKOD"));
+				maklumatPermohonan.put("kodNegeriA", rs.getString("KOD_NEGERIA") == null ? "" : rs.getString("KOD_NEGERIA"));
 
 				maklumatPermohonan.put("idPermohonan", rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN"));
 				maklumatPermohonan.put("kodNegeri", rs.getString("KOD_NEGERI") == null ? "" : rs.getString("KOD_NEGERI"));
@@ -481,9 +494,12 @@ public class PopupeTanahData {
 				maklumatPermohonan.put("kodAgensi", rs.getString("KOD_AGENSI") == null ? "" : rs.getString("KOD_AGENSI"));
 				maklumatPermohonan.put("namaAgensi", rs.getString("NAMA_AGENSI") == null ? "" : rs.getString("NAMA_AGENSI"));
 
+				maklumatPermohonan.put("idKementerian", rs.getString("ID_KEMENTERIAN") == null ? "" : rs.getString("ID_KEMENTERIAN"));
 				maklumatPermohonan.put("kodKementerian", rs.getString("KOD_KEMENTERIAN") == null ? "" : rs.getString("KOD_KEMENTERIAN"));
 				maklumatPermohonan.put("namaKementerian", rs.getString("NAMA_KEMENTERIAN") == null ? "" : rs.getString("NAMA_KEMENTERIAN"));
-				
+				maklumatPermohonan.put("noRujukanSurat", rs.getString("NO_RUJUKAN_SURAT") == null ? "" : rs.getString("NO_RUJUKAN_SURAT"));
+				maklumatPermohonan.put("tarikhRujukanSurat", rs.getString("TARIKH_SURATKJP") == null ? "" : sdf.format(rs.getDate("TARIKH_SURATKJP")));
+
 				maklumatPermohonan.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL"));
 				maklumatPermohonan.put("noJilid", rs.getString("NO_JILID") == null ? "" : rs.getString("NO_JILID"));
 				maklumatPermohonan.put("namaProjek", rs.getString("NAMA_PROJEK") == null ? "" : rs.getString("NAMA_PROJEK"));
@@ -524,13 +540,16 @@ public class PopupeTanahData {
 
 			Statement stmt = db.getStatement();
 			sql = " SELECT DISTINCT "+
-			" RN.KOD_NEGERI,RD.KOD_DAERAH,RM.KOD_MUKIM,'OO' NO_SEKSYEN "+
+			" RN.KOD_NEGERI,RD.KOD_DAERAH,RM.KOD_MUKIM,'000' NO_SEKSYEN "+
 			" ,RJ.KOD_JENIS_HAKMILIK KOD_HAKMILIK,H.NO_HAKMILIK" +
 			" ,RL.KOD_LOT,NVL(H.NO_LOT,H.NO_PT) NO_LOT "+
-			" ,LO.KOD_LUAS KOD_LUAS_ASAL,H.LUAS_LOT LUAS_ASAL,LT.KOD_LUAS KOD_LUAS_AMBIL,H.LUAS_AMBIL "+
+			" ,NVL(LO.ID_LUAS,0) KOD_LUAS_ASAL,H.LUAS_LOT LUAS_ASAL,NVL(LT.ID_LUAS,0) KOD_LUAS_AMBIL,H.LUAS_AMBIL "+
 			" ,H.CATATAN CATATAN_HAKMILIK "+
 			//--H.*
-			" ,HI.ID_PERMOHONANMILIK ID_HAKMILIKPERMOHONAN,H.ID_HAKMILIK,F.NO_FAIL"+
+			" ,HI.ID_PERMOHONANMILIK ID_HAKMILIKPERMOHONAN"+
+			", GETUPI(RN.KOD_NEGERI,RD.KOD_DAERAH,RM.KOD_MUKIM,'000','N',H.NO_LOT,H.NO_HAKMILIK,RJ.KOD_JENIS_HAKMILIK) ID_HAKMILIK "+
+			//KOD_NEGERI VARCHAR2,KOD_DAERAH VARCHAR2,KOD_MUKIM VARCHAR2,SEKSYEN VARCHAR2,STATUS VARCHAR2,NO_LOT VARCHAR2,NO_HAKMILIK VARCHAR2,JENIS VARCHAR2)
+			",F.NO_FAIL"+
 			" FROM TBLPPTHAKMILIK H,TBLINTANAHPERMOHONANMILIK HI "+
 			" ,TBLRUJNEGERI RN,TBLRUJDAERAH RD,TBLRUJMUKIM RM "+
 			" ,TBLRUJLUAS LO,TBLRUJLUAS LT "+
@@ -781,26 +800,17 @@ public class PopupeTanahData {
 
 			Statement stmt = db.getStatement();
 			sql = "SELECT D.ID_DOKUMEN, DI.ID_TANAHDOKUMEN,D.ID_JENISDOKUMEN,D.NAMA_FAIL,D.JENIS_MIME,D.CONTENT "
-				+ ",(CASE"  
-				+	"	WHEN D.ID_JENISDOKUMEN =1 THEN 'A'"  
-				+	"	WHEN D.ID_JENISDOKUMEN =2 THEN 'B'"  
-				+	"	WHEN D.ID_JENISDOKUMEN =3 THEN 'C'"  
-				+	"	WHEN D.ID_JENISDOKUMEN =4 THEN 'D'"  
-				+	"	WHEN D.ID_JENISDOKUMEN =5 THEN 'K'" 
-				+ 	"	WHEN D.ID_JENISDOKUMEN =6 THEN 'IH'" 
-				+	"	WHEN D.ID_JENISDOKUMEN =7 THEN 'SPU'" 
-				+	"	WHEN D.ID_JENISDOKUMEN =1 THEN 'MMKNe'" 
-				+	"	WHEN D.ID_JENISDOKUMEN =1 THEN 'SII'" 
-				+	"END ) KOD_JENISDOKUMEN "
-				+ " FROM TBLINTANAHDOKUMEN DI,TBLPPTDOKUMEN D "
+				+ ",NVL(DIM.KOD_DOKUMENETANAH,'TIADA') KOD_JENISDOKUMEN "
+				+ " FROM TBLINTANAHDOKUMEN DI,TBLPPTDOKUMEN D,TBLINTRUJMAPPING DIM "
 				+ " WHERE "
 				+ " D.ID_DOKUMEN = DI.ID_DOKUMEN(+)"
+				+ " AND D.ID_JENISDOKUMEN = DIM.ID_JENISDOKUMEN (+)"
 				+ " AND D.ID_PERMOHONAN = '" + idPermohonanIntegrasi + "'";
 			if(!tapisan.equals(""))
 				sql +=" AND D.TAJUK='"+tapisan+"'";
 //				+ " AND DI.ID_RUJUKAN = '" + idPermohonanIntegrasi + "'";
 			sql = sql + " ORDER BY ID_TANAHDOKUMEN ASC";
-			myLog.info("getSenaraiDokumen:sql="+sql);
+//			myLog.info("getSenaraiDokumen:sql="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -822,6 +832,7 @@ public class PopupeTanahData {
 //				h.put("namaDokumen", rs.getString("NAMA_FAIL") == null ? "" : rs.getString("NAMA_FAIL"));
 //				h.put("jenisMime", rs.getString("JENIS_MIME") == null ? "" : rs.getString("JENIS_MIME"));
 				//h.put("kodDokumen", rs.getString("KOD_DOKUMEN") == null ? "" : rs.getString("KOD_DOKUMEN"));
+//				listDokumen.add(index, element);
 				listDokumen.addElement(dokumen);
 				
 			}
@@ -831,6 +842,7 @@ public class PopupeTanahData {
 		}
 
 		return listDokumen;
+		
 	}
 	
 	public Vector getSenaraiDokumenEndorsan(String idPermohonanIntegrasi, Db db) {

@@ -4,7 +4,12 @@
 package ekptg.intergration.eTanah.pengambilan;
 
 import integrasi.IntegrasiManager;
+import integrasi.utils.IntegrationInternal;
+
 import org.apache.axis2.addressing.EndpointReference;
+
+import integrasi.ws.etanah.ETanahSek4;
+import integrasi.ws.etanah.ETanahSek8;
 //import org.apache.axis2.client.Options;
 import integrasi.ws.etanah.melaka_ns.ppt.CustomDataSource;
 //import integrasi.ws.etanah.ppt.ETanahCarianManager;
@@ -74,6 +79,8 @@ import org.apache.log4j.Logger;
 import com.Ostermiller.util.Base64;
 
 import ekptg.helpers.DB;
+import ekptg.model.entities.Tblrujdokumen;
+import ekptg.model.utils.lampiran.ILampiran;
 
 public class PopupPengambilanTanah extends AjaxBasedModule {
 
@@ -96,6 +103,10 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 	public static String flagMsg = null;
 	public static String outputMsg = null;
 	
+	PopupeTanahData logic_ = new PopupeTanahData();
+    ILampiran iLampiran = null;
+    IntegrationInternal integration4 = null;
+
 	@Override
 	public String doTemplate2() throws Exception {
 		HttpSession session = this.request.getSession();
@@ -135,6 +146,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		
 		
 		String id_fail = getParam("id_fail");
+		String idPermohonan = getParam("id_permohonan");
 		String id_permohonan = getParam("id_permohonan");
 		String no_fail = getParam("no_fail");
 		String jenis_skrin = getParam("jenis_skrin");
@@ -172,10 +184,8 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		
 		vm = "app/integrasi/etanah/pengambilanTanah/PopupPengambilanTanah.jsp";
 		myLogger.info("hitButton :::::::" + hitButton);
-		
-		
-		
-		
+			
+		String userID = (String) session.getAttribute("_ekptg_user_id");		
 		
 		if ("simpanDokumen".equals(hitButton)) {
 			if(doPostPop.equals("true"))
@@ -223,8 +233,8 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			}
 		} else if ("hantarData".equals(hitButton)) {
 			ETanahPPTManager cm = new ETanahPPTManager("E-TANAH");
-			stub = getStub();
-			myLogger.info("detail ETanahPPTManager :"+cm);
+			//stub = getStub();
+			//myLogger.info("detail ETanahPPTManager :"+cm);
 			myLogger.info("masuk hantar ");
 			if(doPostPop.equals("true"))
 			{
@@ -331,13 +341,13 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 					LampiranForm[] lampiran = new LampiranForm[3];
 //					lampiran[0] = new LampiranForm();
 //					lampiran[1] = new LampiranForm();
-					try {
-					lampiran[0].setFilename("test");
-					lampiran[1].setKodDokumen("2");
-					}catch(Exception g) {
-						myLogger.info("SSSSSSSSSSSSSSSSWWW4");
-						g.printStackTrace();
-					}
+//					try {
+//					lampiran[0].setFilename("test");
+//					lampiran[1].setKodDokumen("2");
+//					}catch(Exception g) {
+//						myLogger.info("SSSSSSSSSSSSSSSSWWW4");
+//						g.printStackTrace();
+//					}
 					
 					
 					/*MaklumatPermohonanSek4Form form
@@ -351,12 +361,20 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 					
 					//hantarData(jenis_skrin, id_fail, id_hakmilik, session,id_permohonan, id_penarikan,db,return_new_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
 					try {
-					String test = daftarPermohonanBorangAMMk(reqformSek4
-							,hakmiliks
-							,lampiranMMK
-							,lampiran
-							);
-					myLogger.info("masuk sini tak zzzzzz--- "+test);
+//					String test = daftarPermohonanBorangAMMk(reqformSek4
+//							,hakmiliks
+//							,lampiranMMK
+//							,lampiran
+//							);
+					//myLogger.info("masuk sini tak zzzzzz--- "+test);
+					String jeniSkrin=jenis_skrin;
+					Hashtable<String,String> maklumatPermohonan = logic_.getMaklumatPermohonan(idPermohonan, db);
+					Vector<Hashtable<String,String>> listHakmilik = logic_.getSenaraiHakmilik(idPermohonan, db);
+					Vector<Tblrujdokumen> listDokumen = logic_.getSenaraiDokumen(idPermohonan,jeniSkrin,db);
+
+					getISek4().setHakmiliks(listHakmilik);
+					getISek4().hantar(cm, maklumatPermohonan,listDokumen, userID, db);
+
 					myLogger.info("masuk sini tak");
 					
 					}catch(Exception e) {
@@ -2987,6 +3005,8 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 				System.out.println("########### upload 1");
 				//stub.uploadDokumen(uplodDokumenE);
 				System.out.println("########### upload 2");
+				
+				
 			}
 
 		} catch (RuntimeException e) {
@@ -5381,6 +5401,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 								jenis_skrin, tajuk, session, db, conn,
 								id_penarikan,kategori_lampiran);
 					}*/
+					getDoc().simpan(item,request);
 
 					saveData(item, id_fail, id_permohonan, id_hakmilik,
 							jenis_skrin, tajuk, session, db, conn,
@@ -6655,5 +6676,19 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			PopupPengambilanTanah.outputMsg = outputMsg;
 		}
 		
+	private IntegrationInternal getISek4(){
+		if(integration4 == null){
+			integration4 = new ETanahSek4();
+		}
+		return integration4;
+					
+	}	
+	private ILampiran getDoc(){
+		if(iLampiran == null){
+			iLampiran = new ekptg.model.ppt.util.LampiranBean();
+		}
+		return iLampiran;
+				
+	}
 	 
 }

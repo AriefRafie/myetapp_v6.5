@@ -4,6 +4,9 @@ import integrasi.IntegrasiManager;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.BorangCdanMMK;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.BorangCdanMMKE;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.BorangCdanMMKResponse;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.DaftarPermohonanBorangAMMk;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.DaftarPermohonanBorangAMMkE;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.DaftarPermohonanBorangAMMkResponse;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.DaftarPermohonanSek8;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.DaftarPermohonanSek8E;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.DaftarPermohonanSek8Response;
@@ -28,6 +31,7 @@ import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumanPenghantara
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumanPenghantaranPUE;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumanPenghantaranPUResponse;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumatHakmilikForm;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumatPermohonanSek4Form;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumatPermohonanSek8Form;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.SijilPembebasanUkur;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.SijilPembebasanUkurE;
@@ -112,6 +116,29 @@ public class ETanahPPTManager {
 		}
 		return hf;
 			
+	}
+	
+	//public DaftarPermohonanSek8 hantar() {
+	public String permohonanSek4( MaklumatPermohonanSek4Form form
+		,MaklumatHakmilikForm[] hakmiliks
+		,LampiranForm mmk
+		,LampiranForm[] lampiran
+		) throws Exception{
+		//MaklumatPermohonanSek8Form permohonan = null;
+		stub = getStub();
+		DaftarPermohonanBorangAMMk request = new DaftarPermohonanBorangAMMk();
+		
+		request.setMaklumatPermohonan(form);
+		request.setMaklumatHakmilik(hakmiliks);
+		request.setDrafMMk(mmk);
+		request.setAttachment(lampiran);
+		
+		DaftarPermohonanBorangAMMkE temp = new DaftarPermohonanBorangAMMkE();
+		temp.setDaftarPermohonanBorangAMMk(request);
+		
+		DaftarPermohonanBorangAMMkResponse responseSek8 = stub.daftarPermohonanBorangAMMk(temp).getDaftarPermohonanBorangAMMkResponse();
+		return responseSek8.get_return();
+		
 	}
 	
 	//public DaftarPermohonanSek8 hantar() {
