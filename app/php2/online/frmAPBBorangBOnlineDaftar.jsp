@@ -23,6 +23,7 @@
 #if ($clearForm=="yes")
     #set ($txtJumKuantiti = "")
     #set ($txtJumRoyalti = "")
+    #set ($txdTarikhPengeluaran ="")
     #set ($txtTahun = "")
     #set ($socBulan = "")
 #end
@@ -30,13 +31,13 @@
 #if ($flag=="semak")
     #foreach ( $data in $dataLaporan )
         #set ($txtJumRoyalti=$data.jumlah_royalti)
+        #set ($txdTarikhPengeluaran=$data.tarikh_pengeluaran)
         #set ($txtTahun=$data.tahun_pengambilan)
         #set ($txtKontraktor=$data.kontraktor)
         #set ($txtPembeli=$data.pembeli)
         #set ($txtJumKuantiti=$data.jumlah_kuantiti)
     #end   
 #end
-
 
 <fieldset>
 
@@ -48,7 +49,7 @@
     <table width="100%">
   <tr>
     <td align="left" width="39%">
-
+    
       #if ($button=="view")
       &nbsp;&nbsp;&nbsp;Kuantiti (meter padu)
       #else
@@ -59,21 +60,17 @@
     <td width="2%">:</td>
     <td width="59%">
     
-    #if ($mode=="disabled")
-    <input type="text" name="txtJumKuantiti" id="txtJumKuantiti" value="$!txtJumKuantiti" size="5" class="disabled" readonly />
-    #elseif ($mode=="disabled")
+    #if ($button=="view")
     <input type="text" name="txtJumKuantiti" id="txtJumKuantiti" value="$!txtJumKuantiti" size="5" class="disabled" readonly />
     #else
     <input type="text" name="txtJumKuantiti" id="txtJumKuantiti" value="$!txtJumKuantiti" size="5" onblur="getAnggaranRoyalti()" />
     #end
     
     <!-- <input type="hidden" name="jumKuantitiHidden" id="jumKuantitiHidden" value="$!txtJumKuantiti" /> -->
-    #if ($mode=="disabled")
-    x RM <select name="socRoyalti" id="socRoyalti" style="width:50px;" class="disabled" readonly><option value="3">1.00</option><option value="0.7" selected="selected">0.70</option></select> 
-    #elseif ($mode=="disabled")
-    x RM <select name="socRoyalti" id="socRoyalti" style="width:50px;" class="disabled" readonly><option value="3">3.00</option><option value="0.7" selected="selected">0.70</option></select> 
+    #if ($button=="view")
+    x RM <select name="socRoyalti" id="socRoyalti" style="width:50px;" class="disabled" readonly><option value="3">3.00</option><option value="1">1.00</option><option value="0.7" selected="selected">0.70</option></select> 
     #else
-    x RM <select name="socRoyalti" id="socRoyalti" onchange="getAnggaranRoyalti()" style="width:50px;" class=$mode><option value="3">3.00</option><option value="0.7" selected="selected">0.70</option></select> 
+    x RM <select name="socRoyalti" id="socRoyalti" onchange="getAnggaranRoyalti()" style="width:50px;" class=""><option value="3">3.00</option><option value="1">1.00</option><option value="0.7" selected="selected">0.70</option></select> 
     #end
     
      <input type="hidden" name="txtKadarRoyalti" id="txtKadarRoyalti" value="$!txtKadarRoyalti" /> </td>
@@ -93,9 +90,7 @@
     <td>:</td>
     <td>
     
-    #if ($mode=="disabled")
-    <input type="text" name="txtJumRoyalti" id="txtJumRoyalti" value="$!txtJumRoyalti" size="10" class="disabled" readonly/>
-    #elseif ($mode=="disabled")
+    #if ($button=="view")
     <input type="text" name="txtJumRoyalti" id="txtJumRoyalti" value="$!txtJumRoyalti" size="10" class="disabled" readonly/>
     #else
     <input type="text" name="txtJumRoyalti" id="txtJumRoyalti" value="$!txtJumRoyalti" size="10" onblur="validateNumber(this,this.value)" onkeyup="validateNumber(this,this.value);" maxlength="12"  />
@@ -104,7 +99,23 @@
     <!-- <input type="hidden" name="jumRoyaltiHidden" id="jumRoyaltiHidden" value="$!txtJumRoyalti" /> -->
     </td>
   </tr>
-
+  
+ <!--<tr>
+	<td align="left" width="50%">
+	    
+	#if ($button=="view")
+	&nbsp;&nbsp;&nbsp;Tarikh Pengeluaran
+	#else
+	<font color="red">*</font>&nbsp;Tarikh Operasi
+	#end       
+	
+	</td>
+	<td width="1%">:</td>
+	<td width="49%">
+	   <input type="text" name="txdTarikhPengeluaran" id="txdTarikhPengeluaran" value="$txdTarikhPengeluaran" onblur="check_date(this)" size="9"/>
+         <a href="javascript:displayDatePicker('txdTarikhPengeluaran',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
+    </td>
+  </tr>-->
 </table>
     </fieldset>    
     </td>    
@@ -137,9 +148,9 @@
     <td>:</td>
     <td>
     
-    #if ($mode=="disabled")
+    #if ($button=="view")
     <input type="text" name="txtTahun" id="txtTahun" value="$!txtTahun" size="10" class="disabled" readonly/>
-    #else
+    #else 
     <input type="text" name="txtTahun" id="txtTahun" value="$!txtTahun" size="10" onblur="validateNumber(this,this.value)" onkeyup="validateNumber(this,this.value);" maxlength="4" />
     #end 
     
@@ -199,21 +210,21 @@
     
     #if ($button=="add")
       <input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="simpanLaporan()" />    
-   	  <input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="batalBaru()" />      
+   	  <input type="button" name="cmdBatal" id="cmdBatal" value="Batal/Kembali" onclick="batalBaru()" />      
     #end
     
     #if ($button=="edit")
       <input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="simpanEditLaporan()" />    
-   	  <input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="batalEdit('$id_laporanpasir')" />
+   	  <input type="button" name="cmdBatal" id="cmdBatal" value="Batal/Kembali" onclick="batalEdit('$id_laporanpasir')" />
     #end
     
     #if ($button=="view")
     	<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskiniLaporan('$id_laporanpasir')"/>
     	<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onclick="hapusLaporan('$id_laporanpasir')"/> 
-        <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:setTable('tableReport1')" />   
+        <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:setTable('tableReport1')" /> 
+        <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembali_pelesen(id_jadualkedualesenAPB)" />    
     #end        
-    
-      <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembali_pelesen('$id_jadualkedualesenAPB')" />    
+  
     </td>
   </tr>
 </table>
@@ -233,7 +244,7 @@
 	<input type="hidden" name="id_dokumen" id="id_dokumen"  />
 	<table width="100%"  cellpadding="1" cellspacing="2" border="0">
 		<tr class="table_header">
-        	<td width="8%" align="center" style="text-transform:uppercase" scope="row">Bil</td>
+        	<td scope="row" width="0.5%" align="center">Bil</td>
             <td width="15%" style="text-transform:uppercase">Nama Lampiran</td>
             #if($list_size!=0)     
            	#foreach($senarai in $SenaraiDokumen)
@@ -313,7 +324,7 @@
 <!------------------------------------------ OUTPUT LAPORAN/SURAT ----------------------------------------------->
 <br/>
 <fieldset id="tableReport1" style="display:none;">
-<legend><strong>Senarai Laporan</strong></legend>
+<legend><strong>Senarai Dokumen</strong></legend>
 	<table width="100%" border="0" cellspacing="2" cellpadding="2">
        <tr>
         <td><a href="#" class="style2" onClick="javascript:cetakAPBLaporanPengeluaranPasirLaut('$id_jadualkedualesenAPB','$bulan_pengambilan','$id_laporanpasir')"><font color="blue"> Laporan Pengeluaran Pasir Laut </font></a></td>
@@ -353,37 +364,36 @@ function setTable(id){
 
 function paparPasir(id_borangk2k3) {
 	document.${formName}.id_borangk2k3.value = id_borangk2k3;
-	document.${formName}.actionLaporanPasir.value = "paparPasir";
+	document.${formName}.actionOnline.value = "paparPasir";
 	document.${formName}.submit();
 }
 
 function daftarPasirLaut(id_laporanpasir) {
 	document.${formName}.id_laporanpasir.value = id_laporanpasir;
-	document.${formName}.actionLaporanPasir.value = "daftarPasirLaut";
+	document.${formName}.actionOnline.value = "daftarPasirLaut";
 	document.${formName}.submit();
 }
 
 function kemaskiniLaporan(id_laporanpasir) {
+	document.${formName}.actionOnline.value = "kemaskiniLaporan";
+	//document.${formName}.mode.value = "view";
 	document.${formName}.id_laporanpasir.value = id_laporanpasir;
-	document.${formName}.actionLaporanPasir.value = "kemaskiniLaporan";
 	document.${formName}.submit();
 }
-
 function kembali_pelesen(id_jadualkedualesenAPB) {
 	document.${formName}.id_jadualkedualesenAPB.value = id_jadualkedualesenAPB;
-	document.${formName}.actionLaporanPasir.value = "papar_pelesen";
+	document.${formName}.actionOnline.value = "papar_pelesen";
 	document.${formName}.submit();
 }
 
 function batalBaru() {
-	if ( !window.confirm("Adakah Anda Pasti?") ) return;
-	document.${formName}.actionLaporanPasir.value = "batalBaru";
+	document.${formName}.actionOnline.value = "papar_pelesen";
 	document.${formName}.submit();
 }
 
-function batalEdit() {
-	if ( !window.confirm("Adakah Anda Pasti?") ) return;
-	document.${formName}.actionLaporanPasir.value = "papar_laporan";
+function batalEdit(id_laporanpasir) {
+	//if ( !window.confirm("Adakah Anda Pasti?")) return;
+	document.${formName}.actionOnline.value = "papar_pelesen";
 	document.${formName}.submit();
 }
 
@@ -398,12 +408,17 @@ function simpanLaporan() {
 		alert("Sila masukkan \"Jumlah Royalti\" terlebih dahulu.");
   		document.${formName}.txtJumRoyalti.focus(); 
 		return;		
-	}	
+	}
+	/*if(document.${formName}.txdTarikhPengeluaran.value == ""){
+		alert("Sila masukkan Tarikh Pengeluaran.");
+  		document.${formName}.txdTarikhPengeluaran.focus(); 
+		return;		
+	}*/
 	if(document.${formName}.socBulan.value == ""){
 		alert("Sila masukkan \"Bulan\" terlebih dahulu.");
   		document.${formName}.socBulan.focus(); 
 		return;		
-	}	
+	}
 	if(document.${formName}.txtTahun.value == ""){
 		alert("Sila masukkan \"Tahun Pengambilan\" terlebih dahulu.");
   		document.${formName}.txtTahun.focus(); 
@@ -463,7 +478,7 @@ function simpanEditLaporan() {
 
 	else{
 		if ( !window.confirm("Adakah Anda Pasti?") ) return;
-		document.${formName}.actionLaporanPasir.value = "simpanEditLaporan";
+		document.${formName}.actionOnline.value = "simpanEditLaporan";
 		document.${formName}.submit();
 	}	
 				
@@ -473,7 +488,7 @@ function hapusLaporan(id_laporanpasir){
 	input_box = confirm("Adakah anda pasti?");
 	if (input_box == true) {
 	var id_laporanpasir = document.${formName}.id_laporanpasir.value ;		
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmAPBLaporanPasir&command=hapusLaporan&id_laporanpasir="+id_laporanpasir;	
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView&command=hapusLaporan&id_laporanpasir="+id_laporanpasir;	
 	document.${formName}.submit();
 	}	
 }
@@ -534,18 +549,18 @@ function getAnggaranRoyalti(){
 }
 </script>
 
-<!-- FUNCTION UPLOAD FILE PASIR LAUT -AIN07062017- -->
+<!-- FUNCTION UPLOAD FILE PASIR LAUT -16102020 -->
 <script>
 function uploadBaruDokumen(id_laporanpasir) {
 	document.${formName}.id_laporanpasir.value = id_laporanpasir;
-	document.${formName}.actionLaporanPasir.value = "uploadBaruDokumen";
+	document.${formName}.actionOnline.value = "uploadBaruDokumen";
 	document.${formName}.submit();
 }
 
 function paparMaklumatDokumen(id_dokumen) {
 	alert(id_dokumen);
 	document.${formName}.id_dokumen.value = id_dokumen;
-	document.${formName}.actionLaporanPasir.value = "paparDokumen";
+	document.${formName}.actionOnline.value = "paparDokumen";
 	document.${formName}.submit();
 }
 function calculateRoyalti()

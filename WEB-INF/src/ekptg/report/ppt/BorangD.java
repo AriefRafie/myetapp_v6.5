@@ -52,7 +52,6 @@ public class BorangD extends EkptgReportServlet {
 //			 super.setReportName("Borang D_PTG");
 //		}
 		
-        
 		super.setFolderName("ppt");
 		
 	
