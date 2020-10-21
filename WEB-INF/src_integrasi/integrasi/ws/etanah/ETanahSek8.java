@@ -175,7 +175,10 @@ public class ETanahSek8 implements IntegrationInternal{
 		//form.setTarikh_permohonan(permohonan.get("tarikhPermohonan")); 
 		form.setTujuan(permohonan.get("namaProjek"));
 		form.setTujuan_dalam_english(permohonan.get("namaProjekBI"));
-		//form.set
+		
+		myLog.info("Maklumat Sek8 no fail="+permohonan.get("noFail"));
+		myLog.info("Maklumat Sek8 Daerah="+permohonan.get("kodDaerah"));
+		myLog.info("Maklumat Sek8 Negeri="+form.getKod_negeri_pengambilan());
 		return form;
 		
 	}
