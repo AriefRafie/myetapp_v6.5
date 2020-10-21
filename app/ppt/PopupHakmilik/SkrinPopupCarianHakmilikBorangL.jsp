@@ -444,7 +444,13 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
           #end            
           </table>
          
-      
+      <!-- PPT-11 -->
+		#if($flag_skrin == "hakmilik_borangL")
+			#if($isEdit=="no")
+				<input type="button" name="cmdCetak" value="Cetak Surat Pelupusan" onClick="javascript:cetakSuratPelupusanHakmilik('$!id_hakmilik','$!id_fail', '$!id_permohonan', '$!bilLot');">
+			#else
+			#end
+		#end
       </fieldset>
       
       </td>
