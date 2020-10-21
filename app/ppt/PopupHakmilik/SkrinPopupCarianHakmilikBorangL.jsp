@@ -136,8 +136,15 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 				#else
 				<input type="button" name="cmdUpdate" value ="Simpan" onClick="javascript:simpanBorangL('$!id_permohonan','$flag_skrin')">
 				<input type="button" name="cmdBatal" value ="Batal" onClick="javascript:batalKemaskini('$!id_permohonan','$flag_skrin')">
+		#end
+		
+		<!-- PPT-11 -->
+		#if($flag_skrin == "hakmilik_borangL")
+			#if($isEdit=="no")
+				<input type="button" name="cmdCetak" value="Cetak Surat Pelupusan" onClick="javascript:cetakSuratPelupusanHakmilik('$!id_hakmilik','$!id_fail', '$!id_permohonan', '$!bilLot');">
+			#else
 			#end
-			
+		#end	
         #end
         
         
@@ -147,7 +154,7 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
         <tr class="table_header">
         				<!-- PPT-11 -->
         				<!-- td align="center" ><b><input type="checkbox" title="Sila Semak Untuk Pilih Semua" name="checkall" id="checkall" onclick="checkALL()" ></b></td -->
-        				<td align="center"><b><font color="white">Surat Pelupusan Hakmilik</b></td>
+        				<td align="center" width="10%"><b><font color="white"><b></b>PILIH HAKMILIK</b></td>
                   		<td align="center" ><b><font color="white">NO</font></b></td>
                   		<td  ><b><font color="white">NO HAKMILIK</font></b></td>
                         #if($flag_skrin != "hakmilik_borangL")
@@ -416,7 +423,7 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                         <td class="$rowx">
                         #if($!listTanah.tarikh_borangl != "")
                         
-                        <input type="button" name="cmdCetakBorangL" value ="Cetak" onClick="javascript:cetakBorangL($!listTanah.id_hakmilik,$!id_fail,$!id_permohonan,'$!listTanah.tarikh_borangl','$!listTanah.tempoh')">
+                        <input type="button" name="cmdCetakBorangL" value ="Borang L" onClick="javascript:cetakBorangL($!listTanah.id_hakmilik,$!id_fail,$!id_permohonan,'$!listTanah.tarikh_borangl','$!listTanah.tempoh')">
                         <input type="button" name="cmdCetakPenyampaianBorangL" value ="Penyampaian Borang L" onClick="javascript:cetakPenyampaianBorangL($!listTanah.id_hakmilik, $!id_fail,$!id_permohonan, '$!listTanah.tarikh_borangl', '$!listTanah.tempoh')">
                         #end
                         </td>
@@ -436,22 +443,7 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
           
           #end            
           </table>
-          
-<!-- PPT - 11 -->
-		<table width="100%" border="0">
-			<tr align="center">
-				<td>
-					
-					#if($flag_skrin == "hakmilik_borangL")
-						#if($isEdit=="no")
-							<input type="button" name="cmdCetak" value="Cetak Surat Pelupusan" onClick="javascript:cetakSuratPelupusanHakmilik('$!id_hakmilik','$!id_fail', '$!id_permohonan', '$!bilLot');">
-						#else
-						#end
-					#end
-				
-				</td>
-			</tr>
-		</table>
+         
       
       </fieldset>
       
@@ -989,7 +981,7 @@ function cetakSuratPelupusanHakmilik(id_hakmilik, id_fail, id_permohonan, bilLot
 		
 	}	else	{
 	
-	var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_hakmilik="+id_hakmilik+"&id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&bilLot="+bilLot+"&report=suratPelupusanHakmilik";
+	var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_hakmilik="+id_hakmilik+"&id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&bilLot="+bilLot+"&report=suratPelupusanHakmilik&selectNoFail=yes";
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;

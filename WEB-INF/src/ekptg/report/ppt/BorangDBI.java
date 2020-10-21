@@ -33,17 +33,17 @@ public class BorangDBI extends EkptgReportServlet {
 		}	
 		
 		
-		if(id_negeri.equals("5"))
-		{
-			super.setReportName("BORANGD_N9_1LOT");
-		}
-		else
-		{
-			super.setReportName("BORANGD_KEDAH_1LOT");
-		}
+//		if(id_negeri.equals("5"))
+//		{
+//			super.setReportName("BORANGD_N9_1LOT");
+//		}
+//		else
+//		{
+//			super.setReportName("BORANGD_KEDAH_1LOT");
+//		}
 		
        	
-        
+		super.setReportName("BORANGD_N9_1LOT");
 		super.setFolderName("ppt");
 	}
 	

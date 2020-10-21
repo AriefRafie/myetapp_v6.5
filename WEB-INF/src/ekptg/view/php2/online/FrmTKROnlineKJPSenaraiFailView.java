@@ -419,7 +419,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 	    			Hashtable hashMaklumatPelepasan = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
 	    			idLuasKegunaan = (String) hashMaklumatPelepasan.get("flagGuna");
 				}
-				this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "disabled", " class=\"disabled\""));
+				this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "disabled", " class=\"disabled\" style=\"width:auto\""));
 
 				// MAKLUMAT PEMOHON
 				logic.setMaklumatPemohon(idFail);
@@ -567,6 +567,9 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				// MODE VIEW
 				if ("view".equals(mode)) {
 					myLog.info("baca mode view");
+					this.context.put("readonly", "readonly");
+					this.context.put("inputTextClass", "disabled");
+					this.context.put("disabled", "disabled");
 
 					// MAKLUMAT PERMOHONAN
 					beanMaklumatPermohonan = new Vector();
