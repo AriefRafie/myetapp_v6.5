@@ -406,7 +406,7 @@ SELECT * FROM TBLRUJSTATUS WHERE ID_STATUS IN ('47','70','169','50','21','999')
           <td  valign="top" >
           <font style="text-transform:uppercase;" color="blue">$!headerppk.NAMA_PEMOHON</font>
            <br />
-           #if (($hurufH != "H") && ($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N") && ($!headerppk.ID_STATUS != "152")&& ($!headerppk.ID_STATUS != "21")&& ($!headerppk.ID_STATUS != "175")&& ($!headerppk.ID_STATUS != "177"))
+           #if (($hurufH != "H") && ($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N") && ($!headerppk.ID_STATUS != "152")&& ($!headerppk.ID_STATUS != "21")&& ($!headerppk.ID_STATUS != "175")&& ($!headerppk.ID_STATUS != "177") && ($!headerppk.SEKSYEN != "17"))
           	
           
            Penggantian pemohon boleh dibuat  
