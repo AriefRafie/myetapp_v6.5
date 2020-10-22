@@ -29,9 +29,9 @@
 			//document.${formName}.action = "?_portal_module=ekptg.view.htp.pajakan.FrmPajakanMJMView";
 			//Pendaftaran 24/01/2017
 			document.${formName}.actionPajakan.value = "paparmjm";
-
+/*
 			if(idStatus == '86' || idStatus == '87')
-				params = "selectedTab=3";
+				params = "selectedTab=0"; */
 
 		} else if (idStatus == '65' || idStatus == '148' || idStatus == '240' ){
 			//document.${formName}.action = "$EkptgUtil.getTabID('Pajakan',$portal_role)?_portal_module=ekptg.view.htp.FrmPajakanMemorandumJemaahMenteriView";
