@@ -18,25 +18,25 @@
 	#else<img src="../img/5enable.png" alt="" border="0" title="Maklumat MJM" onclick="langkah5($!htpPermohonan.permohonan.getIdPermohonan(),'$!htpPermohonan.permohonan.pfdFail.getIdFail()')" onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>#end
 	#if($page == "6")<img src="../img/6current.png" alt="" border="0" title="Deraf Perjanjian"/>
 	#else<img src="../img/6enable.png" alt="" border="0" title="Deraf Perjanjian" onclick="langkah6($!htpPermohonan.permohonan.getIdPermohonan(),'$!htpPermohonan.permohonan.pfdFail.getIdFail()')" onMouseOver="this.style.cursor='pointer'"/>#end
-	#if($page == "7")<img src="../img/7current.png" alt="" border="0" title="Perjanjian"/>
-	#else<img src="../img/7enable.png" alt="" border="0" title="Perjanjian" onclick="langkah7($!htpPermohonan.permohonan.getIdPermohonan(),'$!htpPermohonan.permohonan.pfdFail.getIdFail()')" onMouseOver="this.style.cursor='pointer'"/>#end
-	#if($page == "8")<img src="../img/8current.png" alt="" border="0" title="Pajakan"/>
-	#else<img src="../img/8enable.png" alt="" border="0" title="Pajakan" onclick="langkah8($!htpPermohonan.permohonan.getIdPermohonan(),'$!htpPermohonan.permohonan.pfdFail.getIdFail()')" onMouseOver="this.style.cursor='pointer'"/>#end
-	#if($page == "9")<img src="../img/9current.png" alt="" border="0" title="Bayaran"/>
-	#else<img src="../img/9enable.png" alt="" border="0" title="Bayaran" onclick="langkah9($!htpPermohonan.permohonan.getIdPermohonan(),'$!htpPermohonan.permohonan.pfdFail.getIdFail()')" onMouseOver="this.style.cursor='pointer'"/>#end
-	#if($page == "10")<img src="../img/10current.png" alt="" border="0" title="Penamatan"/>
-	#else<img src="../img/10enable.png" alt="" border="0" title="Penamatan" onclick="langkah10($!htpPermohonan.permohonan.getIdPermohonan(),'$!htpPermohonan.permohonan.pfdFail.getIdFail()')" onMouseOver="this.style.cursor='pointer'"/>#end
-	#if($page == "11")<img src="../img/11current.png" alt="" border="0" title="Tindakan"/>
-	#else<img src="../img/11enable.png" alt="" border="0" title="Tindakan" onclick="langkah11($!htpPermohonan.permohonan.getIdPermohonan(),'$!htpPermohonan.permohonan.pfdFail.getIdFail()')" onMouseOver="this.style.cursor='pointer'"/>#end
+<!-- 	#if($page == "7")<img src="../img/7current.png" alt="" border="0" title="Perjanjian"/> -->
+<!-- 	#else<img src="../img/7enable.png" alt="" border="0" title="Perjanjian" onclick="langkah7($!htpPermohonan.permohonan.getIdPermohonan(),'$!htpPermohonan.permohonan.pfdFail.getIdFail()')" onMouseOver="this.style.cursor='pointer'"/>#end -->
+	#if($page == "7")<img src="../img/7current.png" alt="" border="0" title="Pajakan"/>
+	#else<img src="../img/7enable.png" alt="" border="0" title="Pajakan" onclick="langkah7($!htpPermohonan.permohonan.getIdPermohonan(),'$!htpPermohonan.permohonan.pfdFail.getIdFail()')" onMouseOver="this.style.cursor='pointer'"/>#end
+	#if($page == "8")<img src="../img/8current.png" alt="" border="0" title="Bayaran"/>
+	#else<img src="../img/8enable.png" alt="" border="0" title="Bayaran" onclick="langkah8($!htpPermohonan.permohonan.getIdPermohonan(),'$!htpPermohonan.permohonan.pfdFail.getIdFail()')" onMouseOver="this.style.cursor='pointer'"/>#end
+	#if($page == "9")<img src="../img/9current.png" alt="" border="0" title="Penamatan"/>
+	#else<img src="../img/9enable.png" alt="" border="0" title="Penamatan" onclick="langkah9($!htpPermohonan.permohonan.getIdPermohonan(),'$!htpPermohonan.permohonan.pfdFail.getIdFail()')" onMouseOver="this.style.cursor='pointer'"/>#end
+	#if($page == "10")<img src="../img/10current.png" alt="" border="0" title="Tindakan"/>
+	#else<img src="../img/10enable.png" alt="" border="0" title="Tindakan" onclick="langkah10($!htpPermohonan.permohonan.getIdPermohonan(),'$!htpPermohonan.permohonan.pfdFail.getIdFail()')" onMouseOver="this.style.cursor='pointer'"/>#end
 #else
 	<img src="../img/4disable.png" alt="" border="0" title="Ulasan"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
 	<img src="../img/5disable.png" alt="" border="0" title="Maklumat MJM"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
 	<img src="../img/6disable.png" alt="" border="0" title="Deraf Perjanjian"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
-	<img src="../img/7disable.png" alt="" border="0" title="Perjanjian"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
-	<img src="../img/8disable.png" alt="" border="0" title="Pajakan"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
-	<img src="../img/9disable.png" alt="" border="0" title="Bayaran"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
-	<img src="../img/10disable.png" alt="" border="0" title="Penamatan"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
-	<img src="../img/11disable.png" alt="" border="0" title="Tindakan"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
+<!-- 	<img src="../img/7disable.png" alt="" border="0" title="Perjanjian"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/> -->
+	<img src="../img/7disable.png" alt="" border="0" title="Pajakan"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
+	<img src="../img/8disable.png" alt="" border="0" title="Bayaran"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
+	<img src="../img/9disable.png" alt="" border="0" title="Penamatan"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
+	<img src="../img/10disable.png" alt="" border="0" title="Tindakan"  onMouseOver="this.style.cursor='pointer'"/><img src="../img/arrowgaris.png" alt="" border="0"/>
 #end
 
 
