@@ -321,6 +321,10 @@ padding:0 0.25em;
 		}else if('dokumenIC' == '$!actionRefresh'){
 			window.opener.setSelected(0,2,0,0);
 			window.opener.WarisView(flagOnline);
+			
+		}else if('dokumenS' == '$!actionRefresh'){
+			window.opener.semakLampiran();
+		
 		}
 		
 		
