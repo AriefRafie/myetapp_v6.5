@@ -339,11 +339,11 @@ a.nav:visited {
                           <tr>
                             <td><b>Utiliti</b> </td>
                           </tr>
-                          <tr>
+                          <!-- <tr>
                             <td><a href="javascript:gotoKutipanPLP()" class="help" title="Kutipan Data Pelepasan"> <font color="blue">
                               <li>&nbsp;Kutipan Data Pelepasan</li>
                               </font> </a> </td>
-                          </tr>
+                          </tr> -->
                           <tr>
                             <td><a href="javascript:gotoKutipanPNW()" class="help" title="Kutipan Data Penawaran"> <font color="blue">
                               <li>&nbsp;Kutipan Data Penawaran</li>
@@ -361,7 +361,7 @@ a.nav:visited {
             </table></td>
         </tr>
         #end
-        <tr>
+        <!-- <tr>
           <td valign="top" align="left"><table cellpadding="2" cellspacing="1" border="0" width="100%" class="dashboard_sub" align="left">
               <tr>
                 <td width="50%" valign="top"><table width="100%" >
@@ -383,7 +383,7 @@ a.nav:visited {
                   </table></td>
               </tr>
             </table></td>
-        </tr>
+        </tr> -->
          <tr>
           <td valign="top" align="left"><table cellpadding="2" cellspacing="1" border="0" width="100%" class="dashboard_sub" align="left">
               <tr>
