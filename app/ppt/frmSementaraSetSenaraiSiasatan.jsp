@@ -646,7 +646,7 @@
 #if($list_siasatan.size() == 0 && $record_siasatan != "yes")
   <input type="button" value="Daftar Rundingan" onClick="tambah('$id_hakmilik','$!id_pembatalan')">
 #end
-<input type="button" value="Cetak Borang Q" onClick="javascript:cetakBorangQ('$id_permohonan','$id_hakmilik')">
+<!-- <input type="button" value="Cetak Borang Q" onClick="javascript:cetakBorangQ('$id_permohonan','$id_hakmilik')"> -->
 
 #if($list_siasatan.size() > 0)
 <input name="" type="button" value="Hapus" onClick="hapus_beramai()">

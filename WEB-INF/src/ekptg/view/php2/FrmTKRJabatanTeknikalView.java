@@ -721,6 +721,11 @@ private static final long serialVersionUID = 1L;
 			senaraiJPPH = logic.getListJPPH();
 			this.context.put("SenaraiJPPH", senaraiJPPH);
 			
+			//LAMPIRAN ULASAN TEKNIKAL
+			beanMaklumatLampiran = new Vector();
+			beanMaklumatLampiran = logic.getBeanMaklumatLampiran(idUlasanTeknikal);
+			this.context.put("BeanMaklumatLampiran",beanMaklumatLampiran);
+			
 		} else if(mode.equals("update")){
 			
 			this.context.put("readonly", "");
