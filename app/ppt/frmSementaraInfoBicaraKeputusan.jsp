@@ -944,8 +944,13 @@ Lain - Lain Kos</td>
       </tr> 
       <!-- PPT-43 (iv) -->
       <tr>  
-      	 <td><a href="#" onClick="javascript:cetakBorangR('$id_siasatan','$!id_hakmilik')"><font color="blue">Borang R</font></a></td>
+      	 <td><a href="#" onClick="javascript:cetakBorangR('$id_siasatan','$!id_hakmilik','$id_fail')"><font color="blue">Borang R</font></a></td>
       </tr> 
+      <!-- KOMEN PAT -->
+      <tr>  
+      	 <td><a href="#" onClick="javascript:cetakBorangQ('$id_permohonan','$id_hakmilik')"><font color="blue">Borang Q</font></a></td>
+      </tr>
+      
     </table>
 </fieldset>
   
@@ -4081,9 +4086,9 @@ function cetakSuratMohonBayaranAgensi(id_fail,id_hakmilik,id_permohonan) {
     if (hWnd.focus != null) hWnd.focus();
 }
 //PPT-43(iv)
-function cetakBorangR(id_siasatan,id_hakmilik) {
+function cetakBorangR(id_siasatan,id_hakmilik,id_fail) {
 	
-    var url = "../servlet/ekptg.report.ppt.BorangR?id_siasatan="+id_siasatan+"&id_hakmilik="+id_hakmilik;
+    var url = "../servlet/ekptg.report.ppt.BorangR?id_siasatan="+id_siasatan+"&id_hakmilik="+id_hakmilik+"&id_Fail="+id_fail;
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
@@ -4211,6 +4216,19 @@ input_box = confirm("Adakah anda pasti?");
 	}
 }
 
+
+//KOMEN PAT
+function cetakBorangQ(idpermohonan,idhakmilik) {
+	
+	//var url = "../servlet/ekptg.report.ppt.BorangQ?idhakmilik="+id_hakmilik;
+	//var url = "../servlet/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?idhakmilik="+id_hakmilik;
+	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+idhakmilik+"&report=BorangQ&selectNoFail=yes";
+	//var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?idhakmilik="+idhakmilik";	
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();	
+}
 
 </script>
   

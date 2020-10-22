@@ -93,7 +93,7 @@
         <li class="TabbedPanelsTab" tabindex="0" onClick="screen2('$id_permohonan','$id_pembatalan')" >Senarai Lot Penarikan</li>
         <li class="TabbedPanelsTab" tabindex="0" id="maklumat_am" onClick="LaporanTanah('$!id_hakmilik','$!id_pembatalan')">Maklumat Am Tanah</li>
         <li class="TabbedPanelsTab" tabindex="0" onClick="PerihalTanah('$!id_hakmilik','$!id_pembatalan')">Perihal Tanah</li>
-                <li class="TabbedPanelsTab" tabindex="0" onclick="PembangunanSekitar('$!id_hakmilik','$!id_pembatalan')">Pembangunan Sekitar</li>
+        <li class="TabbedPanelsTab" tabindex="0" onclick="PembangunanSekitar('$!id_hakmilik','$!id_pembatalan')">Pembangunan Sekitar</li>
         <li class="TabbedPanelsTab" tabindex="0" onClick="LaporanKerosakan('$!id_hakmilik','$!id_pembatalan')">Laporan Kerosakan</li>
       </ul>
       <div class="TabbedPanelsContentGroup">
@@ -367,7 +367,7 @@
   <input type="hidden" name="id_tanahumum" id="id_tanahumum" value="$!id_tanahumum" />
  
   <script type="text/javascript">
-var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:3});
+var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:4});
 
 var readmode = '$readmode';
 var jenis_permohonan = '$jenis_permohonan';

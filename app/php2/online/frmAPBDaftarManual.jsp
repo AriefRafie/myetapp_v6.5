@@ -8,6 +8,7 @@
 </style>
 #set($saizTxtTujuanPengambilan="500")
 #set($saizTxtRingkasanPengalaman="900")
+#set($saizTxtUndang="900")
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input name="actionOnline" type="hidden" id="actionOnline" value="$actionOnline"/>
@@ -117,6 +118,7 @@
   		<td width="70%"> $!pemohon.get("namaPemohon")
   		<input type="hidden" name="txtNama" id="txtNama" value="$!pemohon.get("namaPemohon")"></td>
   	</tr>
+  	
  	<tr>
   		<td></td>
   		<td>
@@ -166,21 +168,30 @@
   		<td>:</td>
   		<td>$!pemohon.get("noFax")</td>
   	</tr>
-  	  	<tr>
+  	<tr>
   		<td></td>
   		<td>Emel</td>
   		<td>:</td>
   		<td>$!pemohon.get("emel")</td>
   	</tr>
-  	</tr>
-  	  	<tr>
+  	<tr>
   		<td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>
   		<td width="28%">Undang-Undang Diperbadankan</td>
   		<td width="1%">:</td>
-  		<td width="78%">
-            <input name="txtUndang" type="text" class="$inputTextClass" id="txtUndang" value="$beanMaklumatPermohonan.txtUndang" size="50" maxlength="250" $readonly />
-        </td>
+  		<td width="70%">
+           <!-- <input name="txtUndang" type="text" class="$inputTextClass" id="txtUndang" value="$pemohon.undangUndang" size="50" maxlength="250" />-->
+           <textarea name="txtUndang" id="txtUndang" cols="43" rows="5" $readonly class="$inputTextClass" onKeyUp="textCounter(this.form.txtUndang,this.form.remLen3,$!saizTxtUndang);" onKeyDown="textCounter(this.form.txtUndang,this.form.remLen3,$!saizTxtUndang);" >$!pemohon.get("undangUndang")</textarea></td>
     </tr>
+        #if ($mode == 'new')
+        <tr>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">&nbsp;</td>
+          <td width="28%">Baki Aksara :&nbsp;
+          <input type="text" readonly="readonly" class="disabled" name="remLen3" size="3" maxlength="3" value="$!saizTxtUndang" /></td>
+        </tr>
+        #end
+  	</tr>
   </fieldset>
  </table>
   	</td>
@@ -417,7 +428,7 @@ function doChangeNoFailAPB() {
 function daftarBaru() {
 
 	if(document.${formName}.txtUndang.value == ""){
-		alert('Sila masukkan maklumat Undang-undang.');
+		alert('Sila masukkan maklumat Undang-Undang Diperbadankan.');
   		document.${formName}.txtUndang.focus(); 
 		return; 
 	}

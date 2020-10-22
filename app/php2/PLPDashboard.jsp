@@ -339,11 +339,11 @@ a.nav:visited {
                           <tr>
                             <td><b>Utiliti</b> </td>
                           </tr>
-                          <tr>
+                          <!-- <tr>
                             <td><a href="javascript:gotoKutipanPLP()" class="help" title="Kutipan Data Pelepasan"> <font color="blue">
                               <li>&nbsp;Kutipan Data Pelepasan</li>
                               </font> </a> </td>
-                          </tr>
+                          </tr> -->
                           <tr>
                             <td><a href="javascript:gotoKutipanPNW()" class="help" title="Kutipan Data Penawaran"> <font color="blue">
                               <li>&nbsp;Kutipan Data Penawaran</li>
@@ -361,7 +361,7 @@ a.nav:visited {
             </table></td>
         </tr>
         #end
-        <tr>
+        <!-- <tr>
           <td valign="top" align="left"><table cellpadding="2" cellspacing="1" border="0" width="100%" class="dashboard_sub" align="left">
               <tr>
                 <td width="50%" valign="top"><table width="100%" >
@@ -383,7 +383,7 @@ a.nav:visited {
                   </table></td>
               </tr>
             </table></td>
-        </tr>
+        </tr> -->
          <tr>
           <td valign="top" align="left"><table cellpadding="2" cellspacing="1" border="0" width="100%" class="dashboard_sub" align="left">
               <tr>
@@ -464,8 +464,10 @@ a.nav:visited {
                       <li class="TabbedPanelsTab" tabindex="0" id="Pengumuman_Head" >Pengumuman</li>
                       #end
                       <li class="TabbedPanelsTab" tabindex="0"  id="Carta_Head"  >Carta</li>
+                      <li class="TabbedPanelsTab" tabindex="0" id="Peringatan_Head"><span class="blink">PERINGATAN !</span></li>
                     </ul>
-                    <div class="TabbedPanelsContentGroup"> #if($list_memo_aktif.size()>0)
+                    <div class="TabbedPanelsContentGroup"> 
+                      #if($list_memo_aktif.size()>0)
                       <div class="TabbedPanelsContent"  id="Peringatan_Main" style="height:250" >
                         <table width="100%" >
                           <tr>
@@ -539,6 +541,28 @@ a.nav:visited {
                           </table>
                         </div>
                       </div>
+                      <div class="TabbedPanelsContent" >
+	                  	<table width="90%" align="center" border="0"  class="alert">
+	                  		<tr>
+							   <td>
+							   </td>
+						   </tr>
+						   <tr>
+							   <td width="2%" valign="top" align="right">
+							   </td>
+						   	   <td width="98%">
+						   			<div id="tertunggak">
+					   					<a href="javascript:gotoKJPTamatTempoh('S')" class="help" title="Senarai Ulasan KJP Tamat Tempoh">
+											<label style="background-color:red"  align="center" valign="top" >
+			                            		<b><font color="WHITE"><span class="blink">&nbsp;$bilTamatTempohUlasanKJP</span></font></b>
+		                             		</label>&nbsp;
+									 		Bil. Fail Tamat Tempoh Ulasan KJP
+										</a>
+									</div>
+								</td>
+						   </tr>
+	                  	</table>
+                      </div>
                     </div>
                   </div></td>
               </tr>
@@ -607,6 +631,12 @@ function gotoFLMSstat() {
 }
 function gotoInbox() {
 	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.utils.FrmInboxUsers";
+	document.${formName}.submit();
+}
+function gotoKJPTamatTempoh(S) {
+	document.${formName}.action = "$EkptgUtil.getTabID("Penawaran",$portal_role)?_portal_module=ekptg.view.php2.FrmSenaraiTugasanPLPView&socJenisFailC=S";
+	//document.${formName}.socJenisFailC.value = S;
+	//document.Fekptg_view_php2_FrmREVMemantauBayaranSewaView.socJenisFailC.value = "S";
 	document.${formName}.submit();
 }
 </script>

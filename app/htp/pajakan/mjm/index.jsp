@@ -48,14 +48,26 @@
        		<div id="TabbedPanels1" class="TabbedPanels">
 
            		<ul class="TabbedPanelsTabGroup">
-                	<li class="TabbedPanelsTab" title="Memorandum Jemaah Menteri">MEMORANDUM JEMAAH MENTERI</li>
+           			<li class="TabbedPanelsTab" title="Perakuan Jawatankuasa Pajakan" onclick="doChangeTab(0)" tabindex="0">PERAKUAN JAWATANKUASA PAJAKAN</li>
+                	<li class="TabbedPanelsTab" title="Memorandum Jemaah Menteri" onclick="doChangeTab(1)" tabindex="1">MEMORANDUM JEMAAH MENTERI</li>
               	</ul>
 
               	<div class="TabbedPanelsContentGroup">
+
               		<div class="TabbedPanelsContent">
-                	<!-- content Memorandum Jemaah Menteri -->
-	                	#parse ("app/htp/pajakan/mjm/frmPajakanTabMJM.jsp")
-              		<!-- close content Memorandum Jemaah Menteri -->
+	                	<!-- content pemohon pajakan -->
+						#if ($selectedTab == '0')
+		                	#parse ("app/htp/pajakan/mjm/frmPajakanTabPerakuan.jsp")
+	                    #end
+	               		<!-- close content pemohon pajakan -->
+                	</div>
+
+              		<div class="TabbedPanelsContent">
+	                	<!-- content Memorandum Jemaah Menteri -->
+	                	#if ($selectedTab == '1')
+		                	#parse ("app/htp/pajakan/mjm/frmPajakanTabMJM.jsp")
+		                #end
+	              		<!-- close content Memorandum Jemaah Menteri -->
               		</div>
 
          		</div>
@@ -1353,6 +1365,16 @@ function langkah5(permohonan,idFail){
 		document.${formName}.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.integrasi.FrmJPPHViewNilaianPajakan&action2=view&ID_PERMOHONAN=$idPermohonan";
 		document.${formName}.method = "POST";
 		document.${formName}.submit();
+	}
+
+
+	function downloadPerakuan(idPermohonan,idDeraf){
+		var url = "../servlet/ekptg.view.htp.pajakan.PerakuanDisplayBlob?id="+idPermohonan+"&idderaf="+idDeraf;
+	    var hWnd = window.open(url,'displayfile','width=800,height=600, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	    hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+
 	}
 </script>
 <!-- Diguna selepas Upload Draf Perjanjian -->

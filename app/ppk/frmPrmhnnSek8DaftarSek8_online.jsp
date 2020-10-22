@@ -2858,6 +2858,7 @@ var dtCh= "/";
     }else{
       window.location.hash='tab_Daftar';
       //goTo('tab_Daftar');
+      document.f1.namaDoc2.value = "0";
     }
     
   } 

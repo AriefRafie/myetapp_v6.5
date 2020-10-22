@@ -15,7 +15,6 @@
 
 #parse("app/ppt/paging_penarikanbalik.jsp")
 
-
 #set($id_tanahumum = "")
 #set($txtKerosakanTanah = "")
 #set($txtKeteranganKerosakan = "")
@@ -29,13 +28,6 @@
 #set($txtnamadaerah = "")
 #set($txtnamajajahan = "")
 #set($STATUS_LAPORAN = "")
-
-#set($txtKemudahan = "")
-#set($txtSempadanUtara = "")
-#set($txtSempadanSelatan = "")
-#set($txtSempadanBarat = "")
-#set($txtSempadanTimur = "")
-
 
 #foreach($listmaklumat in $maklumat_hakmilik)
 #set($id_hakmilik = $listmaklumat.ID_HAKMILIK)
@@ -57,14 +49,14 @@
 #end
 
 
-#foreach($data in $maklumat_am_tanah)
-#set($txtKemudahan=$data.kemudahan_awam)
-	#set($txtSempadanUtara=$data.sempadan_utara)
-	#set($txtSempadanSelatan=$data.sempadan_selatan)
-	#set($txtSempadanTimur=$data.sempadan_timur)
-	#set($txtSempadanBarat=$data.sempadan_barat)
-	#set($sorSaliran=$data.flag_saliran)
-	
+<!--  Tab Laporan Kerosakan  -->
+#foreach($maklumatam in $maklumat_am_tanah)
+#set($id_tanahumum = $maklumatam.ID_TANAHUMUM)
+#set($txtKerosakanTanah = $maklumatam.KEROSAKAN_TANAH)
+#set($txtKeteranganKerosakan = $maklumatam.KETERANGAN_KEROSAKAN)
+#set($txtKerosakanTanaman = $maklumatam.KEROSAKAN_TANAMAN)
+#set($txtKerosakanBangunan = $maklumatam.KEROSAKAN_BANGUNAN)
+#set($txtKosDitanggung = $maklumatam.KOS_DITANGGUNG)
 #end
 
 
@@ -94,7 +86,21 @@
     
     <tr>
     <td>
-   
+    
+	<input name="tabId" type="hidden" id="tabId" value="$selectedTab"/>
+	
+	<div id="TabbedPanels1" class="TabbedPanels">
+	
+  		<ul class="TabbedPanelsTabGroup">
+    		<li class="TabbedPanelsTab" onClick="screen2('$id_permohonan','$id_pembatalan')" tabindex="1">Senarai Lot Penarikan</li>
+   	 		<li class="TabbedPanelsTab" onClick="LaporanTanah('$!id_hakmilik','$!id_pembatalan')" tabindex="1">Maklumat Am</li>
+   	 		<li class="TabbedPanelsTab" onClick="PerihalTanah('$!id_hakmilik','$!id_pembatalan')" tabindex="1">Perihal Tanah</li>
+   	 		<li class="TabbedPanelsTab" onClick="PembangunanSekitar('$!id_hakmilik','$!id_pembatalan')" tabindex="1">Pembangunan Sekitar</li>
+   	 		<li class="TabbedPanelsTab" onClick="LaporanKerosakan('$!id_hakmilik','$!id_pembatalan')" tabindex="1">Laporan Kerosakan</li>
+  		</ul>
+  		
+  		<div class="TabbedPanelsContentGroup">
+   <!--  
     <div id="TabbedPanels1" class="TabbedPanels">
       <ul class="TabbedPanelsTabGroup">
         <li class="TabbedPanelsTab" tabindex="0" onClick="screen2('$id_permohonan','$id_pembatalan')" >Senarai Lot Penarikan</li>
@@ -111,106 +117,217 @@
        	</div>
         <div class="TabbedPanelsContent">     
         </div>
-        
+        -->
         
         <div class="TabbedPanelsContent"> 
         <table width="100%"><tr>
     		<td>
-    			<fieldset>
-    				<table width="100%" >	
-    					
-    			
-    			#if($sorSaliran=="1")
-    				#set($check1s = "checked")
-    				#set($check2s = "")
-    			#elseif($sorSaliran=="2")
-    				#set($check1s = "")
-    				#set($check2s = "checked")
-    			#else
-    				#set($check1s = "")
-    				#set($check2s = "")
-    			#end			
-  					<tr>
-    				<td width="1%">&nbsp;</td>
-    				<td width="25%">Saliran</td>
-    				<td width="1%">:</td>
-    				<td width="73%"><input $check1s type="radio" name="sorSaliran" id="sorBaik" value="1" >Baik
-     				&nbsp;&nbsp;<input $check2s type="radio" name="sorSaliran" id="sorTidak" value="2" >Tidak</td>
-    			</tr>
-  					<tr>
-    					<td>&nbsp;</td>
-    					<td>Kemudahan Asas Yang Ada</td>
-    					<td>:</td>
-    					<td><textarea name="txtKemudahan" id="txtKemudahan" cols="50" rows="5" 
-    					$readonlymode class = "$disabledmode">$txtKemudahan</textarea></td>
-  					</tr>
- 					<tr>
-    					<td>&nbsp;</td>
-    					<td>Sempadan Utara</td>
-    					<td>:</td>
-    					<td><textarea name="txtSempadanUtara" id="txtSempadanUtara" cols="50" rows="5" 
-    					$readonlymode class = "$disabledmode">$txtSempadanUtara</textarea></td>
-  					</tr>
-  					<tr>
-    					<td>&nbsp;</td>
-    					<td>Sempadan Selatan</td>
-    					<td>:</td>
-    					<td><textarea name="txtSempadanSelatan" id="txtSempadanSelatan" cols="50" rows="5" 
-    					$readonlymode class = "$disabledmode">$txtSempadanSelatan</textarea></td>
-  					</tr>
-  					<tr>
-    					<td>&nbsp;</td>
-    					<td>Sempadan Timur</td>
-    					<td>:</td>
-    					<td><textarea name="txtSempadanTimur" id="txtSempadanTimur" cols="50" rows="5" 
-    					$readonlymode class = "$disabledmode">$txtSempadanTimur</textarea></td>
-  					</tr>
-    			<tr>
-    					<td>&nbsp;</td>
-    					<td>Sempadan Barat</td>
-    					<td>:</td>
-    					<td><textarea name="txtSempadanBarat" id="txtSempadanBarat" cols="50" rows="5" 
-    					$readonlymode class = "$disabledmode">$txtSempadanBarat</textarea></td>
-  					</tr>
-         
-    			</fieldset></td>
-  				</tr>
-  				<tr>
-    				<td>    </td>
-  				</tr>
-			</table> </div>
-        	
-        	<div class="TabbedPanelsContent"></div>
-      	</div>
-    </div></td>
-    </tr>
-    
+    <fieldset>
+    <table width="100%" >
     <tr>
-    	<td colspan="2">
-    	<div align="center" >
-    	#if($readmode == "view")
-      		<label><input type="button" name="cmdKemaskini " id="cmdKemaskini " value="Kemaskini" onClick="kemaskini()"></label>
-      		<label><input type="button" name="cmdHapus1" id="cmdHapus1" value="Hapus" onClick="hapus()"></label>
-   	 	#end
-    	#if($readmode == "edit")  
-      		<label><input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan"  onClick="simpan()"></label>
-      		<label><input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onClick="batal()"></label>
-    	#end  
+    <td width="1%">&nbsp;</td>
+    <td width="28%">No. Lot</td>
+    <td width="1%">:</td>
+    <td width="70%">$txtnorujukan</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>Negeri</td>
+    <td>:</td>
+    <td>$txtnamanegeri</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>Daerah/Jajahan</td>
+    <td>:</td>
+    <td>$txtnamadaerah</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>Bandar/Pekan/Mukim</td>
+    <td>:</td>
+    <td>$txtnamajajahan</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>Status Laporan Tanah</td>
+    <td>:</td>
+    <td>$STATUS_LAPORAN</td>
+  </tr>
+    <tr>
+              <td width="1%" valign="top">&nbsp;</td>
+              <td width="28%" valign="top">Kerosakan Tanah</td>
+              <td width="1%" valign="top">:</td>
+              <td width="70%">   
+           <textarea name="txtKerosakanTanah" id="txtKerosakanTanah" cols="80"   rows="6"         
+         onBlur="check_length(this,'4000','txtKerosakanTanah_check','txtKerosakanTanah_num','normal','no','lokasi tanah');"  
+         onKeyup="check_length(this,'4000','txtKerosakanTanah_check','txtKerosakanTanah_num','normal','no','lokasi tanah');" 
+         onKeydown="check_length(this,'4000','txtKerosakanTanah_check','txtKerosakanTanah_num','normal','no','lokasi tanah');"                    
+          $readonlymode class = "$disabledmode" 
+        >$txtKerosakanTanah</textarea>
+       #if($readmode == "edit")           
+        <div><span id="txtKerosakanTanah_num" style="color:blue;" ></span><span> Baki Aksara</span>         </div>
+         #else
+         <input name="txtKerosakanTanah_num" id="txtSebabPembatalan_num" size="3" value="4000"  style=" display:none" > 
+         #end
+  		<div id="txtKerosakanTanah_check" class="alert_msg" ></div>                 </td>
+            </tr>
+          
+          <tr>
+              <td width="1%" valign="top">&nbsp;</td>
+              <td width="28%" valign="top">Keterangan Kerosakan</td>
+              <td width="1%" valign="top">:</td>
+              <td width="70%">   
+              <!--           
+               <textarea name="txtKeteranganKerosakan" id="txtKeteranganKerosakan" cols="80"  rows="6" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();checking_validation(this,'txtKeteranganKerosakan_check','yes','Keterangan Kerosakan','normal')"  onKeyUp="checking_validation(this,'txtKeteranganKerosakan_check','yes','lokasi tanah','normal')" $readonlymode class = "$disabledmode" >$txtKeteranganKerosakan</textarea>     
+         <div id="txtKerosakanTanah_check" style="color:red" ></div>     
+         -->
+         
+           <textarea name="txtKeteranganKerosakan" id="txtKeteranganKerosakan" cols="80"   rows="6"         
+         onBlur="check_length(this,'4000','txtKeteranganKerosakan_check','txtKeteranganKerosakan_num','normal','no','Keterangan Kerosakan');"  
+         onKeyup="check_length(this,'4000','txtKeteranganKerosakan_check','txtKeteranganKerosakan_num','normal','no','Keterangan Kerosakan');" 
+         onKeydown="check_length(this,'4000','txtKeteranganKerosakan_check','txtKeteranganKerosakan_num','normal','no','Keterangan Kerosakan');"                    
+          $readonlymode class = "$disabledmode" 
+        >$txtKeteranganKerosakan</textarea>
+       #if($readmode == "edit")           
+        <div><span id="txtKeteranganKerosakan_num" style="color:blue;" ></span><span> Baki Aksara</span>         </div>
+         #else
+         <input name="txtKeteranganKerosakan_num" id="txtKeteranganKerosakan_num" size="3" value="4000"  style=" display:none" > 
+         #end
+  		<div id="txtKeteranganKerosakan_check" class="alert_msg" ></div>                 </td>
+            </tr>
+                       
+            <tr>
+              <td width="1%" valign="top">&nbsp;</td>
+              <td width="28%" valign="top">Kerosakan Tanaman</td>
+              <td width="1%" valign="top">:</td>
+              <td width="70%"> 
+              <!--             
+               <textarea name="txtKerosakanTanaman" id="txtKerosakanTanaman" cols="80"  rows="6" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();checking_validation(this,'txtKerosakanTanaman_check','yes','keadaan lot','normal')"  onKeyUp="checking_validation(this,'txtKerosakanTanaman_check','yes','keadaan lot','normal')" $readonlymode class = "$disabledmode" >$txtKerosakanTanaman</textarea>     
+         <div id="txtKerosakanTanaman_check" style="color:red" ></div>       
+         -->
+         
+            <textarea name="txtKerosakanTanaman" id="txtKerosakanTanaman" cols="80"   rows="6"         
+         onBlur="check_length(this,'4000','txtKerosakanTanaman_check','txtKerosakanTanaman_num','normal','no','keadaan lot');"  
+         onKeyup="check_length(this,'4000','txtKerosakanTanaman_check','txtKerosakanTanaman_num','normal','no','keadaan lot');" 
+         onKeydown="check_length(this,'4000','txtKerosakanTanaman_check','txtKerosakanTanaman_num','normal','no','keadaan lot');"                    
+          $readonlymode class = "$disabledmode" 
+        >$txtKerosakanTanaman</textarea>
+       #if($readmode == "edit")           
+        <div><span id="txtKerosakanTanaman_num" style="color:blue;" ></span><span> Baki Aksara</span>         </div>
+         #else
+         <input name="txtKerosakanTanaman_num" id="txtKerosakanTanaman_num" size="3" value="4000"  style=" display:none" > 
+         #end
+  		<div id="txtKerosakanTanaman_check" class="alert_msg" ></div>                </td>
+            </tr>
+            <tr>
+              <td width="1%" valign="top">&nbsp;</td>
+              <td width="28%" valign="top">Kerosakan Bangunan</td>
+              <td width="1%" valign="top">:</td>
+              <td width="70%">  
+              
+              <!--            
+               <textarea name="txtKerosakanBangunan" id="txtKerosakanBangunan" cols="80"  rows="6" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();checking_validation(this,'txtKerosakanBangunan_check','yes','jenis tanaman','normal')"  onKeyUp="checking_validation(this,'txtKerosakanBangunan_check','yes','jenis tanaman','normal')" $readonlymode class = "$disabledmode" >$txtKerosakanBangunan</textarea>     
+         <div id="txtKerosakanBangunan_check" style="color:red" ></div>      
+         -->
+         
+          <textarea name="txtKerosakanBangunan" id="txtKerosakanBangunan" cols="80"   rows="6"         
+         onBlur="check_length(this,'4000','txtKerosakanBangunan_check','txtKerosakanBangunan_num','normal','no','jenis tanaman');"  
+         onKeyup="check_length(this,'4000','txtKerosakanBangunan_check','txtKerosakanBangunan_num','normal','no','jenis tanaman');" 
+         onKeydown="check_length(this,'4000','txtKerosakanBangunan_check','txtKerosakanBangunan_num','normal','no','jenis tanaman');"                    
+          $readonlymode class = "$disabledmode" 
+        >$txtKerosakanBangunan</textarea>
+       #if($readmode == "edit")           
+        <div><span id="txtKerosakanBangunan_num" style="color:blue;" ></span><span> Baki Aksara</span>         </div>
+         #else
+         <input name="txtKerosakanBangunan_num" id="txtKerosakanBangunan_num" size="3" value="4000"  style=" display:none" > 
+         #end
+  		<div id="txtKerosakanBangunan_check" class="alert_msg" ></div>                 </td>
+            </tr>
+            <tr>
+              <td width="1%" valign="top">&nbsp;</td>
+              <td width="28%" valign="top">Kos - Kos Yang Ditanggung Beban</td>
+              <td width="1%" valign="top">:</td>
+              <td width="70%"> 
+              <!--             
+               <textarea name="txtKosDitanggung" id="txtKosDitanggung" cols="80"  rows="6" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();checking_validation(this,'txtKosDitanggung_check','yes','maklumat berhampiran','normal')"  onKeyUp="checking_validation(this,'txtKosDitanggung_check','yes','maklumat berhampiran','normal')" $readonlymode class = "$disabledmode" >$txtKosDitanggung</textarea>     
+         <div id="txtKosDitanggung_check" style="color:red" ></div>   -->
+         
+          <textarea name="txtKosDitanggung" id="txtKosDitanggung" cols="80"   rows="6"         
+         onBlur="check_length(this,'4000','txtKosDitanggung_check','txtKosDitanggung_num','normal','no','maklumat berhampiran');"  
+         onKeyup="check_length(this,'4000','txtKosDitanggung_check','txtKosDitanggung_num','normal','no','maklumat berhampiran');" 
+         onKeydown="check_length(this,'4000','txtKosDitanggung_check','txtKosDitanggung_num','normal','no','maklumat berhampiran');"                    
+          $readonlymode class = "$disabledmode" 
+        >$txtKosDitanggung</textarea>
+       #if($readmode == "edit")           
+        <div><span id="txtKosDitanggung_num" style="color:blue;" ></span><span> Baki Aksara</span>         </div>
+         #else
+         <input name="txtKosDitanggung_num" id="txtKosDitanggung_num" size="3" value="4000"  style=" display:none" > 
+         #end
+  		<div id="txtKosDitanggung_check" class="alert_msg" ></div>                    </td>
+            </tr>
+    </table>
+    
+    </fieldset>    </td>
+  </tr>
+  <tr>
+    <td>    </td>
+  </tr>
+</table>
+
+
+<!-- START PPT-44 (ii) Muatnaik Dokumen -->
+<!----------------------------------------- SENARAI DOKUMEN YANG DISERTAKAN --------------------------------------------->
+<!-- :::upload -->
+<fieldset id="senarai_dokumen" >
+<legend> Senarai Dokumen </legend>
+	
+	<a href="javascript:popupCarianDokumen('$id_pembatalan', '$id_hakmilik')"><font color="blue">>> SKRIN SENARAI DOKUMEN</font></a>   
+    
+<br />
+        
+        
+</div>
+        <div class="TabbedPanelsContent"></div>
+      </div>
+    </div>
+    
+  
+    </td>
+    </tr>
+    <tr>
+    <td colspan="2">
+    <div align="center" >
+    #if($readmode == "view")
+      <label>
+      <input type="button" name="cmdKemaskini " id="cmdKemaskini " value="Kemaskini" onClick="kemaskini()">
+      </label>
+      <label>
+      <input type="button" name="cmdHapus1" id="cmdHapus1" value="Hapus" onClick="hapus()">
+      </label>
+    #end
+    #if($readmode == "edit")  
+      <label>
+      <input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan"  onClick="simpan()">
+      </label>
+      <label>
+      <input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onClick="batal()">
+      </label>
+    #end  
      
-     	<div style="display:none;">
-		#if($id_pembatalan != "")
-			#if($readmode == "view")
-				#if($STATUS_LAPORAN != "SELESAI")
-          			<label>
-          				<input type="button" name="cmdSimpan" id="cmdSimpan" value="Selesai Laporan Tanah"  onClick="selesai()">
-      				</label> 
-      			#end    
-      			<label> 
-      				<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onClick="javascript:setTable('tableReport1')" />  
-      			</label>   
-      		#end 
+       #if($id_pembatalan != "")
+         #if($readmode == "view")
+           #if($STATUS_LAPORAN != "SELESAI")
+          <label>
+      <input type="button" name="cmdSimpan" id="cmdSimpan" value="Selesai Laporan Tanah"  onClick="selesai()">
+      </label> 
       #end    
-        </div></div>
+      <label> 
+      <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onClick="javascript:setTable('tableReport1')" />  
+      </label>   
+      #end 
+      #end    
+        </div>
         
               </td>
   </tr>
@@ -257,7 +374,7 @@
   <input type="hidden" name="id_tanahumum" id="id_tanahumum" value="$!id_tanahumum" />
  
   <script type="text/javascript">
-var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:3});
+//var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:4});
 
 var readmode = '$readmode';
 var jenis_permohonan = '$jenis_permohonan';
@@ -778,6 +895,18 @@ function PerihalTanah(id_hakmilik,id_pembatalan)
 	document.${formName}.action = "";
 	document.${formName}.submit();
 }
+function PembangunanSekitar(id_hakmilik,id_pembatalan)
+{
+	document.${formName}.command.value = "Laporan_Tanah";
+	document.${formName}.sub_command.value = "Pembangunan_Sekitar";
+	document.${formName}.subminor_command.value = "View";
+	document.${formName}.location.value = "maklumat_am";
+	document.${formName}.point.value = "maklumat_am";	
+	document.${formName}.id_hakmilik.value = id_hakmilik;
+	document.${formName}.id_pembatalan.value = id_pembatalan;
+	document.${formName}.action = "";
+	document.${formName}.submit();
+}
 
 
 function simpan()	{
@@ -807,7 +936,7 @@ return;
 input_box = confirm("Adakah anda pasti?");
 	if (input_box == true) {
 		document.${formName}.command.value = "Laporan_Tanah";
-		document.${formName}.sub_command.value = "Pembangunan_Sekitar";
+		document.${formName}.sub_command.value = "Laporan_Kerosakan";
 		document.${formName}.subminor_command.value = "Simpan";	
 		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPenarikanBalikInternal";
 		document.${formName}.location.value = "maklumat_am";
@@ -844,20 +973,14 @@ input_box = confirm("Adakah anda pasti?");
 	}
 }
 
-
-
-function kemaskini()
-{
-	alert("sini");
+function kemaskini()	{
     document.${formName}.command.value = "Laporan_Tanah";
-	document.${formName}.sub_command.value = "Pembangunan_Sekitar";
+	document.${formName}.sub_command.value = "Laporan_Kerosakan";
 	document.${formName}.subminor_command.value = "Kemaskini";	
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPenarikanBalikInternal";
 	document.${formName}.location.value = "maklumat_am";
-	//document.${formName}.point.value = "txtLokasiTanah";
+	document.${formName}.point.value = "txtKerosakanTanah";
 	document.${formName}.submit();
-
-
 }
 
 
@@ -1008,6 +1131,7 @@ new_window.document.close();
 
 function LaporanKerosakan(id_hakmilik,id_pembatalan)
 {
+
 	document.${formName}.command.value = "Laporan_Tanah";
 	document.${formName}.sub_command.value = "Laporan_Kerosakan";
 	document.${formName}.subminor_command.value = "View";
@@ -1038,31 +1162,4 @@ function popupCarianDokumen(id_penarikanbalik,id_hakmilik)	{
 	
 }
 
-
-function PembangunanSekitar(id_hakmilik,id_pembatalan)
-{
-	document.${formName}.command.value = "Laporan_Tanah";
-	document.${formName}.sub_command.value = "Pembangunan_Sekitar";
-	document.${formName}.subminor_command.value = "View";
-	document.${formName}.location.value = "maklumat_am";
-	document.${formName}.point.value = "maklumat_am";	
-	document.${formName}.id_hakmilik.value = id_hakmilik;
-	document.${formName}.id_pembatalan.value = id_pembatalan;
-	document.${formName}.action = "";
-	document.${formName}.submit();
-}
-
-function LaporanKerosakan(id_hakmilik,id_pembatalan)
-{
-
-	document.${formName}.command.value = "Laporan_Tanah";
-	document.${formName}.sub_command.value = "Laporan_Kerosakan";
-	document.${formName}.subminor_command.value = "View";
-	document.${formName}.location.value = "maklumat_am";
-	document.${formName}.point.value = "maklumat_am";	
-	document.${formName}.id_hakmilik.value = id_hakmilik;
-	document.${formName}.id_pembatalan.value = id_pembatalan;
-	document.${formName}.action = "";
-	document.${formName}.submit();
-}
   </script>

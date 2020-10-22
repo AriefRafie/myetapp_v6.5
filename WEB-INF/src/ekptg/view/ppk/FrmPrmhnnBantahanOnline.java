@@ -31,6 +31,7 @@ import ekptg.model.ppk.FrmPrmhnnStatusPengunaOnlineData;
 import ekptg.model.ppk.FrmTukaranStatus;
 import ekptg.model.ppk.online.IStatusPermohonan;
 import ekptg.model.ppk.online.StatusPermohonanFacade;
+import ekptg.model.ppk.util.LampiranBean;
 
 public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 	static Logger myLogger = Logger
@@ -144,12 +145,15 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 		
 		// syafiqah add
 		else if("skrinBantahNow".equals(submit)) {
+			
 			String idPermohonan = getParam("idPermohonan");
 			String idFail = getParam("idFail");
 			String noFail = getParam("noFail");
 			String nama_simati = getParam("nama_simati");
 			String ic_simati = getParam("icSimati");
 			String id_bicara = getParam("idBicara");
+			
+			LampiranBean lBean = new LampiranBean();
 			
 			senaraiBantah = FrmPrmhnnStatusPengunaOnlineData.getSenaraiBantahan("", (String) session
 					.getAttribute("_ekptg_user_id"),
@@ -162,10 +166,31 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 			Hashtable<String,String> hash = vec.get(0);
 			
 			// MAKLUMAT 
-			
 			this.context.put("pemohon", hash);
 			this.context.put("nowpast", "now");
 			myLogger.info("masuk skrin bantah NOW");
+			
+			if("getSimati".equals(mode)) {
+				myLogger.info("lalu sini a");
+				// Simati
+				this.context.put("idfail", getParam("id_fail"));
+				//this.context.put("nofail", getParam("nama_fail"));
+				this.context.put("idPermohonan", getParam("id_permohonan"));
+				this.context.put("id_bicara", getParam("id_bicara"));
+				this.context.put("nofail", getParam("nama_fail"));
+				this.context.put("nama_simati", getParam("nama_simati"));
+				this.context.put("ic_simati", getParam("ic_simati"));
+				this.context.put("supportDoc", lBean.getLampiranSimatiPapar(getParam("id_permohonan"), "99204"));
+			} else {
+				myLogger.info("lalu sini b");
+				this.context.put("idfail", idFail);
+				this.context.put("idPermohonan", idPermohonan);
+				this.context.put("id_bicara", id_bicara);
+				this.context.put("nofail", noFail);
+				this.context.put("nama_simati", nama_simati);
+				this.context.put("ic_simati", ic_simati);
+				this.context.put("supportDoc", lBean.getLampiranSimatiPapar(idPermohonan, "99204"));
+			}
 			
 			
 			vm = "app/ppk/frmSkrinBantahanOnline.jsp";
@@ -174,13 +199,25 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 			this.context.put("show_simpan_button", "yes");
 			this.context.put("show_confirm_button", "");
 			
-			this.context.put("idPermohonan", idPermohonan);
-			this.context.put("idfail", idFail);
-			this.context.put("nofail", noFail);
-			this.context.put("nama_simati", nama_simati);
-			this.context.put("ic_simati", ic_simati);
-			this.context.put("id_bicara", id_bicara);
 			this.context.put("senaraibantahan", senaraiBantah);
+			
+			// Disclaimer
+			this.context.put("nameD", getParam("txtNama"));
+			this.context.put("no_kpD", getParam("txtNoKPLamaPemohon"));
+			
+			// Pembantah
+			this.context.put("nama", getParam("txtNama"));
+			this.context.put("ic_no", getParam("txtNoKPLamaPemohon"));
+			this.context.put("alamat1", getParam("txtAlamat1"));
+			this.context.put("alamat2", getParam("txtAlamat2"));
+			this.context.put("alamat3", getParam("txtAlamat3"));
+			this.context.put("poskod", getParam("txtPoskod"));
+			this.context.put("bandar", getParam("txtBandar"));
+			this.context.put("negeri", getParam("txtNegeri"));
+			this.context.put("no_tel", getParam("txtNoTel"));
+			this.context.put("emel", getParam("txtEmel"));
+			this.context.put("catatan", getParam("txtCatatan"));
+			//this.context.put("supportDoc", lBean.getLampiranSimatiPapar(idPermohonan, "99204"));
 		}
 		else if("skrinBantahPast".equals(submit)) {
 			String idFail = getParam("idFail");
@@ -197,7 +234,6 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 			Vector<Hashtable<String,String>> vec = logic3.setMaklumatPemohon(usid);
 			Hashtable<String,String> hash = vec.get(0);
 			this.context.put("pemohon", hash);
-			
 			
 			this.context.put("nowpast", "past");
 			myLogger.info("masuk skrin bantah PAST");
@@ -344,7 +380,7 @@ public class FrmPrmhnnBantahanOnline extends AjaxBasedModule {
 		String negeri = getParam("txtNegeri");
 		String noTel = getParam("txtNoTel");
 		String emel = getParam("txtEmel");
-		String catatan = getParam("catatan");
+		String catatan = getParam("txtCatatan");
 		String id_perbicaraan = getParam("id_bicara");
 		
 		myLogger.info("Step 2 SYAFIQAH");
