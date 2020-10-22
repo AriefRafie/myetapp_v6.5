@@ -1226,12 +1226,9 @@ public class FrmPenarikanBalikInternal extends AjaxBasedModule{
 			
     	}
 		
-		
-		
          else if ("Laporan_Tanah".equals(main_command)){ 
         	maklumat_am_tanah = logic.maklumat_am_tanah(getParam("id_pembatalan"),getParam("id_hakmilik"));
-        	senarai_laporan_tanah = logic.senarai_laporan_tanah(getParam("id_hakmilik"));
-        	
+        	senarai_laporan_tanah = logic.senarai_laporan_tanah(getParam("id_hakmilik"));       	
  			if ("Maklumat_Am".equals(sub_command))
 			{		                 
 				if ("View".equals(subminor_command))
@@ -1369,22 +1366,90 @@ public class FrmPenarikanBalikInternal extends AjaxBasedModule{
 				vm = "app/ppt/frmPenarikanBalikPerihalTanah.jsp";
 	    	}	
  			
- 			if ("Laporan_Kerosakan".equals(sub_command)){		                 
+ 			//TAMBAH v6.5
+ 			if ("Pembangunan_Sekitar".equals(sub_command)){
 				if ("View".equals(subminor_command)){
 				
 					if(maklumat_am_tanah.size()>0){
 						Hashtable h = (Hashtable) maklumat_am_tanah.get(0);
 
-						if(h.get("KEROSAKAN_TANAH").toString().equals("") && h.get("KEROSAKAN_TANAMAN").toString().equals("") 
-								&& h.get("KEROSAKAN_BANGUNAN").toString().equals("") && h.get("KOS_DITANGGUNG").toString().equals("")){
+						if(h.get("flag_saliran").toString().equals("") && h.get("sempadan_timur").toString().equals("") 
+								&& h.get("sempadan_selatan").toString().equals("") && h.get("sempadan_utara").toString().equals("")
+								&& h.get("kemudahan_awam").toString().equals("") && h.get("sempadan_barat").toString().equals("")){
 							this.context.put("readmode", "edit");		
 						}else{
 							this.context.put("readmode", "view");			
 						}						
+					}else{
+						this.context.put("readmode", "edit");	
+					}
+				}
+				else if ("Simpan".equals(subminor_command)){
+							
+					 if(getParam("id_tanahumum")!="" && getParam("id_tanahumum")!=null){						
+						 if (bolehsimpan.equals("yes")){
+							 updatePerihalTanahSekitar(session);		
+						}						
+					 }	 
+					 else{							
+						if (bolehsimpan.equals("yes")){
+							 //addMaklumatKerosakan(session);
+							addPerihalTanahSekitar(session);
+							 logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
+									 (String) session.getAttribute("_ekptg_user_id"),"16102699","add",getParam("id_fail"));
+				 		}	
+					 }
+					
+					 this.context.put("readmode", "view");	
+				}
+				else if ("UpdateSuburusan".equals(subminor_command)){
+					if (bolehsimpan.equals("yes")){
+						logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
+							(String) session.getAttribute("_ekptg_user_id"),"16102700","add",getParam("id_fail"));
+					}
+					
+					this.context.put("readmode", "view");	
+				}
+				else if("Batal".equals(subminor_command) ||  "Kemaskini".equals(subminor_command)){
+					this.context.put("readmode", "edit");	
+				}
+				
+				else if("Hapus".equals(subminor_command)){
+					if (bolehsimpan.equals("yes")){
+						logic.deleteMaklumatAm(getParam("id_tanahumum"));
+						logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
+							(String) session.getAttribute("_ekptg_user_id"),"16102699","hapus",getParam("id_fail"));
+					}	
+					
+					this.context.put("readmode", "edit");	
+				}
+							
+				vm = "app/ppt/frmPenarikanBalikPembangunan.jsp";
+	    	}
+ 			else if ("Laporan_Kerosakan".equals(sub_command)){	
+ 				myLogger.info("masuk1");
+				if ("View".equals(subminor_command)){
+					myLogger.info("masuk2");
+					if(maklumat_am_tanah.size()>0){
+						myLogger.info("masuk3");
+						Hashtable h = (Hashtable) maklumat_am_tanah.get(0);
+
+						if(h.get("KEROSAKAN_TANAH").toString().equals("") && h.get("KEROSAKAN_TANAMAN").toString().equals("") 
+								&& h.get("KEROSAKAN_BANGUNAN").toString().equals("") && h.get("KOS_DITANGGUNG").toString().equals("")){
+							this.context.put("readmode", "edit");	
+
+							myLogger.info("masuk4");
+							
+						}else{
+							myLogger.info("masuk5");
+							this.context.put("readmode", "view");			
+						}		
+						myLogger.info("masuk6");
 					}
 					else{
 						this.context.put("readmode", "edit");	
 					}
+					//vm = "app/ppt/frmPenarikanBalikInfoKerosakan.jsp";
 				}
 				else if ("Simpan".equals(subminor_command)){
 							
@@ -1427,68 +1492,12 @@ public class FrmPenarikanBalikInternal extends AjaxBasedModule{
 					
 					this.context.put("readmode", "edit");	
 				}
-							
-				vm = "app/ppt/frmPenarikanBalikLaporanTanahKerosakan.jsp";
+				myLogger.info("hai");			
+				//vm = "app/ppt/frmPenarikanBalikLaporanTanahKerosakan.jsp";
+				vm = "app/ppt/frmPenarikanBalikInfoKerosakan.jsp";
 	    	}
  			
- 			//TAMBAH v6.5
- 			if ("Pembangunan_Sekitar".equals(sub_command)){
-				if ("View".equals(subminor_command)){
-				
-					if(maklumat_am_tanah.size()>0){
-						Hashtable h = (Hashtable) maklumat_am_tanah.get(0);
-
-						if(h.get("KEROSAKAN_TANAH").toString().equals("") && h.get("KEROSAKAN_TANAMAN").toString().equals("") 
-								&& h.get("KEROSAKAN_BANGUNAN").toString().equals("") && h.get("KOS_DITANGGUNG").toString().equals("")){
-							this.context.put("readmode", "edit");		
-						}else{
-							this.context.put("readmode", "view");			
-						}						
-					}else{
-						this.context.put("readmode", "edit");	
-					}
-				}
-				else if ("Simpan".equals(subminor_command)){
-							
-					 if(getParam("id_tanahumum")!="" && getParam("id_tanahumum")!=null){						
-						 if (bolehsimpan.equals("yes")){
-							 updateMaklumatKerosakan(session);	
-						}						
-					 }	 
-					 else{							
-						if (bolehsimpan.equals("yes")){
-							 addMaklumatKerosakan(session);		
-							 logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
-									 (String) session.getAttribute("_ekptg_user_id"),"16102699","add",getParam("id_fail"));
-				 		}	
-					 }
-					
-					 this.context.put("readmode", "view");	
-				}
-				else if ("UpdateSuburusan".equals(subminor_command)){
-					if (bolehsimpan.equals("yes")){
-						logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
-							(String) session.getAttribute("_ekptg_user_id"),"16102700","add",getParam("id_fail"));
-					}
-					
-					this.context.put("readmode", "view");	
-				}
-				else if("Batal".equals(subminor_command) ||  "Kemaskini".equals(subminor_command)){
-					this.context.put("readmode", "edit");	
-				}
-				
-				else if("Hapus".equals(subminor_command)){
-					if (bolehsimpan.equals("yes")){
-						logic.deleteMaklumatAm(getParam("id_tanahumum"));
-						logic.update_status_hakmilik(getParam("id_hakmilik"), getParam("id_permohonan"),
-							(String) session.getAttribute("_ekptg_user_id"),"16102699","hapus",getParam("id_fail"));
-					}	
-					
-					this.context.put("readmode", "edit");	
-				}
-							
-				vm = "app/ppt/frmPenarikanBalikPembangunan.jsp";
-	    	}
+ 			
  			
 			context.put("id_permohonan",getParam("id_permohonan"));
 			context.put("id_pembatalan",getParam("id_pembatalan"));
@@ -5070,18 +5079,6 @@ public class FrmPenarikanBalikInternal extends AjaxBasedModule{
 	 private void addPerihalTanah(HttpSession session) throws Exception {
 		 
 			Hashtable h = new Hashtable();		
-			h.put("txtLokasiTanah", getParam("txtLokasiTanah"));
-			h.put("txtKeadaanLot", getParam("txtKeadaanLot"));
-			h.put("txtJenisTanaman", getParam("txtJenisTanaman"));
-			h.put("txtBerhampiran", getParam("txtBerhampiran"));
-			h.put("txtKeadaanTanaman", getParam("txtKeadaanTanaman"));
-			h.put("txtUlasan", getParam("txtUlasan"));
-			h.put("txtKeseluruhanLot", getParam("txtKeseluruhanLot"));
-			h.put("txtKawasan", getParam("txtKawasan"));
-			h.put("sorBangunan", getParam("sorBangunan"));
-			h.put("txtBilBangunan", getParam("txtBilBangunan"));
-			
-			h.put("txtKawasanTerlibat", getParam("txtKawasanTerlibat"));
 			
 			//TAMBAH v6.5
 			h.put("flagBukit", getParam("flagBukit"));
@@ -5101,7 +5098,24 @@ public class FrmPenarikanBalikInternal extends AjaxBasedModule{
 			h.put("txtPerihalKeadaan", getParam("txtPerihalKeadaan"));
 			h.put("txtHalangan", getParam("txtHalangan"));
 			h.put("txtTanaman", getParam("txtTanaman"));
-			
+		
+			h.put("id_pembatalan", getParam("id_pembatalan"));
+			h.put("id_hakmilik", getParam("id_hakmilik"));
+			h.put("id_Masuk", (String) session.getAttribute("_ekptg_user_id"));
+			logic.addPerihalTanah(h);		
+		}
+	 
+	 
+	 private void addPerihalTanahSekitar(HttpSession session) throws Exception {
+		 
+			Hashtable h = new Hashtable();		
+		
+			h.put("txtSempadanBarat", getParam("txtSempadanBarat"));
+			h.put("txtSempadanTimur", getParam("txtSempadanTimur"));
+			h.put("txtSempadanSelatan", getParam("txtSempadanSelatan"));
+			h.put("txtSempadanUtara", getParam("txtSempadanUtara"));
+			h.put("sorSaliran", getParam("sorSaliran"));
+			h.put("txtKemudahan", getParam("txtKemudahan"));
 			
 			h.put("id_pembatalan", getParam("id_pembatalan"));
 			h.put("id_hakmilik", getParam("id_hakmilik"));
@@ -5109,24 +5123,13 @@ public class FrmPenarikanBalikInternal extends AjaxBasedModule{
 			logic.addPerihalTanah(h);		
 		}
 	 
+	 
 	 private void updatePerihalTanah(HttpSession session) throws Exception {
 		 
 			Hashtable h = new Hashtable();
-			h.put("txtKawasanTerlibat", getParam("txtKawasanTerlibat"));
-			h.put("txtLokasiTanah", getParam("txtLokasiTanah"));
-			h.put("txtKeadaanLot", getParam("txtKeadaanLot"));
-			h.put("txtJenisTanaman", getParam("txtJenisTanaman"));
-			h.put("txtBerhampiran", getParam("txtBerhampiran"));
-			h.put("txtKeadaanTanaman", getParam("txtKeadaanTanaman"));
-			h.put("txtUlasan", getParam("txtUlasan"));
-			h.put("txtKeseluruhanLot", getParam("txtKeseluruhanLot"));
-			h.put("txtKawasan", getParam("txtKawasan"));
-			h.put("sorBangunan", getParam("sorBangunan"));
-			h.put("txtBilBangunan", getParam("txtBilBangunan"));			
 			h.put("id_pembatalan", getParam("id_pembatalan"));
 			h.put("id_hakmilik", getParam("id_hakmilik"));
 			h.put("id_tanahumum", getParam("id_tanahumum"));
-			
 			//TAMBAH v6.5
 			h.put("flagBukit", getParam("flagBukit"));
 			h.put("flagLandai", getParam("flagLandai"));
@@ -5145,11 +5148,28 @@ public class FrmPenarikanBalikInternal extends AjaxBasedModule{
 			h.put("txtPerihalKeadaan", getParam("txtPerihalKeadaan"));
 			h.put("txtHalangan", getParam("txtHalangan"));
 			h.put("txtTanaman", getParam("txtTanaman"));
-			
+		
 			h.put("id_Masuk", (String) session.getAttribute("_ekptg_user_id"));
 			logic.updatePerihalTanah(h);		
 		}
 	 
+	 private void updatePerihalTanahSekitar(HttpSession session) throws Exception {
+		 
+			Hashtable h = new Hashtable();
+			h.put("id_pembatalan", getParam("id_pembatalan"));
+			h.put("id_hakmilik", getParam("id_hakmilik"));
+			h.put("id_tanahumum", getParam("id_tanahumum"));
+	
+			h.put("txtSempadanBarat", getParam("txtSempadanBarat"));
+			h.put("txtSempadanTimur", getParam("txtSempadanTimur"));
+			h.put("txtSempadanSelatan", getParam("txtSempadanSelatan"));
+			h.put("txtSempadanUtara", getParam("txtSempadanUtara"));
+			h.put("sorSaliran", getParam("sorSaliran"));
+			h.put("txtKemudahan", getParam("txtKemudahan"));
+			
+			h.put("id_Masuk", (String) session.getAttribute("_ekptg_user_id"));
+			logic.updatePerihalTanahSekitar(h);		
+		}
 	 private void addMaklumatSiasatan(HttpSession session) throws Exception {
 				 
 			Hashtable h = new Hashtable();		
