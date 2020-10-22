@@ -727,7 +727,8 @@ public class FrmPrmhnnPemindahanSek17BKEData {
 	    {
 	    	
 	      String userId = (String)data.get("iduser");
-	      int idPermohonan = Integer.parseInt((String)data.get("IdPermohonan"));
+	      //int idPermohonan = Integer.parseInt((String)data.get("IdPermohonan"));
+	      String idPermohonan = (String)data.get("IdPermohonan");
 	      String keputusan = (String)data.get("keputusan");
 	      String pegawai = (String)data.get("pegawai");
 	      int pengendali = Integer.parseInt((String)data.get("pengendali"));
@@ -806,7 +807,7 @@ public class FrmPrmhnnPemindahanSek17BKEData {
 	    try
 	    {
 	      String userId = (String)data.get("iduser");
-	      int idPermohonan = Integer.parseInt((String)data.get("IdPermohonan"));
+	      String idPermohonan = (String)data.get("IdPermohonan");
 	      String tarikhlulus = (String)data.get("tarikhlulus");
 	      String keputusan = (String)data.get("keputusan");
 	      String catatankptg = (String)data.get("catatankptg");

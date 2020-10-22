@@ -160,6 +160,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		String id_projekNegeri = "";
     	String idpermohonan = getParam("id_permohonan");
     	this.context.put("listPenghantarNotis", "");
+    	this.context.put("listGelaran", "");//gelaran
     	this.context.put("token", token);
     	header.setDataHeader(idpermohonan);
 		Vector dataHeader = header.getDataHeader();
@@ -176,7 +177,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 			tujuanInit = (String)dh.get("tujuanInit");
 			id_projekNegeri = (String)dh.get("id_projekNegeri");
 			this.context.put("listPenghantarNotis", listPenghantarNotis(id_projekNegeri));
-			
+			this.context.put("listGelaran", listGelaran());//gelaran
 		}
 		//pejabat jpph
 		if(id_negeri!=""){
@@ -726,6 +727,36 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 	    }
 		  
 	}//find alamat kementerian
+	
+	//gelaran
+	public Vector listGelaran() throws Exception {
+		Db db = null;
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			String sql = " 	SELECT ID_GELARAN, GELARAN FROM TBLRUJGELARAN";
+			myLogger.info("LIST GELARAN :" + sql.toUpperCase());
+			stmt.executeUpdate(sql);
+
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector<Hashtable<String,String>>listGelaran = new Vector<Hashtable<String,String>>();
+
+			Hashtable<String,String> h = null;
+
+			while (rs.next()) {
+				h = new Hashtable<String,String>();
+				h.put("ID_GELARAN", rs.getString("ID_GELARAN") == null ? "" : rs.getString("ID_GELARAN"));
+				h.put("GELARAN", rs.getString("GELARAN") == null ? "" : rs.getString("GELARAN"));
+				listGelaran.addElement(h);
+			}
+			return listGelaran;
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		
+	}
 	
 	
 }//close class

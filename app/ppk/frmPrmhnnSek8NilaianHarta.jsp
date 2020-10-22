@@ -962,9 +962,11 @@ kod :: $listhath.kod_hakmilik
                                             #end
                                         #end    
                                       <!-- Kena check sama ada Maklumat Simati dan Pemohon lengkap diisi -->
-                                      	#if ($strErrorMaklumatSimati == "" && $strErrorMaklumatPemohon == "")
+                                      	#if (($strErrorMaklumatSimati == "") && ($strErrorMaklumatPemohon == "") && ($pilihpegawai != "") && ($flag_pengesahanPegawai == "") && ($USER_ROLE != "user_ppk") && (($daftarHTA == "1") || ($daftarHA == "1") ))
                  							<input type="button" name="button" id="button" value="Seterusnya" onClick="hantar_terus('$listseksyen','$id','$permohonan_mati','$listtarikhMohon','$listidSimati')" />
-                 						#else
+                 						#end
+                 						
+                 						#if (($strErrorMaklumatSimati != "") && ($strErrorMaklumatPemohon != ""))
                  						<p align="center"><font color="red">Tidak dapat meneruskan ke proses seterusnya kerana terdapat maklumat berkenaan Simati/Pemohon yang tidak lengkap diisi: $strErrorMaklumatSimati $strErrorMaklumatPemohon</font> </p>
                  						
                  						#end	
@@ -1005,7 +1007,7 @@ kod :: $listhath.kod_hakmilik
                       <td   valign="top">:</td>
                       <td  valign="top">
                      
-                      #if(($buttonSimpanDisable=="disabled") || ($pilihpegawai != ""))
+                      #if(($buttonSimpanDisable=="disabled") && ($pilihpegawai != ""))
                     	#set($disability1 = "disabled")
                       #end
                         <select  class="autoselect" name="pilihpegawai" id="pilihpegawai" $disability1>
@@ -1049,7 +1051,8 @@ kod :: $listhath.kod_hakmilik
                      -->
                     <tr>
                     	<td valign="top" colspan=3> &nbsp;</td>
-                    	#if(($buttonSimpanDisable=="disabled") || ($pilihpegawai != ""))
+                    	
+                    	#if(($buttonSimpanDisable=="disabled") && ($pilihpegawai != ""))
                     	<td ><input disabled name="cmdSimpanPeg" id="cmdSimpanPeg" value="Simpan" type="button" onClick="javascript:cmdSimpan_Pegawai()"></td>
                     	#else
                     	<td ><input name="cmdSimpanPeg" id="cmdSimpanPeg" value="Simpan" type="button" onClick="javascript:simpanPengesahan()"></td>
