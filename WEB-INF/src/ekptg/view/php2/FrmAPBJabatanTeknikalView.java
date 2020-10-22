@@ -380,7 +380,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
         	}
         	
         	if ("simpanDokumenKJT".equals(hitButton)) {
-        		logic.hapusDokumen(idUlasanTeknikal, session);
+        		logic.hapusDokumen(idUlasanTeknikal, flagLampiran, session);
 				uploadFiles(idUlasanTeknikal, idPermohonan, flagLampiran, session);
 			}
     		if ("hapusMaklumatUlasan".equals(hitButton)){

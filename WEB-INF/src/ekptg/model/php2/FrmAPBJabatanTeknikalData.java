@@ -461,7 +461,7 @@ public class FrmAPBJabatanTeknikalData {
 		}
 	}
 
-	public void hapusDokumen(String idUlasanTeknikal, HttpSession session)
+	public void hapusDokumen(String idUlasanTeknikal, String flagLampiran, HttpSession session)
 			throws Exception {
 		Db db = null;
 		Connection conn = null;
@@ -476,6 +476,7 @@ public class FrmAPBJabatanTeknikalData {
 			// TBLPHPDOKUMEN
 			SQLRenderer r = new SQLRenderer();
 			r.add("ID_ULASANTEKNIKAL", idUlasanTeknikal);
+			r.add("FLAG_DOKUMEN", flagLampiran);
 
 			sql = r.getSQLDelete("TBLPHPDOKUMEN");
 			stmt.executeUpdate(sql);

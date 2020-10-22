@@ -1,3 +1,7 @@
+#define($Amp)
+<span class="style1">*</span>
+#end
+
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td colspan="2"><fieldset>
@@ -19,24 +23,24 @@
           <td width="70%">$beanMaklumatJUPEM.agensi</td>
         </tr>
         <tr>
-          <td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#else&nbsp;#end</td>
+          <td width="1%">#if ($modePopup != 'view') $Amp #else &nbsp; #end</td>
           <td width="28%">Tarikh Hantar</td>
           <td width="1%">:</td>
           <td width="70%">
-            #if ($flagStatus == '1')
+          	#if ($modePopup != 'view')
             <input name="txtTarikhHantar" type="text" $readonlyPopup class="$inputTextClassPopup" id="txtTarikhHantar" onBlur="check_date(this);calcDate()" value="$beanMaklumatJUPEM.tarikhHantar" size="9" maxlength="10">
-              #if ($modePopup != 'view') <a href="javascript:displayDatePicker('txtTarikhHantar',false,'dmy');"><img border="0" src="../img/calendar.gif"/>#end
+            <a href="javascript:displayDatePicker('txtTarikhHantar',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
             #else
             <input name="txtTarikhHantar" type="text" readonly="readonly" class="disabled" id="txtTarikhHantar" value="$beanMaklumatJUPEM.tarikhHantar" size="9" maxlength="10">
             #end
           </td>
         </tr>
         <tr>
-          <td>#if ($modePopup != 'view')<span class="style1">*</span>#else&nbsp;#end</td>
+          <td width="1%">#if ($modePopup != 'view') $Amp #else &nbsp; #end</td>
           <td>Jangkamasa</td>
           <td>:</td>
           <td>
-            #if ($flagStatus == '1')
+            #if ($modePopup != 'view')
             <input type="text" name="txtJangkaMasa" id="txtJangkaMasa" size="1" maxlength="2" value="$beanMaklumatJUPEM.jangkamasa" onBlur="validateNumber(this,this.value,'$beanMaklumatJUPEM.jangkamasa');calcDate()" $readonlyPopup class="$inputTextClassPopup">
             #else
             <input type="text" name="txtJangkaMasa" id="txtJangkaMasa" size="1" maxlength="2" value="$beanMaklumatJUPEM.jangkamasa" readonly="readonly" class="disabled">
@@ -49,12 +53,12 @@
           <td>Tarikh Dijangka Terima</td>
           <td>:</td>
           <td>
-            #if ($flagStatus == '1')
+            #if ($modePopup != 'view')
             <input name="txtTarikhJangkaTerima" type="text" $readonlyPopup class="$inputTextClassPopup" id="txtTarikhJangkaTerima" onBlur="check_date(this)" value="$beanMaklumatJUPEM.tarikhJangkaTerima" size="9" maxlength="10">
+            <a href="javascript:displayDatePicker('txtTarikhJangkaTerima',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
             #else
             <input name="txtTarikhJangkaTerima" type="text" readonly="readonly" class="disabled" id="txtTarikhJangkaTerima" value="$beanMaklumatJUPEM.tarikhJangkaTerima" size="9" maxlength="10">
             #end
-            #if ($modePopup != 'view') <a href="javascript:displayDatePicker('txtTarikhJangkaTerima',false,'dmy');"><img border="0" src="../img/calendar.gif"/>#end
           </td>
         </tr>
         <tr>
@@ -280,14 +284,14 @@
         </tr>
         #set ($list = "")
         #if ($SenaraiNotifikasiEmel.size() > 0)
-        #foreach ($list in $SenaraiNotifikasiEmel)
-        #if ($list.bil == '')
-        #set( $row = "row1" )
-        #elseif (($list.bil % 2) != 0)
-        #set( $row = "row1" )
-        #else 
-        #set( $row = "row2" )
-        #end
+        	#foreach ($list in $SenaraiNotifikasiEmel)
+        		#if ($list.bil == '')
+        			#set( $row = "row1" )
+        		#elseif (($list.bil % 2) != 0)
+        			#set( $row = "row1" )
+        		#else 
+        			#set( $row = "row2" )
+       		#end
         <tr>
           <td class="$row" align="center">$list.bil</td>
           ##<td class="$row"><a href="javascript:paparMaklumatSuratPenghargaan('$list.idUlasanTeknikal')" class="style2">$list.namaPegawai</a></td>
