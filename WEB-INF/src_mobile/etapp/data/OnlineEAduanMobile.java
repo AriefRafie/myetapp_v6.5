@@ -63,9 +63,11 @@ public class OnlineEAduanMobile {
 	@JoinColumn(name="ID_NEGERI")
 	private RujNegeriMobile negeri;
 
-
 	@Column(name="NO_FAIL")
 	private String noFail;
+
+	@Column(name="LOG_ADUAN")
+	private String noAduan;
 
 	public OnlineEAduanMobile() {
 		setId(lebah.db.UniqueID.get());
@@ -179,4 +181,13 @@ public class OnlineEAduanMobile {
 	public void setNoFail(String noFail) {
 		this.noFail = noFail;
 	}
+	
+	public String getNoAduan() {
+		return noAduan;
+	}
+	public void setNoAduan(String noAduan) {
+		this.noAduan = noAduan;
+	}
+	
+	
 }
