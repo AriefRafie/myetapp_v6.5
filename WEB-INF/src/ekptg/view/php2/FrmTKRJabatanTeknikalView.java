@@ -131,7 +131,7 @@ private static final long serialVersionUID = 1L;
             		logic.sendEmailtoKJP(idPermohonan, idKementerianTanah, session);
             		
         		} else if("4".equals(idDokumen) && !"".equals(idDokumen)){
-        			logic.sendEmailtoPejabatJKPTG(idPermohonan, idPejabat, session);
+        			logic.sendEmailtoPejabatJKPTG(idUlasanTeknikal, session);
         		}
     		}
         	if ("simpanMaklumatUlanganKJP".equals(hitButton)){
@@ -142,7 +142,7 @@ private static final long serialVersionUID = 1L;
             		logic.sendEmailtoKJP(idPermohonan, idKementerianTanah, session);
             		
         		} else if("4".equals(idDokumen) && !"".equals(idDokumen)){
-        			logic.sendEmailtoPejabatJKPTG(idPermohonan, idPejabat, session);
+        			logic.sendEmailtoPejabatJKPTG(idUlasanTeknikal, session);
         		}
     		}
         	if ("simpanKemaskiniMaklumatKJP".equals(hitButton)){
