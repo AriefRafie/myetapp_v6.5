@@ -265,7 +265,7 @@
                 ##if ($idStatus == '')
                 #if ($mode == 'view')
                   #if ($!statussemasa.equals("1") || $!statussemasa.equals("2"))
-                  <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>
+                  <!-- <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/> -->
                   <input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
                   #end
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
@@ -963,7 +963,7 @@ function doHantarKelulusan(){
 }
 
 function papar(idFail,idStatus) {
-	alert('baca papar');
+	//alert('baca papar');
 		document.${formName}.idFail.value = idFail;
 		document.${formName}.idStatus.value = idStatus;
 		document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView";
