@@ -49,18 +49,16 @@ public class FrmPLPDashboard extends AjaxBasedModule {
 		context.put("failPelepasan", getFailPelepasan());
 		context.put("failPenawaran", getFailPenawaran());
 		context.put("failTukarguna", getFailTukarguna());
-
 		context.put("failBelumSelesai", getFailBelumSelesai());
 		context.put("failSelesai", getFailSelesai());
-
 		context.put("failBelumSelesaiPLP", getFailBelumSelesaiPLP());
 		context.put("failSelesaiPLP", getFailSelesaiPLP());
 		context.put("failBelumSelesaiPNW", getFailBelumSelesaiPNW());
 		context.put("failSelesaiPNW", getFailSelesaiPNW());
 		context.put("failBelumSelesaiTKR", getFailBelumSelesaiTKR());
 		context.put("failSelesaiTKR", getFailSelesaiTKR());
-
 		context.put("check_notifikasi_aduan", getNotifikasiAduan("", user_negeri_login, userId, "", "NO"));
+		context.put("bilTamatTempohUlasanKJP", getFailTamatTempohUlasanKJP());
 
 		//list_memo_aktif = logicPengumuman.getMemo("", "Aktif","1","0");
 		list_memo_aktif = logicPengumuman.getMemo("", "Aktif","1","","","","","0");
@@ -297,7 +295,8 @@ public class FrmPLPDashboard extends AjaxBasedModule {
 		}
 	}
 
-	public Integer getNotifikasiAduan(String id_esaduan, String id_negeri_user, String user_terima, String flag_notifikasi, String notread) throws Exception {
+	public Integer getNotifikasiAduan(String id_esaduan, String id_negeri_user, String user_terima, String 
+			flag_notifikasi, String notread) throws Exception {
 
 		Db db = null;
 		String sql = "";
@@ -494,6 +493,31 @@ public class FrmPLPDashboard extends AjaxBasedModule {
 			return rs.getInt("BIL");
 
 		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public Integer getFailTamatTempohUlasanKJP() throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			sql = "SELECT COUNT(*) AS BIL"
+					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, TBLPHPHAKMILIK F, USERS H"
+					+ " WHERE A.ID_SEKSYEN = 4 AND A.ID_URUSAN = '6' AND A.ID_SUBURUSAN IN (33) AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS"
+					+ " AND E.ID_HAKMILIKPERMOHONAN = F.ID_HAKMILIKPERMOHONAN(+) AND B.ID_PEMOHON = C.ID_PEMOHON AND B.ID_PERMOHONAN = E.ID_PERMOHONAN AND A.NO_FAIL IS NOT NULL"
+					+ " AND A.ID_MASUK = H.USER_ID(+) AND D.ID_STATUS NOT IN (1610207,1610208,1610212)";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			rs.next();
+			return rs.getInt("BIL");
+			
+		}finally {
 			if (db != null)
 				db.close();
 		}
