@@ -218,7 +218,7 @@
 					          <td width="20%"><strong>No. Fail</strong></td>
 					          <td width="15%"><strong>Jenis Permohonan</strong></td>
 					          <td width="20%"><strong>Nama Pemohon</strong></td>
-					          <td width="10%"><strong>Kertas Pertimbangan</strong></td>
+					          <td width="10%"><strong>Kertas Cadangan</strong></td>
 					          <td width="10%"><strong>Keputusan</strong></td>
 					          <td width="15%"><strong>Catatan</strong></td>
 					          #foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
@@ -713,7 +713,7 @@ function refreshFromPilihPermohonan() {
 }
 
 function doCetakKertasPertimbangan(idFail) {
-	var url = "../servlet/ekptg.report.php2.PLPKertasRingkasan?ID_FAIL="+idFail;
+	var url = "../servlet/ekptg.report.php2.PLPKertasCadangan?ID_FAIL="+idFail;
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;

@@ -128,15 +128,9 @@
 	#set ($checkeda = "checked")
     #set ($checkedb = "")
     #set ($checkedc = "")
-#elseif ($perintah == "PD")
-	#set ($checkeda = "")
-    #set ($checkedb = "checked")
-    #set ($checkedc = "")
-#elseif ($perintah == "PTS")
-	#set ($checkeda = "")
-	#set ($checkedb = "")
-	#set ($checkedc = "checked")
-#end 
+#end
+
+
   <table width="100%" border="0">
     <tr>
       <td><div id="TabbedPanels1" class="TabbedPanels">
@@ -159,7 +153,8 @@
           </tr>
           <tr>
           <td width="30%" align="right"><font class="mandatory" color="#FF0000">*</font>&nbsp;Dikeluarkan Oleh :</td>
-          <td width="70%"><input type="radio" name="sorpegawai" value="PT" $readmode $checkeda> PENTADBIR TANAH &nbsp;&nbsp;<input type="radio" name="sorpegawai" value="PD" $readmode $checkedb> PEGAWAI DAERAH <input type="radio" name="sorpegawai" value="PTS" $readmode $checkedc> PENTADBIR DAERAH SARAWAK</td>
+          <!-- ARIEF COMMENT <td width="70%"><input type="radio" name="sorpegawai" value="PT" $readmode $checkeda> PENTADBIR TANAH &nbsp;&nbsp;<input type="radio" name="sorpegawai" value="PD" $readmode $checkedb> PEGAWAI DAERAH <input type="radio" name="sorpegawai" value="PTS" $readmode $checkedc> PENTADBIR DAERAH SARAWAK</td> -->
+		  <td width="70%"><input type="radio" name="sorpegawai" value="PT" $readmode $checkeda checked> PEGAWAI PUSAKA </td>
           </tr>
           <tr>
           <td width="30%" align="right"><font class="mandatory" color="#FF0000">*</font>&nbsp;Nama Pengawai Pengendali :</td>
@@ -395,7 +390,7 @@ function cetakBorangR(idfail) {
     var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener=document.window;
-    if (hWnd.focus != null) hWnd.focus();
+    if (hWnd.focus != null) hWnd.focus();  
 }
 
 function setTable(id){

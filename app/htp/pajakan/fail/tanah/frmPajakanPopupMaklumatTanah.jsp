@@ -185,8 +185,18 @@ padding:0 0.25em;
 			        		</td>
 			            	<td class="$row">$!list.pemohon</td>
 			            	<td class="$row">$!list.tujuan</td>
-			            	<td class="$row">$!list.tarikhMula</td>
-			            	<td class="$row">$!list.tarikhTamat</td>
+			            	<td class="$row">
+				            	#if($!list.tarikhMula.equals("01/01/1900"))
+				            	#else
+				            		$!list.tarikhMula
+				            	#end
+				            </td>
+			            	<td class="$row">
+			            		#if($!list.tarikhTamat.equals("01/01/1900"))
+				            	#else
+				            		$!list.tarikhTamat
+				            	#end
+				            </td>
 			        	</tr>
 		        	#end
 

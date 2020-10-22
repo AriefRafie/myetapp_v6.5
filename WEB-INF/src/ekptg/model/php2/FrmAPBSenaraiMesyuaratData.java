@@ -18,6 +18,7 @@ import org.apache.commons.logging.LogFactory;
 
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
+import ekptg.engine.EmailSender;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.File;
@@ -1450,5 +1451,44 @@ public class FrmAPBSenaraiMesyuaratData {
 	
 	public Vector getBeanMaklumatImejan() {
 		return beanMaklumatImejan;
+	}
+	
+	public void sendEmailMesyuarat(String idPermohonan, HttpSession session) throws Exception {
+		Db db = null;
+		Connection conn = null;
+		Vector beanMaklumatEmail = null;
+		EmailSender email = EmailSender.getInstance();
+		String sql = "";
+		String noFail = "";
+		String emelUser = "";
+		
+		try {
+			db = new Db();
+			conn = db.getConnection();
+	    	conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			sql = " SELECT A.NO_FAIL, A.ID_MASUK, C.USER_NAME, D.EMEL FROM TBLPFDFAIL A, TBLPERMOHONAN B, USERS C, USERS_INTERNAL D "
+				+ " WHERE A.ID_FAIL = B.ID_FAIL AND A.ID_MASUK = C.USER_ID "
+				+ " AND C.USER_ID = D.USER_ID AND B.ID_PERMOHONAN = '"+idPermohonan+"'";
+			
+			ResultSet rsEmel = stmt.executeQuery(sql);
+			if (rsEmel.next()){
+				emelUser = rsEmel.getString("EMEL");
+				noFail = rsEmel.getString("NO_FAIL");
+			}	
+			
+			email.RECIEPIENT = emelUser;
+			email.SUBJECT = "KEPUTUSAN NILAIAN HARTA URUSAN PELEPASAN BAGI NO. FAIL " + noFail;
+			email.MESSAGE = "Keputusan nilaian bagi permohonan tersebut telah dibuat<br><br>"
+							 + "Mohon semakan daripada pihak tuan "
+							 + " <br><br>Sekian, terima kasih.<br>";
+			email.sendEmail();
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
 	}
 }
