@@ -133,7 +133,7 @@ padding:0 0.25em;
 <!-- Untuk borang dan surat -->
 <script>
 
-	function cetakPeringatanBayaranLewat() {	
+	function cetakPeringatanBayaran() {	
 		var idpermohonan = document.${formName}.idpermohonan.value;
 		var namaPegawai = document.${formName}.namaPegawai.value;
 		var idJawatan = document.${formName}.idJawatan.value;
