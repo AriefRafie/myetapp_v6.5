@@ -101,13 +101,13 @@
         </tr>
         ##end
         <tr class="table_header">
-          <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-          <td width="30%"><strong>No Rujukan <i>Online</i></strong></td>
-          <td width="30%"><strong>No Fail</strong></td>
-          <td width="25%"><strong>Tajuk Fail</strong></td>
-          <td width="10%" align="center"><strong>Tarikh Mohon</strong></td>
-          <td width="15%"><strong>Status</strong></td>
-          <td width="15%"><strong>Urusan</strong></td>
+          <td scope="row" width="3%" align="center"><strong>Bil</strong></td>
+          <td width="18%"><strong>No. Rujukan <i>Online</i></strong></td>
+          <td width="15%"><strong>No. Fail</strong></td>
+          <td width="43%"><strong>Tajuk Fail</strong></td>
+          <td width="8%" align="center"><strong>Tarikh Mohon</strong></td>
+          <td width="23%"><strong>Status</strong></td>
+          <!-- <td width="15%"><strong>Urusan</strong></td> -->
         </tr>
         #set ($list = "")
         #if ($SenaraiFail.size() > 0)
@@ -126,17 +126,17 @@
           <td class="$row">$list.tajukFail</td>
           <td class="$row" align="center">$list.tarikhTerima </td>
           <td class="$row">$list.keterangan</td>
-          <td class="$row">$list.namaSuburusan</td>
+          <!-- <td class="$row">$list.namaSuburusan</td> -->
         </tr>
         #end
         #else
         <tr>
           <td class="row1" align="center">&nbsp;</td>
-          <td class="row1">Tiada Rekod</td>
-          <td class="row1">&nbsp;</td>
+          <td class="row1" colspan="5">Tiada Rekod</td>
+         <!--  <td class="row1">&nbsp;</td>
           <td class="row1" align="center">&nbsp;</td>
           <td class="row1">&nbsp;</td>
-          <td class="row1">&nbsp;</td>
+          <td class="row1">&nbsp;</td> -->
         </tr>
         #end
       </table>
