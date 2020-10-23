@@ -359,7 +359,7 @@
 	<tr>
 		<td align="right">
 		#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
-			#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
+			#if ($beanMaklumatMesyuarat.statusMesyuarat == "1" && $selectedTabUpper=="2")
 			<input id="btnSelesai" type="button" value="Selesai Mesyuarat" onClick="javascript:doSelesaiMesyuarat();">
 			#end
 	    	<input id="btnBack" type="button" value="Kembali" onClick="doKembaliSenaraiPermohonan()">
@@ -712,7 +712,8 @@ function refreshFromPilihPermohonan() {
 }
 
 function doCetakKertasPertimbangan(idFail) {
-	var url = "../servlet/ekptg.report.php2.TKRKertasRingkasan?ID_FAIL="+idFail;
+	//var url = "../servlet/ekptg.report.php2.TKRKertasRingkasan?ID_FAIL="+idFail;
+	var url = "../servlet/ekptg.report.php2.TKRLaporanTanahAsal?ID_FAIL="+idFail;
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;

@@ -18,18 +18,18 @@ import ekptg.model.htp.entity.Permohonan;
 import ekptg.model.htp.entity.PfdFail;
 
 public class FrmHakmilikUrusanPajakanBean implements ITanahUrusan {
-	
+
 	//private HakmilikInterface iHakmilik = null;
 	private static Logger myLog = Logger.getLogger(ekptg.model.htp.rekod.FrmHakmilikUrusanPajakanBean.class);
 	private static Vector<Hashtable<String,String>> listCarianHakmilikDanRizab = null;
 	//private HakMilik hakmilik = null;
- 	private IHtp iHTP = null;  
+ 	private IHtp iHTP = null;
  	//private PfdFail pfdFail = null;
  	//private Permohonan permohonan = null;
 	private String sql = "";
 	//private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	private	Db db = null;
-	
+
 	//PAPAR CARIAN HAKMILIK DAN RIZAB
 	@Override
 	public Vector<Hashtable<String,String>> getMaklumat(String idHakmilik) throws Exception {
@@ -38,7 +38,7 @@ public class FrmHakmilikUrusanPajakanBean implements ITanahUrusan {
 	    //Pajakan	pajakan = new Pajakan();
 	    try {
 	    	db = new Db();
-	    	Statement stmt = db.getStatement();  
+	    	Statement stmt = db.getStatement();
 	    	sql = "SELECT TPH.NO_HAKMILIK,TPH.NO_WARTA " +
 	 			" ,( SELECT CASE "+
 	 			" 	WHEN RJH.KOD_JENIS_HAKMILIK = '00' THEN '' "+
@@ -67,10 +67,10 @@ public class FrmHakmilikUrusanPajakanBean implements ITanahUrusan {
 	             " AND F.ID_URUSAN = '3' " +
 	             " AND P.ID_PERMOHONAN = TPP.ID_PERMOHONAN(+) " +
 	             " AND TPH.ID_HAKMILIK = '"+idHakmilik+"'"+
-	             "";     		
+	             "";
 			sql = sql +" ORDER BY F.NO_FAIL DESC ";
-//			myLog.debug("Pajakan getMaklumat:sql="+sql);
-			ResultSet rs = stmt.executeQuery(sql);	    
+			myLog.debug("Pajakan getMaklumat:sql="+sql);
+			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable<String,String> h;
 	      	int bil = 1;
 	      	while (rs.next()) {
@@ -89,31 +89,31 @@ public class FrmHakmilikUrusanPajakanBean implements ITanahUrusan {
 	      		h.put("tarikhMula",rs.getString("TARIKH_MULA_PERJANJIAN"));
 	      		h.put("tarikhTamat",rs.getString("TARIKH_TAMAT_PERJANJIAN"));
 	      		h.put("kadar", String.valueOf(rs.getString("KADAR")== null?0.00:rs.getDouble("KADAR")));
-	      		h.put("tempoh", rs.getString("TEMPOH"));	    	  
-	      		h.put("tujuan", rs.getString("TUJUAN"));	    	  
-	      		h.put("idPermohonan", rs.getString("ID_PERMOHONAN"));	    	  
+	      		h.put("tempoh", rs.getString("TEMPOH"));
+	      		h.put("tujuan", rs.getString("TUJUAN"));
+	      		h.put("idPermohonan", rs.getString("ID_PERMOHONAN"));
 	      		listCarianHakmilikDanRizab.addElement(h);
 	      		bil++;
-	    	  
+
 	      	}
 	    } catch (Exception e) {
 	    	getIHTP().getErrorHTML(e.toString());
 
 	    } finally {
 	      if (db != null) db.close();
-	    
-	    }		
+
+	    }
 	    //return listCarianHakmilikDanRizab;
 	    return listCarianHakmilikDanRizab;
-	    
-	}	
-	
+
+	}
+
 	public Pajakan getMaklumatByPermohonan(String idPermohonan, String idHakmilik) throws Exception {
 	    Pajakan	pajakan = null;
 		myLog.info("Pajakan getMaklumatByPermohonan:pajakan="+pajakan);
 	    try {
 	    	db = new Db();
-	    	Statement stmt = db.getStatement();  
+	    	Statement stmt = db.getStatement();
 	    	sql = "SELECT TPH.NO_HAKMILIK,TPH.NO_WARTA " +
 	 			" ,( SELECT CASE "+
 	 			" 	WHEN RJH.KOD_JENIS_HAKMILIK = '00' THEN '' "+
@@ -142,10 +142,10 @@ public class FrmHakmilikUrusanPajakanBean implements ITanahUrusan {
 	             " AND P.ID_PERMOHONAN = TPP.ID_PERMOHONAN(+) " +
 	             " AND P.ID_PERMOHONAN = '"+idPermohonan+"'"+
 	             " AND TPH.ID_HAKMILIK = '"+idHakmilik+"'"+
-	             "";     		
+	             "";
 			sql = sql +" ORDER BY F.NO_FAIL DESC ";
 			myLog.info("Pajakan getMaklumat:sql="+sql);
-			ResultSet rs = stmt.executeQuery(sql);	    
+			ResultSet rs = stmt.executeQuery(sql);
 	      	while (rs.next()) {
 	      		pajakan = new Pajakan();
 	      		PfdFail fail = new PfdFail();
@@ -163,27 +163,27 @@ public class FrmHakmilikUrusanPajakanBean implements ITanahUrusan {
 				pajakan.setTarikhTamatPajakan(new Date(rs.getString("TARIKH_TAMAT_PERJANJIAN")));
 				pajakan.setTempohPajakan(rs.getString("TEMPOH"));
 				pajakan.setKadarPajakan(Double.parseDouble(rs.getString("KADAR")));
-	    	  
+
 	      	}
 	    } catch (Exception e) {
 	    	getIHTP().getErrorHTML(e.toString());
 
 	    } finally {
 	      if (db != null) db.close();
-	    
-	    }		
+
+	    }
 		myLog.info("Pajakan getMaklumatByPermohonan:pajakan end="+pajakan);
 	    return pajakan;
-	    
+
 	}
-	
+
 	private IHtp getIHTP(){
 		if(iHTP== null)
 			iHTP = new HtpBean();
 		return iHTP;
-		
+
 	}
-	
-	
-	
+
+
+
 }

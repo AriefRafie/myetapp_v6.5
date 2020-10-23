@@ -632,8 +632,8 @@
   <input type="hidden" name="subminor_command" id="subminor_command" />
   <input type="hidden" name="location" id="location" />
   <input type="hidden" name="point" id="point" />
-  <input type="text" name="id_pembatalan" id="id_pembatalan" value="$id_pembatalan" />
-  <input type="text" name="id_fail" id="id_fail" value="$id_fail" />
+  <input type="hidden" name="id_pembatalan" id="id_pembatalan" value="$id_pembatalan" />
+  <input type="hidden" name="id_fail" id="id_fail" value="$id_fail" />
   <input type="hidden" name="screen_name" id="screen_name" value="s2" />
   <input type="hidden" name="readmode" id="readmode"  value="$!readmode"/>
   <input type="hidden" name="alert_message" id="alert_message" />

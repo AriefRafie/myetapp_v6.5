@@ -62,7 +62,7 @@ public class FrmPNWTawaranKJPData {
 					+ " AND F.ID_NEGERI = RUJNEGERI.ID_NEGERI(+) "
 					+ " AND B.ID_PEMOHON = C.ID_PEMOHON AND B.ID_PERMOHONAN = E.ID_PERMOHONAN AND A.NO_FAIL IS NOT NULL"
 					+ " AND A.ID_MASUK = H.USER_ID(+)"
-					+ " AND (D.ID_STATUS = '1610210' OR D.ID_STATUS = '1610201') "; //TAWARAN
+					+ " AND D.ID_STATUS = '1610210' "; //TAWARAN
 
 			// noFail
 			if (noFail != null) {
@@ -253,6 +253,43 @@ public class FrmPNWTawaranKJPData {
 				db.close();
 		}
 	}
+	public Vector getIdNegeriKJPByUserId(String userId) throws Exception {
+		Db db = null;
+		String sql = "";
+		Hashtable h;
+		Vector listDetailKJP = new Vector();
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.USER_ID, A.USER_NAME, C.ID_NEGERI, B.ID_KEMENTERIAN, B.ID_AGENSI FROM USERS A, USERS_KEMENTERIAN B, TBLRUJAGENSI C, TBLRUJKEMENTERIAN D "
+					+ " WHERE A.USER_ID = B.USER_ID AND B.ID_AGENSI = C.ID_AGENSI AND B.ID_KEMENTERIAN = D.ID_KEMENTERIAN AND A.USER_ID = '"
+					+ userId + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			myLog.info("listDetailKJP:: "+sql);
+
+			if (rs.next()) {
+				h = new Hashtable();
+				h.put("userId", rs.getString("USER_ID").toString());
+				h.put("idNegeri", rs.getString("ID_NEGERI").toString());
+				h.put("idKementerian", rs.getString("ID_KEMENTERIAN").toString());
+				h.put("idAgensi", rs.getString("ID_AGENSI").toString());
+				h.put("namaPemohon", rs.getString("USER_NAME").toString());
+				listDetailKJP.addElement(h);
+
+				return listDetailKJP;
+			} else {
+				return listDetailKJP;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
 
 	public void setSenaraiAgensi(String idPermohonan) throws Exception {
 		Db db = null;
@@ -263,7 +300,7 @@ public class FrmPNWTawaranKJPData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_PENAWARANKJP, B.NAMA_KEMENTERIAN, C.NAMA_AGENSI, A.TARIKH_TERIMA, A.NO_RUJUKAN FROM TBLPHPPENAWARANKJP A, TBLRUJKEMENTERIAN B, TBLRUJAGENSI C"
+			sql = "SELECT A.ID_PENAWARANKJP, B.NAMA_KEMENTERIAN, C.NAMA_AGENSI, A.TARIKH_TERIMA, A.NO_RUJUKAN_KJP FROM TBLPHPPENAWARANKJP A, TBLRUJKEMENTERIAN B, TBLRUJAGENSI C"
 					+ " WHERE A.ID_KEMENTERIAN = B.ID_KEMENTERIAN AND A.ID_AGENSI = C.ID_AGENSI AND A.ID_PERMOHONAN = '"
 					+ idPermohonan + "'";
 			ResultSet rs = stmt.executeQuery(sql);
@@ -285,8 +322,8 @@ public class FrmPNWTawaranKJPData {
 				h.put("tarikhTerima",
 						rs.getString("TARIKH_TERIMA") == null ? "" : sdf
 								.format(rs.getDate("TARIKH_TERIMA")));
-				h.put("noRujukan", rs.getString("NO_RUJUKAN") == null ? "" : rs
-						.getString("NO_RUJUKAN").toUpperCase());
+				h.put("noRujukanKJP", rs.getString("NO_RUJUKAN_KJP") == null ? "" : rs
+						.getString("NO_RUJUKAN_KJP").toUpperCase());
 				listAgensi.addElement(h);
 				bil++;
 			}
@@ -309,9 +346,10 @@ public class FrmPNWTawaranKJPData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT ID_PENAWARANKJP, ID_KEMENTERIAN, ID_AGENSI, TARIKH_TERIMA, NO_RUJUKAN, TUJUAN_KEGUNAAN FROM TBLPHPPENAWARANKJP"
+			sql = "SELECT ID_PENAWARANKJP, ID_KEMENTERIAN, ID_AGENSI, TARIKH_TERIMA, NO_RUJUKAN_KJP, TUJUAN_KEGUNAAN FROM TBLPHPPENAWARANKJP"
 					+ " WHERE ID_PENAWARANKJP = '" + idPenawaranKJP + "'";
 			ResultSet rs = stmt.executeQuery(sql);
+			myLog.info("baca setMaklumatAgensi=="+sql);
 
 			Hashtable h;
 			int bil = 1;
@@ -329,8 +367,8 @@ public class FrmPNWTawaranKJPData {
 				h.put("tarikhTerima",
 						rs.getString("TARIKH_TERIMA") == null ? "" : sdf
 								.format(rs.getDate("TARIKH_TERIMA")));
-				h.put("noRujukan", rs.getString("NO_RUJUKAN") == null ? "" : rs
-						.getString("NO_RUJUKAN").toUpperCase());
+				h.put("noRujukanKJP", rs.getString("NO_RUJUKAN_KJP") == null ? "" : rs
+						.getString("NO_RUJUKAN_KJP").toUpperCase());
 				h.put("tujuanKegunaan",
 						rs.getString("TUJUAN_KEGUNAAN") == null ? "" : rs
 								.getString("TUJUAN_KEGUNAAN"));
@@ -347,7 +385,7 @@ public class FrmPNWTawaranKJPData {
 		}
 	}
 
-	public String simpanAgensi(String idPermohonan, String txtNoRujukan,
+	public String simpanAgensi(String idPermohonan, String txtNoRujukanKJP,
 			String txtTarikhTerima, String idKementerian, String idAgensi,
 			String txtTujuanKegunaan, HttpSession session) throws Exception {
 
@@ -369,7 +407,7 @@ public class FrmPNWTawaranKJPData {
 			idPenawaranKJPString = String.valueOf(idPenawaranKJP);
 			r.add("ID_PENAWARANKJP", idPenawaranKJP);
 			r.add("ID_PERMOHONAN", idPermohonan);
-			r.add("NO_RUJUKAN", txtNoRujukan);
+			r.add("NO_RUJUKAN_KJP", txtNoRujukanKJP);
 			if (!"".equals(txtTarikhTerima)) {
 				r.add("TARIKH_TERIMA",
 						r.unquote("to_date('" + txtTarikhTerima
@@ -384,6 +422,7 @@ public class FrmPNWTawaranKJPData {
 
 			sql = r.getSQLInsert("TBLPHPPENAWARANKJP");
 			stmt.executeUpdate(sql);
+			myLog.info("simpanAgensi===="+sql);
 
 			conn.commit();
 			
@@ -409,7 +448,7 @@ public class FrmPNWTawaranKJPData {
 	}
 
 	public void simpanKemaskiniAgensi(String idPenawaranKJP,
-			String txtNoRujukan, String txtTarikhTerima, String idKementerian,
+			String txtNoRujukanKJP, String txtTarikhTerima, String idKementerian,
 			String idAgensi, String txtTujuanKegunaan, HttpSession session)
 			throws Exception {
 
@@ -427,7 +466,7 @@ public class FrmPNWTawaranKJPData {
 
 			// TBLPHPPENAWARANKJP
 			r.update("ID_PENAWARANKJP", idPenawaranKJP);
-			r.add("NO_RUJUKAN", txtNoRujukan);
+			r.add("NO_RUJUKAN_KJP", txtNoRujukanKJP);
 			if (!"".equals(txtTarikhTerima)) {
 				r.add("TARIKH_TERIMA",
 						r.unquote("to_date('" + txtTarikhTerima

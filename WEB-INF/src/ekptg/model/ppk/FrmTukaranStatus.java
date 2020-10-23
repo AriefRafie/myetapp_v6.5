@@ -32,6 +32,7 @@ public class FrmTukaranStatus {
 	private static Vector senaraiNotabicara = new Vector();
 	private Vector beanMaklumatNota = null;
 	private Vector listNota = null;
+	Vector search_bantahan = null;
 	
 	public static Vector getList(){
 		return list;
@@ -90,58 +91,144 @@ public class FrmTukaranStatus {
 		}
 	}
 	
-	public Vector tukarPemohonOnline(String id_permohonan) throws Exception {
-		list_sub = new Vector();
-		list_sub.clear();
+	public Vector search_bantahan(String no_fail,String usid,String txtIcPemohon, String txtNamaSimati, String txtNamaPemohon) throws Exception {
+		search_bantahan = new Vector();
+		search_bantahan.clear();
 		Db db = null;
-		Hashtable sek = null;
 		String sql = "";
-		String seksyen = "";
-		String id_suburusan = "";
-		try {
-			db = new Db();
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
-	
-			sql = " SELECT * FROM TBLPPKTUKARPEMOHONLINE WHERE ID_PERMOHONAN = '"+id_permohonan+"'";
-			
-			myLogger.info("SENARAI TUKAR PEMOHON ONLINE :"+sql);
-			
-			
-			int bil = 0;
-			
-			ResultSet rs = stmt.executeQuery(sql);
-			while (rs.next()) {
-				bil = bil + 1;
-				Hashtable h = new Hashtable();
-							
-				h.put("BIL", bil);
-				h.put("ADA", "ada");
-				if (rs.getString("ID_PEMOHONLAMA") == null) {
-					h.put("ID_PEMOHONLAMA", "");
-				} else {
-					h.put("ID_PEMOHONLAMA", rs.getString("ID_PEMOHONLAMA"));
-				}
-				
-				if (rs.getString("ID_PEMOHONBARU") == null) {
-					h.put("ID_PEMOHONBARU", "");
-				} else {
-					h.put("ID_PEMOHONBARU", rs.getString("ID_PEMOHONBARU"));
-				}
-				
-				if (rs.getString("SEBAB_TUKAR") == null) {
-					h.put("SEBAB_TUKAR", "");
-				} else {
-					h.put("SEBAB_TUKAR", rs.getString("SEBAB_TUKAR"));
-				}
-				
+			try {
+					db = new Db();
+					Statement stmt = db.getStatement();
+					SQLRenderer r = new SQLRenderer();
 					
-				list_sub.addElement(h);
-			}
-			return list_sub;
-		} catch (Exception er) {
-			myLogger.error(er);
-			throw er;
+					sql = " SELECT ST.KETERANGAN AS NAMA_STATUS, ST.ID_STATUS, F.ID_FAIL,F.NO_FAIL,P.ID_PERMOHONAN,PM.NO_KP_BARU,PM.NO_KP_LAMA," +
+							  " TO_CHAR(P.TARIKH_MOHON,'DD/MM/YYYY') AS TARIKH_MOHON,S.NAMA_SIMATI,PM.NAMA_PEMOHON,C.ID_PERBICARAAN,\r\n" + 
+							  "	C.TARIKH_BICARA "+
+							  " FROM TBLPFDFAIL F,TBLPPKPERMOHONAN P,TBLPPKPERMOHONANSIMATI PS,TBLPPKSIMATI S,TBLPPKPEMOHON PM,TBLRUJSTATUS ST,"
+							  + "TBLPPKKEPUTUSANPERMOHONAN KP,\r\n" + 
+							  "	TBLPPKPERBICARAAN C "+
+							  " WHERE F.ID_FAIL = P.ID_FAIL "+
+							  " AND P.ID_PERMOHONAN = KP.ID_PERMOHONAN "+
+							  " AND KP.ID_KEPUTUSANPERMOHONAN = C.ID_KEPUTUSANPERMOHONAN "+ 
+							  " AND C.BIL_BICARA = (SELECT MAX(BIL_BICARA) FROM TBLPPKPERBICARAAN WHERE ID_KEPUTUSANPERMOHONAN = C.ID_KEPUTUSANPERMOHONAN ) " +
+							  " AND ST.ID_STATUS = '18' "+
+							  " AND P.ID_PERMOHONAN = PS.ID_PERMOHONAN ";
+							
+						sql += " AND ( trim(F.NO_FAIL) LIKE '%"+no_fail.trim()+"%' ";
+						sql += " OR trim(S.NO_KP_BARU) LIKE '%"+no_fail.trim()+"%' ";
+						sql += " OR trim(S.NO_KP_LAMA) LIKE '%"+no_fail.trim()+"%' ";
+						sql += " OR trim(S.NO_KP_LAIN) LIKE '%"+no_fail.trim()+"%') ";
+						
+						if(!txtIcPemohon.trim().equals("") && txtIcPemohon.trim()!=null){
+						sql += " AND ( trim(PM.NO_KP_BARU) LIKE '%"+txtIcPemohon.trim()+"%' ";
+						sql += " OR trim(PM.NO_KP_LAMA) LIKE '%"+txtIcPemohon.trim()+"%' )";
+						}
+						
+						if(!txtNamaSimati.trim().equals("") && txtNamaSimati.trim()!=null){
+							sql += " AND ( trim(S.NAMA_SIMATI) LIKE '%"+txtNamaSimati.trim()+"%' ) ";
+						}
+						
+						if(!txtNamaPemohon.trim().equals("") && txtNamaPemohon.trim()!=null){
+							sql += " AND ( trim(S.NAMA_SIMATI) LIKE '%"+txtNamaPemohon.trim()+"%' ) ";
+						}
+						
+		//				sql += "AND D.ID_DAERAH = P.ID_DAERAHMHN "+
+		//					   "AND N.ID_NEGERI = P.ID_NEGERIMHN";
+								
+						sql += " AND S.ID_SIMATI = PS.ID_SIMATI "+
+							   " AND P.ID_PEMOHON = PM.ID_PEMOHON "+
+						       " AND P.ID_STATUS = ST.ID_STATUS(+) ";
+		//				sql += " AND P.ID_DAERAHMHN in ( select distinct u.id_daerahurus from  TBLRUJPEJABATURUSAN u, users_internal ur "+
+		//						   " where u.id_pejabatjkptg=ur.id_pejabatjkptg and ur.user_id= '"+usid+"' ";
+		//						   
+		//						    sql += " UNION "+                                                                            
+		//							" SELECT DISTINCT PBU_U.ID_DAERAHURUS  "+ 
+		//							" FROM TBLPERMOHONANBANTUUNIT PBU,TBLRUJPEJABATURUSAN PBU_U "+ 
+		//							" WHERE ID_STATUS = 2  "+ 
+		//							" AND TO_DATE(TO_CHAR(SYSDATE,'DD/MM/YYYY'),'DD/MM/YYYY') >= TO_DATE(TO_CHAR(PBU.TARIKH_MULA,'DD/MM/YYYY'),'DD/MM/YYYY') "+ 
+		//							" AND TO_DATE(TO_CHAR(SYSDATE,'DD/MM/YYYY'),'DD/MM/YYYY') <= TO_DATE(TO_CHAR(PBU.TARIKH_AKHIR,'DD/MM/YYYY'),'DD/MM/YYYY') "+ 
+		//							" AND PBU.ID_UNIT = PBU_U.ID_PEJABATJKPTG  "+ 
+		//							" AND PBU.ID_PEMOHON = "+usid+"  ";
+		//						   
+		//						   sql += " ) ";
+							sql += " ORDER BY P.TARIKH_MOHON";
+				   
+					myLogger.info("SQL LIST NO_FAIL :"+sql);
+					
+					ResultSet rs = stmt.executeQuery(sql);
+					while (rs.next()) {
+						Hashtable h = new Hashtable();
+						
+						if (rs.getString("NAMA_STATUS") == null) {
+							h.put("NAMA_STATUS", "");
+						} else {
+							h.put("NAMA_STATUS", rs.getString("NAMA_STATUS"));
+						}
+						
+						if (rs.getString("ID_FAIL") == null) {
+							h.put("ID_FAIL", "");
+						} else {
+							h.put("ID_FAIL", rs.getString("ID_FAIL"));
+						}
+						if (rs.getString("NO_KP_BARU") == null) {
+							h.put("NO_KP_BARU", "");
+						} else {
+							h.put("NO_KP_BARU", rs.getString("NO_KP_BARU"));
+						}
+						if (rs.getString("NO_KP_LAMA") == null) {
+							h.put("NO_KP_LAMA", "");
+						} else {
+							h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA"));
+						}
+						if (rs.getString("NO_FAIL") == null) {
+							h.put("NO_FAIL", "");
+						} else {
+							h.put("NO_FAIL", rs.getString("NO_FAIL"));
+						}
+						if (rs.getString("ID_PERMOHONAN") == null) {
+							h.put("ID_PERMOHONAN", "");
+						} else {
+							h.put("ID_PERMOHONAN", rs.getString("ID_PERMOHONAN"));
+						}
+						
+						if (rs.getString("TARIKH_MOHON") == null) {
+							h.put("TARIKH_MOHON", "");
+						} else {
+							h.put("TARIKH_MOHON", rs.getString("TARIKH_MOHON"));
+						}
+						
+						if (rs.getString("ID_STATUS") == null) {
+							h.put("ID_STATUS", "");
+						} else {
+							h.put("ID_STATUS", rs.getString("ID_STATUS"));
+						}
+						
+						if (rs.getString("NAMA_SIMATI") == null) {
+							h.put("NAMA_SIMATI", "");
+						} else {
+							h.put("NAMA_SIMATI", rs.getString("NAMA_SIMATI"));
+						}
+						
+						if (rs.getString("NAMA_PEMOHON") == null) {
+							h.put("NAMA_PEMOHON", "");
+						} else {
+							h.put("NAMA_PEMOHON", rs.getString("NAMA_PEMOHON"));
+						}
+						
+						if (rs.getString("ID_PERBICARAAN") == null) {
+							h.put("ID_PERBICARAAN", "");
+						} else {
+							h.put("ID_PERBICARAAN", rs.getString("ID_PERBICARAAN"));
+						}
+						
+						
+						
+						search_bantahan.addElement(h);
+					}
+					return search_bantahan;
+			} catch (Exception er) {
+		myLogger.error(er);
+		throw er;
 		} finally {
 			if (db != null)
 				db.close();
@@ -433,7 +520,63 @@ public class FrmTukaranStatus {
 	  }//close list
 	
 	
+	public Vector tukarPemohonOnline(String id_permohonan) throws Exception {
+		list_sub = new Vector();
+		list_sub.clear();
+		Db db = null;
+		Hashtable sek = null;
+		String sql = "";
+		String seksyen = "";
+		String id_suburusan = "";
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
 	
+			//sql = " SELECT * FROM TBLPPKTUKARPEMOHON WHERE ID_PERMOHONAN = '"+id_permohonan+"'";
+			sql = " SELECT * FROM TBLPPKTUKARPEMOHON WHERE ID_SIMATI in (SELECT ID_SIMATI FROM TBLPPKPERMOHONANSIMATI WHERE ID_PERMOHONAN = '"+id_permohonan+"')  AND TARIKH_MASUK IS NOT NULL ORDER BY TARIKH_MASUK DESC";
+			myLogger.info("SENARAI TUKAR PEMOHON ONLINE :"+sql);
+			
+			
+			int bil = 0;
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				bil = bil + 1;
+				Hashtable h = new Hashtable();
+							
+				h.put("BIL", bil);
+				h.put("ADA", "ada");
+				if (rs.getString("ID_PEMOHONLAMA") == null) {
+					h.put("ID_PEMOHONLAMA", "");
+				} else {
+					h.put("ID_PEMOHONLAMA", rs.getString("ID_PEMOHONLAMA"));
+				}
+				
+				if (rs.getString("ID_PEMOHONBARU") == null) {
+					h.put("ID_PEMOHONBARU", "");
+				} else {
+					h.put("ID_PEMOHONBARU", rs.getString("ID_PEMOHONBARU"));
+				}
+				
+				if (rs.getString("SEBAB_TUKAR") == null) {
+					h.put("SEBAB_TUKAR", "");
+				} else {
+					h.put("SEBAB_TUKAR", rs.getString("SEBAB_TUKAR"));
+				}
+				
+					
+				list_sub.addElement(h);
+			}
+			return list_sub;
+		} catch (Exception er) {
+			myLogger.error(er);
+			throw er;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
 		
 	public Vector setListSub(String id_fail) throws Exception {
 		list_sub = new Vector();
@@ -641,153 +784,6 @@ public class FrmTukaranStatus {
 		}
 	}
 	
-	Vector search_bantahan = null;
-	
-	public Vector search_bantahan(String no_fail,String usid,String txtIcPemohon, String txtNamaSimati, String txtNamaPemohon) throws Exception {
-		search_bantahan = new Vector();
-		search_bantahan.clear();
-		Db db = null;
-		String sql = "";
-	try {
-			db = new Db();
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
-			
-			sql = " SELECT ST.KETERANGAN AS NAMA_STATUS, ST.ID_STATUS, F.ID_FAIL,F.NO_FAIL,P.ID_PERMOHONAN,PM.NO_KP_BARU,PM.NO_KP_LAMA," +
-					  " TO_CHAR(P.TARIKH_MOHON,'DD/MM/YYYY') AS TARIKH_MOHON,S.NAMA_SIMATI,PM.NAMA_PEMOHON,C.ID_PERBICARAAN,\r\n" + 
-					  "	C.TARIKH_BICARA "+
-					  " FROM TBLPFDFAIL F,TBLPPKPERMOHONAN P,TBLPPKPERMOHONANSIMATI PS,TBLPPKSIMATI S,TBLPPKPEMOHON PM,TBLRUJSTATUS ST,"
-					  + "TBLPPKKEPUTUSANPERMOHONAN KP,\r\n" + 
-					  "	TBLPPKPERBICARAAN C "+
-					  " WHERE F.ID_FAIL = P.ID_FAIL "+
-					  " AND P.ID_PERMOHONAN = KP.ID_PERMOHONAN "+
-					  " AND KP.ID_KEPUTUSANPERMOHONAN = C.ID_KEPUTUSANPERMOHONAN "+ 
-					  " AND C.BIL_BICARA = (SELECT MAX(BIL_BICARA) FROM TBLPPKPERBICARAAN WHERE ID_KEPUTUSANPERMOHONAN = C.ID_KEPUTUSANPERMOHONAN ) " +
-					  " AND ST.ID_STATUS = '18' "+
-					  " AND P.ID_PERMOHONAN = PS.ID_PERMOHONAN ";
-					
-				sql += " AND ( trim(F.NO_FAIL) LIKE '%"+no_fail.trim()+"%' ";
-				sql += " OR trim(S.NO_KP_BARU) LIKE '%"+no_fail.trim()+"%' ";
-				sql += " OR trim(S.NO_KP_LAMA) LIKE '%"+no_fail.trim()+"%' ";
-				sql += " OR trim(S.NO_KP_LAIN) LIKE '%"+no_fail.trim()+"%') ";
-				
-				if(!txtIcPemohon.trim().equals("") && txtIcPemohon.trim()!=null){
-				sql += " AND ( trim(PM.NO_KP_BARU) LIKE '%"+txtIcPemohon.trim()+"%' ";
-				sql += " OR trim(PM.NO_KP_LAMA) LIKE '%"+txtIcPemohon.trim()+"%' )";
-				}
-				
-				if(!txtNamaSimati.trim().equals("") && txtNamaSimati.trim()!=null){
-					sql += " AND ( trim(S.NAMA_SIMATI) LIKE '%"+txtNamaSimati.trim()+"%' ) ";
-				}
-				
-				if(!txtNamaPemohon.trim().equals("") && txtNamaPemohon.trim()!=null){
-					sql += " AND ( trim(S.NAMA_SIMATI) LIKE '%"+txtNamaPemohon.trim()+"%' ) ";
-				}
-				
-//				sql += "AND D.ID_DAERAH = P.ID_DAERAHMHN "+
-//					   "AND N.ID_NEGERI = P.ID_NEGERIMHN";
-						
-				sql += " AND S.ID_SIMATI = PS.ID_SIMATI "+
-					   " AND P.ID_PEMOHON = PM.ID_PEMOHON "+
-				       " AND P.ID_STATUS = ST.ID_STATUS(+) ";
-//				sql += " AND P.ID_DAERAHMHN in ( select distinct u.id_daerahurus from  TBLRUJPEJABATURUSAN u, users_internal ur "+
-//						   " where u.id_pejabatjkptg=ur.id_pejabatjkptg and ur.user_id= '"+usid+"' ";
-//						   
-//						    sql += " UNION "+                                                                            
-//							" SELECT DISTINCT PBU_U.ID_DAERAHURUS  "+ 
-//							" FROM TBLPERMOHONANBANTUUNIT PBU,TBLRUJPEJABATURUSAN PBU_U "+ 
-//							" WHERE ID_STATUS = 2  "+ 
-//							" AND TO_DATE(TO_CHAR(SYSDATE,'DD/MM/YYYY'),'DD/MM/YYYY') >= TO_DATE(TO_CHAR(PBU.TARIKH_MULA,'DD/MM/YYYY'),'DD/MM/YYYY') "+ 
-//							" AND TO_DATE(TO_CHAR(SYSDATE,'DD/MM/YYYY'),'DD/MM/YYYY') <= TO_DATE(TO_CHAR(PBU.TARIKH_AKHIR,'DD/MM/YYYY'),'DD/MM/YYYY') "+ 
-//							" AND PBU.ID_UNIT = PBU_U.ID_PEJABATJKPTG  "+ 
-//							" AND PBU.ID_PEMOHON = "+usid+"  ";
-//						   
-//						   sql += " ) ";
-					sql += " ORDER BY P.TARIKH_MOHON";
-		   
-			myLogger.info("SQL LIST NO_FAIL :"+sql);
-			
-			ResultSet rs = stmt.executeQuery(sql);
-			while (rs.next()) {
-				Hashtable h = new Hashtable();
-				
-				if (rs.getString("NAMA_STATUS") == null) {
-					h.put("NAMA_STATUS", "");
-				} else {
-					h.put("NAMA_STATUS", rs.getString("NAMA_STATUS"));
-				}
-				
-				if (rs.getString("ID_FAIL") == null) {
-					h.put("ID_FAIL", "");
-				} else {
-					h.put("ID_FAIL", rs.getString("ID_FAIL"));
-				}
-				if (rs.getString("NO_KP_BARU") == null) {
-					h.put("NO_KP_BARU", "");
-				} else {
-					h.put("NO_KP_BARU", rs.getString("NO_KP_BARU"));
-				}
-				if (rs.getString("NO_KP_LAMA") == null) {
-					h.put("NO_KP_LAMA", "");
-				} else {
-					h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA"));
-				}
-				if (rs.getString("NO_FAIL") == null) {
-					h.put("NO_FAIL", "");
-				} else {
-					h.put("NO_FAIL", rs.getString("NO_FAIL"));
-				}
-				if (rs.getString("ID_PERMOHONAN") == null) {
-					h.put("ID_PERMOHONAN", "");
-				} else {
-					h.put("ID_PERMOHONAN", rs.getString("ID_PERMOHONAN"));
-				}
-				
-				if (rs.getString("TARIKH_MOHON") == null) {
-					h.put("TARIKH_MOHON", "");
-				} else {
-					h.put("TARIKH_MOHON", rs.getString("TARIKH_MOHON"));
-				}
-				
-				if (rs.getString("ID_STATUS") == null) {
-					h.put("ID_STATUS", "");
-				} else {
-					h.put("ID_STATUS", rs.getString("ID_STATUS"));
-				}
-				
-				if (rs.getString("NAMA_SIMATI") == null) {
-					h.put("NAMA_SIMATI", "");
-				} else {
-					h.put("NAMA_SIMATI", rs.getString("NAMA_SIMATI"));
-				}
-				
-				if (rs.getString("NAMA_PEMOHON") == null) {
-					h.put("NAMA_PEMOHON", "");
-				} else {
-					h.put("NAMA_PEMOHON", rs.getString("NAMA_PEMOHON"));
-				}
-				
-				if (rs.getString("ID_PERBICARAAN") == null) {
-					h.put("ID_PERBICARAAN", "");
-				} else {
-					h.put("ID_PERBICARAAN", rs.getString("ID_PERBICARAAN"));
-				}
-				
-				
-				
-				search_bantahan.addElement(h);
-			}
-			return search_bantahan;
-	} catch (Exception er) {
-		myLogger.error(er);
-		throw er;
-		} finally {
-			if (db != null)
-				db.close();
-		}
-	}
-	
-	
 	
 	Vector search_nofail = null;
 	
@@ -830,6 +826,7 @@ public class FrmTukaranStatus {
 						
 				sql += " AND S.ID_SIMATI = PS.ID_SIMATI "+
 					   " AND P.ID_PEMOHON = PM.ID_PEMOHON "+
+					   " AND P.SEKSYEN = 8 "+
 				       " AND P.ID_STATUS = ST.ID_STATUS(+) ";
 				sql += " AND P.ID_DAERAHMHN in ( select distinct u.id_daerahurus from  TBLRUJPEJABATURUSAN u, users_internal ur "+
 						   " where u.id_pejabatjkptg=ur.id_pejabatjkptg and ur.user_id= '"+usid+"' ";

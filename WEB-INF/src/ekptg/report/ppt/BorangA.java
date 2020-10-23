@@ -36,17 +36,15 @@ public class BorangA extends EkptgReportServlet {
 		
 		System.out.println("id_negeri report :"+id_negeri);
 		
-		if(id_negeri.equals("10"))
-		{
+//		if(id_negeri.equals("10"))
+//		{
 			 super.setReportName("BorangA");	
-		}
-		else
-		{
-			 super.setReportName("BorangA_PTG");
-		}
-		
-       	
-        
+//		}
+//		else
+//		{
+//			 super.setReportName("BorangA_PTG");
+//		}
+		 
 		super.setFolderName("ppt");
 	}
 	

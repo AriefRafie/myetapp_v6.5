@@ -194,7 +194,7 @@ public class FrmAPBHeaderData {
 				h.put("emel", rs.getString("EMEL") == null ? "" : rs.getString("EMEL"));
 				//h.put("idStatus", rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS").toUpperCase());
 				//BARU TAMBAH 29092020
-				h.put("undang", rs.getString("UNDANG_UNDANG_DIPERBADANKAN") == null ? "" : rs.getString("UNDANG_UNDANG_DIPERBADANKAN"));
+				h.put("undangUndang", rs.getString("UNDANG_UNDANG_DIPERBADANKAN") == null ? "" : rs.getString("UNDANG_UNDANG_DIPERBADANKAN"));
 	
 				
 				beanMaklumatPemohon.addElement(h);

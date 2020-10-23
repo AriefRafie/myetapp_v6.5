@@ -30,6 +30,7 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 	FrmPNWHeaderData logicHeader = new FrmPNWHeaderData();
 	FrmPNWTawaranKJPData logic = new FrmPNWTawaranKJPData();
 	FrmPHPDokumenData logicDokumen = new FrmPHPDokumenData();
+	private String readonly = "disabled class = \"disabled\"";
 	
 	static Logger myLogger = Logger.getLogger(FrmPNWTawaranKJPView.class);
 
@@ -65,7 +66,7 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 		String idStatus = getParam("idStatus");
 		String idPenawaranKJP = getParam("idPenawaranKJP");
 		String idDokumen = getParam("idDokumen");
-		String noRujukan = getParam("txtNoRujukan");
+		String noRujukanKJP = getParam("txtNoRujukanKJP");
 		String txtTarikhTerima = getParam("txtTarikhTerima");
 		String idHakmilikAgensi = getParam("idHakmilikAgensi");
 		String idHakmilikUrusan = getParam("idHakmilikUrusan");
@@ -74,6 +75,9 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 		String idJenisTanah = "1";
 		
 		String idKategoriPemohon = "";
+		String idNegeriPemohon = "";
+		String userJawatan = "";
+		String idJawatan = "";
 
 		// VECTOR
 		Vector beanHeader = null;
@@ -81,6 +85,7 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
         Vector beanMaklumatAgensi = null;
         Vector beanMaklumatImejan = null;               
         Vector list = null;
+        Vector listDetailKJP = null;
         
         // GET DROPDOWN PARAM
         String idKementerian = getParam("socKementerian");
@@ -100,18 +105,37 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 		String noFail = "";
 		
 		
+		listDetailKJP = logic.getIdNegeriKJPByUserId(userId);
+		if (!listDetailKJP.isEmpty() && listDetailKJP.size() > 0) {
+			Hashtable hashRayuanDB = (Hashtable) listDetailKJP.get(0);
+			idNegeriPemohon = hashRayuanDB.get("idNegeri").toString();
+			idKementerian = hashRayuanDB.get("idKementerian").toString();
+			idAgensi = hashRayuanDB.get("idAgensi").toString();
+			//myLog.info("JAWATAN="+userJawatan);
+			myLogger.info("IDKEMENTERIAN="+hashRayuanDB.get("idKementerian").toString());
+
+		}
+
+		//userJawatan = String.valueOf(hUser.get("userJawatan"));
+		//context.put("idjawatan", idJawatan);
+
+		this.context.put("idNegeriPemohon", idNegeriPemohon);
+		this.context.put("idKementerian", idKementerian);
+		this.context.put("idAgensi", idAgensi);
+		
+		
 		
 		//SUBMIT TO NEXT PROCESS
 		if (postDB) {
 			if ("simpanAgensi".equals(hitButton)) {
-				idPenawaranKJP = logic.simpanAgensi(idPermohonan, getParam("txtNoRujukan"), getParam("txtTarikhTerima"), idKementerian, idAgensi, getParam("txtTujuanKegunaan"), session);
+				idPenawaranKJP = logic.simpanAgensi(idPermohonan, getParam("txtNoRujukanKJP"), getParam("txtTarikhTerima"), idKementerian, idAgensi, getParam("txtTujuanKegunaan"), session);
 				flagReKeyin = "Y";
 				idKementerian = "99999";
 				idAgensi = "99999";
     			uploadFiles(idPenawaranKJP, idPermohonan, session);
 			}
 			if ("simpanKemaskiniAgensi".equals(hitButton)) {
-				logic.simpanKemaskiniAgensi(idPenawaranKJP, getParam("txtNoRujukan"), getParam("txtTarikhTerima"), idKementerian, idAgensi, getParam("txtTujuanKegunaan"), session);
+				logic.simpanKemaskiniAgensi(idPenawaranKJP, getParam("txtNoRujukanKJP"), getParam("txtTarikhTerima"), idKementerian, idAgensi, getParam("txtTujuanKegunaan"), session);
 			}
 			if ("hapusAgensi".equals(hitButton)) {
 				logic.hapusAgensi(idPenawaranKJP,idDokumen, session);
@@ -209,6 +233,7 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 		this.context.put("txtNoFail", getParam("txtNoFail"));
 		this.context.put("txtTajukFail", getParam("txtTajukFail"));
 		this.context.put("txtPemohon", getParam("txtPemohon"));
+		this.context.put("txtNoRujukanKJP", getParam("txtNoRujukanKJP"));
 		this.context.put("txdTarikhTerima", getParam("txdTarikhTerima"));
 		
 		this.context.put("txtNoPegangan", getParam("txtNoPegangan"));
@@ -221,7 +246,8 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 		this.context.put("selectDaerah", HTML.SelectDaerahByNegeri(idNegeriC, "socDaerahC", Long.parseLong(idDaerahC), ""," onChange=\"doChangeDaerah();\""));
 		this.context.put("selectMukim", HTML.SelectMukimByDaerah(idDaerahC, "socMukimC", Long.parseLong(idMukimC), ""));
 		this.context.put("selectStatus", HTML.SelectStatusPenawaran("socStatusC", Long.parseLong(idStatusC), "", ""));
-		this.context.put("selectKementerian", HTML.SelectKementerian("socKementerianC", Long.parseLong(idKementerianC), "", " onChange=\"doChangeKementerian();\""));
+
+		this.context.put("selectKementerian", HTML.SelectKementerian("socKementerianC", Long.parseLong(idKementerianC), "", readonly+" style=\"width:400\" "));
 		this.context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensiC", idKementerianC,  Long.parseLong(idAgensiC), "", ""));
 		this.context.put("checkTanah", getParam("checkTanah"));
 		this.context.put("flagTanah", getParam("checkTanah"));
@@ -235,6 +261,7 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 		logic.setSenaraiAgensi(idPermohonan);
 		senaraiAgensi = logic.getListAgensi();
 		this.context.put("SenaraiAgensi", senaraiAgensi);
+		this.context.put("bilSenaraiAgensi", senaraiAgensi.size());
 		
 		if ("batalPermohonan".equals(step)){
         	vm = "app/php2/online/ulasanKJP/pnw/frmBatalPermohonan.jsp";
@@ -288,22 +315,23 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 	    			this.context.put("readonlyPopupMinit", "");
 	    			this.context.put("inputTextClassPopupMinit", "");
 	    			
-					this.context.put("selectKementerian", HTML.SelectKementerian("socKementerian",Long.parseLong(idKementerian), ""," onChange=\"doChangeKementerian();\""));
+	    			//disable kementerian
+	    			this.context.put("selectKementerian", HTML.SelectKementerian("socKementerianC", Long.parseLong(idKementerian), "", readonly+" style=\"width:400\" "));	    			
 	    			
 	    			if ("".equals(flagReKeyin)){
 	    				
 	    				beanMaklumatAgensi = new Vector();    			
 		    			Hashtable hashMaklumatAgensi = new Hashtable();
 		    			hashMaklumatAgensi.put("tarikhTerima", getParam("txtTarikhTerima"));
-		    			hashMaklumatAgensi.put("noRujukan", noFail);
+		    			hashMaklumatAgensi.put("noRujukanSuratKJP", noRujukanKJP);
 		    			hashMaklumatAgensi.put("tujuanKegunaan", cadanganKegunaan);
 		    			beanMaklumatAgensi.addElement(hashMaklumatAgensi);
 						this.context.put("BeanMaklumatAgensi", beanMaklumatAgensi);
-						this.context.put("noRujukan", noFail);
+						this.context.put("txtNoRujukanKJP", noRujukanKJP);	
 						
 //						idAgensi = idAgensiDef;
 						
-						this.context.put("selectAgensi", HTML.SelectAgensi("socAgensi", Long.parseLong(idAgensi), "",""));
+						this.context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Long.parseLong(idAgensi), "", readonly+" style=\"width:400\" "));
 						
 	    			} 
 	    			
@@ -312,11 +340,12 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 	    				beanMaklumatAgensi = new Vector();    			
 		    			Hashtable hashMaklumatAgensi = new Hashtable();
 		    			hashMaklumatAgensi.put("tarikhTerima", txtTarikhTerima);
-		    			hashMaklumatAgensi.put("noRujukan", noRujukan);
+		    			hashMaklumatAgensi.put("noRujukanSuratKJP", noRujukanKJP);
 		    			hashMaklumatAgensi.put("tujuanKegunaan", "");
 		    			beanMaklumatAgensi.addElement(hashMaklumatAgensi);
 						this.context.put("BeanMaklumatAgensi", beanMaklumatAgensi);	
-						this.context.put("txtTarikhTerima", txtTarikhTerima);					
+						this.context.put("txtTarikhTerima", txtTarikhTerima);		
+						this.context.put("txtNoRujukanKJP", noRujukanKJP);		
 						
 						this.context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Long.parseLong(idAgensi), "",""));
 						
@@ -335,8 +364,8 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 	    			this.context.put("readonlyPopupMinit", "readonly");
 	    			this.context.put("inputTextClassPopupMinit", "disabled");
 	    			
-	    			this.context.put("selectKementerian", HTML.SelectKementerian("socKementerian",Long.parseLong(idKementerian), ""," onChange=\"doChangeKementerian();\""));
-	    			this.context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Long.parseLong(idAgensi), "",""));
+	    			this.context.put("selectKementerian", HTML.SelectKementerian("socKementerian",Long.parseLong(idKementerian), "",readonly+" style=\"width:400\" "));
+	    			this.context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Long.parseLong(idAgensi), "",readonly+" style=\"width:400\" "));
 	    			
 	    			setMaklumatPelan(beanMaklumatImejan, idPenawaranKJP);
 	    			this.context.put("modeDokumenItem", "viewable");

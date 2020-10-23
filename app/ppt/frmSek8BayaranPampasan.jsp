@@ -55,20 +55,6 @@
 					</tr>	
 					<tr>
 						<td>&nbsp;</td>
-			            <td>Tarikh Kuatkuasa Caj Lewat</td>
-			            <td>:</td>
-			            <td><input name="txdTarikhLewat" id="txdTarikhLewat" size="11" type="text" value="" onkeyup="validateTarikh(this,this.value)" onblur="checkDate(); check_date(this);" >
-			            <img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhLewat',false,'dmy');">&nbsp;$!frmtdate</td>
-					</tr>
-					<tr>
-  						<td>&nbsp;</td>
-  						<td>Caj Bayaran Lewat</td>
-  						<td>:</td>
-  						<td>&nbsp;RM&nbsp;<input type="text" name="txtCekLewat" id="txtCekLewat" value="$!Utils.RemoveSymbol($!txtCekLewat)" size="10" maxlength="8" style="text-align:right" onkeyup="validateNilai(this,this.value)" onblur="validateModal(this,this.value,'$!txtCekLewat')" ></td>
-  					</tr>	
-  	  				
-					<tr>
-						<td>&nbsp;</td>
 						<td>Tarikh Terima</td>
 						<td>:</td>
 						<td><input name="txdTarikhTerima" id="txdTarikhTerima" size="11" type="text" value="" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" >
@@ -151,6 +137,14 @@
 			            <td><input $disability $disabilityx name="txdTarikhLewat" id="txdTarikhLewat" size="11" type="text" value="$!txdTarikhLewat" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" >
 			            #if($isEdit=="yes")<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhLewat',false,'dmy');">&nbsp;$!frmtdate#end</td>
 					</tr>	
+					 <tr>
+  						<td>&nbsp;</td>
+  						<td>Bil. Hari Lewat</td>
+  						<td>:</td>
+  						<td>
+                        
+                        <input $disability $disabilityx type="text" name="txtBilLewatCek" id="txtBilLewatCek" value="$!txtBilLewatCek" size="3" maxlength="4" onkeyup="validateNumber(this,this.value);" ></td>
+  					</tr>
 					<tr>
   						<td>&nbsp;</td>
   						<td>Caj Bayaran Lewat</td>
@@ -403,7 +397,7 @@
   						<td>:</td>
   						<td>
                          <input type="text" name="txtBilLewat" id="txtBilLewat" value="$!txtBilLewat" size="3" maxlength="4" onkeyup="validateNumber(this,this.value);" ></td>
-  					</tr>
+  					</tr>				
   					<tr>
   						<td>&nbsp;</td>
   						<td>Caj Bayaran Lewat</td>
@@ -1281,31 +1275,36 @@ function checkDate() {
 	var days = Math.floor(res / 86400);
 	//alert(days);
 	
-	var res2 = Math.abs(date8-date5) / 1000;
-	var days2 = Math.floor(res2 / 86400);
-	//alert(days2);
 	
-	var res3 = Math.abs(dateLewat-date8) / 1000;
-	var days3 = Math.floor(res3 / 86400);
-	//alert(days3);
+	//alert(days2);
+
+	
 	
 	var award = document.getElementById("jumlahAward").value;
 	
+	
 	if(dateLewat>date5){
 		//alert(5);
-		var c = Math.abs(5*award)/100;		
+		var c = Math.abs(5*award)/100;	
+		var res2 = Math.abs(date8-date5) / 1000;
+		var days2 = Math.floor(res2 / 86400);
 		//alert(c);
 		
 	}
 	if(dateLewat<date8){
 		//alert(8);
 		var c = Math.abs(8*award)/100;		
+		
+		var res3 = Math.abs(dateLewat-date8) / 1000;
+		var days2 = Math.floor(res3 / 86400);
+		//alert(days3);
 		//alert(c);
 		
 	}
 	
 	
 	document.${formName}.txtCekLewat.value = c;
+	document.${formName}.txtBilLewatCek.value = days2;
 	
 }
 

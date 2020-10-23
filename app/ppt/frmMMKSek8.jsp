@@ -716,7 +716,7 @@ alert("Sila Klik 'Paging' No.7 Untuk Proses Pewartaan");
 <legend><strong>SENARAI LAPORAN</strong></legend>
 	<table width="100%" border="0" cellspacing="2" cellpadding="2">
 	  <tr>  
-      	 <td><a href="#" onClick="javascript:cetakSuratIringanMMK('$!id_permohonan')"><font color="blue">Surat Iringan MMK</font></a></td>
+      	 <td><a href="#" onClick="javascript:cetakSuratIringanMMK('$!id_permohonan')"><font color="blue">Surat Iringan MMK Ke PTG</font></a></td>
       </tr>	
       <tr>  
       	 <td><a href="#" onClick="javascript:cetakMMK('$!id_permohonan','$!id_fail','$!negeriMMK','$!no_fail')"><font color="blue">Kertas Kerja MMK</font></a></td>

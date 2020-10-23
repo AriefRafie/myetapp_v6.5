@@ -223,10 +223,10 @@ public class FrmPLPCetakanMinitKewanganData {
 		
 		String sql = "";
 		String emelUser = "nurulain.siprotech@gmail.com"; //untuk sementara
-		String tempoh = "";
 		String noFail = "";
-		String tarikhAkhir = "";
-		
+		String tajukFail = "";
+		String tarikhHantar = "";
+
 		try {
 			db = new Db();
 			conn = db.getConnection();
@@ -234,25 +234,26 @@ public class FrmPLPCetakanMinitKewanganData {
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 			
-			sql = " SELECT D.NO_FAIL, A.TARIKH_JANGKA_TERIMA, A.JANGKAMASA"
-				+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJKEMENTERIAN B, TBLPERMOHONAN C, TBLPFDFAIL D "
-				+ " WHERE A.ID_MENTERI = B.ID_KEMENTERIAN AND A.ID_PERMOHONAN = C.ID_PERMOHONAN "
-				+ " AND C.ID_FAIL = D.ID_FAIL AND B.ID_KEMENTERIAN = '"+idKementerian+"' "
-				+ " AND C.ID_PERMOHONAN = '"+idPermohonan+"'";
+			sql = "SELECT A.TARIKH_HANTAR_KEWANGAN, D.NO_FAIL, D.TAJUK_FAIL "
+				+ "FROM TBLPHPKERTASKERJAPELEPASAN A, TBLPERMOHONAN C, TBLPFDFAIL D "
+				+ "WHERE A.ID_PERMOHONAN = C.ID_PERMOHONAN AND C.ID_FAIL = D.ID_FAIL "
+				+ "AND A.FLAG_KERTAS = 2 AND C.ID_PERMOHONAN = '"+idPermohonan+"'";
 			
 			ResultSet rsEmel = stmt.executeQuery(sql);
 			if (rsEmel.next()){
 				noFail = rsEmel.getString("NO_FAIL");
-				tempoh = rsEmel.getString("JANGKAMASA");
-				tarikhAkhir = sdf.format(rsEmel.getDate("TARIKH_JANGKA_TERIMA"));
+				tajukFail = rsEmel.getString("TAJUK_FAIL");
+				//tempoh = rsEmel.getString("JANGKAMASA");
+				tarikhHantar = sdf.format(rsEmel.getDate("TARIKH_HANTAR_KEWANGAN"));
 			}	
 			
-			String tajuk = "PERMOHONAN ULASAN KERTAS CADANGAN URUSAN PELEPASAN BAGI NO. FAIL " + noFail;
-			String kandungan = "Mohon pihak tuan memberikan ulasan dan keputusan bagi permohonan tersebut<br><br>"
-							 + "Kerjasama daripada pihak tuan untuk mengemukakan keputusan tersebut kepada Jabatan ini "
-							 + "sebelum " + tarikhAkhir + " amatlah dihargai."
-							 + " <br><br>Sekian, terima kasih.<br><br><br>"			
-							 + " Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
+			String tajuk = "PERMOHONAN MENGEMUKAKAN ULASAN KERTAS CADANGAN URUSAN PELEPASAN BAGI NO. FAIL " + noFail;
+			String kandungan = "Tuan/ Puan,"
+					 		 +"<br><br><u><b>"+tajuk+"</b></u>"
+							 + "Adalah saya dengan hormatnya merujuk kepada perkara di atas."
+							 + "<br><br>2.	Sukacita dimaklumkan bahawa pihak kami memerlukan kelulusan "
+							 + "daripada Y.A.B Menteri Kewangan Malaysia sebelum " +tarikhHantar+ "."
+							 + "<br>3.	Kerjasama dari pihak tuan amatlah diharapkan dan dihargai.";
 			
 			conf.sendByKJPPenyedia(idKementerian, "", emelUser, tajuk, kandungan);
 			//email.sendEmail();

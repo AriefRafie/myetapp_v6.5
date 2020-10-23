@@ -77,6 +77,28 @@ public class FrmSenaraiTugasanPLPView extends AjaxBasedModule {
 		if (idSuburusan == null || idSuburusan.trim().length() == 0) {
 			idSuburusan = "99999";
 		}
+		String idJenisFailC = getParam("socJenisFailC");
+		if (idJenisFailC == null || idJenisFailC.trim().length() == 0){
+			idJenisFailC = "99999";
+		}
+		
+		if ("S".equals(idJenisFailC)){
+
+			this.context.put("selected", "");
+			this.context.put("selectedD", "");
+			this.context.put("selectedS", "selected");
+
+		} else if ("D".equals(idJenisFailC)){
+
+			this.context.put("selected", "");
+			this.context.put("selectedD", "selected");
+			this.context.put("selectedS", "");
+
+		} else {
+			this.context.put("selected", "selected");
+			this.context.put("selectedD", "");
+			this.context.put("selectedS", "");
+		}
 		 
 		String flagDetail = getParam("flagDetail");
 
