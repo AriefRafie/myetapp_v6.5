@@ -179,6 +179,7 @@ public class FrmAPBSenaraiMesyuaratView extends AjaxBasedModule {
 									listAgensi[i], listJawatan[i],
 									listNoTel[i], listEmail[i],getParam("flagPengerusi"),
 									session);
+							logic.sendEmailMesyuarat(idMesyuarat, listEmail[i], session);
 						}
 					}
 				}
