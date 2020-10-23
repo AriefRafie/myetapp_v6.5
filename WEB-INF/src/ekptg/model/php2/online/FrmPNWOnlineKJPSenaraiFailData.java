@@ -479,7 +479,8 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 	}
 
 	public String daftarBaru(String idJenisTanah, String tarikhTerima, String tarikhSurat, String noRujukanSurat,
-			String idKategori, String idKementerian, String idAgensi, String idLuasKegunaan, String txtTujuanKegunaan,
+			String idKategori, String idKementerian, String idAgensi, String idLuasKegunaan, 
+			//String txtTujuanKegunaan,
 			String idHakmilikAgensi, String idPPTBorangK, String idHakmilikUrusan, String idPHPBorangK,
 			String idKementerianTanah, String idNegeriTanah, String idLuasTanah, String luasTanah,
 			String idHakmilikSementara, HttpSession session) throws Exception {
@@ -653,7 +654,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 				r.add("ID_UNITLUASBAKI", idLuasTanah);
 				r.add("LUAS_BAKI", 0);
 			}
-			r.add("CADANGAN_KEGUNAAN", txtTujuanKegunaan);
+			//r.add("CADANGAN_KEGUNAAN", txtTujuanKegunaan);
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
@@ -1658,7 +1659,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 			myLog.info("padam TBLPERMOHONAN: "+sql);
 			stmt.executeUpdate(sql);
 			
-			/*// TBLPHPHAKMILIK
+			// TBLPHPHAKMILIK
 			sql = "DELETE FROM TBLPHPHAKMILIK WHERE ID_PERMOHONAN IN "
 					+ "(SELECT ID_PERMOHONAN FROM TBLPERMOHONAN WHERE ID_FAIL IN (" + idFail + "))";
 			myLog.info("padam TBLPHPHAKMILIK: " + sql);
@@ -1676,7 +1677,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 
 			sql = "DELETE FROM TBLPHPLAPORANTANAH WHERE ID_FAIL IN (" + idFail + ")";
 			myLog.info("padam TBLPHPLAPORANTANAH: "+sql);
-			stmt.executeUpdate(sql);*/
+			stmt.executeUpdate(sql);
 			
 			// TBLPFDFAIL
 			sql = "DELETE FROM TBLPFDFAIL WHERE ID_FAIL IN (" + idFail + ")";

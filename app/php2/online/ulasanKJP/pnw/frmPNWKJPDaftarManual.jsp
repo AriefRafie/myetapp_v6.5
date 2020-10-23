@@ -19,6 +19,7 @@
   <input name="idSuburusan" type="hidden" id="idSuburusan" />
   <input type="hidden" name="idPHPBorangK" id="idPHPBorangK"/>
   <input type="hidden" name="idPPTBorangK" id="idPPTBorangK"/>
+ <!--  $!selectLuasKegunaan -->
 
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -186,7 +187,7 @@
       </table>
       </fieldset></td>
   </tr>
-    <tr>
+   <!--  <tr>
     <td colspan="2"><fieldset>
       <legend><strong>MAKLUMAT KEGUNAAN TANAH</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -208,7 +209,7 @@
         #end
       </table>
       </fieldset></td>
-  </tr>
+  </tr> -->
 <tr>
     <td colspan="2"><fieldset>
       <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
