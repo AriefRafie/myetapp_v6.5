@@ -4798,7 +4798,7 @@ public class DB extends EkptgCache implements Serializable {
 	public static Vector<Tblppkrujjenisperintah> getJenisPerintahSek8() throws Exception {
 		Db db = null;
 		String sql = "Select id_jenisperintah,kod,keterangan from "
-				+ " tblppkrujjenisperintah where id_jenisperintah in (1,2,3,7) order by lpad(kod,10)";
+				+ " tblppkrujjenisperintah where id_jenisperintah in (1,2,3,7,10,11) order by lpad(kod,10)";
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();

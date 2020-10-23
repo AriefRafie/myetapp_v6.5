@@ -116,6 +116,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		String flagAdaHAPKT = "0";
 		String flagAdaHTAPL = "0";
 		String flagAdaHAPL = "0";
+		String flagAdaHADIKEMBALIKAN = "0";
 		String flagAdaHTAPF = "0";
 		String flagAdaHAPF = "0";
 		
@@ -1785,7 +1786,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 					
 					myLogger.info("Sini1");
 					//disablekan dulu sbb semua HA dia register perintah secara auto
-					logic.saveHA("1", "", id_HAARB, idPerintah, idPermohonan, idSimati, idPermohonanSimati, session);
+					//logic.saveHA("1", "", id_HAARB, idPerintah, idPermohonan, idSimati, idPermohonanSimati, session);
 					myLogger.info("Sini2");
 					}
 					//cari perintahhaobmst
@@ -1853,6 +1854,10 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 				if (logic.checkExistHAPF(idPerintah)){
 					flagAdaHAPF = "1";
 				}
+				
+				if (logic.checkExistHADIKEMBALIKAN(idPerintah)){
+					flagAdaHADIKEMBALIKAN = "1";
+				}
 			}
 			
 			if (flagAdaHTAPT.equals("1")){
@@ -1864,6 +1869,11 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 				logic.setDataSenaraiHAPT(idPerintah,idPermohonanSimati);
 				listHAPT = logic.getSenaraiHAPT();
 				this.context.put("SenaraiHAPT", listHAPT);
+			}
+			if (flagAdaHADIKEMBALIKAN.equals("1")){
+				logic.setDataSenaraiHAPT(idPerintah,idPermohonanSimati);
+				listHAPT = logic.getSenaraiHAPT();
+				this.context.put("SenaraiHADIKEMBALIKAN", listHAPT);
 			}
 			if (flagAdaHTAPKT.equals("1")){
 				logic.setDataSenaraiHTAPKT(idPerintah,idPermohonanSimati);
@@ -1948,6 +1958,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		//SET DEFAULT PARAM
 		this.context.put("actionPerintah", actionPerintah);
         this.context.put("mode", mode);
+        myLogger.info("flagPopup = "+flagPopup);
         this.context.put("flagPopup", flagPopup);
 		this.context.put("modePopup", modePopup);
         this.context.put("selectedTabUpper", selectedTabUpper);
