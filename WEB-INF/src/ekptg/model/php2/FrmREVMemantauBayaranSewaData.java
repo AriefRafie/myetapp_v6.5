@@ -344,7 +344,6 @@ public class FrmREVMemantauBayaranSewaData {
 								.getString("TUJUAN"));
 
 				senaraiFail.addElement(h);
-
 				bil++;
 			}
 

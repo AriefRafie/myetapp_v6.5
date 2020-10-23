@@ -59,6 +59,7 @@ public class FrmPLPDashboard extends AjaxBasedModule {
 		context.put("failSelesaiTKR", getFailSelesaiTKR());
 		context.put("check_notifikasi_aduan", getNotifikasiAduan("", user_negeri_login, userId, "", "NO"));
 		context.put("bilTamatTempohUlasanKJP", getFailTamatTempohUlasanKJP());
+		context.put("bilTamatTempohUlasanJKPTG", getFailTamatTempohUlasanJKPTG());
 
 		//list_memo_aktif = logicPengumuman.getMemo("", "Aktif","1","0");
 		list_memo_aktif = logicPengumuman.getMemo("", "Aktif","1","","","","","0");
@@ -507,12 +508,47 @@ public class FrmPLPDashboard extends AjaxBasedModule {
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 			
-			sql = "SELECT COUNT(*) AS BIL"
-					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, TBLPHPHAKMILIK F, USERS H"
-					+ " WHERE A.ID_SEKSYEN = 4 AND A.ID_URUSAN = '6' AND A.ID_SUBURUSAN IN (33) AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS"
-					+ " AND E.ID_HAKMILIKPERMOHONAN = F.ID_HAKMILIKPERMOHONAN(+) AND B.ID_PEMOHON = C.ID_PEMOHON AND B.ID_PERMOHONAN = E.ID_PERMOHONAN AND A.NO_FAIL IS NOT NULL"
-					+ " AND A.ID_MASUK = H.USER_ID(+) AND D.ID_STATUS NOT IN (1610207,1610208,1610212)";
+			sql = "SELECT COUNT(*) AS BIL "
+				+ "FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, "
+				+ "TBLPHPHAKMILIK F, USERS H, TBLRUJSUBURUSAN I, TBLRUJNEGERI J, TBLPHPULASANTEKNIKAL K "
+				+ "WHERE A.ID_SEKSYEN = 4 AND A.ID_URUSAN = '6' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS "
+				+ "AND E.ID_HAKMILIKPERMOHONAN = F.ID_HAKMILIKPERMOHONAN(+) AND B.ID_PEMOHON = C.ID_PEMOHON "
+				+ "AND B.ID_PERMOHONAN = E.ID_PERMOHONAN AND A.NO_FAIL IS NOT NULL AND F.ID_NEGERI = J.ID_NEGERI(+) "
+				+ "AND B.ID_PERMOHONAN = K.ID_PERMOHONAN(+) AND A.ID_MASUK = H.USER_ID(+) AND A.ID_SUBURUSAN = I.ID_SUBURUSAN(+) "
+				+ "AND B.FLAG_AKTIF = 'Y' AND A.NO_FAIL IS NOT NULL AND K.FLAG_STATUS = 1 AND K.FLAG_AKTIF = 'Y' "
+				+ "AND K.FLAG_KJP = 'KJP' AND K.TARIKH_JANGKA_TERIMA IS NOT NULL "
+				+ "AND TO_CHAR(K.TARIKH_JANGKA_TERIMA, 'dd-MON-YY') < TRUNC(SYSDATE)";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			rs.next();
+			return rs.getInt("BIL");
 			
+		}finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public Integer getFailTamatTempohUlasanJKPTG() throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			sql = "SELECT COUNT(*) AS BIL "
+				+ "FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, "
+				+ "TBLPHPHAKMILIK F, USERS H, TBLRUJSUBURUSAN I, TBLRUJNEGERI J, TBLPHPULASANTEKNIKAL K "
+				+ "WHERE A.ID_SEKSYEN = 4 AND A.ID_URUSAN = '6' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS "
+				+ "AND E.ID_HAKMILIKPERMOHONAN = F.ID_HAKMILIKPERMOHONAN(+) AND B.ID_PEMOHON = C.ID_PEMOHON "
+				+ "AND B.ID_PERMOHONAN = E.ID_PERMOHONAN AND A.NO_FAIL IS NOT NULL AND F.ID_NEGERI = J.ID_NEGERI(+) "
+				+ "AND B.ID_PERMOHONAN = K.ID_PERMOHONAN(+) AND A.ID_MASUK = H.USER_ID(+) AND A.ID_SUBURUSAN = I.ID_SUBURUSAN(+) "
+				+ "AND B.FLAG_AKTIF = 'Y' AND A.NO_FAIL IS NOT NULL AND K.FLAG_STATUS = 1 AND K.FLAG_AKTIF = 'Y' "
+				+ "AND K.FLAG_KJP = 'KJT' AND K.TARIKH_JANGKA_TERIMA IS NOT NULL "
+				+ "AND TO_CHAR(K.TARIKH_JANGKA_TERIMA, 'dd-MON-YY') < TRUNC(SYSDATE)";
+
 			ResultSet rs = stmt.executeQuery(sql);
 			rs.next();
 			return rs.getInt("BIL");

@@ -551,8 +551,8 @@ a.nav:visited {
 							   <td width="2%" valign="top" align="right">
 							   </td>
 						   	   <td width="98%">
-						   			<div id="tertunggak">
-					   					<a href="javascript:gotoKJPTamatTempoh('S')" class="help" title="Senarai Ulasan KJP Tamat Tempoh">
+						   			<div id="tamatTempohKJP">
+					   					<a href="javascript:gotoKJPTamatTempoh('K')" class="help" title="Senarai Ulasan KJP Tamat Tempoh">
 											<label style="background-color:red"  align="center" valign="top" >
 			                            		<b><font color="WHITE"><span class="blink">&nbsp;$bilTamatTempohUlasanKJP</span></font></b>
 		                             		</label>&nbsp;
@@ -562,6 +562,25 @@ a.nav:visited {
 								</td>
 						   </tr>
 	                  	</table>
+	                  	<table width="90%" align="center" border="0"  class="alert">
+						   <tr>
+							   <td>
+							   </td>
+						   </tr>
+						   <tr>
+							   <td width="2%" valign="top" align="right">
+							   </td>
+						   <td width="98%">
+						  	<div id="tamatTempohJKPTG">
+	                             <a href="javascript:gotoJKPTGTamatTempoh('G')" class="help" title="Senarai Ulasan JKPTG Tamat Tempoh">
+									<label style="background-color:red"  align="center" valign="top" >
+			                            <b><font color="WHITE"><span class="blink">&nbsp;$bilTamatTempohUlasanJKPTG</span></font></b>
+		                             </label>&nbsp;
+								 	Bil. Fail Tamat Tempoh Ulasan JKPTG
+								 </a>
+							</div>
+						   </tr>
+						  </table>
                       </div>
                     </div>
                   </div></td>
@@ -633,10 +652,14 @@ function gotoInbox() {
 	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.utils.FrmInboxUsers";
 	document.${formName}.submit();
 }
-function gotoKJPTamatTempoh(S) {
-	document.${formName}.action = "$EkptgUtil.getTabID("Penawaran",$portal_role)?_portal_module=ekptg.view.php2.FrmSenaraiTugasanPLPView&socJenisFailC=S";
+function gotoKJPTamatTempoh(K) {
+	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmSenaraiTugasanPLPView&socJenisFailC=K";
 	//document.${formName}.socJenisFailC.value = S;
 	//document.Fekptg_view_php2_FrmREVMemantauBayaranSewaView.socJenisFailC.value = "S";
+	document.${formName}.submit();
+} 
+function gotoJKPTGTamatTempoh(G) {
+	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmSenaraiTugasanPLPView&socJenisFailC=G";
 	document.${formName}.submit();
 }
 </script>
