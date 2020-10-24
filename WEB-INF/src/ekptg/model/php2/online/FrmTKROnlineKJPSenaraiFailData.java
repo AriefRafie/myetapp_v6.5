@@ -304,7 +304,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			//noFail
 			if (findNoFail != null) {
 				if (!findNoFail.trim().equals("")) {
-					sql = sql + " AND UPPER(F.NO_FAIL) LIKE '%' ||'"
+					sql = sql + " AND UPPER(P.NO_PERMOHONAN) LIKE '%' ||'"
 							+ findNoFail.trim().toUpperCase() + "'|| '%'";
 				}
 			}
