@@ -204,7 +204,7 @@
                 <td>&nbsp;</td>
                 <td>Keluasan Asal</td>
                 <td>:</td>
-                <td>$beanMaklumatPenawaran.luasAsal $beanMaklumatPenawaran.keteranganLuasAsal
+                <td>$beanMaklumatPenawaran.luasAsal $beanMaklumatPenawaran.keteranganLuasAsal HEKTAR
                   <input type="hidden" name="txtLuasAsal" id="txtLuasAsal" value="$beanMaklumatPenawaran.luasAsal"/></td>
               </tr>
               #if ($idLuasKegunaan == '2')
@@ -271,11 +271,11 @@
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
                   ##end
                   #if ($mode == 'update')
-                  <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniMaklumatPelepasan('$idLuas')"/>
+                  <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniMaklumatPenawaran('$idLuas')"/>
                   <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskini()"/>
                   #end
                    #else
-                   <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniMaklumatPelepasan('$idLuas')"/>
+                   <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniMaklumatPenawaran('$idLuas')"/>
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
                   <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
                  #end </td>
@@ -644,7 +644,7 @@ function doBatalKemaskini() {
 	document.${formName}.mode.value = "view";
 	document.${formName}.submit();
 }
-function doSimpanKemaskiniMaklumatPelepasan(idLuas) {
+function doSimpanKemaskiniMaklumatPenawaran(idLuas) {
 	
 	/* if(document.${formName}.socLuasKegunaan.value == ""){
 		alert('Sila masukkan Luas Kegunaan.');
@@ -704,7 +704,7 @@ function doSimpanKemaskiniMaklumatPelepasan(idLuas) {
 	}
 	
 	document.${formName}.mode.value = "view";
-	document.${formName}.hitButton.value = "doSimpanKemaskiniMaklumatPelepasan";
+	document.${formName}.hitButton.value = "doSimpanKemaskiniMaklumatPenawaran";
 	document.${formName}.submit();
 }
 function doHantar(){
