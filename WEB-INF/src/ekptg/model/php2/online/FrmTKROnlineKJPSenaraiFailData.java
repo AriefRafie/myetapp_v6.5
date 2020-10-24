@@ -1011,7 +1011,8 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			r.add("ID_PEMOHON", idPemohon);
 			r.add("ID_JKPTG", "1");
 			r.add("ID_FAIL", idFail);
-			r.add("ID_STATUS", "9920199");
+			r.add("ID_STATUS", "245"); //tindakan penguna/penyedia
+			//r.add("ID_STATUS", "9920199"); //status pra-daftar
 			r.add("TARIKH_SURAT", r.unquote(TS));
 			r.add("TARIKH_TERIMA", r.unquote(TT));
 			r.add("NO_RUJ_SURAT", noRujukanSurat);
