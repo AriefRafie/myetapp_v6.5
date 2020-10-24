@@ -11,6 +11,7 @@
     #set($idHakmilik = $beanMaklumatPermohonan.idHakmilik)
     #set($noFail = $beanMaklumatPermohonan.noFail)
     #set($perkara = $beanMaklumatPermohonan.perkara)
+    #set($keterangan = $beanMaklumatPermohonan.keterangan)
     #end
 
     <td width="50%" valign="top" ><fieldset>
@@ -39,7 +40,7 @@
         <tr>
           <td width="36%" align="right">Status Permohonan </td>
           <td width="1%">:</td>
-          <td><font color="green">$status</font></td>
+          <td><font color="green">$keterangan</font></td>
         </tr>
       </table>
       </fieldset></td>
