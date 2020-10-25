@@ -444,7 +444,7 @@
         </tr>
         <tr>
           <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-          <td valign="top">Tarikh Terima</td>
+          <td valign="top">Tarikh Mohon</td>
           <td>:</td>
           <td><input type="text" name="tarikhTerima" id="tarikhTerima" value="$beanMaklumatPermohonan.tarikhTerima" size="9" $readonly class="$inputTextClass" onblur="check_date(this);cekTarikhTerima(this)"/>
             #if ($mode != 'view') <a href="javascript:displayDatePicker('tarikhTerima',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a>#end</td>

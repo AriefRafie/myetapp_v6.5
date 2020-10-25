@@ -38,10 +38,12 @@
     <td><fieldset>
       <legend><strong>SENARAI MESYUARAT</strong></legend>
       <table align="center" width="100%">
-        <tr>
-        #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
-          <td colspan="4" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:doDaftarBaruMesyuarat()"/></td>
-        #end
+        ##<tr>
+        ## #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
+        ##  <td colspan="4" scope="row">
+        ##  	<input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:doDaftarBaruMesyuarat()"/>
+        ##  </td>
+        ## #end
         </tr>
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>

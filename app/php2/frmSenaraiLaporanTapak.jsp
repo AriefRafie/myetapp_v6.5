@@ -8,7 +8,8 @@
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input type="hidden" name="step">
-  <input type="hidden" name="idLaporan">
+  <input type="hidden" name="idUlasanTeknikal">
+  <input type="hidden" name="idPermohonan">
   <input type="hidden" name="idFail">
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -92,7 +93,7 @@
         #end
         <tr>
           <td class="$row" align="center">$list.bil</td>
-          <td class="$row"><a href="javascript:kemaskini('$list.idLaporan')" class="style1">$list.noFail</a></td>
+          <td class="$row"><a href="javascript:kemaskini('$list.idUlasanTeknikal')" class="style1">$list.noFail</a></td>
           <td class="$row" align="center">$list.urusan</td>
           <td class="$row">$list.hakmilik</td>
           <td class="$row">$list.pelapor</td>
@@ -135,8 +136,8 @@ function kosongkan(flagDetail) {
 	document.${formName}.socMukimC.value = "";	
 	doAjaxCall${formName}("");
 }
-function kemaskini(idLaporan) {
-	document.${formName}.idLaporan.value = idLaporan;
+function kemaskini(idUlasanTeknikal) {
+	document.${formName}.idUlasanTeknikal.value = idUlasanTeknikal;
 	document.${formName}.step.value = "kemaskini";
 	document.${formName}.submit();
 }

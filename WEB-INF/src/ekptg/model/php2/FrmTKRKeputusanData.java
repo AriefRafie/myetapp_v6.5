@@ -370,7 +370,7 @@ public class FrmTKRKeputusanData {
 		String userId = (String) session.getAttribute("_ekptg_user_id");
 		String sql = "";
 		String namaUser = "";
-		String emelUser = "";
+		String emelUser = "nurulain.siprotech@gmail.com"; //UNTUK SEMENTARA
 		String idhakmilikPermohonan = "";
 		String noPermohonan = "";
 		String idSuburusan = "";
@@ -395,7 +395,7 @@ public class FrmTKRKeputusanData {
 				noPermohonan = rsPermohonan.getString("NO_PERMOHONAN");
 				idSuburusan = rsPermohonan.getString("ID_SUBURUSAN");
 				namaUser = rsPermohonan.getString("NAMA");
-				emelUser = rsPermohonan.getString("EMEL");
+				//emelUser = rsPermohonan.getString("EMEL");
 			}	
 			
 			if ("L".equals(idKeputusan)) {

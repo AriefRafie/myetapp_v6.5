@@ -453,7 +453,7 @@
 	<tr>
 		<td align="right">
 		#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
-			#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
+			#if ($beanMaklumatMesyuarat.statusMesyuarat == "1" && $selectedTabUpper=="2")
 			<input id="btnSelesai" type="button" value="Selesai Mesyuarat" onClick="javascript:doSelesaiMesyuarat();">
 			#end
 	    	<input id="btnBack" type="button" value="Kembali" onClick="doKembaliSenaraiPermohonan()">

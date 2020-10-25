@@ -7685,8 +7685,9 @@ try {
 					+ " TU.PENDAHULUAN, TU.STATUS_TANAH, TU.JALAN_UTAMA, TU.JALAN_MASUK,TU.NAMA_TEMPAT, TU.JARAK_BANDAR, " + 
 					"   TU.PERUMAHAN, TU.INDUSTRI, TU.NAMA_PBT, TU.FLAG_PBT, TU.FLAG_REZAB_MELAYU, TU.TARIKH_AKHIR_LAWAT, TU.TARIKH_MULA_LAWAT, " + 
 					"   TU.FLAG_BUKIT, TU.FLAG_BELUKAR, TU.FLAG_DIUSAHA, TU.FLAG_HUTAN, TU.FLAG_JENIS_TANAH, TU.FLAG_LANDAI, TU.FLAG_LAPANG, TU.FLAG_LEMBAH, " + 
-					"   TU.FLAG_LURAH, TU.FLAG_PAYA, TU.FLAG_SEMAK, TU.FLAG_TERBIAR, TU.KEADAAN_TANAH, TU.RUPABUMI, TU.FLAG_RENDAH, TU.FLAG_RATA"
+					"   TU.FLAG_LURAH, TU.FLAG_PAYA, TU.FLAG_SEMAK, TU.FLAG_TERBIAR, TU.KEADAAN_TANAH, TU.RUPABUMI, TU.FLAG_RENDAH, TU.FLAG_RATA,"
 
+					+ " TU.FLAG_SALIRAN, TU.KEMUDAHAN_AWAM, TU.SEMPADAN_UTARA, TU.SEMPADAN_BARAT,TU.SEMPADAN_TIMUR, TU.SEMPADAN_SELATAN "
 					+ " FROM TBLPPTTANAHUMUM TU,TBLPPTPENARIKANBALIK PB,TBLPPTHAKMILIK HM,TBLPPTPERMOHONAN P, "
 					+ " TBLRUJNEGERI N,TBLRUJDAERAH D,TBLRUJMUKIM M,TBLPPTPENARIKANHAKMILIK PH  "
 					+ " WHERE TU.ID_PENARIKANBALIK = PB.ID_PENARIKANBALIK "
@@ -7843,15 +7844,20 @@ try {
 				h.put("flag_lurah", rs.getString("flag_lurah")==null?"0":rs.getString("flag_lurah"));
 				h.put("flag_paya", rs.getString("flag_paya")==null?"0":rs.getString("flag_paya"));
 				h.put("flag_rendah", rs.getString("flag_rendah")==null?"0":rs.getString("flag_rendah"));
-				h.put("flag_rata", rs.getString("flag_rata")==null?"0":rs.getString("flag_rata"));
-				
+				h.put("flag_rata", rs.getString("flag_rata")==null?"0":rs.getString("flag_rata"));				
 				h.put("flag_landai", rs.getString("flag_landai")==null?"0":rs.getString("flag_landai"));
 				h.put("flag_bukit", rs.getString("flag_bukit")==null?"0":rs.getString("flag_bukit"));
 				h.put("flag_semak", rs.getString("flag_semak")==null?"0":rs.getString("flag_semak"));
 				h.put("flag_belukar", rs.getString("flag_belukar")==null?"0":rs.getString("flag_belukar"));
 				h.put("flag_hutan", rs.getString("flag_hutan")==null?"0":rs.getString("flag_hutan"));
 				h.put("flag_terbiar", rs.getString("flag_terbiar")==null?"0":rs.getString("flag_terbiar"));
-				h.put("flag_lapang", rs.getString("flag_lapang")==null?"0":rs.getString("flag_lapang"));
+				h.put("flag_lapang", rs.getString("flag_lapang")==null?"0":rs.getString("flag_lapang"));				
+				h.put("flag_saliran", rs.getString("flag_saliran")==null?"":rs.getString("flag_saliran"));
+				h.put("sempadan_timur", rs.getString("sempadan_timur")==null?"":rs.getString("sempadan_timur"));
+				h.put("sempadan_selatan", rs.getString("sempadan_selatan")==null?"":rs.getString("sempadan_selatan"));
+				h.put("sempadan_utara", rs.getString("sempadan_utara")==null?"":rs.getString("sempadan_utara"));
+				h.put("kemudahan_awam", rs.getString("kemudahan_awam")==null?"":rs.getString("kemudahan_awam"));
+				h.put("sempadan_barat", rs.getString("sempadan_barat")==null?"":rs.getString("sempadan_barat"));
 				
 				
 
@@ -8358,20 +8364,10 @@ try {
 		Db db = null;
 		String sql = "";
 
-		String txtLokasiTanah = (String) data.get("txtLokasiTanah");
-		String txtKeadaanLot = (String) data.get("txtKeadaanLot");
-		String txtJenisTanaman = (String) data.get("txtJenisTanaman");
-		String txtBerhampiran = (String) data.get("txtBerhampiran");
-		String txtKeadaanTanaman = (String) data.get("txtKeadaanTanaman");
-		String txtUlasan = (String) data.get("txtUlasan");
-		String txtKeseluruhanLot = (String) data.get("txtKeseluruhanLot");
-		String txtKawasan = (String) data.get("txtKawasan");
-		String sorBangunan = (String) data.get("sorBangunan");
-		String txtBilBangunan = (String) data.get("sorBangunan");
 		String id_Masuk = (String) data.get("id_Masuk");
 		String id_pembatalan = (String) data.get("id_pembatalan");
 		String id_hakmilik = (String) data.get("id_hakmilik");
-		String txtKawasanTerlibat = (String) data.get("txtKawasanTerlibat");
+		
 		
 		//TAMBAH v6.5
 		String flagBukit = (String)data.get("flagBukit");
@@ -8393,26 +8389,22 @@ try {
 		String flagLapang = (String)data.get("flagLapang");	    		
 		String flagUsaha = (String)data.get("flagUsaha");
 		
+		String txtSempadanBarat = (String)data.get("txtSempadanBarat");
+		String txtSempadanTimur = (String)data.get("txtSempadanTimur");
+		String txtSempadanSelatan = (String)data.get("txtSempadanSelatan");
+		String txtSempadanUtara = (String)data.get("txtSempadanUtara");
+		//String txtKemudahan = (String)data.get("txtKemudahan");
+		String sorSaliran = (String)data.get("sorSaliran");
+		
 
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 
-			r.add("LOT_KWSN_TERLIBAT", txtKawasanTerlibat);
-			r.add("LOKASI_TANAH", txtLokasiTanah);
-			r.add("LOT_SELURUH_LOT", txtKeadaanLot);
-			r.add("LOT_JENIS_TANAMAN", txtJenisTanaman);
-			r.add("LOT_BERHAMPIRAN", txtBerhampiran);
-			r.add("LOT_KEADAAN_TANAMAN", txtKeadaanTanaman);
-			r.add("ULASAN", txtUlasan);
-			r.add("RUPABUMI_SELURUH_LOT", txtKeseluruhanLot);
-			r.add("RUPABUMI_KWSN_TERLIBAT", txtKawasan);
-			r.add("MELIBATKAN_BANGUNAN", sorBangunan);
-			r.add("BILANGAN_BANGUNAN", txtBilBangunan);
-			r.add("ID_PENARIKANBALIK", id_pembatalan);
-			
+		
 			//TAMBAH v6.5
+			r.add("ID_PENARIKANBALIK", id_pembatalan);
 			r.add("flag_lapang",flagLapang);
     		r.add("flag_terbiar",flagTerbiar);
     		r.add("flag_hutan",flagHutan);
@@ -8430,6 +8422,13 @@ try {
     		r.add("flag_lembah",flagLembah);
     		r.add("rupabumi",txtPerihalRupabumi);
     		r.add("flag_diusaha",flagUsaha);
+    		
+    		r.add("kemudahan_awam",txtKemudahan);
+    		r.add("sempadan_utara",txtSempadanUtara);
+    		r.add("sempadan_selatan",txtSempadanSelatan);
+    		r.add("sempadan_timur",txtSempadanTimur);
+    		r.add("sempadan_barat",txtSempadanBarat);
+    		r.add("flag_saliran",sorSaliran);
     		
     		r.add("ID_HAKMILIK", id_hakmilik);
 			r.add("ID_MASUK", id_Masuk);
@@ -8448,25 +8447,13 @@ try {
 	}
 
 	public void updatePerihalTanah(Hashtable data) throws Exception {
+		myLogger.info("data :"+data);
 		Db db = null;
 		String sql = "";
 
 		String id_tanahumum = (String) data.get("id_tanahumum");
-		String txtLokasiTanah = (String) data.get("txtLokasiTanah");
-		String txtKeadaanLot = (String) data.get("txtKeadaanLot");
-		String txtJenisTanaman = (String) data.get("txtJenisTanaman");
-		String txtBerhampiran = (String) data.get("txtBerhampiran");
-		String txtKeadaanTanaman = (String) data.get("txtKeadaanTanaman");
-		String txtUlasan = (String) data.get("txtUlasan");
-		String txtKeseluruhanLot = (String) data.get("txtKeseluruhanLot");
-		String txtKawasan = (String) data.get("txtKawasan");
-		String sorBangunan = (String) data.get("sorBangunan");
-		String txtBilBangunan = (String) data.get("sorBangunan");
 		String id_Masuk = (String) data.get("id_Masuk");
-		String id_pembatalan = (String) data.get("id_pembatalan");
-		String id_hakmilik = (String) data.get("id_hakmilik");
-		String txtKawasanTerlibat = (String) data.get("txtKawasanTerlibat");
-		
+	
 		//TAMBAH v6.5
 		String flagBukit = (String)data.get("flagBukit");
 		String flagLandai = (String)data.get("flagLandai");
@@ -8476,7 +8463,7 @@ try {
 		String flagLurah = (String)data.get("flagLurah");
 		String flagLembah = (String)data.get("flagLembah");
 		String txtPerihalRupabumi = (String)data.get("txtPerihalRupabumi");
-		String txtKemudahan = (String)data.get("txtKemudahan");
+		//String txtKemudahan = (String)data.get("txtKemudahan");
 		String txtTanaman = (String)data.get("txtTanaman");
 		String txtHalangan = (String)data.get("txtHalangan");
 		String txtPerihalKeadaan = (String)data.get("txtPerihalKeadaan");
@@ -8487,27 +8474,14 @@ try {
 		String flagLapang = (String)data.get("flagLapang");	    		
 		String flagUsaha = (String)data.get("flagUsaha");
 		
-
+	
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			r.update("ID_TANAHUMUM", id_tanahumum);
-			r.add("LOT_KWSN_TERLIBAT", txtKawasanTerlibat);
-			r.add("LOKASI_TANAH", txtLokasiTanah);
-			r.add("LOT_SELURUH_LOT", txtKeadaanLot);
-			r.add("LOT_JENIS_TANAMAN", txtJenisTanaman);
-			r.add("LOT_BERHAMPIRAN", txtBerhampiran);
-			r.add("LOT_KEADAAN_TANAMAN", txtKeadaanTanaman);
-			r.add("ULASAN", txtUlasan);
-			r.add("RUPABUMI_SELURUH_LOT", txtKeseluruhanLot);
-			r.add("RUPABUMI_KWSN_TERLIBAT", txtKawasan);
-			r.add("MELIBATKAN_BANGUNAN", sorBangunan);
-			r.add("BILANGAN_BANGUNAN", txtBilBangunan);
-			r.add("ID_PENARIKANBALIK", id_pembatalan);
-			r.add("ID_HAKMILIK", id_hakmilik);
 
 			//TAMBAH v6.5
+			r.update("ID_TANAHUMUM", id_tanahumum);
 			r.add("flag_lapang",flagLapang);
     		r.add("flag_terbiar",flagTerbiar);
     		r.add("flag_hutan",flagHutan);
@@ -8525,6 +8499,48 @@ try {
     		r.add("flag_lembah",flagLembah);
     		r.add("rupabumi",txtPerihalRupabumi);
     		r.add("flag_diusaha",flagUsaha);
+   
+			r.add("ID_KEMASKINI", id_Masuk);
+
+			r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
+			sql = r.getSQLUpdate("tblppttanahumum");
+			myLogger.info("SQL UPDATE Perihal :" + sql);
+			stmt.executeUpdate(sql);
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+
+	}
+	
+	public void updatePerihalTanahSekitar(Hashtable data) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		String id_tanahumum = (String) data.get("id_tanahumum");
+		String id_Masuk = (String) data.get("id_Masuk");
+		
+		String txtSempadanBarat = (String)data.get("txtSempadanBarat");
+		String txtSempadanTimur = (String)data.get("txtSempadanTimur");
+		String txtSempadanSelatan = (String)data.get("txtSempadanSelatan");
+		String txtSempadanUtara = (String)data.get("txtSempadanUtara");
+		String txtKemudahan = (String)data.get("txtKemudahan");
+		String sorSaliran = (String)data.get("sorSaliran");
+		
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			r.update("ID_TANAHUMUM", id_tanahumum);
+			
+    		r.add("kemudahan_awam",txtKemudahan);
+    		r.add("sempadan_utara",txtSempadanUtara);
+    		r.add("sempadan_selatan",txtSempadanSelatan);
+    		r.add("sempadan_timur",txtSempadanTimur);
+    		r.add("sempadan_barat",txtSempadanBarat);
+    		r.add("flag_saliran",sorSaliran);
     		
 			
 			r.add("ID_KEMASKINI", id_Masuk);
@@ -8540,6 +8556,7 @@ try {
 		}
 
 	}
+
 
 	Vector senarai_bangunan = null;
 

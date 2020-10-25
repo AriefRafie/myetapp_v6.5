@@ -2296,16 +2296,23 @@ public class FrmTKRJabatanTeknikalData {
 		return beanMaklumatLampiran;
 	}
 	
-	public void sendEmailtoKJP(String idPermohonan, String idKementerian, HttpSession session) throws Exception {
+	public void sendEmailtoKJP(String idPermohonan, String idUlasanTeknikal, String idKementerian, HttpSession session) 
+			throws Exception {
 		Db db = null;
 		Connection conn = null;
 		Vector beanMaklumatEmail = null;
 		EmailSender email = EmailSender.getInstance();
 		String sql = "";
 		String emelUser = "nurulain.siprotech@gmail.com"; //untuk sementara
-		String tempoh = "";
+		String tajukFail = "";
 		String noFail = "";
-		String tarikhAkhir = "";
+		String pemohon = "";
+		String tempoh = "";
+		String tarikhHantar = "";
+		String urusan = "";
+		String pemilikTanah = "";
+		String tujuan = "";
+		String kegunaanTanah = "";
 		
 		try {
 			db = new Db();
@@ -2314,26 +2321,60 @@ public class FrmTKRJabatanTeknikalData {
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 			
-			sql = " SELECT D.NO_FAIL, A.TARIKH_JANGKA_TERIMA, A.JANGKAMASA"
-				+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJKEMENTERIAN B, TBLPERMOHONAN C, TBLPFDFAIL D "
-				+ " WHERE A.ID_MENTERI = B.ID_KEMENTERIAN AND A.ID_PERMOHONAN = C.ID_PERMOHONAN "
-				+ " AND C.ID_FAIL = D.ID_FAIL AND B.ID_KEMENTERIAN = '"+idKementerian+"' "
-				+ " AND C.ID_PERMOHONAN = '"+idPermohonan+"'";
+			sql = "SELECT A.TARIKH_HANTAR, A.JANGKAMASA, C.NO_FAIL, C.TAJUK_FAIL, D.NAMA, E.NAMA_SUBURUSAN,"
+				+ " F.FLAG_GUNA, F.CADANGAN_KEGUNAAN"
+				+ " FROM TBLPHPULASANTEKNIKAL A, TBLPERMOHONAN B, TBLPFDFAIL C, TBLPHPPEMOHON D, TBLRUJSUBURUSAN E,"
+				+ " TBLPHPPERMOHONANPELEPASAN F"
+				+ " WHERE A.ID_PERMOHONAN = B.ID_PERMOHONAN AND B.ID_FAIL = C.ID_FAIL AND C.ID_SUBURUSAN = E.ID_SUBURUSAN"
+				+ " AND B.ID_PERMOHONAN = F.ID_PERMOHONAN AND B.ID_PEMOHON = D.ID_PEMOHON AND A.ID_ULASANTEKNIKAL = "
+				+ "'"+idUlasanTeknikal+"'";
 			
 			ResultSet rsEmel = stmt.executeQuery(sql);
 			if (rsEmel.next()){
-				noFail = rsEmel.getString("NO_FAIL");
-				tempoh = rsEmel.getString("JANGKAMASA");
-				tarikhAkhir = sdf.format(rsEmel.getDate("TARIKH_JANGKA_TERIMA"));
+				tajukFail = rsEmel.getString("TAJUK_FAIL") == null ? "" :
+								rsEmel.getString("TAJUK_FAIL");
+				noFail = rsEmel.getString("NO_FAIL") == null ? "" :
+							rsEmel.getString("NO_FAIL");
+				pemohon = rsEmel.getString("NAMA") == null ? "" :
+							rsEmel.getString("NAMA");
+				tempoh = rsEmel.getString("JANGKAMASA") == null ? "" :
+							rsEmel.getString("JANGKAMASA");
+				tarikhHantar = sdf.format(rsEmel.getDate("TARIKH_HANTAR"));
+				urusan = rsEmel.getString("NAMA_SUBURUSAN") == null ? "" :
+							rsEmel.getString("NAMA_SUBURUSAN");
+				tujuan = rsEmel.getString("CADANGAN_KEGUNAAN") == null ? "" :
+							rsEmel.getString("CADANGAN_KEGUNAAN");
+				if("1".equals(rsEmel.getString("FLAG_GUNA"))) {
+					kegunaanTanah = "keseluruhan";
+				} else if("2".equals(rsEmel.getString("FLAG_GUNA"))) {
+					kegunaanTanah = "sebahagian";
+				}
 			}	
 			
+			//TO GET USER EMAIL BY ROLE idKementerian
+			sql = "SELECT UI.EMEL FROM USERS U, USERS_INTERNAL UI, USERS_KEMENTERIAN UK "
+				+ "WHERE U.USER_ID = UI.USER_ID AND U.USER_ID = UK.USER_ID  "
+				+ "AND UK.ID_KEMENTERIAN IN ('"+idKementerian+"') ";
+			
+			ResultSet rsEmel2 = stmt.executeQuery(sql);
+			if (rsEmel.next()){
+//				emelUser = rsEmel2.getString("EMEL") == null ? "" :
+//							rsEmel2.getString("EMEL");
+			}
+			
 			email.RECIEPIENT = emelUser;
-			email.SUBJECT = "PERMOHONAN ULASAN URUSAN TUKARGUNA BAGI NO. FAIL " + noFail;
-			email.MESSAGE = "Mohon pihak tuan memberikan ulasan dan keputusan bagi permohonan tersebut<br><br>"
-							 + "Kerjasama daripada pihak tuan untuk mengemukakan keputusan tersebut kepada Jabatan ini "
-							 + "sebelum " + tarikhAkhir + " amatlah dihargai."
-							 + " <br><br>Sekian, terima kasih.<br><br><br>"			
-							 + " Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
+			email.SUBJECT = "PERMOHONAN MENGEMUKAKAN LAPORAN TANAH URUSAN "+urusan+" BAGI NO. FAIL " + noFail;
+			email.MESSAGE =  "Tuan/ Puan,"
+							+ "<br><br><u><b>"+tajukFail+"</b></u>"
+							+ "<br><br>Dengan hormatnya saya diarah untuk menarik perhatian tuan kepada perkara di atas"
+							+ "<br><br>2.	Untuk makluman pihak tuan, lot tersebut di atas adalah tanah milik Persekutuan "
+							+ "di bawah kawalan " +pemilikTanah+ ". " +pemohon+ "telah mengemukakan permohonan untuk "
+							+ "menukarguna "+kegunaanTanah+" tanah tersebut bagi tujuan " +tujuan+ "."
+							+ "<br><br>3.	Sehubungan dengan itu, pihak tuan dipohon untuk memberi ulasan mengenai "
+							+ "permohonan tukarguna tersebut dalam tempoh " +tempoh+ " hari sebelum " +tarikhHantar+ ". "
+							+ "Kerjasama dan tindakan awal daripada pihak tuan/ puan amatlah dihargai."
+							+ "<br><br>Sekian, terima kasih.<br><br><br>"			
+							+ "Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
 			email.sendEmail();
 			
 		} finally {
@@ -2342,16 +2383,19 @@ public class FrmTKRJabatanTeknikalData {
 		}
 	}
 	
-	public void sendEmailtoPejabatJKPTG(String idPermohonan, String idPejabat, HttpSession session) throws Exception {
+	public void sendEmailtoPejabatJKPTG(String idUlasanTeknikal, HttpSession session) throws Exception {
 		Db db = null;
 		Connection conn = null;
 		Vector beanMaklumatEmail = null;
 		EmailSender email = EmailSender.getInstance();
 		String sql = "";
 		String emelUser = "nurulain.siprotech@gmail.com"; //untuk sementara
-		String tempoh = "";
+		String tajuk = "";
 		String noFail = "";
-		String tarikhAkhir = "";
+		String penawar = "";
+		String tempoh = "";
+		String tarikhHantar = "";
+		String urusan = "";
 		
 		try {
 			db = new Db();
@@ -2360,24 +2404,51 @@ public class FrmTKRJabatanTeknikalData {
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 			
-			sql = " SELECT D.NO_FAIL, A.TARIKH_JANGKA_TERIMA, A.JANGKAMASA"
-				+ " FROM TBLPHPULASANTEKNIKAL A, TBLPERMOHONAN C, TBLPFDFAIL D "
-				+ " WHERE A.ID_PERMOHONAN = C.ID_PERMOHONAN "
-				+ " AND C.ID_FAIL = D.ID_FAIL AND A.ID_PEJABAT = '"+idPejabat+"' "
-				+ " AND C.ID_PERMOHONAN = '"+idPermohonan+"'";
+			sql = "SELECT A.TARIKH_HANTAR, A.JANGKAMASA, C.NO_FAIL, C.TAJUK_FAIL, D.NAMA, E.NAMA_SUBURUSAN"
+				+ " FROM TBLPHPULASANTEKNIKAL A, TBLPERMOHONAN B, TBLPFDFAIL C, TBLPHPPEMOHON D, TBLRUJSUBURUSAN E"
+				+ " WHERE A.ID_PERMOHONAN = B.ID_PERMOHONAN AND B.ID_FAIL = C.ID_FAIL AND C.ID_SUBURUSAN = E.ID_SUBURUSAN"
+				+ " AND B.ID_PEMOHON = D.ID_PEMOHON AND A.ID_ULASANTEKNIKAL = '"+idUlasanTeknikal+"'";
 			
 			ResultSet rsEmel = stmt.executeQuery(sql);
 			if (rsEmel.next()){
-				noFail = rsEmel.getString("NO_FAIL");
-				tempoh = rsEmel.getString("JANGKAMASA");
-				tarikhAkhir = sdf.format(rsEmel.getDate("TARIKH_JANGKA_TERIMA"));
-			}	
+				tajuk = rsEmel.getString("TAJUK_FAIL") == null ? "" :
+							rsEmel.getString("TAJUK_FAIL");
+				noFail = rsEmel.getString("NO_FAIL") == null ? "" :
+							rsEmel.getString("NO_FAIL");
+				penawar = rsEmel.getString("NAMA") == null ? "" :
+							rsEmel.getString("NAMA");
+				tempoh = rsEmel.getString("JANGKAMASA") == null ? "" :
+							rsEmel.getString("JANGKAMASA");
+				tarikhHantar = sdf.format(rsEmel.getDate("TARIKH_HANTAR"));
+				urusan = rsEmel.getString("NAMA_SUBURUSAN") == null ? "" :
+					rsEmel.getString("NAMA_SUBURUSAN");
+			}
+			
+			//TO GET USER EMAIL BY ROLE (PHP)PYWPenolongPegawaiTanahNegeri
+//			sql = "SELECT U.USER_ID, U.USER_LOGIN, U.USER_ROLE AS USER_ROLE, UI.EMEL "
+//				+ "FROM USERS U, USERS_INTERNAL UI "
+//				+ "WHERE U.USER_ID = UI.USER_ID AND U.USER_ROLE = '(PHP)PYWPenolongPegawaiTanahNegeri' "
+//				+ "UNION "
+//				+ "SELECT U.USER_ID, U.USER_LOGIN, UR.ROLE_ID AS USER_ROLE, UI.EMEL "
+//				+ "FROM USERS U, USER_ROLE UR, USERS_INTERNAL UI "
+//				+ "WHERE U.USER_LOGIN = UR.USER_ID AND U.USER_ID = UI.USER_ID "
+//				+ "AND UR.ROLE_ID = '(PHP)PYWPenolongPegawaiTanahNegeri'";
+//			
+//			ResultSet rsEmel2 = stmt.executeQuery(sql);
+//			if (rsEmel.next()){
+//				emelUser = rsEmel2.getString("EMEL") == null ? "" :
+//							rsEmel2.getString("EMEL");
+//			}
 			
 			email.RECIEPIENT = emelUser;
-			email.SUBJECT = "PERMOHONAN ULASAN URUSAN TUKARGUNA BAGI NO. FAIL " + noFail;
-			email.MESSAGE = "Mohon pihak tuan memberikan ulasan dan keputusan bagi permohonan tersebut<br><br>"
-							 + "Kerjasama daripada pihak tuan untuk mengemukakan keputusan tersebut kepada Jabatan ini "
-							 + "sebelum " + tarikhAkhir + " amatlah dihargai."
+			email.SUBJECT = "PERMOHONAN MENGEMUKAKAN LAPORAN TANAH URUSAN "+urusan+" BAGI NO. FAIL " + noFail;
+			email.MESSAGE =  "Tuan/ Puan,"
+							 +"<br><br><u><b>"+tajuk+"</b></u>"
+							 + "<br><br>2.	Adalah dimaklumkan bahawa "+penawar+" selaku Jabatan/Agensi pengawal "
+							 + "lot di atas berhasrat untuk menawarkan tapak tersebut kepada mana-mana "
+							 + "agensi yang berminat. Oleh yang demikian, pihak tuan dimohon untuk "
+							 + "mengemukakan laporan tanah berhubung keadaan terkini tapak tersebut dalam tempoh "
+							 + tempoh + " hari sebelum " + tarikhHantar + "."
 							 + " <br><br>Sekian, terima kasih.<br><br><br>"			
 							 + " Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
 			email.sendEmail();

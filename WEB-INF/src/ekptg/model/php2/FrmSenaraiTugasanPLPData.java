@@ -9,11 +9,16 @@ import java.text.SimpleDateFormat;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import org.apache.log4j.Logger;
+import org.jfree.util.Log;
+
+import ekptg.view.php2.FrmPLPDashboard;
 import lebah.db.Db;
 
 public class FrmSenaraiTugasanPLPData {
 
 	private Vector senaraiFail = null;
+	static Logger log = Logger.getLogger(FrmSenaraiTugasanPLPData.class);
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -21,7 +26,7 @@ public class FrmSenaraiTugasanPLPData {
 			String tarikhTerima, String idNegeri, String idDaerah,
 			String idMukim, String idJenisHakmilik, String noHakmilik,
 			String noWarta, String idLot, String noLot, String noPegangan,
-			String idStatus, String idSuburusan, String idKementerian,
+			String idStatus, String idSuburusan, String idJenisFail, String idKementerian,
 			String idAgensi) throws Exception {
 
 		Db db = null;
@@ -33,14 +38,15 @@ public class FrmSenaraiTugasanPLPData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, A.TAJUK_FAIL, B.TARIKH_TERIMA, C.NAMA, D.KETERANGAN, B.ID_STATUS, H.USER_LOGIN, I.NAMA_SUBURUSAN, A.ID_SUBURUSAN,  "
-					+ " J.NAMA_NEGERI, A.TARIKH_DAFTAR_FAIL"
-					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, TBLPHPHAKMILIK F, USERS H, TBLRUJSUBURUSAN I, TBLRUJNEGERI J "
-					+ " WHERE A.ID_SEKSYEN = 4 AND A.ID_URUSAN = '6' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS"
-					+ " AND E.ID_HAKMILIKPERMOHONAN = F.ID_HAKMILIKPERMOHONAN(+)"
-					+ " AND B.ID_PEMOHON = C.ID_PEMOHON AND B.ID_PERMOHONAN = E.ID_PERMOHONAN AND A.NO_FAIL IS NOT NULL"
-					+ " AND F.ID_NEGERI = J.ID_NEGERI(+) "
-					+ " AND A.ID_MASUK = H.USER_ID(+) AND A.ID_SUBURUSAN = I.ID_SUBURUSAN(+) AND B.FLAG_AKTIF = 'Y' AND A.NO_FAIL IS NOT NULL ";
+			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, A.TAJUK_FAIL, B.TARIKH_TERIMA, C.NAMA, D.KETERANGAN, B.ID_STATUS, "
+				+ "H.USER_LOGIN, I.NAMA_SUBURUSAN, A.ID_SUBURUSAN, J.NAMA_NEGERI, A.TARIKH_DAFTAR_FAIL "
+				+ "FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, "
+				+ "TBLPHPHAKMILIK F, USERS H, TBLRUJSUBURUSAN I, TBLRUJNEGERI J, TBLPHPULASANTEKNIKAL K "
+				+ "WHERE A.ID_SEKSYEN = 4 AND A.ID_URUSAN = '6' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS "
+				+ "AND E.ID_HAKMILIKPERMOHONAN = F.ID_HAKMILIKPERMOHONAN(+) AND B.ID_PEMOHON = C.ID_PEMOHON "
+				+ "AND B.ID_PERMOHONAN = E.ID_PERMOHONAN AND A.NO_FAIL IS NOT NULL AND F.ID_NEGERI = J.ID_NEGERI(+) "
+				+ "AND B.ID_PERMOHONAN = K.ID_PERMOHONAN(+) AND A.ID_MASUK = H.USER_ID(+) AND A.ID_SUBURUSAN = I.ID_SUBURUSAN(+) "
+				+ "AND B.FLAG_AKTIF = 'Y' AND A.NO_FAIL IS NOT NULL ";
 
 			// noFail
 			if (noFail != null) {
@@ -174,9 +180,28 @@ public class FrmSenaraiTugasanPLPData {
 							+ "'";
 				}
 			}
-
+			
+			
+			if (idJenisFail != null) {
+				//SENARAI FAIL YANG TAMAT TEMPOH ULASAN KJP
+				if (idJenisFail.equals("K")) {
+					sql = sql + " AND K.FLAG_STATUS = 1 AND K.FLAG_AKTIF = 'Y' "
+							+ "AND K.ID_DOKUMEN = '1' AND K.TARIKH_JANGKA_TERIMA IS NOT NULL "
+							+ "AND TO_CHAR(K.TARIKH_JANGKA_TERIMA, 'dd-MON-YY')  < TRUNC(SYSDATE)";
+				}
+				
+				//SENARAI FAIL YANG TAMAT TEMPOH ULASAN JKPTG
+				if (idJenisFail.equals("G")) {
+					sql = sql + " AND K.FLAG_STATUS = 1 AND K.FLAG_AKTIF = 'Y' "
+							+ "AND K.ID_DOKUMEN = '4' AND K.TARIKH_JANGKA_TERIMA IS NOT NULL "
+							+ "AND TO_CHAR(K.TARIKH_JANGKA_TERIMA, 'dd-MON-YY')  < TRUNC(SYSDATE)";
+				}
+						
+			}
+			
 			sql = sql + " ORDER BY B.TARIKH_TERIMA DESC NULLS LAST ";
 			ResultSet rs = stmt.executeQuery(sql);
+			log.info("woi kuda keluar tak? " +sql);
 
 			Hashtable h;
 			int bil = 1;

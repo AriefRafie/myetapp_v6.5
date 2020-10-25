@@ -299,7 +299,6 @@ private static final long serialVersionUID = 1L;
     		}
     	}
 
-
 		this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("", "paparLampiran", "idDokumen",session, "phptkr"));
 
     	//HEADER
@@ -376,8 +375,11 @@ private static final long serialVersionUID = 1L;
 		if(selectedTabUpper.equals("3")){
 
 			if("view".equals(mode)){
-				tabMaklumatPemohon("list", idPemohon, idKategoriPemohon, idPejabat, idKementerian, idAgensi, idNegeri, idFail,
+//				tabMaklumatPemohon("list", idPemohon, idKategoriPemohon, idPejabat, idKementerian, idAgensi, idNegeri, idFail,
+//						 beanMaklumatAgensi, beanMaklumatPejabat, beanListMaklumatPemohon);
+				tabMaklumatPemohon("viewPemohon", idPemohonList, idKategoriPemohon, idPejabat, idKementerian, idAgensi, idNegeri, idFail,
 						 beanMaklumatAgensi, beanMaklumatPejabat, beanListMaklumatPemohon);
+				idPemohon = idPemohonList;
 			}
 
 			if("addNewPemohon".equals(hitButton) || "addNewPemohon".equals(mode)){
@@ -611,7 +613,7 @@ private static final long serialVersionUID = 1L;
 			this.context.put("readonly", "readonly");
 			this.context.put("inputTextClass", "disabled");
 			this.context.put("disabled", "disabled");
-
+			
         	//MAKLUMAT TUKAGUNA
 			beanMaklumatTukarguna = new Vector();
 			logic.setMaklumatTukarguna(idPermohonan);
