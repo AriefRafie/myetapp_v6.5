@@ -128,7 +128,7 @@ private static final long serialVersionUID = 1L;
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
         		
         		if("1".equals(idDokumen) && !"".equals(idDokumen)){
-            		logic.sendEmailtoKJP(idPermohonan, idKementerianTanah, session);
+            		logic.sendEmailtoKJP(idPermohonan, idUlasanTeknikal, idKementerianTanah, session);
             		
         		} else if("4".equals(idDokumen) && !"".equals(idDokumen)){
         			logic.sendEmailtoPejabatJKPTG(idUlasanTeknikal, session);
@@ -139,7 +139,7 @@ private static final long serialVersionUID = 1L;
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
         		
         		if("1".equals(idDokumen) && !"".equals(idDokumen)){
-            		logic.sendEmailtoKJP(idPermohonan, idKementerianTanah, session);
+            		logic.sendEmailtoKJP(idPermohonan, idUlasanTeknikal, idKementerianTanah, session);
             		
         		} else if("4".equals(idDokumen) && !"".equals(idDokumen)){
         			logic.sendEmailtoPejabatJKPTG(idUlasanTeknikal, session);

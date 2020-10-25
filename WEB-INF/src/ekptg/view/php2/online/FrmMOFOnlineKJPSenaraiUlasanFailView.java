@@ -312,6 +312,7 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailView extends AjaxBasedModule {
 			ps.executeUpdate();
 			
 			con.commit();
+			myLog.info("Baca saveData==="+idDokumenUpload);;
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {

@@ -133,7 +133,29 @@ function toggle_div(id) {
 																</a>
 															</td>
 														</tr>
-														<!-- AISHAH TAMBAH START -->
+														
+														<tr>
+															<td>
+																<!-- <a href="#" onclick="toggle_div('toggleDiv');" class="help" title="Membuat Permohonan Pengambilan Tanah"> -->
+																<a href="javascript:maklumatPembayaran()" class="help" title="Notifikasi Masukkan Maklumat Pembayaran">
+																	<font color="blue"><li>
+																	#if($!jumlah_notifikasi > 0)
+																		<label style="background-color:blue" align="center" valign="top" >
+																			<b><font color="WHITE"><blink>$!jumlah_notifikasi</blink></font></b>
+																		</label>&nbsp;
+																	#end
+
+																	<!--
+																	<label style="background-color:blue" align="center" valign="top" >
+																				<b><font color="WHITE"><blink>$!jumlah_notifikasitolak</blink></font></b>
+																		</label>&nbsp;
+																	 -->
+
+																	Notifikasi Maklumat Pembayaran</li></font>
+																</a>
+															</td>
+														</tr>
+														
 														<!-- <tr>
 															<td>
 																<a href="javascript:paparanMalumatPermohonan()" class="help" title="Paparan maklumat permohonan KJP yang dihantar ke negeri">
@@ -240,6 +262,7 @@ function toggle_div(id) {
 																</a>
 															</td>
 														</tr> -->
+														
 														<tr>
 															<td>
 																<a href="javascript:penawaran()" class="help" title="Permohonan Penawaran">
@@ -249,7 +272,20 @@ function toggle_div(id) {
 																		<b><font color="WHITE"><blink>$jumlah_notifikasi_penawaran</blink></font></b>
 																	</label>&nbsp;
 																	#end
-																	Permohonan Penawaran</li></font>
+																	Permohonan Tawaran</li></font>
+																</a>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<a href="javascript:penerimaTawaran()" class="help" title="Penerima Tawaran">
+																	<font color="blue"><li>
+																	#if($jumlah_notifikasi_penerimaTawaran > 0)
+																	<label style="background-color:blue" align="center" valign="top" >
+																		<b><font color="WHITE"><blink>$jumlah_notifikasi_penerimaTawaran</blink></font></b>
+																	</label>&nbsp;
+																	#end
+																	Penerima Tawaran</li></font>
 																</a>
 															</td>
 														</tr>
@@ -622,6 +658,29 @@ function permohonanUPT(){
 //	document.${formName}.action = "$EkptgUtil.getTabID('Menu Utama',$portalRole)?_portal_module=ekptg.view.online.FrmOnlineMenuUtamaKJP";
 	document.${formName}.submit();
 }
+
+function maklumatPembayaran(){
+//	document.$(formName).jawatan.value = "$!jawatan";
+	document.${formName}.action = "$EkptgUtil.getTabID('Pengambilan Tanah',$portalRole)?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline";
+
+	var flag_noti = "";
+	var noti = document.getElementById('notifikasi').value;
+	//alert(" noti : "+noti);
+	if(noti!="")
+	{
+		if(parseInt(noti)>0)
+		{
+			//alert(" parseInt(noti) : "+parseInt(noti));
+			flag_noti = "Y";
+		}
+
+	}
+	document.getElementById('flag_noti').value = flag_noti;
+
+
+//	document.${formName}.action = "$EkptgUtil.getTabID('Menu Utama',$portalRole)?_portal_module=ekptg.view.online.FrmOnlineMenuUtamaKJP";
+	document.${formName}.submit();
+}
 function permohonanPenarikanBalik(){
 	document.${formName}.action = "$EkptgUtil.getTabID('Pengambilan Tanah',$portalRole)?_portal_module=ekptg.view.ppt.FrmPenarikanBalikInternalOnline";
 	document.${formName}.submit();
@@ -657,11 +716,14 @@ function ulasanJPBD(){
 	document.${formName}.submit();
 }
 
-function penawaran(){
-	document.${formName}.action = "$EkptgUtil.getTabID('Penguatkuasaan dan Hasil Persekutuan',$portalRole)?_portal_module=ekptg.view.php2.online.FrmPNWOnlineSenaraiFailView";
+function penerimaTawaran(){
+	document.${formName}.action = "$EkptgUtil.getTabID('Penguatkuasaan dan Hasil Persekutuan',$portalRole)?_portal_module=ekptg.view.php2.online.FrmPNWTawaranKJPView";
 	document.${formName}.submit();
 }
-
+function penawaran(){
+	document.${formName}.action = "$EkptgUtil.getTabID('Penguatkuasaan dan Hasil Persekutuan',$portalRole)?_portal_module=ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView";
+	document.${formName}.submit();
+} 
 function tukarGuna(){
 	document.${formName}.action = "$EkptgUtil.getTabID('Penguatkuasaan dan Hasil Persekutuan',$portalRole)?_portal_module=ekptg.view.php2.online.FrmTKROnlineKJPSenaraiFailView";
 	document.${formName}.submit();
@@ -687,10 +749,7 @@ function penyewaan(){
 	document.${formName}.action = "$EkptgUtil.getTabID('Penguatkuasaan dan Hasil Persekutuan',$portalRole)?_portal_module=ekptg.view.php2.online.FrmPYWOnlineKJPSenaraiFailView";
 	document.${formName}.submit();
 }
-function penawaran(){
-	document.${formName}.action = "$EkptgUtil.getTabID('Penguatkuasaan dan Hasil Persekutuan',$portalRole)?_portal_module=ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView";
-	document.${formName}.submit();
-}
+
 function ulasanKertasKewangan(){
 	document.${formName}.action = "$EkptgUtil.getTabID('Penguatkuasaan dan Hasil Persekutuan',$portalRole)?_portal_module=ekptg.view.php2.online.FrmMOFOnlineKJPSenaraiUlasanFailView";
 	document.${formName}.submit();

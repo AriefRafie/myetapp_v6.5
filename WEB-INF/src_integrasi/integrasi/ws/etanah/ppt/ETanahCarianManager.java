@@ -21,6 +21,8 @@ import org.apache.axis2.client.Options;
 import org.apache.axis2.addressing.EndpointReference;
 import org.apache.log4j.Logger;
 
+import com.mysql.jdbc.Util;
+
 import ekptg.helpers.Utils;
 
 
@@ -293,7 +295,7 @@ public class ETanahCarianManager {
 						+ "'" + hakmilik.getIdHakmilik() + "'"
 						+ ",'"+pf.getNamaPemilik()+"'"
 						+ ",'"+pf.getIdJenisPengenalan()+"'"
-						+ ",'"+pf.getNoPengenalan()+"'"
+						+ ",'"+Utils.RemoveDash(pf.getNoPengenalan())+"'"
 						+ ",'"+pf.getBA()+"'"
 						+ ",'"+pf.getBB()+"'"
 						+ ",'"+pf.getJenisPB()+"',SYSDATE"
@@ -329,6 +331,7 @@ public class ETanahCarianManager {
 							+ " '" + IntegrasiManager.cleanDataString(hakmilik.getPAJAKAN()) + "', '" + IntegrasiManager.cleanDataString(hakmilik.getNO_PERSERAHAN_PAJAKAN()) + "',"
 							+ " '" + IntegrasiManager.cleanDataString(hakmilik.getKAVEAT()) + "', '" + IntegrasiManager.cleanDataString(hakmilik.getNO_PERSERAHAN_KAVEAT()) + "',"						
 							+ " SYSDATE, 'Y', 'Y',SYSDATE)";
+					myLog.info("sql :"+sql);
 					stmt.executeUpdate(sql);
 					
 					

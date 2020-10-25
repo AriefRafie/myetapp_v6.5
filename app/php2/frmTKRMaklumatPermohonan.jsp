@@ -347,9 +347,98 @@
           </div>
 
           <div class="TabbedPanelsContent">
-          	#if($selectedTabUpper==3)
-            	#parse("app/php2/frmTKRMaklumatPemohon.jsp")
-            #end
+          	##if($selectedTabUpper==3)
+            ##	#parse("app/php2/frmTKRMaklumatPemohon.jsp")
+            ##end
+            <table width="100%" border="0" cellspacing="2" cellpadding="2">
+            	<tr>
+            		<td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+		    		<td width="28%">Kategori Pemohon</td>
+		    		<td>:</td>
+		    		<td width="70%">$selectKategoriPemohon</td>
+            	</tr>
+            	<tr>
+			    	<td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
+			    	<td>Kementerian</td>
+			    	<td>:</td>
+			    	<td>$selectKementerian</td>
+			  	</tr>
+			  	<tr>
+		    		<td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
+		    		<td>Agensi</td>
+		    		<td>:</td>
+		    		<td>$selectAgensi</td>
+		  		</tr>
+		  		#foreach ($beanMaklumatAgensi in $BeanMaklumatAgensi)
+		  		<tr>
+		    		<td>&nbsp;</td>
+		    		<td>Nama</td>
+		    		<td>:</td>
+		    		<td>$beanMaklumatAgensi.namaAgensi</td>
+		  		</tr>
+		  		<tr>
+		    		<td>&nbsp;</td>
+		    		<td>Alamat</td>
+		    		<td>:</td>
+		    		<td>$beanMaklumatAgensi.alamat1</td>
+			  	</tr>
+			  	<tr>
+			    	<td>&nbsp;</td>
+			    	<td>&nbsp;</td>
+			    	<td>:</td>
+			    	<td>$beanMaklumatAgensi.alamat2</td>
+			  	</tr>
+			  	<tr>
+			    	<td>&nbsp;</td>
+			    	<td>&nbsp;</td>
+			    	<td>:</td>
+			    	<td>$beanMaklumatAgensi.alamat3</td>
+			  	</tr>
+			  	<tr>
+			    	<td>&nbsp;</td>
+			    	<td>Poskod</td>
+			    	<td>:</td>
+			    	<td>$beanMaklumatAgensi.poskod</td>
+			  	</tr>
+			  	<tr>
+		    		<td>&nbsp;</td>
+		    		<td>Negeri</td>
+		    		<td>:</td>
+		    		<td>$beanMaklumatAgensi.negeri</td>
+		  		</tr>
+		  		<tr>
+				    <td>&nbsp;</td>
+				    <td>&nbsp;</td>
+				    <td>&nbsp;</td>
+				    <td>&nbsp;</td>
+				</tr>
+		  		#end
+		  		#if ($mode == 'update')
+			  	<tr>
+			    	<td colspan="4" valign="bottom"><i><font color="#ff0000">Perhatian</font> : Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i></td>
+			  	</tr>
+			  	#end
+			  	<tr>
+				    <td>&nbsp;</td>
+				    <td>&nbsp;</td>
+				    <td>&nbsp;</td>
+				    <td> 
+				      #if ($mode == 'addNewPemohon')
+							<input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="doSimpanMaklumatPemohon()"/>
+							<input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onClick="doBatalMaklumatPemohon()"/>      
+				      #end     
+				      #if ($mode == 'updatePemohon')
+					      <input type="button" name="cmdSimpanKemaskini2" id="cmdSimpanKemaskini2" value="Simpan" onclick="doSimpanKemaskiniMaklumatPemohon()"/>
+					      <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskiniMaklumatPemohon()"/>
+				      #end
+				      #if ($mode == 'view')
+					      <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskiniMaklumatPemohon()"/>
+					      ##<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapusMaklumatPemohon()"/>	      
+					      ##<input type="button" name="cmdBatal" id="cmdBatal" value="Kembali" onClick="doBatalMaklumatPemohon()"/>    
+					  #end 
+				    </td>
+				 </tr>
+            </table>
           </div>
 
           #if($selectedTabUpper!=3)
@@ -1457,12 +1546,12 @@ function doSimpanMaklumatPemohon() {
 	}
 
 	document.${formName}.mode.value = "view";
-	document.${formName}.flagPopup.value = "closePopupPemohon";
+	//document.${formName}.flagPopup.value = "closePopupPemohon";
 	document.${formName}.hitButton.value = "doSimpanMaklumatPemohon";
 	document.${formName}.submit();
 }
 function doBatalMaklumatPemohon() {
-	document.${formName}.flagPopup.value = "closePopupPemohon";
+	//document.${formName}.flagPopup.value = "closePopupPemohon";
 	document.${formName}.mode.value = "view";
 	doAjaxCall${formName}("");
 }
@@ -1474,19 +1563,19 @@ function doPaparPemohon(idPemohon){
 	doAjaxCall${formName}("");
 }
 function doKemaskiniMaklumatPemohon(){
-	document.${formName}.flagPopup.value = "openPopupPemohon";
+	//document.${formName}.flagPopup.value = "openPopupPemohon";
 	document.${formName}.hitButton.value = "updatePemohon";
 	document.${formName}.mode.value = "updatePemohon";
 	doAjaxCall${formName}("");
 }
 function doHapusMaklumatPemohon(){
-	document.${formName}.flagPopup.value = "closePopupPemohon";
+	//document.${formName}.flagPopup.value = "closePopupPemohon";
 	document.${formName}.hitButton.value = "doHapusMaklumatPemohon";
 	document.${formName}.mode.value = "view";
 	doAjaxCall${formName}("");
 }
 function doBatalKemaskiniMaklumatPemohon() {
-	document.${formName}.mode.value = "viewPemohon";
+	document.${formName}.mode.value = "view";
 	doAjaxCall${formName}("");
 }
 function doSimpanKemaskiniMaklumatPemohon() {
@@ -1534,7 +1623,7 @@ function doSimpanKemaskiniMaklumatPemohon() {
 		return;
 	}
 
-	document.${formName}.flagPopup.value = "closePopupPemohon";
+	//document.${formName}.flagPopup.value = "closePopupPemohon";
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniMaklumatPemohon";
 	document.${formName}.submit();

@@ -369,6 +369,139 @@ public class PopupPengambilanTanahData {
 		return listSenaraiLotBorangC;
 	}
 	
+	public List<Hashtable> listSenaraiLotBorangA(String id_fail, Db db)
+			throws Exception {
+		// Db db = null;
+		ResultSet rs = null;
+		Statement stmt = null;
+		SimpleDateFormat sdf = null;
+		List listSenaraiLotBorangA = null;
+		String sql = "";
+		Integer count = 0;
+		try {
+			// db = new Db();
+			sdf = new SimpleDateFormat("dd/MM/yyyy");
+			stmt = db.getStatement();
+			sql = " SELECT DISTINCT NO_SUBJAKET,ID_FAIL, NO_FAIL, ID_NEGERI, ID_DAERAH, ID_MUKIM, KOD_JENIS_HAKMILIK, NO_HAKMILIK, ID_JENISHAKMILIK, "
+					+ " NO_LOT, TARIKH_PERMOHONAN, ID_UNIT_LUAS_AMBIL, ID_UNIT_LUAS_ASAL, "
+					+ " JENIS_LUAS_ASAL,JENIS_LUAS_AMBIL, LUAS_ASAL, LUAS_AMBIL" +
+				//	" , NO_WARTA,TARIKH_WARTA  " +
+					" FROM( ";
+			sql += " SELECT DISTINCT C.NO_SUBJAKET,A.ID_FAIL, A.NO_FAIL, A.ID_NEGERI, B.ID_DAERAH, C.ID_MUKIM, JH.KOD_JENIS_HAKMILIK AS KOD_JENIS_HAKMILIK, C.NO_HAKMILIK, JH.ID_JENISHAKMILIK, "
+					+ " C.NO_LOT, B.TARIKH_PERMOHONAN, C.ID_UNITLUASAMBIL_CONVERT AS ID_UNIT_LUAS_AMBIL, C.ID_UNITLUASLOT_CONVERT AS ID_UNIT_LUAS_ASAL, "
+					
+					
+					//+ " (JL_ASAL.KETERANGAN) AS JENIS_LUAS_ASAL," 			
+					//+" (JL_AMBIL.KETERANGAN) AS JENIS_LUAS_AMBIL, " 
+					
+					+ " (CASE WHEN C.ID_UNITLUASLOT_CONVERT = '1' THEN 'HEKTAR' "
+					+ " WHEN C.ID_UNITLUASLOT_CONVERT= '2' THEN 'METER PERSEGI' "
+					+ " ELSE '' END) AS JENIS_LUAS_ASAL, "
+					
+					+ " (CASE WHEN C.ID_UNITLUASAMBIL_CONVERT = '1' THEN 'HEKTAR' "
+					+ " WHEN C.ID_UNITLUASAMBIL_CONVERT= '2' THEN 'METER PERSEGI' "
+					+ " ELSE '' END) AS JENIS_LUAS_AMBIL, " 
+					
+					
+					+"TRIM(TO_CHAR(C.LUAS_LOT,'9999999999999990.9999')) AS LUAS_ASAL,TRIM(TO_CHAR(C.LUAS_AMBIL,'9999999999999990.9999')) AS LUAS_AMBIL " 
+					// " ,W.NO_WARTA, TO_CHAR (W.TARIKH_WARTA, 'DD/MM/YYYY') AS TARIKH_WARTA "
+					+ "  FROM TBLPFDFAIL A, TBLPPTPERMOHONAN B, TBLPPTHAKMILIK C, TBLRUJNEGERI D, TBLRUJMUKIM E, TBLRUJDAERAH F, TBLRUJJENISHAKMILIK JH, TBLRUJLUAS JL_ASAL, "
+					+ " TBLRUJLUAS JL_AMBIL " 
+				//	" , TBLPPTWARTA W "
+					+ " WHERE " +
+					//" B.ID_PERMOHONAN = W.ID_PERMOHONAN(+)  AND " +
+					" A.ID_FAIL = B.ID_FAIL AND B.ID_PERMOHONAN = C.ID_PERMOHONAN AND A.ID_NEGERI = D.ID_NEGERI AND C.ID_MUKIM = E.ID_MUKIM "
+					+ " AND B.ID_DAERAH = F.ID_DAERAH AND C.ID_JENISHAKMILIK = JH.ID_JENISHAKMILIK(+) AND C.ID_UNITLUASLOT_CONVERT = JL_ASAL.ID_LUAS(+) "
+					+ " AND C.ID_UNITLUASAMBIL= JL_AMBIL.ID_LUAS(+)  ";
+			/*sql += " AND (((NVL(W.NO_WARTA,'0') != '0') AND W.TARIKH_WARTA = (SELECT MAX (TARIKH_WARTA) FROM TBLPPTWARTA WW, TBLPPTPERMOHONAN P, TBLPFDFAIL F "
+					+ " WHERE WW.ID_PERMOHONAN = P.ID_PERMOHONAN AND P.ID_FAIL = F.ID_FAIL AND F.ID_FAIL = '"
+					+ id_fail
+					+ "' AND ROWNUM < 2)) OR (NVL (w.no_warta, '0') = '0')) "; */
+			sql += " AND A.ID_FAIL = '"+ id_fail+ "' "
+			//sql +=  " AND ROWNUM < 500 "
+					//+" AND (TRANSLATE(TRIM(C.NO_HAKMILIK),'_0123456789','_')) IS NULL "
+					+ " AND A.NO_FAIL IS NOT NULL "
+					+ " AND (C.FLAG_PENARIKAN_KESELURUHAN IS NULL AND C.FLAG_PEMBATALAN_KESELURUHAN IS NULL)  ";
+			sql += " ORDER BY C.NO_SUBJAKET,C.NO_LOT ASC ";
+			sql += " )";
+			myLogger.info("listSenaraiLotBorangA x :" + sql.toUpperCase());
+
+			stmt.setFetchSize(10);
+			rs = stmt.executeQuery(sql);
+			int bil = 1;
+			listSenaraiLotBorangA = Collections
+					.synchronizedList(new ArrayList());
+			Map h = null;
+
+			while (rs.next()) {
+				h = Collections.synchronizedMap(new HashMap());
+				h.put("BIL", bil);
+				h.put("NO_SUBJAKET", rs.getString("NO_SUBJAKET") == null ? ""
+						: rs.getString("NO_SUBJAKET").toUpperCase());
+				h.put("ID_FAIL", rs.getString("ID_FAIL") == null ? "" : rs
+						.getString("ID_FAIL").toUpperCase());
+				h.put("NO_FAIL", rs.getString("NO_FAIL") == null ? "" : rs
+						.getString("NO_FAIL").toUpperCase());
+				h.put("ID_NEGERI", rs.getString("ID_NEGERI") == null ? "" : rs
+						.getString("ID_NEGERI").toUpperCase());
+				h.put("ID_DAERAH", rs.getString("ID_DAERAH") == null ? "" : rs
+						.getString("ID_DAERAH").toUpperCase());
+				h.put("ID_MUKIM", rs.getString("ID_MUKIM") == null ? "" : rs
+						.getString("ID_MUKIM").toUpperCase());
+				h.put("KOD_JENIS_HAKMILIK",
+						rs.getString("KOD_JENIS_HAKMILIK") == null ? "" : rs
+								.getString("KOD_JENIS_HAKMILIK").toUpperCase());
+				h.put("NO_HAKMILIK", rs.getString("NO_HAKMILIK") == null ? ""
+						: rs.getString("NO_HAKMILIK").toUpperCase());
+				h.put("ID_JENISHAKMILIK",
+						rs.getString("ID_JENISHAKMILIK") == null ? "" : rs
+								.getString("ID_JENISHAKMILIK").toUpperCase());
+				h.put("NO_LOT", rs.getString("NO_LOT") == null ? "" : rs
+						.getString("NO_LOT").toUpperCase());
+				h.put("TARIKH_PERMOHONAN",
+						rs.getString("TARIKH_PERMOHONAN") == null ? "" : rs
+								.getString("TARIKH_PERMOHONAN").toUpperCase());
+				h.put("ID_UNIT_LUAS_AMBIL",
+						rs.getString("ID_UNIT_LUAS_AMBIL") == null ? "" : rs
+								.getString("ID_UNIT_LUAS_AMBIL").toUpperCase());
+				h.put("ID_UNIT_LUAS_ASAL",
+						rs.getString("ID_UNIT_LUAS_ASAL") == null ? "" : rs
+								.getString("ID_UNIT_LUAS_ASAL").toUpperCase());
+				h.put("LUAS_ASAL",
+						rs.getString("LUAS_ASAL") == null ? "" : rs.getString(
+								"LUAS_ASAL").toUpperCase()
+								+ (rs.getString("JENIS_LUAS_ASAL") == null ? ""
+										: " "
+												+ rs.getString(
+														"JENIS_LUAS_ASAL")
+														.toUpperCase()));
+				h.put("LUAS_AMBIL",
+						rs.getString("LUAS_AMBIL") == null ? ""
+								: rs.getString("LUAS_AMBIL").toUpperCase()
+										+ (rs.getString("JENIS_LUAS_AMBIL") == null ? ""
+												: " "
+														+ rs.getString(
+																"JENIS_LUAS_AMBIL")
+																.toUpperCase()));
+				/*h.put("NO_WARTA", rs.getString("NO_WARTA") == null ? "" : rs
+						.getString("NO_WARTA").toUpperCase());
+				h.put("TARIKH_WARTA", rs.getString("TARIKH_WARTA") == null ? ""
+						: rs.getString("TARIKH_WARTA").toUpperCase());*/
+				listSenaraiLotBorangA.add(h);
+
+				bil++;
+				count++;
+			}
+
+		} finally {/*
+					 * if (rs != null) rs.close(); if (stmt != null)
+					 * stmt.close(); if (db != null) db.close();
+					 */
+		}
+
+		return listSenaraiLotBorangA;
+	}
+	
 	
 	public List<Hashtable> listSenaraiKategoriLampiran(String id_lampiran,String jenis_skrin, Db db)
 			throws Exception {
@@ -2577,7 +2710,8 @@ public class PopupPengambilanTanahData {
 
 				// " AND ROWNUM < 472 "+
 				sql += " AND (C.FLAG_PENARIKAN_KESELURUHAN IS NULL  AND C.FLAG_PEMBATALAN_KESELURUHAN IS NULL) "
-						+ " AND (TRANSLATE(TRIM(C.NO_HAKMILIK),'_0123456789','_')) IS NULL AND A.NO_FAIL IS NOT NULL ";
+					//	+ " AND (TRANSLATE(TRIM(C.NO_HAKMILIK),'_0123456789','_')) IS NULL "
+						+ " AND A.NO_FAIL IS NOT NULL ";
 			}
 
 			else if (jenis_skrin.equals("BorangI")) {

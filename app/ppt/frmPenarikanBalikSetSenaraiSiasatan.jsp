@@ -2132,7 +2132,13 @@ function setTable(id){
 
 function BorangLB(id_pembatalan)
 {
-    var url = "../servlet/ekptg.report.ppt.BorangLB?id_penarikan="+id_pembatalan;  
+    /*var url = "../servlet/ekptg.report.ppt.BorangLB?id_penarikan="+id_pembatalan;  
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();*/
+    
+    var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_penarikan="+id_pembatalan+"&report=BorangLB&selectNoFail=yes";
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;

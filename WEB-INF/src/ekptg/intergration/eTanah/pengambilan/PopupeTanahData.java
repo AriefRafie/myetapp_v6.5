@@ -528,6 +528,32 @@ public class PopupeTanahData {
 		return maklumatPermohonan;
 		
 	}
+	
+	public Hashtable<String,String> getMaklumatInt(String idPermohonanIntegrasi, Db db) {
+		String sql = "";
+		Hashtable<String,String> maklumatInt = null;
+
+		try {
+			Statement stmt = db.getStatement();
+			sql = "SELECT P.NO_PERMOHONAN FROM TBLINTANAHPERMOHONAN P WHERE " +			
+			"  P.ID_PERMOHONAN ='" + idPermohonanIntegrasi + "'"+
+			"";
+//			sql = "SELECT * FROM TBLINTANAHPERMOHONAN WHERE ID_PERMOHONAN = '" + idPermohonanIntegrasi + "'";
+			myLog.info("sql INTEGRASI:"+sql);
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				maklumatInt = new Hashtable<String,String>();
+				maklumatInt.put("NO_PERMOHONAN", rs.getString("NO_PERMOHONAN") == null ? "" : rs.getString("NO_PERMOHONAN"));
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return maklumatInt;
+		
+	}
 
 	public Vector<Hashtable<String,String>> getSenaraiHakmilik(String idPermohonanIntegrasi, Db db) {
 		String sql = "";
@@ -574,7 +600,7 @@ public class PopupeTanahData {
 //				" AND H.ID_PERMOHONAN =  '" + idPermohonanIntegrasi + "'"+
 //				"";
 			//sql = "SELECT * FROM TBLINTANAHPERMOHONANMILIK WHERE ID_PERMOHONAN = '" + idPermohonanIntegrasi + "'";
-			sql = sql + " ORDER BY H.ID_HAKMILIK ASC";
+			//sql = sql + " ORDER BY H.ID_HAKMILIK ASC";
 			myLog.info("getSenaraiHakmilik:sql="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -774,7 +800,7 @@ public class PopupeTanahData {
 			if(!tapisan.equals(""))
 				sql +=" AND D.JENIS_DOKUMEN='"+tapisan+"'";
 //				+ " AND DI.ID_RUJUKAN = '" + idPermohonanIntegrasi + "'";
-			sql = sql + " ORDER BY ID_TANAHDOKUMEN ASC";
+			//sql = sql + " ORDER BY ID_TANAHDOKUMEN ASC";
 			myLog.info("getSenaraiDokumen:sql="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -888,7 +914,6 @@ public class PopupeTanahData {
 			ex.printStackTrace();
 		}
 	}
-
 	
 	private void updateCatatanHakmilik(String idHakmilikPermohonan, String catatanHakmilik, Db db) {
 		String sql = "";
@@ -906,4 +931,6 @@ public class PopupeTanahData {
 			ex.printStackTrace();
 		}
 	}
+	
+	
 }
