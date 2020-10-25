@@ -96,7 +96,7 @@
           <td width="1%"></td>
           <td width="28%">Kategori Pemohon</td>
           <td>:</td>
-          <td width="70%">$selectKategoriPemohon</td>
+          <td width="70%">KEMENTERIAN / AGENSI</td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -163,7 +163,7 @@
           <td width="1%"></td>
           <td width="28%">Kategori Pemohon</td>
           <td>:</td>
-          <td width="70%">$selectKategoriPemohon</td>
+          <td width="70%">KEMENTERIAN / AGENSI</td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -271,8 +271,6 @@
           <td>:</td>
           <td>#parse("app/php2/unit_luas.jsp") </td>
         </tr>
-        $beanMaklumatPelepasan.idLuasMohon
-
         #if ($beanMaklumatPelepasan.idLuas != '99999' && $beanMaklumatPelepasan.idLuas != '')
         <tr>
           <td>&nbsp;</td>
