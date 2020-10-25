@@ -398,6 +398,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 					perkara = (String) hashHeader.get("perkara");
 					idKementerian = (String) hashHeader.get("idKementerian");
 					idAgensi = (String) hashHeader.get("idAgensi");
+					keterangan = (String) hashHeader.get("keterangan");
 					this.context.put("namaKementerian", nama);
 					this.context.put("namaAgensi", namaAgensi);
 					this.context.put("alamat1", alamat1);
@@ -408,6 +409,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 					this.context.put("perkara", perkara);
 					this.context.put("idKementerian", idKementerian);
 					this.context.put("idAgensi", idAgensi);
+					this.context.put("keterangan", keterangan);
 				}
 
 				// MAKLUMAT PERMOHONAN

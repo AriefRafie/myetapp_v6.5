@@ -464,8 +464,10 @@ a.nav:visited {
                       <li class="TabbedPanelsTab" tabindex="0" id="Pengumuman_Head" >Pengumuman</li>
                       #end
                       <li class="TabbedPanelsTab" tabindex="0"  id="Carta_Head"  >Carta</li>
+                      <li class="TabbedPanelsTab" tabindex="0" id="Peringatan_Head"><span class="blink">PERINGATAN !</span></li>
                     </ul>
-                    <div class="TabbedPanelsContentGroup"> #if($list_memo_aktif.size()>0)
+                    <div class="TabbedPanelsContentGroup"> 
+                      #if($list_memo_aktif.size()>0)
                       <div class="TabbedPanelsContent"  id="Peringatan_Main" style="height:250" >
                         <table width="100%" >
                           <tr>
@@ -539,6 +541,47 @@ a.nav:visited {
                           </table>
                         </div>
                       </div>
+                      <div class="TabbedPanelsContent" >
+	                  	<table width="90%" align="center" border="0"  class="alert">
+	                  		<tr>
+							   <td>
+							   </td>
+						   </tr>
+						   <tr>
+							   <td width="2%" valign="top" align="right">
+							   </td>
+						   	   <td width="98%">
+						   			<div id="tamatTempohKJP">
+					   					<a href="javascript:gotoKJPTamatTempoh('K')" class="help" title="Senarai Ulasan KJP Tamat Tempoh">
+											<label style="background-color:red"  align="center" valign="top" >
+			                            		<b><font color="WHITE"><span class="blink">&nbsp;$bilTamatTempohUlasanKJP</span></font></b>
+		                             		</label>&nbsp;
+									 		Bil. Fail Tamat Tempoh Ulasan KJP
+										</a>
+									</div>
+								</td>
+						   </tr>
+	                  	</table>
+	                  	<table width="90%" align="center" border="0"  class="alert">
+						   <tr>
+							   <td>
+							   </td>
+						   </tr>
+						   <tr>
+							   <td width="2%" valign="top" align="right">
+							   </td>
+						   <td width="98%">
+						  	<div id="tamatTempohJKPTG">
+	                             <a href="javascript:gotoJKPTGTamatTempoh('G')" class="help" title="Senarai Ulasan JKPTG Tamat Tempoh">
+									<label style="background-color:red"  align="center" valign="top" >
+			                            <b><font color="WHITE"><span class="blink">&nbsp;$bilTamatTempohUlasanJKPTG</span></font></b>
+		                             </label>&nbsp;
+								 	Bil. Fail Tamat Tempoh Ulasan JKPTG
+								 </a>
+							</div>
+						   </tr>
+						  </table>
+                      </div>
                     </div>
                   </div></td>
               </tr>
@@ -607,6 +650,16 @@ function gotoFLMSstat() {
 }
 function gotoInbox() {
 	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.utils.FrmInboxUsers";
+	document.${formName}.submit();
+}
+function gotoKJPTamatTempoh(K) {
+	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmSenaraiTugasanPLPView&socJenisFailC=K";
+	//document.${formName}.socJenisFailC.value = S;
+	//document.Fekptg_view_php2_FrmREVMemantauBayaranSewaView.socJenisFailC.value = "S";
+	document.${formName}.submit();
+} 
+function gotoJKPTGTamatTempoh(G) {
+	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmSenaraiTugasanPLPView&socJenisFailC=G";
 	document.${formName}.submit();
 }
 </script>

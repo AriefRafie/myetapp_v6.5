@@ -86,7 +86,7 @@
         <legend><b>SENARAI PERMOHONAN</b></legend>
         #parse("app/utils/record_paging.jsp")
         <table align="center" width="100%">
-         <td><input name="cmdDaftarBaru" id="cmdDaftarBaru" value="Daftar Permohonan Baru" type="button" onclick="doDivAjaxCall$formname('divMainForm','daftarBaru','');">
+         <td><input name="cmdDaftarBaru" id="cmdDaftarBaru" value="Daftar Permohonan" type="button" onclick="doDivAjaxCall$formname('divMainForm','daftarBaru','');">
           <tr class="table_header">
             <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
            	<td width="19%"><strong>No. Rujukan <i>Online</i></strong></td>
@@ -114,7 +114,8 @@
             <td class="$row">$list.NO_FAIL</td>
             <td class="$row">$list.TAJUK_FAIL</td>
             <td class="$row" align="center">$list.TARIKH_TERIMA</td>
-            <td class="$row" align="center">$list.STATUS</td>
+            <td class="$row" align="center">$list.KETERANGAN</td>
+            <!-- <td class="$row" align="center">$list.STATUS</td> -->
           </tr>
           #end
           #else

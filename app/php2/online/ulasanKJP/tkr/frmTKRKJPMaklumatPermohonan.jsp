@@ -277,7 +277,7 @@
             #foreach ($beanMaklumatTukarguna in $beanMaklumatTukarguna)
               <tr>
                 <td width="1%">#if ($mode == 'update')<span class="style1">*</span>#end</td>
-                <td width="28%" valign="top">Tarikh Terima</td>
+                <td width="28%" valign="top">Tarikh Mohon</td>
                 <td width="1%">:</td>
                 <td width="70%">
                   #if ($mode == 'update')
@@ -321,7 +321,7 @@
                 <td>&nbsp;</td>
                 <td>Keluasan Asal</td>
                 <td>:</td>
-                <td>$beanMaklumatTukarguna.luasAsal
+                <td>$beanMaklumatTukarguna.luasAsal HEKTAR
                   <input type="hidden" name="txtLuasAsal" id="txtLuasAsal" value="$beanMaklumatTukarguna.luasAsal"/></td>
               </tr>
         	  #if ($idLuasKegunaan == '2')

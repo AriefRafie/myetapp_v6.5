@@ -286,7 +286,12 @@ public class FrmTKROnlineKJPSenaraiFailData {
 
 			sql = "SELECT "
 					+ " F.ID_FAIL, F.NO_FAIL, F.TAJUK_FAIL"
-					+ " ,RS.KETERANGAN STATUS, P.TARIKH_TERIMA, P.NO_PERMOHONAN, P.ID_STATUS"
+					+ " ,RS.KETERANGAN STATUS, P.TARIKH_TERIMA, "
+					+ " CASE "
+					+ "	WHEN P.ID_STATUS IN (148,240,245) THEN 'PRA PERMOHONAN ('||RS.KETERANGAN ||')'	"
+					+ " ELSE RS.KETERANGAN "
+					+ " END KETERANGAN, "
+					+ " P.NO_PERMOHONAN, P.ID_STATUS"
 					+ " FROM TBLPFDFAIL F, TBLPERMOHONAN P"
 					+ " ,USERS_KEMENTERIAN UK"
 					+ " ,TBLRUJSTATUS RS"
@@ -299,7 +304,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			//noFail
 			if (findNoFail != null) {
 				if (!findNoFail.trim().equals("")) {
-					sql = sql + " AND UPPER(F.NO_FAIL) LIKE '%' ||'"
+					sql = sql + " AND UPPER(P.NO_PERMOHONAN) LIKE '%' ||'"
 							+ findNoFail.trim().toUpperCase() + "'|| '%'";
 				}
 			}
@@ -328,6 +333,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 				h.put("STATUS", rs.getString("STATUS") == null ? "" : rs.getString("STATUS"));
 				h.put("TARIKH_TERIMA", rs.getDate("TARIKH_TERIMA") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMA")));
 				h.put("ID_STATUS", rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS"));
+				h.put("KETERANGAN", rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
 				//h.put("TARIKH_JANGKA_TERIMA", rs.getDate("TARIKH_JANGKA_TERIMA") == null ? "" : sdf.format(rs.getDate("TARIKH_JANGKA_TERIMA")));
 				listFail.addElement(h);
 
@@ -1005,7 +1011,8 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			r.add("ID_PEMOHON", idPemohon);
 			r.add("ID_JKPTG", "1");
 			r.add("ID_FAIL", idFail);
-			r.add("ID_STATUS", "9920199");
+			r.add("ID_STATUS", "245"); //tindakan penguna/penyedia
+			//r.add("ID_STATUS", "9920199"); //status pra-daftar
 			r.add("TARIKH_SURAT", r.unquote(TS));
 			r.add("TARIKH_TERIMA", r.unquote(TT));
 			r.add("NO_RUJ_SURAT", noRujukanSurat);
@@ -1631,7 +1638,12 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_FAIL, A.NO_FAIL, B.NO_PERMOHONAN, B.ID_PERMOHONAN, B.TARIKH_SURAT, B.TARIKH_TERIMA, B.NO_RUJ_SURAT, A.TAJUK_FAIL, B.TUJUAN, B.ID_PEMOHON, C.FLAG_GUNA, C.CADANGAN_KEGUNAAN, D.KETERANGAN AS STATUS "
+			sql = "SELECT A.ID_FAIL, A.NO_FAIL, B.NO_PERMOHONAN, B.ID_PERMOHONAN, B.TARIKH_SURAT, B.TARIKH_TERIMA, "
+					+ " CASE  "
+					+ "	WHEN B.ID_STATUS IN (148,240,245) THEN 'PRA PERMOHONAN ('||D.KETERANGAN ||')'	"
+				 	+ "	ELSE D.KETERANGAN  "
+				 	+ " END KETERANGAN, "
+					+ " B.NO_RUJ_SURAT, A.TAJUK_FAIL, B.TUJUAN, B.ID_PEMOHON, C.FLAG_GUNA, C.CADANGAN_KEGUNAAN, D.KETERANGAN AS STATUS "
 					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPERMOHONANPELEPASAN C, TBLRUJSTATUS D WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS AND B.ID_PERMOHONAN = C.ID_PERMOHONAN AND A.ID_FAIL = '"
 					+ idFail + "'";
 
@@ -1654,7 +1666,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 				h.put("flagGuna",rs.getString("FLAG_GUNA") == null ? "" : rs.getString("FLAG_GUNA"));
 				h.put("tujuanKegunaan",rs.getString("CADANGAN_KEGUNAAN") == null ? "" : rs.getString("CADANGAN_KEGUNAAN"));
 				h.put("status",rs.getString("STATUS") == null ? "" : rs.getString("STATUS"));
-				//h.put("status",rs.getString("status") == null ? "" : rs.getString("status"));
+				h.put("keterangan",rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
 				beanMaklumatPermohonan.addElement(h);
 				bil++;
 			}
@@ -2114,7 +2126,13 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			Hashtable h;
 
 			sql = "SELECT A.ID_FAIL, A.NO_FAIL, A.TAJUK_FAIL, B.ID_PERMOHONAN, L.ID_SUBURUSAN, B.TARIKH_TERIMA, B.TARIKH_SURAT, C.ID_PEMOHON, C.NAMA, C.ID_NEGERITETAP, C.ID_KATEGORIPEMOHON, C.ID_PEJABAT, C.ID_AGENSI, I.ID_NEGERI AS ID_NEGERITANAH, H.ID_KEMENTERIAN AS ID_KEMENTERIANTANAH, H.ID_AGENSI AS ID_AGENSITANAH,"
-				+ " C.ALAMAT1_TETAP, C.ALAMAT2_TETAP, C.ALAMAT3_TETAP, C.POSKOD_TETAP, D.NAMA_NEGERI, G.KETERANGAN AS NAMA_BANDAR, C.NO_TEL, C.NO_FAX, B.ID_STATUS, E.KETERANGAN, I.NO_HAKMILIK, I.NO_WARTA, H.ID_HAKMILIKAGENSI, H.ID_HAKMILIK, J.KEPUTUSAN, B.NO_PERMOHONAN, B.FLAG_LAYER_KJP, K.NAMA_AGENSI"
+				+ " C.ALAMAT1_TETAP, C.ALAMAT2_TETAP, C.ALAMAT3_TETAP, C.POSKOD_TETAP, D.NAMA_NEGERI, G.KETERANGAN AS NAMA_BANDAR, C.NO_TEL, C.NO_FAX, B.ID_STATUS, "
+				+ " CASE "
+				+ "	WHEN E.ID_STATUS IN (148,240,245) THEN 'PRA PERMOHONAN ('||E.KETERANGAN ||')'	"
+				+ " ELSE E.KETERANGAN "
+				+ " END KETERANGAN, "
+				//+ "E.KETERANGAN, "
+				+ " I.NO_HAKMILIK, I.NO_WARTA, H.ID_HAKMILIKAGENSI, H.ID_HAKMILIK, J.KEPUTUSAN, B.NO_PERMOHONAN, B.FLAG_LAYER_KJP, K.NAMA_AGENSI"
 				+ ",K.ALAMAT1, K.ALAMAT2, K.ALAMAT3, K.POSKOD, D.NAMA_NEGERI, A.TAJUK_FAIL,N.ID_KEMENTERIAN,M.NAMA_KEMENTERIAN"
 				+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJNEGERI D, TBLRUJSTATUS E, TBLPHPHAKMILIKPERMOHONAN F, TBLRUJBANDAR G, TBLHTPHAKMILIKAGENSI H, TBLHTPHAKMILIK I, TBLPHPPERMOHONANPELEPASAN J, TBLRUJAGENSI K, TBLRUJSUBURUSAN L, TBLRUJKEMENTERIAN M,USERS_KEMENTERIAN N"
 				+ " WHERE A.ID_SUBURUSAN = '33' AND A.ID_SUBURUSAN = L.ID_SUBURUSAN AND A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON AND C.ID_NEGERITETAP = D.ID_NEGERI(+) AND B.ID_STATUS = E.ID_STATUS(+) AND B.ID_PERMOHONAN = F.ID_PERMOHONAN"
