@@ -235,18 +235,14 @@
 			      			<option value="2" #if($!listTanah.jenis_pilih=="2") selected=selected #end>TENGAH HARI</option>	
 			      			<option value="3" #if($!listTanah.jenis_pilih=="3") selected=selected #end>PETANG</option>	
 			      		</select>      
-			      		
-			      		#if($isEdit=="yes")
-                		#set($txtCatatan = "txtCatatan"+$!listTanah.bil)
-                		<select name="$!txtCatatan" style="width:100px">
-      					
-			      		</select>  
 			      		#else
 			      		$!listTanah.JENIS_WAKTU
 			      		#end     			
                 		</td>  
 
 					</tr>
+					<td class="$row"><input name="txtCatatan" id="txtCatatan" size="30" type="text" value="$!listTanah.MASA_SIASATAN"  ">            	  	
+            	  		</td>
 					#end 
 					#else
 					<tr>
