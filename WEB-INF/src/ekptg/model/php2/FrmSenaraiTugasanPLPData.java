@@ -186,14 +186,14 @@ public class FrmSenaraiTugasanPLPData {
 				//SENARAI FAIL YANG TAMAT TEMPOH ULASAN KJP
 				if (idJenisFail.equals("K")) {
 					sql = sql + " AND K.FLAG_STATUS = 1 AND K.FLAG_AKTIF = 'Y' "
-							+ "AND K.FLAG_KJP = 'KJP' AND K.TARIKH_JANGKA_TERIMA IS NOT NULL "
+							+ "AND K.ID_DOKUMEN = '1' AND K.TARIKH_JANGKA_TERIMA IS NOT NULL "
 							+ "AND TO_CHAR(K.TARIKH_JANGKA_TERIMA, 'dd-MON-YY')  < TRUNC(SYSDATE)";
 				}
 				
 				//SENARAI FAIL YANG TAMAT TEMPOH ULASAN JKPTG
 				if (idJenisFail.equals("G")) {
 					sql = sql + " AND K.FLAG_STATUS = 1 AND K.FLAG_AKTIF = 'Y' "
-							+ "AND K.FLAG_KJP = 'KJT' AND K.TARIKH_JANGKA_TERIMA IS NOT NULL "
+							+ "AND K.ID_DOKUMEN = '4' AND K.TARIKH_JANGKA_TERIMA IS NOT NULL "
 							+ "AND TO_CHAR(K.TARIKH_JANGKA_TERIMA, 'dd-MON-YY')  < TRUNC(SYSDATE)";
 				}
 						

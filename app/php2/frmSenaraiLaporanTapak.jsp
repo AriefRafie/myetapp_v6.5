@@ -8,8 +8,8 @@
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input type="hidden" name="step">
-  <input type="text" name="idUlasanTeknikal">
-  <input type="text" name="idPermohonan">
+  <input type="hidden" name="idUlasanTeknikal">
+  <input type="hidden" name="idPermohonan">
   <input type="hidden" name="idFail">
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
