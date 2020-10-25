@@ -1314,17 +1314,23 @@ public class FrmPNWSenaraiMesyuaratData {
 				flagKeputusanPemohon=rs.getString("FLAG_KEPUTUSAN_PEMOHON");
 			}	
 			
-			String body = "<table width='75%' border='0' cellspacing='0' cellpadding='5'>"
-					+ "<tr><td>Assalamualaikum / Salam Sejahtera.</td></tr>"
+			String body = "<table width='100%' border='0' cellspacing='0' cellpadding='5'>"
+					+ "<tr><td>Tuan/ Puan,</td></tr>"
 					+ "<tr><td>&nbsp;</td></tr>"
-					+ "<tr><td>Dengan hormatnya saya merujuk kepada perkara diatas.</td></tr>"
-					+ "<tr><td>Dimaklumkan bahawa tuan/puan dijemput menghadiri mesyuarat seperti dibawah:-"
-					+ "<tr><td>Tajuk: "+tajukMesyuarat+"</td></tr>"
-					+ "<tr><td>Tarikh: "+tarikhMesyuarat+"</td></tr>"
+					+ "<tr><td>MESYUARAT BERKENAAN "+tajukMesyuarat.toUpperCase()+"</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td>2.	Dengan hormatnya saya merujuk kepada perkara diatas.</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td>3.	Dimaklumkan bahawa tuan/puan dijemput menghadiri mesyuarat seperti dibawah:-</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td>Tajuk: "+tajukMesyuarat.toUpperCase()+"</td></tr>"
+					+ "<tr><td>Tarikh: "+tarikhMesyuarat.toUpperCase()+"</td></tr>"
 					+ "<tr><td>Masa  : "+idJamDari+":"+idMinitDari+" - "+idJamHingga+":"+idMinitHingga+"</td></tr>"
-					+ "<tr><td>Lokasi: "+lokasiMesyuarat+"</td></tr>"
+					+ "<tr><td>Lokasi: "+lokasiMesyuarat.toUpperCase()+"</td></tr>"
 					+ "<tr><td>&nbsp;</td></tr>"
-					+ "<tr><td>Sekian, terima kasih.</i></td></tr>"
+					+ "<tr><td>Sekian, terima kasih.</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td><i>Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas.</i></td></tr>"
 					+ "<tr><td>&nbsp;</td></tr>" + "</table>";
 			
 			email.RECIEPIENT = emel;

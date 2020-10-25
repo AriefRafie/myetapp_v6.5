@@ -153,7 +153,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		String hitButton = getParam("hitButton");
 		String action = getParam("action");
 		String id_dokumen = getParam("id_dokumen");
-		String tajuk = getParam("tajuk");
+		String nama_dokumen = getParam("nama_dokumen");
 		String kategori_lampiran = getParam("kategori_lampiran");
 		String id_hakmilik = getParam("id_hakmilik");
 		String id_penarikan = getParam("id_penarikan");
@@ -165,7 +165,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		this.context.put("no_fail", no_fail);
 		this.context.put("jenis_skrin", jenis_skrin);
 		this.context.put("hitButton", hitButton);
-		this.context.put("tajuk", tajuk);
+		this.context.put("nama_dokumen", nama_dokumen);
 		this.context.put("id_hakmilik", id_hakmilik);
 		this.context.put("id_penarikan", id_penarikan);
 		context.put("statusSend", "");
@@ -199,7 +199,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 					conn = db.getConnection();
 					conn.setAutoCommit(false);					
 						uploadFiles(id_permohonan, id_fail, id_hakmilik, jenis_skrin,
-								tajuk, session, db, conn, id_penarikan,kategori_lampiran,return_new_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
+								nama_dokumen, session, db, conn, id_penarikan,kategori_lampiran,return_new_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
 						context.put("flag_submit", "yes");
 						conn.commit();					
 				} catch (Exception e) {
@@ -555,10 +555,10 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			try {
 				db = new Db();
 				context.put("turutan",return_new_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
-				List<Hashtable> listSenaraiLotBorangC = new ArrayList();
-				listSenaraiLotBorangC = logic
-						.listSenaraiLotBorangC(id_fail, db);
-				setupPage(session, action, listSenaraiLotBorangC);
+				List<Hashtable> listSenaraiLotBorangA = new ArrayList();
+				listSenaraiLotBorangA = logic
+						.listSenaraiLotBorangA(id_fail, db);
+				setupPage(session, action, listSenaraiLotBorangA);
 				listSenaraiDokumenUpload(id_permohonan, id_hakmilik,
 						jenis_skrin, id_penarikan, db);
 				maklumatProjek(id_fail, db);
@@ -718,18 +718,26 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			String NO_WARTA = "";
 			String TARIKH_WARTA = "";
 			String NO_FAIL_DERAF = "";
+			String NO_PERMOHONAN = "";
 			String NO_RUJUKAN_TARIKBALIK = "";
 			String ID_NEGERI = "";
 
 			Hashtable hash_maklumatWarta = null;
 			Hashtable hash_maklumatProjek = null;
 			Hashtable hash_maklumatTarikBalik = null;
+			//YATI
+			Hashtable hash_maklumatintPermohonan = null;
 			
 			
 			hash_maklumatProjek = logic.getMaklumatProjek(id_fail_etapp, db);
 			NO_FAIL_DERAF = (hash_maklumatProjek.get("NO_FAIL").toString());
 			ID_NEGERI = (hash_maklumatProjek.get("ID_NEGERI").toString());
 			
+			//YATI
+			hash_maklumatintPermohonan = logic_.getMaklumatInt(id_permohonan, db);
+			//String NO_PERMOHONAN = "";
+			NO_PERMOHONAN = (hash_maklumatintPermohonan.get("NO_PERMOHONAN").toString());
+					//logic.getMaklumatIntPermohonan(id_fail_etapp, db);
 			
 			//open maklumat pengambilan tanah				
 			 String tarikh_permohonan_mp = "";
@@ -5366,7 +5374,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 
 	// UPLOAD FILE
 	private void uploadFiles(String id_permohonan, String id_fail,
-			String id_hakmilik, String jenis_skrin, String tajuk,
+			String id_hakmilik, String jenis_skrin, String nama_dokumen,
 			HttpSession session, Db db, Connection conn, String id_penarikan,String kategori_lampiran,Integer turutan)
 			throws Exception {
 		DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -5404,7 +5412,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 					getDoc().simpan(item,request);
 
 					saveData(item, id_fail, id_permohonan, id_hakmilik,
-							jenis_skrin, tajuk, session, db, conn,
+							jenis_skrin, nama_dokumen, session, db, conn,
 							id_penarikan,kategori_lampiran,turutan);
 				}
 			}

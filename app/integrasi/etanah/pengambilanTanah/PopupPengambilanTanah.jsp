@@ -140,6 +140,13 @@ JKPTG(S).MLK/02/881/04/2010/9-->
 <td   valign="top">:</td>
 <td  valign="top">$!hash_maklumatprojek.NAMA_PROJEK</td>
 </tr>
+</tr>
+<tr>
+<td  valign="top"></td>
+<td  valign="top">No Permohonan E-TANAH</td>
+<td   valign="top">:</td>
+<td  valign="top">$!hash_maklumatintPermohonan.NO_PERMOHONAN</td>
+</tr>
 #if($!jenis_skrin == "BorangC" || $!jenis_skrin == "BorangK" || $!jenis_skrin == "PU" || $!jenis_skrin == "SijilUkur")   
 #if($!hash_maklumatWarta.size() >0)           
 <tr>
@@ -735,9 +742,9 @@ $!maklumat_mmk
 	 
     function simpan(id_penarikan,id_permohonan,jenis_skrin) {
 	
-		if(document.${formName}.tajuk.value == ""){
+		if(document.${formName}.nama_dokumen.value == ""){
 			alert('Sila pastikan tajuk dokumen diisi.');
-	  		document.${formName}.tajuk.focus(); 
+	  		document.${formName}.nama_dokumen.focus(); 
 			return; 
 		}
 		
@@ -758,11 +765,11 @@ $!maklumat_mmk
 		var id_permohonan_set =  document.${formName}.id_permohonan.value;
 		var id_fail_set =  document.${formName}.id_fail.value;
 		var jenis_skrin_set =  document.${formName}.jenis_skrin.value;
-		var tajuk_set =  document.${formName}.tajuk.value;
+		var tajuk_set =  document.${formName}.nama_dokumen.value;
 		var id_hakmilik_set =  document.${formName}.id_hakmilik.value;
 		var kategori_lampiran_set =  document.${formName}.kategori_lampiran.value;
 		
-		document.${formName}.action = "?_portal_module=etanah.ppt.sek4&hitButton=simpanDokumen&id_permohonan="+id_permohonan_set+"&id_penarikan="+id_penarikan+"&jenis_skrin="+jenis_skrin_set+""+dopost+"&id_fail="+id_fail_set+"&tajuk="+tajuk_set+"&id_hakmilik="+id_hakmilik_set+"&kategori_lampiran="+kategori_lampiran_set;
+		document.${formName}.action = "?_portal_module=etanah.ppt.sek4&hitButton=simpanDokumen&id_permohonan="+id_permohonan_set+"&id_penarikan="+id_penarikan+"&jenis_skrin="+jenis_skrin_set+""+dopost+"&id_fail="+id_fail_set+"&nama_dokumen="+tajuk_set+"&id_hakmilik="+id_hakmilik_set+"&kategori_lampiran="+kategori_lampiran_set;
 		//document.${formName}.action = "?_portal_module=ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah&hitButton=simpanDokumen&id_permohonan="+id_permohonan_set+"&id_penarikan="+id_penarikan+"&jenis_skrin="+jenis_skrin_set+""+dopost+"&id_fail="+id_fail_set+"&tajuk="+tajuk_set+"&id_hakmilik="+id_hakmilik_set+"&kategori_lampiran="+kategori_lampiran_set;
 		
 		document.${formName}.method="post";
