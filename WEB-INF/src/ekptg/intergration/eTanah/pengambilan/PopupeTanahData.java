@@ -529,6 +529,32 @@ public class PopupeTanahData {
 		return maklumatPermohonan;
 		
 	}
+	
+	public Hashtable<String,String> getMaklumatInt(String idPermohonanIntegrasi, Db db) {
+		String sql = "";
+		Hashtable<String,String> maklumatInt = null;
+
+		try {
+			Statement stmt = db.getStatement();
+			sql = "SELECT P.NO_PERMOHONAN FROM TBLINTANAHPERMOHONAN P WHERE " +			
+			"  P.ID_PERMOHONAN ='" + idPermohonanIntegrasi + "'"+
+			"";
+//			sql = "SELECT * FROM TBLINTANAHPERMOHONAN WHERE ID_PERMOHONAN = '" + idPermohonanIntegrasi + "'";
+			myLog.info("sql INTEGRASI:"+sql);
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				maklumatInt = new Hashtable<String,String>();
+				maklumatInt.put("NO_PERMOHONAN", rs.getString("NO_PERMOHONAN") == null ? "" : rs.getString("NO_PERMOHONAN"));
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return maklumatInt;
+		
+	}
 
 	public Vector<Hashtable<String,String>> getSenaraiHakmilik(String idPermohonanIntegrasi, Db db) {
 		String sql = "";
@@ -574,7 +600,7 @@ public class PopupeTanahData {
 //				"";
 			//sql = "SELECT * FROM TBLINTANAHPERMOHONANMILIK WHERE ID_PERMOHONAN = '" + idPermohonanIntegrasi + "'";
 			myLog.info("getSenaraiHakmilik:sql="+sql);
-			sql = sql + " ORDER BY H.ID_HAKMILIK ASC";
+			//sql = sql + " ORDER BY H.ID_HAKMILIK ASC";
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
@@ -807,10 +833,10 @@ public class PopupeTanahData {
 				+ " AND D.ID_JENISDOKUMEN = DIM.ID_JENISDOKUMEN (+)"
 				+ " AND D.ID_PERMOHONAN = '" + idPermohonanIntegrasi + "'";
 			if(!tapisan.equals(""))
-				sql +=" AND D.TAJUK='"+tapisan+"'";
+				//sql +=" AND D.TAJUK='"+tapisan+"'";
 //				+ " AND DI.ID_RUJUKAN = '" + idPermohonanIntegrasi + "'";
-			sql = sql + " ORDER BY ID_TANAHDOKUMEN ASC";
-//			myLog.info("getSenaraiDokumen:sql="+sql);
+			//sql = sql + " ORDER BY ID_TANAHDOKUMEN ASC";
+		myLog.info("getSenaraiDokumen:sql BARU="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {

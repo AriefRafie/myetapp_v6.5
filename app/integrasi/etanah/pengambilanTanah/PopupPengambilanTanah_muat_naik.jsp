@@ -29,7 +29,7 @@
 			              <td width="1%" valign="top">:</td>
 			              <td width="62%" valign="top">                        
                           #set($tajuk_lampiran = "")                                                                          
-                          <input type="text" name="tajuk" id="tajuk" maxlength="200" size="50" value="$tajuk_lampiran"  /></td>
+                          <input type="text" name="nama_dokumen" id="nama_dokumen" maxlength="200" size="50" value="$nama_dokumen"  /></td>
 			 	</tr>
                	
                	<tr>
