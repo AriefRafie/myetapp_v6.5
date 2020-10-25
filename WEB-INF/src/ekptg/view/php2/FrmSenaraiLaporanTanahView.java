@@ -151,7 +151,7 @@ public class FrmSenaraiLaporanTanahView extends AjaxBasedModule {
 					idUlasanTeknikal = getParam("idUlasanTeknikal");
 				}
 				
-				logic.goToHantarNotifikasi(idLaporan, session);
+				logic.goToHantarNotifikasi(idLaporan, idUlasanTeknikal, session);
 				logic.updateMaklumBalas(idUlasanTeknikal, idNegeri, session);
 				session.setAttribute("MSG", "NOTIFIKASI PEMBERITAHUAN TELAH DIHANTAR KE IBU PEJABAT");
 			}
