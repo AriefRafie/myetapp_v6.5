@@ -101,6 +101,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		String tarikhBorangL = getParam("tarikhBorangL");
 		String tempohBL = getParam("tempohBL");
 		String token = getParam("token");
+		String id_penarikan = getParam("id_penarikan");
 		
 		String txtBilKertas = getParam("txtBilKertas");
 		String txtBilSalinan = getParam("txtBilSalinan");
@@ -544,6 +545,8 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
     	context.put("namaMukimInit", nama2MukimInit);
     	context.put("flagCetakSiasatan", flagCetakSiasatan);
     	context.put("id_permintaanukur", id_permintaanukur);
+    	
+    	context.put("id_penarikan", id_penarikan);
     	
     	context.put("id_mmk", id_mmk);
     	context.put("emel", emel);

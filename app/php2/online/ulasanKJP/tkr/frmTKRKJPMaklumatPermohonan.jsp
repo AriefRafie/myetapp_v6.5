@@ -483,8 +483,12 @@
 			<input type="checkbox" name="pengesahan" id="pengesahan">&nbsp&nbsp
         	Saya, <b>$!namaPemohon</b>, $!kadPengenalanPemohon dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
    			<br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
+   			<br/>
+   			<b><font color="BLUE" size="2"><span class="blink">Ambil Perhatian: Sila pastikan maklumat yang diisi pada permohonan adalah TEPAT dan MUKTAMAD.
+	Permohonan yang telah <br>dihantar TIDAK DIBENARKAN untuk dipinda/dikemaskini.</span></font></b>
    			<p align="center"><input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Permohonan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
    			<input type="button" name="cmdPindaan" id="cmdPindaan" $buttonSend value="Kembalikan kepada penyedia" onclick="doAjaxCall${formName}('simpanpengesahan3')" /></p>
+
       		</td>
 
 
