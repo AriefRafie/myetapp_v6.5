@@ -23,9 +23,12 @@ import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Utils;
+import ekptg.model.htp.FrmSemakan;
 import ekptg.model.php2.FrmPNWHeaderData;
 import ekptg.model.php2.FrmPNWMaklumatPermohonanData;
 import ekptg.model.php2.FrmPNWPopupSenaraiTanahData;
+import ekptg.model.php2.utiliti.LampiranBean;
+import ekptg.model.utils.lampiran.ILampiran;
 
 
 public class FrmPNWMaklumatPermohonanView extends AjaxBasedModule {
@@ -35,6 +38,8 @@ public class FrmPNWMaklumatPermohonanView extends AjaxBasedModule {
 	FrmPNWHeaderData logicHeader = new FrmPNWHeaderData();
 	FrmPNWMaklumatPermohonanData logic = new FrmPNWMaklumatPermohonanData();
 	FrmPNWPopupSenaraiTanahData logicTanah = new FrmPNWPopupSenaraiTanahData();
+	FrmSemakan semak = null;
+	private ILampiran iLampiran = null;
 
 	@Override
 	public String doTemplate2() throws Exception {
@@ -164,6 +169,8 @@ public class FrmPNWMaklumatPermohonanView extends AjaxBasedModule {
     		}
     	}
         
+        this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("", "paparLampiran", "idDokumen",session, "phptkr"));
+        
         //HEADER
         beanHeader = new Vector();
         logicHeader.setMaklumatPermohonan(idFail, session);
@@ -212,8 +219,15 @@ public class FrmPNWMaklumatPermohonanView extends AjaxBasedModule {
 		this.context.put("SenaraiTanahBerkaitan", senaraiTanahBerkaitan);
 		
 		//SENARAI SEMAK
-		senaraiSemak = logic.getSenaraiSemak(idPermohonan);
-		this.context.put("SenaraiSemak", senaraiSemak);
+		if("5".equals(selectedTabUpper)){
+			/*senaraiSemak = logic.getSenaraiSemak(idPermohonan);
+			this.context.put("SenaraiSemak", senaraiSemak);*/
+
+			semak = new FrmSemakan();
+			senaraiSemak = semak.getSenaraiSemakanAttach2("phptukar",idPermohonan);
+			this.context.put("SenaraiSemak", senaraiSemak);
+
+		}
 		
         //VIEW MODE
         if ("view".equals(mode)){
@@ -468,5 +482,13 @@ public class FrmPNWMaklumatPermohonanView extends AjaxBasedModule {
 
 	private String carianId(String idFail) throws Exception  {
 		return logic.carianIdPermohonan(idFail);
+	}
+	
+	private ILampiran getDocPHP(){
+		if(iLampiran == null){
+			iLampiran = new LampiranBean();
+		}
+		return iLampiran;
+
 	}
 }
