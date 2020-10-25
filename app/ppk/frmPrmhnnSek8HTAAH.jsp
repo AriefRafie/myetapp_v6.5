@@ -2614,6 +2614,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                               <td width="10%"><div align="left">NO PT/NO LOT</div></td>
                               <td width="5%"><div align="center">BAHAGIAN SIMATI</div></td>
                               <td width="5%"><strong>Dokumen</strong></td>
+                              <td width="5%"><strong>Tindakan</strong></td>
                             </tr>
                             #set($plko=0)
 
@@ -2686,6 +2687,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                               #end
                                #if($listam.idDokumen != "" )
                                <td class="row1"><div align="center"><a onclick="javascript:cetakImej($listam.idDokumen)" href="#" style="color: #0000FF"> lihat </a></div></td>
+                               <td class="row1"><div align="center"><input type="button" name="cmdJPPH" value ="Nilaian JPPH" onClick="javascript:sendNilaianJPPH('$idPermohonanSimati', '$listam.idhta')"/></div></td>
                               #else
                               <td class="row1">  </td>
                              #end
@@ -2753,6 +2755,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                               #end
                                #if($listam.idDokumen != "" )
                                <td class="row2"><div align="center"><a onclick="javascript:cetakImej($listam.idDokumen)" href="#" style="color: #0000FF"> lihat </a></div></td>
+                               <td class="row2"><div align="center"><input type="button" name="cmdJPPH" value ="Nilaian JPPH" onClick="javascript:sendNilaianJPPH('$idPermohonanSimati', '$listam.idhta')"/></div></td>
                               #else
                               <td class="row2">  </td>
                              #end
@@ -2805,7 +2808,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                     <td width="20%">&nbsp;</td>
                     #if($!skrin_online != "yes")
                     <td width="5%"><input type="button" name="cmdSimpan9" id="cmdSimpan8" value="Batal" onclick="cancel()"/></td>
-                    <td width="5%"><input type="button" name="cmdJPPH" value ="Nilaian JPPH" onClick="javascript:sendNilaianHTA('$id', '$idhta')" disabled/> </td>
+                    <!--<td width="5%"><input type="button" name="cmdJPPH" value ="Nilaian JPPH" onClick="javascript:sendNilaianHTA('$id', '$idhta')" disabled/> </td>-->
                    	#end
                     <td width="20%">&nbsp;</td>
                     <td width="10%">&nbsp;</td>
@@ -2881,6 +2884,20 @@ function sendNilaianHTA(idPermohonan,noFail) {
 
 	  document.f1.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.integrasi.FrmViewNilaianHartaTakAlih&selectedHartaTakAlih="+selectedHartaTakAlihAdaHakmilik+"&idSimati="+idSimati+"&idPermohonan="+idPermohonan+"&action2=viewNilaianHTA&method=post&command=nilai_harta&mode=simpan_HTAHA";
 	  document.f1.submit();
+  }
+  
+function sendNilaianJPPH(idPermohonanSimati, idhta) {
+		//alert("Permohonan mati: " + idPermohonanSimati + ", id hta: " + idhta);
+		//var idhta  = $jquery('#idhta').val();
+		//var idPermohonanSimati  = $jquery('#idPermohonanSimati').val();
+		var idPermohonanSimati = idPermohonanSimati;
+		var idhta  = idhta;
+
+		var url = "../x/${securityToken}/ekptg.view.ppk.FrmNilaianJPPH?idhta="+idhta+"&idPermohonanSimati="+idPermohonanSimati+"&command=borangPermohonan&frmFrom=frmPrmhnnSek8DaftarSek8";
+		var hWnd = window.open(url,'Cetak','width=925,height=470, resizable=no,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
   }
 
 function doCheckAll1_HTA(){
