@@ -19,11 +19,11 @@
       <table width="100%" align="center" border="0">
         <tr>
           <td width="30%" height="24" scope="row" align="right">Disediakan Oleh : </td>
-          <td width="70%"><input name="txtPelaporC" id="txtPelaporC" type="text" value="$txtPelaporC" size="50" maxlength="50" style="text-transform:uppercase;" ></td>
+          <td width="70%"><input name="txtPelaporC" id="txtPelaporC" type="text" value="$txtPelaporC" size="43" maxlength="50" style="text-transform:uppercase;" ></td>
         </tr>
         <tr>
           <td width="30%" height="24" scope="row" align="right">No. Fail : </td>
-          <td width="70%"><input type="text" name="txtNoFail" id="txtNoFail" value="$txtNoFail" maxlength="50" size="30"/>
+          <td width="70%"><input type="text" name="txtNoFail" id="txtNoFail" value="$txtNoFail" maxlength="50" size="43"/>
         </tr>
         <tr>
           <td scope="row" align="right"> Jenis Hakmilik :</td>
@@ -31,11 +31,11 @@
         </tr>
         <tr>
           <td scope="row" align="right"> No. Hakmilik :</td>
-          <td><input name="txtNoHakmilikC" id="txtNoHakmilikC" type="text" value="$txtNoHakmilikC" size="30" maxlength="50" /></td>
+          <td><input name="txtNoHakmilikC" id="txtNoHakmilikC" type="text" value="$txtNoHakmilikC" size="43" maxlength="50" /></td>
         </tr>
         <tr>
           <td scope="row" align="right"> No. Warta :</td>
-          <td><input name="txtNoWartaC" id="txtNoWartaC" type="text" value="$txtNoWartaC" size="30" maxlength="50"/></td>
+          <td><input name="txtNoWartaC" id="txtNoWartaC" type="text" value="$txtNoWartaC" size="43" maxlength="50"/></td>
         </tr>
         <tr>
           <td scope="row" align="right">Jenis Lot :</td>
@@ -43,7 +43,7 @@
         </tr>
         <tr>
           <td scope="row" align="right">No. Lot :</td>
-          <td><input name="txtNoLotC" id="txtNoLotC" type="text" value="$txtNoLotC" size="30" maxlength="50"/></td>
+          <td><input name="txtNoLotC" id="txtNoLotC" type="text" value="$txtNoLotC" size="43" maxlength="50"/></td>
         </tr>
         <tr>
           <td scope="row" align="right">Negeri :</td>
@@ -59,8 +59,10 @@
         </tr>
         <tr>
           <td scope="row"></td>
-          <td><input name="cmdCari" id="cmdCaricmdKosongkan" value="Cari" type="button" onclick="javascript:carian()">
-            <input name="cmdKosongkan" id="" value="Kosongkan" type="reset" onClick="javascript:kosongkan('$flagDetail')"></td>
+          <td>
+          	<input name="cmdCari" id="cmdCari" value="Cari" type="button" onclick="javascript:carian()">
+            <input name="cmdKosongkan" id="cmdKosongkan" value="Kosongkan" type="reset" onClick="javascript:kosongkan('$flagDetail')">
+          </td>
         </tr>
         <tr>
           <td scope="row">&nbsp;</td>
@@ -123,9 +125,8 @@ function carian(){
 }
 function kosongkan(flagDetail) {
 	document.${formName}.reset();
-	document.${formName}.txdTarikhLawatanC.value = "";
 	document.${formName}.txtPelaporC.value = "";
-	document.${formName}.txtNoPeganganC.value = "";
+	document.${formName}.txtNoFail.value = "";
 	document.${formName}.socJenisHakmilikC.value = "";
 	document.${formName}.txtNoHakmilikC.value = "";	
 	document.${formName}.txtNoWartaC.value = "";

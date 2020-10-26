@@ -2,6 +2,7 @@ package ekptg.view.online;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -73,6 +74,13 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 		context.put("jawatan", jawatan);
 		context.put("portalRole", portal_role);
 		//System.out.println("*** jumlah_notifikasi --- "+jumlah_notifikasi);
+		
+		Hashtable get_notifikasi_pembayaran = null;
+		get_notifikasi_pembayaran = (Hashtable) notifikasi_pembayaran(user_id, Long.parseLong(jawatan));
+		String jumlah_pembayaran = (String) get_notifikasi_pembayaran.get("jumlah_Permohonan");
+		context.put("jumlah_notifikasi", Long.parseLong(jumlah_notifikasi));
+		context.put("jawatan", jawatan);
+		context.put("portalRole", portal_role);
 
 		 Hashtable get_notifikasi_pelepasan = null;
 		 get_notifikasi_pelepasan = (Hashtable) notifikasi_pelepasan(user_id);
@@ -103,9 +111,15 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 		 String jumlah_notifikasi_penawaran = (String)get_notifikasi_penawaran.get("JUMLAHPERMOHONAN");
 		 context.put("jumlah_notifikasi_penawaran", Long.parseLong(jumlah_notifikasi_penawaran));
 		 context.put("jawatan", jawatan); context.put("portalRole", portal_role);
+		 
+		 Hashtable get_notifikasi_penerimaTawaran = null;
+		 get_notifikasi_penerimaTawaran = (Hashtable) notifikasi_penerimaTawaran(idKementerian, user_id);
+		 String jumlah_notifikasi_penerimaTawaran = (String)get_notifikasi_penerimaTawaran.get("JUMLAHPERMOHONAN");
+		 context.put("jumlah_notifikasi_penerimaTawaran", Long.parseLong(jumlah_notifikasi_penerimaTawaran));
+		 context.put("jawatan", jawatan); context.put("portalRole", portal_role);
 
 		 Hashtable get_notifikasi_MOF = null;
-		 get_notifikasi_MOF = (Hashtable) notifikasi_MOF(user_id);
+		 get_notifikasi_MOF = (Hashtable) notifikasi_MOF( user_id);
 		 String jumlah_notifikasi_MOF = (String)get_notifikasi_MOF.get("JUMLAHPERMOHONAN");
 		 context.put("jumlah_notifikasi_MOF", Long.parseLong(jumlah_notifikasi_MOF));
 		 context.put("jawatan", jawatan); context.put("portalRole", portal_role);
@@ -283,6 +297,87 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 				db.close();
 		}
 	}
+	
+	public Hashtable notifikasi_pembayaran(String userID, long jawatan)
+			throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+
+			if (jawatan == 24) {
+
+				sql += " SELECT SUM (JUMLAHPERMOHONAN) AS JUMLAHPERMOHONAN " +
+						" FROM (SELECT (SELECT COUNT (P.FLAG_STATUS_ONLINE) " +
+						" FROM TBLPPTPERMOHONAN P, TBLPFDFAIL F, TBLRUJSUBURUSAN SU, TBLRUJSTATUS S, TBLRUJKEMENTERIAN K, USERS U, USERS_KEMENTERIAN UK " +
+						" WHERE F.ID_FAIL = P.ID_FAIL AND F.ID_SUBURUSAN = SU.ID_SUBURUSAN AND F.ID_KEMENTERIAN = K.ID_KEMENTERIAN " +
+						" AND U.USER_ID = UK.USER_ID AND P.ID_STATUS = S.ID_STATUS AND UK.ID_KEMENTERIAN = K.ID_KEMENTERIAN " +
+						" AND F.ID_SUBURUSAN IN ('51', '52', '53') AND U.USER_ID = '" + userID + "' " +
+						/*" AND P.FLAG_STATUS_ONLINE = 'Y' " +*/
+						" AND P.FLAG_STATUS_ONLINE = 1) AS JUMLAHPERMOHONAN FROM DUAL " +
+						" UNION ALL " +
+						" SELECT (SELECT COUNT (P.FLAG_SEMAKAN_ONLINE) " +
+						" FROM TBLPPTPERMOHONAN P, TBLPFDFAIL F, TBLRUJSUBURUSAN SU, TBLRUJSTATUS S, TBLRUJKEMENTERIAN K, USERS U, USERS_KEMENTERIAN UK " +
+						" WHERE F.ID_FAIL = P.ID_FAIL AND F.ID_SUBURUSAN = SU.ID_SUBURUSAN AND F.ID_KEMENTERIAN = K.ID_KEMENTERIAN " +
+						" AND U.USER_ID = UK.USER_ID AND P.ID_STATUS = S.ID_STATUS AND UK.ID_KEMENTERIAN = K.ID_KEMENTERIAN " +
+						" AND F.ID_SUBURUSAN IN ('51', '52', '53') AND U.USER_ID = '" + userID + "' " +
+						" AND P.FLAG_SEMAKAN_ONLINE = 4) AS JUMLAHPERMOHONAN FROM DUAL) ";
+			} else if (jawatan == 9) {
+				sql += " SELECT (SELECT COUNT (p.flag_semakan_online) "
+				        +" FROM tblpptpermohonan p, tblpfdfail f, tblrujsuburusan su, tblrujstatus s, tblrujkementerian k, "
+				        +" users u, users_kementerian uk "
+				        +" WHERE f.id_fail = p.id_fail AND f.id_suburusan = su.id_suburusan AND f.id_kementerian = k.id_kementerian "
+				        +" AND u.user_id = uk.user_id AND p.id_status = s.id_status AND uk.id_kementerian = k.id_kementerian "
+				        +" AND f.id_suburusan IN ('51', '52', '53') AND u.user_id ='" + userID + "' "
+				        +" AND p.flag_semakan_online = 1) AS jumlahpermohonan FROM DUAL ";
+			} else if (jawatan == 4) {
+				sql += " SELECT (SELECT COUNT (p.flag_semakan_online) "
+				        +" FROM tblpptpermohonan p, tblpfdfail f, tblrujsuburusan su, tblrujstatus s, tblrujkementerian k, "
+				        +" users u, users_kementerian uk "
+				        +" WHERE f.id_fail = p.id_fail AND f.id_suburusan = su.id_suburusan AND f.id_kementerian = k.id_kementerian "
+				        +" AND u.user_id = uk.user_id AND p.id_status = s.id_status AND uk.id_kementerian = k.id_kementerian "
+				        +" AND f.id_suburusan IN ('51', '52', '53') AND u.user_id ='" + userID + "' "
+				        +" AND p.flag_semakan_online = 2) AS jumlahpermohonan FROM DUAL ";
+			} else {
+				sql += " SELECT (SELECT COUNT (p.flag_semakan_online) "
+				        +" FROM tblpptpermohonan p, tblpfdfail f, tblrujsuburusan su, tblrujstatus s, tblrujkementerian k, "
+				        +" users u, users_kementerian uk "
+				        +" WHERE f.id_fail = p.id_fail AND f.id_suburusan = su.id_suburusan AND f.id_kementerian = k.id_kementerian "
+				        +" AND u.user_id = uk.user_id AND p.id_status = s.id_status AND uk.id_kementerian = k.id_kementerian "
+				        +" AND f.id_suburusan IN ('51', '52', '53') AND u.user_id ='" + userID + "' "
+				        +" AND p.flag_semakan_online = 2) AS jumlahpermohonan FROM DUAL ";
+			}
+
+			///myLogger.info("JUMLAH DOKUMEN :"+sql.toUpperCase());
+			System.out.println("**** sql PPT --- "+sql);
+			ResultSet rs = stmt.executeQuery(sql);
+
+			//System.out.println("**** sql PPT --- "+sql);
+
+			Hashtable h;
+			h = new Hashtable();
+			// h.put("jumlah_Permohonan", "0");
+			while (rs.next()) {
+				h.put("jumlah_Permohonan",
+						rs.getString("jumlahPermohonan") == null ? "0" : rs
+								.getString("jumlahPermohonan"));
+			}
+			return h;
+
+			/*
+			 * } else { Hashtable h; h = new Hashtable();
+			 * h.put("jumlah_Permohonan", "0"); return h; }
+			 */
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
 	public Hashtable notifikasi_penawaran(String userID)
 			throws Exception {
 		Db db = null;
@@ -313,6 +408,55 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 
 			myLog.info("JUMLAH DOKUMEN PENAWARAN:"+sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			h = new Hashtable();
+			while (rs.next()) {
+				h.put("JUMLAHPERMOHONAN",
+						rs.getString("JUMLAHPERMOHONAN"));
+			}
+			return h;
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public Hashtable notifikasi_penerimaTawaran(String idKementerian, String userID) throws Exception {
+
+		Db db = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		String sql = "";
+
+		try {
+			
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT (SELECT COUNT (*) "
+					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, "
+					+ " TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, "
+					+ " TBLPHPHAKMILIK F, USERS H, TBLRUJNEGERI RUJNEGERI "
+					+ " WHERE A.ID_SEKSYEN = 4 "
+					+ " AND A.ID_URUSAN = '6' "
+					+ " AND A.ID_SUBURUSAN = '32' "
+					+ " AND A.ID_FAIL = B.ID_FAIL "
+					+ " AND B.ID_STATUS = D.ID_STATUS"
+					+ " AND E.ID_HAKMILIKPERMOHONAN = F.ID_HAKMILIKPERMOHONAN(+)"
+					+ " AND F.ID_NEGERI = RUJNEGERI.ID_NEGERI(+) "
+					+ " AND B.ID_PEMOHON = C.ID_PEMOHON "
+					+ " AND B.ID_PERMOHONAN = E.ID_PERMOHONAN "
+					+ " AND A.NO_FAIL IS NOT NULL"
+					+ " AND A.ID_MASUK = H.USER_ID(+)"
+					+ " AND D.ID_STATUS = '1610210' " //TAWARAN
+					+ " AND C.ID_KEMENTERIAN != '"+idKementerian +"') "
+					+ " AS JUMLAHPERMOHONAN FROM DUAL "
+					; 
+
+			ResultSet rs = stmt.executeQuery(sql);
+			myLog.info("JUMLAH DOKUMEN PENAWARAN:"+sql.toUpperCase());
+			
 
 			Hashtable h;
 			h = new Hashtable();

@@ -153,6 +153,7 @@ public class FrmCRBSenaraiMesyuaratView extends AjaxBasedModule {
 				idMesyuarat = logic.simpanMesyuarat(getParam("txtTarikhMesyuarat"), 
 						getParam("txtBilMesyuarat"), getParam("txtTujuanMesyuarat"), idJamDari, idMinitDari,
 						idJamHingga, idMinitHingga, getParam("txtCatatanMesyuarat"), idLokasi, session);
+				this.context.put("idMesyuarat", idMesyuarat);
 			}
 			if ("simpanKemaskiniMesyuarat".equals(hitButton)) {
 				logic.simpanKemaskiniMesyuarat(idMesyuarat, getParam("txtTarikhMesyuarat"),
