@@ -218,7 +218,7 @@
 					          <td width="20%"><strong>No. Fail</strong></td>
 					          <td width="15%"><strong>Jenis Permohonan</strong></td>
 					          <td width="20%"><strong>Nama Pemohon</strong></td>
-					          <td width="10%"><strong>Kertas Pertimbangan</strong></td>
+					          ##<td width="10%"><strong>Kertas Pertimbangan</strong></td>
 					          <td width="10%"><strong>Keputusan</strong></td>
 					          <td width="15%"><strong>Catatan</strong></td>
 					          #foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
@@ -242,8 +242,8 @@
 					          <td class="$row">$senaraiFailMohonBaru.noFailPermohonan</td>
 					          <td class="$row">$senaraiFailMohonBaru.jenisPermohonan</td>
 					          <td class="$row">$senaraiFailMohonBaru.namaPemohon</td>
-					          <td class="$row" align="center"><a href="#" class="style2" onClick="doCetakKertasPertimbangan('$senaraiFailMohonBaru.id')">
-                      		  <img border="0" src="../img/print.gif"/></a></td>
+					          ##<td class="$row" align="center"><a href="#" class="style2" onClick="doCetakKertasPertimbangan('$senaraiFailMohonBaru.id')">
+                      		  ##<img border="0" src="../img/print.gif"/></a></td>
 					          <td class="$row">
 					          		#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
 										#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")

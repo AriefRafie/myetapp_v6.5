@@ -242,7 +242,7 @@
 					          <td class="$row">$senaraiFailMohonBaru.noFailPermohonan</td>
 					          <td class="$row">$senaraiFailMohonBaru.jenisPermohonan</td>
 					          <td class="$row">$senaraiFailMohonBaru.namaPemohon</td>
-					          <td class="$row" align="center"><a href="#" class="style2" onClick="doCetakKertasPertimbangan('$senaraiFailMohonBaru.id')">
+					          <td class="$row" align="center"><a href="#" class="style2" onClick="doCetakKertasPertimbangan('$senaraiFailMohonBaru.idFail')">
                       		  <img border="0" src="../img/print.gif"/></a></td>
 					          <td class="$row">
 					          		#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)

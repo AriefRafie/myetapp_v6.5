@@ -445,7 +445,7 @@ public class FrmPLPSenaraiMesyuaratData {
 			Statement stmt = db.getStatement();
 
 
-			sql = "select a.ID_MESYUARAT_PERMOHONAN, d.no_fail,e.nama,a.flag_jenis_permohonan,a.FLAG_SYOR ,a.CATATAN, c.id_permohonan from tblphpMesyuaratPermohonan a, tblphpmesyuarat b, tblpermohonan c, tblpfdfail d, tblphppemohon e "
+			sql = "select a.ID_MESYUARAT_PERMOHONAN, d.no_fail,e.nama,a.flag_jenis_permohonan,a.FLAG_SYOR ,a.CATATAN, c.id_permohonan,c.id_fail from tblphpMesyuaratPermohonan a, tblphpmesyuarat b, tblpermohonan c, tblpfdfail d, tblphppemohon e "
 				 +"where a.flag_jenis_permohonan = 'B' and a.id_mesyuarat = b.id_mesyuarat and a.id_permohonan=c.id_permohonan and c.id_fail=d.id_fail "
 				 +"and c.id_pemohon=e.id_pemohon and a.id_mesyuarat='"+idMesyuarat+"'";	
 			sql = sql + " ORDER BY a.ID_MESYUARAT_PERMOHONAN ASC";
@@ -463,6 +463,12 @@ public class FrmPLPSenaraiMesyuaratData {
 				h.put("noFailPermohonan",
 						rs.getString("NO_FAIL") == null ? "" : rs
 								.getString("NO_FAIL"));
+				h.put("idPermohonan",
+						rs.getString("ID_PERMOHONAN") == null ? "" : rs
+								.getString("ID_PERMOHONAN"));
+				h.put("idFail",
+						rs.getString("ID_FAIL") == null ? "" : rs
+								.getString("ID_FAIL"));
 				h.put("namaPemohon",
 						rs.getString("NAMA") == null ? "" : rs
 								.getString("NAMA"));
