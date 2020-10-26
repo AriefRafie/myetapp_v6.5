@@ -197,10 +197,10 @@ public class FrmSenaraiLaporanTanahData {
 			Statement stmt = db.getStatement();
 
 			sql = "SELECT A.ID_ULASANTEKNIKAL, B.ID_PERMOHONAN, C.NO_FAIL, UPPER(F.KETERANGAN) AS JENIS_LOT, E.NO_LOT, M.ID_SUBURUSAN, L.NAMA_URUSAN, "
-				+ "G.KOD_JENIS_HAKMILIK, E.NO_HAKMILIK, H.NAMA_MUKIM, I.NAMA_DAERAH, J.NAMA_NEGERI, K.ID_STATUS, M.NAMA_SUBURUSAN "
+				+ "G.KOD_JENIS_HAKMILIK, E.NO_HAKMILIK, H.NAMA_MUKIM, I.NAMA_DAERAH, J.NAMA_NEGERI, K.ID_STATUS, M.NAMA_SUBURUSAN, N.NAMA_PELAPOR "
 				+ "FROM TBLPHPULASANTEKNIKAL A, TBLPERMOHONAN B, TBLPFDFAIL C, TBLPHPHAKMILIKPERMOHONAN D, TBLPHPHAKMILIK E, TBLRUJLOT F, "
-				+ "TBLRUJJENISHAKMILIK G, TBLRUJMUKIM H, TBLRUJDAERAH I, TBLRUJNEGERI J, TBLRUJSTATUS K, TBLRUJURUSAN L, TBLRUJSUBURUSAN M "
-				+ "WHERE A.ID_PERMOHONAN = B.ID_PERMOHONAN AND B.ID_FAIL = C.ID_FAIL AND B.ID_PERMOHONAN = D.ID_PERMOHONAN "
+				+ "TBLRUJJENISHAKMILIK G, TBLRUJMUKIM H, TBLRUJDAERAH I, TBLRUJNEGERI J, TBLRUJSTATUS K, TBLRUJURUSAN L, TBLRUJSUBURUSAN M, TBLPHPLAPORANTANAH N "
+				+ "WHERE A.ID_PERMOHONAN = B.ID_PERMOHONAN AND B.ID_FAIL = C.ID_FAIL AND B.ID_PERMOHONAN = D.ID_PERMOHONAN AND B.ID_PERMOHONAN = N.ID_PERMOHONAN(+) "
 				+ "AND D.ID_HAKMILIKPERMOHONAN = E.ID_HAKMILIKPERMOHONAN AND E.ID_LOT = F.ID_LOT AND E.ID_JENISHAKMILIK = G.ID_JENISHAKMILIK "
 				+ "AND E.ID_MUKIM = H.ID_MUKIM AND H.ID_DAERAH = I.ID_DAERAH AND I.ID_NEGERI = J.ID_NEGERI AND B.ID_STATUS = K.ID_STATUS "
 				+ "AND B.FLAG_AKTIF = 'Y' AND C.NO_FAIL IS NOT NULL AND A.ID_DOKUMEN = '4' AND A.FLAG_STATUS = '1' "
@@ -217,12 +217,12 @@ public class FrmSenaraiLaporanTanahData {
 			}
 
 			// pelapor
-//			if (pelapor != null) {
-//				if (!pelapor.trim().equals("")) {
-//					sql = sql + " AND UPPER(A.NAMA_PELAPOR) LIKE '%' ||'"
-//							+ pelapor.trim().toUpperCase() + "'|| '%'";
-//				}
-//			}
+			if (pelapor != null) {
+				if (!pelapor.trim().equals("")) {
+					sql = sql + " AND UPPER(N.NAMA_PELAPOR) LIKE '%' ||'"
+							+ pelapor.trim().toUpperCase() + "'|| '%'";
+				}
+			}
 
 			// idNegeri
 			if (idNegeri != null) {
@@ -309,8 +309,8 @@ public class FrmSenaraiLaporanTanahData {
 						: rs.getString("ID_PERMOHONAN"));
 				h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs
 						.getString("NO_FAIL").toUpperCase());
-//				h.put("pelapor", rs.getString("NAMA_PELAPOR") == null ? "" : rs
-//						.getString("NAMA_PELAPOR").toUpperCase());
+				h.put("pelapor", rs.getString("NAMA_PELAPOR") == null ? "" : rs
+						.getString("NAMA_PELAPOR").toUpperCase());
 				h.put("hakmilik",
 						rs.getString("JENIS_LOT") + " "
 								+ rs.getString("NO_LOT") + ", "
@@ -1110,16 +1110,18 @@ public class FrmSenaraiLaporanTanahData {
 		}
 	}
 	
-	public void goToHantarNotifikasi(String idLaporanTanah, HttpSession session) throws Exception {
+	public void goToHantarNotifikasi(String idLaporanTanah, String idUlasanTeknikal, HttpSession session) throws Exception {
 		Db db = null;
 		Connection conn = null;
 		Vector beanMaklumatEmail = null;
 		EmailSender email = EmailSender.getInstance();
 		String sql = "";
 		String noFail = "";
+		String tajukFail = "";
 		String userName = "";
 		String userEmail = "nurulain.siprotech@gmail.com"; //untuk sementara
 		String namaJKPTG = "";
+		String namaUrusan = "";
 		
 		try {
 			db = new Db();
@@ -1128,30 +1130,56 @@ public class FrmSenaraiLaporanTanahData {
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 			
-			sql = " SELECT A.ID_LAPORANTANAH, A.ID_PERMOHONAN, C.NO_FAIL, D.USER_NAME, E.EMEL, F.NAMA_PEJABAT "
-				+ " FROM TBLPHPLAPORANTANAH A, TBLPERMOHONAN B, TBLPFDFAIL C, USERS D, USERS_INTERNAL E, TBLRUJPEJABATJKPTG F"
-				+ " WHERE A.ID_PERMOHONAN = B.ID_PERMOHONAN AND B.ID_FAIL = C.ID_FAIL AND C.ID_NEGERI = F.ID_NEGERI AND F.ID_SEKSYEN = '4'"
-				+ " AND C.ID_MASUK = D.USER_ID AND D.USER_ID = E.USER_ID AND A.ID_LAPORANTANAH = '"+idLaporanTanah+"'";
+			sql = "SELECT A.ID_LAPORANTANAH, A.ID_PERMOHONAN, C.NO_FAIL, C.TAJUK_FAIL, D.USER_NAME, E.EMEL, "
+				+ "F.NAMA_PEJABAT, G.NAMA_URUSAN, H.ID_SUBURUSAN "
+				+ "FROM TBLPHPLAPORANTANAH A, TBLPERMOHONAN B, TBLPFDFAIL C, USERS D, USERS_INTERNAL E, "
+				+ "TBLRUJPEJABATJKPTG F, TBLRUJURUSAN G, TBLRUJSUBURUSAN H "
+				+ "WHERE A.ID_PERMOHONAN = B.ID_PERMOHONAN AND B.ID_FAIL = C.ID_FAIL AND C.ID_NEGERI = F.ID_NEGERI "
+				+ "AND F.ID_SEKSYEN = '4' AND C.ID_MASUK = D.USER_ID AND D.USER_ID = E.USER_ID AND C.ID_URUSAN = G.ID_URUSAN "
+				+ "AND C.ID_SUBURUSAN = H.ID_SUBURUSAN AND A.ID_LAPORANTANAH = '"+idLaporanTanah+"'";
 			
 			ResultSet rsEmel = stmt.executeQuery(sql);
 			if (rsEmel.next()){
-				noFail = rsEmel.getString("NO_FAIL");
-				userName = rsEmel.getString("USER_NAME");
-				//userEmail = rsEmel.getString("EMEL");
-				namaJKPTG = rsEmel.getString("NAMA_PEJABAT");
-			}	
+				noFail = rsEmel.getString("NO_FAIL") == null ? "" : rsEmel.getString("NO_FAIL");
+				tajukFail = rsEmel.getString("TAJUK_FAIL") == null ? "" : rsEmel.getString("TAJUK_FAIL");
+				userName = rsEmel.getString("USER_NAME") == null ? "" : rsEmel.getString("USER_NAME");
+				namaJKPTG = rsEmel.getString("NAMA_PEJABAT") == null ? "" : rsEmel.getString("NAMA_PEJABAT");
+				
+				if("34".equals(rsEmel.getString("ID_SUBURUSAN"))) {
+					namaUrusan = "PELEPASAN/PENYERAHAN BALIK";
+				} else if("33".equals(rsEmel.getString("ID_SUBURUSAN"))) {
+					namaUrusan = "TUKARGUNA";
+				} else if("32".equals(rsEmel.getString("ID_SUBURUSAN"))) {
+					namaUrusan = "PENAWARAN";
+				} else {
+					namaUrusan = rsEmel.getString("NAMA_URUSAN");
+				}
+			}
 			
+			//TO GET USER EMAIL BY ROLE (PHP)PenolongPegawaiTanahHQ
+			sql = "SELECT UI.EMEL FROM USERS U, USERS_INTERNAL UI, TBLPHPULASANTEKNIKAL T "
+				+ "WHERE U.USER_ID = UI.USER_ID AND U.USER_ID = T.ID_MASUK "
+				+ "AND T.ID_ULASANTEKNIKAL = '"+idUlasanTeknikal+"'";
+			
+			ResultSet rsEmel2 = stmt.executeQuery(sql);
+			if (rsEmel.next()){
+//				userEmail = rsEmel2.getString("EMEL") == null ? "" :
+//							rsEmel2.getString("EMEL");
+			}
+
 			email.RECIEPIENT = userEmail;
-			email.SUBJECT = "PERMOHONAN ULASAN URUSAN PELEPASAN BAGI NO. FAIL " + noFail;
-			email.MESSAGE = "Tuan/ Puan,<br><br><br>"
-							 + "Saya dengan hormatnya diarah merujuk kepada perkara di atas.\r\n"
-							 + "<br>Adalah dimaklumkan bahawa " + namaJKPTG + "mengemukakan laporan berhubung keadaan terkini tapak\r\n"
-							 + "tersebut."
-							 + "<br><br>Sekian, terima kasih.<br><br><br>"			
-							 + "Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
+			email.SUBJECT = "PERMOHONAN MENGEMUKAKAN LAPORAN TANAH "+namaUrusan+" BAGI NO. FAIL " + noFail;
+			email.MESSAGE =  "Tuan/ Puan,"
+							+ "<br><br><u><b>"+tajukFail+"</b></u>"
+							+ "<br><br>Saya dengan hormatnya diarah merujuk kepada perkara di atas."
+							+ "<br><br>2.	Adalah dimaklumkan bahawa " + namaJKPTG + " mengemukakan laporan berhubung "
+							+ "keadaan terkini tapak tersebut."
+							+ "3. Mohon semakan daripada pihak tuan/ puan."
+							+ "<br><br>Sekian, terima kasih.<br><br><br>"			
+							+ "Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
 			email.sendEmail();
 			
-			log.info("weh kudaa apa yang keluar : " + email.MESSAGE);
+			log.info("apa yang keluar : " + email.MESSAGE);
 			
 		} finally {
 			if(db != null)

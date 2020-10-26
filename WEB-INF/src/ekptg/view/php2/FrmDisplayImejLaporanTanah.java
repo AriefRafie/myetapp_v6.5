@@ -35,7 +35,8 @@ public class FrmDisplayImejLaporanTanah implements IServlet2 {
 
 			PreparedStatement ps = con
 					.prepareStatement("SELECT CONTENT,JENIS_MIME,NAMA_FAIL FROM"
-							+ " TBLPHPDOKUMENLAPORANTANAH WHERE ID_DOKUMEN = ?");
+//							+ " TBLPHPDOKUMENLAPORANTANAH WHERE ID_DOKUMEN = ?");
+							+ " TBLPHPDOKUMEN WHERE ID_DOKUMEN = ?");
 			String id = request.getParameter("id");
 			ps.setString(1, id);
 			ResultSet rs = ps.executeQuery();
