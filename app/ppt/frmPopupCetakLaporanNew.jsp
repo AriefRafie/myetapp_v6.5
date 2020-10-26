@@ -71,8 +71,9 @@ background: #f4eff4 !important;
    
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input type="hidden" name="user" value='$!{session.getAttribute("_portal_username")}'>
+   <input type="hidden" name="userlogin" value='$!{session.getAttribute("_ekptg_user_id")}'>
 
-  <input name="userlogin" type="hidden" id="userlogin" value="$!userlogin"/>
+  <input name="ic_login" type="hidden" id="ic_login" value="$!ic_login"/>
    <input name="token" type="hidden" id="token" value="$token"/>
    <input name="id_penarikan" type="hidden" id="id_penarikan" value="$!id_penarikan"/>
   
@@ -1532,7 +1533,7 @@ background: #f4eff4 !important;
                 	#end
                 	<!--SURAT IRINGAN AP -->
                     #if($report == 'LaporanTanahSementara')
-                		<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakLaporanTanahPPS('$!id_fail','$!id_tanahumum')">
+                		<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakLaporanTanahPPS('$!id_fail','$!id_tanahumum','$!ic_login')">
                 	#end
                 	
                     <!-- END REPORT SEKSYEN 4 & 8 --------->
@@ -6462,10 +6463,10 @@ function cetakBorangR(id_siasatan,id_hakmilik,id_fail) {
 	}
 }
 
-function cetakLaporanTanahPPS(idfail,idTanahumum) {
+function cetakLaporanTanahPPS(idfail,idTanahumum,icLogin) {
 
 	//alert(idfail);
-	var url = "../../servlet/ekptg.report.ppt.LaporanTanahSementara?idfail="+idfail+"&idTanahumum="+idTanahumum;
+	var url = "../../servlet/ekptg.report.ppt.LaporanTanahSementara?idfail="+idfail+"&idTanahumum="+idTanahumum+"&userlogin="+icLogin;
 	//var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?idfail="+id_fail+"&idTanahumum="+id_tanahumum+"&report=LaporanTanahSementara&flagReport=S";	
 	//var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&idfail="+idfail+"&namaPengarah="+namaPengarah+"&report=KertasMinitMB&flagReport=S";
 	//var url = "../servlet/ekptg.report.ppt.LaporanTanahSementara?idfail="+id_fail+"&idTanahumum="+id_tanahumum;
