@@ -2122,7 +2122,7 @@
           <td >: </td>
           <td >      
      
-          <select name="jenis_pej2" id="jenis_pej2" class="largeselect" $setMode style="text-transform:uppercase;" onChange="alamat_raya()" >         
+          <select name="jenis_pej5" id="jenis_pej5" class="largeselect" $setMode style="text-transform:uppercase;" onChange="alamat_raya()" >         
           #if($!jenis_pej == "" || $!jenis_pej == "0") 
           <option value="">SILA PILIH</option>   
                  
@@ -3224,6 +3224,7 @@
                                  		
                                     
                                   <input type="submit" name="cmdPapar" id="cmdPapar" value="Tambah"  onclick="setSelected(0,3,0,0);tambah_penting_baru()"/>
+                                  <span style="color:blue"><small >*</small> Diisi jika berkaitan</span>
                                    
 								   #if($flag_kemaskini_selesai != "yes")
 								   <script>
@@ -6119,7 +6120,7 @@ function pilih_amanah()
 
 
 
-if((document.f1.socTarafKepentinganPenting.value == "6" || document.f1.socTarafKepentinganPenting.value == "16" || document.f1.socTarafKepentinganPenting.value == "8" || document.f1.socTarafKepentinganPenting.value == "17" || document.f1.socTarafKepentinganPenting.value == "21") || document.f1.socTarafKepentinganPenting.value == "20" && document.f1.txtNamaOBPenting!= null){
+if((document.f1.socTarafKepentinganPenting.value == "6" || document.f1.socTarafKepentinganPenting.value == "16" || document.f1.socTarafKepentinganPenting.value == "8" || document.f1.socTarafKepentinganPenting.value == "17" || document.f1.socTarafKepentinganPenting.value == "21" || document.f1.socTarafKepentinganPenting.value == "20" ) && document.f1.txtNamaOBPenting!= null){
 	
 							document.f1.socNegeriPenting.value = '';
 					 		document.f1.socNegeriPenting_D.value = '';
@@ -6181,7 +6182,7 @@ document.f1.jenis_pej.value = document.f1.jenis_pej3.value;
 }
 if(document.f1.socTarafKepentinganPenting.value == '20')
 {
-document.f1.jenis_pej.value = document.f1.jenis_pej2.value;
+document.f1.jenis_pej.value = document.f1.jenis_pej5.value;
 }
 
 
@@ -6223,7 +6224,7 @@ document.f1.jenis_pej.value = document.f1.jenis_pej3.value;
 
 if(document.f1.socTarafKepentinganPenting.value == '20')
 {
-document.f1.jenis_pej.value = document.f1.jenis_pej2.value;
+document.f1.jenis_pej.value = document.f1.jenis_pej5.value;
 }
 
 
