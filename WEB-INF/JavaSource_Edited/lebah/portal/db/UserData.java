@@ -86,7 +86,7 @@ public class UserData {
 					Role role = new Role();
 					role.setName(rs.getString(1));
 					role.setDescription(rs.getString(2));
-					//roles[i++] = role;
+					roles[i++] = role;
 				}
 				user.setSecondaryRoles(roles);
 			}
