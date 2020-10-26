@@ -1279,10 +1279,15 @@ public class FrmTKRSenaraiMesyuaratData {
 			SQLRenderer r = new SQLRenderer();
 			
 			//get maklumat mesyuarat APB
-			sql = "SELECT A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.JAM_DARI, A.MINIT_DARI, A.JAM_HINGGA, A.MINIT_HINGGA, A.ID_LOKASI, C.CATATAN, C.FLAG_SYOR,"
-			   + " A.ULASAN_PEMOHON, A.FLAG_KEPUTUSAN_PEMOHON, B.LOKASI"
-			   + " FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B, TBLPHPMESYUARATPERMOHONAN C"
-			   + " WHERE A.ID_LOKASI = B.ID_LOKASI AND A.ID_MESYUARAT = C.ID_MESYUARAT AND A.ID_MESYUARAT = '" + idMesyuarat + "'";
+			//sql = "SELECT A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.JAM_DARI, A.MINIT_DARI, A.JAM_HINGGA, A.MINIT_HINGGA, A.ID_LOKASI, C.CATATAN, C.FLAG_SYOR,"
+			//   + " A.ULASAN_PEMOHON, A.FLAG_KEPUTUSAN_PEMOHON, B.LOKASI"
+			//   + " FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B, TBLPHPMESYUARATPERMOHONAN C"
+			//   + " WHERE A.ID_LOKASI = B.ID_LOKASI AND A.ID_MESYUARAT = C.ID_MESYUARAT AND A.ID_MESYUARAT = '" + idMesyuarat + "'";
+			
+			sql = "SELECT A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.JAM_DARI, A.MINIT_DARI, A.JAM_HINGGA, A.MINIT_HINGGA, A.ID_LOKASI,"
+				+ " A.ULASAN_PEMOHON, A.FLAG_KEPUTUSAN_PEMOHON, B.LOKASI"
+				+ " FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B"
+				+ " WHERE A.ID_LOKASI = B.ID_LOKASI AND A.ID_MESYUARAT = '" + idMesyuarat + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
 			
@@ -1308,8 +1313,8 @@ public class FrmTKRSenaraiMesyuaratData {
 				if (idMinitHingga.length()==1){
 					idMinitHingga="0"+ idMinitHingga;
 				}
-				catatan=rs.getString("CATATAN");
-				flagSyor=rs.getString("FLAG_SYOR");
+				//catatan=rs.getString("CATATAN");
+				//flagSyor=rs.getString("FLAG_SYOR");
 				ulasanPemohon=rs.getString("ULASAN_PEMOHON");
 				flagKeputusanPemohon=rs.getString("FLAG_KEPUTUSAN_PEMOHON");
 			}	

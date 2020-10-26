@@ -2936,7 +2936,7 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			String id_fail = (String) data.get("id_fail");
 			String no_fail = (String) data.get("no_fail");
 			String no_kp_baru = (String) data.get("no_kp_baru");
-			String tarikh_hantar = (String) data.get("tarikh_hantar");
+			// String tarikh_hantar = (String) data.get("tarikh_hantar");
 			String id_perbicaraan = (String) data.get("id_perbicaraan");
 			
 			db = new Db();
@@ -3004,7 +3004,11 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 		Db db2 = null;
 		Db db3 = null;
 		
+		Connection conn = null;
+		
 		String sql = "";
+		String sql2 = "";
+		String sql3 = "";
 		try {
 			String id_permohonan = (String) data.get("id_permohonan");
 			String no_fail = (String) data.get("no_fail");
@@ -3014,15 +3018,19 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			String sebab_tukar = (String) data.get("sebab_tukar");
 			String id_permohonansimati = (String) data.get("id_permohonansimati");
 			String tarikhmati_pemohon = (String) data.get("tarikhmati_pemohon");
-			String tarikh_hantar = (String) data.get("tarikh_hantar");
+			String tarikh_mati = "to_date('" + tarikhmati_pemohon + "','dd/MM/yyyy')";
+			// String tarikh_hantar = (String) data.get("tarikh_hantar");
 			String id_masuk = (String) data.get("id_masuk");
 			
 			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
+			SQLRenderer r2 = new SQLRenderer();
+			SQLRenderer r3 = new SQLRenderer();
 			
-			//r.add("ID_PERMOHONAN", id_permohonan);
-			//r.add("NO_FAIL", no_fail);
+			//TBLPPKTUKARPEMOHON
 			r.add("ID_SIMATI", id_simati);
 			r.add("ID_PEMOHONLAMA", id_pemohonlama);
 			r.add("ID_PEMOHONBARU", id_pemohonbaru);
@@ -3032,43 +3040,65 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			r.add("TARIKH_MASUK", r.unquote("sysdate"));
 			r.add("ID_MASUK", id_masuk);
 			
-			
-			myLogger.info("Step 3 SYAFIQAH");
 			sql = r.getSQLInsert("TBLPPKTUKARPEMOHON");
-			System.out.println("TBLPPKTUKARPEMOHONLINE-->>"+sql);
+			myLogger.info("Step 3 TBLPPKTUKARPEMOHON : "+sql);
 			stmt.executeUpdate(sql);
+
+			//TBLPPKOB
+			r2.update("ID_PEMOHON",id_pemohonlama);
+			r2.update("ID_SIMATI",id_simati);
+			r2.add("TARIKH_MATI", r2.unquote(tarikh_mati));
 			
-				
-			String sql2 = "";
-			sql2 ="UPDATE TBLPPKOB SET TARIKH_MATI = '"+ tarikhmati_pemohon +"'"
-					+ "WHERE ID_PEMOHON = '"+ id_pemohonlama +"' AND ID_SIMATI = '"+id_simati+"'";
+			sql2 = r2.getSQLUpdate("TBLPPKOB");
+			myLogger.info("Step 4 TBLPPKOB : "+ sql2);
+			stmt.executeUpdate(sql2);
 			
-			try {
-				db2 = new Db();
-				Statement stmt2  = db.getStatement();
-				ResultSet rs2 = stmt2.executeQuery(sql2);
-				myLogger.info("Step 4 syafiqah:" + sql2);
-				
-			} finally {
-				if (db2 != null)
-					db2.close();
-			}
+//			sql2 ="UPDATE TBLPPKOB SET TARIKH_MATI = '"+ tarikhmati_pemohon +"'"
+//					+ "WHERE ID_PEMOHON = '"+ id_pemohonlama +"' AND ID_SIMATI = '"+id_simati+"'";
+//			myLogger.info("Step 4 syafiqah:" + sql2);
 			
-			String sql3 = "";
-			sql3 ="UPDATE TBLPPKOBPERMOHONAN SET TARIKH_MATI = '"+ tarikhmati_pemohon +"'"
-					+ "WHERE ID_PEMOHON = '"+ id_pemohonlama +"' AND ID_SIMATI = '"+id_simati+"'";
+//			try {
+//				db2 = new Db();
+//				Statement stmt2  = db.getStatement();
+//				ResultSet rs2 = stmt2.executeQuery(sql2);
+//				
+//			} finally {
+//				if (db2 != null)
+//					db2.close();
+//			}
 			
-			try {
-				db2 = new Db();
-				Statement stmt3  = db.getStatement();
-				ResultSet rs3 = stmt3.executeQuery(sql3);
-				myLogger.info("Step 5 syafiqah:" + sql3);
-				
-			} finally {
-				if (db3 != null)
-					db3.close();
-			}
+			//TBLPPKOBPERMOHONAN
+			r3.update("ID_PEMOHON",id_pemohonlama);
+			r3.update("ID_SIMATI",id_simati);
+			r3.add("TARIKH_MATI", r3.unquote(tarikh_mati));
 			
+			sql3 = r3.getSQLUpdate("TBLPPKOBPERMOHONAN");
+			myLogger.info("Step 5 TBLPPKOBPERMOHONAN : "+ sql3);
+			stmt.executeUpdate(sql3);
+			
+			conn.commit();
+			
+//			sql3 ="UPDATE TBLPPKOBPERMOHONAN SET TARIKH_MATI = '"+ tarikhmati_pemohon +"'"
+//					+ "WHERE ID_PEMOHON = '"+ id_pemohonlama +"' AND ID_SIMATI = '"+id_simati+"'";
+//			myLogger.info("Step 5 syafiqah:" + sql3);
+			
+//			try {
+//				db2 = new Db();
+//				Statement stmt3  = db.getStatement();
+//				ResultSet rs3 = stmt3.executeQuery(sql3);
+//				
+//			} finally {
+//				if (db3 != null)
+//					db3.close();
+//			}
+//			
+		} catch (SQLException ex) { 
+		   	try {
+		   		conn.rollback();
+		   	} catch (SQLException e) {
+		   		throw new Exception("Rollback error : " + e.getMessage());
+		   	}
+		   	throw new Exception("Ralat : Masalah penyimpanan data " + ex.getMessage());
 			
 		} finally {
 			if (db != null)
