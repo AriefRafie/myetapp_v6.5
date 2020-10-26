@@ -38,7 +38,7 @@
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   #if ($idFail != '')
   <tr>
-    <td> #parse("app/php2/frmPLPHeader.jsp") </td>
+    <td> #parse("app/php2/frmPNWHeader.jsp") </td>
   </tr>
   #elseif ($idFail == '' )
   <tr>

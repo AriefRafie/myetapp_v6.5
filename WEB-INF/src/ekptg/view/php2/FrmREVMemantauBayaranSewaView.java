@@ -1216,9 +1216,10 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 
     		list = new Vector();
 
-        	logic.carianFail(getParam("txtNoFail"), getParam("txtNamaPemohon"), getParam("txtNoRujukan"), idBankC, getParam("txtNoCek"), getParam("txtNoResit"), idJenisFailC, idStatusPerjanjianC,
-        			getParam("txtTujuan"), idNegeriC, idDaerahC, idMukimC, jenisHakmilik, getParam("txtNoHakmilik"), getParam("txtNoWarta"), jenisLot,getParam("txtNoLot"),
-        			getParam("txtNoPegangan"), idKementerianC, idAgensiC);
+        	logic.carianFail(getParam("txtNoFail"), getParam("txtNamaPemohon"), getParam("txtNoRujukan"), idBankC,
+        			getParam("txtNoCek"), getParam("txtNoResit"), idJenisFailC, idStatusPerjanjianC,
+        			getParam("txtTujuan"), idNegeriC, idDaerahC, idMukimC, jenisHakmilik, getParam("txtNoHakmilik"),
+        			getParam("txtNoWarta"), jenisLot, getParam("txtNoLot"), getParam("txtNoPegangan"), idKementerianC, idAgensiC);
 
     		list = logic.getSenaraiFail();
 			this.context.put("SenaraiFail", list);

@@ -271,19 +271,92 @@
 		}
 
 	}
-	function cal_tarikh_luput(){
+
+	function calcDate(){
+		if (document.${formName}.txdTarikhMulaPajakan.value != "" && (document.${formName}.txtTempohHari.value != ""
+				|| document.${formName}.txtTempohBulan.value != "" || document.${formName}.txtTempoh.value != "")){
+
+			var tarikhHantar  = document.${formName}.txdTarikhMulaPajakan.value;
+			var days  = 0 ;
+			if(document.${formName}.txtTempohHari.value != ""){
+				days = parseInt(document.${formName}.txtTempohHari.value);
+			}
+			var months  = 0 ;
+			if(document.${formName}.txtTempohBulan.value != ""){
+				months = parseInt(document.${formName}.txtTempohBulan.value);
+			}
+			var years  = 0 ;
+			if(document.${formName}.txtTempoh.value != ""){
+				years = parseInt(document.${formName}.txtTempoh.value);
+			}
+
+			var dt1   = parseInt(tarikhHantar.substring(0,2),10) + days;
+			var mon1  = parseInt(tarikhHantar.substring(3,5),10)-1 + months;
+			var yr1   = parseInt(tarikhHantar.substring(6,10),10) + years;
+
+			var myDate = new Date(yr1, mon1, dt1);
+
+			var day = myDate.getDate();
+			var month = myDate.getMonth()+1;
+			var year = myDate.getFullYear();
+
+			var tarikhJangkaTerima = "";
+			if(month>=10){
+				if(day>=10){
+					tarikhJangkaTerima = day + "/" + month + "/" + year;
+				} else {
+					tarikhJangkaTerima = "0"+ day + "/" + month + "/" + year;
+				}
+			} else {
+				if(day>=10){
+					tarikhJangkaTerima = day + "/0" + month + "/" + year;
+				} else {
+					tarikhJangkaTerima = "0"+ day + "/0" + month + "/" + year;
+				}
+			}
+			document.${formName}.txdTarikhTamatPajakan.value = tarikhJangkaTerima;
+
+		} else {
+			document.${formName}.txdTarikhTamatPajakan.value = "";
+		}
+	}
+	/* function cal_tarikh_luput(){
 		var tr = document.${formName}.txdTarikhMulaPajakan.value;
 		var tempoh = document.${formName}.txtTempoh.value;
 		var luput = "";
 		if((tr!="" && tr!=null) && (tempoh!="" && tempoh!=null)){
-			var temp_tr = tr.substring(0,6)
-		  	var year_cur = tr.substring(6,10)
+			var temp_tr = tr.substring(0,6);
+			alert("temp_tr >>> "+temp_tr);
+		  	var year_cur = tr.substring(6,10);
+			alert("year_cur >>> "+year_cur);
 			luput = temp_tr+(parseInt(year_cur)+parseInt(tempoh));
-
 		}
 		document.${formName}.txdTarikhTamatPajakan.value = luput;
 
 	}
+	function cal_tarikh_luputb(){
+		var tr = document.${formName}.txdTarikhMulaPajakan.value;
+		var tempoh = document.${formName}.txtTempohBulan.value;
+		var luput = "";
+		var tamat = document.${formName}.txdTarikhTamatPajakan.value;
+		alert("tamat >>>> "+tamat);
+		if((tr!="" && tr!=null) && (tempoh!="" && tempoh!=null)){
+			var temp_tr = tr.substring(0,3);
+			alert("temp_tr >>> "+temp_tr);
+		  	var year_cur = tr.substring(3,5);
+			alert("year_cur >>> "+year_cur);
+			luput = temp_tr+(parseInt(year_cur)+parseInt(tempoh));
+			alert("luput 1 >>>>> "+luput);
+			luput = luput + tamat;
+
+			alert("luput 2 >>>>> "+luput);
+		}
+
+		alert("luput 3 >>>>> "+luput);
+		document.${formName}.txdTarikhTamatPajakan.value = luput;
+
+	} */
+
 
 	function validateCurrency(elmnt,content,content2) {
 		//if it is character, then remove it..

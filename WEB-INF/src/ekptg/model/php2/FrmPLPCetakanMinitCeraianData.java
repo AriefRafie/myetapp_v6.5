@@ -47,10 +47,10 @@ public class FrmPLPCetakanMinitCeraianData {
 						rs.getString("ID_KERTASKERJA") == null ? "" : rs
 								.getString("ID_KERTASKERJA"));
 				h.put("txtKepada",
-						rs.getString("KEPADA") == null ? "Y.B DATO' SERI MENTERI SUMBER ASLI DAN ALAM SEKITAR."
+						rs.getString("KEPADA") == null ? "Y.B DATO' SERI MENTERI TENAGA DAN SUMBER ASLI"
 								: rs.getString("KEPADA"));
 				h.put("txtMelalui",
-						rs.getString("MELALUI") == null ? "Y.BHG DATO' KETUA SETIAUSAHA KEMENTERIAN SUMBER ASLI DAN ALAM SEKITAR"
+						rs.getString("MELALUI") == null ? "Y.BHG DATO' KETUA SETIAUSAHA KEMENTERIAN TENAGA DAN SUMBER ASLI"
 								: rs.getString("MELALUI"));
 				h.put("txtDaripada",
 						rs.getString("DARIPADA") == null ? "PESURUHJAYA TANAH PERSEKUTUAN"

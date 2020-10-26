@@ -1,42 +1,50 @@
 /**
  * AUTHOR : RAZMAN BIN MD ZAINAL
- * MODIFIED : YATI -13102020
  */
 package ekptg.intergration.eTanah.pengambilan;
 
-import integrasi.ws.etanah.melaka_ns.ppt.CustomDataSource;
+import integrasi.IntegrasiManager;
+import integrasi.utils.IntegrationInternal;
 
-import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub;
+import org.apache.axis2.addressing.EndpointReference;
+
+import integrasi.ws.etanah.ETanahSek4;
+import integrasi.ws.etanah.ETanahSek8;
+//import org.apache.axis2.client.Options;
+import integrasi.ws.etanah.melaka_ns.ppt.CustomDataSource;
+//import integrasi.ws.etanah.ppt.ETanahCarianManager;
+import integrasi.ws.etanah.ppt.ETanahPPTManager;
+
+//import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub;
+
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.DaftarPermohonanBorangAMMk;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.DaftarPermohonanBorangAMMkE;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.DaftarPermohonanBorangAMMkResponse;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumatHakmilikForm;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.LampiranForm;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumatPermohonanSek4Form;
+
 import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.InsertDerafMMKTajuk_byObject;
 import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.InsertDerafMMKTajuk_byObjectE;
 import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.InsertDerafMMK_byObject;
 import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.InsertDerafMMK_byObjectE;
 import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.InsertDokumen_byObject;
 import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.InsertDokumen_byObjectE;
-import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.InsertHakmilikList_byObject;
-import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.InsertHakmilikList_byObjectE;
-import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.InsertMaklumatPengambilan_byObject;
-import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.InsertMaklumatPengambilan_byObjectE;
+//import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.InsertHakmilikList_byObject;
+//import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.InsertHakmilikList_byObjectE;
+//import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.InsertMaklumatPengambilan_byObject;
+//import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.InsertMaklumatPengambilan_byObjectE;
 import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.InsertMaklumatWarta_byObject;
 import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.InsertMaklumatWarta_byObjectE;
 import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.Tblintpptderafmmk;
 import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.Tblintpptderafmmktajuk;
 import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.Tblintpptdokumen;
-import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.Tblintppthakmilik;
-import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.Tblintpptmaklumatpengambilan;
+//import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.Tblintppthakmilik;
+//import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.Tblintpptmaklumatpengambilan;
 import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.Tblintpptwarta;
 import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.UploadDokumen;
 import integrasi.ws.etanah.melaka_ns.ppt.EtappPengambilanServiceStub.UploadDokumenE;
-
-
-import integrasi.rest.etanah.wpkl.ppk.EtanahWPKLPPKManager;
-import integrasi.ws.etanah.ppt.ETanahCarianManager;
-
-import ekptg.model.integrasi.CapaianHakmilikeTanahHTP;
-import ekptg.model.integrasi.CapaianHakmilikeTanahPPK;
-import ekptg.model.integrasi.FrmPopupCapaianHakmilikeTanahData;
-import ekptg.model.integrasi.IIntegrasieTanahCarian;
-
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -53,10 +61,10 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import javax.activation.DataHandler;
 import javax.servlet.http.HttpSession;
-import javax.xml.rpc.ServiceException;
 
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
@@ -71,8 +79,8 @@ import org.apache.log4j.Logger;
 import com.Ostermiller.util.Base64;
 
 import ekptg.helpers.DB;
-import etanah.ws.MyEtappPengambilan;
-import etanah.ws.MyEtappPengambilanServiceLocator;
+import ekptg.model.entities.Tblrujdokumen;
+import ekptg.model.utils.lampiran.ILampiran;
 
 public class PopupPengambilanTanah extends AjaxBasedModule {
 
@@ -80,7 +88,25 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 	static Logger myLogger = Logger.getLogger(PopupPengambilanTanah.class);
 
 	PopupPengambilanTanahData logic = new PopupPengambilanTanahData();
+	private static MyEtappPengambilanServiceStub stub = null;
+	private static IntegrasiManager im = null;
+	private static String userName = ""; 
+	private static String password = ""; 
+	private static String caseCode = "";
+	//private static String url = "";
+	private static String source = "";
+	private static String eventName = "";
+	//private static URL objURL = null;
+	private static String msg = "";
+	private static String msgDaftar = "";
+	//private MyEtappPengambilanServiceStub stub = null;
+	public static String flagMsg = null;
+	public static String outputMsg = null;
 	
+	PopupeTanahData logic_ = new PopupeTanahData();
+    ILampiran iLampiran = null;
+    IntegrationInternal integration4 = null;
+
 	@Override
 	public String doTemplate2() throws Exception {
 		HttpSession session = this.request.getSession();
@@ -120,13 +146,14 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		
 		
 		String id_fail = getParam("id_fail");
+		String idPermohonan = getParam("id_permohonan");
 		String id_permohonan = getParam("id_permohonan");
 		String no_fail = getParam("no_fail");
 		String jenis_skrin = getParam("jenis_skrin");
 		String hitButton = getParam("hitButton");
 		String action = getParam("action");
 		String id_dokumen = getParam("id_dokumen");
-		String tajuk = getParam("tajuk");
+		String nama_dokumen = getParam("nama_dokumen");
 		String kategori_lampiran = getParam("kategori_lampiran");
 		String id_hakmilik = getParam("id_hakmilik");
 		String id_penarikan = getParam("id_penarikan");
@@ -138,7 +165,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		this.context.put("no_fail", no_fail);
 		this.context.put("jenis_skrin", jenis_skrin);
 		this.context.put("hitButton", hitButton);
-		this.context.put("tajuk", tajuk);
+		this.context.put("nama_dokumen", nama_dokumen);
 		this.context.put("id_hakmilik", id_hakmilik);
 		this.context.put("id_penarikan", id_penarikan);
 		context.put("statusSend", "");
@@ -157,10 +184,8 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		
 		vm = "app/integrasi/etanah/pengambilanTanah/PopupPengambilanTanah.jsp";
 		myLogger.info("hitButton :::::::" + hitButton);
-		
-		
-		
-		
+			
+		String userID = (String) session.getAttribute("_ekptg_user_id");		
 		
 		if ("simpanDokumen".equals(hitButton)) {
 			if(doPostPop.equals("true"))
@@ -174,7 +199,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 					conn = db.getConnection();
 					conn.setAutoCommit(false);					
 						uploadFiles(id_permohonan, id_fail, id_hakmilik, jenis_skrin,
-								tajuk, session, db, conn, id_penarikan,kategori_lampiran,return_new_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
+								nama_dokumen, session, db, conn, id_penarikan,kategori_lampiran,return_new_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
 						context.put("flag_submit", "yes");
 						conn.commit();					
 				} catch (Exception e) {
@@ -207,15 +232,155 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 				context.put("flag_submit", "yes");
 			}
 		} else if ("hantarData".equals(hitButton)) {
+			ETanahPPTManager cm = new ETanahPPTManager("E-TANAH");
+			//stub = getStub();
+			//myLogger.info("detail ETanahPPTManager :"+cm);
+			myLogger.info("masuk hantar ");
 			if(doPostPop.equals("true"))
 			{
+				myLogger.info("masuk aaa la ");
 				context.put("statusSend", "yes");
 				context.put("statusMesej",
 						"<font color='blue'><b><blink>Berjaya!</blink></b></font>");
 				Db db = null;
 				try {
+					//db = new Db();
 					db = new Db();
-					hantarData(jenis_skrin, id_fail, id_hakmilik, session,id_permohonan, id_penarikan,db,return_new_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
+					myLogger.info("masuk sini tak ye");
+					//Vector<Hashtable<String,String>> listHakmilik = getSenaraiHakmilik(id_permohonan, db);
+					//myLogger.info("listHakmilik="+listHakmilik);
+					
+					//this.context.put("listHakmilik", listHakmilik);
+					//Vector listHakmilikEndorsan = getSenaraiHakmilik(id_permohonan, db);	
+					
+					MaklumatPermohonanSek4Form reqformSek4 = new MaklumatPermohonanSek4Form();
+					DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+					Calendar cal = Calendar.getInstance();
+					String dateNow = dateFormat.format(cal.getTime());
+					myLogger.info("dateNow :" + dateNow);
+					
+					reqformSek4.setTarikh_permohonan("16/10/2020");
+					//myLogger.info("setTarikh_permohonan :"+dateNow);
+					reqformSek4.setNama_kementerian("KEMENTERIAN AIR, TANAH DAN SUMBER ASLI");
+					reqformSek4.setTujuan_dalam_english("");
+					reqformSek4.setTujuan("Pembersihan dan Pengindahan Sg. Melaka, Melaka Parcel 2.");
+					reqformSek4.setNo_fail_jkptg("JKPTG(S).MLK/03/881/18/2020/3");
+					reqformSek4.setKod_negeri_pengambilan("04");
+					reqformSek4.setNama_negeri_pengambilan("MELAKA");
+					reqformSek4.setKod_daerah_pengambilan("03");
+					reqformSek4.setNama_daerah_pengambilan("ALOR GAJAH");
+					reqformSek4.setJenis_pengambilan("SEKSYEN4");
+					reqformSek4.setJenis_projek_pengambilan("");
+					reqformSek4.setNo_rujukan_surat_kjp("KATS/BPN 608-8/5 Jld.5 (33)");
+					reqformSek4.setTarikh_surat_kjp("09/08/2012");
+					reqformSek4.setId_kementerian_myetapp("18");
+					reqformSek4.setNama_agensi("BAHAGIAN PEMBANGUNAN");
+					reqformSek4.setId_agensi_myetapp("445");
+					reqformSek4.setKodAgensi("25");
+					reqformSek4.setKodKementerian("18");
+					reqformSek4.setAlamat1("Aras 15, Wisma Sumber Asli");
+					reqformSek4.setAlamat2("No.25 Persiaran Perdana, Presint 4");
+					reqformSek4.setAlamat3("");
+					reqformSek4.setAlamat4("");
+					reqformSek4.setPoskod("62574");
+					reqformSek4.setKodNegeri("16");			
+					
+					
+					myLogger.info("SSSSSSSSSSSSSSSSWWW");
+					
+					//MaklumatHakmilikForm reqformHakmilik = new MaklumatHakmilikForm();
+					//Vector<Hashtable<String,String>> listHakmilik = getSenaraiHakmilik(id_permohonan, db);
+//					reqformHakmilik.setId_hakmilik("040108PN00019187");
+//					reqformHakmilik.setKod_luas_ambil("M");
+//					reqformHakmilik.setKod_luas_asal("M");
+//					reqformHakmilik.setKod_unit_hakmilik("PN");
+//					reqformHakmilik.setLuas_ambil("143.0000");
+//					reqformHakmilik.setLuas_asal("143.0000");
+//					reqformHakmilik.setNo_fail_jkptg("JKPTG(S).MLK/03/881/18/2020/3"); 
+//					reqformHakmilik.setNo_hakmilik("00019187");
+//					reqformHakmilik.setNo_lot("0003346");
+//					reqformHakmilik.setNo_warta("");
+//					reqformHakmilik.setStatus_borangk("");
+//					reqformHakmilik.setTarikh_borangk("");
+//					reqformHakmilik.setTarikh_warta("");
+					
+					
+					String nowarta = "1234";
+					//myLogger.info("SSSSSSSSSSSSSSSSWWW1");
+					
+					MaklumatHakmilikForm[] hakmiliks = new MaklumatHakmilikForm[12] ;
+					//hakmiliks[0].
+//					hakmiliks[0] = new MaklumatHakmilikForm();
+//					hakmiliks[1] = new MaklumatHakmilikForm();
+//					hakmiliks[2] = new MaklumatHakmilikForm();
+//					hakmiliks[10] = new MaklumatHakmilikForm();
+					
+					try {
+				    hakmiliks[0].setId_hakmilik("1");
+					hakmiliks[1].setNo_warta("12345");
+					hakmiliks[2].setTarikh_warta("12/12/2020");
+					hakmiliks[10].setLuas_ambil("0.4");
+					
+					myLogger.info("idhkmilik "+hakmiliks[0].getId_hakmilik());
+					myLogger.info("luasambil "+hakmiliks[10].getLuas_ambil());
+					
+					}catch(Exception f) {
+						//myLogger.info("SSSSSSSSSSSSSSSSWWW20");
+						//f.printStackTrace();
+					}
+//					hakmiliks[1].setNo_warta(nowarta);
+					
+					//myLogger.info("SSSSSSSSSSSSSSSSWWW2");
+					
+					
+					LampiranForm lampiranMMK = null;
+					//lampiranMMK.setFilename("test");
+					
+					//myLogger.info("SSSSSSSSSSSSSSSSWWW3");
+					
+					LampiranForm[] lampiran = new LampiranForm[3];
+//					lampiran[0] = new LampiranForm();
+//					lampiran[1] = new LampiranForm();
+//					try {
+//					lampiran[0].setFilename("test");
+//					lampiran[1].setKodDokumen("2");
+//					}catch(Exception g) {
+//						myLogger.info("SSSSSSSSSSSSSSSSWWW4");
+//						g.printStackTrace();
+//					}
+					
+					
+					/*MaklumatPermohonanSek4Form form
+					,MaklumatHakmilikForm[] hakmiliks
+					,LampiranForm lampiranMMK
+					,LampiranForm[] lampiran*/
+					
+					//myLogger.info("mKMMLMLML");
+					
+					
+					
+					//hantarData(jenis_skrin, id_fail, id_hakmilik, session,id_permohonan, id_penarikan,db,return_new_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
+					try {
+//					String test = daftarPermohonanBorangAMMk(reqformSek4
+//							,hakmiliks
+//							,lampiranMMK
+//							,lampiran
+//							);
+					//myLogger.info("masuk sini tak zzzzzz--- "+test);
+					String jeniSkrin=jenis_skrin;
+					Hashtable<String,String> maklumatPermohonan = logic_.getMaklumatPermohonan(idPermohonan, db);
+					Vector<Hashtable<String,String>> listHakmilik = logic_.getSenaraiHakmilik(idPermohonan, db);
+					Vector<Tblrujdokumen> listDokumen = logic_.getSenaraiDokumen(idPermohonan,jeniSkrin,db);
+
+					getISek4().setHakmiliks(listHakmilik);
+					getISek4().hantar(cm, maklumatPermohonan,listDokumen, userID, db);
+
+					myLogger.info("masuk sini tak");
+					
+					}catch(Exception e) {
+						myLogger.info("Exception tutu "+e);
+						e.printStackTrace();
+					}
 				} 
 				catch (Exception e) {
 					context.put("statusSend", "no");
@@ -231,6 +396,40 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 				
 			}
 		}
+			/*if ("hantarData".equals(hitButton)) {
+			if(doPostPop.equals("true"))
+			{
+				context.put("statusSend", "yes");
+				context.put("statusMesej",
+						"<font color='blue'><b><blink>Berjaya!</blink></b></font>");
+				Db db = null;
+				try {
+					db = new Db();
+					/*tring test = daftarPermohonanBorangAMMk(reqformSek4
+							,hakmiliks
+							,lampiranMMK
+							,lampiran
+							);
+					myLogger.info("masuk sini tak zzzzzz--- "+test);
+					myLogger.info("masuk sini tak");
+					
+					hantarData(jenis_skrin, id_fail, id_hakmilik, session,id_permohonan, id_penarikan,db,return_new_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
+				myLogger.info(" hantarData :");
+				} 
+				catch (Exception e) {
+					context.put("statusSend", "no");
+				context.put("statusMesej",
+						"<font color='red'><b><blink>Tidak Berjaya!</blink></b></font>");
+				context.put("errorMesej",
+						"<font color='red'><b>" + e.toString() + "</b></font>");
+			}
+				finally {
+					if (db != null)
+						db.close();
+				}
+				
+			}
+		}*/
 		if (jenis_skrin.equals("BorangC")) {
 			Db db = null;
 			try {
@@ -356,10 +555,10 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			try {
 				db = new Db();
 				context.put("turutan",return_new_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
-				List<Hashtable> listSenaraiLotBorangC = new ArrayList();
-				listSenaraiLotBorangC = logic
-						.listSenaraiLotBorangC(id_fail, db);
-				setupPage(session, action, listSenaraiLotBorangC);
+				List<Hashtable> listSenaraiLotBorangA = new ArrayList();
+				listSenaraiLotBorangA = logic
+						.listSenaraiLotBorangA(id_fail, db);
+				setupPage(session, action, listSenaraiLotBorangA);
 				listSenaraiDokumenUpload(id_permohonan, id_hakmilik,
 						jenis_skrin, id_penarikan, db);
 				maklumatProjek(id_fail, db);
@@ -519,18 +718,26 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			String NO_WARTA = "";
 			String TARIKH_WARTA = "";
 			String NO_FAIL_DERAF = "";
+			String NO_PERMOHONAN = "";
 			String NO_RUJUKAN_TARIKBALIK = "";
 			String ID_NEGERI = "";
 
 			Hashtable hash_maklumatWarta = null;
 			Hashtable hash_maklumatProjek = null;
 			Hashtable hash_maklumatTarikBalik = null;
+			//YATI
+			Hashtable hash_maklumatintPermohonan = null;
 			
 			
 			hash_maklumatProjek = logic.getMaklumatProjek(id_fail_etapp, db);
 			NO_FAIL_DERAF = (hash_maklumatProjek.get("NO_FAIL").toString());
 			ID_NEGERI = (hash_maklumatProjek.get("ID_NEGERI").toString());
 			
+			//YATI
+			hash_maklumatintPermohonan = logic_.getMaklumatInt(id_permohonan, db);
+			//String NO_PERMOHONAN = "";
+			NO_PERMOHONAN = (hash_maklumatintPermohonan.get("NO_PERMOHONAN").toString());
+					//logic.getMaklumatIntPermohonan(id_fail_etapp, db);
 			
 			//open maklumat pengambilan tanah				
 			 String tarikh_permohonan_mp = "";
@@ -600,17 +807,16 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			kod_negeri_kjp = (hash_maklumatProjek.get("KOD_NEGERI_KJP").toString());
 			
 			Integer checkMaklumatPPTdihantar = logic.derafMaklumatPengambilanLog_COUNT(id_fail_etapp, jenis_skrin_etapp, db,return_new_turutan (id_fail_etapp,id_permohonan, id_hakmilik_etapp, jenis_skrin_etapp,db));
-			myLogger.info("checkMaklumatPPTdihantar :"+checkMaklumatPPTdihantar);
 			if (checkMaklumatPPTdihantar == 0) {
-				myLogger.info("masukkk");
-				Tblintpptmaklumatpengambilan tblintpptmaklumatpengambilan[] = new Tblintpptmaklumatpengambilan[1];
+				MaklumatPermohonanSek4Form tblintpptmaklumatpengambilan[] = new MaklumatPermohonanSek4Form[1];
 				tblintpptmaklumatpengambilan[0] =  addMaklumatPengambilan_return_obj( tarikh_permohonan_mp, nama_kementerian_mp,  tujuan_dalam_english_mp,  tujuan_mp,  no_fail_jkptg_mp,  kod_negeri_pengambilan_mp, 
 						 nama_negeri_pengambilan_mp,  kod_daerah_pengambilan_mp,  nama_daerah_pengambilan_mp,  jenis_pengambilan_mp,  jenis_projek_pengambilan_mp,  no_rujukan_surat_kjp_mp, 
 						 tarikh_surat_kjp_mp,  no_rujukan_ptg_mp,  no_rujukan_ptd_mp,  id_kementerian_myetapp_mp,  nama_agensi_mp,  id_agensi_myetapp_mp,  jenis_pengambilan_segera_mp, flag_permohonan_segera_mp, 
 						turutan_mp, flag_proses_mp, session,kod_agensi,kod_kementerian,alamat1_kjp,alamat2_kjp,alamat3_kjp,poskod_kjp,kod_negeri_kjp);
 				
-				myLogger.info("addMaklumatPengambilan_return_obj :"+tblintpptmaklumatpengambilan[0]);
+				
 				addDerafMaklumatPengambilan_List(tblintpptmaklumatpengambilan,id_fail_etapp, session, db);
+			
 				saveLogMaklumatPengambilan(id_fail_etapp, jenis_skrin_etapp,
 						session, db,turutan);
 			}				
@@ -632,7 +838,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 				NO_RUJUKAN_TARIKBALIK = (hash_maklumatTarikBalik.get("NO_PENARIKANBALIK").toString());
 				
 					Integer checkMMKPBdihantar = logic.derafMmkPBLog_COUNT(id_penarikan, jenis_skrin_etapp, db);
-					if (checkMMKPBdihantar == 0) {
+					if (checkMMKPBdi == 0) {
 						
 						Hashtable hash_maklumatMMK = null;
 						hash_maklumatMMK = logic.getMaklumatMMK(id_penarikan,id_fail_etapp,jenis_skrin_etapp,db);
@@ -681,10 +887,10 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 				Integer checkWartadihantar = logic.derafMaklumatWartaLog_COUNT(
 						id_fail_etapp, jenis_skrin_etapp, db);
 				if (checkWartadihantar == 0) {
-					//Tblintpptwarta tblintpptwarta_arr[] = new Tblintpptwarta[1];
-					//tblintpptwarta_arr[0] = addDerafMaklumatWarta_return_obj(id_fail_etapp, jenis_skrin_etapp,NO_FAIL_DERAF, dateNow,
-							//NO_WARTA, TARIKH_WARTA,session, db,turutan);
-					//addDerafMaklumatWarta_List(tblintpptwarta_arr,id_fail_etapp, session, db);
+					Tblintpptwarta tblintpptwarta_arr[] = new Tblintpptwarta[1];
+					tblintpptwarta_arr[0] = addDerafMaklumatWarta_return_obj(id_fail_etapp, jenis_skrin_etapp,NO_FAIL_DERAF, dateNow,
+							NO_WARTA, TARIKH_WARTA,session, db,turutan);
+					addDerafMaklumatWarta_List(tblintpptwarta_arr,id_fail_etapp, session, db);
 					saveLogMaklumatWarta(id_fail_etapp, jenis_skrin_etapp,
 							session, db,turutan);
 				}				
@@ -843,7 +1049,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 				List listSenaraiLotBorangC_PULL = logic
 						.listSenaraiLotBorangC_PULL(id_fail_etapp, db);
 				
-				Tblintppthakmilik tblintppthakmilik_arr[] = new Tblintppthakmilik[listSenaraiLotBorangC_PULL.size()];				
+				MaklumatHakmilikForm tblintppthakmilik_arr[] = new MaklumatHakmilikForm[listSenaraiLotBorangC_PULL.size()];				
 				for (int i = 0; i < listSenaraiLotBorangC_PULL.size(); i++) {
 					Hashtable hashSenaraiLotBorangC = (Hashtable) listSenaraiLotBorangC_PULL
 							.get(i);
@@ -940,7 +1146,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			} else if (jenis_skrin_etapp.equals("BorangI")) {
 				List listSenaraiLotBorangI_PULL = logic
 						.listSenaraiLotBorangI_PULL(id_fail_etapp, db);
-				Tblintppthakmilik tblintppthakmilik_arr[] = new Tblintppthakmilik[listSenaraiLotBorangI_PULL.size()];
+				MaklumatHakmilikForm tblintppthakmilik_arr[] = new MaklumatHakmilikForm[listSenaraiLotBorangI_PULL.size()];
 				for (int i = 0; i < listSenaraiLotBorangI_PULL.size(); i++) {
 					Hashtable hashSenaraiLotBorangI = (Hashtable) listSenaraiLotBorangI_PULL
 							.get(i);
@@ -1040,29 +1246,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 				}
 				addHakmilik_List(tblintppthakmilik_arr,id_fail_etapp, session, db,turutan);
 
-			} 
-			
-			/*MyEtappPengambilanServiceLocator locator = new MyEtappPengambilanServiceLocator();
-			
-			try {
-				MyEtappPengambilan myEtappPengambilanPort = locator.getMyEtappPengambilanPort();
-				
-				//String ret1 = myEtappPengambilanPort.daftarPermohonanBorangAMMk(maklumatPermohonan, maklumatHakmilik, listMMK, attachment);
-				
-				String ret = myEtappPengambilanPort.borangCdanMMK(id_permohonan, listMMK, attachment);
-				
-				System.out.println("result "+ret);
-				//System.out.println("result "+ret1);
-				
-			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
-			
-			
-			
-			
-			/*else if (jenis_skrin_etapp.equals("TarikBalik")) {
+			} /*else if (jenis_skrin_etapp.equals("TarikBalik")) {
 				List listSenaraiLotTarikBalik_PULL = logic
 						.listSenaraiLotTarikBalik_PULL(id_fail_etapp, db,
 								id_penarikan);
@@ -1180,7 +1364,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 				List listSenaraiLotBorangK_PULL = logic
 						.listSenaraiLotBorangK_PULL(id_fail_etapp,
 								id_hakmilik_etapp, db);
-				Tblintppthakmilik tblintppthakmilik_arr[] = new Tblintppthakmilik[listSenaraiLotBorangK_PULL.size()];
+				MaklumatHakmilikForm tblintppthakmilik_arr[] = new MaklumatHakmilikForm[listSenaraiLotBorangK_PULL.size()];
 				for (int i = 0; i < listSenaraiLotBorangK_PULL.size(); i++) {
 					Hashtable hashSenaraiLotBorangK_PULL = (Hashtable) listSenaraiLotBorangK_PULL
 							.get(i);
@@ -1292,7 +1476,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 				List listSenaraiLotBorangK_PULL = logic
 						.listSenaraiLotBorangK_PULL(id_fail_etapp,
 								id_hakmilik_etapp, db);
-				Tblintppthakmilik tblintppthakmilik_arr[] = new Tblintppthakmilik[listSenaraiLotBorangK_PULL.size()];
+				MaklumatHakmilikForm tblintppthakmilik_arr[] = new MaklumatHakmilikForm[listSenaraiLotBorangK_PULL.size()];
 				for (int i = 0; i < listSenaraiLotBorangK_PULL.size(); i++) {
 					Hashtable hashSenaraiLotBorangK_PULL = (Hashtable) listSenaraiLotBorangK_PULL
 							.get(i);
@@ -2484,8 +2668,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		String url = "";		
 		if(id_negeri.equals("4"))
 		{
-			//url = "http://etanah.melaka.gov.my/etanahwsa/EtappPengambilanService";
-			url ="http://kjsb.zapto.org/etanahwsa/MyEtappPengambilanService?wsdl"; //yati
+			url = "http://kjsb.zapto.org/etanahwsa/MyEtappPengambilanService?WSDL";
 		}
 		else if(id_negeri.equals("5"))
 		{
@@ -2493,7 +2676,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		}
 		//url = "http://192.168.200.129:20928/etanahwsa/EtappPengambilanService";
 		
-		EtappPengambilanServiceStub stub = new EtappPengambilanServiceStub(url);
+		MyEtappPengambilanServiceStub stub = new MyEtappPengambilanServiceStub(url);
 		InsertDerafMMK_byObject c2 = new InsertDerafMMK_byObject();
 		InsertDerafMMK_byObjectE c2E = new InsertDerafMMK_byObjectE(); 		
 
@@ -2501,7 +2684,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			System.out.println("*******************************************try");
 			c2.setTblintpptderafmmk(tblintpptderafmmk);			
 			c2E.setInsertDerafMMK_byObject(c2);		
-			stub.insertDerafMMK_byObject(c2E);
+			//stub.insertDerafMMK_byObject(c2E);
 		} catch (RuntimeException e) {
 			System.out
 					.println("*******************************************catch"
@@ -2541,22 +2724,21 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		String url = "";		
 		if(id_negeri.equals("4"))
 		{
-			//url = "http://etanah.melaka.gov.my/etanahwsa/EtappPengambilanService";
-			url ="http://kjsb.zapto.org/etanahwsa/MyEtappPengambilanService?wsdl";
+			url = "http://kjsb.zapto.org/etanahwsa/MyEtappPengambilanService?WSDL";
 		}
 		else if(id_negeri.equals("5"))
 		{
 			url = "http://218.208.26.234/etanahwsa/EtappPengambilanService";
 		}
 		//url = "http://192.168.200.129:20928/etanahwsa/EtappPengambilanService";
-		EtappPengambilanServiceStub stub = new EtappPengambilanServiceStub(url);
+		MyEtappPengambilanServiceStub stub = new MyEtappPengambilanServiceStub(url);
 		InsertDerafMMKTajuk_byObject c2 = new InsertDerafMMKTajuk_byObject();
 		InsertDerafMMKTajuk_byObjectE c2E = new InsertDerafMMKTajuk_byObjectE();
 		try {
 			System.out.println("*******************************************try");
 			c2.setTblintpptderafmmktajuk(tblintpptderafmmktajuk);
 			c2E.setInsertDerafMMKTajuk_byObject(c2);
-			stub.insertDerafMMKTajuk_byObject(c2E);
+			//stub.insertDerafMMKTajuk_byObject(c2E);
 		} catch (RuntimeException e) {
 			System.out
 					.println("*******************************************catch"
@@ -2597,22 +2779,21 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		String url = "";		
 		if(id_negeri.equals("4"))
 		{
-			//url = "http://etanah.melaka.gov.my/etanahwsa/EtappPengambilanService";
-			url ="http://kjsb.zapto.org/etanahwsa/MyEtappPengambilanService?wsdl";
+			url = "http://kjsb.zapto.org/etanahwsa/MyEtappPengambilanService?WSDL";
 		}
 		else if(id_negeri.equals("5"))
 		{
 			url = "http://218.208.26.234/etanahwsa/EtappPengambilanService";
 		}	
 		//url = "http://192.168.200.129:20928/etanahwsa/EtappPengambilanService";
-		EtappPengambilanServiceStub stub = new EtappPengambilanServiceStub(url);
+		MyEtappPengambilanServiceStub stub = new MyEtappPengambilanServiceStub(url);
 		InsertMaklumatWarta_byObject c2 = new InsertMaklumatWarta_byObject();
 		InsertMaklumatWarta_byObjectE c2E = new InsertMaklumatWarta_byObjectE();
 		try {
 			System.out.println("*******************************************try");
 			c2.setTblintpptwarta(tblintpptwarta);
 			c2E.setInsertMaklumatWarta_byObject(c2);
-			stub.insertMaklumatWarta_byObject(c2E);
+			//stub.insertMaklumatWarta_byObject(c2E);
 		} catch (RuntimeException e) {
 			System.out
 					.println("*******************************************catch"
@@ -2645,7 +2826,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 	}
 
 	
-	public void addDerafMaklumatPengambilan_List(Tblintpptmaklumatpengambilan tblintpptmaklumatpengambilan[],String id_fail_etapp, HttpSession session, Db db) throws Exception {		
+	public void addDerafMaklumatPengambilan_List(MaklumatPermohonanSek4Form tblintpptmaklumatpengambilan[],String id_fail_etapp, HttpSession session, Db db) throws Exception {		
 		//point to server etanah
 		
 		Hashtable hash_maklumatprojek = logic.getMaklumatProjek(id_fail_etapp, db);
@@ -2653,22 +2834,54 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		String url = "";		
 		if(id_negeri.equals("4"))
 		{
-			//url = "http://etanah.melaka.gov.my/etanahwsa/EtappPengambilanService";
-			url ="http://kjsb.zapto.org/etanahwsa/MyEtappPengambilanService?wsdl";
+			url = "http://kjsb.zapto.org/etanahwsa/MyEtappPengambilanService?WSDL";
 		}
 		else if(id_negeri.equals("5"))
 		{
 			url = "http://218.208.26.234/etanahwsa/EtappPengambilanService";
 		}
 		//url = "http://192.168.200.129:20928/etanahwsa/EtappPengambilanService";
-		EtappPengambilanServiceStub stub = new EtappPengambilanServiceStub(url);
-		InsertMaklumatPengambilan_byObject c2 = new InsertMaklumatPengambilan_byObject();
-		InsertMaklumatPengambilan_byObjectE c2E = new InsertMaklumatPengambilan_byObjectE();
+		MyEtappPengambilanServiceStub stub = new MyEtappPengambilanServiceStub(url);
+		DaftarPermohonanBorangAMMk c2 = new DaftarPermohonanBorangAMMk();
+		DaftarPermohonanBorangAMMkE c2E = new DaftarPermohonanBorangAMMkE();
 		try {
 			System.out.println("*******************************************try");			
-			c2.setTblintpptmaklumatpengambilan(tblintpptmaklumatpengambilan);
-			c2E.setInsertMaklumatPengambilan_byObject(c2);
-			stub.insertMaklumatPengambilan_byObject(c2E);
+			//c2.setTblintpptmaklumatpengambilan(tblintpptmaklumatpengambilan);
+			//c2E.setInsertMaklumatPengambilan_byObject(c2);
+			//stub.insertMaklumatPengambilan_byObject(c2E);
+			MaklumatPermohonanSek4Form reqformSek4 = new MaklumatPermohonanSek4Form();
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+			Calendar cal = Calendar.getInstance();
+			String dateNow = dateFormat.format(cal.getTime());
+			myLogger.info("dateNow :" + dateNow);
+			
+			reqformSek4.setTarikh_permohonan(dateNow);
+			myLogger.info("setTarikh_permohonan :"+dateNow);
+			reqformSek4.setNama_kementerian("KEMENTERIAN AIR, TANAH DAN SUMBER ASLI");
+			reqformSek4.setTujuan_dalam_english("");
+			reqformSek4.setTujuan("Pembersihan dan Pengindahan Sg. Melaka, Melaka Parcel 2.");
+			reqformSek4.setNo_fail_jkptg("JKPTG(S).MLK/03/881/18/2020/3");
+			reqformSek4.setKod_negeri_pengambilan("04");
+			reqformSek4.setNama_negeri_pengambilan("MELAKA");
+			reqformSek4.setKod_daerah_pengambilan("03");
+			reqformSek4.setNama_daerah_pengambilan("ALOR GAJAH");
+			reqformSek4.setJenis_pengambilan("SEKSYEN4");
+			reqformSek4.setJenis_projek_pengambilan("");
+			reqformSek4.setNo_rujukan_surat_kjp("KATS/BPN 608-8/5 Jld.5 (33)");
+			reqformSek4.setTarikh_surat_kjp("09/08/2012");
+			reqformSek4.setId_kementerian_myetapp("18");
+			reqformSek4.setNama_agensi("BAHAGIAN PEMBANGUNAN");
+			reqformSek4.setId_agensi_myetapp("445");
+			reqformSek4.setKodAgensi("25");
+			reqformSek4.setKodKementerian("18");
+			reqformSek4.setAlamat1("Aras 15, Wisma Sumber Asli");
+			reqformSek4.setAlamat2("No.25 Persiaran Perdana, Presint 4");
+			reqformSek4.setAlamat3("");
+			reqformSek4.setAlamat4("");
+			reqformSek4.setPoskod("62574");
+			reqformSek4.setKodNegeri("16");
+			
+			
 		} catch (RuntimeException e) {
 			System.out
 					.println("*******************************************catch"
@@ -2677,6 +2890,41 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			System.out
 					.println("*******************************************finally");
 		}
+		
+	}
+		public String daftarPermohonanBorangAMMk( MaklumatPermohonanSek4Form form
+				,MaklumatHakmilikForm[] hakmiliks
+				,LampiranForm lampiranMMK
+				,LampiranForm[] lampiran
+				) throws Exception{
+				//MaklumatPermohonanSek8Form permohonan = null;
+				myLogger.info("masuk sini tak123456");
+				String url = "http://kjsb.zapto.org/etanahwsa/MyEtappPengambilanService?WSDL";
+		
+		//url = "http://192.168.200.129:20928/etanahwsa/EtappPengambilanService";
+				MyEtappPengambilanServiceStub stub = new MyEtappPengambilanServiceStub(url);
+			
+				myLogger.info("masuk sini tak12345");
+				DaftarPermohonanBorangAMMk requestBorangA = new DaftarPermohonanBorangAMMk();
+				//request.setIdPermohonan(idPermohonan);
+				//request.setDrafMMk(lampiranMMK);
+				//request.setAttachment(lampiran);
+				requestBorangA.setMaklumatPermohonan(form);
+				requestBorangA.setMaklumatHakmilik(hakmiliks);
+				requestBorangA.setDrafMMk(lampiranMMK);
+				requestBorangA.setAttachment(lampiran);
+					myLogger.info("requestBorangA :"+requestBorangA);
+				DaftarPermohonanBorangAMMkE temp = new DaftarPermohonanBorangAMMkE();
+				myLogger.info("hai sini stop1");
+				//temp.setBorangCdanMMK(request);
+				temp.setDaftarPermohonanBorangAMMk(requestBorangA);
+				myLogger.info("hai sini stop2");
+				DaftarPermohonanBorangAMMkResponse response = stub.daftarPermohonanBorangAMMk(temp).getDaftarPermohonanBorangAMMkResponse();
+						//stub.borangCdanMMK(temp).getBorangCdanMMKResponse();
+				myLogger.info("hai sini stop "+response);
+				return response.get_return();
+					
+			}
 		
 		//point to local server
 		/*
@@ -2695,8 +2943,6 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 					.println("*******************************************finally");
 		}
 		*/
-		
-	}
 	
 	
 	public void addDokumen_List(Tblintpptdokumen tblintpptdokumen[],String id_fail_etapp, HttpSession session, Db db) throws Exception {		
@@ -2707,15 +2953,14 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		String url = "";		
 		if(id_negeri.equals("4"))
 		{
-			//url = "http://etanah.melaka.gov.my/etanahwsa/EtappPengambilanService";
-			url ="http://kjsb.zapto.org/etanahwsa/MyEtappPengambilanService?wsdl";
+			url = "http://kjsb.zapto.org/etanahwsa/MyEtappPengambilanService?WSDL";
 		}
 		else if(id_negeri.equals("5"))
 		{
 			url = "http://218.208.26.234/etanahwsa/EtappPengambilanService";
 		}
 		//url = "http://192.168.200.129:20928/etanahwsa/EtappPengambilanService";
-		EtappPengambilanServiceStub stub = new EtappPengambilanServiceStub(url);
+		MyEtappPengambilanServiceStub stub = new MyEtappPengambilanServiceStub(url);
 		InsertDokumen_byObject c2 = new InsertDokumen_byObject();
 		InsertDokumen_byObjectE c2E = new InsertDokumen_byObjectE();
 		try {
@@ -2766,8 +3011,10 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 				params.setTajuk_dokumen(tbl.getTajuk_dokumen());
 				uplodDokumenE.setUploadDokumen(params);
 				System.out.println("########### upload 1");
-				stub.uploadDokumen(uplodDokumenE);
+				//stub.uploadDokumen(uplodDokumenE);
 				System.out.println("########### upload 2");
+				
+				
 			}
 
 		} catch (RuntimeException e) {
@@ -2801,7 +3048,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 	}
 	
 	
-	public void addHakmilik_List(Tblintppthakmilik tblintppthakmilik[],String id_fail_etapp, HttpSession session, Db db,Integer turutan) throws Exception {		
+	public void addHakmilik_List(MaklumatHakmilikForm tblintppthakmilik[],String id_fail_etapp, HttpSession session, Db db,Integer turutan) throws Exception {		
 		//point to server etanah
 		
 		Hashtable hash_maklumatprojek = logic.getMaklumatProjek(id_fail_etapp, db);
@@ -2811,27 +3058,46 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		
 		if(id_negeri.equals("4"))
 		{
-			//url = "http://etanah.melaka.gov.my/etanahwsa/EtappPengambilanService";
-			url ="http://kjsb.zapto.org/etanahwsa/MyEtappPengambilanService?wsdl";
+			url = "http://kjsb.zapto.org/etanahwsa/MyEtappPengambilanService?WSDL";
 		}
 		else if(id_negeri.equals("5"))
 		{
 			url = "http://218.208.26.234/etanahwsa/EtappPengambilanService";
 		}
 		//url = "http://192.168.200.129:20928/etanahwsa/EtappPengambilanService";
-		EtappPengambilanServiceStub stub = new EtappPengambilanServiceStub(url);
-		InsertHakmilikList_byObject c2 = new InsertHakmilikList_byObject();
-		InsertHakmilikList_byObjectE c2E = new InsertHakmilikList_byObjectE();
+		//stub = getStub();
+		myLogger.info("masuk sini tak12345");
+				
+		MyEtappPengambilanServiceStub stub = new MyEtappPengambilanServiceStub(url);
+		MaklumatHakmilikForm c2 = new MaklumatHakmilikForm();
+		//MaklumatHakmilikFormE c2E = new InsertHakmilikList_byObjectE();
 		try {
-			System.out.println("*******************************************try");
-			c2.setTblintppthakmilik(tblintppthakmilik);
-			c2E.setInsertHakmilikList_byObject(c2);
-			stub.insertHakmilikList_byObject(c2E);
+			System.out.println("*******************************************try HAKMILIK");
+			//c2.setTblintppthakmilik(tblintppthakmilik);
+			MaklumatHakmilikForm reqformHakmilik = new MaklumatHakmilikForm();
+			//request.setIdPermohonan(idPermohonan);
+			//request.setDrafMMk(lampiranMMK);
+			//request.setAttachment(lampiran);
+			reqformHakmilik.setId_hakmilik("040108PN00019187");
+			reqformHakmilik.setKod_luas_ambil("M");
+			reqformHakmilik.setKod_luas_asal("M");
+			reqformHakmilik.setKod_unit_hakmilik("PN");
+			reqformHakmilik.setLuas_ambil("143.0000");
+			reqformHakmilik.setLuas_asal("143.0000");
+			reqformHakmilik.setNo_fail_jkptg("JKPTG(S).MLK/03/881/18/2020/3"); 
+			reqformHakmilik.setNo_hakmilik("00019187");
+			reqformHakmilik.setNo_lot("0003346");
+			reqformHakmilik.setNo_warta("");
+			reqformHakmilik.setStatus_borangk("");
+			reqformHakmilik.setTarikh_borangk("");
+			reqformHakmilik.setTarikh_warta("");
+			//stub.insertHakmilikList_byObject(c2E);
 			
 			for (int i = 0; i < tblintppthakmilik.length; i++) {
 			
-			saveLog(id_fail_etapp, tblintppthakmilik[i].getId_hakmilik_myetapp(), tblintppthakmilik[i].getFlag_proses(),
-					session, db, "",turutan);
+				saveLog(id_fail_etapp, tblintppthakmilik[i].getId_hakmilik(), "1",
+						session, db, "",turutan);
+				
 			
 			}
 			
@@ -2980,7 +3246,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 	
 	
 	
-	public Tblintpptmaklumatpengambilan addMaklumatPengambilan_return_obj(String tarikh_permohonan,String nama_kementerian, String tujuan_dalam_english, String tujuan, String no_fail_jkptg, String kod_negeri_pengambilan, 
+	public MaklumatPermohonanSek4Form addMaklumatPengambilan_return_obj(String tarikh_permohonan,String nama_kementerian, String tujuan_dalam_english, String tujuan, String no_fail_jkptg, String kod_negeri_pengambilan, 
 			String nama_negeri_pengambilan, String kod_daerah_pengambilan, String nama_daerah_pengambilan, String jenis_pengambilan, String jenis_projek_pengambilan, String no_rujukan_surat_kjp, 
 			String tarikh_surat_kjp, String no_rujukan_ptg, String no_rujukan_ptd, String id_kementerian_myetapp, String nama_agensi, String id_agensi_myetapp, String jenis_pengambilan_segera, String flag_permohonan_segera, 
 			Integer turutan, String flag_proses, HttpSession session,String kod_agensi,String kod_kementerian,String alamat1_kjp,String alamat2_kjp,
@@ -2988,7 +3254,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 			Calendar cal = Calendar.getInstance();
 			String dateNow = dateFormat.format(cal.getTime());
-			Tblintpptmaklumatpengambilan mp = new Tblintpptmaklumatpengambilan();			
+			MaklumatPermohonanSek4Form mp = new MaklumatPermohonanSek4Form();			
 			mp.setTarikh_permohonan(tarikh_permohonan);
 			mp.setNama_kementerian(nama_kementerian);
 			mp.setTujuan_dalam_english(tujuan_dalam_english);
@@ -3002,15 +3268,15 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			mp.setJenis_projek_pengambilan(jenis_projek_pengambilan);
 			mp.setNo_rujukan_surat_kjp(no_rujukan_surat_kjp);
 			mp.setTarikh_surat_kjp(tarikh_surat_kjp);
-			mp.setNo_rujukan_ptg(no_rujukan_ptg);
-			mp.setNo_rujukan_ptd(no_rujukan_ptd);
+			//mp.setNo_rujukan_ptg(no_rujukan_ptg);
+			//mp.setNo_rujukan_ptd(no_rujukan_ptd);
 			mp.setId_kementerian_myetapp(id_kementerian_myetapp);
 			mp.setNama_agensi(nama_agensi);
 			mp.setId_agensi_myetapp(id_agensi_myetapp);
-			mp.setJenis_pengambilan_segera(jenis_pengambilan_segera);
-			mp.setFlag_permohonan_segera(flag_permohonan_segera);
-			mp.setTurutan(turutan);
-			mp.setFlag_proses(flag_proses);
+			//mp.setJenis_pengambilan_segera(jenis_pengambilan_segera);
+			//mp.setFlag_permohonan_segera(flag_permohonan_segera);
+			//mp.setTurutan(turutan);
+			//mp.setFlag_proses(flag_proses);
 			mp.setKodAgensi(kod_agensi);
 			mp.setKodKementerian(kod_kementerian);
 			
@@ -3228,7 +3494,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 	
 	
 	
-	public Tblintppthakmilik addHakmilik_return_obj(String id_hakmilik, String flag_proses,
+	public MaklumatHakmilikForm addHakmilik_return_obj(String id_hakmilik, String flag_proses,
 			String no_warta, String tarikh_warta, String luas_asal,
 			String kod_luas_asal, String luas_ambil, String kod_luas_ambil,
 			String no_fail_jkptg, String no_lot, String kod_unit_hakmilik,
@@ -3250,10 +3516,10 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		myLogger.info("dateNow :" + dateNow);
 
 		myLogger.info("get_tururan :::"+turutan);
-			Tblintppthakmilik th = new Tblintppthakmilik();
+			MaklumatHakmilikForm th = new MaklumatHakmilikForm();
 
 			th.setId_hakmilik(id_hakmilik.trim());
-			th.setFlag_proses(flag_proses);
+			//th.setFlag_proses(flag_proses);
 			th.setNo_warta(no_warta);
 			th.setTarikh_warta(tarikh_warta);
 			th.setLuas_asal(luas_asal.trim());
@@ -3266,24 +3532,24 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			th.setNo_hakmilik(no_hakmilik.trim());
 			th.setTarikh_borangk(tarikh_borangk);
 			th.setStatus_borangk(status_borangk);
-			th.setNo_rujukan_tarikhbalik(no_rujukan_tarikhbalik.trim());
-			th.setSebab_tarikbalik(sebab_tarikbalik);
-			th.setNo_warta_tarikbalik(sebab_tarikbalik);
-			th.setTarikh_warta_tarikbalik(tarikh_warta_tarikbalik);
-			th.setNo_lot_baru(no_lot_baru);
-			th.setNo_syit(no_syit);
-			th.setNo_pa(no_pa);
-			th.setNo_pu(no_pu);
-			th.setLuas_pa(luas_pa);
-			th.setKod_luas_pa(kod_luas_pa);
-			th.setTarikh_terima_data(dateNow);
-			th.setKod_negeri(kod_negeri.trim());
-			th.setKod_daerah(kod_daerah.trim());
-			th.setKod_mukim(kod_mukim.trim());
-			th.setTarikh_borangi(tarikh_borangi);
-			th.setId_hakmilik_myetapp(id_hakmilik_etapp);
-			th.setId_fail_myetapp(id_fail_etapp);
-			th.setTurutan(turutan);
+			//th.setNo_rujukan_tarikhbalik(no_rujukan_tarikhbalik.trim());
+			//th.setSebab_tarikbalik(sebab_tarikbalik);
+			//th.setNo_warta_tarikbalik(sebab_tarikbalik);
+			//th.setTarikh_warta_tarikbalik(tarikh_warta_tarikbalik);
+			//th.setNo_lot_baru(no_lot_baru);
+			//th.setNo_syit(no_syit);
+			//th.setNo_pa(no_pa);
+			//th.setNo_pu(no_pu);
+			//th.setLuas_pa(luas_pa);
+			//th.setKod_luas_pa(kod_luas_pa);
+			//th.setTarikh_terima_data(dateNow);
+			//th.setKod_negeri(kod_negeri.trim());
+			//th.setKod_daerah(kod_daerah.trim());
+			//th.setKod_mukim(kod_mukim.trim());
+			//th.setTarikh_borangi(tarikh_borangi);
+			//th.setId_hakmilik_myetapp(id_hakmilik_etapp);
+			//th.setId_fail_myetapp(id_fail_etapp);
+			//th.setTurutan(turutan);
 
 			return th;
 	}
@@ -5108,7 +5374,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 
 	// UPLOAD FILE
 	private void uploadFiles(String id_permohonan, String id_fail,
-			String id_hakmilik, String jenis_skrin, String tajuk,
+			String id_hakmilik, String jenis_skrin, String nama_dokumen,
 			HttpSession session, Db db, Connection conn, String id_penarikan,String kategori_lampiran,Integer turutan)
 			throws Exception {
 		DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -5143,9 +5409,10 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 								jenis_skrin, tajuk, session, db, conn,
 								id_penarikan,kategori_lampiran);
 					}*/
+					getDoc().simpan(item,request);
 
 					saveData(item, id_fail, id_permohonan, id_hakmilik,
-							jenis_skrin, tajuk, session, db, conn,
+							jenis_skrin, nama_dokumen, session, db, conn,
 							id_penarikan,kategori_lampiran,turutan);
 				}
 			}
@@ -5462,7 +5729,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 
 	private void saveLog(String id_fail, String id_hakmilik,
 			String jenis_skrin, HttpSession session, Db db,
-			String id_penarikanbalik,Integer turutan) throws Exception {
+			String id_penarikanbalik, Integer turutan) throws Exception {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		Calendar cal = Calendar.getInstance();
 		String dateNow = dateFormat.format(cal.getTime());
@@ -5482,7 +5749,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		ps.setString(4, userId);
 		ps.setString(5, dateNow);
 		ps.setString(6, id_penarikanbalik);
-		ps.setInt(7, turutan);
+		//ps.setInt(7, turutan);
 		ps.executeUpdate();
 		con.commit();
 
@@ -6287,5 +6554,149 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 	               if(db != null) db.close();
 	        }
 	        }//close setDataListKertas
+	   
+	   public Vector<Hashtable<String,String>> getSenaraiHakmilik(String id_permohonan, Db db) {
+			String sql = "";
+			Vector listHakmilik = null;
+			Hashtable<String,String> h;
+
+			try {
+				listHakmilik = new Vector();
+
+				Statement stmt = db.getStatement();
+				sql = " SELECT DISTINCT "+
+				" RN.KOD_NEGERI,RD.KOD_DAERAH,RM.KOD_MUKIM,'OO' NO_SEKSYEN "+
+				" ,RJ.KOD_JENIS_HAKMILIK KOD_HAKMILIK,H.NO_HAKMILIK" +
+				" ,RL.KOD_LOT,NVL(H.NO_LOT,H.NO_PT) NO_LOT "+
+				" ,LO.KOD_LUAS KOD_LUAS_ASAL,H.LUAS_LOT LUAS_ASAL,LT.KOD_LUAS KOD_LUAS_AMBIL,H.LUAS_AMBIL "+
+				" ,H.CATATAN CATATAN_HAKMILIK "+
+				//--H.*
+				" ,HI.ID_PERMOHONANMILIK ID_HAKMILIKPERMOHONAN,H.ID_HAKMILIK,F.NO_FAIL"+
+				" FROM TBLPPTHAKMILIK H,TBLINTANAHPERMOHONANMILIK HI "+
+				" ,TBLRUJNEGERI RN,TBLRUJDAERAH RD,TBLRUJMUKIM RM "+
+				" ,TBLRUJLUAS LO,TBLRUJLUAS LT "+
+				" ,TBLRUJJENISHAKMILIK RJ "+
+				" ,TBLRUJLOT RL,TBLPFDFAIL F,TBLPPTPERMOHONAN P "+
+				" WHERE H.ID_NEGERI = RN.ID_NEGERI "+
+				" AND H.ID_DAERAH = RD.ID_DAERAH "+
+				" AND H.ID_DAERAH = RM.ID_MUKIM "
+				+ " AND F.ID_FAIL = P.ID_FAIL "
+				+ " AND P.ID_PERMOHONAN = H.ID_PERMOHONAN "+
+				" AND H.ID_HAKMILIK = HI.ID_HAKMILIK(+) "+
+				" AND H.ID_UNITLUASLOT = LO.ID_LUAS(+) "+
+				" AND H.ID_UNITLUASAMBIL = LT.ID_LUAS(+) "+
+				" AND H.ID_LOT = RL.ID_LOT(+) "+
+				" AND H.ID_JENISHAKMILIK = RJ.ID_JENISHAKMILIK(+) "+
+				" AND H.ID_PERMOHONAN ='" + id_permohonan + "'"+
+				"";
+				
+//				sql = " SELECT H.*,HI.ID_PERMOHONANMILIK ID_HAKMILIKPERMOHONAN FROM TBLPPTHAKMILIK H,TBLINTANAHPERMOHONANMILIK HI "+
+//					" WHERE H.ID_HAKMILIK = HI.ID_HAKMILIK(+) "+
+//					" AND H.ID_PERMOHONAN =  '" + idPermohonanIntegrasi + "'"+
+//					"";
+				//sql = "SELECT * FROM TBLINTANAHPERMOHONANMILIK WHERE ID_PERMOHONAN = '" + idPermohonanIntegrasi + "'";
+				myLogger.info("getSenaraiHakmilik:sql="+sql);
+				sql = sql + " ORDER BY H.ID_HAKMILIK ASC";
+				ResultSet rs = stmt.executeQuery(sql);
+
+				while (rs.next()) {
+					h = new Hashtable<String,String>();
+					h.put("idHakmilikPermohonan", rs.getString("ID_HAKMILIKPERMOHONAN") == null ? "" : rs.getString("ID_HAKMILIKPERMOHONAN"));
+					h.put("idHakmilik", rs.getString("ID_HAKMILIK") == null ? "" : rs.getString("ID_HAKMILIK"));
+					h.put("kodNegeri", rs.getString("KOD_NEGERI") == null ? "" : rs.getString("KOD_NEGERI"));
+					h.put("kodDaerah", rs.getString("KOD_DAERAH") == null ? "" : rs.getString("KOD_DAERAH"));
+					h.put("kodMukim", rs.getString("KOD_MUKIM") == null ? "" : rs.getString("KOD_MUKIM"));
+					h.put("kodHakmilik", rs.getString("KOD_HAKMILIK") == null ? "" : rs.getString("KOD_HAKMILIK"));
+					h.put("noHakmilik", rs.getString("NO_HAKMILIK") == null ? "" : rs.getString("NO_HAKMILIK"));
+					h.put("kodLot", rs.getString("KOD_LOT") == null ? "" : rs.getString("KOD_LOT"));
+					h.put("noLot", rs.getString("NO_LOT") == null ? "" : rs.getString("NO_LOT"));
+					h.put("noSeksyen", rs.getString("NO_SEKSYEN") == null ? "" : rs.getString("NO_SEKSYEN"));
+					h.put("kodLuasAsal", rs.getString("KOD_LUAS_ASAL") == null ? "" : rs.getString("KOD_LUAS_ASAL"));
+					h.put("luasAsal", rs.getString("LUAS_ASAL") == null ? "" : rs.getString("LUAS_ASAL"));
+					h.put("kodLuasAmbil", rs.getString("KOD_LUAS_AMBIL") == null ? "" : rs.getString("KOD_LUAS_AMBIL"));
+					h.put("luasAmbil", rs.getString("LUAS_AMBIL") == null ? "" : rs.getString("LUAS_AMBIL"));
+					
+					h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL"));
+					//h.put("noWarta", rs.getString("NO_WARTA") == null ? "" : rs.getString("NO_WARTA"));
+					//h.put("tarikhWarta", rs.getString("TARIKH_WARTA") == null ? "" : sdf.format(rs.getDate("TARIKH_WARTA")));
+					//h.put("tarikhBorangK", rs.getString("TARIKH_BORANGK") == null ? "" : sdf.format(rs.getDate("TARIKH_BORANGK")));
+					//h.put("statusAmbil", rs.getString("STATUS_AMBIL") == null ? "" : rs.getString("STATUS_AMBIL"));
+					//h.put("noSubJaket", rs.getString("NO_SUBJAKET") == null ? "" : rs.getString("NO_SUBJAKET"));
+					//h.put("sebabPenarikanBalik", rs.getString("SEBAB_PENARIKANBALIK") == null ? "" : rs.getString("SEBAB_PENARIKANBALIK"));
+					//h.put("catatanHakmilik", rs.getString("CATATAN_HAKMILIK") == null ? "" : rs.getString("CATATAN_HAKMILIK"));
+					//h.put("idPPTHakmilik", rs.getString("ID_PPTHAKMILIK") == null ? "" : rs.getString("ID_PPTHAKMILIK"));
+					//h.put("idHakmilikSambungan", rs.getString("ID_HAKMILIK_SAMBUNGAN") == null ? "" : rs.getString("ID_HAKMILIK_SAMBUNGAN"));
+					//h.put("kodLuasSambungan", rs.getString("KOD_LUAS_SAMBUNGAN") == null ? "" : rs.getString("KOD_LUAS_SAMBUNGAN"));
+					//h.put("luasSambungan", rs.getString("LUAS_SAMBUNGAN") == null ? "" : rs.getString("LUAS_SAMBUNGAN"));				
+					//h.put("noPerserahan", rs.getString("NO_PERSERAHAN") == null ? "" : rs.getString("NO_PERSERAHAN"));
+					//h.put("tarikhEndorsan", rs.getString("TARIKH_ENDORSAN") == null ? "" : sdf.format(rs.getDate("TARIKH_ENDORSAN")));
+					//h.put("masaEndorsan", rs.getString("MASA_ENDORSAN") == null ? "" : rs.getString("MASA_ENDORSAN"));
+					//h.put("statusEndorsan", rs.getString("STATUS_ENDORSAN") == null ? "" : rs.getString("STATUS_ENDORSAN"));
+					listHakmilik.addElement(h);
+				}
+
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+
+			return listHakmilik;
+		}
+	   
+	   private static MyEtappPengambilanServiceStub getStub() throws Exception {
+		   String url = "http://kjsb.zapto.org/etanahwsa/MyEtappPengambilanService?WSDL";
+		
+			MyEtappPengambilanServiceStub stub = new MyEtappPengambilanServiceStub(url);	
+					
+			org.apache.axis2.client.Options options = new org.apache.axis2.client.Options();
+			List<org.apache.axis2.context.NamedValue> namedValuePairs = new ArrayList<org.apache.axis2.context.NamedValue>();
+			namedValuePairs.add(new org.apache.axis2.context.NamedValue("SOAPAction", "myetapp"));
+			namedValuePairs.add(new org.apache.axis2.context.NamedValue("username", "myetapp"));
+			namedValuePairs.add(new org.apache.axis2.context.NamedValue("password", "etanah123"));
+			namedValuePairs.add(new org.apache.axis2.context.NamedValue("Content-Type", "text/html"));
+			options.setProperty(org.apache.axis2.transport.http.HTTPConstants.HTTP_HEADERS, namedValuePairs);
+			stub._getServiceClient().setOptions(options);
+			
+			stub._getServiceClient().setTargetEPR(new EndpointReference(url));
+			return stub;
+			
+		}
+		public static String getEventName() {
+			return eventName;
+		}
+
+		public static void setEventName(String eventName) {
+			PopupPengambilanTanah.eventName = eventName;
+		}
+		
+		public static String getFlagMsg() {
+			return flagMsg;
+		}
+
+		public static void setFlagMsg(String flagMsg) {
+			PopupPengambilanTanah.flagMsg = flagMsg;
+		}
+
+		public static String getOutputMsg() {
+			return outputMsg;
+		}
+
+		public static void setOutputMsg(String outputMsg) {
+			PopupPengambilanTanah.outputMsg = outputMsg;
+		}
+		
+	private IntegrationInternal getISek4(){
+		if(integration4 == null){
+			integration4 = new ETanahSek4();
+		}
+		return integration4;
+					
+	}	
+	private ILampiran getDoc(){
+		if(iLampiran == null){
+			iLampiran = new ekptg.model.ppt.util.LampiranBean();
+		}
+		return iLampiran;
+				
+	}
 	 
 }

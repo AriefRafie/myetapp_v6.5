@@ -35,6 +35,7 @@
   <input name="idLuasKegunaan" type="hidden" id="idLuasKegunaan" value="$idLuasKegunaan"/>
   <input name="idKementerian" type="hidden" id="idKementerian" value="$idKementerian"/>
   <input name="idAgensi" type="hidden" id="idAgensi" value="$idAgensi"/>
+  <input name="flagDetail" type="hidden" id="flagDetail" value="$flagDetail"/>
   
   
  
@@ -203,7 +204,7 @@
                 <td>&nbsp;</td>
                 <td>Keluasan Asal</td>
                 <td>:</td>
-                <td>$beanMaklumatPenawaran.luasAsal $beanMaklumatPenawaran.keteranganLuasAsal
+                <td>$beanMaklumatPenawaran.luasAsal $beanMaklumatPenawaran.keteranganLuasAsal HEKTAR
                   <input type="hidden" name="txtLuasAsal" id="txtLuasAsal" value="$beanMaklumatPenawaran.luasAsal"/></td>
               </tr>
               #if ($idLuasKegunaan == '2')
@@ -263,18 +264,18 @@
                 <td> 
                 ##if ($idStatus == '')
                 #if ($mode == 'view')
-                  <!-- #if ($!statussemasa.equals("1") || $!statussemasa.equals("2"))
-                  <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>
+                  #if ($!statussemasa.equals("1") || $!statussemasa.equals("2"))
+                  <!-- <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/> -->
                   <input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
-                  #end -->
+                  #end
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
                   ##end
                   #if ($mode == 'update')
-                  <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniMaklumatPelepasan('$idLuas')"/>
+                  <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniMaklumatPenawaran('$idLuas')"/>
                   <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskini()"/>
                   #end
                    #else
-                   <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniMaklumatPelepasan('$idLuas')"/>
+                   <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniMaklumatPenawaran('$idLuas')"/>
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
                   <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
                  #end </td>
@@ -307,18 +308,31 @@
 						#elseif ($!idjawatan.equals("4")&& $!statussemasa.equals("3"))
 							<p><input type="checkbox" id="checkme"/><a>&nbsp;Saya, <b>$namaPemohon</b> dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
    							<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tanpa sebarang keraguan dan paksaan dari mana-mana pihak.</a></p>
+		    				<p><b><font color="blue" size="2"><span class="blink">
+   							&nbsp&nbsp&nbsp&nbsp Ambil Perhatian: Sila pastikan maklumat diisi pada permohonan adalah TEPAT dan MUKTAMAD.
+   							<br/>&nbsp&nbsp&nbsp&nbsp Permohonan yang telah dihantar TIDAK DIBENARKAN untuk dipinda/dikemaskini.
+   							</p></b></span>
 		    				<p align="center"><input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Permohonan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
-                			<input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
-                		#end
+		    				<input type="button" name="cmdPindaan" id="cmdPindaan" $buttonSend value="Kembalikan kepada penyedia" onclick="doAjaxCall${formName}('simpanpengesahan3')" />
+                			<input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/></p>
+                		
                 		
                  	<!-- <td align="center"><input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/></td> -->
                  	                	
 		    		#else
-		    		<!-- <p align="center"><input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/> -->
-		    		
-           			<p align="center"><input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
-           			
+
+           			<td>
+                	<input type="checkbox" name="pengesahan" id="pengesahan" checked disabled>&nbsp&nbsp
+
+        			Saya, <b>$!namaPemohon</b>, $!kadPengenalanPemohon dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
+   					<br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
+   					
+      				<p align="center">
+           			<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
+            		<input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
+            		</p>
                		<!-- <p align="center"><input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/> -->
+		    		#end
 		    		#end
 		    </td>
            	</tr>
@@ -559,6 +573,29 @@ if(this.checked){
 }
 
 }
+var checker = document.getElementById('checkme');
+var sendbtn = document.getElementById('cmdSimpan');
+var pindaanbtn = document.getElementById('cmdPindaan',true);
+// when unchecked or checked, run the function
+checker.onchange = function(){
+sendbtn.disabled = true;
+if(pindaanbtn !=null){
+pindaanbtn.disabled = true;
+}
+
+if(this.checked){
+   sendbtn.disabled = false;
+   if(pindaanbtn !=null){
+   	pindaanbtn.disabled = false;
+   }
+} else {
+   sendbtn.disabled = true;
+   if(pindaanbtn !=null){
+   	pindaanbtn.disabled = true;
+   }
+}
+
+}
 function doChangeTabUpper(tabId) {
 	document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.selectedTabUpper.value = tabId;
@@ -619,7 +656,7 @@ function doBatalKemaskini() {
 	document.${formName}.mode.value = "view";
 	document.${formName}.submit();
 }
-function doSimpanKemaskiniMaklumatPelepasan(idLuas) {
+function doSimpanKemaskiniMaklumatPenawaran(idLuas) {
 	
 	/* if(document.${formName}.socLuasKegunaan.value == ""){
 		alert('Sila masukkan Luas Kegunaan.');
@@ -679,7 +716,7 @@ function doSimpanKemaskiniMaklumatPelepasan(idLuas) {
 	}
 	
 	document.${formName}.mode.value = "view";
-	document.${formName}.hitButton.value = "doSimpanKemaskiniMaklumatPelepasan";
+	document.${formName}.hitButton.value = "doSimpanKemaskiniMaklumatPenawaran";
 	document.${formName}.submit();
 }
 function doHantar(){
@@ -934,6 +971,46 @@ function doHantarKelulusan(){
 	document.${formName}.modePopup.value = "";
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWOnlineSenaraiFailView";
 	document.${formName}.method="POST";
+	document.${formName}.submit();
+}
+
+function papar(idFail,idStatus) {
+	//alert('baca papar');
+		document.${formName}.idFail.value = idFail;
+		document.${formName}.idStatus.value = idStatus;
+		document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView";
+		document.${formName}.actionOnline.value = "seterusnya";
+		document.${formName}.method="POST";
+		document.${formName}.submit();
+	}
+function bukaCarian(){
+	document.${formName}.flagDetail.value = "buka";
+	document.${formName}.actionOnline.value = "";
+	doAjaxCall${formName}("");
+}
+function tutupCarian(){
+	document.${formName}.flagDetail.value = "";
+	document.${formName}.actionOnline.value = "";
+	document.${formName}.txtNoFail.value = "";
+	document.${formName}.txtNoPermohonan.value = "";
+	document.${formName}.txdTarikhTerima.value = "";
+	document.${formName}.txtNoPegangan.value = "";
+	document.${formName}.socJenisHakmilik.value = "";
+	document.${formName}.txtNoHakmilik.value = "";
+	document.${formName}.txtNoWarta.value = "";
+	document.${formName}.socJenisLot.value = "";
+	document.${formName}.txtNoLot.value = "";
+	document.${formName}.socNegeriC.value = "";
+	document.${formName}.socDaerahC.value = "";
+	document.${formName}.socMukimC.value = "";
+	doAjaxCall${formName}("");
+}
+function carian(){
+	document.${formName}.actionOnline.value = "";
+	doAjaxCall${formName}("");
+}
+function daftarBaru(){
+	document.${formName}.actionOnline.value = "daftarBaru";
 	document.${formName}.submit();
 }
 function doHantarEmel(){

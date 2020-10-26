@@ -1,8 +1,6 @@
 package integrasi.ws.etanah.ppt;
 
 import integrasi.IntegrasiManager;
-import integrasi.ws.etanah.melaka_ns.ppk.EtappPesakaServiceStub.Hakmilik;
-import integrasi.ws.etanah.melaka_ns.ppk.EtappPesakaServiceStub.Pemilik;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.HakmilikDetailByCarianResit;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.HakmilikDetailByCarianResitE;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.HakmilikDetailByCarianResitResponse;
@@ -22,6 +20,8 @@ import java.util.List;
 import org.apache.axis2.client.Options;
 import org.apache.axis2.addressing.EndpointReference;
 import org.apache.log4j.Logger;
+
+import com.mysql.jdbc.Util;
 
 import ekptg.helpers.Utils;
 
@@ -181,13 +181,18 @@ public class ETanahCarianManager {
 			con.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			
-			noKPSimati = getNoKPSimati(idPermohonan);
+			//noKPSimati = getNoKPSimati(idPermohonan);
 			
 			if (hakmilik.getIdHakmilik() != null) {
 				PemilikForm[] pemilik = hakmilik.getListPemilik();				
 				for (int i = 0; i < pemilik.length; i++){
+					pemilikHakmilik = true;
 					if (noKPSimati != null){
-						if (noKPSimati.equalsIgnoreCase(Utils.RemoveDash(pemilik[i].getNoPengenalan()))) {
+						if (isKPSimati(pemilik[i].getIdJenisPengenalan()
+							,Utils.RemoveDash(pemilik[i].getNoPengenalan())
+							,""
+							,"")) {
+						//if (noKPSimati.equalsIgnoreCase(Utils.RemoveDash(pemilik[i].getNoPengenalan()))) {
 							pemilikHakmilik = true;
 							BA_Simati = pemilik[i].getBA();
 							BB_Simati = pemilik[i].getBB();
@@ -290,7 +295,7 @@ public class ETanahCarianManager {
 						+ "'" + hakmilik.getIdHakmilik() + "'"
 						+ ",'"+pf.getNamaPemilik()+"'"
 						+ ",'"+pf.getIdJenisPengenalan()+"'"
-						+ ",'"+pf.getNoPengenalan()+"'"
+						+ ",'"+Utils.RemoveDash(pf.getNoPengenalan())+"'"
 						+ ",'"+pf.getBA()+"'"
 						+ ",'"+pf.getBB()+"'"
 						+ ",'"+pf.getJenisPB()+"',SYSDATE"
@@ -326,6 +331,7 @@ public class ETanahCarianManager {
 							+ " '" + IntegrasiManager.cleanDataString(hakmilik.getPAJAKAN()) + "', '" + IntegrasiManager.cleanDataString(hakmilik.getNO_PERSERAHAN_PAJAKAN()) + "',"
 							+ " '" + IntegrasiManager.cleanDataString(hakmilik.getKAVEAT()) + "', '" + IntegrasiManager.cleanDataString(hakmilik.getNO_PERSERAHAN_KAVEAT()) + "',"						
 							+ " SYSDATE, 'Y', 'Y',SYSDATE)";
+					myLog.info("sql :"+sql);
 					stmt.executeUpdate(sql);
 					
 					
@@ -425,6 +431,48 @@ public class ETanahCarianManager {
 				db.close();
 		}
 		return noKP;
+	}
+	
+	private static boolean isKPSimati(String jenis,String ic,String icLama,String icLain) throws Exception {
+		Db db = null;
+		String sql = "";
+		boolean noKP = false;
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			
+			sql = "SELECT SM.NO_KP_BARU, SM.NO_KP_LAMA, SM.NO_KP_LAIN FROM TBLPPKSIMATI SM "
+				+ " WHERE "
+				+ "";
+			if(jenis.equals("B")){
+				sql +=" SM.NO_KP_BARU='"+ic+"'";
+			}else if(jenis.equals("B")){
+					sql +=" SM.NO_KP_LAMA='"+icLama+"'";
+			}else {
+				sql +=" SM.NO_KP_LAIN='"+icLain+"'";
+					
+			}
+//				+ "SM.ID_SIMATI  = '" + idPermohonanSimati + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()){
+//				if (rs.getString("NO_KP_BARU") != null && rs.getString("NO_KP_BARU").trim().length() > 0) {
+//					noKP = rs.getString("NO_KP_BARU");
+//				} else if (rs.getString("NO_KP_LAMA") != null && rs.getString("NO_KP_LAMA").trim().length() > 0) {
+//					noKP = rs.getString("NO_KP_LAMA");
+//				} else if (rs.getString("NO_KP_LAIN") != null && rs.getString("NO_KP_LAIN").trim().length() > 0) {
+//					noKP = rs.getString("NO_KP_LAIN");
+					noKP =true;
+			
+			} 
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		return noKP;
+		
 	}
 	
 	public static String getEventName() {

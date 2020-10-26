@@ -97,7 +97,6 @@ function cetakAPBLaporanBorangA(id_borangA) {
     if (hWnd.focus != null) hWnd.focus();
 }
 function doSimpanMaklumatPasir(){
-
 	if(document.${formName}.socBulan.value == ""){
 		alert('Sila pilih bulan.');
   		document.${formName}.socBulan.focus(); 

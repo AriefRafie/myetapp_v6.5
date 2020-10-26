@@ -21,8 +21,8 @@
         #end
         <tr>
           <td class="$row" width="5%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" $checked $disabled /></td>
-          <td class="$row" width="45%">$list.keterangan</td>
-          <td class="$row" width="50%">$list.lampirans</td>
+          <td class="$row" width="45%">$!list.keterangan</td>
+          <td class="$row" width="50%">$!list.lampirans</td>
         </tr>
         #end
         #else

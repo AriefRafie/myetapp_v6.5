@@ -18,6 +18,7 @@ import org.apache.commons.logging.LogFactory;
 
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
+import ekptg.engine.EmailSender;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.File;
@@ -443,7 +444,7 @@ public class FrmAPBSenaraiMesyuaratData {
 			Statement stmt = db.getStatement();
 
 
-			sql = "select a.ID_MESYUARAT_PERMOHONAN, d.no_fail,e.nama,a.flag_jenis_permohonan,a.FLAG_SYOR ,a.CATATAN, c.id_permohonan from tblphpMesyuaratPermohonan a, tblphpmesyuarat b, tblpermohonan c, tblpfdfail d, tblphppemohon e "
+			sql = "select a.ID_MESYUARAT_PERMOHONAN, c.id_permohonan, d.no_fail,e.nama,a.flag_jenis_permohonan,a.FLAG_SYOR ,a.CATATAN, c.id_permohonan, D.ID_FAIL from tblphpMesyuaratPermohonan a, tblphpmesyuarat b, tblpermohonan c, tblpfdfail d, tblphppemohon e "
 				 +"where a.flag_jenis_permohonan = 'B' and a.id_mesyuarat = b.id_mesyuarat and a.id_permohonan=c.id_permohonan and c.id_fail=d.id_fail "
 				 +"and c.id_pemohon=e.id_pemohon and a.id_mesyuarat='"+idMesyuarat+"'";	
 			sql = sql + " ORDER BY a.ID_MESYUARAT_PERMOHONAN ASC";
@@ -467,7 +468,7 @@ public class FrmAPBSenaraiMesyuaratData {
 				if(rs.getString("FLAG_JENIS_PERMOHONAN").equals("B")){
 					h.put("jenisPermohonan","PERMOHONAN BARU");
 				}else{
-					h.put("jenisPermohonan","PERMOHONAN TANGGUH");
+					h.put("jenisPermohonan","PERMOHONAN LANJUTAN");
 				}
 				h.put("flagKeputusan",
 						rs.getString("FLAG_SYOR") == null ? "" : rs
@@ -475,6 +476,12 @@ public class FrmAPBSenaraiMesyuaratData {
 				h.put("catatanKeputusan",
 						rs.getString("CATATAN") == null ? "" : rs
 								.getString("CATATAN"));
+				h.put("idFail",
+						rs.getString("ID_FAIL") == null ? "" : rs
+								.getString("ID_FAIL"));
+				h.put("idPermohonan",
+						rs.getString("ID_PERMOHONAN") == null ? "" : rs
+								.getString("ID_PERMOHONAN"));
 				listPermohonanBaharu.addElement(h);
 				bil++;
 			}
@@ -495,7 +502,7 @@ public class FrmAPBSenaraiMesyuaratData {
 			Statement stmt = db.getStatement();
 
 
-			sql = "select a.ID_MESYUARAT_PERMOHONAN, d.no_fail,e.nama,a.flag_jenis_permohonan,a.FLAG_SYOR ,a.CATATAN, c.id_permohonan from tblphpMesyuaratPermohonan a, tblphpmesyuarat b, tblpermohonan c, tblpfdfail d, tblphppemohon e "
+			sql = "select a.ID_MESYUARAT_PERMOHONAN, d.no_fail,e.nama,a.flag_jenis_permohonan,a.FLAG_SYOR ,a.CATATAN, c.id_permohonan, d.id_fail from tblphpMesyuaratPermohonan a, tblphpmesyuarat b, tblpermohonan c, tblpfdfail d, tblphppemohon e "
 				 +"where a.flag_jenis_permohonan = 'L' and a.id_mesyuarat = b.id_mesyuarat and a.id_permohonan=c.id_permohonan and c.id_fail=d.id_fail "
 				 +"and c.id_pemohon=e.id_pemohon and a.id_mesyuarat='"+idMesyuarat+"'";	
 			sql = sql + " ORDER BY a.ID_MESYUARAT_PERMOHONAN ASC";
@@ -519,7 +526,7 @@ public class FrmAPBSenaraiMesyuaratData {
 				if(rs.getString("FLAG_JENIS_PERMOHONAN").equals("B")){
 					h.put("jenisPermohonan","PERMOHONAN BARU");
 				}else{
-					h.put("jenisPermohonan","PERMOHONAN TANGGUH");
+					h.put("jenisPermohonan","PERMOHONAN LANJUTAN");
 				}
 				h.put("flagKeputusan",
 						rs.getString("FLAG_SYOR") == null ? "" : rs
@@ -527,7 +534,13 @@ public class FrmAPBSenaraiMesyuaratData {
 				h.put("catatanKeputusan",
 						rs.getString("CATATAN") == null ? "" : rs
 								.getString("CATATAN"));
-				listPermohonanBaharu.addElement(h);
+				h.put("idFail",
+						rs.getString("ID_FAIL") == null ? "" : rs
+								.getString("ID_FAIL"));
+				h.put("idPermohonan",
+						rs.getString("ID_PERMOHONAN") == null ? "" : rs
+								.getString("ID_PERMOHONAN"));
+				listPermohonanLanjut.addElement(h);
 				bil++;
 			}
 
@@ -1056,6 +1069,9 @@ public class FrmAPBSenaraiMesyuaratData {
 		String sql = "";
 		String sqla = "";
 		String flagSyor="";
+		String flagMesyuaratSemula="";
+		String flagSelesaiMesyuarat="";
+		String flagAktif="";
 		String idPermohonan="";
 		String idSuburusan="";
 		String idFail="";
@@ -1067,7 +1083,7 @@ public class FrmAPBSenaraiMesyuaratData {
 			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			
-			sql = "SELECT A.ID_MESYUARAT_PERMOHONAN, D.NO_FAIL,E.NAMA,A.FLAG_JENIS_PERMOHONAN,A.FLAG_SYOR ,A.CATATAN, C.ID_PERMOHONAN "+
+			sql = "SELECT A.ID_MESYUARAT_PERMOHONAN, D.NO_FAIL,E.NAMA,A.FLAG_JENIS_PERMOHONAN,A.FLAG_SYOR ,A.CATATAN, C.ID_PERMOHONAN, A.FLAG_MESYUARAT_SEMULA, A.FLAG_SELESAI_MESYUARAT, A.FLAG_AKTIF "+
 			"FROM TBLPHPMESYUARATPERMOHONAN A, TBLPHPMESYUARAT B, TBLPERMOHONAN C, TBLPFDFAIL D, TBLPHPPEMOHON E WHERE A.FLAG_JENIS_PERMOHONAN = 'B' "+
 			"AND A.ID_MESYUARAT = B.ID_MESYUARAT AND A.ID_PERMOHONAN=C.ID_PERMOHONAN AND C.ID_FAIL=D.ID_FAIL AND C.ID_PEMOHON=E.ID_PEMOHON "+
 			"AND A.ID_MESYUARAT='"+idMesyuaratPermohonan+"'";
@@ -1079,7 +1095,10 @@ public class FrmAPBSenaraiMesyuaratData {
 			while (rs.next()) {			
 				flagSyor=rs.getString("FLAG_SYOR");
 				idPermohonan=rs.getString("ID_PERMOHONAN");
-				list.add(new String[]{flagSyor, idPermohonan});
+				flagMesyuaratSemula=rs.getString("FLAG_MESYUARAT_SEMULA");
+				flagSelesaiMesyuarat=rs.getString("FLAG_SELESAI_MESYUARAT");
+				flagAktif=rs.getString("FLAG_AKTIF");
+				list.add(new String[]{flagSyor, idPermohonan, flagMesyuaratSemula, flagSelesaiMesyuarat, flagAktif});
 			}	
 			
 			for (int i = 0; i < list.size(); i++) {
@@ -1099,7 +1118,20 @@ public class FrmAPBSenaraiMesyuaratData {
 					idFail=rsa.getString("ID_FAIL");
 				}
 				
+				// TBLPHPMESYUARATPERMOHONAN
+				r = new SQLRenderer();
+				r.update("ID_PERMOHONAN", idPermohonan);
+				r.update("FLAG_AKTIF","1");
+				r.add("FLAG_MESYUARAT_SEMULA", "0");
+				r.add("FLAG_SELESAI_MESYUARAT", "1");
+				r.add("ID_KEMASKINI", userId);
+				r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+				sql = r.getSQLUpdate("TBLPHPMESYUARATPERMOHONAN");
+				stmt.executeUpdate(sql);
+			
+				
 				// TBLPERMOHONAN
+				r = new SQLRenderer();
 				r.update("ID_PERMOHONAN", idPermohonan);
 				r.add("ID_STATUS", "1610213"); // CETAKAN KERTAS RINGKASAN
 				r.add("ID_KEMASKINI", userId);
@@ -1419,5 +1451,103 @@ public class FrmAPBSenaraiMesyuaratData {
 	
 	public Vector getBeanMaklumatImejan() {
 		return beanMaklumatImejan;
+	}
+	
+	public void sendEmailMesyuarat(String idMesyuarat,String emel, HttpSession session) throws Exception {
+		Db db = null;
+		Connection conn = null;
+		Vector beanMaklumatEmail = null;
+		EmailSender email = EmailSender.getInstance();
+		String sql = "";
+		String noFail = "";
+		String tajukMesyuarat = "";			
+		String bilMesyuarat = "";
+		String tarikhMesyuarat = "";
+		String idLokasi = "";
+		String lokasiMesyuarat = "";
+		String idJamDari = "";
+		String idMinitDari = "";
+		String idJamHingga = "";
+		String idMinitHingga = "";
+		String catatan = "";
+		String flagSyor = "";
+		String ulasanPemohon = "";
+		String flagKeputusanPemohon = "";
+		try {
+			db = new Db();
+			conn = db.getConnection();
+	    	conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			//get maklumat mesyuarat APB
+			//sql = "SELECT A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.JAM_DARI, A.MINIT_DARI, A.JAM_HINGGA, A.MINIT_HINGGA, A.ID_LOKASI, C.CATATAN, C.FLAG_SYOR,"
+			//   + " A.ULASAN_PEMOHON, A.FLAG_KEPUTUSAN_PEMOHON, B.LOKASI"
+			//   + " FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B, TBLPHPMESYUARATPERMOHONAN C"
+			//   + " WHERE A.ID_LOKASI = B.ID_LOKASI AND A.ID_MESYUARAT = C.ID_MESYUARAT AND A.ID_MESYUARAT = '" + idMesyuarat + "'";
+			
+			sql = "SELECT A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.JAM_DARI, A.MINIT_DARI, A.JAM_HINGGA, A.MINIT_HINGGA, A.ID_LOKASI,"
+				+ " A.ULASAN_PEMOHON, A.FLAG_KEPUTUSAN_PEMOHON, B.LOKASI"
+				+ " FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B"
+				+ " WHERE A.ID_LOKASI = B.ID_LOKASI AND A.ID_MESYUARAT = '" + idMesyuarat + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			if (rs.next()){
+				tajukMesyuarat= rs.getString("TAJUK");			
+				bilMesyuarat=rs.getString("BIL_MESYUARAT");
+				tarikhMesyuarat=sdf.format(rs.getDate("TARIKH_MESYUARAT"));
+				idLokasi=rs.getString("ID_LOKASI");
+				lokasiMesyuarat=rs.getString("LOKASI");
+				idJamDari=rs.getString("JAM_DARI");
+				if (idJamDari.length()==1){
+					idJamDari="0"+ idJamDari;
+				}
+				idMinitDari=rs.getString("MINIT_DARI");
+				if (idMinitDari.length()==1){
+					idMinitDari="0"+ idMinitDari;
+				}
+				idJamHingga=rs.getString("JAM_HINGGA");
+				if (idJamHingga.length()==1){
+					idJamHingga="0"+ idJamHingga;
+				}
+				idMinitHingga=rs.getString("MINIT_HINGGA");
+				if (idMinitHingga.length()==1){
+					idMinitHingga="0"+ idMinitHingga;
+				}
+				//catatan=rs.getString("CATATAN");
+				//flagSyor=rs.getString("FLAG_SYOR");
+				ulasanPemohon=rs.getString("ULASAN_PEMOHON");
+				flagKeputusanPemohon=rs.getString("FLAG_KEPUTUSAN_PEMOHON");
+			}	
+			
+			String body = "<table width='100%' border='0' cellspacing='0' cellpadding='5'>"
+					+ "<tr><td>Tuan/ Puan,</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td>MESYUARAT BERKENAAN "+tajukMesyuarat.toUpperCase()+"</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td>2.	Dengan hormatnya saya merujuk kepada perkara diatas.</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td>3.	Dimaklumkan bahawa tuan/puan dijemput menghadiri mesyuarat seperti dibawah:-</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td>Tajuk: "+tajukMesyuarat.toUpperCase()+"</td></tr>"
+					+ "<tr><td>Tarikh: "+tarikhMesyuarat.toUpperCase()+"</td></tr>"
+					+ "<tr><td>Masa  : "+idJamDari+":"+idMinitDari+" - "+idJamHingga+":"+idMinitHingga+"</td></tr>"
+					+ "<tr><td>Lokasi: "+lokasiMesyuarat.toUpperCase()+"</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td>Sekian, terima kasih.</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td><i>Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas.</i></td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>" + "</table>";
+			
+			email.RECIEPIENT = emel;
+			email.SUBJECT = "NOTIS PANGGILAN MESYUARAT BERKENAAN " + tajukMesyuarat.toUpperCase();
+			email.MESSAGE = body;
+			email.sendEmail();
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
 	}
 }

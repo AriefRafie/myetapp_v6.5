@@ -151,6 +151,7 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 				idMesyuarat = logic.simpanMesyuarat(getParam("txtTarikhMesyuarat"), 
 						getParam("txtBilMesyuarat"), getParam("txtTujuanMesyuarat"), idJamDari, idMinitDari,
 						idJamHingga, idMinitHingga, getParam("txtCatatanMesyuarat"), idLokasi, session);
+				this.context.put("idMesyuarat", idMesyuarat);
 			}
 			if ("simpanKemaskiniMesyuarat".equals(hitButton)) {
 				logic.simpanKemaskiniMesyuarat(idMesyuarat, getParam("txtTarikhMesyuarat"),
@@ -176,6 +177,7 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 									listAgensi[i], listJawatan[i],
 									listNoTel[i], listEmail[i],getParam("flagPengerusi"),
 									session);
+							logic.sendEmailMesyuarat(idMesyuarat, listEmail[i], session);
 						}
 					}
 				}
@@ -275,7 +277,7 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 				this.context.put("SenaraiKehadiran", senaraiKehadiran);
 
 			} else if ("2".equals(selectedTabUpper)) {
-				
+				this.context.put("close_window", "no");
 				// SENARAI MESYUARAT PERMOHONAN BAHARU
 				logic.setSenaraiPermohonanBaharu(idMesyuarat);
 				senaraiFailMohonBaru = logic.getListPermohonanBaharu();

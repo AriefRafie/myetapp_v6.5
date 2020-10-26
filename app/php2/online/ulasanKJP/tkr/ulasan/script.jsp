@@ -53,7 +53,7 @@ function hantarUlasan(){
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}
-	doDivAjaxCall$formname('divUlasan','hantarUlasan','');
+	doDivAjaxCall$formname('divUlasan2','hantarUlasan','');
 }
 
 function simpanDokumen() {

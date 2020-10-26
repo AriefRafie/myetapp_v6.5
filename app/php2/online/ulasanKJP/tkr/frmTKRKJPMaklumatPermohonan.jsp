@@ -277,7 +277,7 @@
             #foreach ($beanMaklumatTukarguna in $beanMaklumatTukarguna)
               <tr>
                 <td width="1%">#if ($mode == 'update')<span class="style1">*</span>#end</td>
-                <td width="28%" valign="top">Tarikh Terima</td>
+                <td width="28%" valign="top">Tarikh Mohon</td>
                 <td width="1%">:</td>
                 <td width="70%">
                   #if ($mode == 'update')
@@ -321,39 +321,36 @@
                 <td>&nbsp;</td>
                 <td>Keluasan Asal</td>
                 <td>:</td>
-                <td>$beanMaklumatTukarguna.luasAsal
+                <td>$beanMaklumatTukarguna.luasAsal HEKTAR
                   <input type="hidden" name="txtLuasAsal" id="txtLuasAsal" value="$beanMaklumatTukarguna.luasAsal"/></td>
               </tr>
-
-        #if ($idLuasKegunaan == '2')
-
-              #if ($mode == 'update')
-              <tr>
-                <td><span class="style1">*</span></td>
-                <td>Unit Luas</td>
-                <td>:</td>
-                <td>#parse("app/php2/unit_luas.jsp") </td>
-              </tr>
-              #else
-              <tr>
-                <td><span class="style1"></span></td>
-                <td>Unit Luas</td>
-                <td>:</td>
-                <td><select name="socLuas" id="socLuas" $inputTextClass class="$inputTextClass">
-                    <option $selected value="0">SILA PILIH</option>
-                    <option $selectedL1 value="1">KM - KILOMETER PERSEGI</option>
-                    <option $selectedL2 value="2">H - HEKTAR</option>
-                    <option $selectedL3 value="3">M - METER PERSEGI</option>
-                    <option $selectedL4 value="4">E - EKAR,ROOD,POLE</option>
-                    <option $selectedL5 value="5">K - KAKI PERSEGI</option>
-                    <option $selectedL6 value="6">P - EKAR PERPULUHAN</option>
-                    <option $selectedL7 value="7">D - EKAR,DEPA</option>
-                    <option $selectedL8 value="8">R - RELONG,JEMBA,KAKI PERSEGI</option>
-                    <option $selectedL9 value="9">BN - BATU NAUTIKA</option>
-                  </select></td>
-              </tr>
-              #end
-
+        	  #if ($idLuasKegunaan == '2')
+              	#if ($mode == 'update')
+	              <tr>
+	                <td><span class="style1">*</span></td>
+	                <td>Unit Luas</td>
+	                <td>:</td>
+	                <td>#parse("app/php2/unit_luas.jsp") </td>
+	              </tr>
+	            #else
+	              <tr>
+	                <td><span class="style1"></span></td>
+	                <td>Unit Luas</td>
+	                <td>:</td>
+	                <td><select name="socLuas" id="socLuas" $inputTextClass class="$inputTextClass">
+	                    <option $selected value="0">SILA PILIH</option>
+	                    <option $selectedL1 value="1">KM - KILOMETER PERSEGI</option>
+	                    <option $selectedL2 value="2">H - HEKTAR</option>
+	                    <option $selectedL3 value="3">M - METER PERSEGI</option>
+	                    <option $selectedL4 value="4">E - EKAR,ROOD,POLE</option>
+	                    <option $selectedL5 value="5">K - KAKI PERSEGI</option>
+	                    <option $selectedL6 value="6">P - EKAR PERPULUHAN</option>
+	                    <option $selectedL7 value="7">D - EKAR,DEPA</option>
+	                    <option $selectedL8 value="8">R - RELONG,JEMBA,KAKI PERSEGI</option>
+	                    <option $selectedL9 value="9">BN - BATU NAUTIKA</option>
+	                  </select></td>
+	              </tr>
+	            #end
               #if ($idLuas != '99999' && $idLuas != '')
               <tr>
                 <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
@@ -486,8 +483,12 @@
 			<input type="checkbox" name="pengesahan" id="pengesahan">&nbsp&nbsp
         	Saya, <b>$!namaPemohon</b>, $!kadPengenalanPemohon dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
    			<br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
+   			<br/>
+   			<b><font color="BLUE" size="2"><span class="blink">Ambil Perhatian: Sila pastikan maklumat yang diisi pada permohonan adalah TEPAT dan MUKTAMAD.
+	Permohonan yang telah <br>dihantar TIDAK DIBENARKAN untuk dipinda/dikemaskini.</span></font></b>
    			<p align="center"><input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Permohonan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
-   			<input type="button" name="cmdPindaan" id="cmdPindaan" $buttonSend value="Pindaan Penyedia" onclick="doAjaxCall${formName}('simpanpengesahan3')" /></p>
+   			<input type="button" name="cmdPindaan" id="cmdPindaan" $buttonSend value="Kembalikan kepada penyedia" onclick="doAjaxCall${formName}('simpanpengesahan3')" /></p>
+
       		</td>
 
 

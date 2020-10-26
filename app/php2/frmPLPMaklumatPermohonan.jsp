@@ -12,8 +12,9 @@
 #set($saizTxtKemajuanTanah="1000")
 #set($saizTxtPerkara="1000")
 #set($saizTxtNamaProjek="1000")
+
 <p>
-  <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'/>
+  <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input name="mode" type="hidden" id="mode" value="$mode"/>
   <input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
   <input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
@@ -64,9 +65,9 @@
           		#parse("app/php2/frmPLPMaklumatBorangK.jsp") 
           	#else 
           		#parse("app/php2/frmPLPMaklumatTanah.jsp")
-          	  #if ($userRole == '(PHP)PYWPenolongPegawaiTanahHQ' || $userRole == '(PHP)PYWPenolongPengarahHQ' || $userRole == '(PHP)PYWPengarahHQ')
-          		#parse("app/php2/frmPLPTindakan.jsp") 
-          	  #end
+          	  	#if ($userRole != '(PHP)PYWPenolongPegawaiTanahNegeri')
+          			#parse("app/php2/frmPLPTindakan.jsp") 
+          	  	#end
           	#end
           </div>
           
@@ -244,7 +245,7 @@
                 	<td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
                 	<td>Luas Permohonan</td>
                 	<td>:</td>
-                	<td >$selectLuasKegunaan</td>
+                	<td>$selectLuasKegunaan</td>
               	</tr>
               	<tr>
                 	<td>&nbsp;</td>
@@ -751,7 +752,7 @@
 
 if(document.${formName}.hitButton.value == 'refresh'){
     document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmPLPMaklumatPermohonanView";
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 
 function gotoKembali(){
@@ -763,7 +764,7 @@ function doChangeTabUpper(tabId) {
 	document.${formName}.selectedTabUpper.value = tabId;
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function validateLuas(elmnt,content,content2) {
 	//if it is character, then remove it..
@@ -782,37 +783,37 @@ function validateLuas(elmnt,content,content2) {
 	}
 }
 function doChangeKategori() {
-	document.${formName}.submit("doChangeKategori");
+	doAjaxCall${formName}("doChangeKategori");
 }
 function doChangeKementerian() {
-	document.${formName}.submit("doChangeKementerian");
+	doAjaxCall${formName}("doChangeKementerian");
 }
 function doChangeAgensi() {
-	document.${formName}.submit("doChangeAgensi");
+	doAjaxCall${formName}("doChangeAgensi");
 }
 function doChangePejabat() {
-	document.${formName}.submit("doChangePejabat");
+	doAjaxCall${formName}("doChangePejabat");
 }
 function doChangeNegeri() {
-	document.${formName}.submit("doChangeNegeri");
+	doAjaxCall${formName}("doChangeNegeri");
 }
 function doChangeDaerah() {
-	document.${formName}.submit("doChangeDaerah");
+	doAjaxCall${formName}("doChangeDaerah");
 }
 function doChangeLuasKegunaan() {
-	document.${formName}.submit("doChangeLuasKegunaan");
+	doAjaxCall${formName}("doChangeLuasKegunaan");
 }
 function doChangeLuas() {
-	document.${formName}.submit("doChangeLuas");
+	doAjaxCall${formName}("doChangeLuas");
 }
 
 function doKemaskini() {
 	document.${formName}.mode.value = "update";
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function doBatalKemaskini() {
 	document.${formName}.mode.value = "view";
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function doSimpanKemaskiniMaklumatPelepasan(idLuas) {
 	//CHECK DATE   
@@ -1047,12 +1048,12 @@ function doDaftarBaruTanahGanti(idNegeriPemohon){
 	document.${formName}.flagPopup.value = "openPopupTanahGanti";
 	document.${formName}.modePopup.value = "new";
 	document.${formName}.mode.value = "view";
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function doBatalTanahGanti(){
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function doSimpanTanahGanti(){
 	if(document.${formName}.socJenisHakmilikTG.value == ""){
@@ -1285,7 +1286,7 @@ function doSeterusnya(){
 }
 function gotoBatalPermohonan(){	
 	document.${formName}.step.value = "batalPermohonan";
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function gotoHapusFail(){
  	document.${formName}.step.value = "hapusFail";

@@ -77,8 +77,13 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 					+ " AND A.ID_KEMENTERIAN = C.ID_KEMENTERIAN "
 					+ " AND C.USER_ID = '" + userId + "'";*/
 			
-			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, A.TAJUK_FAIL, B.TARIKH_TERIMA, C.NAMA, D.KETERANGAN, "
-					+ "B.ID_STATUS, H.USER_LOGIN,B.NO_PERMOHONAN "
+			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, A.TAJUK_FAIL, B.TARIKH_TERIMA, C.NAMA "
+					+ ", CASE  "
+					+ "	WHEN B.ID_STATUS IN (148,240,245) THEN 'PRA PERMOHONAN ('||D.KETERANGAN ||')'	"
+				 	+ "	ELSE D.KETERANGAN  "
+				 	+ "END KETERANGAN "
+					//+ ", D.KETERANGAN, "
+					+ ",B.ID_STATUS, H.USER_LOGIN,B.NO_PERMOHONAN "
 					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, "
 					+ "TBLHTPHAKMILIKAGENSI F, TBLHTPHAKMILIK G, USERS H, USERS_KEMENTERIAN I "
 					+ " WHERE A.ID_URUSAN = '6' "
@@ -479,7 +484,8 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 	}
 
 	public String daftarBaru(String idJenisTanah, String tarikhTerima, String tarikhSurat, String noRujukanSurat,
-			String idKategori, String idKementerian, String idAgensi, String idLuasKegunaan, String txtTujuanKegunaan,
+			String idKategori, String idKementerian, String idAgensi, String idLuasKegunaan, 
+			//String txtTujuanKegunaan,
 			String idHakmilikAgensi, String idPPTBorangK, String idHakmilikUrusan, String idPHPBorangK,
 			String idKementerianTanah, String idNegeriTanah, String idLuasTanah, String luasTanah,
 			String idHakmilikSementara, HttpSession session) throws Exception {
@@ -564,7 +570,8 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 			r.add("ID_PEMOHON", idPemohon);
 			r.add("ID_JKPTG", "1");
 			r.add("ID_FAIL", idFail);
-			r.add("ID_STATUS", "9920199");
+			r.add("ID_STATUS", "245"); //tindakan penguna/penyedia
+			//r.add("ID_STATUS", "9920199"); //status pra-daftar
 			r.add("TARIKH_SURAT", r.unquote(TS));
 			r.add("TARIKH_TERIMA", r.unquote(TT));
 			r.add("NO_RUJ_SURAT", noRujukanSurat);
@@ -653,7 +660,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 				r.add("ID_UNITLUASBAKI", idLuasTanah);
 				r.add("LUAS_BAKI", 0);
 			}
-			r.add("CADANGAN_KEGUNAAN", txtTujuanKegunaan);
+			//r.add("CADANGAN_KEGUNAAN", txtTujuanKegunaan);
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
@@ -1101,7 +1108,13 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 			Hashtable h;
 
 			sql = "SELECT M.ID_KEMENTERIAN, A.ID_FAIL, A.NO_FAIL, A.TAJUK_FAIL, B.ID_PERMOHONAN, L.ID_SUBURUSAN, B.TARIKH_TERIMA, B.TARIKH_SURAT, C.ID_PEMOHON, C.NAMA, C.ID_NEGERITETAP, C.ID_KATEGORIPEMOHON, C.ID_PEJABAT, C.ID_AGENSI, I.ID_NEGERI AS ID_NEGERITANAH, H.ID_KEMENTERIAN AS ID_KEMENTERIANTANAH, H.ID_AGENSI AS ID_AGENSITANAH,"
-					+ " C.ALAMAT1_TETAP, C.ALAMAT2_TETAP, C.ALAMAT3_TETAP, C.POSKOD_TETAP, D.NAMA_NEGERI, G.KETERANGAN AS NAMA_BANDAR, C.NO_TEL, C.NO_FAX, B.ID_STATUS, E.KETERANGAN, I.NO_HAKMILIK, I.NO_WARTA, H.ID_HAKMILIKAGENSI, H.ID_HAKMILIK, J.KEPUTUSAN, B.NO_PERMOHONAN, B.FLAG_LAYER_KJP, K.NAMA_AGENSI"
+					+ " C.ALAMAT1_TETAP, C.ALAMAT2_TETAP, C.ALAMAT3_TETAP, C.POSKOD_TETAP, D.NAMA_NEGERI, G.KETERANGAN AS NAMA_BANDAR, C.NO_TEL, C.NO_FAX, B.ID_STATUS"
+					+ ", CASE  "
+					+ "	WHEN E.ID_STATUS IN (148,240,245) THEN 'PRA PERMOHONAN ('||E.KETERANGAN ||')'	"
+				 	+ "	ELSE E.KETERANGAN  "
+				 	+ "END KETERANGAN "
+				 	//+ ", E.KETERANGAN"
+					+ ", I.NO_HAKMILIK, I.NO_WARTA, H.ID_HAKMILIKAGENSI, H.ID_HAKMILIK, J.KEPUTUSAN, B.NO_PERMOHONAN, B.FLAG_LAYER_KJP, K.NAMA_AGENSI"
 					+ ",K.ALAMAT1, K.ALAMAT2, K.ALAMAT3, K.POSKOD, D.NAMA_NEGERI, A.TAJUK_FAIL"
 					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJNEGERI D, TBLRUJSTATUS E, TBLPHPHAKMILIKPERMOHONAN F, TBLRUJBANDAR G, TBLHTPHAKMILIKAGENSI H, TBLHTPHAKMILIK I, TBLPHPPERMOHONANPELEPASAN J, TBLRUJAGENSI K, TBLRUJSUBURUSAN L, TBLRUJKEMENTERIAN M"
 					+ " WHERE A.ID_SUBURUSAN = '32' AND A.ID_SUBURUSAN = L.ID_SUBURUSAN AND A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON AND C.ID_NEGERITETAP = D.ID_NEGERI(+) AND B.ID_STATUS = E.ID_STATUS(+) AND B.ID_PERMOHONAN = F.ID_PERMOHONAN"
@@ -1658,7 +1671,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 			myLog.info("padam TBLPERMOHONAN: "+sql);
 			stmt.executeUpdate(sql);
 			
-			/*// TBLPHPHAKMILIK
+			// TBLPHPHAKMILIK
 			sql = "DELETE FROM TBLPHPHAKMILIK WHERE ID_PERMOHONAN IN "
 					+ "(SELECT ID_PERMOHONAN FROM TBLPERMOHONAN WHERE ID_FAIL IN (" + idFail + "))";
 			myLog.info("padam TBLPHPHAKMILIK: " + sql);
@@ -1676,7 +1689,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 
 			sql = "DELETE FROM TBLPHPLAPORANTANAH WHERE ID_FAIL IN (" + idFail + ")";
 			myLog.info("padam TBLPHPLAPORANTANAH: "+sql);
-			stmt.executeUpdate(sql);*/
+			stmt.executeUpdate(sql);
 			
 			// TBLPFDFAIL
 			sql = "DELETE FROM TBLPFDFAIL WHERE ID_FAIL IN (" + idFail + ")";

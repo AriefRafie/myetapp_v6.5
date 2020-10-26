@@ -45,7 +45,7 @@
         </tr>
         <tr>
           <td colspan="4"><fieldset>
-            <legend>SYOR</legend>
+            <legend>KEPUTUSAN MESYUARAT</legend>
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
               <tr>
                 <td width="1%">&nbsp;</td>
@@ -57,22 +57,22 @@
                     <option value="">SILA PILIH</option>
                     <option value="L" selected="selected">L - LULUS</option>
                     <option value="T">T - TOLAK</option>
-                    <option value="G">G - LULUS BERSYARAT</option>
+                    <option value="G">G - TANGGUH</option>
                 #elseif($beanMaklumatMesyuarat.flagSyor == 'T')
 					<option value="">SILA PILIH</option>
                     <option value="L">L - LULUS</option>
                     <option value="T" selected="selected">T - TOLAK</option>
-                    <option value="G">G - LULUS BERSYARAT</option>
+                    <option value="G">G - TANGGUH</option>
                 #elseif($beanMaklumatMesyuarat.flagSyor == 'G')
 					<option value="">SILA PILIH</option>
                     <option value="L">L - LULUS</option>
                     <option value="T">T - TOLAK</option>
-                    <option value="G" selected="selected">G - LULUS BERSYARAT</option>
+                    <option value="G" selected="selected">G - TANGGUH</option>
                 #else
 					<option value="" selected="selected">SILA PILIH</option>
                     <option value="L">L - LULUS</option>
                     <option value="T">T - TOLAK</option>
-                    <option value="G">G - LULUS BERSYARAT</option>
+                    <option value="G">G - TANGGUH</option>
                 #end
 				</select></td>
               </tr>
@@ -133,28 +133,33 @@
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
               <tr>
                 <td width="1%">&nbsp;</td>
-                <td width="28%">Muat Turun Minit Mesyuarat</td>
+                <td width="28%">Minit Mesyuarat</td>
                 <td width="1%">:</td>
-                <td width="70%">#if ($idDokumen != '') <a href="#" onclick="cetakDokumen($idDokumen)" class="style1">$namaFail</a> &nbsp;&nbsp; #end</td>
+                <td width="70%">
+                	#if ($idDokumen != '') 
+                		<a href="#" onclick="cetakDokumen($idDokumen)" class="style1">$namaFail</a> 
+                	#end
+                	&nbsp;&nbsp; 
+                </td>
               </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td><input id="fileuploadMM" name="fileuploadMM" type="file" size="40" /></td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td><span class="style4"><i><font color="#ff0000">Perhatian</font> : </i><span class="style5">Saiz muat naik fail adalah tidak melebihi 2MB. Jika muat naik anda tidak berjaya sila cuba dengan saiz fail yang lebih kecil.</span></span></td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td><input name="cmdSimpan" type="button" value="Simpan Dokumen" onclick="simpanDokumenMM('$idMesyuarat','$idPermohonan')" /></td>
-              </tr>
+              ##<tr>
+              ##  <td>&nbsp;</td>
+              ##  <td>&nbsp;</td>
+              ##  <td>&nbsp;</td>
+              ##  <td><input id="fileuploadMM" name="fileuploadMM" type="file" size="40" /></td>
+              ##</tr>
+              ##<tr>
+              ##  <td>&nbsp;</td>
+              ##  <td>&nbsp;</td>
+              ##  <td>&nbsp;</td>
+              ##  <td><span class="style4"><i><font color="#ff0000">Perhatian</font> : </i><span class="style5">Saiz muat naik fail adalah tidak melebihi 2MB. Jika muat naik anda tidak berjaya sila cuba dengan saiz fail yang lebih kecil.</span></span></td>
+              ##</tr>
+              ##<tr>
+              ##  <td>&nbsp;</td>
+              ##  <td>&nbsp;</td>
+              ##  <td>&nbsp;</td>
+              ##  <td><input name="cmdSimpan" type="button" value="Simpan Dokumen" onclick="simpanDokumenMM('$idMesyuarat','$idPermohonan')" /></td>
+              ##</tr>
             </table>
             </fieldset></td>
         </tr>
@@ -183,8 +188,8 @@
             #end
             #if ($modePopup == 'view')
             #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
-            <input name="cmdKemaskini" type="button" value="Kemaskini" onClick="kemaskiniMesyuarat()" >
-            <input name="cmdHapus" type="button" value="Hapus" onClick="hapusMesyuarat()" >
+            ##<input name="cmdKemaskini" type="button" value="Kemaskini" onClick="kemaskiniMesyuarat()" >
+            ##<input name="cmdHapus" type="button" value="Hapus" onClick="hapusMesyuarat()" >
             #end
             <input name="cmdKembali" type="button" value="Kembali" onClick="kembali()" >
             #if($beanMaklumatMesyuarat.flagSyor == 'G')
@@ -203,4 +208,4 @@
       </fieldset></td>
   </tr>
 </table>
-#parse("app/php2/frmPLPNotifikasiEmail.jsp")
+##parse("app/php2/frmPLPNotifikasiEmail.jsp")

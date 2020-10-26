@@ -164,14 +164,14 @@ alert("Sila Klik 'Paging' No.7 Untuk Proses Pewartaan");
 				#if($mode=="view")
 					#if($isEdit=="no")
 					<input type="button" name="cmdKemaskini" value ="Kemaskini" onClick="javascript:kemaskiniPenyediaan('$!id_mmk')">
-                    
                     <!--
                     <input type="button" name="cmdPopupeTanah" value="Integrasi eTanah Deraf MMK (Syor Pentadbir Tanah)" onClick="popupEtanah('$id_fail','$id_permohonan','','MMK_S8','')">
                     -->
-                    
-                        #if($ID_NEGERIPROJEK == "4" || $ID_NEGERIPROJEK == "5")     
-                        <input type="button" name="cmdPopupeTanah" value="Integrasi eTanah (Hantar Borang C)" onClick="popupEtanah('$id_fail','$id_permohonan','BorangC','')">
-                        #end
+                    #if($ID_NEGERIPROJEK == "4")     
+                    ##if($ID_NEGERIPROJEK == "4" || $ID_NEGERIPROJEK == "5")     
+                        <input type="button" name="cmdPopupeTanah" value="Integrasi e-Tanah Melaka(Hantar Borang C)" onClick="eTanahPermohonanMelaka('$id_fail','$id_permohonan','BorangC','')">
+                 	    <!--  <input type="button" name="cmdPopupeTanah" value="Integrasi e-Tanah Melaka(Hantar Borang C)" onClick="popupEtanah('$id_fail','$id_permohonan','BorangC','')"> -->
+                 	#end
                     
 					<input type="button" name="button" id="button" value="Cetak" onClick="javascript:setTable('tableReport1')" />
 					#else
@@ -716,7 +716,7 @@ alert("Sila Klik 'Paging' No.7 Untuk Proses Pewartaan");
 <legend><strong>SENARAI LAPORAN</strong></legend>
 	<table width="100%" border="0" cellspacing="2" cellpadding="2">
 	  <tr>  
-      	 <td><a href="#" onClick="javascript:cetakSuratIringanMMK('$!id_permohonan')"><font color="blue">Surat Iringan MMK</font></a></td>
+      	 <td><a href="#" onClick="javascript:cetakSuratIringanMMK('$!id_permohonan')"><font color="blue">Surat Iringan MMK Ke PTG</font></a></td>
       </tr>	
       <tr>  
       	 <td><a href="#" onClick="javascript:cetakMMK('$!id_permohonan','$!id_fail','$!negeriMMK','$!no_fail')"><font color="blue">Kertas Kerja MMK</font></a></td>
@@ -802,8 +802,6 @@ new_window.document.write("<table><tr><td><font color='blue' >Jika anda ingin me
 new_window.document.write("</body></html>");
 new_window.document.close();
 
-
-
 }
 
 
@@ -819,17 +817,17 @@ function popupEtanah(id_fail,id_permohonan,id_hakmilik,jenis_skrin,command) {
 	
 }
 */
-function popupEtanah(id_fail,id_permohonan,jenis_skrin,command) {
-
-	var url = "../x/${securityToken}/ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah?id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&jenis_skrin="+jenis_skrin+"&command="+command;	
-    var hWnd = window.open(url,'printuser','width=1200,height=1000, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-       hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus();
-	
-}
-
+	function eTanahPermohonanMelaka(id_fail,id_permohonan,jenis_skrin,command) {	
+	//function popupEtanah(id_fail,id_permohonan,jenis_skrin,command) {	
+		var url = "../x/${securityToken}/ekptg.view.integrasi.etanah.PermohonanPengambilan?idFail="+id_fail+"&idPermohonan="+id_permohonan+"&jenisSkrin="+jenis_skrin+"&command="+command;	
+		//var url = "../x/${securityToken}/ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah?id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&jenis_skrin="+jenis_skrin+"&command="+command;	
+	    var hWnd = window.open(url,'printuser','width=1200,height=1000, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
+		
+	}
 
 function close_window() 
 {

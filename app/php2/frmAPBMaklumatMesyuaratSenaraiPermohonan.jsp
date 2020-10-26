@@ -202,7 +202,7 @@
           	<table width="100%" border="0" cellspacing="2" cellpadding="2">
           		<tr>
 			  		<td><fieldset>
-      					<legend><strong>SENARAI PERMOHONAN BARU</strong></legend>
+      					<legend><strong>SENARAI PERMOHONAN BAHARU</strong></legend>
       					#parse("app/utils/record_paging.jsp")
       					<table align="center" width="100%">
       						<tr>
@@ -240,10 +240,12 @@
 					        #end
 					        <tr>
 					          <td class="$row" align="center">$senaraiFailMohonBaru.bil</td>
-					          <td class="$row">$senaraiFailMohonBaru.noFailPermohonan</td>
+					          ##<td class="$row">$senaraiFailMohonBaru.noFailPermohonan</td>
+					          <td class="$row"><a href="javascript:doCetakKertasPertimbangan('$senaraiFailMohonBaru.idFail')" class="style2">$senaraiFailMohonBaru.noFailPermohonan</a></td>
 					          <td class="$row">$senaraiFailMohonBaru.jenisPermohonan</td>
 					          <td class="$row">$senaraiFailMohonBaru.namaPemohon</td>
-					          <td class="$row" align="center"><a href="#" class="style2" onClick="doCetakKertasPertimbangan('$senaraiFailMohonBaru.id')">
+					          ##<td class="$row" align="center"><a href="#" class="style2" onClick="doCetakKertasPertimbangan('$senaraiFailMohonBaru.id')">
+                      		  <td class="$row" align="center"><a href="#" class="style2" onClick="javascript:doCetakKertasPertimbangan('$senaraiFailMohonBaru.idFail')">
                       		  <img border="0" src="../img/print.gif"/></a></td>
 					          <td class="$row">
 					          		#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
@@ -329,10 +331,12 @@
 					        #end
 					        <tr>
 					          <td class="$row" align="center">$senaraiFailMohonLanjut.bil</td>
-					          <td class="$row"><a href="javascript:paparRingkasanPertimbangan('$senaraiFailMohonLanjut.idPermohonan')" class="style2">$senaraiFailMohonLanjut.noFailPermohonan</a></td>
+					          ##<td class="$row"><a href="javascript:paparRingkasanPertimbangan('$senaraiFailMohonLanjut.idPermohonan')" class="style2">$senaraiFailMohonLanjut.noFailPermohonan</a></td>
+					          <td class="$row"><a href="javascript:doCetakKertasPertimbangan('$senaraiFailMohonLanjut.idFail')" class="style2">$senaraiFailMohonLanjut.noFailPermohonan</a></td>
 					          <td class="$row" align="center">$senaraiFailMohonLanjut.jenisPermohonan</td>
 					          <td class="$row">$senaraiFailMohonLanjut.namaPemohon</td>
-					          <td class="$row" align="center"><a href="#" class="style2" onClick="doCetakKertasPertimbangan('$senaraiFailMohonLanjut.idFail')">
+					          ##<td class="$row" align="center"><a href="#" class="style2" onClick="doCetakKertasPertimbangan('$senaraiFailMohonLanjut.idFail')">
+                      		  <td class="$row" align="center"><a href="#" class="style2" onClick="javascript:doCetakKertasPertimbangan('$senaraiFailMohonLanjut.idFail')">
                       		  <img border="0" src="../img/print.gif"/></a></td>
 					          <td class="$row" align="center">
 					          		#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
@@ -449,7 +453,7 @@
 	<tr>
 		<td align="right">
 		#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
-			#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
+			#if ($beanMaklumatMesyuarat.statusMesyuarat == "1" && $selectedTabUpper=="2")
 			<input id="btnSelesai" type="button" value="Selesai Mesyuarat" onClick="javascript:doSelesaiMesyuarat();">
 			#end
 	    	<input id="btnBack" type="button" value="Kembali" onClick="doKembaliSenaraiPermohonan()">
@@ -662,7 +666,7 @@ function doKembaliSenaraiPermohonan(){
 }
 
 function doCetakKertasPertimbangan(idFail) {
-	var url = "../servlet/ekptg.report.php2.PYWKertasRingkasan?ID_FAIL="+idFail;
+	var url = "../servlet/ekptg.report.php2.APBKertasRingkasan?ID_FAIL="+idFail;
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
@@ -792,6 +796,14 @@ function hapusMesyuarat(idMesyuarat){
 	document.${formName}.actionMesyuarat.value = "";
 	document.${formName}.mode.value = "";
 	document.${formName}.submit();
+}
+function paparRingkasanPertimbangan(idPermohonan) {
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmAPBPopupRingkasanPertimbanganView?idPermohonan="+idPermohonan;
+    var hWnd = window.open(url,'printuser','width=1100,height=430, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
 }
 function refreshFromPilihPermohonan() {
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmAPBSenaraiMesyuaratView";

@@ -85,7 +85,7 @@ function doChangeTab(tabId) {
 	document.${formName}.modePopup.value = "";	
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmPLPLawatanTapakView";
 	document.${formName}.method="POST";
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function kembali() {
 	document.${formName}.actionPelepasan.value = "";

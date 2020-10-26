@@ -1,3 +1,4 @@
+xxx
 <script type="text/javascript" src="../../library/js/jquery-1.3.2.min.js" ></script>
 <script>var $jquery = jQuery.noConflict();</script>
 
@@ -107,7 +108,7 @@ JKPTG(S).MLK/02/881/04/2010/9-->
  <fieldset>
       <legend><strong><font color="white">$tajuk_popup</font></strong></legend>
 <div id="mainContainer">
-#parse("app/integrasi/etanah/pengambilanTanah/PopupPengambilanTanah_maklumbalas.jsp")
+#parse("app/integrasi/etanah/pengambilanTanah/PopupPengambilanTanah_maklumbalas.jsp") 
 #parse("app/integrasi/etanah/pengambilanTanah/PopupPengambilanTanah_status_log.jsp")      
 
 
@@ -138,6 +139,13 @@ JKPTG(S).MLK/02/881/04/2010/9-->
 <td  valign="top">Projek</td>
 <td   valign="top">:</td>
 <td  valign="top">$!hash_maklumatprojek.NAMA_PROJEK</td>
+</tr>
+</tr>
+<tr>
+<td  valign="top"></td>
+<td  valign="top">No Permohonan E-TANAH</td>
+<td   valign="top">:</td>
+<td  valign="top">$!hash_maklumatintPermohonan.NO_PERMOHONAN</td>
 </tr>
 #if($!jenis_skrin == "BorangC" || $!jenis_skrin == "BorangK" || $!jenis_skrin == "PU" || $!jenis_skrin == "SijilUkur")   
 #if($!hash_maklumatWarta.size() >0)           
@@ -355,8 +363,7 @@ JKPTG(S).MLK/02/881/04/2010/9-->
                           #else
                           <font color="red">Sila Pastikan Maklumat Ini Diisi!</font>
                           #set($check_maklumat_PU = "X") 
-                          #end  
-                         
+                          #end                     
                          
                           </td>
 			          	</tr>
@@ -690,13 +697,13 @@ $!maklumat_mmk
 </fieldset>
 
 
-#if($!display_button_hantar == "Y")       
+##if($!display_button_hantar == "Y")       
        	  <table width="100%" border="0" align="center"	 cellspacing="2" cellpadding="2" >
            <tr>
            <td  valign="top" align="center"> 
            
            	   #set($disable_button_hantar = "")
-                     
+
                #if($!jenis_skrin == "PU" && $check_maklumat_PU == "X")
                <font color="red">Sila Pastikan Maklumat <b>Hakmilik Sambungan</b> Lengkap Diisi!</font>
                #set($disable_button_hantar = "disabled")                
@@ -717,7 +724,7 @@ $!maklumat_mmk
            </td>
            </tr>
            </table>       
-       #end
+       ##end
        <br />
 
  
@@ -735,9 +742,9 @@ $!maklumat_mmk
 	 
     function simpan(id_penarikan,id_permohonan,jenis_skrin) {
 	
-		if(document.${formName}.tajuk.value == ""){
+		if(document.${formName}.nama_dokumen.value == ""){
 			alert('Sila pastikan tajuk dokumen diisi.');
-	  		document.${formName}.tajuk.focus(); 
+	  		document.${formName}.nama_dokumen.focus(); 
 			return; 
 		}
 		
@@ -758,11 +765,11 @@ $!maklumat_mmk
 		var id_permohonan_set =  document.${formName}.id_permohonan.value;
 		var id_fail_set =  document.${formName}.id_fail.value;
 		var jenis_skrin_set =  document.${formName}.jenis_skrin.value;
-		var tajuk_set =  document.${formName}.tajuk.value;
+		var tajuk_set =  document.${formName}.nama_dokumen.value;
 		var id_hakmilik_set =  document.${formName}.id_hakmilik.value;
 		var kategori_lampiran_set =  document.${formName}.kategori_lampiran.value;
 		
-		document.${formName}.action = "?_portal_module=etanah.ppt.sek4&hitButton=simpanDokumen&id_permohonan="+id_permohonan_set+"&id_penarikan="+id_penarikan+"&jenis_skrin="+jenis_skrin_set+""+dopost+"&id_fail="+id_fail_set+"&tajuk="+tajuk_set+"&id_hakmilik="+id_hakmilik_set+"&kategori_lampiran="+kategori_lampiran_set;
+		document.${formName}.action = "?_portal_module=etanah.ppt.sek4&hitButton=simpanDokumen&id_permohonan="+id_permohonan_set+"&id_penarikan="+id_penarikan+"&jenis_skrin="+jenis_skrin_set+""+dopost+"&id_fail="+id_fail_set+"&nama_dokumen="+tajuk_set+"&id_hakmilik="+id_hakmilik_set+"&kategori_lampiran="+kategori_lampiran_set;
 		//document.${formName}.action = "?_portal_module=ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah&hitButton=simpanDokumen&id_permohonan="+id_permohonan_set+"&id_penarikan="+id_penarikan+"&jenis_skrin="+jenis_skrin_set+""+dopost+"&id_fail="+id_fail_set+"&tajuk="+tajuk_set+"&id_hakmilik="+id_hakmilik_set+"&kategori_lampiran="+kategori_lampiran_set;
 		
 		document.${formName}.method="post";
@@ -832,6 +839,7 @@ function hapusDokumenEtanah(id_dokumen,id_button) {
 
 
 	function hantar(id_permohonan,jenis_skrin,id_penarikan) {		
+		//alert("masuk sini hantar");
 
 		if ( !window.confirm("Adakah Anda Pasti ?") ){
 			return;

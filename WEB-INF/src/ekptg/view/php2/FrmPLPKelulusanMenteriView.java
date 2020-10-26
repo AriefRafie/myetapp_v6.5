@@ -43,10 +43,12 @@ public class FrmPLPKelulusanMenteriView extends AjaxBasedModule{
         String idPermohonan = getParam("idPermohonan");
         String idStatus = getParam("idStatus");
         String statusRizab = getParam("statusRizab");
+        String idKertaskerja = getParam("idKertaskerja");
              
         //VECTOR
 		Vector beanHeader= null;
 		Vector beanKelulusanMenteri = null;
+		Vector beanMaklumatLampiran = null;
 		
 		String step = getParam("step");
 		
@@ -106,8 +108,14 @@ public class FrmPLPKelulusanMenteriView extends AjaxBasedModule{
 			this.context.put("BeanKelulusanMenteri", beanKelulusanMenteri);
 			if (beanKelulusanMenteri.size() != 0){
 				Hashtable hashMaklumatKelulusanMenteri = (Hashtable) logic.getBeanKelulusanMenteri().get(0);
+				idKertaskerja = (String) hashMaklumatKelulusanMenteri.get("idKertaskerja");
 				/*keputusan = (String) hashMaklumatKelulusanMenteri.get("keputusan");*/
 	       	}
+			
+			//LAMPIRAN ULASAN
+	       	beanMaklumatLampiran = new Vector();
+			beanMaklumatLampiran = logic.getBeanMaklumatLampiran(idKertaskerja);
+			this.context.put("BeanMaklumatLampiran",beanMaklumatLampiran);
 	
 		} else if("update".equals(mode)){
 				
@@ -146,6 +154,7 @@ public class FrmPLPKelulusanMenteriView extends AjaxBasedModule{
 	    this.context.put("idPermohonan", idPermohonan);
 	    this.context.put("idStatus", idStatus);
 	    this.context.put("statusRizab", statusRizab);
+	    this.context.put("idKertaskerja", idKertaskerja);
 	    
 	    if (!"".equals(getParam("flagFrom"))){
 	      	session.setAttribute("FLAG_FROM", getParam("flagFrom"));

@@ -56,21 +56,7 @@
 #end
 
 
-#foreach($maklumatam in $maklumat_am_tanah)
-#set($id_tanahumum = $maklumatam.ID_TANAHUMUM)
-#set($txtKawasanTerlibat = $maklumatam.LOT_KWSN_TERLIBAT)
-#set($txtLokasiTanah = $maklumatam.LOKASI_TANAH)
-#set($txtKeadaanLot = $maklumatam.LOT_SELURUH_LOT)
-#set($txtJenisTanaman = $maklumatam.LOT_JENIS_TANAMAN)
-#set($txtBerhampiran = $maklumatam.LOT_BERHAMPIRAN)
-#set($txtKeadaanTanaman = $maklumatam.LOT_KEADAAN_TANAMAN)
-#set($txtUlasan = $maklumatam.ULASAN)
-#set($txtKeseluruhanLot = $maklumatam.RUPABUMI_SELURUH_LOT)
-#set($txtKawasan = $maklumatam.RUPABUMI_KWSN_TERLIBAT)
-#set($sorBangunan = $maklumatam.MELIBATKAN_BANGUNAN)
-#set($txtBilBangunan = $maklumatam.BILANGAN_BANGUNAN)
-
-<!-- TAMBAH v6.5 -->
+#foreach($data in $maklumat_am_tanah)
 #set($flagLembah=$data.flag_lembah)
 #set($flagLurah=$data.flag_lurah)
 #set($flagBerpaya=$data.flag_paya)
@@ -90,14 +76,12 @@
 #set($txtTanaman=$data.tanaman)
 #end
 
-#if($txtKawasanTerlibat == "" && $txtLokasiTanah == "" && $txtKeadaanLot == "" && $txtJenisTanaman == "" && $txtBerhampiran == "" && $txtKeadaanTanaman == ""
-&& $txtUlasan == "" && $txtKeseluruhanLot == "" && $txtKawasan == "")
 #foreach($mak in $senarai_laporan_tanah)
 #set($txtKeadaanLot = $mak.KEADAAN_TANAH)
 #set($txtJenisTanaman = $mak.TANAMAN)
 #set($txtKeseluruhanLot = $mak.RUPABUMI)
 #end
-#end
+
 
 
 #if($readmode == "edit")
@@ -1165,6 +1149,18 @@ function PembangunanSekitar(id_hakmilik,id_pembatalan)
 {
 	document.${formName}.command.value = "Laporan_Tanah";
 	document.${formName}.sub_command.value = "Pembangunan_Sekitar";
+	document.${formName}.subminor_command.value = "View";
+	document.${formName}.location.value = "maklumat_am";
+	document.${formName}.point.value = "maklumat_am";	
+	document.${formName}.id_hakmilik.value = id_hakmilik;
+	document.${formName}.id_pembatalan.value = id_pembatalan;
+	document.${formName}.action = "";
+	document.${formName}.submit();
+}
+function LaporanKerosakan(id_hakmilik,id_pembatalan)
+{
+	document.${formName}.command.value = "Laporan_Tanah";
+	document.${formName}.sub_command.value = "Laporan_Kerosakan";
 	document.${formName}.subminor_command.value = "View";
 	document.${formName}.location.value = "maklumat_am";
 	document.${formName}.point.value = "maklumat_am";	

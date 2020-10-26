@@ -63,11 +63,11 @@
     		  <td><fieldset>
       			<legend><strong>SENARAI MESYUARAT</strong></legend>
       			<table align="center" width="100%">
-	        		#if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
-	        		<tr>
-	          			<td colspan="5" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:daftarMesyuarat()"/></td>
-	        		</tr>
-	        		#end
+	        		##if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
+	        		##<tr>
+	          		##	<td colspan="5" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:daftarMesyuarat()"/></td>
+	        		##</tr>
+	        		###end
 	        		<tr class="table_header">
 				    	<td scope="row" width="5%" align="center"><strong>Bil</strong></td>
 				        <td width="60%"><strong>Tajuk Mesyuarat</strong></td>
@@ -121,7 +121,7 @@
     	#end
     	#if ($mode == 'view' && $selectedTabUpper == '1')
     	#if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
-    	<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskiniPampasan()"/>
+    	##<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskiniPampasan()"/>
     	#end
     	#end
     	#if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')

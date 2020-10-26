@@ -389,11 +389,11 @@ a.nav:visited {
                               <li>&nbsp;Laporan Tanah</li>
                               </font> </a> </td>
                           </tr>
-                          <tr>
+                          <!-- <tr>
                             <td><a href="javascript:gotoLaporanTanah()" class="help" title="Senarai Laporan Tanah"> <font color="blue">
                               <li>&nbsp;Senarai Laporan Tanah Penguatkuasaan</li>
                               </font> </a> </td>
-                          </tr>
+                          </tr> -->
                         </table></td>
                     </tr>
                   </table></td>

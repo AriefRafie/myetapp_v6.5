@@ -44,21 +44,22 @@ public class FrmPLPDashboard extends AjaxBasedModule {
 
 		context.put("checkNotifikasiOnline", getNotifikasiOnline());
 		context.put("jumlahNotifikasiOnline", getJumlahNotifikasiOnline());
+		context.put("jumlahNotifikasiOnlinePenawaran", getJumlahNotifikasiOnlinePenawaran());
+		context.put("jumlahNotifikasiOnlineTukarguna", getJumlahNotifikasiOnlineTukarguna());
 		context.put("failPelepasan", getFailPelepasan());
 		context.put("failPenawaran", getFailPenawaran());
 		context.put("failTukarguna", getFailTukarguna());
-
 		context.put("failBelumSelesai", getFailBelumSelesai());
 		context.put("failSelesai", getFailSelesai());
-
 		context.put("failBelumSelesaiPLP", getFailBelumSelesaiPLP());
 		context.put("failSelesaiPLP", getFailSelesaiPLP());
 		context.put("failBelumSelesaiPNW", getFailBelumSelesaiPNW());
 		context.put("failSelesaiPNW", getFailSelesaiPNW());
 		context.put("failBelumSelesaiTKR", getFailBelumSelesaiTKR());
 		context.put("failSelesaiTKR", getFailSelesaiTKR());
-
 		context.put("check_notifikasi_aduan", getNotifikasiAduan("", user_negeri_login, userId, "", "NO"));
+		context.put("bilTamatTempohUlasanKJP", getFailTamatTempohUlasanKJP());
+		context.put("bilTamatTempohUlasanJKPTG", getFailTamatTempohUlasanJKPTG());
 
 		//list_memo_aktif = logicPengumuman.getMemo("", "Aktif","1","0");
 		list_memo_aktif = logicPengumuman.getMemo("", "Aktif","1","","","","","0");
@@ -108,6 +109,54 @@ public class FrmPLPDashboard extends AjaxBasedModule {
 				+ " WHERE A.ID_URUSAN = '6' AND A.ID_SUBURUSAN IN (34,32,33)"
 				+ " AND A.FLAG_JENIS_FAIL = '4' AND A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON AND A.NO_FAIL IS NULL AND B.NO_PERMOHONAN IS NOT NULL"
 				+ " AND A.ID_SEKSYEN = '4' AND A.ID_SUBURUSAN = D.ID_SUBURUSAN AND B.ID_STATUS IS NOT NULL AND B.ID_STATUS = '138'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			rs.next();
+			return rs.getInt("BIL");
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
+	public Integer getJumlahNotifikasiOnlinePenawaran() throws Exception {
+
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			sql = "SELECT COUNT(*) AS BIL FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C,  TBLRUJSUBURUSAN D"
+				+ " WHERE A.ID_URUSAN = '6'"
+				+ " AND A.FLAG_JENIS_FAIL = '4' AND A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON AND A.NO_FAIL IS NULL AND B.NO_PERMOHONAN IS NOT NULL"
+				+ " AND A.ID_SEKSYEN = '4' AND A.ID_SUBURUSAN = D.ID_SUBURUSAN AND B.ID_STATUS IS NOT NULL AND B.ID_STATUS = '138' AND A.ID_SUBURUSAN='32'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			rs.next();
+			return rs.getInt("BIL");
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
+	public Integer getJumlahNotifikasiOnlineTukarguna() throws Exception {
+
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			sql = "SELECT COUNT(*) AS BIL FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C,  TBLRUJSUBURUSAN D"
+				+ " WHERE A.ID_URUSAN = '6'"
+				+ " AND A.FLAG_JENIS_FAIL = '4' AND A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON AND A.NO_FAIL IS NULL AND B.NO_PERMOHONAN IS NOT NULL"
+				+ " AND A.ID_SEKSYEN = '4' AND A.ID_SUBURUSAN = D.ID_SUBURUSAN AND B.ID_STATUS IS NOT NULL AND B.ID_STATUS = '138' AND A.ID_SUBURUSAN='33'";
 
 			ResultSet rs = stmt.executeQuery(sql);
 			rs.next();
@@ -247,7 +296,8 @@ public class FrmPLPDashboard extends AjaxBasedModule {
 		}
 	}
 
-	public Integer getNotifikasiAduan(String id_esaduan, String id_negeri_user, String user_terima, String flag_notifikasi, String notread) throws Exception {
+	public Integer getNotifikasiAduan(String id_esaduan, String id_negeri_user, String user_terima, String 
+			flag_notifikasi, String notread) throws Exception {
 
 		Db db = null;
 		String sql = "";
@@ -444,6 +494,66 @@ public class FrmPLPDashboard extends AjaxBasedModule {
 			return rs.getInt("BIL");
 
 		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public Integer getFailTamatTempohUlasanKJP() throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			sql = "SELECT COUNT(*) AS BIL "
+				+ "FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, "
+				+ "TBLPHPHAKMILIK F, USERS H, TBLRUJSUBURUSAN I, TBLRUJNEGERI J, TBLPHPULASANTEKNIKAL K "
+				+ "WHERE A.ID_SEKSYEN = 4 AND A.ID_URUSAN = '6' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS "
+				+ "AND E.ID_HAKMILIKPERMOHONAN = F.ID_HAKMILIKPERMOHONAN(+) AND B.ID_PEMOHON = C.ID_PEMOHON "
+				+ "AND B.ID_PERMOHONAN = E.ID_PERMOHONAN AND A.NO_FAIL IS NOT NULL AND F.ID_NEGERI = J.ID_NEGERI(+) "
+				+ "AND B.ID_PERMOHONAN = K.ID_PERMOHONAN(+) AND A.ID_MASUK = H.USER_ID(+) AND A.ID_SUBURUSAN = I.ID_SUBURUSAN(+) "
+				+ "AND B.FLAG_AKTIF = 'Y' AND A.NO_FAIL IS NOT NULL AND K.FLAG_STATUS = 1 AND K.FLAG_AKTIF = 'Y' "
+				+ "AND K.ID_DOKUMEN = '1' AND K.TARIKH_JANGKA_TERIMA IS NOT NULL "
+				+ "AND TO_CHAR(K.TARIKH_JANGKA_TERIMA, 'dd-MON-YY') < TRUNC(SYSDATE)";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			rs.next();
+			return rs.getInt("BIL");
+			
+		}finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public Integer getFailTamatTempohUlasanJKPTG() throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			sql = "SELECT COUNT(*) AS BIL "
+				+ "FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, "
+				+ "TBLPHPHAKMILIK F, USERS H, TBLRUJSUBURUSAN I, TBLRUJNEGERI J, TBLPHPULASANTEKNIKAL K "
+				+ "WHERE A.ID_SEKSYEN = 4 AND A.ID_URUSAN = '6' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS "
+				+ "AND E.ID_HAKMILIKPERMOHONAN = F.ID_HAKMILIKPERMOHONAN(+) AND B.ID_PEMOHON = C.ID_PEMOHON "
+				+ "AND B.ID_PERMOHONAN = E.ID_PERMOHONAN AND A.NO_FAIL IS NOT NULL AND F.ID_NEGERI = J.ID_NEGERI(+) "
+				+ "AND B.ID_PERMOHONAN = K.ID_PERMOHONAN(+) AND A.ID_MASUK = H.USER_ID(+) AND A.ID_SUBURUSAN = I.ID_SUBURUSAN(+) "
+				+ "AND B.FLAG_AKTIF = 'Y' AND A.NO_FAIL IS NOT NULL AND K.FLAG_STATUS = 1 AND K.FLAG_AKTIF = 'Y' "
+				+ "AND K.ID_DOKUMEN = '4' AND K.TARIKH_JANGKA_TERIMA IS NOT NULL "
+				+ "AND TO_CHAR(K.TARIKH_JANGKA_TERIMA, 'dd-MON-YY') < TRUNC(SYSDATE)";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			rs.next();
+			return rs.getInt("BIL");
+			
+		}finally {
 			if (db != null)
 				db.close();
 		}

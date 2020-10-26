@@ -120,7 +120,13 @@ function kembaliNew(id_permohonan){
 }
 function cetakBorangM(id_fail,id_hakmilikpb,id_permohonan) {
 
-	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?idfail="+id_fail+"&id_hakmilikpb="+id_hakmilikpb+"&id_permohonan="+id_permohonan+"&report=BorangM&flagReport=S";
+	/*var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?idfail="+id_fail+"&id_hakmilikpb="+id_hakmilikpb+"&id_permohonan="+id_permohonan+"&report=BorangM&flagReport=S";
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();*/
+    
+    var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?idfail="+id_fail+"&id_hakmilikpb="+id_hakmilikpb+"&id_permohonan="+id_permohonan+"&report=BorangM&selectNoFail=yes";
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;

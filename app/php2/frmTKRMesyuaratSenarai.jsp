@@ -16,43 +16,41 @@
           <td width="1%">&nbsp;</td>
           <td width="27%" align="top">Jenis Pampasan</td>
           <td width="1%">:</td>
-<td width="71%"><select name="socGanti" id="socGanti" onChange="onChangeValue(this)" $readonly class="$disabled" $disabled>
-
+		  <td width="71%">
+		  	<select name="socGanti" id="socGanti" onChange="onChangeValue(this)" $readonly class="$disabled" $disabled>
 				#if ($beanMaklumatPampasan.jenis == '1')
-                <option value="0">SILA PILIH</option>
-				<option value="1" selected>TANAH GANTI</option>
-				<option value="2">WANG PAMPASAN</option>
-				<option value="3">TANAH GANTI DAN WANG PAMPASAN</option>
-				<option value="4">LAIN-LAIN</option>
-                
+	                <option value="0">SILA PILIH</option>
+					<option value="1" selected>TANAH GANTI</option>
+					<option value="2">WANG PAMPASAN</option>
+					<option value="3">TANAH GANTI DAN WANG PAMPASAN</option>
+					<option value="4">LAIN-LAIN</option>
                 #elseif($beanMaklumatPampasan.jenis == '2')
-                <option value="0">SILA PILIH</option>
-				<option value="1" >TANAH GANTI</option>
-				<option value="2" selected>WANG PAMPASAN</option>
-				<option value="3">TANAH GANTI DAN WANG PAMPASAN</option>
-				<option value="4">LAIN-LAIN</option>
-                
-               #elseif($beanMaklumatPampasan.jenis == '3')
-               <option value="0">SILA PILIH</option>
-				<option value="1" >TANAH GANTI</option>
-				<option value="2">WANG PAMPASAN</option>
-				<option value="3" selected>TANAH GANTI DAN WANG PAMPASAN</option>
-				<option value="4">LAIN-LAIN</option>
-                
-               #elseif($beanMaklumatPampasan.jenis == '4')
-               <option value="0">SILA PILIH</option>
-				<option value="1" >TANAH GANTI</option>
-				<option value="2">WANG PAMPASAN</option>
-				<option value="3">TANAH GANTI DAN WANG PAMPASAN</option>
-				<option value="4" selected>LAIN-LAIN</option>
+	                <option value="0">SILA PILIH</option>
+					<option value="1" >TANAH GANTI</option>
+					<option value="2" selected>WANG PAMPASAN</option>
+					<option value="3">TANAH GANTI DAN WANG PAMPASAN</option>
+					<option value="4">LAIN-LAIN</option>
+               	#elseif($beanMaklumatPampasan.jenis == '3')
+	               	<option value="0">SILA PILIH</option>
+					<option value="1" >TANAH GANTI</option>
+					<option value="2">WANG PAMPASAN</option>
+					<option value="3" selected>TANAH GANTI DAN WANG PAMPASAN</option>
+					<option value="4">LAIN-LAIN</option>
+               	#elseif($beanMaklumatPampasan.jenis == '4')
+	               	<option value="0">SILA PILIH</option>
+					<option value="1" >TANAH GANTI</option>
+					<option value="2">WANG PAMPASAN</option>
+					<option value="3">TANAH GANTI DAN WANG PAMPASAN</option>
+					<option value="4" selected>LAIN-LAIN</option>
                 #else
-                <option value="0" selected>SILA PILIH</option>
-				<option value="1" >TANAH GANTI</option>
-				<option value="2">WANG PAMPASAN</option>
-				<option value="3">TANAH GANTI DAN WANG PAMPASAN</option>
-				<option value="4">LAIN-LAIN</option>
+	                <option value="0" selected>SILA PILIH</option>
+					<option value="1" >TANAH GANTI</option>
+					<option value="2">WANG PAMPASAN</option>
+					<option value="3">TANAH GANTI DAN WANG PAMPASAN</option>
+					<option value="4">LAIN-LAIN</option>
                 #end
-			</select></td>
+			</select>
+		  </td>
         </tr>
         #if($beanMaklumatPampasan.jenis == '2' || $beanMaklumatPampasan.jenis == '3')
         <tr>
