@@ -720,7 +720,7 @@
       	<td><a href="#" onClick="javascript:cetakMBSS8('$!id_permohonan')"><font color="blue">Kertas MB</font></a></td>
       </tr>
       <tr>  
-      	<td><a href="#" onClick="javascript:cetakKertasMinitMB('$!id_fail','$!nama_pengarah.toUpperCase()')"><font color="blue">Kertas Minit Pentadbir</font></a></td>
+      	<td><a href="#" onClick="javascript:cetakKertasMinitMB('$!id_fail','$!nama_pengarah.toUpperCase()','$!id_permohonan')"><font color="blue">Kertas Minit Pentadbir</font></a></td>
       </tr>
       #end
       <tr>
@@ -736,6 +736,7 @@
 <input type="hidden" name="id_status" value="$!id_status">
 <input type="hidden" name="id_mmk" value="$!id_mmk">
 <input type="hidden" name="id_mmkkeputusan" value="$!id_mmkkeputusan">
+<input type="hidden" name="nama_pengarah" value="$!nama_pengarah">
 
 <input type="hidden" name="command2">
 <input type="hidden" name="command3">
@@ -794,10 +795,10 @@ function cetakBorangD(idpermohonan,idfail,totalHM,mukim,negeri) {
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
-function cetakKertasMinitMB(idfail,namaPengarah) {
+function cetakKertasMinitMB(idfail,namaPengarah,idpermohonan) {
 
-	var url = "../servlet/ekptg.report.ppt.KertasMinitMB?idfail="+idfail+"&namaPengarah="+namaPengarah;
-	//var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&report=KertasMinitMB&flagReport=S";
+	//var url = "../servlet/ekptg.report.ppt.KertasMinitMB?idfail="+idfail+"&namaPengarah="+namaPengarah;
+	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&idfail="+idfail+"&namaPengarah="+namaPengarah+"&report=KertasMinitMB&flagReport=S";
 	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;

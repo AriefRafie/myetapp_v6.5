@@ -63,6 +63,7 @@ public class FrmPNWTawaranKJPData {
 					+ " AND B.ID_PEMOHON = C.ID_PEMOHON AND B.ID_PERMOHONAN = E.ID_PERMOHONAN AND A.NO_FAIL IS NOT NULL"
 					+ " AND A.ID_MASUK = H.USER_ID(+)"
 					+ " AND D.ID_STATUS = '1610210' "; //TAWARAN
+					
 
 			// noFail
 			if (noFail != null) {
@@ -128,7 +129,7 @@ public class FrmPNWTawaranKJPData {
 			if (idKementerian != null) {
 				if (!idKementerian.trim().equals("")
 						&& !idKementerian.trim().equals("99999")) {
-					sql = sql + " AND F.ID_KEMENTERIAN = '"
+					sql = sql + " AND F.ID_KEMENTERIAN != '"
 							+ idKementerian.trim() + "'";
 				}
 			}
@@ -137,7 +138,7 @@ public class FrmPNWTawaranKJPData {
 			if (idAgensi != null) {
 				if (!idAgensi.trim().equals("")
 						&& !idAgensi.trim().equals("99999")) {
-					sql = sql + " AND F.ID_AGENSI = '" + idAgensi.trim() + "'";
+					sql = sql + " AND F.ID_AGENSI != '" + idAgensi.trim() + "'";
 				}
 			}
 
@@ -205,6 +206,97 @@ public class FrmPNWTawaranKJPData {
 					sql = sql + " AND B.ID_STATUS = '" + idStatus.trim() + "'";
 				}
 			}
+
+			sql = sql + " ORDER BY B.TARIKH_TERIMA DESC NULLS LAST ";
+			ResultSet rs = stmt.executeQuery(sql);
+			myLog.info("carianFail tawaran====="+sql);
+			
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("idFail",
+						rs.getString("ID_FAIL") == null ? "" : rs
+								.getString("ID_FAIL"));
+				h.put("idPermohonan",
+						rs.getString("ID_PERMOHONAN") == null ? "" : rs
+								.getString("ID_PERMOHONAN"));
+				h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs
+						.getString("NO_FAIL").toUpperCase());
+				h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_TERIMA")));
+				h.put("tarikhBukaFail",
+						rs.getDate("TARIKH_DAFTAR_FAIL") == null ? "" : sdf
+								.format(rs.getDate("TARIKH_DAFTAR_FAIL")));
+				h.put("namaPemohon", rs.getString("NAMA") == null ? "" : rs
+						.getString("NAMA").toUpperCase());
+				h.put("idStatus",
+						rs.getString("ID_STATUS") == null ? "" : rs
+								.getString("ID_STATUS"));
+				h.put("status",
+						rs.getString("KETERANGAN") == null ? "" : rs
+								.getString("KETERANGAN"));
+				h.put("userLogin",
+						rs.getString("USER_NAME") == null ? "" : rs
+								.getString("USER_NAME"));
+				h.put("namaNegeri", rs.getString("NAMA_NEGERI") == null ? ""
+						: rs.getString("NAMA_NEGERI"));
+				h.put("tajukFail", rs.getString("TAJUK_FAIL") == null ? "" : rs
+						.getString("TAJUK_FAIL").toUpperCase());
+				senaraiFail.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public void senaraiFail(String noFail, String tajukFail, String namaPemohon,
+			String tarikhTerima, String idNegeri, String idDaerah,
+			String idMukim, String idJenisHakmilik, String noHakmilik,
+			String noWarta, String idLot, String noLot, String noPegangan,
+			String idStatus, String idKementerian, String idAgensi,
+			String checkTanah) throws Exception {
+
+		Db db = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		String sql = "";
+
+		try {
+			senaraiFail = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, "
+					+ " A.TAJUK_FAIL, B.TARIKH_TERIMA, A.TARIKH_DAFTAR_FAIL, "
+					+ " C.NAMA, D.KETERANGAN, B.ID_STATUS, H.USER_NAME, "
+					+ " RUJNEGERI.NAMA_NEGERI "
+					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, "
+					+ " TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, "
+					+ " TBLPHPHAKMILIK F, USERS H, TBLRUJNEGERI RUJNEGERI "
+					+ " WHERE A.ID_SEKSYEN = 4 "
+					+ " AND A.ID_URUSAN = '6' "
+					+ " AND A.ID_SUBURUSAN = '32' "
+					+ " AND A.ID_FAIL = B.ID_FAIL "
+					+ " AND B.ID_STATUS = D.ID_STATUS"
+					+ " AND E.ID_HAKMILIKPERMOHONAN = F.ID_HAKMILIKPERMOHONAN(+)"
+					+ " AND F.ID_NEGERI = RUJNEGERI.ID_NEGERI(+) "
+					+ " AND B.ID_PEMOHON = C.ID_PEMOHON "
+					+ " AND B.ID_PERMOHONAN = E.ID_PERMOHONAN "
+					+ " AND A.NO_FAIL IS NOT NULL"
+					+ " AND A.ID_MASUK = H.USER_ID(+)"
+					+ " AND D.ID_STATUS = '1610210' " //TAWARAN
+					+ " AND C.ID_KEMENTERIAN != '"+idKementerian +"'"
+					+ " AND C.ID_AGENSI != '"+idAgensi+"'"; 
+
+
+			SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MMM-yy");
+
+			
 
 			sql = sql + " ORDER BY B.TARIKH_TERIMA DESC NULLS LAST ";
 			ResultSet rs = stmt.executeQuery(sql);
@@ -291,7 +383,7 @@ public class FrmPNWTawaranKJPData {
 	}
 
 
-	public void setSenaraiAgensi(String idPermohonan) throws Exception {
+	public void setSenaraiAgensi(String idPermohonan, String idKementerian, String idAgensi) throws Exception {
 		Db db = null;
 		String sql = "";
 
@@ -300,8 +392,16 @@ public class FrmPNWTawaranKJPData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_PENAWARANKJP, B.NAMA_KEMENTERIAN, C.NAMA_AGENSI, A.TARIKH_TERIMA, A.NO_RUJUKAN_KJP FROM TBLPHPPENAWARANKJP A, TBLRUJKEMENTERIAN B, TBLRUJAGENSI C"
-					+ " WHERE A.ID_KEMENTERIAN = B.ID_KEMENTERIAN AND A.ID_AGENSI = C.ID_AGENSI AND A.ID_PERMOHONAN = '"
+			sql = "SELECT A.ID_PENAWARANKJP, B.NAMA_KEMENTERIAN, C.NAMA_AGENSI, A.TARIKH_TERIMA, A.NO_RUJUKAN_KJP "
+					+ " FROM TBLPHPPENAWARANKJP A, TBLRUJKEMENTERIAN B, TBLRUJAGENSI C, "
+					+ " TBLPERMOHONAN D, TBLPHPPEMOHON E "
+					+ " WHERE A.ID_KEMENTERIAN = B.ID_KEMENTERIAN "
+					+ " AND A.ID_AGENSI = C.ID_AGENSI "
+					+ " AND A.ID_PERMOHONAN = D.ID_PERMOHONAN "
+					+ " AND D.ID_PEMOHON = E.ID_PEMOHON "
+					+ " AND B.ID_KEMENTERIAN = '"+ idKementerian +"'"
+					+ " AND C.ID_AGENSI = '"+ idAgensi +"'"
+					+ " AND A.ID_PERMOHONAN = '"
 					+ idPermohonan + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 			myLog.info("baca listAgensi=="+sql);
@@ -546,6 +646,32 @@ public class FrmPNWTawaranKJPData {
 			if (db != null)
 				db.close();
 		}
+	}
+	public Hashtable getMaklumatLampiran(String idPermohonan) {
+		String sql = "";
+		Hashtable lampiran = null;
+		
+		try {			
+			db = new Db();
+			Statement stmt = db.getStatement();
+			
+			sql = "SELECT ID_DOKUMEN FROM TBLPHPDOKUMEN WHERE ID_PERMOHONAN = '" + idPermohonan + "' ";
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			myLog.info("getMaklumatLampiran===="+sql);
+			
+			if (rs.next()) {
+				lampiran = new Hashtable();
+				lampiran.put("ID_DOKUMEN", rs.getString("ID_DOKUMEN") == null ? "" : rs.getString("ID_DOKUMEN"));
+			}
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (db != null ) db.close();
+		}
+		
+		return lampiran;
 	}
 
 	public void updateStatus(String idFail, String idPermohonan,
