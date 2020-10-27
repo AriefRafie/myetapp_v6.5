@@ -1313,8 +1313,6 @@ public class FrmPNWSenaraiMesyuaratData {
 				if (idMinitHingga.length()==1){
 					idMinitHingga="0"+ idMinitHingga;
 				}
-				//catatan=rs.getString("CATATAN");
-				//flagSyor=rs.getString("FLAG_SYOR");
 				ulasanPemohon=rs.getString("ULASAN_PEMOHON");
 				flagKeputusanPemohon=rs.getString("FLAG_KEPUTUSAN_PEMOHON");
 			}	
@@ -1322,7 +1320,7 @@ public class FrmPNWSenaraiMesyuaratData {
 			String body = "<table width='100%' border='0' cellspacing='0' cellpadding='5'>"
 					+ "<tr><td>Tuan/ Puan,</td></tr>"
 					+ "<tr><td>&nbsp;</td></tr>"
-					+ "<tr><td>MESYUARAT BERKENAAN "+tajukMesyuarat.toUpperCase()+"</td></tr>"
+					+ "<tr><td>"+tajukMesyuarat.toUpperCase()+"</td></tr>"
 					+ "<tr><td>&nbsp;</td></tr>"
 					+ "<tr><td>2.	Dengan hormatnya saya merujuk kepada perkara diatas.</td></tr>"
 					+ "<tr><td>&nbsp;</td></tr>"
@@ -1339,7 +1337,7 @@ public class FrmPNWSenaraiMesyuaratData {
 					+ "<tr><td>&nbsp;</td></tr>" + "</table>";
 			
 			email.RECIEPIENT = emel;
-			email.SUBJECT = "NOTIS PANGGILAN MESYUARAT BERKENAAN " + tajukMesyuarat.toUpperCase();
+			email.SUBJECT = "NOTIS PANGGILAN MESYUARAT PERMOHONAN PENAWARAN";
 			email.MESSAGE = body;
 			email.sendEmail();
 			

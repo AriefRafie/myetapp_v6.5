@@ -1458,7 +1458,7 @@ public class FrmPYWSenaraiMesyuaratData {
 			String body = "<table width='100%' border='0' cellspacing='0' cellpadding='5'>"
 					+ "<tr><td>Tuan/ Puan,</td></tr>"
 					+ "<tr><td>&nbsp;</td></tr>"
-					+ "<tr><td>MESYUARAT BERKENAAN "+tajukMesyuarat.toUpperCase()+"</td></tr>"
+					+ "<tr><td>"+tajukMesyuarat.toUpperCase()+"</td></tr>"
 					+ "<tr><td>&nbsp;</td></tr>"
 					+ "<tr><td>2.	Dengan hormatnya saya merujuk kepada perkara diatas.</td></tr>"
 					+ "<tr><td>&nbsp;</td></tr>"
@@ -1475,7 +1475,7 @@ public class FrmPYWSenaraiMesyuaratData {
 					+ "<tr><td>&nbsp;</td></tr>" + "</table>";
 			
 			email.RECIEPIENT = emel;
-			email.SUBJECT = "NOTIS PANGGILAN MESYUARAT BERKENAAN " + tajukMesyuarat.toUpperCase();
+			email.SUBJECT = "NOTIS PANGGILAN MESYUARAT PERMOHONAN PENYEWAAN";
 			email.MESSAGE = body;
 			email.sendEmail();
 			

@@ -17,7 +17,7 @@
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input name="actionPerintah" type="hidden" id="actionPerintah" value="$actionPerintah"/>
   <input name="mode" type="hidden" id="mode" value="$mode"/>
-  <input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
+  <input name="flagPopup" type="text" id="flagPopup" value="$flagPopup"/>
   <input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
   <input name="selectedTabUpper" type="hidden" id="selectedTabUpper" value="$selectedTabUpper"/>
   <input name="selectedTabLower" type="hidden" id="selectedTabLower" value="$selectedTabLower"/>
@@ -1044,6 +1044,8 @@ document.getElementById("header_lama").style.display="block";
             <li onClick="javascript:setSelectedTabLower(2);" class="TabbedPanelsTab" tabindex="0">PERINTAH LELONG</li>
             <li onClick="javascript:setSelectedTabLower(3);" class="TabbedPanelsTab" tabindex="0">PERINTAH FARAID</li>
             <li onClick="javascript:setSelectedTabLower(4);" class="TabbedPanelsTab" tabindex="0">PERINTAH PEMBAHAGIAN AKTA 1958</li><!-- arief add -->
+            <li onClick="javascript:setSelectedTabLower(5);" class="TabbedPanelsTab" tabindex="0">DIKEMBALIKAN KEPADA KERAJAAN NEGERI</li>
+            <li onClick="javascript:setSelectedTabLower(6);" class="TabbedPanelsTab" tabindex="0">DIMASUKKAN KE DALAM KUMPULAN WANG DISATUKAN</li>
           </ul>
           <div class="TabbedPanelsContentGroup"> 
             <!-- START CONTENT PERINTAH TERUS -->
@@ -2707,6 +2709,502 @@ document.getElementById("header_lama").style.display="block";
               	</table>
             	</div>
             	<!-- END CONTENT PERINTAH AKTA 1958 --> 
+            	
+            	<!-- START DIKEMBALIKAN KEPADA KERAJAAN NEGERI -->
+            	<div class="TabbedPanelsContent">
+  			<table width="100%" border="0" cellspacing="2" cellpadding="2">
+ 			<!-- START OPEN POPUP HTAPA1958 --> 
+  			#if ($flagPopup == 'openHTAPA1958')
+  			<tr>
+     			<td><table width="100%" border="0" cellspacing="2" cellpadding="2">
+     			#set ($headerDetail = "")
+     				#foreach($headerDetail in $BeanHeaderDetail)
+     			<tr>
+     				<td width="30%" align="right">KETERANGAN HAKMILIK :</td>
+        			<td width="70%" align="left"><font color="blue">$headerDetail.keteranganHakmilik</font></td>
+        		</tr>
+     			<tr>
+        			<td width="30%" align="right">STATUS PEMILIKAN :</td>
+        			<td width="70%" align="left"><font color="blue">$headerDetail.jenisPB</font></td>
+     			</tr>
+     			<tr>
+     				<td width="30%" align="right">JENIS TANAH :</td>
+        			<td width="70%" align="left"><font color="blue">$headerDetail.jenisTanah</font></td>
+     			</tr>
+     			<tr>
+     				<td width="30%" align="right">BAHAGIAN SIMATI :</td>
+        			<td width="70%" align="left"><font color="blue">$headerDetail.bahagianSimati</font></td>
+     			</tr>
+     			<tr>
+     				<td width="30%" align="right" valign="top">CATATAN :</td>
+        			<td width="70%" align="left"><textarea name="txtCatatan" cols="50" rows="5" id="txtCatatan" $readonly class="$inputTextClass" >$headerDetail.catatan</textarea></td>
+     			</tr>
+     			#end
+     			<tr>
+         			<td>&nbsp;</td>
+         			<td>&nbsp;</td>
+     			</tr>
+     			<tr>
+     				<td colspan="2"><table width="95%" border="0" cellspacing="2" cellpadding="2" align="center">
+        			<tr class="table_header">
+        				<td align="center" width="5%">BIL</td>
+            			<td width="60%">NAMA WARIS</td>
+          				<td width="20%">STATUS WARIS</td>
+            			<td align="center" width="15%">BAHAGIAN WARIS</td>
+       				</tr>
+        			#set ($listHTAPA1958DTL = "")
+        				#foreach ($listHTAPA1958DTL in $SenaraiHTAPA1958DTL)
+       				<tr>
+        				<input name="idspentadbir" type="hidden" value="$listHTAPA1958DTL.idOB">
+            			<td align="center">$listHTAPA1958DTL.bil</td>
+            			#if ($listHTAPA1958DTL.status == '')
+            			<td>$listHTAPA1958DTL.namaWaris</td>
+                		#else
+                    	<td><a href="javascript:updatePAPTHTAPA1958('$listHTAPA1958DTL.idOB','$idPermohonanSimati','$idSimati','$listHTAPFDTL.status','$idPerintah','$mode','$idHTA','$flag_kemaskini_selesai')"><font color="#0000FF">$listHTAP1958DTL.namaWaris</font></a></td>
+                        #end
+                              <td>$listHTAPA1958DTL.status</td>
+                              <td align="center">$listHTAPA1958DTL.bahagianWaris</td>
+                            </tr>
+                            #end
+                            <tr class="table_header">
+                              <td width="5%">&nbsp;</td>
+                              <td colspan="2" align="left"><strong>JUMLAH</strong></td>
+                              <td align="center" width="15%"><strong>$jumlahBahagian</strong></td>
+                            </tr>
+                            <tr>
+                              <td colspan="4">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td valign="bottom" colspan="4"><i>&nbsp;&nbsp;&nbsp;&nbsp;<font color="#ff0000">Perhatian</font> : Sila klik pada nama waris untuk melantik pemegang amanah / pentadbir bagi waris yang menerima bahagian.</i></td>
+                            </tr>
+                          </table></td>
+                      </tr>
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" align="center"> #if($mode == 'update' && $userRole != "user_ppk")
+                          <input name="cmdSimpanKemaskiniHTAPA1958" id="cmdSimpanKemaskiniHTAPA1958" type="button" value="Simpan" onClick="javascript:simpanKemaskiniHTAPA1958()"/>
+                          #if($flag_kemaskini_selesai != "yes") 
+                          <script>
+                                        document.getElementById('cmdSimpanKemaskiniHTAPA1958').style.display = "none";
+                                        </script> 
+                          #end
+                          #end
+                          <input type="button" name="cmdBatalHTAPF" id="cmdBatalHTAPF" value="Kembali" onClick="javascript:batalHTAPA1958()"/></td>
+                      </tr>
+                    </table></td>
+                </tr>
+                #end 
+                <!-- END OPEN POPUP HTAPA1958 --> 
+                #if ($flagPopup != 'openHAPA1958') 
+                <!-- START LIST HTAPA1958 -->
+                <tr>
+                  <td><fieldset>
+                      <legend><strong>SENARAI PEMBAHAGIAN HARTA TAK ALIH</strong></legend>
+                      #if($flagAdaHTAPA1958 == '1')
+                      
+                      #if ($SenaraiHTAPA1958.size() > 10)
+                      <div style="width:100%;height:190;overflow:auto"> #end
+                        <table align="center" width="100%">
+                          <tr class="table_header">
+                            <td scope="row" width="5%" align="center">BIL</td>
+                            <td width="65%">KETERANGAN HAKMILIK</td>
+                            <td width="15%" align="center">STATUS PEMILIKAN</td>
+                            <td width="15%" align="center">JENIS TANAH</td>
+                          </tr>
+                          #set ($listHTAPA1958 = "")
+                          #foreach ($listHTAPA1958 in $SenaraiHTAPA1958)
+                          #if ($listHTAPA1958.bil == '')
+                          #set( $row = "row1" )
+                          #elseif (($listHTAPA1958.bil % 2) != 0)
+                          #set( $row = "row1" )
+                          #else 
+                          #set( $row = "row2" )
+                          #end
+                          <tr>
+                            <td class="$row" align="center">$listHTAPA1958.bil</td>
+                            #if($listHTAPA1958.idPerintahHTAOBMST == '')
+                            <td class="$row">$listHTAPA1958.keteranganHakmilik</td>
+                            #else
+                            <td class="$row"><a href="javascript:paparHTAPA1958('$listHTAPA1958.idPerintahHTAOBMST')"><font color="#0000FF">$listHTAPF.keteranganHakmilik</font></a></td>
+                            <td class="$row" align="center">$listHTAPA1958.kodPB</td>
+                            <td class="$row" align="center">$listHTAPA1958.jenisTanah</td>
+                            #end </tr>
+                          #end
+                        </table>
+                        #if ($SenaraiHTAPA1958.size() > 10) </div>
+                      #end 
+                      
+                      #else <br>
+                      &nbsp;&nbsp;<font color="black">TIADA PEMBAHAGIAN HARTA TAK ALIH BAGI PERINTAH INI</font> <br>
+                      <br>
+                      #end
+                    </fieldset></td>
+                </tr>
+                <!-- END LIST HTAPA1958 --> 
+                #end 
+                <!-- START OPEN POPUP HAPA1958 --> 
+                #if ($flagPopup == 'openHAPA1958')
+                <tr>
+                  <td><table width="100%" border="0" cellspacing="2" cellpadding="2">
+                      #set ($headerDetail = "")
+                      #foreach($headerDetail in $BeanHeaderDetail)
+                      <tr>
+                        <td width="30%" align="right">JENIS HARTA ALIH :</td>
+                        <td width="70%" align="left"><font color="blue">$headerDetail.jenisHA</font><font color="#000000">$headerDetail.keterangan</font></td>
+                      </tr>
+                      <tr>
+                        <td width="30%" align="right">JENAMA/MODEL/BANK :</td>
+                        <td width="70%" align="left"><font color="blue">$headerDetail.jenama</font></td>
+                      </tr>
+                      <tr>
+                        <td width="30%" align="right">NO. PENDAFTARAN/AKAUN :</td>
+                        <td width="70%" align="left"><font color="blue">$headerDetail.noDaftar</font></td>
+                      </tr>
+                      <tr>
+                        <td width="30%" align="right">BAHAGIAN SIMATI :</td>
+                        <td width="70%" align="left"><font color="blue">$headerDetail.bahagianSimati</font></td>
+                      </tr>
+                      <tr>
+                        <td width="30%" align="right" valign="top">CATATAN :</td>
+                        <td width="70%" align="left"><textarea name="txtCatatan" cols="50" rows="5" id="txtCatatan" $readonly class="$inputTextClass" >$headerDetail.catatan</textarea></td>
+                      </tr>
+                      #end
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2"><table width="95%" border="0" cellspacing="2" cellpadding="2" align="center">
+                            <tr class="table_header">
+                              <td align="center" width="5%">BIL</td>
+                              <td width="60%">NAMA WARIS</td>
+                              <td width="20%">STATUS WARIS</td>
+                              <td align="center" width="15%">BAHAGIAN WARIS</td>
+                            </tr>
+                            #set ($listHAPA1958DTL = "")
+                            #foreach ($listHAPA1958DTL in $SenaraiHAPA1958DTL)
+                            <tr>
+                              <input name="idspentadbir" type="hidden" value="$listHAPA1958DTL.idOB">
+                              <td align="center">$listHAPA1958DTL.bil</td>
+                              #if ($listHAPA1958DTL.status == '')
+                              <td>$listHAPA1958DTL.namaWaris</td>
+                              #else
+                              <td><a href="javascript:updatePAPTHAPA1958('$listHAPA1958DTL.idOB','$idPermohonanSimati','$idSimati','$listHAPA1958DTL.status','$idPerintah','$mode','$idHA','$flag_kemaskini_selesai')"><font color="#0000FF">$listHAPA1958DTL.namaWaris</font></a></td>
+                              #end
+                              <td >$listHAPA1958DTL.status</td>
+                              <td align="center">$listHAPA1958DTL.bahagianWaris</td>
+                            </tr>
+                            #end
+                            <tr class="table_header">
+                              <td width="5%">&nbsp;</td>
+                              <td colspan="2" align="left"><strong>JUMLAH</strong></td>
+                              <td align="center" width="15%"><strong>$jumlahBahagian</strong></td>
+                            </tr>
+                            <tr>
+                              <td colspan="4">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td valign="bottom" colspan="4"><i>&nbsp;&nbsp;&nbsp;&nbsp;<font color="#ff0000">Perhatian</font> : Sila klik pada nama waris untuk melantik pemegang amanah / pentadbir bagi waris yang menerima bahagian.</i></td>
+                            </tr>
+                          </table></td>
+                      </tr>
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" align="center"> #if($mode == 'update' && $userRole != "user_ppk")
+                          <input name="cmdSimpanKemaskiniHAPA1958" id="cmdSimpanKemaskiniHAPA1958" type="button" value="Simpan" onClick="javascript:simpanKemaskiniHAPA1958()"/>
+                          #if($flag_kemaskini_selesai != "yes") 
+                          <script>
+                                        document.getElementById('cmdSimpanKemaskiniHAPA1958').style.display = "none";
+                                        </script> 
+                          #end
+                          #end
+                          <input type="button" name="cmdBatalHAPA1958" id="cmdBatalHAPA1958" value="Kembali" onClick="javascript:batalHAPA1958()"/></td>
+                      </tr>
+                    </table></td>
+                </tr>
+                #end 
+                <!-- END OPEN POPUP HAPA1958 --> 
+                #if ($flagPopup != 'openHTAPA1958') 
+                <!-- START LIST HAPA1958 -->
+                <tr>
+                  <td><fieldset>
+                      <legend><strong>SENARAI PEMBAHAGIAN HARTA ALIH</strong></legend>
+                      #if($flagAdaHAPA1958 == '1')
+                      
+                      #if ($SenaraiHAPA1958.size() > 10)
+                      <div style="width:100%;height:190;overflow:auto"> #end
+                        <table align="center" width="100%">
+                          <tr class="table_header">
+                            <td scope="row" width="5%" align="center">BIL</td>
+                            <td width="35%">JENIS HARTA ALIH</td>
+                            <td width="30%">JENAMA/MODEL/BANK</td>
+                            <td width="30%">NO. PENDAFTARAN/AKAUN</td>
+                          </tr>
+                          #set ($listHAPA1958 = "")
+                          #foreach ($listHAPA1958 in $SenaraiHAPFA1958)
+                          #if ($listHAPA1958.bil == '')
+                          #set( $row = "row1" )
+                          #elseif (($listHAPA1958.bil % 2) != 0)
+                          #set( $row = "row1" )
+                          #else 
+                          #set( $row = "row2" )
+                          #end
+                          <tr>
+                            <td class="$row" align="center">$listHAPA1958.bil</td>
+                            #if($listHAPA1958.idPerintahHAOBMST == '')
+                            <td class="$row">$listHAPA1958.jenisHA</td>
+                            #else
+                            <td class="$row"><a href="javascript:paparHAPA1958('$listHAPA1958.idPerintahHAOBMST')"><font color="#0000FF">$listHAPF.jenisHA.toUpperCase()</font><font color="#000000">$listHAPA1958.keterangan</font></a></td>
+                            <td class="$row">$listHAPA1958.jenama.toUpperCase()</td>
+                            <td class="$row">$listHAPA1958.noDaftar</td>
+                            #end </tr>
+                          #end
+                        </table>
+                        #if ($SenaraiHAPAKTA1958.size() > 10) </div>
+                      #end
+                      
+                      #else <br>
+                      &nbsp;&nbsp;<font color="black">TIADA PEMBAHAGIAN HARTA ALIH BAGI PERINTAH INI</font> <br>
+                      <br>
+                      #end
+                    </fieldset></td>
+                </tr>
+                <!-- END LIST HAPA1958 --> 
+                #end
+              	</table>
+            	</div>
+            	
+            	<!--  END DIKEMBALIKAN KEPADA KERAJAAN NEGERI -->
+            	
+            	<!-- START DIBERIKAN KEPADA WANG DISATUKAN -->
+            	<div class="TabbedPanelsContent">
+  			<table width="100%" border="0" cellspacing="2" cellpadding="2">
+ 			<!-- START OPEN POPUP HTAPA1958 --> 
+  			#if ($flagPopup == 'openHTAPA1958')
+  			<tr>
+     			<td><table width="100%" border="0" cellspacing="2" cellpadding="2">
+     			#set ($headerDetail = "")
+     				#foreach($headerDetail in $BeanHeaderDetail)
+     			<tr>
+     				<td width="30%" align="right">KETERANGAN HAKMILIK :</td>
+        			<td width="70%" align="left"><font color="blue">$headerDetail.keteranganHakmilik</font></td>
+        		</tr>
+     			<tr>
+        			<td width="30%" align="right">STATUS PEMILIKAN :</td>
+        			<td width="70%" align="left"><font color="blue">$headerDetail.jenisPB</font></td>
+     			</tr>
+     			<tr>
+     				<td width="30%" align="right">JENIS TANAH :</td>
+        			<td width="70%" align="left"><font color="blue">$headerDetail.jenisTanah</font></td>
+     			</tr>
+     			<tr>
+     				<td width="30%" align="right">BAHAGIAN SIMATI :</td>
+        			<td width="70%" align="left"><font color="blue">$headerDetail.bahagianSimati</font></td>
+     			</tr>
+     			<tr>
+     				<td width="30%" align="right" valign="top">CATATAN :</td>
+        			<td width="70%" align="left"><textarea name="txtCatatan" cols="50" rows="5" id="txtCatatan" $readonly class="$inputTextClass" >$headerDetail.catatan</textarea></td>
+     			</tr>
+     			#end
+     			<tr>
+         			<td>&nbsp;</td>
+         			<td>&nbsp;</td>
+     			</tr>
+     			<tr>
+     				<td colspan="2"><table width="95%" border="0" cellspacing="2" cellpadding="2" align="center">
+        			<tr class="table_header">
+        				<td align="center" width="5%">BIL</td>
+            			<td width="60%">NAMA WARIS</td>
+          				<td width="20%">STATUS WARIS</td>
+            			<td align="center" width="15%">BAHAGIAN WARIS</td>
+       				</tr>
+        			#set ($listHTAPA1958DTL = "")
+        				#foreach ($listHTAPA1958DTL in $SenaraiHTAPA1958DTL)
+       				<tr>
+        				<input name="idspentadbir" type="hidden" value="$listHTAPA1958DTL.idOB">
+            			<td align="center">$listHTAPA1958DTL.bil</td>
+            			#if ($listHTAPA1958DTL.status == '')
+            			<td>$listHTAPA1958DTL.namaWaris</td>
+                		#else
+                    	<td><a href="javascript:updatePAPTHTAPA1958('$listHTAPA1958DTL.idOB','$idPermohonanSimati','$idSimati','$listHTAPFDTL.status','$idPerintah','$mode','$idHTA','$flag_kemaskini_selesai')"><font color="#0000FF">$listHTAP1958DTL.namaWaris</font></a></td>
+                        #end
+                              <td>$listHTAPA1958DTL.status</td>
+                              <td align="center">$listHTAPA1958DTL.bahagianWaris</td>
+                            </tr>
+                            #end
+                            <tr class="table_header">
+                              <td width="5%">&nbsp;</td>
+                              <td colspan="2" align="left"><strong>JUMLAH</strong></td>
+                              <td align="center" width="15%"><strong>$jumlahBahagian</strong></td>
+                            </tr>
+                            <tr>
+                              <td colspan="4">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td valign="bottom" colspan="4"><i>&nbsp;&nbsp;&nbsp;&nbsp;<font color="#ff0000">Perhatian</font> : Sila klik pada nama waris untuk melantik pemegang amanah / pentadbir bagi waris yang menerima bahagian.</i></td>
+                            </tr>
+                          </table></td>
+                      </tr>
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" align="center"> #if($mode == 'update' && $userRole != "user_ppk")
+                          <input name="cmdSimpanKemaskiniHTAPA1958" id="cmdSimpanKemaskiniHTAPA1958" type="button" value="Simpan" onClick="javascript:simpanKemaskiniHTAPA1958()"/>
+                          #if($flag_kemaskini_selesai != "yes") 
+                          <script>
+                                        document.getElementById('cmdSimpanKemaskiniHTAPA1958').style.display = "none";
+                                        </script> 
+                          #end
+                          #end
+                          <input type="button" name="cmdBatalHTAPF" id="cmdBatalHTAPF" value="Kembali" onClick="javascript:batalHTAPA1958()"/></td>
+                      </tr>
+                    </table></td>
+                </tr>
+                #end 
+               
+                <!-- START OPEN POPUP HAPA1958 --> 
+                #if ($flagPopup == 'openHAPA1958')
+                <tr>
+                  <td><table width="100%" border="0" cellspacing="2" cellpadding="2">
+                      #set ($headerDetail = "")
+                      #foreach($headerDetail in $BeanHeaderDetail)
+                      <tr>
+                        <td width="30%" align="right">JENIS HARTA ALIH :</td>
+                        <td width="70%" align="left"><font color="blue">$headerDetail.jenisHA</font><font color="#000000">$headerDetail.keterangan</font></td>
+                      </tr>
+                      <tr>
+                        <td width="30%" align="right">JENAMA/MODEL/BANK :</td>
+                        <td width="70%" align="left"><font color="blue">$headerDetail.jenama</font></td>
+                      </tr>
+                      <tr>
+                        <td width="30%" align="right">NO. PENDAFTARAN/AKAUN :</td>
+                        <td width="70%" align="left"><font color="blue">$headerDetail.noDaftar</font></td>
+                      </tr>
+                      <tr>
+                        <td width="30%" align="right">BAHAGIAN SIMATI :</td>
+                        <td width="70%" align="left"><font color="blue">$headerDetail.bahagianSimati</font></td>
+                      </tr>
+                      <tr>
+                        <td width="30%" align="right" valign="top">CATATAN :</td>
+                        <td width="70%" align="left"><textarea name="txtCatatan" cols="50" rows="5" id="txtCatatan" $readonly class="$inputTextClass" >$headerDetail.catatan</textarea></td>
+                      </tr>
+                      #end
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2"><table width="95%" border="0" cellspacing="2" cellpadding="2" align="center">
+                            <tr class="table_header">
+                              <td align="center" width="5%">BIL</td>
+                              <td width="60%">NAMA WARIS</td>
+                              <td width="20%">STATUS WARIS</td>
+                              <td align="center" width="15%">BAHAGIAN WARIS</td>
+                            </tr>
+                            #set ($listHAPA1958DTL = "")
+                            #foreach ($listHAPA1958DTL in $SenaraiHAPA1958DTL)
+                            <tr>
+                              <input name="idspentadbir" type="hidden" value="$listHAPA1958DTL.idOB">
+                              <td align="center">$listHAPA1958DTL.bil</td>
+                              #if ($listHAPA1958DTL.status == '')
+                              <td>$listHAPA1958DTL.namaWaris</td>
+                              #else
+                              <td><a href="javascript:updatePAPTHAPA1958('$listHAPA1958DTL.idOB','$idPermohonanSimati','$idSimati','$listHAPA1958DTL.status','$idPerintah','$mode','$idHA','$flag_kemaskini_selesai')"><font color="#0000FF">$listHAPA1958DTL.namaWaris</font></a></td>
+                              #end
+                              <td >$listHAPA1958DTL.status</td>
+                              <td align="center">$listHAPA1958DTL.bahagianWaris</td>
+                            </tr>
+                            #end
+                            <tr class="table_header">
+                              <td width="5%">&nbsp;</td>
+                              <td colspan="2" align="left"><strong>JUMLAH</strong></td>
+                              <td align="center" width="15%"><strong>$jumlahBahagian</strong></td>
+                            </tr>
+                            <tr>
+                              <td colspan="4">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td valign="bottom" colspan="4"><i>&nbsp;&nbsp;&nbsp;&nbsp;<font color="#ff0000">Perhatian</font> : Sila klik pada nama waris untuk melantik pemegang amanah / pentadbir bagi waris yang menerima bahagian.</i></td>
+                            </tr>
+                          </table></td>
+                      </tr>
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" align="center"> #if($mode == 'update' && $userRole != "user_ppk")
+                          <input name="cmdSimpanKemaskiniHAPA1958" id="cmdSimpanKemaskiniHAPA1958" type="button" value="Simpan" onClick="javascript:simpanKemaskiniHAPA1958()"/>
+                          #if($flag_kemaskini_selesai != "yes") 
+                          <script>
+                                        document.getElementById('cmdSimpanKemaskiniHAPA1958').style.display = "none";
+                                        </script> 
+                          #end
+                          #end
+                          <input type="button" name="cmdBatalHAPA1958" id="cmdBatalHAPA1958" value="Kembali" onClick="javascript:batalHAPA1958()"/></td>
+                      </tr>
+                    </table></td>
+                </tr>
+                #end 
+                <!-- END OPEN POPUP HAPA1958 --> 
+                #if ($flagPopup != 'openHTAPA1958') 
+                <!-- START LIST HAPA1958 -->
+                <tr>
+                  <td><fieldset>
+                      <legend><strong>SENARAI PEMBAHAGIAN HARTA ALIH</strong></legend>
+                      #if($flagAdaHAPA1958 == '1')
+                      
+                      #if ($SenaraiHAPA1958.size() > 10)
+                      <div style="width:100%;height:190;overflow:auto"> #end
+                        <table align="center" width="100%">
+                          <tr class="table_header">
+                            <td scope="row" width="5%" align="center">BIL</td>
+                            <td width="35%">JENIS HARTA ALIH</td>
+                            <td width="30%">JENAMA/MODEL/BANK</td>
+                            <td width="30%">NO. PENDAFTARAN/AKAUN</td>
+                          </tr>
+                          #set ($listHAPA1958 = "")
+                          #foreach ($listHAPA1958 in $SenaraiHAPFA1958)
+                          #if ($listHAPA1958.bil == '')
+                          #set( $row = "row1" )
+                          #elseif (($listHAPA1958.bil % 2) != 0)
+                          #set( $row = "row1" )
+                          #else 
+                          #set( $row = "row2" )
+                          #end
+                          <tr>
+                            <td class="$row" align="center">$listHAPA1958.bil</td>
+                            #if($listHAPA1958.idPerintahHAOBMST == '')
+                            <td class="$row">$listHAPA1958.jenisHA</td>
+                            #else
+                            <td class="$row"><a href="javascript:paparHAPA1958('$listHAPA1958.idPerintahHAOBMST')"><font color="#0000FF">$listHAPF.jenisHA.toUpperCase()</font><font color="#000000">$listHAPA1958.keterangan</font></a></td>
+                            <td class="$row">$listHAPA1958.jenama.toUpperCase()</td>
+                            <td class="$row">$listHAPA1958.noDaftar</td>
+                            #end </tr>
+                          #end
+                        </table>
+                        #if ($SenaraiHAPAKTA1958.size() > 10) </div>
+                      #end
+                      
+                      #else <br>
+                      &nbsp;&nbsp;<font color="black">TIADA PEMBAHAGIAN HARTA ALIH BAGI PERINTAH INI</font> <br>
+                      <br>
+                      #end
+                    </fieldset></td>
+                </tr>
+                <!-- END LIST HAPA1958 --> 
+                #end
+              	</table>
+            	</div>
+            	<!-- END DIBERIKAN KEPADA WANG DISATUKAN -->
           		</div>
         		</div>
       		</fieldset></td>
@@ -3183,6 +3681,8 @@ function selesaiPermohonan(fail,permohonan,noFail) {
 <!-- END SCRIPT FOR SCREEN --> 
 <!-- START SCRIPT FOR TAB ATAS --> 
 <script>
+
+
 <!--START FUNCTION HTA -->
 function tambahHTA() {
 	document.${formName}.actionPerintah.value = "papar";
