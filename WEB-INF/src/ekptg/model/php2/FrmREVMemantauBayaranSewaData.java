@@ -2337,12 +2337,16 @@ public class FrmREVMemantauBayaranSewaData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT FAIL.ID_FAIL, FAIL.NO_FAIL, HASIL.ID_HASIL, FAIL.NO_FAIL, SUBURUSAN.ID_URUSAN, FAIL.ID_SUBURUSAN,"
-					+ " FAIL.TAJUK_FAIL, HASIL.TUJUAN, FAIL.CATATAN"
-					+ " FROM TBLPFDFAIL FAIL, TBLPHPHASIL HASIL, TBLRUJSUBURUSAN SUBURUSAN"
-					+ " WHERE FAIL.ID_FAIL = HASIL.ID_FAIL AND FAIL.ID_SUBURUSAN = SUBURUSAN.ID_SUBURUSAN(+)"
+			sql = "SELECT DISTINCT FAIL.ID_FAIL, FAIL.NO_FAIL, HASIL.ID_HASIL, FAIL.NO_FAIL, SUBURUSAN.ID_URUSAN, FAIL.ID_SUBURUSAN,"
+					+ " FAIL.TAJUK_FAIL,SEWA.CATATAN, SEWA.TUJUAN, SEWA.FLAG_TEMPOHSEWA, SEWA.ID_LUASASAL, SEWA.LUAS_ASAL,"
+					+ " LUAS.KETERANGAN, SEWA.FLAG_GUNA, SEWA.ID_LUASMHN, SEWA.LUAS_MHN1, SEWA.LUAS_MHN2, SEWA.LUAS_MHN3,"
+					+ " SEWA.ID_LUASMHNBERSAMAAN, SEWA.LUAS_MHNBERSAMAAN, SEWA.ID_LUASBAKI, SEWA.LUAS_BAKI"
+					+ " FROM TBLPFDFAIL FAIL, TBLPHPHASIL HASIL, TBLRUJSUBURUSAN SUBURUSAN,"
+					+ " TBLPHPBAYARANPERLUDIBAYAR BAYAR, TBLPHPPERMOHONANSEWA SEWA, TBLRUJLUAS LUAS"
+					+ " WHERE FAIL.ID_FAIL = HASIL.ID_FAIL"
+					+ " AND HASIL.ID_FAIL = BAYAR.ID_FAIL AND BAYAR.ID_PERMOHONAN = SEWA.ID_PERMOHONAN"
+					+ " AND FAIL.ID_SUBURUSAN = SUBURUSAN.ID_SUBURUSAN(+) AND SEWA.ID_LUASASAL = LUAS.ID_LUAS(+)"
 					+ " AND HASIL.ID_HASIL = '" + idHasil + "'";
-
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -2371,6 +2375,33 @@ public class FrmREVMemantauBayaranSewaData {
 						.getString("TUJUAN").toUpperCase());
 				h.put("catatan", rs.getString("CATATAN") == null ? "" : rs
 						.getString("CATATAN").toUpperCase());
+				h.put("flagGuna",
+						rs.getString("FLAG_GUNA") == null ? "" : rs
+								.getString("FLAG_GUNA"));
+				h.put("flagTempohSewa",
+						rs.getString("FLAG_TEMPOHSEWA") == null ? "" : rs
+								.getString("FLAG_TEMPOHSEWA"));
+				h.put("luasAsal", rs.getString("LUAS_ASAL") == null ? ""
+						: rs.getDouble("LUAS_ASAL"));
+				h.put("keteranganLuasAsal",
+						rs.getString("KETERANGAN") == null ? "" : rs
+								.getString("KETERANGAN"));
+				h.put("idLuasMohon", rs.getString("ID_LUASMHN") == null ? ""
+						: rs.getString("ID_LUASMHN"));
+				h.put("luas1",
+						rs.getString("LUAS_MHN1") == null ? "" : Utils
+								.formatLuas(rs.getDouble("LUAS_MHN1")));
+				h.put("luas2",
+						rs.getString("LUAS_MHN2") == null ? "" : Utils
+								.formatLuas(rs.getDouble("LUAS_MHN2")));
+				h.put("luas3",
+						rs.getString("LUAS_MHN3") == null ? "" : Utils
+								.formatLuas(rs.getDouble("LUAS_MHN3")));
+				h.put("luasBersamaan",
+						rs.getString("LUAS_MHNBERSAMAAN") == null ? "" : Utils
+								.formatLuas(rs.getDouble("LUAS_MHNBERSAMAAN")));
+				h.put("luasBaki", rs.getString("LUAS_BAKI") == null ? ""
+						: Utils.formatLuas(rs.getDouble("LUAS_BAKI")));
 
 				beanMaklumatPermohonan.addElement(h);
 				bil++;

@@ -87,6 +87,11 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         String idAkaun = getParam("idAkaun");
         String idNotis = getParam("idNotis");
 
+        String idLuasKegunaan = getParam("idLuasKegunaan");
+		if (idLuasKegunaan == null || idLuasKegunaan.trim().length() == 0){
+			idLuasKegunaan = "99999";
+		}
+
 		String idJenisPelarasan = getParam("socJenisPelarasan");
 		if (idJenisPelarasan == null || idJenisPelarasan.trim().length() == 0){
 			idJenisPelarasan = "99999";
@@ -1053,9 +1058,15 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         				idHasil = (String) hashPermohonan.get("idHasil");
         				idUrusan = (String) hashPermohonan.get("idUrusan");
         				idSuburusan = (String) hashPermohonan.get("idSuburusan");
+        				if (hashPermohonan.get("flagGuna") != null && hashPermohonan.get("flagGuna").toString().trim().length() != 0){
+                			idLuasKegunaan = (String) hashPermohonan.get("flagGuna");
+                		} else {
+                			idLuasKegunaan = "99999";
+                		}
         			}
         			this.context.put("selectUrusan", HTML.SelectUrusanPHPPenyewaan("socUrusan", Long.parseLong(idUrusan), "disabled", " class=\"disabled\""));
         			this.context.put("selectSuburusan", HTML.SelectSuburusanByIdUrusan(idUrusan, "socSuburusan", Long.parseLong(idSuburusan), "disabled", " class=\"disabled\""));
+        			this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "disabled", " class=\"disabled\" style=\"width:auto\""));
 
         		} else if ("update".equals(mode)){
 
@@ -1065,6 +1076,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 
             		this.context.put("selectUrusan", HTML.SelectUrusanPHPPenyewaan("socUrusan", Long.parseLong(idUrusan), "", " onChange=\"doChangeUrusan();\""));
         			this.context.put("selectSuburusan", HTML.SelectSuburusanByIdUrusan(idUrusan, "socSuburusan", Long.parseLong(idSuburusan), "", " "));
+        			this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan),"", ""));
 
         			// MAKLUMAT PERMOHONAN
         			beanMaklumatPermohonan = new Vector();
