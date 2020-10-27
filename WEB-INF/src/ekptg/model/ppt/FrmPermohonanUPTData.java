@@ -4764,6 +4764,7 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 				
 				
 				ResultSet rs = stmt.executeQuery(sql);
+				myLogger.info("sql pengarah :"+sql);
 				
 				while (rs.next()) {
 					Hashtable h = new Hashtable();

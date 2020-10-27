@@ -1,4 +1,4 @@
-MMKSek4Selangor
+::$report
 <!--  <style>
 body{
 background: #f4eff4 !important;
@@ -11,7 +11,8 @@ background: #f4eff4 !important;
 
  #if($report == 'BorangE' || $report == 'BorangF' || $report == 'BorangG' || $report == 'BorangH' || $report == 'BorangJ' 
  || $report == 'BorangK' || $report == 'BorangL' || $report == 'BorangLB' || $report == 'BorangLC' || $report == 'BorangQ'
- || $report == 'BorangO' || $report == 'BorangP' || $report == 'BorangR' || $report == 'BorangM')
+ || $report == 'BorangO' || $report == 'BorangP' || $report == 'BorangR' || $report == 'BorangM' 
+ || $report =='SementaraMMKSelangor' || $report == 'KertasMinitMB' || $report == 'LaporanTanahSementara')
 #parse("app/ppt/tindakanPegawaiSignPPT.jsp")
 #end
 #set($frmtdate = "&nbsp;<i><font color='blue' style='font-size:10px'>dd/mm/yyyy</font></i>")
@@ -70,17 +71,21 @@ background: #f4eff4 !important;
    
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input type="hidden" name="user" value='$!{session.getAttribute("_portal_username")}'>
+   <input type="hidden" name="userlogin" value='$!{session.getAttribute("_ekptg_user_id")}'>
 
-  <input name="userlogin" type="hidden" id="userlogin" value="$!userlogin"/>
+  <input name="ic_login" type="hidden" id="ic_login" value="$!ic_login"/>
    <input name="token" type="hidden" id="token" value="$token"/>
    <input name="id_penarikan" type="hidden" id="id_penarikan" value="$!id_penarikan"/>
   
                
 #if(($token != "" && ($report == 'BorangE' || $report == 'BorangF' || $report == 'BorangG' || $report == 'BorangH' 
 || $report == 'BorangJ' || $report == 'BorangK' || $report == 'BorangL' || $report == 'BorangLB' || $report == 'BorangLC' 
-|| $report == 'BorangQ' || $report == 'BorangO' || $report == 'BorangM' || $report == 'BorangR') ) || ($token == "" && ($report !='BorangE' && $report != 'BorangF' && $report != 'BorangG' 
+|| $report == 'BorangQ' || $report == 'BorangO' || $report == 'BorangM' || $report == 'BorangR' 
+|| $report =='SementaraMMKSelangor' || $report == 'KertasMinitMB' || $report == 'LaporanTanahSementara') )
+|| ($token == "" && ($report !='BorangE' && $report != 'BorangF' && $report != 'BorangG' 
 && $report != 'BorangH' && $report != 'BorangJ' && $report != 'BorangK' && $report != 'BorangL' && $report != 'BorangLB' 
-&& $report != 'BorangLC' && $report != 'BorangQ' && $report != 'BorangO' && $report != 'BorangM' && $report != 'BorangR')))
+&& $report != 'BorangLC' && $report != 'BorangQ' && $report != 'BorangO' && $report != 'BorangM' && $report != 'BorangR' 
+&& $report != 'SementaraMMKSelangor' && $report != 'KertasMinitMB' && $report != 'LaporanTanahSementara')))
     	<fieldset><legend><strong>Cetakan Laporan</strong></legend>
         	<table width="100%" border="0" cellspacing="2" cellpadding="2" margin="10px">
         	
@@ -166,7 +171,7 @@ background: #f4eff4 !important;
                
               
             #if($report != "BorangC_TGANU" && $report != "BorangCLebih_TGANU" && $report != "CoveringPU_SA" && $report != "coveringSijilPU_SA" && $report != "minitSijilPU_SA" 
-            && $report != "BorangM")  
+            && $report != "BorangM" && $report != 'LaporanTanahSementara')  
               <tr>
                 <td>&nbsp;</td>
                 <td>No. Fail Permohonan</td>
@@ -221,7 +226,7 @@ background: #f4eff4 !important;
               && $report != 'coveringSijilPU' && $report != 'minitSijilPU' && $report != 'cetakNotis' && $report != 'senaraiKehadiran' 
               && $report != 'senaraiKehadiranKosong' && $report != 'BayaranLainKos_Nofail' && $report != 'sabpn_notis_awam_sek4' && $report != 'sabpn_notis_awam_sek8'  && $report != 'sabpn_notis_borange'  
               && $report != 'sabpn_notis_borangk'  && $report != 'sabpn_notis_borangh' && $report != 'BorangO' && $report != 'BorangLB' && $report != 'BorangLC'
-              && $report != 'BorangM' && $report != 'BorangR' )
+              && $report != 'BorangM' && $report != 'BorangR' && $report != 'LaporanTanahSementara' )
             
 <!--               || $report == 'SuratPengosonganTanah' || -->
               <!-- PPT-27 & PPT-30-->
@@ -1372,7 +1377,7 @@ background: #f4eff4 !important;
                 	#end
                 	
                 	#if($report == 'senaraiKehadiran')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSenaraiKehadiran('$!selectNoFail','$!id_permohonan')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSenaraiKehadiran('$!selectNoFail','$!id_permohonan','$!idfail','$!nama_pegawai','$!id_siasatan','$!id_jawatan','$!id_hakmilik')"> 
                 	#end
 					<!-- PPT-27 -->
                 	#if($report == 'senaraiKehadiranKosong')
@@ -1525,6 +1530,10 @@ background: #f4eff4 !important;
                 	<!--SURAT IRINGAN AP -->
                     #if($report == 'SuratIringanAP')
                 		<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratIringanAP('$!id_hakmilik','$!id_fail','$!nama_pengarah','$!id_jawatan')">
+                	#end
+                	<!--SURAT IRINGAN AP -->
+                    #if($report == 'LaporanTanahSementara')
+                		<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakLaporanTanahPPS('$!id_fail','$!id_tanahumum','$!ic_login')">
                 	#end
                 	
                     <!-- END REPORT SEKSYEN 4 & 8 --------->
@@ -1739,7 +1748,7 @@ function RemoveNonNumeric3( strString )
       return strReturn;
 }
 
-function cetakSenaraiKehadiran(selectNoFail,idpermohonan) {
+function cetakSenaraiKehadiran(selectNoFail,idpermohonan,idfail,nama_pegawai,id_siasatan,id_jawatan,id_hakmilik) {
 
 	if (selectNoFail == "yes" && document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
@@ -1763,7 +1772,7 @@ function cetakSenaraiKehadiran(selectNoFail,idpermohonan) {
 		}		
 		
 
-		var url = "../../servlet/ekptg.report.ppt.senaraiKehadiran?id_permohonan="+idpermohonan+"&no_fail="+nofail;
+		var url = "../../servlet/ekptg.report.ppt.senaraiKehadiran?id_permohonan="+idpermohonan+"&no_fail="+nofail+"&idFail="+idfail+"'&id_hakmilik="+id_hakmilik;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -6453,5 +6462,19 @@ function cetakBorangR(id_siasatan,id_hakmilik,id_fail) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
+
+function cetakLaporanTanahPPS(idfail,idTanahumum,icLogin) {
+
+	//alert(idfail);
+	var url = "../../servlet/ekptg.report.ppt.LaporanTanahSementara?idfail="+idfail+"&idTanahumum="+idTanahumum+"&userlogin="+icLogin;
+	//var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?idfail="+id_fail+"&idTanahumum="+id_tanahumum+"&report=LaporanTanahSementara&flagReport=S";	
+	//var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&idfail="+idfail+"&namaPengarah="+namaPengarah+"&report=KertasMinitMB&flagReport=S";
+	//var url = "../servlet/ekptg.report.ppt.LaporanTanahSementara?idfail="+id_fail+"&idTanahumum="+id_tanahumum;
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();	
+}
+
 
 </script>

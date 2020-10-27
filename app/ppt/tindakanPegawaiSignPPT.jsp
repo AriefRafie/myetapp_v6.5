@@ -43,9 +43,12 @@
              ##if($!id_perintah!="")
            
              	##if($!enabledPegawai=="yes" && $statusPNB!="yes")
+             	##if($report == 'LaporanTanahSementara')
+             	##<input type="button" name="cmdHPNB1" id="cmdHPNB1" value="Pengesahan Tandatangan" onClick="sendDGcertPPTPPS('$!idfail','$!idTanahumum','$!token','$!username')" />
+             	##else
               	<input type="button" name="cmdHPNB1" id="cmdHPNB1" value="Pengesahan Tandatangan" onClick="sendDGcertPPT('$!id_fail','$id_permohonan','$!token','$!username')" />
-             	<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="screen5('$id_permohonan');" />
               	##end
+              	<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="screen5('$id_permohonan');" />
 
               ##end
               </td></tr>
@@ -66,11 +69,20 @@
 function sendDGcertPPT(id_fail,id_permohonan)
 {
 	document.${formName}.command.value = "sendDGcert";
-	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPopupPilihPegawaiReportView?&id_permohonan="+'$id_permohonan';
+	//document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPopupPilihPegawaiReportView?&id_permohonan="+'$id_permohonan';
 	document.${formName}.submit();
 	}
 	
+/*function sendDGcertPPTPPS(id_fail,idTanahumum)
+{
+	alert(id_fail);
+	alert(idTanahumum);
+	document.${formName}.command.value = "sendDGcert";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPopupPilihPegawaiReportView?&id_fail="+$id_fail+"&idtanahumum="+idTanahumum";
+	document.${formName}.submit();
+	}
 	
+*/	
 function screen5(id_permohonan)
 {
 

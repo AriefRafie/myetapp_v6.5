@@ -1415,10 +1415,15 @@ public class FrmPYWSenaraiMesyuaratData {
 			SQLRenderer r = new SQLRenderer();
 			
 			//get maklumat mesyuarat APB
-			sql = "SELECT A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.JAM_DARI, A.MINIT_DARI, A.JAM_HINGGA, A.MINIT_HINGGA, A.ID_LOKASI, C.CATATAN, C.FLAG_SYOR,"
-			   + " A.ULASAN_PEMOHON, A.FLAG_KEPUTUSAN_PEMOHON, B.LOKASI"
-			   + " FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B, TBLPHPMESYUARATPERMOHONAN C"
-			   + " WHERE A.ID_LOKASI = B.ID_LOKASI AND A.ID_MESYUARAT = C.ID_MESYUARAT AND A.ID_MESYUARAT = '" + idMesyuarat + "'";
+			//sql = "SELECT A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.JAM_DARI, A.MINIT_DARI, A.JAM_HINGGA, A.MINIT_HINGGA, A.ID_LOKASI, C.CATATAN, C.FLAG_SYOR,"
+			//   + " A.ULASAN_PEMOHON, A.FLAG_KEPUTUSAN_PEMOHON, B.LOKASI"
+			//   + " FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B, TBLPHPMESYUARATPERMOHONAN C"
+			//   + " WHERE A.ID_LOKASI = B.ID_LOKASI AND A.ID_MESYUARAT = C.ID_MESYUARAT AND A.ID_MESYUARAT = '" + idMesyuarat + "'";
+			
+			sql = "SELECT A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.JAM_DARI, A.MINIT_DARI, A.JAM_HINGGA, A.MINIT_HINGGA, A.ID_LOKASI,"
+				+ " A.ULASAN_PEMOHON, A.FLAG_KEPUTUSAN_PEMOHON, B.LOKASI"
+				+ " FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B"
+				+ " WHERE A.ID_LOKASI = B.ID_LOKASI AND A.ID_MESYUARAT = '" + idMesyuarat + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
 			
@@ -1444,8 +1449,8 @@ public class FrmPYWSenaraiMesyuaratData {
 				if (idMinitHingga.length()==1){
 					idMinitHingga="0"+ idMinitHingga;
 				}
-				catatan=rs.getString("CATATAN");
-				flagSyor=rs.getString("FLAG_SYOR");
+				//catatan=rs.getString("CATATAN");
+				//flagSyor=rs.getString("FLAG_SYOR");
 				ulasanPemohon=rs.getString("ULASAN_PEMOHON");
 				flagKeputusanPemohon=rs.getString("FLAG_KEPUTUSAN_PEMOHON");
 			}	
@@ -1453,7 +1458,7 @@ public class FrmPYWSenaraiMesyuaratData {
 			String body = "<table width='100%' border='0' cellspacing='0' cellpadding='5'>"
 					+ "<tr><td>Tuan/ Puan,</td></tr>"
 					+ "<tr><td>&nbsp;</td></tr>"
-					+ "<tr><td>MESYUARAT BERKENAAN "+tajukMesyuarat.toUpperCase()+"</td></tr>"
+					+ "<tr><td>"+tajukMesyuarat.toUpperCase()+"</td></tr>"
 					+ "<tr><td>&nbsp;</td></tr>"
 					+ "<tr><td>2.	Dengan hormatnya saya merujuk kepada perkara diatas.</td></tr>"
 					+ "<tr><td>&nbsp;</td></tr>"
@@ -1470,7 +1475,7 @@ public class FrmPYWSenaraiMesyuaratData {
 					+ "<tr><td>&nbsp;</td></tr>" + "</table>";
 			
 			email.RECIEPIENT = emel;
-			email.SUBJECT = "NOTIS PANGGILAN MESYUARAT BERKENAAN " + tajukMesyuarat.toUpperCase();
+			email.SUBJECT = "NOTIS PANGGILAN MESYUARAT PERMOHONAN PENYEWAAN";
 			email.MESSAGE = body;
 			email.sendEmail();
 			
