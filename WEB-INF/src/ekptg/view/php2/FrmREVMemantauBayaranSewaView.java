@@ -34,6 +34,7 @@ import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
 import ekptg.model.php2.FrmREVHeaderData;
 import ekptg.model.php2.FrmREVMemantauBayaranSewaData;
+import ekptg.model.php2.FrmREVPopupCetakLaporanData;
 import ekptg.model.php2.utiliti.PHPUtilHTML;
 import ekptg.model.utils.emel.EmailConfig;
 import ekptg.ws.gfmas.GfmasMemantauBayaranSewaManager;
@@ -1494,7 +1495,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 		String sql = "";
 		String noFail = "";
 		String namaUser = "";
-		String emelUser = "";
+		String emelUser = "nurulain.siprotech@gmail.com";
 		String subject = "";
 		String content = "";
 
@@ -1506,7 +1507,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 			conn = db.getConnection();
 	    	conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
-
+			
 			sql = "SELECT A.NO_FAIL, C.NAMA, C.EMEL "
 					+ " FROM TBLPFDFAIL A, TBLPHPHASIL B, TBLPHPPEMOHON C "
 					+ " WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON "
@@ -1514,10 +1515,10 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 
 			ResultSet rs = stmt.executeQuery(sql);
 			myLogger.info("MASUK "+sql);
-			while (rs.next()) {
+			if (rs.next()) {
 				noFail = rs.getString("NO_FAIL");
 				namaUser = rs.getString("NAMA");
-				emelUser = rs.getString("EMEL");
+				//emelUser = rs.getString("EMEL");
 			}
 
 			if (!"".equals(namaUser) && !"".equals(emelUser)){
@@ -1542,8 +1543,13 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 					// path = "/reports/" + fileName ;
 					path = File.separator + "reports" + File.separator + fileName;
 				}
+		    	
+				FrmREVPopupCetakLaporanData logic = new FrmREVPopupCetakLaporanData();
 
-		    	myMap.put("idfail", idFail);
+		    	myMap.put("ID_AKAUN", idAkaun);
+		    	myMap.put("KADAR_SEWA", logic.getKadarSewaSebulan(idAkaun));
+		    	myMap.put("TUNGGAKAN_SEWA", logic.getTunggakanSewa(idAkaun));
+		    	myMap.put("SEWA_SEMASA", logic.getKadarSewaSemasa(idAkaun));
 		    	myMap.put("flagVersion", "no");
 		    	myMap.put("ReportDir", path);
 		    	myLogger.info("path "+path);
