@@ -1140,7 +1140,7 @@ Tidak Hadir &nbsp; &nbsp;<span id="txtPBhadir_check" class = "alert_msg" >      
     <tr>
         <td>
                
-        <a href="#" onClick="javascript:cetakSenarai('$!id_permohonan','$id_siasatan')"><font color="blue"> Senarai Kehadiran
+        <a href="#" onClick="javascript:cetakSenarai('$!id_permohonan','$id_siasatan','$id_hakmilik')"><font color="blue"> Senarai Kehadiran
  </font></a></td>
       </tr>  
 	 <tr>
@@ -1705,8 +1705,8 @@ function kembaliKehadiran(id_permohonan,id_pembatalan)
 	document.${formName}.submit();
 }
   
-function cetakSenarai(idpermohonan,id_siasatan) {
-	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&report=senaraiKehadiran&selectNoFail=yes&id_siasatan="+id_siasatan;
+function cetakSenarai(idpermohonan,id_siasatan,id_hakmilik) {
+	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&report=senaraiKehadiran&selectNoFail=yes&id_siasatan="+id_siasatan+"&id_hakmilik="+id_hakmilik;	
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;

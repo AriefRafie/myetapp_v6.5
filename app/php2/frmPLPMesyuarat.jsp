@@ -121,7 +121,7 @@
     	#end
     	#if ($mode == 'view' && $selectedTabUpper == '1')
     	#if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
-    	<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskiniPampasan()"/>
+    	##<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskiniPampasan()"/>
     	#end
     	#end
     	#if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')

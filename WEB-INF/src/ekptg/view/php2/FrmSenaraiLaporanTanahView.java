@@ -63,6 +63,7 @@ public class FrmSenaraiLaporanTanahView extends AjaxBasedModule {
 		}
 		
 		// GET ID PARAM
+		String idUlasanTeknikal = getParam("idUlasanTeknikal");
 		String idLaporan = getParam("idLaporan");
 		String idPermohonan = getParam("idPermohonan");
 		String idHakmilikAgensi = getParam("idHakmilikAgensi");
@@ -143,8 +144,16 @@ public class FrmSenaraiLaporanTanahView extends AjaxBasedModule {
 				logic.hapusDokumen(idDokumen);
 			}
 			if ("sendNotification".equals(hitButton)) {
-				logic.goToHantarNotifikasi(idLaporan, session);
-				session.setAttribute("MSG", "FAIL TELAH DIHANTAR KE IBUPEJABAT");
+				
+				if("".equals(idUlasanTeknikal)) {
+					idUlasanTeknikal = logic.getIdUlasanByIdPermohonan(idPermohonan);
+				} else {
+					idUlasanTeknikal = getParam("idUlasanTeknikal");
+				}
+				
+				logic.goToHantarNotifikasi(idLaporan, idUlasanTeknikal, session);
+				logic.updateMaklumBalas(idUlasanTeknikal, idNegeri, session);
+				session.setAttribute("MSG", "NOTIFIKASI PEMBERITAHUAN TELAH DIHANTAR KE IBU PEJABAT");
 			}
 		}
 		
@@ -180,6 +189,14 @@ public class FrmSenaraiLaporanTanahView extends AjaxBasedModule {
 			
 			// GO TO MAKLUMAT LAPORAN TANAH
 			vm = "app/php2/frmMaklumatLaporanTanah.jsp";
+			
+			if("".equals(idLaporan)) {
+				idLaporan = logic.getidLaporanTanahByidUlasan(idUlasanTeknikal);
+				this.context.put("idLaporan", idLaporan);
+			} else {
+				idLaporan = getParam("idLaporan");
+				this.context.put("idLaporan", idLaporan);
+			}
 			
 			beanMaklumatLaporan = new Vector();
 			beanMaklumatLaporan = logic.getMaklumatLaporan(idLaporan);

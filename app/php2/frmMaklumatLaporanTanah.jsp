@@ -7,6 +7,7 @@
 	<input type="hidden" name="modePopup" id="modePopup" value="$modePopup"/>
 	<input type="hidden" name="idLaporan" id="idLaporan" value="$idLaporan"/>
 	<input type="hidden" name="idPermohonan" id="idPermohonan" value="$idPermohonan"/>
+	<input type="hidden" name="idUlasanTeknikal" id="idUlasanTeknikal" value="$!idUlasanTeknikal"/>
 	<input type="hidden" name="idHakmilikAgensi" id="idHakmilikAgensi" value="$idHakmilikAgensi"/>
 	<input type="hidden" name="idPegawaiLaporanTanah"id="idPegawaiLaporanTanah" value="$idPegawaiLaporanTanah"/>
 	<input type="hidden" name="idDokumen" id="idDokumen" value="$idDokumen"/>
@@ -30,7 +31,7 @@
         <li onClick="doChangeTab(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT LAWATAN TAPAK</li>
         <li onClick="doChangeTab(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT LAIN</li>
         <li onClick="doChangeTab(2);" class="TabbedPanelsTab" tabindex="0">KEHADIRAN</li>
-        <li onClick="doChangeTab(3);" class="TabbedPanelsTab" tabindex="0">DOKUMEN</li>
+        <li onClick="doChangeTab(3);" class="TabbedPanelsTab" tabindex="0">IMEJAN</li>
       </ul>
       <div class="TabbedPanelsContentGroup">
         <div class="TabbedPanelsContent">

@@ -13,6 +13,8 @@ import lebah.db.Db;
 import lebah.db.SQLRenderer;
 import lebah.portal.AjaxBasedModule;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
 
 import ekptg.helpers.HTML;
@@ -30,6 +32,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 
 	private static final long serialVersionUID = 1L;
 	static Logger myLogger = Logger.getLogger(FrmPopupPilihPegawaiReportView.class);
+	//private static final Log log = LogFactory.getLog(FrmPermohonanUPTData.class);
 	
 	FrmPopupPilihPegawaiReportData logic = new FrmPopupPilihPegawaiReportData();
 	FrmPermohonanUPTData modelUPT = new FrmPermohonanUPTData();
@@ -63,6 +66,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		Vector malaysianDateByDate = new Vector();
 		Vector dataMT = new Vector();
 		Vector checkBorangG = new Vector();
+		Vector dataIcLogin = new Vector();
 		
 		checkBorangG.clear();
 		dataMT.clear();
@@ -101,6 +105,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		String tarikhBorangL = getParam("tarikhBorangL");
 		String tempohBL = getParam("tempohBL");
 		String token = getParam("token");
+		String id_penarikan = getParam("id_penarikan");
 		
 		String txtBilKertas = getParam("txtBilKertas");
 		String txtBilSalinan = getParam("txtBilSalinan");
@@ -114,10 +119,12 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		String usid = (String) session.getAttribute("_portal_username");
 		String login = (String) session.getAttribute("_ekptg_user_id");
 		context.put("username", usid);
+		
 		myLogger.info("login : "+login);
 		myLogger.info("--------- report :"+report);
 		
 		String bydate = getParam("bydate");
+		
 		
 		String emel = "";
 		
@@ -148,6 +155,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		if (id_pegawai2 == null || id_pegawai2.trim().length() == 0){
 			id_pegawai2 = "0";
 		}
+		
 		
 		//data
 		String tujuanInit = "";
@@ -193,6 +201,18 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 			context.put("selectPejabatARB",HTML.selectPejabatARB("socPejabatARB",null,"",""));
 		}
 		
+		//get ic login 
+		//GET NAMA PENGARAH
+	    String ic_login = "";
+	    setIcLogin(login);
+	    dataIcLogin = getIcLogin();
+	    if(dataIcLogin.size()!=0){
+	    	Hashtable np = (Hashtable)dataIcLogin.get(0);
+	    	ic_login = np.get("ic_login").toString();
+	    }
+		
+	    myLogger.info("ic_login :"+ic_login);
+	    context.put("ic_login",ic_login);
 		//GET NAMA PENGARAH
 	    String nama_pengarah = "";
 	    modelUPT.setNamaPengarah(id_negeri);
@@ -327,6 +347,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 	      		context.put("userlogin",login);
 	      		myLogger.info("token adalah :"+token);
 					      	
+	      		myLogger.info("userlogin :"+userlogin);
 	      		
 	      	}
 	    
@@ -545,6 +566,8 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
     	context.put("flagCetakSiasatan", flagCetakSiasatan);
     	context.put("id_permintaanukur", id_permintaanukur);
     	
+    	context.put("id_penarikan", id_penarikan);
+    	
     	context.put("id_mmk", id_mmk);
     	context.put("emel", emel);
     	
@@ -583,6 +606,12 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 	}//close template
 	
 	
+	private String setNamaLogin(String login) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 	public void checkTableWujud(String table_name,Db db)  throws Exception {		  
 	  	int total = 0;
 	  	String sql="";
@@ -758,5 +787,47 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		
 	}
 	
+	@SuppressWarnings("unchecked")
+	public static void setIcLogin(String idlogin) throws Exception {
+		
+		icLogin = new Vector();
+		
+		Db db = null;
+		String sql = "";
+		
+		try {
+				db = new Db();
+				Statement stmt = db.getStatement();
+			
+				sql =  "SELECT DISTINCT A.USER_ID, A.USER_NAME, A.USER_LOGIN ";
+				sql += " FROM USERS A, USERS_INTERNAL B ";
+				sql += " WHERE A.USER_ID = B.USER_ID ";
+				sql += " AND B.FLAG_AKTIF = '1' ";
+				sql += " AND A.USER_ID= '"+idlogin+"'";
+				
+				
+				ResultSet rs = stmt.executeQuery(sql);
+				myLogger.info("sql icLogin :"+sql);
+				
+				while (rs.next()) {
+					Hashtable h = new Hashtable();
+					h.put("ic_login", rs.getString("USER_LOGIN")== null?"":rs.getString("USER_LOGIN"));
+					icLogin.addElement(h);
+				
+			}
+		} catch (Exception re) {
+			myLogger.error("Error: ", re);
+			throw re;
+			} finally {
+			if(db != null)db.close();
+		}
+	}//close setIcLOGIN
+	
+	//get detail user
+			private static Vector icLogin = null;
+			
+			public static Vector getIcLogin() {
+				return icLogin;
+			}
 	
 }//close class

@@ -170,12 +170,20 @@ function kembali() {
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.submit();
 }
+function paparAgensi(id) {
+	//alert('baca paparAgensi frmPNWTawaranKJP');
+	document.${formName}.idPenawaranKJP.value = id;
+	document.${formName}.flagPopup.value = "openPopupAgensi";
+	document.${formName}.modePopup.value = "view";
+	doAjaxCall${formName}("");
+}
 function daftarAgensi() {
 	document.${formName}.flagPopup.value = "openPopupAgensi";
 	document.${formName}.modePopup.value = "new";
 	doAjaxCall${formName}("");
 }
 function simpanAgensi(){
+	//alert('baca simpanAgensi frmPNWTawaraKJP');
  	if(document.${formName}.txtNoRujukanKJP.value == ""){
  		alert('Sila masukkan No Rujukan Surat KJP.');
    		document.${formName}.txtNoRujukanKJP.focus(); 
@@ -201,11 +209,11 @@ function simpanAgensi(){
   		document.${formName}.txtTujuanKegunaan.focus(); 
 		return; 
 	}
-	/* if(document.${formName}.fileupload.value == ""){
-		alert('Sila pilih Imej yang Ingin Dimuatnaik.');
+	if(document.${formName}.fileupload.value == ""){
+		alert('Sila masukkan lampiran yang Ingin Dimuatnaik.');
   		document.${formName}.fileupload.focus(); 
 		return; 
-	} */
+	} 
 
 	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
@@ -235,11 +243,7 @@ function hapusAgensi(){
 	doAjaxCall${formName}("");
 }
 function kemaskiniAgensi() {
-	document.${formName}.flagPopup.value = "openPopupAgensi";
-	document.${formName}.modePopup.value = "update";
-	doAjaxCall${formName}("");
-}
-function kemaskiniAgensi() {
+	//alert('baca kemaskiniAgensi frmPNWTawaranKJP');
 	document.${formName}.flagPopup.value = "openPopupAgensi";
 	document.${formName}.modePopup.value = "update";
 	doAjaxCall${formName}("");
@@ -284,5 +288,23 @@ function simpanKemaskiniAgensi(){
 	document.${formName}.modePopup.value = "view";
 	document.${formName}.hitButton.value = "simpanKemaskiniAgensi";
 	doAjaxCall${formName}("");
+}
+function simpanKemaskiniDokumen() {
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+
+	var idPenawaranKJP = document.${formName}.idPenawaranKJP.value;
+	var idDokumen = document.${formName}.idDokumen.value;
+// 	var namaImej = document.${formName}.testNamaFile.value;
+//  	var catatanImej = document.${formName}.testCatatanFile.value ;
+	var dp = document.${formName}.form_token.value ;
+	var dopost = "&form_token="+dp;
+	
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWTawaranKJPView&idPenawaranKJP="+idPenawaranKJP+"&idDokumen="+idDokumen+dopost+"&flagPopup=openPopupAgensi&modePopup=view&hitButton=simpanKemaskiniDokumen";
+	document.${formName}.method="post";
+	document.${formName}.enctype="multipart/form-data";
+    document.${formName}.encoding="multipart/form-data";
+	document.${formName}.submit();
 }
 </script>

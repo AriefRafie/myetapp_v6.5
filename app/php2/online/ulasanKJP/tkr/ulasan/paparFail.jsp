@@ -3,6 +3,7 @@
 <input type="hidden" name="idPermohonan" id="idPermohonan" value='$!idPermohonan'>
 <input type="hidden" name="idDokumen" id="idDokumen" value='$!idDokumen'>
 <input type="hidden" name="flagDokumen" id="flagDokumen" value='$!flagDokumen'>
+<div id="divUlasan2">
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td colspan="2">#parse("app/php2/online/ulasanKJP/frmHeader.jsp")</td>
@@ -21,3 +22,4 @@
     <td colspan="2"><div id="divUlasan">#parse("$templateDir/maklumatUlasan.jsp")</div></td>
   </tr>
 </table>
+</div>

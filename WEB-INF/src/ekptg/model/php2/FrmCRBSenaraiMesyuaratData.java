@@ -18,6 +18,7 @@ import org.apache.commons.logging.LogFactory;
 
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
+import ekptg.engine.EmailSender;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.File;
@@ -1239,5 +1240,103 @@ public class FrmCRBSenaraiMesyuaratData {
 	
 	public Vector getBeanMaklumatImejan() {
 		return beanMaklumatImejan;
+	}
+	
+	public void sendEmailMesyuarat(String idMesyuarat,String emel, HttpSession session) throws Exception {
+		Db db = null;
+		Connection conn = null;
+		Vector beanMaklumatEmail = null;
+		EmailSender email = EmailSender.getInstance();
+		String sql = "";
+		String noFail = "";
+		String tajukMesyuarat = "";			
+		String bilMesyuarat = "";
+		String tarikhMesyuarat = "";
+		String idLokasi = "";
+		String lokasiMesyuarat = "";
+		String idJamDari = "";
+		String idMinitDari = "";
+		String idJamHingga = "";
+		String idMinitHingga = "";
+		String catatan = "";
+		String flagSyor = "";
+		String ulasanPemohon = "";
+		String flagKeputusanPemohon = "";
+		try {
+			db = new Db();
+			conn = db.getConnection();
+	    	conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			//get maklumat mesyuarat APB
+			//sql = "SELECT A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.JAM_DARI, A.MINIT_DARI, A.JAM_HINGGA, A.MINIT_HINGGA, A.ID_LOKASI, C.CATATAN, C.FLAG_SYOR,"
+			//   + " A.ULASAN_PEMOHON, A.FLAG_KEPUTUSAN_PEMOHON, B.LOKASI"
+			//   + " FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B, TBLPHPMESYUARATPERMOHONAN C"
+			//   + " WHERE A.ID_LOKASI = B.ID_LOKASI AND A.ID_MESYUARAT = C.ID_MESYUARAT AND A.ID_MESYUARAT = '" + idMesyuarat + "'";
+			
+			sql = "SELECT A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.JAM_DARI, A.MINIT_DARI, A.JAM_HINGGA, A.MINIT_HINGGA, A.ID_LOKASI,"
+				+ " A.ULASAN_PEMOHON, A.FLAG_KEPUTUSAN_PEMOHON, B.LOKASI"
+				+ " FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B"
+				+ " WHERE A.ID_LOKASI = B.ID_LOKASI AND A.ID_MESYUARAT = '" + idMesyuarat + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			if (rs.next()){
+				tajukMesyuarat= rs.getString("TAJUK");			
+				bilMesyuarat=rs.getString("BIL_MESYUARAT");
+				tarikhMesyuarat=sdf.format(rs.getDate("TARIKH_MESYUARAT"));
+				idLokasi=rs.getString("ID_LOKASI");
+				lokasiMesyuarat=rs.getString("LOKASI");
+				idJamDari=rs.getString("JAM_DARI");
+				if (idJamDari.length()==1){
+					idJamDari="0"+ idJamDari;
+				}
+				idMinitDari=rs.getString("MINIT_DARI");
+				if (idMinitDari.length()==1){
+					idMinitDari="0"+ idMinitDari;
+				}
+				idJamHingga=rs.getString("JAM_HINGGA");
+				if (idJamHingga.length()==1){
+					idJamHingga="0"+ idJamHingga;
+				}
+				idMinitHingga=rs.getString("MINIT_HINGGA");
+				if (idMinitHingga.length()==1){
+					idMinitHingga="0"+ idMinitHingga;
+				}
+				//catatan=rs.getString("CATATAN");
+				//flagSyor=rs.getString("FLAG_SYOR");
+				ulasanPemohon=rs.getString("ULASAN_PEMOHON");
+				flagKeputusanPemohon=rs.getString("FLAG_KEPUTUSAN_PEMOHON");
+			}	
+			
+			String body = "<table width='100%' border='0' cellspacing='0' cellpadding='5'>"
+					+ "<tr><td>Tuan/ Puan,</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td>MESYUARAT BERKENAAN "+tajukMesyuarat.toUpperCase()+"</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td>2.	Dengan hormatnya saya merujuk kepada perkara diatas.</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td>3.	Dimaklumkan bahawa tuan/puan dijemput menghadiri mesyuarat seperti dibawah:-</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td>Tajuk: "+tajukMesyuarat.toUpperCase()+"</td></tr>"
+					+ "<tr><td>Tarikh: "+tarikhMesyuarat.toUpperCase()+"</td></tr>"
+					+ "<tr><td>Masa  : "+idJamDari+":"+idMinitDari+" - "+idJamHingga+":"+idMinitHingga+"</td></tr>"
+					+ "<tr><td>Lokasi: "+lokasiMesyuarat.toUpperCase()+"</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td>Sekian, terima kasih.</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td><i>Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas.</i></td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>" + "</table>";
+			
+			email.RECIEPIENT = emel;
+			email.SUBJECT = "NOTIS PANGGILAN MESYUARAT BERKENAAN " + tajukMesyuarat.toUpperCase();
+			email.MESSAGE = body;
+			email.sendEmail();
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
 	}
 }

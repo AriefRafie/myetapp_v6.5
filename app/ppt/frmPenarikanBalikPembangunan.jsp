@@ -30,6 +30,13 @@
 #set($txtnamajajahan = "")
 #set($STATUS_LAPORAN = "")
 
+#set($txtKemudahan = "")
+#set($txtSempadanUtara = "")
+#set($txtSempadanSelatan = "")
+#set($txtSempadanBarat = "")
+#set($txtSempadanTimur = "")
+
+
 #foreach($listmaklumat in $maklumat_hakmilik)
 #set($id_hakmilik = $listmaklumat.ID_HAKMILIK)
 #set($txtnorujukan = $listmaklumat.NO_PT)
@@ -50,14 +57,14 @@
 #end
 
 
-<!--  Tab Laporan Kerosakan  -->
-#foreach($maklumatam in $maklumat_am_tanah)
-#set($id_tanahumum = $maklumatam.ID_TANAHUMUM)
-#set($txtKerosakanTanah = $maklumatam.KEROSAKAN_TANAH)
-#set($txtKeteranganKerosakan = $maklumatam.KETERANGAN_KEROSAKAN)
-#set($txtKerosakanTanaman = $maklumatam.KEROSAKAN_TANAMAN)
-#set($txtKerosakanBangunan = $maklumatam.KEROSAKAN_BANGUNAN)
-#set($txtKosDitanggung = $maklumatam.KOS_DITANGGUNG)
+#foreach($data in $maklumat_am_tanah)
+#set($txtKemudahan=$data.kemudahan_awam)
+	#set($txtSempadanUtara=$data.sempadan_utara)
+	#set($txtSempadanSelatan=$data.sempadan_selatan)
+	#set($txtSempadanTimur=$data.sempadan_timur)
+	#set($txtSempadanBarat=$data.sempadan_barat)
+	#set($sorSaliran=$data.flag_saliran)
+	
 #end
 
 
@@ -110,48 +117,61 @@
         <table width="100%"><tr>
     		<td>
     			<fieldset>
-    				<table width="100%" >
-    				<tr>
-    					<td width="1%">&nbsp;</td>
-    					<td width="28%">Saliran</td>
-    					<td width="1%">:</td>
-    					<td width="70%">$txtnorujukan</td>
-  					</tr>
+    				<table width="100%" >	
+    					
+    			
+    			#if($sorSaliran=="1")
+    				#set($check1s = "checked")
+    				#set($check2s = "")
+    			#elseif($sorSaliran=="2")
+    				#set($check1s = "")
+    				#set($check2s = "checked")
+    			#else
+    				#set($check1s = "")
+    				#set($check2s = "")
+    			#end			
+  					<tr>
+    				<td width="1%">&nbsp;</td>
+    				<td width="25%">Saliran</td>
+    				<td width="1%">:</td>
+    				<td width="73%"><input $check1s type="radio" name="sorSaliran" id="sorBaik" value="1" >Baik
+     				&nbsp;&nbsp;<input $check2s type="radio" name="sorSaliran" id="sorTidak" value="2" >Tidak</td>
+    			</tr>
   					<tr>
     					<td>&nbsp;</td>
     					<td>Kemudahan Asas Yang Ada</td>
     					<td>:</td>
-    					<td><textarea name="txtKerosakanTanah" id="txtKerosakanTanah" cols="50" rows="5" 
-    					$readonlymode class = "$disabledmode">$txtKerosakanTanah</textarea></td>
+    					<td><textarea name="txtKemudahan" id="txtKemudahan" cols="50" rows="5" 
+    					$readonlymode class = "$disabledmode">$txtKemudahan</textarea></td>
   					</tr>
  					<tr>
     					<td>&nbsp;</td>
     					<td>Sempadan Utara</td>
     					<td>:</td>
-    					<td><textarea name="txtKerosakanTanah" id="txtKerosakanTanah" cols="50" rows="5" 
-    					$readonlymode class = "$disabledmode">$txtKerosakanTanah</textarea></td>
+    					<td><textarea name="txtSempadanUtara" id="txtSempadanUtara" cols="50" rows="5" 
+    					$readonlymode class = "$disabledmode">$txtSempadanUtara</textarea></td>
   					</tr>
   					<tr>
     					<td>&nbsp;</td>
-    					<td>Bandar/Pekan/Mukim</td>
+    					<td>Sempadan Selatan</td>
     					<td>:</td>
-    					<td><textarea name="txtKerosakanTanah" id="txtKerosakanTanah" cols="50" rows="5" 
-    					$readonlymode class = "$disabledmode">$txtKerosakanTanah</textarea></td>
+    					<td><textarea name="txtSempadanSelatan" id="txtSempadanSelatan" cols="50" rows="5" 
+    					$readonlymode class = "$disabledmode">$txtSempadanSelatan</textarea></td>
   					</tr>
   					<tr>
     					<td>&nbsp;</td>
-    					<td>Status Laporan Tanah</td>
+    					<td>Sempadan Timur</td>
     					<td>:</td>
-    					<td><textarea name="txtKerosakanTanah" id="txtKerosakanTanah" cols="50" rows="5" 
-    					$readonlymode class = "$disabledmode">$txtKerosakanTanah</textarea></td>
+    					<td><textarea name="txtSempadanTimur" id="txtSempadanTimur" cols="50" rows="5" 
+    					$readonlymode class = "$disabledmode">$txtSempadanTimur</textarea></td>
   					</tr>
-    				<tr>
-              			<td width="1%" valign="top">&nbsp;</td>
-             			<td width="28%" valign="top">Kerosakan Tanah</td>
-              			<td width="1%" valign="top">:</td>
-              			<td width="70%"><textarea name="txtKerosakanTanah" id="txtKerosakanTanah" cols="50" rows="5" 
-              			$readonlymode class = "$disabledmode">$txtKerosakanTanah</textarea></td>
-            		</tr>
+    			<tr>
+    					<td>&nbsp;</td>
+    					<td>Sempadan Barat</td>
+    					<td>:</td>
+    					<td><textarea name="txtSempadanBarat" id="txtSempadanBarat" cols="50" rows="5" 
+    					$readonlymode class = "$disabledmode">$txtSempadanBarat</textarea></td>
+  					</tr>
          
     			</fieldset></td>
   				</tr>
@@ -787,7 +807,7 @@ return;
 input_box = confirm("Adakah anda pasti?");
 	if (input_box == true) {
 		document.${formName}.command.value = "Laporan_Tanah";
-		document.${formName}.sub_command.value = "Laporan_Kerosakan";
+		document.${formName}.sub_command.value = "Pembangunan_Sekitar";
 		document.${formName}.subminor_command.value = "Simpan";	
 		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPenarikanBalikInternal";
 		document.${formName}.location.value = "maklumat_am";
@@ -824,14 +844,20 @@ input_box = confirm("Adakah anda pasti?");
 	}
 }
 
-function kemaskini()	{
+
+
+function kemaskini()
+{
+	alert("sini");
     document.${formName}.command.value = "Laporan_Tanah";
-	document.${formName}.sub_command.value = "Laporan_Kerosakan";
+	document.${formName}.sub_command.value = "Pembangunan_Sekitar";
 	document.${formName}.subminor_command.value = "Kemaskini";	
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPenarikanBalikInternal";
 	document.${formName}.location.value = "maklumat_am";
-	document.${formName}.point.value = "txtKerosakanTanah";
+	//document.${formName}.point.value = "txtLokasiTanah";
 	document.${formName}.submit();
+
+
 }
 
 
@@ -1017,6 +1043,20 @@ function PembangunanSekitar(id_hakmilik,id_pembatalan)
 {
 	document.${formName}.command.value = "Laporan_Tanah";
 	document.${formName}.sub_command.value = "Pembangunan_Sekitar";
+	document.${formName}.subminor_command.value = "View";
+	document.${formName}.location.value = "maklumat_am";
+	document.${formName}.point.value = "maklumat_am";	
+	document.${formName}.id_hakmilik.value = id_hakmilik;
+	document.${formName}.id_pembatalan.value = id_pembatalan;
+	document.${formName}.action = "";
+	document.${formName}.submit();
+}
+
+function LaporanKerosakan(id_hakmilik,id_pembatalan)
+{
+
+	document.${formName}.command.value = "Laporan_Tanah";
+	document.${formName}.sub_command.value = "Laporan_Kerosakan";
 	document.${formName}.subminor_command.value = "View";
 	document.${formName}.location.value = "maklumat_am";
 	document.${formName}.point.value = "maklumat_am";	

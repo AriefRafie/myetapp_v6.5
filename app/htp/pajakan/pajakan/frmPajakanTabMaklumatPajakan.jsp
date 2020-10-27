@@ -62,8 +62,12 @@
                 <td>&nbsp;</td>
                 <td valign="top">Tempoh Pajakan</td>
                 <td valign="top">:</td>
-                <td valign="top"><input type="text" name="txtTempoh" id="txtTempoh" size="2" value="$beanPajakan.tempoh" class="$classDis" $readOnly onkeyup="validateNumber(this,this.value)" onblur="validateNumber(this,this.value);cal_tarikh_luput()"/>
-                  Tahun </td>
+                <td valign="top"><input type="text" name="txtTempoh" id="txtTempoh" size="2" value="$beanPajakan.tempoh" class="$classDis" $readOnly onkeyup="validateNumber(this,this.value)" onblur="validateNumber(this,this.value);calcDate()"/>
+                  Tahun &nbsp; &nbsp;
+                  <input type="text" name="txtTempohBulan" id="txtTempohBulan" size="2" value="$beanPajakan.tempoh" class="$classDis" $readOnly onkeyup="validateNumber(this,this.value)" onblur="validateNumber(this,this.value);calcDate()"/>
+                  Bulan &nbsp; &nbsp;
+                  <input type="text" name="txtTempohHari" id="txtTempohHari" size="2" value="$beanPajakan.tempoh" class="$classDis" $readOnly onkeyup="validateNumber(this,this.value)" onblur="validateNumber(this,this.value);calcDate()"/>
+                  Hari</td>
               </tr>
               <tr>
                 <td valign="top">&nbsp;</td>

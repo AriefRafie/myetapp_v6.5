@@ -350,6 +350,7 @@ function daftarAgensi() {
 	doAjaxCall${formName}("");
 }
 function simpanAgensi(){
+	//alert('baca senaraifailtawaran');
  	if(document.${formName}.txtNoRujukanKJP.value == ""){
  		alert('Sila masukkan No Rujukan KJP.');
    		document.${formName}.txtNoRujukanKJP.focus(); 
@@ -375,11 +376,11 @@ function simpanAgensi(){
   		document.${formName}.txtTujuanKegunaan.focus(); 
 		return; 
 	}
-	/* if(document.${formName}.fileupload.value == ""){
-		alert('Sila pilih Imej yang Ingin Dimuatnaik.');
+	 if(document.${formName}.fileupload.value == ""){
+		alert('Sila masukkan lampiran yang Ingin Dimuatnaik.');
   		document.${formName}.fileupload.focus(); 
 		return; 
-	} */
+	} 
 
 	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
@@ -390,6 +391,7 @@ function simpanAgensi(){
 	document.${formName}.modePopup.value = "view";
 	document.${formName}.hitButton.value = "simpanAgensi";
 	
+	
 	var data = create_request_string(document.${formName});
 	
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWTawaranKJPView&"+data;
@@ -397,6 +399,7 @@ function simpanAgensi(){
 	document.${formName}.enctype="multipart/form-data";
     document.${formName}.encoding="multipart/form-data";
 	document.${formName}.submit();
+
 }
 function hapusAgensi(){
 	if ( !window.confirm("Adakah Anda Pasti ?") ){

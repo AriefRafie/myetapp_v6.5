@@ -155,8 +155,8 @@
             #end
             #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
             #if ($modePopup == 'view')
-            <input name="cmdKemaskini" type="button" value="Kemaskini" onClick="kemaskiniMesyuarat()" >
-            <input name="cmdHapus" type="button" value="Hapus" onClick="hapusMesyuarat()" >
+            ##<input name="cmdKemaskini" type="button" value="Kemaskini" onClick="kemaskiniMesyuarat()" >
+            ##<input name="cmdHapus" type="button" value="Hapus" onClick="hapusMesyuarat()" >
             <input name="cmdKembali" type="button" value="Kembali" onClick="batalMesyuarat()" >
             #end
             #end 

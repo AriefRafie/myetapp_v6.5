@@ -126,7 +126,7 @@
 			return;
 
 		 }
-		document.${formName}.actionPajakan.value = "papardaftar";
+		document.${formName}.actionPajakan.value = "paparpemohon";
 		document.${formName}.hitButton.value = "hantarpengesahandaftar";
 		document.${formName}.mode.value = "view";
 		//document.${formName}.submit();
@@ -139,7 +139,7 @@
 			return;
 
 		 }
-		document.${formName}.actionPajakan.value = "papardaftar";
+		document.${formName}.actionPajakan.value = "paparpemohon";
 		document.${formName}.hitButton.value = "hantarpenyemakdaftar";
 		document.${formName}.mode.value = "view";
 		//document.${formName}.submit();
@@ -152,7 +152,7 @@
 				return;
 
 		}
-		document.${formName}.actionPajakan.value = "papardaftar";
+		document.${formName}.actionPajakan.value = "paparpemohon";
 		document.${formName}.hitButton.value = "sahkanpermohonandaftar";
 		document.${formName}.mode.value = "view";
 		//document.${formName}.submit();

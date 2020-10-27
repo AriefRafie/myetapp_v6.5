@@ -53,7 +53,7 @@ public class ETanahSek4 implements IntegrationInternal{
 	LampiranForm lampiran = null;
 	private static Logger myLog = Logger.getLogger(ETanahSek4.class);
 	Calendar cal = new GregorianCalendar();
-	private String URUSAN = "mmk";
+	private String URUSAN = "A4";
 	
 	public void hantar(ETanahPPTManager pptManager
 		,Hashtable<String,String> permohonan_

@@ -75,6 +75,10 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 		if (selectedTabUpper == null || "".equals(selectedTabUpper) ) {
 			selectedTabUpper = "0";
 		}
+        String selectedTabLower = (String) getParam("selectedTabLower");
+		if (selectedTabLower == null || "".equals(selectedTabLower) ) {
+			selectedTabLower = "0";
+		}
 
         //GET ID PARAM
 		String idFail = getParam("idFail");
@@ -250,6 +254,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 
         	this.context.put("txtNamaPemohon", getParam("txtNamaPemohon"));
         	this.context.put("txtNoFail", getParam("txtNoFail"));
+        	this.context.put("selectedTabLower", selectedTabLower);
 
         	//MAKLUMAT DEPOSIT
         	if ("0".equals(selectedTabUpper)){
@@ -1148,6 +1153,57 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         		Vector listMemo = logic.getSenaraiMemo(idHasil);
 				this.context.put("listMemo", listMemo);
         	}
+        	//MAKLUMAT TINDAKAN MAHKAMAH
+        	if ("10".equals(selectedTabUpper)){
+
+        		System.out.println("selectedTabLower >>> "+selectedTabLower);
+        		this.context.put("readonly", "readonly");
+    			this.context.put("inputTextClass", "disabled");
+    			this.context.put("disabled", "disabled");
+
+        		if("0".equals(selectedTabLower)){
+
+        			System.out.println("masuk selectedTabLower 0");
+        			System.out.println("mode >>> "+mode);
+            		if ("view".equals(mode)){
+
+            			this.context.put("readonly", "readonly");
+            			this.context.put("inputTextClass", "disabled");
+            			this.context.put("disabled", "disabled");
+
+            			// MAKLUMAT TINDAKAN MAHKAMAH
+            			Hashtable tm = logic.getMaklumatTindakanMahkamah(idHasil);
+                		context.put("tm", tm);
+
+            		} else if ("update".equals(mode)){
+
+            			this.context.put("readonly", "");
+                		this.context.put("inputTextClass", "");
+                		this.context.put("disabled", "");
+
+                		// MAKLUMAT TANAH
+            			beanMaklumatTanah = new Vector();
+            			Hashtable hashMaklumatTanah = new Hashtable();
+            			hashMaklumatTanah.put("maklumatLot", getParam("txtMaklumatLot") == null ? "": getParam("txtMaklumatLot"));
+            			hashMaklumatTanah.put("luas",getParam("txtLuas") == null ? "": getParam("txtLuas"));
+            			hashMaklumatTanah.put("catatanTanah",getParam("txtCatatanTanah") == null ? "": getParam("txtCatatanTanah"));
+            			beanMaklumatTanah.addElement(hashMaklumatTanah);
+            			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
+
+            			this.context.put("selectNegeriTanah", HTML.SelectNegeri("socNegeriTanah",Long.parseLong(idNegeriTanah), "",""));
+            			this.context.put("selectKementerian",HTML.SelectKementerian("socKementerian", Long.parseLong(idKementerian), "", " onChange=\"doChangeKementerian();\""));
+            			this.context.put("selectAgensi",HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Long.parseLong(idAgensi), "", ""));
+
+            		}
+        		}else if("1".equals(selectedTabLower)){
+
+        		}else if("0".equals(selectedTabLower)){
+
+        		}else{
+        			Hashtable tm = logic.getMaklumatTindakanMahkamah(idHasil);
+            		context.put("tm", tm);
+        		}
+        	}
 
         } else {
 
@@ -1216,9 +1272,10 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 
     		list = new Vector();
 
-        	logic.carianFail(getParam("txtNoFail"), getParam("txtNamaPemohon"), getParam("txtNoRujukan"), idBankC, getParam("txtNoCek"), getParam("txtNoResit"), idJenisFailC, idStatusPerjanjianC,
-        			getParam("txtTujuan"), idNegeriC, idDaerahC, idMukimC, jenisHakmilik, getParam("txtNoHakmilik"), getParam("txtNoWarta"), jenisLot,getParam("txtNoLot"),
-        			getParam("txtNoPegangan"), idKementerianC, idAgensiC);
+        	logic.carianFail(getParam("txtNoFail"), getParam("txtNamaPemohon"), getParam("txtNoRujukan"), idBankC,
+        			getParam("txtNoCek"), getParam("txtNoResit"), idJenisFailC, idStatusPerjanjianC,
+        			getParam("txtTujuan"), idNegeriC, idDaerahC, idMukimC, jenisHakmilik, getParam("txtNoHakmilik"),
+        			getParam("txtNoWarta"), jenisLot, getParam("txtNoLot"), getParam("txtNoPegangan"), idKementerianC, idAgensiC);
 
     		list = logic.getSenaraiFail();
 			this.context.put("SenaraiFail", list);

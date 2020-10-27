@@ -48,6 +48,7 @@
           <!-- START MAKLUMAT MESYUARAT -->
           <div class="TabbedPanelsContent">
           	<table width="100%" border="0" cellspacing="2" cellpadding="2">
+
   			#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
   				<tr>
 			    	<td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
@@ -219,7 +220,7 @@
 					          <td width="20%"><strong>No. Fail</strong></td>
 					          <td width="15%"><strong>Jenis Permohonan</strong></td>
 					          <td width="20%"><strong>Nama Pemohon</strong></td>
-					          <td width="10%"><strong>Kertas Pertimbangan</strong></td>
+					          ##<td width="10%"><strong>Kertas Pertimbangan</strong></td>
 					          <td width="10%"><strong>Keputusan</strong></td>
 					          <td width="15%"><strong>Catatan</strong></td>
 					          #foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
@@ -243,8 +244,8 @@
 					          <td class="$row">$senaraiFailMohonBaru.noFailPermohonan</td>
 					          <td class="$row">$senaraiFailMohonBaru.jenisPermohonan</td>
 					          <td class="$row">$senaraiFailMohonBaru.namaPemohon</td>
-					          <td class="$row" align="center"><a href="#" class="style2" onClick="doCetakKertasPertimbangan('$senaraiFailMohonBaru.id')">
-                      		  <img border="0" src="../img/print.gif"/></a></td>
+					          ##<td class="$row" align="center"><a href="#" class="style2" onClick="doCetakKertasPertimbangan('$senaraiFailMohonBaru.id')">
+                      		  ##<img border="0" src="../img/print.gif"/></a></td>
 					          <td class="$row">
 					          		#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
 										#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
@@ -259,8 +260,10 @@
 								    			DILULUSKAN
 								    		#elseif ( "T" == $senaraiFailMohonBaru.flagKeputusan )
 								    			DITOLAK
+								    		#elseif ( "G" == $senaraiFailMohonBaru.flagKeputusan )
+								    			DITANGGUH
 								    		#else
-								    			TANGGUH
+								    			TIADA KEPUTUSAN
 								    		#end
 								    	#end
 								  	#end
@@ -360,7 +363,7 @@
 	<tr>
 		<td align="right">
 		#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
-			#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
+			#if ($beanMaklumatMesyuarat.statusMesyuarat == "1" && $selectedTabUpper=="2")
 			<input id="btnSelesai" type="button" value="Selesai Mesyuarat" onClick="javascript:doSelesaiMesyuarat();">
 			#end
 	    	<input id="btnBack" type="button" value="Kembali" onClick="doKembaliSenaraiPermohonan()">

@@ -227,8 +227,9 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 				idFail = logic.daftarBaru(idJenisTanah, getParam("tarikhTerima"),
 						getParam("tarikhSurat"), getParam("txtNoRujukanSurat"),
-						"3", idKementerian, idAgensi, idLuasKegunaan,
-						getParam("txtTujuanKegunaan"),
+						"3", idKementerian, idAgensi, 
+						"1", 
+						//getParam("txtTujuanKegunaan"),
 						idHakmilikAgensi, idPPTBorangK, idHakmilikUrusan, idPHPBorangK,
 						getParam("idKementerianTanah"), getParam("idNegeriTanah"), getParam("idLuasTanah"), getParam("luasTanah"),
 						idHakmilikSementara, session);
@@ -237,7 +238,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 			if ("doSimpanKemaskiniMaklumatTnh".equals(hitButton)) {
 				logic.updateTanah(idPermohonan, idHakmilikAgensi, session);
 			}
-			if ("doSimpanKemaskiniMaklumatPelepasan".equals(hitButton)) {
+			if ("doSimpanKemaskiniMaklumatPenawaran".equals(hitButton)) {
 				logic.updatePermohonanPenawaran(idPermohonanPelepasan, idLuasKegunaan, idLuas,
 						getParam("txtLuasMohon1"), getParam("txtLuasMohon2"), getParam("txtLuasMohon3"),
 						getParam("txtLuasBersamaan"), getParam("txtBakiLuas"), session);

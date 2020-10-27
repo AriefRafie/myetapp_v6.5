@@ -41,9 +41,19 @@
           <td>$selectStatus</td>
         </tr>
         #end
+        <tr>
+          <td scope="row" align="right">Jenis Fail :</td>
+          <td>
+          	<select name="socJenisFailC" id="socJenisFailC" style="width:260px;">
+              <option $selected value="">SILA PILIH</option>
+              <option $selected1 value="K">ULASAN KJP TAMAT TEMPOH</option>
+              <option $selected2 value="G">ULASAN JKPTG TAMAT TEMPOH</option>
+            </select>
+          </td>
+        </tr>
         #if($flagDetail == 'buka')
         <tr>
-          <td scope="row" align="right">No Pegangan Hakmilik :</td>
+          <td scope="row" align="right">No. Pegangan Hakmilik :</td>
           <td><input name="txtNoPegangan" id="txtNoPegangan" type="text" value="$txtNoPegangan" size="30" maxlength="50"/></td>
         </tr>
         <tr>
@@ -51,11 +61,11 @@
           <td>$selectJenisHakmilik</td>
         </tr>
         <tr>
-          <td scope="row" align="right"> No Hakmilik :</td>
+          <td scope="row" align="right"> No. Hakmilik :</td>
           <td><input name="txtNoHakmilik" id="txtNoHakmilik" type="text" value="$txtNoHakmilik" size="30" maxlength="50" /></td>
         </tr>
         <tr>
-          <td scope="row" align="right"> No Warta :</td>
+          <td scope="row" align="right"> No. Warta :</td>
           <td><input name="txtNoWarta" id="txtNoWarta" type="text" value="$txtNoWarta" size="30" maxlength="50"/></td>
         </tr>
         <tr>
@@ -63,7 +73,7 @@
           <td>$selectLot</td>
         </tr>
         <tr>
-          <td scope="row" align="right">No Lot :</td>
+          <td scope="row" align="right">No. Lot :</td>
           <td><input name="txtNoLot" id="txtNoLot" type="text" value="$txtNoLot" size="30" maxlength="50"/></td>
         </tr>
         <tr>
@@ -199,6 +209,7 @@ function kosongkan(flagDetail) {
 	document.${formName}.txtTajukFail.value = "";
 	document.${formName}.txdTarikhTerima.value = "";
 	document.${formName}.socSubUrusan.value = "";
+	document.${formName}.socJenisFailC.value = "";
 	if (flagDetail == 'buka'){
 		document.${formName}.socStatusC.value = "";
 		document.${formName}.txtNoPegangan.value = "";

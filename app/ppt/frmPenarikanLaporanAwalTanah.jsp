@@ -18,6 +18,14 @@
 #set($sorJenisGazet = "")
 #set($txtNoGazetDaerah = "")
 
+#set($txtPendahuluan = "")
+#set($txtStatusTanah = "")
+#set($txtLokasi = "")
+#set($txtJalanUtama = "")
+#set($txtNamaTempat = "")
+#set($txtJalanMasuk = "")
+#set($txtJarak = "")
+
 
 
 
@@ -159,6 +167,7 @@
          <li class="TabbedPanelsTab" tabindex="0" onclick="screen2('$id_permohonan','$id_pembatalan')" >Senarai Lot Penarikan</li>
         <li class="TabbedPanelsTab" tabindex="0" id="maklumat_am" onclick="LaporanTanah('$!id_hakmilik','$!id_pembatalan')">Maklumat Am Tanah</li>
         <li class="TabbedPanelsTab" tabindex="0" onclick="PerihalTanah('$!id_hakmilik','$!id_pembatalan')">Perihal Tanah</li>
+         <li class="TabbedPanelsTab" tabindex="0" onclick="PembangunanSekitar('$!id_hakmilik','$!id_pembatalan')">Pembangunan Sekitar</li>
          <li class="TabbedPanelsTab" tabindex="0" onclick="LaporanKerosakan('$!id_hakmilik','$!id_pembatalan')">Laporan Kerosakan</li>
       </ul>
       <div class="TabbedPanelsContentGroup">
