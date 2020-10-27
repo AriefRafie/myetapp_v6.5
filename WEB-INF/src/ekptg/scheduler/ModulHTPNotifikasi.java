@@ -10,6 +10,8 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Vector;
 
+import org.quartz.JobExecutionContext;
+
 import lebah.db.Db;
 import ekptg.model.htp.cukai.CukaiBean;
 import ekptg.model.htp.cukai.ICukai;
@@ -18,6 +20,7 @@ import ekptg.model.php2.utiliti.PHPAPBPeringatanBean;
 import ekptg.model.utils.IPeringatan;
 import ekptg.model.utils.List;
 import ekptg.model.utils.emel.EmailConfig;
+import ekptg.scheduler.PHP.GenerateSewaBulananPenyewaanJob;
 import ekptg.view.php2.util.UtilHasil;
 
 public class ModulHTPNotifikasi {
@@ -63,6 +66,8 @@ public class ModulHTPNotifikasi {
 				submodulAPB(tahun,bulan,emel,"",0);
 				// Notifikasi Keputusan Dasar(D)
 				submodulAPBKeputusan(tahun,bulan,emel,"TBLPHPPMOHONNJDUALPERTAMA",40);
+				//Bil Sewa Bulanan (setiap 1st)
+				submodulSewa(hari,bulan+"/"+tahun,emel);	
 
 			}else {
 				hari = dfd.format(new Date());
@@ -76,6 +81,8 @@ public class ModulHTPNotifikasi {
 				// Notifikasi Keputusan Dasar(D)
 				submodulAPBKeputusan(tahunSemasa,bulanSemasa,emel,"TBLPHPPMOHONNJDUALPERTAMA",40);
 
+				//Bil Sewa Bulanan (setiap 1st)
+				submodulSewa(hari,bulanSemasa+"/"+tahunSemasa,emel);
 			}
 		}catch(Exception e) {				
 			System.out.println("submodulCukaiPeringat:err::" + e.getStackTrace() );
@@ -290,6 +297,23 @@ public class ModulHTPNotifikasi {
 			if (db != null) db.close();
 		}		
 		return senaraiHakmilik;
+		
+	}
+	
+	private static void submodulSewa(String hari,String bulanTahun,String emel)  throws Exception{	
+		String emelSubjek = "Bil bagi "+hari+"/"+bulanTahun;
+		if(hari.equals("01")){
+			GenerateSewaBulananPenyewaanJob j = null;
+			JobExecutionContext context_ = null;
+			
+			context_.setResult(emelSubjek);
+			j.execute(context_);
+			EmailConfig ec = new EmailConfig();
+			String kandungan = "Berjaya Dijana.<br/>";
+
+			ec.sendTo(emel, emelSubjek, kandungan);
+
+		}
 		
 	}
 	
