@@ -60,7 +60,7 @@
         </tr>
         <tr>
         	#if ($modePopup != 'view')        
-	          <td width="1%"></td>
+	          <td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
 	          <td width="28%">Lampiran Dokumen</td>
 	          <td width="1%">:</td>
 	          <td width="70%"><input id="fileupload" name="fileupload" type="file" size="40" $readonlyPopup  class="$inputTextClassPopup" /></td>
@@ -97,9 +97,9 @@
             #if ($modePopup == 'update')
 	            <input name="cmdSimpanKemaskini" type="button" value="Simpan" onClick="javascript:simpanKemaskiniAgensi()" />
 	            <input name="txtBatal" type="button" value="Batal" onClick="javascript:batalKemaskiniAgensi()" />
-            	#if ($modeDokumen == 'noDokumen')
+            	<!-- #if ($modeDokumen == 'noDokumen')
 	            	<input name="cmdSimpanKemaskini" type="button" value="Tambah Minit Mesyuarat" onClick="javascript:tambahMinitMesyuarat()" />
-	            #end
+	            #end -->
             #end 
           </td>
         </tr>

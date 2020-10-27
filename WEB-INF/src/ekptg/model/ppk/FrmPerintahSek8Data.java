@@ -2629,6 +2629,30 @@ System.out.println("sini======="+sql);
 		}
 	}
 	
+	public boolean checkExistHADIKEMBALIKAN(String idPerintah) throws Exception{
+		Db db = null;
+		String sql = "";
+		
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+		
+			sql = "SELECT ID_PERINTAHHAOBMST FROM TBLPPKPERINTAHHAOBMST WHERE ID_PERINTAH = '" + idPerintah + "' AND ID_JENISPERINTAH = '10'";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			if (rs.next()){
+				return true;
+			} else {
+				return false;
+			}
+		
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
 	public boolean checkExistHTAPL(String idPerintah) throws Exception{
 		Db db = null;
 		String sql = "";

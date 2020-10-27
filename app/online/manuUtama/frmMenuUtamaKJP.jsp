@@ -272,7 +272,7 @@ function toggle_div(id) {
 																		<b><font color="WHITE"><blink>$jumlah_notifikasi_penawaran</blink></font></b>
 																	</label>&nbsp;
 																	#end
-																	Permohonan Tawaran</li></font>
+																	Permohonan Penawaran</li></font>
 																</a>
 															</td>
 														</tr>

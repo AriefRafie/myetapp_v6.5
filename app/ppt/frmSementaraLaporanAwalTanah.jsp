@@ -868,7 +868,10 @@ function onchangeUnit() {
 } 
 function cetakLaporanTanah(id_fail,id_tanahumum) {
 	
-	var url = "../servlet/ekptg.report.ppt.LaporanTanahSementara?idfail="+id_fail+"&idTanahumum="+id_tanahumum;
+	//var url = "../servlet/ekptg.report.ppt.LaporanTanahSementara?idfail="+id_fail+"&idTanahumum="+id_tanahumum;
+	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_fail="+id_fail+"&id_tanahumum="+id_tanahumum+"&report=LaporanTanahSementara&flagReport=S";	
+	//var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&idfail="+idfail+"&namaPengarah="+namaPengarah+"&report=KertasMinitMB&flagReport=S";
+	//var url = "../servlet/ekptg.report.ppt.LaporanTanahSementara?idfail="+id_fail+"&idTanahumum="+id_tanahumum;
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
@@ -877,7 +880,8 @@ function cetakLaporanTanah(id_fail,id_tanahumum) {
 
 function cetakLaporanAwalSementara(id_tanahumum) {
 
-    var url = "../servlet/ekptg.report.ppt.laporanTanahSS8?idTanahumum="+id_tanahumum;
+   // var url = "../servlet/ekptg.report.ppt.laporanTanahSS8?idTanahumum="+id_tanahumum;
+   var url = "../servlet/ekptg.report.ppt.LaporanTanahSementara?idfail="+id_fail+"&idTanahumum="+id_tanahumum;
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;

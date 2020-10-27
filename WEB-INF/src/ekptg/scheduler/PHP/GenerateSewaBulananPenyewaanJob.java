@@ -20,7 +20,8 @@ public class GenerateSewaBulananPenyewaanJob implements Job {
 	
 	static Logger myLogger = Logger.getLogger("GenerateSewaBulananPenyewaanJob");
 	static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
+	
+	//public GenerateSewaBulananPenyewaanJob(){}
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
 		myLogger.info("Executing GenerateSewaBulananPenyewaanJob on : " + new Date());
@@ -29,7 +30,9 @@ public class GenerateSewaBulananPenyewaanJob implements Job {
 		Db db = null;
 		Connection conn = null;
 		String sql = "";
-		
+		JobExecutionContext context_ = arg0;
+
+		String bulan1 = String.valueOf(context_).substring(0,2);
 		try {
 			db = new Db();
 			conn = db.getConnection();
@@ -42,8 +45,72 @@ public class GenerateSewaBulananPenyewaanJob implements Job {
 					+ " FROM TBLPHPHASIL, TBLPHPBAYARANPERLUDIBAYAR"
 					+ " WHERE TBLPHPHASIL.ID_HASIL = TBLPHPBAYARANPERLUDIBAYAR.ID_HASIL AND TBLPHPBAYARANPERLUDIBAYAR.FLAG_PERJANJIAN = 'U'"
 					+ " AND TBLPHPBAYARANPERLUDIBAYAR.FLAG_AKTIF = 'Y' AND TBLPHPBAYARANPERLUDIBAYAR.TARIKH_TAMAT > SYSDATE"
-					+ " AND TO_CHAR (SYSDATE, 'DD') = TO_CHAR (TBLPHPBAYARANPERLUDIBAYAR.TARIKH_MULA, 'DD')"
+					+ " AND '"+bulan1+"' = TO_CHAR (TBLPHPBAYARANPERLUDIBAYAR.TARIKH_MULA, 'DD')"
+//					+ " AND TO_CHAR (SYSDATE, 'DD') = TO_CHAR (TBLPHPBAYARANPERLUDIBAYAR.TARIKH_MULA, 'DD')"
 					+ " ORDER BY TBLPHPBAYARANPERLUDIBAYAR.TARIKH_MULA ASC";
+			myLogger.info("execute:sql="+sql);
+			ResultSet rsPerjanjianUtama = stmt.executeQuery(sql);
+			
+			while (rsPerjanjianUtama.next()) {
+				String idHasil = rsPerjanjianUtama.getString("ID_HASIL");
+				String tarikhMula = sdf.format(rsPerjanjianUtama.getDate("TARIKH_MULA"));
+				String kadarSewa = rsPerjanjianUtama.getString("BAYARAN");
+				String modCajSewaan = rsPerjanjianUtama.getString("MOD_CAJ_SEWAAN");				
+				
+				//SEMAK SAMA ADA TERDAPAT PERJANJIAN TAMBAHAN YANG AKTIF
+				sql = "SELECT ID_HASIL, TARIKH_MULA, TARIKH_TAMAT, BAYARAN, MOD_CAJ_SEWAAN"
+						+ " FROM TBLPHPBAYARANPERLUDIBAYAR"
+						+ " WHERE TARIKH_MULA IS NOT NULL AND TARIKH_TAMAT IS NOT NULL AND BAYARAN IS NOT NULL AND FLAG_PERJANJIAN != 'U'"
+						+ " AND FLAG_AKTIF = 'Y' AND TARIKH_TAMAT > SYSDATE AND ID_HASIL = '" + idHasil + "' ORDER BY TARIKH_MULA ASC";
+				ResultSet rsPerjanjianTambahan = stmt.executeQuery(sql);
+				
+				if (rsPerjanjianTambahan.next()) {
+					kadarSewa = rsPerjanjianTambahan.getString("BAYARAN");
+					generateAkaunCaj(idHasil, tarikhMula, kadarSewa, modCajSewaan, db);
+					updateFlagTunggakan(idHasil, db);
+				} else {
+					generateAkaunCaj(idHasil, tarikhMula, kadarSewa, modCajSewaan, db);
+					updateFlagTunggakan(idHasil, db);
+				}
+			}
+			
+			conn.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (db != null) { db.close(); }
+		}
+		
+		myLogger.info("Finish GenerateSewaBulananPenyewaanJob on : " + new Date());
+		System.out.println("Finish GenerateSewaBulananPenyewaanJob on : " + new Date());
+	}
+	
+	public void execute1(String arg0) throws JobExecutionException {
+		myLogger.info("Executing GenerateSewaBulananPenyewaanJob on : " + new Date());
+		System.out.println("Executing GenerateSewaBulananPenyewaanJob on : " + new Date());
+		
+		Db db = null;
+		Connection conn = null;
+		String sql = "";
+		//JobExecutionContext context_ = arg0;
+
+		String bulan1 = arg0.substring(0,2);
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			
+			//GET PERJANJIAN UTAMA YANG AKTIF
+			sql = "SELECT TBLPHPHASIL.ID_HASIL, TBLPHPBAYARANPERLUDIBAYAR.TARIKH_MULA, TBLPHPBAYARANPERLUDIBAYAR.TARIKH_TAMAT,"
+					+ " TBLPHPBAYARANPERLUDIBAYAR.BAYARAN, TBLPHPBAYARANPERLUDIBAYAR.MOD_CAJ_SEWAAN"
+					+ " FROM TBLPHPHASIL, TBLPHPBAYARANPERLUDIBAYAR"
+					+ " WHERE TBLPHPHASIL.ID_HASIL = TBLPHPBAYARANPERLUDIBAYAR.ID_HASIL AND TBLPHPBAYARANPERLUDIBAYAR.FLAG_PERJANJIAN = 'U'"
+					+ " AND TBLPHPBAYARANPERLUDIBAYAR.FLAG_AKTIF = 'Y' AND TBLPHPBAYARANPERLUDIBAYAR.TARIKH_TAMAT > SYSDATE"
+					+ " AND '"+bulan1+"' = TO_CHAR (TBLPHPBAYARANPERLUDIBAYAR.TARIKH_MULA, 'DD')"
+//					+ " AND TO_CHAR (SYSDATE, 'DD') = TO_CHAR (TBLPHPBAYARANPERLUDIBAYAR.TARIKH_MULA, 'DD')"
+					+ " ORDER BY TBLPHPBAYARANPERLUDIBAYAR.TARIKH_MULA ASC";
+			myLogger.info("execute:sql="+sql);
 			ResultSet rsPerjanjianUtama = stmt.executeQuery(sql);
 			
 			while (rsPerjanjianUtama.next()) {
