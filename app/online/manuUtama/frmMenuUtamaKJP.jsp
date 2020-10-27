@@ -432,12 +432,27 @@ function toggle_div(id) {
 																	<font color="blue"><li>Gadaian</li></font>
 																</a>
 															</td>
-														</tr>
+														</tr><!-- -->
 														<tr>
 															<td>
 																<a href="javascript:jawatankuasaRuangPejabat()" class="help" title="Jawatankuasa Ruang Pejabat">
 																	<font color="blue"><li>Jawatankuasa Ruang Pejabat</li></font>
 																</a>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<a href="javascript:dikembalikanHTP()" class="help" title="Permohonan Dikembalikan">
+																	
+																	##if($jumlah_notifikasi_penyewaan > 0)
+																	<label style="background-color:blue" align="center" valign="top" > 
+																		<b><font color="WHITE"><blink>$!bilDikembaliHTP</blink></font></b>
+																	</label>
+																	##end
+																	<font color="blue"><li>Permohonan Dikembalikan</li></font>				
+																</a>
+																<div  id="div_senaraidikembalikan"  style="width:40"></div>
+																
 															</td>
 														</tr>
 													</table>
@@ -464,6 +479,14 @@ function toggle_div(id) {
 																</a>
 															</td>
 														</tr> -->
+														<!-- Aduan Tanah $EkptgUtil.getTabID('+namaModul+',$portal_role)-->
+														<tr>
+															<td>
+																<a href="javascript:pautanSubmodul($EkptgUtil.getTabID('Aduan / Cadangan',$portal_role),'ekptg.view.htp.online.aduan.PengurusanAduanTanahKJP')" class="help" title="Pengurusan Aduan Tanah">
+																	<font color="blue"><li>&nbsp;Aduan Tanah</li></font>
+																</a>
+															</td>
+														</tr> 
 													</table>
 												</td>
 											</tr>
@@ -622,6 +645,8 @@ function toggle_div(id) {
 <input type="hidden" name="notifikasi" id="notifikasi" value="$!jumlah_notifikasi">
 <div id="divMainStats">
 <script>
+
+
 <!-- AISHAH TAMBAH START -->
 function gotoSek4()
 {
@@ -791,11 +816,30 @@ function jawatankuasaRuangPejabat(){
 	document.${formName}.action = "$EkptgUtil.getTabID('Aduan / Cadangan',$portalRole)?_portal_module=ekptg.view.online.aduan.ComplaintSenderModule";
 	document.${formName}.submit();
 } */
-
+/**
+ * Submodul Aduan
+ */
+ 	function pautanSubmodul(namaModul,idModul) {
+		//alert('$EkptgUtil.getTabID('+namaModul+',$portal_role)'); //1288829466095-Aduan / Cadangan
+		document.${formName}.action = namaModul+"?_portal_module="+idModul;
+		//document.${formName}.action = "$EkptgUtil.getTabID("Aduan / Cadangan",$portal_role)?_portal_module=ekptg.view.esaduan.FrmEtappSupportAduan";
+		document.${formName}.submit();
+	
+	}
 function aduan() {
 	document.${formName}.action = "$EkptgUtil.getTabID("Aduan / Cadangan",$portal_role)?_portal_module=ekptg.view.esaduan.FrmEtappSupportAduan";
 	document.${formName}.submit();
 }
+/**
+ * Modul HTP
+ */
+	function dikembalikanHTP(){
+		//reset_jqueryCarian('div_listCukai');	
+		document.getElementById('div_senaraidikembalikan').style.display="";		
+		doDivAjaxCall$formname('div_senaraidikembalikan','getdikembalikanHTP','');
+		
+	}
+	
 function permohonanDikembalikan() {
 	document.${formName}.action = "$EkptgUtil.getTabID("Permohonan Dikembalikan ",$portal_role)?_portal_module=ekptg.view.esaduan.FrmEtappSupportAduan";
 	document.${formName}.submit();
