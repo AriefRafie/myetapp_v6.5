@@ -7,7 +7,9 @@ public enum ComplainStatus {
 	SEMAKKAN_SEKSYEN("DALAM SEMAKAN SEKSYEN"),
 	SELESAI("SELESAI"),
 	ABAIKAN("ABAIKAN"),
-	PALSU("PALSU");
+	PALSU("PALSU"),
+	BACA("TELAH DIBACA")
+	;
 	
 	private String desc;
 	

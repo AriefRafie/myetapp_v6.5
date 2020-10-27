@@ -17,7 +17,7 @@ public abstract class ComplaintHandler {
 	protected ComplaintHandler successor;
 	protected IComplaintSource complaintSource;
 	protected IJawapanLampiran jawapanLampiran;
-	protected static Logger log = Logger.getLogger(ComplaintHandler.class);
+	protected static Logger myLog = Logger.getLogger(ComplaintHandler.class);
 	public void setSuccessor(ComplaintHandler successor) {
 		this.successor = successor;
 	}
@@ -41,8 +41,7 @@ public abstract class ComplaintHandler {
 		return jawapanLampiran;
 	}
 	public Complaint getComplaint(String idComplaint){
-		log.info("call get complaint");
-		
+		myLog.info("call get getComplaint");
 		Db db = null;
 		Complaint comp = null;
 		
@@ -50,17 +49,20 @@ public abstract class ComplaintHandler {
     	SimpleDateFormat formatter =  new SimpleDateFormat("dd/MM/yyyy");
     	String today = "to_date('" + formatter.format(now) + "','dd/MM/yyyy HH:MI:SS AM')";
     	
-    	log.info("ID COMPLAINT DIA:::" + idComplaint);
+    	myLog.info("ID COMPLAINT DIA:::" + idComplaint);
 //    	log.info("STATUS COMPLAINT DIA:::" + status);
 //    	if ( idComplaint != "" ) {
-    		log.info("MASUK ID COMPLAINT COMMAND:::");
+//    	myLog.info("MASUK ID COMPLAINT COMMAND:::");
     		try{
     			db = new Db();
-    			String sql ="SELECT A.ID_EADUAN,A.NAMA_PENGADU,A.EMAIL_PENGADU,A.CATATAN,A.CATATAN_SELESAI,A.TARIKH_MASUK,A.ID_JENISADUAN,A.PHONE_PENGADU,A.STATUS,A.ID_RESPONSEKSYEN,A.ID_PEGAWAI,A.ULASAN_PENERIMAAN,A.ULASAN_PEGAWAI,A.TARIKH_KEMASKINI,A.FLAG_ONLINE,A.CATATAN_SELESAI,A.STATUS_PENYELESAIAN,A.ID_SUMBERADUAN,A.FLAG_NOTIFYPENGADU," +
-    					"C.KOD_JENIS_ADUAN, C.JENIS_ADUAN,a.id_pengadu " +
-    			"FROM TBLONLINEEADUAN A, TBLRUJJENISADUAN C, tblrujsumberaduan d" +
-    			" WHERE C.ID_JENISADUAN = A.ID_JENISADUAN and a.id_sumberaduan = d.id_sumberaduan AND A.ID_EADUAN="+idComplaint;
-    			
+    			String sql ="SELECT A.ID_EADUAN,A.NAMA_PENGADU,A.EMAIL_PENGADU,A.CATATAN,A.CATATAN_SELESAI"+
+    					" ,A.TARIKH_MASUK,A.ID_JENISADUAN,A.PHONE_PENGADU,A.STATUS,A.ID_RESPONSEKSYEN"+
+    					" ,A.ID_PEGAWAI,A.ULASAN_PENERIMAAN,A.ULASAN_PEGAWAI,A.TARIKH_KEMASKINI,A.FLAG_ONLINE"+
+    					" ,A.CATATAN_SELESAI,A.STATUS_PENYELESAIAN,A.ID_SUMBERADUAN,A.FLAG_NOTIFYPENGADU,a.id_pengadu" +
+    					" ,C.KOD_JENIS_ADUAN, C.JENIS_ADUAN " +
+    					" FROM TBLONLINEEADUAN A, TBLRUJJENISADUAN C, tblrujsumberaduan d" +
+    					" WHERE C.ID_JENISADUAN = A.ID_JENISADUAN and a.id_sumberaduan = d.id_sumberaduan "+
+    					" AND A.ID_EADUAN="+idComplaint;  			
     			
     			Statement stat = db.getStatement();
     			ResultSet rs = stat.executeQuery(sql);
@@ -133,7 +135,7 @@ public abstract class ComplaintHandler {
     			
     		}
     		catch(Exception e){
-    			log.error(e.getMessage(),e);
+    			myLog.error(e.getMessage(),e);
     			e.printStackTrace();
     		}
     		finally{
@@ -230,7 +232,7 @@ public abstract class ComplaintHandler {
 	}
 	
 	public Complaint update(Complaint complaint){
-		log.info("updating aduan "+complaint.getId());
+		myLog.info("updating aduan "+complaint.getId());
 		Db db = null;
 		Date now = new Date();
     	SimpleDateFormat formatter =  new SimpleDateFormat("dd/MM/yyyy h:MM:ss a");
@@ -246,9 +248,9 @@ public abstract class ComplaintHandler {
 			r.add("CATATAN",complaint.getCatatan());
 			r.add("ID_JENISADUAN",complaint.getType().getId());
 			r.add("TARIKH_KEMASKINI",r.unquote(today));
-			log.info("SEBELUM STATUS"+complaint.getId());
+			myLog.info("SEBELUM STATUS"+complaint.getId());
 			r.add("STATUS",complaint.getStatus());
-			log.info("SELEPAS STATUS "+complaint.getStatus());
+			myLog.info("SELEPAS STATUS "+complaint.getStatus());
 			r.add("PHONE_PENGADU",complaint.getPhonePengadu());
 //			r.add("ID_PEGAWAI",complaint.getIdPegawai());
 			if(tarikhSelesai != null)
@@ -260,28 +262,29 @@ public abstract class ComplaintHandler {
 			r.add("STATUS_PENYELESAIAN",complaint.getStatusPenyelesaian());
 			if(complaint.getFlagNotifiedPengadu() != null)
 				r.add("FLAG_NOTIFYPENGADU",complaint.getFlagNotifiedPengadu());
+			
 			r.update("ID_EADUAN", complaint.getId());
 			String sql = r.getSQLUpdate("TBLONLINEEADUAN");
-			log.info("SQL UPDATE TBLONLINEEADUAN"+sql);
+			myLog.info("SQL UPDATE TBLONLINEEADUAN"+sql);
 //			
 			stat.executeUpdate(sql);
 			
 		}catch(Exception e){
-			log.error(e.getMessage(),e);
+			myLog.error(e.getMessage(),e);
 			e.printStackTrace();
 		}
 		finally{
 			db.close();
 		}
 		
-		log.info("UPDATE FINISH");
-		
+		myLog.info("UPDATE FINISH");	
 		return complaint;
+		
 	}
 	
 	public Complaint save(Complaint complaint){
-		log.info("SAVING ADUAN.....");
-		log.debug("debug saving aduan ");
+		myLog.info("SAVING ADUAN.....");
+//		log.debug("debug saving aduan ");
 		Db db = null;
 		Date now = new Date();
     	SimpleDateFormat formatter =  new SimpleDateFormat("dd/MM/yyyy h:MM:ss a");
@@ -307,11 +310,11 @@ public abstract class ComplaintHandler {
 				r.add("ID_PENGADU",complaint.getIdPengadu());
 			String sql = r.getSQLInsert("TBLONLINEEADUAN");
 			
-			log.info(sql);
+			myLog.info(sql);
 			stat.executeUpdate(sql);
 			
 		}catch(Exception e){
-			log.error(e.getMessage(), e);
+			myLog.error(e.getMessage(), e);
 			e.printStackTrace();
 		}
 		finally{
@@ -319,8 +322,10 @@ public abstract class ComplaintHandler {
 		}
 		return complaint;
 	}
+	
 	protected ComplainStatus getEnum(String code){
 		return ComplainStatus.getDescription(code);
 	}
+	
 	
 }

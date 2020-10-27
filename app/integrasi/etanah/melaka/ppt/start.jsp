@@ -18,6 +18,8 @@
   #set($tajuk_popup = "")
   #if($!jenisSkrin == "BorangC")         
   	#set($tajuk_popup = "Skrin Integrasi Borang C")
+	#elseif($!jenisSkrin == "Sekyen8")         
+  		#set($tajuk_popup = "Skrin Integrasi Permohonan Seksyen 8")
   #elseif($!jenisSkrin == "BorangA")         
   	#set($tajuk_popup = "Skrin Integrasi Borang A")
   #elseif($!jenisSkrin == "MMK_S8")         

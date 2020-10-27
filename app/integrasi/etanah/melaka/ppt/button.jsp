@@ -12,8 +12,15 @@
       #if ($!maklumatPermohonan.flagHantar == 'T')
           <!-- <input type="button" name="cmdGeneratePermohonan" id="cmdGeneratePermohonan" value="Hantar Permohonan" onClick="janaPermohonan()">
           -->
+          #if($!jenisSkrin == "Sekyen8")
+          <input type="button" name="cmdHantarRekod" id="cmdHantarRekod" value="Hantar Permohonan" onClick="hantarPermohonan">
+          #end
           #if($!jenisSkrin == "WartaS8")
           <input type="button" name="cmdHantarRekod" id="cmdHantarRekod" value="Hantar Permohonan" onClick="hantarBorangD()">
+          #end 
+          
+       	  #if($!jenisSkrin == "BorangC")
+          <input type="button" name="cmdHantarRekod" id="cmdHantarRekod" value="Hantar Permohonan" onClick="hantarBorangC()">
           #end 
           
           #if($!jenisSkrin == "BorangK")
@@ -91,7 +98,30 @@ function janaPermohonanBaruK() {
 	document.${formName}.command.value = "generatePermohonanBaruK";
 	document.${formName}.submit();
 }
+	//02
+	function hantarBorangC() {	
+		if ( !window.confirm("Adakah Anda Pasti ?") ){
+			return;
+		}
+		document.${formName}.action = urlInt;
+		//document.${formName}.action = "?_portal_module=ekptg.intergration.eTanah.pengambilan.PopupETanahPPTWPKL";
+		document.${formName}.method="POST";
+		document.${formName}.command.value = "hantarBorangC";
+		document.${formName}.submit();
+	}
 	//01
+	function hantarPermohonan() {	
+		if ( !window.confirm("Adakah Anda Pasti ?") ){
+			return;
+		}
+		document.${formName}.action = urlInt;
+		//document.${formName}.action = "?_portal_module=ekptg.intergration.eTanah.pengambilan.PopupETanahPPTWPKL";
+		document.${formName}.method="POST";
+		document.${formName}.command.value = "hantar"+${jenisSkrin};
+		document.${formName}.submit();
+		
+	}
+	
 	function hantarBorangD() {	
 		if ( !window.confirm("Adakah Anda Pasti ?") ){
 			return;

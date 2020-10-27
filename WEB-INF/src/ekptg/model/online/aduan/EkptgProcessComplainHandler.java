@@ -20,7 +20,8 @@ public class EkptgProcessComplainHandler extends ComplaintHandler implements IEk
 		try{
 			db = new Db();
 			String sql ="SELECT A.ID_EADUAN,A.NAMA_PENGADU,A.EMAIL_PENGADU,A.CATATAN,A.TARIKH_MASUK,A.ID_JENISADUAN,A.PHONE_PENGADU,A.STATUS,A.ID_RESPONSEKSYEN,A.ID_PEGAWAI,A.ULASAN_PENERIMAAN,A.TARIKH_KEMASKINI,C.KOD_JENIS_ADUAN, C.JENIS_ADUAN " +
-					"FROM TBLONLINEEADUAN A,TBLRUJJENISADUAN C" +
+					" ,A.LOG_ADUAN "+
+					" FROM TBLONLINEEADUAN A,TBLRUJJENISADUAN C" +
 					" WHERE C.ID_JENISADUAN = A.ID_JENISADUAN AND A.ID_RESPONSEKSYEN="+role;
 			// AND A.STATUS='"+ComplainStatus.SEMAKKAN_SEKSYEN+"'
 			Statement stat = db.getStatement();
@@ -33,6 +34,7 @@ public class EkptgProcessComplainHandler extends ComplaintHandler implements IEk
 				type.setDescription(rs.getString("JENIS_ADUAN"));
 
 				comp.setType(type);
+				comp.setNoAduan(rs.getString("LOG_ADUAN")); //2020/10/22
 				comp.setId(rs.getLong("ID_EADUAN"));
 				comp.setNamaPengadu(rs.getString("NAMA_PENGADU"));
 				comp.setEmailPengadu(rs.getString("EMAIL_PENGADU"));
