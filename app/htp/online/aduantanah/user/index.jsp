@@ -158,11 +158,11 @@ function toggle_div(id) {
 	}
 	
 	function doChangeJenisHakmilik() {
-		doAjaxCall${formName}("");
+		//doAjaxCall${formName}("");
 	}
 
 	function doChangeJenisLot() {
-	  	doAjaxCall${formName}("");
+	  	//doAjaxCall${formName}("");
 	}
   
 	daftar =function(){
@@ -181,7 +181,8 @@ function toggle_div(id) {
 		else{
 			document.${formName}.enctype= "multipart/form-data";
 			document.${formName}.encoding = "multipart/form-data";
-			document.${formName}.action='?_portal_module=ekptg.view.online.aduan.ComplaintSenderModule&command=doAduan';
+			document.${formName}.action='?_portal_module=ekptg.view.htp.online.aduan.LandComplaintSenderModule&command=doAduan';
+			//document.${formName}.action='?_portal_module=ekptg.view.online.aduan.ComplaintSenderModule&command=doAduan';
 			document.${formName}.submit();
 			//doAjaxCall${formName}("doAduan");
 		}
@@ -223,12 +224,10 @@ function toggle_div(id) {
 
 	doHide = function () {
 		$jquery('#RegistrationForm').hide("slow");
+	}	
+	
+	function menuUtama(){
+		document.${formName}.action = "$EkptgUtil.getTabID("Menu",$myrole)?_portal_module=ekptg.view.online.FrmOnlineMenuUtama";
+		document.${formName}.submit();
 	}
-
-	
-	
-function menuUtama(){
-	document.${formName}.action = "$EkptgUtil.getTabID("Menu",$myrole)?_portal_module=ekptg.view.online.FrmOnlineMenuUtama";
-	document.${formName}.submit();
-}
 </script>

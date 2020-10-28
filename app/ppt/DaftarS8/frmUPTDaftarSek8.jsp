@@ -1151,8 +1151,9 @@ alert("Sila Klik 'Paging' No.2 Untuk Penambahan Hakmilik dan Pihak Berkepentinga
                     
                     
 					<input type="button" name="cmdKemaskini" value="Kemaskini" onClick="javascript:kemaskiniPendaftaran('$!id_permohonan')">
-                 		#if($ID_NEGERIPROJEK == "4")     
-                  	<input type="button" name="cmdpopupetanah" value="Integrasi e-Tanah Melaka(Hantar Permohonan)" onClick="eTanahPermohonan('$id_fail','$id_permohonan','WartaS8','')">
+                 		#if($ID_NEGERIPROJEK == "4")    
+                 		## 2020/10/23 tukar "WartaS8" kepada "Sekyen8"
+                  	<input type="button" name="cmdpopupetanah" value="Integrasi e-Tanah Melaka(Hantar Permohonan)" onClick="eTanahPermohonan('$id_fail','$id_permohonan','Seksyen8','')">
                     	#end
                     <!--
                     <input type="button" name="cmdPopupeTanah" value="Integrasi eTanah (Hantar Pelan untuk Charting)" onClick="popupEtanah('$id_fail','$id_permohonan','hantarPelanChartingS8','')">

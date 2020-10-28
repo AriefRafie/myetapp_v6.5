@@ -36,9 +36,12 @@ import ekptg.model.online.aduan.ComplainStatus;
 import ekptg.model.online.aduan.Complaint;
 import ekptg.model.online.aduan.ComplaintAgihanBean;
 import ekptg.model.online.aduan.ComplaintEmailNotification;
+import ekptg.model.online.aduan.ComplaintEmailNotificationSelesai;
+import ekptg.model.online.aduan.ComplaintEmailNotificationX;
 import ekptg.model.online.aduan.EkptgCloseComplaintHandler;
 import ekptg.model.online.aduan.EkptgFakeComplaintHandler;
 import ekptg.model.online.aduan.EkptgManageComplaintHandler;
+import ekptg.model.online.aduan.EkptgReadComplaintHandler;
 import ekptg.model.online.aduan.IComplaintEmailNotification;
 import ekptg.model.online.aduan.IComplaintResponseBean;
 import ekptg.model.online.aduan.IEkptgCloseComplaintHandler;
@@ -68,7 +71,11 @@ public class PengurusanAduanTanah extends AjaxModule {
 	private IJawapanLampiran jawapan;
 	private IEkptgCloseComplaintHandler closeBean;
 	private IEkptgFakeComplaintHandler fakeBean;
+	private IEkptgFakeComplaintHandler readBean;
 	private IComplaintEmailNotification emailNotification;
+	private IComplaintEmailNotification emailNotificationS;
+	private IComplaintEmailNotification emailNotificationX;
+
 	HttpSession session = null;
 	String action = null;
 	Db db1 = null;
@@ -84,16 +91,17 @@ public class PengurusanAduanTanah extends AjaxModule {
 		context.put("test_ajax", "");
 		context.put("upload_file", "");
 		context.put("noAduan", "");
-		System.out.println("COMMAND PILIHAN : " + command);
-		System.out.println("COMMAND PILIHAN 02 : " + command01);
+		myLog.info("COMMAND PILIHAN : " + command);
+//		System.out.println("COMMAND PILIHAN 02 : " + command01);
 		String mode = getParam("mode");
 		action = getParam("action");
 		String idKategori = getParam("idCategory");
 		String selectedTabUpper = (String) getParam("selectedTabUpper");
-			if (selectedTabUpper == null || "".equals(selectedTabUpper) ) {
-				selectedTabUpper = "0";
-			}
-			context.put("selectedTabUpper", selectedTabUpper);
+		if (selectedTabUpper == null || "".equals(selectedTabUpper) ) {
+			selectedTabUpper = "0";
+		}
+		context.put("selectedTabUpper", selectedTabUpper);
+		
 		if(command.equals("viewComplaint")){
 			String idComplaint = getParam("idComplaint");
 			viewComplaint(idComplaint);
@@ -107,9 +115,9 @@ public class PengurusanAduanTanah extends AjaxModule {
 			try {
 				db = new Db();
 				listAgihan = listAgihan(idComplaint,session,db);
-			}
-			catch (Exception ex) {
-			throw new DbException(ex.getMessage());
+			
+			}catch (Exception ex) {
+				throw new DbException(ex.getMessage());
 			}
 			finally {
 				if (db != null)
@@ -117,11 +125,10 @@ public class PengurusanAduanTanah extends AjaxModule {
 			}
 			context.put("categories", listAgihan);
 			vm = PATH+"view.jsp";
-		}
-		else if(command.equals("simpanComplaint")){
+			
+		}else if(command.equals("simpanComplaint")){
 			simpanComplaint();
-		}
-		else if(command.equals("daftarAgih") || command.equals("doChangeTindakan") || command.equals("doChangePegawai")){
+		}else if(command.equals("daftarAgih") || command.equals("doChangeTindakan") || command.equals("doChangePegawai")){
 			mode ="update";
 			String idComplaint = getParam("idComplaint");
 			viewComplaint(idComplaint);
@@ -211,8 +218,8 @@ public class PengurusanAduanTanah extends AjaxModule {
 			}
 
 			vm = PATH+"agihan.jsp";
-		}
-		else if(command.equals("simpanAgih")){
+		
+		}else if(command.equals("simpanAgih")){
 			mode = "view";
 			String idComplaint = getParam("idComplaint");
 			simpanAgih(idComplaint);
@@ -224,18 +231,19 @@ public class PengurusanAduanTanah extends AjaxModule {
 			try {
 				db = new Db();
 				listAgihan = listAgihan(idComplaint,session,db);
-			}
-			catch (Exception ex) {
-			throw new DbException(ex.getMessage());
-			}
-			finally {
+			}catch (Exception ex) {
+				throw new DbException(ex.getMessage());
+			}finally {
 				if (db != null)
 					db.close();
 			}
+			// fungsi emel dekat method simpanAgih
+//			getNotificationBean().notifySeksyen(idComplaint,idComplaint);
+
 			context.put("categories", listAgihan);
 			vm = PATH+"view.jsp";
-		}
-		else if(command.equals("viewAgihan")){
+		
+		}else if(command.equals("viewAgihan")){
 			myLog.info("amsuk x sini");
 			mode = "view";
 			String idAgihan = getParam("idResponse");
@@ -262,11 +270,24 @@ public class PengurusanAduanTanah extends AjaxModule {
 			String idComplaint = getParam("idComplaint");
 			viewComplaint("");
 			vm = PATH+"view.jsp";
-		}
-		else if(command.equals("tutupAduan")){
-//			System.out.println("Tutup Aduan");
-			//>>>>>>>>Response Aduan
+		
+		}else if(command.equals("aduanbaca")){
+			mode = "view";
+			String catatanSelesai = getParam("catatanSelesai");
+			String idComplaint = getParam("idComplaint");
+			Complaint temp = new Complaint();
+			temp.setCatatanSelesai(catatanSelesai);
+			temp.setLoginName(userId);
+			temp.setId(Long.parseLong(idComplaint));
+			getReadBean().processComplaint(temp);
+			viewComplaint(idComplaint);
+			context.put("categories",getCategoryAduan().getComplaintCategory());
+			
+			getNotificationBean().notifyPengadu(idComplaint);//email notification to pengadu
 
+			vm = PATH+"view.jsp";
+
+		}else if(command.equals("tutupAduan")){
 			mode = "view";
 			String catatanSelesai = getParam("catatanSelesai");
 			String idComplaint = getParam("idComplaint");
@@ -277,10 +298,13 @@ public class PengurusanAduanTanah extends AjaxModule {
 			getCloseBean().processComplaint(temp);
 			viewComplaint(idComplaint);
 			context.put("categories",getCategoryAduan().getComplaintCategory());
-			vm = PATH+"index.jsp";
+
+			getNotificationBeanS().notifyPengadu(idComplaint);//email notification to pengadu
 
 			displayComplaint();
 			getProsesStatus();
+			vm = PATH+"index.jsp";
+			
 		}
 		else if(command.equals("aduanPalsu")){
 			mode = "view";
@@ -294,7 +318,11 @@ public class PengurusanAduanTanah extends AjaxModule {
 			getFakeBean().processComplaint(temp);
 			viewComplaint(idComplaint);
 			context.put("categories",getCategoryAduan().getComplaintCategory());
+			
+			getNotificationBeanX().notifyPengadu(idComplaint);//email notification to pengadu
+
 			vm = PATH+"view.jsp";
+			
 		}
 		else if(command.equals("cariAduan") || command01.equals("cariAduan")){
 			String noAduan = getParam("noAduan");
@@ -326,15 +354,17 @@ public class PengurusanAduanTanah extends AjaxModule {
 			deleteDokumenLampiran(idLampiran);
 			viewComplaint(idComplaint);
 			vm = PATH+"view.jsp";
-		}
-		else{
+		
+		}else{
 			vm = PATH+"index.jsp";
 			displayComplaint();
 			getProsesStatus();
+		
 		}
 		myLog.info("command >>> "+command);
 		context.put("mode", mode);
 		return vm;
+		
 	}
 	private void updateResponse() {
 		String ulasanRespon = getParam("ulasanRespon");
@@ -388,6 +418,7 @@ public class PengurusanAduanTanah extends AjaxModule {
 		}
 		System.out.println("aduanDetails >>> "+ aduanDetails);
 		context.put("tanah", aduanDetails);
+		
 	}
 	private void displayAgihan(){
 		String idResponse = getParam("idResponse");
@@ -478,11 +509,9 @@ public class PengurusanAduanTanah extends AjaxModule {
 
 		context.put("negeri",getHandler().getAvailableNegeri());
 	}
+	
 	private void getResponseList(String idAduan)throws Exception{
-
 		//Vector<ComplaintResponse> vectorResponse = getHandlerRB().getComplaintResponse(idAduan);
-
-
 		Db db = null;
 		try {
 			db = new Db();
@@ -497,6 +526,7 @@ public class PengurusanAduanTanah extends AjaxModule {
 		}
 		myLog.info("listAgihan >>>> "+listAgihan);
 		context.put("responses", listAgihan);
+		
 	}
 	private void simpanAgih(String idComplaint) throws Exception {
 		//String idComplaint = getParam("idComplaint");
@@ -507,6 +537,7 @@ public class PengurusanAduanTanah extends AjaxModule {
 		String idPtg =getParam("socPtg");
 		String idKementerian =getParam("socKementerian");
 		String idCategory = getParam("idCategory");
+		
 		ComplaintResponse response = new ComplaintResponse();
 		ComplaintTindakan tindakan = new ComplaintTindakan();
 		tindakan.setId(Long.parseLong(idTindakan));
@@ -521,17 +552,18 @@ public class PengurusanAduanTanah extends AjaxModule {
 		response.setTindakan(tindakan);
 		getHandlerRB().doResponse(response);
 		getResponseList(idComplaint);
-		simpanAgihan(arahan,idComplaint,idTindakan,idPegawai,idCategory,idPejabatJkptgn,idPtg,idKementerian);
+//		simpanAgihan(arahan,idComplaint,idTindakan,idPegawai,idCategory,idPejabatJkptgn,idPtg,idKementerian);
+		
 	}
 
 	public String simpanAgihan(String arahan,String idComplaint,String idTindakan, String idPegawai,
-			String idCategory, String idPejabatJkptgn, String idPtg, String idKementerian) throws Exception {
+		String idCategory, String idPejabatJkptgn, String idPtg, String idKementerian) throws Exception {
 
 		Connection conn = null;
 
-		 String ID_ADUANRESPON = getParam("id_aduanRespon");
-		 SQLRenderer r2 = new SQLRenderer();
-		 String sql2 = "";
+		String ID_ADUANRESPON = getParam("id_aduanRespon");
+		SQLRenderer r2 = new SQLRenderer();
+		String sql2 = "";
 		long idAduanRespon = 0;
 		String namaPegawai = "";
 		if("1".equals(idCategory)){
@@ -549,12 +581,9 @@ public class PengurusanAduanTanah extends AjaxModule {
 			conn = db.getConnection();
 			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
-		if(!ID_ADUANRESPON.equals(""))
-		{
+		if(!ID_ADUANRESPON.equals("")){
 			r2.update("ID_ADUANRESPON", ID_ADUANRESPON);
-		}
-		else
-		{
+		}else{
 			idAduanRespon = DB.getNextID(db, "TBLONLINEADUANRESPON_SEQ");
 			r2.add("ID_ADUANRESPON", idAduanRespon);
 		}
@@ -569,20 +598,17 @@ public class PengurusanAduanTanah extends AjaxModule {
 		r2.add("ID_KEMASKINI", userId);
 		r2.add("TARIKH_KEMASKINI", r2.unquote("sysdate"));
 
-		if(!ID_ADUANRESPON.equals(""))
-		{
+		if(!ID_ADUANRESPON.equals("")){
 			sql2 = r2.getSQLUpdate("TBLONLINEADUANRESPON");
-		}
-		else
-		{
+		}else{
 			sql2 = r2.getSQLInsert("TBLONLINEADUANRESPON");
 		}
 
 		myLog.info("aduan Respon :: sql >>>> "+sql2);
 		stmt.executeUpdate(sql2);
 		conn.commit();
-		}
-		catch (SQLException se) {
+		
+		}catch (SQLException se) {
 			myLog.error(se);
 	    	try {
 	    		conn.rollback();
@@ -590,12 +616,12 @@ public class PengurusanAduanTanah extends AjaxModule {
 	    		throw new Exception("Rollback error:"+se2.getMessage());
 	    	}
 	    	throw new Exception("Ralat Pendaftaran :"+se.getMessage());
-		}
-		catch (Exception re) {
+		
+		}catch (Exception re) {
 			throw re;
-		}finally {
-		}
+		}finally {}
 		return ID_ADUANRESPON;
+		
 	}
 
 	public String MaklumatPegawai(String idPegawai) throws Exception {
@@ -783,15 +809,34 @@ public class PengurusanAduanTanah extends AjaxModule {
 		}
 		return fakeBean;
 	}
+	private IEkptgFakeComplaintHandler getReadBean(){
+		if(closeBean == null){
+			readBean = new EkptgReadComplaintHandler();
+		}
+		return fakeBean;
+	}
 	private IComplaintEmailNotification getNotificationBean(){
 		if(emailNotification == null){
 			emailNotification = new ComplaintEmailNotification();
 		}
 		return emailNotification;
 	}
+	
+	private IComplaintEmailNotification getNotificationBeanS(){
+		if(emailNotificationS == null){
+			emailNotificationS = new ComplaintEmailNotificationSelesai();
+		}
+		return emailNotificationS;
+	}
+	
+	private IComplaintEmailNotification getNotificationBeanX(){
+		if(emailNotificationX == null){
+			emailNotificationX = new ComplaintEmailNotificationX();
+		}
+		return emailNotificationS;
+	}
 
 	private void getProsesStatus(){
-
 		context.put("statuses", ComplainStatus.values());
 	}
 	public void setupPagexxx(HttpSession session, String action, Vector list) {
@@ -938,8 +983,7 @@ public class PengurusanAduanTanah extends AjaxModule {
 		String sql = "";
 		try {
 			if(db==null)
-			{
-			db1 = new Db();
+			{db1 = new Db();
 			}
 			else
 			{
