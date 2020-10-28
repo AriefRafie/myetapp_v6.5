@@ -322,6 +322,7 @@
           	$selectMukim
           </td>
         </tr>
+        #if($idJenisTanah == '1')
 		<tr>
           <td width="1%"><span class="style1">*</span></td>
           <td>Jenis Hakmilik</td>
@@ -335,6 +336,27 @@
           <td width="70%">
           <input type="text" name="noMilikTanah" id="noMilikTanah" value="$beanMaklumatTanah.noHakmilik"/></td>
         </tr>
+        #end
+        #if($idJenisTanah == '2')
+        <tr>
+        	<td width="1%"><span class="style1">*</span></td>
+        	<td width="28%">No. Warta</td>
+        	<td width="1%">:</td>
+        	<td width="70%">
+          		<input type="text" name="noWartaTanah" id="noWartaTanah" value="$beanMaklumatTanah.noWarta"/>
+          	</td>
+        </tr>
+        <tr>
+        	<td width="1%"><span class="style1">*</span></td>
+        	<td width="28%">Tarikh Warta</td>
+        	<td width="1%">:</td>
+        	<td width="70%">
+          		<input type="text" name="tarikhWartaTanah" id="tarikhWartaTanah" size="9" readonly="readonly" class="disabled" value="$beanMaklumatTanah.tarikhWarta"/><a
+							href="javascript:displayDatePicker('tarikhWartaTanah',false,'dmy');"> <img
+								border="0" src="../img/calendar.gif" /></a>
+          	</td>
+        </tr>
+        #end
         <tr>
           <td><span class="style1">*</span></td>
           <td>Jenis Lot</td>
@@ -560,7 +582,7 @@
   <tr>
     <td width="100%" align="center"> 
     #if ($mode == 'new')
-      <input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Seterusnya" onclick="daftar('$idLuas')"/>
+      <input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Seterusnya" onclick="daftar('$idLuas','$idJenisTanah')"/>
       <input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="kembali()"/>
     #end 
     </td>
@@ -620,6 +642,25 @@ function doChangeJenisPermohonan() {
 function doChangeNoFailLama() {
 	doAjaxCall${formName}("doChangeNoFailLama");
 }
+
+function cekTarikhWarta(elmnt) {  
+	//CHECK DATE   
+	var str1  = document.${formName}.tarikhWartaTanah.value;		   
+	var dt1   = parseInt(str1.substring(0,2),10);
+	var mon1  = parseInt(str1.substring(3,5),10)-1;
+	var yr1   = parseInt(str1.substring(6,10),10);
+	var tarikhWartaTanah = new Date(yr1, mon1, dt1);
+	
+	var currentDate = new Date();
+	
+	if (tarikhWartaTanah > currentDate){
+		alert('Tarikh Warta tidak boleh melebihi dari tarikh hari ini.');
+		elmnt.value ="";
+  		document.${formName}.tarikhSurat.focus(); 
+		return;
+	}
+}
+
 function kiraLuas(idLuas){
 	var jenisLuas = idLuas;
   
@@ -718,7 +759,7 @@ function kiraLuas(idLuas){
 	  document.${formName}.txtLuasBersamaan.value = luasH.toFixed(5);
 	}
 }
-function daftar(idLuas) {
+function daftar(idLuas, idJenisTanah) {
 	if(document.${formName}.socJenisPermohonan.value == "0"){
 		alert('Sila pilih Jenis Permohonan.');
   		document.${formName}.socJenisPermohonan.focus(); 
@@ -764,15 +805,29 @@ function daftar(idLuas) {
   		document.${formName}.socMukim.focus(); 
 		return; 
 	}
-	if(document.${formName}.socJenisHakmilik.value == ""){
-		alert('Sila pilih Jenis Hakmilik.');
-  		document.${formName}.socJenisHakmilik.focus(); 
-		return; 
+	if(idJenisTanah == '1') {
+		if(document.${formName}.socJenisHakmilik.value == ""){
+			alert('Sila pilih Jenis Hakmilik.');
+	  		document.${formName}.socJenisHakmilik.focus(); 
+			return; 
+		}
+		if(document.${formName}.noMilikTanah.value == ""){
+			alert('Sila isi No. Hakmilik.');
+	  		document.${formName}.noMilikTanah.focus(); 
+			return; 
+		}
 	}
-	if(document.${formName}.noMilikTanah.value == ""){
-		alert('Sila isi No. Hakmilik.');
-  		document.${formName}.noMilikTanah.focus(); 
-		return; 
+	if(idJenisTanah == '2') {
+		if(document.${formName}.noWartaTanah.value == ""){
+			alert('Sila isi No. Warta.');
+	  		document.${formName}.noWartaTanah.focus(); 
+			return; 
+		}
+		if(document.${formName}.tarikhWartaTanah.value == ""){
+			alert('Sila isi Tarikh Warta.');
+	  		document.${formName}.tarikhWartaTanah.focus(); 
+			return; 
+		}
 	}
 	if(document.${formName}.socJenisLot.value == ""){
 		alert('Sila pilih Jenis Lot.');
