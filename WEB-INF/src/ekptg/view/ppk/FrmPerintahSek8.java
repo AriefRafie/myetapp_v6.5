@@ -2406,10 +2406,8 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 	public void setupPage(HttpSession session,String action,Vector list) {
 		
 		try {
-		
 			this.context.put("totalRecords",list.size());
 			int page = getParam("page") == "" ? 1:getParamAsInteger("page");
-			
 			int itemsPerPage;
 			if (this.context.get("itemsPerPage") == null || this.context.get("itemsPerPage") == "") {
 				itemsPerPage = getParam("itemsPerPage") == "" ? 10:getParamAsInteger("itemsPerPage");
@@ -2426,7 +2424,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		    } else if ("doChangeItemPerPage".equals(action)) {
 		       itemsPerPage = getParamAsInteger("itemsPerPage");
 		    }
-		    	
+		    
 		    Paging paging = new Paging(session,list,itemsPerPage);
 			
 			if (page > paging.getTotalPages()) page = 1; //reset page number
