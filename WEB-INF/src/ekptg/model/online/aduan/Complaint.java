@@ -40,7 +40,8 @@ public class Complaint implements Serializable, Comparable<Complaint> {
 	private String idPengadu;
 	private Vector<OnlineLampiran> jawapanLampiran = new Vector<OnlineLampiran>();
 	private String flagNotifiedPengadu;
-	
+	private String noAduan;
+
 	private String tempStatus;
 	public String getCatatanSelesai() {
 		if(catatanSelesai == null)
@@ -246,7 +247,6 @@ public class Complaint implements Serializable, Comparable<Complaint> {
 		this.flagNotifiedPengadu = flagNotifiedPengadu;
 	}
 	
-	
 	public String getTempStatus() {
 		return tempStatus;
 	}
@@ -259,5 +259,12 @@ public class Complaint implements Serializable, Comparable<Complaint> {
 		return 0;
 	}
 	
-	
+	public String getNoAduan() {
+		return noAduan;
+	}
+	public void setNoAduan(String noAduan) {
+		this.tempStatus = noAduan;
+	}
+
+
 }

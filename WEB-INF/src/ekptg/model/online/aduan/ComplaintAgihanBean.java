@@ -1,5 +1,6 @@
 package ekptg.model.online.aduan;
 
+import java.sql.SQLException;
 import java.util.Vector;
 
 import ekptg.model.online.aduan.entity.ComplaintResponse;
@@ -22,7 +23,7 @@ public class ComplaintAgihanBean extends ComplaintResponseFacade implements ICom
 			emailNotification = new ComplaintEmailNotification();
 	}
 	@Override
-	public ComplaintResponse doResponse(ComplaintResponse response) {
+	public ComplaintResponse doResponse(ComplaintResponse response){
 		idAduan = response.getComplaint().getId();
 		idMasuk = response.getIdMasuk();
 		response.setResponseStatus(ResponseStatus.BARU);
@@ -32,8 +33,16 @@ public class ComplaintAgihanBean extends ComplaintResponseFacade implements ICom
 		complaint.setLoginName(response.getComplaint().getLoginName());
 		complaintHandler.processComplaint(response.getComplaint());
 		new ComplaintActivityBean().setActivity(this);
-		emailNotification.notifySeksyen(String.valueOf(idAduan), String.valueOf(response.getId()));
+		try{
+			emailNotification.notifySeksyen(String.valueOf(idAduan), String.valueOf(response.getId()));		
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+			//throw se.getMessage();
+    		//throw new Exception("Rollback error:"+se.getMessage());
+		}
+	
 		return response;
+	
 	}
 	
 

@@ -201,10 +201,41 @@
     	<td colspan="2">
 			<fieldset>
     			<legend><strong>MAKLUMAT TANAH</strong></legend>
-    			#foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
+    			##foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
     			<input type="hidden" name="idHakmilik" id="idHakmilik" value="$beanMaklumatTanah.idHakmilik" />
     			
-    			<table width="100%" border="0" cellspacing="2" cellpadding="2">
+    			<table width="100%" border="0" cellspacing="2" cellpadding="2"> 			        				
+        				<tr>
+          					<td>&nbsp;</td>
+          					<td>Negeri</td>
+          					<td>:</td>			
+          					<td>
+          					$selectNegeri
+          					##$beanMaklumatTanah.negeri
+            					<input type="hidden" name="idNegeriTanah" id="idNegeriTanah" value="$beanMaklumatTanah.idNegeriTanah">
+            					<input type="hidden" name="namaNegeriTanah" id="namaNegeriTanah" value="$$beanMaklumatTanah.negeri">
+          					</td>
+        				</tr>
+        				<tr>
+          					<td>&nbsp;</td>
+          					<td>Daerah</td>
+          					<td>:</td>
+          					<td>$selectDaerah
+          						<input type="hidden" name="namaDerahTanah" id="namaDerahTanah" value="$beanMaklumatTanah.daerah" /></td>
+        				</tr>        				
+        				<tr>
+          					<td>&nbsp;</td>
+			          		<td>Mukim</td>
+          					<td>:</td>
+          					<td>$selectMukim
+          						<input type="hidden" name="namaMukimTanah" id="namaMukimTanah" value="$beanMaklumatTanah.mukim" /></td>
+        				</tr>
+        				<tr>
+          					<td>&nbsp;</td>
+			          		<td>Seksyen</td>
+          					<td>:</td>
+          					<td>$selectSeksyen</td>
+        				</tr>
         			<tr>
           				<td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>
           				<td>No. Lot</td>
@@ -251,30 +282,9 @@
           						<input type="hidden" name="idLuasTanah" id="idLuasTanah" value="$beanMaklumatTanah.idLuas" /> 
           						<input type="hidden" name="luasTanah" id="luasTanah" value="$beanMaklumatTanah.luasBersamaan" /></td>
         				</tr>
-        				<tr>
-          					<td>&nbsp;</td>
-			          		<td>Mukim</td>
-          					<td>:</td>
-          					<td>$beanMaklumatTanah.mukim
-          						<input type="hidden" name="namaMukimTanah" id="namaMukimTanah" value="$beanMaklumatTanah.mukim" /></td>
-        				</tr>
-        				<tr>
-          					<td>&nbsp;</td>
-          					<td>Daerah</td>
-          					<td>:</td>
-          					<td>$beanMaklumatTanah.daerah
-          						<input type="hidden" name="namaDerahTanah" id="namaDerahTanah" value="$beanMaklumatTanah.daerah" /></td>
-        				</tr>
-        				<tr>
-          					<td>&nbsp;</td>
-          					<td>Negeri</td>
-          					<td>:</td>			
-          					<td>$beanMaklumatTanah.negeri
-            					<input type="hidden" name="idNegeriTanah" id="idNegeriTanah" value="$beanMaklumatTanah.idNegeriTanah">
-            					<input type="hidden" name="namaNegeriTanah" id="namaNegeriTanah" value="$$beanMaklumatTanah.negeri">
-          					</td>
-        				</tr>
-        				<tr>
+
+
+<!--         				<tr>
           					<td>&nbsp;</td>
           					<td>Kementerian</td>
           					<td>:</td>
@@ -282,14 +292,14 @@
             					<input type="hidden" name="idKementerianTanah" id="idKementerianTanah" value="$beanMaklumatTanah.idKementerian">
             					<input type="hidden" name="kodKementerian" id="kodKementerian" value="$beanMaklumatTanah.kodKementerian">
           					</td>
-        				</tr>
-        				<tr>
+        				</tr> -->
+<!--         				<tr>
           					<td>&nbsp;</td>
           					<td>Agensi</td>
           					<td>:</td>
           					<td>$beanMaklumatTanah.agensi
           						<input type="hidden" name="idAgensiTanah" id="idAgensiTanah" value="$beanMaklumatTanah.idAgensi">
-        				</tr>
+        				</tr> -->
         				
               			<tr>
                            	<td></td>
@@ -305,7 +315,7 @@
            				 	#end</td>
                         </tr>
 					</table>
-                    #end
+                    ##end
 				</fieldset>
 			</td>
 		</tr>
