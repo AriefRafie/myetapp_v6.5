@@ -304,7 +304,8 @@
           	<table width="100%" border="0" cellspacing="2" cellpadding="2">
 		          	  #if ($flagPopup == 'openPopupDokumen')
 					  <tr>
-					    <td> #parse("app/php2/frmCRBMinitMesyuaratDetailSenaraiPermohonan.jsp") </td>
+					    ##<td> #parse("app/php2/frmCRBMinitMesyuaratDetailSenaraiPermohonan.jsp") </td>
+					  <td> #parse("app/php2/frmAPBMinitMesyuaratDetailSenaraiPermohonan.jsp") </td>
 					  </tr>
 					  <tr>
 					    <td>&nbsp;</td>
