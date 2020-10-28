@@ -36,6 +36,7 @@ import ekptg.helpers.Utils;
 import ekptg.model.RazTemplete;
 import ekptg.model.ppk.BicaraInteraktifData;
 import ekptg.model.ppk.FrmHeaderPpk;
+import ekptg.model.ppk.FrmPerintahSek8Data;
 import ekptg.model.ppk.FrmPrmhnnSek8BicaraData;
 import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8InternalData;
 import ekptg.model.ppk.FrmPrmhnnSek8KptsanBicaraData;
@@ -59,7 +60,9 @@ public class BicaraInteraktif extends AjaxBasedModule {
 	String checkedSelesai = "";// arief add
 	String checkedTangguh = "";// arief add
 	String checkedBatal = "";// arief add
-	
+
+	// delang
+    FrmPerintahSek8Data logic = new FrmPerintahSek8Data();
 
 	// List listPerbicaraan = null;
 	@SuppressWarnings("unused")
@@ -109,6 +112,11 @@ public class BicaraInteraktif extends AjaxBasedModule {
 		List listPerbicaraan = null;
 		List listKronologiStatus = null;
 		defaultPut();
+
+		// delang
+		Vector<Hashtable<String, String>> listHTA = new Vector<Hashtable<String, String>>();
+		Vector<Hashtable<String, String>> listHA = new Vector<Hashtable<String, String>>();
+		Vector<Hashtable<String, String>> listHTATH = new Vector<Hashtable<String, String>>();
 
 		if (command.equals("showListPerbicaraan") || command.equals("cariListPerbicaraan")) {
 			String paramsButton = "";
@@ -356,7 +364,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				String ID_NEGERIPEGAWAIASAL = "";
 				String ID_TUKARPEGAWAI = "";
 				String NAMA_PEGAWAI_BARU = "";
-				
+
 				String NO_FAIL = "";
 				String TARIKH_BICARA = "";
 				String MASA_BICARA = "";
@@ -485,7 +493,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 								TARIKH_MOHON = getParam(skrinName + "TARIKH_MOHON");
 								TARIKH_KEPUTUSAN = getParam(skrinName + "TARIKH_KEPUTUSAN");
 								FLAG_DAFTAR_TERUS = getParam(skrinName + "FLAG_DAFTAR_TERUS");
-								
+
 								NO_FAIL = getParam("listkNO_FAIL" + ID_TUKARPEGAWAI);
 								TARIKH_BICARA = getParam("listkTARIKH_BICARA" + ID_TUKARPEGAWAI);
 								MASA_BICARA = getParam("listkMASA_BICARA" + ID_TUKARPEGAWAI);
@@ -661,7 +669,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				if (!openFormTukarPegawai.equals("N")) {
 					int check_TP_baru = 0;
 					String NO_TUKARPEGAWAI_CHECK = "";
-					
+
 					if (listPermohonanTukarPegawaiSejarah.size() != 0) {
 						for (int i = 0; i < listPermohonanTukarPegawaiSejarah.size(); i++) {
 							Map map_column_name = (Map) listPermohonanTukarPegawaiSejarah.get(i);
@@ -1563,8 +1571,8 @@ public class BicaraInteraktif extends AjaxBasedModule {
 
 		// arief add OPEN
 		/**
-		 * 
-		 * 
+		 *
+		 *
 		 * else if(command.equals("simpan_tidakHadir")) { String ID_PERMOHONANSIMATI =
 		 * getParam("ID_PERMOHONANSIMATI"); this.context.put("ID_PERMOHONANSIMATI",
 		 * ID_PERMOHONANSIMATI); this.context.put("div", "view_kehadiran"); String
@@ -1641,7 +1649,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				 * ID_PENGHUTANG; } else if(skrinName.equals("peguam")) { id = ID_PEGUAM; } else
 				 * if(skrinName.equals("htaah") || skrinName.equals("htaahx")) { id =
 				 * ID_HTAPERMOHONAN; } else if(skrinName.equals("ha")) { id = ID_HAPERMOHONAN; }
-				 * 
+				 *
 				 * Map mapDataAsal =
 				 * modelBI.getValueColumn(session,ID_PEMOHON,ID_PERBICARAAN,skrinName,
 				 * ID_PERMOHONANSIMATI, FIELD_PK, id, NAMA_TABLE, db);
@@ -1772,9 +1780,9 @@ public class BicaraInteraktif extends AjaxBasedModule {
 		 * myLogger.info("action : "+action+" get_co_listPerbicaraan : "
 		 * +get_co_listPermohonanTukarPegawai); String htmlSkrin = ""; String flagCari =
 		 * ""; String paramsButton = "";
-		 * 
+		 *
 		 * if(command.equals("cariPermohonanTukarPegawai")) { flagCari = "Y"; }
-		 * 
+		 *
 		 * Db db = null; try { db = new Db(); if( action.equals("") //||
 		 * command.equals("cariListPerbicaraan") || //comment dlu sementara
 		 * get_co_listPermohonanTukarPegawai == null) { listPermohonanTukarPegawai =
@@ -1788,7 +1796,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 		 * CacheManager.removeCache(cacheID); } htmlSkrin =
 		 * setupSkrinCarianTukarPegawai(session,"carianTukarPegawai",command,formName,
 		 * "edit",paramsButton,db); } finally { if (db != null) db.close(); }
-		 * 
+		 *
 		 * myLogger.info("SIZE : "+listPermohonanTukarPegawai.size());
 		 * this.context.put("div", "listPermohonanTukarPegawai");
 		 * this.context.put("htmlCarianTukarPegawai", htmlSkrin);
@@ -1796,8 +1804,8 @@ public class BicaraInteraktif extends AjaxBasedModule {
 		 * setupPageMainList(session, action,
 		 * listPermohonanTukarPegawai,"listPermohonanTukarPegawai",command); skrin_name
 		 * = "app/ppk/BicaraInteraktif/listPermohonanTukarPegawai.jsp";
-		 * 
-		 * 
+		 *
+		 *
 		 */
 		else if (command.equals("showMaklumatHistoryJana")) {
 			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
@@ -1848,6 +1856,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			FrmPrmhnnSek8KptsanBicaraData.setInfoPerintahList(idpermohonan);
 			getrecord_perintah = FrmPrmhnnSek8KptsanBicaraData.getDataPerintahViewList();
 			String idUnitPsk = "";
+
 			if (getrecord_perintah.size() != 0) {
 				Hashtable d = (Hashtable) getrecord_perintah.get(0);
 				String flag_jenis_keputusan = (String) d.get("flag_jenis_keputusan");
@@ -1922,6 +1931,33 @@ public class BicaraInteraktif extends AjaxBasedModule {
 						"Y", ID_PEMOHON, db);
 				this.context.put("htmlSkrinMaklumat", setupSkrin);
 
+				// delang
+				// harta tak alih (ada hakmilik)
+				boolean flagAdaHTA = logic.checkExistHTA(ID_PERMOHONANSIMATI);
+		        this.context.put("flagAdaHTA", flagAdaHTA);
+				if (flagAdaHTA) {
+					logic.setDataSenaraiHTA((String)setupKeputusan.get("ID_PERINTAH"), ID_PERMOHONANSIMATI);
+					listHTA = logic.getSenaraiHTA();
+					this.context.put("SenaraiHTA", listHTA);
+				}
+
+				// harta tak alih (tiada hakmilik)
+				boolean flagAdaHTATH = logic.checkExistHTATH(ID_PERMOHONANSIMATI);
+				this.context.put("flagAdaHTATH", flagAdaHTATH);
+				if (flagAdaHTATH) {
+					logic.setDataSenaraiHTATH((String)setupKeputusan.get("ID_PERINTAH"), ID_PERMOHONANSIMATI);
+					listHTATH = logic.getSenaraiHTA();
+					this.context.put("SenaraiHTATH", listHTATH);
+				}
+
+		        // harta alih
+				boolean flagAdaHA = logic.checkExistHA(ID_PERMOHONANSIMATI);
+		        this.context.put("flagAdaHA", flagAdaHA);
+				if (logic.checkExistHA(ID_PERMOHONANSIMATI)) {
+			        logic.setDataSenaraiHA((String)setupKeputusan.get("ID_PERINTAH"), ID_PERMOHONANSIMATI);
+			        listHA = logic.getSenaraiHA();
+					this.context.put("SenaraiHA", listHA);
+				}
 			} finally {
 				if (db != null)
 					db.close();
@@ -2852,7 +2888,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			/*
 			 * String NamaTable = "TBLPPKPEMOHON"; if(command.equals("showNegeriSurat") ||
 			 * command.equals("showNegeri") || command.equals("showNegeriMahkamah")) {
-			 * 
+			 *
 			 * }
 			 */
 
@@ -5618,7 +5654,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				 * //htmlPageSetup +=
 				 * setupSenaraiWarisBorangJKolateral(session,ID_PERMOHONANSIMATI,ID_PERMOHONAN,
 				 * ID_PERBICARAAN,ID_PEMOHON,FLAG_TANGGUH,mode,db1);
-				 * 
+				 *
 				 * Map setupBayaranKoleteral =
 				 * modelBI.getValueColumn(session,ID_PEMOHON,ID_PERBICARAAN,skrinName,
 				 * ID_PERMOHONANSIMATI,"",ID_PERMOHONAN, "TBLPPKBAYARAN", "17", db1);
@@ -5640,10 +5676,10 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				 * "ID_BAYARAN",value_main_PK,ID_PERBICARAAN,"TARIKH_BAYARAN17","","text","Y",
 				 * "10","Y","",0,db1); //htmlPageSetup +=
 				 * "<tr><td colspan=\"4\" class=\"table_header\">Catatan Keputusan</td></tr>";
-				 * 
-				 * 
+				 *
+				 *
 				 * htmlPageSetup += modelBI.closeHTMLTable(); htmlPageSetup += "</div></div>";
-				 * 
+				 *
 				 * }
 				 */
 
@@ -6241,7 +6277,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			 * ; htmlPageSetup += "</a> "; } else { htmlPageSetup +=
 			 * " <div style=\"margin:5px\"><i><font color='blue'>Info</font> : Sila simpan keputusan perbicaraan dahulu sebelum menjana keterangan perintah secara auto.</i></div>"
 			 * ;
-			 * 
+			 *
 			 * } htmlPageSetup += " <span id=\"locationJanaCatatan\" ></span>";
 			 * htmlPageSetup += "</td>"; htmlPageSetup += "</tr>"; }
 			 */
@@ -6285,17 +6321,18 @@ public class BicaraInteraktif extends AjaxBasedModule {
 					+ "CATATAN_PERINTAH_BI\"><td></td><td></td><td></td><td align=\"right\">";
 			htmlPageSetup += "<div id=\"word" + skrinName + "CATATAN_PERINTAH_BI\"></div>";
 			htmlPageSetup += "</td></tr>";
-			
+
 			htmlPageSetup += modelBI.closeHTMLTable();
 			//arief add
-			htmlPageSetup += modelBI.openHTMLTable();
-			htmlPageSetup += "<tr  ><td colspan=\"4\" class=\"table_header\">Perintah Perbicaraan</td></tr>";
-			htmlPageSetup += modelBI.closeHTMLTable();
-			htmlPageSetup += "<iframe src = \"?_portal_module=ekptg.view.ppk.FrmPerintahSek8\" style=\"border: 1px none; margin-right: -35px; height: 812px; width: 1070px;\"</iframe>";
+			//htmlPageSetup += modelBI.openHTMLTable();
+			//htmlPageSetup += "<tr  ><td colspan=\"4\" class=\"table_header\">Perintah Perbicaraan</td></tr>";
+			//htmlPageSetup += modelBI.closeHTMLTable();
+
+			// delang komen
+			//htmlPageSetup += "<iframe src = \"?_portal_module=ekptg.view.ppk.FrmPerintahSek8\" style=\"border: 1px none; margin-right: -35px; height: 812px; width: 1070px;\"</iframe>";
 			//htmlPageSetup += "<p><a href=\"?_portal_module=ekptg.view.ppk.FrmPerintahSek8\" target=\"iframe_a\">FrmPerintahSek8</a></p>";
 			//perlu repair iframe bagi kegunaan daftar perintah di Bicara Interaktif :: 3/9/2020
 			//arief add
-
 		} finally {
 			if (db == null) {
 				db1.close();
@@ -8625,29 +8662,29 @@ public class BicaraInteraktif extends AjaxBasedModule {
  * NotaPerbicaraan.jrxml NotaPerbicaraan.jasper NotaPerbicaraan17.jrxml
  * NotaPerbicaraan17.jasper NotaPerbicaraan_OBBicaraOnline.jrxml
  * NotaPerbicaraan_OBBicaraOnline.jasper
- * 
- * 
+ *
+ *
  * BorangJ.jrxml BorangJ.jasper BorangL.jrxml BorangL.jasper BorangM.jrxml
  * BorangM.jasper BorangN.jrxml BorangN.jasper BorangIWasiatPerbicaraan.jrxml
  * BorangIWasiatPerbicaraan.jasper NotaPerbicaraan_THBicaraOnline.jrxml
  * NotaPerbicaraan_THBicaraOnline.jasper
- * 
+ *
  * ekptg.view.ppk.FrmDashboard.class ekptg.view.ppk.BicaraInteraktif.class
  * ekptg.view.ppk.BicaraInteraktifPrint.class
- * 
- * 
+ *
+ *
  * ekptg.engine.CacheManager.class ekptg.engine.CachedObject.class
- * 
+ *
  * ekptg.model.ppk.BicaraInteraktifData.class
- * 
+ *
  * app/ppk/dashboard_showCountTukarPegawai.jsp
  * app/ppk/dashboard_showCountBicaraOnline.jsp app/ppk/dashboard.jsp
  * app/ppk/dashboard_showBorangB_stats.jsp app/ppk/frmPopupCetakLaporan.jsp
  * app/ppk/headerppk.jsp app/ppk/headerppk_script.jsp
- * 
- * 
+ *
+ *
  * //jquery baru library/js/jquery-1.7.2.min.js bootstrap-wysihtml5-master
- * 
+ *
  * JavaSource_Edited/lebah/portal/DesktopController.class
  */
 
