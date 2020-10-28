@@ -18,7 +18,7 @@
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         <tr>
           <td width="1%">&nbsp;</td>
-          <td width="28%">No Aduan</td>
+          <td width="28%">No. Aduan</td>
           <td width="1%">:</td>
           <td width="70%">$!complaint.id </td>
         </tr>
@@ -129,27 +129,15 @@
 							</tr>
 							<tr>
 							  <td>&nbsp;</td>
-							  <td>Janis Hakmilik</td>
-							  <td>:</td>
-							  <td>$!tanahs.nama_hakmilik</td>
-							</tr>
-							<tr>
-							  <td>&nbsp;</td>
 							  <td>No. Hakmilik</td>
 							  <td>:</td>
-							  <td>$!tanahs.NO_HAKMILIK</td>
-							</tr>
-							<tr>
-							  <td>&nbsp;</td>
-							  <td>Jenis PT/ LOT</td>
-							  <td>:</td>
-							  <td>$!tanahs.nama_lot</td>
+							  <td>$!tanahs.nama_hakmilik $!tanahs.NO_HAKMILIK</td>
 							</tr>
 							<tr>
 							  <td>&nbsp;</td>
 							  <td>No. PT/ LOT</td>
 							  <td>:</td>
-							  <td>$!tanahs.NO_LOT</td>
+							  <td>$!tanahs.nama_lot $!tanahs.NO_LOT</td>
 							</tr>
 					</table>
 				</fieldset>
@@ -171,7 +159,12 @@
       </table>
       </fieldset></td>
   </tr>
-
+	<tr>
+	<td align="center">
+		<input type="button" value="Kembali" onclick="mainPage()">
+	
+	</td>
+	</tr>
 </table>
 <input type="hidden" name="idRespon" value="$!response.id">
 <p>

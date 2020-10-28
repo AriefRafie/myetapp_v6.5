@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -31,6 +32,7 @@ import ekptg.model.online.aduan.ComplaintType;
 import ekptg.model.online.aduan.EkptgPublicComplaintHandler;
 import ekptg.model.online.aduan.IEkptgPublicComplaintHandler;
 import ekptg.model.utils.IUtilHTMLPilihan;
+import ekptg.model.utils.emel.EmailConfig;
 import ekptg.model.utils.rujukan.UtilHTMLPilihanSeksyenUPI;
 import etapp.data.OnlineEAduanMobile;
 import etapp.data.OnlineLampiranEAduanMobile;
@@ -43,8 +45,8 @@ public class LandComplaintSenderModule extends AjaxModule {
 	 * 
 	 */
 	private static final long serialVersionUID = 3858875812950929902L;
-	private static Logger myLog = Logger.getLogger(LandComplaintSenderModule.class);
-	private final String PATH ="app/online/aduantanah/user/";
+	private static Logger myLog = Logger.getLogger(ekptg.view.htp.online.aduan.LandComplaintSenderModule.class);
+	private final String PATH ="app/htp/online/aduantanah/user/";
 	private String vm = PATH+"index.jsp";
 	private IEkptgPublicComplaintHandler handler;
 	private IPortalUtility portalUtility;
@@ -62,22 +64,23 @@ public class LandComplaintSenderModule extends AjaxModule {
 		getUserDetail(user_login);
 		context.put("readOnly", readonly);
 		myLog.info("command="+command);
-
-		
+	
 		if("doAduan".equals(command)){
 			 submitAduan();
 			 vm = PATH+"confirm.jsp";
 		
 		}else if("doAduanBaru".equals(command)){
-
 			vm = PATH+"index.jsp";
 		
 		}else{
 			getSelectedVal();
 			vm = PATH+"index.jsp";
+			
 		}
 		return vm;
+		
 	}
+	
 	private void getUserDetail(String user_login){
 		OnlineUser user = getUtility().getUserOnline(user_login);
 		if(user == null)
@@ -103,7 +106,7 @@ public class LandComplaintSenderModule extends AjaxModule {
 		 String namaPengadu = "";
 		 String emailPengadu = "";
 		 String phonePengadu = "";
-		 Long idJenisAduan = null;
+		 Long idJenisAduan = Long.parseLong("16104");
 		 String status = "DALAM PROSES";
 		 String statusPenyelesaian = "DALAM PROSES";
 		 String flagOnline = "Y";
@@ -112,7 +115,8 @@ public class LandComplaintSenderModule extends AjaxModule {
 		 String uploadName = "";
 		 String uploadType = "";
 		 long uploadSize = 0;
-		 
+		 myLog.info("submitAduan:idJenisAduan="+idJenisAduan);
+	 
 		 while (itr.hasNext()) {
 			 FileItem item = (FileItem)itr.next();
 			 if ( ((item.isFormField())) ) {
@@ -131,10 +135,12 @@ public class LandComplaintSenderModule extends AjaxModule {
 			 }
 			
 		 }
-		    
+		
+		 myLog.info("submitAduan:idJenisAduan="+idJenisAduan);
 		 RujJenisAduanMobile jenisAduan = db.find(RujJenisAduanMobile.class, idJenisAduan);
 	
 		 Long idSumber = Long.parseLong("16101");
+		 myLog.info("submitAduan:idSumber="+idSumber);
 		 RujSumberAduanMobile sumberAduan = db.find(RujSumberAduanMobile.class, idSumber);
 	
 		 try {
@@ -152,6 +158,21 @@ public class LandComplaintSenderModule extends AjaxModule {
 			aduan.setStatusPenyelesaian(statusPenyelesaian.toUpperCase());
 			aduan.setSumberAduan(sumberAduan);
 			aduan.setTarikhMasuk(now);
+			
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy");
+			String tahun = formatter.format(now);
+			String noAduan ="";
+//			String no_rujukan_aduan = tahun
+//					+ "/"
+//					+ kod_negeri
+//					+ "/"
+//					+ kod_modul
+//					+ "/"
+//					+ String.format(
+//							"%06d",
+//							getSeqNoAduanOnline(tahun, id_negeri,
+//									kod_modul, db));
+			
 			db.persist(aduan);
 			db.commit();
 				
@@ -171,7 +192,29 @@ public class LandComplaintSenderModule extends AjaxModule {
 				
 			context.put("complaintID", idAduan);
 			
+			EmailConfig ec = new EmailConfig();
+			//ec.mail.FROM = 
+			String tajuk ="ADUAN TANAH: " + idAduan+ " (Notifikasi : Log Berjaya Dihantar)";
+//			email.SUBJECT = "PLA: " + (String) get_aduan.get("log_aduan")
+//			+ " (Notifikasi : Log Bejaya Dihantar)";
 			
+			String kandungan = "";
+			String kandunganPlus = "";
+
+			//if (check_status.equals("16121")) {
+			kandunganPlus += "Log berjaya dihantar. Pihak pengadu akan dimaklumkan perkembangannya setelah perkara ini disemak dan diselesaikan.";
+			//}
+	
+			kandungan += " "
+				+ "<table width='100%' border='0'><tr><td width='5%' >&nbsp;</td><td  width='95%' >"
+				+ kandunganPlus + "</td></tr></table>" + "<br><br>";
+
+			kandungan += "";
+			
+			ec.mail.TO_CC = new String[1];		
+			ec.mail.TO_CC[0] = emailPengadu;
+
+			ec.sendTo("roslizakariasip@gmail.com", tajuk, kandungan);
 		
 		 } catch(Exception e){
 			 e.getMessage();
@@ -179,79 +222,67 @@ public class LandComplaintSenderModule extends AjaxModule {
 
 	 }
 	 
-	 public String aduanTanah(HttpSession session,String ID_ADUANPUBLIC,String command,Db db) throws Exception {
-			Connection conn = null;
-
-		 String ID_TANAH = getParam("id_phphakmilikaduan");
-		 SQLRenderer r2 = new SQLRenderer();
-		 String sql2 = "";
+	public String aduanTanah(HttpSession session,String ID_ADUANPUBLIC,String command,Db db) 
+		throws Exception {
+		Connection conn = null;
+		String ID_TANAH = getParam("id_phphakmilikaduan");
+		SQLRenderer r2 = new SQLRenderer();
+		String sql2 = "";
 		long idTanah = 0;
 
 		myLog.info("ID_TANAH >>>> "+ID_TANAH);
 		try {
-//			if(db==null)
-//			{
-//				db1 = new Db();
-//			}
-//			else
-//			{
-//				db1 = db;
-//			}
 			conn = db.getConnection();
 			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 
-		if(!ID_TANAH.equals(""))
-		{
-			r2.update("ID_HAKMILIKADUAN", ID_TANAH);
-		}
-		else
-		{
-			idTanah = DB.getNextID(db, "TBLHTPHAKMILIKADUAN_SEQ");
-			r2.add("ID_HAKMILIKADUAN", idTanah);
-		}
-		String idNegeri = getParam("socNegeri").equals("")?"-1":getParam("socNegeri");		
-		String idDaerahTanah = getParam("socDaerahTanah").equals("")?"-1":getParam("socDaerahTanah");		
-		String idMukimTanah = getParam("socMukimTanah").equals("")?"-1":getParam("socMukimTanah");		
+			if(!ID_TANAH.equals("")){
+				r2.update("ID_HAKMILIKADUAN", ID_TANAH);
+			}else{
+				idTanah = DB.getNextID(db, "TBLHTPHAKMILIKADUAN_SEQ");
+				r2.add("ID_HAKMILIKADUAN", idTanah);
+			
+			}
+//			String idNegeri = getParam("socNegeri").equals("")?"-1":getParam("socNegeri");		
+//			String idDaerahTanah = getParam("socDaerahTanah").equals("")?"-1":getParam("socDaerahTanah");		
+//			String idMukimTanah = getParam("socMukimTanah").equals("")?"-1":getParam("socMukimTanah");		
+//	
+//			String idJenisHakmilik = getParam("socJenisHakmilik").equals("")?"-1":getParam("socJenisHakmilik");		
+//			String idJenisLot = getParam("socJenisLot").equals("")?"-1":getParam("socJenisLot");		
+//	
+			r2.add("ID_ADUAN", ID_ADUANPUBLIC);
+			r2.add("ID_NEGERI", getParam("socNegeri"));
+			r2.add("ID_DAERAH", getParam("socDaerahTanah"));
+			r2.add("ID_MUKIM", getParam("socMukimTanah"));
+			r2.add("ID_JENISHAKMILIK", getParam("socJenisHakmilik"));
+			r2.add("NO_HAKMILIK", getParam("nohakmilik"));
+			//r2.add("NO_WARTA", getParam("noWarta"));
+			String TW = "to_date('" + getParam("tarikhWarta") + "','dd/MM/yyyy')";
+			myLog.info("TW >>>> "+TW);
+			if(TW == "null"){
+				//r2.add("TARIKH_WARTA", r.unquote("sysdate"));
+			}else{
+				//r2.add("TARIKH_WARTA", r.unquote(TW));
+			}
+			r2.add("ID_LOT", getParam("socJenisLot"));
+			r2.add("NO_LOT", getParam("txtNoLot"));
+			//r2.add("LUAS", getParam("txtLuas"));
+			//r2.add("ID_LUAS", getParam("socLuas"));
+			r2.add("ID_MASUK", user_login);
+			r2.add("TARIKH_MASUK", r2.unquote("sysdate"));
+			r2.add("ID_KEMASKINI", user_login);
+			r2.add("TARIKH_KEMASKINI", r2.unquote("sysdate"));
 
-		String idJenisHakmilik = getParam("socJenisHakmilik").equals("")?"-1":getParam("socJenisHakmilik");		
-		String idJenisLot = getParam("socJenisLot").equals("")?"-1":getParam("socJenisLot");		
+			if(!ID_TANAH.equals("")){
+				sql2 = r2.getSQLUpdate("TBLHTPHAKMILIKADUAN");
+			}else{
+				sql2 = r2.getSQLInsert("TBLHTPHAKMILIKADUAN");
+			}
 
-		r2.add("ID_ADUAN", ID_ADUANPUBLIC);
-		r2.add("ID_NEGERI", getParam("socNegeri"));
-		r2.add("ID_DAERAH", getParam("socDaerahTanah"));
-		r2.add("ID_MUKIM", getParam("socMukimTanah"));
-		r2.add("ID_JENISHAKMILIK", getParam("socJenisHakmilik"));
-		r2.add("NO_HAKMILIK", getParam("nohakmilik"));
-		//r2.add("NO_WARTA", getParam("noWarta"));
-		String TW = "to_date('" + getParam("tarikhWarta") + "','dd/MM/yyyy')";
-		myLog.info("TW >>>> "+TW);
-		if(TW == "null"){
-			//r2.add("TARIKH_WARTA", r.unquote("sysdate"));
-		}else{
-			//r2.add("TARIKH_WARTA", r.unquote(TW));
-		}
-		r2.add("ID_LOT", getParam("socJenisLot"));
-		r2.add("NO_LOT", getParam("txtNoLot"));
-		//r2.add("LUAS", getParam("txtLuas"));
-		//r2.add("ID_LUAS", getParam("socLuas"));
-		r2.add("ID_MASUK", user_login);
-		r2.add("TARIKH_MASUK", r2.unquote("sysdate"));
-		r2.add("ID_KEMASKINI", user_login);
-		r2.add("TARIKH_KEMASKINI", r2.unquote("sysdate"));
-
-		if(!ID_TANAH.equals(""))
-		{
-			sql2 = r2.getSQLUpdate("TBLHTPHAKMILIKADUAN");
-		}
-		else
-		{
-			sql2 = r2.getSQLInsert("TBLHTPHAKMILIKADUAN");
-		}
-
-		myLog.info("TANAH : SAVE  : "+sql2);
-		stmt.executeUpdate(sql2);
-		conn.commit();
+			myLog.info("TANAH : SAVE  sql= "+sql2);
+			stmt.executeUpdate(sql2);
+			conn.commit();
+			
 		}
 		catch (SQLException se) {
 			myLog.error(se);
@@ -261,8 +292,8 @@ public class LandComplaintSenderModule extends AjaxModule {
 	    		throw new Exception("Rollback error:"+se2.getMessage());
 	    	}
 	    	throw new Exception("Ralat Pendaftaran :"+se.getMessage());
-		}
-		catch (Exception re) {
+		
+		}catch (Exception re) {
 			throw re;
 		}finally {
 			if(db==null)
@@ -272,11 +303,12 @@ public class LandComplaintSenderModule extends AjaxModule {
 			}
 		}
 		return ID_TANAH;
+
 	}
 	 
-	 private void uploadData() throws Exception{
-		 
-	 }
+//	 private void uploadData() throws Exception{
+//		 
+//	 }
 	 
 	 private void getSelectedVal() throws Exception{
 		String idNegeri = getParam("socNegeri").equals("")?"-1":getParam("socNegeri");		
@@ -296,7 +328,7 @@ public class LandComplaintSenderModule extends AjaxModule {
 		this.context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("socJenisHakmilik", Long.parseLong(idJenisHakmilik), "", "onChange=\"doChangeJenisHakmilik();\""));
 		this.context.put("selectJenisLot", HTML.SelectLot("socJenisLot", Long.parseLong(idJenisLot), "", "onChange=\"doChangeJenisLot();\""));
 
-	 }
+	}
 	 
 	private IEkptgPublicComplaintHandler getHandler(){
 		if(handler == null)
@@ -315,5 +347,6 @@ public class LandComplaintSenderModule extends AjaxModule {
 		return iPilihan;
 	
 	}
+	
 	
 }

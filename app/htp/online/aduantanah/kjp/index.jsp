@@ -1,3 +1,10 @@
+<style type="text/css">
+<!--
+.style1 {
+	color: #0033FF
+}
+-->
+</style>
 <body onLoad="refreshPage('$!test_ajax')">
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
 	<tr>
@@ -5,12 +12,16 @@
 			#parse("app/utils/record_paging.jsp")
 			<table align="center" width="100%">
 				<tr>
-				<td colspan="7" scope="row">&nbsp;</td>
+				<td colspan="6" scope="row">&nbsp;</td>
 				</tr>
 				<tr class="table_header">
-					<td scope="row" width="5%" align="center"><strong>No</strong></td>
-					<td width="25%"><strong>Id</strong></td>
-					<td width="25%"><strong>Arahan</strong></td>
+					<td scope="row" width="3%" align="center"><strong>No. </strong></td>
+			        <td width="20%"><strong>Nama Pengadu</strong></td>
+			       	<td width="10%"><strong>Tarikh Aduan</strong></td>
+			       	<td width="47%"  align="center"><strong>Keterangan</strong></td>         
+			       	<!-- <td width="10%"  align="center"><strong>No. Hakmilik</strong></td> -->
+			      	<td width="10%"  align="center"><strong>Status</strong></td>
+								
 				</tr>
 				#set ($count = 0)
 				#foreach ( $fail in $SenaraiFail )
@@ -22,9 +33,17 @@
 				#set( $row = "row1" )
 				#end
 				<tr>
-					<td class="$row" align="center">$!count</td>
+					<!-- <td class="$row" align="center">$!count</td>
 					<td class="$row"><a href="javascript:detail('$fail.idAduan')" class="style1">$fail.id</a></td>
-					<td class="$row">$!fail.arahan</td>
+					<td class="$row">$!fail.arahan</td> -->
+					<td class="$row">$!count</td>
+        	<td class="$row"><a href="javascript:detail('$fail.idAduan','$!fail.id')" class="style1">$fail.pengadu</a></td>
+        	<td class="$row">$!fail.tarikhMasuk </td>
+        	<td class="$row">$!fail.aduan 
+        		<br> $!fail.arahan
+        		</td>
+	       	<!-- <td class="$row">$!fail.tanah</td> -->
+        	<td class="$row">$!fail.status</td>
 				</tr>
 				#end
 			</table>
@@ -56,7 +75,8 @@
 		} else {
 			document.${formName}.command01.value = "cariAduan";
 		}
-   		function detail(id){
+   		function detail(id,idPengadu){
+		//function detail(id){
    	   		doAjaxCall${formName}("viewComplaint","idComplaint="+id);
    		}
    		function simpan(){

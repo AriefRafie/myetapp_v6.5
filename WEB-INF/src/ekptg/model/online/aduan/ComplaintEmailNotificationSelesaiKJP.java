@@ -9,12 +9,12 @@ import ekptg.model.online.aduan.entity.ComplaintResponse;
 import ekptg.model.online.aduan.entity.ComplaintTindakan;
 import ekptg.model.utils.emel.EmailConfig;
 
-public class ComplaintEmailNotification implements IComplaintEmailNotification {
+public class ComplaintEmailNotificationSelesaiKJP implements IComplaintEmailNotification {
 	private IEkptgManageComplaintHandler manageComplaint;
 	private Complaint complaint = null;
 	private ComplaintResponse response;
 	private IComplaintResponseBean complaintResponse = null;
-	public ComplaintEmailNotification(){
+	public ComplaintEmailNotificationSelesaiKJP(){
 		if(manageComplaint == null)
 			manageComplaint = new EkptgManageComplaintHandler();
 		if(complaintResponse == null)
@@ -56,7 +56,7 @@ public class ComplaintEmailNotification implements IComplaintEmailNotification {
 	private void sendNotifiedPengaduMessage () throws Exception {
 		StringBuffer msg = new StringBuffer();
 		msg.append("<p>Salam sejahtera "+complaint.getNamaPengadu()+",</p>");
-		msg.append("<p>Aduan anda bertarikh "+complaint.getTarikhAduan()+" telah kami terima. Pihak kami akan memberi maklumbalas kepada anda secepat yang mungkin.</p>");
+		msg.append("<p>Aduan anda bertarikh "+complaint.getTarikhAduan()+" telah kami selesaikan.</p>");
 		//msg.append("<p>Sekian, terima kasih.</p>");
 		String tajuk ="ADUAN TANAH: " + complaint.getNoAduan()+ " (Notifikasi : Log Bejaya Dihantar)";
 
@@ -66,9 +66,9 @@ public class ComplaintEmailNotification implements IComplaintEmailNotification {
 //			EmailProperty prop = EmailProperty.getInstance();
 			EmailConfig ec = new EmailConfig();
 			ec.mail.TO_CC = new String[1];		
-			ec.mail.TO_CC[0] = "roslizakariasip@gmail.com";
+			ec.mail.TO_CC[0] = complaint.getEmailPengadu();
 
-			ec.sendTo(complaint.getEmailPengadu(), tajuk, msg.toString());
+			ec.sendTo("roslizakariasip@gmail.com", tajuk, msg.toString());
 
 //			email.FROM = prop.getAduanFrom();
 //			email.SUBJECT = "Perkhidmatan Online eTaPP : Aduan Online No. "+complaint.getId();
@@ -79,29 +79,20 @@ public class ComplaintEmailNotification implements IComplaintEmailNotification {
 	}
 	
 	private void sendNotifiedSeksyenMessage() throws Exception{
-//		String emailSubject ="Perkhidmatan Online eTaPP : Agihan Tugasan Aduan Online No. "+complaint.getId();
+		String emailSubject ="Perkhidmatan Online eTaPP : Agihan Tugasan Aduan Online No. "+complaint.getId();
 		StringBuffer msg = new StringBuffer();
-		msg.append("<p>Salam Sejahtera, <br> Aduan No. "+complaint.getId()+" telah diagihkan kepada anda.</p>");
-		//msg.append("<p>Salam Sejahtera, <br> Aduan No. "+complaint.getId()+" telah diagihkan kepada anda. Sila login ke  <a href='http://www.etapp.gov.my'>www.etapp.gov.my</a> untuk mendapatkan perincian.</p>");
-		//msg.append("<p>Sekian, terima kasih.</p>");
-		String tajuk ="ADUAN TANAH: " + complaint.getNoAduan()+ " (Notifikasi : Log Bejaya Dihantar)";
-
+		msg.append("<p>Salam Sejahtera, <br> Aduan No. "+complaint.getId()+" telah diagihkan kepada anda. Sila login ke  <a href='http://www.etapp.gov.my'>www.etapp.gov.my</a> untuk mendapatkan perincian.</p>");
+		msg.append("<p>Sekian, terima kasih.</p>");
 		ComplaintTindakan tindakan = response.getTindakan();
 		String groupEmail = tindakan.getGroupEmail();
 		if(groupEmail != null && !groupEmail.equals("")){
-			EmailConfig ec = new EmailConfig();
-			ec.mail.TO_CC = new String[1];		
-			ec.mail.TO_CC[0] = "roslizakaria@gmail.com";
-
-			ec.sendTo("roslizakariasip@gmail.com", tajuk, msg.toString());
-//			EmailSender email = EmailSender.getInstance();
-//			EmailProperty prop = EmailProperty.getInstance();
-//			email.FROM = prop.getAduanFrom();
-//			email.SUBJECT =emailSubject;
-//			email.RECIEPIENT = groupEmail;
-//			email.MESSAGE = msg.toString();
-//			email.sendEmail();
-			
+			EmailSender email = EmailSender.getInstance();
+			EmailProperty prop = EmailProperty.getInstance();
+			email.FROM = prop.getAduanFrom();
+			email.SUBJECT =emailSubject;
+			email.RECIEPIENT = groupEmail;
+			email.MESSAGE = msg.toString();
+			email.sendEmail();
 		}
 		
 	}

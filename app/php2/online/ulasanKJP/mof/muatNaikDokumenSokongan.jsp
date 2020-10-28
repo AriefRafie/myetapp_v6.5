@@ -4,7 +4,11 @@
     <td width="1%">&nbsp;</td>
     <td width="28%">Lampiran</td>
     <td width="1%">:</td>
-    <td width="70%">#if ($!lampiran.ID_DOKUMEN) #if ($!lampiran.ID_DOKUMEN != '') <a href="#" onclick="cetakDokumen($!lampiran.ID_DOKUMEN)" class="style2">LAMPIRAN</a> &nbsp;&nbsp; #end #end</td>
+    <td width="70%">
+    	#if ($!lampiran.ID_DOKUMEN != '')  
+    			<a href="#" onclick="cetakDokumen($!lampiran.ID_DOKUMEN)" class="style2">$!lampiran.NAMA_FAIL</a> &nbsp;&nbsp; 
+    	#end
+    </td>
   </tr>
   <tr>
     <td width="1%"><span class="style1">*</span></td>

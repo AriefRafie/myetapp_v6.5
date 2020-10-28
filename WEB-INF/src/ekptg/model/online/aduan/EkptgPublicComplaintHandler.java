@@ -112,7 +112,7 @@ public class EkptgPublicComplaintHandler extends ComplaintHandler implements IEk
 		return type;
 	}
 	private void notifyAdmin(Complaint complaint){
-		log.debug("debug notify admin aduan aduan ");
+		myLog.debug("debug notify admin aduan aduan ");
 		StringBuffer msg = new StringBuffer();
 		msg.append("<p>Aduan baru telah diterima :-</p>");
 		msg.append("<table width='80%'>");
@@ -161,7 +161,7 @@ public class EkptgPublicComplaintHandler extends ComplaintHandler implements IEk
 		email.TO_CC = cc;
 		email.MESSAGE = msg.toString();
 		email.sendEmail();
-		log.info("send email notification to admin aduan");
+		myLog.info("send email notification to admin aduan");
 	}
 
 	@Override

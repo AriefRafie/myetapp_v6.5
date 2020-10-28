@@ -361,17 +361,21 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailData {
 	public Hashtable getMaklumatLampiran(String idUlasanTeknikal, String idPermohonan) {
 		String sql = "";
 		Hashtable lampiran = null;
+		Vector lampiranS = new Vector();
 		
 		try {			
 			db = new Db();
 			Statement stmt = db.getStatement();
 			
-			sql = "SELECT ID_DOKUMEN FROM TBLPHPDOKUMEN WHERE ID_PERMOHONAN = '" + idPermohonan + "' AND ID_ULASANTEKNIKAL = '" + idUlasanTeknikal + "'";
+			sql = "SELECT ID_DOKUMEN, NAMA_FAIL FROM TBLPHPDOKUMEN WHERE ID_PERMOHONAN = '" + idPermohonan + "' "
+				+ "AND ID_ULASANTEKNIKAL = '" + idUlasanTeknikal + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			if (rs.next()) {
 				lampiran = new Hashtable();
 				lampiran.put("ID_DOKUMEN", rs.getString("ID_DOKUMEN") == null ? "" : rs.getString("ID_DOKUMEN"));
+				lampiran.put("NAMA_FAIL", rs.getString("NAMA_FAIL") == null ? "" : rs.getString("NAMA_FAIL"));
+				lampiranS.addElement(lampiran);
 			}
 			
 		} catch (Exception ex) {

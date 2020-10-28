@@ -194,7 +194,7 @@
 											:
 										</TD>
 										<TD>
-											<textarea rows="10" cols="100" name="catatanSelesai" #if($complaint.statusPenyelesaian =="SELESAI") readonly="readonly" #end>$complaint.catatanSelesai</textarea>
+											<textarea rows="10" cols="100" name="catatanSelesai" #if($!complaint.statusPenyelesaian =="SELESAI") readonly="readonly" #end>$!complaint.catatanSelesai</textarea>
 										</TD>
 									</TR>
 									#if($complaint.statusPenyelesaian !="SELESAI")
@@ -236,7 +236,7 @@
 											<input type="button" value="KEMBALI" onclick="mainPage()">
 											<input type="button" value="HANTAR JAWAPAN & TUTUP ADUAN" #if($complaint.statusPenyelesaian =="SELESAI") onclick="notAllowed()" #else onclick="tutupAduan()" #end>
 											<input type="button" value="ADUAN PALSU & TUTUP ADUAN" #if($complaint.statusPenyelesaian =="SELESAI") onclick="notAllowed()" #else onclick="aduanPalsu()" #end>
-											<input type="button" value="HANTAR E-MEL" onclick="parent.location='mailto:$!complaint.emailPengadu?subject=ADUAN ONLINE NO $complaint.id'"/>
+											<!--  <input type="button" value="HANTAR E-MEL" onclick="parent.location='mailto:$!complaint.emailPengadu?subject=ADUAN ONLINE NO $complaint.id'"/> -->
 										</TD>
 									</TR>
 								</TABLE>
