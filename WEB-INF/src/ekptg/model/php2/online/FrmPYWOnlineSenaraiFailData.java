@@ -2144,7 +2144,7 @@ public class FrmPYWOnlineSenaraiFailData {
 	
 	public String daftarBaruSewa(String idUrusan, String idSuburusan, String idSubsuburusan, String tujuanLain, String noRujukanSurat, String tarikhSurat, 
 		   String idPHPBorangK, String idPPTBorangK, 
-		   String idJenisTanah, String idNegeri, String idDaerah, String idMukim, String jenisHakmilik, String txtNoHakmilik, String jenisLot, String txtNoLot, String txtLuasBersamaan,
+		   String idJenisTanah, String idNegeri, String idDaerah, String idMukim, String jenisHakmilik, String txtNoHakmilik, String txtNoWarta, String tarikhWarta, String jenisLot, String txtNoLot, String txtLuasBersamaan,
 		   String idHakmilikUrusan, String tarikhTerima, 
 		   String idJenisPermohonan, HttpSession session, String idPermohonanLama, String idLuas, String txtLuas1, String txtLuas2, String txtLuas3) throws Exception {
 		
@@ -2163,6 +2163,7 @@ public class FrmPYWOnlineSenaraiFailData {
 		String emelUser = "";
 		String TT = "to_date('" + tarikhTerima + "','dd/MM/yyyy')";
 		String TS = "to_date('" + tarikhSurat + "','dd/MM/yyyy')";
+		String TW = "to_date('" + tarikhWarta + "','dd/MM/yyyy')";
 
 		try {
 			db = new Db();
@@ -2289,6 +2290,8 @@ public class FrmPYWOnlineSenaraiFailData {
 			r.add("ID_MUKIM", idMukim);
 			r.add("ID_JENISHAKMILIK", jenisHakmilik);
 			r.add("NO_HAKMILIK", txtNoHakmilik);
+			r.add("NO_WARTA", txtNoWarta);
+			r.add("TARIKH_WARTA", r.unquote(TW));
 			r.add("ID_LOT", jenisLot);
 			r.add("NO_LOT", txtNoLot);
 			r.add("ID_LUAS", "2");
@@ -2798,7 +2801,7 @@ public class FrmPYWOnlineSenaraiFailData {
 					+ " AND B.ID_PERMOHONAN = J.ID_PERMOHONAN AND F.ID_HAKMILIKSEMENTARA = S.ID_HAKMILIKSEMENTARA AND A.ID_FAIL = '" + idFail + "'";
 			
 			ResultSet rs = stmt.executeQuery(sql);
-			log.info("aaaaaaaaaaaaa " +sql);
+			log.info("header: " +sql);
 
 			if (rs.next()) {
 				h = new Hashtable();
@@ -2901,8 +2904,8 @@ public class FrmPYWOnlineSenaraiFailData {
 		}		
 	}
 	
-	public void updateTanahSewa(String idPermohonan, String idHakmilikSementara, String idJenisTanah, String idNegeri, String idDaerah, String idMukim, 
-			String jenisHakmilik, String txtNoHakmilik, String jenisLot, String txtNoLot, String txtLuasBersamaan, HttpSession session,
+	public void updateTanahSewa(String idFail, String idPermohonan, String idHakmilikSementara, String idJenisTanah, String idNegeri, String idDaerah, String idMukim, 
+			String jenisHakmilik, String txtNoHakmilik, String txtNoWarta, String tarikhWarta, String jenisLot, String txtNoLot, String txtLuasBersamaan, HttpSession session,
 			String idLuas, String txtLuas1, String txtLuas2, String txtLuas3) throws Exception {
 
 
@@ -2912,7 +2915,10 @@ public class FrmPYWOnlineSenaraiFailData {
 		String sql = "";
 		String sql_= "";
 		String sql_b= "";
+		String sql_c= "";
+		String sql_d= "";
 		String flag_guna="";
+		String TW = "to_date('" + tarikhWarta + "','dd/MM/yyyy')";
 	
 		try {
 			db = new Db();
@@ -2922,6 +2928,8 @@ public class FrmPYWOnlineSenaraiFailData {
 			SQLRenderer r = new SQLRenderer();
 			SQLRenderer r_ = new SQLRenderer();
 			SQLRenderer r_b = new SQLRenderer();
+			SQLRenderer r_c = new SQLRenderer();
+			SQLRenderer r_d = new SQLRenderer();
 
 			//TBLPHPHAKMILIKPERMOHONAN
 			r.update("ID_PERMOHONAN", idPermohonan);
@@ -2946,6 +2954,8 @@ public class FrmPYWOnlineSenaraiFailData {
 			r_.add("ID_MUKIM", idMukim);
 			r_.add("ID_JENISHAKMILIK", jenisHakmilik);
 			r_.add("NO_HAKMILIK", txtNoHakmilik);
+			r_.add("NO_WARTA", txtNoWarta);
+			r_.add("TARIKH_WARTA", r.unquote(TW));
 			r_.add("ID_LOT", jenisLot);
 			r_.add("NO_LOT", txtNoLot);
 			r_.add("ID_LUAS", "2");
@@ -2981,6 +2991,35 @@ public class FrmPYWOnlineSenaraiFailData {
 			sql_b = r_b.getSQLUpdate("TBLPHPPERMOHONANSEWA");
 			log.info("TBLPHPPERMOHONANSEWA :"+ sql_b);
 			stmt.executeUpdate(sql_b);
+			
+			//TBLPFDFAIL
+			r_c.update("ID_FAIL", idFail);
+			r_c.add("ID_NEGERI", idNegeri);
+			r_c.add("ID_KEMASKINI", userId);
+			r_c.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			
+			sql_c = r_c.getSQLUpdate("TBLPFDFAIL");
+			log.info("TBLPFDFAIL :"+ sql_c);
+			stmt.executeUpdate(sql_c);
+			
+			String idPejabatJKPTG = "";
+			sql_d = "SELECT ID_PEJABATJKPTG, ID_NEGERI FROM TBLRUJPEJABATJKPTG "
+					+ " WHERE ID_SEKSYEN = '4' AND ID_NEGERI = '" + idNegeri + "'";
+				
+			ResultSet rsJKPTG = stmt.executeQuery(sql_d);
+			if (rsJKPTG.next()){
+				idPejabatJKPTG = rsJKPTG.getString("ID_PEJABATJKPTG");
+			}
+			
+			//TBLPERMOHONAN
+			r_d.update("ID_PERMOHONAN", idPermohonan);
+			r_d.add("ID_JKPTG", idPejabatJKPTG);
+			r_d.add("ID_KEMASKINI", userId);
+			r_d.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			
+			sql_d = r_d.getSQLUpdate("TBLPERMOHONAN");
+			log.info("TBLPERMOHONAN :"+ sql_d);
+			stmt.executeUpdate(sql_d);
 			
 			conn.commit();
 			
