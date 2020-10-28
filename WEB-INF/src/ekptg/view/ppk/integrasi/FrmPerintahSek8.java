@@ -17,39 +17,39 @@ import ekptg.model.ppk.FrmPerintahSek8Data;
 import ekptg.model.ppk.perintah.FrmPerintah8Bean;
 import ekptg.model.ppk.perintah.IMaklumatPerintah;
 /**
- * 
+ *
  *
  */
 public class FrmPerintahSek8 extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
-	private IMaklumatPerintah iPerintah = null;  
-	
+	private IMaklumatPerintah iPerintah = null;
+
 	FrmPerintahSek8Data logic = new FrmPerintahSek8Data();
 	FrmHeaderPpk mainheader = new FrmHeaderPpk();
 	static Logger myLog = Logger.getLogger(ekptg.view.ppk.integrasi.FrmPerintahSek8.class);
-	String role = null;	
+	String role = null;
 	Utils utils = new Utils();
 
 	@Override
 	public String doTemplate2() throws Exception {
-		
-		HttpSession session = this.request.getSession();		
+
+		HttpSession session = this.request.getSession();
 		Boolean postDB = false;
 		String doPost =  session.getAttribute("doPost").toString();
 	    if (doPost.equals("true")) {
 	        postDB = true;
-	    } 
-	    
+	    }
+
 	    role = (String)session.getAttribute("myrole");
 	    //myLog.info("CURRENT ROLE :"+role);
 	    //GET DEFAULT PARAM
-		String vm = ""; 
-		
+		String vm = "";
+
         String actionPerintah = getParam("actionPerintah");
         String mode = getParam("mode");
         String hitButt = getParam("hitButt");
-        //String submit = getParam("command");       
+        //String submit = getParam("command");
         String flagPopup = getParam("flagPopup");
 		String modePopup = getParam("modePopup");
 		String selectedTabUpper = getParam("selectedTabUpper").toString();
@@ -62,7 +62,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		}
 		String anchor = getParam("anchor");
 		String action = getParam("action"); //* ACTION NI HANYA UTK SETUP PAGING SHJ
-        
+
         //GET VALUE PARAM
 		String idPermohonanSimati = getParam("idPermohonanSimati");
         String idPermohonan = getParam("idPermohonan");
@@ -70,17 +70,17 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
         String idPerbicaraan = getParam("idPerbicaraan");
         String idSimati = getParam("idSimati");
         String idStatus = getParam("idStatus");
-        
+
         String idHTA = getParam("idHTA");
         String idHA = getParam("idHA");
-        
+
         String idJenisHA = getParam("idJenisHA");
-        
+
         //GET FLAG PARAM
 		String flagAdaHTA = "0";
 		String flagAdaHTATH = "0";
 		String flagAdaHA = "0";
-		
+
 		String flagAdaHTAPT = "0";
 		String flagAdaHAPT = "0";
 		String flagAdaHTAPKT = "0";
@@ -89,24 +89,24 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		String flagAdaHAPL = "0";
 		String flagAdaHTAPF = "0";
 		String flagAdaHAPF = "0";
-		
+
 		String flagFromSenaraiFailSek8 = getParam("flagFromSenaraiFailSek8");
 		String flagFromSenaraiPermohonanSek8 = getParam("flagFromSenaraiPermohonanSek8");
-		
+
 		String flagSelesaiHTA = getParam("flagSelesaiHTA");
 		String flagSelesaiHA = getParam("flagSelesaiHA");
-		
+
 		String flagSelesaiPembahagian = "Y";
 		this.context.put("systemMsg", "");
-        
+
         //VECTOR
         Vector<Hashtable<String, String>> list = new Vector<Hashtable<String, String>>();
         Vector<Hashtable<String, String>> beanMaklumatPermohonan = new Vector<Hashtable<String, String>>();
         Vector<Hashtable<String, String>> beanHeaderDetail = new Vector<Hashtable<String, String>>();
-        
+
         beanMaklumatPermohonan.clear();
         beanHeaderDetail.clear();
-        
+
         Vector<Hashtable<String, String>> listHTA = new Vector<Hashtable<String, String>>();
         Vector<Hashtable<String, String>> beanMaklumatHTA = new Vector<Hashtable<String, String>>();
         Vector<Hashtable<String, String>> listHTAPopup = new Vector<Hashtable<String, String>>();
@@ -115,7 +115,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
         Vector<Hashtable<String, String>> listHA = new Vector<Hashtable<String, String>>();
         Vector<Hashtable<String, String>> beanMaklumatHA = new Vector<Hashtable<String, String>>();
         Vector<Hashtable<String, String>> listHAPopup = new Vector<Hashtable<String, String>>();
-        
+
         listHTA.clear();
         beanMaklumatHTA.clear();
         listHTAPopup.clear();
@@ -124,7 +124,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
         listHA.clear();
         beanMaklumatHA.clear();
         listHAPopup.clear();
-        
+
         Vector<Hashtable<String, String>> listHTAPT = new Vector<Hashtable<String, String>>();
         Vector<Hashtable<String, String>> listHAPT = new Vector<Hashtable<String, String>>();
         Vector<Hashtable<String, String>> listHTAPKT = new Vector<Hashtable<String, String>>();
@@ -134,8 +134,8 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
         Vector<Hashtable<String, String>> listHTAPF = new Vector<Hashtable<String, String>>();
         Vector<Hashtable<String, String>> listHAPF = new Vector<Hashtable<String, String>>();
         Vector<Hashtable<String, String>> beanMaklumatHTAPL = new Vector<Hashtable<String, String>>();
-        Vector<Hashtable<String, String>> beanMaklumatHAPL = new Vector<Hashtable<String, String>>();      
-        
+        Vector<Hashtable<String, String>> beanMaklumatHAPL = new Vector<Hashtable<String, String>>();
+
         listHTAPT.clear();
         listHAPT.clear();
         listHTAPKT.clear();
@@ -143,16 +143,16 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
         listHTAPL.clear();
         listHAPL.clear();
         listHTAPF.clear();
-        listHAPF.clear();        
-        
+        listHAPF.clear();
+
         Vector<Hashtable<String, String>> listHTAPTDTL = new Vector<Hashtable<String, String>>();
         Vector<Hashtable<String, String>> listHAPTDTL = new Vector<Hashtable<String, String>>();
         Vector<Hashtable<String, String>> listHTAPKTDTL = new Vector<Hashtable<String, String>>();
         Vector<Hashtable<String, String>> listHAPKTDTL = new Vector<Hashtable<String, String>>();
         Vector<Hashtable<String, String>> listHTAPFDTL = new Vector<Hashtable<String, String>>();
         Vector<Hashtable<String, String>> listHAPFDTL = new Vector<Hashtable<String, String>>();
-        Vector<Hashtable<String, String>> listPembahagianHTAPKTDTL = new Vector<Hashtable<String, String>>();  
-        
+        Vector<Hashtable<String, String>> listPembahagianHTAPKTDTL = new Vector<Hashtable<String, String>>();
+
         listHTAPTDTL.clear();
         listHAPTDTL.clear();
         listHTAPKTDTL.clear();
@@ -160,7 +160,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
         listHTAPFDTL.clear();
         listHAPFDTL.clear();
         listPembahagianHTAPKTDTL.clear();
-        
+
         //GET DROPDOWN PARAM
 		String jenisKp = getParam("socJenisKp");
 		if (jenisKp == null || jenisKp.trim().length() == 0){
@@ -174,20 +174,20 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		if (idJenisPerintahHA == null || idJenisPerintahHA.trim().length() == 0){
 			idJenisPerintahHA = "0";
 		}
-	    
+
 		this.context.put("onload", "");
 	    //SCREEN NAVIGATION
-		if (actionPerintah.equals("papar")){			
-			vm = "app/ppk/frmPerintahMaklumatPerintahSek8.jsp";			
+		if (actionPerintah.equals("papar")){
+			vm = "app/ppk/frmPerintahMaklumatPerintahSek8.jsp";
 			//<-------------------- SELESAI PERMOHONAN --------------------------->
-        	
+
         	if (hitButt.equals("selesaiPermohonan")){
-        		
+
         		//CHECK ALL HTA YANG BELUM DIDAFTARKAN
 				if (logic.checkHTAYangBelumDibahagikan(idPermohonanSimati, idPerintah)){
 					this.context.put("onload", " \"javascript:alert('Masih Terdapat Harta Tidak Alih (Ada Hakmilik) Simati Yang Belum Didaftarkan Perintahnya.')\"");
 					return "app/ppk/frmPerintahMaklumatPerintahSek8.jsp";
-				}				
+				}
 				//CHECK ALL HA YANG BELUM DIDAFTARKAN
 				if (logic.checkHAYangBelumDibahagikan(idPermohonanSimati, idPerintah)){
 					this.context.put("onload", " \"javascript:alert('Masih Terdapat Harta Alih Simati Yang Belum Didaftarkan Perintahnya.')\"");
@@ -291,16 +291,16 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 						return "app/ppk/frmPerintahMaklumatPerintahSek8.jsp";
 					}
 				}
-				
+
 				//all validation pass - proceed to hantar permohonan
 				if (postDB){
 					logic.selesaiPermohonan(idPermohonan, session);
 				}
 			}
-        	
+
         	//<-------------------- SELESAI --------------------------->
 
-			if (hitButt.equals("selesai")){					
+			if (hitButt.equals("selesai")){
 				//all validation pass - proceed to selesai permohonan
 				if (postDB){
 					if (idStatus.equals("25")){
@@ -309,7 +309,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 						if (logic.checkHTAYangBelumDibahagikan(idPermohonanSimati, idPerintah)){
 							this.context.put("onload", " \"javascript:alert('Masih Terdapat Harta Tidak Alih (Ada Hakmilik) Simati Yang Belum Didaftarkan Perintahnya.')\"");
 							return "app/ppk/frmPerintahMaklumatPerintahSek8.jsp";
-						}				
+						}
 						//CHECK ALL HA YANG BELUM DIDAFTARKAN
 						if (logic.checkHAYangBelumDibahagikan(idPermohonanSimati, idPerintah)){
 							this.context.put("onload", " \"javascript:alert('Masih Terdapat Harta Alih Simati Yang Belum Didaftarkan Perintahnya.')\"");
@@ -413,28 +413,28 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 								return "app/ppk/frmPerintahMaklumatPerintahSek8.jsp";
 							}
 						}
-						
+
 						if (getParam("printOption").equals("potrait")){
 							this.context.put("onload", " \"javascript:generateNotisKeluarGeranPot('" + getParam("idFail") + "')\"");
 						} else {
 							this.context.put("onload", " \"javascript:generateNotisKeluarGeranLand('" + getParam("idFail") + "')\"");
 						}
 						logic.selesai(idPermohonan, idPerintah, session,idPermohonanSimati);
-						
+
 					} else {
-						
+
 						if (getParam("printOption").equals("potrait")){
 							this.context.put("onload", " \"javascript:generateNotisKeluarGeranPot('" + getParam("idFail") + "')\"");
 						} else {
 							this.context.put("onload", " \"javascript:generateNotisKeluarGeranLand('" + getParam("idFail") + "')\"");
 						}
-						
+
 					}
 				}
 			}
-			
+
  			//<--------------------------- HARTA TAK ALIH (ADA HAKMILIK) --------------------------->
-        	
+
         	//HITBUTTON FOR POPUP HARTA TAK ALIH (ADA HAKMILIK)
 			if (hitButt.equals("simpanBaruHTA")){
 				if (postDB) {
@@ -463,29 +463,29 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 					}
 				}
 			}
-			
+
 			//OPEN POPUP HARTA TAK ALIH (ADA HAKMILIK)
         	if (flagPopup.equals("openHTA")){
         		this.context.put("idHTA", idHTA);
-        		
+
         		//MODE = NEW
 				if (modePopup.equals("new")){
 					this.context.put("readonly", "");
 					this.context.put("inputTextClass", "");
-					
+
 					//DETAIL HTA
 					Hashtable<String, String> hashHTA = new Hashtable<String, String>();
 					hashHTA.put("catatan", getParam("txtCatatanHTA") == null ? "" : getParam("txtCatatanHTA"));
 					beanMaklumatHTA.addElement(hashHTA);
 					this.context.put("BeanMaklumatHTA", beanMaklumatHTA);
-					
+
 					this.context.put("selectJenisPerintahHTA",HTML.SelectJenisPerintahSek8("socJenisPerintahHTA", Long.parseLong(idJenisPerintahHTA), "", ""));
-					
+
 					// SENARAI HTA
 					logic.setDataSenaraiHTAPopup(idPermohonanSimati, idPerintah);
 					listHTAPopup = logic.getSenaraiHTAPopup();
 					this.context.put("SenaraiHTAPopup", listHTAPopup);
-					
+
 					Hashtable<String,String> h = (Hashtable<String,String>) listHTAPopup.get(0);
 					if (h.get("bil").toString().equals("")){
 						this.context.put("listSizeHTAPopup", 0);
@@ -493,7 +493,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 						this.context.put("listSizeHTAPopup", listHTAPopup.size());
 					}
 				}
-				
+
 				//MODE = UPDATE
 				if (modePopup.equals("update")){
 					if (mode.equals("update")){
@@ -503,14 +503,14 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 						this.context.put("readonly", "readonly");
 						this.context.put("inputTextClass", "disabled");
 					}
-					
-					
+
+
 					//DETAIL HTA
 					logic.setDataMaklumatHTA(idHTA,idPermohonanSimati);
 					beanMaklumatHTA = logic.getBeanMaklumatHTA();
 					Hashtable<String, String> hashHTA = logic.getBeanMaklumatHTA().get(0);
 					this.context.put("BeanMaklumatHTA", beanMaklumatHTA);
-					
+
 					if ("0".equals(idJenisPerintahHTA)){
 						idJenisPerintahHTA = hashHTA.get("idJenisPerintah").toString();
 					}
@@ -519,13 +519,13 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 					} else {
 						this.context.put("selectJenisPerintahHTA",HTML.SelectJenisPerintahSek8("socJenisPerintahHTA", Long.parseLong(hashHTA.get("idJenisPerintah").toString()), "disabled", " class=\"disabled\""));
 					}
-					
+
 					this.context.put("jenisPerintah", hashHTA.get("idJenisPerintah"));
 				}
         	}
-        	
+
         	//<--------------------------- HARTA TAK ALIH (TIADA HAKMILIK) --------------------------->
-        	
+
         	//HITBUTTON FOR POPUP HARTA TAK ALIH (TIADA HAKMILIK)
 			if (hitButt.equals("simpanKemaskiniHTATH")){
 				if (postDB) {
@@ -541,7 +541,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
         	//OPEN POPUP HARTA TAK ALIH (TIADA HAKMILIK)
         	if (flagPopup.equals("openHTATH")){
         		this.context.put("idHTA", idHTA);
-				
+
 				//MODE = UPDATE
 				if (modePopup.equals("update")){
 					if (mode.equals("update")){
@@ -551,18 +551,18 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 						this.context.put("readonly", "readonly");
 						this.context.put("inputTextClass", "disabled");
 					}
-					
+
 					//DETAIL HTATH
-					logic.setDataMaklumatHTATH(idHTA,idPermohonanSimati);					
+					logic.setDataMaklumatHTATH(idHTA,idPermohonanSimati);
 					beanMaklumatHTATH = logic.getBeanMaklumatHTATH();
 					//Hashtable<String,String> hashHTATH = (Hashtable<String,String>) logic.getBeanMaklumatHTATH().get(0);
 					this.context.put("BeanMaklumatHTATH", beanMaklumatHTATH);
-				
+
 				}
         	}
-        	
+
         	// <--------------------------- HARTA ALIH --------------------------->
-        	
+
         	//HITBUTTON FOR POPUP HARTA ALIH
 			if (hitButt.equals("simpanBaruHA")){
 				if (postDB) {
@@ -591,29 +591,29 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 					}
 				}
 			}
-        	
+
         	//OPEN POPUP HARTA ALIH
         	if (flagPopup.equals("openHA")){
         		this.context.put("idHA", idHA);
-        		
+
         		//MODE = NEW
 				if (modePopup.equals("new")){
 					this.context.put("readonly", "");
 					this.context.put("inputTextClass", "");
-					
+
 					//DETAIL HA
 					Hashtable<String, String> hashHA = new Hashtable<String, String>();
 					hashHA.put("catatan", getParam("txtCatatanHA") == null ? "" : getParam("txtCatatanHA"));
 					beanMaklumatHA.addElement(hashHA);
 					this.context.put("BeanMaklumatHA", beanMaklumatHA);
-					
+
 					this.context.put("selectJenisPerintahHA",HTML.SelectJenisPerintahSek8("socJenisPerintahHA", Long.parseLong(idJenisPerintahHA), "", ""));
-					
+
 					// SENARAI HA
 					logic.setDataSenaraiHAPopup(idPermohonanSimati, idPerintah);
 					listHAPopup = logic.getSenaraiHAPopup();
 					this.context.put("SenaraiHAPopup", listHAPopup);
-					
+
 					Hashtable<String,String> h = (Hashtable<String,String>) listHAPopup.get(0);
 					if (h.get("bil").toString().equals("")){
 						this.context.put("listSizeHAPopup", 0);
@@ -621,7 +621,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 						this.context.put("listSizeHAPopup", listHAPopup.size());
 					}
 				}
-				
+
 				//MODE = UPDATE
 				if (modePopup.equals("update")){
 					if (mode.equals("update")){
@@ -631,30 +631,30 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 						this.context.put("readonly", "readonly");
 						this.context.put("inputTextClass", "disabled");
 					}
-					
+
 					//DETAIL HA
 					logic.setDataMaklumatHA(idHA,idPermohonanSimati);
 					beanMaklumatHA = logic.getBeanMaklumatHA();
 					Hashtable<String, String> hashHA = logic.getBeanMaklumatHA().get(0);
 					this.context.put("BeanMaklumatHA", beanMaklumatHA);
-					
+
 					if ("0".equals(idJenisPerintahHA)){
 						idJenisPerintahHA = hashHA.get("idJenisPerintah").toString();
 					}
 					idJenisHA = hashHA.get("idJenisHA").toString();
-					
+
 					if (mode.equals("update")){
 						this.context.put("selectJenisPerintahHA",HTML.SelectJenisPerintahSek8("socJenisPerintahHA", Long.parseLong(idJenisPerintahHA), "", ""));
 					} else {
 						this.context.put("selectJenisPerintahHA",HTML.SelectJenisPerintahSek8("socJenisPerintahHA", Long.parseLong(hashHA.get("idJenisPerintah").toString()), "disabled", " class=\"disabled\""));
 					}
-					
+
 					this.context.put("jenisPerintah", hashHA.get("idJenisPerintah"));
 				}
         	}
-        	
+
         	// <--------------------------- HTAPT --------------------------->
-        	
+
         	//HITBUTTON FOR POPUP HTAPT
 			if (hitButt.equals("simpanKemaskiniHTAPT")){
 				if (postDB) {
@@ -674,22 +674,22 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 							}
 						}
 					}
-					
+
 					//SAVE FOR WARIS YANG HILANG
 					if (getParam("chkWarisHilang").equals("1") && getParamAsInteger("txtBAHilang") > 0){
 						logic.updateHTAPTHilang(idHTA, idPerintah, getParam("txtBAHilang"), getParam("txtBBHilang"), session,idPermohonanSimati);
 					} else {
 						logic.removeHTAPTHilang(idHTA);
 					}
-					
+
 					logic.updatePecahanWarisHTA(idHTA);
 				}
 			}
-        	
+
         	//OPEN POPUP HARTA TAK ALIH PERINTAH TERUS
         	if (flagPopup.equals("openHTAPT")){
         		this.context.put("idHTA", idHTA);
-        		
+
         		if (mode.equals("update")){
 					this.context.put("readonly", "");
 					this.context.put("inputTextClass", "");
@@ -699,16 +699,16 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 					this.context.put("inputTextClass", "disabled");
 					this.context.put("disabled", "disabled");
 				}
-        		
+
         		//HEADER DETAIL
         		logic.setMaklumatHeaderDetailHTA(idHTA,idPermohonanSimati);
     			beanHeaderDetail = logic.getBeanHeaderDetail();
     			this.context.put("BeanHeaderDetail", beanHeaderDetail);
-    			
+
     			logic.setDataSenaraiHTAPTDTL(idHTA, idSimati, idPermohonanSimati);
 				listHTAPTDTL = logic.getSenaraiHTAPTDTL();
 				this.context.put("SenaraiHTAPTDTL", listHTAPTDTL);
-				
+
 				Fraction f = new Fraction(0,1);
 				for (int i = 0; i < listHTAPTDTL.size(); i++){
 					Hashtable<String, String> hash = (Hashtable<String, String>) listHTAPTDTL.get(i);
@@ -731,33 +731,33 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 				logic.setDataSenaraiHTAPTDTLHilang(idHTA);
 				if (logic.getSenaraiHTAPTDTLHilang().size() != 0){
 					Hashtable<?, ?> hash = (Hashtable<?, ?>) logic.getSenaraiHTAPTDTLHilang().get(0);
-					
+
 					this.context.put("idHilang", hash.get("idPerintahHTAOBDTL"));
 					this.context.put("BAHilang", hash.get("BA"));
 					this.context.put("BBHilang", hash.get("BB"));
 					this.context.put("checked", "checked");
 					this.context.put("readonlyHilang", "");
 					this.context.put("disabledHilang", "");
-					
+
 					Fraction f2 = new Fraction(Long.parseLong(hash.get("BA").toString()),Long.parseLong(hash.get("BB").toString()));
 					f = f.plus(f2);
-					
+
 				} else {
-					
+
 					this.context.put("idHilang", "");
 					this.context.put("BAHilang", "0");
 					this.context.put("BBHilang", "0");
 					this.context.put("checked", "");
-					this.context.put("readonlyHilang", "readonly");	
+					this.context.put("readonlyHilang", "readonly");
 					this.context.put("disabledHilang", "disabled");
 				}
 
 				this.context.put("txtJumlahBA", f.numerator());
 				this.context.put("txtJumlahBB", f.denominator());
         	}
-        	
+
         	// <--------------------------- HAPT --------------------------->
-        	
+
         	//HITBUTTON FOR POPUP HAPT
 			if (hitButt.equals("simpanKemaskiniHAPT")){
 				if (postDB) {
@@ -777,22 +777,22 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 							}
 						}
 					}
-					
+
 					//save for waris yang hilang
 					if (getParam("chkWarisHilang").equals("1") && getParamAsInteger("txtBAHilang") > 0){
 						logic.updateHAPTHilang(idHA, idPerintah, getParam("txtBAHilang"), getParam("txtBBHilang"), session);
 					} else {
 						logic.removeHAPTHilang(idHA);
 					}
-					
+
 					logic.updatePecahanWarisHA(idHA);
 				}
 			}
-        	
+
         	//OPEN POPUP HARTA ALIH PERINTAH TERUS
         	if (flagPopup.equals("openHAPT")){
         		this.context.put("idHA", idHA);
-        		
+
         		if (mode.equals("update")){
 					this.context.put("readonly", "");
 					this.context.put("inputTextClass", "");
@@ -802,16 +802,16 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 					this.context.put("inputTextClass", "disabled");
 					this.context.put("disabled", "disabled");
 				}
-        		
+
         		//HEADER DETAIL
         		logic.setMaklumatHeaderDetailHA(idHA,idPermohonanSimati);
     			beanHeaderDetail = logic.getBeanHeaderDetail();
     			this.context.put("BeanHeaderDetail", beanHeaderDetail);
-    			
+
     			logic.setDataSenaraiHAPTDTL(idHA, idSimati, idPermohonanSimati);
 				listHAPTDTL = logic.getSenaraiHAPTDTL();
 				this.context.put("SenaraiHAPTDTL", listHAPTDTL);
-				
+
 				Fraction f = new Fraction(0,1);
 				for (int i = 0; i < listHAPTDTL.size(); i++){
 					Hashtable<?, ?> hash = (Hashtable<?, ?>) listHAPTDTL.get(i);
@@ -822,38 +822,38 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 					Fraction f2 = new Fraction(Long.parseLong(hash.get("BA").toString()),pembawah);
 					f = f.plus(f2);
 				}
-				
+
 				logic.setDataSenaraiHAPTDTLHilang(idHA);
 				if (logic.getSenaraiHAPTDTLHilang().size() != 0){
 					Hashtable<?, ?> hash = (Hashtable<?, ?>) logic.getSenaraiHAPTDTLHilang().get(0);
-					
+
 					this.context.put("idHilang", hash.get("idPerintahHTAOBDTL"));
 					this.context.put("BAHilang", hash.get("BA"));
 					this.context.put("BBHilang", hash.get("BB"));
 					this.context.put("checked", "checked");
 					this.context.put("readonlyHilang", "");
 					this.context.put("disabledHilang", "");
-					
+
 					Fraction f2 = new Fraction(Long.parseLong(hash.get("BA").toString()),Long.parseLong(hash.get("BB").toString()));
 					f = f.plus(f2);
-					
+
 				} else {
-					
+
 					this.context.put("idHilang", "");
 					this.context.put("BAHilang", "0");
 					this.context.put("BBHilang", "0");
 					this.context.put("checked", "");
-					this.context.put("readonlyHilang", "readonly");	
+					this.context.put("readonlyHilang", "readonly");
 					this.context.put("disabledHilang", "disabled");
 				}
 
 				this.context.put("txtJumlahBA", f.numerator());
 				this.context.put("txtJumlahBB", f.denominator());
         	}
-        	
-        	
+
+
         	// <--------------------------- HTAPKT --------------------------->
-        	
+
         	//HITBUTTON FOR POPUP HARTA TAK ALIH PERINTAH KUASA TADBIR
         	if (hitButt.equals("simpanKemaskiniHTAPKT")){
         		if (postDB) {
@@ -862,7 +862,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
         			String idPA3 = "";
         			String idPA4 = "";
         			String ids[] = request.getParameterValues("idsOB");
-        			
+
         			if (ids != null) {
         				for (int i = 0; i < ids.length; i++) {
         					if (i == 0){
@@ -876,16 +876,16 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
         					}
         				}
         			}
-        			
+
         			logic.updateCatatanHTA(getParam("txtCatatan"), idHTA, session);
         			logic.updatePentadbir(idPA1, idPA2, idPA3, idPA4, idPerintah, session);
-        			
+
         			//UPDATE PECAHAN HARTA
         			String idspentadbir[] = request.getParameterValues("idspentadbir");
         			String status[] = request.getParameterValues("status");
 					String BA[] = request.getParameterValues("txtBA");
 					String BB[] = request.getParameterValues("txtBB");
-					
+
 					if (idspentadbir != null) {
 						for (int i = 0; i < idspentadbir.length; i++) {
 							if (BA[i] != null){
@@ -900,11 +900,11 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 					logic.updatePecahanWarisHTAPKT(idHTA);
         		}
 			}
-        	
+
         	//OPEN POPUP HARTA TAK ALIH PERINTAH KUASA TADBIR
         	if (flagPopup.equals("openHTAPKT")){
         		this.context.put("idHTA", idHTA);
-        		
+
         		if (mode.equals("update")){
 					this.context.put("readonly", "");
 					this.context.put("inputTextClass", "");
@@ -914,29 +914,29 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 					this.context.put("inputTextClass", "disabled");
 					this.context.put("disabled", "disabled");
 				}
-        		
+
         		//HEADER DETAIL
         		logic.setMaklumatHeaderDetailHTA(idHTA,idPermohonanSimati);
     			beanHeaderDetail = logic.getBeanHeaderDetail();
     			this.context.put("BeanHeaderDetail", beanHeaderDetail);
-    			
+
     			// SENARAI HTAPKT
     			logic.setDataSenaraiHTAPKTDTL(idHTA, idPermohonanSimati, idSimati);
     			listHTAPKTDTL = logic.getSenaraiHTAPKTDTL();
     			this.context.put("ListHTAPKTDTL", listHTAPKTDTL);
-    			
+
     			Hashtable<?, ?> h = (Hashtable<?, ?>) listHTAPKTDTL.get(0);
     			if (h.get("bil").toString().equals("")){
     				this.context.put("listSize", 0);
     			} else {
     				this.context.put("listSize", listHTAPKTDTL.size());
     			}
-    			
+
     			// SENARAI PEMBAHAGIAN HTAPKT
     			logic.setDataSenaraiPembahagianHTAPKTDTL(idHTA, idSimati, idPermohonanSimati);
 				listPembahagianHTAPKTDTL = logic.getSenaraiPembahagianHTAPKTDTL();
 				this.context.put("SenaraiPembahagianHTAPKTDTL", listPembahagianHTAPKTDTL);
-				
+
 				Fraction f = new Fraction(0,1);
 				for (int i = 0; i < listPembahagianHTAPKTDTL.size(); i++){
 					Hashtable<String, String> hash = (Hashtable<String, String>) listPembahagianHTAPKTDTL.get(i);
@@ -954,15 +954,15 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 					}
 					Fraction f2 = new Fraction(Long.parseLong(hash.get("BA").toString()),pembawah);
 					f = f.plus(f2);
-					
+
 					this.context.put("txtJumlahBA", f.numerator());
 					this.context.put("txtJumlahBB", f.denominator());
 				}
-    			
+
         	}
-        	
+
         	// <--------------------------- HAPKT --------------------------->
-        	
+
         	//HITBUTTON FOR POPUP HARTA ALIH PERINTAH KUASA TADBIR
         	if (hitButt.equals("simpanKemaskiniHAPKT")){
         		if (postDB) {
@@ -971,7 +971,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
         			String idPA3 = "";
         			String idPA4 = "";
         			String ids[] = request.getParameterValues("idspentadbir");
-        			
+
         			if (ids != null) {
         				for (int i = 0; i < ids.length; i++) {
         					if (i == 0){
@@ -985,16 +985,16 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
         					}
         				}
         			}
-        			
+
         			logic.updateCatatanHA(getParam("txtCatatan"), idHA, session);
         			logic.updatePentadbir(idPA1, idPA2, idPA3, idPA4, idPerintah, session);
         		}
 			}
-        	
+
         	//OPEN POPUP HARTA ALIH PERINTAH KUASA TADBIR
         	if (flagPopup.equals("openHAPKT")){
         		this.context.put("idHA", idHA);
-        		
+
         		if (mode.equals("update")){
 					this.context.put("readonly", "");
 					this.context.put("inputTextClass", "");
@@ -1004,17 +1004,17 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 					this.context.put("inputTextClass", "disabled");
 					this.context.put("disabled", "disabled");
 				}
-        		
+
         		//HEADER DETAIL
         		logic.setMaklumatHeaderDetailHA(idHA,idPermohonanSimati);
     			beanHeaderDetail = logic.getBeanHeaderDetail();
     			this.context.put("BeanHeaderDetail", beanHeaderDetail);
-    			
+
     			// SENARAI HAPKT
     			logic.setDataSenaraiHAPKTDTL(idHA, idPermohonanSimati, idSimati);
     			listHAPKTDTL = logic.getSenaraiHAPKTDTL();
     			this.context.put("ListHAPKTDTL", listHAPKTDTL);
-    			
+
     			Hashtable<?, ?> h = (Hashtable<?, ?>) listHAPKTDTL.get(0);
     			if (h.get("bil").toString().equals("")){
     				this.context.put("listSize", 0);
@@ -1022,20 +1022,20 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
     				this.context.put("listSize", listHAPKTDTL.size());
     			}
         	}
-        	
+
         	// <--------------------------- HTAPL --------------------------->
-        	
+
         	//HITBUTTON FOR POPUP HARTA TAK ALIH PERINTAH LELONG
         	if (hitButt.equals("simpanKemaskiniHTAPL")){
         		if (postDB) {
         			updateHTAPL(idHTA, session);
         		}
 			}
-        	
+
         	//OPEN POPUP HARTA TAK ALIH PERINTAH LELONG
         	if (flagPopup.equals("openHTAPL")){
         		this.context.put("idHTA", idHTA);
-				
+
 				//MODE = UPDATE
 				if (modePopup.equals("update")){
 					if (mode.equals("update")){
@@ -1048,14 +1048,14 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 						this.context.put("readonly", "readonly");
 						this.context.put("inputTextClass", "disabled");
 						this.context.put("disabled", "disabled");
-					}					
-					
+					}
+
 					//DETAIL
 					logic.setDataMaklumatHTAPL(idHTA,idPermohonanSimati);
 					beanMaklumatHTAPL = logic.getBeanMaklumatHTAPL();
 					Hashtable<?, ?> hashHTAPL = (Hashtable<?, ?>) logic.getBeanMaklumatHTAPL().get(0);
 					this.context.put("BeanMaklumatHTAPL", beanMaklumatHTAPL);
-										
+
 					if (hashHTAPL.get("jenisLelong").equals("A")){
 						this.context.put("checkedA", "checked");
 						this.context.put("checkedT", "");
@@ -1068,20 +1068,20 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 					}
 				}
         	}
-        	
+
         	// <--------------------------- HAPL --------------------------->
-        	
+
         	//HITBUTTON FOR POPUP HARTA ALIH PERINTAH LELONG
         	if (hitButt.equals("simpanKemaskiniHAPL")){
         		if (postDB) {
         			updateHAPL(idHA,session);
         		}
 			}
-        	
+
         	//OPEN POPUP FOR HARTA ALIH PERINTAH LELONG
         	if (flagPopup.equals("openHAPL")){
         		this.context.put("idHA", idHA);
-				
+
 				//MODE = UPDATE
 				if (modePopup.equals("update")){
 					if (mode.equals("update")){
@@ -1095,13 +1095,13 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 						this.context.put("inputTextClass", "disabled");
 						this.context.put("disabled", "disabled");
 					}
-					
+
 					//detail
 					logic.setDataMaklumatHAPL(idHA,idPermohonanSimati);
 					beanMaklumatHAPL = logic.getBeanMaklumatHAPL();
 					Hashtable<?, ?> hashHAPL = (Hashtable<?, ?>) logic.getBeanMaklumatHAPL().get(0);
 					this.context.put("BeanMaklumatHAPL", beanMaklumatHAPL);
-					
+
 					if (hashHAPL.get("jenisLelong").equals("A")){
 						this.context.put("checkedA", "checked");
 						this.context.put("checkedT", "");
@@ -1114,20 +1114,20 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 					}
 				}
         	}
-        	
+
         	// <--------------------------- HTAPF --------------------------->
-        	
+
         	//HITBUTTON FOR POPUP HARTA TAK ALIH PERINTAH FARAID
         	if (hitButt.equals("simpanKemaskiniHTAPF")){
         		if (postDB) {
         			logic.updateCatatanHTA(getParam("txtCatatan"), idHTA, session);
         		}
 			}
-        	
+
         	//OPEN POPUP HARTA TAK ALIH PERINTAH FARAID
         	if (flagPopup.equals("openHTAPF")){
         		this.context.put("idHTA", idHTA);
-        		
+
         		if (mode.equals("update")){
 					this.context.put("readonly", "");
 					this.context.put("inputTextClass", "");
@@ -1136,16 +1136,16 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 					this.context.put("readonly", "readonly");
 					this.context.put("inputTextClass", "disabled");
 				}
-        		
+
         		//HEADER DETAIL
         		logic.setMaklumatHeaderDetailHTA(idHTA,idPermohonanSimati);
     			beanHeaderDetail = logic.getBeanHeaderDetail();
     			this.context.put("BeanHeaderDetail", beanHeaderDetail);
-    			
+
     			logic.setDataSenaraiHTAPFDTL(idHTA,idPermohonanSimati);
 				listHTAPFDTL = logic.getSenaraiHTAPFDTL();
 				this.context.put("SenaraiHTAPFDTL", listHTAPFDTL);
-				
+
 				Fraction f = new Fraction(0,1);
 				for (int i = 0; i < listHTAPFDTL.size(); i++){
 					Hashtable<?, ?> hash = (Hashtable<?, ?>) listHTAPFDTL.get(i);
@@ -1158,20 +1158,20 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 				}
 				this.context.put("jumlahBahagian", f.numerator() + " / " + f.denominator());
         	}
-        	
+
         	// <--------------------------- HAPF --------------------------->
-        	
+
         	//HITBUTTON FOR POPUP HARTA ALIH PERINTAH FARAID
         	if (hitButt.equals("simpanKemaskiniHAPF")){
         		if (postDB) {
         			logic.updateCatatanHA(getParam("txtCatatan"), idHA, session);
         		}
 			}
-        	
+
         	//OPEN POPUP HARTA ALIH PERINTAH FARAID
         	if (flagPopup.equals("openHAPF")){
         		this.context.put("idHA", idHA);
-        		
+
         		if (mode.equals("update")){
 					this.context.put("readonly", "");
 					this.context.put("inputTextClass", "");
@@ -1180,16 +1180,16 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 					this.context.put("readonly", "readonly");
 					this.context.put("inputTextClass", "disabled");
 				}
-        		
+
         		//HEADER DETAIL
         		logic.setMaklumatHeaderDetailHA(idHA,idPermohonanSimati);
     			beanHeaderDetail = logic.getBeanHeaderDetail();
     			this.context.put("BeanHeaderDetail", beanHeaderDetail);
-    			
+
     			logic.setDataSenaraiHAPFDTL(idHA,idPermohonanSimati);
 				listHAPFDTL = logic.getSenaraiHAPFDTL();
 				this.context.put("SenaraiHAPFDTL", listHAPFDTL);
-				
+
 				Fraction f = new Fraction(0,1);
 				for (int i = 0; i < listHAPFDTL.size(); i++){
 					Hashtable<?, ?> hash = (Hashtable<?, ?>) listHAPFDTL.get(i);
@@ -1202,14 +1202,14 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 				}
 				this.context.put("jumlahBahagian", f.numerator() + " / " + f.denominator());
         	}
-			
+
 			//HEADER
 			logic.setMaklumatPermohonan(idPermohonan,session);
 			beanMaklumatPermohonan = logic.getBeanMaklumatPermohonan();
 			this.context.put("MaklumatPermohonan", beanMaklumatPermohonan);
 			//hashtable maklumat header
 			headerppk_baru(session,idPermohonan,"Y","","T");
-			
+
 			if (beanMaklumatPermohonan.size() != 0){
 				//SET MODE AND ID_STATUS
 				Hashtable<?, ?> hashHeader = (Hashtable<?, ?>) logic.getBeanMaklumatPermohonan().get(0);
@@ -1217,7 +1217,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 					idStatus = hashHeader.get("id_Status").toString();
 					mode = "update";
 				} else {
-					String roleId = "";  
+					String roleId = "";
 					roleId = (String)session.getAttribute("_portal_role");
 					if (roleId.equals("adminppk")){
 						idStatus = hashHeader.get("id_Status").toString();
@@ -1228,25 +1228,25 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 						//man tukar flag
 						mode = "update";
 					}
-			   		
+
 				}
 			}
-			
+
 			//GET ID PERINTAH
 			if (idPerintah.isEmpty()){
 				idPerintah =  logic.getIdPerintah(idPermohonan);
 			}
 			this.context.put("idPerintah", idPerintah);
-			
+
 			//GET ID PERBICARAAN
 			if (idPerbicaraan.isEmpty()){
 				idPerbicaraan =  logic.getIdPerbicaraan(idPerintah);
 			}
 			this.context.put("idPerbicaraan", idPerbicaraan);
-			
-			
-			
-			//CHECK IF SIMATI ADA HTA, HTATH AND HA		
+
+
+
+			//CHECK IF SIMATI ADA HTA, HTATH AND HA
 			if (logic.checkExistHTA(idPermohonanSimati)){
 				flagAdaHTA = "1";
 			}
@@ -1256,42 +1256,42 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 			if (logic.checkExistHA(idPermohonanSimati)){
 				flagAdaHA = "1";
 			}
-			
+
 			//AUTOMATIC REGISTER HTATH INTO PERINTAH KUASA TADBIR IF EXIST
 			if (flagAdaHTATH.equals("1")){
 				logic.registerHTATHIntoPKT(idPerintah, idPermohonanSimati, session);
 			}
-			
+
 			//GET LIST HARTA TAK ALIH (ADA HAKMILIK)
 			if (flagAdaHTA.equals("1")){
 				logic.setDataSenaraiHTA(idPerintah,idPermohonanSimati);
 				//###temp
 				//logic.setDataMaklumatHTATH(idHTA,idPermohonanSimati);
-				
+
 				listHTA = logic.getSenaraiHTA();
 				this.context.put("SenaraiHTA", listHTA);
-				
+
 				//CHECK ALL HTA YANG BELUM DIDAFTARKAN
 				if (logic.checkHTAYangBelumDibahagikan(idPermohonanSimati, idPerintah)){
 					flagSelesaiHTA = "";
 				} else {
 					flagSelesaiHTA = "Y";
 				}
-			} 
-			
+			}
+
 			//GET LIST HARTA TAK ALIH (TIADA HAKMILIK)
 			if (flagAdaHTATH.equals("1")){
 				logic.setDataSenaraiHTATH(idPerintah,idPermohonanSimati);
 				listHTATH = logic.getSenaraiHTATH();
 				this.context.put("SenaraiHTATH", listHTATH);
 			}
-			
+
 			//GET LIST HARTA ALIH
 			if (flagAdaHA.equals("1")){
 				logic.setDataSenaraiHA(idPerintah,idPermohonanSimati);
 				listHA = logic.getSenaraiHA();
 				this.context.put("SenaraiHA", listHA);
-				
+
 				//CHECK ALL HA YANG BELUM DIDAFTARKAN
 				if (logic.checkHAYangBelumDibahagikan(idPermohonanSimati, idPerintah)){
 					flagSelesaiHA = "";
@@ -1299,8 +1299,8 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 					flagSelesaiHA = "Y";
 				}
 			}
-			
-			//CHECK IF ADA PEMBAHAGIAN HTA AND HA FOR PT,PKT,PL AND PF		
+
+			//CHECK IF ADA PEMBAHAGIAN HTA AND HA FOR PT,PKT,PL AND PF
 			if (flagAdaHTA.equals("1") || flagAdaHTATH.equals("1")){
 				//HTA PERINTAH TERUS
 				if (logic.checkExistHTAPT(idPerintah)){
@@ -1337,12 +1337,12 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 					flagAdaHAPF = "1";
 				}
 			}
-			
+
 			if (flagAdaHTAPT.equals("1")){
 				logic.setDataSenaraiHTAPT(idPerintah,idPermohonanSimati);
 				listHTAPT = logic.getSenaraiHTAPT();
 				this.context.put("SenaraiHTAPT", listHTAPT);
-			}			
+			}
 			if (flagAdaHAPT.equals("1")){
 				logic.setDataSenaraiHAPT(idPerintah,idPermohonanSimati);
 				listHAPT = logic.getSenaraiHAPT();
@@ -1378,7 +1378,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 				listHAPF = logic.getSenaraiHAPF();
 				this.context.put("SenaraiHAPF", listHAPF);
 			}
-			
+
 		} else {
 			//GO TO LIST PERINTAH
 			/**
@@ -1389,23 +1389,23 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 			vm = "app/ppk/perintah/frmSenaraiFailPerintahSek8.jsp";
 			//if(role.equals("userSemakanPerintah")){
 			if(role.equals("userSemakanPerintah") || role.contains("(INTEGRASI)")){
-				//myLog.info(role);				
+				//myLog.info(role);
 				//logic.carianFail_semakanPerintahHQ(role,getParam("txtNoFail"),getParam("txtPemohon"), getParam("txtSimati"),getParam("socJenisKp"), getParam("txtIcSimati"), session);
 				//list = logic.getSenaraiFail_semakanPerintahHQ();
 				String noFail = getParam("txtNoFail");
-				
-				
-				
+
+
+
 				if(!getParam("txtNoFail").equals("") || !getParam("txtPemohon").equals("") || !getParam("txtSimati").equals("") || !getParam("socJenisKp").equals("") || !getParam("txtIcSimati").equals("")){
-					
+
 					list = getPerintah().carianFail_semakanPerintahHQ(role,getParam("txtNoFail"),getParam("txtPemohon"), getParam("txtSimati"), getParam("socJenisKp"), getParam("txtIcSimati"), session);
 				}
 			}else{
 				//logic.carianFailsocJenisKp(getParam("txtNoFail"),getParam("txtPemohon"), getParam("txtSimati"), getParam("socJenisKp"), getParam("txtIcSimati"), session);
 				//list = logic.getSenaraiFail();
-				
+
 					list = getPerintah().carianFail(getParam("txtNoFail"),getParam("txtPemohon"), getParam("txtSimati"), getParam("socJenisKp"), getParam("txtIcSimati"), session);
-				
+
 			}
 			this.context.put("SenaraiFail", list);
 			this.context.put("selectJenisKp",HTML.SelectPPKJenisKp("socJenisKp", Long.parseLong(jenisKp), "", "class=\"autoselect\""));
@@ -1414,10 +1414,10 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 			this.context.put("txtSimati", getParam("txtSimati"));
 			this.context.put("jenisIc", getParam("socJenisKp"));
 			this.context.put("txtIcSimati", getParam("txtIcSimati"));
-			
+
 			setupPage(session,action,list);
 		}
-		
+
 		//SET DEFAULT PARAM
 		this.context.put("actionPerintah", actionPerintah);
         this.context.put("mode", mode);
@@ -1425,12 +1425,12 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		this.context.put("modePopup", modePopup);
         this.context.put("selectedTabUpper", selectedTabUpper);
         this.context.put("selectedTabLower", selectedTabLower);
-        
+
         //SET FLAG PARAM
         this.context.put("flagAdaHTA", flagAdaHTA);
         this.context.put("flagAdaHTATH", flagAdaHTATH);
         this.context.put("flagAdaHA", flagAdaHA);
-        
+
         this.context.put("flagAdaHTAPT", flagAdaHTAPT);
         this.context.put("flagAdaHAPT", flagAdaHAPT);
         this.context.put("flagAdaHTAPKT", flagAdaHTAPKT);
@@ -1439,40 +1439,40 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
         this.context.put("flagAdaHAPL", flagAdaHAPL);
         this.context.put("flagAdaHTAPF", flagAdaHTAPF);
         this.context.put("flagAdaHAPF", flagAdaHAPF);
-        
+
         this.context.put("flagFromSenaraiFailSek8", flagFromSenaraiFailSek8);
 		this.context.put("flagFromSenaraiPermohonanSek8", flagFromSenaraiPermohonanSek8);
-		
+
 		this.context.put("flagSelesaiHTA", flagSelesaiHTA);
 		this.context.put("flagSelesaiHA", flagSelesaiHA);
-		
+
 		if (checkSelesaiPembahagian(idPermohonanSimati, idPerintah)){
 			flagSelesaiPembahagian = "T";
 		}
 		this.context.put("flagSelesaiPembahagian", flagSelesaiPembahagian);
-		
-        
+
+
         //SET ID PARAM
         this.context.put("idPermohonanSimati", idPermohonanSimati);
         this.context.put("idPermohonan", idPermohonan);
         this.context.put("idPerintah", idPerintah);
         this.context.put("idSimati", idSimati);
         this.context.put("idStatus", idStatus);
-        
+
         if (!anchor.equals("")){
         	this.context.put("onload", " \"javascript:goToAnchor('" + anchor + "')\"");
         }
-	    
+
 		return vm;
 	}
-	
+
 	private boolean checkSelesaiPembahagian(String idPermohonanSimati, String idPerintah) throws Exception {
 
 		//CHECK ALL HTA YANG BELUM DIDAFTARKAN
 		if (logic.checkHTAYangBelumDibahagikan(idPermohonanSimati, idPerintah)){
 			this.context.put("systemMsg", "Masih Terdapat Harta Tidak Alih (Ada Hakmilik) Simati Yang Belum Didaftarkan Perintahnya.");
 			return true;
-		}				
+		}
 		//CHECK ALL HA YANG BELUM DIDAFTARKAN
 		if (logic.checkHAYangBelumDibahagikan(idPermohonanSimati, idPerintah)){
 			this.context.put("systemMsg", "Masih Terdapat Harta Alih Simati Yang Belum Didaftarkan Perintahnya.");
@@ -1576,7 +1576,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -1589,7 +1589,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		hash.put("catatan", getParam("txtCatatanHTAPL"));
 		logic.updateHTAPL(idHTA,hash,session);
 	}
-	
+
 	private void updateHAPL(String idHAMST, HttpSession session) throws Exception {
 		Hashtable<String, String> hash = new Hashtable<String, String>();
 		hash.put("jenisLelong", getParam("sorJenisLelongHAPL"));
@@ -1599,12 +1599,12 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		hash.put("catatan", getParam("txtCatatanHTAPL"));
 		logic.updateHAPL(idHAMST,hash,session);
 	}
-	
+
 	private void headerppk_baru(HttpSession session,String id_permohonan,String flag_permohonan,String id_fail,String flag_fail) throws Exception {
 		//hashtable maklumat header
 		this.context.put("headerppk",mainheader.getHeaderData(session,id_permohonan,flag_permohonan,id_fail,flag_fail));
 		Vector<Hashtable<String,String>> list_sub = null;
-		list_sub = mainheader.carianFail(id_permohonan,flag_permohonan,id_fail,flag_fail);		
+		list_sub = mainheader.carianFail(id_permohonan,flag_permohonan,id_fail,flag_fail);
 		this.context.put("list_sub_header",list_sub);
 		this.context.put("flag_jenis_vm","ajax");
 	}
@@ -1615,11 +1615,11 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 //		this.context.put("list_sub_header","");
 //		this.context.put("flag_jenis_vm","ajax");
 //	}
-	
+
 	private IMaklumatPerintah getPerintah(){
 		if(iPerintah == null)
 			iPerintah = new FrmPerintah8Bean();
 		return iPerintah;
 	}
-	
+
 }
