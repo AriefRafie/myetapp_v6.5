@@ -34,6 +34,7 @@ import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
 import ekptg.model.php2.FrmREVHeaderData;
 import ekptg.model.php2.FrmREVMemantauBayaranSewaData;
+import ekptg.model.php2.FrmREVPopupCetakLaporanData;
 import ekptg.model.php2.utiliti.PHPUtilHTML;
 import ekptg.model.utils.emel.EmailConfig;
 import ekptg.ws.gfmas.GfmasMemantauBayaranSewaManager;
@@ -86,6 +87,11 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         String idPemohon = getParam("idPemohon");
         String idAkaun = getParam("idAkaun");
         String idNotis = getParam("idNotis");
+
+        String idLuasKegunaan = getParam("idLuasKegunaan");
+		if (idLuasKegunaan == null || idLuasKegunaan.trim().length() == 0){
+			idLuasKegunaan = "99999";
+		}
 
 		String idJenisPelarasan = getParam("socJenisPelarasan");
 		if (idJenisPelarasan == null || idJenisPelarasan.trim().length() == 0){
@@ -1053,9 +1059,15 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         				idHasil = (String) hashPermohonan.get("idHasil");
         				idUrusan = (String) hashPermohonan.get("idUrusan");
         				idSuburusan = (String) hashPermohonan.get("idSuburusan");
+        				if (hashPermohonan.get("flagGuna") != null && hashPermohonan.get("flagGuna").toString().trim().length() != 0){
+                			idLuasKegunaan = (String) hashPermohonan.get("flagGuna");
+                		} else {
+                			idLuasKegunaan = "99999";
+                		}
         			}
         			this.context.put("selectUrusan", HTML.SelectUrusanPHPPenyewaan("socUrusan", Long.parseLong(idUrusan), "disabled", " class=\"disabled\""));
         			this.context.put("selectSuburusan", HTML.SelectSuburusanByIdUrusan(idUrusan, "socSuburusan", Long.parseLong(idSuburusan), "disabled", " class=\"disabled\""));
+        			this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan), "disabled", " class=\"disabled\" style=\"width:auto\""));
 
         		} else if ("update".equals(mode)){
 
@@ -1065,6 +1077,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 
             		this.context.put("selectUrusan", HTML.SelectUrusanPHPPenyewaan("socUrusan", Long.parseLong(idUrusan), "", " onChange=\"doChangeUrusan();\""));
         			this.context.put("selectSuburusan", HTML.SelectSuburusanByIdUrusan(idUrusan, "socSuburusan", Long.parseLong(idSuburusan), "", " "));
+        			this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan),"", ""));
 
         			// MAKLUMAT PERMOHONAN
         			beanMaklumatPermohonan = new Vector();
@@ -1550,7 +1563,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 		String sql = "";
 		String noFail = "";
 		String namaUser = "";
-		String emelUser = "";
+		String emelUser = "nurulain.siprotech@gmail.com";
 		String subject = "";
 		String content = "";
 
@@ -1562,7 +1575,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 			conn = db.getConnection();
 	    	conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
-
+			
 			sql = "SELECT A.NO_FAIL, C.NAMA, C.EMEL "
 					+ " FROM TBLPFDFAIL A, TBLPHPHASIL B, TBLPHPPEMOHON C "
 					+ " WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON "
@@ -1570,10 +1583,10 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 
 			ResultSet rs = stmt.executeQuery(sql);
 			myLogger.info("MASUK "+sql);
-			while (rs.next()) {
+			if (rs.next()) {
 				noFail = rs.getString("NO_FAIL");
 				namaUser = rs.getString("NAMA");
-				emelUser = rs.getString("EMEL");
+				//emelUser = rs.getString("EMEL");
 			}
 
 			if (!"".equals(namaUser) && !"".equals(emelUser)){
@@ -1598,8 +1611,13 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 					// path = "/reports/" + fileName ;
 					path = File.separator + "reports" + File.separator + fileName;
 				}
+		    	
+				FrmREVPopupCetakLaporanData logic = new FrmREVPopupCetakLaporanData();
 
-		    	myMap.put("idfail", idFail);
+		    	myMap.put("ID_AKAUN", idAkaun);
+		    	myMap.put("KADAR_SEWA", logic.getKadarSewaSebulan(idAkaun));
+		    	myMap.put("TUNGGAKAN_SEWA", logic.getTunggakanSewa(idAkaun));
+		    	myMap.put("SEWA_SEMASA", logic.getKadarSewaSemasa(idAkaun));
 		    	myMap.put("flagVersion", "no");
 		    	myMap.put("ReportDir", path);
 		    	myLogger.info("path "+path);

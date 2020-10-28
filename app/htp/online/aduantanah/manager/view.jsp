@@ -10,7 +10,7 @@
 </style>
 <p>
   <input type="hidden" name="idComplaint" value="$!complaint.id">
-  <input name="selectedTabUpper" type="hidden" id="selectedTabUpper" value="$selectedTabUpper"/>
+  <input type="hidden" name="selectedTabUpper" id="selectedTabUpper" value="$selectedTabUpper"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
@@ -23,7 +23,7 @@
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
                    <tr>
                       <td width="1%">&nbsp;</td>
-                      <td width="28%">No Aduan</td>
+                      <td width="28%">No. Aduan</td>
                       <td width="1%">:</td>
                       <td width="70%">$!complaint.id </td>
                     </tr>
@@ -106,7 +106,7 @@
                       <td colspan="4"><table>
                           #foreach($lampiran in $complaint.lampiran)
                           <tr>
-                            <td><a href="javascript:papar_Lampiran('$lampiran.id')" class="style1">$lampiran.fileName</a> </td>
+                            <td><a href="javascript:papar_Lampiran('$lampiran.id')" class="style2">$lampiran.fileName</a> </td>
                           </tr>
                           #end
                         </table></td>
@@ -197,7 +197,7 @@
 					                    <tr class="table_header">
 					                      <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
 					                      <td width="15%" align="center"><strong>Tarikh</strong></td>
-					                      <td width="15%" align="center"><strong>No Agihan</strong></td>
+					                      <td width="15%" align="center"><strong>No. Agihan</strong></td>
 					                      <td width="10%"><strong>Status</strong></td>
 					                       <td width="30%"><strong>Seksyen/Bahagian Bertanggungjawab</strong></td>
 					                      <td width="40%"><strong>Arahan</strong></td>
@@ -286,10 +286,11 @@
 									#end
 									<TR>
 										<TD valign="top" align="center" colspan="5">
-											<input type="button" value="KEMBALI" onclick="mainPage()">
-											<input type="button" value="HANTAR JAWAPAN & TUTUP ADUAN" #if($complaint.statusPenyelesaian =="SELESAI") onclick="notAllowed()" #else onclick="tutupAduan()" #end>
-											<input type="button" value="ADUAN PALSU & TUTUP ADUAN" #if($complaint.statusPenyelesaian =="SELESAI") onclick="notAllowed()" #else onclick="aduanPalsu()" #end>
-											<input type="button" value="HANTAR E-MEL" onclick="parent.location='mailto:$!complaint.emailPengadu?subject=ADUAN ONLINE NO $complaint.id'"/>
+											<input type="button" value="Kembali" onclick="mainPage()">
+											<input type="button" value="Hantar Jawapan & Tutup Aduan" #if($complaint.statusPenyelesaian =="SELESAI") onclick="notAllowed()" #else onclick="tutupAduan()" #end>
+											<input type="button" value="Aduan Palsu & Tutup Aduan" #if($complaint.statusPenyelesaian =="SELESAI") onclick="notAllowed()" #else onclick="aduanPalsu()" #end>
+											<input type="button" value="Hantar Emel (Aduan Telah Dibaca)" onclick="aduanDibaca()"/>
+											<!-- <input type="button" value="HANTAR E-MEL" onclick="parent.location='mailto:$!complaint.emailPengadu?subject=ADUAN ONLINE NO $complaint.id'"/> -->
 										</TD>
 									</TR>
 								</TABLE>

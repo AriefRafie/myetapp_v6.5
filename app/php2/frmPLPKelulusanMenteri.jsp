@@ -3,6 +3,9 @@
 .style1 {
 	color: #FF0000
 }
+.style2 {
+	color: #0000FF
+}
 -->
 </style>
 <p>
@@ -98,7 +101,7 @@
                 <td valign="top">:</td>
                 <td valign="top"> 
                 	#if ($idLampiran != '')
-                		<a href="javascript:cetakLampiran($idKertaskerja)" class="style2">$!namaFailLampiran</a> 
+                		<a href="javascript:cetakLampiran($idLampiran)" class="style2">$!namaFailLampiran</a> 
                 	#end
                 	&nbsp;&nbsp;&nbsp;&nbsp;
                 	<input name="cmdUpload" type="button" onclick="uploadDoc($idKertaskerja)" value="Muat Naik Lampiran" />

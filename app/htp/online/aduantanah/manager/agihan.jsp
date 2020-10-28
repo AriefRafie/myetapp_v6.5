@@ -24,7 +24,7 @@
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
                     <tr>
                       <td width="1%">&nbsp;</td>
-                      <td width="28%">No Aduan</td>
+                      <td width="28%">No. Aduan</td>
                       <td width="1%">:</td>
                       <td width="70%">$!complaint.id </td>
                     </tr>
@@ -168,7 +168,7 @@
             <td>Seksyen / Bahagian</td>
                       <td>:</td>
                       <td>$selectTindakan
-                      <input type="text" name="idTindakan" id="idTindakan" value="$idTindakan" />
+                      <input type="hidden" name="idTindakan" id="idTindakan" value="$idTindakan" />
                       </td>
           </tr>
           <tr>

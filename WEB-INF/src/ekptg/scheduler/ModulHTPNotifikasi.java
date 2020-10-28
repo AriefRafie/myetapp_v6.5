@@ -59,13 +59,14 @@ public class ModulHTPNotifikasi {
 				if(args[1] != null) {
 					emel = args[1];
 				}				
-				submodulCukaiPeringatan(tahun,bulan,emel);
-				submodulPajakanPeringatan(tahun,bulan,emel);
+				System.out.println("emel= " + emel);
+				//submodulCukaiPeringatan(tahun,bulan,emel);
+				//submodulPajakanPeringatan(tahun,bulan,emel);
 					
 				// Notifikasi Ulasan
-				submodulAPB(tahun,bulan,emel,"",0);
+				//submodulAPB(tahun,bulan,emel,"",0);
 				// Notifikasi Keputusan Dasar(D)
-				submodulAPBKeputusan(tahun,bulan,emel,"TBLPHPPMOHONNJDUALPERTAMA",40);
+				//submodulAPBKeputusan(tahun,bulan,emel,"TBLPHPPMOHONNJDUALPERTAMA",40);
 				//Bil Sewa Bulanan (setiap 1st)
 				submodulSewa(hari,bulan+"/"+tahun,emel);	
 
@@ -85,7 +86,7 @@ public class ModulHTPNotifikasi {
 				submodulSewa(hari,bulanSemasa+"/"+tahunSemasa,emel);
 			}
 		}catch(Exception e) {				
-			System.out.println("submodulCukaiPeringat:err::" + e.getStackTrace() );
+			System.out.println("submodul Notifikasi:err::" + e.getStackTrace().toString() );
 		}
 			
 		System.out.println("FINISH JOB ON " + new Date());
@@ -301,17 +302,23 @@ public class ModulHTPNotifikasi {
 	}
 	
 	private static void submodulSewa(String hari,String bulanTahun,String emel)  throws Exception{	
-		String emelSubjek = "Bil bagi "+hari+"/"+bulanTahun;
-		if(hari.equals("01")){
-			GenerateSewaBulananPenyewaanJob j = null;
-			JobExecutionContext context_ = null;
+		System.out.println("submodulSewa");
+		String emelSubjek = hari+"Bil bagi "+hari+"/"+bulanTahun;
+		String hariSemasa = dfd.format(new Date());
+		System.out.println("submodulSewa"+hari+","+bulanTahun);
+		System.out.println("submodulSewa hariSemasa"+hariSemasa);
+
+		if(hari.equals(hariSemasa)){
+			System.out.println("masuk");
+			GenerateSewaBulananPenyewaanJob j = new GenerateSewaBulananPenyewaanJob();;
+			//JobExecutionContext context_ = new JobExecutionContext();
 			
-			context_.setResult(emelSubjek);
-			j.execute(context_);
+			//context_.setResult(emelSubjek);
+			j.execute1(emelSubjek);
 			EmailConfig ec = new EmailConfig();
 			String kandungan = "Berjaya Dijana.<br/>";
 
-			ec.sendTo(emel, emelSubjek, kandungan);
+			ec.sendTo(emel, emelSubjek.substring(2,emelSubjek.length()+1), kandungan);
 
 		}
 		

@@ -15,16 +15,16 @@
   </tr>
   #set ($listD = "")
   #set ($counter = 0)
-  #if ($listDokumen.size() > 0)
-  #foreach ($listD in $listDokumen)
-  #set( $counter = $counter + 1 )
-  #if ($counter == '')
-  #set( $row = "row1" )
-  #elseif (($counter % 2) != 0)
-  #set( $row = "row1" )
-  #else 
-  #set( $row = "row2" )
-  #end
+  #if ($listDokumen.size() >= 0)
+  	#foreach ($listD in $listDokumen)
+  		#set( $counter = $counter + 1 )
+  		#if ($counter == '')
+ 			 #set( $row = "row1" )
+  		#elseif (($counter % 2) != 0)
+  			#set( $row = "row1" )
+  		#else 
+  			#set( $row = "row2" )
+  		#end
   <tr>
     <td class="$row" align="center"> $counter </td>
     <td class="$row"> <a href="javascript:paparDokumen($!listD.getIdDokumen())" class="style2"><strong>$!listD.getNamaDokumen()</strong></a></td>
@@ -32,7 +32,8 @@
     <td class="$row" align="center"><span id="hapusDoc"> <a href="javascript:void()" onClick="deleteDokumen($!listD.getIdDokumen())" ><img src="../../img/delete.gif" border="0"></a> </span></td>
     #end
   </tr>
-  #end  
+  	#end  
+  	
   #else
   <tr>
     <td colspan="3" class="row"> Tiada rekod </td>

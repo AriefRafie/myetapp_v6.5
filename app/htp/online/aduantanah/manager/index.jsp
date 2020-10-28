@@ -1,9 +1,18 @@
+<style type="text/css">
+<!--
+.style1 {
+	color: #0033FF
+}
+-->
+</style>
+
 <body onLoad="refreshPage('$!test_ajax')">
+<br>
 <fieldset><legend>Carian</legend>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
 	<tr>
 		<td>
-			No Aduan :
+			No. Aduan :
 		</td>
 		<td>
 			<input type="text" name="noAduan">
@@ -54,12 +63,13 @@
 				<td colspan="7" scope="row">&nbsp;</td>
 				</tr>
 				<tr class="table_header">
-					<td scope="row" width="5%" align="center"><strong>No</strong></td>
-					<td width="25%"><strong>Nama Pengadu</strong></td>
-					<td width="20%"><strong>Emel</strong></td>
-					<td width="10%"  align="center"><strong>Tarikh Aduan</strong></td>
+					<td scope="row" width="3%" align="center"><strong>No.</strong></td>
+					<td width="20%"><strong>Nama Pengadu</strong></td>
+					<td width="10%"><strong>No.Aduan</strong></td>
+					<td width="8%"  align="center"><strong>Tarikh Aduan</strong></td>
+					<td width="41%"  align="center"><strong>Keterangan</strong></td>         					
 					<td width="10%"><strong>Status Aduan</strong></td>
-					<td width="10%" align="center"><strong>Tarikh Dikemaskini</strong></td>
+					<td width="8%" align="center"><strong>Tarikh Dikemaskini</strong></td>
 				</tr>
 				#set ($count = 0)
 				#foreach ( $fail in $SenaraiFail )
@@ -73,8 +83,9 @@
 				<tr>
 					<td class="$row" align="center">$!count</td>
 					<td class="$row"><a href="javascript:detail('$fail.id')" class="style1">$fail.namaPengadu</a></td>
-					<td class="$row">$!fail.emelPengadu</td>
+					<td class="$row">$!fail.id</td>
 					<td class="$row">$!fail.tarikhAduan</td>
+			       	<td class="$row">$!fail.catatan </td>
 					<td class="$row">$!fail.status</td>
 					<td class="$row">$!fail.tarikhKemaskini</td>
 				</tr>
@@ -86,6 +97,10 @@
 <input type="hidden" name="command01" value="">
 <input type="hidden" name="uploadFiles" value="$!upload_file">
 <script>
+
+	function aduanDibaca() {
+		doAjaxCall${formName}("aduanbaca");
+	}
 		function refreshPage(m){
 			//alert('$!test_ajax' + ' FUNCTION REFRESH PAGE DAH MASUK');
 			if ( m != '' ){
@@ -119,11 +134,12 @@
 			if(document.${formName}.ulasan.value==""){
    	   	   		alert('Sila Isi Arahan');
    	   	   		return;
-   	   		}
-   	   		else{
+   	   		}else{
    				doAjaxCall${formName}("simpanAgih");
    	   		}
+   	   		
    		}
+   		
    		function kembali(){
    			doAjaxCall${formName}("back");
    		}

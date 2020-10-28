@@ -6,7 +6,7 @@
 <table width="100%" border="0" cellspacing="2" cellpadding="2" class="dashboard_sub">
   <tr class="table_header">
     <td width="5%" scope="row"  align="center"><strong><font color="white">Bil.</font></strong></td>
-    <td ><strong><font color="white">ID Hakmilik</font></strong></td>
+    <td ><strong><font color="white">No. Hakmilik</font></strong></td>
     <td ><strong><font color="white">No. Lot</font></strong></td>
     <td align="right" ><strong><font color="white">Luas Asal</font></strong></td>
     <td align="right" ><strong ><font color="white">Luas Ambil</font></strong></td>
@@ -36,7 +36,7 @@
   #end
   <tr>
     <td class="$row" align="center"> $counter </td>
-    <td class="$row">$!list.idHakmilik</td>
+    <td class="$row">$!list.kodHakmilik $!list.noHakmilik</td>
     <td class="$row">$!list.kodLot $!list.noLot</td>
     <td class="$row" align="right">$!list.luasAsal $!list.kodLuasAsal</td>
     <td class="$row" align="right">$!list.luasAmbil $!list.kodLuasAmbil</td>

@@ -72,8 +72,9 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailView extends AjaxBasedModule {
 			}
 
 			this.context.put("idKementerian", idKementerian);
-			this.context.put("onload", "");
-			this.context.put("completed", false);
+			/*
+			 * this.context.put("onload", ""); this.context.put("completed", false);
+			 */
 			
 
 			if ("refreshDokumenMuatNaik".equals(command)) {

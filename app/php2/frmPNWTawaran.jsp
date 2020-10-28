@@ -90,7 +90,7 @@
         #end
         <tr>
           <td class="$row" align="center">$senaraiAgensi.bil</td>
-          <td class="$row"><a href="javascript:paparAgensi($senaraiAgensi.idPenawaranKJP)" class="style2">$senaraiAgensi.noRujukan</a></td>
+          <td class="$row"><a href="javascript:paparAgensi($senaraiAgensi.idPenawaranKJP)" class="style2">$senaraiAgensi.noRujukanSuratKJP</a></td>
           <td class="$row">$senaraiAgensi.kementerian</td>
           <td class="$row">$senaraiAgensi.agensi</td>
           <td class="$row" align="center">$senaraiAgensi.tarikhTerima</td>
