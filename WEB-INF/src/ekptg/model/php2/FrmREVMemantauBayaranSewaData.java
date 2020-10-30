@@ -2344,9 +2344,10 @@ public class FrmREVMemantauBayaranSewaData {
 					+ " FROM TBLPFDFAIL FAIL, TBLPHPHASIL HASIL, TBLRUJSUBURUSAN SUBURUSAN,"
 					+ " TBLPHPBAYARANPERLUDIBAYAR BAYAR, TBLPHPPERMOHONANSEWA SEWA, TBLRUJLUAS LUAS"
 					+ " WHERE FAIL.ID_FAIL = HASIL.ID_FAIL"
-					+ " AND HASIL.ID_FAIL = BAYAR.ID_FAIL AND BAYAR.ID_PERMOHONAN = SEWA.ID_PERMOHONAN"
+					+ " AND HASIL.ID_FAIL = BAYAR.ID_FAIL(+) AND BAYAR.ID_PERMOHONAN = SEWA.ID_PERMOHONAN(+)"
 					+ " AND FAIL.ID_SUBURUSAN = SUBURUSAN.ID_SUBURUSAN(+) AND SEWA.ID_LUASASAL = LUAS.ID_LUAS(+)"
 					+ " AND HASIL.ID_HASIL = '" + idHasil + "'";
+
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -2425,12 +2426,20 @@ public class FrmREVMemantauBayaranSewaData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT FAIL.ID_NEGERI, FAIL.ID_KEMENTERIAN, D.ID_AGENSI, HASIL.MAKLUMAT_LOT, HASIL.ID_LUAS, HASIL.LUAS, HASIL.CATATAN_TANAH"
+			sql = "SELECT D.ID_NEGERI, D.ID_KEMENTERIAN, D.ID_AGENSI, HASIL.MAKLUMAT_LOT, D.ID_LUAS, D.LUAS, HASIL.CATATAN_TANAH,"
+					+ " D.NO_LOT, D.NO_HAKMILIK, D.NO_WARTA, RUJLOT.KETERANGAN AS JENIS_LOT, D.ID_JENISHAKMILIK, RUJJENISHM.KOD_JENIS_HAKMILIK,"
+					+ " D.ID_MUKIM, RUJMUKIM.NAMA_MUKIM, D.ID_DAERAH, RUJDAERAH.NAMA_DAERAH, D.ID_NEGERI, RUJNEGERI.NAMA_NEGERI,"
+					+ " PEMOHON.NAMA, SEWA.TUJUAN"
 					+ " FROM TBLPFDFAIL FAIL, TBLPHPHASIL HASIL, TBLPHPPEMOHON PEMOHON,"
-					+ " TBLPERMOHONAN B, TBLPHPHAKMILIKPERMOHONAN C, TBLPHPHAKMILIK D, TBLPFDFAIL TBLPFDFAILPERMOHONAN "
+					+ " TBLPERMOHONAN B, TBLPHPHAKMILIKPERMOHONAN C, TBLPHPHAKMILIK D, TBLPFDFAIL TBLPFDFAILPERMOHONAN,TBLRUJLOT RUJLOT,"
+					+ " TBLRUJJENISHAKMILIK RUJJENISHM, TBLRUJMUKIM RUJMUKIM, TBLRUJDAERAH RUJDAERAH, TBLRUJNEGERI RUJNEGERI, "
+					+ " TBLPHPPERMOHONANSEWA SEWA"
 					+ " WHERE FAIL.ID_FAIL = HASIL.ID_FAIL AND HASIL.ID_PEMOHON = PEMOHON.ID_PEMOHON "
 					+ " AND HASIL.ID_FAILPERMOHONAN = TBLPFDFAILPERMOHONAN.ID_FAIL(+) AND TBLPFDFAILPERMOHONAN.ID_FAIL = B.ID_FAIL(+) "
 					+ " AND B.ID_PERMOHONAN = C.ID_PERMOHONAN(+) AND C.ID_HAKMILIKPERMOHONAN = D.ID_HAKMILIKPERMOHONAN(+) "
+					+ " AND D.ID_MUKIM = RUJMUKIM.ID_MUKIM(+) AND D.ID_DAERAH = RUJDAERAH.ID_DAERAH(+) "
+					+ " AND D.ID_NEGERI = RUJNEGERI.ID_NEGERI(+) AND B.ID_PERMOHONAN = SEWA.ID_PERMOHONAN(+)"
+					+ " AND D.ID_LOT = RUJLOT.ID_LOT(+) AND D.ID_JENISHAKMILIK = RUJJENISHM.ID_JENISHAKMILIK(+) "
 					+ " AND FAIL.ID_FAIL = '"
 					+ idFail + "'";
 
@@ -2459,7 +2468,39 @@ public class FrmREVMemantauBayaranSewaData {
 				h.put("catatanTanah",
 						rs.getString("CATATAN_TANAH") == null ? "" : rs
 								.getString("CATATAN_TANAH"));
-
+				h.put("lot",
+						(rs.getString("JENIS_LOT") == null ? "" : rs.getString(
+								"JENIS_LOT").toUpperCase())
+								+ " "
+								+ (rs.getString("NO_LOT") == null ? "" : rs
+										.getString("NO_LOT")));
+				h.put("hakmilik",
+						(rs.getString("KOD_JENIS_HAKMILIK") == null ? "" : rs
+								.getString("KOD_JENIS_HAKMILIK").toUpperCase())
+								+ " "
+								+ (rs.getString("NO_HAKMILIK") == null ? ""
+										: rs.getString("NO_HAKMILIK")));
+				h.put("mukim", rs.getString("NAMA_MUKIM") == null ? "" : rs
+						.getString("NAMA_MUKIM").toUpperCase());
+				h.put("daerah", rs.getString("NAMA_DAERAH") == null ? "" : rs
+						.getString("NAMA_DAERAH").toUpperCase());
+				h.put("negeri", rs.getString("NAMA_NEGERI") == null ? "" : rs
+						.getString("NAMA_NEGERI").toUpperCase());
+				h.put("nama", rs.getString("NAMA") == null ? "" : rs
+						.getString("NAMA").toUpperCase());
+				h.put("tujuan", rs.getString("TUJUAN") == null ? "" : rs
+						.getString("TUJUAN").toUpperCase());
+				h.put("noWarta", rs.getString("NO_WARTA") == null ? "" : rs
+						.getString("NO_WARTA").toUpperCase());
+				if (rs.getString("NO_HAKMILIK") != null
+						&& rs.getString("NO_WARTA") == null) {
+					h.put("statusRizab", "MILIK");
+				} else if (rs.getString("NO_HAKMILIK") == null
+						&& rs.getString("NO_WARTA") != null) {
+					h.put("statusRizab", "RIZAB");
+				} else {
+					h.put("statusRizab", "");
+				}
 				beanMaklumatTanah.addElement(h);
 				bil++;
 

@@ -180,12 +180,12 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 //				idJenisPermohonan, session,idPermohonanLama);
 				idFail = logic.daftarBaruSewa(idUrusan, idSuburusan, idSubsuburusan, getParam("txtTujuanLain"), getParam("txtNoRujukanSurat"), getParam("txttarikhSurat"), 
 						idPHPBorangK, idPPTBorangK,
-						idJenisTanah, idNegeri, idDaerah, idMukim, jenisHakmilik, getParam("noMilikTanah"), jenisLot, getParam("noLotTanah"), getParam("txtLuasBersamaan"),
+						idJenisTanah, idNegeri, idDaerah, idMukim, jenisHakmilik, getParam("noMilikTanah"), getParam("noWartaTanah"), getParam("tarikhWartaTanah"), jenisLot, getParam("noLotTanah"), getParam("txtLuasBersamaan"),
 						idHakmilikUrusan, getParam("tarikhTerima"), idJenisPermohonan, session,idPermohonanLama, idLuas, getParam("txtLuas1"), getParam("txtLuas2"),getParam("txtLuas3"));
 			}
 			if ("doSimpanKemaskiniMaklumatTnh".equals(hitButton)){
         		// logic.updateTanah(idPermohonan,idHakmilikAgensi,session);
-        		logic.updateTanahSewa(idPermohonan,idHakmilikSementara,idJenisTanah, idNegeri, idDaerah, idMukim, jenisHakmilik, getParam("noMilikTanah"), 
+        		logic.updateTanahSewa(idFail, idPermohonan, idHakmilikSementara, idJenisTanah, idNegeri, idDaerah, idMukim, jenisHakmilik, getParam("noMilikTanah"), getParam("noWartaTanah"), getParam("tarikhWartaTanah"),
         				jenisLot, getParam("noLotTanah"), getParam("txtLuasBersamaan_"),session, idLuas_, getParam("txtLuas1_"), getParam("txtLuas2_"),getParam("txtLuas3_"));
             }
 			if ("doSimpanKemaskiniMaklumatPenyewaan".equals(hitButton)){
@@ -638,6 +638,8 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 			//beanMaklumatTanah = logic.getBeanMaklumatTanah();
 			hashTanah.put("noHakmilik",getParam("noMilikTanah") == null ? "": getParam("noMilikTanah"));
 			hashTanah.put("noLot",getParam("noLotTanah") == null ? "": getParam("noLotTanah"));
+			hashTanah.put("noWarta",getParam("noWartaTanah") == null ? "": getParam("noWartaTanah"));
+			hashTanah.put("tarikhWarta",getParam("tarikhWartaTanah") == null ? "": getParam("tarikhWartaTanah"));
 			beanMaklumatTanah.addElement(hashTanah);
 			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 			

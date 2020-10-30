@@ -222,7 +222,8 @@ public class FrmJawatankuasaRuangPejabat extends AjaxBasedModule{
 				    myLog.info("pageMode="+pageMode);
 				    if(pageMode.equals("0")){
 					    this.context.put("socSeksyen","3");
-					    socUrusan = HTML.SelectSuburusan("socUrusan",Long.parseLong(idSubUrusan),disability);
+					    socUrusan = HTML.SelectSuburusanByIdUrusan(idUrusan,"socUrusan",Long.parseLong(idSubUrusan),"");
+//					    socUrusan = HTML.SelectSuburusan("socUrusan",Long.parseLong(idSubUrusan),disability);
 //						socUrusan = HTML.SelectUrusan("socUrusan",Long.parseLong(idUrusan),disability);
 				    	this.context.put("socUrusan",socUrusan);
 				    	//perjanjian 44

@@ -856,4 +856,27 @@ function doRefreshScreen() {
 function goUpperScreen() {
 	window.scrollTo(0, 0);
 }
+
+function janaMaklumatLot() {
+	var strTajuk = " ";
+	var milikOrRizab = " ";
+	var str1  = document.${formName}.noLotTanah.value;
+	var str2  = document.${formName}.noMilikTanah.value;
+	var str3  = document.${formName}.namaMukimTanah.value;
+	var str4  = document.${formName}.namaDerahTanah.value;
+	var str5  = document.${formName}.namaNegeriTanah.value;
+	var str6 = document.${formName}.noWartaTanah.value;
+	var strTujuan = document.${formName}.namatujuan.value;
+	var statusRizabTnh = document.${formName}.status.value;
+	var namaPemohon = document.${formName}.txtNama.value;
+
+	if(statusRizabTnh == 'MILIK') {
+		milikOrRizab = str2;
+	} else if(statusRizabTnh == 'RIZAB') {
+		milikOrRizab = str6;
+	}
+
+	strTajuk = str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan ;
+	document.${formName}.txtMaklumatLot.value = strTajuk;
+	}
 </script>
