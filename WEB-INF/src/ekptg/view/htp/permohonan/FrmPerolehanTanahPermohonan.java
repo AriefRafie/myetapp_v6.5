@@ -1687,7 +1687,7 @@ public class FrmPerolehanTanahPermohonan extends AjaxBasedModule{
 			myLog.info("812");
 
 		}
-		System.out.println("page=================="+template_name);
+		myLog.info("page=================="+template_name);
 		return template_name;
 	
 	}

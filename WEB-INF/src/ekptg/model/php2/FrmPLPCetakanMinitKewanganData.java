@@ -32,7 +32,8 @@ public class FrmPLPCetakanMinitKewanganData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT ID_KERTASKERJA, TAJUK, TUJUAN, PERIHAL_KEMAJUANTANAH, PEMOHON, LAPORAN_NILAIAN, ULASAN_KJP, PERAKUAN_PTP, TARIKH_HANTAR_KEWANGAN"
+			sql = "SELECT ID_KERTASKERJA, TAJUK, TUJUAN, PERIHAL_KEMAJUANTANAH, PEMOHON, LAPORAN_NILAIAN, ULASAN_KJP, PERAKUAN_PTP, "
+					+ "TARIKH_HANTAR_KEWANGAN, JANGKAMASA, TARIKH_JANGKA_TERIMA "
 					+ " FROM TBLPHPKERTASKERJAPELEPASAN WHERE FLAG_KERTAS = '2' AND ID_PERMOHONAN = '"
 					+ idPermohonan + "'";
 			ResultSet rs = stmt.executeQuery(sql);
@@ -67,6 +68,11 @@ public class FrmPLPCetakanMinitKewanganData {
 				h.put("txtTarikhHantar",
 						rs.getDate("TARIKH_HANTAR_KEWANGAN") == null ? "" : sdf
 								.format(rs.getDate("TARIKH_HANTAR_KEWANGAN")));
+				h.put("txtJangkaMasa", rs.getString("JANGKAMASA") == null ? ""
+						: rs.getString("JANGKAMASA"));
+				h.put("txtTarikhJangkaTerima",
+						rs.getDate("TARIKH_JANGKA_TERIMA") == null ? "" : sdf
+								.format(rs.getDate("TARIKH_JANGKA_TERIMA")));
 				beanKertasKewangan.addElement(h);
 				bil++;
 			}
@@ -80,7 +86,8 @@ public class FrmPLPCetakanMinitKewanganData {
 	public void simpanKemaskiniKewangan(String idKertasKerja,
 			String txtTajukKertas, String txtTujuan, String txtPerihalKemajuan,
 			String txtPemohon, String txtLaporanNilaian, String txtUlasanKJP,
-			String txtPerakuanPTP, String txtTarikhHantar, HttpSession session)
+			String txtPerakuanPTP, String txtTarikhHantar, String txtJangkamasa,
+			String txtTarikhTerima, HttpSession session)
 			throws Exception {
 
 		Db db = null;
@@ -109,7 +116,12 @@ public class FrmPLPCetakanMinitKewanganData {
 						r.unquote("to_date('" + txtTarikhHantar
 								+ "','dd/MM/yyyy')"));
 			}
-
+			r.add("JANGKAMASA", txtJangkamasa);
+			if (!"".equals(txtTarikhTerima)) {
+				r.add("TARIKH_JANGKA_TERIMA",
+						r.unquote("to_date('" + txtTarikhTerima
+								+ "','dd/MM/yyyy')"));
+			}
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 

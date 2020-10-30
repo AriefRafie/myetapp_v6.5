@@ -58,7 +58,8 @@ private static final long serialVersionUID = 1L;
         if (postDB) {
         	if ("simpanKemaskiniMinitKewangan".equals(hitButton)){
 				logic.simpanKemaskiniMinitKewangan(idPermohonan, getParam("txtTarikhTerima"), getParam("socKeputusan"),
-						getParam("txtUlasan"), getParam("socKeputusanPemohon"), getParam("txtUlasanPemohon"), session);
+						getParam("txtUlasan"), getParam("socKeputusanPemohon"), getParam("txtUlasanPemohon"), 
+						getParam("txtNamaPengulas"), getParam("txtNoTelPengulas"), session);
 			}
         	if ("doSeterusnya".equals(hitButton)){
         		logic.updateStatus(idFail, idPermohonan, session);
@@ -120,14 +121,14 @@ private static final long serialVersionUID = 1L;
 			//beanMaklumatKewangan = logic.getBeanMaklumatKewangan();
 			Hashtable HashMaklumatKewangan = (Hashtable) logic.getBeanMaklumatKewangan().get(0);
 			Hashtable hashMaklumatKewangan = new Hashtable();
-			
 			hashMaklumatKewangan.put("tarikhTerima", getParam("txtTarikhTerima"));
 			hashMaklumatKewangan.put("keputusan", getParam("socKeputusan"));
 			if ("doChangeKeputusanKewangan".equals(submit)){
 				hashMaklumatKewangan.put("flagKeputusanPemohon", getParam("socKeputusanPemohon"));
-				
 			}
 			hashMaklumatKewangan.put("ulasan", getParam("txtUlasan"));
+			hashMaklumatKewangan.put("namaPengulas", getParam("txtNamaPengulas"));
+			hashMaklumatKewangan.put("noTelPengulas", getParam("txtNoTelPengulas"));
 			hashMaklumatKewangan.put("ulasanPemohon", getParam("txtUlasanPemohon"));
 			
 			beanMaklumatKewangan.addElement(hashMaklumatKewangan);

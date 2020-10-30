@@ -147,7 +147,6 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailData {
 				h = new Hashtable();
 				h.put("ID_ULASANTEKNIKAL", rs.getString("ID_KERTASKERJA") == null ? "" : rs.getString("ID_KERTASKERJA"));
 				h.put("ID_FAIL", rs.getString("ID_FAIL") == null ? "" : rs.getString("ID_FAIL"));
-				//h.put("ID_KEMENTERIAN", rs.getString("ID_KEMENTERIAN") == null ? "" : rs.getString("ID_KEMENTERIAN"));
 				h.put("NO_FAIL", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL"));
 				h.put("TAJUK_FAIL", rs.getString("TAJUK_FAIL") == null ? "" : rs.getString("TAJUK_FAIL"));
 				h.put("TARIKH_HANTAR", rs.getDate("TARIKH_TERIMA_KEWANGAN") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMA_KEWANGAN")));

@@ -1,9 +1,6 @@
 package ekptg.report.htp.utiliti;
 
 import java.util.Hashtable;
-import java.util.Vector;
-
-import javax.servlet.http.HttpSession;
 
 import lebah.portal.AjaxBasedModule;
 
@@ -25,10 +22,10 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 
 	@Override
 	public String doTemplate2() throws Exception {		
-		HttpSession session = request.getSession();		
+		//HttpSession session = request.getSession();		
 		String vm = "";
-		Vector detailPegawai = new Vector();
-		detailPegawai.clear();
+//		Vector detailPegawai = new Vector();
+//		detailPegawai.clear();
 		
 		String selectNoFail = getParam("selectNoFail");
 		String report = getParam("report");
@@ -80,6 +77,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		//screen
 		vm = "app/htp/6.0/utiliti/frmPopupCetakLaporan.jsp";
 		//vm = "app/htp/utiliti/frmPopupCetakLaporan.jsp";
+		myLog.info("tarikh kemaskini:20200923 0721");
 		return vm;
 		
 	}//close template

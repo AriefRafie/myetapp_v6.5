@@ -37,7 +37,6 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailView extends AjaxBasedModule {
     FrmMOFOnlineKJPSenaraiUlasanFailData logic = new FrmMOFOnlineKJPSenaraiUlasanFailData();
 	//private String templateDir = "app/php2/online/ulasanKJP/mof";
 
-	
 	public String doTemplate2() throws Exception {
 
 		HttpSession session = this.request.getSession();
@@ -72,10 +71,6 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailView extends AjaxBasedModule {
 			}
 
 			this.context.put("idKementerian", idKementerian);
-			/*
-			 * this.context.put("onload", ""); this.context.put("completed", false);
-			 */
-			
 
 			if ("refreshDokumenMuatNaik".equals(command)) {
 				
