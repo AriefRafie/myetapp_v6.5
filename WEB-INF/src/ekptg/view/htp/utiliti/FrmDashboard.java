@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package ekptg.view.htp.utiliti;
 
 import java.sql.Connection;
@@ -75,7 +73,7 @@ public class FrmDashboard extends AjaxBasedModule {
 	private Db db = null;
 	private Connection conn = null;
 	private String sql = "";
-	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	//private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	List listFail = null;
 	List listHakmilik = null;
 	List listKemaskiniCukai = null;
@@ -132,6 +130,7 @@ public class FrmDashboard extends AjaxBasedModule {
 			listCukai = DBListKemaskiniCukai(session);
 			this.context.put("listCukai", listCukai);
 			return PATH+"/div_listCukai.jsp";
+		
 		}
 		
 				
@@ -147,7 +146,7 @@ public class FrmDashboard extends AjaxBasedModule {
 		userId = (String)session.getAttribute("_ekptg_user_id");
 		user_negeri_login = (String)session.getAttribute("_ekptg_user_negeri");
 			
-		get_stat = (Hashtable) statFail();
+		get_stat = (Hashtable<String,String>) statFail();
 		String negeriServer = (String)get_stat.get("NAMA_NEGERI_SERVER");
 		String jumlahKeseluruhan = (String)get_stat.get("JUMLAH_KESELURUHAN");
 		String fail01 = (String)get_stat.get("JUMLAH_PEMBERIMILIKAN");
@@ -175,6 +174,7 @@ public class FrmDashboard extends AjaxBasedModule {
 //    	}
 //     	context.put("senaraionline", vecSenaraiOnline);  
    	
+		
 		//ONLINE - Submodul Permohonan
     	Vector<HtpPermohonan> onlinePermohonan = null; 
     	Vector<Hashtable<String, String>> onlinePermohonanPra = null; 
@@ -263,8 +263,48 @@ public class FrmDashboard extends AjaxBasedModule {
 		list_memo_aktif = logic.getMemo("","Aktif","1","0");
 		context.put("list_memo_aktif",list_memo_aktif);		
 		//
-		int bilTugasan = 0; 
+		String langkahCukaiHantar = "5";
+		String langkahPerakuan = "4";
+		String langkahRekod = "24";
 
+		if(portal_role.contains("HQPengguna")){
+  			langkahCukaiHantar = "5";
+ 			langkahRekod = "24";
+   			langkahPerakuan = "1";
+
+		}else if(portal_role.contains("HQPegawai")){
+			langkahCukaiHantar = "6";
+   			langkahPerakuan = "4";
+   			langkahRekod = "25";
+
+		}else if(portal_role.contains("HQPengarah")){
+			langkahCukaiHantar = "7";
+   			langkahPerakuan = "5";
+   			langkahRekod = "26";
+
+		}
+
+		int bilTugasan = 0; 
+		//submodul Permohonan
+		//PENAMBAHBAIKAN. SYAZ. 17112014. NOTIFIKASI BORANG 15A UTK UNIT REKOD DAN UNIT CUKAI
+//		Integer bil_borang5ABaru = getBilBorang5ABaru(userId);
+//		this.context.put("bil_borang5ABaru",bil_borang5ABaru);
+//		
+		Integer bil_borang15ABaru = getBilBorang15ABaru(userId);
+		this.context.put("bil_borang15ABaru",bil_borang15ABaru);
+
+		//submodul Akuan Pembelian
+		myLog.info("langkahPerakuan="+langkahPerakuan);
+		int bilTugasanPerakuan = 0; 
+		Vector<Hashtable<String,String>> vecPerakuan = null;
+		vecPerakuan = getHTPermohonan().getPermohonanAktifLangkah("2", langkahPerakuan); 
+
+		if(vecPerakuan != null)
+			bilTugasanPerakuan = vecPerakuan.size();
+
+		myLog.info("bilTugasanPerakuan="+bilTugasanPerakuan);
+
+		//submodul Pengurusan Cukai
 		int bilTugasanCukaiPenyata = 0; 
     	if(isTab(portal_role,"Cukai")){
     	 	String socTahun = getParam("Form_tahun")==null||getParam("Form_tahun")==""?lebah.util.Util.getDateTime(new Date(), "yyyy"):getParam("Form_tahun");
@@ -290,18 +330,7 @@ public class FrmDashboard extends AjaxBasedModule {
     	//this.context.put("cukaiSenaraiPenyata", vecCukaiSenarai);
 		int bilTugasanCukaiHantar = 0; 
 		Vector vecCukaiHantar = null;
-		String langkahCukaiHantar = "5";
-  		if(portal_role.contains("HQPengguna")){
-  			langkahCukaiHantar = "5";
- 
-		}else if(portal_role.contains("HQPegawai")){
-			langkahCukaiHantar = "6";
- 		
-		}else if(portal_role.contains("HQPengarah")){
-			langkahCukaiHantar = "7";
- 
-		}
-  		vecCukaiHantar = getHTPermohonan().getPermohonanAktifLangkah(IDURUSANCUKAI, langkahCukaiHantar); 
+ 		vecCukaiHantar = getHTPermohonan().getPermohonanAktifLangkah(IDURUSANCUKAI, langkahCukaiHantar); 
 		myLog.info("bilTugasan="+vecCukaiHantar);
   		if(vecCukaiHantar != null)
   			bilTugasanCukaiHantar = vecCukaiHantar.size();
@@ -309,6 +338,12 @@ public class FrmDashboard extends AjaxBasedModule {
   		context.put("bilTugasanCukaiHantar",bilTugasanCukaiHantar);
 		context.put("bilTugasanCukaiHantar",String.valueOf(bilTugasanCukaiHantar));    	
     	
+		//PENAMBAHBAIKAN. SYAZ. 25112014. NOTIFIKASI KEMASKINI CUKAI
+		listKemaskiniCukai = DBListKemaskiniCukai(session);
+		this.context.put("listKemaskiniCukai",listKemaskiniCukai);
+		//System.out.println("listKemaskiniCukai : "+listKemaskiniCukai);
+		
+		
   	    int bilPajakanKecilInt = 0;
 		String bilPajakanKecil = "0";
 		Vector vecPajakanKecil = getHTPermohonan().getPermohonanAktifLangkah(IDURUSANPAJAKANKECIL, "82");
@@ -328,15 +363,12 @@ public class FrmDashboard extends AjaxBasedModule {
 		int bilTugasanRekod = 0; 
 		Vector vecMaklumatPembangunan = null;
   		if(portal_role.contains("HQPengguna")){
-  			String langkahRekod = "24";
   			vecMaklumatPembangunan = getStatusRekod().getInfoStatusPermohonan("", IDSUBURUSANREKOD, langkahRekod);
  
 		}else if(portal_role.contains("HQPegawai")){
- 			String langkahRekod = "25";
   			vecMaklumatPembangunan = getStatusRekod().getInfoStatusPermohonan("", IDSUBURUSANREKOD, langkahRekod);
  		
 		}else if(portal_role.contains("HQPengarah")){
- 			String langkahRekod = "26";
   			vecMaklumatPembangunan = getStatusRekod().getInfoStatusPermohonan("", IDSUBURUSANREKOD, langkahRekod);
  
 		}
@@ -347,7 +379,8 @@ public class FrmDashboard extends AjaxBasedModule {
   		context.put("bilTugasanRekodInt",bilTugasanRekod);
 		context.put("bilTugasanRekod",String.valueOf(bilTugasanRekod));
 		
-		bilTugasan = bilTugasanCukaiHantar+bilTugasanCukaiPenyata+bilPajakanKecilInt+bilTugasanRekod;
+		
+		bilTugasan = bilTugasanCukaiHantar+bilTugasanCukaiPenyata+bilPajakanKecilInt+bilTugasanRekod+bilTugasanPerakuan;
 		myLog.info("bilTugasan="+bilTugasan);
 		context.put("bilTugasanInt",bilTugasan);
 		context.put("bilTugasan",String.valueOf(bilTugasan));
@@ -361,19 +394,8 @@ public class FrmDashboard extends AjaxBasedModule {
 			context.put("tab_index",0);			
 		}
 		*/
+				
 		
-		
-		//PENAMBAHBAIKAN. SYAZ. 17112014. NOTIFIKASI BORANG 15A UTK UNIT REKOD DAN UNIT CUKAI
-//		Integer bil_borang5ABaru = getBilBorang5ABaru(userId);
-//		this.context.put("bil_borang5ABaru",bil_borang5ABaru);
-//		
-		Integer bil_borang15ABaru = getBilBorang15ABaru(userId);
-		this.context.put("bil_borang15ABaru",bil_borang15ABaru);
-		
-		//PENAMBAHBAIKAN. SYAZ. 25112014. NOTIFIKASI KEMASKINI CUKAI
-		listKemaskiniCukai = DBListKemaskiniCukai(session);
-		this.context.put("listKemaskiniCukai",listKemaskiniCukai);
-		//System.out.println("listKemaskiniCukai : "+listKemaskiniCukai);		
 		//System.out.println("portal_role "+portal_role);
 		if(session.getAttribute("rbFile") == null){
 			ResourceBundle rb = ResourceBundle.getBundle("file");
@@ -505,9 +527,9 @@ public class FrmDashboard extends AjaxBasedModule {
 		return listHakmilik;
 	}
 	
-	public Hashtable statFail() throws Exception {	
-		Hashtable get_negeri = (Hashtable) kod_negeri();
-		String kod_negeri = (String)get_negeri.get("KOD_NEGERI");
+	public Hashtable<String,String> statFail() throws Exception {	
+		//Hashtable<String,String> get_negeri = (Hashtable<String,String>) kod_negeri();
+		//String kod_negeri = (String)get_negeri.get("KOD_NEGERI");
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -584,8 +606,8 @@ public class FrmDashboard extends AjaxBasedModule {
 			//myLog.info(" STATISTIK :"+sql.toUpperCase());
 				
 			ResultSet rs = stmt.executeQuery(sql);			
-			Hashtable h;
-			h = new Hashtable();
+			Hashtable<String,String> h;
+			h = new Hashtable<String,String>();
 			while (rs.next()) {
 				h.put("NAMA_NEGERI_SERVER", Utils.isNull(rs.getString("NAMA_NEGERI_SERVER")));
 				h.put("JUMLAH_KESELURUHAN", Utils.isNull(rs.getString("FAIL_HTP")));
@@ -610,18 +632,18 @@ public class FrmDashboard extends AjaxBasedModule {
 		}
 	}
 		
-	public Hashtable kod_negeri() throws Exception {		
+	public Hashtable<String,String> kod_negeri() throws Exception {		
 		Db db = null;
 		String sql = "";
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
+//			SQLRenderer r = new SQLRenderer();
 			sql = "SELECT KOD_NEGERI FROM TBLLOOKUPSTATE S ";		
 			//myLog.info(" KOD_NEGERI :"+sql.toUpperCase());				
 			ResultSet rs = stmt.executeQuery(sql);		
-			Hashtable h;
-			h = new Hashtable();
+			Hashtable<String,String> h;
+			h = new Hashtable<String,String>();
 			while (rs.next()) {
 				if (rs.getString("KOD_NEGERI") == null) {
 					h.put("KOD_NEGERI", "");

@@ -275,6 +275,7 @@
                             <tr>
                               <td colspan="8" scope="row">
                               ##if($idStatus == '6' || $idStatus == '1' || $idStatus == '12' || $SenaraiHakmilik.size() == 0)
+									<input type="button" name="cmdsemakanhakmilik" value="Capaian Hakmilik e-Tanah(Melaka)" onclick="javascript:semakanHakmilikeTanah('htp','$!idPermohonan')"/>
                               <input class="stylobutton100" name="cmdDaftar" type="button" value="Pilih Tanah" onClick="pilihTanah('$idPermohonan')">
                               ##end
                               </td>

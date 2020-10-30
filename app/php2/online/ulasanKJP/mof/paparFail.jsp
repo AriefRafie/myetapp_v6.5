@@ -10,11 +10,12 @@
     <td colspan="2">
     #if ($flagBorangK == 'Y') 
       #parse("app/php2/online/ulasanKJP/frmMaklumatBorangK.jsp") 
-      #else 
+    #else 
       <fieldset><legend>MAKLUMAT TANAH</legend>
       #parse("app/php2/online/ulasanKJP/frmMaklumatTanah.jsp")
       </fieldset>
-      #end </td>
+    #end 
+    </td>
   </tr>
   <tr>
     <td colspan="2"><div id="divUlasan">#parse("app/php2/online/ulasanKJP/mof/maklumatUlasan.jsp")</div></td>

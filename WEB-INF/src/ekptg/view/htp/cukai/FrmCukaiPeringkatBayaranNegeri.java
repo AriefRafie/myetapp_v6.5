@@ -250,7 +250,7 @@ public class FrmCukaiPeringkatBayaranNegeri extends AjaxBasedModule{
 			this.context.put("idPermohonan", idPermohonan);
 			this.context.put("negeri", getParam("negeri"));
 			this.context.put("peringkat_bayaran", getParam("peringkat_bayaran"));
-			int idBaucer;
+			String idBaucer;
 			int idDaerah;
 		    int idPeringkatbayaran;
 		    if (getParam("idPeringkatbayaran") != "0")
@@ -313,7 +313,7 @@ public class FrmCukaiPeringkatBayaranNegeri extends AjaxBasedModule{
 
 			}else if("view".equals(pageMode)){
 				mylog.info("tambahBaucer : pageMode="+pageMode);
-				idBaucer = Integer.parseInt(getParam("idBaucer"));
+				idBaucer = getParam("idBaucer");
 				this.context.put("idPeringkatbayaran", idPeringkatbayaran);
 				this.context.put("idBaucer", idBaucer);
 				this.context.put("idDaerah", getParam("idDaerah"));
@@ -352,7 +352,7 @@ public class FrmCukaiPeringkatBayaranNegeri extends AjaxBasedModule{
 	    	this.context.put("idbayaran", getParam("socbayaran")); 
 			
 			int idBayaranCukai;
-			int idBaucer;
+			String idBaucer;
 		    //int idPeringkatbayaran;
 //		    if(getParam("idPeringkatbayaran") != "0")
 //		    	idPeringkatBayaran = Integer.parseInt(getParam("idPeringkatbayaran"));
@@ -377,10 +377,10 @@ public class FrmCukaiPeringkatBayaranNegeri extends AjaxBasedModule{
 				String idBayaran = simpanBayaran(session,idPeringkatBayaran);
 				//System.out.println("CukaiProcess::Bayaran::simpanBay::socBaucer:xxxxxxxxx:"+getParam("socBaucer"));
 				if(getParam("socBaucer") != ""){
-					idBaucer = Integer.parseInt(getParam("socBaucer"));
+					idBaucer = getParam("socBaucer");
 				    //System.out.println("CukaiProcess::Bayaran::simpanBay::idBaucer::"+idBaucer);
 				}else{
-				  	idBaucer = Integer.parseInt(getParam("idBaucer"));
+				  	idBaucer = getParam("idBaucer");
 			    	//System.out.println("CukaiProcess::Bayaran::simpanBay::idBaucer::"+idBaucer);
 				}
 				bayaranView(session,String.valueOf(idNegeri),idBayaran,idPeringkatBayaran,disability,readability,style1,style2);
@@ -415,7 +415,7 @@ public class FrmCukaiPeringkatBayaranNegeri extends AjaxBasedModule{
 				mylog.info("CukaiProcess::Bayaran::BayaranView");
 				idBayaranCukai = Integer.parseInt(getParam("idBayaranCukai"));
 				String idBayaran = getParam("idBayaranCukai");
-				idBaucer = Integer.parseInt(getParam("idBaucer"));
+				idBaucer = getParam("idBaucer");
 				//this.context.put("idPeringkatbayaran", idPeringkatbayaran);
 				this.context.put("idBayaranCukai", idBayaranCukai);
 				this.context.put("idBaucer", idBaucer);
@@ -880,8 +880,8 @@ public class FrmCukaiPeringkatBayaranNegeri extends AjaxBasedModule{
 			}
 		}
 	  
-	  private int SimpanTBaucer(HttpSession session,int idPeringkatbayaran) throws Exception {
-		  int idBaucer = 0;
+	  private String SimpanTBaucer(HttpSession session,int idPeringkatbayaran) throws Exception {
+		  String idBaucer = "0";
 		  //System.out.println("CukaiProcess::SimpanTBaucer:::idBaucer::"+getParam("idBaucer"));
 		  if(getParam("idBaucer") == ""){
 			  //baucer baru
@@ -910,7 +910,7 @@ public class FrmCukaiPeringkatBayaranNegeri extends AjaxBasedModule{
 			//kemaskini baucer
 			//System.out.println("CukaiProcess::SimpanTBaucer::kemaskini");
 			Hashtable h = new Hashtable();
-			idBaucer = Integer.parseInt(getParam("idBaucer"));
+			idBaucer = getParam("idBaucer");
 			h.put("idBaucer", idBaucer);
 			h.put("idPeringkatbayaran", idPeringkatbayaran);
 			h.put("tkh_baucer", getParam("txdTarikhBaucer"));
@@ -927,7 +927,7 @@ public class FrmCukaiPeringkatBayaranNegeri extends AjaxBasedModule{
 		}
 	}
 		
-	private void DataTBaucer(HttpSession session,int idNegeri, int idBaucer, int idPeringkatbayaran, String disability, String readability, String style1, String style2) throws Exception {
+	private void DataTBaucer(HttpSession session,int idNegeri, String idBaucer, int idPeringkatbayaran, String disability, String readability, String style1, String style2) throws Exception {
 	  	Vector list = new Vector();
 		list.clear();					    
 		try{
@@ -1101,7 +1101,7 @@ public class FrmCukaiPeringkatBayaranNegeri extends AjaxBasedModule{
 			idBayaranCukai = Integer.parseInt(getParam("idBayaranCukai"));
 			h.put("idBayaranCukai", idBayaranCukai);
 			h.put("idPeringkatbayaran", idPeringkatbayaran);
-			h.put("idBaucer", Integer.parseInt(getParam("idBaucer")));
+			h.put("idBaucer", getParam("idBaucer"));
 			h.put("tkh_bayaran", getParam("txdTarikhBayaran"));
 			h.put("nama_bank", getParam("txtNamaBank"));
 			h.put("amaunBayaran", getParam("txtAmaun"));

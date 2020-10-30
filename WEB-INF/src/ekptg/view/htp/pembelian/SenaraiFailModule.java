@@ -1027,7 +1027,7 @@ private void getValuesPemilik(){
 		String idHtpPermohonan = getParam("txtidHtpPermohonan")==""?"0":getParam("txtidHtpPermohonan");
 		String socNegeri = getParam("socNegeri")==""?"0":getParam("socNegeri");
 		String socDaerah = getParam("socDaerah") ==""?"0":getParam("socDaerah");
-		String idMukim = getParam("socMukim") ==""?"0":getParam("socMukim");
+		String idMukim = getParam("socMukim") ==""?"-1":getParam("socMukim");
 		Long idMukimLong = Long.parseLong(idMukim);
 		
 		String socLot = getParam("socLot") ==""?"0":getParam("socLot");

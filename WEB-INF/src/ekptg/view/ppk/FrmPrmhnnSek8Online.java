@@ -20,6 +20,7 @@ import org.apache.velocity.Template;
 
 import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
+import ekptg.helpers.Paging;
 import ekptg.model.ppk.FrmHeaderPpk;
 import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8InternalData;
 import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8OnlineData;
@@ -106,6 +107,7 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 		String mode = getParam("mode");
 		String idAlert = getParam("idAlert");
 		String action = getParam("action");
+		myLogger.info("action:" + action);
 		myLogger.info("submit:" + submit);
 		System.out.println("submit:" + submit);
 		System.out.println("mode:" + mode);
@@ -6648,16 +6650,19 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 			Carix = "1";
 			this.context.put("carix", Carix);
 			if (getParam("subcommand").equals("lebih")) {
+				myLogger.info("Read here1");
 				list = logic_E.getList(usid);
 				onlineLebih = getParam("subcommand");
 
 			} else {
+				myLogger.info("Read here2");
 				list = logic_E.setList(usid);
 				onlineLebih = "";
 
 			}
 			int countList = list.size();
-			this.context.put("Senaraifail", list);
+			myLogger.info("list size***** = "+list.size());
+			this.context.put("SenaraifailOnline", list);
 			this.context.put("CountList", countList);
 			this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri"));
 			setupPage(session,action,list);
@@ -8825,5 +8830,47 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 		this.context.put("flag_jenis_vm", "vtemplate");
 		this.context.put("kenegaraan", "");
 	}
+	
+public void setupPage(HttpSession session,String action,Vector list) {
+	
+		try {
+		
+			this.context.put("totalRecords",list.size());
+			int page = getParam("page") == "" ? 1:getParamAsInteger("page");
+			
+			int itemsPerPage;
+			if (this.context.get("itemsPerPage") == null || this.context.get("itemsPerPage") == "") {
+				itemsPerPage = getParam("itemsPerPage") == "" ? 10:getParamAsInteger("itemsPerPage");
+			} else {
+				itemsPerPage = (Integer)this.context.get("itemsPerPage");
+			}
+		    
+		    if ("getNext".equals(action)) {
+		    	page++;
+		    } else if ("getPrevious".equals(action)) {
+		    	page--;
+		    } else if ("getPage".equals(action)) {
+		    	page = getParamAsInteger("value");
+		    } else if ("doChangeItemPerPage".equals(action)) {
+		       itemsPerPage = getParamAsInteger("itemsPerPage");
+		    }
+		    
+		    Paging paging = new Paging(session,list,itemsPerPage);
+			
+			if (page > paging.getTotalPages()) page = 1; //reset page number
+				this.context.put("SenaraifailOnline",paging.getPage(page));
+			    this.context.put("page", new Integer(page));
+			    this.context.put("itemsPerPage", new Integer(itemsPerPage));
+			    this.context.put("totalPages", new Integer(paging.getTotalPages()));
+			    this.context.put("startNumber", new Integer(paging.getTopNumber()));
+			    this.context.put("isFirstPage",new Boolean(paging.isFirstPage()));
+			    this.context.put("isLastPage", new Boolean(paging.isLastPage()));
+			   
+	        
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.context.put("error",e.getMessage());
+		}	
+	}	
 
 }
