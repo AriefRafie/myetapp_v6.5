@@ -167,8 +167,7 @@ function daftarBaruMesyuarat(){
 	document.${formName}.submit();
 }
 function paparLaporanMesyuarat(idMesyuarat) {
-	//var url = "../x/${securityToken}/ekptg.view.php2.PYWRingkasanKeputusanMesyuarat?idMesyuarat="+idMesyuarat;
-	var url = "../servlet/ekptg.report.php2.PYWRingkasanKeputusanMesyuarat?idMesyuarat="+idMesyuarat;
+	var url = "../servlet/ekptg.report.php2.PYWRingkasanKeputusanMesyuarat?ID_MESYUARAT="+idMesyuarat;
 	var hWnd = window.open(url,'printuser','width=1100,height=430, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
