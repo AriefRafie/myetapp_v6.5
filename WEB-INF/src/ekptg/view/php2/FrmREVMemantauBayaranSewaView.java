@@ -87,6 +87,8 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         String idPemohon = getParam("idPemohon");
         String idAkaun = getParam("idAkaun");
         String idNotis = getParam("idNotis");
+        String noLotTanah = getParam("noLotTanah");
+        System.out.println("noLotTanah >>>> "+noLotTanah);
 
         String idLuasKegunaan = getParam("idLuasKegunaan");
 		if (idLuasKegunaan == null || idLuasKegunaan.trim().length() == 0){
@@ -1126,16 +1128,41 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 
             		// MAKLUMAT TANAH
         			beanMaklumatTanah = new Vector();
+        			/*logic.setMaklumatTanah(idFail);
+        			beanMaklumatTanah = logic.getBeanMaklumatTanah();
+        			if (logic.getBeanMaklumatTanah().size() != 0){
+        				Hashtable hashMaklumatTanah = (Hashtable) logic.getBeanMaklumatTanah().get(0);
+        				idNegeriTanah = (String) hashMaklumatTanah.get("idNegeri");
+        				idKementerian = (String) hashMaklumatTanah.get("idKementerian");
+        				idAgensi = (String) hashMaklumatTanah.get("idAgensi");
+        				idLuas = (String) hashMaklumatTanah.get("idLuas");
+        				hashMaklumatTanah.put("maklumatLot", getParam("txtMaklumatLot") == null ? "": getParam("txtMaklumatLot"));
+            			hashMaklumatTanah.put("catatanTanah",getParam("txtCatatanTanah") == null ? "": getParam("txtCatatanTanah"));
+            			beanMaklumatTanah.addElement(hashMaklumatTanah);
+        			}
+        			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);*/
         			Hashtable hashMaklumatTanah = new Hashtable();
+        			hashMaklumatTanah.put("lot", getParam("noLotTanah") == null ? "": getParam("noLotTanah"));
+        			hashMaklumatTanah.put("hakmilik", getParam("noMilikTanah") == null ? "": getParam("noMilikTanah"));
+        			hashMaklumatTanah.put("noWarta", getParam("noWartaTanah") == null ? "": getParam("noWartaTanah"));
+        			hashMaklumatTanah.put("mukim", getParam("namaMukimTanah") == null ? "": getParam("namaMukimTanah"));
+        			hashMaklumatTanah.put("daerah", getParam("namaDerahTanah") == null ? "": getParam("namaDerahTanah"));
+        			hashMaklumatTanah.put("negeri", getParam("namaNegeriTanah") == null ? "": getParam("namaNegeriTanah"));
+        			hashMaklumatTanah.put("tujuan", getParam("namatujuan") == null ? "": getParam("namatujuan"));
+        			hashMaklumatTanah.put("statusRizab", getParam("status") == null ? "": getParam("status"));
+        			hashMaklumatTanah.put("nama", getParam("txtNama") == null ? "": getParam("txtNama"));
         			hashMaklumatTanah.put("maklumatLot", getParam("txtMaklumatLot") == null ? "": getParam("txtMaklumatLot"));
         			hashMaklumatTanah.put("luas",getParam("txtLuas") == null ? "": getParam("txtLuas"));
         			hashMaklumatTanah.put("catatanTanah",getParam("txtCatatanTanah") == null ? "": getParam("txtCatatanTanah"));
+        			hashMaklumatTanah.put("idNegeriTanah", getParam("socNegeriTanah") == null ? "": getParam("socNegeriTanah"));
+        			hashMaklumatTanah.put("idKementerian", getParam("socKementerian") == null ? "": getParam("socKementerian"));
+        			hashMaklumatTanah.put("idAgensi", getParam("socAgensi") == null ? "": getParam("socAgensi"));
         			beanMaklumatTanah.addElement(hashMaklumatTanah);
         			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 
-        			this.context.put("selectNegeriTanah", HTML.SelectNegeri("socNegeriTanah",Long.parseLong(idNegeriTanah), "",""));
-        			this.context.put("selectKementerian",HTML.SelectKementerian("socKementerian", Long.parseLong(idKementerian), "", " onChange=\"doChangeKementerian();\""));
-        			this.context.put("selectAgensi",HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Long.parseLong(idAgensi), "", ""));
+        			this.context.put("selectNegeriTanah", HTML.SelectNegeri("socNegeriTanah",Long.parseLong(idNegeriTanah),"disabled", " class=\"disabled\""));
+        			this.context.put("selectKementerian",HTML.SelectKementerian("socKementerian", Long.parseLong(idKementerian), "disabled", " class=\"disabled\""));
+        			this.context.put("selectAgensi",HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Long.parseLong(idAgensi), "disabled", " class=\"disabled\""));
 
         		}
         	}
@@ -1575,7 +1602,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 			conn = db.getConnection();
 	    	conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
-			
+
 			sql = "SELECT A.NO_FAIL, C.NAMA, C.EMEL "
 					+ " FROM TBLPFDFAIL A, TBLPHPHASIL B, TBLPHPPEMOHON C "
 					+ " WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON "
@@ -1611,7 +1638,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 					// path = "/reports/" + fileName ;
 					path = File.separator + "reports" + File.separator + fileName;
 				}
-		    	
+
 				FrmREVPopupCetakLaporanData logic = new FrmREVPopupCetakLaporanData();
 
 		    	myMap.put("ID_AKAUN", idAkaun);

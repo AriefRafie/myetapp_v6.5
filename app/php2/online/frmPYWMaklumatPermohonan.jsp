@@ -55,6 +55,13 @@
           <div class="TabbedPanelsContent">
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
               #foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
+              
+              	#if ($!beanMaklumatTanah.noHakmilik == 'NULL' || $!beanMaklumatTanah.noHakmilik == '')
+              		#set($idJenisTanah = '2')
+              	#else
+              		#set($idJenisTanah = '1')
+              	#end
+              	<input type="hidden" name="idJenisTanah" id="idJenisTanah" value="$idJenisTanah" />
 <!--               <tr> -->
 <!--                 <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td> -->
 <!--                 <td width="28%">Pegangan Hakmilik</td> -->
@@ -87,6 +94,7 @@
                 <td>:</td>
                 <td>$selectMukim</td>
               </tr>
+              #if($idJenisTanah == '1')
               <tr>
                 <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
                 <td>Jenis Hakmilik</td>
@@ -105,7 +113,35 @@
                 	#end
                 </td>
               </tr>
-               <tr>
+              #else
+              <tr>
+                <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+                <td>No. Warta</td>
+                <td>:</td>
+                <td>
+                	#if ($mode == 'update')
+                	<input type="text" name="noWartaTanah" id="noWartaTanah" value="$beanMaklumatTanah.noWarta">
+                	#else
+                	<input type="text" name="noWartaTanah" id="noWartaTanah" value="$beanMaklumatTanah.noWarta" readonly="readonly" class="disabled">
+                	#end
+                </td>
+              </tr>
+              <tr>
+                <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+                <td>Tarikh Warta</td>
+                <td>:</td>
+                <td>
+                	#if ($mode == 'update')
+                	<input type="text" name="tarikhWartaTanah" id="tarikhWartaTanah" size="9" value="$beanMaklumatTanah.tarikhWarta" readonly="readonly" class="disabled"/>
+                	<a href="javascript:displayDatePicker('tarikhWartaTanah',false,'dmy');"> <img
+								border="0" src="../img/calendar.gif" /></a>
+                	#else
+                	<input type="text" name="tarikhWartaTanah" id="tarikhWartaTanah" size="9" value="$beanMaklumatTanah.tarikhWarta" readonly="readonly" class="disabled">
+                	#end
+                </td>
+              </tr>
+              #end
+              <tr>
                 <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
                 <td>Jenis Lot</td>
                 <td>:</td>
@@ -554,6 +590,9 @@ function doChangePeganganHakmilik1() {
 }
 function doChangeNegeri() {
 	doAjaxCall${formName}("doChangeNegeri");
+}
+function doChangeDaerah() {
+	doAjaxCall${formName}("doChangeDaerah");
 }
 function doChangeLuasKegunaan() {
 	doAjaxCall${formName}("doChangeLuasKegunaan");
