@@ -2,6 +2,7 @@ package ekptg.view.htp.cukai;
 
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.ResourceBundle;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
@@ -14,13 +15,20 @@ import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
 import ekptg.model.htp.FrmCukaiSenaraiFailExcelUpload;
+import ekptg.model.htp.cukai.CukaiBean;
 import ekptg.model.htp.cukai.FrmCukaiPenyataBean;
 import ekptg.model.htp.cukai.ICukai;
 
-@SuppressWarnings("serial")
 public class FrmCukaiPelarasanHapus extends AjaxBasedModule{
 	
-	private final String PATH="app/htp/cukai/";
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3613060385456172653L;
+	private final String PATHTP="app/htp/";
+	private final String PATHVER = PATHTP+ResourceBundle.getBundle("file").getString("ver_htp")+"/";
+	private final String PATH = PATHVER+"cukai/";
+
 	static Logger myLog = Logger.getLogger(ekptg.view.htp.cukai.FrmCukaiPelarasanHapus.class);
 	String socNegeri = "";
 	String socDaerah = "";
@@ -60,10 +68,23 @@ public class FrmCukaiPelarasanHapus extends AjaxBasedModule{
 			idCukaiTerperinci = getParam("id_cukaiterperinci"+bil);
 			idCukaiTemp = getParam("idcukaitemp"+bil);
 
-			getICukai().cukaiTempHapus(idCukaiTemp);
-			getICukai().cukaiTerperinciHapus(idCukaiTerperinci);
-			SenaraiFailOrig = (Vector<?>)getICukai().senaraiHakmilik(idnegeri,iddaerah,idmukim,socTahun);
+			getICukaiBase().cukaiTempHapus(idCukaiTemp);
+			getICukaiBase().cukaiTerperinciHapus(idCukaiTerperinci);
+			SenaraiFailOrig = (Vector<?>)getICukaiBase().senaraiHakmilik(idnegeri,iddaerah,idmukim,socTahun);
 			this.context.put("SenaraiFailOrig", SenaraiFailOrig);
+			
+		}else if(submit.equals("hakmilik")){
+			Vector senaraiHakmilikB = getICukaiPenyata().senaraiHakmilik(idnegeri,iddaerah,idmukim,socTahun);
+			myLog.info("senaraiHakmilikB="+ senaraiHakmilikB.size());
+
+			Vector senaraiHakmilikX = getICukaiBase().senaraiHakmilik(idnegeri,iddaerah,idmukim,socTahun);
+//			Vector senaraiHakmilikX = getICukaiBase().senaraiHakmilik(idnegeri,iddaerah,idmukim,socTahun,noHakmilik,"","");
+			myLog.info("senaraiHakmilikX="+ senaraiHakmilikX.size());
+
+			this.context.put("senaraiHakmilikB", senaraiHakmilikB);
+			this.context.put("senaraiHakmilikX", senaraiHakmilikX);
+
+			template_name = PATH+"frmCukaiSenarai.jsp";
 			
 		}else if("CetakSenaraiKemaskini".equals(submit)){
      		Vector senaraikemaskini = FrmCukaiSenaraiFailExcelUpload.getCukaiKemaskiniList();
@@ -74,15 +95,15 @@ public class FrmCukaiPelarasanHapus extends AjaxBasedModule{
 			isCarian = "ya";		
 		    String noLot = getParam("txtNoLot")==""?"":getParam("txtNoLot");
 			try {
-				SenaraiFailOrig = getICukai().senaraiHakmilik(idnegeri,iddaerah,idmukim,socTahun);
+				SenaraiFailOrig = getICukaiBase().senaraiHakmilik(idnegeri,iddaerah,idmukim,socTahun);
 				if(!noHakmilik.equals("")){
-					SenaraiFailOrig = getICukai().senaraiHakmilik(idnegeri
+					SenaraiFailOrig = getICukaiBase().senaraiHakmilik(idnegeri
 					,iddaerah,idmukim,socTahun,noHakmilik);
 				}else if(!noLot.equals("")){
-					SenaraiFailOrig = getICukai().senaraiHakmilik(idnegeri
+					SenaraiFailOrig = getICukaiBase().senaraiHakmilik(idnegeri
 							,iddaerah,idmukim,socTahun,noHakmilik,"",noLot);					
 				}else if(!noHakmilik.equals("") && !noLot.equals("")){
-					SenaraiFailOrig = getICukai().senaraiHakmilik(idnegeri
+					SenaraiFailOrig = getICukaiBase().senaraiHakmilik(idnegeri
 							,iddaerah,idmukim,socTahun,noHakmilik,"",noLot);				
 				}
 				this.context.put("SenaraiFailOrig", SenaraiFailOrig);
@@ -97,7 +118,7 @@ public class FrmCukaiPelarasanHapus extends AjaxBasedModule{
 		    String noLot = getParam("txtNoLot")==""?"":getParam("txtNoLot");
 			if(isCarian.equals("ya")){
 				try {
-					SenaraiFailOrig = getICukai().senaraiHakmilik(idnegeri,iddaerah,idmukim,socTahun);
+					SenaraiFailOrig = getICukaiBase().senaraiHakmilik(idnegeri,iddaerah,idmukim,socTahun);
 					isCarian = "ya";		
 				     
 				} catch (Exception e) {
@@ -167,7 +188,7 @@ public class FrmCukaiPelarasanHapus extends AjaxBasedModule{
 		
 	}
 
-	private ICukai getICukai(){
+	private ICukai getICukaiPenyata(){
 		if(iCukai==null){
 			iCukai = new FrmCukaiPenyataBean();
 		}
@@ -175,5 +196,12 @@ public class FrmCukaiPelarasanHapus extends AjaxBasedModule{
 		
 	}
 	
+	private ICukai getICukaiBase(){
+		if(iCukai==null){
+			iCukai = new CukaiBean();
+		}
+		return iCukai;
+		
+	}
 	
 }
