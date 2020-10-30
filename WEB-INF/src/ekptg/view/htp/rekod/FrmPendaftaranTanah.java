@@ -47,6 +47,7 @@ import ekptg.model.htp.utiliti.KodLotBean;
 import ekptg.model.htp.utiliti.UtilHTMLPilihanJenisRizabBean;
 import ekptg.model.htp.utiliti.fail.HTPFailBean;
 import ekptg.model.htp.utiliti.fail.IHTPFail;
+import ekptg.model.utils.rujukan.UtilHTMLPilihanSeksyenUPI;
 
 public class FrmPendaftaranTanah extends AjaxBasedModule {
 
@@ -56,12 +57,13 @@ public class FrmPendaftaranTanah extends AjaxBasedModule {
 	private IHtp iHTP = null;  
  	private IHTPFail iHTPFail = null;  
  	private IKod iKod = null;  
- 	private IUtilHTMLPilihan iUtilPilihan = null;
 	private IHTPStatus iStatus = null;
 	private ITanah iTanah = null;
 	private ITanahDaftar iPengesahan = null;
 	private ITanahDaftar iTanahDaftar = null;
 	private ITanahKementerian iTanahKem = null;  
+	private ekptg.model.utils.IUtilHTMLPilihan iPilihanSek = null;
+  	private IUtilHTMLPilihan iUtilPilihan = null;
 	private HakMilik hakmilik = null;
 	private HakmilikAgensi hakmilikAgensi = null;
 	private HtpPermohonan htpPermohonan = null;
@@ -244,8 +246,8 @@ public class FrmPendaftaranTanah extends AjaxBasedModule {
 		//}else if (submit.equals("paparrizabterperinci")){	//[2.1]-TAMBAH RIZAB- DARI PERMOHONAN, SEKIRANYA TIADA RIZAB				
 		}else if (submit.equals("baru") || submit.equals("paparrizabterperinci")){	//[2.1]-TAMBAH RIZAB- DARI PERMOHONAN, SEKIRANYA TIADA RIZAB				
 			vm = PATH+"pendaftaran/frmPendaftaranTerimaRizab.jsp";
-			myLog.info("baru/paparrizabterperinci="+submit+",mode="+mode);
-			myLog.info("baru/paparrizabterperinci="+submit+",idPermohonan="+getParam("idPermohonan"));
+			myLog.info("submit:baru/paparrizabterperinci="+submit+",mode="+mode);
+			myLog.info("submit:baru/paparrizabterperinci="+submit+",idPermohonan="+getParam("idPermohonan"));
 			String idPermohonan = getParam("idPermohonan");	
 
 			/** [2.2] JIKA MAKLUMAT RIZAB DALAM TABLE TBLHTPHAKMILIK SUDAH ADA/WUJUD */
@@ -269,17 +271,14 @@ public class FrmPendaftaranTanah extends AjaxBasedModule {
 				* VIEW MAKLUMAT FAIL/RIZAB(JIKA ADA)
 				**/
 				myLog.info("isHTPHakmilik = FALSE");
-				//myLog.info("firstAction:"+firstAction);`
-				//2012/12/31
-				//getMaklumatRizabAwal(session,idPermohonan,submit);
 				getMaklumatRizabMengikutPermohonan(idPermohonan,submit);
 				String idDaerah = getParam("socDaerah");
 				//add by rosli 20/08/2010 for default current date
 				String txdTarikhWarta = tarikhSemasa;
 				String txdTarikhTerima = tarikhSemasa;
 				this.context.put("mode", "new");			
+				
 				//AZAM - Override - capture what ever do changes mode
-//2012/12/31			
 				if (mode.toLowerCase().indexOf("change") != -1) {
 //					this.context.put("txtNamaKementerian",UtilHTML.SelectKementerianAktif("txtIdKementerian"
 //							, Utils.parseLong((String)getParam("txtIdKementerian")), null
@@ -437,6 +436,9 @@ public class FrmPendaftaranTanah extends AjaxBasedModule {
 //				 AuditTrail.logActivity("1", idSeksyen, this, session, "UPD", "HAKMILIK/RIZAB  ["+noTanah+"] DIKEMASKINI ");
 //				 
 //			 }else{
+			 	 // HTP-12(b)
+				 rizab.put("socSeksyen", getParam("socSeksyen"));
+
 			 	idHakmilik = getIDaftaRizab().simpan(rizab);
 			 	AuditTrail.logActivity("1", idSeksyen, this, session, "INS", "HAKMILIK/RIZAB  ["+noTanah+"] DITAMBAH ");
 			 //}
@@ -960,8 +962,7 @@ public class FrmPendaftaranTanah extends AjaxBasedModule {
 		
 		}catch(Exception e){
 			 //e.printStackTrace();
-			//throw new Exception("MASALAH RANGKAIAN[2] , SILA SEMAK RANGKAIAN DB METHOD doGetListBox(ekptg.view.htp.FrmPendaftaranHakmilikRizabRekod)");
-			throw new Exception(getIHTP().getErrorHTML("[MODUL HTP REKOD] MASALAH RANGKAIAN[2] , SILA SEMAK RANGKAIAN DB METHOD doGetListBox(ekptg.view.htp.FrmPendaftaranHakmilikRizabRekod)"));
+			throw new Exception(getIHTP().getErrorHTML("[MODUL HTP REKOD] MASALAH RANGKAIAN[2] , SILA SEMAK RANGKAIAN DB METHOD getMaklumatRizabAwal(ekptg.view.htp.FrmPendaftaranHakmilikRizabRekod)"));
 		}
 
 	}
@@ -1015,54 +1016,45 @@ public class FrmPendaftaranTanah extends AjaxBasedModule {
 		try{
 			myLog.info("getMaklumatRizabMengikutPermohonan(idPermohonan="+idPermohonan+",submit="+submit+") mode="+mode);		
 			HtpPermohonan  maklumatFail = getIPermohonan().getPermohonanInfo("",idPermohonan);
-			//myLog.info(getSemakSubUrusan(String.valueOf(maklumatFailB.getPermohonan().getPfdFail().getIdSubUrusan())));
 			semakSubUrusan = getSemakSubUrusan(String.valueOf(maklumatFail.getPermohonan().getPfdFail().getIdSubUrusan()));
 
-			//Hashtable<?, ?> maklumatFail = (Hashtable<?, ?>)frmRekodUtilData.getPermohonanInfoV1(idPermohonan);	
-		 	//if (mode.equals("changeTarafRizab")) {
 			if (mode.toLowerCase().indexOf("change") != -1) {
 		 		myLog.info("getMaklumatRizabMengikutPermohonan:changeTarafRizab");
+				String idnegeri = getParam("socNegeri");
+			 	String iddaerah = getParam("socDaerah");
 				this.context.put("txtFailPTD",getParam("txtFailPTD"));
 				this.context.put("txtFailPTG",getParam("txtFailPTG"));
 				this.context.put("txtTajuk",maklumatFail.getPermohonan().getTujuan());
-				this.context.put("txtNamaKementerian",HTML.SelectKementerian("txtIdKementerian", Utils.parseLong((String)getParam("txtIdKementerian")), null,"onChange=\"doChangeKementerianRizab()\" style=\"width:400px\""));
-				this.context.put("txtNamaAgensi",HTML.SelectAgensiByKementerian("txtIdAgensi", (String)getParam("txtIdKementerian"), Utils.parseLong((String)getParam("txtIdAgensi")), "", " style=\"width:400px\""));
 				this.context.put("txtNoFailSeksyen",maklumatFail.getPermohonan().getPfdFail().getNoFail());
-				String idnegeri = getParam("socNegeri");
-			 	String iddaerah = getParam("socDaerah");
-//			 	if (mode.equals("doChangeStateRizab")) {
-//					this.context.put("selectNegeri",HTML.SelectNegeri("socNegeri",Utils.parseLong(idnegeri)," onChange=\"doChangeStateRizab();\" style=\"width:300px\""));	
-//					this.context.put("selectDaerah", HTML.SelectDaerahByNegeri(idnegeri, "socDaerah", Utils.parseLong(iddaerah),""," onChange=\"doChangeDaerahRizab();\" style=\"width:300px\""));
-//				
-//			 	}
-//				if (mode.equals("doChangeDaerahRizab")) {
-					this.context.put("selectNegeri",HTML.SelectNegeri("socNegeri",Utils.parseLong(idnegeri)," onChange=\"doChangeStateRizab();\" style=\"width:300px\""));	
-					this.context.put("selectDaerah", HTML.SelectDaerahByNegeri(idnegeri, "socDaerah", Utils.parseLong(iddaerah),""," onChange=\"doChangeDaerahRizab();\" style=\"width:300px\""));
-				
-//				}
 				this.context.put("txtFailKJP", maklumatFail.getNoRujukanKJP());
 				this.context.put("txtKemAgenTerkini", getParam("txtKemAgenTerkini"));
-			 		
+					
+//				this.context.put("txtNamaKementerian",HTML.SelectKementerian("txtIdKementerian", Utils.parseLong((String)getParam("txtIdKementerian")), null,"onChange=\"doChangeKementerianRizab()\" style=\"width:400px\""));
+//				this.context.put("txtNamaAgensi",HTML.SelectAgensiByKementerian("txtIdAgensi", (String)getParam("txtIdKementerian"), Utils.parseLong((String)getParam("txtIdAgensi")), "", " style=\"width:400px\""));
+//				this.context.put("selectNegeri",HTML.SelectNegeri("socNegeri",Utils.parseLong(idnegeri)," onChange=\"doChangeStateRizab();\" style=\"width:300px\""));	
+//				this.context.put("selectDaerah", HTML.SelectDaerahByNegeri(idnegeri, "socDaerah", Utils.parseLong(iddaerah),""," onChange=\"doChangeDaerahRizab();\" style=\"width:300px\""));
+	 		
 		 	}else{
 	//	 		myLog.info("getMaklumatRizabAwal:else changeTarafRizab");
 				this.context.put("txtFailPTG",maklumatFail.getNoRujukanPTG());
 				this.context.put("txtFailPTD",maklumatFail.getNoRujukanPTD());
 				this.context.put("txtTajuk",maklumatFail.getPermohonan().getTujuan());
 
-				this.context.put("txtNamaKementerian",UtilHTML.SelectKementerianAktif("txtIdKementerian"
-						, maklumatFail.getPermohonan().getPfdFail().getIdKementerian(), null
-						,"onChange=\"doChangeKementerianRizab()\" style=\"width:400px\""));
-				this.context.put("txtNamaAgensi",HTML.SelectAgensiByKementerian("txtIdAgensi"
-						, String.valueOf(maklumatFail.getPermohonan().getPfdFail().getIdKementerian())
-						, maklumatFail.getIdAgensi()
-						, "", " style=\"width:400px\""));
 				this.context.put("txtNoFailSeksyen", maklumatFail.getPermohonan().getPfdFail().getNoFail());
 				this.context.put("txtFailKJP",maklumatFail.getNoRujukanKJP());
 				//myLog.info("getMaklumatRizabMengikutPermohonan: idNegeriFail="+maklumatFail.get("idnegeri"));
+				this.context.put("txtNamaKementerian",UtilHTML.SelectKementerianAktif("txtIdKementerian"
+						, maklumatFail.getPermohonan().getPfdFail().getIdKementerian(), null
+						,"onChange=\"doChangeKementerianRizab()\" style=\"width:400px\""));
+
+				this.context.put("txtNamaAgensi",HTML.SelectAgensiByKementerian("txtIdAgensi"
+						, String.valueOf(maklumatFail.getPermohonan().getPfdFail().getIdKementerian())
+						, maklumatFail.getIdAgensi(), "", " style=\"width:400px\""));
+
 				this.context.put("selectNegeri",HTML.SelectNegeri("socNegeri"
 						,maklumatFail.getPermohonan().getPfdFail().getIdNegeri()
 						," onChange=\"doChangeStateRizab();\" style=\"width:300px\""));	
-				//myLog.info("getMaklumatRizabMengikutPermohonan: idDdaerahFail="+maklumatFail.get("idDaerah"));
+				
 				iddaerah = maklumatFail.getIdDaerah();
 				this.context.put("selectDaerah", HTML.SelectDaerahByNegeri(String.valueOf(maklumatFail.getPermohonan().getPfdFail().getIdNegeri())
 						, "socDaerah",Utils.parseLong(maklumatFail.getIdDaerah())
@@ -1078,7 +1070,7 @@ public class FrmPendaftaranTanah extends AjaxBasedModule {
 		
 		}catch(Exception e){
 			throw new Exception(getIHTP().getErrorHTML("[MODUL HTP REKOD] MASALAH DATA[RIZAB 1] , HUBUNGI PENTADBIR SISTEM, " +
-					"SILA SEMAK DATA BAGI PERMOHONAN "+idPermohonan+ " doGetListBox(ekptg.view.htp.FrmPendaftaranTanah)"));
+					"SILA SEMAK DATA BAGI PERMOHONAN "+idPermohonan+ " getMaklumatRizabMengikutPermohonan(ekptg.view.htp.FrmPendaftaranTanah)"));
 		}
 
 	}
@@ -1090,26 +1082,18 @@ public class FrmPendaftaranTanah extends AjaxBasedModule {
 	 * @throws Exception
 	 */
 	private void getMaklumatTanahAwal(String idPermohonan) throws Exception {	
-		Hashtable maklumatRizab = (Hashtable)frmRekodUtilData.getRizabUrusan(idPermohonan,null);
-//		myLog.info("getMaklumatTanahAwal:0,maklumatRizab=\n"+maklumatRizab);
-//		if(!maklumatRizab.get("IdDaerahPermohonan").equals("0")){
-//			iddaerah = (getParam("socDaerah")==null||getParam("socDaerah")==""?String.valueOf(maklumatRizab.get("IdDaerah")):getParam("socDaerah"));
-//			this.context.put("selectDaerah", UtilHTML.SelectDaerahByNegeri(idnegeri, "socDaerah",Utils.parseLong((String)maklumatRizab.get("IdDaerah")),""," onChange=\"doChangeDaerahRizab();\" style=\"width:300px\""));
-//		
-//		}
-		if (mode.toLowerCase().indexOf("change") != -1) {
+		Hashtable<String,String> maklumatRizab = (Hashtable<String,String>)FrmRekodUtilData.getRizabUrusan(idPermohonan,null);
+		myLog.info("getMaklumatTanahAwal:mode="+mode);
 
+		if (mode.toLowerCase().indexOf("change") != -1) {
 			String idMukim = getParam("socMukim");
-			this.context.put("selectMukim", HTML.SelectMukimByDaerah(iddaerah, "socMukim", Utils.parseLong(idMukim)," style=\"width:300px\""));
 			this.context.put("txtNoWarta", getParam("txtNoWarta") );
-			this.context.put("selectLuas", HTML.SelectLuas("socLuas",Utils.parseLong( (String)maklumatRizab.get("IdLuas")), " style=\"width:200px\"","pilihLuas()"));
 			this.context.put("txtLuas", getParam("txtLuas") );	
 			this.context.put("statusSah", "");	
 			this.context.put("pegawaiAkhir", "");	
 			this.context.put("txdTarikhDaftar", "");	
 			this.context.put("txdTarikhKemaskini", "");			
 			this.context.put("txtNoWarta", getParam("txtNoWarta"));
-			this.context.put("selectLot", HTML.SelectLot("socLot",Utils.parseLong( String.valueOf(getParam("socLot"))),"style=\"width:200px\""));
 			this.context.put("txtNoLot", getParam("txtNoLot"));	
 			this.context.put("txdTarikhTerima",getParam("txdTarikhTerima"));	
 			this.context.put("txdTarikhWarta", getParam("txdTarikhWarta"));	
@@ -1122,8 +1106,13 @@ public class FrmPendaftaranTanah extends AjaxBasedModule {
 			this.context.put("txtNoPelan",getParam("txtNoPelan"));	
 			this.context.put("txtNoSyit", getParam("txtNoSyit"));
 			this.context.put("txtNoPu", getParam("txtNoPu"));	
-			this.context.put("socjenisrizab", getIUtilPilihan().Pilihan("socjenisrizab"
-					,String.valueOf( getParam("socjenisrizab")), " style=\"width:200px\""," "));
+					
+//			this.context.put("selectMukim", HTML.SelectMukimByDaerah(iddaerah, "socMukim", Utils.parseLong(idMukim)," style=\"width:300px\""));
+//			this.context.put("selectLot", HTML.SelectLot("socLot",Utils.parseLong( String.valueOf(getParam("socLot"))),"style=\"width:200px\""));
+//			this.context.put("selectLuas", HTML.SelectLuas("socLuas",Utils.parseLong( (String)maklumatRizab.get("IdLuas")), " style=\"width:200px\"","pilihLuas()"));
+//			this.context.put("socjenisrizab", getIUtilPilihan().Pilihan("socjenisrizab"
+//					,String.valueOf( getParam("socjenisrizab")), " style=\"width:200px\""," "));
+			getPilihanRizab();
 	
 		}else{
 			//myLog.info("getMaklumatTanahAwal : idnegeri="+idnegeri+",iddaerah = "+iddaerah+",idmukim = "+maklumatRizab.get("idMukim")+maklumatRizab.get("bil"));
@@ -1135,7 +1124,17 @@ public class FrmPendaftaranTanah extends AjaxBasedModule {
 
 			}
 			//myLog.info("getMaklumatTanahAwal : Selepas if");
-			this.context.put("selectMukim", HTML.SelectMukimByDaerah(iddaerah, "socMukim", Utils.parseLong(idmukim)," style=\"width:300px\""));
+			this.context.put("selectMukim", HTML.SelectMukimByDaerah(iddaerah, "socMukim"
+					, Utils.parseLong(idmukim)," style=\"width:300px\""));
+
+			this.context.put("selectSeksyen", getPilihanSek().Pilihan("socSeksyen", "",idmukim));
+
+			this.context.put("selectLot", HTML.SelectLot("socLot"
+					,Utils.parseLong( String.valueOf(getParam("socLot"))),"style=\"width:200px\""));
+			
+			this.context.put("socjenisrizab", getIUtilPilihan().Pilihan("socjenisrizab"
+					,"0", " style=\"width:200px\""," "));
+			
 			this.context.put("txtNoWarta", getParam("txtNoWarta") );
 			this.context.put("selectLuas", HTML.SelectLuas("socLuas",Utils.parseLong( (String)maklumatRizab.get("IdLuas")), " style=\"width:200px\"","pilihLuas()"));
 			this.context.put("txtLuas", getParam("txtLuas") );	
@@ -1144,7 +1143,6 @@ public class FrmPendaftaranTanah extends AjaxBasedModule {
 			this.context.put("txdTarikhDaftar", "");	
 			this.context.put("txdTarikhKemaskini", "");			
 			this.context.put("txtNoWarta", getParam("txtNoWarta"));
-			this.context.put("selectLot", HTML.SelectLot("socLot",Utils.parseLong( String.valueOf(getParam("socLot"))),"style=\"width:200px\""));
 			this.context.put("txtNoLot", getParam("txtNoLot"));	
 			this.context.put("txdTarikhTerima",getParam("txdTarikhTerima"));	
 			this.context.put("txdTarikhWarta", getParam("txdTarikhWarta"));	
@@ -1156,8 +1154,6 @@ public class FrmPendaftaranTanah extends AjaxBasedModule {
 			this.context.put("txtNoPelan",getParam("txtNoPelan"));	
 			this.context.put("txtNoSyit", getParam("txtNoSyit"));
 			this.context.put("txtNoPu", getParam("txtNoPu"));	
-			this.context.put("socjenisrizab", getIUtilPilihan().Pilihan("socjenisrizab"
-					,"0", " style=\"width:200px\""," "));
 
 		}
 		this.context.put("idHakmilik",idPermohonan);	
@@ -2294,7 +2290,8 @@ public class FrmPendaftaranTanah extends AjaxBasedModule {
 			this.context.put("selectRizab", HTML.SelectRizab("socJenisRizab",Utils.parseLong( getParam("socJenisRizab")), " style=\"width:200px;\""));
 			this.context.put("selectLuas", HTML.SelectLuas("socLuas",Utils.parseLong(getParam("socLuas")), " style=\"width:200px\""," pilihLuas()"));
 			this.context.put("selectKategori", HTML.SelectKategori("socKategori",Utils.parseLong(getParam("socKategori")), " style=\"width:200px;\""));
-			
+			this.context.put("selectSeksyen", getPilihanSek().Pilihan("socSeksyen", "",idmukim));
+
 			if (mode.indexOf("doChange") != -1){
 				this.context.put("txtNamaKementerian",HTML.SelectKementerian("txtIdKementerian", Utils.parseLong(idKementerianKemasukan), null,"onChange=\"doChangeKementerianHakmilik()\" style=\"width:400px\""));
 				this.context.put("txtNamaAgensi",HTML.SelectAgensiByKementerian("txtIdAgensi", idKementerianKemasukan, Utils.parseLong(idAgensiKemasukan), "", " style=\"width:400px\""));
@@ -2303,7 +2300,42 @@ public class FrmPendaftaranTanah extends AjaxBasedModule {
 		}catch(Exception e){
 			 e.printStackTrace();
 			 throw new Exception(getIHTP().getErrorHTML(
-					 "[MODUL HTP REKOD] MASALAH RANGKAIAN[1], SILA SEMAK RANGKAIAN DB METHOD doGetListBox(ekptg.view.htp.FrmPendaftaranHakmilikRizabRekod)"));
+					 "[MODUL HTP REKOD] MASALAH RANGKAIAN[1], SILA SEMAK RANGKAIAN DB METHOD doGetListBox("+this.className+")"));
+		
+		}
+		
+	}
+	
+	public void getPilihanRizab() throws Exception {
+		myLog.info("getPilihanRizab:mode="+mode);
+		try{
+			//26/10/2010 Buka komen, diguna untuk kemaskini hakmilik(pilih negeri),param id_negeri  
+			idnegeri = getParam("socNegeri");if ("".equals(idnegeri)) idnegeri = "-1";
+			iddaerah = getParam("socDaerah");if ("".equals(iddaerah)) iddaerah = "-1";
+			idmukim = getParam("socMukim");if ("".equals(idmukim)) idmukim = "-1";
+			//26/10/2010 Buka komen, diguna untuk kemaskini hakmilik(pilih negeri)  
+			this.context.put("selectNegeri",HTML.SelectNegeri("socNegeri",Utils.parseLong(idnegeri)," onChange=\"doChangeStateRizab();\""));	
+			this.context.put("selectDaerah", HTML.SelectDaerahByNegeri(idnegeri, "socDaerah", Utils.parseLong(iddaerah),"$readonly class=\"$disabled\""," onChange=\"doChangeDaerahRizab();\""));
+			this.context.put("selectMukim", HTML.SelectMukimByDaerah(iddaerah, "socMukim", Utils.parseLong(idmukim),"$readonly class=\"$disabled\"","onChange=\"doChangeMukimRizab();\""));
+		   	
+			this.context.put("txtJenisHakmilik", HTML.SelectJenisHakmilik("socJenisHakmilik",Utils.parseLong(getParam("socJenisHakmilik")), "style=\"width:200px\""));
+		    this.context.put("selectLot", HTML.SelectLot("noLot",Utils.parseLong( getParam("noLot")),"style=\"width:200px\""));
+			this.context.put("selectLuas", HTML.SelectLuas("socLuas",Utils.parseLong(getParam("socLuas")), " style=\"width:200px\""," pilihLuas()"));
+			this.context.put("selectKategori", HTML.SelectKategori("socKategori",Utils.parseLong(getParam("socKategori")), " style=\"width:200px;\""));
+			this.context.put("selectSeksyen", getPilihanSek().Pilihan("socSeksyen", "",idmukim));
+
+			this.context.put("socjenisrizab", getIUtilPilihan().Pilihan("socjenisrizab"
+					,String.valueOf( getParam("socjenisrizab")), " style=\"width:200px\""," "));
+
+			if (mode.indexOf("doChange") != -1){
+				this.context.put("txtNamaKementerian",HTML.SelectKementerian("txtIdKementerian", Utils.parseLong(idKementerianKemasukan), null,"onChange=\"doChangeKementerianHakmilik()\" style=\"width:400px\""));
+				this.context.put("txtNamaAgensi",HTML.SelectAgensiByKementerian("txtIdAgensi", idKementerianKemasukan, Utils.parseLong(idAgensiKemasukan), "", " style=\"width:400px\""));
+			}
+		
+		}catch(Exception e){
+			 e.printStackTrace();
+			 throw new Exception(getIHTP().getErrorHTML(
+					 "[MODUL HTP REKOD] MASALAH RANGKAIAN[1], SILA SEMAK RANGKAIAN DB METHOD getPilihanRizab("+this.className+")"));
 		
 		}
 		
@@ -2499,7 +2531,7 @@ public class FrmPendaftaranTanah extends AjaxBasedModule {
 
 			//Diguna semasa Tambah Hakmilik, Tambah Hakmilik Permohonan (Pilih Negeri)	
 			} else {
-				System.out.println("fix bug: default mode : "+mode);
+				myLog.info("else mode = ");
 				//myLog.debug(" ** NEW FORM **"+idPermohonan);
 				initContextValue();
 				doGetListBox();
@@ -2524,9 +2556,8 @@ public class FrmPendaftaranTanah extends AjaxBasedModule {
 				this.context.put("readonly", "");
 				
 			}
-			
-		
-			myLog.info("\nmode = "+mode);
+					
+			myLog.info("nmode = "+mode);
 			this.context.put("mode", mode);
 
 		} catch (Exception e) {
@@ -3141,5 +3172,12 @@ public class FrmPendaftaranTanah extends AjaxBasedModule {
 		return iTanahKem;
 	}		
 	
+	private ekptg.model.utils.IUtilHTMLPilihan getPilihanSek(){
+		if(iPilihanSek==null){
+			iPilihanSek = new UtilHTMLPilihanSeksyenUPI();
+		}
+		return iPilihanSek;
+	
+	}
 
 }
