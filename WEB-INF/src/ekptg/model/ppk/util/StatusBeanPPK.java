@@ -448,7 +448,7 @@ public class StatusBeanPPK implements IStatus {
 	    		" ,S.KETERANGAN  "+
 	    		" ,SM.NAMA_SIMATI"+
 	    		" ,ST.ID_SUBURUSANSTATUS,ST.ID_SUBURUSAN "+
-	    		" ,STF.ID_SUBURUSANSTATUSFAIL, STF.AKTIF,STF.URL_CATATAN" +
+	    		" ,STF.ID_SUBURUSANSTATUSFAIL, STF.AKTIF, P.ALASAN_ONLINE_DIKEMBALIKAN " +
 	    		" ,TO_CHAR(STF.TARIKH_MASUK,'dd/mm/yyyy') TARIKH_MASUK " +
 	    		" ,TO_CHAR(STF.TARIKH_KEMASKINI,'dd/mm/yyyy') TARIKH_SELESAI" +
 	    		" ,STF.ID_PERMOHONAN,STF.ID_FAIL " +
@@ -465,8 +465,9 @@ public class StatusBeanPPK implements IStatus {
 	    		" AND P.ID_PERMOHONAN = PSM.ID_PERMOHONAN "+
 	    		" AND PSM.ID_SIMATI = SM.ID_SIMATI "+
 	    		" AND PM.ID_PEMOHON = P.ID_PEMOHON  "+
+	    		" AND P.FLAG_PERMOHONANDIKEMBALIKAN = '1'"+
 	    		" AND ST.LANGKAH = '"+langkah+"'"+
-	    		" AND STF.aktif = 1 "+
+	    		" AND STF.AKTIF = 1 "+
 	    		//" AND STF.ID_FAIL = '" + idHakmilik + "'" +
 	    				"";
 	    		if(!idUrusan.equals("")){
@@ -491,7 +492,7 @@ public class StatusBeanPPK implements IStatus {
 	    				h.put("id_suburusanstatus", rs.getString("id_suburusanstatus"));
 	    				//h.put("id_fail", rs.getString("id_fail")==null?"":rs.getString("id_fail"));
 	    				//h.put("no_fail", rs.getString("no_fail")==null?"":rs.getString("no_fail"));
-	    				h.put("catatan", Utils.isNull(rs.getString("URL_CATATAN")));
+	    				h.put("catatan", Utils.isNull(rs.getString("ALASAN_ONLINE_DIKEMBALIKAN")));
 		    		    h.put("nama_pemohon", rs.getString("NAMA_PEMOHON")==null?"":rs.getString("NAMA_PEMOHON"));
 		    		    h.put("nama_simati", rs.getString("NAMA_SIMATI")==null?"":rs.getString("NAMA_SIMATI"));
 	    		    	h.put("seksyen", rs.getString("SEKSYEN")==null?"":rs.getString("SEKSYEN"));
