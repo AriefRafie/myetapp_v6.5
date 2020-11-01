@@ -66,15 +66,13 @@
 					<div class="TabbedPanelsContent">#if ($selectedTabUpper == '4')
 					
 	<fieldset>	
-				<legend>
-				PENGESAHAN PERMOHONAN
-				</legend>
-				<table width="100%" border="0">
-				<tr>
-					<td width="5%"></td>
-					<td width="28%" >Negeri</td>
-					<td width="1%">:</td>
-					<td width="70%"><strong>$!maklumatPejabat.get("negeri")</strong></td>
+	<legend>PENGESAHAN PERMOHONAN</legend>
+	<table width="100%" border="0">
+	<tr>
+		<td width="5%"></td>
+		<td width="28%" >Negeri</td>
+		<td width="1%">:</td>
+		<td width="70%"><strong>$!maklumatPejabat.get("negeri")</strong></td>
 	</tr>
 	  <tr>
 		<td></td>
@@ -159,7 +157,7 @@
     <input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
     #else
     #if($idStatus == '1610207') <!-- 1610207 -->
-    <input type="button" name="cmdRenewLesen" id="cmdRenewLesen" value="Pembaharuan Lesen" onClick="javascript:daftarPembaharuan('$!idFail','$!idPermohonan','$!idStatus') "/>  
+    <!--<input type="button" name="cmdRenewLesen" id="cmdRenewLesen" value="Pembaharuan Lesen" onClick="javascript:daftarPembaharuan('$!idFail','$!idPermohonan','$!idStatus') "/>--> 
     <input type="button" name="cmdBorangA" id="cmdBorangA" value="Borang A" onClick="javascript:daftarPembaharuanBorangA('$!idFail','$!idPermohonan','$!idStatus','$!namaPemohon','$!idJadualKeduaLesen','$!noLesen') "/>   
     <input type="button" name="cmdBorangB" id="cmdBorangB" value="Borang B" onClick="javascript:daftarPembaharuanBorangB('$!idFail','$!idPermohonan','$!idStatus','$!namaPemohon','$!idJadualKeduaLesen','$!noLesen') "/>    	 
     #else
@@ -630,8 +628,8 @@ function popupMsg(){
 function kemaskiniPermohonan() {
 	document.${formName}.actionOnline.value = "seterusnya";
 	document.${formName}.mode.value = "update";
-	document.${formName}.submit();	
- //	doAjaxCall${formName}("");//comment jap ye
+	//document.${formName}.submit();	
+ 	doAjaxCall${formName}("");
 }
 function batalKemaskiniPermohonan() {
 	document.${formName}.mode.value = "view";
