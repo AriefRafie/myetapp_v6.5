@@ -461,7 +461,8 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdDaerah() + ">"
-						+ f.getKodDaerah() + " - " + f.getNamaDaerah()
+//						+ f.getKodDaerah() + " - " + f.getNamaDaerah() 20201028
+						+ f.getNamaDaerah()
 						+ "</option>\n");
 			}
 			sb.append("</select>");
@@ -3704,7 +3705,8 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdMukim() + ">"
-						+ f.getKodMukim() + " - " + f.getNamaMukim()
+//						+ f.getKodMukim() + " - " + f.getNamaMukim() 20201028
+						+ f.getNamaMukim()
 						+ "</option>\n");
 			}
 			sb.append("</select>");

@@ -90,11 +90,12 @@ private static final long serialVersionUID = 1L;
         	if ("simpanMaklumatKJT".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatKJT(idPermohonan, "4", idKementerian, idAgensi, idPejabat, idNegeri, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
-        		logicTKR.sendEmailtoPejabatJKPTG(idPermohonan, idPejabat, session);
+        		logicTKR.sendEmailtoPejabatJKPTG(idUlasanTeknikal, session);
     		}
         	if ("simpanMaklumatUlanganKJT".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatUlanganKJT(idUlasanTeknikal, idPermohonan, "4", idKementerian, idAgensi, idPejabat, idNegeri, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
+        		logicTKR.sendEmailtoPejabatJKPTG(idUlasanTeknikal, session);
     		}
         	if ("simpanKemaskiniMaklumatKJT".equals(hitButton)){
         		logic.simpanKemaskiniMaklumatKJT(idUlasanTeknikal, "4", idKementerian, idAgensi, idPejabat, idNegeri, getParam("txtTarikhHantar"), 

@@ -83,7 +83,7 @@ public class FrmPrmhnnSek8DaftarSek8OnlineData {
 
 				////System.out.println("SQL FAR" + sql);
 
-				//myLogger.info("SQL SET DATA:"+sql.toUpperCase());
+				myLogger.info("SQL SET DATA:"+sql.toUpperCase());
 
 				ResultSet rs = stmt.executeQuery(sql);
 				Hashtable h;
@@ -3183,6 +3183,44 @@ public  void setGetId(String id) throws Exception{
 	      if (db != null) db.close();
 	    }
 	  }
+	
+public static void simpanCatatanTolak(Hashtable data) throws Exception {
+		
+	    Db db = null;
+	    String sql = "";
+	   
+	    try
+	    {
+	    
+	    	db = new Db();
+	    	 Statement stmt = db.getStatement();
+	    	 
+	    	 String id_user = (String)data.get("id_user");
+	    	 String id_permohonan = (String)data.get("id_permohonan");
+	    	 String txtCatatan = (String)data.get("txtCatatan");
+	    	 String id_status = "8";
+	    	 
+	    	 SQLRenderer r = new SQLRenderer();
+	    	 r.update("id_permohonan", id_permohonan);
+	    	 
+	    	 r.add("ALASAN_ONLINE_DIKEMBALIKAN", txtCatatan);	
+	    	 r.add("id_status","150");
+	    	 r.add("tarikh_kemaskini",r.unquote("sysdate"));
+		     r.add("id_kemaskini",id_user);
+		     r.add("FLAG_PERMOHONANDIKEMBALIKAN","Y");
+		     
+	    	 sql = r.getSQLUpdate("Tblppkpermohonan");
+	    	 myLogger.info("simpanCatatanTolak: "+ sql);
+	    	 stmt.executeUpdate(sql);
+	    	 
+	    } catch (Exception re) {
+	    	myLogger.error("Error: ", re);
+	    	throw re;
+	    	}
+	    finally {
+	    if (db != null) db.close();
+	    }
+	  }//close simpanCatatanTolak
 	
 	public  Vector getListJenisHakMilik(String statushakmilik) throws Exception {
 	    Db db = null;

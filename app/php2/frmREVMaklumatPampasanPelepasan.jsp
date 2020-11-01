@@ -76,7 +76,7 @@ function validateCurrency(elmnt,content,content2) {
 		elmnt.value = content2;
 		return;
 	}
-	
+
 	if(content != ""){
 		var num = content * 1;
 		elmnt.value = num.toFixed(2);
@@ -97,22 +97,51 @@ function doKemaskiniPemohon(){
 function doSimpanKemaskiniPemohon() {
 	if(document.${formName}.txtNama.value == ""){
 			alert('Sila masukan Nama.');
-  			document.${formName}.txtNama.focus(); 
-			return; 
+  			document.${formName}.txtNama.focus();
+			return;
 		}
 		if(document.${formName}.socNegeri.value == ""){
 			alert('Sila masukan Negeri.');
-  			document.${formName}.socNegeri.focus(); 
-			return; 
+  			document.${formName}.socNegeri.focus();
+			return;
 		}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "update";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniPemohon";
+	document.${formName}.submit();
+}
+</script>
+
+<!-- MAKLUMAT TINDAKAN MAHKAMAH -->
+<script>
+function doKemaskiniTindakanMahkamah(){
+	document.${formName}.mode.value = "update";
+	doAjaxCall${formName}("");
+}
+function doSimpanKemaskiniTindakanMahkamah() {
+	if(document.${formName}.tarikh_notis_tuntutan.value == ""){
+			alert('Sila masukan Tarikh Notis Tuntutan.');
+  			document.${formName}.tarikh_notis_tuntutan.focus();
+			return;
+		}
+		if(document.${formName}.tarikh_notis_rampasan.value == ""){
+			alert('Sila masukan Tarikh Notis Rampasan.');
+  			document.${formName}.tarikh_notis_rampasan.focus();
+			return;
+		}
+
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.mode.value = "update";
+		return;
+	}
+
+	document.${formName}.mode.value = "view";
+	document.${formName}.hitButton.value = "doSimpanKemaskiniTindakanMahkamah";
 	document.${formName}.submit();
 }
 </script>
@@ -132,25 +161,25 @@ function simpanBayaran(){
 
 	if(document.${formName}.txtTarikh.value == ""){
 		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus(); 
-		return; 
+  		document.${formName}.txtTarikh.focus();
+		return;
 	}
 	if(document.${formName}.socCaraBayaran.value == ""){
 		alert('Sila pilih Cara Bayar.');
-  		document.${formName}.socCaraBayaran.focus(); 
-		return; 
+  		document.${formName}.socCaraBayaran.focus();
+		return;
 	}
 	if(document.${formName}.txtAmaun.value == ""){
 		alert('Sila masukkan Amaun.');
-  		document.${formName}.txtAmaun.focus(); 
-		return; 
+  		document.${formName}.txtAmaun.focus();
+		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "newBayaran";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "viewBayaran";
 	document.${formName}.hitButton.value = "simpanBayaran";
 	doAjaxCall${formName}("");
@@ -170,7 +199,7 @@ function hapusBayaran(){
 		document.${formName}.mode.value = "viewBayaran";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "hapusBayaran";
 	doAjaxCall${formName}("");
@@ -178,25 +207,25 @@ function hapusBayaran(){
 function simpanKemaskiniBayaran(){
 	if(document.${formName}.txtTarikh.value == ""){
 		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus(); 
-		return; 
+  		document.${formName}.txtTarikh.focus();
+		return;
 	}
 	if(document.${formName}.socCaraBayaran.value == ""){
 		alert('Sila pilih Cara Bayar.');
-  		document.${formName}.socCaraBayaran.focus(); 
-		return; 
+  		document.${formName}.socCaraBayaran.focus();
+		return;
 	}
 	if(document.${formName}.txtAmaun.value == ""){
 		alert('Sila masukkan Amaun.');
-  		document.${formName}.txtAmaun.focus(); 
-		return; 
+  		document.${formName}.txtAmaun.focus();
+		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "updateBayaran";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "viewBayaran";
 	document.${formName}.hitButton.value = "simpanKemaskiniBayaran";
 	doAjaxCall${formName}("");
@@ -222,25 +251,25 @@ function simpanPelarasan(){
 
 	if(document.${formName}.txtTarikh.value == ""){
 		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus(); 
-		return; 
+  		document.${formName}.txtTarikh.focus();
+		return;
 	}
 	if(document.${formName}.socJenisPelarasan.value == ""){
 		alert('Sila pilih Debit / Kredit.');
-  		document.${formName}.socJenisPelarasan.focus(); 
-		return; 
+  		document.${formName}.socJenisPelarasan.focus();
+		return;
 	}
 	if(document.${formName}.txtAmaun.value == ""){
 		alert('Sila masukkan Amaun.');
-  		document.${formName}.txtAmaun.focus(); 
-		return; 
+  		document.${formName}.txtAmaun.focus();
+		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "newPelarasan";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "viewPelarasan";
 	document.${formName}.hitButton.value = "simpanPelarasan";
 	doAjaxCall${formName}("");
@@ -260,7 +289,7 @@ function hapusPelarasan(){
 		document.${formName}.mode.value = "viewPelarasan";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "hapusPelarasan";
 	doAjaxCall${formName}("");
@@ -268,25 +297,25 @@ function hapusPelarasan(){
 function simpanKemaskiniPelarasan(){
 	if(document.${formName}.txtTarikh.value == ""){
 		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus(); 
-		return; 
+  		document.${formName}.txtTarikh.focus();
+		return;
 	}
 	if(document.${formName}.socJenisPelarasan.value == ""){
 		alert('Sila pilih Debit / Kredit.');
-  		document.${formName}.socJenisPelarasan.focus(); 
-		return; 
+  		document.${formName}.socJenisPelarasan.focus();
+		return;
 	}
 	if(document.${formName}.txtAmaun.value == ""){
 		alert('Sila masukkan Amaun.');
-  		document.${formName}.txtAmaun.focus(); 
-		return; 
+  		document.${formName}.txtAmaun.focus();
+		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "updatePelarasan";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "viewPelarasan";
 	document.${formName}.hitButton.value = "simpanKemaskiniPelarasan";
 	doAjaxCall${formName}("");

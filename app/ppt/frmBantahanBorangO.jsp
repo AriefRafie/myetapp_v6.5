@@ -360,7 +360,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
       
       <tr>
         <td>
-        <a href="#" class="style2" onClick="javascript:cetakBorangO('$id_fail','$id_bantahan','$id_siasatan','$id_warta')"><font color="blue"> Borang O - Rujukan Kepada Mahkamah </font></a>
+        <a href="#" class="style2" onClick="javascript:cetakBorangO('$id_fail','$id_bantahan','$id_siasatan','$id_warta','$id_permohonan')"><font color="blue"> Borang O - Rujukan Kepada Mahkamah </font></a>
         </td>
       </tr> 
       
@@ -489,12 +489,19 @@ function cetakLampiranBorangO(id_fail,id_bantahan,id_siasatan,id_warta) {
     if (hWnd.focus != null) hWnd.focus();	
 }
 
-function cetakBorangO(id_fail,id_bantahan,id_siasatan,id_warta) {
-	var url = "../servlet/ekptg.report.ppt.BorangO?idFail="+id_fail+"&id_bantahan="+id_bantahan+"&idSiasatan="+id_siasatan+"&idWarta="+id_warta;
+function cetakBorangO(id_fail,id_bantahan,id_siasatan,id_warta,id_permohonan) {
+	/*var url = "../servlet/ekptg.report.ppt.BorangO?idFail="+id_fail+"&id_bantahan="+id_bantahan+"&idSiasatan="+id_siasatan+"&idWarta="+id_warta;
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();	
+    if (hWnd.focus != null) hWnd.focus();	*/
+    
+
+    var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?idFail="+id_fail+"&id_bantahan="+id_bantahan+"&idSiasatan="+id_siasatan+"&idWarta="+id_warta+"&id_permohonan="+id_permohonan+"&report=BorangO&selectNoFail=yes";
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
 }
 
 function cetakSuratIringanBorangO(id_fail,id_bantahan,id_hakmilikpb,id_permohonan) {

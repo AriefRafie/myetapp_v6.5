@@ -153,6 +153,7 @@ public class FrmCRBSenaraiMesyuaratView extends AjaxBasedModule {
 				idMesyuarat = logic.simpanMesyuarat(getParam("txtTarikhMesyuarat"), 
 						getParam("txtBilMesyuarat"), getParam("txtTujuanMesyuarat"), idJamDari, idMinitDari,
 						idJamHingga, idMinitHingga, getParam("txtCatatanMesyuarat"), idLokasi, session);
+				this.context.put("idMesyuarat", idMesyuarat);
 			}
 			if ("simpanKemaskiniMesyuarat".equals(hitButton)) {
 				logic.simpanKemaskiniMesyuarat(idMesyuarat, getParam("txtTarikhMesyuarat"),
@@ -178,6 +179,7 @@ public class FrmCRBSenaraiMesyuaratView extends AjaxBasedModule {
 									listAgensi[i], listJawatan[i],
 									listNoTel[i], listEmail[i],getParam("flagPengerusi"),
 									session);
+							logic.sendEmailMesyuarat(idMesyuarat, listEmail[i], session);
 						}
 					}
 				}

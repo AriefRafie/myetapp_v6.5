@@ -271,7 +271,7 @@ public class FrmPopupCapaianHakmilikeTanahData {
 //					stmt.executeUpdate(sql);
 					
 					sql = "SELECT * FROM TBLINTMAKLUMATANAHOB WHERE "
-							+ "AND ID_HAKMILIK = '" + idHakmilik + "' "
+							+ "ID_HAKMILIK = '" + idHakmilik + "' "
 							//+ "AND ID_PERMOHONAN = '" + idPermohonan + "'"
 						+ "";
 						myLog.info("TBLINTMAKLUMATANAHOB:sql="+sql);

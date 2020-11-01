@@ -7,6 +7,7 @@ import ekptg.engine.EmailSender;
 import ekptg.engine.EmailProperty;
 import ekptg.model.online.aduan.entity.ComplaintResponse;
 import ekptg.model.online.aduan.entity.ComplaintTindakan;
+import ekptg.model.utils.emel.EmailConfig;
 
 public class ComplaintEmailNotification implements IComplaintEmailNotification {
 	private IEkptgManageComplaintHandler manageComplaint;
@@ -20,7 +21,7 @@ public class ComplaintEmailNotification implements IComplaintEmailNotification {
 			complaintResponse = new ComplaintResponseBean();
 	}
 	@Override
-	public void notifyPengadu(String idAduan) {
+	public void notifyPengadu(String idAduan) throws Exception {
 		if(!isNotifiedPengadu(idAduan)){
 			sendNotifiedPengaduMessage();
 			updateFlagNotifiedPengadu();
@@ -52,43 +53,60 @@ public class ComplaintEmailNotification implements IComplaintEmailNotification {
 			db.close();
 		}
 	}
-	private void sendNotifiedPengaduMessage(){
+	private void sendNotifiedPengaduMessage () throws Exception {
 		StringBuffer msg = new StringBuffer();
 		msg.append("<p>Salam sejahtera "+complaint.getNamaPengadu()+",</p>");
 		msg.append("<p>Aduan anda bertarikh "+complaint.getTarikhAduan()+" telah kami terima. Pihak kami akan memberi maklumbalas kepada anda secepat yang mungkin.</p>");
-		msg.append("<p>Sekian, terima kasih.</p>");
+		//msg.append("<p>Sekian, terima kasih.</p>");
+		String tajuk ="ADUAN TANAH: " + complaint.getNoAduan()+ " (Notifikasi : Log Bejaya Dihantar)";
+
 		System.out.println(msg.toString());
 		if(complaint.getEmailPengadu() != null && !complaint.getEmailPengadu().equals("")){
-			EmailSender email = EmailSender.getInstance();
-			EmailProperty prop = EmailProperty.getInstance();
-			email.FROM = prop.getAduanFrom();
-			email.SUBJECT = "Perkhidmatan Online eTaPP : Aduan Online No. "+complaint.getId();
-			email.RECIEPIENT = complaint.getEmailPengadu();
-			email.MESSAGE = msg.toString();
-			email.sendEmail();
+//			EmailSender email = EmailSender.getInstance();
+//			EmailProperty prop = EmailProperty.getInstance();
+			EmailConfig ec = new EmailConfig();
+			ec.mail.TO_CC = new String[1];		
+			ec.mail.TO_CC[0] = "roslizakariasip@gmail.com";
+
+			ec.sendTo(complaint.getEmailPengadu(), tajuk, msg.toString());
+
+//			email.FROM = prop.getAduanFrom();
+//			email.SUBJECT = "Perkhidmatan Online eTaPP : Aduan Online No. "+complaint.getId();
+//			email.RECIEPIENT = complaint.getEmailPengadu();
+//			email.MESSAGE = msg.toString();
+//			email.sendEmail();
 		}
 	}
 	
-	private void sendNotifiedSeksyenMessage(){
-		String emailSubject ="Perkhidmatan Online eTaPP : Agihan Tugasan Aduan Online No. "+complaint.getId();
+	private void sendNotifiedSeksyenMessage() throws Exception{
+//		String emailSubject ="Perkhidmatan Online eTaPP : Agihan Tugasan Aduan Online No. "+complaint.getId();
 		StringBuffer msg = new StringBuffer();
-		msg.append("<p>Salam Sejahtera, <br> Aduan No. "+complaint.getId()+" telah diagihkan kepada anda. Sila login ke  <a href='http://www.etapp.gov.my'>www.etapp.gov.my</a> untuk mendapatkan perincian.</p>");
-		msg.append("<p>Sekian, terima kasih.</p>");
+		msg.append("<p>Salam Sejahtera, <br> Aduan No. "+complaint.getId()+" telah diagihkan kepada anda.</p>");
+		//msg.append("<p>Salam Sejahtera, <br> Aduan No. "+complaint.getId()+" telah diagihkan kepada anda. Sila login ke  <a href='http://www.etapp.gov.my'>www.etapp.gov.my</a> untuk mendapatkan perincian.</p>");
+		//msg.append("<p>Sekian, terima kasih.</p>");
+		String tajuk ="ADUAN TANAH: " + complaint.getNoAduan()+ " (Notifikasi : Log Bejaya Dihantar)";
+
 		ComplaintTindakan tindakan = response.getTindakan();
 		String groupEmail = tindakan.getGroupEmail();
 		if(groupEmail != null && !groupEmail.equals("")){
-			EmailSender email = EmailSender.getInstance();
-			EmailProperty prop = EmailProperty.getInstance();
-			email.FROM = prop.getAduanFrom();
-			email.SUBJECT =emailSubject;
-			email.RECIEPIENT = groupEmail;
-			email.MESSAGE = msg.toString();
-			email.sendEmail();
+			EmailConfig ec = new EmailConfig();
+			ec.mail.TO_CC = new String[1];		
+			ec.mail.TO_CC[0] = "roslizakaria@gmail.com";
+
+			ec.sendTo("roslizakariasip@gmail.com", tajuk, msg.toString());
+//			EmailSender email = EmailSender.getInstance();
+//			EmailProperty prop = EmailProperty.getInstance();
+//			email.FROM = prop.getAduanFrom();
+//			email.SUBJECT =emailSubject;
+//			email.RECIEPIENT = groupEmail;
+//			email.MESSAGE = msg.toString();
+//			email.sendEmail();
+			
 		}
 		
 	}
 	@Override
-	public void notifySeksyen(String idAduan, String idAduanResponse) {
+	public void notifySeksyen(String idAduan, String idAduanResponse) throws Exception{
 		complaint = manageComplaint.getComplaint(idAduan);
 		response = complaintResponse.getResponse(idAduanResponse);
 		if(response != null){

@@ -13,8 +13,7 @@ function toggle_div(id) {
 <input type="hidden" name="ID_ADUANPUBLIC" id="ID_ADUANPUBLIC" value="$!ID_ADUANPUBLIC">
 <input type="hidden" name="id_phphakmilikaduan" id="id_phphakmilikaduan" value="$!id_phphakmilikaduan">
 <input type="hidden" name="idJenisAduan" id="idJenisAduan" value="16101">
-
-
+<br>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td colspan="2"><fieldset>
@@ -26,34 +25,38 @@ function toggle_div(id) {
 		</script>
           <tr>
             <td width="1%">&nbsp;</td>
-            <td align="left" width="15%">Nama</td>
+            <td align="left" width="15%">Nama Pengadu</td>
             <td width="1%">:</td>
-            <td width="73%"><input TABINDEX="1" type="hidden" id="name" name="name"  onBlur="this.value=this.value.toUpperCase();" value="$!user.name.toUpperCase()">
-            <font color="blue">$!user.name.toUpperCase()</font>            </td>
+            <td width="73%">
+            	<input TABINDEX="1" type="text" id="name" name="name" size="50" onBlur="this.value=this.value.toUpperCase();" value="$!user.name.toUpperCase()">
+            <!-- <font color="blue">$!user.name.toUpperCase()</font> -->            
+            </td>
           </tr>
           <tr>
             <td>&nbsp;</td>
             <td align="left">Jawatan</td>
             <td >:</td>
-            <td><input TABINDEX="1" type="hidden" id="nama_jawatan" name="nama_jawatan"  onBlur="this.value=this.value.toUpperCase();" value="$!user.jawatan">
-            <font color="blue">$!user.jawatan</font>            </td>
+            <td><input TABINDEX="1" type="text" id="nama_jawatan" name="nama_jawatan" size="30" onBlur="this.value=this.value.toUpperCase();" value="$!user.jawatan">
+            	<!-- <font color="blue">$!user.jawatan</font> -->            
+            	</td>
           </tr>
         <tr>
           <td align="right"><font color="red">*</font></td>
           <td align="left">Emel</td>
           <td>:</td>
           <td>
-          <input TABINDEX="1" onClick="" value="$!emel" type="hidden" name="email" id="email" autocomplete="off" />
-             <a href="mailto:$!user.email"><font color="blue"><u>$!user.email</u></font></a>
+          <input TABINDEX="1" type="text" value="$!emel" name="email" id="email" size="30" autocomplete="off" value="$!user.email" onClick="" />
+             <!-- <a href="mailto:$!user.email"><font color="blue"><u>$!user.email</u></font></a> -->
 
 			</td>
         </tr>
         <tr>
             <td>&nbsp;</td>
-            <td align="left">No. Tel</td>
+            <td align="left">No. Telefon</td>
             <td >:</td>
-            <td><input TABINDEX="1" type="hidden" id="phone" name="phone"  onBlur="this.value=this.value.toUpperCase();" value="$!user.phone">
-           <font color="blue">$!user.phone</font>            </td>
+            <td><input TABINDEX="1" type="text" id="phone" name="phone" size="30" onBlur="this.value=this.value.toUpperCase();" value="$!user.phone">
+           <!-- <font color="blue">$!user.phone</font>  -->           
+         	</td>
          </tr>
          <tr>
             <td>&nbsp;</td>
@@ -87,7 +90,7 @@ function toggle_div(id) {
           <td valign="top" align="right"> <span id="notifyPPK2" style="display:none"><font color="red">*</font></span></td>
           <td align="left">No. Fail</td>
           <td>:</td>
-          <td><input value="$!no_fail" type="text" style="text-transform:uppercase;" name="no_fail" id="no_fail" size="40" maxlength="40" onBlur="this.value=this.value.toUpperCase();" onkeyup="this.value=this.value.toUpperCase();" /> </td>
+          <td><input value="$!no_fail" type="text" style="text-transform:uppercase;" name="no_fail" id="no_fail" size="30" maxlength="40" onBlur="this.value=this.value.toUpperCase();" onkeyup="this.value=this.value.toUpperCase();" /> </td>
         </tr>
 		<tr>
 		    <td colspan="4">
@@ -227,19 +230,16 @@ function daftarAduan_hantar() {
 
 	}
 
-function simpan() {
-
-	//doAjaxCall${formName}("simpanDraf");
-	document.${formName}.enctype= "multipart/form-data";
-	document.${formName}.encoding = "multipart/form-data";
-	document.${formName}.action='?_portal_module=ekptg.view.htp.online.aduan.AduanTanah&command=daftarBaru';
-	document.${formName}.submit();
-
+	function simpan() {
+		//doAjaxCall${formName}("simpanDraf");
+		document.${formName}.enctype= "multipart/form-data";
+		document.${formName}.encoding = "multipart/form-data";
+		document.${formName}.action='?_portal_module=ekptg.view.htp.online.aduan.AduanTanah&command=daftarBaru';
+		document.${formName}.submit();
 
 	}
 
 function hantar() {
-
 	//doAjaxCall${formName}("simpanComplaint");
 	document.${formName}.enctype= "multipart/form-data";
 	document.${formName}.encoding = "multipart/form-data";

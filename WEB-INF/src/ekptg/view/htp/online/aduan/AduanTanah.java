@@ -42,12 +42,8 @@ import ekptg.model.online.aduan.ResponseStatus;
 import ekptg.model.online.aduan.entity.ComplaintResponse;
 import ekptg.model.utils.IUtilHTMLPilihan;
 import ekptg.model.utils.rujukan.UtilHTMLPilihanSeksyenUPI;
-import etapp.data.HTPHakmilikAduanMobile;
 import etapp.data.OnlineEAduanMobile;
 import etapp.data.OnlineLampiranEAduanMobile;
-import etapp.data.RujJenisAduanMobile;
-import etapp.data.RujJenisHakmilikMobile;
-import etapp.data.RujSumberAduanMobile;
 
 public class AduanTanah extends AjaxModule {
 	/**
@@ -106,10 +102,10 @@ public class AduanTanah extends AjaxModule {
 		}
 
 		getUserDetail(userId);
-		myLog.info("userId nak add "+ userId);
+		myLog.info("command= "+ command);
 		if(command.equals("viewComplaint")){
 			userId = getParam("userid");
-			myLog.info("userId nak view "+userId);
+//			myLog.info("userId nak view "+userId);
 			viewComplaint();
 			getSeksyenList();
 			getUserDetail(userId);
@@ -143,13 +139,13 @@ public class AduanTanah extends AjaxModule {
 			String responseStatus = getParam("responseStatus");
 			Vector v =getRespone().getMyTaskList(userId, responseStatus);
 			context.put("lists", v);
-		}
-
-		else{
-			vm = PATH+"index.jsp";
+		
+		}else{
 			displayComplaint();
+			vm = PATH+"index.jsp";
+	
 		}
-		myLog.info("<<<command>>"+command);
+		myLog.info("<<<command>>="+command);
 
 		getProsesStatus();
 		return vm;
@@ -207,10 +203,10 @@ public class AduanTanah extends AjaxModule {
 
 	private void simpanAduan() throws Exception{
 		myLog.info("simpanAduan");
-		 DiskFileItemFactory factory = new DiskFileItemFactory();
-		 ServletFileUpload upload = new ServletFileUpload(factory);
-		 List items = upload.parseRequest(request);
-		    Iterator itr = items.iterator();
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		List items = upload.parseRequest(request);
+		Iterator itr = items.iterator();
 
 			myLog.info("simpanAduan2");
 		    Date now = new Date();
@@ -218,7 +214,7 @@ public class AduanTanah extends AjaxModule {
 		    String namaPengadu = "";
 		    String emailPengadu = "";
 		    String phonePengadu = "";
-		    Long idJenisAduan = null;
+		    Long idJenisAduan = Long.parseLong("16104");
 		    String status = "DALAM PROSES";
 		    String statusPenyelesaian = "";
 		    String flagOnline = "Y";
@@ -238,87 +234,96 @@ public class AduanTanah extends AjaxModule {
 			String no_fail ="";
 			long idAduan =0;
 
-		    while (itr.hasNext()) {
-				FileItem item = (FileItem)itr.next();
-				if ( ((item.isFormField())) ) {
-
-					myLog.info("simpanAduan3");
-					if ( "name".equals((String)item.getFieldName())) namaPengadu = (String) item.getString();
-					if ( "email".equals((String)item.getFieldName())) emailPengadu = (String) item.getString();
-					if ( "phone".equals((String)item.getFieldName())) phonePengadu = (String) item.getString();
-					if ( "idJenisAduan".equals(item.getFieldName())) idJenisAduan = Long.parseLong(item.getString());
-					if ( "ulasanBalas".equals((String)item.getFieldName())) catatan = (String) item.getString();
-					if ( "socNegeri".equals((String)item.getFieldName())) idNegeri = (String) item.getString();
-					if ( "socDaerahTanah".equals((String)item.getFieldName())) idDaerah = (String) item.getString();
-					if ( "socJenisHakmilik".equals((String)item.getFieldName())) idHakmilikAduan = (String) item.getString();
-					if ( "nohakmilikTanah".equals((String)item.getFieldName())) noHakmilikAduan = (String) item.getString();
-					if ( "socJenisLot".equals((String)item.getFieldName())) idJenisLotTanah = (String) item.getString();
-					if ( "nolotTanah".equals((String)item.getFieldName())) nolotTanah = (String) item.getString();
-					if ( "socMukimTanah".equals((String)item.getFieldName())) idMukim = (String) item.getString();
-					if ( "socSeksyen".equals((String)item.getFieldName())) idSekyen = (String) item.getString();
-					if ( "no_fail".equals((String)item.getFieldName())) no_fail = (String) item.getString();
-				} else if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
-					uploadData = item.getInputStream();
-					uploadName = item.getName();
-					uploadType = item.getContentType();
-					uploadSize = item.getSize();
-				}
+		while (itr.hasNext()) {
+			FileItem item = (FileItem)itr.next();
+			if ( ((item.isFormField())) ) {
+//				myLog.info("simpanAduan3");
+				if ( "name".equals((String)item.getFieldName())) namaPengadu = (String) item.getString();
+				if ( "email".equals((String)item.getFieldName())) emailPengadu = (String) item.getString();
+				if ( "phone".equals((String)item.getFieldName())) phonePengadu = (String) item.getString();
+				if ( "idJenisAduan".equals(item.getFieldName())) idJenisAduan = Long.parseLong(item.getString());
+				if ( "ulasanBalas".equals((String)item.getFieldName())) catatan = (String) item.getString();
+				if ( "socNegeri".equals((String)item.getFieldName())) idNegeri = (String) item.getString();
+				if ( "socDaerahTanah".equals((String)item.getFieldName())) idDaerah = (String) item.getString();
+				if ( "socJenisHakmilik".equals((String)item.getFieldName())) idHakmilikAduan = (String) item.getString();
+				if ( "nohakmilikTanah".equals((String)item.getFieldName())) noHakmilikAduan = (String) item.getString();
+				if ( "socJenisLot".equals((String)item.getFieldName())) idJenisLotTanah = (String) item.getString();
+				if ( "nolotTanah".equals((String)item.getFieldName())) nolotTanah = (String) item.getString();
+				if ( "socMukimTanah".equals((String)item.getFieldName())) idMukim = (String) item.getString();
+				if ( "socSeksyen".equals((String)item.getFieldName())) idSekyen = (String) item.getString();
+				if ( "no_fail".equals((String)item.getFieldName())) no_fail = (String) item.getString();
+				
+			} else if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
+				uploadData = item.getInputStream();
+				uploadName = item.getName();
+				uploadType = item.getContentType();
+				uploadSize = item.getSize();
+				
 			}
+			
+		}
+		myLog.info("simpanAduan4");
+		Connection conn = null;
+		SQLRenderer r2 = new SQLRenderer();
+		String sql2 = "";
+		try {
+			Db db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
 
+			myLog.info("aduanTanah2");
+			idAduan = DB.getNextID(db, "TBLONLINEEADUAN_SEQ");
+			r2.add("ID_EADUAN", idAduan);
+			r2.add("NAMA_PENGADU", namaPengadu);
+			r2.add("EMAIL_PENGADU", emailPengadu);
+			r2.add("CATATAN", catatan);
+			r2.add("ID_JENISADUAN", idJenisAduan);
+			r2.add("STATUS", status);
+			r2.add("PHONE_PENGADU", phonePengadu);
+			r2.add("ID_PENGADU", idPengadu);
+			r2.add("ID_SUMBERADUAN", 16101);
+			r2.add("NO_FAIL", no_fail);
+			r2.add("FLAG_ONLINE", flagOnline);
+			r2.add("TARIKH_MASUK", r2.unquote("sysdate"));
+			sql2 = r2.getSQLInsert("TBLONLINEEADUAN");
 
-			myLog.info("simpanAduan4");
-			Connection conn = null;
-			SQLRenderer r2 = new SQLRenderer();
-			String sql2 = "";
+			myLog.info("save aduan :: sql >>>> "+sql2);
+			stmt.executeUpdate(sql2);
+			conn.commit();
+		
+		}catch (SQLException se) {
+			myLog.error(se);
+			
 			try {
-				Db db = new Db();
-				conn = db.getConnection();
-				conn.setAutoCommit(false);
-				Statement stmt = db.getStatement();
+	    		conn.rollback();
+		    } catch (SQLException se2) {
+		   		throw new Exception("Rollback error:"+se2.getMessage());
+		   	}
+	    	throw new Exception("Ralat Pendaftaran :"+se.getMessage());
+			
+		}catch (Exception re) {
+			throw re;
+		}finally {}
 
-				myLog.info("aduanTanah2");
-
-
-				idAduan = DB.getNextID(db, "TBLONLINEEADUAN_SEQ");
-				r2.add("ID_EADUAN", idAduan);
-				r2.add("NAMA_PENGADU", namaPengadu);
-				r2.add("EMAIL_PENGADU", emailPengadu);
-				r2.add("CATATAN", catatan);
-				r2.add("ID_JENISADUAN", idJenisAduan);
-				r2.add("STATUS", status);
-				r2.add("PHONE_PENGADU", phonePengadu);
-				r2.add("ID_PENGADU", idPengadu);
-				r2.add("ID_SUMBERADUAN", 16101);
-				r2.add("NO_FAIL", no_fail);
-				r2.add("FLAG_ONLINE", flagOnline);
-				r2.add("TARIKH_MASUK", r2.unquote("sysdate"));
-
-				sql2 = r2.getSQLInsert("TBLONLINEEADUAN");
-
-				myLog.info("save aduan :: sql >>>> "+sql2);
-				stmt.executeUpdate(sql2);
-				conn.commit();
-				}
-				catch (SQLException se) {
-					myLog.error(se);
-			    	try {
-			    		conn.rollback();
-			    	} catch (SQLException se2) {
-			    		throw new Exception("Rollback error:"+se2.getMessage());
-			    	}
-			    	throw new Exception("Ralat Pendaftaran :"+se.getMessage());
-				}
-				catch (Exception re) {
-					throw re;
-				}finally {
-				}
-
-
-			myLog.info("simpanAduan5");
-			aduanTanah(session,String.valueOf(idAduan),db1,idNegeri,idDaerah,idHakmilikAduan,noHakmilikAduan,idJenisLotTanah,nolotTanah,idMukim,idSekyen);
-			context.put("complaintID", idAduan);
-			context.put("pengaduID", idPengadu);
-	 }
+		OnlineEAduanMobile aduanOnline = db.find(OnlineEAduanMobile.class, idAduan);
+				
+		db.begin();
+		OnlineLampiranEAduanMobile lampiran = new OnlineLampiranEAduanMobile(); 
+		lampiran.setEAduan(aduanOnline);
+		lampiran.setContent(IOUtils.toByteArray(uploadData));
+		lampiran.setJenisMime(uploadType);
+		lampiran.setTarikhMasuk(now);
+		lampiran.setNamaFail(uploadName);
+		db.persist(lampiran);
+		db.commit();
+			
+		myLog.info("simpanAduan5");
+		aduanTanah(session,String.valueOf(idAduan),db1,idNegeri,idDaerah,idHakmilikAduan,noHakmilikAduan,idJenisLotTanah,nolotTanah,idMukim,idSekyen);
+		context.put("complaintID", idAduan);
+		context.put("pengaduID", idPengadu);
+	 
+	}
 
 	public String aduanTanah(HttpSession session,String ID_ADUANPUBLIC,Db db,String idNegeri,String idDaerah,String idHakmilikAduan,
 			String noHakmilik,String idJenisLotTanah,String nolotTanah,String idMukim,String idSekyen) throws Exception {
@@ -446,9 +451,8 @@ public class AduanTanah extends AjaxModule {
 		try {
 			db = new Db();
 			aduanDetails = aduanDetails(idRespon,idRespon,session,db);
-		}
-		catch (Exception ex) {
-		throw new DbException(ex.getMessage());
+		}catch (Exception ex) {
+			throw new DbException(ex.getMessage());
 		}
 		finally {
 			if (db != null)
@@ -484,18 +488,24 @@ public class AduanTanah extends AjaxModule {
 				db1 = db;
 			}
 			stmt = db1.getStatement();
-			sql = " SELECT aduan.NO_FAIL," +
-					" tanah.ID_HAKMILIKADUAN,tanah.ID_ADUAN,tanah.ID_LUAS,tanah.NO_HAKMILIK,tanah.NO_WARTA,tanah.TARIKH_WARTA,tanah.NO_LOT," +
-					" tanah.LUAS,tanah.ID_DAERAH,tanah.ID_NEGERI,tanah.ID_MUKIM,tanah.ID_LOT,tanah.ID_JENISHAKMILIK,N1.NAMA_NEGERI AS NAMA_NEGERITANAH," +
-					" D1.NAMA_DAERAH AS NAMA_DAERAHTANAH,M.NAMA_MUKIM AS NAMA_MUKIMTANAH, J.KETERANGAN AS NAMA_HAKMILIK, L.KETERANGAN AS NAMA_LOT, "+
-					" tanah.ID_SEKSYEN, S.NAMA_SEKSYENUPI AS NAMA_SEKSYENTANAH "+
-					" FROM TBLONLINEEADUAN aduan,TBLHTPHAKMILIKADUAN tanah,TBLRUJNEGERI N1," +
-					" TBLRUJDAERAH D1,TBLRUJMUKIM M,TBLRUJJENISHAKMILIK J,TBLRUJLOT L ,TBLRUJSEKSYENUPI S"+
-					" WHERE tanah.ID_NEGERI = N1.ID_NEGERI(+) AND tanah.ID_DAERAH = D1.ID_DAERAH(+) AND tanah.ID_MUKIM = M.ID_MUKIM(+) AND tanah.ID_SEKSYEN = S.ID_SEKSYENUPI(+)" +
-					" AND tanah.ID_JENISHAKMILIK = J.ID_JENISHAKMILIK(+) AND tanah.ID_LOT = L.ID_LOT(+) "+
-					" AND aduan.ID_EADUAN = '"+idAduan+"' "+
-					" AND tanah.ID_ADUAN = '"+idAduan+"'  ";
-			myLog.info(" ADUAN : SQL aduanDetails :"+ sql);
+			sql = " SELECT DISTINCT A.NO_FAIL,A.ID_EADUAN ID_ADUAN" +
+				" ,T.ID_HAKMILIKADUAN,T.ID_LUAS,T.NO_HAKMILIK,T.NO_WARTA,T.TARIKH_WARTA,T.NO_LOT,T.LUAS" +
+				" ,T.ID_DAERAH,T.ID_NEGERI,T.ID_MUKIM,T.ID_SEKSYEN,T.ID_LOT,T.ID_JENISHAKMILIK"+
+				" ,RN.NAMA_NEGERI AS NAMA_NEGERITANAH" +
+				" ,RD.NAMA_DAERAH AS NAMA_DAERAHTANAH"+
+				" ,RM.NAMA_MUKIM AS NAMA_MUKIMTANAH"+
+				" ,RS.NAMA_SEKSYENUPI AS NAMA_SEKSYENTANAH "+
+				" ,RJ.KOD_JENIS_HAKMILIK AS NAMA_HAKMILIK, RL.KETERANGAN AS NAMA_LOT "+
+				" FROM TBLONLINEEADUAN A,TBLHTPHAKMILIKADUAN T "+
+				" ,TBLRUJNEGERI RN,TBLRUJDAERAH RD,TBLRUJMUKIM RM,TBLRUJSEKSYENUPI RS" +
+				" ,TBLRUJJENISHAKMILIK RJ,TBLRUJLOT RL "+
+				" WHERE A.ID_EADUAN = T.ID_ADUAN "+
+				" AND T.ID_NEGERI = RN.ID_NEGERI(+) AND T.ID_DAERAH = RD.ID_DAERAH(+) AND T.ID_MUKIM = RM.ID_MUKIM(+) AND T.ID_SEKSYEN = RS.ID_SEKSYENUPI(+)" +
+				" AND T.ID_JENISHAKMILIK = RJ.ID_JENISHAKMILIK(+) AND T.ID_LOT = RL.ID_LOT(+) "+
+				" AND A.ID_EADUAN = '"+idAduan+"' "+
+//					" AND tanah.ID_ADUAN = '"+idAduan+"'  "
+				"";
+			myLog.info(" aduanDetails : sql="+ sql);
 			rs = stmt.executeQuery(sql);
 			listJenisAduan = Collections.synchronizedList(new ArrayList());
 			Map h = null;
@@ -599,8 +609,10 @@ public class AduanTanah extends AjaxModule {
 				db1 = db;
 			}
 			stmt = db1.getStatement();
-			sql = "SELECT UPPER(aduan.NAMA_PENGADU) AS FULLNAME,aduan.ID_PENGADU,tanah.NO_HAKMILIK,aduan.ID_EADUAN,aduan.TARIKH_MASUK,aduan.STATUS FROM TBLHTPHAKMILIKADUAN tanah, TBLONLINEEADUAN aduan "+
-					" WHERE tanah.ID_ADUAN = aduan.ID_EADUAN AND tanah.ID_MASUK = '"+USER_ID+"'  ";
+			sql = "SELECT UPPER(aduan.NAMA_PENGADU) AS FULLNAME,aduan.ID_PENGADU,tanah.NO_HAKMILIK,aduan.ID_EADUAN,aduan.TARIKH_MASUK,aduan.STATUS "+
+				" ,NVL(aduan.CATATAN,'') CATATAN "+
+				" FROM TBLHTPHAKMILIKADUAN tanah, TBLONLINEEADUAN aduan "+
+				" WHERE aduan.ID_EADUAN = tanah.ID_ADUAN(+)  AND aduan.id_pengadu = '"+USER_ID+"'  ";
 			myLog.info(" ADUAN : SQL listJenisAduan :"+ sql);
 			rs = stmt.executeQuery(sql);
 			listJenisAduan = Collections.synchronizedList(new ArrayList());
@@ -616,6 +628,7 @@ public class AduanTanah extends AjaxModule {
 				h.put("ID_PENGADU",rs.getString("ID_PENGADU") == null ? "" : rs.getString("ID_PENGADU"));
 				h.put("TARIKH_MASUK",rs.getDate("TARIKH_MASUK") == null ? "": sdf.format(rs.getDate("TARIKH_MASUK")));
 				h.put("STATUS",rs.getString("STATUS") == null ? "" : rs.getString("STATUS").toUpperCase());
+				h.put("aduan",rs.getString("CATATAN") == null ? "" : rs.getString("CATATAN").toUpperCase());
 				listJenisAduan.add(h);
 			}
 
@@ -689,7 +702,6 @@ public class AduanTanah extends AjaxModule {
 		context.put("negeri",getHandler().getAvailableNegeri());
 	}
 	private void getProsesStatus(){
-
 		context.put("statuses", ResponseStatus.values());
 	}
 

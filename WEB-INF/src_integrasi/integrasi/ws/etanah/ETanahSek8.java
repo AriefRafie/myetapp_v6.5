@@ -115,9 +115,9 @@ public class ETanahSek8 implements IntegrationInternal{
 		for (int i = 0; i < vecHakmilik.size(); i++) {
 			tanah = (Hashtable<String,String>)vecHakmilik.get(i);
 			hakmilik = new MaklumatHakmilikForm();
-			hakmilik.setId_hakmilik(tanah.get("idHakmilik"));
-			hakmilik.setKod_luas_ambil(tanah.get("kodLuasAmbil"));
-			hakmilik.setKod_luas_asal(tanah.get("kodLuasAsal"));
+			hakmilik.setId_hakmilik(tanah.get("peganganHakmilik"));
+			hakmilik.setKod_luas_ambil(tanah.get("idLuasAmbil"));
+			hakmilik.setKod_luas_asal(tanah.get("idLuasAsal"));
 			hakmilik.setKod_unit_hakmilik(tanah.get("kodHakmilik"));
 			hakmilik.setLuas_ambil(tanah.get("luasAmbil"));
 			hakmilik.setLuas_asal(tanah.get("luasAsal"));
@@ -143,6 +143,34 @@ public class ETanahSek8 implements IntegrationInternal{
 	private MaklumatPermohonanSek8Form getPermohonan(Hashtable<String,String> permohonan) {
 		MaklumatPermohonanSek8Form form = null;
 		form = new MaklumatPermohonanSek8Form();
+		//KJP ATAU JKPTG?
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		form.setTarikh_permohonan(sdf.format((cal.getTime()))); 
+	
+		form.setNama_kementerian(permohonan.get("namaKementerian"));
+		form.setTujuan(permohonan.get("namaProjek"));
+		form.setTujuan_dalam_english(permohonan.get("namaProjekBI"));
+		//form.setNo_fail_jkptg("JKPTG(S).MLK/03/881/24/2019/5");
+		form.setNo_fail_jkptg(permohonan.get("noFail"));
+
+		form.setKod_negeri_pengambilan(permohonan.get("kodNegeri"));
+		form.setNama_negeri_pengambilan(permohonan.get("namaNegeri"));
+		form.setKod_daerah_pengambilan(permohonan.get("kodDaerah"));
+		form.setNama_daerah_pengambilan(permohonan.get("namaDaerah"));
+
+		form.setJenis_pengambilan(permohonan.get("jenisPengambilan"));
+		form.setJenis_projek_pengambilan(permohonan.get("jenisProjek"));
+
+		form.setNo_rujukan_surat_kjp(permohonan.get("noRujukanSurat"));
+		form.setTarikh_surat_kjp(permohonan.get("tarikhRujukanSurat"));
+		//form.setTarikh_surat_kjp(sdf.format(cal.getTime()));
+		
+		form.setId_kementerian_myetapp(permohonan.get("idKementerian"));
+		form.setNama_agensi(permohonan.get("namaAgensi"));
+		form.setId_agensi_myetapp(permohonan.get("idAgensi"));
+		form.setKodAgensi(permohonan.get("kodAgensi"));
+		form.setKodKementerian(permohonan.get("kodKementerian"));
+	
 		form.setAlamat1(permohonan.get("alamat1"));
 		form.setAlamat2(permohonan.get("alamat2"));
 		form.setAlamat3(permohonan.get("alamat3"));
@@ -150,31 +178,56 @@ public class ETanahSek8 implements IntegrationInternal{
 		form.setPoskod(permohonan.get("poskod"));
 		form.setKodNegeri(permohonan.get("kodNegeriA"));
 
-		form.setId_agensi_myetapp(permohonan.get("idAgensi"));
-		form.setJenis_pengambilan(permohonan.get("jenisPengambilan"));
-		form.setJenis_projek_pengambilan(permohonan.get("jenisProjek"));
-		form.setKod_daerah_pengambilan(permohonan.get("kodDaerah"));
-		form.setKod_negeri_pengambilan(permohonan.get("kodNegeri"));
-		form.setKodAgensi(permohonan.get("kodAgensi"));
-		form.setKodKementerian(permohonan.get("kodKementerian"));
-		form.setNama_agensi(permohonan.get("namaAgensi"));
-		form.setNama_daerah_pengambilan(permohonan.get("namaDaerah"));
-		form.setNama_kementerian(permohonan.get("namaKementerian"));
-		form.setNama_negeri_pengambilan(permohonan.get("namaNegeri"));
-		//form.setNo_fail_jkptg("JKPTG(S).MLK/03/881/24/2019/5");
-		form.setNo_fail_jkptg(permohonan.get("noFail"));
-		form.setNo_rujukan_surat_kjp(permohonan.get("noRujukanSurat"));
-		form.setTarikh_surat_kjp(permohonan.get("tarikhRujukanSurat"));
-
-		//KJP ATAU JKPTG?
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		form.setTarikh_surat_kjp(sdf.format(cal.getTime()));
-		
-		form.setTarikh_permohonan(sdf.format((cal.getTime()))); 
-
 		//form.setTarikh_permohonan(permohonan.get("tarikhPermohonan")); 
-		form.setTujuan(permohonan.get("namaProjek"));
-		form.setTujuan_dalam_english(permohonan.get("namaProjekBI"));
+		/**
+        <!--Optional:-->
+        <tarikh_permohonan>23/10/2020</tarikh_permohonan>
+        <!--Optional:-->
+        <nama_kementerian>KEMENTERIAN TENAGA DAN SUMBER ASLI</nama_kementerian>
+        <!--Optional:-->
+        <tujuan_dalam_english>?</tujuan_dalam_english>
+        <!--Optional:-->
+        <Tujuan>MENAIKTARAF SISTEM SALIRAN BAGI MENGATASI MASALAH BANJIR KILAT DI KAWASAN MELAKA BANDARAYA BERSEJARAH FASA 2 (PAKEJ 1)</Tujuan>
+        <!--Optional:-->
+        <no_fail_jkptg>JKPTG(S).MLK/01/881/18/2015/4</no_fail_jkptg>
+        <!--Optional:-->
+        <kod_negeri_pengambilan>04</kod_negeri_pengambilan>
+        <!--Optional:-->
+        <nama_negeri_pengambilan>MELAKA</nama_negeri_pengambilan>
+        <!--Optional:-->
+        <kod_daerah_pengambilan>01</kod_daerah_pengambilan>
+        <!--Optional:-->
+        <nama_daerah_pengambilan>MELAKA TENGAH</nama_daerah_pengambilan>
+        <!--Optional:-->
+        <jenis_pengambilan>?</jenis_pengambilan>
+        <!--Optional:-->
+        <jenis_projek_pengambilan>JAJARAN</jenis_projek_pengambilan>
+        <!--Optional:-->
+        <no_rujukan_surat_kjp>JPS/M/11/3/76/SK 9(21)</no_rujukan_surat_kjp>
+        <!--Optional:-->
+        <tarikh_surat_kjp>02/04/2015</tarikh_surat_kjp>
+        <!--Optional:-->
+        <id_kementerian_myetapp>12</id_kementerian_myetapp>
+        <!--Optional:-->
+        <nama_agensi>JABATAN PENGAIRAN DAN SALIRAN MALAYSIA</nama_agensi>
+        <!--Optional:-->
+        <id_agensi_myetapp>747</id_agensi_myetapp>
+        <!--Optional:-->
+        <kodAgensi>18</kodAgensi>
+        <!--Optional:-->
+        <kodKementerian>?</kodKementerian>
+        <!--Optional:-->
+        <alamat1>Aras 15, Wisma Sumber Asli</alamat1>
+        <!--Optional:-->
+        <alamat2>No.25 Persiaran Perdana, Presint 4</alamat2>
+        <!--Optional:-->
+        <alamat3>?</alamat3>
+        <!--Optional:-->
+        <alamat4>?</alamat4>
+        <!--Optional:-->
+        <poskod>62574</poskod>
+        <!--Optional:-->
+        <kodNegeri>17</kodNegeri> */
 		
 		myLog.info("Maklumat Sek8 no fail="+permohonan.get("noFail"));
 		myLog.info("Maklumat Sek8 Daerah="+permohonan.get("kodDaerah"));

@@ -29,11 +29,12 @@ import org.apache.log4j.Logger;
 import ekptg.helpers.DB;
 import ekptg.helpers.InternalUserUtil;
 import ekptg.helpers.Paging;
-import ekptg.model.online.aduan.AduanPublic;
 import ekptg.model.online.aduan.ComplainStatus;
 import ekptg.model.online.aduan.Complaint;
 import ekptg.model.online.aduan.ComplaintAgihanBean;
 import ekptg.model.online.aduan.ComplaintEmailNotification;
+import ekptg.model.online.aduan.ComplaintEmailNotificationSelesaiKJP;
+import ekptg.model.online.aduan.ComplaintEmailNotificationXKJP;
 import ekptg.model.online.aduan.EkptgCloseComplaintHandler;
 import ekptg.model.online.aduan.EkptgFakeComplaintHandler;
 import ekptg.model.online.aduan.EkptgManageComplaintHandler;
@@ -52,8 +53,9 @@ import ekptg.model.online.aduan.setup.IComplaintCategoryBean;
 
 public class PengurusanAduanTanahKJP extends AjaxModule {
 	/**
-	 *
+	 * 
 	 */
+	private static final long serialVersionUID = 5625812335595351510L;
 	private static Logger myLog = Logger.getLogger(ekptg.view.htp.online.aduan.PengurusanAduanTanahKJP.class);
 
 	private final String PATH="app/htp/online/aduantanah/kjp/";
@@ -65,6 +67,9 @@ public class PengurusanAduanTanahKJP extends AjaxModule {
 	private IEkptgCloseComplaintHandler closeBean;
 	private IEkptgFakeComplaintHandler fakeBean;
 	private IComplaintEmailNotification emailNotification;
+	private IComplaintEmailNotification emailNotificationS;
+	private IComplaintEmailNotification emailNotificationX;
+
 	HttpSession session = null;
 	String action = null;
 	List listAduan = null;
@@ -89,6 +94,7 @@ public class PengurusanAduanTanahKJP extends AjaxModule {
 				selectedTabUpper = "0";
 			}
 			context.put("selectedTabUpper", selectedTabUpper);
+			
 		if(command.equals("viewComplaint")){
 			String idComplaint = getParam("idComplaint");
 			myLog.info("idComplaint >>>> "+idComplaint);
@@ -138,11 +144,8 @@ public class PengurusanAduanTanahKJP extends AjaxModule {
 			String idComplaint = getParam("idComplaint");
 			viewComplaint("");
 			vm = PATH+"view.jsp";
-		}
-		else if(command.equals("tutupAduan")){
-//			System.out.println("Tutup Aduan");
-			//>>>>>>>>Response Aduan
-
+		
+		}else if(command.equals("tutupAduan")){
 			mode = "view";
 			String catatanSelesai = getParam("catatanSelesai");
 			String idComplaint = getParam("idComplaint");
@@ -153,12 +156,14 @@ public class PengurusanAduanTanahKJP extends AjaxModule {
 			getCloseBean().processComplaint(temp);
 			viewComplaint(idComplaint);
 			context.put("categories",getCategoryAduan().getComplaintCategory());
-			vm = PATH+"index.jsp";
+
+			getNotificationBeanSKJP().notifyPengadu(idComplaint);//email notification to pengadu
 
 			displayComplaint();
 			getProsesStatus();
-		}
-		else if(command.equals("aduanPalsu")){
+			vm = PATH+"index.jsp";
+		
+		}else if(command.equals("aduanPalsu")){
 			mode = "view";
 			String catatanSelesai = getParam("catatanSelesai");
 			String idComplaint = getParam("idComplaint");
@@ -170,9 +175,12 @@ public class PengurusanAduanTanahKJP extends AjaxModule {
 			getFakeBean().processComplaint(temp);
 			viewComplaint(idComplaint);
 			context.put("categories",getCategoryAduan().getComplaintCategory());
+			
+			getNotificationBeanXKJP().notifyPengadu(idComplaint);//email notification to pengadu
+
 			vm = PATH+"view.jsp";
-		}
-		else if(command.equals("cariAduan") || command01.equals("cariAduan")){
+		
+		}else if(command.equals("cariAduan") || command01.equals("cariAduan")){
 			String noAduan = getParam("noAduan");
 			String tarikhAduan = getParam("tarikhAduan");
 			String statusAduan = getParam("responseStatus");
@@ -246,7 +254,10 @@ public class PengurusanAduanTanahKJP extends AjaxModule {
 //		AduanPublic complaint = getHandler().getComplaintTanahDetails(idComplaint);
 
 		Complaint complaint = getHandler().getComplaint(idComplaint);
+		context.put("complaint", complaint);
+
 		getResponseList(idComplaint);
+		
 
 		Db db = null;
 		try {
@@ -283,11 +294,10 @@ public class PengurusanAduanTanahKJP extends AjaxModule {
 		try {
 			db = new Db();
 			listAduan = listAduan(userId,session,db);
-		}
-		catch (Exception ex) {
-		throw new DbException(ex.getMessage());
-		}
-		finally {
+		
+		}catch (Exception ex) {
+			throw new DbException(ex.getMessage());
+		}finally {
 			if (db != null)
 				db.close();
 		}
@@ -491,20 +501,19 @@ public class PengurusanAduanTanahKJP extends AjaxModule {
 		String sql = "";
 		SimpleDateFormat formatter =  new SimpleDateFormat("dd/MM/yyyy");
 		try {
-			if(db==null)
-			{
-			db1 = new Db();
-			}
-			else
-			{
+			if(db==null){
+				db1 = new Db();
+			}else{
 				db1 = db;
 			}
 			stmt = db1.getStatement();
 			sql = "SELECT A.ID_ADUANRESPON,A.STATUS,A.JAWAPAN,A.ARAHAN,A.TARIKH_MASUK,A.ID_ADUANTINDAKAN,A.NAMA_PEGAWAI,"+
-			" B.ID_KEMENTERIAN,C.ID_KEMENTERIAN,C.USER_ID,D.USER_ID,A.ID_EADUAN"+
-			" FROM TBLONLINEADUANRESPON A,TBLRUJKEMENTERIAN B,USERS_KEMENTERIAN C,USERS D"+
+			" B.ID_KEMENTERIAN,C.ID_KEMENTERIAN,C.USER_ID,D.USER_ID,A.ID_EADUAN"
+			+ ",AO.NAMA_PENGADU,AO.CATATAN,AO.STATUS"+
+			" FROM TBLONLINEADUANRESPON A,TBLRUJKEMENTERIAN B,USERS_KEMENTERIAN C,USERS D,TBLONLINEEADUAN AO"+
 			" WHERE A.ID_ADUANTINDAKAN = B.ID_KEMENTERIAN AND B.ID_KEMENTERIAN = C.ID_KEMENTERIAN AND C.USER_ID = D.USER_ID"+
-			" AND D.USER_ID = '"+USER_ID+"' "+
+			" AND AO.ID_EADUAN = A.ID_EADUAN "
+			+ " AND D.USER_ID = '"+USER_ID+"' "+
 			" ORDER BY A.TARIKH_MASUK";
 			myLog.info(" ADUAN : SQL listJenisAduan :"+ sql);
 			rs = stmt.executeQuery(sql);
@@ -518,6 +527,10 @@ public class PengurusanAduanTanahKJP extends AjaxModule {
 				h.put("id",rs.getString("ID_ADUANRESPON") == null ? "" : rs.getString("ID_ADUANRESPON"));
 				h.put("arahan",rs.getString("ARAHAN") == null ? "" : rs.getString("ARAHAN").toUpperCase());
 				h.put("idAduan",rs.getString("ID_EADUAN") == null ? "" : rs.getString("ID_EADUAN"));
+				h.put("pengadu",rs.getString("NAMA_PENGADU") == null ? "" : rs.getString("NAMA_PENGADU"));
+				h.put("tarikhMasuk",rs.getString("TARIKH_MASUK") == null ? "" : formatter.format(rs.getDate("TARIKH_MASUK")));
+				h.put("aduan",rs.getString("CATATAN") == null ? "" : rs.getString("CATATAN"));
+				h.put("status",rs.getString("STATUS") == null ? "" : rs.getString("STATUS"));
 				listJenisAduan.add(h);
 			}
 
@@ -553,18 +566,35 @@ public class PengurusanAduanTanahKJP extends AjaxModule {
 				db1 = db;
 			}
 			stmt = db1.getStatement();
-			sql = " SELECT aduan.NO_FAIL," +
-					" tanah.ID_HAKMILIKADUAN,tanah.ID_ADUAN,tanah.ID_LUAS,tanah.NO_HAKMILIK,tanah.NO_WARTA,tanah.TARIKH_WARTA,tanah.NO_LOT," +
-					" tanah.LUAS,tanah.ID_DAERAH,tanah.ID_NEGERI,tanah.ID_MUKIM,tanah.ID_LOT,tanah.ID_JENISHAKMILIK,N1.NAMA_NEGERI AS NAMA_NEGERITANAH," +
-					" D1.NAMA_DAERAH AS NAMA_DAERAHTANAH,M.NAMA_MUKIM AS NAMA_MUKIMTANAH, J.KETERANGAN AS NAMA_HAKMILIK, L.KETERANGAN AS NAMA_LOT, "+
-					" tanah.ID_SEKSYEN, S.NAMA_SEKSYENUPI AS NAMA_SEKSYENTANAH "+
-					" FROM TBLONLINEEADUAN aduan,TBLHTPHAKMILIKADUAN tanah,TBLRUJNEGERI N1," +
-					" TBLRUJDAERAH D1,TBLRUJMUKIM M,TBLRUJJENISHAKMILIK J,TBLRUJLOT L ,TBLRUJSEKSYENUPI S"+
-					" WHERE tanah.ID_NEGERI = N1.ID_NEGERI(+) AND tanah.ID_DAERAH = D1.ID_DAERAH(+) AND tanah.ID_MUKIM = M.ID_MUKIM(+) AND tanah.ID_SEKSYEN = S.ID_SEKSYENUPI(+)" +
-					" AND tanah.ID_JENISHAKMILIK = J.ID_JENISHAKMILIK(+) AND tanah.ID_LOT = L.ID_LOT(+) "+
-					" AND aduan.ID_EADUAN = '"+idAduan+"' "+
-					" AND tanah.ID_ADUAN = '"+idAduan+"'  ";
-			myLog.info(" ADUAN : SQL aduanDetails :"+ sql);
+			sql = " SELECT DISTINCT A.NO_FAIL,A.ID_EADUAN ID_ADUAN" +
+					" ,T.ID_HAKMILIKADUAN,T.ID_LUAS,T.NO_HAKMILIK,T.NO_WARTA,T.TARIKH_WARTA,T.NO_LOT,T.LUAS" +
+					" ,T.ID_DAERAH,T.ID_NEGERI,T.ID_MUKIM,T.ID_SEKSYEN,T.ID_LOT,T.ID_JENISHAKMILIK"+
+					" ,RN.NAMA_NEGERI AS NAMA_NEGERITANAH" +
+					" ,RD.NAMA_DAERAH AS NAMA_DAERAHTANAH"+
+					" ,RM.NAMA_MUKIM AS NAMA_MUKIMTANAH"+
+					" ,RS.NAMA_SEKSYENUPI AS NAMA_SEKSYENTANAH "+
+					" ,RJ.KOD_JENIS_HAKMILIK AS NAMA_HAKMILIK, RL.KETERANGAN AS NAMA_LOT "+
+					" FROM TBLONLINEEADUAN A,TBLHTPHAKMILIKADUAN T "+
+					" ,TBLRUJNEGERI RN,TBLRUJDAERAH RD,TBLRUJMUKIM RM,TBLRUJSEKSYENUPI RS" +
+					" ,TBLRUJJENISHAKMILIK RJ,TBLRUJLOT RL "+
+					" WHERE A.ID_EADUAN = T.ID_ADUAN "+
+					" AND T.ID_NEGERI = RN.ID_NEGERI(+) AND T.ID_DAERAH = RD.ID_DAERAH(+) AND T.ID_MUKIM = RM.ID_MUKIM(+) AND T.ID_SEKSYEN = RS.ID_SEKSYENUPI(+)" +
+					" AND T.ID_JENISHAKMILIK = RJ.ID_JENISHAKMILIK(+) AND T.ID_LOT = RL.ID_LOT(+) "+
+					" AND A.ID_EADUAN = '"+idAduan+"' "+
+
+//			sql = " SELECT aduan.NO_FAIL," +
+//					" tanah.ID_HAKMILIKADUAN,tanah.ID_ADUAN,tanah.ID_LUAS,tanah.NO_HAKMILIK,tanah.NO_WARTA,tanah.TARIKH_WARTA,tanah.NO_LOT," +
+//					" tanah.LUAS,tanah.ID_DAERAH,tanah.ID_NEGERI,tanah.ID_MUKIM,tanah.ID_LOT,tanah.ID_JENISHAKMILIK,N1.NAMA_NEGERI AS NAMA_NEGERITANAH," +
+//					" D1.NAMA_DAERAH AS NAMA_DAERAHTANAH,M.NAMA_MUKIM AS NAMA_MUKIMTANAH, J.KETERANGAN AS NAMA_HAKMILIK, L.KETERANGAN AS NAMA_LOT, "+
+//					" tanah.ID_SEKSYEN, S.NAMA_SEKSYENUPI AS NAMA_SEKSYENTANAH "+
+//					" FROM TBLONLINEEADUAN aduan,TBLHTPHAKMILIKADUAN tanah,TBLRUJNEGERI N1," +
+//					" TBLRUJDAERAH D1,TBLRUJMUKIM M,TBLRUJJENISHAKMILIK J,TBLRUJLOT L ,TBLRUJSEKSYENUPI S"+
+//					" WHERE tanah.ID_NEGERI = N1.ID_NEGERI(+) AND tanah.ID_DAERAH = D1.ID_DAERAH(+) AND tanah.ID_MUKIM = M.ID_MUKIM(+) AND tanah.ID_SEKSYEN = S.ID_SEKSYENUPI(+)" +
+//					" AND tanah.ID_JENISHAKMILIK = J.ID_JENISHAKMILIK(+) AND tanah.ID_LOT = L.ID_LOT(+) "+
+//					" AND aduan.ID_EADUAN = '"+idAduan+"' "+
+//					" AND tanah.ID_ADUAN = '"+idAduan+"'  "
+					"";
+			myLog.info("PengurusanAduanTanahKJP: aduanDetails: sql="+ sql);
 			rs = stmt.executeQuery(sql);
 			listJenisAduan = Collections.synchronizedList(new ArrayList());
 			Map h = null;
@@ -627,4 +657,20 @@ public class PengurusanAduanTanahKJP extends AjaxModule {
 		}
 		return listJenisAduan;
 	}
+	
+	
+	private IComplaintEmailNotification getNotificationBeanSKJP(){
+		if(emailNotificationS == null){
+			emailNotificationS = new ComplaintEmailNotificationSelesaiKJP();
+		}
+		return emailNotificationS;
+	}
+	
+	private IComplaintEmailNotification getNotificationBeanXKJP(){
+		if(emailNotificationX == null){
+			emailNotificationX = new ComplaintEmailNotificationXKJP();
+		}
+		return emailNotificationS;
+	}
+
 }

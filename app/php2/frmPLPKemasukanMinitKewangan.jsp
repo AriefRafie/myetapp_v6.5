@@ -48,7 +48,6 @@
           <td>:</td>
           <td>
           <select name="socKeputusan" id="socKeputusan" style="width:120px;" $readonly class="$disabled" onchange="javascript:doChangeKeputusanKewangan(this.value)" $disabled> 
-
      		#if ($beanMaklumatKewangan.keputusan == 'L')
                 <option>SILA PILIH</option>
                 <option value="L" selected="selected">LULUS</option>
@@ -78,6 +77,18 @@
           <td valign="top">:</td>
           <td valign="top"><textarea name="txtUlasan" id="txtUlasan" cols="50" rows="5" $readonly class="$inputTextClass" >$beanMaklumatKewangan.ulasan</textarea></td>
         </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Nama Pengulas</td>
+          <td>:</td>
+          <td><input type="text" name="txtNamaPengulas" id="txtNamaPengulas" size="50" $readonly class="$inputTextClass" value="$beanMaklumatKewangan.namaPengulas" onblur="this.value=this.value.toUpperCase();"/></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>No. Telefon Pengulas</td>
+          <td>:</td>
+          <td><input type="text" name="txtNoTelPengulas" id="txtNoTelPengulas" size="50" $readonly class="$inputTextClass" value="$beanMaklumatKewangan.noTelPengulas" onblur="this.value=this.value.toUpperCase();"/></td>
+        </tr>
         #if ($mode == 'view')
 	          	#set($idLampiran = "")
     			#set($namaLampiran = "")
@@ -101,7 +112,7 @@
                 <td valign="top">:</td>
                 <td valign="top"> 
                 	#if ($idLampiran != '')
-                		<a href="javascript:cetakLampiran($idKertaskerja)" class="style2">$!namaFailLampiran</a> 
+                		<a href="javascript:cetakLampiran($idLampiran)" class="style2">$!namaFailLampiran</a> 
                 	#end
                 	&nbsp;&nbsp;&nbsp;&nbsp;
                 	<input name="cmdUpload" type="button" onclick="uploadDoc($idKertaskerja)" value="Muat Naik Lampiran" />

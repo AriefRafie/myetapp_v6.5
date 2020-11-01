@@ -1,9 +1,15 @@
+#define($Amp)
+<span class="style1">*</span>
+#end
+
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td colspan="2"><fieldset>
       <legend>MAKLUMAT JUPEM</legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
+
         #foreach ($beanMaklumatJUPEM in $BeanMaklumatJUPEM)
+
         <tr>
           <td width="1%">&nbsp;</td>
           <td width="28%">Kementerian</td>
@@ -16,55 +22,96 @@
           <td width="1%">:</td>
           <td width="70%">$beanMaklumatJUPEM.agensi</td>
         </tr>
-        #if ($flagStatus == '1')
         <tr>
-          <td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td width="1%">#if ($modePopup != 'view') $Amp #else &nbsp; #end</td>
           <td width="28%">Tarikh Hantar</td>
           <td width="1%">:</td>
-          <td width="70%"><input name="txtTarikhHantar" type="text" $readonlyPopup class="$inputTextClassPopup" id="txtTarikhHantar" onBlur="check_date(this);calcDate()" value="$beanMaklumatJUPEM.tarikhHantar" size="9" maxlength="10">
-            #if ($modePopup != 'view') <a href="javascript:displayDatePicker('txtTarikhHantar',false,'dmy');"><img border="0" src="../img/calendar.gif"/>#end</td>
+          <td width="70%">
+          	#if ($modePopup != 'view')
+            <input name="txtTarikhHantar" type="text" $readonlyPopup class="$inputTextClassPopup" id="txtTarikhHantar" onBlur="check_date(this);calcDate()" value="$beanMaklumatJUPEM.tarikhHantar" size="9" maxlength="10">
+            <a href="javascript:displayDatePicker('txtTarikhHantar',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
+            #else
+            <input name="txtTarikhHantar" type="text" readonly="readonly" class="disabled" id="txtTarikhHantar" value="$beanMaklumatJUPEM.tarikhHantar" size="9" maxlength="10">
+            #end
+          </td>
         </tr>
         <tr>
-          <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+          <td width="1%">#if ($modePopup != 'view') $Amp #else &nbsp; #end</td>
           <td>Jangkamasa</td>
           <td>:</td>
-          <td><input type="text" name="txtJangkaMasa" id="txtJangkaMasa" size="1" maxlength="2" value="$beanMaklumatJUPEM.jangkamasa" onBlur="validateNumber(this,this.value,'$beanMaklumatJUPEM.jangkamasa');calcDate()" $readonlyPopup class="$inputTextClassPopup">
-            Hari</td>
+          <td>
+            #if ($modePopup != 'view')
+            <input type="text" name="txtJangkaMasa" id="txtJangkaMasa" size="1" maxlength="2" value="$beanMaklumatJUPEM.jangkamasa" onBlur="validateNumber(this,this.value,'$beanMaklumatJUPEM.jangkamasa');calcDate()" $readonlyPopup class="$inputTextClassPopup">
+            #else
+            <input type="text" name="txtJangkaMasa" id="txtJangkaMasa" size="1" maxlength="2" value="$beanMaklumatJUPEM.jangkamasa" readonly="readonly" class="disabled">
+            #end
+            Hari
+          </td>
         </tr>
         <tr>
           <td>&nbsp;</td>
           <td>Tarikh Dijangka Terima</td>
           <td>:</td>
-          <td><input name="txtTarikhJangkaTerima" type="text" $readonlyPopup class="$inputTextClassPopup" id="txtTarikhJangkaTerima" onBlur="check_date(this)" value="$beanMaklumatJUPEM.tarikhJangkaTerima" size="9" maxlength="10">
-            #if ($modePopup != 'view') <a href="javascript:displayDatePicker('txtTarikhJangkaTerima',false,'dmy');"><img border="0" src="../img/calendar.gif"/>#end</td>
-        </tr>
-        #else
-        <tr>
-          <td width="1%">&nbsp;</td>
-          <td width="28%">Tarikh Hantar</td>
-          <td width="1%">:</td>
-          <td width="70%"><input name="txtTarikhHantar" type="text" readonly="readonly" class="disabled" id="txtTarikhHantar" value="$beanMaklumatJUPEM.tarikhHantar" size="9" maxlength="10"></td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>Jangkamasa</td>
-          <td>:</td>
-          <td><input type="text" name="txtJangkaMasa" id="txtJangkaMasa" size="1" maxlength="2" value="$beanMaklumatJUPEM.jangkamasa" readonly="readonly" class="disabled">
-            Hari</td>
+          <td>
+            #if ($modePopup != 'view')
+            <input name="txtTarikhJangkaTerima" type="text" $readonlyPopup class="$inputTextClassPopup" id="txtTarikhJangkaTerima" onBlur="check_date(this)" value="$beanMaklumatJUPEM.tarikhJangkaTerima" size="9" maxlength="10">
+            <a href="javascript:displayDatePicker('txtTarikhJangkaTerima',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
+            #else
+            <input name="txtTarikhJangkaTerima" type="text" readonly="readonly" class="disabled" id="txtTarikhJangkaTerima" value="$beanMaklumatJUPEM.tarikhJangkaTerima" size="9" maxlength="10">
+            #end
+          </td>
         </tr>
         <tr>
           <td>&nbsp;</td>
-          <td>Tarikh Dijangka Terima</td>
-          <td>:</td>
-          <td><input name="txtTarikhJangkaTerima" type="text" readonly="readonly" class="disabled" id="txtTarikhJangkaTerima" value="$beanMaklumatJUPEM.tarikhJangkaTerima" size="9" maxlength="10"></td>
-        </tr>
-        #end
-        <tr>
-          <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
         </tr>
+   		<tr>
+          <td colspan="4"><fieldset>
+            <legend>LAMPIRAN</legend>
+            <table width="100%" border="0" cellspacing="2" cellpadding="2">
+              <tr>
+                <td width="1%">&nbsp;</td>
+                <td width="28%">Muat Turun Dokumen</td>
+                <td width="1%">:</td>
+                <td width="70%"><a href="#" onclick="cetakDokumen($idDokumen)" class="style2">
+					#if($BeanDocJUPEM.size() > 0 && $modePopup != 'new')
+						#foreach($doc in $BeanDocJUPEM)
+							#if($doc.flagDokumen == "L1")
+								$doc.namaFail
+							#end
+						#end
+					#end
+                </a> &nbsp;&nbsp;</td>
+              </tr>
+              #if ($modePopup != 'view')
+              <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>
+ 	              <input id="fileuploadJUPEM" name="fileuploadJUPEM" type="file" multiple size="40" />
+                  <input name="cmdSimpan3" type="button" value="Simpan Dokumen" onclick="simpanDokumenJUPEM('$idUlasanTeknikal','$idPermohonan', 'L1')" />
+                </td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td><span class="style4"><i><font color="#ff0000">Perhatian</font> : </i><span class="style5">Saiz muat naik fail adalah tidak melebihi 2MB. Jika muat naik anda tidak berjaya sila cuba dengan saiz fail yang lebih kecil.</span></span></td>
+              </tr>
+              #end
+              <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+              </tr>
+            </table>
+            </fieldset></td> 
+        </tr>
+        
         #if ($flagStatus == '2')
         <tr>
           <td colspan="4"><fieldset>
@@ -111,13 +158,23 @@
             </table>
             </fieldset></td>
         </tr>
-        #if ($modePopup == 'view')
-        #set($idDokumen = '')
-        #set($namaFail = '')
-        #foreach ($beanMaklumatDokumenJUPEM in $BeanMaklumatDokumenJUPEM)
-        	#set($idDokumen = $beanMaklumatDokumenJUPEM.idDokumen)
-    		#set($namaFail = $beanMaklumatDokumenJUPEM.namaFail)
-        #end
+        #*
+       	#if ($modePopup == 'view')
+        	#set($idDokumen = '')
+        	#set($namaFail = '')
+        	#foreach ($beanMaklumatDokumenJUPEM in $BeanMaklumatDokumenJUPEM)
+        		#set($idDokumen = $beanMaklumatDokumenJUPEM.idDokumen)
+    			#set($namaFail = $beanMaklumatDokumenJUPEM.namaFail)
+   			#end
+   		#else
+		    #set($idDokumen = '')
+        	#set($namaFail = '')
+        	#foreach ($beanMaklumatDokumenJUPEM in $BeanMaklumatDokumenJUPEM)
+        		#set($idDokumen = $beanMaklumatDokumenJUPEM.idDokumen)
+    			#set($namaFail = $beanMaklumatDokumenJUPEM.namaFail)
+   			#end
+   		*#
+	
         <tr>
           <td colspan="4"><fieldset>
             <legend>LAMPIRAN</legend>
@@ -126,14 +183,25 @@
                 <td width="1%">&nbsp;</td>
                 <td width="28%">Muat Turun Dokumen</td>
                 <td width="1%">:</td>
-                <td width="70%">#if ($idDokumen != '') <a href="#" onclick="cetakDokumen($idDokumen)" class="style2">$namaFail</a> &nbsp;&nbsp; #end</td>
+                <td width="70%"><a href="#" onclick="cetakDokumen($idDokumen)" class="style2">
+					#if($BeanDocJUPEM.size() > 0 && $modePopup != 'new')
+						#foreach($doc in $BeanDocJUPEM)
+							#if($doc.flagDokumen == "L2")
+								$doc.namaFail
+							#end
+						#end
+					#end
+                </a> &nbsp;&nbsp;</td>
               </tr>
+              #if ($modePopup != 'view')
               <tr>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td><input id="fileuploadJUPEM" name="fileuploadJUPEM" type="file" size="40" />
-                  <input name="cmdSimpan3" type="button" value="Simpan Dokumen" onclick="simpanDokumenJUPEM('$idUlasanTeknikal','$idPermohonan')" /></td>
+                <td>
+ 	              <input id="fileuploadJUPEM2" name="fileuploadJUPEM2" type="file" multiple size="40" />
+                  <input name="cmdSimpan3" type="button" value="Simpan Dokumen" onclick="simpanDokumenJUPEM2('$idUlasanTeknikal','$idPermohonan', 'L2')" />
+                </td>
               </tr>
               <tr>
                 <td>&nbsp;</td>
@@ -141,6 +209,7 @@
                 <td>&nbsp;</td>
                 <td><span class="style4"><i><font color="#ff0000">Perhatian</font> : </i><span class="style5">Saiz muat naik fail adalah tidak melebihi 2MB. Jika muat naik anda tidak berjaya sila cuba dengan saiz fail yang lebih kecil.</span></span></td>
               </tr>
+              #end
               <tr>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
@@ -150,7 +219,7 @@
             </table>
             </fieldset></td> 
         </tr>
-        #end
+        ##end
         #end
         #end
         
@@ -215,14 +284,14 @@
         </tr>
         #set ($list = "")
         #if ($SenaraiNotifikasiEmel.size() > 0)
-        #foreach ($list in $SenaraiNotifikasiEmel)
-        #if ($list.bil == '')
-        #set( $row = "row1" )
-        #elseif (($list.bil % 2) != 0)
-        #set( $row = "row1" )
-        #else 
-        #set( $row = "row2" )
-        #end
+        	#foreach ($list in $SenaraiNotifikasiEmel)
+        		#if ($list.bil == '')
+        			#set( $row = "row1" )
+        		#elseif (($list.bil % 2) != 0)
+        			#set( $row = "row1" )
+        		#else 
+        			#set( $row = "row2" )
+       		#end
         <tr>
           <td class="$row" align="center">$list.bil</td>
           ##<td class="$row"><a href="javascript:paparMaklumatSuratPenghargaan('$list.idUlasanTeknikal')" class="style2">$list.namaPegawai</a></td>

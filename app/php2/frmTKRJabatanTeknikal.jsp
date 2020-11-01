@@ -26,7 +26,6 @@
   <input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
   <input name="selectedTabUpper" type="hidden" id="selectedTabUpper" value="$selectedTabUpper"/>
   <input name="hitButton" type="hidden" id="hitButton"/>
-
   <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
   <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
@@ -35,7 +34,6 @@
   <input name="idNegeriTanah" type="hidden" id="idNegeriTanah" value="$idNegeriTanah"/>
   <input name="idKementerianTanah" type="hidden" id="idKementerianTanah" value="$idKementerianTanah"/>
   <input name="idAgensiTanah" type="hidden" id="idAgensiTanah" value="$idAgensiTanah"/>
-
   <input name="flagStatus" type="hidden" id="flagStatus" value="$flagStatus"/>
   <input name="flagAktif" type="hidden" id="flagAktif" value="$flagAktif"/>  
   <input name="step" type="hidden" id="step" value="$step"/>

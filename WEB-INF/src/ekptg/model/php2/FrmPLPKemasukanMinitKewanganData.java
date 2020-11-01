@@ -30,7 +30,8 @@ public class FrmPLPKemasukanMinitKewanganData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT ID_KERTASKERJA, TARIKH_TERIMA_KEWANGAN, KEPUTUSAN_KEWANGAN, ULASAN_KEWANGAN, FLAG_KEPUTUSAN_PEMOHON, ULASAN_PEMOHON "
+			sql = "SELECT ID_KERTASKERJA, TARIKH_TERIMA_KEWANGAN, KEPUTUSAN_KEWANGAN, ULASAN_KEWANGAN, FLAG_KEPUTUSAN_PEMOHON, "
+				+ "ULASAN_PEMOHON, NAMA_PEGAWAI, NO_TELEFON_PEGAWAI "
 				+ "FROM TBLPHPKERTASKERJAPELEPASAN WHERE FLAG_KERTAS = '2' AND ID_PERMOHONAN = '"
 				+ idPermohonan + "'";
 			ResultSet rs = stmt.executeQuery(sql);
@@ -55,6 +56,12 @@ public class FrmPLPKemasukanMinitKewanganData {
 								.getString("FLAG_KEPUTUSAN_PEMOHON"));
 				h.put("ulasanPemohon", rs.getString("ULASAN_PEMOHON") == null ? ""
 						: rs.getString("ULASAN_PEMOHON"));
+				h.put("namaPengulas",
+						rs.getString("NAMA_PEGAWAI") == null ? "" : rs
+								.getString("NAMA_PEGAWAI"));
+				h.put("noTelPengulas",
+						rs.getString("NO_TELEFON_PEGAWAI") == null ? "" : rs
+								.getString("NO_TELEFON_PEGAWAI"));
 				beanMaklumatKewangan.addElement(h);
 				bil++;
 			}
@@ -67,7 +74,8 @@ public class FrmPLPKemasukanMinitKewanganData {
 
 	public void simpanKemaskiniMinitKewangan(String idPermohonan,
 			String txtTarikhTerima, String socKeputusan, String txtUlasan,
-			String socKeputusanPemohon, String txtUlasanPemohon, HttpSession session) throws Exception {
+			String socKeputusanPemohon, String txtUlasanPemohon, 
+			String txtNamaPengulas, String txtNoTelPengulas, HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -94,6 +102,8 @@ public class FrmPLPKemasukanMinitKewanganData {
 			r.add("ULASAN_KEWANGAN", txtUlasan);
 			r.add("FLAG_KEPUTUSAN_PEMOHON", socKeputusanPemohon);
 			r.add("ULASAN_PEMOHON", txtUlasanPemohon);
+			r.add("NAMA_PEGAWAI", txtNamaPengulas);
+			r.add("NO_TELEFON_PEGAWAI", txtNoTelPengulas);
 
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
@@ -521,7 +531,7 @@ public class FrmPLPKemasukanMinitKewanganData {
 				db.close();
 		}
 	}
-
+	
 	public Vector getBeanMaklumatKewangan() {
 		return beanMaklumatKewangan;
 	}

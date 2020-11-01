@@ -1250,7 +1250,11 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
     			
     		String id_terimabayaran = getParam("id_terimabayaran");
     		context.put("id_terimabayaran", id_terimabayaran);
+    	
+    		String id_pihakberkepentingan = getParam("id_pihakberkepentingan");
     		
+    		getAndSetPBAward(id_siasatan,idHakmilik,id_pihakberkepentingan);      
+   
     		//form validation
     		context.put("mode","new");
     		context.put("isEdit","no");
@@ -1274,6 +1278,8 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
   
     	    	//set data
     	    	getAndSetPenerimaan(id_siasatan,idHakmilik,"new",id_terimabayaran);
+    	    	
+    	    	
     	    	
     	    }//close onchangeSelectPB
     		   	    
@@ -2550,6 +2556,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
 		String tawaran = "";
 		double jumlah_award = 0;
 		String id_award = "";
+		String tarikh_hantar = "";
 		
 		model.setDataPBAward(idSiasatan,id_pihakberkepentingan);
 		dataPBAward = model.getDataPBAward();
@@ -2562,6 +2569,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
 			unit_luas = (String)pba.get("unit_luas");
 			tawaran = (String)pba.get("tawaran");
 			jumlah_award = (Double)pba.get("bayar_pampasan");
+			tarikh_hantar = (String)pba.get("tarikh_hantar");
 		}
 		
 		//id
@@ -2647,6 +2655,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
 			tarikh_serah = (String)dpb.get("tarikh_serahan");
 	
 		}
+		//myLogger.info("tarikh_serah :"+tarikh_serah);
 		
 		String tarikh_bayaran = "";
 		model.setdataSuratAgensi(idTerimabayaran);
@@ -2684,6 +2693,10 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
 		    day = c.get(Calendar.DATE);
  		}
 
+		String txd3bulan = tarikh_genap;
+		context.put("txd3bulan",txd3bulan);
+		
+		myLogger.info("txd3bulan :"+txd3bulan);
 		SimpleDateFormat fmt = new SimpleDateFormat("ddMMyyyy");
 		
 		//main date
@@ -2692,6 +2705,8 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
 		if(tarikh_hantar!=""){
 			tarikhMain = fmt.parse(maindate);
 		}
+		
+		myLogger.info("tarikhMain :"+tarikhMain);
 		
 		//Syarat 1
 		String dt = "19011984";
@@ -2744,6 +2759,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
 			long diff = milis2 - milis1;
 			hariLewat = diff / (24 * 60 * 60 * 1000);
 		}
+		
 		
 		
 		
@@ -3398,6 +3414,8 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
 		h.put("txtMasaAmbil", getParam("txtMasaAmbil"));
 		h.put("socJenisWaktu", getParam("socJenisWaktu"));
 		h.put("txtTempatAmbil", getParam("txtTempatAmbil"));
+		
+		h.put("txdTarikhLewat", getParam("txdTarikhLewat"));
 		
 		h.put("id_user", session.getAttribute("_ekptg_user_id"));
 		

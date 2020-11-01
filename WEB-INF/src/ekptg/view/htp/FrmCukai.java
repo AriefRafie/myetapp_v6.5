@@ -178,7 +178,7 @@ public class FrmCukai extends AjaxBasedModule{
     			String Daerah = getParam("socDaerah")==""?"0":getParam("socDaerah");
     			long idDaerah = Long.parseLong(Daerah);
     			statusPeringkatBayar = false;
-    			int idBaucer = 0;
+    			String idBaucer = "0";
 				BaucerCukai bCukai = null;
     			vector = getICukaiPenyata().getPenyata("11", "",String.valueOf(permohonan.get("fail")), String.valueOf(permohonan.get("idnegeri")),null);
     			//myLog.info("vector.isEmpty()="+vector.isEmpty());
@@ -244,7 +244,7 @@ public class FrmCukai extends AjaxBasedModule{
     			
     			}else if("view".equals(pageMode)){
     				myLog.info("baucer : pageMode="+pageMode);
-    				idBaucer = Integer.parseInt(getParam("idBaucer"));
+    				idBaucer = getParam("idBaucer");
     				this.context.put("idbaucer", idBaucer);
     				this.context.put("idDaerah", getParam("idDaerah"));
     				style2 = "none";
@@ -254,7 +254,7 @@ public class FrmCukai extends AjaxBasedModule{
 
     			}else if("kemaskinibaucer".equals(pageMode)){
     				myLog.info("Baucer::kemaskinibaucer");
-    				idBaucer = Integer.parseInt(getParam("idBaucer"));
+    				idBaucer = getParam("idBaucer");
        				this.context.put("idbaucer", idBaucer);
     				this.context.put("idDaerah", getParam("idDaerah"));
     				style2 = "none";
@@ -853,8 +853,8 @@ public class FrmCukai extends AjaxBasedModule{
 		  
 	  }
 	  
-	  private int SimpanTBaucer(HttpSession session,int idPeringkatbayaran) throws Exception {
-		  int idBaucer = 0;
+	  private String SimpanTBaucer(HttpSession session,int idPeringkatbayaran) throws Exception {
+		  String idBaucer = "0";
 		  if(getParam("idBaucer") == ""){
 			  //baucer baru
 			  Hashtable h = new Hashtable();
@@ -876,7 +876,7 @@ public class FrmCukai extends AjaxBasedModule{
 			//kemaskini baucer
 			//System.out.println("CukaiProcess::SimpanTBaucer::kemaskini");
 			Hashtable h = new Hashtable();
-			idBaucer = Integer.parseInt(getParam("idBaucer"));
+			idBaucer = getParam("idBaucer");
 			h.put("idBaucer", idBaucer);
 			h.put("idPeringkatbayaran", idPeringkatbayaran);
 			h.put("tkh_baucer", getParam("txdTarikhBaucer"));
@@ -903,7 +903,7 @@ public class FrmCukai extends AjaxBasedModule{
 	  	Vector list = new Vector();
 		list.clear();					    
 		try{
-			list = FrmCukaiBaucerData.getListTBaucer(idNegeri,idBaucer,idPeringkatbayaran);
+			list = FrmCukaiBaucerData.getListTBaucer(idNegeri,String.valueOf(idBaucer),idPeringkatbayaran);
 			this.context.put("ResultSimpan", "");
 			
 			if(list.size() != 0){			    

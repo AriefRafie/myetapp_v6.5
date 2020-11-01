@@ -77,6 +77,28 @@ public class FrmSenaraiTugasanPLPView extends AjaxBasedModule {
 		if (idSuburusan == null || idSuburusan.trim().length() == 0) {
 			idSuburusan = "99999";
 		}
+		String idJenisFailC = getParam("socJenisFailC");
+		if (idJenisFailC == null || idJenisFailC.trim().length() == 0){
+			idJenisFailC = "99999";
+		}
+		
+		if ("K".equals(idJenisFailC)){
+
+			this.context.put("selected", "");
+			this.context.put("selected1", "selected");
+			this.context.put("selected2", "");
+
+		} else if ("G".equals(idJenisFailC)){
+
+			this.context.put("selected", "");
+			this.context.put("selected1", "");
+			this.context.put("selected2", "selected");
+
+		} else {
+			this.context.put("selected", "selected");
+			this.context.put("selected1", "");
+			this.context.put("selected2", "");
+		}
 		 
 		String flagDetail = getParam("flagDetail");
 
@@ -86,15 +108,15 @@ public class FrmSenaraiTugasanPLPView extends AjaxBasedModule {
 					getParam("txdTarikhTerima"), idNegeriC, idDaerahC,
 					idMukimC, idJenisHakmilikC, getParam("txtNoHakmilik"),
 					getParam("txtNoWarta"), idLotC, getParam("txtNoLot"),
-					getParam("txtNoPegangan"), idStatusC, idSuburusan, idKementerianC, idAgensiC);
+					getParam("txtNoPegangan"), idStatusC, idSuburusan, idJenisFailC, idKementerianC, idAgensiC);
 			
 		list = new Vector();
 		list = logic.getSenaraiFail();
 		this.context.put("SenaraiFail", list);
+		
 		this.context.put("txtNoFail", getParam("txtNoFail"));
 		this.context.put("txtTajukFail", getParam("txtTajukFail"));
 		this.context.put("txdTarikhTerima", getParam("txdTarikhTerima"));
-		
 		this.context.put("txtNoPegangan", getParam("txtNoPegangan"));
 		this.context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("socJenisHakmilikC", Long.parseLong(idJenisHakmilikC), ""));
 		this.context.put("txtNoHakmilik", getParam("txtNoHakmilik"));
@@ -115,6 +137,7 @@ public class FrmSenaraiTugasanPLPView extends AjaxBasedModule {
 		} else if("33".equals(idSuburusan)){
 			this.context.put("selectStatus", HTML.SelectStatusTukarguna("socStatusC", Long.parseLong(idStatusC), "", ""));
 		}
+		this.context.put("socJenisFail", getParam("socJenisFail"));
 			
 		this.context.put("flagDetail", flagDetail);
 		setupPage(session, action, list);

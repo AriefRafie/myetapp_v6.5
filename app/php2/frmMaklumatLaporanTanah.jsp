@@ -1,12 +1,21 @@
-<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-<input name="step" type="hidden" id="step" value="$step"/>
-<input name="selectedTab" type="hidden" id="selectedTab" value="$selectedTab"/>
-<input name="hitButton" type="hidden" id="hitButton" />
-<input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
-<input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
-<input name="idLaporan" type="hidden" id="idLaporan" value="$idLaporan"/>
-<input name="idHakmilikAgensi" type="hidden" id="idHakmilikAgensi" value="$idHakmilikAgensi"/>
-<input name="idDokumen" type="hidden" id="idDokumen" value="$idDokumen"/>
+<p>
+	<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
+	<input type="hidden" name="step"id="step" value="$step"/>
+	<input type="hidden" name="selectedTab" id="selectedTab" value="$selectedTab"/>
+	<input type="hidden" name="hitButton" id="hitButton" />
+	<input type="hidden" name="flagPopup" id="flagPopup" value="$flagPopup"/>
+	<input type="hidden" name="modePopup" id="modePopup" value="$modePopup"/>
+	<input type="hidden" name="idLaporan" id="idLaporan" value="$idLaporan"/>
+	<input type="hidden" name="idPermohonan" id="idPermohonan" value="$idPermohonan"/>
+	<input type="hidden" name="idUlasanTeknikal" id="idUlasanTeknikal" value="$!idUlasanTeknikal"/>
+	<input type="hidden" name="idHakmilikAgensi" id="idHakmilikAgensi" value="$idHakmilikAgensi"/>
+	<input type="hidden" name="idPegawaiLaporanTanah"id="idPegawaiLaporanTanah" value="$idPegawaiLaporanTanah"/>
+	<input type="hidden" name="idDokumen" id="idDokumen" value="$idDokumen"/>
+</p>
+
+#if ($errMsg != "")
+<div class="info"><strong>$errMsg</strong></div>
+#end
 
 <body onLoad = $onload >
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -21,59 +30,108 @@
       <ul class="TabbedPanelsTabGroup">
         <li onClick="doChangeTab(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT LAWATAN TAPAK</li>
         <li onClick="doChangeTab(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT LAIN</li>
-        <li onClick="doChangeTab(2);" class="TabbedPanelsTab" tabindex="0">IMEJAN</li>
+        <li onClick="doChangeTab(2);" class="TabbedPanelsTab" tabindex="0">KEHADIRAN</li>
+        <li onClick="doChangeTab(3);" class="TabbedPanelsTab" tabindex="0">IMEJAN</li>
       </ul>
       <div class="TabbedPanelsContentGroup">
         <div class="TabbedPanelsContent">
           <table width="100%" border="0" cellspacing="2" cellpadding="2">
             #foreach ($beanMaklumatLaporan in $BeanMaklumatLaporan)
             <tr>
-              <td width="1%"><font color="#ff0000">*</font></td>
-              <td width="28%">Tarikh Lawatan</td>
-              <td width="1%">:</td>
-              <td width="70%"><input type="text" name="txdTarikhLawatan" id="txdTarikhLawatan" value="$beanMaklumatLaporan.tarikhLawatan" onBlur="check_date(this)" size="9"/>
-                <a href="javascript:displayDatePicker('txdTarikhLawatan',false,'dmy');"><img border="0" src="../img/calendar.gif"/></td>
+              	<td width="1%"><font color="#ff0000">*</font></td>
+              	<td width="28%">Tarikh Lawatan</td>
+	            <td width="1%">:</td>
+	            <td width="70%"><input type="text" name="txdTarikhLawatan" id="txdTarikhLawatan" value="$beanMaklumatLaporan.tarikhLawatan" onBlur="check_date(this)" size="9"/>
+	                <a href="javascript:displayDatePicker('txdTarikhLawatan',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
+	            </td>
             </tr>
             <tr>
-              <td valign="top"><font color="#ff0000">*</font></td>
-              <td valign="top">Tujuan Laporan</td>
-              <td valign="top">:</td>
-              <td valign="top"><textarea name="txtTujuanLaporan" id="txtTujuanLaporan" rows="5" cols="50">$beanMaklumatLaporan.tujuanLaporan</textarea></td>
+			    <td width="1%"><font color="#ff0000">*</font></td>
+			    <td width="28%">Lawatan Tapak Oleh</td>
+			    <td width="1%">:</td>
+			    <td width="70%">
+			    	<select name="socFlagLawatan" id="socFlagLawatan">
+				      #if ($beanMaklumatLaporan.flagLawatan == '1')
+				          <option>SILA PILIH</option>
+				          <option selected="selected" value="1">JKPTG IBUPEJABAT</option>
+				          <option value="2">JKPTG NEGERI</option>
+				      #elseif ($beanMaklumatLaporan.flagLawatan == '2')
+				      	  <option>SILA PILIH</option>
+				          <option value="1">JKPTG IBUPEJABAT</option>
+				          <option selected="selected" value="2">JKPTG NEGERI</option>
+				      #else
+				      	  <option selected="selected">SILA PILIH</option>
+				          <option value="1">JKPTG IBUPEJABAT</option>
+				          <option value="2">JKPTG NEGERI</option>
+				      #end
+				    </select>
+			    </td>
+			</tr>
+            <tr>
+              	<td valign="top"><font color="#ff0000">*</font></td>
+              	<td valign="top">Tujuan Laporan</td>
+              	<td valign="top">:</td>
+              	<td valign="top">
+              		<textarea name="txtTujuanLaporan" id="txtTujuanLaporan" rows="5" cols="50">$beanMaklumatLaporan.tujuanLaporan</textarea>
+              	</td>
             </tr>
             <tr>
-              <td valign="top">&nbsp;</td>
-              <td valign="top">Catatan</td>
-              <td valign="top">:</td>
-              <td valign="top"><textarea name="txtCatatan" id="txtCatatan" rows="5" cols="50">$beanMaklumatLaporan.catatan</textarea></td>
+		    	<td width="1%" valign="top"><font color="#ff0000">*</font></td>
+		    	<td width="28%" valign="top">Laporan Atas Tanah</td>
+		    	<td width="1%" valign="top">:</td>
+		    	<td valign="top">
+		    		<textarea name="txtLaporanAtasTanah" id="txtLaporanAtasTanah" rows="5" cols="50">$beanMaklumatLaporan.laporanAtasTanah</textarea>    
+		    	</td>
+		  	</tr>
+		  	<tr>
+		    	<td valign="top">&nbsp;</td>
+		    	<td valign="top">Isu dan Ulasan</td>
+		    	<td valign="top">:</td>
+		    	<td valign="top">
+		    		<textarea name="txtIsuUlasan" id="txtIsuUlasan" rows="5" cols="50">$beanMaklumatLaporan.ulasan</textarea>    
+		    	</td>
+		  	</tr>
+            <tr>
+              	<td valign="top">&nbsp;</td>
+              	<td valign="top">Catatan</td>
+              	<td valign="top">:</td>
+              	<td valign="top">
+              		<textarea name="txtCatatan" id="txtCatatan" rows="5" cols="50">$beanMaklumatLaporan.catatan</textarea>
+              	</td>
             </tr>
             <tr>
-              <td valign="top"><font color="#ff0000">*</font></td>
-              <td valign="top">Disediakan Oleh</td>
-              <td valign="top">:</td>
-              <td valign="top"><input name="txtPelapor" type="text" id="txtPelapor" value="$beanMaklumatLaporan.pelapor" maxlength="40" size="40" onBlur="this.value=this.value.toUpperCase();"/></td>
+              	<td valign="top"><font color="#ff0000">*</font></td>
+              	<td valign="top">Disediakan Oleh</td>
+              	<td valign="top">:</td>
+              	<td valign="top">
+              		<input name="txtPelapor" type="text" id="txtPelapor" value="$beanMaklumatLaporan.pelapor" maxlength="40" size="40" 
+              			onBlur="this.value=this.value.toUpperCase();"/>
+              	</td>
             </tr>
             <tr>
-              <td valign="top"><font color="#ff0000">*</font></td>
-              <td valign="top">Jawatan</td>
-              <td valign="top">:</td>
-              <td valign="top"><input name="txtJawatan" type="text" id="txtJawatan" value="$beanMaklumatLaporan.jawatan" maxlength="40" size="40" onBlur="this.value=this.value.toUpperCase();"/></td>
-            </tr>
+		    	<td valign="top"><font color="#ff0000">*</font></td>
+		    	<td valign="top">Jawatan</td>
+		    	<td valign="top">:</td>
+		    	<td valign="top">$selectJawatanPelapor</td>
+		  	</tr>
             <tr>
-              <td valign="top"><font color="#ff0000">*</font></td>
-              <td valign="top">Negeri</td>
-              <td valign="top">:</td>
-              <td valign="top">$selectNegeri</td>
+              	<td valign="top"><font color="#ff0000">*</font></td>
+              	<td valign="top">Negeri</td>
+              	<td valign="top">:</td>
+              	<td valign="top">$selectNegeri</td>
             </tr>
             #end
             <tr>
-              <td colspan="4" valign="bottom"><i><font color="#ff0000">Perhatian</font> : Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i> </td>
+              	<td colspan="4" valign="bottom"><i><font color="#ff0000">Perhatian</font> : Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i> </td>
             </tr>
             <tr>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td><input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="kemaskini()"/>
-                <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="kembali()"/></td>
+              	<td>&nbsp;</td>
+              	<td>&nbsp;</td>
+              	<td>&nbsp;</td>
+              	<td>
+              		<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Simpan" onClick="kemaskini()"/>
+                	<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="kembali()"/>
+                </td>
             </tr>
           </table>
         </div>
@@ -179,11 +237,13 @@
             </tr>
             <tr>
               <td width="30%">&nbsp;</td>
-              <td width="70%"><input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="kemaskini()"/>
+              <td width="70%"><input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Simpan" onClick="kemaskini()"/>
                 <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="kembali()"/></td>
             </tr>
           </table>
-          #end </div>
+          #end 
+        </div>
+        <div class="TabbedPanelsContent"> #parse("app/php2/frmMaklumatKehadiranLaporanTanah.jsp") </div>
         <div class="TabbedPanelsContent"> #parse("app/php2/frmImejanLaporanTanah.jsp") </div>
       </div></td>
   </tr>
@@ -210,9 +270,24 @@ function kemaskini() {
 		document.${formName}.txdTarikhLawatan.focus(); 
 		return; 
 	}
+	if(document.${formName}.txdTarikhLawatan.value == ""){
+		alert('Sila masukkan Tarikh Lawatan.');
+		document.${formName}.txdTarikhLawatan.focus(); 
+		return; 
+	}
+	if(document.${formName}.socFlagLawatan.value == ""){
+		alert('Sila pilih Lawatan Tapak Oleh.');
+		document.${formName}.socFlagLawatan.focus(); 
+		return; 
+	}
 	if(document.${formName}.txtTujuanLaporan.value == ""){
 		alert('Sila masukkan Tujuan Laporan.');
 		document.${formName}.txtTujuanLaporan.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtLaporanAtasTanah.value == ""){
+		alert('Sila masukkan Laporan Atas Tanah.');
+  		document.${formName}.txtLaporanAtasTanah.focus(); 
 		return; 
 	}
 	if(document.${formName}.txtPelapor.value == ""){
@@ -220,9 +295,9 @@ function kemaskini() {
 		document.${formName}.txtPelapor.focus(); 
 		return; 
 	}
-	if(document.${formName}.txtJawatan.value == ""){
-		alert('Sila masukkan Jawatan.');
-		document.${formName}.txtJawatan.focus(); 
+	if(document.${formName}.socJawatanPelapor.value == ""){
+		alert('Sila pilih Jawatan.');
+  		document.${formName}.socJawatanPelapor.focus(); 
 		return; 
 	}
 	if(document.${formName}.socNegeri.value == ""){
@@ -241,6 +316,14 @@ function kemaskini() {
 }
 function kembali() {	
 	document.${formName}.step.value = "";
+	document.${formName}.submit();
+}
+function hantar(){
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+	
+	document.${formName}.hitButton.value = "sendNotification";
 	document.${formName}.submit();
 }
 </script>

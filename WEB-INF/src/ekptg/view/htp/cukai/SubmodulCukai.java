@@ -157,8 +157,8 @@ public class SubmodulCukai extends AjaxBasedModule{
 				this.context.put("cukaiUtama",bilCukaiUtama);	
 				myLog.info("statusPeringkatBayar: "+statusPeringkatBayar);
 				
-			}else if("simpanPenyata".equals(pageMode)){
-				myLog.info("simpanPenyata");
+			}else if(pageMode.equals("simpanPenyata") || pageMode.equals("simpanpenyatacukai")){
+				myLog.info("simpanPenyata:idNegeri="+idNegeri);
 				selectedTab = "0";
 				readability = "readonly";
 				disability = "disabled";
@@ -182,7 +182,7 @@ public class SubmodulCukai extends AjaxBasedModule{
     			String Daerah = getParam("socDaerah")==""?"0":getParam("socDaerah");
     			long idDaerah = Long.parseLong(Daerah);
     			statusPeringkatBayar = false;
-    			int idBaucer = 0;
+    			String idBaucer = "0";
 				BaucerCukai bCukai = null;
     			vector = getICukaiPenyata().getPenyata("11", "",String.valueOf(permohonan.get("fail")), String.valueOf(permohonan.get("idnegeri")),null);
     			//myLog.info("vector.isEmpty()="+vector.isEmpty());
@@ -196,6 +196,9 @@ public class SubmodulCukai extends AjaxBasedModule{
     					statusPeringkatBayar = true;
     				}
     			}
+				this.context.put("idNegeri", idNegeri);
+
+    			
     			this.context.put("info", permohonan);
         		this.context.put("idbayaran", peringkatBayar);
         		this.context.put("tahun_cukai", tahunParam);
@@ -204,7 +207,7 @@ public class SubmodulCukai extends AjaxBasedModule{
         		this.context.put("statusPeringkatBayar", statusPeringkatBayar);
         		
         		if("baucerview".equals(pageMode)){
-    				selectedTab = "0";
+    				selectedTab = "1";
     				if(statusPeringkatBayar){
     					selectedTab = "1";
     					int peringkat_bayaran = Integer.parseInt(getParam("peringkat_bayaran"));
@@ -248,7 +251,8 @@ public class SubmodulCukai extends AjaxBasedModule{
     			
     			}else if("view".equals(pageMode)){
     				myLog.info("baucer : pageMode="+pageMode);
-    				idBaucer = Integer.parseInt(getParam("idBaucer"));
+    				idBaucer = getParam("idBaucer");
+    				//idBaucer = Integer.parseInt(getParam("idBaucer"));
     				this.context.put("idbaucer", idBaucer);
     				this.context.put("idDaerah", getParam("idDaerah"));
     				style2 = "none";
@@ -258,8 +262,9 @@ public class SubmodulCukai extends AjaxBasedModule{
 
     			}else if("kemaskinibaucer".equals(pageMode)){
     				myLog.info("Baucer::kemaskinibaucer");
-    				idBaucer = Integer.parseInt(getParam("idBaucer"));
-       				this.context.put("idbaucer", idBaucer);
+    				idBaucer = getParam("idBaucer");
+    				//idBaucer = Integer.parseInt(getParam("idBaucer"));
+    		       	this.context.put("idbaucer", idBaucer);
     				this.context.put("idDaerah", getParam("idDaerah"));
     				style2 = "none";
     				bCukai = getICukaiBaucer().getSenaraiBaucer(negeri, null, peringkatBayar,null, getParam("idBaucer"));
@@ -857,8 +862,8 @@ public class SubmodulCukai extends AjaxBasedModule{
 		  
 	  }
 	  
-	  private int SimpanTBaucer(HttpSession session,int idPeringkatbayaran) throws Exception {
-		  int idBaucer = 0;
+	  private String SimpanTBaucer(HttpSession session,int idPeringkatbayaran) throws Exception {
+		  String idBaucer = "0";
 		  if(getParam("idBaucer") == ""){
 			  //baucer baru
 			  Hashtable h = new Hashtable();
@@ -880,7 +885,9 @@ public class SubmodulCukai extends AjaxBasedModule{
 			//kemaskini baucer
 			//System.out.println("CukaiProcess::SimpanTBaucer::kemaskini");
 			Hashtable h = new Hashtable();
-			idBaucer = Integer.parseInt(getParam("idBaucer"));
+			idBaucer = getParam("idBaucer");
+			//idBaucer = Integer.parseInt(getParam("idBaucer"));
+			
 			h.put("idBaucer", idBaucer);
 			h.put("idPeringkatbayaran", idPeringkatbayaran);
 			h.put("tkh_baucer", getParam("txdTarikhBaucer"));
@@ -903,7 +910,7 @@ public class SubmodulCukai extends AjaxBasedModule{
 		}
 	}
 		
-	private void DataTBaucer(HttpSession session,int idNegeri, int idBaucer, int idPeringkatbayaran, String disability, String readability, String style1, String style2) throws Exception {
+	private void DataTBaucer(HttpSession session,int idNegeri, String idBaucer, int idPeringkatbayaran, String disability, String readability, String style1, String style2) throws Exception {
 	  	Vector list = new Vector();
 		list.clear();					    
 		try{

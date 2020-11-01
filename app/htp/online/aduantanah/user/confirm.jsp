@@ -12,16 +12,17 @@
     </tr>
     <tr>
     <td width="30%">&nbsp;</td>
-    <td width="70%"><input type="button" name="cmdAduanBaru" id="cmdAduanBaru" value="Tambah Aduan" onclick="javascript:aduanBaru()" /> 
+    <td width="70%">
+       	<input type="button" name="cmdAduanBaru1" id="cmdAduanBaru1" value="Kembali" onclick="javascript:doChangeNegeri()" /> 
+    	<input type="button" name="cmdAduanBaru" id="cmdAduanBaru" value="Tambah Aduan" onclick="javascript:aduanBaru()" /> 
     </td>
   </tr>
 
 </table>
 <script type="text/javascript">
+
 	aduanBaru =function(){
-		
-			doAjaxCall${formName}("doAduanBaru");
-		
+		doAjaxCall${formName}("doAduanBaru");	
 	}
 
 

@@ -116,6 +116,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
     String idSubUrusan = "";
     private String userID = "";
     private String iDeraf = "-1";
+    private String iPerakuan = "-1";
     //String idPermohonan_ = "";
     //Perjanjian
 	FrmPajakanPerjanjianPajakanData logicper = new FrmPajakanPerjanjianPajakanData();
@@ -240,6 +241,8 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 		String emTarikhMohon = "";
 		String emAgensi = "";
 
+		iPerakuan= getParam("idPerakuan");
+
         // MJM
         iDeraf = getParam("idDraf");
  		String idUlasanKJP = getParam("idUlasanKJP");
@@ -333,6 +336,9 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
     		/** MJM */
         	}else if (hitButton.equals("savePemohon")){
     			savePemohon(idPermohonan, session);
+
+        	}else if (hitButton.equals("saveMaklumatJawatankuasa")){
+        		saveMaklumatPerakuanJawatankuasa(idPermohonan, session);
 
         	}else if (hitButton.equals("saveMemo")){
         		saveMemo(idPermohonan, session);
@@ -654,6 +660,12 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 
 			myLog1.info(action+",MJM:mode="+mode);
 			this.context.remove("BeanMJM");
+			if (selectedTab.equals("0")){
+			Vector<Hashtable<String, String>> senaraiPerakuanJawatankuasa = new Vector<Hashtable<String, String>>();
+    		logicmjm.setMaklumatPerakuanJawatankuasa(idPermohonan);
+    		senaraiPerakuanJawatankuasa = logicmjm.getMaklumatPerakuanJawatankuasa(idPermohonan);
+    		this.context.put("senaraiPerakuanJawatankuasa", senaraiPerakuanJawatankuasa);
+			}else if (selectedTab.equals("1")){
 	    	tarikhSemasa = lebah.util.Util.getDateTime(new Date(), "dd/MM/yyyy");
 			Tblhtpjemaahmenteri mjm = (Tblhtpjemaahmenteri)getIPMJM().getMaklumatMemorandumJemaahMenteri(idPermohonan);
 			MemorandumJemaahMenteriView(mode,mjm);
@@ -663,25 +675,32 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 				this.context.put("num_files", j);
 
 			}// end getParamAsInteger("jumlahlampiran")
+			}
 	        page_ = "5";
 
-        }else if(actionPajakan.equalsIgnoreCase("paparderaf")){
+        }else if(actionPajakan.equalsIgnoreCase("paparderaf") || actionPajakan.equalsIgnoreCase("paparperjanjian")){
         	vm ="app/htp/pajakan/deraf/index.jsp";
         	myLog1.info("paparderaf...selectedTab="+selectedTab);
         	myLog1.info("paparderaf...selectedTabLower="+selectedTabLower);
-
-
+    		if (selectedTab.equals("0")){
     		//draf memorandum jemaah menteri
     		Vector<Hashtable<String, String>> senaraiDraf = new Vector<Hashtable<String, String>>();
     		logicmjm.setListDraf(idPermohonan);
     		senaraiDraf = logicmjm.getSenaraiDraf();
     		this.context.put("SenaraiDraf", senaraiDraf);
-
     		DrafView(mode, iDeraf);
+    		}else if (selectedTab.equals("1")){
+    		Vector<Hashtable <String,String>> senaraiDraf = new Vector<Hashtable <String,String>>();
+        	//logicper.setListDraf(idPermohonan);
+        	//senaraiDraf = logicper.getSenaraiDraf();
+			senaraiDraf = getIPFungsi().getSenarai(idPermohonan,"P");
+        	this.context.put("SenaraiDraf", senaraiDraf);
+        	drafViewPerjanjian(mode, iDeraf);
 
+    		}
 	        page_ = "6";
 
-        }else if (actionPajakan.equalsIgnoreCase("paparperjanjian")) {
+        }/*else if (actionPajakan.equalsIgnoreCase("paparperjanjian")) {
         	vm ="app/htp/pajakan/perjanjian/index.jsp";
         	//vm =PATHPER+"index.jsp";
 			myLog1.info("paparperjanjian="+actionPajakan+",mode="+mode);
@@ -694,7 +713,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 
 			page_ = "7";
 
-        }else if (actionPajakan.equalsIgnoreCase("paparpajakan")) {
+        }*/else if (actionPajakan.equalsIgnoreCase("paparpajakan")) {
         	vm ="app/htp/pajakan/pajakan/index.jsp";
 			myLog1.info("paparpajakan="+actionPajakan+",mode="+mode);
 			if (selectedTab.equals("0")){
@@ -711,13 +730,13 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 				JemaahMenteriView(mode);*/
 
 	        }
-			page_ = "8";
+			page_ = "7";
 
         }else if(actionPajakan.equalsIgnoreCase("BayaranPajakan")){
             vm  = PATHBAY+"index.jsp";
             logicBayaran.setListMaklumatBayaran(idFail);
         	BayaranView(mode, idBayaran);
-			page_ = "9";
+			page_ = "8";
 
         }else if(actionPajakan.equalsIgnoreCase("penamatan")){
             vm  = PATHTAM+"index.jsp";
@@ -746,14 +765,14 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 //    	    	statusView(idPermohonan);
 //
     	    }
-			page_ = "10";
+			page_ = "9";
 
         }else if(actionPajakan.equalsIgnoreCase("pemantauan")){
             vm  = PATHPANTAU+"index.jsp";
 			//String sumber = "PAJAKAN_TINDAKAN";
 
         	getTindakan(mode);
-			page_ = "11";
+			page_ = "10";
 
         } else if(actionPajakan.equals("carian")){
         	myLog1.info("carian");
@@ -1119,6 +1138,23 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 		logicmjm.updateMemo(idPermohonan, hash, session);
 
 		kemaskiniStatusPermohonan(idPermohonan,idSubUrusan,getParam("txtKeputusan"));
+
+	}
+
+
+	//MJM
+	private String saveMaklumatPerakuanJawatankuasa(String idPermohonan, HttpSession session) throws Exception {
+	    Hashtable<String,String> hash = new Hashtable<String,String>();
+		hash.put("keputusan", getParam("txtKeputusan"));
+		hash.put("tindakanLanjut", getParam("txtKeterangan"));
+		hash.put("tarikhPerakuan", getParam("txdTPerakuan"));
+		hash.put("idSubUrusan", idSubUrusan);
+		if(logicmjm.isMaklumatPerakuanJawatankuasa(idPermohonan))
+			 AuditTrail.logActivity("1", "3", this, session, "UPD", "PERAKUAN JAWATANKUASA DIKEMASKINI ");
+		else
+			AuditTrail.logActivity("1", "3", this, session, "INS", "PERAKUAN JAWATANKUASA DITAMBAH ");
+
+		return logicmjm.updateMaklumatPerakuanJawatankuasa(idPermohonan, hash, session);
 
 	}
 
@@ -1877,6 +1913,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 		    }
 
 	  }
+
 	/**PERJANJIAN*/
 	public void drafViewPerjanjian(String mode, String idDraf) throws Exception{
 	    try{

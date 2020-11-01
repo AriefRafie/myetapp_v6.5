@@ -43,80 +43,86 @@
   </tr>
   #end
   <tr>
-    <td><div id="TabbedPanels1" class="TabbedPanels">
-        <ul class="TabbedPanelsTabGroup">
-          <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">MESYUARAT</li>
-          <!-- <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">BENTUK PAMPASAN</li> -->     
-        </ul>
-        <div class="TabbedPanelsContentGroup">
-          <div class="TabbedPanelsContent">
-           <!-- START SENARAI MESYUARAT -->
-           <table width="100%" border="0" cellspacing="2" cellpadding="2">
-   <tr>
-    <td><fieldset>
-      <legend><strong>SENARAI MESYUARAT</strong></legend>
-      <table align="center" width="100%">
-        <tr>
-          <td colspan="5" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:daftarMesyuarat()"/></td>
-        </tr>
-        <tr class="table_header">
-          <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-          <td width="60%"><strong>Tajuk Mesyuarat</strong></td>
-          <td width="10%"><strong>Bil Mesyuarat</strong></td>
-          <td width="10%" align="center"><strong>Tarikh</strong></td>
-          <td width="15%"><strong>Syor</strong></td>
-        </tr>
-        #set ($senaraiMesyuarat = "")
-        #if ($SenaraiMesyuarat.size() > 0)
-        #foreach ($senaraiMesyuarat in $SenaraiMesyuarat)
-        #if ($senaraiMesyuarat.bil == '')
-        #set( $row = "row1" )
-        #elseif (($senaraiMesyuarat.bil % 2) != 0)
-        #set( $row = "row1" )
-        #else 
-        #set( $row = "row2" )
-        #end
-        <tr>
-          <td class="$row" align="center">$senaraiMesyuarat.bil</td>
-          <td class="$row"><a href="javascript:paparMesyuarat($senaraiMesyuarat.idMesyuarat)" class="style1">$senaraiMesyuarat.tajukMesyuarat</a></td>
-          <td class="$row">$senaraiMesyuarat.bilMesyuarat</td>
-          <td class="$row" align="center">$senaraiMesyuarat.tarikhMesyuarat</td>
-          <td class="$row">$senaraiMesyuarat.syor</td>
-        </tr>
-        #end
-        #else
-        <tr>
-          <td height="21" align="center" class="row1">&nbsp;</td>
-          <td class="row1">Tiada Rekod</td>
-          <td class="row1">&nbsp;</td>
-          <td class="row1">&nbsp;</td>
-          <td class="row1">&nbsp;</td>
-        </tr>
-        #end
-      </table>
-      </fieldset></td>
-  </tr>
-</table></div>
- <!-- END SENARAI MESYUARAT -->
-          <div class="TabbedPanelsContent">
-           #parse("app/php2/frmTKRMesyuaratSenarai.jsp") </div>
-        </div>
-      </div></td>
+    <td>
+    	<div id="TabbedPanels1" class="TabbedPanels">
+        	<ul class="TabbedPanelsTabGroup">
+          		<li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">MESYUARAT</li>
+          		<!-- <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">BENTUK PAMPASAN</li> -->     
+        	</ul>
+        	<div class="TabbedPanelsContentGroup">
+          		<div class="TabbedPanelsContent">
+		         <!-- START SENARAI MESYUARAT -->
+		           <table width="100%" border="0" cellspacing="2" cellpadding="2">
+					  <tr>
+					    <td>
+					    	<fieldset>
+						      <legend><strong>SENARAI MESYUARAT</strong></legend>
+						      <table align="center" width="100%">
+						        ##<tr>
+						        ##  <td colspan="5" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:daftarMesyuarat()"/></td>
+						        ##</tr>
+						        <tr class="table_header">
+						          <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
+						          <td width="60%"><strong>Tajuk Mesyuarat</strong></td>
+						          <td width="10%"><strong>Bil Mesyuarat</strong></td>
+						          <td width="10%" align="center"><strong>Tarikh</strong></td>
+						          <td width="15%"><strong>Syor</strong></td>
+						        </tr>
+						        #set ($senaraiMesyuarat = "")
+						        #if ($SenaraiMesyuarat.size() > 0)
+						        #foreach ($senaraiMesyuarat in $SenaraiMesyuarat)
+						        #if ($senaraiMesyuarat.bil == '')
+						        #set( $row = "row1" )
+						        #elseif (($senaraiMesyuarat.bil % 2) != 0)
+						        #set( $row = "row1" )
+						        #else 
+						        #set( $row = "row2" )
+						        #end
+						        <tr>
+						          <td class="$row" align="center">$senaraiMesyuarat.bil</td>
+						          <td class="$row"><a href="javascript:paparMesyuarat($senaraiMesyuarat.idMesyuarat)" class="style1">$senaraiMesyuarat.tajukMesyuarat</a></td>
+						          <td class="$row">$senaraiMesyuarat.bilMesyuarat</td>
+						          <td class="$row" align="center">$senaraiMesyuarat.tarikhMesyuarat</td>
+						          <td class="$row">$senaraiMesyuarat.syor</td>
+						        </tr>
+						        #end
+						        #else
+						        <tr>
+						          <td height="21" align="center" class="row1">&nbsp;</td>
+						          <td class="row1">Tiada Rekod</td>
+						          <td class="row1">&nbsp;</td>
+						          <td class="row1">&nbsp;</td>
+						          <td class="row1">&nbsp;</td>
+						        </tr>
+						        #end
+      						  </table>
+      						</fieldset>
+      					</td>
+  					  </tr>
+				 	</table>
+				 </div>
+ 				 <!-- END SENARAI MESYUARAT -->
+          		 <div class="TabbedPanelsContent">
+           			#parse("app/php2/frmTKRMesyuaratSenarai.jsp") 
+           		 </div>
+        	</div>
+      	</div>
+     </td>
   </tr>
   #end
   <tr>
     <td align="center">
     #if($idStatus == '1610201')
-    <input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onclick="seterusnya()"/>
-    <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
+    	<input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onclick="seterusnya()"/>
+    	<input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
     #end
     #if ($mode == 'view' && $selectedTabUpper == '1')
-      <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskiniPampasan()"/>
-      #end
-      #if ($mode == 'update')
+      ##<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskiniPampasan()"/>
+    #end
+    #if ($mode == 'update')
       <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onclick="simpanKemaskiniPampasan()"/>
       <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="batalPampasan()"/>
-      #end </td>
+    #end </td>
   </tr>
 </table>
 <script type="text/javascript">
