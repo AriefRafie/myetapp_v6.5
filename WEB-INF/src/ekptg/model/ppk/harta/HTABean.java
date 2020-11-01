@@ -794,6 +794,7 @@ public class HTABean implements IMaklumatHarta {
 		,HttpServletRequest request
 		,HttpSession session
 		,org.apache.velocity.VelocityContext context) throws Exception{
+		myLog.info("getHTA:hParam="+hParam);
 		//int idnegerii = 0;
 		String add_new_harta = "";
 		String buttonhtaam = "";
@@ -1204,12 +1205,35 @@ public class HTABean implements IMaklumatHarta {
 			senaraiHTA = permohonanHarta.getDataHTA(mati,"Y");
 
 			Hashtable k = permohonanHarta.getDataHTAbyIdHtaam(idHarta, mati);
-			if (k.get("negeri").toString() != "" && k.get("negeri").toString() != "0") {
-				Vector s3 = logic_A.getListBandarByNegeri(Integer.parseInt(k.get("negeri").toString()));
-				context.put("listBandarSuratbyNegeri", s3);
-			} else {
-				context.put("listBandarSuratbyNegeri", "");
-			}		
+//			if (k.get("negeri").toString() != "" && k.get("negeri").toString() != "0") {
+//				Vector s3 = logic_A.getListBandarByNegeri(Integer.parseInt(k.get("negeri").toString()));
+//				context.put("listBandarSuratbyNegeri", s3);
+//			} else {
+//				context.put("listBandarSuratbyNegeri", "");
+//			}
+					
+			idNegeriStr = String.valueOf(k.get("negeri"));
+			idaerahStr = String.valueOf(k.get("daerah"));
+			idMukimStr = String.valueOf(k.get("mukim"));
+			idBandarStr = String.valueOf(k.get("bandar"));
+			idJenisHakmilik =  String.valueOf(k.get("jenishakmilik"));
+			socKategoriTanahHtaam =  String.valueOf(k.get("kategori"));
+			socJenisLuasHtaam = String.valueOf(k.get("jenisluas"));
+			socStatusPemilikanHtaam =  String.valueOf(k.get("pemilikan"));
+			myLog.info("test 301020:"+ idBandarStr);
+			
+			mh = new Hashtable<String,String>();
+			mh.put("socNegeri", idNegeriStr);
+			mh.put("socDaerah", idaerahStr);
+			mh.put("socMukim", idMukimStr);
+			//mh.put("txtBandarHarta", "0");
+			mh.put("socBandar", idBandarStr);
+			mh.put("socJenisHakmilik",idJenisHakmilik);
+			mh.put("socKategoriTanah",socKategoriTanahHtaam);
+			mh.put("socJenisLuas", socJenisLuasHtaam);
+			mh.put("socStatusPemilikan", socStatusPemilikanHtaam);
+			setSOC(mh,context);
+			
 //			this.context.put("idhtaam", idhtaam);
 //			context.put("listHTAid", permohonanHarta.getDataHTA());
 			idhtaamid = idhtaam;
@@ -2404,7 +2428,7 @@ public class HTABean implements IMaklumatHarta {
 		h.put("alamat_hta1", fnc.getParam(request,"txtAlamat1Htaam1"));
 		h.put("alamat_hta2", fnc.getParam(request,"txtAlamat2Htaam"));
 		h.put("alamat_hta3", fnc.getParam(request,"txtAlamat3Htaam"));
-		h.put("poskod", fnc.getParam(request,"txtAlamatPoskodHtaam"));
+		h.put("poskod_hta", fnc.getParam(request,"txtAlamatPoskodHtaam"));
 		h.put("id_bandarhta", fnc.getParam(request,"txtBandarHartaHtaamX2"));
 		h.put("idSimati", fnc.getParam(request,"idSimati"));
 		h.put("id_Permohonansimati", fnc.getParam(request,"id_Permohonansimati"));

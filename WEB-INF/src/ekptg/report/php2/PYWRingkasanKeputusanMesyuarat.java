@@ -19,7 +19,7 @@ public class PYWRingkasanKeputusanMesyuarat extends EkptgReportServlet {
 
 	public PYWRingkasanKeputusanMesyuarat() {
 		super.setReportName("PYWLaporanRingkasanKeputusanMesyuarat");
-		super.setFolderName("php2//PYW");
+		super.setFolderName("php2\\PYW");
 	}
 
 	@Override

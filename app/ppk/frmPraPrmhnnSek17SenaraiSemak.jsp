@@ -901,7 +901,7 @@ function checkit17(){
 
 	if (document.f1.cbsemaks[17].checked == true){
 	  document.f1.txtLainLainTujuan.focus();
-	  document.f1.txtLainLainTujuan.value = "Tujuan :";
+	  document.f1.txtLainLainTujuan.value = "TUJUAN :";
 	//  document.f1.txdTarikhByrn.value = "";		  
 		
 	}

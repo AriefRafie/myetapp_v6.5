@@ -117,35 +117,28 @@
    #set ($flagno = 3)
    #set ($idFlag = 2)
     #set ($bil = "")
-   
-                         #if($Senaraifail.size()==0)
+  
+                         #if($SenaraifailOnline.size()==0)
                          <tr>
 				         <td  colspan="6" align="center"><div align="left">Tiada Rekod </div></td>
 				         </tr>
                          #else
-	                       #foreach($fail in $Senaraifail)
+	                       #foreach($fail in $SenaraifailOnline)
                           
                            #set ($bilno = $fail.bil)
-                           
-                        <!--   #set($bilno=$bilno+1) -->
-                           #if($bilno%2!=0)
+                           #set ($bilnoxxx = $bilno%2)
+
+                        
+                           #if($bilnoxxx!=0)
           
 					      <tr class="row1">
-				          <td class="row1"><div align="center">$bilno.</div></td>
+				          <td class="row1"><div align="center">$fail.bil.</div></td>
 				          <td class="row1"><a href="javascript:edit_item('$fail.id_Permohonan','$fail.id_Simati','$flagno','$idFlag','$SimpanStatus')" class="style1">
 				          $fail.noonline</a></td>
                           <td class="row1"><div align="center" style="text-transform:uppercase;" onblur="uppercase()">$fail.no_Fail</div></td>
 				          <td class="row1"><div align="center" style="text-transform:uppercase;" onblur="uppercase()">$fail.tarikhmohononline</div></td>
 				      
-				          <td class="row1"><div align="left" style="text-transform:uppercase;" onblur="uppercase()"> 
-                        
-                          
-                        <!--  <a href="javascript:edit_item('$fail.id_Permohonan','$fail.id_Simati','$flagno','$idFlag','$SimpanStatus')" class="style1"> -->
-                        
-				          $fail.namapemohon
-                          <!-- </a> -->
-                          
-                          </div></td>
+				          <td class="row1"><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$fail.namapemohon</div></td>
 				          <td class="row1"><div align="center" style="text-transform:uppercase;" onblur="uppercase()">$fail.nokppemohon</div></td>
                            <td class="row1"><div align="center">
                              <!-- <input name="cetak" type="button" value="Cetak Borang A" onclick="cetakBorangA('$fail.id_Permohonan')" /> -->
@@ -161,9 +154,9 @@
                            </div></td>
 				          </tr>
                           #else
-                          
+                           
                           <tr class="row2">
-				          <td class="row2"><div align="center" style="text-transform:uppercase;" onblur="uppercase()">$bilno.</div></td>
+				          <td class="row2"><div align="center" style="text-transform:uppercase;" onblur="uppercase()">$fail.bil.</div></td>
 				          <td class="row2"><a href="javascript:edit_item('$fail.id_Permohonan','$fail.id_Simati','$flagno','$idFlag','$SimpanStatus')" class="style1">
 				          $fail.noonline</a></td>
                            <td class="row2"><div align="center" style="text-transform:uppercase;" onblur="uppercase()">$fail.no_Fail</div></td>

@@ -838,20 +838,26 @@
                                   			</td>
                                     		<td width="1%">:</td>
                                     		<td width="70%"> 
-                                      
-										#if($readmode == "disabled")
-                                      
-	                                    	#if($listamid.negeri!="" && $listamid.negeri!="0" )
-	                                      		<input name="n" value="$negerikodpemoP - $negeriketeranganpemoP" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+                                      		#if($readmode == "disabled")
+							                          	
+	                                      		#foreach($listN in $listnegeri)
+				                             		#if($listamid.negeri==$listN.id_Negeri)
+				                                    	#set($negerikodpemoP=$listN.kod_Negeri)
+				                                  		#set($negeriketeranganpemoP=$listN.nama_Negeri)
+				                                  	#end 
+			                       				#end
+	                                      	
+	                                      		#if($listamid.negeri!="" && $listamid.negeri!="0" )
+		                                      		<input name="n" value="$negerikodpemoP - $negeriketeranganpemoP" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+		                                      	#else
+		                                      		<input name="n" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+		                                      	#end
+	                                      		
 	                                      	#else
-	                                      		<input name="n" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+	                                      		$!socNegeri
 	                                      	#end
-                                      
-                                 		#else
-                                      		$listNegeri                                   			                                       	
-                                  		#end 
-                                  		</td>
-                          	    	</tr>
+                                  			</td>
+                          	    		</tr>
                      				<tr>
                                     	<td class="style38" valign="top" >#if($readmode != "disabled")<span class="style41">*</span>#end</td>
                                    		<!-- Kemaskini -->
@@ -862,21 +868,29 @@
                                       	</td>
                                     	<td>:</td>
                                     	<td>
-                                      
-                       				#if($readmode == "disabled")
-                                	
-	                                	#if($listamid.daerah!="" && $listamid.daerah!="0" )
-	                                      	<input name="d" value="$listDaerahbyNegeriK - $listDaerahbyNegeriN" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-	                                  	#else
-	                                      	<input name="d" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-	                                  	#end
-                                      
-                          			#else
-                          		          $!listDaerah
-                      				#end 
-                    			#if($readmode != "disabled") <span id="check_daerah_harta" style="color:red" ></span> #end </td>
-                     			
-                     			</tr>
+                                      	#if($readmode == "disabled")
+							                                       	
+                                       		#foreach($listD in $listdaerah)
+							                    #if($listamid.daerah==$listD.id)
+								                    #set($listDaerahK=$listD.kod)
+								                    #set($listDaerahN=$listD.nama)
+								                #end
+							                #end
+							                
+							                #if($listamid.daerah!="" && $listamid.daerah!="0" )
+	                                      		<input name="d" value="$listDaerahK - $listDaerahN" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+			                                #else
+			                                     <input name="d" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode"/>
+			                                #end
+							                
+                                       	#else
+                                       		$!socDaerah
+                                       	#end
+	               
+		                    			#if($readmode != "disabled") <span id="check_daerah_harta" style="color:red" ></span> #end 
+	                    				</td>
+	                     			
+	                     			</tr>
                               	<tr>
                                     <td class="style38" valign="top" >#if($readmode != "disabled")<span class="style41">*</span>#end</td>
                                     <td class="style38" >
@@ -886,18 +900,25 @@
                                  	</td>
                                     <td>:</td>
                                     <td>
-                           	           
-                  				#if($readmode == "disabled")
-                                   
-                                	#if($listamid.mukim!="" && $listamid.mukim!="0" )
-                                    	<input name="m" value="$listMukimbyDaerahK - $listMukimbyDaerahN" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-                                  	#else
-                                      	<input name="m" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-                             		#end
-                                      
-                      			#else
-                               		$!listMukim
-                               	#end 	
+                           	        #if($readmode == "disabled")
+							                                       	
+	                                   	#foreach($listM in $listmukim)
+						                    #if($listamid.mukim==$listM.id)
+							                    #set($listMukimK=$listM.kod)
+							                    #set($listMukimN=$listM.nama)
+							                #end
+						                #end
+	                                   		
+	                                   	#if($listamid.mukim!="" && $listamid.mukim!="0" )
+	                                  	<input name="m" value="$listMukimK - $listMukimN" size="34" $readmodeR class="$readmode" style="text-transform:uppercase;" />
+	                                	#else
+	                                    	<input name="m" value="" size="34" $readmodeR class="$readmode" style="text-transform:uppercase;" />
+	                           			#end
+                           		
+                                   	#else
+                                   		$!socMukim
+                                   	#end   
+                  				
            							</td>
                          		</tr>
                               	<tr>
@@ -907,17 +928,24 @@
                                       </div></td>
                                     <td>:</td>
                                     <td>
-                        		#if($readmode == "disabled")
-                                      
-                                 	#if($listamid.jenishakmilik!="")
-                                      	<input name="jh" value="$listjenishakmilikK - $listjenishakmilikN" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-                                 	#else
-                                      <input name="jh" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-                                  	#end
-                                      
-                          		#else
-                     				$!socJenisHakmilik
-                               	#end 
+	                        		#if($readmode == "disabled")
+	                        		
+	                        			#foreach($listHM in $listjenishakmilik)
+						                    #if($listamid.jenishakmilik==$listHM.id)
+							                    #set($listjenishakmilikK=$listHM.kod_jenishakmilik)
+							                    #set($listjenishakmilikN=$listHM.nama)
+							                #end
+						                #end
+	                                      
+	                                 	#if($listamid.jenishakmilik!="" && $listamid.jenishakmilik!="0")
+	                                      	<input name="jh" value="$listjenishakmilikK - $listjenishakmilikN" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+	                                 	#else
+	                                      <input name="jh" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+	                                  	#end
+	                                      
+	                          		#else
+	                     				$!socJenisHakmilik
+	                               	#end 
                               		</td>
                               	</tr>
                              	<tr>
@@ -948,7 +976,7 @@
                                       </div></td>
                                     <td>:</td>
                                     <td><label>
-                                      <input name="txtAlamat1Htaam1" type="text" id="txtAlamat1Htaam1" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" value="$!htaHash.alamat1" size="50" maxlength="50" $readmodeR class="$readmode"    />
+                                      <input name="txtAlamat1Htaam1" type="text" id="txtAlamat1Htaam1" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" value="$!listamid.alamat1" size="50" maxlength="50" $readmodeR class="$readmode"    />
                                       </label>
                                       #if($readmode != "disabled") <span id="checklot" style="color:red" ></span> #end </td>
                           		</tr>
@@ -961,7 +989,7 @@
                                     <td></td>
                                     <td><label>
                                     
-                                      <input name="txtAlamat2Htaam" type="text" id="txtAlamat2Htaam" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" value="$!htaHash.alamat2" size="50" maxlength="50" $readmodeR class="$readmode"/>
+                                      <input name="txtAlamat2Htaam" type="text" id="txtAlamat2Htaam" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" value="$!listamid.alamat2" size="50" maxlength="50" $readmodeR class="$readmode"/>
                                       </label>
                                       #if($readmode != "disabled") <span id="checklot" style="color:red" ></span> #end </td>
                              	</tr>
@@ -973,7 +1001,7 @@
                                       </div></td>
                                     <td></td>
                                     <td><label>
-                                      <input name="txtAlamat3Htaam" type="text" id="txtAlamat3Htaam" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" value="$!htaHash.alamat3" size="50" maxlength="50" $readmodeR class="$readmode"/>
+                                      <input name="txtAlamat3Htaam" type="text" id="txtAlamat3Htaam" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" value="$!listamid.alamat3" size="50" maxlength="50" $readmodeR class="$readmode"/>
                                       </label>
                              	</tr>
                                 
@@ -984,7 +1012,7 @@
                                       </div></td>
                                     <td>:</td>
                                     <td><label>
-                                      <input name="txtAlamatPoskodHtaam" type="text" id="txtAlamatPoskodHtaam" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" value="$!htaHash.poskod" size="5" maxlength="5" $readmodeR class="$readmode"/>
+                                      <input name="txtAlamatPoskodHtaam" type="text" id="txtAlamatPoskodHtaam" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" value="$!listamid.poskod" size="5" maxlength="5" $readmodeR class="$readmode"/>
                                       </label>
                                       #if($readmode != "disabled") <span id="checklot" style="color:red" ></span> #end </td>
                          		</tr>
@@ -1000,12 +1028,12 @@
                                		<td><label>
                                        
                                        	#if($readmode == "disabled")
-                                       		#foreach($listamid.listbandar in $listdaerah)
-                                				#set($kodbandar="bandarhta")
+                                       		#foreach($listamid.bandar in $listdaerah)
+                                				#set($kodbandar=$listamid.bandar)
 											#end
                                     
                                      		#if($listamid.bandar!="" && $listamid.bandar!="0" )
-                                     			<input name="ntbb2" value="$kodbx" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+                                     			<input name="ntbb2" value="$kodbandar" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                      		#else
                                      			<input name="ntbb3" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                      		#end                     
@@ -1034,7 +1062,7 @@
                                       </div></td>
                                     <td>:</td>
                                     <td><label>
-                                      <input name="txtNoPajakanUp" type="text" id="txtNoPajakan2" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" value="$!htaHash.nopajakan" size="15" maxlength="12" $readmodeR class="$readmode"   />
+                                      <input name="txtNoPajakanUp" type="text" id="txtNoPajakan2" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" value="$!listamid.nopajakan" size="15" maxlength="12" $readmodeR class="$readmode"   />
                                       </label></td>
                              	</tr>
                                 
@@ -1045,7 +1073,7 @@
                                       </div></td>
                                     <td>:</td>
                                     <td valign="top"><label>
-                                      <input name="txtNoPersHtaamUp" type="text" id="txtNoPersHtaam2" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" value="$!htaHash.noperserahan" size="15" maxlength="12" $readmodeR class="$readmode"   />
+                                      <input name="txtNoPersHtaamUp" type="text" id="txtNoPersHtaam2" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" value="$!listamid.noperserahan" size="15" maxlength="12" $readmodeR class="$readmode"   />
                                       </label></td>
                           		</tr>
                                
@@ -1077,7 +1105,7 @@
                                     	</div></td>
                                     <td valign="top">:</td>
                                     <td>
-                                    	<textarea name="txtCatatanHt" id="txtCatatanHt" $readmodeR class="$readmode" value="$!htaHash.catatan" cols="31" rows="5"  >$!htaHash.catatan</textarea>
+                                    	<textarea name="txtCatatanHt" id="txtCatatanHt" $readmodeR class="$readmode" value="$!listamid.catatan" cols="31" rows="5"  >$!listamid.catatan</textarea>
                                     </td>
                            		</tr>                              	
                         	</table>
@@ -1119,12 +1147,12 @@
                            		<td>
                                        
                           		#if($readmode == "disabled")
-                           			<input name="txtLuasAsalHtaamUpd" type="text" id="txtLuasAsalHtaamUpd" value="$!htaHash.luasasal" size="15" maxlength="15" $readmodeR class="$readmode" onblur="getConversionU()" />                                      
+                           			<input name="txtLuasAsalHtaamUpd" type="text" id="txtLuasAsalHtaamUpd" value="$!listamid.luasasal" size="15" maxlength="15" $readmodeR class="$readmode" onblur="getConversionU()" />                                      
                              	#else
                                       #if($listamid.jenisluas!="" && $listamid.jenisluas!="0")
-                            		<input name="txtLuasAsalHtaamUpd" type="text" id="txtLuasAsalHtaamUpd" onkeyup="javascript:validateIC(event,this,this.value,'txtLuasAsalHtaamUpd')" value="$!htaHash.luasasal" size="15" maxlength="15" readonly  class = "disabled"  />
+                            		<input name="txtLuasAsalHtaamUpd" type="text" id="txtLuasAsalHtaamUpd" onkeyup="javascript:validateIC(event,this,this.value,'txtLuasAsalHtaamUpd')" value="$!listamid.luasasal" size="15" maxlength="15" readonly  class = "disabled"  />
                                       #else
-                            		<input name="txtLuasAsalHtaamUpd" type="text" id="txtLuasAsalHtaamUpd" onkeyup="javascript:validateIC(event,this,this.value,'txtLuasAsalHtaamUpd')" value="$!htaHash.luasasal" size="15" maxlength="15"  readonly  class = "disabled"  />
+                            		<input name="txtLuasAsalHtaamUpd" type="text" id="txtLuasAsalHtaamUpd" onkeyup="javascript:validateIC(event,this,this.value,'txtLuasAsalHtaamUpd')" value="$!listamid.luasasal" size="15" maxlength="15"  readonly  class = "disabled"  />
                                       #end             
                             	#end 
                             	</td>
@@ -1172,7 +1200,7 @@
                                     <td class="style38"><div align="left">Luas (Hektar/MP) </div></td>
                                     <td>:</td>
                                     <td><label>
-                                      <input name="txtLuasHMpHtaamUpd" type="text" class="$readmode" id="txtLuasHMpHtaamUpd" onkeyup="javascript:validateIC(event,this,this.value,'txtLuasHMpHtaamUpd')" value="$!htaHash.luashmp" size="15" maxlength="15" $readmodeR />
+                                      <input name="txtLuasHMpHtaamUpd" type="text" class="$readmode" id="txtLuasHMpHtaamUpd" onkeyup="javascript:validateIC(event,this,this.value,'txtLuasHMpHtaamUpd')" value="$!listamid.luashmp" size="15" maxlength="15" $readmodeR />
                                       <input name="meterhektar" type="text" id="meterhektar" value="$!meterhektar" size="15" readonly class="disabled" />
                                       </label></td>
                          	</tr>
@@ -1181,7 +1209,7 @@
                                     <td class="style38"><div align="left">Nilai Tarikh Mohon (RM)</div></td>
                                     <td>:</td>
                                     <td><label>
-                              			<input type="text" name="txtNilaiTarikhMohonHt" value="$!htaHash.nilai_Hta_memohon" size="15"  onkeyup="javascript:validateIC(event,this,this.value,'txtNilaiTarikhMohonHt')" $readmodeR class="$readmode" />
+                              			<input type="text" name="txtNilaiTarikhMohonHt" value="$!listamid.nilai_Hta_memohon" size="15"  onkeyup="javascript:validateIC(event,this,this.value,'txtNilaiTarikhMohonHt')" $readmodeR class="$readmode" />
                               		</label></td>
                       		</tr>
                        		
@@ -1189,7 +1217,7 @@
                             	<td class="style38"><div align="left">Nilai Tarikh Mati (RM)</div></td>
                           	    <td>:</td>
                        	        <td><label> 
-                              		<input type="text" name="txtNilaiTarikhMatiHtaamUpd" id="txtNilaiTarikhMatiHtaamUpd"  value="$!htaHash.nilai_Hta_mati" size="15"  onkeyup="javascript:validateIC(event,this,this.value,'txtNilaiTarikhMatiHtaamUpd')" $readmodeR class="$readmode" />
+                              		<input type="text" name="txtNilaiTarikhMatiHtaamUpd" id="txtNilaiTarikhMatiHtaamUpd"  value="$!listamid.nilai_Hta_mati" size="15"  onkeyup="javascript:validateIC(event,this,this.value,'txtNilaiTarikhMatiHtaamUpd')" $readmodeR class="$readmode" />
                            		</label></td>
                          	</tr>
                       		
@@ -1214,7 +1242,7 @@
                        		<tr>
                             	<td class="style38"><div align="left">Tanggungan </div></td>
                              	<td>:</td>
-                              	<td><input name="txtTanggunganHtaamUp" type="text" id="txtTanggunganHtaam2" value="$!htaHash.tanggungan" size="15"$readmodeR style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" class="disabled" readonly/></td>
+                              	<td><input name="txtTanggunganHtaamUp" type="text" id="txtTanggunganHtaam2" value="$!listamid.tanggungan" size="15"$readmodeR style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" class="disabled" readonly/></td>
                           	</tr>
                           	
                       		<tr>
@@ -1259,7 +1287,7 @@
                                     <td class="style38" valign="top"><div align="left">Sekatan</div></td>
                                     <td valign="top">:</td>
                                     <td valign="top"><label>
-                                      <textarea name="txtSekatan" id="txtSekatan" $readmodeR class="$readmode" value="$!htaHash.sekatan" cols="31" rows="5"  onblur="this.value=this.value.toUpperCase()">$!htaHash.sekatan</textarea>
+                                      <textarea name="txtSekatan" id="txtSekatan" $readmodeR class="$readmode" value="$!listamid.sekatan" cols="31" rows="5"  onblur="this.value=this.value.toUpperCase()">$!listamid.sekatan</textarea>
                                     </label></td>
                             	</tr>
                                   
@@ -1268,7 +1296,7 @@
                                     <td class="style38" valign="top"><div align="left">Syarat Nyata</div></td>
                                     <td valign="top">:</td>
                                     <td valign="top"><label>
-                                      <textarea name="txtSyaratNyata" id="txtSyaratNyata" $readmodeR class="$readmode" value="$!htaHash.syaratNyata" cols="31" rows="5"  onblur="this.value=this.value.toUpperCase()">$!htaHash.syaratNyata</textarea>
+                                      <textarea name="txtSyaratNyata" id="txtSyaratNyata" $readmodeR class="$readmode" value="$!listamid.syaratNyata" cols="31" rows="5"  onblur="this.value=this.value.toUpperCase()">$!listamid.syaratNyata</textarea>
                                     </label> 
 																			</td>
                               	</tr>                                  
@@ -1367,12 +1395,15 @@
                     			
                     			<tr>
                        				<td align="center"> 
-					#if($open_button_online == "yes")
-  						#if($show_simpan_add_htaam == "yes")
+					
+  										#if($show_simpan_add_htaam == "yes" || $show_kemaskini_htaam == "yes")
 				 						<input type="submit" name="simpanhta" id="simpanhta" $readmode value="Simpan" onclick="setSelected(1,0,0,0);add_Htaam('$idhta','$idPermohonan')"/>                      	
-  						#end 
-  					#else	    
-  					#end 
+  										#end 
+  						
+				  						#if($show_hapus_htaam=="yes") 
+				  						<input type="button" name="cmdHapus1" id="cmdHapus1" $readmode value="Hapus"  onclick="setSelected(1,0,0,1);hapus_Htaam()"/>
+				  					 	#end
+				  					 	
   					         			<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="setSelected(1,0,0,0);HtaamView()" />                       	
                     				</td>
                   				</tr>

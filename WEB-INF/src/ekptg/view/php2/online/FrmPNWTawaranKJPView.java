@@ -5,6 +5,8 @@ package ekptg.view.php2.online;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -25,10 +27,17 @@ import org.apache.log4j.Logger;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
+import ekptg.model.htp.HtpBean;
+import ekptg.model.htp.IHtp;
 import ekptg.model.php2.FrmPHPDokumenData;
 import ekptg.model.php2.FrmPNWHeaderData;
 import ekptg.model.php2.FrmPNWTawaranKJPData;
 import ekptg.model.php2.online.FrmPLPOnlineKJPSenaraiFailData;
+import ekptg.model.utils.IUserPegawai;
+import ekptg.model.utils.UserKJPBean;
+import ekptg.model.utils.emel.EmailConfig;
+import ekptg.model.utils.emel.IEmel;
+import ekptg.view.htp.online.jrp.HTPEmelJRPBean;
 
 public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 
@@ -39,6 +48,10 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 	FrmPNWTawaranKJPData logic = new FrmPNWTawaranKJPData();
 	FrmPHPDokumenData logicDokumen = new FrmPHPDokumenData();
 	private String readonly = "disabled class = \"disabled\"";
+	private IHtp iHTP = null;
+	private ekptg.model.utils.emel.IEmel emelSemak = null;
+	private IUserPegawai iUser = null;
+	
 	
 	static Logger myLogger = Logger.getLogger(FrmPNWTawaranKJPView.class);
 
@@ -86,6 +99,7 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 		String idNegeriPemohon = "";
 		String userJawatan = "";
 		String idJawatan = "";
+		String namaPemohon = "";
 
 		// VECTOR
 		Vector beanHeader = null;
@@ -179,8 +193,43 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
     			uploadFiles(idPenawaranKJP, idPermohonan, session);
     			
 			}
+			if ("doHantarProses".equals(hitButton)) {
+				myLogger.info("baca doHantarProsess======");
+				Hashtable hUser = getIUser().getPengguna(userId);
+				idKementerian =  String.valueOf(hUser.get("idKementerian"));
+				Hashtable hashHeader = (Hashtable) logicHeader.getBeanMaklumatPermohonan().get(0);
+				Hashtable hashRayuanDB = (Hashtable) listDetailKJP.get(0);
+				namaPemohon = hashRayuanDB.get("namaPemohon").toString();
+				
+				idFail = (String) hashHeader.get("idFail");
+				noFail = (String) hashHeader.get("noFail");
+				idPermohonan = (String) hashHeader.get("idPermohonan");
+				idStatus = (String) hashHeader.get("idStatus");
+				this.context.put("idKementerian", idKementerian);
+				myLogger.info("baca idKementerian======"+idKementerian);
+				myLogger.info("baca userId======"+userId);
+
+				EmailConfig ec = new EmailConfig();
+
+				
+				String emelSubjek = ec.tajukSemakanInt + "Penerima Tawaran";
+				String kandungan = "";
+				
+				//kandungan = getEmelSemak().setEmailSign(String.valueOf(hashHeader.get("noFail")));
+					
+				kandungan = getEmelSemak().setEmailSign(String.valueOf(hashHeader.get("noFail")),
+						String.valueOf(hashHeader.get("tajukFail")), String.valueOf(hashRayuanDB.get("namaPemohon")));
+
+				if (!getEmelSemak().checkEmail(userId).equals(""))
+					getIHTP().getErrorHTML("[ONLINE-PHP PELEPASAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
+				
+				ec.sendByRole(getEmelSemak().checkEmail(userId), "(PHP)UserPelepasan",
+						String.valueOf(String.valueOf(hashHeader.get("idNegeriPemohon"))), emelSubjek, kandungan);
+				
+
+			}
+		}
 			
-		} 
  
 		//HEADER
         beanHeader = new Vector();
@@ -303,7 +352,8 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 		
 		this.context.put("step",step);
 		
-		if ("carian".equals(actionPenawaran)) {
+		if ("carian".equals(flagPopup)) {
+			
 			
 			// GO TO LIST FAIL PENAWARAN
 			
@@ -338,13 +388,13 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 			this.context.put("selectAgensi", HTML.SelectAgensiByKementerian("socAgensiC", idKementerian,  Long.parseLong(idAgensiC), "", " onChange=\"doChangeDaerah();\""));
 			this.context.put("checkTanah", getParam("checkTanah"));
 			this.context.put("flagTanah", getParam("checkTanah"));
-			this.context.put("flagDetail", flagDetail);
+			this.context.put("flagPopup", flagPopup);
 			setupPage(session, action, list);
 		
 			vm = "app/php2/online/ulasanKJP/pnw/senaraiFailTawaran.jsp";
 		}
 
-		else if ("paparFail".equals(actionPenawaran)) {
+		else if ("paparFail".equals(flagPopup)) {
 			myLogger.info("BACA paparFail=========="+idFail);
 			vm = "app/php2/online/ulasanKJP/pnw/frmPNWTawaranKJP.jsp";
 			
@@ -529,6 +579,7 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 		return vm;
     	
 	}
+
 	
 	
 	private void setMaklumatPelan(Vector beanMaklumatImejan, String idPenawaranKJP) throws Exception{
@@ -541,8 +592,8 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 			
 			this.context.put("modeDokumen", "addDokumen");   
 		} else {
-			logicDokumen.setMaklumatImej("ID_PENAWARANKJP", idPenawaranKJP);
-			beanMaklumatImejan = logicDokumen.getBeanMaklumatImejan();			
+			logic.setMaklumatImej("ID_PENAWARANKJP", idPenawaranKJP);
+			beanMaklumatImejan = logic.getBeanMaklumatImejan();			
 			
 			if(beanMaklumatImejan.size()>0)
     			this.context.put("modeDokumen", "addDokumen");    	
@@ -678,5 +729,24 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 				db.close();
 		}
 	}	
+	
+	
+	private IHtp getIHTP(){
+		if(iHTP== null)
+			iHTP = new HtpBean();
+		return iHTP;
+	}
+	private IEmel getEmelSemak(){
+		if(emelSemak == null)
+			emelSemak = new HTPEmelJRPBean();
+		return emelSemak;
+	}
+	private IUserPegawai getIUser(){
+		if(iUser==null){
+			iUser = new UserKJPBean();
+		}
+		return iUser;
+			
+	}
 	
 }

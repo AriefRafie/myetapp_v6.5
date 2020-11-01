@@ -33,6 +33,7 @@ public class FrmPNWTawaranKJPData {
 	private Vector senaraiFail = null;
 	private Vector listAgensi = null;
 	private Vector beanMaklumatAgensi = null;
+	private Vector beanMaklumatImejan = null;
 	private static final Log log = LogFactory.getLog(FrmPNWTawaranData.class);
 	static Logger myLog = Logger.getLogger(FrmPNWTawaranKJPView.class);
 
@@ -62,7 +63,9 @@ public class FrmPNWTawaranKJPData {
 					+ " AND F.ID_NEGERI = RUJNEGERI.ID_NEGERI(+) "
 					+ " AND B.ID_PEMOHON = C.ID_PEMOHON AND B.ID_PERMOHONAN = E.ID_PERMOHONAN AND A.NO_FAIL IS NOT NULL"
 					+ " AND A.ID_MASUK = H.USER_ID(+)"
-					+ " AND D.ID_STATUS = '1610210' "; //TAWARAN
+					+ " AND D.ID_STATUS = '1610210' " //Tawaran
+					+ " AND C.ID_KEMENTERIAN != '"+idKementerian +"'"
+					+ " AND C.ID_AGENSI != '"+idAgensi+"'";
 					
 
 			// noFail
@@ -886,6 +889,38 @@ public class FrmPNWTawaranKJPData {
 				db.close();
 		}
 	}
+	public void setMaklumatImej(String column, String data) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			beanMaklumatImejan = new Vector();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT ID_DOKUMEN, NAMA_FAIL, CATATAN FROM TBLPHPDOKUMEN WHERE "+column+" = '"+data+"'";
+			ResultSet rs = stmt.executeQuery(sql);
+			myLog.info("beanMaklumatImejan===="+sql);
+
+			Hashtable h;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("idDokumen", rs.getString("ID_DOKUMEN"));
+				h.put("namaImej", rs.getString("NAMA_FAIL") == null ? ""
+						: rs.getString("NAMA_FAIL").toUpperCase());
+				h.put("catatanImej",
+						rs.getString("CATATAN") == null ? "" : rs
+								.getString("CATATAN"));
+				beanMaklumatImejan.addElement(h);
+			}
+		} catch (Exception re) {
+			log.error("Error: ", re);
+			throw re;
+			} finally {
+			if (db != null)
+				db.close();
+		}
+	}
 
 	public Vector getListAgensi() {
 		return listAgensi;
@@ -904,6 +939,9 @@ public class FrmPNWTawaranKJPData {
 	}
 	public Vector getSenaraiFail() {
 		return senaraiFail;
+	}
+	public Vector getBeanMaklumatImejan() {
+		return beanMaklumatImejan;
 	}
 
 }

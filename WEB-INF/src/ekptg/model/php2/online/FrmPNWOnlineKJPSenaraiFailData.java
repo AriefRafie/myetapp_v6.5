@@ -80,8 +80,9 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, A.TAJUK_FAIL, B.TARIKH_TERIMA, C.NAMA "
 					+ ", CASE  "
 					+ "	WHEN B.ID_STATUS IN (148,240,245) THEN 'PRA PERMOHONAN ('||D.KETERANGAN ||')'	"
+					//+ "	WHEN B.ID_STATUS IN (1610198, 1610199, 1610200, 1610210, 1610201) THEN 'SEDANG DIPROSES' "
 				 	+ "	ELSE D.KETERANGAN  "
-				 	+ "END KETERANGAN "
+				 	+ " END KETERANGAN "
 					//+ ", D.KETERANGAN, "
 					+ ",B.ID_STATUS, H.USER_LOGIN,B.NO_PERMOHONAN "
 					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, "
@@ -1150,14 +1151,14 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 				h.put("negeri", rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI").toUpperCase());
 				h.put("perkara", rs.getString("TAJUK_FAIL") == null ? "" : rs.getString("TAJUK_FAIL").toUpperCase());
 
-				if ("1610197".equals(rs.getString("ID_STATUS")) || "1610212".equals(rs.getString("ID_STATUS"))
+				/*if ("1610197".equals(rs.getString("ID_STATUS")) || "1610212".equals(rs.getString("ID_STATUS"))
 						|| "1610208".equals(rs.getString("ID_STATUS")) || "1610207".equals(rs.getString("ID_STATUS"))) {
 					h.put("status", rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN").toUpperCase());
 				} else if ("".equals(rs.getString("ID_STATUS")) || rs.getString("ID_STATUS") == null) {
 					h.put("status", " PENDAFTARAN");
 				} else {
 					h.put("status", " SEDANG DIPROSES");
-				}
+				}*/
 				h.put("idHakmilik",
 						rs.getString("ID_HAKMILIK") == null ? "" : rs.getString("ID_HAKMILIK").toUpperCase());
 				h.put("idNegeriPemohon",

@@ -54,6 +54,7 @@ public class FrmPLPCetakanMinitKewanganView extends AjaxBasedModule {
 			if ("doSeterusnya".equals(hitButton)) {
 				logic.updateStatus(idFail, idPermohonan, session);
 				logic.sendEmailtoKJP(idPermohonan, "13", session);
+				session.setAttribute("MSG", "EMEL TELAH DIHANTAR KEPADA KEMENTERIAN BERKENAAN");
 			}
 			if ("doBatalPermohonan".equals(hitButton)) {
 				logic.doBatalPermohonan(idFail, idPermohonan,
@@ -64,9 +65,8 @@ public class FrmPLPCetakanMinitKewanganView extends AjaxBasedModule {
 				logic.simpanKemaskiniKewangan(idKertasKerja,
 						getParam("txtTajukKertas"), getParam("txtTujuan"),
 						getParam("txtPerihalKemajuan"), getParam("txtPemohon"),
-						getParam("txtLaporanNilaian"),
-						getParam("txtUlasanKJP"), getParam("txtPerakuanPTP"),
-						getParam("txtTarikhHantar"), session);
+						getParam("txtLaporanNilaian"), getParam("txtUlasanKJP"), getParam("txtPerakuanPTP"),
+						getParam("txtTarikhHantar"), getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
 			}
 		}
 
@@ -123,6 +123,13 @@ public class FrmPLPCetakanMinitKewanganView extends AjaxBasedModule {
 		this.context.put("idStatus", idStatus);
 		this.context.put("idKertasKerja", idKertasKerja);
 		this.context.put("step", step);
+		
+		if (session.getAttribute("MSG") != null){
+			this.context.put("errMsg", session.getAttribute("MSG"));
+			session.removeAttribute("MSG");
+		} else {
+			this.context.put("errMsg", "");
+		}
 		
 		if (!"".equals(getParam("flagFrom"))){
         	session.setAttribute("FLAG_FROM", getParam("flagFrom"));

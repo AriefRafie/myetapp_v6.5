@@ -82,4 +82,5 @@ public interface IHtp {
 	public String getAgensiDefaultMengikutKementerian(String idKementerian) throws Exception ;
 	public String getErrorHTML(String msg) throws Exception,SQLException;
 	public void hapusTindakan(String idsusulan);
+	Vector<Hashtable<String, String>> getSenaraiFail(String keputusan, String noHakmili, String noRujukan,String userId);
 }

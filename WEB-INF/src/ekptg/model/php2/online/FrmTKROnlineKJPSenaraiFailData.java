@@ -267,7 +267,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 		}
 	}
 
-	public Vector<Hashtable<String, Object>> getSenaraiFail(String findNoFail, String findNoPermohonan, String findTajukFail
+	public Vector<Hashtable<String, Object>> getSenaraiFail(String findNoFail, String findNoRujukanOnline, String findNoPermohonan, String findTajukFail
 		, String findPemohon, String findNoPengenalan
 		, String findTarikhTerima
 		, String findNoHakmilik, String findNoWarta, String findNoPegangan, String findJenisHakmilik, String findJenisLot, String findNoLot
@@ -304,8 +304,14 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			//noFail
 			if (findNoFail != null) {
 				if (!findNoFail.trim().equals("")) {
-					sql = sql + " AND UPPER(P.NO_PERMOHONAN) LIKE '%' ||'"
+					sql = sql + " AND UPPER(F.NO_FAIL) LIKE '%' ||'"
 							+ findNoFail.trim().toUpperCase() + "'|| '%'";
+				}
+			}
+			if (findNoRujukanOnline != null) {
+				if (!findNoRujukanOnline.trim().equals("")) {
+					sql = sql + " AND UPPER(P.NO_PERMOHONAN) LIKE '%' ||'"
+							+ findNoRujukanOnline.trim().toUpperCase() + "'|| '%'";
 				}
 			}
 			//tajukFail

@@ -59,7 +59,7 @@ public class FrmAPBOnlineSenaraiFailData {
 	private Vector beanMaklumatKawasanMohon = null;
 	private Vector beanMaklumatLampiran = null;
 	private Vector listLampiran = null;
-	
+	private Vector beanMaklumatDokumen = null;
 	
 	private Vector beanMaklumatPermohonanBorangA = null;
 	private Vector beanPelesen = null;
@@ -76,6 +76,7 @@ public class FrmAPBOnlineSenaraiFailData {
 	private static Vector MaklumatKiraan = null;
 	public Vector getListDokumen = null;
 	private static Vector MaklumatDokumen = null;
+	private Vector listDokumen = null;
 	
 	private Vector<Hashtable<String,String>> beanMaklumatPejabat = null;
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -145,7 +146,8 @@ public class FrmAPBOnlineSenaraiFailData {
 				r.add("NO_FAX", rsUserOnline.getString("NO_FAX") == null ? "" : rsUserOnline.getString("NO_FAX"));
 				r.add("NO_PENGENALAN", rsUserOnline.getString("NO_KP_BARU") == null ? "" : rsUserOnline.getString("NO_KP_BARU"));
 				r.add("NO_TEL", rsUserOnline.getString("NO_TEL") == null ? "" : rsUserOnline.getString("NO_TEL"));
-				
+				r.add("UNDANG_UNDANG_DIPERBADANKAN",undangUndang);
+				myLog.info("sql undangUndang "+undangUndang);
 				
 				if (rsUserOnline.getString("EMEL") != null){
 					emelUser = rsUserOnline.getString("EMEL");
@@ -153,9 +155,6 @@ public class FrmAPBOnlineSenaraiFailData {
 				r.add("EMEL", emelUser);
 				r.add("ID_BANDARTETAP",rsUserOnline.getString("ID_BANDAR") == null ? "99999" : rsUserOnline.getString("ID_BANDAR"));
 			}		
-			
-			r.add("UNDANG_UNDANG_DIPERBADANKAN",undangUndang);
-			myLog.info("sql undangUndang "+undangUndang);
 			
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
@@ -196,7 +195,14 @@ public class FrmAPBOnlineSenaraiFailData {
 			r.add("ID_PHPPMOHONNJDUALPERTAMA", id);
 			r.add("ID_PERMOHONAN", idPermohonan);
 			r.add("FLAG_RAYUAN", 0);
-			r.add("ID_JENISTUJUAN",idJenistujuan);
+//			r.add("ID_JENISTUJUAN",idJenistujuan);
+			if ("2".equals(idJenisLesen)){
+				r.add("ID_JENISTUJUAN", idJenisLesen);
+			} else if ("3".equals(idJenisLesen) || "4".equals(idJenisLesen)) {
+				r.add("ID_JENISTUJUAN", idJenisLesen);
+			} else {
+				r.add("ID_JENISTUJUAN", "");
+			}
 			r.add("ID_KAITANTUJUAN", idKaitanTujuan);
 			r.add("TUJUAN_PENGAMBILAN", tujuanPengambilan);
 			r.add("TEMPOH_DIPOHON", tempoh);
@@ -477,7 +483,6 @@ public void setMaklumatHeader(String idFail) throws Exception {
 			h.put("flagAktif", "");
 			h.put("idKategoriPemohon", "");
 			h.put("flagSambung","");
-			h.put("undangUndang", "");
 			beanMaklumatHeader.addElement(h);
 		}
 
@@ -2078,8 +2083,8 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 	}
 	
 	public void updatePermohonan(String idFail,String idPermohonan,String idPemohon,String idKaitanTujuan, String tujuanPengambilan,
-			String tempoh, String pengalaman,String idNegeri, String lokasi,
-			String luas, String idLuas,String modalBenar, String modalJelas,String idJenistujuan,String idJenisPermohonan, String idJenisLesen, String undangUndang, HttpSession session) throws Exception {
+			String tempoh, String pengalaman,String idNegeri, String lokasi,String luas, String idLuas,String modalBenar, String modalJelas,
+			String idJenistujuan,String idJenisPermohonan, String idJenisLesen, HttpSession session) throws Exception {
 
 
 		Db db = null;
@@ -2100,7 +2105,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			r.add("MODAL_JELAS", Utils.RemoveSymbol(modalJelas));
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
-			r.add("UNDANG_UNDANG_DIPERBADANKAN", Utils.RemoveSymbol(undangUndang));
+			//r.add("UNDANG_UNDANG_DIPERBADANKAN",undangUndang);
 			sql = r.getSQLUpdate("TBLPHPPEMOHON");
 			stmt.executeUpdate(sql);
 						
@@ -2427,6 +2432,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			r.add("C.NO_TEL_BIMBIT");
 			r.add("C.NO_FAX");
 			r.add("C.EMEL");
+			r.add("UNDANG_UNDANG_DIPERBADANKAN");
 
 			r.add("A.ID_FAIL", r.unquote("B.ID_FAIL"));
 			r.add("B.ID_PEMOHON", r.unquote("C.ID_PEMOHON"));
@@ -2521,6 +2527,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				h.put("emelSykt",
 						rs.getString("EMEL") == null ? "" : rs
 								.getString("EMEL"));
+				h.put("undangUndang", rs.getString("UNDANG_UNDANG_DIPERBADANKAN") == null ? "" : rs.getString("UNDANG_UNDANG_DIPERBADANKAN"));
 
 				beanMaklumatPemohon.addElement(h);
 				count++;
@@ -3111,6 +3118,9 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				h.put("idBorangA",
 						rs.getString("ID_BORANGA") == null ? "" : rs
 								.getString("ID_BORANGA"));
+				h.put("idJadualKeduaLesen",
+						rs.getString("ID_JADUALKEDUALESENAPB") == null ? "" : rs
+								.getString("ID_JADUALKEDUALESENAPB"));
 				h.put("bulan",
 						rs.getString("NAMA_BULAN") == null ? "" : rs
 								.getString("NAMA_BULAN"));
@@ -3148,7 +3158,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 
 
 				sql = " SELECT A.ID_LAPORANPASIR,B.NAMA_BULAN,A.TAHUN_PENGAMBILAN,A.BULAN_PENGAMBILAN, A.ID_JADUALKEDUALESENAPB, ";
-				sql += " A.JUMLAH_KUANTITI, A.JUMLAH_ROYALTI ";
+				sql += " A.JUMLAH_KUANTITI, A.JUMLAH_ROYALTI, A.TARIKH_PENGELUARAN ";
 				sql += " FROM TBLPHPLAPORANPASIR A, TBLRUJBULAN B ";
 				sql += " WHERE A.BULAN_PENGAMBILAN = B.ID_BULAN ";
 				sql += " AND A.ID_JADUALKEDUALESENAPB = '" + idJadualKeduaLesen
@@ -3183,6 +3193,8 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 					h.put("jumlah_royalti",
 							rs.getString("JUMLAH_ROYALTI") == null ? "" : rs
 									.getString("JUMLAH_ROYALTI"));
+					h.put("tarikhPengeluaran",
+							rs.getString("TARIKH_PENGELUARAN") == null ? "" : sdf.format(rs.getDate("TARIKH_PENGELUARAN")));
 				// namaPelesen
 			/*	if (namaPelesen != null) {
 					if (!namaPelesen.trim().equals("")) {
@@ -3522,6 +3534,39 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			}
 		}
 		
+		public void hapusBarge(String idBarge, HttpSession session) throws Exception {
+			Db db = null;
+			Connection conn = null;
+			String sql = "";
+
+			try {
+				db = new Db();
+				conn = db.getConnection();
+		    	conn.setAutoCommit(false);
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+				
+				//TBLPHPBARGE
+				r.add("ID_BARGE", idBarge);
+
+				sql = r.getSQLDelete("TBLPHPBARGE");
+				stmt.executeUpdate(sql);
+				
+				conn.commit();
+				
+			} catch (SQLException ex) { 
+		    	try {
+		    		conn.rollback();
+		    	} catch (SQLException e) {
+		    		throw new Exception("Rollback error : " + e.getMessage());
+		    	}
+		    	throw new Exception("Ralat : Masalah penyimpanan data " + ex.getMessage());
+		    	
+		    } finally {
+				if (db != null)
+					db.close();
+			}
+		}
 
 		public void carianBarge(String idBorangA) throws Exception {
 
@@ -3611,7 +3656,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				Statement stmt = db.getStatement();
 
 				sql = " SELECT A.ID_LAPORANPASIR,A.BULAN_PENGAMBILAN,A.TAHUN_PENGAMBILAN,A.JUMLAH_KUANTITI, A.KONTRAKTOR, A.PEMBELI_PASIR,";
-				sql += " A.JUMLAH_ROYALTI,A.ID_UNITISIPADU ";
+				sql += " A.JUMLAH_ROYALTI, A.ID_UNITISIPADU, A.TARIKH_PENGELUARAN ";
 				sql += " FROM TBLPHPLAPORANPASIR A ";
 				sql += " WHERE A.ID_LAPORANPASIR = '" + id_laporanpasir + "' ";
 
@@ -3630,6 +3675,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 					h.put("pembeli", rs.getString("PEMBELI_PASIR") == null ? "" : rs.getString("PEMBELI_PASIR"));
 					h.put("jumlah_royalti", rs.getString("jumlah_royalti") == null ? "" : Double.parseDouble(rs.getString("jumlah_royalti")));
 					h.put("id_unitisipadu", rs.getString("id_unitisipadu") == null ? "" : rs.getString("id_unitisipadu"));
+					h.put("tarikhPengeluaran", rs.getString("tarikhPengeluaran") == null ? "" : rs.getString("tarikhPengeluaran"));
 					MaklumatLaporan.addElement(h);
 				}
 			} finally {
@@ -3753,7 +3799,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				Statement stmt = db.getStatement();
 
 				sql = " SELECT A.ID_LAPORANPASIR,B.NAMA_BULAN,A.TAHUN_PENGAMBILAN,A.BULAN_PENGAMBILAN, A.ID_JADUALKEDUALESENAPB, ";
-				sql += " A.JUMLAH_KUANTITI, A.JUMLAH_ROYALTI ";
+				sql += " A.JUMLAH_KUANTITI, A.JUMLAH_ROYALTI, A.TARIKH_PENGELUARAN ";
 				sql += " FROM TBLPHPLAPORANPASIR A, TBLRUJBULAN B ";
 				sql += " WHERE A.BULAN_PENGAMBILAN = B.ID_BULAN ";
 				sql += " AND A.ID_JADUALKEDUALESENAPB = '" + id_jadualkedualesenAPB + "' ";
@@ -3787,6 +3833,8 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 					h.put("jumlah_royalti",
 							rs.getString("JUMLAH_ROYALTI") == null ? "" : rs
 									.getString("JUMLAH_ROYALTI"));
+					h.put("tarikhPengeluaran",
+							rs.getString("TARIKH_PENGELUARAN") == null ? "" : sdf.format(rs.getDate("TARIKH_PENGELUARAN")));
 					getListLaporan.addElement(h);
 					bil++;
 				}
@@ -3798,8 +3846,9 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 		}// CLOSE getListLaporan
 
 		// setCarianLaporan
-		public Vector setCarianLaporan(String socBulan, String txtTahun,
-				String id_jadualkedualesenAPB) throws Exception {
+		public Vector setCarianLaporan(
+//				String socBulan, String txtTahun,
+				String id_jadualkedualesenAPB, String tarikhPengeluaran) throws Exception {
 			Db db = null;
 			String sql = "";
 
@@ -3807,33 +3856,42 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				listCarianLaporan = new Vector();
 				db = new Db();
 				Statement stmt = db.getStatement();
-				txtTahun = txtTahun.trim();
+//				txtTahun = txtTahun.trim();
 
-				sql = " SELECT A.ID_LAPORANPASIR,B.NAMA_BULAN,A.TAHUN_PENGAMBILAN, A.JUMLAH_KUANTITI, A.JUMLAH_ROYALTI ";
+				sql = " SELECT A.ID_LAPORANPASIR,B.NAMA_BULAN,A.TAHUN_PENGAMBILAN, A.JUMLAH_KUANTITI, A.JUMLAH_ROYALTI, A.TARIKH_PENGELUARAN ";
 				sql += " FROM TBLPHPLAPORANPASIR A, ";
 				sql += " TBLRUJBULAN B ";
 				sql += " WHERE A.BULAN_PENGAMBILAN = B.ID_BULAN ";
 				sql += " AND A.ID_JADUALKEDUALESENAPB = '" + id_jadualkedualesenAPB
 						+ "' ";
 
-				// BULAN
-				if (socBulan != null) {
-					if (!socBulan.trim().equals("") && !socBulan.trim().equals("0")) {
-						sql = sql + " AND A.BULAN_PENGAMBILAN = '" + socBulan
-								+ "'  ";
+//				// BULAN
+//				if (socBulan != null) {
+//					if (!socBulan.trim().equals("") && !socBulan.trim().equals("0")) {
+//						sql = sql + " AND A.BULAN_PENGAMBILAN = '" + socBulan
+//								+ "'  ";
+//					}
+//				}
+//
+//				// TAHUN
+//				if (txtTahun != null) {
+//					if (!txtTahun.trim().equals("")) {
+//						sql = sql + " AND UPPER(A.TAHUN_PENGAMBILAN) LIKE '%"
+//								+ txtTahun + "%'";
+//					}
+//				}
+
+				SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MMM-yy");
+				// TARIKH PENGELUARAN
+				if (tarikhPengeluaran != null) {
+					if (!tarikhPengeluaran.trim().equals("")) {
+						sql = sql + " AND TO_CHAR(A.TARIKH_PENGELUARAN, 'dd-MON-YY') ='" + sdf1.format(sdf.parse(tarikhPengeluaran)).toUpperCase() +"'";
 					}
 				}
-
-				// TAHUN
-				if (txtTahun != null) {
-					if (!txtTahun.trim().equals("")) {
-						sql = sql + " AND UPPER(A.TAHUN_PENGAMBILAN) LIKE '%"
-								+ txtTahun + "%'";
-					}
-				}
-
+				
 				// SORTING
-				sql += " ORDER BY A.TAHUN_PENGAMBILAN ASC, A.BULAN_PENGAMBILAN ASC ";
+				sql += " ORDER BY A.TARIKH_PENGELUARAN ASC ";
+//						+ "A.BULAN_PENGAMBILAN ASC ";
 
 				myLog.info("SQL CARIAN LAPORAN :: " + sql);
 				ResultSet rs = stmt.executeQuery(sql);
@@ -3846,16 +3904,18 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 					h.put("id_laporanpasir",
 							rs.getString("id_laporanpasir") == null ? "-" : rs
 									.getString("id_laporanpasir"));
-					h.put("nama_bulan", rs.getString("nama_bulan") == null ? "-"
-							: rs.getString("nama_bulan"));
-					h.put("tahun_pengambilan",
-							rs.getString("tahun_pengambilan") == null ? "-" : rs
-									.getString("tahun_pengambilan"));
+//					h.put("nama_bulan", rs.getString("nama_bulan") == null ? "-"
+//							: rs.getString("nama_bulan"));
+//					h.put("tahun_pengambilan",
+//							rs.getString("tahun_pengambilan") == null ? "-" : rs
+//									.getString("tahun_pengambilan"));
 					h.put("jumlah_kuantiti", rs.getString("JUMLAH_KUANTITI") == null ? ""
 							: rs.getString("JUMLAH_KUANTITI"));
 					h.put("jumlah_royalti",
 							rs.getString("JUMLAH_ROYALTI") == null ? "" : rs
 									.getString("JUMLAH_ROYALTI"));
+					h.put("tarikhPengeluaran",
+							rs.getString("TARIKH_PENGELUARAN") == null ? "" : sdf.format(rs.getDate("TARIKH_PENGELUARAN")));
 					listCarianLaporan.addElement(h);
 					bil++;
 				}
@@ -3887,13 +3947,13 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 						+ "' ";
 
 				// NAMA PELESEN
-			/*	if (txtNamaPelesen != null) {
+				if (txtNamaPelesen != null) {
 					if (!txtNamaPelesen.trim().equals("")) {
 						sql = sql + " AND UPPER(B.NAMA) LIKE '%"
 								+ txtNamaPelesen.toUpperCase() + "%'";
 					}
 				}
-*/
+				
 				// NO LESEN
 				if (txtNoLesen != null) {
 					if (!txtNoLesen.trim().equals("")) {
@@ -3990,6 +4050,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				r.add("pembeli_pasir", txtPembeli);
 				r.add("id_kemaskini", userId);
 				r.add("tarikh_kemaskini", r.unquote("sysdate"));
+				//r.add("tarikhPengeluaran", r.unquote("sysdate"));
 				sql = r.getSQLUpdate("Tblphplaporanpasir");
 				myLog.info("SQL UPDATE LAPORAN :" + sql.toUpperCase());
 				stmt.executeUpdate(sql);
@@ -4063,148 +4124,86 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			return output;
 		} // CLOSE SIMPAN PASIR
 		
-		// getListDokumen ADD 14102020
-		public Vector getListDokumen(String id_laporanpasir) throws Exception {
+		// setMaklumatImej ADD 14102020
+		public void setMaklumatLaporanPasir(String idDokumen) throws Exception {
 			Db db = null;
 			String sql = "";
+
 			try {
-				getListDokumen = new Vector();
 				db = new Db();
+				beanMaklumatDokumen = new Vector();
 				Statement stmt = db.getStatement();
 
-				sql = "SELECT A.ID_DOKUMEN, A.NAMA_DOKUMEN, A.CATATAN, B.ID_LAPORANPASIR "
-						+	" FROM TBLPHPDOKUMEN A, TBLPHPLAPORANPASIR B "
-						+	" WHERE B.ID_LAPORANPASIR = A.ID_LAPORANPASIR "
-						+	" AND A.ID_LAPORANPASIR = '"+ id_laporanpasir + "'"; 
-				myLog.info("SQL getListDokumen :: " + sql);
+				sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN, NAMA_FAIL FROM TBLPHPDOKUMEN WHERE ID_DOKUMEN = '"
+						+ idDokumen + "'";
 				ResultSet rs = stmt.executeQuery(sql);
-				Hashtable h = null;
+
+				Hashtable h;
+				while (rs.next()) {
+					h = new Hashtable();
+					h.put("idDokumen", rs.getString("ID_DOKUMEN"));
+					h.put("namaFail", rs.getString("NAMA_FAIL") == null ? ""
+							: rs.getString("NAMA_FAIL"));
+					h.put("namaLampiran", rs.getString("NAMA_DOKUMEN") == null ? ""
+							: rs.getString("NAMA_DOKUMEN").toUpperCase());
+					h.put("catatanLampiran",
+							rs.getString("CATATAN") == null ? "" : rs
+									.getString("CATATAN"));
+					beanMaklumatDokumen.addElement(h);
+				}
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}
+	public Vector getbeanMaklumatDokumen() {
+		return beanMaklumatDokumen;
+	}
+		
+		public void setSenaraiDokumen(String idLaporanPasir) throws Exception {
+			Db db = null;
+			String sql = "";
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+			try {
+				db = new Db();
+				listDokumen = new Vector();
+				Statement stmt = db.getStatement();
+
+				sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN FROM TBLPHPDOKUMEN"
+						+ " WHERE ID_LAPORANPASIR = '" + idLaporanPasir + "'";
+
+				ResultSet rs = stmt.executeQuery(sql);
+				Hashtable h;
 				int bil = 1;
+				int count = 0;
 				while (rs.next()) {
 					h = new Hashtable();
 					h.put("bil", bil);
-					h.put("id_dokumen", rs.getString("ID_DOKUMEN") == null ? "" : rs.getString("ID_DOKUMEN"));
-					h.put("id_laporanpasir", rs.getString("ID_LAPORANPASIR") == null ? "" : rs.getString("ID_LAPORANPASIR"));
-					h.put("nama_dokumen", rs.getString("NAMA_DOKUMEN") == null ? "" : rs.getString("NAMA_DOKUMEN"));
-					h.put("catatan", rs.getString("CATATAN") == null ? "" : rs.getString("CATATAN"));
-					getListDokumen.addElement(h);
+					h.put("idDokumen", rs.getString("ID_DOKUMEN"));
+					h.put("namaDokumen", rs.getString("NAMA_DOKUMEN") == null ? ""
+							: rs.getString("NAMA_DOKUMEN"));
+					h.put("catatan",
+							rs.getString("CATATAN") == null ? "" : rs
+									.getString("CATATAN"));
+					listDokumen.addElement(h);
 					bil++;
-				}
-				return getListDokumen;
-			} finally {
-				if (db != null)
-					db.close();
-			}
-		}
-		
-		// getMaklumatDokumen ADD 14102020
-		public static void getMaklumatDokumen(String id_dokumen) throws Exception {
-			Db db = null;
-			String sql = "";
-			try {
-				MaklumatDokumen = new Vector();
-				db = new Db();
-				Statement stmt = db.getStatement();
-
-				sql = "SELECT A.ID_DOKUMEN, A.NAMA_DOKUMEN, A.CATATAN, B.ID_LAPORANPASIR "
-					+	" FROM TBLPHPDOKUMEN A, TBLPHPLAPORANPASIR B"
-					+	" WHERE B.ID_LAPORANPASIR = A.ID_LAPORANPASIR"
-					+	" AND A.ID_DOKUMEN = '"+ id_dokumen + "'"; 
-					
-				myLog.info("SQL Dokumen :: " + sql);
-				ResultSet rs = stmt.executeQuery(sql);
-				Hashtable h;
-
-				while (rs.next()) {
-					h = new Hashtable();
-					h.put("id_dokumen", rs.getString("ID_DOKUMEN") == null ? "" : rs.getString("ID_DOKUMEN"));
-					h.put("id_laporanpasir", rs.getString("ID_LAPORANPASIR") == null ? "" : rs.getString("ID_LAPORANPASIR"));
-					h.put("nama_dokumen", rs.getString("NAMA_DOKUMEN") == null ? "" : rs.getString("NAMA_DOKUMEN"));
-					h.put("catatan", rs.getString("CATATAN") == null ? "" : rs.getString("CATATAN"));
-					MaklumatDokumen.addElement(h);
+					count++;
 				}
 			} finally {
 				if (db != null)
 					db.close();
 			}
-		}// CLOSE getMaklumatDokumen
-		public static Vector getMaklumatDokumen() {
-			return MaklumatDokumen;
 		}
-	// SIMPAN DOKUMEN 
-		public static String simpanDokumen(String userId, String id_laporanpasir,
-					String txtNamaDokumen, String txtCatatan) throws Exception {
 
-			Db db = null;
-			Connection conn = null;
-			String sql = "";
-			String output = "";
+		public Vector getListDokumen() {
+			return listDokumen;
+		}
 
-			try {
-				long id_dokumen = DB.getNextID("TBLPHPDOKUMEN_SEQ");
-
-				db = new Db();
-				conn = db.getConnection();
-				conn.setAutoCommit(false);
-				Statement stmt = db.getStatement();
-				SQLRenderer r = new SQLRenderer();
-
-				// TBLPHPDOKUMEN
-				r = new SQLRenderer();
-				r.add("id_laporanpasir", id_laporanpasir);
-				r.add("id_dokumen", id_dokumen);
-				r.add("nama_dokumen", txtNamaDokumen);
-				r.add("catatan", txtCatatan);
-						
-				r.add("id_masuk", userId);
-				r.add("tarikh_masuk", r.unquote("sysdate"));
-				r.add("id_kemaskini", userId);
-				r.add("tarikh_kemaskini", r.unquote("sysdate")); 
-				sql = r.getSQLInsert("Tblphpdokumen");
-				myLog.info("SQL SIMPAN DOKUMEN :" + sql.toUpperCase());
-				stmt.executeUpdate(sql);
-
-				output = "" + id_dokumen;
-
-				conn.commit();
-				} catch (SQLException se) {
-					try {
-						conn.rollback();
-					} catch (SQLException se2) {
-						throw new Exception("Rollback error:" + se2.getMessage());
-					}
-					throw new Exception("Ralat Pendaftaran Pengeluaran Pasir Laut:"
-							+ se.getMessage());
-				} finally {
-					if (db != null)
-						db.close();
-				}
-				return output;
-			} // CLOSE DOKUMEN
+		public void setListDokumen(Vector listDokumen) {
+			this.listDokumen = listDokumen;
+		}
 		
-	// EDIT BORANG
-    public void simpanKemaskiniDokumen(String usid, String id_dokumen, String txtNamaDokumen, String txtCatatan)throws Exception {
-
-		Db db = null;
-		String sql = "";
-		try {
-			db = new Db();
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
-			r.update("id_dokumen", id_dokumen);
-			r.add("nama_dokumen", txtNamaDokumen);
-			r.add("catatan", txtCatatan);
-			r.add("id_kemaskini", usid);
-			r.add("tarikh_kemaskini", r.unquote("sysdate"));
-			sql = r.getSQLUpdate("Tblphpdokumen");
-			myLog.info("SQL UPDATE Tblphpdokumen :" + sql.toUpperCase());
-			stmt.executeUpdate(sql);
-		} finally {
-			if (db != null)
-				db.close();
-		}
-	 } // CLOSE EDIT BORANG
-    
 	 // HAPUS DOKUMEN
 	 public void deleteDokumen(String id_dokumen) throws Exception {
 	 		Db db = null;

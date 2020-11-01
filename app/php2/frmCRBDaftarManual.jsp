@@ -343,9 +343,10 @@
               <option $selected1 value="1">TANAH MILIK PERSEKUTUAN</option>
               <option $selected2 value="2">TANAH RIZAB PERSEKUTUAN</option>
               <option $selected3 value="3">BORANG K</option>
-              <!-- <option $selected4 value="4">LAIN-LAIN TANAH</option> -->
+              <option $selected4 value="4">LAIN-LAIN TANAH</option>
             </select></td>
         </tr>
+
         #if ($idJenisTanah == '1' || $idJenisTanah == '2')
         #foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
         <tr>
@@ -455,20 +456,23 @@
         </tr>
         #end
         #end
+        
         #if ($idJenisTanah == '4')
         #foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
         <tr>
           <td>&nbsp;</td>
-          <td>Pegangan Hakmilik</td>
+          <td>Jenis Hakmilik</td>
           <td>:</td>
-          <td><input type="text" class="$inputTextClass" name="txtPeganganHakmilik1" id="txtPeganganHakmilik1" value="$beanMaklumatTanah.peganganHakmilik1" size="43" maxlength="80" $readonly onblur="this.value=this.value.toUpperCase();"/></td>
+          <td>$selectJenisHakmilik
+          	<input type="hidden" name="idJenisHakmilik" id="idJenisHakmilik" value="$idJenisHakmilik"/>
+          	<input type="hidden" name="jenisHakmilik" id="jenisHakmilik" value="$jenisHakmilik"/>
+          </td>
         </tr>
         <tr>
           <td>&nbsp;</td>
           <td>No. Hakmilik</td>
           <td>:</td>
-          <td>$selectJenisHakmilik
-          	<input type="hidden" name="idJenisHakmilik" id="idJenisHakmilik" value="$idJenisHakmilik"/>
+          <td>
           	<input type="text" class="$inputTextClass" name="txtNoHakmilikTanah" id="txtNoHakmilikTanah" value="$beanMaklumatTanah.noHakmilik" size="43" maxlength="80" $readonly/>
           </td>
         </tr>
@@ -477,7 +481,7 @@
           <td>No. Warta</td>
           <td>:</td>
           <td>
-            <input type="text" class="$inputTextClass" name="noWarta" id="noWarta" value="$beanMaklumatTanah.noWarta" size="43" maxlength="80" $readonly onblur="this.value=this.value.toUpperCase();"/>
+            <input type="text" class="$inputTextClass" name="txtNoWarta" id="txtNoWarta" value="$beanMaklumatTanah.noWarta" size="43" maxlength="80" $readonly onblur="this.value=this.value.toUpperCase();"/>
           </td>
         </tr>
         <tr>
@@ -491,21 +495,76 @@
         </tr>
         <tr>
           <td>&nbsp;</td>
-          <td>No. Lot</td>
+          <td>Jenis Lot</td>
           <td>:</td>
           <td>$selectJenisLot
           	<input type="hidden" name="idJenisLot" id="idJenisLot" value="$idJenisLot" />
+          	<input type="hidden" name="jenisLot" id="jenisLot" value="$jenisLot"/>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>No. Lot</td>
+          <td>:</td>
+          <td>
           	<input type="text" class="$inputTextClass" name="txtNoLot" id="txtNoLot" value="$beanMaklumatTanah.noLot" size="43" maxlength="80" $readonly/>
           </td>
         </tr>
         <tr>
           <td>&nbsp;</td>
-          <td>Luas Lot</td>
+          <td>Unit Luas</td>
           <td>:</td>
           <td>
-            <input type="text" class="$inputTextClass" name="txtLuas" id="txtLuas" value="$beanMaklumatTanah.luas" size="43" maxlength="80" $readonly/>
-            #parse("app/php2/unit_luas.jsp")
-           </td>
+          	<select name="socLuas" style="width:200px;" $readonly class="$disabled" $disabled 
+					onchange="javascript:doChangeLuas(this.value)">
+				#set ($listUnitLuas = 
+            	["SILA PILIH",
+		       	 "KM - KILOMETER PERSEGI",
+		         "H - HEKTAR",
+		         "M - METER PERSEGI",
+		         "E - EKAR,ROOD,POLE",
+		         "K - KAKI PERSEGI",
+		         "P - EKAR PERPULUHAN",
+		         "D - EKAR,DEPA",
+		         "R - RELONG,JEMBA,KAKI PERSEGI",
+		         "BN - BATU NAUTIKA"])
+		         #set( $counter = 0 )
+				 #foreach ($i in $listUnitLuas)
+					#if ($idLuas == $counter) 
+						<option selected value="$counter">$i</option>
+              		#else
+						<option value="$counter">$i</option>
+	            	#end
+					#set ($counter = $counter+1)
+				 #end
+			</select>
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Luas</td>
+          <td>:</td>
+          <td>
+          	#if ($idLuas == '0' || $idLuas == '1' || $idLuas == '2' || $idLuas == '3' || $idLuas == '5' || $idLuas == '6' || $idLuas == '9')
+            	<input type="text" name="txtLuas1" id="txtLuas1" value="$beanMaklumatTanah.luas" onkeyup="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6" $readonly class="$inputTextClass"/ >
+            #elseif ($idLuas == '7')
+            	<input type="text" name="txtLuas1" id="txtLuas1" value="$beanMaklumatTanah.luas" onkeyup="validateNumber(this,this.value);" size="4" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
+            	<input type="text" name="txtLuas2" id="txtLuas2" value="$beanMaklumatTanah.luas" style="text-align:right" onkeyup="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6"/ $readonly class="$inputTextClass">
+            #elseif ($idLuas == '8' || $idLuas == '4')
+            	<input type="text" name="txtLuas1" id="txtLuas1" value="$beanMaklumatTanah.luas" onkeyup="validateNumber(this,this.value);" size="4" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
+            	<input type="text" name="txtLuas2" id="txtLuas2" value="$beanMaklumatTanah.luas" onkeyup="validateNumber(this,this.value);" size="4" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
+            	<input type="text" name="txtLuas3" id="txtLuas3" value="$beanMaklumatTanah.luas" onKeyUp="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6" $readonly class="$inputTextClass"/>
+          	#end
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Luas Bersamaan</td>
+          <td>:</td>
+          <td>
+          	<input type="text" name="txtLuasBersamaan" id="txtLuasBersamaan" value="$beanMaklumatTanah.luasBersamaan" readonly="readonly" class="disabled"/>
+            HEKTAR
+          </td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -513,28 +572,30 @@
           <td>:</td>
           <td>
           	$selectNegeriTanah
-            <input type="hidden" name="namaNegeriTanah" id="namaNegeriTanah" value="$beanMaklumatTanah.negeri" /></td>
-            <input type="hidden" name="idNegeri" id="idNegeri" value="$beanMaklumatTanah.idNegeri" /></td>
+            <input type="hidden" name="namaNegeriTanah" id="namaNegeriTanah" value="$namaNegeriTanah" />
+            <input type="hidden" name="idNegeriTanah" id="idNegeriTanah" value="$idNegeriTanah" />
+          </td>
         </tr>
         <tr>
           <td>&nbsp;</td>
           <td>Daerah</td>
           <td>:</td>
           <td>$selectDaerahTanah
-            <input type="hidden" name="namaDerahTanah" id="namaDerahTanah" value="$beanMaklumatTanah.daerah" />
-            <input type="hidden" name="idDaerahTanah" id="idDaerahTanah" value="$beanMaklumatTanah.idDaerah" /></td>
+            <input type="hidden" name="namaDaerahTanah" id="namaDaerahTanah" value="$namaDaerahTanah" />
+            <input type="hidden" name="idDaerahTanah" id="idDaerahTanah" value="$idDaerahTanah" />
           </td>
         </tr>
         <tr>
           <td>&nbsp;</td>
-          <td>Mukim</td>
+          <td>Bandar/Pekan/Mukim</td>
           <td>:</td>
           <td>$selectMukimTanah
-            <input type="hidden" name="namaMukimTanah" id="namaMukimTanah" value="$beanMaklumatTanah.mukim" /></td>
-            <input type="hidden" name="idMukimTanah" id="idMukimTanah" value="$beanMaklumatTanah.idMukim" /></td>
+            <input type="hidden" name="namaMukimTanah" id="namaMukimTanah" value="$namaMukimTanah" />
+          </td>
         </tr>
         #end
         #end
+        
         #if ($idJenisTanah == '3')
         <tr>
           <td colspan="4"><fieldset>
@@ -757,6 +818,9 @@ function doChangeDaerahTanah(){
 function doChangeMukimTanah(){
 	doAjaxCall${formName}("doChangeMukimTanah");
 }
+function doChangeLuas() {
+	doAjaxCall${formName}("doChangeLuas");
+}
 /* function pilihTanah() {
 	var url = "../x/${securityToken}/ekptg.view.php2.FrmCRBPopupSenaraiTanahView";
     var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
@@ -919,7 +983,7 @@ function daftarBaru() {
 			alert('Sila pilih Pegangan Hakmilik.');
 			return;
 		}
-	} else {
+	} else if((document.${formName}.socJenisTanah.value == "1") || (document.${formName}.socJenisTanah.value == "2")){
 		if(document.${formName}.idHakmilikAgensi.value == "" && document.${formName}.idHakmilikSementara.value == ""){
 			alert('Sila pilih Pegangan Hakmilik.');
 			return;
@@ -994,6 +1058,120 @@ function validateLength(str) {
 		 return false
 	}
 }
+function validateLuas(elmnt,content,content2) {
+	//if it is character, then remove it..
+	if (isNaN(content)) {
+		elmnt.value = content2;
+		return;
+	}
+	
+	if(content != ""){
+		var num = content * 1;
+		elmnt.value = num.toFixed(5);
+		return;
+	} else {
+		elmnt.value ="";
+		return;
+	}
+}
+function kiraLuas(idLuas){
+
+  var jenisLuas = idLuas;
+  
+  if(jenisLuas == "1"){ //KILOMETER PERSEGI
+
+		var luasK = 0;
+		if (document.${formName}.txtLuas1.value != ''){
+			luasK = document.${formName}.txtLuas1.value*1;
+		}
+		var luasH = luasK*100;		
+		document.${formName}.txtLuasBersamaan.value = luasH.toFixed(5);
+
+   } else if(jenisLuas == "2"){ //HEKTER
+  		
+		var luasH = 0;
+		if (document.${formName}.txtLuas1.value != ''){
+			luasH = document.${formName}.txtLuas1.value*1;
+		}
+		document.${formName}.txtLuasBersamaan.value = luasH.toFixed(5);
+
+   } else if(jenisLuas == "3"){ // METER PERSEGI
+    	
+		var luasM = 0;
+		if (document.${formName}.txtLuas1.value != ''){
+			luasM = document.${formName}.txtLuas1.value*1;
+		}
+  	  	var luasH = (luasM*0.0001);
+	  	document.${formName}.txtLuasBersamaan.value = luasH.toFixed(5);
+
+   } else if(jenisLuas == "4"){  //EKAR, ROOD, POLE
+
+	  	var luasE = 0;
+		if (document.${formName}.txtLuas1.value != ''){
+			luasE = document.${formName}.txtLuas1.value*1;
+		}
+	  	var luasR = 0;
+		if (document.${formName}.txtLuas2.value != ''){
+			luasR = document.${formName}.txtLuas2.value*1;
+		}
+	  	var luasP = 0;
+		if (document.${formName}.txtLuas3.value != ''){
+			luasP = document.${formName}.txtLuas3.value*1;
+		}
+	  	var luasH = (luasE*0.4046864)+(luasR*0.1011716)+(luasP*0.00252929);
+  	  	document.${formName}.txtLuasBersamaan.value = luasH.toFixed(5);
+
+   } else if(jenisLuas == "5"){ //KAKI PERSEGI
+  	  
+	  var luasAsal = 0;
+	  if (document.${formName}.txtLuas1.value != ''){
+		  luasAsal = document.${formName}.txtLuas1.value*1;
+	  }
+	  var luasH = luasAsal*0.0000092;
+  	  document.${formName}.txtLuasBersamaan.value = luasH.toFixed(5);
+
+   } else if(jenisLuas == "6"){	//EKAR PERPULUHAN
+  	  
+	  var luasAsal = 0;
+	  if (document.${formName}.txtLuas1.value != ''){
+		  luasAsal = document.${formName}.txtLuas1.value*1;
+	  }
+	  var luasH = luasAsal*0.405;
+	  document.${formName}.txtLuasBersamaan.value = luasH.toFixed(5);
+  	  
+   } else if(jenisLuas == "7"){ //EKAR,DEPA
+  	  
+	  var luasE = 0;
+	  if (document.${formName}.txtLuas1.value != ''){
+		  luasE = document.${formName}.txtLuas1.value*1;
+	  }
+	  var luasD = 0;
+	  if (document.${formName}.txtLuas2.value != ''){
+		  luasD = document.${formName}.txtLuas2.value*1;
+	  }
+	  
+	  var luasH = (luasE*0.4046864)+(luasD*0.00040469);
+	  document.${formName}.txtLuasBersamaan.value = luasH.toFixed(5);
+
+   } else if(jenisLuas == "8"){ //RELONG,JEMBA,KAKI PERSEGI
+  	  
+	  var luasR = 0;
+	  if (document.${formName}.txtLuas1.value != ''){
+		  luasR = document.${formName}.txtLuas1.value*1;
+	  }
+	  var luasJ = 0;
+	  if (document.${formName}.txtLuas2.value != ''){
+		  luasJ = document.${formName}.txtLuas2.value*1;
+	  }
+	  var luasK = 0;
+	  if (document.${formName}.txtLuas3.value != ''){
+		  luasK = document.${formName}.txtLuas3.value*1;
+	  }
+	  
+	  var luasH = (luasR*0.2877764)+(luasJ*0.0005945)+(luasK*0.0000092);
+	  document.${formName}.txtLuasBersamaan.value = luasH.toFixed(5);
+	}
+}
 function textCounter(field, countfield, maxlimit) {
    if (field.value.length > maxlimit) // if too long...trim it!
 		 field.value = field.value.substring(0, maxlimit);
@@ -1002,33 +1180,46 @@ function textCounter(field, countfield, maxlimit) {
 	 countfield.value = maxlimit - field.value.length;
 }
 function janaTajuk() {
-	if(document.${formName}.idHakmilikAgensi.value != "4"){
+	if(document.${formName}.socJenisTanah.value != "4"){
+		
 		if(document.${formName}.idHakmilikAgensi.value == "" && document.${formName}.idHakmilikSementara.value == ""){
 			alert('Sila pilih Pegangan Hakmilik Sebelum Menjana Tajuk.');
 			return;
 		}
+
+		var str2  = document.${formName}.noLotTanah.value;
+		var str3  = document.${formName}.noWartaTanah.value;
+		var str4  = document.${formName}.noMilikTanah.value;
+		var str5  = document.${formName}.namaMukimTanah.value;
+		var str6  = document.${formName}.namaDerahTanah.value;
+		var str7  = document.${formName}.namaNegeriTanah.value;
+		var statusRizabTnh = document.${formName}.statusRizab.value;
+
+		if(statusRizabTnh == 'MILIK') {
+			milikOrRizab = str2;
+		} else if(statusRizabTnh == 'RIZAB') {
+			milikOrRizab = str3;
+		}
+
+		var strTajuk = "PENCEROBOHAN TANAH " + statusRizabTnh + " PERSEKUTUAN DI ATAS TANAH  " + str2 +", " + str3 + str4 + ", " + str5 + ", " + str6 + ", " + str7;
+		var strTajuk = "PENCEROBOHAN TANAH MILIK/RIZAB KJP DI ATAS TANAH  " + str2 +", " + str3 + str4 + ", " + str5 + ", " + str6 + ", " + str7;
+	
+		document.${formName}.txtPerkara.value = strTajuk;
+	} else {
+
+		var str1  = document.${formName}.jenisLot.value;
+		var str2  = document.${formName}.txtNoLot.value;
+		var str3  = document.${formName}.txtNoWarta.value;
+		var str4  = document.${formName}.jenisHakmilik.value;
+		var str5  = document.${formName}.txtNoHakmilikTanah.value;
+		var str6  = document.${formName}.namaMukimTanah.value;
+		var str7  = document.${formName}.namaDaerahTanah.value;
+		var str8  = document.${formName}.namaNegeriTanah.value;
+				
+		strTajuk = "PENCEROBOHAN DI ATAS TANAH  " +str1+" "+ str2 +", "+str4+" "+ str3 + str5 + ", " + str6 + ", " + str7 + ", " + str8;
+		
+		document.${formName}.txtPerkara.value = strTajuk;
 	}
-
-	//var str1  = document.${formName}.keteranganLotTanah.value;
-	var str2  = document.${formName}.noLotTanah.value;
-	var str3  = document.${formName}.noWartaTanah.value;
-	var str4  = document.${formName}.noMilikTanah.value;
-	var str5  = document.${formName}.namaMukimTanah.value;
-	var str6  = document.${formName}.namaDerahTanah.value;
-	var str7  = document.${formName}.namaNegeriTanah.value;
-	var statusRizabTnh = document.${formName}.statusRizab.value;
-
-	if(statusRizabTnh == 'MILIK') {
-		milikOrRizab = str2;
-	} else if(statusRizabTnh == 'RIZAB') {
-		milikOrRizab = str3;
-	}
-
-	var strTajuk = "PENCEROBOHAN TANAH " + statusRizabTnh + " PERSEKUTUAN DI ATAS TANAH  " + str2 +", " + str3 + str4 + ", " + str5 + ", " + str6 + ", " + str7;
-	var strTajuk = "PENCEROBOHAN TANAH MILIK/RIZAB KJP DI ATAS TANAH  " + str2 +", " + str3 + str4 + ", " + str5 + ", " + str6 + ", " + str7;
-
-
-	document.${formName}.txtPerkara.value = strTajuk;
 }
 function seterusnya(){
 	document.${formName}.action = "$EkptgUtil.getTabID("Penguatkuasaan",$portal_role)?_portal_module=ekptg.view.php2.FrmCRBMaklumatPermohonanView";

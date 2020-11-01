@@ -4112,6 +4112,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			dataParam.put("socStatusPemilikanHtaamX", getParam("socStatusPemilikanHtaamX"));
 			dataParam.put("socNegeriPemajuHtaamX", getParam("socNegeriPemajuHtaamX"));
 			dataParam.put("txtBandarPemaju1HtaamX", getParam("txtBandarPemaju1HtaamX"));
+			dataParam.put("txtJenisKepentinganX", getParam("txtJenisKepentinganX"));
 				
 			//dataParam.put("radioHtaamViewX", getParam("id_Permohonansimati"));
 			dataParam.put("noradio", getParam("noradio"));

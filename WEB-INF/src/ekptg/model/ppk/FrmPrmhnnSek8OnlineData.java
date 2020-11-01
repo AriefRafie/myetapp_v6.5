@@ -3478,7 +3478,7 @@ public class FrmPrmhnnSek8OnlineData {
 					+ " WHERE SM.ID_PERMOHONAN = P.ID_PERMOHONAN "
 					+ " AND SM.ID_SIMATI = M.ID_SIMATI"
 					+ " AND P.ID_PERMOHONAN = '" + idp + "' ";
-
+			System.out.println("setDataSijilMati = "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
 

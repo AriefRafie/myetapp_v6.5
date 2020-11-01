@@ -14,9 +14,14 @@
     <td width="1%"><span class="style1">*</span></td>
     <td>Muatnaik Lampiran</td>
     <td>:</td>
-    <td><input class="texts" type="file" id="dokumen" name="dokumen" style="width:100%" onfocus="$('err_dokumen').innerHTML = '';" onchange="simpanDokumen()">
-      <div id="dokumenMuatnaik" style="display:none"> <img src="../img/indicator.gif"> <span style="font-weight:bold;color:#008000;">Sedang Muatnaik...</span> </div>
-      <div id="err_dokumen" style="color:#CC0000;font-weight:bold;border:2px #000"></div></td>
+    <td>
+    	<input class="texts" type="file" id="dokumen" name="dokumen" style="width:100%" onfocus="$('err_dokumen').innerHTML = '';" onChange="simpanDokumen()">
+      		<div id="dokumenMuatnaik" style="display:none"> 
+      			<img src="../img/indicator.gif"> 
+      			<span style="font-weight:bold;color:#008000;">Sedang Muatnaik...</span> 
+      		</div>
+      		<div id="err_dokumen" style="color:#CC0000;font-weight:bold;border:2px #000"></div>
+    </td>
   </tr>
   <tr>
     <td width="1%">&nbsp;</td>

@@ -93,6 +93,13 @@
 
 	}
 
+	function carianKJP(){
+		document.${formName}.actionPajakan.value = "carian";
+		//document.${formName}.submit();
+		doAjaxCall${formName}("");
+
+	}
+
 //NO.2 PERMOHONAN
 
 //NO.3 MAKLUMAT MJM
