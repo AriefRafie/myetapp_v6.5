@@ -959,7 +959,7 @@ public class FrmPermohonanHTAData extends FrmPrmhnnSek8InternalData{
 				" H.ID_PERMOHONANSIMATI = '"+ id_permohonansimati+ "'"+
 				" AND H.JENIS_HTA = 'T'  AND H.ID_HTA = '"+ idhtaam + "' " +
 				"";
-			//myLogger.info("***GET BY ID getDataHTAX :sql=" + sql.toUpperCase());
+			myLog.info("***GET BY ID getDataHTAX :sql=" + sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 					
 			while (rs.next()) {
@@ -1061,7 +1061,7 @@ public class FrmPermohonanHTAData extends FrmPrmhnnSek8InternalData{
 				" AND H.ID_PERMOHONANSIMATI = '"+ idPerSimati+ "' "+
 				" AND H.JENIS_HTA = '"+jenisHarta+"' " + //Y-Ada hakmilik, T-Tiada Hakmilik
 				" ORDER BY H.ID_HTA DESC ";
-			//myLog.info("getDataHTA:sql=" + sql.toUpperCase());
+			myLog.info("getDataHTA:sql=" + sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable<String,String> h;
 			int i = 0;
@@ -1120,6 +1120,7 @@ public class FrmPermohonanHTAData extends FrmPrmhnnSek8InternalData{
 			if (db != null)
 				db.close();
 		}
+		myLog.info("getDataHTA:h=" + listHarta);
 		return listHarta;
 		
 	}
@@ -1247,6 +1248,7 @@ public class FrmPermohonanHTAData extends FrmPrmhnnSek8InternalData{
 			if (db != null)
 				db.close();
 		}
+		myLog.info("getDataHTAbyIdHtaam:h="+h);
 		return h;
 
 	}

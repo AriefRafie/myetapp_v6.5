@@ -504,6 +504,7 @@ public class HTATHBean extends EkptgCache implements IMaklumatHarta {
 		h.put("nolot", String.valueOf(data.get("txtLotIdHtaamX")));
 		h.put("jeniskepentingan", String.valueOf(data.get("txtJenisKepentinganX")));
 		h.put("nocagaran", String.valueOf(data.get("txtNoCagaranX")));
+		h.put("catatan", String.valueOf(data.get("txtCatatanHtaamX")));
 
 		String[] radioHtaamViewX = request.getParameterValues("radioHtaamViewX");
 		int n = 0;
@@ -517,6 +518,8 @@ public class HTATHBean extends EkptgCache implements IMaklumatHarta {
 			}
 			
 		}
+		
+		myLog.info("TAMBAH LALU SINI");
 
 		h.put("flag",String.valueOf(n));
 		//h.put("id_Masuk", String.valueOf(data.get("idUser")));
@@ -2502,6 +2505,7 @@ public class HTATHBean extends EkptgCache implements IMaklumatHarta {
 		Vector v = null;
 		
 		if ("HtaamviewX".equals(mode)) {
+			myLog.info("LALU SINI");
 			//String id = String.valueOf(hParam.get("idPermohonan"));
 			String radioX1 = String.valueOf(hParam.get("radioHtaamViewX1"));
 			String radioX2 = String.valueOf(hParam.get("radioHtaamViewX2"));
