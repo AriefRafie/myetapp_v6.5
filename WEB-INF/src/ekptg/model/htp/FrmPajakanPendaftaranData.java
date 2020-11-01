@@ -492,6 +492,29 @@ public class FrmPajakanPendaftaranData {
 			stmt.executeUpdate(sql);
 			conn.commit();
 
+			String sql2 = "";
+			String sql3 = "";
+			sql2 = "SELECT * FROM TBLHTPHAKMILIKURUSAN WHERE ID_PERMOHONAN = '" + idPermohonan + "'";
+			myLog.info("sql2 maklumat tanah : " + sql2);
+			ResultSet rs2 = stmt.executeQuery(sql2);
+			if (rs2.next()){
+				r = new SQLRenderer();
+				long idUlasanKjp = DB.getNextID("TBLHTPULASANKJP_SEQ");
+				r.add("ID_ULASANKJP", idUlasanKjp);
+				r.add("ID_PERMOHONAN", idPermohonan);
+				r.add("NO_HAKMILIK", rs2.getString("NO_HAKMILIK") == null ? "" : rs2.getString("NO_HAKMILIK"));
+				r.add("TARIKH_TERIMA", r.unquote("SYSDATE"));
+				r.add("ID_AGENSI", rs2.getString("ID_AGENSI") == null ? "" : rs2.getString("ID_AGENSI"));
+
+				r.add("ID_MASUK", userId);
+				r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+
+				sql3 = r.getSQLInsert("TBLHTPULASANKJP");
+				myLog.info("insert sql TBLHTPULASANKJP : " + sql3);
+				stmt.executeUpdate(sql3);
+			}
+
+
 		} catch (SQLException ex) {
 	    	try {
 	    		conn.rollback();

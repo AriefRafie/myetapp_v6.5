@@ -1,3 +1,10 @@
+-- ros 1/11/2020
+====================================================================================================
+ALTER TABLE TBLHTPHAKMILIKURUSAN ADD ID_KEMENTERIAN NUMBER;
+ALTER TABLE TBLHTPHAKMILIKURUSAN ADD ID_AGENSI NUMBER;
+ALTER TABLE TBLHTPULASANKJP ADD ID_AGENSI NUMBER;
+ALTER TABLE TBLHTPULASANKJP ADD NO_HAKMILIK VARCHAR2(100);
+
 
 -- 2020/10/11 local
 ====================================================================================================
