@@ -347,7 +347,7 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 		
 		this.context.put("step",step);
 		
-		if ("carian".equals(flagPopup)) {
+		if ("carian".equals(actionPenawaran)) {
 			
 			
 			// GO TO LIST FAIL PENAWARAN
