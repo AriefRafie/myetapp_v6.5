@@ -547,11 +547,14 @@ public class FrmCRBLawatanTapakData {
 			r.add("A.TARIKH_LAWATAN");
 			r.add("A.ID_LAPORANTANAH");
 			r.add("A.TUJUAN_LAPORAN");
+			r.add("D.PEGANGAN_HAKMILIK");
 			r.add("A.ID_PERMOHONAN", idPermohonan);
-			r.add("FLAG_LAPORAN", "1");
+			r.add("A.FLAG_LAPORAN", "1");
 			r.add("A.ID_PERMOHONAN", r.unquote("B.ID_PERMOHONAN"));
+			r.add("B.ID_PERMOHONAN", r.unquote("C.ID_PERMOHONAN"));
+			r.add("C.ID_HAKMILIKPERMOHONAN", r.unquote("D.ID_HAKMILIKPERMOHONAN"));
 
-			sql = r.getSQLSelect("TBLPHPLAPORANTANAH A, TBLPERMOHONAN B",
+			sql = r.getSQLSelect("TBLPHPLAPORANTANAH A, TBLPERMOHONAN B, TBLPHPHAKMILIKPERMOHONAN C, TBLPHPHAKMILIK D", 
 					"A.TARIKH_LAWATAN ASC");
 
 			ResultSet rs = stmt.executeQuery(sql);
@@ -570,6 +573,9 @@ public class FrmCRBLawatanTapakData {
 				h.put("tujuanLawatan",
 						rs.getString("TUJUAN_LAPORAN") == null ? "" : rs
 								.getString("TUJUAN_LAPORAN"));
+				h.put("peganganHakmilik",
+						rs.getString("PEGANGAN_HAKMILIK") == null ? "" : rs
+								.getString("PEGANGAN_HAKMILIK"));
 				listLawatanTapak.addElement(h);
 				bil++;
 			}
