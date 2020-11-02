@@ -464,8 +464,8 @@
           <td>Jenis Hakmilik</td>
           <td>:</td>
           <td>$selectJenisHakmilik
-          	<input type="hidden" name="idJenisHakmilik" id="idJenisHakmilik" value="$idJenisHakmilik"/>
-          	<input type="hidden" name="jenisHakmilik" id="jenisHakmilik" value="$jenisHakmilik"/>
+          	<input type="hidden" name="idJenisHakmilik" id="idJenisHakmilik" value="$!idJenisHakmilik"/>
+          	<input type="hidden" name="jenisHakmilik" id="jenisHakmilik" value="$!jenisHakmilik"/>
           </td>
         </tr>
         <tr>
@@ -498,8 +498,8 @@
           <td>Jenis Lot</td>
           <td>:</td>
           <td>$selectJenisLot
-          	<input type="hidden" name="idJenisLot" id="idJenisLot" value="$idJenisLot" />
-          	<input type="hidden" name="jenisLot" id="jenisLot" value="$jenisLot"/>
+          	<input type="hidden" name="idJenisLot" id="idJenisLot" value="$!idJenisLot" />
+          	<input type="hidden" name="jenisLot" id="jenisLot" value="$!jenisLot"/>
           </td>
         </tr>
         <tr>
