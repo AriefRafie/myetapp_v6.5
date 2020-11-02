@@ -36,15 +36,37 @@ color: #FF0000
           <td>Status Kelulusan</td>
           <td>:</td>
           <td>
-          #if ( $!beanMaklumatPerjanjian.flagKelulusanDasar != 'T')
-          	LULUS DASAR
-          #end
-          #if ( $!beanMaklumatPerjanjian.flagKelulusanDasar != 'Y')
+          #if ( $!beanMaklumatPerjanjian.flagKelulusanDasar == 'T')
           	LULUS
+          #end
+          #if ( $!beanMaklumatPerjanjian.flagKelulusanDasar == 'Y')
+          	LULUS DASAR
           #end
           </td>
         </tr>
-        #if ($!beanMaklumatPerjanjian.flagKelulusanDasar != 'Y')
+        #if ($!beanMaklumatPerjanjian.flagKelulusanDasar == 'Y')
+         <tr>
+          <td><span class="style1">*</span></td>
+          <td>Tarikh Mula Kelulusan Dasar</td>
+          <td>:</td>
+          <td><input name="txtTarikhMulaDasar" type="text" class="$inputTextClass" id="txtTarikhMulaDasar" onBlur="check_date(this);calcDate()" value="$!beanMaklumatPerjanjian.tarikhMulaDasar" size="9" maxlength="10" $readonly />
+            #if ($mode != 'view')<a href="javascript:displayDatePicker('txtTarikhMula',false,'dmy');"><img border="0" src="../../img/calendar.gif"/>#end</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Tempoh Dasar</td>
+          <td>:</td>
+          <td><input type="text" name="txtTempohDasar" id="txtTempohDasar" size="1" maxlength="2" value="$!beanMaklumatPerjanjian.tempohDasar" onBlur="validateNumber(this,this.value);calcDate();" $readonly class="$inputTextClass">
+            Bulan</td>
+        </tr>
+        <tr>
+          <td><span class="style1">*</span></td>
+          <td>Tarikh Tamat Kelulusan Dasar</td>
+          <td>:</td>
+          <td><input name="txtTarikhTamatDasar" type="text" class="$inputTextClass" id="txtTarikhTamatDasar" onBlur="check_date(this);calcDate()" value="$!beanMaklumatPerjanjian.tarikhTamatDasar" size="9" maxlength="10" $readonly />
+            #if ($mode != 'view')<a href="javascript:displayDatePicker('txtTarikhTamat',false,'dmy');"><img border="0" src="../../img/calendar.gif"/>#end</td>
+        </tr>
+        #end
         <tr>
           <td><span class="style1">*</span></td>
           <td>Tarikh Mula Perjanjian</td>
@@ -90,20 +112,6 @@ color: #FF0000
             <option #if ( $!beanMaklumatPerjanjian.modCajSewaan =="0" ) selected #end value="0">CAJ PENUH</option>
           </select></td>
         </tr>
-        #else
-        <tr>
-          <td>&nbsp;</td>
-          <td> Kadar Sewa (RM)</td>
-          <td>:</td>
-          <td><input name="txtKadarSewa" type="text" value="$!beanMaklumatPerjanjian.kadarSewa" $readonly class="$inputTextClass" onBlur="validateCurrency(this,this.value,'$!beanMaklumatPerjanjian.kadarSewa');calcCagaran()" /></td>
-        </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>Cagaran (RM)</td>
-          <td>:</td>
-          <td><input name="txtCagaran" type="text" value="$!beanMaklumatPerjanjian.cagaran" $readonly class="$inputTextClass" onBlur="validateCurrency(this,this.value,'$!beanMaklumatPerjanjian.cagaran');" /></td>
-        </tr>
-        #end
         <tr>
           <td valign="top">&nbsp;</td>
           <td valign="top">Catatan</td>
