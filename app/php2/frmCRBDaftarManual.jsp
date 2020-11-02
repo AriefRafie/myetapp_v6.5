@@ -546,14 +546,14 @@
           <td>:</td>
           <td>
           	#if ($idLuas == '0' || $idLuas == '1' || $idLuas == '2' || $idLuas == '3' || $idLuas == '5' || $idLuas == '6' || $idLuas == '9')
-            	<input type="text" name="txtLuas1" id="txtLuas1" value="$beanMaklumatTanah.luas" onkeyup="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6" $readonly class="$inputTextClass"/ >
+            	<input type="text" name="txtLuas1" id="txtLuas1" value="$!beanMaklumatTanah.luas1" onkeyup="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6" $readonly class="$inputTextClass"/ >
             #elseif ($idLuas == '7')
-            	<input type="text" name="txtLuas1" id="txtLuas1" value="$beanMaklumatTanah.luas" onkeyup="validateNumber(this,this.value);" size="4" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
-            	<input type="text" name="txtLuas2" id="txtLuas2" value="$beanMaklumatTanah.luas" style="text-align:right" onkeyup="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6"/ $readonly class="$inputTextClass">
+            	<input type="text" name="txtLuas1" id="txtLuas1" value="$!beanMaklumatTanah.luas1" onkeyup="validateNumber(this,this.value);" size="4" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
+            	<input type="text" name="txtLuas2" id="txtLuas2" value="$!beanMaklumatTanah.luas2" style="text-align:right" onkeyup="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6"/ $readonly class="$inputTextClass">
             #elseif ($idLuas == '8' || $idLuas == '4')
-            	<input type="text" name="txtLuas1" id="txtLuas1" value="$beanMaklumatTanah.luas" onkeyup="validateNumber(this,this.value);" size="4" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
-            	<input type="text" name="txtLuas2" id="txtLuas2" value="$beanMaklumatTanah.luas" onkeyup="validateNumber(this,this.value);" size="4" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
-            	<input type="text" name="txtLuas3" id="txtLuas3" value="$beanMaklumatTanah.luas" onKeyUp="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6" $readonly class="$inputTextClass"/>
+            	<input type="text" name="txtLuas1" id="txtLuas1" value="$!beanMaklumatTanah.luas1" onkeyup="validateNumber(this,this.value);" size="4" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
+            	<input type="text" name="txtLuas2" id="txtLuas2" value="$!beanMaklumatTanah.luas2" onkeyup="validateNumber(this,this.value);" size="4" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
+            	<input type="text" name="txtLuas3" id="txtLuas3" value="$!beanMaklumatTanah.luas3" onKeyUp="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6" $readonly class="$inputTextClass"/>
           	#end
           </td>
         </tr>

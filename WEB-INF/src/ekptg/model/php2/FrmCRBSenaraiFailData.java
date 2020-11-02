@@ -490,7 +490,7 @@ public class FrmCRBSenaraiFailData {
 
 			sql = "SELECT HMA.ID_HAKMILIKAGENSI, HM.ID_HAKMILIK, NULL AS ID_HAKMILIKSEMENTARA, HM.PEGANGAN_HAKMILIK,"
 					+ " HM.ID_JENISHAKMILIK, RUJJENISHM.KOD_JENIS_HAKMILIK, HM.NO_HAKMILIK, HM.ID_LOT,"
-					+ " RUJLOT.KETERANGAN AS JENIS_LOT, HM.NO_LOT, HMA.ID_LUAS_BERSAMAAN, HMA.LUAS_BERSAMAAN,"
+					+ " RUJLOT.KETERANGAN AS JENIS_LOT, HM.NO_LOT, HMA.ID_LUAS_BERSAMAAN, HM.LUAS AS LUAS_ASAL, HMA.LUAS_BERSAMAAN,"
 					+ " RUJLUAS.KETERANGAN AS JENIS_LUAS, HM.NO_WARTA, HM.TARIKH_WARTA, HM.ID_MUKIM, RUJMUKIM.NAMA_MUKIM,"
 					+ " HM.ID_DAERAH, RUJDAERAH.NAMA_DAERAH, HM.ID_NEGERI, RUJNEGERI.NAMA_NEGERI, HM.ID_KATEGORI AS ID_KATEGORI,"
 					+ " RUJKATEGORI.KETERANGAN AS KATEGORI, HM.ID_SUBKATEGORI, RUJSUBKATEGORI.KETERANGAN AS SUBKATEGORI, HM.KEGUNAAN_TANAH,"
@@ -510,8 +510,8 @@ public class FrmCRBSenaraiFailData {
 
 			sql = sql
 					+ " SELECT NULL AS ID_HAKMILIKAGENSI, NULL AS ID_HAKMILIK, HMS.ID_HAKMILIKSEMENTARA, HMS.PEGANGAN_HAKMILIK,"
-					+ " HMS.ID_JENISHAKMILIK, RUJJENISHM.KOD_JENIS_HAKMILIK, HMS.NO_HAKMILIK, HMS.ID_LOT,"
-					+ " RUJLOT.KETERANGAN AS JENIS_LOT, HMS.NO_LOT, HMS.ID_LUAS AS ID_LUAS_BERSAMAAN, HMS.LUAS AS LUAS_BERSAMAAN, "
+					+ " HMS.ID_JENISHAKMILIK, RUJJENISHM.KOD_JENIS_HAKMILIK, HMS.NO_HAKMILIK, HMS.ID_LOT, RUJLOT.KETERANGAN AS JENIS_LOT,"
+					+ " HMS.NO_LOT, HMS.ID_LUAS AS ID_LUAS_BERSAMAAN, HMS.LUAS_ASAL, HMS.LUAS AS LUAS_BERSAMAAN, "
 					+ " RUJLUAS.KETERANGAN AS JENIS_LUAS, HMS.NO_WARTA, HMS.TARIKH_WARTA, HMS.ID_MUKIM, RUJMUKIM.NAMA_MUKIM,"
 					+ " HMS.ID_DAERAH, RUJDAERAH.NAMA_DAERAH, HMS.ID_NEGERI, RUJNEGERI.NAMA_NEGERI, HMS.ID_KATEGORI AS ID_KATEGORI,"
 					+ " RUJKATEGORI.KETERANGAN AS KATEGORI, HMS.ID_SUBKATEGORI, RUJSUBKATEGORI.KETERANGAN AS SUBKATEGORI, HMS.KEGUNAAN_TANAH,"
@@ -574,6 +574,18 @@ public class FrmCRBSenaraiFailData {
 										.getString("NO_LOT")));
 				h.put("idLuas", rs.getString("ID_LUAS_BERSAMAAN") == null ? ""
 						: rs.getString("ID_LUAS_BERSAMAAN"));
+				h.put("luasAsal",
+						rs.getString("LUAS_ASAL") == null ? "" : rs
+								.getString("LUAS_ASAL"));
+				h.put("luas1",
+						rs.getString("LUAS_ASAL") == null ? "" : rs
+								.getString("LUAS_ASAL"));
+				h.put("luas2",
+						rs.getString("LUAS_ASAL") == null ? "" : rs
+								.getString("LUAS_ASAL"));
+				h.put("luas3",
+						rs.getString("LUAS_ASAL") == null ? "" : rs
+								.getString("LUAS_ASAL"));
 				h.put("luasBersamaan",
 						rs.getString("LUAS_BERSAMAAN") == null ? "" : rs
 								.getString("LUAS_BERSAMAAN"));
@@ -656,6 +668,10 @@ public class FrmCRBSenaraiFailData {
 				h.put("noLot", "");
 				h.put("lot", "");
 				h.put("idLuas", "");
+				h.put("luasAsal", "");
+				h.put("luas1", "");
+				h.put("luas2", "");
+				h.put("luas3", "");
 				h.put("luasBersamaan", "");
 				h.put("luas", "");
 				h.put("noWarta", "");
@@ -689,7 +705,8 @@ public class FrmCRBSenaraiFailData {
 	
 	public String saveHakmilikSementara(String jenisHakmilik,
 			String txtNoHakmilik, String noWarta, String tarikhWarta, 
-			String jenisLot, String txtNoLot, String txtLuasBersamaan, 
+			String jenisLot, String txtNoLot, String luas1, String luas2,
+			String luas3, String txtLuasBersamaan, 
 			String idNegeri, String idDaerah, String idMukim, HttpSession session)
 			throws Exception {
 
@@ -727,6 +744,15 @@ public class FrmCRBSenaraiFailData {
 			r.add("ID_LOT", jenisLot);
 			r.add("NO_LOT", txtNoLot);
 			r.add("ID_LUAS", "2");
+			if (!"".equals(luas1) || luas1 != null) {
+				r.add("LUAS_ASAL", luas1);
+			} else if (!"".equals(luas2) || luas2 != null) {
+				r.add("LUAS_ASAL", luas2);
+			} else if (!"".equals(luas3) || luas3 != null) {
+				r.add("LUAS_ASAL", luas3);
+			} else {
+				r.add("LUAS_ASAL", "");
+			}
 			r.add("LUAS", txtLuasBersamaan);
 
 			sql = r.getSQLInsert("TBLPHPHAKMILIKSEMENTARA");
@@ -1074,6 +1100,7 @@ public class FrmCRBSenaraiFailData {
 					r.add("ID_LOT", hashTanah.get("idLot"));
 					r.add("NO_LOT", hashTanah.get("noLot"));
 					r.add("ID_LUAS", hashTanah.get("idLuas"));
+					r.add("LUAS_ASAL", hashTanah.get("luasAsal"));
 					r.add("LUAS", hashTanah.get("luasBersamaan"));
 					r.add("SYARAT", hashTanah.get("syarat"));
 					r.add("SEKATAN", hashTanah.get("sekatan"));

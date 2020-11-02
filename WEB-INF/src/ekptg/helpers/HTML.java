@@ -1814,6 +1814,42 @@ public class HTML {
 
 		return sb.toString();
 	}
+	
+	// Kegunaan modul PHP 
+	public static String SelectPHPJenisHakmilik(String selectName,
+			Long selectedValue, String disability, String jsFunction)
+			throws Exception {
+		StringBuffer sb = new StringBuffer("");
+		try {
+			sb.append("<select name='" + selectName + "'");
+			if (disability != null)
+				sb.append(disability);
+			if (jsFunction != null)
+				sb.append(jsFunction);
+			sb.append(" > ");
+			sb.append("<option value=>SILA PILIH</option>\n");
+
+			Vector v = DB.getJenisHakmilikPHP();
+			Tblrujjenishakmilik f = null;
+			String s = "";
+			for (int i = 0; i < v.size(); i++) {
+				f = (Tblrujjenishakmilik) v.get(i);
+				if (f.getIdJenishakmilik().equals(selectedValue)) {
+					s = "selected";
+				} else {
+					s = "";
+				}
+				sb.append("<option " + s + " value=" + f.getIdJenishakmilik()
+						+ ">" + f.getKeterangan().toUpperCase() + "</option>\n");
+			}
+			sb.append("</select>");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw ex;
+		}
+
+		return sb.toString();
+	}
 
 	// *** SelectStatusPelepasan - HILDA
 	public static String SelectStatusPelepasan(String selectName,
@@ -2056,7 +2092,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdLot() + ">"
-						+ f.getKeterangan()
+						+ f.getKeterangan().toUpperCase()
 //						+ f.getKodLot() + " - " + f.getKeterangan()
 						+ "</option>\n");
 			}
@@ -9063,8 +9099,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdDaerah() + ">"
-						+ f.getKodDaerah() + " - " + f.getNamaDaerah()
-						+ "</option>\n");
+						+ f.getNamaDaerah() + "</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {
