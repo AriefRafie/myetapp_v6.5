@@ -93,6 +93,7 @@ public class FrmREVPopupPerjanjianSewaData {
 
 	public String savePerjanjian(String idFail, String idHasil, String noSiri,
 			String txtTarikhMula, String tempoh, String txtTarikhTamat,
+			String txtTarikhMulaDasar, String tempohDasar, String txtTarikhTamatDasar,
 			String kadarSewa, String cagaran, String flagKelulusanDasar, String catatan,
 			String modCajSewaan, String flagPerjanjian, String flagSkrin, HttpSession session) throws Exception {
 
@@ -122,7 +123,18 @@ public class FrmREVPopupPerjanjianSewaData {
 			if ("U".equals(flagSkrin)) {
 				r.add("FLAG_LULUSDASAR", flagKelulusanDasar);
 				r.add("FLAG_PERJANJIAN", "U");
-				if (!"Y".equals(flagKelulusanDasar)) {
+				if ("Y".equals(flagKelulusanDasar)) {
+					if (!"".equals(txtTarikhMulaDasar)) {
+						r.add("TARIKH_MULA_DASAR",
+								r.unquote("to_date('" + txtTarikhMulaDasar
+										+ "','dd/MM/yyyy')"));
+					}
+					r.add("TEMPOH_DASAR", tempohDasar);
+					if (!"".equals(txtTarikhTamatDasar)) {
+						r.add("TARIKH_TAMAT_DASAR",
+								r.unquote("to_date('" + txtTarikhTamatDasar
+										+ "','dd/MM/yyyy')"));
+					}
 					if (!"".equals(txtTarikhMula)) {
 						r.add("TARIKH_MULA",
 								r.unquote("to_date('" + txtTarikhMula
@@ -139,9 +151,21 @@ public class FrmREVPopupPerjanjianSewaData {
 					r.add("DEPOSIT", Utils.RemoveComma(cagaran));
 					r.add("MOD_CAJ_SEWAAN", modCajSewaan);
 				} else {
-					r.add("TARIKH_MULA", r.unquote(null));
-					r.add("TEMPOH", r.unquote(null));
-					r.add("TARIKH_TAMAT", r.unquote(null));
+
+					if (!"".equals(txtTarikhMula)) {
+						r.add("TARIKH_MULA",
+								r.unquote("to_date('" + txtTarikhMula
+										+ "','dd/MM/yyyy')"));
+					}
+					r.add("TEMPOH", tempoh);
+					if (!"".equals(txtTarikhTamat)) {
+						r.add("TARIKH_TAMAT",
+								r.unquote("to_date('" + txtTarikhTamat
+										+ "','dd/MM/yyyy')"));
+					}
+					r.add("TARIKH_MULA_DASAR", r.unquote(null));
+					r.add("TEMPOH_DASAR", r.unquote(null));
+					r.add("TARIKH_TAMAT_DASAR", r.unquote(null));
 					r.add("BAYARAN", Utils.RemoveComma(kadarSewa));
 					r.add("DEPOSIT", Utils.RemoveComma(cagaran));
 					r.add("MOD_CAJ_SEWAAN", r.unquote(null));
@@ -239,6 +263,7 @@ public class FrmREVPopupPerjanjianSewaData {
 
 	public void kemaskiniPerjanjian(String idFail, String idHasil, String idPerjanjian, String noSiri,
 			String txtTarikhMula, String tempoh, String txtTarikhTamat,
+			String txtTarikhMulaDasar, String tempohDasar, String txtTarikhTamatDasar,
 			String kadarSewa, String cagaran, String flagKelulusanDasar, String catatan,
 			String modCajSewaan, String flagPerjanjian, String flagSkrin, HttpSession session) throws Exception {
 
@@ -265,7 +290,7 @@ public class FrmREVPopupPerjanjianSewaData {
 			if ("U".equals(flagSkrin)) {
 				r.add("FLAG_LULUSDASAR", flagKelulusanDasar);
 				r.add("FLAG_PERJANJIAN", "U");
-				if (!"Y".equals(flagKelulusanDasar)) {
+				if ("Y".equals(flagKelulusanDasar)) {
 					if (!"".equals(txtTarikhMula)) {
 						r.add("TARIKH_MULA",
 								r.unquote("to_date('" + txtTarikhMula
@@ -278,13 +303,37 @@ public class FrmREVPopupPerjanjianSewaData {
 										+ "','dd/MM/yyyy')"));
 					}
 
+					if (!"".equals(txtTarikhMulaDasar)) {
+						r.add("TARIKH_MULA_DASAR",
+								r.unquote("to_date('" + txtTarikhMulaDasar
+										+ "','dd/MM/yyyy')"));
+					}
+					r.add("TEMPOH_DASAR", tempohDasar);
+					if (!"".equals(txtTarikhTamatDasar)) {
+						r.add("TARIKH_TAMAT_DASAR",
+								r.unquote("to_date('" + txtTarikhTamatDasar
+										+ "','dd/MM/yyyy')"));
+					}
+
 					r.add("BAYARAN", Utils.RemoveComma(kadarSewa));
 					r.add("DEPOSIT", Utils.RemoveComma(cagaran));
 					r.add("MOD_CAJ_SEWAAN", modCajSewaan);
 				} else {
-					r.add("TARIKH_MULA", r.unquote(null));
-					r.add("TEMPOH", r.unquote(null));
-					r.add("TARIKH_TAMAT", r.unquote(null));
+
+					if (!"".equals(txtTarikhMula)) {
+						r.add("TARIKH_MULA",
+								r.unquote("to_date('" + txtTarikhMula
+										+ "','dd/MM/yyyy')"));
+					}
+					r.add("TEMPOH", tempoh);
+					if (!"".equals(txtTarikhTamat)) {
+						r.add("TARIKH_TAMAT",
+								r.unquote("to_date('" + txtTarikhTamat
+										+ "','dd/MM/yyyy')"));
+					}
+					r.add("TARIKH_MULA_DASAR", r.unquote(null));
+					r.add("TEMPOH_DASAR", r.unquote(null));
+					r.add("TARIKH_TAMAT_DASAR", r.unquote(null));
 					r.add("BAYARAN", Utils.RemoveComma(kadarSewa));
 					r.add("DEPOSIT", Utils.RemoveComma(cagaran));
 					r.add("MOD_CAJ_SEWAAN", r.unquote(null));

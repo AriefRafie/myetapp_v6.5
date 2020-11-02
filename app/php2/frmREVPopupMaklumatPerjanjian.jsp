@@ -42,6 +42,7 @@ color: #FF0000
           #if ( $!beanMaklumatPerjanjian.flagKelulusanDasar == 'Y')
           	LULUS DASAR
           #end
+          <input type="hidden" name="flagKelulusanDasar" id="flagKelulusanDasar" size="1" maxlength="2" value="$!beanMaklumatPerjanjian.flagKelulusanDasar">
           </td>
         </tr>
         #if ($!beanMaklumatPerjanjian.flagKelulusanDasar == 'Y')
@@ -49,22 +50,22 @@ color: #FF0000
           <td><span class="style1">*</span></td>
           <td>Tarikh Mula Kelulusan Dasar</td>
           <td>:</td>
-          <td><input name="txtTarikhMulaDasar" type="text" class="$inputTextClass" id="txtTarikhMulaDasar" onBlur="check_date(this);calcDate()" value="$!beanMaklumatPerjanjian.tarikhMulaDasar" size="9" maxlength="10" $readonly />
-            #if ($mode != 'view')<a href="javascript:displayDatePicker('txtTarikhMula',false,'dmy');"><img border="0" src="../../img/calendar.gif"/>#end</td>
+          <td><input name="txtTarikhMulaDasar" type="text" class="$inputTextClass" id="txtTarikhMulaDasar" onBlur="check_date(this);calcDateDasar()" value="$!beanMaklumatPerjanjian.tarikhMulaDasar" size="9" maxlength="10" $readonly />
+            #if ($mode != 'view')<a href="javascript:displayDatePicker('txtTarikhMulaDasar',false,'dmy');"><img border="0" src="../../img/calendar.gif"/>#end</td>
         </tr>
         <tr>
           <td>&nbsp;</td>
           <td>Tempoh Dasar</td>
           <td>:</td>
-          <td><input type="text" name="txtTempohDasar" id="txtTempohDasar" size="1" maxlength="2" value="$!beanMaklumatPerjanjian.tempohDasar" onBlur="validateNumber(this,this.value);calcDate();" $readonly class="$inputTextClass">
+          <td><input type="text" name="txtTempohDasar" id="txtTempohDasar" size="1" maxlength="2" value="$!beanMaklumatPerjanjian.tempohDasar" onBlur="validateNumber(this,this.value);calcDateDasar();" $readonly class="$inputTextClass">
             Bulan</td>
         </tr>
         <tr>
           <td><span class="style1">*</span></td>
           <td>Tarikh Tamat Kelulusan Dasar</td>
           <td>:</td>
-          <td><input name="txtTarikhTamatDasar" type="text" class="$inputTextClass" id="txtTarikhTamatDasar" onBlur="check_date(this);calcDate()" value="$!beanMaklumatPerjanjian.tarikhTamatDasar" size="9" maxlength="10" $readonly />
-            #if ($mode != 'view')<a href="javascript:displayDatePicker('txtTarikhTamat',false,'dmy');"><img border="0" src="../../img/calendar.gif"/>#end</td>
+          <td><input name="txtTarikhTamatDasar" type="text" class="$inputTextClass" id="txtTarikhTamatDasar" onBlur="check_date(this);calcDateDasar()" value="$!beanMaklumatPerjanjian.tarikhTamatDasar" size="9" maxlength="10" $readonly />
+            #if ($mode != 'view')<a href="javascript:displayDatePicker('txtTarikhTamatDasar',false,'dmy');"><img border="0" src="../../img/calendar.gif"/>#end</td>
         </tr>
         #end
         <tr>
@@ -234,6 +235,43 @@ function calcDate(){
 		document.${formName}.txtTarikhTamat.value = "";
 	}
 }
+function calcDateDasar(){
+	if (document.${formName}.txtTarikhMulaDasar.value != "" && document.${formName}.txtTempohDasar.value != ""){
+
+		var tarikhMula  = document.${formName}.txtTarikhMulaDasar.value;
+		var month  = parseInt(document.${formName}.txtTempohDasar.value);
+
+		var dt1   = parseInt(tarikhMula.substring(0,2),10);
+		var mon1  = parseInt(tarikhMula.substring(3,5),10)-1 + month;
+		var yr1   = parseInt(tarikhMula.substring(6,10),10);
+
+		var myDate = new Date(yr1, mon1, dt1);
+		myDate.setDate(myDate.getDate()-1);
+
+		var day = myDate.getDate();
+		var month = myDate.getMonth()+1;
+		var year = myDate.getFullYear();
+
+		var tarikhTamat = "";
+		if(month>=10){
+			if(day>=10){
+				tarikhTamat = day + "/" + month + "/" + year;
+			} else {
+				tarikhTamat = "0"+ day + "/" + month + "/" + year;
+			}
+		} else {
+			if(day>=10){
+				tarikhTamat = day + "/0" + month + "/" + year;
+			} else {
+				tarikhTamat = "0"+ day + "/0" + month + "/" + year;
+			}
+		}
+		document.${formName}.txtTarikhTamatDasar.value = tarikhTamat;
+
+	} else {
+		document.${formName}.txtTarikhTamatDasar.value = "";
+	}
+}
 function calcCagaran(){
 	if (document.${formName}.txtKadarSewa.value != ""){
 
@@ -270,12 +308,6 @@ function simpan() {
 	var flagSkrin = document.${formName}.flagSkrin.value;
 
 	if (flagSkrin == 'U') {
-		if(document.${formName}.flagKelulusanDasar.value == ""){
-			alert('Sila pilih Status Kelulusan Dasar.');
-			document.${formName}.flagKelulusanDasar.focus();
-			return;
-		}
-
 		if (document.${formName}.flagKelulusanDasar.value != 'Y') {
 			if(document.${formName}.txtTarikhMula.value == ""){
 				alert('Sila masukan Tarikh Mula.');
@@ -341,12 +373,6 @@ function simpanKemaskini() {
 	var flagSkrin = document.${formName}.flagSkrin.value;
 
 	if (flagSkrin == 'U') {
-		if(document.${formName}.flagKelulusanDasar.value == ""){
-			alert('Sila pilih Status Kelulusan Dasar.');
-			document.${formName}.flagKelulusanDasar.focus();
-			return;
-		}
-
 		if (document.${formName}.flagKelulusanDasar.value != 'Y') {
 			if(document.${formName}.txtTarikhMula.value == ""){
 				alert('Sila masukan Tarikh Mula.');
