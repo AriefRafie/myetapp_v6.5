@@ -53,7 +53,10 @@
           <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">LAWATAN TAPAK</li>
         </ul>
         <div class="TabbedPanelsContentGroup">
-          <div class="TabbedPanelsContent"> 
+          <div class="TabbedPanelsContent">
+          	#if ($errMsg != "")
+				<div class="info"><strong>$errMsg</strong></div>
+			#end 
           	#parse("app/php2/frmCRBSuratMintaLawatanTapak.jsp") 
           </div>
           <div class="TabbedPanelsContent">
