@@ -1211,8 +1211,8 @@ Sebab-sebab Lain</td>
                           	<td><div align="right">:</div></td>
                           	<td><label><span style="text-transform:uppercase;">
                             <input type="text" size="12" name="txtJumBayaran1" onblur="this.value=this.value.toUpperCase();" id="txtJumBayaran1" style="text-transform:uppercase;" readonly class="disabled" value="$!Util.formatDecimal($bayaran_perintah)" /></span></label>
-                            <input type="text" name="txtJumBayaran" id="txtJumBayaran" value="$bayaran_perintah" />
-             				<input type="text" name="txtJumBayaranTerkini" id="txtJumBayaranTerkini" value="$txtJumBayaranTerkini"/>             
+                            <input type="hidden" name="txtJumBayaran" id="txtJumBayaran" value="$bayaran_perintah" />
+             				<input type="hidden" name="txtJumBayaranTerkini" id="txtJumBayaranTerkini" value="$txtJumBayaranTerkini"/>             
                         	</td>
                         </tr>
                         <!-- arief add Jumlah Bayaran Sebenar (atas permintaan Pn.Syaida: 16/6/2020) OPEN -->
