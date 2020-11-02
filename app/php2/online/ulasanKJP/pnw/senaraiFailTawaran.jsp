@@ -8,6 +8,7 @@
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input name="flagDetail" type="hidden" id="flagDetail" value="$flagDetail"/>
+  <input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
   <input name="checkTanah" type="hidden" id="checkTanah" value= "$checkTanah"/>
   <input name="idPenawaranKJP" type="hidden" id="idPenawaranKJP" value="$idPenawaranKJP"/>
  <!-- <input name="idFail" type="text" id="idFail" value="$idFail"/>
@@ -222,7 +223,7 @@ function tutupCarian(){
 	doAjaxCall${formName}("");
 }
 function carian(){
-	document.${formName}.actionPenawaran.value = "";
+	document.${formName}.actionPenawaran.value = "carian";
 	doAjaxCall${formName}("");
 }
 function kosongkan(flagDetail) {
@@ -250,7 +251,7 @@ function paparFail(idFail,idStatus) {
 	document.${formName}.idFail.value = idFail;
 	document.${formName}.idStatus.value = idStatus;
 	document.${formName}.action = "$EkptgUtil.getTabID("Penawaran",$portal_role)?_portal_module=ekptg.view.php2.online.FrmPNWTawaranKJPView";
-	document.${formName}.actionPenawaran.value = "paparFail";
+	document.${formName}.flagPopup.value = "paparFail";
 	//document.${formName}.modePopup.value = "view";
 	doAjaxCall${formName}("");
 }
@@ -376,9 +377,9 @@ function simpanAgensi(){
   		document.${formName}.txtTujuanKegunaan.focus(); 
 		return; 
 	}
-	 if(document.${formName}.fileupload.value == ""){
+	 if(document.${formName}.idDokumen.value == ""){
 		alert('Sila masukkan lampiran yang Ingin Dimuatnaik.');
-  		document.${formName}.fileupload.focus(); 
+  		document.${formName}.idDokumen.focus(); 
 		return; 
 	} 
 
@@ -452,6 +453,11 @@ function simpanKemaskiniAgensi(){
   		document.${formName}.txtTujuanKegunaan.focus(); 
 		return; 
 	}
+	if(document.${formName}.idDokumen.value == ""){
+		alert('Sila masukkan lampiran yang Ingin Dimuatnaik.');
+  		document.${formName}.idDokumen.focus(); 
+		return; 
+	} 
 	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
@@ -501,7 +507,20 @@ function cetakImej(id){
     if (hWnd.focus != null) hWnd.focus();
 }
 function kembali() {
-	document.${formName}.hitButton.value = "";
+	//alert('baca kembali senaraiFailTawaran');
+	document.${formName}.flagPopup.value = "carian";
+	document.${formName}.submit();
+}
+function doHantarProses(){
+
+	
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.mode.value = "view";
+		return;
+	}
+	
+	document.${formName}.mode.value = "view";
+	document.${formName}.hitButton.value = "doHantarProses";
 	document.${formName}.submit();
 }
 

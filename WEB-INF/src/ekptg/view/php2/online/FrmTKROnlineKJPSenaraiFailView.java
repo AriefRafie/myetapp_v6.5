@@ -456,7 +456,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 
 				myLog.info("masuk else");
 				//String userId = (String) session.getAttribute("_ekptg_user_id");
-				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
+				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
 				this.context.put("SenaraiFail", listFail);
 				setupPage(session, action, listFail);
 
@@ -1093,6 +1093,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				//String userId = (String) session.getAttribute("_ekptg_user_id");
 				myLog.info("masuk carian");
 				String findNoFail = getParam("findNoFail");
+				String findNoRujukanOnline = getParam("findNoRujukanOnline");
 				String findNoPermohonan = getParam("findNoPermohonan");
 				String findTajukFail = getParam("findTajukFail");
 				String findPemohon = getParam("findPemohon");
@@ -1130,7 +1131,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 					findMukim = "9999";
 				}
 
-				Vector listFail = logic.getSenaraiFail(findNoFail, findNoPermohonan, findTajukFail, findPemohon, findNoPengenalan, findTarikhTerima,
+				Vector listFail = logic.getSenaraiFail(findNoFail, findNoRujukanOnline, findNoPermohonan, findTajukFail, findPemohon, findNoPengenalan, findTarikhTerima,
 						findNoHakmilik, findNoWarta, findNoPegangan, findJenisHakmilik, findJenisLot, findNoLot
 						, findNegeri, findDaerah, findMukim
 						, userId);
@@ -1138,6 +1139,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				setupPage(session, action, listFail);
 
 				context.put("findNoFail", findNoFail);
+				context.put("findNoRujukanOnline", findNoRujukanOnline);
 				context.put("findTajukFail", findTajukFail);
 				context.put("findPemohon", findPemohon);
 				context.put("findNoPengenalan", findNoPengenalan);
@@ -1157,7 +1159,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 			} else if ("kembali".equals(submit)) {
 				myLog.info("kembali");
 				//String userId = (String) session.getAttribute("_ekptg_user_id");
-				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
+				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
 				this.context.put("SenaraiFail", listFail);
 				setupPage(session, action, listFail);
 
@@ -1347,7 +1349,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				idStatus = (String) permohonan2.get("idStatus");
 				this.context.put("BeanHeader", beanHeader);
 
-				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
+				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
 				this.context.put("SenaraiFail", listFail);
 				setupPage(session, action, listFail);
 
@@ -1521,7 +1523,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 				idStatus = (String) permohonan2.get("idStatus");
 				this.context.put("BeanHeader", beanHeader);
 
-				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
+				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
 				this.context.put("SenaraiFail", listFail);
 				setupPage(session, action, listFail);
 
@@ -1565,7 +1567,7 @@ public class FrmTKROnlineKJPSenaraiFailView extends AjaxBasedModule {
 			}else {
 				myLog.info("masuk+ else");
 				//String userId = (String) session.getAttribute("_ekptg_user_id");
-				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
+				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
 				this.context.put("SenaraiFail", listFail);
 				setupPage(session, action, listFail);
 
