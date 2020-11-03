@@ -1180,6 +1180,7 @@ public class FrmCRBSenaraiFailData {
 				db.close();
 		}
 		session.setAttribute("ID_FAIL", idFailString);
+		session.setAttribute("FLAG_FROM", "failTugasan");
 		return idFailString;
 	}
 

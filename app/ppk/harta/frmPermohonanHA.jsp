@@ -301,11 +301,6 @@
 	#end 
 
 			<fieldset><legend>MAKLUMAT HARTA ALIH</legend>
-			#if($!skrin_online == "yes")
-			<div id="info_skrin_daftar_sek8"></div>
-      <script>
- 						parent.document.getElementById("info_skrin_daftar_sek8").innerHTML="<div class=\"warning_online_ppk\"><b><blink>*</blink>Wang tunai,saham, simpanan bank, KWSP, insurans, kenderaan, senjata api, barang kemas dan barang-barang berharga.</b></div>";
- 			</script> #end
       		<table width="100%" border="0">
         		<tr>
           			<td>
@@ -1711,6 +1706,11 @@
 	#end
 
 	<fieldset><legend>SENARAI HARTA ALIH</legend>
+	#if($!skrin_online == "yes")
+			<div id="info_skrin_daftar_sek8"></div>
+     		<script>
+ 						parent.document.getElementById("info_skrin_daftar_sek8").innerHTML="<div class=\"warning_online_ppk\"><font color=\"black\"><b>* Wang tunai, saham, simpanan bank, KWSP, insurans, kenderaan, senjata api, barang kemas dan barang-barang berharga.</b></font></div>";
+ 			</script> #end
 <!-- <table width="100%" bordercolor="#333333"> -->
 	<table width="100%" >
 		<tr>
