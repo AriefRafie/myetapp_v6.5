@@ -490,7 +490,7 @@ public class FrmCRBSenaraiFailData {
 
 			sql = "SELECT HMA.ID_HAKMILIKAGENSI, HM.ID_HAKMILIK, NULL AS ID_HAKMILIKSEMENTARA, HM.PEGANGAN_HAKMILIK,"
 					+ " HM.ID_JENISHAKMILIK, RUJJENISHM.KOD_JENIS_HAKMILIK, HM.NO_HAKMILIK, HM.ID_LOT,"
-					+ " RUJLOT.KETERANGAN AS JENIS_LOT, HM.NO_LOT, HMA.ID_LUAS_BERSAMAAN, HMA.LUAS_BERSAMAAN,"
+					+ " RUJLOT.KETERANGAN AS JENIS_LOT, HM.NO_LOT, HMA.ID_LUAS_BERSAMAAN, HM.LUAS AS LUAS_ASAL, HMA.LUAS_BERSAMAAN,"
 					+ " RUJLUAS.KETERANGAN AS JENIS_LUAS, HM.NO_WARTA, HM.TARIKH_WARTA, HM.ID_MUKIM, RUJMUKIM.NAMA_MUKIM,"
 					+ " HM.ID_DAERAH, RUJDAERAH.NAMA_DAERAH, HM.ID_NEGERI, RUJNEGERI.NAMA_NEGERI, HM.ID_KATEGORI AS ID_KATEGORI,"
 					+ " RUJKATEGORI.KETERANGAN AS KATEGORI, HM.ID_SUBKATEGORI, RUJSUBKATEGORI.KETERANGAN AS SUBKATEGORI, HM.KEGUNAAN_TANAH,"
@@ -510,8 +510,8 @@ public class FrmCRBSenaraiFailData {
 
 			sql = sql
 					+ " SELECT NULL AS ID_HAKMILIKAGENSI, NULL AS ID_HAKMILIK, HMS.ID_HAKMILIKSEMENTARA, HMS.PEGANGAN_HAKMILIK,"
-					+ " HMS.ID_JENISHAKMILIK, RUJJENISHM.KOD_JENIS_HAKMILIK, HMS.NO_HAKMILIK, HMS.ID_LOT,"
-					+ " RUJLOT.KETERANGAN AS JENIS_LOT, HMS.NO_LOT, HMS.ID_LUAS AS ID_LUAS_BERSAMAAN, HMS.LUAS AS LUAS_BERSAMAAN, "
+					+ " HMS.ID_JENISHAKMILIK, RUJJENISHM.KOD_JENIS_HAKMILIK, HMS.NO_HAKMILIK, HMS.ID_LOT, RUJLOT.KETERANGAN AS JENIS_LOT,"
+					+ " HMS.NO_LOT, HMS.ID_LUAS AS ID_LUAS_BERSAMAAN, HMS.LUAS_ASAL, HMS.LUAS AS LUAS_BERSAMAAN, "
 					+ " RUJLUAS.KETERANGAN AS JENIS_LUAS, HMS.NO_WARTA, HMS.TARIKH_WARTA, HMS.ID_MUKIM, RUJMUKIM.NAMA_MUKIM,"
 					+ " HMS.ID_DAERAH, RUJDAERAH.NAMA_DAERAH, HMS.ID_NEGERI, RUJNEGERI.NAMA_NEGERI, HMS.ID_KATEGORI AS ID_KATEGORI,"
 					+ " RUJKATEGORI.KETERANGAN AS KATEGORI, HMS.ID_SUBKATEGORI, RUJSUBKATEGORI.KETERANGAN AS SUBKATEGORI, HMS.KEGUNAAN_TANAH,"
@@ -574,6 +574,18 @@ public class FrmCRBSenaraiFailData {
 										.getString("NO_LOT")));
 				h.put("idLuas", rs.getString("ID_LUAS_BERSAMAAN") == null ? ""
 						: rs.getString("ID_LUAS_BERSAMAAN"));
+				h.put("luasAsal",
+						rs.getString("LUAS_ASAL") == null ? "" : rs
+								.getString("LUAS_ASAL"));
+				h.put("luas1",
+						rs.getString("LUAS_ASAL") == null ? "" : rs
+								.getString("LUAS_ASAL"));
+				h.put("luas2",
+						rs.getString("LUAS_ASAL") == null ? "" : rs
+								.getString("LUAS_ASAL"));
+				h.put("luas3",
+						rs.getString("LUAS_ASAL") == null ? "" : rs
+								.getString("LUAS_ASAL"));
 				h.put("luasBersamaan",
 						rs.getString("LUAS_BERSAMAAN") == null ? "" : rs
 								.getString("LUAS_BERSAMAAN"));
@@ -656,6 +668,10 @@ public class FrmCRBSenaraiFailData {
 				h.put("noLot", "");
 				h.put("lot", "");
 				h.put("idLuas", "");
+				h.put("luasAsal", "");
+				h.put("luas1", "");
+				h.put("luas2", "");
+				h.put("luas3", "");
 				h.put("luasBersamaan", "");
 				h.put("luas", "");
 				h.put("noWarta", "");
@@ -685,6 +701,81 @@ public class FrmCRBSenaraiFailData {
 			if (db != null)
 				db.close();
 		}
+	}
+	
+	public String saveHakmilikSementara(String jenisHakmilik,
+			String txtNoHakmilik, String noWarta, String tarikhWarta, 
+			String jenisLot, String txtNoLot, String luas1, String luas2,
+			String luas3, String txtLuasBersamaan, 
+			String idNegeri, String idDaerah, String idMukim, HttpSession session)
+			throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String idPHPHakMilikSementaraString = "";
+		String sql = "";
+		
+		String TW = "to_date('" + tarikhWarta + "','dd/MM/yyyy')";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPHAKMILIKSEMENTARA
+			r = new SQLRenderer();
+			long idHakmilikSementara = DB
+					.getNextID("TBLPHPHAKMILIKSEMENTARA_SEQ");
+			idPHPHakMilikSementaraString = String.valueOf(idHakmilikSementara);
+			r.add("ID_HAKMILIKSEMENTARA", idHakmilikSementara);
+			String peganganHakmilik = "";
+			peganganHakmilik = getKodNegeri(idNegeri) + getKodDaerah(idDaerah)
+					+ getKodMukim(idMukim) + getKodJenisHakmilik(jenisHakmilik)
+					+ Utils.digitLastFormatted(txtNoHakmilik, 8);
+			r.add("PEGANGAN_HAKMILIK", peganganHakmilik);
+			r.add("ID_NEGERI", idNegeri);
+			r.add("ID_DAERAH", idDaerah);
+			r.add("ID_MUKIM", idMukim);
+			r.add("ID_JENISHAKMILIK", jenisHakmilik);
+			r.add("NO_HAKMILIK", txtNoHakmilik);
+			r.add("NO_WARTA", noWarta);
+			r.add("TARIKH_WARTA", r.unquote(TW));
+			r.add("ID_LOT", jenisLot);
+			r.add("NO_LOT", txtNoLot);
+			r.add("ID_LUAS", "2");
+			if (!"".equals(luas1) || luas1 != null) {
+				r.add("LUAS_ASAL", luas1);
+			} else if (!"".equals(luas2) || luas2 != null) {
+				r.add("LUAS_ASAL", luas2);
+			} else if (!"".equals(luas3) || luas3 != null) {
+				r.add("LUAS_ASAL", luas3);
+			} else {
+				r.add("LUAS_ASAL", "");
+			}
+			r.add("LUAS", txtLuasBersamaan);
+
+			sql = r.getSQLInsert("TBLPHPHAKMILIKSEMENTARA");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		return idPHPHakMilikSementaraString;
 	}
 
 	public String daftarBaru(String idJenisTanah, String tarikhTerima,
@@ -735,6 +826,10 @@ public class FrmCRBSenaraiFailData {
 			Calendar curDate = new GregorianCalendar();
 			Date dateCurrent = new Date();
 			curDate.setTime(dateCurrent);
+			
+			if ("4".equals(idJenisTanah)) {
+				idKementerianTanah = "0";
+			}
 			noFail = generateNoFail(session, kodUrusan,
 					getKodKementerianByIdKementerian(idKementerianTanah),
 					idKementerianTanah, getKodNegeriByIdNegeri(idNegeriTanah),
@@ -982,31 +1077,7 @@ public class FrmCRBSenaraiFailData {
 					stmt.executeUpdate(sql);
 
 				}
-			} if ("4".equals(idJenisTanah)) {
-				r = new SQLRenderer();
-				long idHakmilik = DB.getNextID("TBLPHPHAKMILIK_SEQ");
-				r.add("ID_HAKMILIK", idHakmilik);
-				r.add("ID_HAKMILIKPERMOHONAN", idhakmilikPermohonan);
-				r.add("PEGANGAN_HAKMILIK", txtPeganganHakmilik);
-				r.add("ID_JENISHAKMILIK", getParam("idJenisHakmilik"));
-				r.add("NO_HAKMILIK", getParam("txtNoHakmilikTanah"));
-				r.add("NO_WARTA", getParam("txtNoWartaTanah"));
-				r.add("TARIKH_WARTA",
-						r.unquote("to_date('"
-								+ getParam("tarikhWarta")
-								+ "','dd/MM/yyyy')"));
-				r.add("ID_LOT", getParam("idLot"));
-				r.add("NO_LOT", getParam("txtNoLot"));
-				r.add("ID_LUAS", getParam("idLuas"));
-				r.add("LUAS", getParam("txtLuas"));
-				r.add("ID_NEGERI", idNegeriTanah);
-				r.add("ID_DAERAH", getParam("idDaerahTanah"));
-				r.add("ID_MUKIM", getParam("idMukimTanah"));
-				
-				sql = r.getSQLInsert("TBLPHPHAKMILIK");
-				stmt.executeUpdate(sql);
-				
-			} else {
+			} else { 
 				setMaklumatTanah(idHakmilikAgensi, idHakmilikSementara);
 				if (getBeanMaklumatTanah().size() != 0) {
 					Hashtable hashTanah = (Hashtable) getBeanMaklumatTanah()
@@ -1031,6 +1102,7 @@ public class FrmCRBSenaraiFailData {
 					r.add("ID_LOT", hashTanah.get("idLot"));
 					r.add("NO_LOT", hashTanah.get("noLot"));
 					r.add("ID_LUAS", hashTanah.get("idLuas"));
+					r.add("LUAS_ASAL", hashTanah.get("luasAsal"));
 					r.add("LUAS", hashTanah.get("luasBersamaan"));
 					r.add("SYARAT", hashTanah.get("syarat"));
 					r.add("SEKATAN", hashTanah.get("sekatan"));
@@ -1041,6 +1113,7 @@ public class FrmCRBSenaraiFailData {
 					r.add("ID_AGENSI", hashTanah.get("idAgensi"));
 
 					sql = r.getSQLInsert("TBLPHPHAKMILIK");
+					myLog.info("keluar lah woi :" +sql);
 					stmt.executeUpdate(sql);
 
 				}
@@ -1107,6 +1180,7 @@ public class FrmCRBSenaraiFailData {
 				db.close();
 		}
 		session.setAttribute("ID_FAIL", idFailString);
+		session.setAttribute("FLAG_FROM", "failTugasan");
 		return idFailString;
 	}
 
@@ -1121,9 +1195,13 @@ public class FrmCRBSenaraiFailData {
 		String noFail = "";
 		noFail = "JKPTG/BPHP/"
 				+ kodUrusan
-				+ "/"
-				+ kodKementerian
-				+ "/"
+				+ "/" ;
+				if (kodKementerian == null || kodKementerian == "") {
+					noFail = noFail + "0";
+				} else {
+					noFail = noFail + kodKementerian;
+				}
+				noFail = noFail + "/"
 				+ kodNegeri
 				+ "/"
 				+ Utils.digitLastFormatted(String.valueOf(File
@@ -1861,6 +1939,80 @@ public class FrmCRBSenaraiFailData {
 				db.close();
 		}
 	}
+	
+	public String getNamaNegeriById(String idNegeri) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT NAMA_NEGERI FROM TBLRUJNEGERI WHERE ID_NEGERI = '"
+					+ idNegeri + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				return (String) rs.getString("NAMA_NEGERI");
+			} else {
+				return "";
+			}
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public String getNamaDaerahById(String idDaerah) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT NAMA_DAERAH FROM TBLRUJDAERAH WHERE ID_DAERAH = '"
+					+ idDaerah + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				return (String) rs.getString("NAMA_DAERAH");
+			} else {
+				return "";
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public String getNamaMukimById(String idMukim) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT NAMA_MUKIM FROM TBLRUJMUKIM WHERE ID_MUKIM = '"
+					+ idMukim + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				return (String) rs.getString("NAMA_MUKIM");
+			} else {
+				return "";
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
 
 	public String getKodNegeri(String idNegeri) throws Exception {
 		Db db = null;
@@ -1952,6 +2104,31 @@ public class FrmCRBSenaraiFailData {
 
 			if (rs.next()) {
 				return (String) rs.getString("KOD_JENIS_HAKMILIK");
+			} else {
+				return "";
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public String getKodJenisLot(String idLot) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT KETERANGAN AS JENIS_LOT FROM TBLRUJLOT WHERE ID_LOT = '"
+					+ idLot + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				return (String) rs.getString("JENIS_LOT");
 			} else {
 				return "";
 			}

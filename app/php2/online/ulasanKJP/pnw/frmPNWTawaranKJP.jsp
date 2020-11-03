@@ -15,6 +15,7 @@
   <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
   <input name="idPenawaranKJP" type="hidden" id="idPenawaranKJP" value="$idPenawaranKJP"/>
+  <input name="flagDetail" type="hidden" id="flagDetail" value="$flagDetail"/>
   <input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
   <input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
   <input name="hitButton" type="hidden" id="hitButton"/>
@@ -50,17 +51,7 @@
   <!-- UNTUK DISPLAY PADA MENU TAWARAN ATAU MENU PENERIMA TAWARAN -->
   #if ($!{session.getAttribute("_portal_module")} == "ekptg.view.php2.FrmPNWTawaranView_SuratTawaran")
   <tr>
-  	<td><fieldset id="tableReport" >
-		<legend><strong>SURAT TAWARAN</strong></legend>
-		<table width="100%" border="0" cellspacing="2" cellpadding="2">
-  		<tr>
-    		<td ><a href="#" class="style2" onClick="javascript:cetakSuratTawaran('$idFail')"> Surat Tawaran </a></td>
-  		</tr>
-  		<tr>
-    		<td ><a href="#" class="style2" onClick="javascript:cetakSenaraiEdaran('$idFail')"> Senarai Edaran </a></td>
-  		</tr>
-		</table>
-	</fieldset></td>
+  	
   </tr>
   #else
   <tr>
@@ -155,20 +146,34 @@
   	#end
   	<td align="center">
   <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="kembali()"/>
+  <input type="button" name="cmdHantar" id="cmdHantar" value="Hantar" onClick="doHantarProses()"/>
   </td>
 </table>
 <script>
+function doHantarProses(){
+
+	
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.mode.value = "view";
+		return;
+	}
+	
+	document.${formName}.mode.value = "view";
+	document.${formName}.hitButton.value = "doHantarProses";
+	document.${formName}.submit();
+}
 function paparFail(idFail,idStatus) {
 	document.${formName}.idFail.value = idFail;
 	document.${formName}.idStatus.value = idStatus;
 	document.${formName}.action = "$EkptgUtil.getTabID("Penawaran",$portal_role)?_portal_module=ekptg.view.php2.online.FrmPNWTawaranKJPView";
-	document.${formName}.actionPenawaran.value = "paparFail";
+	document.${formName}.flagPopup.value = "paparFail";
 	//document.${formName}.modePopup.value = "view";
 	doAjaxCall${formName}("");
 }
 function kembali() {
-	document.${formName}.flagPopup.value = "";
-	document.${formName}.submit();
+	//alert('baca kembali frmPNWTawaranKJP');
+	document.${formName}.flagPopup.value = "carian";
+	doAjaxCall${formName}("");
 }
 function paparAgensi(id) {
 	//alert('baca paparAgensi frmPNWTawaranKJP');
@@ -209,9 +214,9 @@ function simpanAgensi(){
   		document.${formName}.txtTujuanKegunaan.focus(); 
 		return; 
 	}
-	if(document.${formName}.fileupload.value == ""){
+	if(document.${formName}.idDokumen.value == ""){
 		alert('Sila masukkan lampiran yang Ingin Dimuatnaik.');
-  		document.${formName}.fileupload.focus(); 
+  		document.${formName}.idDokumen.focus(); 
 		return; 
 	} 
 
@@ -279,6 +284,11 @@ function simpanKemaskiniAgensi(){
   		document.${formName}.txtTujuanKegunaan.focus(); 
 		return; 
 	}
+	if(document.${formName}.idDokumen.value == ""){
+		alert('Sila masukkan lampiran yang Ingin Dimuatnaik.');
+  		document.${formName}.idDokumen.focus(); 
+		return; 
+	} 
 	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
@@ -306,5 +316,12 @@ function simpanKemaskiniDokumen() {
 	document.${formName}.enctype="multipart/form-data";
     document.${formName}.encoding="multipart/form-data";
 	document.${formName}.submit();
+}
+function cetakImej(id){
+	var url = "../servlet/ekptg.view.php2.FrmDisplayImage?id="+id;
+    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener=document.window;
+    if (hWnd.focus != null) hWnd.focus();
 }
 </script>

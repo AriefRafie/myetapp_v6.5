@@ -257,10 +257,13 @@
 			return;
 		
 		}
+		var ptemtanah = "";
 		if(tanah==1){
 			ptem += "Milik";
+			ptemtanah = "Milik";
 		}else if (tanah==2){
 			ptem += "Rizab";
+			ptemtanah = "Rizab";
 		}
 		//OKalert("1."+ptem);	
 
@@ -272,6 +275,7 @@
 		}
 		param += "&IDSUBURUSAN1="+jenisPajakan;
 		ptem += "_"+jenisPajakan;
+		var ptempajakan = "_"+jenisPajakan
 		//OKalert("2."+ptem);	
 
 		if(masa==""){
@@ -293,7 +297,8 @@
 		
 
 		if(range_akhir==""){
-		
+			//alert("3."+ptem);	
+
 			if(laporan=="negeri"){
 			//if(jenisLaporan==2){
 				if(negeri=="-1"){
@@ -351,7 +356,7 @@
 				
 			}
 			//alert('256:'+ptem);
-		}else{
+		}else{	//range akhir else
 			if(jenisLaporan == ""){
 				alert("Sila pilih \"Laporan\" terlebih dahulu");
 				document.${formName}.sorLaporan_.focus(); 
@@ -368,25 +373,30 @@
 				//alert('masa 1:range_akhir='+range_akhir);
 				if(jenisLaporan == "1"){			
 					//laporanKementerianBulan();
-					ptem += 'MengikutKementerian'+temRange;
-
 					var jenisPajakan = document.${formName}.socsuburusan.value;
 					if(unit == "-1"){
 						alert("Sila pilih \"Kementerian\" terlebih dahulu.");
 						document.${formName}.socUnit.focus(); 
 						return;
 					}	
+					if(unit != "0"){
+						ptem += 'MengikutKementerian'+temRange;
+					}else{
+						ptem += 'MengikutKementerian'+'Semua'+temRange;				
+					}
 					//punit = "&ID_KEMENTERIAN="+unit+"&ID_AGENSI=0";
 					
 				}else if(jenisLaporan == "2"){			
 					var jenisPajakan = document.${formName}.socsuburusan.value;
+					ptemnegeri = 'MengikutNegeri';
+					
 					if(negeri=="-1"){
 						alert("Sila pilih \"Negeri\" terlebih dahulu.");
 						document.${formName}.socNegeri.focus(); 
 						return;
 					
 					}else{
-						ptem = '&template='+tem+'MengikutNegeri'+temRange;
+						//ptem = '&template='+tem+'MengikutNegeri'+temRange;
 						mula_tahun = document.${formName}.txdTahunMula.value;
 						pnegeri = "&ID_NEGERI="+negeri;
 
@@ -394,17 +404,17 @@
 						//pbulanmula = "&bulan="+range_akhir;
 						
 						if(negeri !="0")
-							ptem = '&template='+tem+'MengikutNegeri1'+temRange;
-							
-/* 						if(mulatemp != "" && akhirtemp != "" && jenisPajakan != "-1"){
-							param += "&IDSUBURUSAN1="+jenisPajakan;
+							ptem += ptemnegeri+temRange;
+						else
+							ptem += ptemnegeri+'Semua'+temRange;
 
-						} */
 					 	if(unit != "0" && unit != "-1"){
-							ptem = '&template='+tem+'MengikutNegeriKementerian'+temRange;	
+							//ptem = '&template='+tem+ptemtanah+ptempajakan+'MengikuKementeriantNegeri'+temRange;	
 							if(negeri !="0")
-								ptem = '&template='+tem+'MengikutNegeri1Kementerian'+temRange;	
-					 		
+								ptem = '&template='+tem+ptemtanah+ptempajakan+'MengikutKementerianNegeri'+temRange;	
+							else
+								ptem = '&template='+tem+ptemtanah+ptempajakan+'MengikutKementerianNegeriSemua'+temRange;	
+
 							punit = "&ID_KEMENTERIAN="+unit+"&ID_AGENSI=0";
 							
 						}
@@ -435,16 +445,14 @@
 				}
 			
 			}else if(masa == 2){
+				//alert('masa == 2,'+ptem);
 				temRange = "Thn";
 				ptahun = "&TAHUN="+range_akhir;
 				var jenisPajakan = document.${formName}.socsuburusan.value;
 
-				//alert('range_akhir='+range_akhir);
-				if(jenisLaporan == "1"){			
-					//laporanKementerianBulan();
-					//
-					ptem = '&template='+tem+'MengikutTahun';
-					//ptem = '&template='+tem+'MengikutKementerian'+temRange;
+				//alert('jenisLaporan='+jenisLaporan);
+				if(jenisLaporan == "1"){
+					ptemkem = 'MengikutKementerian';					
 
 					if(unit == "-1"){
 						alert("Sila pilih \"Kementerian\" terlebih dahulu.");
@@ -452,7 +460,9 @@
 						return;
 					}	
 					if(unit != "0"){
-						ptem = '&template='+tem+'MengikutKementerian'+temRange;
+						ptem = ptem+ptemkem+temRange;
+					}else{
+						ptem = ptem+ptemkem+'Semua'+temRange;				
 					}
 					punit = "&ID_KEMENTERIAN="+unit+"&ID_AGENSI=0";
 					
@@ -464,22 +474,25 @@
 					
 					//}else if(negeri=="0"){ 				
 					}else{
-						ptem = '&template='+tem+'MengikutNegeri'+temRange;
+						ptemnegeri = 'MengikutNegeri';
 						pnegeri = "&ID_AGENSI=0&ID_NEGERI="+negeri+"&bulan=1";
 						if(negeri !="0")
-							ptem = '&template='+tem+'MengikutNegeri1'+temRange;
-							
+							ptem += ptemnegeri+temRange;
+						else	
+							ptem += ptemnegeri+'Semua'+temRange;
+						
 						if(mulatemp != "" && akhirtemp != "" && jenisPajakan != "-1"){
 							param += "&IDSUBURUSAN1="+jenisPajakan;
 
 						}
-					 	if(unit != "0"){
-							ptem = '&template='+tem+'MengikutNegeriKementerian'+temRange;	
-							if(negeri !="0"){
-								ptem = '&template='+tem+'MengikutNegeri1Kementerian'+temRange;	
-							}
+					 	if(unit != "0" && unit != "-1"){
+							if(negeri !="0")
+								ptem = '&template='+tem+ptemtanah+ptempajakan+'MengikutKementerianNegeri'+temRange;	
+							//}else
+							//	ptem = '&template='+tem+'MengikutNegeriKementerian'+temRange;								
+								
 							punit = "&ID_KEMENTERIAN="+unit+"&ID_AGENSI=0";
-							
+								
 						}
 						
 					}
@@ -547,19 +560,25 @@
 			    	alert("Sila pastikan Tarikh Akhir tidak melebihi dari Tarikh Semasa.");
 			    	return;
 			  	}
-			  	
+			  	//alert('masa 3, mengikut kem'+ptem);
 				if(jenisLaporan=="1"){
-					ptem = '&template='+tem+'MengikutKementerian'+temRange;
+					ptemkem = 'MengikutKementerian';					
 					var jenisPajakan = document.${formName}.socsuburusan.value;
 					if(unit=="-1"){
 						alert("Sila pilih \"Kementerian\" terlebih dahulu.");
 						document.${formName}.socUnit.focus(); 
 						return;
 					}	
+					if(unit != "0"){
+						ptem = ptem+ptemkem+temRange;
+					}else{
+						ptem = ptem+ptemkem+'Semua'+temRange;				
+					}
 					punit = "&ID_KEMENTERIAN="+unit+"&ID_AGENSI=0"+"&bulan=1";
 			
 					if(negeri != "-1"){
 						ptem = '&template='+tem+'MengikutNegeriKementerian'+temRange;				
+						ptem = ptem+ptemkem+'Negeri'+temRange;
 						pnegeri = "&ID_NEGERI="+negeri;
 						
 					}
@@ -572,20 +591,25 @@
 					
 					//}else if(negeri=="0"){ 				
 					}else{
-						ptem = '&template='+tem+'MengikutNegeri'+temRange;
+						//alert("range negeri"+ptem);
+						ptemNegeri = "MengikutNegeri";
+						//ptem = '&template='+tem+'MengikutNegeri'+temRange;
 						pnegeri = "&ID_AGENSI=0&ID_NEGERI="+negeri+"&bulan=1";
 						if(negeri !="0")
-							ptem = '&template='+tem+'MengikutNegeri1'+temRange;
-							
+							ptem += ptemNegeri+temRange;
+						else
+							ptem += ptemNegeri+'Semua'+temRange;
+	
 						if(mulatemp != "" && akhirtemp != "" && jenisPajakan != "-1"){
 							param += "&IDSUBURUSAN1="+jenisPajakan;
 
 						}
-					 	if(unit != "0"){
-							ptem = '&template='+tem+'MengikutNegeriKementerian'+temRange;	
+					 	if(unit != "0" && unit != "-1"){
+							//ptem = '&template='+tem+'MengikutNegeriKementerian'+temRange;	
 							if(negeri !="0")
-								ptem = '&template='+tem+'MengikutNegeri1Kementerian'+temRange;	
+								ptem = '&template='+tem+ptemtanah+ptempajakan+'MengikutKementerianNegeri'+temRange;	
 					 		
+							//alert("range negeri|kem"+ptem);
 							punit = "&ID_KEMENTERIAN="+unit+"&ID_AGENSI=0";
 							
 						}
@@ -622,106 +646,7 @@
 			  	}
 			  	
 			}
-			/*
-			akhir_bulan = document.${formName}.txdAkhir.value.substring(3,5);
-	  		akhir_hari = document.${formName}.txdAkhir.value.substring(0,2);
-	  		akhir_tahun = document.${formName}.txdAkhir.value.substring(6,10);
-			var akhirtemp = akhir_bulan+"/"+akhir_hari+"/"+akhir_tahun; 
-	  		mula_bulan = document.${formName}.txdMula.value.substring(3,5);
-	 		mula_hari = document.${formName}.txdMula.value.substring(0,2);
-	  		mula_tahun = document.${formName}.txdMula.value.substring(6,10);
-			var mulatemp = mula_bulan+"/"+mula_hari+"/"+mula_tahun;
-		
-			var mula = Date.parse(mulatemp);
-			var akhir = Date.parse(akhirtemp);
-			var tarikhsemasa = new Date();
-		  
-		  	if(akhir<mula){
-		    	alert("Sila pastikan Tarikh Akhir tidak melebihi dari Tarikh Mula.");
-		    	return;
-		  	}
-		  	if(akhir>tarikhsemasa){
-		    	alert("Sila pastikan Tarikh Akhir tidak melebihi dari Tarikh Semasa.");
-		    	return;
-		  	}
-		  	var temRange = "BlnThnRange";
-			ptahun = "&TAHUN="+mula_tahun+"&TAHUN_TAMAT="+akhir_tahun;
-			pbulanmula = "&BULANTAHUN="+mula_bulan+"/"+mula_tahun+"&bulan="+mula_bulan;
-			pbulantamat = "&BULANTAHUNTMT="+akhir_bulan+"/"+akhir_tahun+"&bulantamat="+akhir_bulan;
-		  	//if(laporan=="kementerian"){
-			if(jenisLaporan=="1"){
-				// 2017/03/30
-				ptem = '&template='+tem+'MengikutKementerian'+temRange;
-				var jenisPajakan = document.${formName}.socsuburusan.value;
-				if(unit=="-1"){
-					alert("Sila pilih \"Kementerian\" terlebih dahulu.");
-					document.${formName}.socUnit.focus(); 
-					return;
-				}	
-				punit = "&ID_KEMENTERIAN="+unit+"&ID_AGENSI=0"+"&bulan=1";
-				// if(jenisPajakan != "-1"){
-				//	ptem = "&template=HTPPajakanSenaraiMengikutKementerianJenis";
-				//	param += "&IDSUBURUSAN1="+jenisPajakan;
-				//} 
-				if(mulatemp != "" && akhirtemp != ""){
-					//ptem = "&template=HTPPajakanSenaraiMengikutKementerianSelangTahun";
-					//ptahun = "&TAHUN="+mula_tahun+"&TAHUN_TAMAT="+akhir_tahun;
 
-				}
-				// if(mulatemp != "" && akhirtemp != "" && jenisPajakan != "-1"){
-				//	ptem = "&template=HTPPajakanSenaraiMengikutKementerianSelangTahunJenis";
-				//	ptahun = "&TAHUN="+mula_tahun+"&TAHUN_TAMAT="+akhir_tahun;
-				//	param += "&IDSUBURUSAN1="+jenisPajakan;
-
-				//} 
-				if(negeri != "-1"){
-					ptem = '&template='+tem+'MengikutNegeriKementerian'+temRange;				
-					pnegeri = "&ID_NEGERI="+negeri;
-					
-				}
-								
-		  	} //end kementerian with date
-		  	//else if(laporan=="negeri"){
-			else if(jenisLaporan=="2"){
-				if(negeri=="-1"){
-					alert("Sila pilih \"Negeri\" terlebih dahulu.");
-					document.${formName}.socNegeri.focus(); 
-					return;
-				
-				}else if(negeri=="0"){ 				
-				}else{
-					ptem = '&template='+tem+'MengikutNegeri'+temRange;
-					pnegeri = "&ID_KEMENTERIAN=0&ID_AGENSI=0&ID_NEGERI="+negeri+"&bulan=1";
- 					//if(jenisPajakan != "-1"){
-					//	ptem = "&template=HTPPajakanSenaraiMengikutNegeriJenis";
-					//	param += "&IDSUBURUSAN1="+jenisPajakan;
-					//}
-					if(mulatemp != "" && akhirtemp != ""){
-						//ptem = "&template=HTPPajakanSenaraiMengikutNegeriSelangTahun";
-						//ptahun = "&TAHUN="+mula_tahun+"&TAHUN_TAMAT="+akhir_tahun;
-
-					}
-					if(mulatemp != "" && akhirtemp != "" && jenisPajakan != "-1"){
-						//ptem = "&template=HTPPajakanSenaraiMengikutNegeriSelangTahunJenis";
-						//ptahun = "&TAHUN="+mula_tahun+"&TAHUN_TAMAT="+akhir_tahun;
-						param += "&IDSUBURUSAN1="+jenisPajakan;
-
-					}
-					if(unit != "-1"){
-						ptem = '&template='+tem+'MengikutNegeriKementerian'+temRange;				
-						punit = "&ID_KEMENTERIAN="+unit+"&ID_AGENSI=0";
-						
-					}
-					
-				}
-				
-			}else{				
-				ptem = '&template='+tem+'MengikutTahun';
-				if(mulatemp != "" && akhirtemp != ""){
-					ptem = '&template='+tem+'MengikutTahunRange';
-				}
-			}
-				*/
 		} //else
 		//alert(ptem);
 		var url = "../servlet/"+urli+"?"+param+pnegeri+ptahun+ptem+pbulanmula+pbulantamat+punit+pdaerah;

@@ -52,18 +52,18 @@
         #foreach ($beanMaklumatImejan in $BeanMaklumatImejan)
    		<tr>
    			#if ($modeDokumen == 'addDokumen')
-	          <td width="1%">&nbsp;</td>
-	          <td width="28%">&nbsp;</td>
-	          <td width="1%">&nbsp; <input type="hidden" id="idDokumen" name="idDokumen" value="$beanMaklumatImejan.idDokumen" /> </td>
-	          <!-- <td width="70%"><img src="../servlet/ekptg.view.php2.FrmDisplayImage?id=$beanMaklumatImejan.idDokumen" alt="Imej Pelan" border="1" width="250" height="250" onclick="cetakImej('$beanMaklumatImejan.idDokumen')"/></td> -->
+	          <td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
+	          <td width="28%">Lampiran Dokumen</td>
+	          <td width="1%">: <input type="hidden" id="idDokumen" name="idDokumen" value="$beanMaklumatImejan.idDokumen" /> </td>
+	          <td width="70%">#if ($beanMaklumatImejan.idDokumen) #if ($!beanMaklumatImejan.idDokumen != '') <a href="#" onclick="cetakImej($!beanMaklumatImejan.idDokumen)" class="style2">$beanMaklumatImejan.namaImej</a> &nbsp;&nbsp; #end #end</td>   
    			#end
         </tr>
         <tr>
         	#if ($modePopup != 'view')        
-	          <td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
-	          <td width="28%">Lampiran Dokumen</td>
-	          <td width="1%">:</td>
-	          <td width="70%"><input id="fileupload" name="fileupload" type="file" size="40" $readonlyPopup  class="$inputTextClassPopup" /></td>
+	          <td width="1%">&nbsp;</td>
+	          <td width="28%">&nbsp;</td>
+	          <td width="1%"></td>
+	          <td width="70%"><input id="fileupload" name="fileupload" type="file" size="40" $readonlyPopup  class="$inputTextClassPopup" value="$beanMaklumatImejan.idDokumen"/></td>
         	#end
         </tr>        
         #end
@@ -107,3 +107,11 @@
       </fieldset></td>
   </tr>
 </table>
+<script>
+function kemaskiniAgensi() {
+	alert('baca kemaskiniAgensi frmPNWTawaranDetail');
+	document.${formName}.flagPopup.value = "openPopupAgensi";
+	document.${formName}.modePopup.value = "update";
+	doAjaxCall${formName}("");
+}
+</script>

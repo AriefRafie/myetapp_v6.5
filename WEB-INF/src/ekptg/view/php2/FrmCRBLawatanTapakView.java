@@ -21,6 +21,7 @@ import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.model.php2.FrmCRBHeaderData;
 import ekptg.model.php2.FrmCRBLawatanTapakData;
+import ekptg.model.php2.FrmPhpNotifikasiEmel;
 
 public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 
@@ -28,6 +29,7 @@ public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 
 	FrmCRBHeaderData logicHeader = new FrmCRBHeaderData();
 	FrmCRBLawatanTapakData logic = new FrmCRBLawatanTapakData();
+	FrmPhpNotifikasiEmel logicEmel = new FrmPhpNotifikasiEmel();
 	
 	String userId = null;
 	String userRole = null;
@@ -158,7 +160,7 @@ public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 			if ("simpanMaklumatKJT".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatKJT(idPermohonan, idPejabat, idNegeri, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
-        		//logic.sendEmail(idPermohonan, idPejabat, session);
+        		logicEmel.sendEmailtoPejabatJKPTG(idUlasanTeknikal, session);
         		session.setAttribute("MSG", "Emel telah dihantar kepada JKPTG berkaitan");
     		}
         	if ("simpanMaklumatUlanganKJT".equals(hitButton)){
@@ -879,6 +881,13 @@ public class FrmCRBLawatanTapakView extends AjaxBasedModule {
 		this.context.put("idDokumen", idDokumen);
 		this.context.put("flagOpenDetail", flagOpenDetail);
 	    this.context.put("status", status.toUpperCase());
+	    
+	    if (session.getAttribute("MSG") != null){
+			this.context.put("errMsg", session.getAttribute("MSG"));
+			session.removeAttribute("MSG");
+		} else {
+			this.context.put("errMsg", "");
+		}
 	    
 	    if (!"".equals(getParam("flagFrom"))){
         	session.setAttribute("FLAG_FROM", getParam("flagFrom"));

@@ -15,7 +15,8 @@ public class PajakanUlasan implements java.io.Serializable {
 	private String ulasan;
 	private String keputusan;
 	private Date tarikhHantar;
-	private Date tarikhTerima;	
+	private Date tarikhTerima;
+	private String noHakmilik;
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	// Constructors
 //	public PajakanUlasan(Long idPermohonan) {
@@ -41,7 +42,7 @@ public class PajakanUlasan implements java.io.Serializable {
 //	public void setPajakan(Pajakan pajakan) {
 //		this.pajakan = pajakan;
 //	}
-	
+
 	public void setTarikhHantarTxt(String txtTarikhHantar) {
 		this.txtTarikhHantar = txtTarikhHantar;
 	}
@@ -51,23 +52,23 @@ public class PajakanUlasan implements java.io.Serializable {
 	public Date getTarikhHantar() {
 		return new Date(this.txtTarikhHantar);
 	}
-	
+
 	public void setTarikhTerima(String txtTarikhTerima) {
 		this.txtTarikhTerima = txtTarikhTerima;
-	}	
+	}
 	public String getTarikhTerimaTxt() {
 		return this.txtTarikhTerima;
 	}
 	public Date getTarikhTerima() {
 		return new Date(this.txtTarikhTerima);
 	}
-	
+
 	public void setUlasan(String ulasan) {
 		this.ulasan = ulasan;
 	}
 	public String getUlasan() {
 		return this.ulasan;
-	}	
+	}
 
 	public void setKeputusan(String keputusan) {
 		this.keputusan = keputusan;
@@ -75,12 +76,19 @@ public class PajakanUlasan implements java.io.Serializable {
 	public String getKeputusan() {
 		return this.keputusan;
 	}
-	
+
 	public void setNo(String noRujukan) {
 		this.noRujukan = noRujukan;
 	}
 	public String getNo() {
 		return this.noRujukan;
 	}
-	
+
+	public void setNoHakmilik(String noHakmilik) {
+		this.noHakmilik = noHakmilik;
+	}
+	public String getNoHakmilik() {
+		return this.noHakmilik;
+	}
+
 }
