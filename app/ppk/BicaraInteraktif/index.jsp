@@ -15,22 +15,22 @@
 }
 
 #sddmheader
-{	
+{
 	margin: 0;
 	padding: 0;
 	z-index: 30
 }
 
 #sddmheader li
-{	
+{
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	float: left;	
+	float: left;
 }
 
 #sddmheader li a
-{	
+{
 	display: block;
 	color: #FFF;
 	text-align: center;
@@ -38,22 +38,22 @@
 }
 
 #sddmheader li a:hover
-{	
+{
 	background: #E0F2F7;
 }
 
 #sddmheader div
-{	
+{
 	position: absolute;
 	visibility: hidden;
 	margin: 0;
-	padding: 0;	
-	/*border: 1px solid #5970B2;*/	
+	padding: 0;
+	/*border: 1px solid #5970B2;*/
 	z-index:99;
 }
 
 #sddmheader div a
-{	
+{
 	position: relative;
 	display: block;
 	margin: 0;
@@ -69,7 +69,7 @@
 }
 
 #sddmheader div a:hover
-{	
+{
 	background: #49A3FF;
 	color: #FFFFFF;
 }
@@ -85,7 +85,7 @@
 	top: 0;
 	left: 0%;
 	bottom: 0;
-	right: 0;  
+	right: 0;
 }
 
 /* Transparent Overlay */
@@ -194,7 +194,7 @@
 }
 
 .wysihtml5-sandbox
-{ 
+{
 	border: 1px solid #000 !important;
   	-moz-border-radius: 10px !important;
   	border-radius: 10px !important;
@@ -202,8 +202,8 @@
 	width:99%	!important;
 	z-index: 2 !important;
     box-shadow: inset 0px 6px 4px -5px black, inset 0px -6px 4px -5px black !important;
-	
-	
+
+
 }
 
 .divKeterangan {
@@ -221,7 +221,7 @@
 
 
 .disabledpointer {
-    pointer-events: none;    
+    pointer-events: none;
 }
 
 
@@ -231,11 +231,11 @@
 }
 
 .hidebutton {
-	display:none;     
+	display:none;
 }
 
 .textmarq {
- height: 15px;	
+ height: 15px;
  overflow: hidden;
  position: relative;
 }
@@ -250,9 +250,9 @@
  text-align: center;
  /* Starting position */
  -moz-transform:translateX(100%);
- -webkit-transform:translateX(100%);	
+ -webkit-transform:translateX(100%);
  transform:translateX(100%);
- /* Apply animation to this element */	
+ /* Apply animation to this element */
  -moz-animation: textmarq 15s linear infinite;
  -webkit-animation: textmarq 15s linear infinite;
  animation: textmarq 15s linear infinite;
@@ -267,55 +267,55 @@
  100% { -webkit-transform: translateX(-100%); }
 }
 @keyframes textmarq {
- 0%   { 
+ 0%   {
  -moz-transform: translateX(100%); /* Firefox bug fix */
  -webkit-transform: translateX(100%); /* Firefox bug fix */
- transform: translateX(100%); 		
+ transform: translateX(100%);
  }
- 100% { 
+ 100% {
  -moz-transform: translateX(-100%); /* Firefox bug fix */
  -webkit-transform: translateX(-100%); /* Firefox bug fix */
- transform: translateX(-100%); 
+ transform: translateX(-100%);
  }
 }
-.HeaderFont{    
-    color : blue;    
+.HeaderFont{
+    color : blue;
 }
 
-.blue{    
-    color : blue;    
+.blue{
+    color : blue;
 }
-.red{    
-    color : red;    
+.red{
+    color : red;
 }
 .tajukList {
 	border-bottom: 1px solid #000;
 	margin-bottom:3px;
-    padding: 1px 1px; 	
+    padding: 1px 1px;
 }
 
 .viewMaklumatTR {
 	margin-bottom:3px;
-    padding: 5px; 	
+    padding: 5px;
 	box-shadow: 2px 2px 5px black;
 }
 
 .viewKeterangan {
 	margin-bottom:3px;
-    padding: 15px; 	
+    padding: 15px;
 	box-shadow: 2px 2px 5px black;
 }
 
 .underline_below_form {
 	border-top: 1px solid #000;
-    padding: 3px 1px;    
+    padding: 3px 1px;
 }
 .div_history {
 	margin:3px;
 	box-shadow: 2px 2px 5px black;
 }
 .fullwidth_input {
-     width: 100%; 
+     width: 100%;
      box-sizing: border-box;
      -webkit-box-sizing:border-box;
      -moz-box-sizing: border-box;
@@ -338,7 +338,7 @@
 	box-shadow: 2px 2px 5px black;
 }
 .classFade{
-    
+
     animation: fadein 2s;
     -moz-animation: fadein 2s; /* Firefox */
     -webkit-animation: fadein 2s; /* Safari and Chrome */
@@ -381,7 +381,7 @@
 
 </style>
 
-<!--  
+<!--
 <div class="blink" ><font color="red" ><strong class="blink">PERHATIAN!</strong> MODUL INI DIDALAM TEMPOH PENGUJIAN, SILA ABAIKAN BUAT SEMENTARA WAKTU.</font></div>
 -->
 
@@ -423,10 +423,10 @@ openCloseTukarPegawai();
 </td>
 <td width="58%" class="underline_td_main" onclick="openCloseTukarPegawai()">
 <span id="icon_tukarpegawai" >> </span><strong>PERMOHONAN TUKAR PEGAWAI BICARA</strong> </td>
-<td width="20%" class="underline_td_main" align="right" valign="top" >		
+<td width="20%" class="underline_td_main" align="right" valign="top" >
 </td>
 <td width="20%" class="underline_td_main" align="right">
-<input type="button" id="cmdKembaliSenaraiTukarPegawai" name="cmdKembaliSenaraiTukarPegawai" value="Senarai Tukar Pegawai" onClick="kembaliSenaraiTukarPegawai()" style="display:none;" >		
+<input type="button" id="cmdKembaliSenaraiTukarPegawai" name="cmdKembaliSenaraiTukarPegawai" value="Senarai Tukar Pegawai" onClick="kembaliSenaraiTukarPegawai()" style="display:none;" >
 </td>
 </tr>
 </table>
@@ -437,9 +437,9 @@ openCloseTukarPegawai();
 <div id="view_tukarpegawaiKPP">
 </div>
 <div id="listPermohonanTukarPegawai">
-<script> 
+<script>
 //$jquery(document).ready(function () {
-	//doDivAjaxCall$formname('listPermohonanTukarPegawai','showPermohonanTukarPegawai','');			 	  
+	//doDivAjaxCall$formname('listPermohonanTukarPegawai','showPermohonanTukarPegawai','');
 //});
 </script>
 </div>
@@ -455,10 +455,10 @@ openCloseTukarPegawai();
 </td>
 <td width="58%" class="underline_td_main">
 <strong>PERBICARAAN INTERAKTIF</strong> </td>
-<td width="20%" class="underline_td_main" align="right" valign="top" >		
+<td width="20%" class="underline_td_main" align="right" valign="top" >
 </td>
 <td width="20%" class="underline_td_main" align="right">
-<input type="button" id="cmdKembaliSenarai" name="cmdKembaliSenarai" value="Senarai Perbicaraan" onClick="kembaliSenarai()" style="display:none;" >		
+<input type="button" id="cmdKembaliSenarai" name="cmdKembaliSenarai" value="Senarai Perbicaraan" onClick="kembaliSenarai()" style="display:none;" >
 </td>
 </tr>
 </table>
@@ -469,9 +469,9 @@ openCloseTukarPegawai();
 <div id="div_viewPerbicaraan">
 </div>
 <div id="listPerbicaraan">
-<script> 
+<script>
 $jquery(document).ready(function () {
-doDivAjaxCall$formname('listPerbicaraan','showListPerbicaraan','');			 	  
+doDivAjaxCall$formname('listPerbicaraan','showListPerbicaraan','');
 });
 </script>
 </div>
@@ -494,7 +494,7 @@ var refreshInterval_showtime = [];
 function trim(val,divID) {
 	val = val.
     replace(/(^\s*)|(\s*$)/gi, ""). // removes leading and trailing spaces
-    replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space 
+    replace(/[ ]{2,}/gi, " "). // replaces multiple spaces with one space
     replace(/\n +/, "\n"); // Removes spaces after newlines
 	alert("elem : "+val);
    // return val;
@@ -506,7 +506,7 @@ function validateNumber(evt) {
     var key = e.keyCode || e.which;
 
     if (!e.shiftKey && !e.altKey && !e.ctrlKey &&
-    // numbers   
+    // numbers
     key >= 48 && key <= 57 ||
     // Numeric keypad
     key >= 96 && key <= 105 ||
@@ -534,29 +534,29 @@ function validateCurrency(e,elmnt,content) {
 	{
 		keycode = window.event.keyCode;
 	}
-	else if (e) 
+	else if (e)
 	{
 		keycode = e.which;
 	}
-	else 
+	else
 	{
 		return true;
 	}
-	
-	if((keycode >= 37 && keycode <= 40) || (keycode == 9)) 
+
+	if((keycode >= 37 && keycode <= 40) || (keycode == 9))
 	{
 		return false;
 	}
-	
+
 	if (isNaN(content)) {
 		elmnt.value = RemoveNonNumeric(content);
 		return;
-	}	
+	}
 }
 
 
 
-function validateCurrencyBlur(e,elmnt,content) 
+function validateCurrencyBlur(e,elmnt,content)
 {
 	//alert('x');
 	//alert(Math.round(RemoveNonNumeric(content), 2));
@@ -568,7 +568,7 @@ function validateCurrencyBlur(e,elmnt,content)
 	}
 }
 
-function validateAreaBlur(e,elmnt,content) 
+function validateAreaBlur(e,elmnt,content)
 {
 	//alert('x');
 	//alert(Math.round(RemoveNonNumeric(content), 2));
@@ -602,7 +602,7 @@ function kembaliSenarai()
 }
 
 
-function checkSubKolateral(jenis_ob, id_ob){  
+function checkSubKolateral(jenis_ob, id_ob){
 	var c = 0;
 	var element = document.getElementsByName("sub"+jenis_ob+"_ob");
 	var jenis_ob_vs = "";
@@ -613,25 +613,25 @@ function checkSubKolateral(jenis_ob, id_ob){
 	else if(jenis_ob=="Defendan")
 	{
 		jenis_ob_vs = "Plantif";
-	}	
+	}
 	var element_vs = document.getElementsByName("sub"+jenis_ob_vs+"_ob");
 	if(element.length > 1)
-	{     
+	{
 		for (i = 0; i < element.length; i++)
 		{
 			if (element[i].checked == true)
-			{	
+			{
 				//alert('check');
 				element_vs[i].checked = false;
 			}
-		}  
+		}
 	}
 	else
 	{
 		if (document.getElementById("sub"+jenis_ob+"_ob").checked == true)
-		{	 
+		{
 			element_vs.checked = false;
-		}	 	
+		}
 	}
 }
 
@@ -640,40 +640,40 @@ function checkSubKolateral(jenis_ob, id_ob){
 
 
 //$jquery("#tukarpegawai_multipleSenaraiPerbicaraan").html("")
-		
+
 
 
 
 /*
 
- <input type="text" id="listID_PERBICARAAN" name="listID_PERBICARAAN" value="$pr.ID_PERBICARAAN" /> 	
-               <input type="text" id="listID_UNITPSK$pr.ID_PERBICARAAN" name="listID_UNITPSK$pr.ID_PERBICARAAN" value="$pr.ID_UNITPSK" /> 	
-               <input type="text" id="listPEG_PENGENDALI$pr.ID_PERBICARAAN" name="listPEG_PENGENDALI$pr.ID_PERBICARAAN" value="$pr.PEG_PENGENDALI" /> 	
-               <input type="text" id="listTARIKH_BICARA$pr.ID_PERBICARAAN" name="listTARIKH_BICARA$pr.ID_PERBICARAAN" value="$pr.TARIKH_BICARA" /> 	
-               <input type="text" id="listMASA_BICARA$pr.ID_PERBICARAAN" name="listMASA_BICARA$pr.ID_PERBICARAAN" value="$pr.MASA_BICARA" /> 	
-               <input type="text" id="listBIL_BICARA$pr.ID_PERBICARAAN" name="listBIL_BICARA$pr.ID_PERBICARAAN" value="$pr.BIL_BICARA" /> 	
-               <input type="text" id="listNO_FAIL$pr.ID_PERBICARAAN" name="listNO_FAIL$pr.ID_PERBICARAAN" value="$pr.NO_FAIL" /> 
-               <input type="text" id="listID_FAIL$pr.ID_PERBICARAAN" name="listID_FAIL$pr.ID_PERBICARAAN" value="$pr.ID_FAIL" /> 
-               <input type="text" id="listID_PERMOHONANSIMATI$pr.ID_PERBICARAAN" name="listID_PERMOHONANSIMATI$pr.ID_PERBICARAAN" value="$pr.ID_PERMOHONANSIMATI" /> 
-               <input type="text" id="listID_SIMATI$pr.ID_PERBICARAAN" name="listID_SIMATI$pr.ID_PERBICARAAN" value="$pr.ID_SIMATI" /> 
-               <input type="text" id="listID_PERMOHONAN$pr.ID_PERBICARAAN" name="listID_PERMOHONAN$pr.ID_PERBICARAAN" value="$pr.ID_PERMOHONAN" /> 	
-               <input type="text" id="listID_STATUS$pr.ID_PERBICARAAN" name="listID_STATUS$pr.ID_PERBICARAAN" value="$pr.ID_STATUS" /> 	
-               <input type="text" id="listFLAG_JENIS_KEPUTUSAN$pr.ID_PERBICARAAN" name="listFLAG_JENIS_KEPUTUSAN$pr.ID_PERBICARAAN" value="$pr.FLAG_JENIS_KEPUTUSAN" /> 
-               <input type="text" id="listTOTAL_PERINTAH$pr.ID_PERBICARAAN" name="listTOTAL_PERINTAH$pr.ID_PERBICARAAN" value="$pr.TOTAL_PERINTAH" /> 
-               <input type="text" id="listMAX_BIL_BICARA$pr.ID_PERBICARAAN" name="listMAX_BIL_BICARA$pr.ID_PERBICARAAN" value="$pr.MAX_BIL_BICARA" /> 	
+ <input type="text" id="listID_PERBICARAAN" name="listID_PERBICARAAN" value="$pr.ID_PERBICARAAN" />
+               <input type="text" id="listID_UNITPSK$pr.ID_PERBICARAAN" name="listID_UNITPSK$pr.ID_PERBICARAAN" value="$pr.ID_UNITPSK" />
+               <input type="text" id="listPEG_PENGENDALI$pr.ID_PERBICARAAN" name="listPEG_PENGENDALI$pr.ID_PERBICARAAN" value="$pr.PEG_PENGENDALI" />
+               <input type="text" id="listTARIKH_BICARA$pr.ID_PERBICARAAN" name="listTARIKH_BICARA$pr.ID_PERBICARAAN" value="$pr.TARIKH_BICARA" />
+               <input type="text" id="listMASA_BICARA$pr.ID_PERBICARAAN" name="listMASA_BICARA$pr.ID_PERBICARAAN" value="$pr.MASA_BICARA" />
+               <input type="text" id="listBIL_BICARA$pr.ID_PERBICARAAN" name="listBIL_BICARA$pr.ID_PERBICARAAN" value="$pr.BIL_BICARA" />
+               <input type="text" id="listNO_FAIL$pr.ID_PERBICARAAN" name="listNO_FAIL$pr.ID_PERBICARAAN" value="$pr.NO_FAIL" />
+               <input type="text" id="listID_FAIL$pr.ID_PERBICARAAN" name="listID_FAIL$pr.ID_PERBICARAAN" value="$pr.ID_FAIL" />
+               <input type="text" id="listID_PERMOHONANSIMATI$pr.ID_PERBICARAAN" name="listID_PERMOHONANSIMATI$pr.ID_PERBICARAAN" value="$pr.ID_PERMOHONANSIMATI" />
+               <input type="text" id="listID_SIMATI$pr.ID_PERBICARAAN" name="listID_SIMATI$pr.ID_PERBICARAAN" value="$pr.ID_SIMATI" />
+               <input type="text" id="listID_PERMOHONAN$pr.ID_PERBICARAAN" name="listID_PERMOHONAN$pr.ID_PERBICARAAN" value="$pr.ID_PERMOHONAN" />
+               <input type="text" id="listID_STATUS$pr.ID_PERBICARAAN" name="listID_STATUS$pr.ID_PERBICARAAN" value="$pr.ID_STATUS" />
+               <input type="text" id="listFLAG_JENIS_KEPUTUSAN$pr.ID_PERBICARAAN" name="listFLAG_JENIS_KEPUTUSAN$pr.ID_PERBICARAAN" value="$pr.FLAG_JENIS_KEPUTUSAN" />
+               <input type="text" id="listTOTAL_PERINTAH$pr.ID_PERBICARAAN" name="listTOTAL_PERINTAH$pr.ID_PERBICARAAN" value="$pr.TOTAL_PERINTAH" />
+               <input type="text" id="listMAX_BIL_BICARA$pr.ID_PERBICARAAN" name="listMAX_BIL_BICARA$pr.ID_PERBICARAAN" value="$pr.MAX_BIL_BICARA" />
 
 */
 
 
 function checkShowHideCBK(id_tukarpegawai)
 {
-	var showCheck = "yes";	
+	var showCheck = "yes";
 	var id_status = document.getElementById("listkSTATUS_TUKARPEGAWAI"+id_tukarpegawai).value;
 	if(id_status != "1")
 	{
 		showCheck = "no";
-	}	
-	return showCheck;	
+	}
+	return showCheck;
 }
 
 
@@ -681,7 +681,7 @@ function checkShowHideCBK(id_tukarpegawai)
 function checkShowHideCB(id_perbicaraan)
 {
 	var showCheck = "yes";
-	
+
 	var no_fail = document.getElementById("listNO_FAIL"+id_perbicaraan).value;
 	var id_status = document.getElementById("listID_STATUS"+id_perbicaraan).value;
 	var bil_bicara = document.getElementById("listBIL_BICARA"+id_perbicaraan).value;
@@ -689,17 +689,17 @@ function checkShowHideCB(id_perbicaraan)
 	var total_perintah = document.getElementById("listTOTAL_PERINTAH"+id_perbicaraan).value;
 	var max_bicara = document.getElementById("listMAX_BIL_BICARA"+id_perbicaraan).value;
 	var permohonanBaruTP = document.getElementById("listREKOD_TUKARPEGAWAI"+id_perbicaraan).value;
-	
-	
-	
+
+
+
 	var showCheck = "yes";
 	if(parseInt(permohonanBaruTP) > 0 || id_status != "18" || flag_jenis_keputusan != "" || (parseInt(total_perintah) <= 1 && (parseInt(bil_bicara) < parseInt(max_bicara) && flag_jenis_keputusan != "0" && flag_jenis_keputusan != "1" && flag_jenis_keputusan != "2"))
 	)
 	{
 		showCheck = "no";
 	}
-	
-	return showCheck;	
+
+	return showCheck;
 }
 
 
@@ -716,13 +716,13 @@ function settingShowHideCB(elem,checkALL,showCheck)
 	{
 		elem.checked = false;
 	}
-		
+
 	if(elem.checked == true)
 	{
 		returnOne++;
 	}
-	
-	return returnOne;	
+
+	return returnOne;
 }
 
 function checkTPMainCheckBox(elem)
@@ -749,97 +749,97 @@ function checkTPMainCheckBoxK(elem)
 	}
 }
 
-function checkTPCheckBox(checkALL){ 
-		
+function checkTPCheckBox(checkALL){
+
 	//var totalSeletected = document.getElementById("tukarpegawai_multipleJumlahPerbicaraan").value;
 	//alert("totalSeletected : ");
 	var totalSeletected = 0;
 	var element = document.getElementsByName("listID_PERBICARAAN");
 	if(element.length > 1)
-	{ 
+	{
 		for (i = 0; i < element.length; i++)
 		{
 			//alert("masuk");
-			var id_perbicaraan = element[i].value;	
-			//alert("id_perbicaraan : "+id_perbicaraan);		
+			var id_perbicaraan = element[i].value;
+			//alert("id_perbicaraan : "+id_perbicaraan);
 			var showCheck = checkShowHideCB(id_perbicaraan);
-			var elemCheckBox = document.getElementById("selectTP"+id_perbicaraan);		
+			var elemCheckBox = document.getElementById("selectTP"+id_perbicaraan);
 			totalSeletected += settingShowHideCB(elemCheckBox,checkALL,showCheck);
 		}
-	
+
 	}
 	else
 	{
 		element = document.getElementById("listID_PERBICARAAN");
-		var id_perbicaraan = element.value;			
-		var showCheck = checkShowHideCB(id_perbicaraan);		
-		var elemCheckBox = document.getElementById("selectTP"+id_perbicaraan);			
+		var id_perbicaraan = element.value;
+		var showCheck = checkShowHideCB(id_perbicaraan);
+		var elemCheckBox = document.getElementById("selectTP"+id_perbicaraan);
 		totalSeletected += settingShowHideCB(elemCheckBox,checkALL,showCheck);
 	}
 	//alert('x');
 	document.getElementById("tukarpegawai_multipleJumlahPerbicaraan").value = totalSeletected;
 	document.getElementById("divtukarpegawai_multipleDisplayJumlahPerbicaraan").innerHTML = totalSeletected;
-	
+
 }
 
 
-function checkTPCheckBoxK(checkALL){ 
-		
+function checkTPCheckBoxK(checkALL){
+
 	//var totalSeletected = document.getElementById("tukarpegawai_multipleJumlahPerbicaraan").value;
 	//alert("totalSeletected : "+totalSeletected);
 	var totalSeletected = 0;
 	var size = 0;
 	var element = document.getElementsByName("listkID_TUKARPEGAWAI");
 	if(element.length > 1)
-	{ 
+	{
 		size = element.length;
 		for (i = 0; i < element.length; i++)
 		{
 			//alert("masuk 1");
-			var id_tukarpegawai = element[i].value;		
-			//alert("masuk 2");	
+			var id_tukarpegawai = element[i].value;
+			//alert("masuk 2");
 			var showCheck = checkShowHideCBK(id_tukarpegawai);
 			//alert("masuk 3");
-			var elemCheckBox = document.getElementById("selectTPK"+id_tukarpegawai);	
-			//alert("masuk 4");	
+			var elemCheckBox = document.getElementById("selectTPK"+id_tukarpegawai);
+			//alert("masuk 4");
 			totalSeletected += settingShowHideCB(elemCheckBox,checkALL,showCheck);
 			//alert("masuk 5");
 			//checkMaklumat("listkID_TUKARPEGAWAI");
 			//alert("masuk 6");
 		}
-	
+
 	}
-	else 
+	else
 	{
 		size = 1;
 		//alert("1");
 		element = document.getElementById("listkID_TUKARPEGAWAI");
-		var id_tukarpegawai = element.value;			
-		var showCheck = checkShowHideCBK(id_tukarpegawai);		
-		var elemCheckBox = document.getElementById("selectTPK"+id_tukarpegawai);			
+		var id_tukarpegawai = element.value;
+		var showCheck = checkShowHideCBK(id_tukarpegawai);
+		var elemCheckBox = document.getElementById("selectTPK"+id_tukarpegawai);
 		totalSeletected += settingShowHideCB(elemCheckBox,checkALL,showCheck);
 		//alert("2");
 		//checkMaklumat("listkID_TUKARPEGAWAI");
 	}
 	//alert("length : "+element.length);
-	
+
 	if(size > 0)
 	{
 		//alert("1.1");
 		checkMaklumat("listkID_TUKARPEGAWAI");
 		//alert("1.2");
 	}
-	
+
 	document.getElementById("tukarpegawaiKPP_multipleJumlahPerbicaraan").value = totalSeletected;
 	document.getElementById("divtukarpegawaiKPP_multipleDisplayJumlahPerbicaraan").innerHTML = totalSeletected;
-	
+
 }
 
 function checkMaklumat(elemenName)
 {
-	  //<input type="hidden" id="listkID_PEGAWAIBARU$pr.ID_TUKARPEGAWAI" name="listkID_PEGAWAIBARU$pr.ID_TUKARPEGAWAI" value="$pr.ID_PEGAWAIBARU" />  
-      //<input type="hidden" id="listkID_NEGERIPEGAWAIBARU$pr.ID_TUKARPEGAWAI" name="listkID_NEGERIPEGAWAIBARU$pr.ID_TUKARPEGAWAI" value="$pr.ID_NEGERIPEGAWAIBARU" />  
-            
+	  //<input type="hidden" id="listkID_PEGAWAIBARU$pr.ID_TUKARPEGAWAI" name="listkID_PEGAWAIBARU$pr.ID_TUKARPEGAWAI" value="$pr.ID_PEGAWAIBARU" />
+      //<input type="hidden" id="listkID_NEGERIPEGAWAIBARU$pr.ID_TUKARPEGAWAI" name="listkID_NEGERIPEGAWAIBARU$pr.ID_TUKARPEGAWAI" value="$pr.ID_NEGERIPEGAWAIBARU" />
+
 	var element = document.getElementsByName(elemenName);
 	var id_negeri = "XXX";
 	var id_pegawai = "XXX";
@@ -851,15 +851,15 @@ function checkMaklumat(elemenName)
 	//var catatan_pemohon_asal_div = document.getElementById("divViewDefaulttukarpegawaiKPP_multipleCATATAN_PEMOHON").innerHTML
 	//var catatan_pemohon_asal = document.getElementById("divViewDefaulttukarpegawaiKPP_multipleCATATAN_PEMOHON").innerHTML;
 	if(element.length > 1)
-	{ 
+	{
 		for (i = 0; i < element.length; i++)
 		{
-			var id_tukarpegawai = element[i].value;		
-			var elemCheckBox = document.getElementById("selectTPK"+id_tukarpegawai);	
+			var id_tukarpegawai = element[i].value;
+			var elemCheckBox = document.getElementById("selectTPK"+id_tukarpegawai);
 			if(elemCheckBox.checked == true)
 			{
-				
-				
+
+
 				var selected_negeri = document.getElementById("listkID_NEGERIPEGAWAIBARU"+id_tukarpegawai).value;
 				if((id_negeri == "XXX") || (id_negeri != "XXX" && id_negeri != "" && id_negeri == selected_negeri))
 				{
@@ -869,10 +869,10 @@ function checkMaklumat(elemenName)
 				{
 					//alert("Salah");
 					bezaNegeri++;
-					//errorMesej += "Terdapat perbezaan negeri perbicaraan pada permohonan tukar pegawai yang dipilih, pilihan negeri di tetapkan pada 'Sila Pilih' secara default.\n"; 
+					//errorMesej += "Terdapat perbezaan negeri perbicaraan pada permohonan tukar pegawai yang dipilih, pilihan negeri di tetapkan pada 'Sila Pilih' secara default.\n";
 					id_negeri = "";
-				}	
-				
+				}
+
 				var selected_pegawai = document.getElementById("listkID_PEGAWAIBARU"+id_tukarpegawai).value;
 				if((id_pegawai == "XXX") || (id_pegawai != "XXX" && id_pegawai != "" && id_pegawai == selected_pegawai))
 				{
@@ -881,10 +881,10 @@ function checkMaklumat(elemenName)
 				else
 				{
 					bezaPegawai++;
-					//errorMesej += "Terdapat perbezaan pegawai perbicaraan pada permohonan tukar pegawai yang dipilih, pilihan pegawai di tetapkan pada 'Sila Pilih' secara default.\n"; 
+					//errorMesej += "Terdapat perbezaan pegawai perbicaraan pada permohonan tukar pegawai yang dipilih, pilihan pegawai di tetapkan pada 'Sila Pilih' secara default.\n";
 					id_pegawai = "";
-				}	
-				
+				}
+
 				/*
 				var catatan_pemohon_current = document.getElementById("listkCATATAN_PEMOHON"+id_tukarpegawai).value;
 				if((catatan_pemohon == "XXX") || (catatan_pemohon != "XXX" && catatan_pemohon != "" && catatan_pemohon_current == catatan_pemohon))
@@ -894,7 +894,7 @@ function checkMaklumat(elemenName)
 				}
 				else
 				{
-					//errorMesej = "Terdapat perbezaan pegawai perbicaraan pada permohonan tukar pegawai yang dipilih, pilihan pegawai di tetapkan pada 'Sila Pilih' secara default.\n"; 
+					//errorMesej = "Terdapat perbezaan pegawai perbicaraan pada permohonan tukar pegawai yang dipilih, pilihan pegawai di tetapkan pada 'Sila Pilih' secara default.\n";
 					catatan_pemohon = "";
 					catatan_pemohon_div = "-";
 				}
@@ -903,14 +903,14 @@ function checkMaklumat(elemenName)
 				if(errorMesej!="")
 				{
 					alert(errorMesej);
-				*/			
+				*/
 			}
 		}
 	}
 	else
 	{
 		element = document.getElementById(elemenName);
-		var id_tukarpegawai = element.value;	
+		var id_tukarpegawai = element.value;
 		var elemCheckBox = document.getElementById("selectTPK"+id_tukarpegawai);
 		if(elemCheckBox.checked == true)
 		{
@@ -922,11 +922,11 @@ function checkMaklumat(elemenName)
 			}
 			else
 			{
-				//errorMesej = "Terdapat perbezaan negeri perbicaraan pada permohonan tukar pegawai yang dipilih, pilihan negeri di tetapkan pada 'Sila Pilih' secara default.\n"; 
+				//errorMesej = "Terdapat perbezaan negeri perbicaraan pada permohonan tukar pegawai yang dipilih, pilihan negeri di tetapkan pada 'Sila Pilih' secara default.\n";
 				bezaNegeri++;
 				id_negeri = "";
-			}	
-			
+			}
+
 			var selected_pegawai = document.getElementById("listkID_PEGAWAIBARU"+id_tukarpegawai).value;
 			if((id_pegawai == "XXX") || (id_pegawai != "XXX" && id_pegawai != "" && id_pegawai == selected_pegawai))
 			{
@@ -934,7 +934,7 @@ function checkMaklumat(elemenName)
 			}
 			else
 			{
-				//errorMesej = "Terdapat perbezaan pegawai perbicaraan pada permohonan tukar pegawai yang dipilih, pilihan pegawai di tetapkan pada 'Sila Pilih' secara default.\n"; 
+				//errorMesej = "Terdapat perbezaan pegawai perbicaraan pada permohonan tukar pegawai yang dipilih, pilihan pegawai di tetapkan pada 'Sila Pilih' secara default.\n";
 				bezaPegawai++;
 				id_pegawai = "";
 			}
@@ -951,14 +951,14 @@ function checkMaklumat(elemenName)
 				catatan_pemohon_div = "-";
 			}
 			*/
-			
-			/*	
+
+			/*
 			if(errorMesej!="")
 			{
 				alert(errorMesej);
 			}
 			*/
-		}	
+		}
 	}
 	/*
 	else
@@ -968,9 +968,9 @@ function checkMaklumat(elemenName)
 	}
 	*/
 	//alert(">>>>>>>>>>>>>>>>>>>>>>>> id_pegawai : "+id_pegawai+" id_negeri : "+id_negeri+" catatan_pemohon : "+catatan_pemohon);
-	
-	
-	
+
+
+
 	if(id_negeri == "XXX")
 	{
 		id_negeri = "";
@@ -994,35 +994,35 @@ function checkMaklumat(elemenName)
 	//alert(bezaPegawai+" : "+bezaNegeri);
 	if(bezaPegawai > 0)
 	{
-		errorMesej += "Terdapat perbezaan pegawai perbicaraan pada permohonan tukar pegawai yang dipilih, pilihan pegawai di tetapkan pada 'Sila Pilih' secara default.\n"; 
+		errorMesej += "Terdapat perbezaan pegawai perbicaraan pada permohonan tukar pegawai yang dipilih, pilihan pegawai di tetapkan pada 'Sila Pilih' secara default.\n";
 	}
 	if(bezaNegeri > 0)
 	{
 		errorMesej += "Terdapat perbezaan negeri perbicaraan pada permohonan tukar pegawai yang dipilih, pilihan negeri di tetapkan pada 'Sila Pilih' secara default.\n";
 	}
-	
+
 	if(errorMesej!="")
 	{
 		alert(errorMesej);
 	}
-	
+
 	//
 }
 
-function showHideCheckBoxKPP(name){  
+function showHideCheckBoxKPP(name){
 
 	var flag_tukarpegawaiKPP_multiple = document.getElementById("flag_tukarpegawaiKPP_multiple").value;
 	//alert("showHideCheckBoxKPP : "+name);
 	var element = document.getElementsByName(name);
 	//alert("B");
 	if(element.length > 1)
-	{ 		
+	{
 		//alert("C");
 		for (i = 0; i < element.length; i++)
 		{
 			var id_tukarpegawai = element[i].value;
-			var showCheck = checkShowHideCBK(id_tukarpegawai);		
-			
+			var showCheck = checkShowHideCBK(id_tukarpegawai);
+
 			if(flag_tukarpegawaiKPP_multiple == "open")
 			{
 				if(showCheck == "yes")
@@ -1045,8 +1045,8 @@ function showHideCheckBoxKPP(name){
 				document.getElementById('selectTPK'+id_tukarpegawai).disabled = true;
 				document.getElementById('divSelectAllTPK').style.display = "none";
 				document.getElementById('divselectTPK_'+id_tukarpegawai).style.display = "none";
-			}			
-		}  
+			}
+		}
 	}
 	else
 	{
@@ -1056,7 +1056,7 @@ function showHideCheckBoxKPP(name){
 		//alert("id_tukarpegawai : "+id_tukarpegawai);
 		var showCheck = checkShowHideCBK(id_tukarpegawai);
 		//alert("2 : ");
-		
+
 		if(flag_tukarpegawaiKPP_multiple == "open")
 		{
 			if(showCheck == "yes")
@@ -1079,7 +1079,7 @@ function showHideCheckBoxKPP(name){
 			document.getElementById('selectTPK'+id_tukarpegawai).disabled = true;
 			document.getElementById('divSelectAllTPK').style.display = "none";
 			document.getElementById('divselectTPK_'+id_tukarpegawai).style.display = "none";
-		}	
+		}
 	}
 }
 
@@ -1098,19 +1098,19 @@ function getValueFromDrop(dropdownid)
 	return selectedText;
 }
 
-function showHideCheckBox(listIdPerbicaraan){  
+function showHideCheckBox(listIdPerbicaraan){
 	var flag_tukarpegawai_multiple = document.getElementById("flag_tukarpegawai_multiple").value;
 
 	var element = document.getElementsByName(listIdPerbicaraan);
-	
+
 	if(element.length > 1)
-	{ 
-		
+	{
+
 		for (i = 0; i < element.length; i++)
 		{
 			var id_perbicaraan = element[i].value;
-			var showCheck = checkShowHideCB(id_perbicaraan);		
-			
+			var showCheck = checkShowHideCB(id_perbicaraan);
+
 			if(flag_tukarpegawai_multiple == "open")
 			{
 				if(showCheck == "yes")
@@ -1133,15 +1133,15 @@ function showHideCheckBox(listIdPerbicaraan){
 				document.getElementById('selectTP'+id_perbicaraan).disabled = true;
 				document.getElementById('divSelectAllTP').style.display = "none";
 				document.getElementById('divselectTP_'+id_perbicaraan).style.display = "none";
-			}			
-		}  
+			}
+		}
 	}
 	else
 	{
 		element = document.getElementById(listIdPerbicaraan);
 		var id_perbicaraan = element.value;
 		var showCheck = checkShowHideCB(id_perbicaraan);
-		
+
 		if(flag_tukarpegawai_multiple == "open")
 		{
 			if(showCheck == "yes")
@@ -1164,45 +1164,45 @@ function showHideCheckBox(listIdPerbicaraan){
 			document.getElementById('selectTP'+id_perbicaraan).disabled = true;
 			document.getElementById('divSelectAllTP').style.display = "none";
 			document.getElementById('divselectTP_'+id_perbicaraan).style.display = "none";
-		}	
+		}
 	}
 }
 
 
-function doCheckKehadiran(sub_check, main_check){  
+function doCheckKehadiran(sub_check, main_check){
 	var c = 0;
 	var element = document.getElementsByName(sub_check);
 	var element_all = document.getElementById(main_check);
 	if(element.length > 1)
-	{     
+	{
 		for (i = 0; i < element.length; i++)
 		{
 			if (element[i].checked == false)
-			{	 
+			{
 				c++;
 			}
-		}  
+		}
 	}
 	else
 	{
 		if (document.getElementById(sub_check).checked == false)
-		{	 
+		{
 			c++;
-		}	 	
+		}
 	}
-	
+
 	if(c>0)
-	{	  
+	{
 		element_all.checked = false;
 	}
 	else
 	{
 		element_all.checked = true;
 	}
-	  
+
 }
-function doCheckAllKehadiran(main_check,sub_check) 
-{ 
+function doCheckAllKehadiran(main_check,sub_check)
+{
 	var element_all = document.getElementById(main_check);
 	if(element_all.checked==true)
 	{
@@ -1219,7 +1219,7 @@ function doCheckAllKehadiran(main_check,sub_check)
 		for (k = 0; k < checklist_length; k++) {
 			checklist_checkbox[k].checked = false;
 		}
-	}	
+	}
 }
 
 function getPageLocation()
@@ -1234,11 +1234,11 @@ function divToTop(id)
 {
 	$jquery('#'+id).show();
 	alert('ID : '+id);
-	
+
 	$jquery('#'+id).animate({
    		scrollTop:  $jquery(this).offset().top
 	}, 'fast');
-	
+
 	//$jquery('#'+id).scrollTop(0);
 	alert('totop');
 }
@@ -1268,7 +1268,7 @@ function setingTrDiv(fieldFlagName,divID)
 			$jquery("#"+current_divID).html("");
 		}
 	}
-	
+
 	if(divID!="")
 	{
 		document.getElementById(fieldFlagName).value=divID;
@@ -1293,7 +1293,7 @@ function disableByClass(cl)
 function hideByClass(cl)
 {
 	$jquery("."+cl).addClass("hidebutton");
-	$jquery("."+cl).removeClass(cl);	
+	$jquery("."+cl).removeClass(cl);
 }
 
 function showInfoWakil(div)
@@ -1310,7 +1310,7 @@ function disableInput(div)
 	$jquery("#"+div+" :checkbox").addClass("disabledbutton");
 	*/
 	//alert("XXXXXXXX : "+$jquery("#"+div+" :button"));
-	
+
 	$jquery("#"+div+" :button").hide();
 	//$jquery("#"+div+" input[value=Kemaskini]").hide();
 	$jquery("#"+div+" input[value=Cetak]").show();
@@ -1333,9 +1333,9 @@ function resetListPerbicaraan()
 	document.getElementById("carianBicaraTARIKH_BICARAMULA").value = "";
 	document.getElementById("carianBicaraTARIKH_BICARAAKHIR").value = "";
 	document.getElementById("carianBicaraBIL_BICARA").value = "";
-	document.getElementById("carianBicaraSTATUS_PERBICARAAN").value = "";	
-	document.getElementById("carianBicaraSTATUS").value = "";	
-	doDivAjaxCall$formname('listPerbicaraan','showListPerbicaraan','');		
+	document.getElementById("carianBicaraSTATUS_PERBICARAAN").value = "";
+	document.getElementById("carianBicaraSTATUS").value = "";
+	doDivAjaxCall$formname('listPerbicaraan','showListPerbicaraan','');
 }
 
 function resetListTukarPegawai()
@@ -1348,11 +1348,11 @@ function resetListTukarPegawai()
 	document.getElementById("carianTukarPegawaiNAMAPEGAWAIBARU").value = "";
 	document.getElementById("carianTukarPegawaiSTATUS_TUKARPEGAWAI").value = "";
 	document.getElementById("carianTukarPegawaiTARIKH_MOHONMULA").value = "";
-	document.getElementById("carianTukarPegawaiTARIKH_MOHONAKHIR").value = "";	
+	document.getElementById("carianTukarPegawaiTARIKH_MOHONAKHIR").value = "";
 	document.getElementById("carianTukarPegawaiTARIKH_BICARAMULA").value = "";
 	document.getElementById("carianTukarPegawaiTARIKH_BICARAAKHIR").value = "";
-	
-	doDivAjaxCall$formname('listPermohonanTukarPegawai','showPermohonanTukarPegawai','');		
+
+	doDivAjaxCall$formname('listPermohonanTukarPegawai','showPermohonanTukarPegawai','');
 }
 
 
@@ -1363,7 +1363,7 @@ function openCloseBantahan(jenis,id_permohonansimati,id_perbicaraan,id_permohona
 		$jquery("#icon_"+jenis).html("< ");
 		document.getElementById("flag_"+jenis).value = "open";
 		$jquery(document).ready(function () {
-		doDivAjaxCall$formname('view_'+jenis,'show_'+jenis,'skrinName='+jenis+'&ID_PERBICARAAN='+id_perbicaraan+'&ID_PERMOHONAN='+id_permohonan+'&ID_PERMOHONANSIMATI='+id_permohonansimati+'&ID_PEMOHON='+id_pemohon+'&scrolPosition='+getPageLocation()+'&div=view_'+jenis);  
+		doDivAjaxCall$formname('view_'+jenis,'show_'+jenis,'skrinName='+jenis+'&ID_PERBICARAAN='+id_perbicaraan+'&ID_PERMOHONAN='+id_permohonan+'&ID_PERMOHONANSIMATI='+id_permohonansimati+'&ID_PEMOHON='+id_pemohon+'&scrolPosition='+getPageLocation()+'&div=view_'+jenis);
 		});
 	}
 	else
@@ -1371,7 +1371,7 @@ function openCloseBantahan(jenis,id_permohonansimati,id_perbicaraan,id_permohona
 		$jquery("#icon_"+jenis).html("> ");
 		document.getElementById("flag_"+jenis).value = "close";
 		$jquery("#view_"+jenis).html("");
-	}	
+	}
 }
 
 
@@ -1382,7 +1382,7 @@ function openCloseKehadiran(jenis,id_permohonansimati,id_perbicaraan,id_permohon
 		$jquery("#icon_"+jenis).html("< ");
 		document.getElementById("flag_"+jenis).value = "open";
 		$jquery(document).ready(function () {
-		doDivAjaxCall$formname('view_'+jenis,'show_'+jenis,'ID_PERBICARAAN='+id_perbicaraan+'&ID_PERMOHONAN='+id_permohonan+'&ID_PERMOHONANSIMATI='+id_permohonansimati+'&ID_PEMOHON='+id_pemohon+'&scrolPosition='+getPageLocation()+'&div=view_'+jenis);  
+		doDivAjaxCall$formname('view_'+jenis,'show_'+jenis,'ID_PERBICARAAN='+id_perbicaraan+'&ID_PERMOHONAN='+id_permohonan+'&ID_PERMOHONANSIMATI='+id_permohonansimati+'&ID_PEMOHON='+id_pemohon+'&scrolPosition='+getPageLocation()+'&div=view_'+jenis);
 		});
 	}
 	else
@@ -1390,7 +1390,7 @@ function openCloseKehadiran(jenis,id_permohonansimati,id_perbicaraan,id_permohon
 		$jquery("#icon_"+jenis).html("> ");
 		document.getElementById("flag_"+jenis).value = "close";
 		$jquery("#view_"+jenis).html("");
-	}	
+	}
 }
 
 
@@ -1412,7 +1412,7 @@ function openCloseTukarPegawai()
 		$jquery("#listPermohonanTukarPegawai").html("");
 		$jquery("#view_tukarpegawaiKPP").html("");
 		document.getElementById('cmdKembaliSenaraiTukarPegawai').style.display = "none";
-		
+
 	}
 }
 
@@ -1501,7 +1501,7 @@ function openCloseMultipleTP(ID_PERMOHONAN,ID_FAIL,ID_SIMATI,ID_PERMOHONANSIMATI
 		$jquery(document).ready(function () {
 			doDivAjaxCall$formname(DIV,'openSkrinTukarPegawai_multiple','mode=edit&div=view_tukarpegawai_multiple&ID_PERMOHONAN='+ID_PERMOHONAN+'&FIELD_PK=ID_TUKARPEGAWAI&NAMA_TABLE=TBLPPKTUKARPEGAWAI&ID_FAIL='+ID_FAIL+'&ID_SIMATI='+ID_SIMATI+'&ID_PERMOHONANSIMATI='+ID_PERMOHONANSIMATI+'&ID_PERBICARAAN='+ID_PERBICARAAN+'&skrinName='+SKRINNAME);
 		});
-		
+
 		showHideCheckBox('listID_PERBICARAAN');
 	}
 	else
@@ -1510,7 +1510,7 @@ function openCloseMultipleTP(ID_PERMOHONAN,ID_FAIL,ID_SIMATI,ID_PERMOHONANSIMATI
 		document.getElementById("flag_tukarpegawai_multiple").value = "close";
 		$jquery("#view_tukarpegawai_multiple").html("");
 		showHideCheckBox('listID_PERBICARAAN');
-	}	
+	}
 }
 
 function openCloseMultipleTPK(ID_PERMOHONAN,ID_FAIL,ID_SIMATI,ID_PERMOHONANSIMATI,ID_PERBICARAAN,DIV,SKRINNAME)
@@ -1539,7 +1539,7 @@ function openCloseMultipleTPK(ID_PERMOHONAN,ID_FAIL,ID_SIMATI,ID_PERMOHONANSIMAT
 		document.getElementById("flag_tukarpegawaiKPP_multiple").value = "close";
 		$jquery("#view_tukarpegawaiKPP_multiple").html("");
 		showHideCheckBoxKPP('listkID_TUKARPEGAWAI');
-	}	
+	}
 }
 
 function openCloseSenarai(jenis,id_simati,id_perbicaraan,id_permohonan,nama_table,field_pk,id_permohonansimati,current_previous,tajukList,id_pemohon)
@@ -1549,7 +1549,7 @@ function openCloseSenarai(jenis,id_simati,id_perbicaraan,id_permohonan,nama_tabl
 		$jquery("#icon_"+jenis).html("< ");
 		document.getElementById("flag_senarai_"+jenis).value = "open";
 		$jquery(document).ready(function () {
-		doDivAjaxCall$formname('senarai_'+jenis+current_previous,'showSenarai','NAMA_TABLE='+nama_table+'&FIELD_PK='+field_pk+'&ID_PERBICARAAN='+id_perbicaraan+'&ID_SIMATI='+id_simati+'&ID_PERMOHONAN='+id_permohonan+'&ID_PERMOHONANSIMATI='+id_permohonansimati+'&skrinName='+jenis+'&current_previous='+current_previous+"&tajukList="+tajukList+"&ID_PEMOHON="+id_pemohon+'&div=senarai_'+jenis+current_previous+"&scrolPosition="+getPageLocation()); 	  
+		doDivAjaxCall$formname('senarai_'+jenis+current_previous,'showSenarai','NAMA_TABLE='+nama_table+'&FIELD_PK='+field_pk+'&ID_PERBICARAAN='+id_perbicaraan+'&ID_SIMATI='+id_simati+'&ID_PERMOHONAN='+id_permohonan+'&ID_PERMOHONANSIMATI='+id_permohonansimati+'&skrinName='+jenis+'&current_previous='+current_previous+"&tajukList="+tajukList+"&ID_PEMOHON="+id_pemohon+'&div=senarai_'+jenis+current_previous+"&scrolPosition="+getPageLocation());
 		});
 	}
 	else
@@ -1559,7 +1559,7 @@ function openCloseSenarai(jenis,id_simati,id_perbicaraan,id_permohonan,nama_tabl
 		$jquery("#senarai_"+jenis+"current").html("");
 		$jquery("#senarai_"+jenis+"history").html("");
 		$jquery("#senarai_"+jenis+"previous").html("");
-	}	
+	}
 }
 
 
@@ -1570,7 +1570,7 @@ function openClose(jenis,id_simati,id_perbicaraan,id_permohonan,nama_table,field
 		$jquery("#icon_"+jenis).html("< ");
 		document.getElementById("flag_"+jenis).value = "open";
 		$jquery(document).ready(function () {
-		
+
 		var cmd = "showMaklumat";
 		if(jenis == "perubahan")
 		{
@@ -1591,11 +1591,11 @@ function openClose(jenis,id_simati,id_perbicaraan,id_permohonan,nama_table,field
 		else if(jenis == "cetakan")
 		{
 			cmd = "showCetakan"
-		}	
-		
-		
-			
-		doDivAjaxCall$formname('view_'+jenis,cmd,'NAMA_TABLE='+nama_table+'&FIELD_PK='+field_pk+'&ID_SIMATI='+id_simati+'&ID_PERBICARAAN='+id_perbicaraan+'&ID_PERMOHONAN='+id_permohonan+'&ID_PERMOHONANSIMATI='+id_permohonansimati+'&skrinName='+jenis+'&scrolPosition='+getPageLocation()+'&div=view_'+jenis); 	  
+		}
+
+
+
+		doDivAjaxCall$formname('view_'+jenis,cmd,'NAMA_TABLE='+nama_table+'&FIELD_PK='+field_pk+'&ID_SIMATI='+id_simati+'&ID_PERBICARAAN='+id_perbicaraan+'&ID_PERMOHONAN='+id_permohonan+'&ID_PERMOHONANSIMATI='+id_permohonansimati+'&skrinName='+jenis+'&scrolPosition='+getPageLocation()+'&div=view_'+jenis);
 		});
 	}
 	else
@@ -1603,7 +1603,7 @@ function openClose(jenis,id_simati,id_perbicaraan,id_permohonan,nama_table,field
 		$jquery("#icon_"+jenis).html("> ");
 		document.getElementById("flag_"+jenis).value = "close";
 		$jquery("#view_"+jenis).html("");
-	}	
+	}
 }
 
 function selectKeputusanPerintah(flag_keputusan,mode,skrinName,ID_SIMATI,ID_PERMOHONAN,ID_PERBICARAAN,ID_PERMOHONANSIMATI,command)
@@ -1621,22 +1621,22 @@ function selectKeputusanPerintah(flag_keputusan,mode,skrinName,ID_SIMATI,ID_PERM
 	{
 		tajukKeputusan = "BATAL";
 	}
-	
+
 	if(flag_keputusan == "1" || flag_keputusan == "2")
 	{	/*
 		document.getElementById('trMaklumatKiv').style.display = "none";
-		document.getElementById(skrinName+'CHECK_KIV').value = "";	
+		document.getElementById(skrinName+'CHECK_KIV').value = "";
 		document.getElementById(skrinName+'DATE_KIV').value = "";
 		document.getElementById(skrinName+'CATATAN_KIV').value = "";
 		*/
-		$jquery("#label"+skrinName+"TARIKH_PERINTAH").html("Tarikh Perbicaraan Terakhir");	
+		$jquery("#label"+skrinName+"TARIKH_PERINTAH").html("Tarikh Perbicaraan Terakhir");
 	}
 	else if(flag_keputusan == "0")
 	{
 		//document.getElementById('trMaklumatKiv').style.display = "";
-		$jquery("#label"+skrinName+"TARIKH_PERINTAH").html("Tarikh Perintah");	
+		$jquery("#label"+skrinName+"TARIKH_PERINTAH").html("Tarikh Perintah");
 	}
-	
+
 	//alert("flag_keputusan : "+flag_keputusan);
 	if(flag_keputusan!="")
 	{
@@ -1666,7 +1666,7 @@ function addClassToDiv(div,className) {
 function removeClassFromDiv(div,className) {
 	//alert('div : '+div);
 	//$jquery("#"+div).addClass(className);
-	$jquery("#"+div).removeClass(className);	
+	$jquery("#"+div).removeClass(className);
 	//alert('2');
 }
 
@@ -1680,7 +1680,7 @@ function addreadonly(div) {
 function removereadonly(div) {
 	//alert('div : '+div);
 	//$jquery("#"+div).addClass(className);
-	//$jquery("#"+div).removeClass(className);	
+	//$jquery("#"+div).removeClass(className);
 	//alert('2');
 	$jquery("#"+div).removeAttr('readonly');
 }
@@ -1689,12 +1689,12 @@ function removereadonly(div) {
 function addClassDisableReadOnly(div)
 {
 	$jquery("#"+div).addClass("disabled");
-	$jquery("#"+div).addClass("disabledpointer");	
+	$jquery("#"+div).addClass("disabledpointer");
 	$jquery("#"+div).attr('readonly', 'readonly');
 }
 function removeClassDisableReadOnly(div)
 {
-	$jquery("#"+div).removeClass("disabled");	
+	$jquery("#"+div).removeClass("disabled");
 	$jquery("#"+div).removeClass("disabledpointer");
 	$jquery("#"+div).removeAttr('readonly');
 }
@@ -1747,7 +1747,7 @@ function selectJenisRujukan(jenis_rujukan,skrinName,mode)
 	//alert('jenis_rujukan : '+jenis_rujukan);
 	if(jenis_rujukan=="1")
 	{
-		
+
 		$jquery("#tdTajukMahkamahTangguh").html("Mahkamah Tinggi");
 		$jquery("#label"+skrinName+"ID_MAHKAMAH").html("Mahkamah Tinggi");
 		document.getElementById('row'+skrinName+'FLAG_RUJUKAN').style.display = "none";
@@ -1756,7 +1756,7 @@ function selectJenisRujukan(jenis_rujukan,skrinName,mode)
 		//document.getElementById(skrinName+'ID_NEGERIMAHKAMAH').value = "";
 		document.getElementById('row'+skrinName+'ID_MAHKAMAH').style.display = "";
 		//document.getElementById(skrinName+'ID_MAHKAMAH').value = "";
-		
+
 		pejabatAddReadonly(skrinName);
 		document.getElementById('trTajukMahkamahTangguh').style.display = "";
 		document.getElementById('row'+skrinName+'NAMA_PEJABAT').style.display = "";
@@ -1768,9 +1768,9 @@ function selectJenisRujukan(jenis_rujukan,skrinName,mode)
 		document.getElementById('row'+skrinName+'ID_BANDAR').style.display = "";
 		document.getElementById('row'+skrinName+'NO_TEL').style.display = "";
 		document.getElementById('row'+skrinName+'NO_FAX').style.display = "";
-		
+
 		//alert('2');
-		
+
 	}
 	else if(jenis_rujukan=="2")
 	{
@@ -1795,7 +1795,7 @@ function selectJenisRujukan(jenis_rujukan,skrinName,mode)
 		document.getElementById(skrinName+'ID_NEGERIMAHKAMAH').value = "";
 		document.getElementById('row'+skrinName+'ID_MAHKAMAH').style.display = "none";
 		document.getElementById(skrinName+'ID_MAHKAMAH').value = "";
-		
+
 		pejabatAddReadonly(skrinName);
 		document.getElementById('trTajukMahkamahTangguh').style.display = "none";
 		document.getElementById('row'+skrinName+'NAMA_PEJABAT').style.display = "none";
@@ -1816,29 +1816,29 @@ function selectJenisRujukan(jenis_rujukan,skrinName,mode)
 		document.getElementById(skrinName+'NO_TEL').value = "";
 		document.getElementById('row'+skrinName+'NO_FAX').style.display = "none";
 		document.getElementById(skrinName+'NO_FAX').value = "";
-	}	
+	}
 }
 
 function selectJenisBatal(flag_batal,mode,skrinName,ID_SIMATI,ID_PERMOHONAN,ID_PERBICARAAN,ID_PERMOHONANSIMATI,command)
-{	
-	
+{
+
 	if(flag_batal == "1") //wasiat
 	{
 		var nama_table = "TBLPPKPERINTAH";
-		var field_pk = "ID_PERINTAH";		
-			
-		doDivAjaxCall$formname('divSkrinSuplimentTangguhBatal','viewSuplimentBatal','FLAG_BATAL='+flag_batal+'&NAMA_TABLE='+nama_table+'&FIELD_PK='+field_pk+'&mode='+mode+'&ID_SIMATI='+ID_SIMATI+'&ID_PERBICARAAN='+ID_PERBICARAAN+'&ID_PERMOHONAN='+ID_PERMOHONAN+'&ID_PERMOHONANSIMATI='+ID_PERMOHONANSIMATI+'&skrinName='+skrinName+'&scrolPosition='+getPageLocation());	
+		var field_pk = "ID_PERINTAH";
+
+		doDivAjaxCall$formname('divSkrinSuplimentTangguhBatal','viewSuplimentBatal','FLAG_BATAL='+flag_batal+'&NAMA_TABLE='+nama_table+'&FIELD_PK='+field_pk+'&mode='+mode+'&ID_SIMATI='+ID_SIMATI+'&ID_PERBICARAAN='+ID_PERBICARAAN+'&ID_PERMOHONAN='+ID_PERMOHONAN+'&ID_PERMOHONANSIMATI='+ID_PERMOHONANSIMATI+'&skrinName='+skrinName+'&scrolPosition='+getPageLocation());
 	}
 	else
 	{
-		$jquery("#divSkrinSuplimentTangguhBatal").html("");	
+		$jquery("#divSkrinSuplimentTangguhBatal").html("");
 	}
-	
+
 }
 
 function selectJenisTangguh(flag_tangguh,mode,skrinName,ID_SIMATI,ID_PERMOHONAN,ID_PERBICARAAN,ID_PERMOHONANSIMATI,command)
 {	//divSkrinSuplimentTangguh
-	//alert("flag_tangguh : "+flag_tangguh);	
+	//alert("flag_tangguh : "+flag_tangguh);
 	document.getElementById('row'+skrinName+'TEMPOH_TUNGGU_FARID').style.display = "none";
 	//document.getElementById('row'+skrinName+'SEBAB_TANGGUH').style.display = "none";
 	if(flag_tangguh == "6")//koleterel
@@ -1851,24 +1851,24 @@ function selectJenisTangguh(flag_tangguh,mode,skrinName,ID_SIMATI,ID_PERMOHONAN,
 	}
 	else if(flag_tangguh == "7")//sijil faraid
 	{
-		document.getElementById('row'+skrinName+'TEMPOH_TUNGGU_FARID').style.display = "";		
+		document.getElementById('row'+skrinName+'TEMPOH_TUNGGU_FARID').style.display = "";
 	}
 	else
 	{
-		document.getElementById(skrinName+'TEMPOH_TUNGGU_FARID').value = "";		
+		document.getElementById(skrinName+'TEMPOH_TUNGGU_FARID').value = "";
 	}
-	
+
 	//default kena bukak
 	document.getElementById('trinfo'+skrinName+'KEPUTUSAN_MAHKAMAH').style.display = "";
 	document.getElementById('row'+skrinName+'KEPUTUSAN_MAHKAMAH').style.display = "";
 	document.getElementById('trword'+skrinName+'KEPUTUSAN_MAHKAMAH').style.display = "";
-	
+
 	document.getElementById('trinfo'+skrinName+'SEBAB_TANGGUH').style.display = "";
 	document.getElementById('row'+skrinName+'SEBAB_TANGGUH').style.display = "";
 	document.getElementById('trword'+skrinName+'SEBAB_TANGGUH').style.display = "";
-	
-	
-	
+
+
+
 	if(flag_tangguh == "6" || flag_tangguh == "5")
 	{
 		//alert("flag_tangguh : "+flag_tangguh);
@@ -1884,8 +1884,8 @@ function selectJenisTangguh(flag_tangguh,mode,skrinName,ID_SIMATI,ID_PERMOHONAN,
 			nama_table = "TBLPPKKOLATERALMST";
 			field_pk = "ID_KOLATERALMST";
 		}
-		
-		
+
+
 	doDivAjaxCall$formname('divSkrinSuplimentTangguhBatal','viewSuplimentTangguh','FLAG_TANGGUH='+flag_tangguh+'&NAMA_TABLE='+nama_table+'&FIELD_PK='+field_pk+'&mode='+mode+'&ID_SIMATI='+ID_SIMATI+'&ID_PERBICARAAN='+ID_PERBICARAAN+'&ID_PERMOHONAN='+ID_PERMOHONAN+'&ID_PERMOHONANSIMATI='+ID_PERMOHONANSIMATI+'&skrinName='+skrinName+'&scrolPosition='+getPageLocation());
 	//document.getElementById('row'+skrinName+'SEBAB_TANGGUH').style.display = "none";
 	//document.getElementById('trword'+skrinName+'SEBAB_TANGGUH').style.display = "none";
@@ -1898,7 +1898,7 @@ function selectJenisTangguh(flag_tangguh,mode,skrinName,ID_SIMATI,ID_PERMOHONAN,
 	{
 		$jquery("#divSkrinSuplimentTangguhBatal").html("");
 		$jquery("#divSkrinSuplimentTangguhBatal_ListPB").html("");
-		//document.getElementById('trword'+skrinName+'SEBAB_TANGGUH').style.display = "";		
+		//document.getElementById('trword'+skrinName+'SEBAB_TANGGUH').style.display = "";
 		//document.getElementById('row'+skrinName+'SEBAB_TANGGUH').style.display = "";
 		//document.getElementById('trword'+skrinName+'KEPUTUSAN_MAHKAMAH').style.display = "";
 		//document.getElementById('row'+skrinName+'KEPUTUSAN_MAHKAMAH').style.display = "";
@@ -1930,7 +1930,7 @@ function salinAlamatTetap(skrinName)
 		document.getElementById(skrinName+"POSKOD_SURAT").value = document.getElementById(skrinName+"POSKOD").value;
 		document.getElementById(skrinName+"ID_NEGERISURAT").value = document.getElementById(skrinName+"ID_NEGERI").value;
 		document.getElementById(skrinName+"NAMA_PELBAGAINEGARA_SURAT").value = document.getElementById(skrinName+"NAMA_PELBAGAINEGARA").value;
-		doDivAjaxCall$formname('div'+skrinName+'ID_NEGERISURAT','showNegeriSurat','ID_NEGERISALIN='+id_negeri+'&ID_BANDARSALIN='+id_bandar+"&skrinName="+skrinName);	
+		doDivAjaxCall$formname('div'+skrinName+'ID_NEGERISURAT','showNegeriSurat','ID_NEGERISALIN='+id_negeri+'&ID_BANDARSALIN='+id_bandar+"&skrinName="+skrinName);
 	}
 }
 
@@ -1952,7 +1952,7 @@ function setMapPejabat(skrinName,nama,alamat1, alamat2, alamat3, poskod, id_nege
 		document.getElementById(skrinName+"ID_NEGERI").value = id_negeri;
 		document.getElementById(skrinName+"NO_TEL_SURAT").value = no_tel;
 		//alert('2');
-		doDivAjaxCall$formname('div'+skrinName+'ID_NEGERI','showNegeri','ID_NEGERISALIN='+id_negeri+'&ID_BANDARSALIN='+id_bandar+"&skrinName="+skrinName);	
+		doDivAjaxCall$formname('div'+skrinName+'ID_NEGERI','showNegeri','ID_NEGERISALIN='+id_negeri+'&ID_BANDARSALIN='+id_bandar+"&skrinName="+skrinName);
 }
 
 function setMapPejabatMahkamah(skrinName,nama,alamat1, alamat2, alamat3, poskod, id_negeri, id_bandar, no_tel, no_fax)
@@ -1968,7 +1968,7 @@ function setMapPejabatMahkamah(skrinName,nama,alamat1, alamat2, alamat3, poskod,
 		document.getElementById(skrinName+"NO_FAX").value = no_fax;
 		//alert("2");
 		//alert('2');
-		doDivAjaxCall$formname('div'+skrinName+'ID_NEGERI','showNegeri','ID_NEGERISALIN='+id_negeri+'&ID_BANDARSALIN='+id_bandar+"&skrinName="+skrinName);	
+		doDivAjaxCall$formname('div'+skrinName+'ID_NEGERI','showNegeri','ID_NEGERISALIN='+id_negeri+'&ID_BANDARSALIN='+id_bandar+"&skrinName="+skrinName);
 }
 
 function setMapPemohon(skrinName,id_permohonan,id_permohonansimati,id_perbicaraan,alamat1, alamat2, alamat3, poskod, id_negeri, id_bandar, negara)
@@ -1979,8 +1979,8 @@ function setMapPemohon(skrinName,id_permohonan,id_permohonansimati,id_perbicaraa
 		document.getElementById(skrinName+"POSKOD").value = poskod;
 		document.getElementById(skrinName+"ID_NEGERI").value = id_negeri;
 		document.getElementById(skrinName+"NAMA_PELBAGAINEGARA").value = negara;
-		doDivAjaxCall$formname('div'+skrinName+'ID_NEGERI','showNegeri','ID_PERMOHONAN='+id_permohonan+'&ID_PERMOHONANSIMATI='+id_permohonansimati+'&ID_PERBICARAAN='+id_perbicaraan+'&ID_NEGERISALIN='+id_negeri+'&ID_BANDARSALIN='+id_bandar+"&skrinName="+skrinName);	
-		
+		doDivAjaxCall$formname('div'+skrinName+'ID_NEGERI','showNegeri','ID_PERMOHONAN='+id_permohonan+'&ID_PERMOHONANSIMATI='+id_permohonansimati+'&ID_PERBICARAAN='+id_perbicaraan+'&ID_NEGERISALIN='+id_negeri+'&ID_BANDARSALIN='+id_bandar+"&skrinName="+skrinName);
+
 		if(id_negeri=="17")
 		{
 			document.getElementById("row"+skrinName+"ID_BANDAR").style.display = "none";
@@ -1993,7 +1993,7 @@ function setMapPemohon(skrinName,id_permohonan,id_permohonansimati,id_perbicaraa
 			document.getElementById("row"+skrinName+"NAMA_PELBAGAINEGARA").style.display = "none";
 			document.getElementById(""+skrinName+"NAMA_PELBAGAINEGARA").value = "";
 		}
-				
+
 }
 
 function printLaporanStatPegawai()
@@ -2017,10 +2017,10 @@ function printLaporanTukarpegawai()
 	var carianTukarPegawaiNAMAPEGAWAIBARU = document.getElementById("carianTukarPegawaiNAMAPEGAWAIBARU").value;
 	var carianTukarPegawaiSTATUS_TUKARPEGAWAI = document.getElementById("carianTukarPegawaiSTATUS_TUKARPEGAWAI").value;
 	var carianTukarPegawaiTARIKH_MOHONMULA = document.getElementById("carianTukarPegawaiTARIKH_MOHONMULA").value;
-	var carianTukarPegawaiTARIKH_MOHONAKHIR = document.getElementById("carianTukarPegawaiTARIKH_MOHONAKHIR").value;	
+	var carianTukarPegawaiTARIKH_MOHONAKHIR = document.getElementById("carianTukarPegawaiTARIKH_MOHONAKHIR").value;
 	var carianTukarPegawaiTARIKH_BICARAMULA = document.getElementById("carianTukarPegawaiTARIKH_BICARAMULA").value;
 	var carianTukarPegawaiTARIKH_BICARAAKHIR = document.getElementById("carianTukarPegawaiTARIKH_BICARAAKHIR").value;
-	
+
 	var url = "../x/${securityToken}/ekptg.view.ppk.BicaraInteraktifPrint?&command=showLaporanTukarpegawai&carianTukarPegawaiNO_TUKARPEGAWAI="+carianTukarPegawaiNO_TUKARPEGAWAI
 	+"&carianTukarPegawaiNO_FAIL="+carianTukarPegawaiNO_FAIL
 	+"&carianTukarPegawaiID_NEGERIPEGAWAIBARU="+carianTukarPegawaiID_NEGERIPEGAWAIBARU
@@ -2033,13 +2033,13 @@ function printLaporanTukarpegawai()
 	+"&carianTukarPegawaiSTATUS_TUKARPEGAWAICONTENT="+getContentDropDown("carianTukarPegawaiSTATUS_TUKARPEGAWAI")
 	+"&carianTukarPegawaiTARIKH_MOHONMULA="+carianTukarPegawaiTARIKH_MOHONMULA+"&carianTukarPegawaiTARIKH_MOHONAKHIR="+carianTukarPegawaiTARIKH_MOHONAKHIR
 	+"&carianTukarPegawaiTARIKH_BICARAMULA="+carianTukarPegawaiTARIKH_BICARAMULA+"&carianTukarPegawaiTARIKH_BICARAAKHIR="+carianTukarPegawaiTARIKH_BICARAAKHIR;
-	
+
 	var hWnd = window.open(url,'printuser','width=1200,height=800, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
-			
+
 }
 
 function getContentDropDown(elemId)
@@ -2053,7 +2053,7 @@ function getContentDropDown(elemId)
 	selectedText = skillsSelect.options[skillsSelect.selectedIndex].text;
 	}
 	return selectedText;
-	
+
 }
 
 
@@ -2064,7 +2064,7 @@ function printHistoryJana(ID_HISTORYJANANOTA,ID_PERBICARAAN)
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus();		
+	hWnd.focus();
 }
 
 
@@ -2075,7 +2075,7 @@ function printCatatanPerintah(ID_PERBICARAAN)
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus();		
+	hWnd.focus();
 }
 
 function printPerubahan(ID_PERBICARAAN)
@@ -2085,7 +2085,7 @@ function printPerubahan(ID_PERBICARAAN)
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus();		
+	hWnd.focus();
 }
 
 function printPerubahan(ID_PERBICARAAN)
@@ -2095,7 +2095,7 @@ function printPerubahan(ID_PERBICARAAN)
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus();		
+	hWnd.focus();
 }
 
 function printKeteranganhadir(ID_PERBICARAAN)
@@ -2106,7 +2106,7 @@ function printKeteranganhadir(ID_PERBICARAAN)
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus();		
+	hWnd.focus();
 }
 
 function setDivRekodPerubahan(val,divid,idtablecetak,msg)
@@ -2144,7 +2144,7 @@ function setLapis(lapis,skrinName)
 	var newLapis = 1;
 	if(lapis!="")
 	{
-		newLapis = parseInt(lapis)+1;		
+		newLapis = parseInt(lapis)+1;
 	}
 	document.getElementById(skrinName+"LAPIS").value = newLapis;
 	$jquery("#span"+skrinName+"LAPIS").html(newLapis);
@@ -2161,7 +2161,7 @@ function getMapPejabat(div,id_arb,skrinName,ID_PERBICARAAN)
 
 function resetMapPejabatMahkamahByJenisRujukan(id_jenisrujukan,skrinName,mode)
 {
-	
+
 	if(id_jenisrujukan=="" || id_jenisrujukan=="2")
 	{
 		document.getElementById('trTajukMahkamahTangguh').style.display = "none";
@@ -2192,7 +2192,7 @@ function resetMapPejabatMahkamahByJenisRujukan(id_jenisrujukan,skrinName,mode)
 
 function selectFlagRujukan(flag_rujukan,skrinName,mode)
 {
-	
+
 	var jenis_rujukan = document.getElementById(skrinName+'JENIS_RUJUKAN').value;
 	//alert("flag_rujukan : "+flag_rujukan+" jenis_rujukan : "+jenis_rujukan);
 	if(flag_rujukan=="" && jenis_rujukan != "1")
@@ -2249,7 +2249,7 @@ function selectFlagRujukan(flag_rujukan,skrinName,mode)
 		document.getElementById('row'+skrinName+'POSKOD').style.display = "";
 		document.getElementById('row'+skrinName+'ID_BANDAR').style.display = "";
 		document.getElementById('row'+skrinName+'NO_TEL').style.display = "";
-		document.getElementById('row'+skrinName+'NO_FAX').style.display = "";		
+		document.getElementById('row'+skrinName+'NO_FAX').style.display = "";
 	}
 }
 
@@ -2331,10 +2331,10 @@ function showKeteranganBantahan(status,skrinName,mode)
 function showMaklumatKIVPerintah(checkKiv,skrinName,mode)
 {
 	//alert('showMaklumatMatiWaris : '+status);
-	if(checkKiv == "0" || checkKiv == "1")
+	if(checkKiv == "0" || checkKiv == "1" || checkKiv == "3")
 	{
 		document.getElementById("row"+skrinName+"DATE_KIV").style.display = "";
-		document.getElementById("row"+skrinName+"CATATAN_KIV").style.display = "";		
+		document.getElementById("row"+skrinName+"CATATAN_KIV").style.display = "";
 	}
 	else
 	{
@@ -2347,8 +2347,8 @@ function showMaklumatKIVPerintah(checkKiv,skrinName,mode)
 
 function pilihJenisHTA(val,skrinName,mode,action)
 {
-	//alert('pilihJenisHTA : '+val+' action : '+action);	
-	
+	//alert('pilihJenisHTA : '+val+' action : '+action);
+
 		if(val == "Y")
 		{
 			document.getElementById("row"+skrinName+"FLAG_KATEGORI_HTA").style.display = "none";
@@ -2363,12 +2363,12 @@ function pilihJenisHTA(val,skrinName,mode,action)
 			document.getElementById("row"+skrinName+"FLAG_KATEGORI_HTA").style.display = "";
 			if(action=="onChange")
 			{
-				document.getElementById(""+skrinName+"FLAG_KATEGORI_HTA").value = "1";			
+				document.getElementById(""+skrinName+"FLAG_KATEGORI_HTA").value = "1";
 				pilihJenisKategoriHTA("1",skrinName,mode);
 			}
 		}
-	
-	
+
+
 }
 
 function pilihJenisHA(val,skrinName)
@@ -2379,88 +2379,88 @@ function pilihJenisHA(val,skrinName)
 	if(val != "")
 	{
 		if (val == "1")
-		{                    
+		{
 			document.getElementById("row"+skrinName+"BUTIRAN").style.display = "none";
-			document.getElementById(""+skrinName+"BUTIRAN").value = "";			
+			document.getElementById(""+skrinName+"BUTIRAN").value = "";
 			document.getElementById("row"+skrinName+"JENAMA").style.display = "";
 			$jquery("#label"+skrinName+"JENAMA").html("Agensi");
 			document.getElementById("row"+skrinName+"NAMA_SAHAM").style.display = "";
 			document.getElementById("row"+skrinName+"NO_DAFTAR").style.display = "";
-			$jquery("#label"+skrinName+"NO_DAFTAR").html("No. Ahli");			
-			document.getElementById("row"+skrinName+"NO_SIJIL").style.display = "";			
+			$jquery("#label"+skrinName+"NO_DAFTAR").html("No. Ahli");
+			document.getElementById("row"+skrinName+"NO_SIJIL").style.display = "";
 			document.getElementById("row"+skrinName+"BIL_UNIT").style.display = "";
-			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "";	
+			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "";
 		}
 		else if (val == "2")
-		{                    
+		{
 			document.getElementById("row"+skrinName+"BUTIRAN").style.display = "none";
-			document.getElementById(""+skrinName+"BUTIRAN").value = "";			
+			document.getElementById(""+skrinName+"BUTIRAN").value = "";
 			document.getElementById("row"+skrinName+"JENAMA").style.display = "";
 			$jquery("#label"+skrinName+"JENAMA").html("Agensi");
 			document.getElementById("row"+skrinName+"NAMA_SAHAM").style.display = "none";
 			document.getElementById(""+skrinName+"NAMA_SAHAM").value = "";
 			document.getElementById("row"+skrinName+"NO_DAFTAR").style.display = "";
-			$jquery("#label"+skrinName+"NO_DAFTAR").html("No. Akaun");			
+			$jquery("#label"+skrinName+"NO_DAFTAR").html("No. Akaun");
 			document.getElementById("row"+skrinName+"NO_SIJIL").style.display = "none";
 			document.getElementById(""+skrinName+"NO_SIJIL").value = "";
 			document.getElementById("row"+skrinName+"BIL_UNIT").style.display = "none";
 			document.getElementById(""+skrinName+"BIL_UNIT").value = "";
-			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";	
+			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";
 			document.getElementById(""+skrinName+"NILAI_SEUNIT").value = "";
 		}
 		else if (val == "3")
-		{                    
+		{
 			document.getElementById("row"+skrinName+"BUTIRAN").style.display = "none";
-			document.getElementById(""+skrinName+"BUTIRAN").value = "";			
+			document.getElementById(""+skrinName+"BUTIRAN").value = "";
 			document.getElementById("row"+skrinName+"JENAMA").style.display = "";
 			$jquery("#label"+skrinName+"JENAMA").html("Jenis & Jenama");
 			document.getElementById("row"+skrinName+"NAMA_SAHAM").style.display = "none";
 			document.getElementById(""+skrinName+"NAMA_SAHAM").value = "";
 			document.getElementById("row"+skrinName+"NO_DAFTAR").style.display = "";
-			$jquery("#label"+skrinName+"NO_DAFTAR").html("No. Daftar");			
+			$jquery("#label"+skrinName+"NO_DAFTAR").html("No. Daftar");
 			document.getElementById("row"+skrinName+"NO_SIJIL").style.display = "none";
 			document.getElementById(""+skrinName+"NO_SIJIL").value = "";
 			document.getElementById("row"+skrinName+"BIL_UNIT").style.display = "none";
 			document.getElementById(""+skrinName+"BIL_UNIT").value = "";
-			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";	
-			document.getElementById(""+skrinName+"NILAI_SEUNIT").value = "";	
+			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";
+			document.getElementById(""+skrinName+"NILAI_SEUNIT").value = "";
 		}
 		else if (val == "4")
-		{                    
+		{
 			document.getElementById("row"+skrinName+"BUTIRAN").style.display = "none";
-			document.getElementById(""+skrinName+"BUTIRAN").value = "";			
+			document.getElementById(""+skrinName+"BUTIRAN").value = "";
 			document.getElementById("row"+skrinName+"JENAMA").style.display = "";
 			$jquery("#label"+skrinName+"JENAMA").html("No. Hakmilik, No. Lot dan Mukim");
 			document.getElementById("row"+skrinName+"NAMA_SAHAM").style.display = "none";
 			document.getElementById(""+skrinName+"NAMA_SAHAM").value = "";
 			document.getElementById("row"+skrinName+"NO_DAFTAR").style.display = "";
-			$jquery("#label"+skrinName+"NO_DAFTAR").html("No. Rujukan UPT");			
+			$jquery("#label"+skrinName+"NO_DAFTAR").html("No. Rujukan UPT");
 			document.getElementById("row"+skrinName+"NO_SIJIL").style.display = "none";
 			document.getElementById(""+skrinName+"NO_SIJIL").value = "";
 			document.getElementById("row"+skrinName+"BIL_UNIT").style.display = "none";
 			document.getElementById(""+skrinName+"BIL_UNIT").value = "";
-			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";	
+			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";
 			document.getElementById(""+skrinName+"NILAI_SEUNIT").value = "";
 		}
 		else if (val == "5")
-		{                    
+		{
 			document.getElementById("row"+skrinName+"BUTIRAN").style.display = "none";
-			document.getElementById(""+skrinName+"BUTIRAN").value = "";			
+			document.getElementById(""+skrinName+"BUTIRAN").value = "";
 			document.getElementById("row"+skrinName+"JENAMA").style.display = "";
 			$jquery("#label"+skrinName+"JENAMA").html("Agensi");
 			document.getElementById("row"+skrinName+"NAMA_SAHAM").style.display = "none";
 			document.getElementById(""+skrinName+"NAMA_SAHAM").value = "";
 			document.getElementById("row"+skrinName+"NO_DAFTAR").style.display = "";
-			$jquery("#label"+skrinName+"NO_DAFTAR").html("No. Polisi");			
+			$jquery("#label"+skrinName+"NO_DAFTAR").html("No. Polisi");
 			document.getElementById("row"+skrinName+"NO_SIJIL").style.display = "none";
 			document.getElementById(""+skrinName+"NO_SIJIL").value = "";
 			document.getElementById("row"+skrinName+"BIL_UNIT").style.display = "none";
 			document.getElementById(""+skrinName+"BIL_UNIT").value = "";
-			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";	
+			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";
 			document.getElementById(""+skrinName+"NILAI_SEUNIT").value = "";
 		}
 		else if (val == "6")
-		{                    
+		{
 			document.getElementById("row"+skrinName+"BUTIRAN").style.display = "";
 			$jquery("#label"+skrinName+"BUTIRAN").html("Butiran Peti Keselamatan");
 			document.getElementById("row"+skrinName+"JENAMA").style.display = "";
@@ -2468,16 +2468,16 @@ function pilihJenisHA(val,skrinName)
 			document.getElementById("row"+skrinName+"NAMA_SAHAM").style.display = "none";
 			document.getElementById(""+skrinName+"NAMA_SAHAM").value = "";
 			document.getElementById("row"+skrinName+"NO_DAFTAR").style.display = "";
-			$jquery("#label"+skrinName+"NO_DAFTAR").html("No. Peti");			
+			$jquery("#label"+skrinName+"NO_DAFTAR").html("No. Peti");
 			document.getElementById("row"+skrinName+"NO_SIJIL").style.display = "none";
 			document.getElementById(""+skrinName+"NO_SIJIL").value = "";
 			document.getElementById("row"+skrinName+"BIL_UNIT").style.display = "none";
 			document.getElementById(""+skrinName+"BIL_UNIT").value = "";
-			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";	
-			document.getElementById(""+skrinName+"NILAI_SEUNIT").value = "";	
+			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";
+			document.getElementById(""+skrinName+"NILAI_SEUNIT").value = "";
 		}
 		else if (val == "7")
-		{                    
+		{
 			document.getElementById("row"+skrinName+"BUTIRAN").style.display = "";
 			$jquery("#label"+skrinName+"BUTIRAN").html("Lokasi Harta");
 			document.getElementById("row"+skrinName+"JENAMA").style.display = "none";
@@ -2490,11 +2490,11 @@ function pilihJenisHA(val,skrinName)
 			document.getElementById(""+skrinName+"NO_SIJIL").value = "";
 			document.getElementById("row"+skrinName+"BIL_UNIT").style.display = "none";
 			document.getElementById(""+skrinName+"BIL_UNIT").value = "";
-			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";	
-			document.getElementById(""+skrinName+"NILAI_SEUNIT").value = "";	
+			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";
+			document.getElementById(""+skrinName+"NILAI_SEUNIT").value = "";
 		}
 		else if (val == "8")
-		{                    
+		{
 			document.getElementById("row"+skrinName+"BUTIRAN").style.display = "";
 			$jquery("#label"+skrinName+"BUTIRAN").html("Butiran Tuntutan");
 			document.getElementById("row"+skrinName+"JENAMA").style.display = "none";
@@ -2507,11 +2507,11 @@ function pilihJenisHA(val,skrinName)
 			document.getElementById(""+skrinName+"NO_SIJIL").value = "";
 			document.getElementById("row"+skrinName+"BIL_UNIT").style.display = "none";
 			document.getElementById(""+skrinName+"BIL_UNIT").value = "";
-			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";	
-			document.getElementById(""+skrinName+"NILAI_SEUNIT").value = "";	
+			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";
+			document.getElementById(""+skrinName+"NILAI_SEUNIT").value = "";
 		}
 		else if (val == "9")
-		{                    
+		{
 			document.getElementById("row"+skrinName+"BUTIRAN").style.display = "";
 			$jquery("#label"+skrinName+"BUTIRAN").html("Butiran Senjata Api");
 			document.getElementById("row"+skrinName+"JENAMA").style.display = "none";
@@ -2524,11 +2524,11 @@ function pilihJenisHA(val,skrinName)
 			document.getElementById(""+skrinName+"NO_SIJIL").value = "";
 			document.getElementById("row"+skrinName+"BIL_UNIT").style.display = "none";
 			document.getElementById(""+skrinName+"BIL_UNIT").value = "";
-			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";	
-			document.getElementById(""+skrinName+"NILAI_SEUNIT").value = "";		
+			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";
+			document.getElementById(""+skrinName+"NILAI_SEUNIT").value = "";
 		}
 		else if (val == "10")
-		{                    
+		{
 			document.getElementById("row"+skrinName+"BUTIRAN").style.display = "";
 			$jquery("#label"+skrinName+"BUTIRAN").html("Butiran Barang Berharga");
 			document.getElementById("row"+skrinName+"JENAMA").style.display = "none";
@@ -2541,11 +2541,11 @@ function pilihJenisHA(val,skrinName)
 			document.getElementById(""+skrinName+"NO_SIJIL").value = "";
 			document.getElementById("row"+skrinName+"BIL_UNIT").style.display = "none";
 			document.getElementById(""+skrinName+"BIL_UNIT").value = "";
-			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";	
-			document.getElementById(""+skrinName+"NILAI_SEUNIT").value = "";		
+			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";
+			document.getElementById(""+skrinName+"NILAI_SEUNIT").value = "";
 		}
 		else if (val == "11")
-		{                    
+		{
 			document.getElementById("row"+skrinName+"BUTIRAN").style.display = "";
 			$jquery("#label"+skrinName+"BUTIRAN").html("Butiran Ternakan");
 			document.getElementById("row"+skrinName+"JENAMA").style.display = "none";
@@ -2558,11 +2558,11 @@ function pilihJenisHA(val,skrinName)
 			document.getElementById(""+skrinName+"NO_SIJIL").value = "";
 			document.getElementById("row"+skrinName+"BIL_UNIT").style.display = "none";
 			document.getElementById(""+skrinName+"BIL_UNIT").value = "";
-			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";	
-			document.getElementById(""+skrinName+"NILAI_SEUNIT").value = "";		
+			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";
+			document.getElementById(""+skrinName+"NILAI_SEUNIT").value = "";
 		}
 		else if (val == "12")
-		{                    
+		{
 			document.getElementById("row"+skrinName+"BUTIRAN").style.display = "";
 			$jquery("#label"+skrinName+"BUTIRAN").html("Butiran Harta");
 			document.getElementById("row"+skrinName+"JENAMA").style.display = "none";
@@ -2575,11 +2575,11 @@ function pilihJenisHA(val,skrinName)
 			document.getElementById(""+skrinName+"NO_SIJIL").value = "";
 			document.getElementById("row"+skrinName+"BIL_UNIT").style.display = "none";
 			document.getElementById(""+skrinName+"BIL_UNIT").value = "";
-			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";	
-			document.getElementById(""+skrinName+"NILAI_SEUNIT").value = "";		
+			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";
+			document.getElementById(""+skrinName+"NILAI_SEUNIT").value = "";
 		}
 		else if (val == "98")
-		{                    
+		{
 			document.getElementById("row"+skrinName+"BUTIRAN").style.display = "";
 			$jquery("#label"+skrinName+"BUTIRAN").html("Butiran Nilaian Harta");
 			document.getElementById("row"+skrinName+"JENAMA").style.display = "none";
@@ -2592,9 +2592,9 @@ function pilihJenisHA(val,skrinName)
 			document.getElementById(""+skrinName+"NO_SIJIL").value = "";
 			document.getElementById("row"+skrinName+"BIL_UNIT").style.display = "none";
 			document.getElementById(""+skrinName+"BIL_UNIT").value = "";
-			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";	
+			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";
 			document.getElementById(""+skrinName+"NILAI_SEUNIT").value = "";
-			$jquery("#label"+skrinName+"NILAI_HA_TARIKHMOHON").html("Nilaian (RM)");		
+			$jquery("#label"+skrinName+"NILAI_HA_TARIKHMOHON").html("Nilaian (RM)");
 		}
 		else if (val == "0")
 		{
@@ -2610,7 +2610,7 @@ function pilihJenisHA(val,skrinName)
 			document.getElementById(""+skrinName+"NO_SIJIL").value = "";
 			document.getElementById("row"+skrinName+"BIL_UNIT").style.display = "none";
 			document.getElementById(""+skrinName+"BIL_UNIT").value = "";
-			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";	
+			document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";
 			document.getElementById(""+skrinName+"NILAI_SEUNIT").value = "";
 		}
 	}
@@ -2628,15 +2628,15 @@ function pilihJenisHA(val,skrinName)
 		document.getElementById(""+skrinName+"NO_SIJIL").value = "";
 		document.getElementById("row"+skrinName+"BIL_UNIT").style.display = "none";
 		document.getElementById(""+skrinName+"BIL_UNIT").value = "";
-		document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";	
-		document.getElementById(""+skrinName+"NILAI_SEUNIT").value = "";		
+		document.getElementById("row"+skrinName+"NILAI_SEUNIT").style.display = "none";
+		document.getElementById(""+skrinName+"NILAI_SEUNIT").value = "";
 	}
 }
 
 function pilihJenisKategoriHTA(val,skrinName,mode)
 {
 	//alert(' pilihJenisKategoriHTA : '+val);
-	
+
 	if(val != "")
 	{
 		document.getElementById("row"+skrinName+"ID_JENISHM").style.display = "none";
@@ -2644,14 +2644,14 @@ function pilihJenisKategoriHTA(val,skrinName,mode)
 		document.getElementById("row"+skrinName+"NO_HAKMILIK").style.display = "none";
 		document.getElementById(""+skrinName+"NO_HAKMILIK").value = "";
 		document.getElementById("row"+skrinName+"NO_PT").style.display = "none";
-		document.getElementById(""+skrinName+"NO_PT").value = "";		
+		document.getElementById(""+skrinName+"NO_PT").value = "";
 		document.getElementById("row"+skrinName+"NO_PERSERAHAN").style.display = "none";
 		document.getElementById(""+skrinName+"NO_PERSERAHAN").value = "";
 		document.getElementById("row"+skrinName+"SEKATAN").style.display = "none";
 		document.getElementById(""+skrinName+"SEKATAN").value = "";
 		document.getElementById("row"+skrinName+"SYARAT_NYATA").style.display = "none";
 		document.getElementById(""+skrinName+"SYARAT_NYATA").value = "";
-		
+
 		document.getElementById("row"+skrinName+"NAMA_PEMAJU").style.display = "";
 		document.getElementById("row"+skrinName+"ALAMAT_PEMAJU1").style.display = "";
 		document.getElementById("row"+skrinName+"ALAMAT_PEMAJU2").style.display = "";
@@ -2659,8 +2659,8 @@ function pilihJenisKategoriHTA(val,skrinName,mode)
 		document.getElementById("row"+skrinName+"POSKOD_PEMAJU").style.display = "";
 		document.getElementById("row"+skrinName+"ID_NEGERIPEMAJU").style.display = "";
 		document.getElementById("row"+skrinName+"ID_BANDARPEMAJU").style.display = "";
-		document.getElementById("row"+skrinName+"NO_CAGARAN").style.display = "";			
-	
+		document.getElementById("row"+skrinName+"NO_CAGARAN").style.display = "";
+
 		if(val == "1")
 		{
 			document.getElementById("row"+skrinName+"NO_PERJANJIAN").style.display = "";
@@ -2670,7 +2670,7 @@ function pilihJenisKategoriHTA(val,skrinName,mode)
 			document.getElementById("row"+skrinName+"ALAMAT_HTA3").style.display = "";
 			document.getElementById("row"+skrinName+"POSKOD_HTA").style.display = "";
 			document.getElementById("row"+skrinName+"ID_BANDARHTA").style.display = "";
-			
+
 			document.getElementById("row"+skrinName+"NAMA_RANCANGAN").style.display = "none";
 			document.getElementById(""+skrinName+"NAMA_RANCANGAN").value = "";
 			document.getElementById("row"+skrinName+"NO_ROH").style.display = "none";
@@ -2679,25 +2679,25 @@ function pilihJenisKategoriHTA(val,skrinName,mode)
 			document.getElementById(""+skrinName+"NO_LOT_ID").value = "";
 			document.getElementById("row"+skrinName+"JENIS_KEPENTINGAN").style.display = "none";
 			document.getElementById(""+skrinName+"JENIS_KEPENTINGAN").value = "";
-			
+
 			$jquery("#label"+skrinName+"NAMA_PEMAJU").html("Nama Pemaju");
 			$jquery("#label"+skrinName+"ALAMAT_PEMAJU1").html("Alamat Pemaju 1");
 			$jquery("#label"+skrinName+"ALAMAT_PEMAJU2").html("Alamat Pemaju 2");
 			$jquery("#label"+skrinName+"ALAMAT_PEMAJU3").html("Alamat Pemaju 3");
-			
+
 		}
 		else if(val == "2")
 		{
 			document.getElementById("row"+skrinName+"NAMA_RANCANGAN").style.display = "";
-			document.getElementById("row"+skrinName+"NO_ROH").style.display = "";	
-			document.getElementById("row"+skrinName+"NO_LOT_ID").style.display = "";	
-			
+			document.getElementById("row"+skrinName+"NO_ROH").style.display = "";
+			document.getElementById("row"+skrinName+"NO_LOT_ID").style.display = "";
+
 			document.getElementById("row"+skrinName+"NO_PERJANJIAN").style.display = "none";
 			document.getElementById(""+skrinName+"NO_PERJANJIAN").value = "";
 			document.getElementById("row"+skrinName+"TARIKH_PERJANJIAN").style.display = "none";
-			document.getElementById(""+skrinName+"TARIKH_PERJANJIAN").value = "";			
+			document.getElementById(""+skrinName+"TARIKH_PERJANJIAN").value = "";
 			document.getElementById("row"+skrinName+"JENIS_KEPENTINGAN").style.display = "none";
-			document.getElementById(""+skrinName+"JENIS_KEPENTINGAN").value = "";			
+			document.getElementById(""+skrinName+"JENIS_KEPENTINGAN").value = "";
 			document.getElementById("row"+skrinName+"ALAMAT_HTA1").style.display = "none";
 			document.getElementById(""+skrinName+"ALAMAT_HTA1").value = "";
 			document.getElementById("row"+skrinName+"ALAMAT_HTA2").style.display = "none";
@@ -2707,21 +2707,21 @@ function pilihJenisKategoriHTA(val,skrinName,mode)
 			document.getElementById("row"+skrinName+"POSKOD_HTA").style.display = "none";
 			document.getElementById(""+skrinName+"POSKOD_HTA").value = "";
 			document.getElementById("row"+skrinName+"ID_BANDARHTA").style.display = "none";
-			document.getElementById(""+skrinName+"ID_BANDARHTA").value = "";	
-			
+			document.getElementById(""+skrinName+"ID_BANDARHTA").value = "";
+
 			$jquery("#label"+skrinName+"NAMA_PEMAJU").html("Nama Agensi");
 			$jquery("#label"+skrinName+"ALAMAT_PEMAJU1").html("Alamat Agensi 1");
 			$jquery("#label"+skrinName+"ALAMAT_PEMAJU2").html("Alamat Agensi 2");
-			$jquery("#label"+skrinName+"ALAMAT_PEMAJU3").html("Alamat Agensi 3");	
+			$jquery("#label"+skrinName+"ALAMAT_PEMAJU3").html("Alamat Agensi 3");
 		}
 		else if(val == "3")
 		{
 			document.getElementById("row"+skrinName+"JENIS_KEPENTINGAN").style.display = "";
-			
+
 			document.getElementById("row"+skrinName+"NO_PERJANJIAN").style.display = "none";
 			document.getElementById(""+skrinName+"NO_PERJANJIAN").value = "";
 			document.getElementById("row"+skrinName+"TARIKH_PERJANJIAN").style.display = "none";
-			document.getElementById(""+skrinName+"TARIKH_PERJANJIAN").value = "";			
+			document.getElementById(""+skrinName+"TARIKH_PERJANJIAN").value = "";
 			document.getElementById("row"+skrinName+"NAMA_RANCANGAN").style.display = "none";
 			document.getElementById(""+skrinName+"NAMA_RANCANGAN").value = "";
 			document.getElementById("row"+skrinName+"NO_ROH").style.display = "none";
@@ -2738,13 +2738,13 @@ function pilihJenisKategoriHTA(val,skrinName,mode)
 			document.getElementById(""+skrinName+"POSKOD_HTA").value = "";
 			document.getElementById("row"+skrinName+"ID_BANDARHTA").style.display = "none";
 			document.getElementById(""+skrinName+"ID_BANDARHTA").value = "";
-			
+
 			$jquery("#label"+skrinName+"NAMA_PEMAJU").html("Nama Pemaju");
 			$jquery("#label"+skrinName+"ALAMAT_PEMAJU1").html("Alamat Pemaju 1");
 			$jquery("#label"+skrinName+"ALAMAT_PEMAJU2").html("Alamat Pemaju 2");
 			$jquery("#label"+skrinName+"ALAMAT_PEMAJU3").html("Alamat Pemaju 3");
 		}
-		
+
 	}
 	else
 	{
@@ -2759,7 +2759,7 @@ function pilihJenisKategoriHTA(val,skrinName,mode)
 		document.getElementById("row"+skrinName+"NO_PERSERAHAN").style.display = "";
 		document.getElementById("row"+skrinName+"SEKATAN").style.display = "";
 		document.getElementById("row"+skrinName+"SYARAT_NYATA").style.display = "";
-		
+
 		document.getElementById("row"+skrinName+"NAMA_PEMAJU").style.display = "none";
 		document.getElementById(""+skrinName+"NAMA_PEMAJU").value = "";
 		document.getElementById("row"+skrinName+"ALAMAT_PEMAJU1").style.display = "none";
@@ -2773,9 +2773,9 @@ function pilihJenisKategoriHTA(val,skrinName,mode)
 		document.getElementById("row"+skrinName+"ID_NEGERIPEMAJU").style.display = "none";
 		document.getElementById(""+skrinName+"ID_NEGERIPEMAJU").value = "";
 		document.getElementById("row"+skrinName+"ID_BANDARPEMAJU").style.display = "none";
-		document.getElementById(""+skrinName+"ID_BANDARPEMAJU").value = "";		
+		document.getElementById(""+skrinName+"ID_BANDARPEMAJU").value = "";
 		document.getElementById("row"+skrinName+"NO_CAGARAN").style.display = "none";
-		document.getElementById(""+skrinName+"NO_CAGARAN").value = "";		
+		document.getElementById(""+skrinName+"NO_CAGARAN").value = "";
 		document.getElementById("row"+skrinName+"NO_PERJANJIAN").style.display = "none";
 		document.getElementById(""+skrinName+"NO_PERJANJIAN").value = "";
 		document.getElementById("row"+skrinName+"TARIKH_PERJANJIAN").style.display = "none";
@@ -2789,8 +2789,8 @@ function pilihJenisKategoriHTA(val,skrinName,mode)
 		document.getElementById("row"+skrinName+"NO_LOT_ID").style.display = "none";
 		document.getElementById(""+skrinName+"NO_LOT_ID").value = "";
 	}
-	
-	
+
+
 }
 
 function setTRNegera(val,skrinName,column_name)
@@ -2799,7 +2799,7 @@ function setTRNegera(val,skrinName,column_name)
 	{
 		if(val=="17")
 		{
-			
+
 			if(column_name=="ID_NEGERI")
 			{
 				document.getElementById("row"+skrinName+"ID_BANDAR").style.display = "none";
@@ -2812,23 +2812,23 @@ function setTRNegera(val,skrinName,column_name)
 				document.getElementById(""+skrinName+"ID_BANDARSURAT").value = "";
 				document.getElementById("row"+skrinName+"NAMA_PELBAGAINEGARA_SURAT").style.display = "";
 			}
-			
+
 		}
 		else
 		{
-			
+
 			if(column_name=="ID_NEGERI")
 			{
-				document.getElementById("row"+skrinName+"ID_BANDAR").style.display = "";				
+				document.getElementById("row"+skrinName+"ID_BANDAR").style.display = "";
 				document.getElementById("row"+skrinName+"NAMA_PELBAGAINEGARA").style.display = "none";
 				document.getElementById(""+skrinName+"NAMA_PELBAGAINEGARA").value = "";
 			}
 			else if(column_name=="ID_NEGERISURAT")
 			{
-				document.getElementById("row"+skrinName+"ID_BANDARSURAT").style.display = "";				
+				document.getElementById("row"+skrinName+"ID_BANDARSURAT").style.display = "";
 				document.getElementById("row"+skrinName+"NAMA_PELBAGAINEGARA_SURAT").style.display = "none";
 				document.getElementById(""+skrinName+"NAMA_PELBAGAINEGARA_SURAT").value = "";
-			}		
+			}
 		}
 	}
 }
@@ -2837,14 +2837,14 @@ function showTrIndividuAgensi(skrinName,mode)
 {
 	//function ni ada 6 jenis skrin yg akan pakai
 	//pemohon,waris,ob,saksi,pemiutang,penghutang
-	var ID_TARAFKPTG = "";	
+	var ID_TARAFKPTG = "";
 	if(skrinName != "penghutang")
 	{
 		ID_TARAFKPTG = document.getElementById(skrinName+"ID_TARAFKPTG").value;
 	}
 	//alert(" showTrIndividuAgensi :::: ID_TARAFKPTG  :"+ID_TARAFKPTG+"  skrinName : "+skrinName);
-	
-	var STATUS_PEMOHON = "";	
+
+	var STATUS_PEMOHON = "";
 	if(skrinName == "pemohon")
 	{
 		STATUS_PEMOHON = document.getElementById(skrinName+"STATUS_PEMOHON").value;
@@ -2857,9 +2857,9 @@ function showTrIndividuAgensi(skrinName,mode)
 	{
 		STATUS_PEMOHON = document.getElementById(skrinName+"JENIS_PENGHUTANG").value;
 	}
-		
+
 	var agensiOnly = false;
-	var pejabatOnly = false;	
+	var pejabatOnly = false;
 	if(ID_TARAFKPTG == "6" || ID_TARAFKPTG == "8")
 	{
 		agensiOnly = true;
@@ -2873,7 +2873,7 @@ function showTrIndividuAgensi(skrinName,mode)
 			agensiOnly = true;
 		}
 	}
-	else 
+	else
 	{
 		if(skrinName == "penghutang")
 		{
@@ -2888,7 +2888,7 @@ function showTrIndividuAgensi(skrinName,mode)
 			}
 		}
 	}
-	
+
 	if(skrinName != "pemiutang" && skrinName != "penghutang")
 	{
 		if(pejabatOnly == false)
@@ -2901,9 +2901,9 @@ function showTrIndividuAgensi(skrinName,mode)
 			document.getElementById("row"+skrinName+"ID_ARB").style.display = "";
 		}
 	}
-	
+
 	//alert("agensiOnly : "+agensiOnly);agensiOnly
-	
+
 	if(agensiOnly == true)
 	{
 		document.getElementById("row"+skrinName+"NO_KP_BARU").style.display = "none";
@@ -2912,65 +2912,65 @@ function showTrIndividuAgensi(skrinName,mode)
 			document.getElementById(""+skrinName+"NO_KP_BARU1").value = "";
 			document.getElementById(""+skrinName+"NO_KP_BARU2").value = "";
 			document.getElementById(""+skrinName+"NO_KP_BARU3").value = "";
-		}		
-		
-		
-		
+		}
+
+
+
 		document.getElementById("row"+skrinName+"JENIS_KP").style.display = "none";
 		document.getElementById(""+skrinName+"JENIS_KP").value = "";
-		
+
 		document.getElementById("row"+skrinName+"NO_KP_LAIN").style.display = "none";
 		document.getElementById(""+skrinName+"NO_KP_LAIN").value = "";
-		
+
 		if(skrinName != "pemiutang" && skrinName != "penghutang")
 		{
 			document.getElementById("row"+skrinName+"NO_KP_LAMA").style.display = "none";
-			document.getElementById(""+skrinName+"NO_KP_LAMA").value = "";			
+			document.getElementById(""+skrinName+"NO_KP_LAMA").value = "";
 		}
-		
+
 		if(skrinName == "ob" || skrinName == "waris" || skrinName == "pemohon")
 		{
 			document.getElementById("row"+skrinName+"NAMA_LAIN").style.display = "none";
 			document.getElementById(""+skrinName+"NAMA_LAIN").value = "";
 		}
-		
+
 		if(skrinName != "penghutang")
 		{
 			document.getElementById("row"+skrinName+"JANTINA").style.display = "none";
 			document.getElementById(""+skrinName+"JANTINA").value = "";
 		}
-		
+
 		if(skrinName == "pemohon")
 		{
 			document.getElementById("row"+skrinName+"ID_SAUDARA").style.display = "none";
 			document.getElementById(""+skrinName+"ID_SAUDARA").value = "";
 		}
-		
+
 		if(skrinName == "ob" || skrinName == "pemiutang")
 		{
 			document.getElementById("row"+skrinName+"TARIKH_LAHIR").style.display = "none";
 			document.getElementById(""+skrinName+"TARIKH_LAHIR").value = "";
 		}
-			
+
 		if(skrinName == "pemiutang" || skrinName == "penghutang")
 		{
 			$jquery("#label"+skrinName+"NO_KP_LAMA").html("No. Pendaftaran");
 		}
-		
+
 		if(skrinName == "ob")
 		{
 			document.getElementById("row"+skrinName+"STATUS_OB").style.display = "none";
 			document.getElementById(""+skrinName+"STATUS_OB").value = "";
 			document.getElementById("row"+skrinName+"NO_SURAT_BERANAK").style.display = "none";
-			document.getElementById(""+skrinName+"NO_SURAT_BERANAK").value = "";			
+			document.getElementById(""+skrinName+"NO_SURAT_BERANAK").value = "";
 		}
-		
+
 		document.getElementById("row"+skrinName+"JENIS_AGAMA").style.display = "none";
 		document.getElementById(""+skrinName+"JENIS_AGAMA").value = "";
-			
+
 		document.getElementById("row"+skrinName+"JENIS_WARGA").style.display = "none";
 		document.getElementById(""+skrinName+"JENIS_WARGA").value = "";
-			
+
 		if(skrinName != "penghutang")
 		{
 			document.getElementById("row"+skrinName+"UMUR").style.display = "none";
@@ -2980,49 +2980,49 @@ function showTrIndividuAgensi(skrinName,mode)
 	else
 	{
 		//alert("x");
-		document.getElementById("row"+skrinName+"NO_KP_BARU").style.display = "";		
+		document.getElementById("row"+skrinName+"NO_KP_BARU").style.display = "";
 		document.getElementById("row"+skrinName+"NO_KP_LAMA").display = "";
-		
+
 		if(skrinName == "pemiutang" || skrinName == "penghutang")
 		{
 			$jquery("#label"+skrinName+"NO_KP_LAMA").html("MyID Lama");
 		}
-		
+
 		document.getElementById("row"+skrinName+"JENIS_KP").style.display = "";
 		document.getElementById("row"+skrinName+"NO_KP_LAIN").style.display = "";
 		if(skrinName == "ob" || skrinName == "waris" || skrinName == "pemohon")
 		{
 			document.getElementById("row"+skrinName+"NAMA_LAIN").style.display = "";
 		}
-		
+
 		if(skrinName != "penghutang")
 		{
 			document.getElementById("row"+skrinName+"JANTINA").style.display = "";
 		}
-				
+
 		if(skrinName == "pemohon")
 		{
 			document.getElementById("row"+skrinName+"ID_SAUDARA").style.display = "";
 		}
-		
+
 		if(skrinName == "ob" || skrinName == "pemiutang")
 		{
-			document.getElementById("row"+skrinName+"TARIKH_LAHIR").style.display = "";	
-		}		
-			
+			document.getElementById("row"+skrinName+"TARIKH_LAHIR").style.display = "";
+		}
+
 		if(skrinName == "ob")
 		{
 			document.getElementById("row"+skrinName+"STATUS_OB").style.display = "";
-			document.getElementById("row"+skrinName+"NO_SURAT_BERANAK").style.display = "";					
+			document.getElementById("row"+skrinName+"NO_SURAT_BERANAK").style.display = "";
 		}
-		document.getElementById("row"+skrinName+"JENIS_AGAMA").style.display = "";	
-		document.getElementById("row"+skrinName+"JENIS_WARGA").style.display = "";	
+		document.getElementById("row"+skrinName+"JENIS_AGAMA").style.display = "";
+		document.getElementById("row"+skrinName+"JENIS_WARGA").style.display = "";
 		if(skrinName != "penghutang")
 		{
-			document.getElementById("row"+skrinName+"UMUR").style.display = "";	
+			document.getElementById("row"+skrinName+"UMUR").style.display = "";
 		}
 	}
-	
+
 	//document.getElementById("CATATAN").value = "SETEL";
 }
 
@@ -3035,26 +3035,26 @@ function setIdPemohon(skrinName, id_pemohon)
 
 function reloadPejabat(mainTable,skrinName,mode,ID_PERBICARAAN)
 {
-	
+
 	var ID_TARAFKPTG = document.getElementById(skrinName+"ID_TARAFKPTG").value;
 	//alert(" reloadPejabat :::: ID_TARAFKPTG  :"+ID_TARAFKPTG+"  skrinName : "+skrinName);
-	
+
 	if(ID_TARAFKPTG=="6" || ID_TARAFKPTG=="8")
 	{
 		if(mode=="edit")
 		{
 			document.getElementById(skrinName+"NO_KP_BARU1").value = "";
 			document.getElementById(skrinName+"NO_KP_BARU2").value = "";
-			document.getElementById(skrinName+"NO_KP_BARU3").value = "";	
+			document.getElementById(skrinName+"NO_KP_BARU3").value = "";
 		}
 		else
 		{
-			document.getElementById(skrinName+"NO_KP_BARU").value = "";	
+			document.getElementById(skrinName+"NO_KP_BARU").value = "";
 		}
 		document.getElementById(skrinName+"NO_KP_LAMA").value = "";
 		document.getElementById(skrinName+"JENIS_KP").value = "";
 		document.getElementById(skrinName+"NO_KP_LAIN").value = "";
-		
+
 		if(skrinName == "pemohon")
 		{
 			document.getElementById(skrinName+"NAMA_PEMOHON").value = "";
@@ -3063,7 +3063,7 @@ function reloadPejabat(mainTable,skrinName,mode,ID_PERBICARAAN)
 		{
 			document.getElementById(skrinName+"NAMA_OB").value = "";
 		}
-		
+
 		document.getElementById(skrinName+"NAMA_LAIN").value = "";
 		document.getElementById(skrinName+"JANTINA").value = "";
 		if(skrinName == "pemohon")
@@ -3074,10 +3074,10 @@ function reloadPejabat(mainTable,skrinName,mode,ID_PERBICARAAN)
 		{
 			document.getElementById(""+skrinName+"TARIKH_LAHIR").value = "";
 			document.getElementById(""+skrinName+"STATUS_OB").value = "";
-			document.getElementById(""+skrinName+"NO_SURAT_BERANAK").value = "";			
+			document.getElementById(""+skrinName+"NO_SURAT_BERANAK").value = "";
 		}
-		document.getElementById(skrinName+"JENIS_AGAMA").value = "";	
-		document.getElementById(skrinName+"JENIS_WARGA").value = "";	
+		document.getElementById(skrinName+"JENIS_AGAMA").value = "";
+		document.getElementById(skrinName+"JENIS_WARGA").value = "";
 		document.getElementById(skrinName+"UMUR").value = "";
 		document.getElementById(skrinName+"ALAMAT_1").value = "";
 		document.getElementById(skrinName+"ALAMAT_2").value = "";
@@ -3091,21 +3091,21 @@ function reloadPejabat(mainTable,skrinName,mode,ID_PERBICARAAN)
 		document.getElementById(skrinName+"POSKOD_SURAT").value  = "";
 		document.getElementById(skrinName+"ID_NEGERISURAT").value = "";
 		document.getElementById(skrinName+"ID_BANDARSURAT").value = "";
-		
+
 		doDivAjaxCall$formname('div'+skrinName+'ID_ARB','showArbBaitulmal','mainTable='+mainTable+'&ID_TARAFKPTG='+document.getElementById(skrinName+"ID_TARAFKPTG").value+'&ID_ARB=&skrinName='+skrinName+'&ID_PERBICARAAN='+ID_PERBICARAAN);
 	}
 	else
 	{
 		//alert('reload pejabat');
-		showTrIndividuAgensi(skrinName,mode);	
+		showTrIndividuAgensi(skrinName,mode);
 	}
-	
+
 }
 
 
 function simpanTurutHadir(id_bikehadiran,id_perbicaraan,id_permohonan,lokasi,rowCss,BIL)
-{	
-	var nama = document.getElementById("NAMA_TURUTHADIR_"+id_bikehadiran);	
+{
+	var nama = document.getElementById("NAMA_TURUTHADIR_"+id_bikehadiran);
 	if(nama.value == "")
 	{
 		alert('Sila masukkan nama!');
@@ -3113,7 +3113,7 @@ function simpanTurutHadir(id_bikehadiran,id_perbicaraan,id_permohonan,lokasi,row
 		return;
 	}
 	else
-	{	
+	{
 		if(id_bikehadiran == "")
 		{
 			doDivAjaxCall$formname('view_turuthadir','tambah_turuthadir','ID_BIKEHADIRAN='+id_bikehadiran+'&ID_PERBICARAAN='+id_perbicaraan+'&ID_PERMOHONAN='+id_permohonan+'&scrolPosition='+lokasi+'&rowCss='+rowCss+'&BIL='+BIL);
@@ -3127,8 +3127,8 @@ function simpanTurutHadir(id_bikehadiran,id_perbicaraan,id_permohonan,lokasi,row
 
 //arief add Saksi
 function simpanSaksi(id_bikehadiran,id_perbicaraan,id_permohonan,lokasi,rowCss,BIL)
-{	
-	var nama = document.getElementById("NAMA_SAKSI_"+id_bikehadiran);	
+{
+	var nama = document.getElementById("NAMA_SAKSI_"+id_bikehadiran);
 	if(nama.value == "")
 	{
 		alert('Sila masukkan nama!');
@@ -3136,7 +3136,7 @@ function simpanSaksi(id_bikehadiran,id_perbicaraan,id_permohonan,lokasi,rowCss,B
 		return;
 	}
 	else
-	{	
+	{
 		if(id_bikehadiran == "")
 		{
 			doDivAjaxCall$formname('view_saksi','tambah_saksi','ID_BIKEHADIRAN='+id_bikehadiran+'&ID_PERBICARAAN='+id_perbicaraan+'&ID_PERMOHONAN='+id_permohonan+'&scrolPosition='+lokasi+'&rowCss='+rowCss+'&BIL='+BIL);
@@ -3150,8 +3150,8 @@ function simpanSaksi(id_bikehadiran,id_perbicaraan,id_permohonan,lokasi,rowCss,B
 
 //arief add Tidak Hadir
 function simpanTidakHadir(id_bitidakhadir,id_perbicaraan,id_permohonan,lokasi,rowCss,BIL)
-{	
-	var nama = document.getElementById("NAMA_TIDAKHADIR_"+id_bitidakhadir);	
+{
+	var nama = document.getElementById("NAMA_TIDAKHADIR_"+id_bitidakhadir);
 	if(nama.value == "")
 	{
 		alert('Sila masukkan nama!');
@@ -3159,7 +3159,7 @@ function simpanTidakHadir(id_bitidakhadir,id_perbicaraan,id_permohonan,lokasi,ro
 		return;
 	}
 	else
-	{	
+	{
 		if(id_bitidakhadir == "")
 		{
 			doDivAjaxCall$formname('view_tidakhadir','tambah_tidakhadir','ID_BITIDAKHADIR='+id_bitidakhadir+'&ID_PERBICARAAN='+id_perbicaraan+'&ID_PERMOHONAN='+id_permohonan+'&scrolPosition='+lokasi+'&rowCss='+rowCss+'&BIL='+BIL);
@@ -3214,34 +3214,34 @@ function checkNOKPBARU(fieldKP1,fieldKP2,fieldKP3,fieldKPLama,fieldKPLain)
 		alert("Masukkan MyID Pengguna Dengan Lengkap!");
 		document.getElementById(fieldKP3).focus();
 		bool_check = false;
-	}			   
+	}
 	else if((document.getElementById(fieldKP1).value!="" || document.getElementById(fieldKP2).value!="" || document.getElementById(fieldKP3).value!="")
 	&& document.getElementById(fieldKP1).value.length != document.getElementById(fieldKP1).maxLength)
 	{
 		alert("Format MyID Tidak Tepat!");
 		document.getElementById(fieldKP1).focus();
-		bool_check = false;				   
+		bool_check = false;
 	}
 	else if((document.getElementById(fieldKP1).value!="" || document.getElementById(fieldKP2).value!="" || document.getElementById(fieldKP3).value!="")
 	&& getDOBByIC_V3(document.getElementById(fieldKP1).value) == false)
 	{
 		alert("Format Tarikh Lahir MyID Tidak Tepat!");
 		document.getElementById(fieldKP1).focus();
-		bool_check = false;				   
-	}		
+		bool_check = false;
+	}
 	else if((document.getElementById(fieldKP1).value!="" || document.getElementById(fieldKP2).value!="" || document.getElementById(fieldKP3).value!="")
 	&& document.getElementById(fieldKP2).value.length != document.getElementById(fieldKP2).maxLength)
 	{
 		alert("Format MyID Tidak Tepat!");
 		document.getElementById(fieldKP2).focus();
-		bool_check = false;				   
+		bool_check = false;
 	}
 	else if((document.getElementById(fieldKP1).value!="" || document.getElementById(fieldKP2).value!="" || document.getElementById(fieldKP3).value!="")
 	&& document.getElementById(fieldKP3).value.length != document.getElementById(fieldKP3).maxLength)
 	{
 		alert("Format MyID Tidak Tepat!");
 		document.getElementById(fieldKP3).focus();
-		bool_check = false;				   
+		bool_check = false;
 	}
 	return bool_check;
 }
@@ -3265,7 +3265,7 @@ function valSimpanKeputusan(skrinName)
 		bool_check = false;
 	}
 	else if(document.getElementById(skrinName+"TARIKH_PERINTAH").value=="")
-	{		
+	{
 		if(jp == "0")
 		{
 			alert("Masukkan Tarikh Perintah!");
@@ -3331,28 +3331,28 @@ function valSimpanKeputusan(skrinName)
 		alert("Format Tarikh Tidak Tepat!");
 		document.getElementById(skrinName+"TARIKH_BAYARAN24").focus();
 		bool_check = false;
-	}	
-	
+	}
+
 	else if(jp=="0" && document.getElementById(skrinName+"CATATAN_KEPUTUSAN_PERBICARAAN").value == "")
 	{
 		alert("Masukkan Catatan Keputusan Perbicaraan!");
 		document.getElementById(skrinName+"CATATAN_KEPUTUSAN_PERBICARAAN").focus();
 		bool_check = false;
 	}
-	
+
 	else if(jp=="1" && document.getElementById(skrinName+"FLAG_TANGGUH").value=="")
 	{
 		alert("Masukkan Alasan Tangguh Perbicaraan!");
 		document.getElementById(skrinName+"FLAG_TANGGUH").focus();
 		bool_check = false;
-	}	
+	}
 	else if(jp=="2" && document.getElementById(skrinName+"FLAG_BATAL").value=="")
 	{
 		alert("Masukkan Alasan Batal Perbicaraan!");
 		document.getElementById(skrinName+"FLAG_BATAL").focus();
 		bool_check = false;
 	}
-	
+
 	//ROS
 	//MAHKAMAH TINGGI
 	else if(jp=="1" && document.getElementById(skrinName+"FLAG_TANGGUH").value == "5" && document.getElementById(skrinName+"TARIKH_MOHON").value=="")
@@ -3379,7 +3379,7 @@ function valSimpanKeputusan(skrinName)
 		document.getElementById(skrinName+"FLAG_RUJUKAN").focus();
 		bool_check = false;
 	}
-	else if(jp=="1" && document.getElementById(skrinName+"FLAG_TANGGUH").value == "5" && 
+	else if(jp=="1" && document.getElementById(skrinName+"FLAG_TANGGUH").value == "5" &&
 	(document.getElementById(skrinName+"JENIS_RUJUKAN").value=="1" || (document.getElementById(skrinName+"JENIS_RUJUKAN").value=="2" && document.getElementById(skrinName+"FLAG_RUJUKAN").value=="1"))
 	 && document.getElementById(skrinName+"ID_NEGERIMAHKAMAH").value=="")
 	{
@@ -3387,50 +3387,50 @@ function valSimpanKeputusan(skrinName)
 		document.getElementById(skrinName+"ID_NEGERIMAHKAMAH").focus();
 		bool_check = false;
 	}
-	else if(jp=="1" && document.getElementById(skrinName+"FLAG_TANGGUH").value == "5" && 
+	else if(jp=="1" && document.getElementById(skrinName+"FLAG_TANGGUH").value == "5" &&
 	(document.getElementById(skrinName+"JENIS_RUJUKAN").value=="1" || (document.getElementById(skrinName+"JENIS_RUJUKAN").value=="2" && document.getElementById(skrinName+"FLAG_RUJUKAN").value=="1")) && document.getElementById(skrinName+"ID_MAHKAMAH").value=="")
 	{
 		alert("Masukkan Mahkamah!");
 		document.getElementById(skrinName+"ID_MAHKAMAH").focus();
 		bool_check = false;
 	}
-	else if(jp=="1" && document.getElementById(skrinName+"FLAG_TANGGUH").value == "5" && 
+	else if(jp=="1" && document.getElementById(skrinName+"FLAG_TANGGUH").value == "5" &&
 	(document.getElementById(skrinName+"JENIS_RUJUKAN").value=="1" || (document.getElementById(skrinName+"JENIS_RUJUKAN").value=="2" && document.getElementById(skrinName+"FLAG_RUJUKAN").value=="2")) && document.getElementById(skrinName+"NAMA_PEJABAT").value=="")
 	{
 		alert("Masukkan Nama Pejabat Mufti!");
 		document.getElementById(skrinName+"NAMA_PEJABAT").focus();
 		bool_check = false;
 	}
-	else if(jp=="1" && document.getElementById(skrinName+"FLAG_TANGGUH").value == "5" && 
+	else if(jp=="1" && document.getElementById(skrinName+"FLAG_TANGGUH").value == "5" &&
 	(document.getElementById(skrinName+"JENIS_RUJUKAN").value=="1" || (document.getElementById(skrinName+"JENIS_RUJUKAN").value=="2" && document.getElementById(skrinName+"FLAG_RUJUKAN").value=="2")) && document.getElementById(skrinName+"ALAMAT1").value=="")
 	{
 		alert("Masukkan Alamat Pejabat Mufti!");
 		document.getElementById(skrinName+"ALAMAT1").focus();
 		bool_check = false;
 	}
-	else if(jp=="1" && document.getElementById(skrinName+"FLAG_TANGGUH").value == "5" && 
+	else if(jp=="1" && document.getElementById(skrinName+"FLAG_TANGGUH").value == "5" &&
 	(document.getElementById(skrinName+"JENIS_RUJUKAN").value=="1" || (document.getElementById(skrinName+"JENIS_RUJUKAN").value=="2" && document.getElementById(skrinName+"FLAG_RUJUKAN").value=="2")) && document.getElementById(skrinName+"POSKOD").value=="")
 	{
 		alert("Masukkan Poskod Pejabat Mufti!");
 		document.getElementById(skrinName+"POSKOD").focus();
 		bool_check = false;
 	}
-	else if(jp=="1" && document.getElementById(skrinName+"FLAG_TANGGUH").value == "5" && 
+	else if(jp=="1" && document.getElementById(skrinName+"FLAG_TANGGUH").value == "5" &&
 	(document.getElementById(skrinName+"JENIS_RUJUKAN").value=="1" || (document.getElementById(skrinName+"JENIS_RUJUKAN").value=="2" && document.getElementById(skrinName+"FLAG_RUJUKAN").value=="2")) && document.getElementById(skrinName+"POSKOD").value.length != document.getElementById(skrinName+"POSKOD").maxLength)
 	{
 		alert("Format Poskod Tidak Tepat!");
 		document.getElementById(skrinName+"POSKOD").focus();
 		bool_check = false;
 	}
-	else if(jp=="1" && document.getElementById(skrinName+"FLAG_TANGGUH").value == "5" && 
+	else if(jp=="1" && document.getElementById(skrinName+"FLAG_TANGGUH").value == "5" &&
 	(document.getElementById(skrinName+"JENIS_RUJUKAN").value=="1" || (document.getElementById(skrinName+"JENIS_RUJUKAN").value=="2" && document.getElementById(skrinName+"FLAG_RUJUKAN").value=="2")) && document.getElementById(skrinName+"ID_NEGERI").value=="")
 	{
 		alert("Masukkan Negeri Pejabat Mufti!");
 		document.getElementById(skrinName+"ID_NEGERI").focus();
 		bool_check = false;
 	}
-	
-	
+
+
 	//KOLETERAL
 	else if(jp=="1" && document.getElementById(skrinName+"FLAG_TANGGUH").value == "6" && document.getElementById(skrinName+"TARIKH_PERAKUAN").value=="")
 	{
@@ -3462,7 +3462,7 @@ function valSimpanKeputusan(skrinName)
 		document.getElementById(skrinName+"MASA_BICARA").focus();
 		bool_check = false;
 	}
-	else if(jp=="1" && document.getElementById(skrinName+"FLAG_TANGGUH").value == "6" && 
+	else if(jp=="1" && document.getElementById(skrinName+"FLAG_TANGGUH").value == "6" &&
 	document.getElementById(skrinName+"MASA_BICARA").value != "" && document.getElementById(skrinName+"MASA_BICARA").value.length != document.getElementById(skrinName+"MASA_BICARA").maxLength)
 	{
 		alert("Format Waktu Tidak Tepat!");
@@ -3481,11 +3481,11 @@ function valSimpanKeputusan(skrinName)
 		document.getElementById(skrinName+"SEBAB_TANGGUH").focus();
 		bool_check = false;
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	//BATAL
 	else if(jp=="2" && document.getElementById(skrinName+"FLAG_BATAL").value == "1" && document.getElementById(skrinName+"JENIS_KELUAR_PERINTAH").value=="")
 	{
@@ -3511,11 +3511,11 @@ function valSimpanKeputusan(skrinName)
 		document.getElementById(skrinName+"SEBAB_BATAL").focus();
 		bool_check = false;
 	}
-	
-	
+
+
 	var bool_check_last = false;
 	if(bool_check == true)
-	{		
+	{
 		input_box = confirm("Adakah anda pasti?" );
 		if (input_box == true) {
 			bool_check_last = true;
@@ -3527,11 +3527,11 @@ function valSimpanKeputusan(skrinName)
 function valSimpanTukarPegawai(skrinName)
 {
 	var bool_check = true;
-	
-	
+
+
 	var bool_check_last = false;
 	if(bool_check == true)
-	{		
+	{
 		input_box = confirm("Adakah anda pasti?" );
 		if (input_box == true) {
 			bool_check_last = true;
@@ -3543,7 +3543,7 @@ function valSimpanTukarPegawai(skrinName)
 function valSimpanTukarPegawaiMultiple(skrinName)
 {
 	var bool_check = true;
-	
+
 	if(document.getElementById(skrinName+"ID_NEGERIPEGAWAIBARU").value=="")
 	{
 		alert("Sila pilih negeri pegawai ganti!");
@@ -3562,10 +3562,10 @@ function valSimpanTukarPegawaiMultiple(skrinName)
 		document.getElementById(skrinName+"JumlahPerbicaraan").focus();
 		bool_check = false;
 	}
-	
+
 	var bool_check_last = false;
 	if(bool_check == true)
-	{		
+	{
 		input_box = confirm("Adakah anda pasti?" );
 		if (input_box == true) {
 			bool_check_last = true;
@@ -3578,17 +3578,17 @@ function valSimpanTukarPegawaiMultiple(skrinName)
 function valSimpanbantahan(skrinName)
 {
 	var bool_check = true;
-	
+
 	if(document.getElementById(skrinName+"FLAG_BANTAHAN").value == "Y" && document.getElementById(skrinName+"KETERANGAN_BANTAHAN").value=="")
 	{
 		alert("Masukkan keterangan bantahan!");
 		document.getElementById(skrinName+"KETERANGAN_BANTAHAN").focus();
 		bool_check = false;
 	}
-		
+
 	var bool_check_last = false;
 	if(bool_check == true)
-	{		
+	{
 		input_box = confirm("Adakah anda pasti?" );
 		if (input_box == true) {
 			bool_check_last = true;
@@ -3601,17 +3601,17 @@ function valSimpanbantahan(skrinName)
 function valSimpanTukarPegawaiMultipleTolak(skrinName)
 {
 	var bool_check = true;
-	
+
 	if(document.getElementById(skrinName+"JumlahPerbicaraan").value=="0")
 	{
 		alert("Sila pilih perbicaraan!");
 		document.getElementById(skrinName+"JumlahPerbicaraan").focus();
 		bool_check = false;
 	}
-	
+
 	var bool_check_last = false;
 	if(bool_check == true)
-	{		
+	{
 		input_box = confirm("Adakah anda pasti?" );
 		if (input_box == true) {
 			bool_check_last = true;
@@ -3625,7 +3625,7 @@ function valSimpanob(skrinName)
 	//alert('skrinName : '+skrinName);
 	//validation kena hardcode, nak kejar masa tak sempat nk buat dynamic
 	var bool_check = true;
-	
+
 	if(document.getElementById(skrinName+"ID_TARAFKPTG").value=="")
 	{
 		alert("Masukkan Taraf Kepentingan!");
@@ -3641,10 +3641,10 @@ function valSimpanob(skrinName)
 	else if(document.getElementById(skrinName+"JENIS_PEMIUTANG").value == "2")
 	{
 		//alert('1'+skrinName);
-		var bool_check_ic = checkNOKPBARU(skrinName+"NO_KP_BARU1",skrinName+"NO_KP_BARU2",skrinName+"NO_KP_BARU3",skrinName+"NO_KP_LAMA",skrinName+"NO_KP_LAIN");	
+		var bool_check_ic = checkNOKPBARU(skrinName+"NO_KP_BARU1",skrinName+"NO_KP_BARU2",skrinName+"NO_KP_BARU3",skrinName+"NO_KP_LAMA",skrinName+"NO_KP_LAIN");
 		bool_check = bool_check_ic;
 		//alert('2');
-	}	
+	}
 	else if(document.getElementById(skrinName+"NAMA_OB").value=="")
 	{
 		alert("Masukkan Nama Ob!");
@@ -3668,7 +3668,7 @@ function valSimpanob(skrinName)
 		alert("Masukkan Poskod!");
 		document.getElementById(skrinName+"POSKOD").focus();
 		bool_check = false;
-	}	
+	}
 	else if(document.getElementById(skrinName+"POSKOD").value.length != document.getElementById(skrinName+"POSKOD").maxLength)
 	{
 		alert("Format Poskod Tidak Tepat!");
@@ -3705,11 +3705,11 @@ function valSimpanob(skrinName)
 		document.getElementById(skrinName+"ID_NEGERISURAT").focus();
 		bool_check = false;
 	}
-	
-	
+
+
 	var bool_check_last = false;
 	if(bool_check == true)
-	{		
+	{
 		input_box = confirm("Adakah anda pasti?" );
 		if (input_box == true) {
 			bool_check_last = true;
@@ -3726,8 +3726,8 @@ function valSimpanhtaahx(skrinName)
 function valSimpanhtaah(skrinName)
 {
 	var bool_check = true;
-	
-	
+
+
 	if(document.getElementById(skrinName+"ID_NEGERI").value=="")
 	{
 		alert("Masukkan Negeri!");
@@ -3781,19 +3781,19 @@ function valSimpanhtaah(skrinName)
 		alert("Pastikan Bahagian Simati Kurang Daripada 1/1!");
 		document.getElementById(skrinName+"BA_SIMATI").focus();
 		bool_check = false;
-	}	
+	}
 	else if(document.getElementById(skrinName+"JENIS_TNH").value=="")
 	{
 		alert("Masukkan Jenis Tanah!");
 		document.getElementById(skrinName+"JENIS_TNH").focus();
 		bool_check = false;
 	}
-	
-	
-	
+
+
+
 	var bool_check_last = false;
 	if(bool_check == true)
-	{		
+	{
 		input_box = confirm("Adakah anda pasti?" );
 		if (input_box == true) {
 			bool_check_last = true;
@@ -3801,19 +3801,19 @@ function valSimpanhtaah(skrinName)
 	}
 	return bool_check_last;
 }
-	
-	
+
+
 function valSimpanha(skrinName)
 {
 	var bool_check = true;
-	
+
 	if(document.getElementById(skrinName+"ID_JENISHA").value=="" || document.getElementById(skrinName+"ID_JENISHA").value=="0")
 	{
 		alert("Masukkan Jenis Harta Alih!");
 		document.getElementById(skrinName+"ID_JENISHA").focus();
 		bool_check = false;
 	}
-		
+
 	else if(document.getElementById(skrinName+"ID_JENISHA").value=="1" && document.getElementById(skrinName+"JENAMA").value=="")
 	{
 		alert("Masukkan Agensi!");
@@ -3832,7 +3832,7 @@ function valSimpanha(skrinName)
 		document.getElementById(skrinName+"NO_DAFTAR").focus();
 		bool_check = false;
 	}
-	
+
 	else if(document.getElementById(skrinName+"ID_JENISHA").value=="2" && document.getElementById(skrinName+"JENAMA").value=="")
 	{
 		alert("Masukkan Agensi!");
@@ -3845,7 +3845,7 @@ function valSimpanha(skrinName)
 		document.getElementById(skrinName+"NO_DAFTAR").focus();
 		bool_check = false;
 	}
-	
+
 	else if(document.getElementById(skrinName+"ID_JENISHA").value=="3" && document.getElementById(skrinName+"JENAMA").value=="")
 	{
 		alert("Masukkan Jenis & Jenama!");
@@ -3858,7 +3858,7 @@ function valSimpanha(skrinName)
 		document.getElementById(skrinName+"NO_DAFTAR").focus();
 		bool_check = false;
 	}
-	
+
 	else if(document.getElementById(skrinName+"ID_JENISHA").value=="4" && document.getElementById(skrinName+"JENAMA").value=="")
 	{
 		alert("Masukkan No. Hakmilik, No. Lot dan Mukim!");
@@ -3871,8 +3871,8 @@ function valSimpanha(skrinName)
 		document.getElementById(skrinName+"NO_DAFTAR").focus();
 		bool_check = false;
 	}
-	
-	
+
+
 	else if(document.getElementById(skrinName+"ID_JENISHA").value=="5" && document.getElementById(skrinName+"JENAMA").value=="")
 	{
 		alert("Masukkan Agensi!");
@@ -3885,7 +3885,7 @@ function valSimpanha(skrinName)
 		document.getElementById(skrinName+"NO_DAFTAR").focus();
 		bool_check = false;
 	}
-	
+
 	else if(document.getElementById(skrinName+"ID_JENISHA").value=="6" && document.getElementById(skrinName+"BUTIRAN").value=="")
 	{
 		alert("Masukkan Butiran Peti Keselamatan!");
@@ -3904,49 +3904,49 @@ function valSimpanha(skrinName)
 		document.getElementById(skrinName+"NO_DAFTAR").focus();
 		bool_check = false;
 	}
-	
+
 	else if(document.getElementById(skrinName+"ID_JENISHA").value=="7" && document.getElementById(skrinName+"BUTIRAN").value=="")
 	{
 		alert("Masukkan Lokasi Harta!");
 		document.getElementById(skrinName+"BUTIRAN").focus();
 		bool_check = false;
 	}
-	
+
 	else if(document.getElementById(skrinName+"ID_JENISHA").value=="8" && document.getElementById(skrinName+"BUTIRAN").value=="")
 	{
 		alert("Masukkan Butiran Tuntutan!");
 		document.getElementById(skrinName+"BUTIRAN").focus();
 		bool_check = false;
 	}
-	
+
 	else if(document.getElementById(skrinName+"ID_JENISHA").value=="9" && document.getElementById(skrinName+"BUTIRAN").value=="")
 	{
 		alert("Masukkan Butiran Senjata Api!");
 		document.getElementById(skrinName+"BUTIRAN").focus();
 		bool_check = false;
 	}
-	
+
 	else if(document.getElementById(skrinName+"ID_JENISHA").value=="10" && document.getElementById(skrinName+"BUTIRAN").value=="")
 	{
 		alert("Masukkan Butiran Barang Berharga!");
 		document.getElementById(skrinName+"BUTIRAN").focus();
 		bool_check = false;
 	}
-	
+
 	else if(document.getElementById(skrinName+"ID_JENISHA").value=="11" && document.getElementById(skrinName+"BUTIRAN").value=="")
 	{
 		alert("Masukkan Butiran Ternakan!");
 		document.getElementById(skrinName+"BUTIRAN").focus();
 		bool_check = false;
 	}
-	
+
 	else if(document.getElementById(skrinName+"ID_JENISHA").value=="12" && document.getElementById(skrinName+"BUTIRAN").value=="")
 	{
 		alert("Masukkan Harta!");
 		document.getElementById(skrinName+"BUTIRAN").focus();
 		bool_check = false;
 	}
-	
+
 	else if(document.getElementById(skrinName+"ID_JENISHA").value=="98" && document.getElementById(skrinName+"BUTIRAN").value=="")
 	{
 		alert("Masukkan Butiran Nilaian Harta!");
@@ -3959,7 +3959,7 @@ function valSimpanha(skrinName)
 		document.getElementById(skrinName+"NO_DAFTAR").focus();
 		bool_check = false;
 	}
-		
+
 	else if(document.getElementById(skrinName+"BA_SIMATI").value=="")
 	{
 		alert("Masukkan Bahagian Simati!");
@@ -3971,12 +3971,12 @@ function valSimpanha(skrinName)
 		alert("Pastikan Bahagian Simati Kurang Daripada 1/1!");
 		document.getElementById(skrinName+"BA_SIMATI").focus();
 		bool_check = false;
-	}	
-	
-	
+	}
+
+
 	var bool_check_last = false;
 	if(bool_check == true)
-	{		
+	{
 		input_box = confirm("Adakah anda pasti?" );
 		if (input_box == true) {
 			bool_check_last = true;
@@ -3984,16 +3984,16 @@ function valSimpanha(skrinName)
 	}
 	return bool_check_last;
 }
-	
-	
-	
+
+
+
 
 function valSimpanpenghutang(skrinName)
 {
 	//alert('skrinName : '+skrinName);
 	//validation kena hardcode, nak kejar masa tak sempat nk buat dynamic
 	var bool_check = true;
-	
+
 	if(document.getElementById(skrinName+"JENIS_PENGHUTANG").value=="")
 	{
 		alert("Masukkan Jenis Penghutang!");
@@ -4003,10 +4003,10 @@ function valSimpanpenghutang(skrinName)
 	else if(document.getElementById(skrinName+"JENIS_PENGHUTANG").value == "2")
 	{
 		//alert('1'+skrinName);
-		var bool_check_ic = checkNOKPBARU(skrinName+"NO_KP_BARU1",skrinName+"NO_KP_BARU2",skrinName+"NO_KP_BARU3",skrinName+"NO_KP_LAMA",skrinName+"NO_KP_LAIN");	
+		var bool_check_ic = checkNOKPBARU(skrinName+"NO_KP_BARU1",skrinName+"NO_KP_BARU2",skrinName+"NO_KP_BARU3",skrinName+"NO_KP_LAMA",skrinName+"NO_KP_LAIN");
 		bool_check = bool_check_ic;
 		//alert('2');
-	}	
+	}
 	else if(document.getElementById(skrinName+"NAMA_PENGHUTANG").value=="")
 	{
 		alert("Masukkan Nama Penghutang!");
@@ -4030,7 +4030,7 @@ function valSimpanpenghutang(skrinName)
 		alert("Masukkan Poskod!");
 		document.getElementById(skrinName+"POSKOD").focus();
 		bool_check = false;
-	}	
+	}
 	else if(document.getElementById(skrinName+"POSKOD").value.length != document.getElementById(skrinName+"POSKOD").maxLength)
 	{
 		alert("Format Poskod Tidak Tepat!");
@@ -4043,10 +4043,10 @@ function valSimpanpenghutang(skrinName)
 		document.getElementById(skrinName+"ID_NEGERI").focus();
 		bool_check = false;
 	}
-	
+
 	var bool_check_last = false;
 	if(bool_check == true)
-	{		
+	{
 		input_box = confirm("Adakah anda pasti?" );
 		if (input_box == true) {
 			bool_check_last = true;
@@ -4060,13 +4060,13 @@ function valSimpanpeguam(skrinName)
 	//alert('skrinName : '+skrinName);
 	//validation kena hardcode, nak kejar masa tak sempat nk buat dynamic
 	var bool_check = true;
-	
+
 	if(document.getElementById(skrinName+"NAMA_FIRMA").value=="")
 	{
 		alert("Masukkan Nama Firma!");
 		document.getElementById(skrinName+"NAMA_FIRMA").focus();
 		bool_check = false;
-	}	
+	}
 	else if(document.getElementById(skrinName+"NO_RUJUKAN_FIRMA").value=="")
 	{
 		alert("Masukkan No. Rujukan Firma!");
@@ -4084,7 +4084,7 @@ function valSimpanpeguam(skrinName)
 		alert("Masukkan Poskod!");
 		document.getElementById(skrinName+"POSKOD").focus();
 		bool_check = false;
-	}	
+	}
 	else if(document.getElementById(skrinName+"POSKOD").value.length != document.getElementById(skrinName+"POSKOD").maxLength)
 	{
 		alert("Format Poskod Tidak Tepat!");
@@ -4103,11 +4103,11 @@ function valSimpanpeguam(skrinName)
 		document.getElementById(skrinName+"NO_TEL").focus();
 		bool_check = false;
 	}
-	
-	
+
+
 	var bool_check_last = false;
 	if(bool_check == true)
-	{		
+	{
 		input_box = confirm("Adakah anda pasti?" );
 		if (input_box == true) {
 			bool_check_last = true;
@@ -4123,7 +4123,7 @@ function valSimpanpemiutang(skrinName)
 	//alert('skrinName : '+skrinName);
 	//validation kena hardcode, nak kejar masa tak sempat nk buat dynamic
 	var bool_check = true;
-	
+
 	if(document.getElementById(skrinName+"JENIS_PEMIUTANG").value=="")
 	{
 		alert("Masukkan Jenis Pemiutang!");
@@ -4133,10 +4133,10 @@ function valSimpanpemiutang(skrinName)
 	else if(document.getElementById(skrinName+"JENIS_PEMIUTANG").value == "2")
 	{
 		//alert('1'+skrinName);
-		var bool_check_ic = checkNOKPBARU(skrinName+"NO_KP_BARU1",skrinName+"NO_KP_BARU2",skrinName+"NO_KP_BARU3",skrinName+"NO_KP_LAMA",skrinName+"NO_KP_LAIN");	
+		var bool_check_ic = checkNOKPBARU(skrinName+"NO_KP_BARU1",skrinName+"NO_KP_BARU2",skrinName+"NO_KP_BARU3",skrinName+"NO_KP_LAMA",skrinName+"NO_KP_LAIN");
 		bool_check = bool_check_ic;
 		//alert('2');
-	}	
+	}
 	else if(document.getElementById(skrinName+"NAMA_OB").value=="")
 	{
 		alert("Masukkan Nama Pemiutang!");
@@ -4160,7 +4160,7 @@ function valSimpanpemiutang(skrinName)
 		alert("Masukkan Poskod!");
 		document.getElementById(skrinName+"POSKOD").focus();
 		bool_check = false;
-	}	
+	}
 	else if(document.getElementById(skrinName+"POSKOD").value.length != document.getElementById(skrinName+"POSKOD").maxLength)
 	{
 		alert("Format Poskod Tidak Tepat!");
@@ -4203,11 +4203,11 @@ function valSimpanpemiutang(skrinName)
 		document.getElementById(skrinName+"BUTIRAN_HUTANG").focus();
 		bool_check = false;
 	}
-	
-	
+
+
 	var bool_check_last = false;
 	if(bool_check == true)
-	{		
+	{
 		input_box = confirm("Adakah anda pasti?" );
 		if (input_box == true) {
 			bool_check_last = true;
@@ -4222,7 +4222,7 @@ function valSimpanpemohon(skrinName)
 	//alert('skrinName : '+skrinName);
 	//validation kena hardcode, nak kejar masa tak sempat nk buat dynamic
 	var bool_check = true;
-	
+
 	if(document.getElementById(skrinName+"ID_TARAFKPTG").value=="")
 	{
 		alert("Masukkan Taraf Kepentingan!");
@@ -4238,10 +4238,10 @@ function valSimpanpemohon(skrinName)
 	else if(document.getElementById(skrinName+"STATUS_PEMOHON").value == "2")
 	{
 		//alert('1'+skrinName);
-		var bool_check_ic = checkNOKPBARU(skrinName+"NO_KP_BARU1",skrinName+"NO_KP_BARU2",skrinName+"NO_KP_BARU3",skrinName+"NO_KP_LAMA",skrinName+"NO_KP_LAIN");	
+		var bool_check_ic = checkNOKPBARU(skrinName+"NO_KP_BARU1",skrinName+"NO_KP_BARU2",skrinName+"NO_KP_BARU3",skrinName+"NO_KP_LAMA",skrinName+"NO_KP_LAIN");
 		bool_check = bool_check_ic;
 		//alert('2');
-	}	
+	}
 	else if(document.getElementById(skrinName+"NAMA_PEMOHON").value=="")
 	{
 		alert("Masukkan Nama Pemohon!");
@@ -4259,7 +4259,7 @@ function valSimpanpemohon(skrinName)
 		alert("Masukkan Poskod!");
 		document.getElementById(skrinName+"POSKOD").focus();
 		bool_check = false;
-	}	
+	}
 	else if(document.getElementById(skrinName+"POSKOD").value.length != document.getElementById(skrinName+"POSKOD").maxLength)
 	{
 		alert("Format Poskod Tidak Tepat!");
@@ -4296,11 +4296,11 @@ function valSimpanpemohon(skrinName)
 		document.getElementById(skrinName+"ID_NEGERISURAT").focus();
 		bool_check = false;
 	}
-	
-	
+
+
 	var bool_check_last = false;
 	if(bool_check == true)
-	{		
+	{
 		input_box = confirm("Adakah anda pasti?" );
 		if (input_box == true) {
 			bool_check_last = true;
@@ -4310,9 +4310,9 @@ function valSimpanpemohon(skrinName)
 }
 function valSimpansimati(skrinName)
 {
-	var bool_check = true;	
-	bool_check = checkNOKPBARU(skrinName+"NO_KP_BARU1",skrinName+"NO_KP_BARU2",skrinName+"NO_KP_BARU3",skrinName+"NO_KP_LAMA",skrinName+"NO_KP_LAIN");	
-	
+	var bool_check = true;
+	bool_check = checkNOKPBARU(skrinName+"NO_KP_BARU1",skrinName+"NO_KP_BARU2",skrinName+"NO_KP_BARU3",skrinName+"NO_KP_LAMA",skrinName+"NO_KP_LAIN");
+
 	if(bool_check == true)
 	{
 		if(document.getElementById(skrinName+"NAMA_SIMATI").value=="")
@@ -4374,7 +4374,7 @@ function valSimpansimati(skrinName)
 			alert("Masukkan Poskod!");
 			document.getElementById(skrinName+"POSKOD").focus();
 			bool_check = false;
-		}	
+		}
 		else if(document.getElementById(skrinName+"POSKOD").value.length != document.getElementById(skrinName+"POSKOD").maxLength)
 		{
 			alert("Format Poskod Tidak Tepat!");
@@ -4388,11 +4388,11 @@ function valSimpansimati(skrinName)
 			bool_check = false;
 		}
 	}
-	
-	
+
+
 	var bool_check_last = false;
 	if(bool_check == true)
-	{		
+	{
 		input_box = confirm("Adakah anda pasti?" );
 		if (input_box == true) {
 			bool_check_last = true;
@@ -4403,11 +4403,11 @@ function valSimpansimati(skrinName)
 
 function valSimpanwaris(skrinName)
 {
-	var bool_check = true;	
-	
-	bool_check = checkNOKPBARU(skrinName+"NO_KP_BARU1",skrinName+"NO_KP_BARU2",skrinName+"NO_KP_BARU3",skrinName+"NO_KP_LAMA",skrinName+"NO_KP_LAIN");	
+	var bool_check = true;
+
+	bool_check = checkNOKPBARU(skrinName+"NO_KP_BARU1",skrinName+"NO_KP_BARU2",skrinName+"NO_KP_BARU3",skrinName+"NO_KP_LAMA",skrinName+"NO_KP_LAIN");
 	//tutup sementara
-		
+
 	if(bool_check == true)
 	{
 		if(document.getElementById(skrinName+"NAMA_OB").value=="")
@@ -4451,7 +4451,7 @@ function valSimpanwaris(skrinName)
 			alert("Masukkan Jenis Waktu Kematian!");
 			document.getElementById(skrinName+"JENIS_WAKTU_KEMATIAN").focus();
 			bool_check = false;
-		}		
+		}
 		else if(document.getElementById(skrinName+"ALAMAT_1").value=="")
 		{
 			alert("Masukkan Alamat!");
@@ -4463,7 +4463,7 @@ function valSimpanwaris(skrinName)
 			alert("Masukkan Poskod!");
 			document.getElementById(skrinName+"POSKOD").focus();
 			bool_check = false;
-		}	
+		}
 		else if(document.getElementById(skrinName+"POSKOD").value.length != document.getElementById(skrinName+"POSKOD").maxLength)
 		{
 			alert("Format Poskod Tidak Tepat!");
@@ -4499,13 +4499,13 @@ function valSimpanwaris(skrinName)
 			alert("Masukkan Negeri Surat Menyurat!");
 			document.getElementById(skrinName+"ID_NEGERISURAT").focus();
 			bool_check = false;
-		}	
+		}
 	}
-	
-	
+
+
 	var bool_check_last = false;
 	if(bool_check == true)
-	{		
+	{
 		input_box = confirm("Adakah anda pasti?" );
 		if (input_box == true) {
 			bool_check_last = true;
@@ -4517,11 +4517,11 @@ function valSimpanwaris(skrinName)
 
 function valSimpansaksi(skrinName)
 {
-	var bool_check = true;	
-	
-	bool_check = checkNOKPBARU(skrinName+"NO_KP_BARU1",skrinName+"NO_KP_BARU2",skrinName+"NO_KP_BARU3",skrinName+"NO_KP_LAMA",skrinName+"NO_KP_LAIN");	
+	var bool_check = true;
+
+	bool_check = checkNOKPBARU(skrinName+"NO_KP_BARU1",skrinName+"NO_KP_BARU2",skrinName+"NO_KP_BARU3",skrinName+"NO_KP_LAMA",skrinName+"NO_KP_LAIN");
 	//tutup sementara
-		
+
 	if(bool_check == true)
 	{
 		if(document.getElementById(skrinName+"NAMA_OB").value=="")
@@ -4535,7 +4535,7 @@ function valSimpansaksi(skrinName)
 			alert("Masukkan Umur!");
 			document.getElementById(skrinName+"UMUR").focus();
 			bool_check = false;
-		}				
+		}
 		else if(document.getElementById(skrinName+"ALAMAT_1").value=="")
 		{
 			alert("Masukkan Alamat!");
@@ -4547,7 +4547,7 @@ function valSimpansaksi(skrinName)
 			alert("Masukkan Poskod!");
 			document.getElementById(skrinName+"POSKOD").focus();
 			bool_check = false;
-		}	
+		}
 		else if(document.getElementById(skrinName+"POSKOD").value.length != document.getElementById(skrinName+"POSKOD").maxLength)
 		{
 			alert("Format Poskod Tidak Tepat!");
@@ -4583,13 +4583,13 @@ function valSimpansaksi(skrinName)
 			alert("Masukkan Negeri Surat Menyurat!");
 			document.getElementById(skrinName+"ID_NEGERISURAT").focus();
 			bool_check = false;
-		}	
+		}
 	}
-	
-	
+
+
 	var bool_check_last = false;
 	if(bool_check == true)
-	{		
+	{
 		input_box = confirm("Adakah anda pasti?" );
 		if (input_box == true) {
 			bool_check_last = true;
@@ -4610,10 +4610,10 @@ function validateIC_V3(e,elmnt,content,nextElementID) {
 		elmnt.value = RemoveNonNumeric(content);
 		return;
 	}
-	if (content.length == elmnt.maxLength) 
+	if (content.length == elmnt.maxLength)
 	{
 		goTo(nextElementID);
-	}		
+	}
 }
 function checkBuktiMati(skrinName,val)
 {
@@ -4642,7 +4642,7 @@ function checkBuktiMati(skrinName,val)
 		document.getElementById("row"+skrinName+"TARIKH_SURAT_AKUAN").style.display = "none";
 		document.getElementById(""+skrinName+"TARIKH_SURAT_AKUAN").value = "";
 	}
-	
+
 }
 function getDOBByIC_V3(content) {
 	var bool_check = false;
@@ -4658,7 +4658,7 @@ function getDOBByIC_V3(content) {
 	if(isValidDate_V3(date_str)==true)
 	{
 		bool_check = true;
-	}		
+	}
 	return bool_check;
 }
 
@@ -4670,10 +4670,10 @@ function getYear2Date(fieldDate1,fieldDate2,fieldAge)
 	{
 		var parts1 = dateString1.split("/");
 		var year1 = parseInt(parts1[2], 10);
-		
+
 		var parts2 = dateString2.split("/");
 		var year2 = parseInt(parts2[2], 10);
-		
+
 		document.getElementById(fieldAge).value = (year2 - year1);
 	}
 }
@@ -4684,11 +4684,11 @@ function isValidDate_V3(dateString)
 	var day = parseInt(parts[0], 10);
 	var month = parseInt(parts[1], 10);
 	var year = parseInt(parts[2], 10);
-	var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];	
+	var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
     if(!/^\d{2}\/\d{2}\/\d{4}$/.test(dateString))
     {
     	return false;
-    }   
+    }
     else if(year < 1000 || year > 3000 || month == 0 || month > 12)
     {
     	return false;
@@ -4712,11 +4712,11 @@ function calculateUmurSimati(skrinName){
 	//alert('skrinName : '+skrinName);
 	var tarikh_lahir = document.getElementById(""+skrinName+"TARIKH_LAHIR").value;
 	var tarikh_mati = document.getElementById(""+skrinName+"TARIKH_MATI").value;
-	
-	
+
+
 	if (tarikh_lahir != "" && tarikh_mati != ""){
-		
-		
+
+
 		var check_format_lahir = true;
 		var check_format_mati = true;
 		if(isValidDate_V3(document.getElementById(skrinName+"TARIKH_LAHIR").value)==false)
@@ -4726,7 +4726,7 @@ function calculateUmurSimati(skrinName){
 			check_format_lahir = false;
 			//return false;
 		}
-		
+
 		if(isValidDate_V3(document.getElementById(skrinName+"TARIKH_MATI").value)==false)
 		{
 			alert("Format Tarikh Mati Tidak Tepat!");
@@ -4734,16 +4734,16 @@ function calculateUmurSimati(skrinName){
 			check_format_mati = false;
 			//return false;
 		}
-		
-		
+
+
 		if(check_format_lahir == true && check_format_mati == true)
 		{
 			var str1  = tarikh_lahir;
 			var str2  = tarikh_mati;
-	
+
 			var yr1   = parseInt(str1.substring(6,10),10);
 			var yr2   = parseInt(str2.substring(6,10),10);
-			
+
 			var age = (yr2*1) - (yr1*1);
 			if (age < 0 )
 			{
@@ -4757,24 +4757,24 @@ function calculateUmurSimati(skrinName){
 function calculateUmurByTarikh(tarikhValue,fieldUmur){
 
 	if (isValidDate_V3(tarikhValue)==true){
-		
+
 		var str1  = tarikhValue;
 		var currentTime = new Date();
 		var currentYear = currentTime.getFullYear();
 
 		var yr1   = parseInt(str1.substring(6,10),10);
-		
+
 		var age = (currentYear*1) - (yr1*1);
 		if (age < 0 )
 			age = 0;
-		document.getElementById(fieldUmur).value = age ;		
+		document.getElementById(fieldUmur).value = age ;
 	}
 }
 
 function setTarikhLahirIC(noKPWaris,fieldTarikhLahir){
 
 		var currentTime = new Date();
-		
+
 		if(noKPWaris.length == 6){
 			var a = noKPWaris.charAt(0);
 			var b = noKPWaris.charAt(1);
@@ -4782,12 +4782,12 @@ function setTarikhLahirIC(noKPWaris,fieldTarikhLahir){
 			var d = noKPWaris.charAt(3);
 			var e = noKPWaris.charAt(4);
 			var f = noKPWaris.charAt(5);
-			
+
 			var currentYear = currentTime.getFullYear();
 			var birthYear = currentYear + "";
 			birthYear = birthYear.charAt(0) + "" + birthYear.charAt(1);
 			var fullBirthYear = birthYear.charAt(0) + "" + birthYear.charAt(1) + a + b;
-			
+
 			if (fullBirthYear > currentYear ){
 				birthYear = birthYear*1 - 1;
 				birthYear = birthYear + "";
@@ -4795,19 +4795,19 @@ function setTarikhLahirIC(noKPWaris,fieldTarikhLahir){
 			}
 			document.getElementById(fieldTarikhLahir).value = e + f + "/" + c + d + "/" + fullBirthYear;
 			//document.f1.txdTarikhLahirWaris.value = e + f + "/" + c + d + "/" + fullBirthYear;
-			
+
 		}
-	
+
 }
 
 
 function pilihKetegoriTanah(jenisluas,tr_luas,tr_luas_b,l1,l2,l3,l1_field,l2_field,l3_field,luasawal,luasconvert,meterhektar)
-{	
+{
 	var val = document.getElementById(jenisluas).value;
-	
+
 	//alert("pilihKetegoriTanah : "+val);
-	
-	
+
+
 	document.getElementById(l1_field).value= "";
 	//alert("pilihKetegoriTanah a");
 	document.getElementById(l2_field).value= "";
@@ -4824,97 +4824,97 @@ function pilihKetegoriTanah(jenisluas,tr_luas,tr_luas_b,l1,l2,l3,l1_field,l2_fie
 	//alert("pilihKetegoriTanah g");
 	document.getElementById(tr_luas_b).style.display="none";
 	//alert("pilihKetegoriTanah h");
-	document.getElementById(l1).style.display="none"; 
-	//alert("pilihKetegoriTanah i"); 
-	document.getElementById(l2).style.display="none"; 
-	//alert("pilihKetegoriTanah j"); 
+	document.getElementById(l1).style.display="none";
+	//alert("pilihKetegoriTanah i");
+	document.getElementById(l2).style.display="none";
+	//alert("pilihKetegoriTanah j");
 	document.getElementById(l3).style.display="none";
-	//alert("pilihKetegoriTanah k");  
-	
+	//alert("pilihKetegoriTanah k");
+
 	//alert("pilihKetegoriTanah 1");
-	
+
 	if(val == 9)
 	{
 		document.getElementById(tr_luas).style.display="";
 		document.getElementById(tr_luas_b).style.display="";
-		document.getElementById(l1).style.display="";  
-		document.getElementById(l2).style.display="none";  
-		document.getElementById(l3).style.display="none"; 
+		document.getElementById(l1).style.display="";
+		document.getElementById(l2).style.display="none";
+		document.getElementById(l3).style.display="none";
 	}
 	else if(val == 7)
 	{
 		document.getElementById(tr_luas).style.display="";
 		document.getElementById(tr_luas_b).style.display="";
-		document.getElementById(l1).style.display="";  
-		document.getElementById(l2).style.display="";  
-		document.getElementById(l3).style.display="none";  
+		document.getElementById(l1).style.display="";
+		document.getElementById(l2).style.display="";
+		document.getElementById(l3).style.display="none";
 	}
 	else if(val == 4)
 	{
 		document.getElementById(tr_luas).style.display="";
 		document.getElementById(tr_luas_b).style.display="";
-		document.getElementById(l1).style.display="";  
-		document.getElementById(l2).style.display="";  
-		document.getElementById(l3).style.display="";  
+		document.getElementById(l1).style.display="";
+		document.getElementById(l2).style.display="";
+		document.getElementById(l3).style.display="";
 	}
 	else if(val == 2)
 	{
 		document.getElementById(tr_luas).style.display="";
 		document.getElementById(tr_luas_b).style.display="";
-		document.getElementById(l1).style.display="";  
-		document.getElementById(l2).style.display="none";  
-		document.getElementById(l3).style.display="none";  
+		document.getElementById(l1).style.display="";
+		document.getElementById(l2).style.display="none";
+		document.getElementById(l3).style.display="none";
 	}
 	else if(val == 5)
 	{
 		document.getElementById(tr_luas).style.display="";
 		document.getElementById(tr_luas_b).style.display="";
-		document.getElementById(l1).style.display="";  
-		document.getElementById(l2).style.display="none";  
-		document.getElementById(l3).style.display="none";  
+		document.getElementById(l1).style.display="";
+		document.getElementById(l2).style.display="none";
+		document.getElementById(l3).style.display="none";
 	}
 	else if(val == 3)
 	{
 		document.getElementById(tr_luas).style.display="";
 		document.getElementById(tr_luas_b).style.display="";
-		document.getElementById(l1).style.display="";  
-		document.getElementById(l2).style.display="none";  
-		document.getElementById(l3).style.display="none";  
+		document.getElementById(l1).style.display="";
+		document.getElementById(l2).style.display="none";
+		document.getElementById(l3).style.display="none";
 	}
 	else if(val == 6)
 	{
 		document.getElementById(tr_luas).style.display="";
 		document.getElementById(tr_luas_b).style.display="";
-		document.getElementById(l1).style.display="";  
-		document.getElementById(l2).style.display="none";  
-		document.getElementById(l3).style.display="none";  
+		document.getElementById(l1).style.display="";
+		document.getElementById(l2).style.display="none";
+		document.getElementById(l3).style.display="none";
 	}
 	else if(val == 1)
 	{
 		document.getElementById(tr_luas).style.display="";
 		document.getElementById(tr_luas_b).style.display="";
-		document.getElementById(l1).style.display="";  
-		document.getElementById(l2).style.display="none";  
-		document.getElementById(l3).style.display="none";  
+		document.getElementById(l1).style.display="";
+		document.getElementById(l2).style.display="none";
+		document.getElementById(l3).style.display="none";
 	}
 	else if(val == 8)
 	{
 		document.getElementById(tr_luas).style.display="";
 		document.getElementById(tr_luas_b).style.display="";
-		document.getElementById(l1).style.display="";  
-		document.getElementById(l2).style.display="";  
-		document.getElementById(l3).style.display="";  
+		document.getElementById(l1).style.display="";
+		document.getElementById(l2).style.display="";
+		document.getElementById(l3).style.display="";
 	}
 	else
 	{
 		document.getElementById(tr_luas).style.display="none";
 		document.getElementById(tr_luas_b).style.display="none";
-		document.getElementById(l1).style.display="none";  
-		document.getElementById(l2).style.display="none";  
-		document.getElementById(l3).style.display="none";  
+		document.getElementById(l1).style.display="none";
+		document.getElementById(l2).style.display="none";
+		document.getElementById(l3).style.display="none";
 	}
 	//alert("pilihKetegoriTanah 9");
-}	
+}
 
 function setJenisLuas(val_kategori,meterhektar)
 {
@@ -4924,46 +4924,46 @@ function setJenisLuas(val_kategori,meterhektar)
 		if(val_kategori == "2")
 		{
 			jenis_luas = "Hektar"
-		}	
+		}
 		else
 		{
 			jenis_luas = "Meter Persegi"
 		}
 	}
 	document.getElementById(meterhektar).value = jenis_luas;
-	
+
 }
 
 function ConvertLuasHartaV6(jenisluas,luasawal,luasconvert,meterhektar,luas1,luas2,luas3,kategory)
 {
 	//alert("ConvertLuasHartaV6");
 	//alert(" jenisluas : "+document.getElementById(jenisluas).value+" kategory : "+document.getElementById(kategory).value);
-	
+
     if (document.getElementById(jenisluas).value=="2"){
         var a = document.getElementById(luas1).value;
-       	var num = a * 10000; 
-		var num1 = a * 1; 
-               
+       	var num = a * 10000;
+		var num1 = a * 1;
+
 		if(a=="")
 		{
 		alert("Sila masukkan jumlah luas asal!")
 		goTo(luas1);
 		return
-		} 
+		}
 		else
-		{   	   
-        if(document.getElementById(kategory).value=="2" || document.getElementById(kategory).value=="1" || document.getElementById(kategory).value=="5") 
-        {       
+		{
+        if(document.getElementById(kategory).value=="2" || document.getElementById(kategory).value=="1" || document.getElementById(kategory).value=="5")
+        {
 		document.getElementById(luasconvert).value=num1.toFixed(4);
 	    document.getElementById(meterhektar).value= "Hektar";
-		document.getElementById(luasawal).value= a+"H";		
+		document.getElementById(luasawal).value= a+"H";
         }
-        else if(document.getElementById(kategory).value=="3" || document.getElementById(kategory).value=="4"  || document.getElementById(kategory).value=="6"  || document.getElementById(kategory).value=="7"  || document.getElementById(kategory).value=="8")        
+        else if(document.getElementById(kategory).value=="3" || document.getElementById(kategory).value=="4"  || document.getElementById(kategory).value=="6"  || document.getElementById(kategory).value=="7"  || document.getElementById(kategory).value=="8")
         {
         document.getElementById(luasconvert).value=num.toFixed(4);
 	    document.getElementById(meterhektar).value= "Meter Persegi";
 	    document.getElementById(luasawal).value= a+"H";
-        } 
+        }
 		else
 		{
 		alert("Sila pilih kategori tanah!")
@@ -4971,82 +4971,82 @@ function ConvertLuasHartaV6(jenisluas,luasawal,luasconvert,meterhektar,luas1,lua
 		return;
 		}
 		}
-		     
-		
+
+
 	}
-    
 
 
-	
+
+
   else if (document.getElementById(jenisluas).value=="5"){
         var a = document.getElementById(luas1).value;
-       //	var num1 = a * 9.290304; 
+       //	var num1 = a * 9.290304;
 		//var num = a * 0.09290304;
-		
+
 		var num = parseFloat(a) * 0.09290304; // kaki persegi to meter persegi
-		var num1 = parseFloat(a) * 0.000009290304; // kaki persegi to hektar    
-		
-		
+		var num1 = parseFloat(a) * 0.000009290304; // kaki persegi to hektar
+
+
 		if(a=="")
 		{
 		alert("Sila masukkan jumlah luas asal!")
 		goTo(luas1);
 		return
-		} 
+		}
 		else
-		{              
-        if(document.getElementById(kategory).value=="2") 
-        {       
+		{
+        if(document.getElementById(kategory).value=="2")
+        {
 		document.getElementById(luasconvert).value=num1.toFixed(4);
 	    document.getElementById(meterhektar).value= "Hektar";
-		document.getElementById(luasawal).value= a+"K";		
+		document.getElementById(luasawal).value= a+"K";
         }
-        else if(document.getElementById(kategory).value=="1" || document.getElementById(kategory).value=="3" || document.getElementById(kategory).value=="4" || document.getElementById(kategory).value=="5" || document.getElementById(kategory).value=="6" || document.getElementById(kategory).value=="7" || document.getElementById(kategory).value=="8")        
+        else if(document.getElementById(kategory).value=="1" || document.getElementById(kategory).value=="3" || document.getElementById(kategory).value=="4" || document.getElementById(kategory).value=="5" || document.getElementById(kategory).value=="6" || document.getElementById(kategory).value=="7" || document.getElementById(kategory).value=="8")
         {
         document.getElementById(luasconvert).value=num.toFixed(4);
 	    document.getElementById(meterhektar).value= "Meter Persegi";
 	    document.getElementById(luasawal).value= a+"K";
-        } 
+        }
 		else
 		{
 		alert("Sila pilih kategori tanah!")
 		goTo(kategory);
 		return;
-		}     
+		}
 		}
 	}
-	
-	
-	
+
+
+
 	 else if (document.getElementById(jenisluas).value=="1"){
         var a = document.getElementById(luas1).value;
-     //   var num1 = a * 100; 
-	 //	var num = a * 1000000;  
-	 
-	    var num = parseFloat(a) * 1000000;  // kilo to meter      
-        var num1 = parseFloat(a) * 100; // kilo meter to hektar     
-		
-		
+     //   var num1 = a * 100;
+	 //	var num = a * 1000000;
+
+	    var num = parseFloat(a) * 1000000;  // kilo to meter
+        var num1 = parseFloat(a) * 100; // kilo meter to hektar
+
+
         if(a=="")
 		{
 		alert("Sila masukkan jumlah luas asal!")
 		goTo(luas1);
 		return
-		} 
+		}
 		else
-		{          
-        if(document.getElementById(kategory).value=="2") 
-        {       
+		{
+        if(document.getElementById(kategory).value=="2")
+        {
 		document.getElementById(luasconvert).value=num1.toFixed(4);
 	    document.getElementById(meterhektar).value= "Hektar";
-		document.getElementById(luasawal).value= a+"KM";		
+		document.getElementById(luasawal).value= a+"KM";
         }
-        else if(document.getElementById(kategory).value=="1" || document.getElementById(kategory).value=="3" || document.getElementById(kategory).value=="4" || document.getElementById(kategory).value=="5" || document.getElementById(kategory).value=="6"  || document.getElementById(kategory).value=="7" || document.getElementById(kategory).value=="8")        
+        else if(document.getElementById(kategory).value=="1" || document.getElementById(kategory).value=="3" || document.getElementById(kategory).value=="4" || document.getElementById(kategory).value=="5" || document.getElementById(kategory).value=="6"  || document.getElementById(kategory).value=="7" || document.getElementById(kategory).value=="8")
         {
         document.getElementById(luasconvert).value=num.toFixed(4);
 	    document.getElementById(meterhektar).value= "Meter Persegi";
 	    document.getElementById(luasawal).value= a+"KM";
-        } 
+        }
 		else
 		{
 		alert("Sila pilih kategori tanah!")
@@ -5054,40 +5054,40 @@ function ConvertLuasHartaV6(jenisluas,luasawal,luasconvert,meterhektar,luas1,lua
 		return;
 		}
 		}
-		     
-		
+
+
 	}
 
 
 
  else if (document.getElementById(jenisluas).value=="3"){
         var a = document.getElementById(luas1).value;
-    //    var num = a * 1; 
-	//	var num1 = a * 0.0001; 
-	
+    //    var num = a * 1;
+	//	var num1 = a * 0.0001;
+
 	    var num = parseFloat(a) * 1; //meter persegi to meter persegi
-		var num1 = parseFloat(a) * 0.0001;  //meter persegi to hektar  
-        
+		var num1 = parseFloat(a) * 0.0001;  //meter persegi to hektar
+
 		if(a=="")
 		{
 		alert("Sila masukkan jumlah luas asal!")
 		goTo(luas1);
 		return
-		} 
+		}
 		else
-		{         
-        if(document.getElementById(kategory).value=="2") 
-        {       
+		{
+        if(document.getElementById(kategory).value=="2")
+        {
 		document.getElementById(luasconvert).value=num1.toFixed(4);
 	    document.getElementById(meterhektar).value= "Hektar";
-		document.getElementById(luasawal).value= a+"M";		
+		document.getElementById(luasawal).value= a+"M";
         }
-        else if(document.getElementById(kategory).value=="1" || document.getElementById(kategory).value=="3" || document.getElementById(kategory).value=="4" || document.getElementById(kategory).value=="5" || document.getElementById(kategory).value=="6"  || document.getElementById(kategory).value=="7" || document.getElementById(kategory).value=="8")        
+        else if(document.getElementById(kategory).value=="1" || document.getElementById(kategory).value=="3" || document.getElementById(kategory).value=="4" || document.getElementById(kategory).value=="5" || document.getElementById(kategory).value=="6"  || document.getElementById(kategory).value=="7" || document.getElementById(kategory).value=="8")
         {
         document.getElementById(luasconvert).value=num.toFixed(4);
 	    document.getElementById(meterhektar).value= "Meter Persegi";
 	    document.getElementById(luasawal).value= a+"M";
-        } 
+        }
 		else
 		{
 		alert("Sila pilih kategori tanah!")
@@ -5095,37 +5095,37 @@ function ConvertLuasHartaV6(jenisluas,luasawal,luasconvert,meterhektar,luas1,lua
 		return;
 		}
 		}
-		     
-		
+
+
 	}
 
 
 
 else if (document.getElementById(jenisluas).value=="9"){
         var a = document.getElementById(luas1).value;
-       var num = parseFloat(a) * 1; 
-		var num1 = parseFloat(a) * 1;   
-        
+       var num = parseFloat(a) * 1;
+		var num1 = parseFloat(a) * 1;
+
 		if(a=="")
 		{
 		alert("Sila masukkan jumlah luas asal!")
 		goTo(luas1);
 		return
-		} 
+		}
 		else
-		{         
-        if(document.getElementById(kategory).value=="2") 
-        {       
+		{
+        if(document.getElementById(kategory).value=="2")
+        {
 		document.getElementById(luasconvert).value=num1.toFixed(4);
 	    document.getElementById(meterhektar).value= "Hektar";
-		document.getElementById(luasawal).value= a+"BN";		
+		document.getElementById(luasawal).value= a+"BN";
         }
-        else if(document.getElementById(kategory).value=="1" || document.getElementById(kategory).value=="3" || document.getElementById(kategory).value=="4" || document.getElementById(kategory).value=="5" || document.getElementById(kategory).value=="6"  || document.getElementById(kategory).value=="7" || document.getElementById(kategory).value=="8")        
+        else if(document.getElementById(kategory).value=="1" || document.getElementById(kategory).value=="3" || document.getElementById(kategory).value=="4" || document.getElementById(kategory).value=="5" || document.getElementById(kategory).value=="6"  || document.getElementById(kategory).value=="7" || document.getElementById(kategory).value=="8")
         {
         document.getElementById(luasconvert).value=num.toFixed(4);
 	    document.getElementById(meterhektar).value= "Meter Persegi";
 	    document.getElementById(luasawal).value= a+"BN";
-        } 
+        }
 		else
 		{
 		alert("Sila pilih kategori tanah!")
@@ -5133,8 +5133,8 @@ else if (document.getElementById(jenisluas).value=="9"){
 		return;
 		}
 		}
-		     
-		
+
+
 	}
 
 
@@ -5142,29 +5142,29 @@ else if (document.getElementById(jenisluas).value=="9"){
 
 else if (document.getElementById(jenisluas).value=="6"){
         var a = document.getElementById(luas1).value;
-        var num = parseFloat(a) * 1; 
-		var num1 = parseFloat(a) * 1;        
-        
+        var num = parseFloat(a) * 1;
+		var num1 = parseFloat(a) * 1;
+
 		if(a=="")
 		{
 		alert("Sila masukkan jumlah luas asal!")
 		goTo(luas1);
 		return
-		} 
+		}
 		else
-		{         
-        if(document.getElementById(kategory).value=="2") 
-        {       
+		{
+        if(document.getElementById(kategory).value=="2")
+        {
 		document.getElementById(luasconvert).value=num1.toFixed(4);
 	    document.getElementById(meterhektar).value= "Hektar";
-		document.getElementById(luasawal).value= a+"P";		
+		document.getElementById(luasawal).value= a+"P";
         }
-        else if(document.getElementById(kategory).value=="1" || document.getElementById(kategory).value=="3" || document.getElementById(kategory).value=="4" || document.getElementById(kategory).value=="5" || document.getElementById(kategory).value=="6"  || document.getElementById(kategory).value=="7" || document.getElementById(kategory).value=="8")        
+        else if(document.getElementById(kategory).value=="1" || document.getElementById(kategory).value=="3" || document.getElementById(kategory).value=="4" || document.getElementById(kategory).value=="5" || document.getElementById(kategory).value=="6"  || document.getElementById(kategory).value=="7" || document.getElementById(kategory).value=="8")
         {
         document.getElementById(luasconvert).value=num.toFixed(4);
 	    document.getElementById(meterhektar).value= "Meter Persegi";
 	    document.getElementById(luasawal).value= a+"P";
-        } 
+        }
 		else
 		{
 		alert("Sila pilih kategori tanah!")
@@ -5172,46 +5172,46 @@ else if (document.getElementById(jenisluas).value=="6"){
 		return;
 		}
 		}
-		     
-		
+
+
 	}
 
 //formula bawah ni hentam dulu
 else if (document.getElementById(jenisluas).value=="7"){
         var a = document.getElementById(luas1).value;
         var b = document.getElementById(luas2).value;
-       // var num = a * b; 
-	//var num1 = a * 0.0001; 
-	
-		var num = (parseFloat(a) + (parseFloat(b)/1000))*4046.86; 
-		var num1 =  (parseFloat(a) + (parseFloat(b)/1000))*0.404686;     
-        
+       // var num = a * b;
+	//var num1 = a * 0.0001;
+
+		var num = (parseFloat(a) + (parseFloat(b)/1000))*4046.86;
+		var num1 =  (parseFloat(a) + (parseFloat(b)/1000))*0.404686;
+
 		if(a=="")
 		{
 		alert("Sila masukkan jumlah luas asal!")
 		goTo(luas1);
 		return
-		} 
+		}
         else if(b=="")
 		{
 		alert("Sila masukkan jumlah luas asal!")
 		goTo(luas2);
 		return
-		} 
+		}
 		else
-		{         
-        if(document.getElementById(kategory).value=="2") 
-        {       
+		{
+        if(document.getElementById(kategory).value=="2")
+        {
 		document.getElementById(luasconvert).value=num1.toFixed(4);
 	    document.getElementById(meterhektar).value= "Hektar";
-		document.getElementById(luasawal).value= a+"E"+b+"D";		
+		document.getElementById(luasawal).value= a+"E"+b+"D";
         }
-        else if(document.getElementById(kategory).value=="1" || document.getElementById(kategory).value=="3" || document.getElementById(kategory).value=="4" || document.getElementById(kategory).value=="5" || document.getElementById(kategory).value=="6"  || document.getElementById(kategory).value=="7" || document.getElementById(kategory).value=="8")        
+        else if(document.getElementById(kategory).value=="1" || document.getElementById(kategory).value=="3" || document.getElementById(kategory).value=="4" || document.getElementById(kategory).value=="5" || document.getElementById(kategory).value=="6"  || document.getElementById(kategory).value=="7" || document.getElementById(kategory).value=="8")
         {
         document.getElementById(luasconvert).value=num.toFixed(4);
 	    document.getElementById(meterhektar).value= "Meter Persegi";
 	    document.getElementById(luasawal).value= a+"E"+b+"D";
-        } 
+        }
 		else
 		{
 		alert("Sila pilih kategori tanah!")
@@ -5219,8 +5219,8 @@ else if (document.getElementById(jenisluas).value=="7"){
 		return;
 		}
 		}
-		     
-		
+
+
 	}
 
 
@@ -5228,18 +5228,18 @@ else if (document.getElementById(jenisluas).value=="8"){
         var a = document.getElementById(luas1).value;
         var b = document.getElementById(luas2).value;
         var c = document.getElementById(luas3).value;
-     //   var num = a * b * c; 
-	 //	var num1 = a * 0.0001; 
-		
-		var num = (parseFloat(a) + (parseFloat(b)/484) + (parseFloat(c)/30976))*0.711111*4046.86; 
+     //   var num = a * b * c;
+	 //	var num1 = a * 0.0001;
+
+		var num = (parseFloat(a) + (parseFloat(b)/484) + (parseFloat(c)/30976))*0.711111*4046.86;
 		var num1 = ((parseFloat(a) + (parseFloat(b)/484) + (parseFloat(c)/30976)))*0.711111*0.404686;
-        
+
 		if(a=="")
 		{
 		alert("Sila masukkan jumlah luas asal!")
 		goTo(luas1);
 		return
-		} 
+		}
         else if(b=="")
 		{
 		alert("Sila masukkan jumlah luas asal!")
@@ -5251,21 +5251,21 @@ else if (document.getElementById(jenisluas).value=="8"){
 		alert("Sila masukkan jumlah luas asal!")
 		goTo(luas3);
 		return
-		} 
+		}
 		else
-		{         
-        if(document.getElementById(kategory).value=="2") 
-        {       
+		{
+        if(document.getElementById(kategory).value=="2")
+        {
 		document.getElementById(luasconvert).value=num1.toFixed(4);
 	    document.getElementById(meterhektar).value= "Hektar";
-		document.getElementById(luasawal).value= a+"R"+b+"J"+c+"K";		
+		document.getElementById(luasawal).value= a+"R"+b+"J"+c+"K";
         }
-        else if(document.getElementById(kategory).value=="1" || document.getElementById(kategory).value=="3" || document.getElementById(kategory).value=="4" || document.getElementById(kategory).value=="5" || document.getElementById(kategory).value=="6"  || document.getElementById(kategory).value=="7" || document.getElementById(kategory).value=="8")        
+        else if(document.getElementById(kategory).value=="1" || document.getElementById(kategory).value=="3" || document.getElementById(kategory).value=="4" || document.getElementById(kategory).value=="5" || document.getElementById(kategory).value=="6"  || document.getElementById(kategory).value=="7" || document.getElementById(kategory).value=="8")
         {
         document.getElementById(luasconvert).value=num.toFixed(4);
 	    document.getElementById(meterhektar).value= "Meter Persegi";
 	    document.getElementById(luasawal).value= a+"R"+b+"J"+c+"K";
-        } 
+        }
 		else
 		{
 		alert("Sila pilih kategori tanah!")
@@ -5273,27 +5273,27 @@ else if (document.getElementById(jenisluas).value=="8"){
 		return;
 		}
 		}
-		     
-		
+
+
 	}
-    
-    
+
+
     //formula bawah ni hentam dulu
 else if (document.getElementById(jenisluas).value=="4"){
         var a = document.getElementById(luas1).value;
         var b = document.getElementById(luas2).value;
         var c = document.getElementById(luas3).value;
-     //   var num = a * b * c; 
-	//	var num1 = a * 0.0001; 
-	var num = (parseFloat(a) + (parseFloat(b)/4) + (parseFloat(c)/160))*4046.86; 
-		var num1 = ((parseFloat(a) + (parseFloat(b)/4) + (parseFloat(c)/160)))*0.404686;  
-        
+     //   var num = a * b * c;
+	//	var num1 = a * 0.0001;
+	var num = (parseFloat(a) + (parseFloat(b)/4) + (parseFloat(c)/160))*4046.86;
+		var num1 = ((parseFloat(a) + (parseFloat(b)/4) + (parseFloat(c)/160)))*0.404686;
+
 		if(a=="")
 		{
 		alert("Sila masukkan jumlah luas asal!")
 		goTo(luas1);
 		return
-		} 
+		}
         else if(b=="")
 		{
 		alert("Sila masukkan jumlah luas asal!")
@@ -5305,21 +5305,21 @@ else if (document.getElementById(jenisluas).value=="4"){
 		alert("Sila masukkan jumlah luas asal!")
 		goTo(luas3);
 		return
-		} 
+		}
 		else
-		{         
-        if(document.getElementById(kategory).value=="2") 
-        {       
+		{
+        if(document.getElementById(kategory).value=="2")
+        {
 		document.getElementById(luasconvert).value=num1.toFixed(4);
 	    document.getElementById(meterhektar).value= "Hektar";
-		document.getElementById(luasawal).value= a+"E"+b+"R"+c+"P";		
+		document.getElementById(luasawal).value= a+"E"+b+"R"+c+"P";
         }
-        else if(document.getElementById(kategory).value=="1" || document.getElementById(kategory).value=="3" || document.getElementById(kategory).value=="4" || document.getElementById(kategory).value=="5" || document.getElementById(kategory).value=="6"  || document.getElementById(kategory).value=="7" || document.getElementById(kategory).value=="8")        
+        else if(document.getElementById(kategory).value=="1" || document.getElementById(kategory).value=="3" || document.getElementById(kategory).value=="4" || document.getElementById(kategory).value=="5" || document.getElementById(kategory).value=="6"  || document.getElementById(kategory).value=="7" || document.getElementById(kategory).value=="8")
         {
         document.getElementById(luasconvert).value=num.toFixed(4);
 	    document.getElementById(meterhektar).value= "Meter Persegi";
 	    document.getElementById(luasawal).value= a+"E"+b+"R"+c+"P";
-        } 
+        }
 		else
 		{
 		alert("Sila pilih kategori tanah!")
@@ -5327,8 +5327,8 @@ else if (document.getElementById(jenisluas).value=="4"){
 		return;
 		}
 		}
-		     
-		
+
+
 	}
 
 
@@ -5339,11 +5339,11 @@ else if (document.getElementById(jenisluas).value=="4"){
 /*
 $jquery(function(){
 	$jquery("#span123 input").keypress(function (e) {
-	
+
 		if (e.keyCode == 13) {
 			alert('You pressed enter!');
 		}
-	
+
 	});
 });
 
@@ -5372,8 +5372,8 @@ function autoText(e,elem,inputSpan,mainSpan)
 			val = "&nbsp;";
 			//alert(val);
 		}
-		
-		
+
+
 		$jquery("#"+mainSpan).html(currentMainSpan + "<span onclick=\"getAutoText(this);\">"+val+"</span>");
 		elem.value = "";
 	}
@@ -5390,9 +5390,9 @@ function autoWidthInputText(elem)
 
 
 function getCaretCharacterOffsetWithin(element) {
-	
+
 	var list_words = ["hello", "world", "test word", "yay", "woot", "multiple words", "blue dog", "blue cat"];
-	
+
     var caretOffset = 0;
     var doc = element.ownerDocument || element.document;
     var win = doc.defaultView || doc.parentWindow;
@@ -5413,21 +5413,21 @@ function getCaretCharacterOffsetWithin(element) {
         preCaretTextRange.setEndPoint("EndToEnd", textRange);
         caretOffset = preCaretTextRange.text.length;
     }
-	
+
   word = getWordAtPosition(caretOffset, element);
   //console.log('caretOffset : ', caretOffset+" word : "+word);
 
-  
-  
+
+
   for (var i = 0; i < list_words.length; i++) {
 	console.log('check : ', list_words[i]+" word : "+word);
 	if (word.indexOf(list_words[i]) > -1)
 	{
 		console.log("String was found in substring " + list_words);
 	}
-	
+
   }
-  
+
   return caretOffset;
 }
 
@@ -5454,7 +5454,7 @@ function getWordAtPosition(position, element) {
 
 function fckeditorWordCatatanPerintah(elem, divId) {
 	//alert("masuk : "+divId+" divViewEditorkeputusanCATATAN_PERINTAH_BI : "+$jquery("#divViewEditorkeputusanCATATAN_PERINTAH_BI").height());
-	
+
 	var val = elem.innerHTML;
 	//alert("divId : "+divId);
 	//alert("val : "+val);
@@ -5477,7 +5477,7 @@ function fckeditorWordCatatanPerintah(elem, divId) {
 		//document.getElementById("divViewEditorkeputusanCATATAN_PERINTAH_BI").setAttribute("style","overflow:auto;");
 		$jquery("#divViewEditorkeputusanCATATAN_PERINTAH_BI").addClass("scrollYes");
 	}
-	
+
 }
 
 function replaceText(selector, text, newText, flags) {
@@ -5494,7 +5494,7 @@ function fckeditor_word_count(elem, divId) {
 	var val = elem.value;
 	//alert("fckeditor_word_count : "+val);
     var matches = val.replace(/<[^<|>]+?>|&nbsp;/gi,' ').match(/\b/g);
-	
+
     var count = 0;
     if(matches) {
         count = matches.length/2;
@@ -5523,7 +5523,7 @@ function editorKeputusan(skrinName,columnName,value)
 //alert("XXXXXXXXXXXX : "+$jquery('#trJanaCatatan').length);
 	//alert("columnName : "+columnName+" skrinName : "+skrinName);
 	$jquery(document).ready(function () {
-			$jquery('#'+skrinName+columnName).wysihtml5({ 
+			$jquery('#'+skrinName+columnName).wysihtml5({
 				"font-styles": true, // Font styling, e.g. h1, h2, etc.
 				"emphasis": true, // Italics, bold, etc.
 				"lists": true, // (Un)ordered lists, e.g. Bullets, Numbers.
@@ -5531,30 +5531,30 @@ function editorKeputusan(skrinName,columnName,value)
 				"link": false, // Button to insert a link.
 				"image": false, // Button to insert an image.
 				"color": true, // Button to change color of font
-				"blockquote": true, // Blockquote	
-				"size": "small"				  
+				"blockquote": true, // Blockquote
+				"size": "small"
 			});
-			
-		});	
+
+		});
 		//alert("2");
 		var resizeIframeK = function() {
-		
-			fckeditor_word_count(document.getElementById(skrinName+columnName),"word"+skrinName+columnName);								
+
+			fckeditor_word_count(document.getElementById(skrinName+columnName),"word"+skrinName+columnName);
 			document.getElementById('button'+skrinName).style.display = "none";
 			document.getElementById('trinfobutton'+skrinName+columnName).style.display = "";
-			$jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.iframe.style.height = $jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.element.scrollHeight + 50 + "px";	
-			
+			$jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.iframe.style.height = $jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.element.scrollHeight + 50 + "px";
+
 			if((skrinName+columnName)=="keputusanINTRO_CATATAN" || (skrinName+columnName)=="keputusanCATATAN_DOCKIV"  || (skrinName+columnName)=="keputusanCATATAN" || (skrinName+columnName)=="keputusanCATATAN_KEPUTUSAN_PERBICARAAN")
 			{
 				getTimeAutoSavePerintah("timer_"+skrinName+columnName,"FOCUS")
 			}
-			
+
 			if ($jquery('#trJanaCatatan').length > 0 && skrinName == "keputusan"
 			 //&& columnName == "CATATAN_PERINTAH_BI"
 			 ) {
 				document.getElementById('trJanaCatatan').style.display = "none";
 			}
-					
+
 		}
 		//alert("3");
 		var resizeIframeBlurK = function() {
@@ -5562,19 +5562,19 @@ function editorKeputusan(skrinName,columnName,value)
 			if((skrinName+columnName)=="keputusanINTRO_CATATAN" || (skrinName+columnName)=="keputusanCATATAN_DOCKIV"  || (skrinName+columnName)=="keputusanCATATAN" || (skrinName+columnName)=="keputusanCATATAN_KEPUTUSAN_PERBICARAAN")
 			{
 				getTimeAutoSavePerintah("timer_"+skrinName+columnName,"BLUR")
-			}	
+			}
 			document.getElementById('button'+skrinName).style.display = "";
 			document.getElementById('trinfobutton'+skrinName+columnName).style.display = "none";
-			$jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.iframe.style.height = $jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.element.scrollHeight + 50 + "px";	
-			if ($jquery('#trJanaCatatan').length > 0 && skrinName == "keputusan" 
+			$jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.iframe.style.height = $jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.element.scrollHeight + 50 + "px";
+			if ($jquery('#trJanaCatatan').length > 0 && skrinName == "keputusan"
 			//&& columnName == "CATATAN_PERINTAH_BI"
 			) {
 				document.getElementById('trJanaCatatan').style.display = "";
-			}									
-		}		
+			}
+		}
 		//alert("4");
 		var resizeIframeKeyUpK = function() {
-			fckeditor_word_count(document.getElementById(skrinName+columnName),"word"+skrinName+columnName);	
+			fckeditor_word_count(document.getElementById(skrinName+columnName),"word"+skrinName+columnName);
 			if((skrinName+columnName)=="keputusanINTRO_CATATAN" || (skrinName+columnName)=="keputusanCATATAN_DOCKIV" || (skrinName+columnName)=="keputusanCATATAN" || (skrinName+columnName)=="keputusanCATATAN_KEPUTUSAN_PERBICARAAN")
 			{
 				//console.log("resizeIframeKeyUpK : "+columnName);
@@ -5587,34 +5587,34 @@ function editorKeputusan(skrinName,columnName,value)
 			if(parseInt(scrollheight) > parseInt(iframeheight))
 			{
 				$jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.iframe.style.height = $jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.element.scrollHeight + 50 + "px";
-			}		
-			if ($jquery('#trJanaCatatan').length > 0 && skrinName == "keputusan" 
+			}
+			if ($jquery('#trJanaCatatan').length > 0 && skrinName == "keputusan"
 			//&& columnName == "CATATAN_PERINTAH_BI"
 			) {
 				//document.getElementById('trJanaCatatan').style.display = "none";
-			}						
+			}
 		}
 		//alert("5");
-		
+
 		var wordCount = function() {
-			fckeditor_word_count(document.getElementById(skrinName+columnName),"word"+skrinName+columnName);			
+			fckeditor_word_count(document.getElementById(skrinName+columnName),"word"+skrinName+columnName);
 		}
-		
+
 		$jquery("#"+skrinName+columnName).data("wysihtml5").editor.on("load", function() {
 		  fckeditor_word_count(document.getElementById(skrinName+columnName),"word"+skrinName+columnName);
 		  console.log("columnName : "+$jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.element.scrollHeight);
-		  $jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.iframe.style.height = $jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.element.scrollHeight + 50 + "px";		  	
+		  $jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.iframe.style.height = $jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.element.scrollHeight + 50 + "px";
 		  $jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.element.addEventListener("keyup", resizeIframeKeyUpK , false);
 		  $jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.element.addEventListener("keydown", resizeIframeKeyUpK , false);
 		  $jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.element.addEventListener("blur", resizeIframeBlurK, false);
-		  $jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.element.addEventListener("focus", resizeIframeK, false);		  	 
-		});	
-		
-		
+		  $jquery("#"+skrinName+columnName).data("wysihtml5").editor.composer.element.addEventListener("focus", resizeIframeK, false);
+		});
+
+
 		 //alert("6 : "+value);
-		
+
 		 //$jquery("#"+skrinName+columnName).data("wysihtml5").editor.setValue(value);
-	
+
 }
 
 function showHideTextIntro(val,skrinName,columnName)
@@ -5627,7 +5627,7 @@ function showHideTextIntro(val,skrinName,columnName)
 		$jquery("#trword"+skrinName+columnName).hide();
 		$jquery("#"+skrinName+columnName).val("");
 		//editorKeputusan(skrinName,columnName,value);
-		
+
 	}
 	else
 	{
@@ -5635,13 +5635,13 @@ function showHideTextIntro(val,skrinName,columnName)
 		//$jquery("#trinfobutton"+skrinName+columnName).show();
 		$jquery("#trword"+skrinName+columnName).show();
 	}
-	
+
 }
 
 function showHideTextDocKembali(val,skrinName,columnName)
 {
 	//console.log("showHideTextDocKembali :: val : "+val+" skrinName : "+skrinName+" columnName : "+columnName);
-	
+
 	if(val == "1" || val == "")
 	{
 		//alert("test 1");
@@ -5650,7 +5650,7 @@ function showHideTextDocKembali(val,skrinName,columnName)
 			//$jquery("#trinfobutton"+skrinName+columnName).hide();
 		$jquery("#trword"+skrinName+columnName).hide();
 		$jquery("#"+skrinName+columnName).val("");
-		//editorKeputusan(skrinName,columnName,value);		
+		//editorKeputusan(skrinName,columnName,value);
 	}
 	else
 	{
@@ -5658,9 +5658,9 @@ function showHideTextDocKembali(val,skrinName,columnName)
 		$jquery("#row"+skrinName+columnName).show();
 			//$jquery("#trinfobutton"+skrinName+columnName).show();
 		$jquery("#trword"+skrinName+columnName).show();
-		
+
 	}
-	
+
 }
 
 function reAssignFieldEditorContent(fieldname)
@@ -5676,7 +5676,7 @@ function reAssignFieldEditorContent(fieldname)
 }
 
 
-function setDalamDiv(div)	 
+function setDalamDiv(div)
 {
 	 document.getElementById("keputusanCATATAN_PERINTAH_BI").value = document.getElementById("dummyJanaCatatan").innerHTML;
 	 var fs = "$fontSize";
@@ -5688,16 +5688,16 @@ function setDalamDiv(div)
 
 function cetakNotaPerbicaraan(NO_FAIL,id_perbicaraan,idfail,idsimati,seksyen,tarikh_permohonan,flagBicaraOnline) {
 
-	var tarikhmohon = tarikh_permohonan; 
+	var tarikhmohon = tarikh_permohonan;
 
 	var dt1   = parseInt(tarikhmohon.substring(0,2),10);
    	var mon1  = parseInt(tarikhmohon.substring(3,5),10);
    	var yr1   = parseInt(tarikhmohon.substring(6,10),10);
-   
+
 	var dt2 = parseInt("01",10);
 	var mon2 = parseInt("09",10);
 	var yr2 = parseInt("2009",10);
-	 	
+
    	var date1 = new Date(yr1, mon1, dt1);
     var tarikhsmbln = new Date(yr2, mon2, dt2);
 
@@ -5707,22 +5707,22 @@ function cetakNotaPerbicaraan(NO_FAIL,id_perbicaraan,idfail,idsimati,seksyen,tar
 	}else{
 		flag = 1;
 	}
-	
+
 	var tajuk = "";
 	var url = "";
-	
+
 	if(seksyen=="8")
 	{
 		tajuk = "PERMOHONAN DI BAWAH SEKSYEN 8 (APPK(1998))";
 		url = "../servlet/ekptg.report.ppk.NotaPerbicaraan?nofail="+NO_FAIL+"&flag="+flag+"&idfail="+idfail+"&idperbicaraan="+id_perbicaraan+"&tajuk="+tajuk+"&flagBicaraOnline="+flagBicaraOnline;
-    
+
 	}
 	else if(seksyen=="17")
 	{
 		tajuk = "PERMOHONAN DI BAWAH SEKSYEN 17 (APPK(1998))";
 		url = "../servlet/ekptg.report.ppk.NotaPerbicaraan17?nofail="+NO_FAIL+"&flag="+flag+"&idfail="+idfail+"&idsimati="+idsimati+"&idperbicaraan="+id_perbicaraan+"&tajuk="+tajuk+"&flagBicaraOnline="+flagBicaraOnline;
-	}	
-    
+	}
+
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
@@ -5739,10 +5739,10 @@ function goToBU()
 function checkHartaTertingal(id_button)
 {
 	//alert("checkHartaTerintggal : "+document.getElementById(id_button));
-	
+
 	var BI_FLAG_HARTA_TERINGGAL =   document.getElementById("BI_FLAG_HARTA_TERINGGAL").value;
 	var seksyen_headerppk =   document.getElementById("seksyen_headerppk").value;
-	
+
 	console.log("BI_FLAG_HARTA_TERINGGAL : "+BI_FLAG_HARTA_TERINGGAL+" seksyen_headerppk : "+seksyen_headerppk);
 	if(BI_FLAG_HARTA_TERINGGAL == "T" && seksyen_headerppk == "17")
 	{
@@ -5752,7 +5752,7 @@ function checkHartaTertingal(id_button)
 	{
 		document.getElementById(id_button).style.display = "";
 	}
-	
+
 }
 
 
@@ -5775,10 +5775,10 @@ function goToPerintah()
 	}
 	document.${formName}.idPermohonanSimati.value = id_permohonansimati_headerppk;
 	document.${formName}.idPermohonan.value = id_permohonan_headerppk;
-	document.${formName}.idStatus.value = id_status_headerppk;	
+	document.${formName}.idStatus.value = id_status_headerppk;
 	document.${formName}.method="POST";
 	document.${formName}.submit();
-	
+
 }
 
 
@@ -5788,13 +5788,13 @@ function cetakSuratPindahMTII(noFail) {
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();	
-	    //document.${formName}.command.value="getDaftarStatus";	
+    if (hWnd.focus != null) hWnd.focus();
+	    //document.${formName}.command.value="getDaftarStatus";
 		//document.${formName}.action="";
 }
 
 function cetakBorangI(noFail,idperbicaraan) {
-    var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&idperbicaraan="+idperbicaraan+"&report=BorangI&flagReport=B";	
+    var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&idperbicaraan="+idperbicaraan+"&report=BorangI&flagReport=B";
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
@@ -5803,7 +5803,7 @@ function cetakBorangI(noFail,idperbicaraan) {
 
 function buktiPenyampaian(noFail,idfail)
 {
-    var url = "../servlet/ekptg.report.ppk.BuktiPenyampaianMT?nofail="+noFail+"&idfail="+idfail;  
+    var url = "../servlet/ekptg.report.ppk.BuktiPenyampaianMT?nofail="+noFail+"&idfail="+idfail;
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
@@ -5816,7 +5816,7 @@ function cetakBorangJ(nofail,idFail,id_perbicaraan) {
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();	
+    if (hWnd.focus != null) hWnd.focus();
 }
 
 
@@ -5853,14 +5853,14 @@ function getTimeAutoSave(divUnique_id,unique_id,action,ID_BIKEHADIRAN)
 		var command = "";
 		if(unique_id=="")
 		{
-			command = "autoSaveKeteranganTuruthadir";		
+			command = "autoSaveKeteranganTuruthadir";
 		}
 		else
 		{
-			command = "autoSaveKeterangan";		
+			command = "autoSaveKeterangan";
 		}
-			
-				
+
+
 		if((flagDahFocusKeyin[divUnique_id] == undefined || flagDahFocusKeyin[divUnique_id] == null) && action=="KEYUP" )
 		{
 			if (typeof(refreshInterval_showtime[divUnique_id]) != 'undefined' && refreshInterval_showtime[divUnique_id] != null)
@@ -5868,28 +5868,28 @@ function getTimeAutoSave(divUnique_id,unique_id,action,ID_BIKEHADIRAN)
 				window.clearInterval(refreshInterval_showtime[divUnique_id]);
 				refreshInterval_showtime[divUnique_id] = null;
 				document.getElementById(divUnique_id).innerHTML = "";
-			}		
+			}
 			//alert("masuk");
 			var timeAutoSave = 30;//5 minit
 			//alert("timeAutoSave : "+timeAutoSave);
-			refreshInterval_showtime[divUnique_id] = setInterval(function(){	
+			refreshInterval_showtime[divUnique_id] = setInterval(function(){
 			timeAutoSave = timeAutoSave-1;
 			//console.log("****");
 			//console.log("flagDahFocusKeyin[divUnique_id] >>>>>>>> "+flagDahFocusKeyin[divUnique_id]);
 			document.getElementById(divUnique_id).innerHTML = "<span class=\"blue\">"+timeAutoSave+" saat sebelum 'auto save'</span>";
-			
+
 			if(timeAutoSave <= 0)
-			{	
+			{
 				window.clearInterval(refreshInterval_showtime[divUnique_id]);
 				refreshInterval_showtime[divUnique_id] = null;
 				getTimeAutoSave(divUnique_id,unique_id,"FOCUS",ID_BIKEHADIRAN);
 				if(flagDahFocusKeyin[divUnique_id] == true)
 				{
 					flagDahFocusKeyin[divUnique_id] = null;
-					doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&ID_OBPERMOHONAN="+unique_id+"&ID_BIKEHADIRAN="+ID_BIKEHADIRAN+"&divUnique_id="+divUnique_id);	
+					doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&ID_OBPERMOHONAN="+unique_id+"&ID_BIKEHADIRAN="+ID_BIKEHADIRAN+"&divUnique_id="+divUnique_id);
 				}
 			}
-			
+
 			}, 1000);
 		}
 		else if(action=="BLUR")
@@ -5897,10 +5897,10 @@ function getTimeAutoSave(divUnique_id,unique_id,action,ID_BIKEHADIRAN)
 			window.clearInterval(refreshInterval_showtime[divUnique_id]);
 			refreshInterval_showtime[divUnique_id] = null;
 			flagDahFocusKeyin[divUnique_id] = null;
-			document.getElementById(divUnique_id).innerHTML = "";		
+			document.getElementById(divUnique_id).innerHTML = "";
 			doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&ID_OBPERMOHONAN="+unique_id+"&ID_BIKEHADIRAN="+ID_BIKEHADIRAN+"&divUnique_id="+divUnique_id);
 		}
-		
+
 		if(action=="KEYUP")
 		{
 			flagDahFocusKeyin[divUnique_id] = true;
@@ -5910,27 +5910,27 @@ function getTimeAutoSave(divUnique_id,unique_id,action,ID_BIKEHADIRAN)
 function getTimeAutoSavePerintah(divUnique_id,action)
 {
 	var command = "autoSaveKeteranganPerintah";
-		
-			
+
+
 	if((flagDahFocusKeyin[divUnique_id] == undefined || flagDahFocusKeyin[divUnique_id] == null) && action=="KEYUP" )
-	{		
+	{
 		if (typeof(refreshInterval_showtime[divUnique_id]) != 'undefined' && refreshInterval_showtime[divUnique_id] != null)
 		{
 			window.clearInterval(refreshInterval_showtime[divUnique_id]);
 			refreshInterval_showtime[divUnique_id] = null;
 			document.getElementById(divUnique_id).innerHTML = "";
-		}		
+		}
 		//alert("masuk");
 		var timeAutoSave = 30;//5 minit
 		//alert("timeAutoSave : "+timeAutoSave);
-		refreshInterval_showtime[divUnique_id] = setInterval(function(){	
+		refreshInterval_showtime[divUnique_id] = setInterval(function(){
 		timeAutoSave = timeAutoSave-1;
 		//console.log("****");
 		//console.log("flagDahFocusKeyin[divUnique_id] >>>>>>>> "+flagDahFocusKeyin[divUnique_id]);
 		document.getElementById(divUnique_id).innerHTML = "<span class=\"blue\">"+timeAutoSave+" saat sebelum 'auto save'</span>";
-		
+
 		if(timeAutoSave <= 0)
-		{	
+		{
 			window.clearInterval(refreshInterval_showtime[divUnique_id]);
 			refreshInterval_showtime[divUnique_id] = null;
 			getTimeAutoSavePerintah(divUnique_id,"FOCUS")
@@ -5938,10 +5938,10 @@ function getTimeAutoSavePerintah(divUnique_id,action)
 			{
 				flagDahFocusKeyin[divUnique_id] = null;
 				//doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&ID_OBPERMOHONAN="+unique_id+"&ID_BIKEHADIRAN="+ID_BIKEHADIRAN+"&divUnique_id="+divUnique_id);
-				doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&divUnique_id="+divUnique_id);	
+				doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&divUnique_id="+divUnique_id);
 			}
 		}
-		
+
 		}, 1000);
 	}
 	else if(action=="BLUR")
@@ -5949,11 +5949,11 @@ function getTimeAutoSavePerintah(divUnique_id,action)
 		window.clearInterval(refreshInterval_showtime[divUnique_id]);
 		refreshInterval_showtime[divUnique_id] = null;
 		flagDahFocusKeyin[divUnique_id] = null;
-		document.getElementById(divUnique_id).innerHTML = "";		
+		document.getElementById(divUnique_id).innerHTML = "";
 		//doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&ID_OBPERMOHONAN="+unique_id+"&ID_BIKEHADIRAN="+ID_BIKEHADIRAN+"&divUnique_id="+divUnique_id);
-		doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&divUnique_id="+divUnique_id);	
-	}	
-	
+		doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&divUnique_id="+divUnique_id);
+	}
+
 	if(action=="KEYUP")
 	{
 		flagDahFocusKeyin[divUnique_id] = true;
@@ -5967,27 +5967,27 @@ function getTimeAutoSavePerintah(divUnique_id,action)
 			refreshInterval_showtime[divUnique_id] = null;
 			document.getElementById(divUnique_id).innerHTML = "";
 		}
-		
+
 		var command = "autoSaveKeteranganPerintah";
-		
+
 		if(action=="KEYUP")
 		{
 			var timeAutoSave = 10;//5 minit
-			refreshInterval_showtime[divUnique_id] = setInterval(function(){	
+			refreshInterval_showtime[divUnique_id] = setInterval(function(){
 			timeAutoSave = timeAutoSave-1;
 			document.getElementById(divUnique_id).innerHTML = "<span class=\"blue\">"+timeAutoSave+" saat sebelum 'auto save'</span>";
 			if(timeAutoSave <= 0)
-			{	
+			{
 				window.clearInterval(refreshInterval_showtime[divUnique_id]);
 				refreshInterval_showtime[divUnique_id] = null;
-				doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&divUnique_id="+divUnique_id);	
+				doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&divUnique_id="+divUnique_id);
 			}
-			
+
 			}, 1000);
 		}
 		else if(action=="BLUR")
 		{
-			doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&divUnique_id="+divUnique_id);	
+			doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&divUnique_id="+divUnique_id);
 		}
 		*/
 }
@@ -6002,100 +6002,100 @@ function getTimeAutoSave_ASAL(divUnique_id,unique_id,action,ID_BIKEHADIRAN)
 			refreshInterval_showtime[divUnique_id] = null;
 			document.getElementById(divUnique_id).innerHTML = "";
 		}
-		
+
 		var command = "";
 		if(unique_id=="")
 		{
-			command = "autoSaveKeteranganTuruthadir";		
+			command = "autoSaveKeteranganTuruthadir";
 		}
 		else
 		{
-			command = "autoSaveKeterangan";		
+			command = "autoSaveKeterangan";
 		}
-		
+
 		if(action=="KEYUP")
 		{
 			//alert("masuk");
 			var timeAutoSave = 10;//5 minit
 			//alert("timeAutoSave : "+timeAutoSave);
-			refreshInterval_showtime[divUnique_id] = setInterval(function(){	
+			refreshInterval_showtime[divUnique_id] = setInterval(function(){
 			timeAutoSave = timeAutoSave-1;
 			document.getElementById(divUnique_id).innerHTML = "<span class=\"blue\">"+timeAutoSave+" saat sebelum 'auto save'</span>";
-			
+
 			if(timeAutoSave <= 0)
-			{	
+			{
 				window.clearInterval(refreshInterval_showtime[divUnique_id]);
 				refreshInterval_showtime[divUnique_id] = null;
 				//alert("y : "+refreshInterval_showtime[divUnique_id]);
-						
-				//alert("divUnique_id : "+divUnique_id);			
-				doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&ID_OBPERMOHONAN="+unique_id+"&ID_BIKEHADIRAN="+ID_BIKEHADIRAN+"&divUnique_id="+divUnique_id);	
+
+				//alert("divUnique_id : "+divUnique_id);
+				doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&ID_OBPERMOHONAN="+unique_id+"&ID_BIKEHADIRAN="+ID_BIKEHADIRAN+"&divUnique_id="+divUnique_id);
 			}
-			
+
 			}, 1000);
 		}
 		else if(action=="BLUR")
 		{
 			doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&ID_OBPERMOHONAN="+unique_id+"&ID_BIKEHADIRAN="+ID_BIKEHADIRAN+"&divUnique_id="+divUnique_id);
 		}
-	
+
 }
 
 
 function getTimeAutoSavePerintah_ASAL(divUnique_id,action)
 {
 		console.log("getTimeAutoSavePerintah : "+divUnique_id);
-		
+
 		if (typeof(refreshInterval_showtime[divUnique_id]) != 'undefined' && refreshInterval_showtime[divUnique_id] != null)
 		{
 			window.clearInterval(refreshInterval_showtime[divUnique_id]);
 			refreshInterval_showtime[divUnique_id] = null;
 			document.getElementById(divUnique_id).innerHTML = "";
 		}
-		
+
 		var command = "autoSaveKeteranganPerintah";
-		
+
 		if(action=="KEYUP")
 		{
 			//alert("masuk");
 			var timeAutoSave = 10;//5 minit
 			//alert("timeAutoSave : "+timeAutoSave);
-			refreshInterval_showtime[divUnique_id] = setInterval(function(){	
+			refreshInterval_showtime[divUnique_id] = setInterval(function(){
 			timeAutoSave = timeAutoSave-1;
 			document.getElementById(divUnique_id).innerHTML = "<span class=\"blue\">"+timeAutoSave+" saat sebelum 'auto save'</span>";
-			
+
 			if(timeAutoSave <= 0)
-			{	
+			{
 				window.clearInterval(refreshInterval_showtime[divUnique_id]);
 				refreshInterval_showtime[divUnique_id] = null;
 				//alert("y : "+refreshInterval_showtime[divUnique_id]);
-						
-				//alert("divUnique_id : "+divUnique_id);			
-				doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&divUnique_id="+divUnique_id);	
+
+				//alert("divUnique_id : "+divUnique_id);
+				doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&divUnique_id="+divUnique_id);
 			}
-			
+
 			}, 1000);
 		}
 		else if(action=="BLUR")
 		{
-			doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&divUnique_id="+divUnique_id);	
+			doDivAjaxCall3$formname(divUnique_id,command,'ACTION='+action+"&divUnique_id="+divUnique_id);
 		}
-	
+
 }
 
 
 function janaCatatanPerintah(ID_SIMATI,ID_PERINTAH,ID_PERMOHONAN,ID_PERMOHONANSIMATI,ID_PERBICARAAN,ID_PEMOHON,skrinName)
 {
-	
+
 	//locationJanaCatatan
-	doDivAjaxCall$formname('locationJanaCatatan','janaCatatanPerintah','ID_SIMATI='+ID_SIMATI+'&ID_PERINTAH='+ID_PERINTAH+"&ID_PERMOHONAN="+ID_PERMOHONAN+"&ID_PERMOHONANSIMATI="+ID_PERMOHONANSIMATI+"&ID_PERBICARAAN="+ID_PERBICARAAN+"&ID_PEMOHON="+ID_PEMOHON+"&skrinName="+skrinName);	
+	doDivAjaxCall$formname('locationJanaCatatan','janaCatatanPerintah','ID_SIMATI='+ID_SIMATI+'&ID_PERINTAH='+ID_PERINTAH+"&ID_PERMOHONAN="+ID_PERMOHONAN+"&ID_PERMOHONANSIMATI="+ID_PERMOHONANSIMATI+"&ID_PERBICARAAN="+ID_PERBICARAAN+"&ID_PEMOHON="+ID_PEMOHON+"&skrinName="+skrinName);
 }
 
 function ajaxAutoReSetup(val,loc,id_perbicaraan)
 {
 	//var ID_PERINTAH = document.getElementById("keputusanID_PERINTAH").value;
 	//alert('content : '+val+' loc : '+loc+" ID_PERINTAH :"+ID_PERINTAH);
-	doDivAjaxCall$formname('locationreSetup'+loc,'reSetupCatatanPerintah','ID_PERBICARAAN='+id_perbicaraan+"&FIELD_NAME="+loc);	
+	doDivAjaxCall$formname('locationreSetup'+loc,'reSetupCatatanPerintah','ID_PERBICARAAN='+id_perbicaraan+"&FIELD_NAME="+loc);
 }
 
 function saveBantahan(loc,elem,ID_PERBICARAAN)
@@ -6110,10 +6110,10 @@ function saveBantahan(loc,elem,ID_PERBICARAAN)
 	{
 		VALUE_FLAG_BANTAHAN = "";
 	}
-	
+
 	if(ID_PERBICARAAN != "")
 	{
-		doDivAjaxCall$formname(loc,'saveBantahan','ID_PERBICARAAN='+ID_PERBICARAAN+"&VALUE_FLAG_BANTAHAN="+VALUE_FLAG_BANTAHAN);	
+		doDivAjaxCall$formname(loc,'saveBantahan','ID_PERBICARAAN='+ID_PERBICARAAN+"&VALUE_FLAG_BANTAHAN="+VALUE_FLAG_BANTAHAN);
 	}
 }
 
@@ -6122,7 +6122,7 @@ function saveIntro(loc,val)
 	var ID_PERINTAH = document.getElementById("keputusanID_PERINTAH").value;
 	if(ID_PERINTAH != "")
 	{
-		doDivAjaxCall$formname(loc,'saveIntro','ID_PERINTAH='+ID_PERINTAH+"&ID_INTROPERINTAH="+val);	
+		doDivAjaxCall$formname(loc,'saveIntro','ID_PERINTAH='+ID_PERINTAH+"&ID_INTROPERINTAH="+val);
 	}
 }
 
@@ -6139,7 +6139,7 @@ function setBlank(elem,aktiviti,displayType)
 		{
 			document.getElementById(elem).style.display = displayType;
 			document.getElementById("div"+elem).style.display = displayType;
-			
+
 			var displayTypeSpan = "none";
 			if(displayType=="none")
 			{
@@ -6156,7 +6156,7 @@ function setField(radiValue,field,aktiviti,displayType)
 	var nama_field_input1 = radiValue+field+"FIELD1";
 	var nama_field_input2 = radiValue+field+"FIELD2";
 	var nama_field_input3 = radiValue+field+"FIELD3";
-	
+
 	setBlank(nama_field_input1,aktiviti,displayType);
 	setBlank(nama_field_input2,aktiviti,displayType);
 	setBlank(nama_field_input3,aktiviti,displayType);
@@ -6168,9 +6168,9 @@ function setFieldIntro(id,field,val, size)
 	var element = document.getElementsByName(field+"Radio");
 	//var element_all = document.getElementById(main_check);
 	//alert("element : "+element.length);
-	
+
 	if(element.length > 1)
-	{     
+	{
 		for (i = 0; i < element.length; i++)
 		{
 			var radioValue = element[i].value;
@@ -6183,8 +6183,8 @@ function setFieldIntro(id,field,val, size)
 			{
 				setField(radioValue,field,"display","")
 			}
-			
-		}  
+
+		}
 	}
 	else
 	{
@@ -6197,10 +6197,10 @@ function setFieldIntro(id,field,val, size)
 		else if (element[i].checked == true)
 		{
 			setField(radioValue,field,"display","")
-		}				
+		}
 	}
-	
-	
+
+
 }
 
 /*
@@ -6212,8 +6212,8 @@ function autoReSetup(mainField,tempDiv)
 		 //document.getElementById("keputusanCATATAN").value = '$htmlSkrinMaklumat';
 		 $jquery("#"+mainField).data("wysihtml5").editor.setValue(document.getElementById(tempDiv).innerHTML+"ccccccccccccccc");
 		// $jquery("#"+mainField).data("wysihtml5").editor.focus();
-		 
-		 
+
+
 		// alert('2');
 	});
 }
