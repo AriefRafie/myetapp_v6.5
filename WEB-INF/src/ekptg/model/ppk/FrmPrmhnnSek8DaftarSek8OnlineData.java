@@ -3214,7 +3214,7 @@ public static void simpanCatatanTolak(Hashtable data) throws Exception {
 	    	 stmt.executeUpdate(sql);
 	    	 
 	    } catch (Exception re) {
-	    	myLogger.error("Error: ", re);
+	    	myLogger.error("Error: ", re);  
 	    	throw re;
 	    	}
 	    finally {
