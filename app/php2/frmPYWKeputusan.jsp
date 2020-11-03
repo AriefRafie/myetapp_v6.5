@@ -197,9 +197,10 @@
                 <td>
                 	<input name="txtCagaran" type="text" value="$beanMaklumatPerjanjian.cagaran" $readonly class="$inputTextClass"
                 		onblur="validateCurrency(this,this.value,'$beanMaklumatPerjanjian.cagaran');" />
-                	<!-- #if ($mode == 'view')
-                	<input type="button" name="cmdKeHasil" id="cmdKeHasil" value="Hantar Ke Hasil" onClick="gotoFailHasil()"/>
-                	#end -->
+	                	#if($BeanMaklumatHasil == [])
+			            	<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar Ke Hasil" onClick="doHantarHasil()"/>
+					 	#else
+					 	#end
                 </td>
               </tr>
             </table>
