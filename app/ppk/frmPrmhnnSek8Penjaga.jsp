@@ -624,7 +624,7 @@
 				<tr>
 					<td>Tarikh Perlantikan Penjaga</td>
 					<td>:&nbsp;</td>
-					<td><input name="txdTarikhPerlantikanPenjaga" $disability1 value="$!txdTarikhPerlantikanPenjaga" maxlength="10" size="11" id="$!txdTarikhPerlantikanPenjaga" type="text" />
+					<td><input name="EDITtxdTarikhPerlantikanPenjaga" $disability1 value="$!txdTarikhPerlantikanPenjaga" maxlength="10" size="11" id="$!txdTarikhPerlantikanPenjaga" type="text" />
                 </td>
 				</tr>
 				#if($editable=="yes")
