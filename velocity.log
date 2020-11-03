@@ -1,0 +1,1121 @@
+2020-11-03 11:51:32,413 - *******************************************************************
+2020-11-03 11:51:32,413 - Starting Apache Velocity v1.6.2 (compiled: 2009-02-19 16:29:46)
+2020-11-03 11:51:32,413 - RuntimeInstance initializing.
+2020-11-03 11:51:32,413 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+2020-11-03 11:51:32,414 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogSystem
+2020-11-03 11:51:32,414 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogSystem or necessary supporting classes in classpath.
+2020-11-03 11:51:32,415 - java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Unknown Source)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:64)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:96)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:154)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:255)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:795)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:250)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:589)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:135)
+	at lebah.portal.velocity.VelocityEngineHolder.<init>(VelocityEngineHolder.java:26)
+	at lebah.portal.velocity.VelocityEngineHolder.getInstance(VelocityEngineHolder.java:34)
+	at lebah.portal.velocity.VServlet.initVelocity(VServlet.java:55)
+	at lebah.portal.DesktopController.doBody(DesktopController.java:135)
+	at lebah.portal.DesktopController.doPost(DesktopController.java:85)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:660)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:728)
+	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:470)
+	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:395)
+	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:316)
+	at lebah.portal.handler.DesktopHandler.process(DesktopHandler.java:19)
+	at lebah.portal.InterceptorServlet.service(InterceptorServlet.java:63)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:199)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:543)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:81)
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:690)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:615)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:818)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1627)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1358)
+	at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1180)
+	... 51 more
+
+2020-11-03 11:51:32,427 - Trying to use logger class org.apache.velocity.runtime.log.SimpleLog4JLogSystem
+2020-11-03 11:51:32,427 - LogSystem has been deprecated. Please use a LogChute implementation.
+2020-11-03 11:51:32,431 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2020-11-03 11:51:32,440 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 11:51:32,443 - FileResourceLoader : initialization starting.
+2020-11-03 11:51:32,443 - Do unicode file recognition:  false
+2020-11-03 11:51:32,443 - FileResourceLoader : adding path 'C:\Users\hlai\Desktop\myetapp\myetapp_v7'
+2020-11-03 11:51:32,443 - FileResourceLoader : initialization complete.
+2020-11-03 11:51:32,468 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl) with class java.util.Collections$SynchronizedMap cache map.
+2020-11-03 11:51:32,469 - Default ResourceManager initialization complete.
+2020-11-03 11:51:32,471 - Loaded System Directive: org.apache.velocity.runtime.directive.Define
+2020-11-03 11:51:32,475 - Loaded System Directive: org.apache.velocity.runtime.directive.Break
+2020-11-03 11:51:32,477 - Loaded System Directive: org.apache.velocity.runtime.directive.Evaluate
+2020-11-03 11:51:32,478 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2020-11-03 11:51:32,482 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2020-11-03 11:51:32,486 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2020-11-03 11:51:32,489 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2020-11-03 11:51:32,491 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2020-11-03 11:51:32,553 - Created '20' parsers.
+2020-11-03 11:51:32,588 - Velocimacro : initialization starting.
+2020-11-03 11:51:32,588 - Velocimacro : adding VMs from VM library : VM_global_library.vm
+2020-11-03 11:51:32,656 - ResourceManager : found VM_global_library.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 11:51:32,674 - Velocimacro : VM library registration complete.
+2020-11-03 11:51:32,674 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2020-11-03 11:51:32,674 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2020-11-03 11:51:32,674 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2020-11-03 11:51:32,674 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2020-11-03 11:51:32,674 - Velocimacro : Velocimacro : initialization complete.
+2020-11-03 11:51:32,674 - RuntimeInstance successfully initialized.
+2020-11-03 11:53:32,615 - SimpleLog4JLogSystem initialized using logfile 'C:\Users\hlai\Desktop\myetapp\myetapp_v7\velocity.log'
+2020-11-03 11:53:32,615 - *******************************************************************
+2020-11-03 11:53:32,617 - Starting Apache Velocity v1.6.2 (compiled: 2009-02-19 16:29:46)
+2020-11-03 11:53:32,617 - RuntimeInstance initializing.
+2020-11-03 11:53:32,617 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+2020-11-03 11:53:32,617 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogSystem
+2020-11-03 11:53:32,617 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogSystem or necessary supporting classes in classpath.
+2020-11-03 11:53:32,620 - java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Unknown Source)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:64)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:96)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:154)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:255)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:795)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:250)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:589)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:135)
+	at lebah.portal.velocity.VelocityEngineHolder.<init>(VelocityEngineHolder.java:26)
+	at lebah.portal.velocity.VelocityEngineHolder.getInstance(VelocityEngineHolder.java:34)
+	at lebah.portal.velocity.VServlet.initVelocity(VServlet.java:55)
+	at lebah.portal.DesktopController.doBody(DesktopController.java:135)
+	at lebah.portal.DesktopController.doPost(DesktopController.java:85)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:660)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:728)
+	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:470)
+	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:395)
+	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:316)
+	at lebah.portal.handler.DesktopHandler.process(DesktopHandler.java:19)
+	at lebah.portal.InterceptorServlet.service(InterceptorServlet.java:63)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:199)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:543)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:81)
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:690)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:615)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:818)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1627)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1358)
+	at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1180)
+	... 51 more
+
+2020-11-03 11:53:32,620 - Trying to use logger class org.apache.velocity.runtime.log.SimpleLog4JLogSystem
+2020-11-03 11:53:32,620 - LogSystem has been deprecated. Please use a LogChute implementation.
+2020-11-03 11:53:32,628 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2020-11-03 11:53:32,641 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 11:53:32,645 - FileResourceLoader : initialization starting.
+2020-11-03 11:53:32,645 - Do unicode file recognition:  false
+2020-11-03 11:53:32,645 - FileResourceLoader : adding path 'C:\Users\hlai\Desktop\myetapp\myetapp_v7'
+2020-11-03 11:53:32,645 - FileResourceLoader : initialization complete.
+2020-11-03 11:53:32,692 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl) with class java.util.Collections$SynchronizedMap cache map.
+2020-11-03 11:53:32,692 - Default ResourceManager initialization complete.
+2020-11-03 11:53:32,695 - Loaded System Directive: org.apache.velocity.runtime.directive.Define
+2020-11-03 11:53:32,698 - Loaded System Directive: org.apache.velocity.runtime.directive.Break
+2020-11-03 11:53:32,703 - Loaded System Directive: org.apache.velocity.runtime.directive.Evaluate
+2020-11-03 11:53:32,704 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2020-11-03 11:53:32,708 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2020-11-03 11:53:32,710 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2020-11-03 11:53:32,713 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2020-11-03 11:53:32,715 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2020-11-03 11:53:32,769 - Created '20' parsers.
+2020-11-03 11:53:32,790 - Velocimacro : initialization starting.
+2020-11-03 11:53:32,790 - Velocimacro : adding VMs from VM library : VM_global_library.vm
+2020-11-03 11:53:33,054 - ResourceManager : found VM_global_library.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 11:53:33,056 - Velocimacro : VM library registration complete.
+2020-11-03 11:53:33,056 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2020-11-03 11:53:33,056 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2020-11-03 11:53:33,056 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2020-11-03 11:53:33,056 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2020-11-03 11:53:33,056 - Velocimacro : Velocimacro : initialization complete.
+2020-11-03 11:53:33,056 - RuntimeInstance successfully initialized.
+2020-11-03 12:13:24,080 - SimpleLog4JLogSystem initialized using logfile 'C:\Users\hlai\Desktop\myetapp\myetapp_v7\velocity.log'
+2020-11-03 12:13:24,081 - *******************************************************************
+2020-11-03 12:13:24,081 - Starting Apache Velocity v1.6.2 (compiled: 2009-02-19 16:29:46)
+2020-11-03 12:13:24,081 - RuntimeInstance initializing.
+2020-11-03 12:13:24,081 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+2020-11-03 12:13:24,081 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogSystem
+2020-11-03 12:13:24,081 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogSystem or necessary supporting classes in classpath.
+2020-11-03 12:13:24,088 - java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Unknown Source)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:64)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:96)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:154)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:255)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:795)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:250)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:589)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:135)
+	at lebah.portal.velocity.VelocityEngineHolder.<init>(VelocityEngineHolder.java:26)
+	at lebah.portal.velocity.VelocityEngineHolder.getInstance(VelocityEngineHolder.java:34)
+	at lebah.portal.velocity.VServlet.initVelocity(VServlet.java:55)
+	at lebah.portal.DesktopController.doBody(DesktopController.java:135)
+	at lebah.portal.DesktopController.doPost(DesktopController.java:85)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:660)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:728)
+	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:470)
+	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:395)
+	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:316)
+	at lebah.portal.handler.DesktopHandler.process(DesktopHandler.java:19)
+	at lebah.portal.InterceptorServlet.service(InterceptorServlet.java:63)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:199)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:543)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:81)
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:690)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:615)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:818)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1627)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1358)
+	at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1180)
+	... 51 more
+
+2020-11-03 12:13:24,088 - Trying to use logger class org.apache.velocity.runtime.log.SimpleLog4JLogSystem
+2020-11-03 12:13:24,088 - LogSystem has been deprecated. Please use a LogChute implementation.
+2020-11-03 12:13:24,097 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2020-11-03 12:13:24,106 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:13:24,109 - FileResourceLoader : initialization starting.
+2020-11-03 12:13:24,109 - Do unicode file recognition:  false
+2020-11-03 12:13:24,109 - FileResourceLoader : adding path 'C:\Users\hlai\Desktop\myetapp\myetapp_v7'
+2020-11-03 12:13:24,109 - FileResourceLoader : initialization complete.
+2020-11-03 12:13:24,146 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl) with class java.util.Collections$SynchronizedMap cache map.
+2020-11-03 12:13:24,146 - Default ResourceManager initialization complete.
+2020-11-03 12:13:24,149 - Loaded System Directive: org.apache.velocity.runtime.directive.Define
+2020-11-03 12:13:24,152 - Loaded System Directive: org.apache.velocity.runtime.directive.Break
+2020-11-03 12:13:24,153 - Loaded System Directive: org.apache.velocity.runtime.directive.Evaluate
+2020-11-03 12:13:24,155 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2020-11-03 12:13:24,158 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2020-11-03 12:13:24,161 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2020-11-03 12:13:24,164 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2020-11-03 12:13:24,166 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2020-11-03 12:13:24,210 - Created '20' parsers.
+2020-11-03 12:13:24,230 - Velocimacro : initialization starting.
+2020-11-03 12:13:24,231 - Velocimacro : adding VMs from VM library : VM_global_library.vm
+2020-11-03 12:13:24,295 - ResourceManager : found VM_global_library.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:13:24,297 - Velocimacro : VM library registration complete.
+2020-11-03 12:13:24,297 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2020-11-03 12:13:24,297 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2020-11-03 12:13:24,297 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2020-11-03 12:13:24,297 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2020-11-03 12:13:24,297 - Velocimacro : Velocimacro : initialization complete.
+2020-11-03 12:13:24,297 - RuntimeInstance successfully initialized.
+2020-11-03 12:13:25,898 - ResourceManager : found vtl/main/header.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:13:25,915 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-11-03 12:13:25,918 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-11-03 12:13:25,918 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-11-03 12:13:25,918 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-11-03 12:13:25,925 - ResourceManager : found vtl/main/header_etapp.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:13:26,030 - ResourceManager : found vtl/main/greeting.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:13:26,044 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-11-03 12:13:26,044 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-11-03 12:13:26,044 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-11-03 12:13:26,044 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-11-03 12:13:26,044 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-11-03 12:13:26,044 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-11-03 12:13:26,044 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-11-03 12:13:26,044 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-11-03 12:13:26,044 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-11-03 12:13:26,044 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-11-03 12:13:26,044 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-11-03 12:13:26,054 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-11-03 12:13:26,054 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-11-03 12:13:26,054 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-11-03 12:13:26,054 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-11-03 12:13:26,054 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-11-03 12:13:26,054 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-11-03 12:13:26,054 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-11-03 12:13:26,131 - ResourceManager : found vtl/main/tabber.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:13:26,902 - ResourceManager : found vtl/main/moduler.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:13:29,919 - ResourceManager : found vtl/ajax/ajax_main.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:13:29,981 - ResourceManager : found app/admin/Dashboard/indexDashboard.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:13:29,995 - ResourceManager : found app/admin/Dashboard/dashboard.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:13:30,052 - Null reference [template 'app/admin/Dashboard/dashboard.jsp', line 80, column 1] : $jquery cannot be resolved.
+2020-11-03 12:13:30,053 - Null reference [template 'app/admin/Dashboard/dashboard.jsp', line 121, column 1] : $jquery cannot be resolved.
+2020-11-03 12:13:30,053 - Null reference [template 'app/admin/Dashboard/dashboard.jsp', line 258, column 1] : $jquery cannot be resolved.
+2020-11-03 12:13:30,053 - Null reference [template 'app/admin/Dashboard/dashboard.jsp', line 268, column 1] : $jquery cannot be resolved.
+2020-11-03 12:13:30,053 - Null reference [template 'app/admin/Dashboard/dashboard.jsp', line 278, column 1] : $jquery cannot be resolved.
+2020-11-03 12:13:30,053 - Null reference [template 'app/admin/Dashboard/dashboard.jsp', line 299, column 1] : $jquery cannot be resolved.
+2020-11-03 12:13:30,053 - Null reference [template 'app/admin/Dashboard/dashboard.jsp', line 332, column 1] : $jquery cannot be resolved.
+2020-11-03 12:13:30,053 - Null reference [template 'app/admin/Dashboard/dashboard.jsp', line 343, column 1] : $jquery cannot be resolved.
+2020-11-03 12:13:30,053 - Null reference [template 'app/admin/Dashboard/dashboard.jsp', line 390, column 1] : $jquery cannot be resolved.
+2020-11-03 12:13:30,093 - ResourceManager : found app/pfd/frmPengumuman.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:13:30,105 - Null reference [template 'app/admin/Dashboard/dashboard.jsp', line 556, column 1] : $jquery cannot be resolved.
+2020-11-03 12:13:30,105 - Null reference [template 'app/admin/Dashboard/dashboard.jsp', line 567, column 5] : $jquery cannot be resolved.
+2020-11-03 12:13:30,105 - Null reference [template 'app/admin/Dashboard/dashboard.jsp', line 583, column 5] : $jquery cannot be resolved.
+2020-11-03 12:13:30,483 - Null reference [template 'app/admin/Dashboard/indexDashboard.jsp', line 151, column 29] : $jquery cannot be resolved.
+2020-11-03 12:13:30,483 - Null reference [template 'app/admin/Dashboard/indexDashboard.jsp', line 153, column 9] : $jquery cannot be resolved.
+2020-11-03 12:13:30,522 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-11-03 12:13:30,522 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-11-03 12:13:30,523 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-11-03 12:13:30,523 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-11-03 12:13:30,523 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-11-03 12:13:30,523 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-11-03 12:13:30,523 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-11-03 12:13:30,643 - ResourceManager : found vtl/main/footer.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:13:34,128 - ResourceManager : found vtl/ajax/div_main.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:13:34,746 - ResourceManager : found app/admin/Dashboard/dashboard_tab.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:13:34,750 - Null reference [template 'app/admin/Dashboard/dashboard_tab.jsp', line 100, column 1] : $jquery cannot be resolved.
+2020-11-03 12:13:35,101 - ResourceManager : found app/ppt/dashboard/script.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:13:35,101 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-11-03 12:13:35,581 - ResourceManager : found app/admin/Dashboard/tabStatData.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:13:35,584 - Null reference [template 'app/admin/Dashboard/tabStatData.jsp', line 68, column 1] : $jquery cannot be resolved.
+2020-11-03 12:13:35,584 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-11-03 12:13:46,379 - ResourceManager : found app/admin/Dashboard/SenaraiLogAduan.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:13:46,379 - Null reference [template 'app/admin/Dashboard/SenaraiLogAduan.jsp', line 2, column 3] : $jquery cannot be resolved.
+2020-11-03 12:13:46,379 - Null reference [template 'app/admin/Dashboard/SenaraiLogAduan.jsp', line 3, column 5] : $jquery cannot be resolved.
+2020-11-03 12:13:46,379 - Null reference [template 'app/admin/Dashboard/SenaraiLogAduan.jsp', line 5, column 28] : $jquery cannot be resolved.
+2020-11-03 12:13:46,382 - Left side ($listAktiviti.size()) of '>' operation has null value at app/admin/Dashboard/SenaraiLogAduan.jsp[line 45, column 26]
+2020-11-03 12:13:46,383 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:04,749 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-11-03 12:14:04,749 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-11-03 12:14:04,749 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-11-03 12:14:04,749 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-11-03 12:14:04,751 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:04,751 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-11-03 12:14:04,751 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:04,751 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:04,751 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-11-03 12:14:04,751 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:04,751 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:04,751 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-11-03 12:14:04,751 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:04,751 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:04,751 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-11-03 12:14:04,752 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-11-03 12:14:04,752 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-11-03 12:14:04,752 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-11-03 12:14:04,752 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-11-03 12:14:04,752 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-11-03 12:14:04,752 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:04,752 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:12,885 - ResourceManager : found app/ppk/dashboard.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:14:13,459 - Null reference [template 'app/ppk/dashboard.jsp', line 85, column 1] : $jquery cannot be resolved.
+2020-11-03 12:14:13,459 - Null reference [template 'app/ppk/dashboard.jsp', line 211, column 1] : $jquery cannot be resolved.
+2020-11-03 12:14:13,459 - Null reference [template 'app/ppk/dashboard.jsp', line 221, column 1] : $jquery cannot be resolved.
+2020-11-03 12:14:13,459 - Null reference [template 'app/ppk/dashboard.jsp', line 231, column 1] : $jquery cannot be resolved.
+2020-11-03 12:14:13,459 - Null reference [template 'app/ppk/dashboard.jsp', line 241, column 1] : $jquery cannot be resolved.
+2020-11-03 12:14:13,459 - Null reference [template 'app/ppk/dashboard.jsp', line 262, column 1] : $jquery cannot be resolved.
+2020-11-03 12:14:13,459 - Null reference [template 'app/ppk/dashboard.jsp', line 272, column 1] : $jquery cannot be resolved.
+2020-11-03 12:14:13,459 - Null reference [template 'app/ppk/dashboard.jsp', line 441, column 1] : $jquery cannot be resolved.
+2020-11-03 12:14:13,459 - Null reference [template 'app/ppk/dashboard.jsp', line 452, column 1] : $jquery cannot be resolved.
+2020-11-03 12:14:13,459 - Null reference [template 'app/ppk/dashboard.jsp', line 558, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:13,459 - Null reference [template 'app/ppk/dashboard.jsp', line 574, column 1] : $jquery cannot be resolved.
+2020-11-03 12:14:13,459 - Null reference [template 'app/ppk/dashboard.jsp', line 627, column 1] : $jquery cannot be resolved.
+2020-11-03 12:14:13,459 - Null reference [template 'app/ppk/dashboard.jsp', line 709, column 1] : $jquery cannot be resolved.
+2020-11-03 12:14:13,460 - Null reference [template 'app/ppk/dashboard.jsp', line 763, column 39] : $row cannot be resolved.
+2020-11-03 12:14:13,460 - Null reference [template 'app/ppk/dashboard.jsp', line 764, column 40] : $row cannot be resolved.
+2020-11-03 12:14:13,460 - Null reference [template 'app/ppk/dashboard.jsp', line 769, column 40] : $row cannot be resolved.
+2020-11-03 12:14:13,460 - Null reference [template 'app/ppk/dashboard.jsp', line 773, column 39] : $row cannot be resolved.
+2020-11-03 12:14:13,460 - Null reference [template 'app/ppk/dashboard.jsp', line 774, column 40] : $row cannot be resolved.
+2020-11-03 12:14:13,460 - Null reference [template 'app/ppk/dashboard.jsp', line 779, column 40] : $row cannot be resolved.
+2020-11-03 12:14:13,460 - Null reference [template 'app/ppk/dashboard.jsp', line 783, column 20] : $row cannot be resolved.
+2020-11-03 12:14:13,460 - Null reference [template 'app/ppk/dashboard.jsp', line 784, column 20] : $row cannot be resolved.
+2020-11-03 12:14:13,460 - Null reference [template 'app/ppk/dashboard.jsp', line 789, column 20] : $row cannot be resolved.
+2020-11-03 12:14:13,460 - Null reference [template 'app/ppk/dashboard.jsp', line 795, column 20] : $row cannot be resolved.
+2020-11-03 12:14:13,460 - Null reference [template 'app/ppk/dashboard.jsp', line 796, column 20] : $row cannot be resolved.
+2020-11-03 12:14:13,460 - Null reference [template 'app/ppk/dashboard.jsp', line 801, column 20] : $row cannot be resolved.
+2020-11-03 12:14:13,460 - Null reference [template 'app/ppk/dashboard.jsp', line 807, column 20] : $row cannot be resolved.
+2020-11-03 12:14:13,460 - Null reference [template 'app/ppk/dashboard.jsp', line 808, column 20] : $row cannot be resolved.
+2020-11-03 12:14:13,460 - Null reference [template 'app/ppk/dashboard.jsp', line 813, column 20] : $row cannot be resolved.
+2020-11-03 12:14:13,460 - Null reference [template 'app/ppk/dashboard.jsp', line 819, column 20] : $row cannot be resolved.
+2020-11-03 12:14:13,460 - Null reference [template 'app/ppk/dashboard.jsp', line 820, column 20] : $row cannot be resolved.
+2020-11-03 12:14:13,460 - Null reference [template 'app/ppk/dashboard.jsp', line 825, column 20] : $row cannot be resolved.
+2020-11-03 12:14:13,460 - Null reference [template 'app/ppk/dashboard.jsp', line 883, column 1] : $jquery cannot be resolved.
+2020-11-03 12:14:13,460 - Null reference [template 'app/ppk/dashboard.jsp', line 1063, column 1] : $jquery cannot be resolved.
+2020-11-03 12:14:13,460 - Null reference [template 'app/ppk/dashboard.jsp', line 1071, column 55] : $queryString cannot be resolved.
+2020-11-03 12:14:13,613 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-11-03 12:14:13,613 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-11-03 12:14:13,613 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-11-03 12:14:13,613 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-11-03 12:14:13,613 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-11-03 12:14:13,613 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-11-03 12:14:13,613 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-11-03 12:14:14,556 - ResourceManager : found app/ppk/showNotifikasi_PengesahanNilaian.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:14:14,557 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:15,045 - ResourceManager : found app/ppk/showNotifikasi_Inbox.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:14:15,045 - ResourceManager : found app/ppk/showNotifikasi_BU.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:14:15,045 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:15,045 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:15,221 - ResourceManager : found app/ppk/showNotifikasi_FailLengkap.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:14:15,222 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:15,363 - ResourceManager : found app/ppk/showNotifikasi_Edit.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:14:15,363 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:15,422 - ResourceManager : found app/ppk/dashboard_showKIV_stats.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:14:15,423 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:15,451 - ResourceManager : found app/ppk/showNotifikasi_OnlineS17.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:14:15,451 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:15,521 - ResourceManager : found app/ppk/showNotifikasi_Pindah.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:14:15,521 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:15,768 - ResourceManager : found app/ppk/showNotifikasi_Aduan.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:14:15,768 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:15,934 - ResourceManager : found app/ppk/showNotifikasi_NotisPerbicaraan.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:14:15,934 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:16,044 - ResourceManager : found app/ppk/showNotifikasi_OnlineS8.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:14:16,045 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:19,843 - ResourceManager : found app/ppk/dashboard_showCountMT.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:14:19,844 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:34,974 - ResourceManager : found app/ppk/dashboard_mainstats.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:14:34,974 - Null reference [template 'app/ppk/dashboard_mainstats.jsp', line 62, column 1] : $jquery cannot be resolved.
+2020-11-03 12:14:34,974 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:49,650 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-11-03 12:14:49,650 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-11-03 12:14:49,650 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-11-03 12:14:49,650 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-11-03 12:14:49,652 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:49,652 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-11-03 12:14:49,652 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:49,652 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:49,652 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-11-03 12:14:49,652 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:49,652 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:49,652 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-11-03 12:14:49,653 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:49,653 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:49,653 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-11-03 12:14:49,653 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-11-03 12:14:49,653 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-11-03 12:14:49,653 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-11-03 12:14:49,653 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-11-03 12:14:49,653 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-11-03 12:14:49,653 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:49,654 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,418 - ResourceManager : found app/ppk/BicaraInteraktif/index.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 441, column 3] : $jquery cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 473, column 1] : $jquery cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 587, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 592, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 599, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 642, column 3] : $jquery cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 649, column 78] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 650, column 53] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 650, column 93] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 650, column 120] : $pr.ID_UNITPSK cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 651, column 57] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 651, column 101] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 651, column 128] : $pr.PEG_PENGENDALI cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 652, column 56] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 652, column 99] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 652, column 126] : $pr.TARIKH_BICARA cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 653, column 54] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 653, column 95] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 653, column 122] : $pr.MASA_BICARA cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 654, column 53] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 654, column 93] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 654, column 120] : $pr.BIL_BICARA cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 655, column 50] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 655, column 87] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 655, column 114] : $pr.NO_FAIL cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 656, column 50] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 656, column 87] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 656, column 114] : $pr.ID_FAIL cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 657, column 62] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 657, column 111] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,419 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 657, column 138] : $pr.ID_PERMOHONANSIMATI cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 658, column 52] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 658, column 91] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 658, column 118] : $pr.ID_SIMATI cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 659, column 56] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 659, column 99] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 659, column 126] : $pr.ID_PERMOHONAN cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 660, column 52] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 660, column 91] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 660, column 118] : $pr.ID_STATUS cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 661, column 63] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 661, column 113] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 661, column 140] : $pr.FLAG_JENIS_KEPUTUSAN cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 662, column 57] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 662, column 101] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 662, column 128] : $pr.TOTAL_PERINTAH cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 663, column 57] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 663, column 101] : $pr.ID_PERBICARAAN cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 663, column 128] : $pr.MAX_BIL_BICARA cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 840, column 57] : $pr.ID_TUKARPEGAWAI cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 840, column 103] : $pr.ID_TUKARPEGAWAI cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 840, column 131] : $pr.ID_PEGAWAIBARU cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 841, column 59] : $pr.ID_TUKARPEGAWAI cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 841, column 111] : $pr.ID_TUKARPEGAWAI cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 841, column 139] : $pr.ID_NEGERIPEGAWAIBARU cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1097, column 11] : $jquery cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1227, column 29] : $jquery cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1235, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1238, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1239, column 29] : $jquery cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1242, column 11] : $jquery cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1247, column 1] : $jquery.fn.scrollView cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1249, column 5] : $jquery cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1250, column 18] : $jquery cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1258, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1259, column 11] : $jquery cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1266, column 21] : $jquery cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1268, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1280, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,420 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1285, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1290, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1295, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1296, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1301, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1307, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1308, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1309, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1310, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1312, column 31] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1314, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1315, column 11] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1316, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1317, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1318, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1319, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1363, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1365, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1371, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1373, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1382, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1384, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1390, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1392, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1403, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1410, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1412, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1413, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1426, column 20] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1444, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1446, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1464, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1466, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1473, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1477, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,421 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1479, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1485, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1489, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1499, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1501, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1509, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1511, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1522, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1528, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1538, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1540, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1549, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1551, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1557, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1559, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1560, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1561, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1570, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1572, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1603, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1605, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1632, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1637, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1644, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1650, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1655, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1662, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1668, column 11] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1669, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1675, column 11] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1677, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1682, column 11] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1683, column 11] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1685, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1691, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1692, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1693, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1697, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1698, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,422 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1699, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1751, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1752, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1834, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1899, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 1900, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2117, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2150, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2232, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2233, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2238, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2377, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2378, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2386, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2389, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2399, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2403, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2416, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2420, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2433, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2437, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2450, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2454, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2465, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2467, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2471, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,423 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2482, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2499, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2516, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2533, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2550, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2567, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2584, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2590, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2597, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2683, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2684, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2685, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2686, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2712, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2713, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2714, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2715, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2742, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2743, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2744, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2745, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2957, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 2988, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5340, column 1] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5341, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5366, column 31] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5377, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5456, column 82] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5472, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5473, column 26] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5478, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5523, column 27] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5525, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,424 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5526, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5545, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5545, column 115] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5552, column 29] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5568, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5568, column 115] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5569, column 29] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5585, column 44] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5586, column 44] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5589, column 33] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5589, column 123] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5591, column 29] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5603, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5605, column 47] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5606, column 19] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5606, column 109] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5607, column 19] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5608, column 19] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5609, column 19] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5610, column 19] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5616, column 20] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5624, column 19] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5625, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5626, column 19] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5627, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5628, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5634, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5635, column 19] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5636, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5648, column 19] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5649, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5650, column 27] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5651, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5652, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5658, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5659, column 27] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5660, column 17] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5672, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,425 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 5675, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,427 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 6131, column 12] : $jquery cannot be resolved.
+2020-11-03 12:14:58,427 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 6136, column 25] : $jquery cannot be resolved.
+2020-11-03 12:14:58,427 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 6210, column 9] : $jquery cannot be resolved.
+2020-11-03 12:14:58,427 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 6213, column 18] : $jquery cannot be resolved.
+2020-11-03 12:14:58,427 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 6214, column 20] : $jquery cannot be resolved.
+2020-11-03 12:14:58,427 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 6223, column 1] : $jquery cannot be resolved.
+2020-11-03 12:14:58,427 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 6224, column 21] : $jquery cannot be resolved.
+2020-11-03 12:14:58,428 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 6225, column 3] : $jquery cannot be resolved.
+2020-11-03 12:14:58,428 - Null reference [template 'app/ppk/BicaraInteraktif/index.jsp', line 6225, column 39] : $jquery cannot be resolved.
+2020-11-03 12:14:58,606 - ResourceManager : found app/ppk/headerppk_script.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:14:58,607 - Null reference [template 'app/ppk/headerppk_script.jsp', line 7, column 27] : $jquery cannot be resolved.
+2020-11-03 12:14:58,607 - Null reference [template 'app/ppk/headerppk_script.jsp', line 15, column 27] : $jquery cannot be resolved.
+2020-11-03 12:14:58,607 - Null reference [template 'app/ppk/headerppk_script.jsp', line 27, column 27] : $jquery cannot be resolved.
+2020-11-03 12:14:58,607 - Null reference [template 'app/ppk/headerppk_script.jsp', line 33, column 27] : $jquery cannot be resolved.
+2020-11-03 12:14:58,607 - Null reference [template 'app/ppk/headerppk_script.jsp', line 50, column 11] : $jquery cannot be resolved.
+2020-11-03 12:14:58,607 - Null reference [template 'app/ppk/headerppk_script.jsp', line 58, column 11] : $jquery cannot be resolved.
+2020-11-03 12:14:58,607 - Null reference [template 'app/ppk/headerppk_script.jsp', line 683, column 1] : $jquery cannot be resolved.
+2020-11-03 12:14:58,617 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-11-03 12:14:58,618 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-11-03 12:14:58,618 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-11-03 12:14:58,618 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-11-03 12:14:58,618 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-11-03 12:14:58,618 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-11-03 12:14:58,618 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-11-03 12:16:01,950 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-11-03 12:16:01,950 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-11-03 12:16:01,950 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-11-03 12:16:01,950 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-11-03 12:16:01,951 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-11-03 12:16:01,951 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-11-03 12:16:01,951 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-11-03 12:16:01,951 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-11-03 12:16:01,951 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-11-03 12:16:01,951 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-11-03 12:16:01,951 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-11-03 12:16:01,951 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-11-03 12:16:01,951 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-11-03 12:16:01,951 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-11-03 12:16:01,952 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-11-03 12:16:01,952 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-11-03 12:16:01,952 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-11-03 12:16:01,952 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-11-03 12:16:01,952 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-11-03 12:16:01,952 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-11-03 12:16:01,952 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-11-03 12:16:01,952 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-11-03 12:17:00,996 - ResourceManager : found app/ppk/BicaraInteraktif/listPerbicaraan.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:17:00,997 - Null reference [template 'app/ppk/BicaraInteraktif/listPerbicaraan.jsp', line 24, column 123] : $CT_NO_FAIL cannot be resolved.
+2020-11-03 12:17:00,997 - Null reference [template 'app/ppk/BicaraInteraktif/listPerbicaraan.jsp', line 35, column 132] : $CT_NAMA_SIMATI cannot be resolved.
+2020-11-03 12:17:00,997 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-11-03 12:17:07,809 - ResourceManager : found app/ppk/frmPrmhnnSek8SenaraiSemakDaftar.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:17:07,826 - ResourceManager : found app/ppk/bil_fail.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:17:07,827 - Could not determine type of iterator in #foreach loop at app/ppk/frmPrmhnnSek8SenaraiSemakDaftar.jsp[line 167, column 4]
+2020-11-03 12:17:07,827 - Null reference [template 'app/ppk/frmPrmhnnSek8SenaraiSemakDaftar.jsp', line 205, column 48] : $id_Simati cannot be resolved.
+2020-11-03 12:17:07,827 - Null reference [template 'app/ppk/frmPrmhnnSek8SenaraiSemakDaftar.jsp', line 208, column 47] : $id_Simati cannot be resolved.
+2020-11-03 12:17:07,827 - Null reference [template 'app/ppk/frmPrmhnnSek8SenaraiSemakDaftar.jsp', line 210, column 48] : $idPemohon cannot be resolved.
+2020-11-03 12:17:07,827 - Left side ($listsept.size()) of '>' operation has null value at app/ppk/frmPrmhnnSek8SenaraiSemakDaftar.jsp[line 380, column 34]
+2020-11-03 12:17:07,827 - Null reference [template 'app/ppk/frmPrmhnnSek8SenaraiSemakDaftar.jsp', line 689, column 43] : $userid cannot be resolved.
+2020-11-03 12:17:40,328 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-11-03 12:17:40,328 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-11-03 12:17:40,328 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-11-03 12:17:40,328 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-11-03 12:17:40,329 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-11-03 12:17:40,329 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-11-03 12:17:40,329 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-11-03 12:17:40,329 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-11-03 12:17:40,329 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-11-03 12:17:40,329 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-11-03 12:17:40,329 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-11-03 12:17:40,329 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-11-03 12:17:40,329 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-11-03 12:17:40,329 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-11-03 12:17:40,329 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-11-03 12:17:40,329 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-11-03 12:17:40,329 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-11-03 12:17:40,329 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-11-03 12:17:40,329 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-11-03 12:17:40,329 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-11-03 12:17:40,329 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-11-03 12:17:40,329 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-11-03 12:17:49,587 - ResourceManager : found vtl/main/module_title.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:17:49,587 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-11-03 12:20:37,001 - ResourceManager : found app/ppk/dashboard_tab.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:20:37,038 - ResourceManager : found app/ppk/frmPengumuman.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:20:37,039 - Null reference [template 'app/ppk/dashboard_tab.jsp', line 63, column 9] : $jquery cannot be resolved.
+2020-11-03 12:20:37,039 - Null reference [template 'vtl/ajax/div_main.vm', line 5, column 9] : $jquery cannot be resolved.
+2020-11-03 12:20:41,295 - ResourceManager : found app/ppk/frmSenaraiFailPusakaKecil.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:20:42,745 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-11-03 12:20:42,745 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-11-03 12:20:42,745 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-11-03 12:20:42,745 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-11-03 12:20:42,747 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-11-03 12:20:42,747 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-11-03 12:20:42,747 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-11-03 12:20:42,747 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-11-03 12:20:42,747 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-11-03 12:20:42,747 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-11-03 12:20:42,747 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-11-03 12:20:42,747 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-11-03 12:20:42,747 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-11-03 12:20:42,747 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-11-03 12:20:42,747 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-11-03 12:20:42,747 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-11-03 12:20:42,747 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-11-03 12:20:42,747 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-11-03 12:20:42,747 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-11-03 12:20:42,747 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-11-03 12:20:42,747 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-11-03 12:20:42,747 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-11-03 12:20:43,184 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-11-03 12:27:58,130 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-11-03 12:27:58,130 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-11-03 12:27:58,130 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-11-03 12:27:58,130 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-11-03 12:27:58,132 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-11-03 12:27:58,132 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-11-03 12:27:58,132 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-11-03 12:27:58,132 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-11-03 12:27:58,132 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-11-03 12:27:58,132 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-11-03 12:27:58,132 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-11-03 12:27:58,132 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-11-03 12:27:58,134 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-11-03 12:27:58,134 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-11-03 12:27:58,134 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-11-03 12:27:58,134 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-11-03 12:27:58,134 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-11-03 12:27:58,134 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-11-03 12:27:58,134 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-11-03 12:27:58,134 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-11-03 12:27:58,134 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-11-03 12:27:58,134 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-11-03 12:28:00,383 - ResourceManager : found app/ppk/frmSenaraiFailSek8ForView.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:28:00,384 - Left side ($!carianrekod) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. app/ppk/frmSenaraiFailSek8ForView.jsp[line 80, column 22]
+2020-11-03 12:28:00,402 - ResourceManager : found app/ppk/tag_baru.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:28:00,402 - Null reference [template 'app/ppk/headerppk_script.jsp', line 7, column 27] : $jquery cannot be resolved.
+2020-11-03 12:28:00,402 - Null reference [template 'app/ppk/headerppk_script.jsp', line 15, column 27] : $jquery cannot be resolved.
+2020-11-03 12:28:00,402 - Null reference [template 'app/ppk/headerppk_script.jsp', line 27, column 27] : $jquery cannot be resolved.
+2020-11-03 12:28:00,402 - Null reference [template 'app/ppk/headerppk_script.jsp', line 33, column 27] : $jquery cannot be resolved.
+2020-11-03 12:28:00,402 - Null reference [template 'app/ppk/headerppk_script.jsp', line 50, column 11] : $jquery cannot be resolved.
+2020-11-03 12:28:00,402 - Null reference [template 'app/ppk/headerppk_script.jsp', line 58, column 11] : $jquery cannot be resolved.
+2020-11-03 12:28:00,402 - Null reference [template 'app/ppk/headerppk_script.jsp', line 271, column 1] : $jquery cannot be resolved.
+2020-11-03 12:28:01,493 - Null reference [template 'app/ppk/frmSenaraiFailSek8ForView.jsp', line 826, column 14] : $jquery cannot be resolved.
+2020-11-03 12:28:01,493 - Null reference [template 'app/ppk/frmSenaraiFailSek8ForView.jsp', line 832, column 12] : $jquery cannot be resolved.
+2020-11-03 12:28:01,493 - Null reference [template 'app/ppk/frmSenaraiFailSek8ForView.jsp', line 838, column 12] : $jquery cannot be resolved.
+2020-11-03 12:28:01,493 - Null reference [template 'app/ppk/frmSenaraiFailSek8ForView.jsp', line 846, column 1] : $jquery cannot be resolved.
+2020-11-03 12:28:01,493 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-11-03 12:28:01,493 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-11-03 12:28:01,493 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-11-03 12:28:01,494 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-11-03 12:28:01,494 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-11-03 12:28:01,494 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-11-03 12:28:01,494 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-11-03 12:28:29,739 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-11-03 12:28:29,739 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-11-03 12:28:29,739 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-11-03 12:28:29,739 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-11-03 12:28:29,740 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-11-03 12:28:29,740 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-11-03 12:28:29,740 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-11-03 12:28:29,740 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-11-03 12:28:29,740 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-11-03 12:28:29,740 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-11-03 12:28:29,740 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-11-03 12:28:29,740 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-11-03 12:28:29,740 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-11-03 12:28:29,740 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-11-03 12:28:29,740 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-11-03 12:28:29,740 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-11-03 12:28:29,740 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-11-03 12:28:29,740 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-11-03 12:28:29,740 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-11-03 12:28:29,740 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-11-03 12:28:29,740 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-11-03 12:28:29,740 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-11-03 12:28:30,545 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-11-03 12:28:36,547 - ResourceManager : found app/ppk/frmPrmhnnSek8SenaraiSemakDaftarKutipan.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:28:36,548 - Could not determine type of iterator in #foreach loop at app/ppk/frmPrmhnnSek8SenaraiSemakDaftarKutipan.jsp[line 165, column 4]
+2020-11-03 12:28:36,548 - Could not determine type of iterator in #foreach loop at app/ppk/frmPrmhnnSek8SenaraiSemakDaftarKutipan.jsp[line 196, column 3]
+2020-11-03 12:28:36,548 - Null reference [template 'app/ppk/frmPrmhnnSek8SenaraiSemakDaftarKutipan.jsp', line 201, column 48] : $id_Simati cannot be resolved.
+2020-11-03 12:28:36,548 - Null reference [template 'app/ppk/frmPrmhnnSek8SenaraiSemakDaftarKutipan.jsp', line 204, column 47] : $id_Simati cannot be resolved.
+2020-11-03 12:28:36,548 - Null reference [template 'app/ppk/frmPrmhnnSek8SenaraiSemakDaftarKutipan.jsp', line 206, column 48] : $idPemohon cannot be resolved.
+2020-11-03 12:28:36,548 - Left side ($list2.size()) of '>' operation has null value at app/ppk/frmPrmhnnSek8SenaraiSemakDaftarKutipan.jsp[line 344, column 28]
+2020-11-03 12:28:36,548 - Null reference [template 'app/ppk/frmPrmhnnSek8SenaraiSemakDaftarKutipan.jsp', line 573, column 43] : $userid cannot be resolved.
+2020-11-03 12:28:37,635 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-11-03 12:28:37,636 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-11-03 12:28:37,636 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-11-03 12:28:37,636 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-11-03 12:28:37,637 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-11-03 12:28:37,637 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-11-03 12:28:37,637 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-11-03 12:28:37,637 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-11-03 12:28:37,637 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-11-03 12:28:37,637 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-11-03 12:28:37,637 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-11-03 12:28:37,637 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-11-03 12:28:37,637 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-11-03 12:28:37,637 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-11-03 12:28:37,637 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-11-03 12:28:37,637 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-11-03 12:28:37,637 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-11-03 12:28:37,637 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-11-03 12:28:37,637 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-11-03 12:28:37,637 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-11-03 12:28:37,637 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-11-03 12:28:37,637 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-11-03 12:28:38,932 - ResourceManager : found app/meps/dashboard.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:28:38,952 - ResourceManager : found app/meps/frmPengumuman.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:28:40,848 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-11-03 12:28:40,848 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-11-03 12:28:40,848 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-11-03 12:28:40,848 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-11-03 12:28:40,848 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-11-03 12:28:40,848 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-11-03 12:28:40,848 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-11-03 12:28:44,831 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-11-03 12:28:44,831 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-11-03 12:28:44,831 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-11-03 12:28:44,831 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-11-03 12:28:44,832 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-11-03 12:28:44,832 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-11-03 12:28:44,832 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-11-03 12:28:44,832 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-11-03 12:28:44,832 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-11-03 12:28:44,832 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-11-03 12:28:44,832 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-11-03 12:28:44,832 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-11-03 12:28:44,832 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-11-03 12:28:44,832 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-11-03 12:28:44,832 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-11-03 12:28:44,833 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-11-03 12:28:44,833 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-11-03 12:28:44,833 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-11-03 12:28:44,833 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-11-03 12:28:44,833 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-11-03 12:28:44,833 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-11-03 12:28:44,833 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-11-03 12:45:38,547 - ResourceManager : found app/meps/ppk/LaporanJumlahPermohonanNegeri.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 12:45:38,548 - Null reference [template 'app/meps/ppk/LaporanJumlahPermohonanNegeri.jsp', line 59, column 36] : $internalType cannot be resolved.
+2020-11-03 12:45:38,548 - Null reference [template 'app/meps/ppk/LaporanJumlahPermohonanNegeri.jsp', line 59, column 49] : $viewPengguna.USER_ID cannot be resolved.
+2020-11-03 12:45:38,558 - Null reference [template 'app/meps/ppk/LaporanJumlahPermohonanNegeri.jsp', line 359, column 37] : $xml cannot be resolved.
+2020-11-03 12:45:38,558 - Null reference [template 'app/meps/ppk/LaporanJumlahPermohonanNegeri.jsp', line 383, column 9] : $jquery cannot be resolved.
+2020-11-03 12:45:38,558 - Null reference [template 'app/meps/ppk/LaporanJumlahPermohonanNegeri.jsp', line 400, column 29] : $id_tahunDari cannot be resolved.
+2020-11-03 12:45:38,558 - Null reference [template 'app/meps/ppk/LaporanJumlahPermohonanNegeri.jsp', line 401, column 31] : $id_tahunHingga cannot be resolved.
+2020-11-03 12:45:38,558 - Null reference [template 'app/meps/ppk/LaporanJumlahPermohonanNegeri.jsp', line 402, column 29] : $id_bulanDari cannot be resolved.
+2020-11-03 12:45:38,558 - Null reference [template 'app/meps/ppk/LaporanJumlahPermohonanNegeri.jsp', line 403, column 31] : $id_bulanHingga cannot be resolved.
+2020-11-03 12:45:38,558 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-11-03 12:45:38,558 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-11-03 12:45:38,558 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-11-03 12:45:38,558 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-11-03 12:45:38,558 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-11-03 12:45:38,558 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-11-03 12:45:38,558 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.
+2020-11-03 12:45:39,914 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-11-03 12:45:39,914 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-11-03 12:45:39,914 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-11-03 12:45:39,914 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-11-03 12:45:39,915 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-11-03 12:45:39,915 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-11-03 12:45:39,915 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-11-03 12:45:39,915 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-11-03 12:45:39,915 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-11-03 12:45:39,915 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-11-03 12:45:39,915 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-11-03 12:45:39,915 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-11-03 12:45:39,915 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-11-03 12:45:39,915 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-11-03 12:45:39,915 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-11-03 12:45:39,915 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-11-03 12:45:39,915 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-11-03 12:45:39,915 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-11-03 12:45:39,915 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-11-03 12:45:39,915 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-11-03 12:45:39,915 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-11-03 12:45:39,915 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-11-03 16:30:36,284 - SimpleLog4JLogSystem initialized using logfile 'C:\Users\hlai\Desktop\myetapp\myetapp_v7\velocity.log'
+2020-11-03 16:30:36,286 - *******************************************************************
+2020-11-03 16:30:36,287 - Starting Apache Velocity v1.6.2 (compiled: 2009-02-19 16:29:46)
+2020-11-03 16:30:36,287 - RuntimeInstance initializing.
+2020-11-03 16:30:36,287 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+2020-11-03 16:30:36,287 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogSystem
+2020-11-03 16:30:36,287 - Couldn't find class org.apache.velocity.runtime.log.AvalonLogSystem or necessary supporting classes in classpath.
+2020-11-03 16:30:36,288 - java.lang.NoClassDefFoundError: org/apache/log/format/Formatter
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Unknown Source)
+	at org.apache.velocity.util.ClassUtils.getClass(ClassUtils.java:64)
+	at org.apache.velocity.util.ClassUtils.getNewInstance(ClassUtils.java:96)
+	at org.apache.velocity.runtime.log.LogManager.createLogChute(LogManager.java:154)
+	at org.apache.velocity.runtime.log.LogManager.updateLog(LogManager.java:255)
+	at org.apache.velocity.runtime.RuntimeInstance.initializeLog(RuntimeInstance.java:795)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:250)
+	at org.apache.velocity.runtime.RuntimeInstance.init(RuntimeInstance.java:589)
+	at org.apache.velocity.app.VelocityEngine.init(VelocityEngine.java:135)
+	at lebah.portal.velocity.VelocityEngineHolder.<init>(VelocityEngineHolder.java:26)
+	at lebah.portal.velocity.VelocityEngineHolder.getInstance(VelocityEngineHolder.java:34)
+	at lebah.portal.velocity.VServlet.initVelocity(VServlet.java:55)
+	at lebah.portal.DesktopController.doBody(DesktopController.java:135)
+	at lebah.portal.DesktopController.doPost(DesktopController.java:85)
+	at lebah.portal.DesktopController.doGet(DesktopController.java:78)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.ApplicationDispatcher.invoke(ApplicationDispatcher.java:728)
+	at org.apache.catalina.core.ApplicationDispatcher.processRequest(ApplicationDispatcher.java:470)
+	at org.apache.catalina.core.ApplicationDispatcher.doForward(ApplicationDispatcher.java:395)
+	at org.apache.catalina.core.ApplicationDispatcher.forward(ApplicationDispatcher.java:316)
+	at lebah.portal.handler.DesktopHandler.process(DesktopHandler.java:19)
+	at lebah.portal.InterceptorServlet.service(InterceptorServlet.java:63)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:199)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:543)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:81)
+	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:690)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:87)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:615)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:818)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1627)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.ClassNotFoundException: org.apache.log.format.Formatter
+	at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1358)
+	at org.apache.catalina.loader.WebappClassLoaderBase.loadClass(WebappClassLoaderBase.java:1180)
+	... 52 more
+
+2020-11-03 16:30:36,288 - Trying to use logger class org.apache.velocity.runtime.log.SimpleLog4JLogSystem
+2020-11-03 16:30:36,288 - LogSystem has been deprecated. Please use a LogChute implementation.
+2020-11-03 16:30:36,293 - Default ResourceManager initializing. (class org.apache.velocity.runtime.resource.ResourceManagerImpl)
+2020-11-03 16:30:36,304 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 16:30:36,308 - FileResourceLoader : initialization starting.
+2020-11-03 16:30:36,308 - Do unicode file recognition:  false
+2020-11-03 16:30:36,308 - FileResourceLoader : adding path 'C:\Users\hlai\Desktop\myetapp\myetapp_v7'
+2020-11-03 16:30:36,308 - FileResourceLoader : initialization complete.
+2020-11-03 16:30:36,358 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl) with class java.util.Collections$SynchronizedMap cache map.
+2020-11-03 16:30:36,358 - Default ResourceManager initialization complete.
+2020-11-03 16:30:36,362 - Loaded System Directive: org.apache.velocity.runtime.directive.Define
+2020-11-03 16:30:36,365 - Loaded System Directive: org.apache.velocity.runtime.directive.Break
+2020-11-03 16:30:36,368 - Loaded System Directive: org.apache.velocity.runtime.directive.Evaluate
+2020-11-03 16:30:36,370 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2020-11-03 16:30:36,373 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2020-11-03 16:30:36,378 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2020-11-03 16:30:36,381 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2020-11-03 16:30:36,385 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2020-11-03 16:30:36,429 - Created '20' parsers.
+2020-11-03 16:30:36,448 - Velocimacro : initialization starting.
+2020-11-03 16:30:36,448 - Velocimacro : adding VMs from VM library : VM_global_library.vm
+2020-11-03 16:30:36,506 - ResourceManager : found VM_global_library.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 16:30:36,508 - Velocimacro : VM library registration complete.
+2020-11-03 16:30:36,508 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2020-11-03 16:30:36,508 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2020-11-03 16:30:36,508 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2020-11-03 16:30:36,508 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2020-11-03 16:30:36,508 - Velocimacro : Velocimacro : initialization complete.
+2020-11-03 16:30:36,508 - RuntimeInstance successfully initialized.
+2020-11-03 16:30:39,215 - ResourceManager : found vtl/main/header.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 16:30:39,224 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-11-03 16:30:39,225 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-11-03 16:30:39,225 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-11-03 16:30:39,226 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-11-03 16:30:39,227 - Left side (${session.getAttribute("_portal_islogin")}) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/header.vm[line 42, column 52]
+2020-11-03 16:30:39,233 - ResourceManager : found vtl/main/header_etapp.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 16:30:39,368 - ResourceManager : found vtl/main/tabber.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 16:30:39,382 - Left side (${session.getAttribute("_portal_action")}) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/tabber.vm[line 17, column 98]
+2020-11-03 16:30:39,384 - Left side (${session.getAttribute("_portal_action")}) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/tabber.vm[line 17, column 98]
+2020-11-03 16:30:39,569 - ResourceManager : found vtl/main/module_title.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 16:30:39,570 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-11-03 16:30:39,586 - ResourceManager : found app/utils/OnlineLogin.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 16:30:39,757 - Left side ($showLangkah) of '==' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/main/module_title.vm[line 5, column 21]
+2020-11-03 16:30:39,783 - ResourceManager : found app/blankSessionOut.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 16:30:39,819 - ResourceManager : found vtl/main/footer.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 16:31:35,354 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 15, column 1]
+2020-11-03 16:31:35,355 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 28, column 1]
+2020-11-03 16:31:35,355 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 29, column 1]
+2020-11-03 16:31:35,355 - RHS of #set statement is null. Context will not be modified. vtl/main/header.vm[line 37, column 1]
+2020-11-03 16:31:35,470 - ResourceManager : found vtl/main/greeting.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 16:31:35,478 - Null reference [template 'vtl/main/greeting.vm', line 94, column 17] : $jquery cannot be resolved.
+2020-11-03 16:31:35,478 - Null reference [template 'vtl/main/greeting.vm', line 120, column 13] : $jquery cannot be resolved.
+2020-11-03 16:31:35,478 - Null reference [template 'vtl/main/greeting.vm', line 121, column 9] : $jquery cannot be resolved.
+2020-11-03 16:31:35,478 - Null reference [template 'vtl/main/greeting.vm', line 124, column 17] : $jquery cannot be resolved.
+2020-11-03 16:31:35,478 - Null reference [template 'vtl/main/greeting.vm', line 124, column 47] : $jquery cannot be resolved.
+2020-11-03 16:31:35,478 - Null reference [template 'vtl/main/greeting.vm', line 125, column 9] : $jquery cannot be resolved.
+2020-11-03 16:31:35,478 - Null reference [template 'vtl/main/greeting.vm', line 126, column 9] : $jquery cannot be resolved.
+2020-11-03 16:31:35,479 - Null reference [template 'vtl/main/greeting.vm', line 130, column 5] : $jquery cannot be resolved.
+2020-11-03 16:31:35,479 - Null reference [template 'vtl/main/greeting.vm', line 131, column 9] : $jquery cannot be resolved.
+2020-11-03 16:31:35,479 - Null reference [template 'vtl/main/greeting.vm', line 132, column 9] : $jquery cannot be resolved.
+2020-11-03 16:31:35,479 - Null reference [template 'vtl/main/greeting.vm', line 239, column 163] : $viewPengguna cannot be resolved.
+2020-11-03 16:31:35,485 - Null reference [template 'vtl/main/greeting.vm', line 618, column 19] : $jquery cannot be resolved.
+2020-11-03 16:31:35,485 - Null reference [template 'vtl/main/greeting.vm', line 657, column 35] : $jquery cannot be resolved.
+2020-11-03 16:31:35,485 - Null reference [template 'vtl/main/greeting.vm', line 688, column 33] : $jquery cannot be resolved.
+2020-11-03 16:31:35,485 - Null reference [template 'vtl/main/greeting.vm', line 731, column 33] : $jquery cannot be resolved.
+2020-11-03 16:31:35,485 - Null reference [template 'vtl/main/greeting.vm', line 736, column 33] : $jquery cannot be resolved.
+2020-11-03 16:31:35,485 - Null reference [template 'vtl/main/greeting.vm', line 799, column 25] : $jquery cannot be resolved.
+2020-11-03 16:31:35,485 - Null reference [template 'vtl/main/greeting.vm', line 801, column 25] : $jquery cannot be resolved.
+2020-11-03 16:31:35,781 - ResourceManager : found vtl/main/moduler.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 16:31:37,118 - ResourceManager : found vtl/ajax/ajax_main.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 16:31:37,226 - ResourceManager : found app/php2/PYWDashboard.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 16:31:37,280 - ResourceManager : found app/ppk/frmPengumuman.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 16:31:37,478 - ResourceManager : found app/integrasi/gis/javaScript.jsp with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2020-11-03 16:31:37,479 - Null reference [template 'app/integrasi/gis/javaScript.jsp', line 10, column 26] : $gisURL cannot be resolved.
+2020-11-03 16:31:37,479 - Null reference [template 'vtl/ajax/ajax_main.vm', line 26, column 1] : $jquery cannot be resolved.
+2020-11-03 16:31:37,479 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 36, column 25]
+2020-11-03 16:31:37,479 - Null reference [template 'vtl/ajax/ajax_main.vm', line 37, column 73] : $queryString cannot be resolved.
+2020-11-03 16:31:37,479 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 50, column 25]
+2020-11-03 16:31:37,479 - Null reference [template 'vtl/ajax/ajax_main.vm', line 52, column 78] : $queryString cannot be resolved.
+2020-11-03 16:31:37,479 - Left side ($queryString) of '!=' operation has null value. If it is a reference, it may not be in the context or its toString() returned null. vtl/ajax/ajax_main.vm[line 64, column 25]
+2020-11-03 16:31:37,479 - Null reference [template 'vtl/ajax/ajax_main.vm', line 65, column 34] : $queryString cannot be resolved.

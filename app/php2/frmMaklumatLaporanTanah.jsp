@@ -254,16 +254,6 @@ function kemaskini() {
 		document.${formName}.txdTarikhLawatan.focus(); 
 		return; 
 	}
-	if(document.${formName}.txdTarikhLawatan.value == ""){
-		alert('Sila masukkan Tarikh Lawatan.');
-		document.${formName}.txdTarikhLawatan.focus(); 
-		return; 
-	}
-	if(document.${formName}.socFlagLawatan.value == ""){
-		alert('Sila pilih Lawatan Tapak Oleh.');
-		document.${formName}.socFlagLawatan.focus(); 
-		return; 
-	}
 	if(document.${formName}.txtTujuanLaporan.value == ""){
 		alert('Sila masukkan Tujuan Laporan.');
 		document.${formName}.txtTujuanLaporan.focus(); 

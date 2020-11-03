@@ -3207,14 +3207,14 @@ public static void simpanCatatanTolak(Hashtable data) throws Exception {
 	    	 r.add("id_status","150");
 	    	 r.add("tarikh_kemaskini",r.unquote("sysdate"));
 		     r.add("id_kemaskini",id_user);
-		     r.add("FLAG_PERMOHONANDIKEMBALIKAN","Y");
+		     r.add("FLAG_PERMOHONANDIKEMBALIKAN","1");
 		     
 	    	 sql = r.getSQLUpdate("Tblppkpermohonan");
 	    	 myLogger.info("simpanCatatanTolak: "+ sql);
 	    	 stmt.executeUpdate(sql);
 	    	 
 	    } catch (Exception re) {
-	    	myLogger.error("Error: ", re);
+	    	myLogger.error("Error: ", re);  
 	    	throw re;
 	    	}
 	    finally {
