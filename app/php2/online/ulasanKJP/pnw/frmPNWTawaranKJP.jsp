@@ -171,7 +171,7 @@ function paparFail(idFail,idStatus) {
 	doAjaxCall${formName}("");
 }
 function kembali() {
-	alert('baca kembali frmPNWTawaranKJP');
+	//alert('baca kembali frmPNWTawaranKJP');
 	document.${formName}.flagPopup.value = "carian";
 	doAjaxCall${formName}("");
 }

@@ -61,13 +61,25 @@
         </ul>
         <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent">
-            #parse("app/php2/frmTKRDokumenKJP.jsp") </div>
+          	#if ($errMsg != "")
+				<div class="info"><strong>$errMsg</strong></div>
+			#end 
+            #parse("app/php2/frmTKRDokumenKJP.jsp") 
+          </div>
           <!--<div class="TabbedPanelsContent">
             #parse("app/php2/frmTKRDokumenKJT.jsp") </div>-->
           <div class="TabbedPanelsContent">
-           #parse("app/php2/frmTKRUlasanJPPH.jsp") </div>
+           #if ($errMsg != "")
+				<div class="info"><strong>$errMsg</strong></div>
+		   #end 
+           #parse("app/php2/frmTKRUlasanJPPH.jsp") 
+          </div>
           <div class="TabbedPanelsContent">
-           #parse("app/php2/frmTKRNilaianJPPH.jsp") </div>
+           #if ($errMsg != "")
+				<div class="info"><strong>$errMsg</strong></div>
+		    #end 
+           #parse("app/php2/frmTKRNilaianJPPH.jsp") 
+          </div>
         </div>
       </div></td>
   </tr>

@@ -222,6 +222,94 @@ public class FrmCRBMaklumatPermohonanData {
 
 			sql = r.getSQLUpdate("TBLPERMOHONAN");
 			stmt.executeUpdate(sql);
+			
+			// PREPARE DATA FOR LAPORAN TANAH ASAL
+			String flagGuna = "";
+			String lot = "";
+			String noHak = "";
+			String mukimTanah = "";
+			String daerahTanah = "";
+			String negeriTanah = "";
+			String tujuanKegunaan = "";
+			String pengadu = "";
+			
+			sql = "SELECT "
+				+ "TBLPFDFAIL.ID_FAIL, "
+				+ "INITCAP(TBLPHPPEMOHON.NAMA) AS NAMA_PEMOHON, "
+				+ "REPLACE(INITCAP(REPLACE(TRIM(DAERAHHAKMILIK.NAMA_DAERAH),'&','&#38;')),',')  AS DAERAH_HAKMILIK, "
+				+ "REPLACE(REPLACE(INITCAP(REPLACE(TRIM(NEGERIHAKMILIK.NAMA_NEGERI),'&','&#38;')),','),'Negeri','') AS NEGERI_HAKMILIK, "
+				+ "REPLACE(INITCAP(REPLACE(TRIM(TBLRUJMUKIM.NAMA_MUKIM),'&','&#38;')),',')  AS MUKIM_HAKMILIK, "
+				+ "TBLPHPHAKMILIK.NO_LOT AS LOT, "
+				+ "CASE "
+				+ "WHEN TBLPHPHAKMILIK.NO_WARTA IS NULL THEN TBLRUJJENISHAKMILIK.KOD_JENIS_HAKMILIK ||' '||TBLPHPHAKMILIK.NO_HAKMILIK  "
+				+ "WHEN TBLPHPHAKMILIK.NO_HAKMILIK IS NULL THEN TBLPHPHAKMILIK.NO_WARTA  "
+				+ "END AS NO_HAK "
+				+ "FROM "
+				+ "TBLPFDFAIL, "
+				+ "TBLPERMOHONAN, "
+				+ "TBLPHPPEMOHON, "
+				+ "TBLPHPHAKMILIKPERMOHONAN, "
+				+ "TBLPHPHAKMILIK, "
+				+ "TBLRUJDAERAH DAERAHHAKMILIK, "
+				+ "TBLRUJNEGERI NEGERIHAKMILIK, "
+				+ "TBLRUJKEMENTERIAN, "
+				+ "TBLRUJMUKIM, "
+				+ "TBLRUJJENISHAKMILIK "
+				+ "WHERE TBLPFDFAIL.ID_FAIL = TBLPERMOHONAN.ID_FAIL "
+				+ "AND TBLPERMOHONAN.ID_PERMOHONAN = TBLPHPHAKMILIKPERMOHONAN.ID_PERMOHONAN "
+				+ "AND TBLPERMOHONAN.ID_PEMOHON = TBLPHPPEMOHON.ID_PEMOHON "
+				+ "AND TBLPHPHAKMILIKPERMOHONAN.ID_HAKMILIKPERMOHONAN = TBLPHPHAKMILIK.ID_HAKMILIKPERMOHONAN "
+				+ "AND TBLPHPHAKMILIK.ID_KEMENTERIAN = TBLRUJKEMENTERIAN.ID_KEMENTERIAN(+) "
+				+ "AND TBLPHPHAKMILIK.ID_DAERAH = DAERAHHAKMILIK.ID_DAERAH(+) "
+				+ "AND TBLPHPHAKMILIK.ID_NEGERI = NEGERIHAKMILIK.ID_NEGERI(+)  "
+				+ "AND TBLPHPHAKMILIK.ID_MUKIM = TBLRUJMUKIM.ID_MUKIM(+) "
+				+ "AND TBLPHPHAKMILIK.ID_JENISHAKMILIK = TBLRUJJENISHAKMILIK.ID_JENISHAKMILIK(+) "
+				+ "AND TBLPHPHAKMILIKPERMOHONAN.FLAG_HAKMILIK = 'U' "
+				+ "AND TBLPERMOHONAN.ID_PERMOHONAN = '" + idPermohonan
+				+ "'";
+			
+			ResultSet rsLawatan = stmt.executeQuery(sql);
+			if (rsLawatan.next()) {
+				lot = rsLawatan.getString("LOT") == null ? "" : rsLawatan
+						.getString("LOT");
+				noHak = rsLawatan.getString("NO_HAK") == null ? "" : rsLawatan
+						.getString("NO_HAK");
+				mukimTanah = rsLawatan.getString("MUKIM_HAKMILIK") == null ? ""
+						: rsLawatan.getString("MUKIM_HAKMILIK");
+				daerahTanah = rsLawatan.getString("DAERAH_HAKMILIK") == null ? ""
+						: rsLawatan.getString("DAERAH_HAKMILIK");
+				negeriTanah = rsLawatan.getString("NEGERI_HAKMILIK") == null ? ""
+						: rsLawatan.getString("NEGERI_HAKMILIK");
+				pengadu = rsLawatan.getString("NAMA_PEMOHON") == null ? ""
+						: rsLawatan.getString("NAMA_PEMOHON");
+			}
+			
+			String tujuan = "Laporan ini disediakan berhubung dengan pencerobohan tanah "
+					+ lot
+					+ ", "
+					+ noHak
+					+ ", "
+					+ mukimTanah
+					+ ", Daerah "
+					+ daerahTanah
+					+ ", Negeri "
+					+ negeriTanah
+					+ " yang dibuat aduan oleh "
+					+ pengadu;
+			
+			// TBLPHPLAPORANTANAH
+			r = new SQLRenderer();
+			long idLaporanTanah = DB.getNextID("TBLPHPLAPORANTANAH_SEQ");
+			r.add("ID_LAPORANTANAH", idLaporanTanah);
+			r.add("ID_PERMOHONAN", idPermohonan);
+			r.add("FLAG_LAPORAN", "1");
+			r.add("TUJUAN_LAPORAN", tujuan);
+
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPHPLAPORANTANAH");
+			stmt.executeUpdate(sql);
 
 			// TBLRUJSUBURUSANSTATUSFAIL
 			r = new SQLRenderer();

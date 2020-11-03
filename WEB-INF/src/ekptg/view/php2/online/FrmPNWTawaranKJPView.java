@@ -150,7 +150,6 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 		//SUBMIT TO NEXT PROCESS
 		if (postDB) {
 			if ("simpanAgensi".equals(hitButton)) {
-				myLogger.info("idPermohonan simpanAgensi======="+idPermohonan);
 				idPenawaranKJP = logic.simpanAgensi(idPermohonan, getParam("txtNoRujukanKJP"), getParam("txtTarikhTerima"), idKementerian, idAgensi, getParam("txtTujuanKegunaan"), session);
 				flagReKeyin = "Y";
 				idKementerian = "99999";
@@ -163,7 +162,6 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 				
 			}
 			if ("simpanKemaskiniAgensi".equals(hitButton)) {
-				myLogger.info("idPermohonan simpanKemaskiniAgensi======="+idPermohonan);
 				logic.simpanKemaskiniAgensi(idPenawaranKJP, getParam("txtNoRujukanKJP"), getParam("txtTarikhTerima"), idKementerian, idAgensi, getParam("txtTujuanKegunaan"), session);
 				updateUploadFile(idDokumen, session);
 				
@@ -194,7 +192,6 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
     			
 			}
 			if ("doHantarProses".equals(hitButton)) {
-				myLogger.info("baca doHantarProsess======");
 				Hashtable hUser = getIUser().getPengguna(userId);
 				idKementerian =  String.valueOf(hUser.get("idKementerian"));
 				Hashtable hashHeader = (Hashtable) logicHeader.getBeanMaklumatPermohonan().get(0);
@@ -206,9 +203,7 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 				idPermohonan = (String) hashHeader.get("idPermohonan");
 				idStatus = (String) hashHeader.get("idStatus");
 				this.context.put("idKementerian", idKementerian);
-				myLogger.info("baca idKementerian======"+idKementerian);
-				myLogger.info("baca userId======"+userId);
-
+				
 				EmailConfig ec = new EmailConfig();
 
 				
@@ -352,7 +347,7 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 		
 		this.context.put("step",step);
 		
-		if ("carian".equals(flagPopup)) {
+		if ("carian".equals(actionPenawaran)) {
 			
 			
 			// GO TO LIST FAIL PENAWARAN
@@ -395,7 +390,6 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 		}
 
 		else if ("paparFail".equals(flagPopup)) {
-			myLogger.info("BACA paparFail=========="+idFail);
 			vm = "app/php2/online/ulasanKJP/pnw/frmPNWTawaranKJP.jsp";
 			
 			//HEADER
@@ -405,7 +399,6 @@ public class FrmPNWTawaranKJPView extends AjaxBasedModule {
 			this.context.put("BeanHeader", beanHeader);
 			
 			if (beanHeader.size() != 0){
-				myLogger.info("BACA kat sini1");
 				Hashtable hashHeader = (Hashtable) logicHeader.getBeanMaklumatPermohonan().get(0);
 				idFail = (String)hashHeader.get("idFail");
 				idPermohonan = (String)hashHeader.get("idPermohonan");
