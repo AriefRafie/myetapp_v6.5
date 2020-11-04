@@ -31,7 +31,7 @@
         <tr>
           <td><strong>Catatan</strong></td>
           <!--<td><strong>: $!tugasanSemasa.catatan</strong></td> -->
-          <td><strong>: - </strong></td>
+          <td><strong>: Bicara Interaktif, Keputusan Perbicaraan dan Perintah</strong></td>
         </tr>
         <tr>
           <td><strong>Tarikh Hantar Fail Ke Pegawai</strong></td>
@@ -55,7 +55,7 @@
         <tr>
           <td class="$row" align="center">1. </td>
           <td class="$row">JKPTG/PK/08/16/0203/2019</td>
-          <td class="$row">-</td>
+          <td class="$row" align = "center">-</td>
           <td class="$row">ZULIANA BINTI TUKIAR</td>
           <td class="$row" align="center">13/10/2019</td>
         </tr>
