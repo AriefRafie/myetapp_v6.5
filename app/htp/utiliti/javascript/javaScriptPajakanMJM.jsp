@@ -965,6 +965,15 @@
 	doAjaxCall${formName}("");
 	}
 
+	function batalUlasanKJP2(){
+		//
+		document.${formName}.actionPajakan.value = "";
+		document.${formName}.mode.value = "view";
+		//document.${formName}.submit();
+	//
+	doAjaxCall${formName}("");
+	}
+
 	//javaScriptPajakanMJM.jsp
 	function SimpanUlasanKJP(){
 		/*
@@ -1027,6 +1036,22 @@
 		//
 		document.${formName}.actionPajakan.value = "paparulasan";
 		document.${formName}.hitButton.value = "saveUlasanKJP";
+		document.${formName}.mode.value = "view";
+		//document.${formName}.submit();
+		//
+		doAjaxCall${formName}("");
+
+	}
+
+	function SimpanUlasanKJP(){
+
+		if ( !window.confirm("Adakah Anda Pasti ?") ){
+			return;
+		}
+
+		//
+		document.${formName}.actionPajakan.value = "paparulasan";
+		document.${formName}.hitButton.value = "saveUlasanKJP2";
 		document.${formName}.mode.value = "view";
 		//document.${formName}.submit();
 		//
@@ -1099,6 +1124,21 @@
 		//
 		document.${formName}.actionPajakan.value = "paparulasan";
 		document.${formName}.hitButton.value = "saveUpdateKJP";
+		document.${formName}.mode.value = "viewKJP";
+		//document.${formName}.submit();
+	//
+		doAjaxCall${formName}("");
+
+	}
+
+	function SimpanUpdateKJP2(){
+		if ( !window.confirm("Adakah Anda Pasti ?") ){
+			return;
+		}
+
+		//
+		document.${formName}.actionPajakan.value = "paparulasan";
+		document.${formName}.hitButton.value = "saveUpdateKJP2";
 		document.${formName}.mode.value = "viewKJP";
 		//document.${formName}.submit();
 	//

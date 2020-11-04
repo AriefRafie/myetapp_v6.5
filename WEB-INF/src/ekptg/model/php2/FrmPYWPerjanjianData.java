@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -33,7 +34,7 @@ public class FrmPYWPerjanjianData {
 	private Vector listSuratPeringatan = null;
 	private Vector beanMaklumatTamatSewa = null;
 	private static final Log log = LogFactory.getLog(FrmPYWPerjanjianData.class);
-	
+
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -85,7 +86,7 @@ public class FrmPYWPerjanjianData {
 				db.close();
 		}
 	}
-	
+
 	public void setMaklumatTamatSewa(String idPermohonanSewa) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -129,7 +130,7 @@ public class FrmPYWPerjanjianData {
 				db.close();
 		}
 	}
-	
+
 	public void setSenaraiDokumen(String idPerjanjian) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -141,7 +142,6 @@ public class FrmPYWPerjanjianData {
 
 			sql = "SELECT ID_PERJANJIAN , TARIKH_SURAT_NOTIFIKASI FROM TBLPHPPERJANJIAN WHERE ID_PERJANJIAN = '"
 					+ idPerjanjian + "'";
-			System.out.println("cek " +sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -289,8 +289,50 @@ public class FrmPYWPerjanjianData {
 			sql = r.getSQLUpdate("TBLPHPPERJANJIAN");
 			stmt.executeUpdate(sql);
 
+			// GET MAKLUMAT PERJANJIAN
+			String sqlSelect = "SELECT NO_SIRI, ID_PERMOHONAN, TARIKH_MULA_PERJANJIAN, TEMPOH, TARIKH_TAMAT_PERJANJIAN, KADAR_SEWA, CAGARAN FROM TBLPHPPERJANJIAN WHERE FLAG_PERJANJIAN = 'U' AND ID_PERJANJIAN = '"
+					+ idPerjanjian + "'";
+			ResultSet rsPerjanjian = stmt.executeQuery(sqlSelect);
+
+			if (rsPerjanjian.next()) {
+				String idPermohonan = rsPerjanjian.getString("ID_PERMOHONAN");
+				String noSiri = rsPerjanjian.getString("NO_SIRI");
+				String bayaran = rsPerjanjian.getString("KADAR_SEWA");
+				String deposit = rsPerjanjian.getString("CAGARAN");
+				String tempoh = rsPerjanjian.getString("TEMPOH");
+				Date tarikhMula = new Date();
+				Date tarikhTamat = new Date();
+				tarikhMula = rsPerjanjian.getDate("TARIKH_MULA_PERJANJIAN");
+				tarikhTamat = rsPerjanjian
+						.getDate("TARIKH_TAMAT_PERJANJIAN");
+
+				// TBLPHPBAYARANPERLUDIBAYAR
+				r = new SQLRenderer();
+				r.update("ID_PERMOHONAN", idPermohonan);
+				if (noSiri != null && noSiri.length() > 0)
+					r.add("NO_RUJUKAN", noSiri);
+
+				if (!"".equals(tarikhMula)) {
+					r.add("TARIKH_MULA",
+							r.unquote("to_date('" + sdf.format(tarikhMula)
+									+ "','dd/MM/yyyy')"));
+				}
+				if (!"".equals(tarikhTamat)) {
+					r.add("TARIKH_TAMAT",
+							r.unquote("to_date('" + sdf.format(tarikhTamat)
+									+ "','dd/MM/yyyy')"));
+				}
+				r.add("TEMPOH", Integer.parseInt(tempoh));
+				r.add("BAYARAN", bayaran);
+				r.add("DEPOSIT", deposit);
+				r.add("FLAG_AKTIF", "Y");
+				r.add("ID_KEMASKINI", userId);
+				r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+				sql = r.getSQLUpdate("TBLPHPBAYARANPERLUDIBAYAR");
+				stmt.executeUpdate(sql);
+			}
 			conn.commit();
-			
 			AuditTrail.logActivity("1610214", "4", null, session, "UPD",
 					"FAIL [" + idPerjanjian
 							+ "] DIKEMASKINI");
@@ -363,7 +405,7 @@ public class FrmPYWPerjanjianData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610214", "4", null, session, "UPD",
 					"FAIL [" + idPerjanjian
 							+ "] DIKEMASKINI");
@@ -1056,7 +1098,7 @@ public class FrmPYWPerjanjianData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610214", "4", null, session, "INS",
 					"FAIL [" + idPermohonanLama
 							+ "] DIDAFTARKAN SAMBUNGAN");
@@ -1077,7 +1119,7 @@ public class FrmPYWPerjanjianData {
 		session.setAttribute("ID_FAIL", idFailString);
 		return idFailString;
 	}
-	
+
 	public String simpanTamatLogTugasan(String idFail, String userRole,
 			String idNegeriUser, HttpSession session) throws Exception {
 
@@ -1189,7 +1231,6 @@ public class FrmPYWPerjanjianData {
 			ResultSet rs = stmt.executeQuery(sql);
 			int count = 1;
 			while (rs.next()) {
-				System.out.println("cekkkk count looping ============ " + count);
 				count++;
 				idHakmilikPermohonanLama = rs
 						.getString("ID_HAKMILIKPERMOHONAN");
@@ -1251,7 +1292,6 @@ public class FrmPYWPerjanjianData {
 		String sql = "";
 
 		Statement stmt = db.getStatement();
-		System.out.println("dalam =====================");
 		// TBLPHPHAKMILIKPERMOHONAN
 		sql = "INSERT INTO TBLPHPHAKMILIKPERMOHONAN"
 				+ " (ID_HAKMILIKPERMOHONAN, ID_PERMOHONAN, ID_MASUK,"
@@ -1718,7 +1758,7 @@ public class FrmPYWPerjanjianData {
 		model.setFlagPost("update");
 		model.save(model, session);
 	}
-	
+
 	public String getNoFailByIdPermohonan(String idPermohonan) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -1812,7 +1852,7 @@ public class FrmPYWPerjanjianData {
 	public void setBeanMaklumatTamatSewa(Vector beanMaklumatTamatSewa) {
 		this.beanMaklumatTamatSewa = beanMaklumatTamatSewa;
 	}
-	
-	
+
+
 
 }

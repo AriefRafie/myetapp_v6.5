@@ -228,7 +228,7 @@ public class HTPRekodLaporanLain extends AjaxBasedModule {
 	}
 	
 	public void setSOC(Long tempIdNegeri,String idSuburusan) throws Exception{		
-		socSuburusan = getUrusan().Pilihan("socsuburusan");
+		socSuburusan = getUrusan().Pilihan("socsuburusan",idSuburusan,"");
 		displayNegeri(tempIdNegeri);
 		socDaerahBaru =  UtilHTML.SelectDaerahByNegeri(String.valueOf(tempIdNegeri),"socDaerahBaru");
 		

@@ -57,7 +57,7 @@ public class HtpBean implements IHtp {
 		,String tarikhPohon
 		,String tarikhBukaFail
 		,String tarikhBukaFailHingga) { //13 Parameter
-		
+
 		Db db = null;
 		Vector<HtpPermohonan> v = new Vector<HtpPermohonan>();
 		try{
@@ -76,7 +76,7 @@ public class HtpBean implements IHtp {
 				if (!pemohon.trim().equals("")) {
 					sql = "SELECT F.TAJUK_FAIL,F.ID_FAIL,F.NO_FAIL,P.TUJUAN, P.ID_PERMOHONAN, P.ID_STATUS,P.TARIKH_TERIMA, RS.KETERANGAN,RN.NAMA_NEGERI"
 						+ " FROM TBLPFDFAIL F, TBLPERMOHONAN P, TBLRUJSTATUS RS, TBLHTPPEMOHON TPP,TBLRUJNEGERI RN "
-						+ " WHERE P.ID_FAIL = F.ID_FAIL AND P.ID_STATUS = RS.ID_STATUS AND P.ID_PERMOHONAN = PP.ID_PERMOHONAN(+) " 
+						+ " WHERE P.ID_FAIL = F.ID_FAIL AND P.ID_STATUS = RS.ID_STATUS AND P.ID_PERMOHONAN = PP.ID_PERMOHONAN(+) "
 						+ " AND F.ID_NEGERI=RN.ID_NEGERI AND A.ID_URUSAN = '"+idUrusan+"' AND f.tajuk_Fail LIKE '%"+tajukFail+"%' ";
 
 					sql += " AND UPPER(D.NAMA_PEMOHON) LIKE '%' ||'"
@@ -99,7 +99,7 @@ public class HtpBean implements IHtp {
 					sql = sql + " AND TO_CHAR(P.TARIKH_TERIMA,'dd-MON-YY') = '" + sdfyy.format(sdf.parse(tarikhPohon)).toUpperCase() +"'";
 				}
 			}
-			
+
 			sql +=" ORDER BY P.ID_PERMOHONAN desc";
 			//
 			ResultSet rs = stmt.executeQuery(sql);
@@ -107,7 +107,7 @@ public class HtpBean implements IHtp {
 				permohonan = new Permohonan();
 				fail = new PfdFail();
 				htpPermohonan = new HtpPermohonan();
-				
+
 				fail.setIdFail(rs.getLong("id_Fail"));
 				permohonan.setNamaNegeri(rs.getString("nama_Negeri"));
 				permohonan.setIdPermohonan(rs.getLong("id_Permohonan"));
@@ -119,10 +119,10 @@ public class HtpBean implements IHtp {
 				htpPermohonan.setStatusPermohonan(rs.getString("keterangan"));
 				permohonan.setPfdFail(fail);
 				htpPermohonan.setPermohonan(permohonan);
-				
+
 				v.addElement(htpPermohonan);
 			}
-			
+
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -132,10 +132,10 @@ public class HtpBean implements IHtp {
 		      }
 		}
 		return v;
-	
+
 	}
 	@Override
-	public BorangK carianFailPPT(String noFail, String idHakmilik) throws Exception {	
+	public BorangK carianFailPPT(String noFail, String idHakmilik) throws Exception {
 		Db db = null;
 		Connection conn = null;
 		BorangK borang = null;
@@ -144,7 +144,7 @@ public class HtpBean implements IHtp {
 			conn = db.getConnection();
 			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
-				
+
 			sql ="SELECT * FROM  VIEWBORANGKHTP WHERE ID_HAKMILIK="+idHakmilik;
 			ResultSet rs = stmt.executeQuery(sql);
 			if(rs.next()){
@@ -167,20 +167,20 @@ public class HtpBean implements IHtp {
 			}
 		}catch(Exception e){
 			e.printStackTrace();
-		
+
 		} finally {
 			if (db != null)
 			db.close();
 		}
-		
+
 		return borang;
-	}	
+	}
 	@Override
 	public Vector<Hashtable<String,String>> carianFail(String noFail,String tajukFail,String tarikhTerima
 		,String namaPemohon
 		,String idNegeri
 		,String idKementerian,String idAgensi) throws Exception {
-		
+
 		Db db = null;
 		String sql = "";
 		senaraiFail = new Vector<Hashtable<String,String>>();
@@ -195,7 +195,7 @@ public class HtpBean implements IHtp {
 				" WHERE B.ID_FAIL = A.ID_FAIL AND B.ID_STATUS = C.ID_STATUS " +
 				" AND B.ID_PERMOHONAN = D.ID_PERMOHONAN(+) "+
 				" AND B.ID_PERMOHONAN = PP.ID_PERMOHONAN " +
-				" AND A.ID_NEGERI=RN.ID_NEGERI AND A.ID_URUSAN = '3' "+ 
+				" AND A.ID_NEGERI=RN.ID_NEGERI AND A.ID_URUSAN = '3' "+
 				" AND (A.ID_STATUS <> 999 OR A.ID_STATUS IS NULL) ";
 			//Tajuk Fail
 			if (tajukFail != null) {
@@ -204,7 +204,7 @@ public class HtpBean implements IHtp {
 							+ tajukFail.trim().toUpperCase() + "'|| '%'";
 				}
 			}
-			
+
 			//Nama Permohon
 			if (namaPemohon != null) {
 				if (!namaPemohon.trim().equals("")) {
@@ -212,7 +212,7 @@ public class HtpBean implements IHtp {
 							+ namaPemohon.trim().toUpperCase() + "'|| '%'";
 				}
 			}
-			
+
 			//noFail
 			if (noFail != null) {
 				if (!noFail.trim().equals("")) {
@@ -220,31 +220,31 @@ public class HtpBean implements IHtp {
 							+ noFail.trim().toUpperCase() + "'|| '%'";
 				}
 			}
-			
+
 			if(idKementerian != null){
 				if(!idKementerian.trim().equals("")&& !idKementerian.equals("99999")){
 					sql = sql + " and A.ID_KEMENTERIAN ="+idKementerian;
 				}
 			}
-			
+
 			if(idNegeri != null && !idNegeri.equals("") && !idNegeri.equals("0")&& !idNegeri.equals("99999")){
 		    	  sql +=" AND A.ID_NEGERI = "+idNegeri;
 			}
 
 			if (idAgensi!= null && !"-1".equals(idAgensi) && !"".equals(idAgensi)&& !idAgensi.equals("99999")) {
 			    	  sql = sql + " AND PP.id_agensi = '"+idAgensi+"' ";
-			}				
+			}
 			//tarikhTerima
 			if (tarikhTerima != null) {
 				if (!tarikhTerima.toString().trim().equals("")) {
 					sql = sql + " AND TO_CHAR(B.TARIKH_TERIMA,'dd-MON-YY') = '" + sdfyy.format(sdf.parse(tarikhTerima)).toUpperCase() +"'";
 				}
 			}
-						
+
 			sql = sql + " ORDER BY B.ID_PERMOHONAN DESC";
 			System.out.println("==="+sql);
 			//log.info("sql carian fail : " + sql);
-			
+
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable<String,String> h;
 			int bil = 1;
@@ -261,17 +261,17 @@ public class HtpBean implements IHtp {
 		    	h.put("negeri", rs.getString("NAMA_NEGERI"));
 		    	senaraiFail.addElement(h);
 				bil++;
-				
+
 			}
 
 		} finally {
 			if (db != null)
 				db.close();
-			
+
 		}
-		
+
 		return senaraiFail;
-		
+
 	}
 
 	@Override
@@ -282,7 +282,7 @@ public class HtpBean implements IHtp {
 		,String jenisHakmilik,String noHakmilik,String jenisLot,String noLot
 		,String subUrusan
 		,String idStatus) throws Exception {
-		
+
 		Db db = null;
 		senaraiFail = new Vector<Hashtable<String, String>>();
 		try {
@@ -297,7 +297,7 @@ public class HtpBean implements IHtp {
 				" WHERE B.ID_FAIL = A.ID_FAIL AND B.ID_STATUS = C.ID_STATUS " +
 				" AND B.ID_PERMOHONAN = D.ID_PERMOHONAN(+) "+
 				" AND B.ID_PERMOHONAN = PP.ID_PERMOHONAN " +
-				" AND A.ID_NEGERI=RN.ID_NEGERI AND A.ID_URUSAN = '3' "+ 
+				" AND A.ID_NEGERI=RN.ID_NEGERI AND A.ID_URUSAN = '3' "+
 				" AND (A.ID_STATUS <> 999 OR A.ID_STATUS IS NULL) ";
 			//Tajuk Fail
 			if (tajukFail != null) {
@@ -305,14 +305,14 @@ public class HtpBean implements IHtp {
 					sql = sql + " AND UPPER(A.TAJUK_FAIL) LIKE '%' ||'"
 							+ tajukFail.trim().toUpperCase() + "'|| '%'";
 				}
-			}			
+			}
 			//Nama Permohon
 			if (namaPemohon != null) {
 				if (!namaPemohon.trim().equals("")) {
 					sql = sql + " AND UPPER(D.NAMA_PEMOHON) LIKE '%' ||'"
 							+ namaPemohon.trim().toUpperCase() + "'|| '%'";
 				}
-			}			
+			}
 			//noFail
 			if (noFail != null) {
 				if (!noFail.trim().equals("")) {
@@ -320,13 +320,13 @@ public class HtpBean implements IHtp {
 							+ noFail.trim().toUpperCase() + "'|| '%'";
 				}
 			}
-			
+
 			if(idKementerian != null){
 				if(!idKementerian.trim().equals("") && !idKementerian.equals("99999")){
 					sql = sql + " and A.ID_KEMENTERIAN ="+idKementerian;
 				}
 			}
-			
+
 			if(idNegeri != null && !idNegeri.equals("") && !idNegeri.equals("-1")&& !idNegeri.equals("99999")){
 		    	  sql +=" AND A.ID_NEGERI = "+idNegeri;
 			}
@@ -372,12 +372,12 @@ public class HtpBean implements IHtp {
 			if (!idStatus.equals("99999") && !idStatus.equals("0")) {
 			    sql = sql + " AND B.ID_STATUS = '"+idStatus+"' ";
 			}
-						
+
 			//sql = sql + " ORDER BY B.ID_PERMOHONAN DESC";
 			// Mengikut default paparan tugasan
 			sql = sql + " ORDER BY A.ID_FAIL DESC";
 			myLog.info("carianFail: sql =" + sql);
-			
+
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable<String, String> h;
 			int bil = 1;
@@ -395,25 +395,25 @@ public class HtpBean implements IHtp {
 		    	h.put("tarikhDaftar", Utils.isNull(rs.getString("TARIKH_DAFTAR")));
 		    	senaraiFail.addElement(h);
 				bil++;
-				
+
 			}
 
 		} finally {
 			if (db != null)
 				db.close();
-			
+
 		}
-		
+
 		return senaraiFail;
-		
-	}	
+
+	}
 	@Override
 	public Vector<Hashtable<String,String>> carianFail(String noFail, String tajukFail,String tarikhTerima
 			,String namaPemohon
 			,String idNegeri
 			,String idKementerian,String idAgensi
 			,String idUrusan, String langkah) throws Exception {
-		
+
 		Db db = null;
 		String sql = "";
 		senaraiFail = new Vector<Hashtable<String,String>>();
@@ -438,8 +438,8 @@ public class HtpBean implements IHtp {
 				if (!langkah.trim().equals("")) {
 					sql = sql + " AND UPPER(RSUS.LANGKAH) = '"+langkah+"'";
 				}
-			}			
-			
+			}
+
 			//Tajuk Fail
 			if (tajukFail != null) {
 				if (!tajukFail.trim().equals("")) {
@@ -447,7 +447,7 @@ public class HtpBean implements IHtp {
 							+ tajukFail.trim().toUpperCase() + "'|| '%'";
 				}
 			}
-			
+
 			//Nama Permohon
 			if (namaPemohon != null) {
 				if (!namaPemohon.trim().equals("")) {
@@ -455,7 +455,7 @@ public class HtpBean implements IHtp {
 							+ namaPemohon.trim().toUpperCase() + "'|| '%'";
 				}
 			}
-			
+
 			//noFail
 			if (noFail != null) {
 				if (!noFail.trim().equals("")) {
@@ -463,30 +463,30 @@ public class HtpBean implements IHtp {
 							+ noFail.trim().toUpperCase() + "'|| '%'";
 				}
 			}
-			
+
 			if(idKementerian != null){
 				if(!idKementerian.trim().equals("")&& !idKementerian.equals("99999") && !idKementerian.equals("0")){
 					sql = sql + " and A.ID_KEMENTERIAN ="+idKementerian;
 				}
 			}
-			
+
 			if(idNegeri != null && !idNegeri.equals("") && !idNegeri.equals("0")&& !idNegeri.equals("99999")){
 		    	  sql +=" AND A.ID_NEGERI = "+idNegeri;
 			}
 
 			if (idAgensi!= null && !"-1".equals(idAgensi) && !"".equals(idAgensi)&& !idAgensi.equals("99999") && !idAgensi.equals("0")) {
 			    	  sql = sql + " AND PP.id_agensi = '"+idAgensi+"' ";
-			}				
+			}
 			//tarikhTerima
 			if (tarikhTerima != null) {
 				if (!tarikhTerima.toString().trim().equals("")) {
 					sql = sql + " AND TO_CHAR(B.TARIKH_TERIMA,'dd-MON-YY') = '" + sdfyy.format(sdf.parse(tarikhTerima)).toUpperCase() +"'";
 				}
 			}
-						
+
 			sql = sql + " ORDER BY B.ID_PERMOHONAN DESC";
 //			myLog.info("carianFail:sql=" + sql);
-			
+
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable<String,String> h;
 			int bil = 1;
@@ -509,10 +509,10 @@ public class HtpBean implements IHtp {
 			if (db != null)
 				db.close();
 		}
-		
+
 		return senaraiFail;
 	}
-	
+
 	@Override
 	public HtpPermohonan kemaskiniPermohonan(HtpPermohonan htpPermohonan,String idPermohonan,String idhtpPermohonan)throws Exception {
 		Db db = null;
@@ -527,7 +527,7 @@ public class HtpBean implements IHtp {
 			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			ResultSet rs = null;
-			r = new SQLRenderer();		
+			r = new SQLRenderer();
 			permohonan = htpPermohonan.getPermohonan();
 			String TarikhSurKJP = permohonan.getTarikhSurat();
 			String TSKJP = "to_date('" + TarikhSurKJP + "','dd/MM/yyyy')";
@@ -546,10 +546,10 @@ public class HtpBean implements IHtp {
 			r.add("ID_KEMASKINI", permohonan.getIdMasuk());
 			r.add("TARIKH_KEMASKINI", r.unquote("sysdate"));
 
-			sql = r.getSQLUpdate("TBLPERMOHONAN");			
+			sql = r.getSQLUpdate("TBLPERMOHONAN");
 			myLog.info("UPDATE TABLE TBLPERMOHONAN :: sql " + sql);
 			stmt.executeUpdate(sql);
-			
+
 			htpPermohonan.getIdHtpPermohonan();
 			r = new SQLRenderer();
 			if(!idhtpPermohonan.equals("")){
@@ -559,7 +559,7 @@ public class HtpBean implements IHtp {
 			if(!htpPermohonan.getNoRujukanLain().equals("")){
 				r.add("NO_RUJUKAN_LAIN", htpPermohonan.getNoRujukanLain());	}
 			if(!htpPermohonan.getNoRujukanUPT().equals("")){
-				r.add("NO_RUJUKAN_UPT",htpPermohonan.getNoRujukanUPT());	}			
+				r.add("NO_RUJUKAN_UPT",htpPermohonan.getNoRujukanUPT());	}
 			if(!htpPermohonan.getNoRujukanPTG().equals("")){
 				r.add("NO_RUJUKAN_PTG", htpPermohonan.getNoRujukanPTG());	}
 			if(!htpPermohonan.getNoRujukanPTD().equals("")){
@@ -573,10 +573,10 @@ public class HtpBean implements IHtp {
 			sql = r.getSQLUpdate("TBLHTPPERMOHONAN");
 			myLog.info("UPDATE TABLE TBLHTPPERMOHONAN :: sql " + sql);
 			stmt.executeUpdate(sql);
-			
+
 			r = new SQLRenderer();
 			r.add("ID_FAIL");
-			r.add("ID_PERMOHONAN",idPermohonan);				      
+			r.add("ID_PERMOHONAN",idPermohonan);
 			sql = r.getSQLSelect("TBLPERMOHONAN");
 			rs = stmt.executeQuery(sql);
 			if(rs.next()){
@@ -584,7 +584,7 @@ public class HtpBean implements IHtp {
 			}
 			String TarikhDaftar = htpPermohonan.getPermohonan().getPfdFail().getTarikhDaftarFail();
 			String TDF = "to_date('" + TarikhDaftar + "','dd/MM/yyyy')";
-			
+
 			r = new SQLRenderer();
 			r.update("ID_FAIL",idFail);
 			r.add("TAJUK_FAIL", permohonan.getTujuan());
@@ -594,21 +594,21 @@ public class HtpBean implements IHtp {
 			r.add("ID_TARAFKESELAMATAN", htpPermohonan.getPermohonan().getPfdFail().getIdTarafKeselamatan());
 			sql = r.getSQLUpdate("TBLPFDFAIL");
 			myLog.info("getSQLUpdate(\"TBLPFDFAIL:sql="+sql);
-			stmt.executeUpdate(sql);		
+			stmt.executeUpdate(sql);
 			conn.commit();
-			
+
 		}catch(Exception e){
 			e.printStackTrace();
-			
+
 		}finally{
 			if(db != null)
 				db.close();
 		}
-		
+
 		return htpPermohonan;
 
 	}
-	
+
 	@Override
 	public HtpPermohonan kemaskiniPermohonanKutipan(HtpPermohonan htpPermohonan,String idPermohonan,String idhtpPermohonan)throws Exception {
 		Db db = null;
@@ -623,7 +623,7 @@ public class HtpBean implements IHtp {
 			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			ResultSet rs = null;
-			r = new SQLRenderer();		
+			r = new SQLRenderer();
 			permohonan = htpPermohonan.getPermohonan();
 			String TarikhSurKJP = permohonan.getTarikhSurat();
 			String TSKJP = "to_date('" + TarikhSurKJP + "','dd/MM/yyyy')";
@@ -635,7 +635,7 @@ public class HtpBean implements IHtp {
 			r.update("id_Permohonan", idPermohonan);
 			if(!TarikhPermohonan.equals("")){
 				r.add("tarikh_Surat", r.unquote(TSKJP));	}
-			
+
 			//r.add("tujuan",permohonan.getTujuan());
 			r.add("id_Kemaskini", permohonan.getIdMasuk());
 			r.add("tarikh_Kemaskini", r.unquote("sysdate"));
@@ -645,10 +645,10 @@ public class HtpBean implements IHtp {
 			r.add("TUJUAN", permohonan.getTujuan());
 
 			sql = r.getSQLUpdate("TBLPERMOHONAN");
-			
+
 			myLog.info(sql);
 			stmt.executeUpdate(sql);
-			
+
 			htpPermohonan.getIdHtpPermohonan();
 			r = new SQLRenderer();
 			if(!idhtpPermohonan.equals("")){
@@ -664,20 +664,20 @@ public class HtpBean implements IHtp {
 			r.add("NO_RUJUKAN_KJP",htpPermohonan.getNoRujukanKJP());
 			if(!htpPermohonan.getNoRujukanUPT().equals("")){
 				r.add("NO_RUJUKAN_UPT",htpPermohonan.getNoRujukanUPT());	}
-			
+
 			if(!htpPermohonan.getNoRujukanPTG().equals("")){
 				r.add("NO_RUJUKAN_PTG", htpPermohonan.getNoRujukanPTG());	}
-			
+
 			if(!htpPermohonan.getNoRujukanPTD().equals("")){
 				r.add("NO_RUJUKAN_PTD",htpPermohonan.getNoRujukanPTD());	}
 
 			sql = r.getSQLUpdate("TBLHTPPERMOHONAN");
 			myLog.info(sql);
 			stmt.executeUpdate(sql);
-			
+
 			r = new SQLRenderer();
 			r.add("ID_FAIL");
-			r.add("ID_PERMOHONAN",idPermohonan);				      
+			r.add("ID_PERMOHONAN",idPermohonan);
 			//Tambah oleh Mohamad Rosli pada2010/03/15, untuk tujuan
 			sql = r.getSQLSelect("TBLPERMOHONAN");
 			rs = stmt.executeQuery(sql);
@@ -686,7 +686,7 @@ public class HtpBean implements IHtp {
 			}
 			String TarikhDaftar = htpPermohonan.getPermohonan().getPfdFail().getTarikhDaftarFail();
 			String TDF = "to_date('" + TarikhDaftar + "','dd/MM/yyyy')";
-			
+
 			r = new SQLRenderer();
 			r.update("ID_FAIL",idFail);
 			r.add("TAJUK_FAIL", permohonan.getTujuan());
@@ -702,17 +702,17 @@ public class HtpBean implements IHtp {
 
 			sql = r.getSQLUpdate("TBLPFDFAIL");
 			myLog.info(sql);
-			stmt.executeUpdate(sql);		
+			stmt.executeUpdate(sql);
 			conn.commit();
-			
+
 		}catch(Exception e){
 			e.printStackTrace();
-			
+
 		}finally{
 			if(db != null)
 				db.close();
 		}
-		
+
 		return htpPermohonan;
 
 	}
@@ -731,7 +731,7 @@ public class HtpBean implements IHtp {
             sql ="DELETE FROM TBLHTPBAYARAN WHERE ID_BAYARAN ="+idBayaran;
             stmt.executeQuery(sql);
             conn.commit();
-            
+
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -754,7 +754,7 @@ public class HtpBean implements IHtp {
             sql ="DELETE FROM TBLHTPNOTIS5A WHERE ID_NOTIS5A ="+idNotis;
             stmt.executeQuery(sql);
             conn.commit();
-            
+
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -764,13 +764,13 @@ public class HtpBean implements IHtp {
 				db.close();
 		}
 	}
-	
+
 	@Override
 	public HtpPermohonan findPermohonan(String idPermohonan,String idHtpPermohonan) throws Exception {
 		Db db = null;
 		Connection conn = null;
 		//Date now = new Date();
-		//String tarikhDaftarFail = "to_date('" + sdfMasa.format(now) + "','dd/MM/yyyy HH:MI:SS AM')";		
+		//String tarikhDaftarFail = "to_date('" + sdfMasa.format(now) + "','dd/MM/yyyy HH:MI:SS AM')";
 		try {
 			db = new Db();
 			conn = db.getConnection();
@@ -796,21 +796,21 @@ public class HtpBean implements IHtp {
 											}
 											sql +=" ORDER BY A.id_Permohonan desc";
 //											myLog.info("Permohonan:::findPermohonan::sql::"+sql);
-											
+
 											 Statement stmt = db.getStatement();
-										     ResultSet rs = stmt.executeQuery(sql);		
-										     
-										    
+										     ResultSet rs = stmt.executeQuery(sql);
+
+
 										     if(rs.next()){
 										    	fail = new PfdFail();
 										 		permohonan = new Permohonan();
 										 		htpPermohonan = new HtpPermohonan();
-										 		
+
 //										 		 String TarikhSurKJP = rs.getString("TARIKH_SURAT");
-//											     String TSKJP = "to_date('" + TarikhSurKJP + "','dd/MM/yyyy')";	
+//											     String TSKJP = "to_date('" + TarikhSurKJP + "','dd/MM/yyyy')";
 //											     String TarikhPermohonan = rs.getString("TARIKH_TERIMA");
 //											     String TP = "to_date('" + TarikhPermohonan + "','dd/MM/yyyy')";
-											     
+
 										 			htpPermohonan.setIdHtpPermohonan(rs.getString("ID_HTPPERMOHONAN"));
 										 			htpPermohonan.setIdAgensi(rs.getLong("ID_AGENSI"));
 										 			htpPermohonan.setIdJenisTanah(rs.getString("ID_JENISTANAH"));
@@ -829,10 +829,10 @@ public class HtpBean implements IHtp {
 										 			permohonan.setNamaNegeri(rs.getString("NAMA_NEGERI"));
 										 			fail.setNoFail(rs.getString("NO_FAIL"));
 										 			if(rs.getString("ID_KEMENTERIAN")==null){
-										 				fail.setIdKementerian(rs.getString("ID_AGENSIID_KEMENTERIAN"));	
+										 				fail.setIdKementerian(rs.getString("ID_AGENSIID_KEMENTERIAN"));
 										 			}else{
-										 				fail.setIdKementerian(rs.getString("ID_KEMENTERIAN"));	
-										 				
+										 				fail.setIdKementerian(rs.getString("ID_KEMENTERIAN"));
+
 										 			}
 										 			fail.setIdNegeri(rs.getString("ID_NEGERI"));
 										 			fail.setIdUrusan(rs.getLong("ID_URUSAN"));
@@ -847,18 +847,18 @@ public class HtpBean implements IHtp {
 										 			fail.setIdFail(rs.getLong("ID_FAIL"));
 										 			permohonan.setPfdFail(fail);
 										 			htpPermohonan.setPermohonan(permohonan);
-										 			
+
 										 			conn.commit();
-										 			
+
 										     }
-										    	
+
 		 } finally {
 		      if (db != null) db.close();
 		    }
-		
+
 		return htpPermohonan;
 	}
-	
+
 	@Override
 	public HtpPermohonan findPermohonanKutipan(String idPermohonan,String idHtpPermohonan) throws Exception {
 		Db db = null;
@@ -900,13 +900,13 @@ public class HtpBean implements IHtp {
 			sql +=" ORDER BY A.id_Permohonan desc";
 			//myLog.info("Permohonan:::findPermohonan::sql::"+sql);
 			Statement stmt = db.getStatement();
-			ResultSet rs = stmt.executeQuery(sql);		
+			ResultSet rs = stmt.executeQuery(sql);
 			if(rs.next()){
 				fail = new PfdFail();
 				permohonan = new Permohonan();
 				htpPermohonan = new HtpPermohonan();
 //				String TarikhSurKJP = rs.getString("TARIKH_SURAT");
-//				String TSKJP = "to_date('" + TarikhSurKJP + "','dd/MM/yyyy')";	
+//				String TSKJP = "to_date('" + TarikhSurKJP + "','dd/MM/yyyy')";
 //				String TarikhPermohonan = rs.getString("TARIKH_TERIMA");
 //				String TP = "to_date('" + TarikhPermohonan + "','dd/MM/yyyy')";
 				htpPermohonan.setIdHtpPermohonan(rs.getString("ID_HTPPERMOHONAN"));
@@ -927,11 +927,11 @@ public class HtpBean implements IHtp {
 				permohonan.setNamaNegeri(rs.getString("NAMA_NEGERI"));
 				fail.setNoFail(rs.getString("NO_FAIL"));
 				if(rs.getString("ID_KEMENTERIAN")==null){
-					fail.setIdKementerian(rs.getString("ID_AGENSIID_KEMENTERIAN"));	
-									 		
+					fail.setIdKementerian(rs.getString("ID_AGENSIID_KEMENTERIAN"));
+
 				}else{
-					fail.setIdKementerian(rs.getString("ID_KEMENTERIAN"));	
-										 				
+					fail.setIdKementerian(rs.getString("ID_KEMENTERIAN"));
+
 				}
 				fail.setIdNegeri(rs.getString("ID_NEGERI"));
 				fail.setIdUrusan(rs.getLong("ID_URUSAN"));
@@ -947,26 +947,26 @@ public class HtpBean implements IHtp {
 				fail.setIdFail(rs.getLong("ID_FAIL"));
 				permohonan.setPfdFail(fail);
 				htpPermohonan.setPermohonan(permohonan);
-									 			
+
 				conn.commit();
-										 			
+
 			}
-										    	
+
 		 } finally {
 		      if (db != null) db.close();
 		    }
-		
+
 		return htpPermohonan;
-		
-	}		
-	
+
+	}
+
 	@Override
 	public HtpPermohonan findPermohonan(String idFail, String idPermohonan,String idHtpPermohonan) throws Exception {
 		Db db = null;
 		Connection conn = null;
 		//Date now = new Date();
 		//String tarikhDaftarFail = "to_date('" + sdfMasa.format(now) + "','dd/MM/yyyy HH:MI:SS AM')";
-		
+
 		try {
 			db = new Db();
 			conn = db.getConnection();
@@ -998,21 +998,21 @@ public class HtpBean implements IHtp {
 											}
 											sql +=" ORDER BY A.id_Permohonan desc";
 //											myLog.info("Permohonan:::findPermohonan::sql::"+sql);
-											
+
 											 Statement stmt = db.getStatement();
-										     ResultSet rs = stmt.executeQuery(sql);		
-										     
-										    
+										     ResultSet rs = stmt.executeQuery(sql);
+
+
 										     if(rs.next()){
 										    	fail = new PfdFail();
 										 		permohonan = new Permohonan();
 										 		htpPermohonan = new HtpPermohonan();
-										 		
+
 //										 		 String TarikhSurKJP = rs.getString("TARIKH_SURAT");
-//											     String TSKJP = "to_date('" + TarikhSurKJP + "','dd/MM/yyyy')";	
+//											     String TSKJP = "to_date('" + TarikhSurKJP + "','dd/MM/yyyy')";
 //											     String TarikhPermohonan = rs.getString("TARIKH_TERIMA");
 //											     String TP = "to_date('" + TarikhPermohonan + "','dd/MM/yyyy')";
-											     
+
 										 			htpPermohonan.setIdHtpPermohonan(rs.getString("ID_HTPPERMOHONAN"));
 										 			htpPermohonan.setIdAgensi(rs.getLong("ID_AGENSI"));
 										 			htpPermohonan.setIdJenisTanah(rs.getString("ID_JENISTANAH"));
@@ -1040,27 +1040,27 @@ public class HtpBean implements IHtp {
 										 			fail.setIdFail(rs.getLong("ID_FAIL"));
 										 			permohonan.setPfdFail(fail);
 										 			htpPermohonan.setPermohonan(permohonan);
-										 			
+
 										 			conn.commit();
-										 			
+
 										     }
-										    	
+
 		 } finally {
 		      if (db != null) db.close();
 		    }
-		
+
 		return htpPermohonan;
-		
-	}	
-	
+
+	}
+
 	@Override
-	public Hashtable<String,String> getInfoSelesaiPermohonan(String idPermohonan)throws Exception {		
+	public Hashtable<String,String> getInfoSelesaiPermohonan(String idPermohonan)throws Exception {
 	    Db db = null;
 	    Hashtable<String,String> h = null;
 	    String sql = "";
-	    try {	    	
+	    try {
 	    		db = new Db();
-	    		Statement stmt = db.getStatement();	    		
+	    		Statement stmt = db.getStatement();
 	    		//SYARAT
 	    		sql = "SELECT distinct f.id_fail, f.no_fail, a.id_permohonan, ";
 	    		sql += " a.id_status, s.keterangan, stf.id_suburusanstatusfail, stf.aktif,f.id_suburusan ";
@@ -1080,11 +1080,11 @@ public class HtpBean implements IHtp {
 	    		sql += " AND stf.aktif = 1 ";
 	    		sql += " AND STF.ID_PERMOHONAN = '" + idPermohonan + "'";
 	    		//myLog.info("getInfoSelesaiPermohonan:sql="+sql);
-	    		ResultSet rs = stmt.executeQuery(sql);	      	
-			  
+	    		ResultSet rs = stmt.executeQuery(sql);
+
 	    		while (rs.next()) {
-	        			h = new Hashtable<String,String>();  
-	    				h.put("level",rs.getString("ID_MASUK"));	 
+	        			h = new Hashtable<String,String>();
+	    				h.put("level",rs.getString("ID_MASUK"));
 	    				h.put("id_permohonan", rs.getString("id_permohonan"));
 	    				h.put("id_status", rs.getString("id_suburusan"));
 	    				h.put("id_suburusanstatusfail", rs.getString("id_suburusanstatusfail"));
@@ -1096,21 +1096,21 @@ public class HtpBean implements IHtp {
 	    				h.put("tarikhSelesai", Utils.isNull(rs.getString("TARIKH_SELESAI")));
 
 	    		}
-	    	  
+
 	      return h;
 	    } finally {
 	      if (db != null) db.close();
-	    }	    
+	    }
 	  }//close list
-	
+
 	@Override
-	public Hashtable<String,String> getInfoTamatSelesaiPermohonan(String idPermohonan)throws Exception {		
+	public Hashtable<String,String> getInfoTamatSelesaiPermohonan(String idPermohonan)throws Exception {
 	    Db db = null;
 	    Hashtable<String,String> h = null;
 	    String sql = "";
-	    try {	    	
+	    try {
 	    		db = new Db();
-	    		Statement stmt = db.getStatement();	    		
+	    		Statement stmt = db.getStatement();
 	    		//SYARAT
 	    		sql = "SELECT distinct f.id_fail, f.no_fail, a.id_permohonan, ";
 	    		sql += " a.id_status, s.keterangan, stf.id_suburusanstatusfail, stf.aktif,f.id_suburusan ";
@@ -1130,11 +1130,11 @@ public class HtpBean implements IHtp {
 	    		//sql += " AND stf.aktif = 1 ";
 	    		sql += " AND stf.id_permohonan = '" + idPermohonan + "'";
 	    		//myLog.info("getInfoSelesaiPermohonan:sql="+sql);
-	    		ResultSet rs = stmt.executeQuery(sql);	      	
-			  
+	    		ResultSet rs = stmt.executeQuery(sql);
+
 	    		while (rs.next()) {
-	        		h = new Hashtable<String,String>();  
-	    			h.put("level",rs.getString("ID_MASUK"));	 
+	        		h = new Hashtable<String,String>();
+	    			h.put("level",rs.getString("ID_MASUK"));
 	    			h.put("id_permohonan", rs.getString("id_permohonan"));
 	    			h.put("id_status", rs.getString("id_suburusan"));
 	   				h.put("id_suburusanstatusfail", rs.getString("id_suburusanstatusfail"));
@@ -1145,23 +1145,23 @@ public class HtpBean implements IHtp {
     				h.put("keterangan", rs.getString("keterangan")==null?"":rs.getString("keterangan"));
 	    			h.put("tarikhSelesai", Utils.isNull(rs.getString("TARIKH_SELESAI")));
 
-	    		}  
+	    		}
 	      return h;
-	      
+
 	    } finally {
 	      if (db != null) db.close();
-	    }	    
-	    
+	    }
+
 	  }//close list
-	
+
 	@Override
-	public Hashtable<String,String> getInfoSelesaiPermohonan(String idPermohonan,String langkah)throws Exception {		
+	public Hashtable<String,String> getInfoSelesaiPermohonan(String idPermohonan,String langkah)throws Exception {
 	    Db db = null;
 	    Hashtable<String,String> h = null;
 	    String sql = "";
-	    try {	    	
+	    try {
 	    		db = new Db();
-	    		Statement stmt = db.getStatement();	    		
+	    		Statement stmt = db.getStatement();
 	    		//SYARAT
 	    		sql = "SELECT distinct f.id_fail, f.no_fail, a.id_permohonan, ";
 	    		sql += " a.id_status, s.keterangan, stf.id_suburusanstatusfail, stf.aktif,f.id_suburusan ";
@@ -1181,11 +1181,11 @@ public class HtpBean implements IHtp {
 	    		sql += " AND stf.aktif = 1 ";
 	    		sql += " AND STF.ID_PERMOHONAN = '" + idPermohonan + "'";
 	    		//myLog.info("getInfoSelesaiPermohonan 2:sql="+sql);
-	    		ResultSet rs = stmt.executeQuery(sql);	      	
-			  
+	    		ResultSet rs = stmt.executeQuery(sql);
+
 	    		while (rs.next()) {
-	        			h = new Hashtable<String,String>();  
-	    				h.put("level",rs.getString("ID_MASUK"));	 
+	        			h = new Hashtable<String,String>();
+	    				h.put("level",rs.getString("ID_MASUK"));
 	    				h.put("id_permohonan", rs.getString("id_permohonan"));
 	    				h.put("id_status", rs.getString("id_suburusan"));
 	    				h.put("id_suburusanstatusfail", rs.getString("id_suburusanstatusfail"));
@@ -1197,11 +1197,11 @@ public class HtpBean implements IHtp {
 	    				h.put("tarikhSelesai", Utils.isNull(rs.getString("TARIKH_SELESAI")));
 
 	    		}
-	    	  
+
 	      return h;
 	    } finally {
 	      if (db != null) db.close();
-	    }	    
+	    }
 	  }//close list
 
 	@Override
@@ -1214,28 +1214,28 @@ public class HtpBean implements IHtp {
 			conn = db.getConnection();
 	    	conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();			
+			SQLRenderer r = new SQLRenderer();
 			//TBLHTPHAKMILIKURUSAN
 			r.add("ID_HAKMILIKURUSAN", idHakmilikUrusan);
 			sql = r.getSQLDelete("TBLHTPHAKMILIKURUSAN");
-			stmt.executeUpdate(sql);			
+			stmt.executeUpdate(sql);
 			conn.commit();
-			
-		} catch (SQLException ex) { 
+
+		} catch (SQLException ex) {
 	    	try {
 	    		conn.rollback();
 	    	} catch (SQLException e) {
 	    		throw new Exception("Rollback error : " + e.getMessage());
 	    	}
 	    	throw new Exception("Ralat : Masalah menghapus data " + ex.getMessage());
-	    	
+
 	    } finally {
 			if (db != null)
 				db.close();
-		}	
-	    
+		}
+
 	}
-	
+
 	@Override
 	public void kemaskiniSimpanStatusPermohonanAktif(Tblrujsuburusanstatusfail s,Tblrujsuburusanstatusfail sBaru) throws Exception {
 		Connection conn = null;
@@ -1252,13 +1252,13 @@ public class HtpBean implements IHtp {
 			r.update("aktif", "1");
 			r.add("aktif",s.getAktif());
 			r.add("id_kemaskini", sBaru.getIdKemaskini());
-			r.add("tarikh_kemaskini", r.unquote("sysdate")); 
+			r.add("tarikh_kemaskini", r.unquote("sysdate"));
 			sql = r.getSQLUpdate("Tblrujsuburusanstatusfail");
 			myLog.info("kemaskini:sql="+sql+","+sBaru.getTarikhMasuk());
 			stmt.executeUpdate(sql);
-			
-			long IdSuburusanstatusfail = DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");		  
-			r = new SQLRenderer();		  
+
+			long IdSuburusanstatusfail = DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");
+			r = new SQLRenderer();
 			r.add("Id_Suburusanstatusfail", IdSuburusanstatusfail);
 			r.add("id_Permohonan", String.valueOf(s.getIdPermohonan()));
 			r.add("Id_Suburusanstatus", r.unquote(String.valueOf(sBaru.getIdSuburusanstatus())));
@@ -1273,29 +1273,29 @@ public class HtpBean implements IHtp {
 			myLog.info("insert:sql="+sql+","+sBaru.getTarikhMasuk());
 		    stmt.executeUpdate(sql);
 		    conn.commit();
-	
-		}catch (SQLException se) { 
+
+		}catch (SQLException se) {
 			try {
 				conn.rollback();
-		    	    
+
 			} catch (SQLException se2) {
 				throw new Exception("Rollback error:"+se2.getMessage());
-				
+
 			}
 			throw new Exception("Ralat Pendaftaran Permohonan:"+se.getMessage());
-			    
+
 		}catch(Exception ex){
 			 conn.rollback();
 			 ex.printStackTrace();
 			 throw new Exception("Ralat:"+ex.getMessage());
-		
+
 		}finally{
 			if (db != null) db.close();
 			if (conn != null) conn.close();
-	
-		}		  
+
+		}
 	}
-	
+
 	@Override
 	public void kemaskiniSimpanStatusPermohonanAktif(
 		Tblrujsuburusanstatusfail s,Tblrujsuburusanstatusfail sBaru,String strTarikh) throws Exception {
@@ -1313,13 +1313,13 @@ public class HtpBean implements IHtp {
 			r.update("aktif", "1");
 			r.add("aktif",s.getAktif());
 			r.add("id_kemaskini", sBaru.getIdKemaskini());
-			r.add("tarikh_kemaskini", r.unquote("sysdate")); 
+			r.add("tarikh_kemaskini", r.unquote("sysdate"));
 			sql = r.getSQLUpdate("tblrujsuburusanstatusfail");
 			myLog.info("update:sql="+sql);
 			stmt.executeUpdate(sql);
-			
-			String IdSuburusanstatusfail = String.valueOf(DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ"));		  
-			r = new SQLRenderer();		  
+
+			String IdSuburusanstatusfail = String.valueOf(DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ"));
+			r = new SQLRenderer();
 			r.add("id_suburusanstatusfail", IdSuburusanstatusfail);
 			r.add("id_permohonan", String.valueOf(s.getIdPermohonan()));
 			r.add("id_suburusanstatus", String.valueOf(sBaru.getIdSuburusanstatus()));
@@ -1339,30 +1339,30 @@ public class HtpBean implements IHtp {
 			myLog.info("insert:sql="+sql);
 		    stmt.executeUpdate(sql);
 		    conn.commit();
-	
-		}catch (SQLException se) { 
+
+		}catch (SQLException se) {
 			try {
 				conn.rollback();
-			    
+
 			} catch (SQLException se2) {
 				throw new Exception("Rollback error:"+se2.getMessage());
-				
+
 			}
 			throw new Exception("Ralat Pendaftaran Permohonan:"+se.getMessage());
-			    
+
 		}catch(Exception ex){
 			 conn.rollback();
 			 ex.printStackTrace();
 			 throw new Exception("Ralat:"+ex.getMessage());
-		
+
 		}finally{
 			if (db != null) db.close();
 			if (conn != null) conn.close();
-	
-		}		  
-		
-	}	
-	
+
+		}
+
+	}
+
 	@Override
 	public void kemaskiniSimpanStatusPermohonanAktif(Tblrujsuburusanstatusfail s,String strTarikh) throws Exception {
 		Connection conn = null;
@@ -1381,33 +1381,33 @@ public class HtpBean implements IHtp {
 			String tarikMasuk = "to_date('" + strTarikh + "','dd/MM/yyyy')";
 			r.add("tarikh_Masuk", r.unquote(tarikMasuk));
 			r.add("id_kemaskini", s.getIdKemaskini());
-			r.add("tarikh_kemaskini", r.unquote("sysdate")); 
+			r.add("tarikh_kemaskini", r.unquote("sysdate"));
 			sql = r.getSQLUpdate("Tblrujsuburusanstatusfail");
-			stmt.executeUpdate(sql);		
+			stmt.executeUpdate(sql);
 		    conn.commit();
-	
-		}catch (SQLException se) { 
+
+		}catch (SQLException se) {
 			try {
 				conn.rollback();
-			    
+
 			} catch (SQLException se2) {
 				throw new Exception("Rollback error:"+se2.getMessage());
-				
+
 			}
 			throw new Exception("Ralat Kemaskini Status:"+se.getMessage());
-			    
+
 		}catch(Exception ex){
 			 conn.rollback();
 			 ex.printStackTrace();
 			 throw new Exception("Ralat:"+ex.getMessage());
-		
+
 		}finally{
 			if (db != null) db.close();
 			if (conn != null) conn.close();
-	
-		}		  
-	}	
-	
+
+		}
+	}
+
 	@Override
 	public String SelectJenisHakmilik(String selectName, Long selectedValue,
 			String disability) throws Exception {
@@ -1444,14 +1444,14 @@ public class HtpBean implements IHtp {
 //						+ f.getKeterangan().toUpperCase() + "</option>\n");
 //			}
 			//sb.append("</select>");
-			
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw ex;
 		}
 
 		return sb.toString();
-		
+
 	}
 
 	@Override
@@ -1473,15 +1473,15 @@ public class HtpBean implements IHtp {
 			}
 			if(returnValue.equals("0")){
 				returnValue = getDaerahDefaultMengikutNegeri(negeriValue);
-			}	
+			}
 			return returnValue;
-			
+
 		} finally {
 			if (db != null)
 				db.close();
 		}
 	}
-	
+
 	@Override
 	public Pemohon carianPemohonMengikutPermohonan(String idPermohonan) {
 		Db db = null;
@@ -1538,7 +1538,7 @@ public class HtpBean implements IHtp {
 		}
 		return pemohon;
 	}
-	
+
 	@Override
 	public Vector<HtpPermohonan> getSenaraiFailMengikutUrusanDanPengguna(String idUrusan
 		,String carian
@@ -1577,7 +1577,7 @@ public class HtpBean implements IHtp {
 				permohonan = new Permohonan();
 				fail = new PfdFail();
 				htpPermohonan = new HtpPermohonan();
-				
+
 				fail.setIdFail(rs.getLong("ID_FAIL"));
 				permohonan.setNamaNegeri(rs.getString("NAMA_NEGERI"));
 				permohonan.setIdPermohonan(rs.getLong("ID_PERMOHONAN"));
@@ -1589,20 +1589,20 @@ public class HtpBean implements IHtp {
 				htpPermohonan.setStatusPermohonan(rs.getString("KETERANGAN"));
 				permohonan.setPfdFail(fail);
 				htpPermohonan.setPermohonan(permohonan);
-				
+
 				list.addElement(htpPermohonan);
-				
+
 			}
 			return list;
 		} finally {
 			if (db != null)
 				db.close();
-			
+
 			//return list;
 		}
-		
+
 	}
-	
+
 	@Override
 	public Vector<HtpPermohonan> getSenaraiFailMengikutUrusanDanPengguna(String idUrusan, String carian, String noFail,
 			String idNegeri) throws Exception {
@@ -1639,7 +1639,7 @@ public class HtpBean implements IHtp {
 				permohonan = new Permohonan();
 				fail = new PfdFail();
 				htpPermohonan = new HtpPermohonan();
-				
+
 				fail.setBil(bil);
 				fail.setIdFail(rs.getLong("ID_FAIL"));
 				permohonan.setNamaNegeri(rs.getString("NAMA_NEGERI"));
@@ -1652,24 +1652,24 @@ public class HtpBean implements IHtp {
 				htpPermohonan.setStatusPermohonan(rs.getString("KETERANGAN"));
 				permohonan.setPfdFail(fail);
 				htpPermohonan.setPermohonan(permohonan);
-				
+
 				list.addElement(htpPermohonan);
 				bil++;
-				
+
 			}
 			return list;
 		} finally {
 			if (db != null)
 				db.close();
-			
+
 		}
 	}
-	
+
 	/* Created by : Mohamad Rosli 2009/12/22
-	 * Tujuan	  : Senarai SubUrusan mengikut role 
+	 * Tujuan	  : Senarai SubUrusan mengikut role
 	 * Pra syarat : Assign user kepada Role terlebih dahulu
 	 */
-	
+
 	public String getUrusanMengikutPengguna(String login) throws Exception {
 		Db db = null;
 		String sql = " ";
@@ -1680,24 +1680,24 @@ public class HtpBean implements IHtp {
     		SQLRenderer r = new SQLRenderer();
     		r.add("distinct(rsu.ID_URUSAN)");
     		r.add("ur.ROLE_ID",r.unquote("rrsu.NAME"));
-    		r.add("rsu.ID_SUBURUSAN",r.unquote("rrsu.ID_SUBURUSAN"));		    		    
+    		r.add("rsu.ID_SUBURUSAN",r.unquote("rrsu.ID_SUBURUSAN"));
     		if(login!=null)	r.add("ur.user_id",login);
-    		
+
     		sql = r.getSQLSelect("tblrujrolesuburusan rrsu,user_role ur,tblrujsuburusan rsu" );
-    		ResultSet rs = stmt.executeQuery(sql);					    		    
+    		ResultSet rs = stmt.executeQuery(sql);
 			Tblrujurusan s = null;
 			while (rs.next()) {
-				s = new Tblrujurusan(); 
-    			s.setIdUrusan(rs.getLong("id_urusan")); 
+				s = new Tblrujurusan();
+    			s.setIdUrusan(rs.getLong("id_urusan"));
     			returnValue = rs.getString("id_urusan");
 			}
 			return returnValue;
 		} finally {
 			if (db != null)	db.close();
 		}
-    	    	
+
 	}
-	
+
 	@Override
 	public HtpPermohonan simpanPermohonan(HtpPermohonan htpPermohonan) throws Exception{
 		Db db = null;
@@ -1723,7 +1723,7 @@ public class HtpBean implements IHtp {
 			//senaraiFailData = new FrmSenaraiFailTerimaPohonData();
 			//2018
 			//KODKEMENTERIAN = senaraiFailData.getKementerianByMampu(Integer.parseInt(String.valueOf(pfdFail.getIdKementerian())));
-			
+
 			String TarikhDaftar = pfdFail.getTarikhDaftarFail();
 			String TDF = "to_date('" + TarikhDaftar + "','dd/MM/yyyy')";
 
@@ -1734,7 +1734,7 @@ public class HtpBean implements IHtp {
 			}
 			/*else{
 				  fileSeq = File.getSeqNo(Integer.parseInt(getParam("socSeksyen")), Integer.parseInt(idUrusan), idKementerian, idNegeri);
-				  noFail += kodKementerianMampu+"/"+kodNegeriMampu+"-"+fileSeq;			  
+				  noFail += kodKementerianMampu+"/"+kodNegeriMampu+"-"+fileSeq;
 			}*/
 			pfdFail.setNoFail(noFail);
 			long idFail = DB.getNextID("TBLPFDFAIL_SEQ");
@@ -1750,7 +1750,7 @@ public class HtpBean implements IHtp {
 			r.add("flag_Fail", 0);
 			r.add("tajuk_Fail", permohonan.getTujuan());
 			r.add("no_Fail", noFail);
-			r.add("no_Fail_Root", "TIADA");	
+			r.add("no_Fail_Root", "TIADA");
 			r.add("id_lokasifail", 1);
 			r.add("id_Negeri", pfdFail.getIdNegeri());
 			r.add("id_Kementerian", pfdFail.getIdKementerian());
@@ -1764,13 +1764,13 @@ public class HtpBean implements IHtp {
 			sql = r.getSQLInsert("TBLPFDFAIL");
 			myLog.info(sql);
 			stmt.executeUpdate(sql);
-			
+
 			String TarikhSurKJP = permohonan.getTarikhSurat();
 			String TSKJP = "to_date('" + TarikhSurKJP + "','dd/MM/yyyy')";
-			
+
 			String TarikhPermohonan = permohonan.getTarikhTerima();
 			String TP = "to_date('" + TarikhPermohonan + "','dd/MM/yyyy')";
-			
+
 			long idPermohonan = DB.getNextID("TBLPERMOHONAN_SEQ");
 			permohonan.setIdPermohonan(idPermohonan);
 			r = new SQLRenderer();
@@ -1790,7 +1790,7 @@ public class HtpBean implements IHtp {
 			sql = r.getSQLInsert("TBLPERMOHONAN");
 			myLog.info(sql);
 			stmt.executeUpdate(sql);
-			
+
 			long idHtpPermohonan = DB.getNextID("TBLHTPPERMOHONAN_SEQ");
 			htpPermohonan.setIdHtpPermohonan(idHtpPermohonan);
 			r = new SQLRenderer();
@@ -1814,14 +1814,14 @@ public class HtpBean implements IHtp {
 			sql = r.getSQLInsert("TBLHTPPERMOHONAN");
 			myLog.info(sql);
 			stmt.executeUpdate(sql);
-			
+
 			//rsusf = getPfdFailValues(String.valueOf(pfdFail.getIdSubUrusan()),idPermohonan,idFail,permohonan.getIdMasuk());
 			//Tblrujsuburusanstatusfail s = new Tblrujsuburusanstatusfail();
-			long IdSuburusanstatusfail = DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");		  
+			long IdSuburusanstatusfail = DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");
 			long setIdSuburusanstatus = 0L;
 			setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah("1",String.valueOf(pfdFail.getIdSubUrusan()),"=");
 
-			r = new SQLRenderer();		  
+			r = new SQLRenderer();
 			r.add("Id_Suburusanstatusfail", IdSuburusanstatusfail);
 			r.add("id_Permohonan", permohonan.getIdPermohonan());
 			r.add("Id_Suburusanstatus", setIdSuburusanstatus);
@@ -1835,47 +1835,47 @@ public class HtpBean implements IHtp {
 			sql = r.getSQLInsert("Tblrujsuburusanstatusfail");
 			myLog.info("simpanStatusPermohonan:sql-TBLRUJSUBURUSANSTATUSFAIL::"+sql);
 			stmt.executeUpdate(sql);
-					  
+
 			conn.commit();
 			//myLog.info("===idSubUrusan" +pfdFail.getIdSubUrusan());
 			//FrmPembelianSemakanData.StatusChange_Action(idPermohonan, Integer.parseInt(String.valueOf(pfdFail.getIdSubUrusan())), idFail);
-		
-		}catch (SQLException se) { 
+
+		}catch (SQLException se) {
 			try {
 				conn.rollback();
-			    
+
 			} catch (SQLException se2) {
 				throw new Exception("Rollback error:"+se2.getMessage());
-				
+
 			}
 			throw new Exception("Ralat Kemaskini Status:"+se.getMessage());
-			    
+
 		}catch(Exception ex){
 			 conn.rollback();
 			 ex.printStackTrace();
 			 throw new Exception("Ralat:"+ex.getMessage());
-		
+
 		}finally{
 			if (db != null) db.close();
 			if (conn != null) conn.close();
-	
-		}	
+
+		}
 		return htpPermohonan;
 	}
-	
+
 	@Override
 	public void simpanStatusPermohonan(Tblrujsuburusanstatusfail s,Connection conn ) throws Exception{
 		Date now = new Date();
 		String sekarang = "to_date('" + sdf.format(now) + "','dd/MM/yyyy')";
 		Db db = null;
-		String sql = "";	  
+		String sql = "";
 		try{
-			long IdSuburusanstatusfail = DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");		  
+			long IdSuburusanstatusfail = DB.getNextID("TBLRUJSUBURUSANSTATUSFAIL_SEQ");
 			db = new Db();
 			conn = db.getConnection();
 			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();		  
+			SQLRenderer r = new SQLRenderer();
 			r.add("Id_Suburusanstatusfail", IdSuburusanstatusfail);
 			r.add("id_Permohonan", s.getIdPermohonan());
 			r.add("Id_Suburusanstatus", s.getIdSuburusanstatus());
@@ -1890,7 +1890,7 @@ public class HtpBean implements IHtp {
 				r.add("URL", s.getUrl());
 			else
 				r.add("URL", "TIADA");
-	  
+
 			r.add("id_kemaskini", s.getIdMasuk());
 			r.add("tarikh_kemaskini", r.unquote(sekarang));
 			r.add("id_fail",s.getIdFail());
@@ -1899,28 +1899,28 @@ public class HtpBean implements IHtp {
 			stmt.executeUpdate(sql);
 			conn.commit();
 
-		}catch (SQLException se) { 
+		}catch (SQLException se) {
 //			try {
 //				conn.rollback();
-//			    
+//
 //			} catch (SQLException se2) {
 //				throw new Exception("Rollback error:"+se2.getMessage());
-//				
+//
 //			}
 			throw new Exception("Ralat Kemaskini Status:"+se.getMessage());
-			    
+
 		}catch(Exception ex){
 			 //conn.rollback();
 			 ex.printStackTrace();
 			 throw new Exception("Ralat:"+ex.getMessage());
-		
+
 		//}finally{
 			//if (db != null) db.close();
 			//if (conn != null) conn.close();
-	
-		}			  
+
+		}
 	}
-	
+
 	@Override
 	public Tblrujsuburusanstatusfail getPfdFailValues(String idSubUrusan,Long idPermohonan,Long idFail,Long idMasuk) throws Exception {
 		  Tblrujsuburusanstatusfail s = new Tblrujsuburusanstatusfail();
@@ -1928,21 +1928,21 @@ public class HtpBean implements IHtp {
 		  setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah("1",idSubUrusan,"=");
 
 		  s.setIdPermohonan(idPermohonan);
-		  s.setIdFail(idFail);	  
+		  s.setIdFail(idFail);
 		  s.setIdSuburusanstatus(setIdSuburusanstatus);
 		  s.setAktif("1");
 		  s.setIdMasuk(idMasuk);
 		  s.setUrl("TIADA");
 		  s.setTarikhMasuk(new Date());
 		  return s;
-		  
+
 	  }
-	
+
 	@Override
 	public String getDaerahDefaultMengikutNegeri(String idNegeri) throws Exception {
 		Db db = null;
 		String sql = "";
-		String returnValue = "148"; //default id_daerah untuk id_negeri=0 
+		String returnValue = "148"; //default id_daerah untuk id_negeri=0
 		sql = "Select id_Daerah,kod_Daerah,nama_Daerah from tblrujdaerah"
 				+ " where id_negeri='" + idNegeri +"' AND NAMA_DAERAH like 'TIADA MAKLUMAT' "
 				+ " ORDER BY lpad(kod_Daerah,10)";
@@ -1954,18 +1954,18 @@ public class HtpBean implements IHtp {
 				returnValue = rs.getString(1);
 			}
 			return returnValue;
-			
+
 		} finally {
 			if (db != null)
 				db.close();
 		}
-	}	
-	
+	}
+
 	@Override
 	public String getAgensiDefaultMengikutKementerian(String idKementerian) throws Exception {
 		Db db = null;
 		String sql = "";
-		String returnValue = "0"; 
+		String returnValue = "0";
 		sql = "Select id_agensi from tblrujagensi"
 				+ " where id_kementerian='" + idKementerian +"' and kod_agensi ='01' "
 				+ " ";
@@ -1978,20 +1978,20 @@ public class HtpBean implements IHtp {
 			}
 			if(returnValue.equals("0")){
 				returnValue = getAgensiDefault("");
-			}	
+			}
 			return returnValue;
-			
+
 		} finally {
 			if (db != null)
 				db.close();
 		}
 	}
-	
+
 	@Override
 	public String getAgensiDefault(String kodAgensi) throws Exception {
 		Db db = null;
 		String sql = "";
-		String returnValue = "0"; 
+		String returnValue = "0";
 		sql = "Select id_agensi from tblrujagensi"
 				+ " where kod_agensi ='00' ";
 		try {
@@ -2002,13 +2002,13 @@ public class HtpBean implements IHtp {
 				returnValue = rs.getString(1);
 			}
 			return returnValue;
-			
+
 		} finally {
 			if (db != null)
 				db.close();
 		}
 	}
-	
+
 	@Override
 	public String getErrorHTML(String msg) throws Exception,SQLException {
 		StringBuffer sb = new StringBuffer("");
@@ -2021,9 +2021,9 @@ public class HtpBean implements IHtp {
 		sb.append(" </table>");
 		sb.append("</select>");
 		return sb.toString();
-	
+
 	}
-	
+
 	@Override
 	public void hapusTindakan(String idSusulan) {
 		Db db = null;
@@ -2038,7 +2038,7 @@ public class HtpBean implements IHtp {
             sql ="DELETE FROM TBLHTPSUSULAN WHERE ID_SUSULAN ="+idSusulan;
             stmt.executeQuery(sql);
             conn.commit();
-            
+
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -2048,5 +2048,76 @@ public class HtpBean implements IHtp {
 				db.close();
 		}
 	}
-	
+	@Override
+	public Vector<Hashtable<String, String>> getSenaraiFail(String keputusan, String noHakmilik, String noRujukan, String userId) {
+
+		String sql = "";
+		Vector<Hashtable<String, String>> listFail = null;
+		Hashtable<String, String> h;
+		Db db = null;
+		try {
+			listFail = new Vector<Hashtable<String, String>>();
+
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.ID_ULASANKJP, A.ID_PERMOHONAN,A.NO_RUJUKAN, "
+					+ "A.TARIKH_HANTAR, A.TARIKH_TERIMA, A.ULASAN, A.STATUS_KEPUTUSAN "
+					+ " , "
+					+ " (case "
+					+ "    when A.STATUS_KEPUTUSAN='S' THEN 'SETUJU' "
+					+ "    when A.STATUS_KEPUTUSAN='TS' THEN 'TIDAK SETUJU' "
+					+ "    else '' "
+					+ " end) KEPUTUSAN, "
+					+ " A.ID_AGENSI, B.ID_AGENSI, A.ID_MASUK,A.NO_HAKMILIK "
+					+ " FROM TBLHTPULASANKJP A, USERS_KEMENTERIAN B "
+					+ " WHERE A.ID_AGENSI = B.ID_AGENSI AND B.USER_ID ='" + userId + "'";
+
+			if (keputusan != null) {
+				if (!keputusan.trim().equals("")) {
+					sql = sql + " AND UPPER(A.STATUS_KEPUTUSAN) LIKE '%' ||'"
+							+ keputusan.trim().toUpperCase() + "'|| '%'";
+				}
+			}
+			if (noHakmilik != null) {
+				if (!noHakmilik.trim().equals("")) {
+					sql = sql + " AND UPPER(A.NO_HAKMILIK) LIKE '%' ||'"
+							+ noHakmilik.trim().toUpperCase() + "'|| '%'";
+				}
+			}
+			if (noRujukan != null) {
+				if (!noRujukan.trim().equals("")) {
+					sql = sql + " AND UPPER(A.NO_RUJUKAN) LIKE '%' ||'"
+							+ noRujukan.trim().toUpperCase() + "'|| '%'";
+				}
+			}
+			System.out.println("getSenaraiFail :::: sql="+sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable<String, String>();
+				h.put("bil", String.valueOf(bil));
+				h.put("idUlasanKJP", rs.getString("ID_ULASANKJP") == null ? "" : rs.getString("ID_ULASANKJP"));
+				h.put("idPermohonan", rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN"));
+				h.put("noRujukan", rs.getString("NO_RUJUKAN") == null ? "" : rs.getString("NO_RUJUKAN"));
+				h.put("tarikhHantar", rs.getDate("TARIKH_HANTAR") == null ? "" : sdf.format(rs.getDate("TARIKH_HANTAR")));
+				h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMA")));
+				h.put("ulasanKJP", rs.getString("ULASAN") == null ? "" : rs.getString("ULASAN"));
+				h.put("status", rs.getString("STATUS_KEPUTUSAN") == null ? "" : rs.getString("STATUS_KEPUTUSAN"));
+				h.put("statusName",Utils.isNull(rs.getString("KEPUTUSAN")));
+				h.put("noHakmilik",Utils.isNull(rs.getString("NO_HAKMILIK")));
+				listFail.addElement(h);
+				bil++;
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (db != null ) db.close();
+		}
+
+		return listFail;
+
+	}
+
 }

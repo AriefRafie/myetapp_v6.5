@@ -354,13 +354,9 @@ function cetakNotisKepadaPentabirTanah(idUlasanTeknikal) {
   		document.${formName}.socPegawai.focus(); 
 		return; 
 	}
-	alert(2);
 	var item = "&ID_PTG="+document.${formName}.socPejabatPTG.value+"&ID_PTD="+document.${formName}.socPejabatPTD.value+"&ID_PBT="+document.${formName}.socPejabatPBT.value+"&ID_JKPTG="+document.${formName}.socPejabatJKPTG.value+"&ID_KEMENTERIAN="+document.${formName}.socKementerian.value+"&ID_AGENSI="+document.${formName}.socAgensi.value+"&ID_AGENSI1="+document.${formName}.socAgensi1.value+"&ID_AGENSI2="+document.${formName}.socAgensi2.value;	
-	alert(3);
-	var url = "../../servlet/ekptg.report.php2.CRBNotisKepadaPentadbirTanah?ID_ULASANTEKNIKAL="+idUlasanTeknikal+"&ID_PEGAWAI="+document.${formName}.socPegawai.value+"&BIL_DOKUMEN="+document.${formName}.txtKandungan.value+"&NAMA_AGENSI3="+document.${formName}.txtAgensi.value+item; /*AIN*/
-	alert(4);
+	var url = "../../servlet/ekptg.report.php2.CRBNotisKepadaPentadbirTanah?ID_ULASANTEKNIKAL="+idUlasanTeknikal+"&ID_PEGAWAI="+document.${formName}.socPegawai.value+"&BIL_DOKUMEN="+document.${formName}.txtKandungan.value+item;
 	var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
-	alert(5);
 	if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();

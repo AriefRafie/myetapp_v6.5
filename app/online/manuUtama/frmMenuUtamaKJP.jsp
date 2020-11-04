@@ -133,7 +133,7 @@ function toggle_div(id) {
 																</a>
 															</td>
 														</tr>
-														
+
 														<tr>
 															<td>
 																<!-- <a href="#" onclick="toggle_div('toggleDiv');" class="help" title="Membuat Permohonan Pengambilan Tanah"> -->
@@ -155,7 +155,7 @@ function toggle_div(id) {
 																</a>
 															</td>
 														</tr>
-														
+
 														<!-- <tr>
 															<td>
 																<a href="javascript:paparanMalumatPermohonan()" class="help" title="Paparan maklumat permohonan KJP yang dihantar ke negeri">
@@ -225,7 +225,7 @@ function toggle_div(id) {
 																</a>
 															</td>
 														</tr>
-														
+
 														<!-- <tr>
 															<td>
 																<a href="javascript:permohonanDikembalikan()" class="help" title="Permohonan Dikembalikan">
@@ -262,7 +262,7 @@ function toggle_div(id) {
 																</a>
 															</td>
 														</tr> -->
-														
+
 														<tr>
 															<td>
 																<a href="javascript:penawaran()" class="help" title="Permohonan Penawaran">
@@ -318,7 +318,7 @@ function toggle_div(id) {
 																</a> -->
 															</td>
 														</tr>
-														
+
 														<tr>
 															<td>
 																<a href="javascript:tukarGunaUlasan()" class="help" title="Ulasan Tukar Guna">
@@ -345,7 +345,7 @@ function toggle_div(id) {
 																</a>
 															</td>
 														</tr>
-														
+
 														<tr>
 															<td>
 																<a href="javascript:aktapelantarbenua()" class="help" title="Akta Pelantar Benua">
@@ -443,16 +443,25 @@ function toggle_div(id) {
 														<tr>
 															<td>
 																<a href="javascript:dikembalikanHTP()" class="help" title="Permohonan Dikembalikan">
-																	
+
 																	##if($jumlah_notifikasi_penyewaan > 0)
-																	<label style="background-color:blue" align="center" valign="top" > 
+																	<label style="background-color:blue" align="center" valign="top" >
 																		<b><font color="WHITE"><blink>$!bilDikembaliHTP</blink></font></b>
 																	</label>
 																	##end
-																	<font color="blue"><li>Permohonan Dikembalikan</li></font>				
+																	<font color="blue"><li>Permohonan Dikembalikan</li></font>
 																</a>
 																<div  id="div_senaraidikembalikan"  style="width:40"></div>
-																
+
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<a href="javascript:ulasanPajakan()" class="help" title="Ulasan Pajakan">
+																	<font color="blue"><li>
+																	Ulasan Pajakan</li></font>
+																</a>
+
 															</td>
 														</tr>
 													</table>
@@ -486,7 +495,7 @@ function toggle_div(id) {
 																	<font color="blue"><li>&nbsp;Aduan Tanah</li></font>
 																</a>
 															</td>
-														</tr> 
+														</tr>
 													</table>
 												</td>
 											</tr>
@@ -748,7 +757,7 @@ function penerimaTawaran(){
 function penawaran(){
 	document.${formName}.action = "$EkptgUtil.getTabID('Penguatkuasaan dan Hasil Persekutuan',$portalRole)?_portal_module=ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView";
 	document.${formName}.submit();
-} 
+}
 function tukarGuna(){
 	document.${formName}.action = "$EkptgUtil.getTabID('Penguatkuasaan dan Hasil Persekutuan',$portalRole)?_portal_module=ekptg.view.php2.online.FrmTKROnlineKJPSenaraiFailView";
 	document.${formName}.submit();
@@ -824,7 +833,7 @@ function jawatankuasaRuangPejabat(){
 		document.${formName}.action = namaModul+"?_portal_module="+idModul;
 		//document.${formName}.action = "$EkptgUtil.getTabID("Aduan / Cadangan",$portal_role)?_portal_module=ekptg.view.esaduan.FrmEtappSupportAduan";
 		document.${formName}.submit();
-	
+
 	}
 function aduan() {
 	document.${formName}.action = "$EkptgUtil.getTabID("Aduan / Cadangan",$portal_role)?_portal_module=ekptg.view.esaduan.FrmEtappSupportAduan";
@@ -834,12 +843,17 @@ function aduan() {
  * Modul HTP
  */
 	function dikembalikanHTP(){
-		//reset_jqueryCarian('div_listCukai');	
-		document.getElementById('div_senaraidikembalikan').style.display="";		
+		//reset_jqueryCarian('div_listCukai');
+		document.getElementById('div_senaraidikembalikan').style.display="";
 		doDivAjaxCall$formname('div_senaraidikembalikan','getdikembalikanHTP','');
-		
+
 	}
-	
+
+function ulasanPajakan(){
+	document.${formName}.action = "$EkptgUtil.getTabID('Ulasan Pajakan',$portalRole)?_portal_module=ekptg.view.htp.online.ulasanKJP.FrmPajakanKJPSenaraiFailView";
+	document.${formName}.submit();
+}
+
 function permohonanDikembalikan() {
 	document.${formName}.action = "$EkptgUtil.getTabID("Permohonan Dikembalikan ",$portal_role)?_portal_module=ekptg.view.esaduan.FrmEtappSupportAduan";
 	document.${formName}.submit();

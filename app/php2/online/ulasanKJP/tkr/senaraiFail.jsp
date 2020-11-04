@@ -16,9 +16,13 @@
     <td><fieldset>
         <legend><b>CARIAN</b></legend>
         <table width="100%" align="center" border="0">
+        <tr>
+            <td width="30%" height="24" scope="row" align="right">No. Fail : </td>
+            <td width="70%"><input name="findNoFail" id="findNoFail" type="text" value="$!findNoFail" size="50" maxlength="50" style="text-transform:uppercase;" ></td>
+          </tr>
           <tr>
             <td width="30%" height="24" scope="row" align="right">No. Rujukan <i>Online</i> : </td>
-            <td width="70%"><input name="findNoFail" id="findNoFail" type="text" value="$!findNoFail" size="50" maxlength="50" style="text-transform:uppercase;" ></td>
+            <td width="70%"><input name="findNoRujukanOnline" id="findNoRujukanOnline" type="text" value="$!findNoRujukanOnline" size="50" maxlength="50" style="text-transform:uppercase;" ></td>
           </tr>
           <tr>
             <td width="30%" height="24" scope="row" align="right">Tajuk Fail : </td>

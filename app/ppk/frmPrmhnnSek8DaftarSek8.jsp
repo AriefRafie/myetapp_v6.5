@@ -5682,15 +5682,18 @@ if(document.f1.taraf_penting.value == '6')
 {
 document.f1.jenis_pej.value = document.f1.jenis_pej1.value;
 }
+
 if(document.f1.taraf_penting.value == '8')
 {
 document.f1.jenis_pej.value = document.f1.jenis_pej2.value;
 }
-if(document.f1.socTarafKepentinganPenting.value == '16')//arief add
+
+if(document.f1.taraf_penting.value == '16')//arief add
 {
 document.f1.jenis_pej.value = document.f1.jenis_pej3.value;
 }
-if(document.f1.socTarafKepentinganPenting.value == '20')//arief addF
+
+if(document.f1.taraf_penting.value == '20')//arief addF
 {
 document.f1.jenis_pej.value = document.f1.jenis_pej5.value;
 }

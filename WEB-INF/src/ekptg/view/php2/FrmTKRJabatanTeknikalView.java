@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import lebah.portal.AjaxBasedModule;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Utils;
+import ekptg.model.php2.FrmPhpNotifikasiEmel;
 import ekptg.model.php2.FrmTKRHeaderData;
 import ekptg.model.php2.FrmTKRJabatanTeknikalData;
 import ekptg.model.php2.online.FrmTKROnlineKJPSenaraiFailData;
@@ -21,6 +22,7 @@ private static final long serialVersionUID = 1L;
 	
 	FrmTKRHeaderData logicHeader = new FrmTKRHeaderData();
 	FrmTKRJabatanTeknikalData logic = new FrmTKRJabatanTeknikalData();
+	FrmPhpNotifikasiEmel logicEmel = new FrmPhpNotifikasiEmel();
 	FrmTKROnlineKJPSenaraiFailData logicKJP = new FrmTKROnlineKJPSenaraiFailData();
 
 	@Override
@@ -128,10 +130,12 @@ private static final long serialVersionUID = 1L;
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
         		
         		if("1".equals(idDokumen) && !"".equals(idDokumen)){
-            		logic.sendEmailtoKJP(idPermohonan, idUlasanTeknikal, idKementerianTanah, session);
+        			logicEmel.sendEmailtoKJP(idPermohonan, idUlasanTeknikal, idKementerianTanah, session);
+            		session.setAttribute("MSG", "Emel telah dihantar kepada KJP berkaitan");
             		
         		} else if("4".equals(idDokumen) && !"".equals(idDokumen)){
-        			logic.sendEmailtoPejabatJKPTG(idUlasanTeknikal, session);
+        			logicEmel.sendEmailtoPejabatJKPTG(idUlasanTeknikal, session);
+        			session.setAttribute("MSG", "Emel telah dihantar kepada JKPTG berkaitan");
         		}
     		}
         	if ("simpanMaklumatUlanganKJP".equals(hitButton)){
@@ -139,10 +143,12 @@ private static final long serialVersionUID = 1L;
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
         		
         		if("1".equals(idDokumen) && !"".equals(idDokumen)){
-            		logic.sendEmailtoKJP(idPermohonan, idUlasanTeknikal, idKementerianTanah, session);
+        			logicEmel.sendEmailtoKJP(idPermohonan, idUlasanTeknikal, idKementerianTanah, session);
+            		session.setAttribute("MSG", "Emel ulangan telah dihantar kepada KJP berkaitan");
             		
         		} else if("4".equals(idDokumen) && !"".equals(idDokumen)){
-        			logic.sendEmailtoPejabatJKPTG(idUlasanTeknikal, session);
+        			logicEmel.sendEmailtoPejabatJKPTG(idUlasanTeknikal, session);
+        			session.setAttribute("MSG", "Emel ulangan telah dihantar kepada JKPTG berkaitan");
         		}
     		}
         	if ("simpanKemaskiniMaklumatKJP".equals(hitButton)){
@@ -769,12 +775,17 @@ private static final long serialVersionUID = 1L;
         this.context.put("idUlasanTeknikal", idUlasanTeknikal);
         this.context.put("idKertasKerja", idKertasKerja);
         this.context.put("idDokumen", idDokumen);
-        
         this.context.put("flagStatus", flagStatus);
         this.context.put("flagAktif", flagAktif);
         this.context.put("keputusan", keputusan);
-
         this.context.put("step",step);
+        
+        if (session.getAttribute("MSG") != null){
+			this.context.put("errMsg", session.getAttribute("MSG"));
+			session.removeAttribute("MSG");
+		} else {
+			this.context.put("errMsg", "");
+		}
         
 		return vm;
 	}

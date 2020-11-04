@@ -959,6 +959,41 @@ public class FrmPajakanMemorandumJemaahMenteriData {
 
 	}
 
+	public void updateUlasanKJP2(String idUlasanKJP, Hashtable <String,String>hash, HttpSession session) throws Exception {
+		String userId = session.getAttribute("_ekptg_user_id").toString();
+		try {
+			db = new Db();
+			conn = db.getConnection();
+	    	conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			//TBLHTPULASANKJP
+			r.update("ID_ULASANKJP", idUlasanKJP);
+			r.add("TARIKH_HANTAR",r.unquote("SYSDATE"));
+			r.add("ULASAN", hash.get("ulasan"));
+			r.add("NO_RUJUKAN", hash.get("noRujukanKJP"));
+			r.add("STATUS_KEPUTUSAN", hash.get("status"));
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			sql = r.getSQLUpdate("TBLHTPULASANKJP");
+			stmt.executeUpdate(sql);
+			conn.commit();
+
+		} catch (SQLException ex) {
+	    	try {
+	    		conn.rollback();
+	    	} catch (SQLException e) {
+	    		throw new Exception("Rollback error : " + e.getMessage());
+	    	}
+	    	throw new Exception("Ralat : Masalah penyimpanan data " + ex.getMessage());
+
+	    } finally {
+			if (db != null)
+				db.close();
+		}
+
+	}
+
 	public void hapusKJP(String idUlasanKJP) throws Exception {
 		try {
 			db = new Db();
