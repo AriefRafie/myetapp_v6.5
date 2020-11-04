@@ -27,6 +27,8 @@ public class FrmPopupLogTugasanView extends AjaxBasedModule {
 		this.context.put("listLogTugasan", listLogTugasan);
 		return "app/ppk/frmPopupLogTugasan.jsp";
 	}
+	
+	
 	private String getTarikhPermohonan (String idFail) {
 		String sql = "";
 		String tarikhPermohonan = null;
@@ -46,6 +48,8 @@ public class FrmPopupLogTugasanView extends AjaxBasedModule {
 		}
 		return tarikhPermohonan;
 	}
+	
+	
 	private Hashtable getTugasanSemasa(String idFail) {
 		String sql = "";
 		Hashtable tugasanSemasa = null;
@@ -77,7 +81,9 @@ public class FrmPopupLogTugasanView extends AjaxBasedModule {
 			if (db != null ) db.close();
 		}
 		return tugasanSemasa;
-	}	
+	}
+	
+	
 	@SuppressWarnings("unchecked")
 	private Vector getSenaraiLogTugasan(String idFail) {
 		String sql = "";
