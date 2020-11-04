@@ -149,4 +149,15 @@ function validateNumber(elmnt,content) {
 	}
 }
 
+function doHapusBarge(){
+
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.mode.value = "viewBarge";
+		return;
+	}
+	
+	document.${formName}.mode.value = "view";
+	document.${formName}.hitButton.value = "doHapusBarge";
+	document.${formName}.submit();
+}
 </script>

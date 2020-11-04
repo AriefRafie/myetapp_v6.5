@@ -673,6 +673,31 @@ function simpanKemaskiniPermohonan() {
 		document.${formName}.txtModalJelas.focus(); 
 		return; 
 	}
+	if(document.${formName}.socFlagLuar.value == ""){
+		alert('Sila masukkan Luar Perairan Negeri.');
+		document.${formName}.socFlagLuar.focus(); 
+		return; 
+	}
+	if(document.${formName}.socNegeri.value == ""){
+		alert('Sila masukkan Negeri.');
+		document.${formName}.socNegeri.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtLokasi.value == ""){
+		alert('Sila masukkan Lokasi.');
+		document.${formName}.txtLokasi.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtLuas.value == ""){
+		alert('Sila masukkan Luas dipohon.');
+		document.${formName}.txtLuas.focus(); 
+		return; 
+	}
+	if(document.${formName}.socLuas.value == ""){
+		alert('Sila masukkan jenis luas.');
+		document.${formName}.socLuas.focus(); 
+		return; 
+	}
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "update";
 		return;
@@ -1031,6 +1056,7 @@ function textCounter(field, countfield, maxlimit) {
 	 countfield.value = maxlimit - field.value.length;
 }
 function doHantarEmel(){
+	//alert($!idPermohonan);
 	if(pengesahan.checked != true){
 		alert('Sila tanda pada checkbox untuk teruskan permohonan. ');
 		return; 
