@@ -1847,7 +1847,8 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			this.context.put("div", "view_historyJana");
 			setupPageMainList(session, action, listHistoryJana, "listHistoryJana", command);
 			skrin_name = "app/ppk/BicaraInteraktif/listHistoryJana.jsp";
-		} else if (command.equals("viewSuplimentPerintah")) {
+		}
+		else if (command.equals("viewSuplimentPerintah")) {
 
 			// get data TBLPPKPERBICARAAN
 			Hashtable h = FrmPrmhnnSek8KptsanBicaraData.setInfoBicaraList(idpermohonan);
@@ -1931,32 +1932,41 @@ public class BicaraInteraktif extends AjaxBasedModule {
 						"Y", ID_PEMOHON, db);
 				this.context.put("htmlSkrinMaklumat", setupSkrin);
 
+
 				// delang
 				// harta tak alih (ada hakmilik)
-				boolean flagAdaHTA = logic.checkExistHTA(ID_PERMOHONANSIMATI);
-		        this.context.put("flagAdaHTA", flagAdaHTA);
-				if (flagAdaHTA) {
-					logic.setDataSenaraiHTA((String)setupKeputusan.get("ID_PERINTAH"), ID_PERMOHONANSIMATI);
-					listHTA = logic.getSenaraiHTA();
-					this.context.put("SenaraiHTA", listHTA);
-				}
+				listHTA.clear();
+				listHTATH.clear();
+				listHA.clear();
 
-				// harta tak alih (tiada hakmilik)
-				boolean flagAdaHTATH = logic.checkExistHTATH(ID_PERMOHONANSIMATI);
-				this.context.put("flagAdaHTATH", flagAdaHTATH);
-				if (flagAdaHTATH) {
-					logic.setDataSenaraiHTATH((String)setupKeputusan.get("ID_PERINTAH"), ID_PERMOHONANSIMATI);
-					listHTATH = logic.getSenaraiHTA();
-					this.context.put("SenaraiHTATH", listHTATH);
-				}
+				if (setupKeputusan != null) {
+					myLogger.info("ID_PERINTAH -- " + (String)setupKeputusan.get("ID_PERINTAH"));
 
-		        // harta alih
-				boolean flagAdaHA = logic.checkExistHA(ID_PERMOHONANSIMATI);
-		        this.context.put("flagAdaHA", flagAdaHA);
-				if (logic.checkExistHA(ID_PERMOHONANSIMATI)) {
-			        logic.setDataSenaraiHA((String)setupKeputusan.get("ID_PERINTAH"), ID_PERMOHONANSIMATI);
-			        listHA = logic.getSenaraiHA();
-					this.context.put("SenaraiHA", listHA);
+					boolean flagAdaHTA = logic.checkExistHTA(ID_PERMOHONANSIMATI);
+			        this.context.put("flagAdaHTA", flagAdaHTA);
+					if (flagAdaHTA) {
+						logic.setDataSenaraiHTA((String)setupKeputusan.get("ID_PERINTAH"), ID_PERMOHONANSIMATI);
+						listHTA = logic.getSenaraiHTA();
+						this.context.put("SenaraiHTA", listHTA);
+					}
+
+					// harta tak alih (tiada hakmilik)
+					boolean flagAdaHTATH = logic.checkExistHTATH(ID_PERMOHONANSIMATI);
+					this.context.put("flagAdaHTATH", flagAdaHTATH);
+					if (flagAdaHTATH) {
+						logic.setDataSenaraiHTATH((String)setupKeputusan.get("ID_PERINTAH"), ID_PERMOHONANSIMATI);
+						listHTATH = logic.getSenaraiHTA();
+						this.context.put("SenaraiHTATH", listHTATH);
+					}
+
+			        // harta alih
+					boolean flagAdaHA = logic.checkExistHA(ID_PERMOHONANSIMATI);
+			        this.context.put("flagAdaHA", flagAdaHA);
+					if (logic.checkExistHA(ID_PERMOHONANSIMATI)) {
+				        logic.setDataSenaraiHA((String)setupKeputusan.get("ID_PERINTAH"), ID_PERMOHONANSIMATI);
+				        listHA = logic.getSenaraiHA();
+						this.context.put("SenaraiHA", listHA);
+					}
 				}
 			} finally {
 				if (db != null)
@@ -1965,7 +1975,8 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			this.context.put("mode", mode);
 
 			skrin_name = "app/ppk/BicaraInteraktif/viewKeputusanJenisPerintah.jsp";
-		} else if (command.equals("viewSuplimentTangguh") || command.equals("viewSuplimentBatal")) {
+		}
+		else if (command.equals("viewSuplimentTangguh") || command.equals("viewSuplimentBatal")) {
 			String skrinName = getParam("skrinName");
 			this.context.put("skrinName", skrinName);
 			String ID_PERINTAH = getParam("ID_PERINTAH");
