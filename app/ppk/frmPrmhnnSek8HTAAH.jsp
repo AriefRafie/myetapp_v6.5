@@ -631,9 +631,9 @@ $listnegeri -->
                                       <select name="socKategoriTanahHtaam" class="autoselect" $readmode id="socKategoriTanahHtaam" style="text-transform:uppercase;" onblur="uppercase()" onchange="pilih_jenis_luas('socJenisLuasHtaam','tr_luasharta','tr_luasharta_b','luas1','luas2','luas3','txtLuasAsalHtaam1','txtLuasAsalHtaam2','txtLuasAsalHtaam3','txtLuasAsalHtaam','txtLuasHMpHtaam','meterhektar')" >
                                         <option value="">Sila Pilih Kategori Tanah</option>
 
-                                  #foreach($listkate in $listkategori)
-                                        <option value="$listkate.id">$listkate.kod - $listkate.keterangan</option>
-	                               #end
+                                  		#foreach($listkate in $listkategori)
+										<option value="$listkate.id">$listkate.kod - $listkate.keterangan</option>
+	                               		#end
 
                                       </select>
                                       #end </td>
@@ -668,24 +668,65 @@ $listnegeri -->
                                       #end
                                       #if($jenisluas!="")
                                       <select name="socJenisLuasHtaam" class="autoselect" $readmode id="socJenisLuasHtaam" style="text-transform:uppercase;" onblur="uppercase()" onchange="pilih_jenis_luas('socJenisLuasHtaam','tr_luasharta','tr_luasharta_b','luas1','luas2','luas3','txtLuasAsalHtaam1','txtLuasAsalHtaam2','txtLuasAsalHtaam3','txtLuasAsalHtaam','txtLuasHMpHtaam','meterhektar')"   >
-                                        <option value="$jenisluas">$listluasK - $listluasN</option>
+                                      	<option value="$jenisluas">$listluasK - $listluasN</option>
 
-                                  #foreach($listluashta in $listluas)
+                                  		#foreach($listluashta in $listluas)
 
-                                  #if($jenisluas!=$listluashta.id)
-                                        <option value="$listluashta.id">$listluashta.kod - $listluashta.nama</option>
-                                  #end
-	                               #end
+		                                  #if($jenisluas!=$listluashta.id)
+		                                  	<option value="$listluashta.id">$listluashta.kod - $listluashta.nama</option>
+		                                  #end
+	                               		#end
+
 
                                       </select>
                                       #else
                                       <select name="socJenisLuasHtaam" class="autoselect" $readmode id="socJenisLuasHtaam" style="text-transform:uppercase;" onblur="uppercase()"  onchange="pilih_jenis_luas('socJenisLuasHtaam','tr_luasharta','tr_luasharta_b','luas1','luas2','luas3','txtLuasAsalHtaam1','txtLuasAsalHtaam2','txtLuasAsalHtaam3','txtLuasAsalHtaam','txtLuasHMpHtaam','meterhektar')"  >
                                         <option value="">Sila Pilih Jenis Luas </option>
 
+
+
+
+
+
+
+
+                                    #foreach($listluashta in $listluas)
+
+
+
+
+
+
+
+
+
+                                        <option value="$listluashta.id">$listluashta.kod - $listluashta.nama</option>
+
+
+
+
+
+
+
+
+
+	                               #end
+
+
+
+
+
+
+
+
+
+
+=======
                                     #foreach($listluashta in $listluas)
                                         <option value="$listluashta.id">$listluashta.kod - $listluashta.nama</option>
 	                               #end
 
+>>>>>>> 73ec1d64552a1aa20c48c0777f7dbb91cf3d7624
                                       </select>
                                       #end </td>
                                   </tr>
@@ -1166,8 +1207,6 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                       #set($listDaerahbyNegeriK=$listdaerah.kod)
                                       #set($listDaerahbyNegeriN=$listdaerah.nama)
 
-
-
                                       #end
                                       #end
 
@@ -1386,10 +1425,6 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
 
                                       #set($listjenishakmilikK=$listjenishakmilik.kod)
                                       #set($listjenishakmilikN=$listjenishakmilik.keterangan)
-
-
-
-
 
                                       #end
                                       #end
@@ -2109,12 +2144,8 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                       #set($listpemilikK=$listpemilik.kod)
                                       #set($listpemilikN=$listpemilik.keterangan)
 
-
-
                                       #end
                                       #end
-
-
 
                                       #if($readmode == "disabled")
 
