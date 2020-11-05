@@ -15,7 +15,7 @@
           <td width="5%" align="center"><strong>Bil</strong></td>
           <td width="25%" ><strong>Jenis Notis</strong></td>
           <td width="10%"><strong>Bil. Peringatan</strong></td>
-          <td width="10%"><strong>Tarikh Transaksi</strong></td>
+          <td width="10%"><strong>Tarikh Mula Notis</strong></td>
           <td width="10%"><strong>Tarikh Akhir Notis</strong></td>
           <td width="10%"><strong>Kadar Sewa (RM)</strong></td>
           <td width="10%"><strong>Jumlah Bulan Tertunggak (Bulan)</strong></td>
