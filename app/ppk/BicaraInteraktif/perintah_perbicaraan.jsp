@@ -7,7 +7,7 @@
 	</tr>
 </table>
 
-////$flagAdaHA -- $SenaraiHA.size()
+////$flagAdaHTATH -- $SenaraiHTATH.size()
 
 <!-- START PERINTAH PEMBAHAGIAN -->
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
