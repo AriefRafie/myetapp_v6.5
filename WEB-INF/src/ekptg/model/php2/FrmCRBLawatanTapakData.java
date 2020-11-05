@@ -1550,7 +1550,9 @@ public class FrmCRBLawatanTapakData {
 			Statement stmt = db.getStatement();
 
 			sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN FROM TBLPHPDOKUMEN"
-					+ " WHERE FLAG_DOKUMEN = 'I' AND ID_LAPORANTANAH = '" + idLaporanTanah + "'";
+					+ " WHERE "
+//					+ "FLAG_DOKUMEN = 'I' AND "
+					+ "ID_LAPORANTANAH = '" + idLaporanTanah + "'";
 
 
 			ResultSet rs = stmt.executeQuery(sql);
