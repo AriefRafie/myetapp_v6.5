@@ -8,7 +8,9 @@
 	<input type="hidden" name="idJadualKeduaLesen" id="idJadualKeduaLesen" value="$idJadualKeduaLesen" />
 	<input type="hidden" name="id_laporanpasir" id="id_laporanpasir" value="$id_laporanpasir" />
 	<input name="mode" type="hidden" id="mode" value="$mode"/>
-  <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
+  	<input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
+  	<input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
+  	<input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
 </p>
 
 <!--  #if ($returnChecking == "true")
@@ -37,6 +39,16 @@
         #set ($txtPembeli=$data.pembeli)
         #set ($txtJumKuantiti=$data.jumlah_kuantiti)
     #end   
+#end
+
+<div id="fileupload_progress"></div>
+<div id="progressBar" style="display: none;">
+  <div id="progressBarBoxContent"></div>
+</div>
+#if ($completed)
+<script>
+parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"success\">Fail berjaya dimuatnaik.</div>";
+</script>
 #end
 
 <fieldset>
@@ -100,7 +112,7 @@
     </td>
   </tr>
   
- <!--<tr>
+ <tr>
 	<td align="left" width="50%">
 	    
 	#if ($button=="view")
@@ -115,11 +127,11 @@
 	   <input type="text" name="txdTarikhPengeluaran" id="txdTarikhPengeluaran" value="$txdTarikhPengeluaran" onblur="check_date(this)" size="9"/>
          <a href="javascript:displayDatePicker('txdTarikhPengeluaran',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
     </td>
-  </tr>-->
+  </tr>
 </table>
     </fieldset>    
     </td>    
-    <td width="50%">
+    <!--<td width="50%">
     <fieldset>    
     <table width="100%">
   <tr>
@@ -155,7 +167,7 @@
     #end 
     
     </td>
-  </tr>
+  </tr>-->
   
    <!-- <tr>
     <td align="left">
@@ -200,10 +212,10 @@
     
     </td>
   </tr> -->
-</table>
+<!--</table>
     </fieldset>        
     </td>
-  </tr>
+  </tr>-->
   
   <tr>
     <td colspan="3" align="center">
@@ -222,9 +234,9 @@
     	<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskiniLaporan('$id_laporanpasir')"/>
     	<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onclick="hapusLaporan('$id_laporanpasir')"/> 
         <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:setTable('tableReport1')" /> 
-        <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembali_pelesen(id_jadualkedualesenAPB)" />    
+          
     #end        
-  
+  	 <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembali_pelesen(id_jadualkedualesenAPB)" /> 
     </td>
   </tr>
 </table>
@@ -238,7 +250,7 @@
 	<!-- #parse("app/utils/record_paging.jsp") -->
 	<table width="100%"  cellpadding="1" cellspacing="2" border="0">
 		<tr>
-        	<td><input name="cmdTambah" id="cmdTambah" value="Tambah" type="button" onclick="javascript:uploadBaruDokumen('$id_laporanpasir')" /></td>           
+        	<td colspan="2" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onclick="javascript:daftarDokumen()"/></td>          
      	</tr>
 	</table>
 	<input type="hidden" name="id_dokumen" id="id_dokumen"  />
@@ -257,7 +269,7 @@
                 <tr valign="top">
                   <td class="$row" align="center">$senarai.bil</td>            
                   <td class="$row">
-                  <a href="javascript:paparMaklumatDokumen('$senarai.id_dokumen')"><font color="blue">$senarai.nama_dokumen</font></a></td>  
+                  <a href="javascript:paparMaklumatDokumen('$listDokumen.idDokumen')"><font color="blue">$senarai.namaDokumen</font></a></td>  
               	</tr>          
             #end
             #else
@@ -409,16 +421,16 @@ function simpanLaporan() {
   		document.${formName}.txtJumRoyalti.focus(); 
 		return;		
 	}
-	/*if(document.${formName}.txdTarikhPengeluaran.value == ""){
+	if(document.${formName}.txdTarikhPengeluaran.value == ""){
 		alert("Sila masukkan Tarikh Pengeluaran.");
   		document.${formName}.txdTarikhPengeluaran.focus(); 
 		return;		
-	}*/
-	if(document.${formName}.socBulan.value == ""){
+	}
+	/*if(document.${formName}.socBulan.value == ""){
 		alert("Sila masukkan \"Bulan\" terlebih dahulu.");
   		document.${formName}.socBulan.focus(); 
 		return;		
-	}
+	}*/
 	if(document.${formName}.txtTahun.value == ""){
 		alert("Sila masukkan \"Tahun Pengambilan\" terlebih dahulu.");
   		document.${formName}.txtTahun.focus(); 
@@ -435,7 +447,7 @@ function simpanLaporan() {
   		document.${formName}.txtPembeli.focus(); 
 		return;		
 	}	 */
-
+alert("simpan");
 	else{
 		if ( !window.confirm("Adakah Anda Pasti?") ) return;
 		document.${formName}.actionOnline.value = "simpanLaporan";
@@ -547,20 +559,59 @@ function getAnggaranRoyalti(){
 	document.getElementById("txtJumRoyalti").value = AnggaranRoyalti.toFixed(2) ;
 	
 }
+
+function simpanDokumen(id_laporanpasir,idPermohonan) {
+
+if(document.${formName}.txtNamaDokumen.value == ""){
+		alert('Sila masukkan Nama Fail.');
+  		document.${formName}.txtNamaDokumen.focus(); 
+		return; 
+	}
+	if(document.${formName}.fileupload.value == ""){
+		alert('Sila pilih Fail yang Ingin Dimuatnaik.');
+  		document.${formName}.fileupload.focus(); 
+		return; 
+	}
+
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+	
+	var namaLampiran = document.${formName}.txtNamaDokumen.value;
+ 	var catatanLampiran = document.${formName}.txtCatatan.value ;
+	var dp = document.${formName}.form_token.value ;
+	var dopost = "&form_token="+dp;
+	
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView&hitButton=simpanDokumen&namaLampiran="+namaLampiran+"&catatanLampiran="
+	+catatanLampiran+"&idPermohonan="+idPermohonan+dopost+"&modePopup=view&flagPopup=openPopupDokumen&id_laporanpasir="+id_laporanpasir;
+	document.${formName}.method="post";
+	document.${formName}.enctype="multipart/form-data";
+    document.${formName}.encoding="multipart/form-data";
+	document.${formName}.submit();
+}
 </script>
 
 <!-- FUNCTION UPLOAD FILE PASIR LAUT -16102020 -->
 <script>
-function uploadBaruDokumen(id_laporanpasir) {
-	document.${formName}.id_laporanpasir.value = id_laporanpasir;
-	document.${formName}.actionOnline.value = "uploadBaruDokumen";
-	document.${formName}.submit();
+function daftarDokumen() {	
+	document.${formName}.flagPopup.value = "openPopupDokumen";
+	document.${formName}.modePopup.value = "new";
+	document.${formName}.actionOnline.value = "uploadBaruDokumen"
+	doAjaxCall${formName}("");
 }
 
-function paparMaklumatDokumen(id_dokumen) {
+function paparMaklumatDokumen(idDokumen) {
 	alert(id_dokumen);
-	document.${formName}.id_dokumen.value = id_dokumen;
+	document.${formName}.idDokumen.value = idDokumen;
 	document.${formName}.actionOnline.value = "paparDokumen";
+	document.${formName}.submit();
+}
+function paparDokumen(idDokumen){
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView";
+	document.${formName}.method="POST";
+	document.${formName}.idDokumen.value = idDokumen;
+	document.${formName}.flagPopup.value = "openPopupDokumen";
+	document.${formName}.modePopup.value = "view";
 	document.${formName}.submit();
 }
 function calculateRoyalti()
