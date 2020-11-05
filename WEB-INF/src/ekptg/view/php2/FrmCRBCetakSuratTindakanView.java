@@ -78,10 +78,12 @@ public class FrmCRBCetakSuratTindakanView extends AjaxBasedModule{
     			logic.hapusMaklumatSuratTindakan(idUlasanTeknikal, session);
     		}
         	if ("simpanMaklumatSuratPanggilanOperasi".equals(hitButton)){
-        		idUlasanTeknikal = logic.simpanMaklumatSuratPanggilanOperasi(idPermohonan, getParam("idPejabat"), getParam("txtTarikhHantar"), session);
+        		idUlasanTeknikal = logic.simpanMaklumatSuratPanggilanOperasi(idPermohonan, getParam("idPejabat"), getParam("txtTarikhHantar"), 
+        				getParam("txtTarikhOperasi"), getParam("txtMasaOperasi"), getParam("txtLokasiOperasi"), session);
     		}
         	if ("simpanKemaskiniMaklumatSuratPanggilanOperasi".equals(hitButton)){
-        		logic.simpanKemaskiniMaklumatSuratPanggilanOperasi(idUlasanTeknikal, getParam("txtTarikhHantar"), session);
+        		logic.simpanKemaskiniMaklumatSuratPanggilanOperasi(idUlasanTeknikal, getParam("txtTarikhHantar"), getParam("txtTarikhOperasi"),
+        				getParam("txtMasaOperasi"), getParam("txtLokasiOperasi"), session);
     		}
         	if ("hapusMaklumatSuratPanggilanOperasi".equals(hitButton)){
     			logic.hapusMaklumatSuratPanggilanOperasi(idUlasanTeknikal, session);
@@ -208,6 +210,9 @@ public class FrmCRBCetakSuratTindakanView extends AjaxBasedModule{
     				beanMaklumatSuratPanggilanOperasi = new Vector();    			
         			Hashtable hashMaklumatSuratPanggilanOperasi = new Hashtable();
         			hashMaklumatSuratPanggilanOperasi.put("tarikhHantar", "");
+        			hashMaklumatSuratPanggilanOperasi.put("tarikhOperasi", "");
+        			hashMaklumatSuratPanggilanOperasi.put("masaOperasi", "");
+        			hashMaklumatSuratPanggilanOperasi.put("lokasiOperasi", "");
         			beanMaklumatSuratPanggilanOperasi.addElement(hashMaklumatSuratPanggilanOperasi);
     				this.context.put("BeanMaklumatSuratPanggilanOperasi", beanMaklumatSuratPanggilanOperasi);
 			
@@ -215,6 +220,9 @@ public class FrmCRBCetakSuratTindakanView extends AjaxBasedModule{
 	    			beanMaklumatSuratPanggilanOperasi = new Vector();    			
 	    			Hashtable hashMaklumatSuratPanggilanOperasi = new Hashtable();
 	    			hashMaklumatSuratPanggilanOperasi.put("tarikhHantar", getParam("txtTarikhHantar"));
+	    			hashMaklumatSuratPanggilanOperasi.put("tarikhOperasi", getParam("txtTarikhOperasi"));
+	    			hashMaklumatSuratPanggilanOperasi.put("masaOperasi", getParam("txtMasaOperasi"));
+	    			hashMaklumatSuratPanggilanOperasi.put("lokasiOperasi", getParam("txtLokasiOperasi"));
 	    			beanMaklumatSuratPanggilanOperasi.addElement(hashMaklumatSuratPanggilanOperasi);
 					this.context.put("BeanMaklumatSuratPanggilanOperasi", beanMaklumatSuratPanggilanOperasi);
 				}
@@ -257,6 +265,9 @@ public class FrmCRBCetakSuratTindakanView extends AjaxBasedModule{
     			beanMaklumatSuratPanggilanOperasi = new Vector();    			
     			Hashtable hashMaklumatSuratPanggilanOperasi = new Hashtable();
     			hashMaklumatSuratPanggilanOperasi.put("tarikhHantar", getParam("txtTarikhHantar"));
+    			hashMaklumatSuratPanggilanOperasi.put("tarikhOperasi", getParam("txtTarikhOperasi"));
+    			hashMaklumatSuratPanggilanOperasi.put("masaOperasi", getParam("txtMasaOperasi"));
+    			hashMaklumatSuratPanggilanOperasi.put("lokasiOperasi", getParam("txtLokasiOperasi"));
     			beanMaklumatSuratPanggilanOperasi.addElement(hashMaklumatSuratPanggilanOperasi);
 				this.context.put("BeanMaklumatSuratPanggilanOperasi", beanMaklumatSuratPanggilanOperasi);	
 				
