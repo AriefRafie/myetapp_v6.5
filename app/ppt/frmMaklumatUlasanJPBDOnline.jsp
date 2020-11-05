@@ -6,11 +6,11 @@
 </style>
 #if ($saveBorangLampiranA1 == 'true')
 	#if ($sendBorangLampiranA1 == 'true')
-    	#if ($isJPBDUser == 'true')
+    	##if ($isJPBDUser == 'true')
 <div class="success">Ulasan telah berjaya dihantar ke JKPTG.</div>
-		#else
-<div class="success">Permohonan bagi mendapatkan ulasan telah berjaya dihantar ke JPBD.</div>
-        #end
+		##else
+<!-- <div class="success">Permohonan bagi mendapatkan ulasan telah berjaya dihantar ke JPBD.</div> -->
+        ##end
 	#else
     	#if ($isJPBDUser == 'true')
 			#if ($verifyBorangLampiranA1 == 'true')
@@ -84,12 +84,17 @@
     <tr>
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
       <td colspan="2" align="left" valign="top" nowrap="nowrap"><strong>No Rujukan JPBD</strong></td>
-      <td colspan="2" align="left" valign="top" nowrap="nowrap"><input name="JPBD_NORUJUKANJPBD" type="text" id="JPBD_NORUJUKANJPBD" value="$!JPBD_NORUJUKANJPBD" size="50" maxlength="255" style="text-transform:uppercase" $READONLY_JPBD $JPBD_CLASS_DISABLED /></td>
+<!--       <td colspan="2" align="left" valign="top" nowrap="nowrap"><input name="JPBD_NORUJUKANJPBD" type="text" id="JPBD_NORUJUKANJPBD" value="$!JPBD_NORUJUKANJPBD" size="50" maxlength="255" style="text-transform:uppercase"  /></td>
+ -->    <td width="63%">
+         	<input type="text" name="JPBD_NORUJUKANJPBD" id="JPBD_NORUJUKANJPBD" value="$!JPBD_NORUJUKANJPBD" $readonlyPopup 
+         			class="$inputTextClassPopup" size="43" onblur="this.value=this.value.toUpperCase();"/>
+          </td>
+    
     </tr>
     <tr>
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
       <td colspan="2" align="left" valign="top" nowrap="nowrap"><strong>No Warta</strong></td>
-      <td colspan="2" align="left" valign="top" nowrap="nowrap"><input name="JPBD_NOWARTA" type="text" id="JPBD_NOWARTA" value="$!JPBD_NOWARTA" size="50" maxlength="255" style="text-transform:uppercase" $READONLY_JPBD $JPBD_CLASS_DISABLED /></td>
+      <td colspan="2" align="left" valign="top" nowrap="nowrap"><input name="JPBD_NOWARTA" type="text" id="JPBD_NOWARTA" value="$!JPBD_NOWARTA" size="50" maxlength="255" style="text-transform:uppercase"  /></td>
     </tr>
     <tr>
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
@@ -112,29 +117,29 @@
     <tr>
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
       <td align="left" valign="top" nowrap="nowrap">&nbsp;</td>
-      <td align="left" valign="top" nowrap="nowrap"><input type="radio" id="JPBD_DALAMKAWASANPBPT1" name="JPBD_DALAMKAWASANPBPT" $!JPBD_DALAMKAWASANPBPT1 value="1" $DISABLE_JPBD /> Ya</td>
-      <td width="19%" align="left" valign="top" nowrap="nowrap"><input type="checkbox" id="JPBD_ADAPELANSTRUKTUR" name="JPBD_ADAPELANSTRUKTUR" value="1" $JPBD_ADAPELANSTRUKTUR $DISABLE_JPBD /> Pelan Struktur</td>
+      <td align="left" valign="top" nowrap="nowrap"><input type="radio" id="JPBD_DALAMKAWASANPBPT1" name="JPBD_DALAMKAWASANPBPT" $!JPBD_DALAMKAWASANPBPT1 value="1"  /> Ya</td>
+      <td width="19%" align="left" valign="top" nowrap="nowrap"><input type="checkbox" id="JPBD_ADAPELANSTRUKTUR" name="JPBD_ADAPELANSTRUKTUR" value="1" $JPBD_ADAPELANSTRUKTUR  /> Pelan Struktur</td>
       <td width="61%" align="left" valign="top" nowrap="nowrap">
-#if ($READONLY_JPBD != '')
-        <input name="JPBD_TARIKHLULUSPELANSTRUKTUR" type="text" id="JPBD_TARIKHLULUSPELANSTRUKTUR" value="$!JPBD_TARIKHLULUSPELANSTRUKTUR" size="15" maxlength="10" $READONLY_JPBD $JPBD_CLASS_DISABLED />
-#else
-        <input name="JPBD_TARIKHLULUSPELANSTRUKTUR" type="text" id="JPBD_TARIKHLULUSPELANSTRUKTUR" value="$!JPBD_TARIKHLULUSPELANSTRUKTUR" size="15" maxlength="10" $READONLY_JPBD $JPBD_CLASS_DISABLED />
+##if ($READONLY_JPBD != '')
+        <!-- <input name="JPBD_TARIKHLULUSPELANSTRUKTUR" type="text" id="JPBD_TARIKHLULUSPELANSTRUKTUR" value="$!JPBD_TARIKHLULUSPELANSTRUKTUR" size="15" maxlength="10"   /> -->
+##else
+        <input name="JPBD_TARIKHLULUSPELANSTRUKTUR" type="text" id="JPBD_TARIKHLULUSPELANSTRUKTUR" value="$!JPBD_TARIKHLULUSPELANSTRUKTUR" size="15" maxlength="10"   />
         &nbsp;<a href="javascript:displayDatePicker('JPBD_TARIKHLULUSPELANSTRUKTUR',false,'dmy');"><img src="../img/calendar.gif" alt="" border="0" /></a>
-#end
+##end
       </td>
     </tr>
     <tr>
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
       <td align="left" valign="top" nowrap="nowrap">&nbsp;</td>
-      <td align="left" valign="top" nowrap="nowrap"><input type="radio" id="JPBD_DALAMKAWASANPBPT0" name="JPBD_DALAMKAWASANPBPT" $!JPBD_DALAMKAWASANPBPT0 value="0" $DISABLE_JPBD /> Tidak</td>
-      <td align="left" valign="top" nowrap="nowrap"><input type="checkbox" id="JPBD_ADAPELANTEMPATAN" name="JPBD_ADAPELANTEMPATAN" value="1" $JPBD_ADAPELANTEMPATAN $DISABLE_JPBD /> Pelan Tempatan</td>
+      <td align="left" valign="top" nowrap="nowrap"><input type="radio" id="JPBD_DALAMKAWASANPBPT0" name="JPBD_DALAMKAWASANPBPT" $!JPBD_DALAMKAWASANPBPT0 value="0"  /> Tidak</td>
+      <td align="left" valign="top" nowrap="nowrap"><input type="checkbox" id="JPBD_ADAPELANTEMPATAN" name="JPBD_ADAPELANTEMPATAN" value="1" $JPBD_ADAPELANTEMPATAN  /> Pelan Tempatan</td>
       <td align="left" valign="top" nowrap="nowrap">
-#if ($READONLY_JPBD != '')
-        <input name="JPBD_TARIKHLULUSPELANTEMPATAN" type="text" id="JPBD_TARIKHLULUSPELANTEMPATAN" value="$!JPBD_TARIKHLULUSPELANTEMPATAN" size="15" maxlength="10" $READONLY_JPBD $JPBD_CLASS_DISABLED />
-#else
-        <input name="JPBD_TARIKHLULUSPELANTEMPATAN" type="text" id="JPBD_TARIKHLULUSPELANTEMPATAN" value="$!JPBD_TARIKHLULUSPELANTEMPATAN" size="15" maxlength="10" $READONLY_JPBD $JPBD_CLASS_DISABLED />
+##if ($READONLY_JPBD != '')
+        <!-- <input name="JPBD_TARIKHLULUSPELANTEMPATAN" type="text" id="JPBD_TARIKHLULUSPELANTEMPATAN" value="$!JPBD_TARIKHLULUSPELANTEMPATAN" size="15" maxlength="10"  /> -->
+##else
+        <input name="JPBD_TARIKHLULUSPELANTEMPATAN" type="text" id="JPBD_TARIKHLULUSPELANTEMPATAN" value="$!JPBD_TARIKHLULUSPELANTEMPATAN" size="15" maxlength="10"  />
         &nbsp;<a href="javascript:displayDatePicker('JPBD_TARIKHLULUSPELANTEMPATAN',false,'dmy');"><img src="../img/calendar.gif" alt="" border="0" /></a>
-#end
+##end
       </td>
     </tr>
     <tr>
@@ -157,7 +162,7 @@
     <tr>
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
       <td align="left" valign="top" nowrap="nowrap">&nbsp;</td>
-      <td colspan="3" align="left" valign="top" nowrap="nowrap"><textarea name="JPBD_KEGUNAANTANAH" cols="100" rows="5" id="JPBD_KEGUNAANTANAH" $READONLY_JPBD $JPBD_CLASS_DISABLED style="text-transform:uppercase">$!JPBD_KEGUNAANTANAH</textarea></td>
+      <td colspan="3" align="left" valign="top" nowrap="nowrap"><textarea name="JPBD_KEGUNAANTANAH" cols="100" rows="5" id="JPBD_KEGUNAANTANAH"  style="text-transform:uppercase">$!JPBD_KEGUNAANTANAH</textarea></td>
     </tr>
     <tr>
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
@@ -167,7 +172,7 @@
     <tr>
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
       <td align="left" valign="top" nowrap="nowrap">&nbsp;</td>
-      <td colspan="3" align="left" valign="top" nowrap="nowrap"><textarea name="JPBD_POTENSIPEMBANGUNAN" cols="100" rows="5" id="JPBD_POTENSIPEMBANGUNAN" $READONLY_JPBD $JPBD_CLASS_DISABLED style="text-transform:uppercase">$!JPBD_POTENSIPEMBANGUNAN</textarea></td>
+      <td colspan="3" align="left" valign="top" nowrap="nowrap"><textarea name="JPBD_POTENSIPEMBANGUNAN" cols="100" rows="5" id="JPBD_POTENSIPEMBANGUNAN" style="text-transform:uppercase">$!JPBD_POTENSIPEMBANGUNAN</textarea></td>
     </tr>
     <tr>
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
@@ -177,7 +182,7 @@
     <tr>
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
       <td align="left" valign="top" nowrap="nowrap">&nbsp;</td>
-      <td colspan="3" align="left" valign="top" nowrap="nowrap"><input name="JPBD_NAMAPBT" type="text" id="JPBD_NAMAPBT" value="$!JPBD_NAMAPBT" size="100" maxlength="255" $READONLY_JPBD $JPBD_CLASS_DISABLED style="text-transform:uppercase" /></td>
+      <td colspan="3" align="left" valign="top" nowrap="nowrap"><input name="JPBD_NAMAPBT" type="text" id="JPBD_NAMAPBT" value="$!JPBD_NAMAPBT" size="100" maxlength="255" style="text-transform:uppercase" /></td>
     </tr>
     <tr>
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
@@ -193,7 +198,7 @@
     <tr>
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
       <td align="left" valign="top" nowrap="nowrap">&nbsp;</td>
-      <td colspan="3" align="left" valign="top" nowrap="nowrap"><textarea name="JPBD_STATUSKELULUSAN" cols="100" rows="5" id="JPBD_STATUSKELULUSAN" $READONLY_JPBD $JPBD_CLASS_DISABLED style="text-transform:uppercase">$!JPBD_STATUSKELULUSAN</textarea></td>
+      <td colspan="3" align="left" valign="top" nowrap="nowrap"><textarea name="JPBD_STATUSKELULUSAN" cols="100" rows="5" id="JPBD_STATUSKELULUSAN" style="text-transform:uppercase">$!JPBD_STATUSKELULUSAN</textarea></td>
     </tr>
     <tr>
       <td align="right" valign="top" nowrap="nowrap">3.</td>
@@ -203,8 +208,8 @@
     <tr>
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
       <td align="left" valign="top" nowrap="nowrap">&nbsp;</td>
-      <td colspan="3" align="left" valign="top" nowrap="nowrap"><input type="radio" id="JPBD_PERMOHONANMEMAJUKANTANAH1" name="JPBD_PERMOHONANMEMAJUKANTANAH" value="1" $JPBD_PERMOHONANMEMAJUKANTANAH1 $DISABLE_JPBD />
-      Ya <input type="radio" id="JPBD_PERMOHONANMEMAJUKANTANAH2" name="JPBD_PERMOHONANMEMAJUKANTANAH" value="0" $JPBD_PERMOHONANMEMAJUKANTANAH0 $DISABLE_JPBD /> Tidak</td>
+      <td colspan="3" align="left" valign="top" nowrap="nowrap"><input type="radio" id="JPBD_PERMOHONANMEMAJUKANTANAH1" name="JPBD_PERMOHONANMEMAJUKANTANAH" value="1" $JPBD_PERMOHONANMEMAJUKANTANAH1 />
+      Ya <input type="radio" id="JPBD_PERMOHONANMEMAJUKANTANAH2" name="JPBD_PERMOHONANMEMAJUKANTANAH" value="0" $JPBD_PERMOHONANMEMAJUKANTANAH0 /> Tidak</td>
     </tr>
     <tr>
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
@@ -215,19 +220,19 @@
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
       <td align="left" valign="top" nowrap="nowrap">&nbsp;</td>
       <td align="left" valign="top" nowrap="nowrap">i) Tujuan permohonan:</td>
-      <td colspan="2" align="left" valign="top" nowrap="nowrap"><textarea name="JPBD_TUJUANPERMOHONAN" cols="65" rows="5" id="JPBD_TUJUANPERMOHONAN" $READONLY_JPBD $JPBD_CLASS_DISABLED style="text-transform:uppercase">$!JPBD_TUJUANPERMOHONAN</textarea></td>
+      <td colspan="2" align="left" valign="top" nowrap="nowrap"><textarea name="JPBD_TUJUANPERMOHONAN" cols="65" rows="5" id="JPBD_TUJUANPERMOHONAN" style="text-transform:uppercase">$!JPBD_TUJUANPERMOHONAN</textarea></td>
     </tr>
     <tr>
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
       <td align="left" valign="top" nowrap="nowrap">&nbsp;</td>
       <td align="left" valign="top" nowrap="nowrap">ii) Tarikh diluluskan / ditolak:</td>
       <td colspan="2" align="left" valign="top" nowrap="nowrap">
-#if ($READONLY_JPBD != '')
-        <input name="JPBD_TARIKHLULUSTOLAK" type="text" id="JPBD_TARIKHLULUSTOLAK" value="$!JPBD_TARIKHLULUSTOLAK" size="15" maxlength="10" $READONLY_JPBD $JPBD_CLASS_DISABLED />
-#else
-        <input name="JPBD_TARIKHLULUSTOLAK" type="text" id="JPBD_TARIKHLULUSTOLAK" value="$!JPBD_TARIKHLULUSTOLAK" size="15" maxlength="10" $READONLY_JPBD $JPBD_CLASS_DISABLED />
+##if ($READONLY_JPBD != '')
+        <!-- <input name="JPBD_TARIKHLULUSTOLAK" type="text" id="JPBD_TARIKHLULUSTOLAK" value="$!JPBD_TARIKHLULUSTOLAK" size="15" maxlength="10" /> -->
+##else
+        <input name="JPBD_TARIKHLULUSTOLAK" type="text" id="JPBD_TARIKHLULUSTOLAK" value="$!JPBD_TARIKHLULUSTOLAK" size="15" maxlength="10"  />
         <a href="javascript:displayDatePicker('JPBD_TARIKHLULUSTOLAK',false,'dmy');"><img src="../img/calendar.gif" alt="" border="0" /></a>
-#end      
+##end      
       </td>
     </tr>
     <tr>
@@ -235,19 +240,19 @@
       <td align="left" valign="top" nowrap="nowrap">&nbsp;</td>
       <td align="left" valign="top" nowrap="nowrap">iii) Tarikh luput kelulusan:</td>
       <td colspan="2" align="left" valign="top" nowrap="nowrap">
-#if ($READONLY_JPBD != '')
-        <input name="JPBD_TARIKHLUPUTKELULUSAN" type="text" id="JPBD_TARIKHLUPUTKELULUSAN" value="$!JPBD_TARIKHLUPUTKELULUSAN" size="15" maxlength="10" $READONLY_JPBD $JPBD_CLASS_DISABLED />
-#else
-        <input name="JPBD_TARIKHLUPUTKELULUSAN" type="text" id="JPBD_TARIKHLUPUTKELULUSAN" value="$!JPBD_TARIKHLUPUTKELULUSAN" size="15" maxlength="10" $READONLY_JPBD $JPBD_CLASS_DISABLED />
+##if ($READONLY_JPBD != '')
+        <!-- <input name="JPBD_TARIKHLUPUTKELULUSAN" type="text" id="JPBD_TARIKHLUPUTKELULUSAN" value="$!JPBD_TARIKHLUPUTKELULUSAN" size="15" maxlength="10"  /> -->
+##else
+        <input name="JPBD_TARIKHLUPUTKELULUSAN" type="text" id="JPBD_TARIKHLUPUTKELULUSAN" value="$!JPBD_TARIKHLUPUTKELULUSAN" size="15" maxlength="10"  />
         <a href="javascript:displayDatePicker('JPBD_TARIKHLUPUTKELULUSAN',false,'dmy');"><img src="../img/calendar.gif" alt="" border="0" /></a>
-#end      
+##end      
       </td>
     </tr>
     <tr>
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
       <td align="left" valign="top" nowrap="nowrap">c)</td>
       <td align="left" valign="top" nowrap="nowrap">Lain-lain: </td>
-      <td colspan="2" align="left" valign="top" nowrap="nowrap"><textarea name="JPBD_CATATANLAIN" cols="65" rows="5" id="JPBD_CATATANLAIN" $READONLY_JPBD $JPBD_CLASS_DISABLED style="text-transform:uppercase">$!JPBD_CATATANLAIN</textarea></td>
+      <td colspan="2" align="left" valign="top" nowrap="nowrap"><textarea name="JPBD_CATATANLAIN" cols="65" rows="5" id="JPBD_CATATANLAIN"  style="text-transform:uppercase">$!JPBD_CATATANLAIN</textarea></td>
     </tr>
     <tr>
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
@@ -263,16 +268,16 @@
     <tr>
       <td align="right" valign="top" nowrap="nowrap"><span class="mandatori">*</span></td>
       <td colspan="2" align="left" valign="top" nowrap="nowrap">Nama Pegawai Perancang Bandar:</td>
-      <td colspan="2" align="left" valign="top" nowrap="nowrap"><input name="JPBD_NAMAPEGAWAIJPBD" type="text" id="JPBD_NAMAPEGAWAIJPBD" value="$!JPBD_NAMAPEGAWAIJPBD" size="100" maxlength="255" $READONLY_JPBD $JPBD_CLASS_DISABLED style="text-transform:uppercase" /></td>
+      <td colspan="2" align="left" valign="top" nowrap="nowrap"><input name="JPBD_NAMAPEGAWAIJPBD" type="text" id="JPBD_NAMAPEGAWAIJPBD" value="$!JPBD_NAMAPEGAWAIJPBD" size="100" maxlength="255" style="text-transform:uppercase" /></td>
     </tr>
     <tr>
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
       <td colspan="2" align="left" valign="top" nowrap="nowrap">Jawatan:</td>
-      <td colspan="2" align="left" valign="top" nowrap="nowrap"><input name="JPBD_JAWATANPEGAWAIJPBD" type="text" id="JPBD_JAWATANPEGAWAIJPBD" value="$!JPBD_JAWATANPEGAWAIJPBD" size="100" maxlength="255" $READONLY_JPBD $JPBD_CLASS_DISABLED style="text-transform:uppercase" /></td>
+      <td colspan="2" align="left" valign="top" nowrap="nowrap"><input name="JPBD_JAWATANPEGAWAIJPBD" type="text" id="JPBD_JAWATANPEGAWAIJPBD" value="$!JPBD_JAWATANPEGAWAIJPBD" size="100" maxlength="255" style="text-transform:uppercase" /></td>
     </tr>
     <tr>
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
-      <td colspan="4" align="left" valign="top" nowrap="nowrap"><input type="checkbox" id="JPBD_TANDATANGANBAGIPIHAK" name="JPBD_TANDATANGANBAGIPIHAK" value="1" $JPBD_TANDATANGANBAGIPIHAK $DISABLE_JPBD onclick="togglePegawaiAsal();" /> 
+      <td colspan="4" align="left" valign="top" nowrap="nowrap"><input type="checkbox" id="JPBD_TANDATANGANBAGIPIHAK" name="JPBD_TANDATANGANBAGIPIHAK" value="1" $JPBD_TANDATANGANBAGIPIHAK onclick="togglePegawaiAsal();" /> 
       Sila &radic; jika menandatangani bagi pihak pegawai lain</td>
     </tr>
 #if ($JPBD_TANDATANGANBAGIPIHAK == '')
@@ -282,7 +287,7 @@
 #end
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
       <td colspan="2" align="left" valign="top" nowrap="nowrap">Nama Pegawai Perancang Bandar Asal:</td>
-      <td colspan="2" align="left" valign="top" nowrap="nowrap"><input name="JPBD_NAMAPEGAWAIASAL" type="text" id="JPBD_NAMAPEGAWAIASAL" value="$!JPBD_NAMAPEGAWAIASAL" size="100" maxlength="255" $READONLY_JPBD $JPBD_CLASS_DISABLED style="text-transform:uppercase" /></td>
+      <td colspan="2" align="left" valign="top" nowrap="nowrap"><input name="JPBD_NAMAPEGAWAIASAL" type="text" id="JPBD_NAMAPEGAWAIASAL" value="$!JPBD_NAMAPEGAWAIASAL" size="100" maxlength="255" style="text-transform:uppercase" /></td>
     </tr>
 #if ($JPBD_TANDATANGANBAGIPIHAK == '')
     <tr id="JPBD_STYLE_JAWATANPEGAWAIASAL" style="visibility:collapse">
@@ -291,25 +296,25 @@
 #end
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
       <td colspan="2" align="left" valign="top" nowrap="nowrap">Jawatan:</td>
-      <td colspan="2" align="left" valign="top" nowrap="nowrap"><input name="JPBD_JAWATANPEGAWAIASAL" type="text" id="JPBD_JAWATANPEGAWAIASAL" value="$!JPBD_JAWATANPEGAWAIASAL" size="100" maxlength="255" $READONLY_JPBD $JPBD_CLASS_DISABLED style="text-transform:uppercase" /></td>
+      <td colspan="2" align="left" valign="top" nowrap="nowrap"><input name="JPBD_JAWATANPEGAWAIASAL" type="text" id="JPBD_JAWATANPEGAWAIASAL" value="$!JPBD_JAWATANPEGAWAIASAL" size="100" maxlength="255" style="text-transform:uppercase" /></td>
     </tr>
     
     <tr>
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
       <td colspan="2" align="left" valign="top" nowrap="nowrap">Tarikh:</td>
       <td colspan="2" align="left" valign="top" nowrap="nowrap">
-        #if ($READONLY_JPBD != '')
-        <input name="JPBD_TARIKHPERMOHONAN" type="text" id="JPBD_TARIKHPERMOHONAN" value="$!JPBD_TARIKHPERMOHONAN" size="15" maxlength="10" $READONLY_JPBD $JPBD_CLASS_DISABLED />
-        #else
-        <input name="JPBD_TARIKHPERMOHONAN" type="text" id="JPBD_TARIKHPERMOHONAN" value="$!JPBD_TARIKHPERMOHONAN" size="15" maxlength="10" $READONLY_JPBD $JPBD_CLASS_DISABLED />
+        ##if ($READONLY_JPBD != '')
+        <!-- <input name="JPBD_TARIKHPERMOHONAN" type="text" id="JPBD_TARIKHPERMOHONAN" value="$!JPBD_TARIKHPERMOHONAN" size="15" maxlength="10" /> -->
+        ##else
+        <input name="JPBD_TARIKHPERMOHONAN" type="text" id="JPBD_TARIKHPERMOHONAN" value="$!JPBD_TARIKHPERMOHONAN" size="15" maxlength="10" />
         <a href="javascript:displayDatePicker('JPBD_TARIKHPERMOHONAN',false,'dmy');"><img src="../img/calendar.gif" alt="" border="0" /></a>
-        #end      
+        ##end      
       </td>
     </tr>
     <tr>
       <td align="right" valign="top" nowrap="nowrap">&nbsp;</td>
       <td colspan="2" align="left" valign="top" nowrap="nowrap">Jabatan:</td>
-      <td colspan="2" align="left" valign="top" nowrap="nowrap"><input name="JPBD_JABATAN" type="text" id="JPBD_JABATAN" value="$!JPBD_JABATAN" size="100" maxlength="255" $READONLY_JPBD $JPBD_CLASS_DISABLED style="text-transform:uppercase" /></td>
+      <td colspan="2" align="left" valign="top" nowrap="nowrap"><input name="JPBD_JABATAN" type="text" id="JPBD_JABATAN" value="$!JPBD_JABATAN" size="100" maxlength="255" style="text-transform:uppercase" /></td>
     </tr>
     <tr>
       <td colspan="5">&nbsp;</td>
@@ -372,24 +377,25 @@
 <div style="text-align:center">
   <input type="button" id="cmdBack" name="cmdBack" value="Kembali" onclick="backBorangLampiranA1();" />&nbsp;
 <!--  <input type="button" id="cmdPrintBorangLampiranA1" name="cmdPrintBorangLampiranA1" value="Cetak Borang Lampiran A1" onclick="printBorangLampiranA1();" />&nbsp; -->
-#if ($isJPBDUser == 'true')
-	#if ($sendBorangLampiranA1 != 'true')
-  <input type="button" id="cmdSave" name="cmdSave" value="Simpan" onclick="saveBorangLampiranA1();" />&nbsp;
-		#if ($isPegawaiJPBD == 'true')  
+##if ($isJPBDUser == 'true')
+	##if ($sendBorangLampiranA1 != 'true')
+  <input type="button" id="cmdSave" name="cmdSave" value="Simpan" onclick="saveBorangLampiranA1('$ID_PERMOHONAN');" />&nbsp;
+		##if ($isPegawaiJPBD == 'true')  
   <input type="button" id="cmdSend" name="cmdSend" value="Hantar ke JKPTG" onclick="sendBorangLampiranA1();" />&nbsp;
-		#else  
-  <input type="button" id="cmdVerify" name="cmdVerify" value="Mohon Pengesahan Pegawai" onclick="verifyBorangLampiranA1();" />&nbsp;
-  		#end
-	#end
-#else
+		##else  
+  <!-- <input type="button" id="cmdVerify" name="cmdVerify" value="Mohon Pengesahan Pegawai" onclick="verifyBorangLampiranA1();" />&nbsp; -->
+  		##end
+	##end
+##else
 <!--  <input type="button" id="cmdPrintSuratIringan" name="cmdPrintSuratIringan" value="Cetak Surat Iringan" onclick="printSuratIringan('JKPTG');" />&nbsp; -->
-  <input type="button" id="cmdSave" name="cmdSave" value="Hantar ke JPBD" onclick="sendBorangLampiranA1();" />&nbsp;
-	#if ($haveINTData == 'true')
-  <input type="button" id="cmdDelete" name="cmdDelete" value="Batalkan Permohonan JPBD" onclick="deleteBorangLampiranA1();" />
-	#end
-#end
+ <!--  <input type="button" id="cmdSave" name="cmdSave" value="Hantar ke JPBD" onclick="sendBorangLampiranA1();" />&nbsp; -->
+	##if ($haveINTData == 'true')
+  <!-- <input type="button" id="cmdDelete" name="cmdDelete" value="Batalkan Permohonan JPBD" onclick="deleteBorangLampiranA1();" /> -->
+	##end
+##end
 </div>
 <input type="hidden" id="ID_PERMOHONAN" name="ID_PERMOHONAN" value="$ID_PERMOHONAN" />
+<input type="hidden" id="ID_NEGERI" name="ID_NEGERI" value="$ID_NEGERI" />
 <input type="hidden" id="action2" name="action2" value="$action2" />
 <script type="text/javascript">
   function togglePegawaiAsal() {
@@ -402,7 +408,8 @@
 	  }
   }
   function printSuratIringan(PRINT_TYPE) {
-	  document.${formName}.action = "?_portal_module=ekptg.view.integrasi.FrmViewBorangLampiranA1&action2=printSuratIringanJKPTG&printType=" + PRINT_TYPE;
+	  document.${formName}.action = "$EkptgUtil.getTabID("JPBD",$portal_role)?_portal_module=ekptg.view.ppt.FrmUlasanJPBDOnline&action2=printSuratIringanJKPTG&printType=" + PRINT_TYPE;
+	  //document.${formName}.action = "?_portal_module=ekptg.view.integrasi.FrmViewBorangLampiranA1&action2=printSuratIringanJKPTG&printType=" + PRINT_TYPE;
 	  document.${formName}.submit();
   }
   function printBorangLampiranA1() {
@@ -412,14 +419,16 @@
 	  hWnd.opener = document.window;
 	  if (hWnd.focus != null) hWnd.focus();
   }
-  function saveBorangLampiranA1() {
+  function saveBorangLampiranA1(ID_PERMOHONAN) {
+	  alert('baca saveUlasanJPBD---1'+ID_PERMOHONAN);
       if (!window.confirm("Adakah anda pasti?")) return;
 	  document.${formName}.method = "POST";
-      document.${formName}.action = "?_portal_module=ekptg.view.integrasi.FrmViewBorangLampiranA1&action2=saveBorangLampiranA1";
-	  document.${formName}.submit();
+      //document.${formName}.action = "?_portal_module=ekptg.view.integrasi.FrmUlasanJPBDOnline&action2=saveUlasanJPBD&ID_PERMOHONAN="+ID_PERMOHONAN;
+	  document.${formName}.action = "$EkptgUtil.getTabID("JPBD",$portal_role)?_portal_module=ekptg.view.ppt.FrmUlasanJPBDOnline&action2=saveUlasanJPBD&ID_PERMOHONAN=" + ID_PERMOHONAN;
+      document.${formName}.submit();
   }
   function sendBorangLampiranA1() {
-#if ($isJPBDUser == 'true')  
+##if ($isJPBDUser == 'true')  
 	  if (document.${formName}.JPBD_KEGUNAANTANAH.value == '' && document.${formName}.JPBD_POTENSIPEMBANGUNAN.value == '') {
 		  alert('Sila isikan salah satu atau kedua-dua medan kegunaan tanah dan/atau potensi pembangunan.');
 		  document.${formName}.JPBD_KEGUNAANTANAH.focus();
@@ -440,10 +449,11 @@
 		  document.${formName}.JPBD_JABATAN.focus();
 		  return false;
 	  }
-#end	  
+##end	  
       if (!window.confirm("Adakah anda pasti?")) return;
 	  document.${formName}.method = "POST";
-      document.${formName}.action = "?_portal_module=ekptg.view.integrasi.FrmViewBorangLampiranA1&action2=sendBorangLampiranA1";
+      document.${formName}.action = "$EkptgUtil.getTabID("JPBD",$portal_role)?_portal_module=ekptg.view.ppt.FrmUlasanJPBDOnline&action2=sendBorangLampiranA1";
+      //document.${formName}.action = "?_portal_module=ekptg.view.integrasi.FrmViewBorangLampiranA1&action2=sendBorangLampiranA1";
 	  document.${formName}.submit();
   }
 #if ($isJPBDUser == 'true')  
@@ -470,26 +480,28 @@
 	  }
       if (!window.confirm("Adakah anda pasti?")) return;
 	  document.${formName}.method = "POST";
-      document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmMaklumatUlasanJPBDOnline&action2=verifyBorangLampiranA1";
+      document.${formName}.action = "$EkptgUtil.getTabID("JPBD",$portal_role)?_portal_module=ekptg.view.ppt.FrmUlasanJPBDOnline&action2=verifyBorangLampiranA1";
+      //document.${formName}.action = "?_portal_module=ekptg.view.integrasi.FrmViewBorangLampiranA1&action2=verifyBorangLampiranA1";
 	  document.${formName}.submit();
   }
 #end
   function viewBorangLampiranA1(ID_PERMOHONAN) {
-      document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmMaklumatUlasanJPBDOnline&action2=viewBorangLampiranA1&ID_PERMOHONAN=" + ID_PERMOHONAN;
+	  document.${formName}.action = "$EkptgUtil.getTabID("JPBD",$portal_role)?_portal_module=ekptg.view.ppt.FrmUlasanJPBDOnline&action2=viewBorangLampiranA1&ID_PERMOHONAN=" + ID_PERMOHONAN;
+      //document.${formName}.action = "?_portal_module=ekptg.view.integrasi.FrmViewBorangLampiranA1&action2=viewBorangLampiranA1&ID_PERMOHONAN=" + ID_PERMOHONAN;
 	  document.${formName}.method = "POST";
 	  document.${formName}.submit();
   }
   function deleteBorangLampiranA1() {
       if (!window.confirm("Adakah anda pasti?")) return;
-      document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmMaklumatUlasanJPBDOnline&action2=deleteBorangLampiranA1";
-	  document.${formName}.method = "POST";
+      document.${formName}.action = "$EkptgUtil.getTabID("JPBD",$portal_role)?_portal_module=ekptg.view.ppt.FrmUlasanJPBDOnline&action2=deleteBorangLampiranA1";
 	  document.${formName}.submit();
   }
   function backBorangLampiranA1() {
 #if ($isJPBDUser == 'true')
-    document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.integrasi.FrmViewMyInfoBorangLampiranA1";
+    document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.integrasi.FrmUlasanJPBDOnline";
 #else  
-      document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmMaklumatUlasanJPBDOnline&action2=";
+      //document.${formName}.action = "?_portal_module=ekptg.view.integrasi.FrmViewBorangLampiranA1&action2=";
+      document.${formName}.action = "$EkptgUtil.getTabID("JPBD",$portal_role)?_portal_module=ekptg.view.ppt.FrmUlasanJPBDOnline&action2=";
 	  document.${formName}.method = "POST";
 #end
 	  document.${formName}.submit();
@@ -501,9 +513,11 @@
 	  hWnd.opener = document.window;
 	  if (hWnd.focus != null) hWnd.focus();
   }
-  function deleteFile(IDFail) {	
+  function deleteFile(IDFail) {
+	  alert('baca deleteFiles');
       if (!window.confirm("Adakah anda pasti?")) return;
-      document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmMaklumatUlasanJPBDOnline&action2=deleteFile&FAIL_IDFAIL=" + IDFail;
+      document.${formName}.action = "$EkptgUtil.getTabID("JPBD",$portal_role)?_portal_module=ekptg.view.ppt.FrmUlasanJPBDOnline&action2=deleteFile&FAIL_IDFAIL=" + IDFail;
+      //document.${formName}.action = "?_portal_module=ekptg.view.integrasi.FrmViewBorangLampiranA1&action2=deleteFile&FAIL_IDFAIL=" + IDFail;
 	  document.${formName}.method = "POST";
 	  document.${formName}.submit();
   }
@@ -513,7 +527,8 @@
 		  return;
 	  }
       if (!window.confirm("Adakah anda pasti?")) return;
-      document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmMaklumatUlasanJPBDOnline&action2=doUpload&ID_PERMOHONAN=$ID_PERMOHONAN";
+      document.${formName}.action = "$EkptgUtil.getTabID("JPBD",$portal_role)?_portal_module=ekptg.view.ppt.FrmUlasanJPBDOnline&action2=doUpload&ID_PERMOHONAN=$ID_PERMOHONAN";
+      //document.${formName}.action = "?_portal_module=ekptg.view.integrasi.FrmViewBorangLampiranA1&action2=doUpload&ID_PERMOHONAN=$ID_PERMOHONAN";
       document.${formName}.method = "POST";
       document.${formName}.enctype = "multipart/form-data";
       document.${formName}.encoding = "multipart/form-data";
