@@ -95,7 +95,7 @@
     
    			<table width="100%" border="0" cellspacing="2" cellpadding="2">
        		#foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
-         	<!-- <tr>
+<!--         	 <tr>
           		<td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
             	<td width="28%">Negeri</td>
             	<td width="1%">:</td>
@@ -138,8 +138,8 @@
          		<td>Jenis Fail</td>
             	<td>:</td>
             	<td>$selectJenisFail</td>
-         	</tr>
-         	<tr>
+         	</tr>-->
+<!--         	<tr>
 	         	<td>
             	</td>
     	        <td valign="top">Tarikh Surat KJP</td>
@@ -148,19 +148,26 @@
     	        #if ($mode != 'view')
         	    <a href="javascript:displayDatePicker('tarikhSuratKJP',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
             	#end</td>
-         </tr>	
-         <tr>
+         </tr>	-->
+<!--         <tr>
          <td style="visibility:hidden">#if ($mode != 'view')<span class="style1">*</span>#end </td>
          <td>No. Fail Lain /  Pemohon</td>
          <td>:</td>
          <td><input type="text" name="txtNoFailLain" id="txtNoFailLain" value="$beanMaklumatPermohonan.noFailLain" onblur="this.value=this.value.toUpperCase();"/></td>
          </tr> -->
          	<tr>
-         		<td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-            	<td>Status Tanah</td>
-            	<td>:</td>
-            	<td>$selectStatusTanah</td>
-         	</tr>
+			<td width="1%"><span class="style1">*</span></td>
+			<td width="28%">Status Tanah</td>
+			<td width="1%">:</td>
+			<td width="70%">
+				<select name="socJenisTanah" id="socJenisTanah" onchange="doChangeJenisTanah()"
+					$inputTextClass class="$inputTextClass">
+				<option $selected value="0">SILA PILIH</option>
+				<option $selected1 value="1">TANAH MILIK PERSEKUTUAN</option>
+				<option $selected2 value="2">TANAH RIZAB PERSEKUTUAN</option>
+				</select>
+			</td>
+		</tr>
          <tr>
           <td>
             #if ($mode != 'view')<span class="style1">*</span>#end 
@@ -174,7 +181,7 @@
 				#end 
 			</td>         
          </tr>
-        <!--<tr style="display:none">
+<!--        <tr style="display:none">
          	<td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
             <td valign="top">Tarikh Agihan</td>
             <td>:</td>
@@ -201,67 +208,36 @@
     	<td colspan="2">
 			<fieldset>
     			<legend><strong>MAKLUMAT TANAH</strong></legend>
-    			##foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
+    			#foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
     			<input type="hidden" name="idHakmilik" id="idHakmilik" value="$beanMaklumatTanah.idHakmilik" />
     			
-    			<table width="100%" border="0" cellspacing="2" cellpadding="2"> 			        				
-        				<tr>
-          					<td>&nbsp;</td>
-          					<td>Negeri</td>
-          					<td>:</td>			
-          					<td>
-          					$selectNegeri
-          					##$beanMaklumatTanah.negeri
-            					<input type="hidden" name="idNegeriTanah" id="idNegeriTanah" value="$beanMaklumatTanah.idNegeriTanah">
-            					<input type="hidden" name="namaNegeriTanah" id="namaNegeriTanah" value="$$beanMaklumatTanah.negeri">
-          					</td>
-        				</tr>
-        				<tr>
-          					<td>&nbsp;</td>
-          					<td>Daerah</td>
-          					<td>:</td>
-          					<td>$selectDaerah
-          						<input type="hidden" name="namaDerahTanah" id="namaDerahTanah" value="$beanMaklumatTanah.daerah" /></td>
-        				</tr>        				
-        				<tr>
-          					<td>&nbsp;</td>
-			          		<td>Mukim</td>
-          					<td>:</td>
-          					<td>$selectMukim
-          						<input type="hidden" name="namaMukimTanah" id="namaMukimTanah" value="$beanMaklumatTanah.mukim" /></td>
-        				</tr>
-        				<tr>
-          					<td>&nbsp;</td>
-			          		<td>Seksyen</td>
-          					<td>:</td>
-          					<td>$selectSeksyen</td>
-        				</tr>
-        			<tr>
-          				<td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>
-          				<td>No. Lot</td>
-          				<td>:</td>
-          				<td>
-          					#if ($mode == 'new')
-          						<input type="text" name="txtnoLot" id="txtnoLot" value="$beanMaklumatTanah.noLot">
-          					#else
-          						<input type="text" name="txtnoLot" id="txtnoLot" value="$beanMaklumatTanah.noLot" readonly="readonly" class="disabled">
-          					#end
-          						<input type="hidden" name="noLotTanah" id="noLotTanah" value="$beanMaklumatTanah.lot" /></td>
-        			</tr>
+    			<table width="100%" border="0" cellspacing="2" cellpadding="2">
+<!--        			<tr> -->
+<!--          				<td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td> -->
+<!--          				<td>No. Lot</td> -->
+<!--          				<td>:</td>-->
+<!--          				<td> -->
+<!--          					#if ($mode == 'new')-->
+<!--          						<input type="text" nam   e="txtnoLot" id="txtnoLot" value="$beanMaklumatTanah.noLot">-->
+<!--          					#else -->
+<!--          						<input type="text" name="txtnoLot" id="txtnoLot" value="$beanMaklumatTanah.noLot" readonly="readonly" class="disabled">-->
+<!--          					#end  -->
+          						<input type="hidden" name="noLotTanah" id="noLotTanah" value="$beanMaklumatTanah.lot" /></td>-->
+<!--        			</tr>-->
         			
-        			<tr>
-          				<td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>
-          				<td>No. Hakmilik</td>
-          				<td>:</td>
-          				<td><input type="text" name="txtnoHakmilik" id="txtnoHakmilik" value="$beanMaklumatTanah.noHakmilik" onblur="doChangePeganganHakmilik();">
-          					<input type="hidden" name="noMilikTanah" id="noMilikTanah" value="$beanMaklumatTanah.hakmilik" /><span class="style1">$errorPeganganHakmilik</span> </td>
-        			</tr>
-        			<tr>
+<!--        			<tr>-->
+<!--          				<td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>-->
+<!--          				<td>No. Hakmilik</td>-->
+<!--          				<td>:</td>-->
+<!--          				<td><input type="text" name="txtnoHakmilik" id="txtnoHakmilik" value="$beanMaklumatTanah.noHakmilik" onblur="doChangePeganganHakmilik();">-->
+<!--          					<input type="hidden" name="noMilikTanah" id="noMilikTanah" value="$beanMaklumatTanah.hakmilik" /><span class="style1">$errorPeganganHakmilik</span> </td>-->
+<!--        			</tr>-->
+<!--        			<tr>
         				<td width="1%"></td>
           				<td width="28%">Pegangan Hakmilik</td>
           				<td width="1%">:</td>
           				<td width="70%"> $beanMaklumatTanah.peganganHakmilik
-          						<!-- #if ($mode == 'new')
+          						#if ($mode == 'new')
             					<input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" onblur="doChangePeganganHakmilik();">
             					<input class="stylobutton100" name="cmdDaftar" type="button" value="Carian Tanah" onClick="pilihTanah('$idPermohonan')">
           						#else
@@ -270,10 +246,19 @@
             					<input type="hidden" name="idHakmilikAgensi" id="idHakmilikAgensi" value="$idHakmilikAgensi">
             					<span class="style1">$errorPeganganHakmilik</span> 
             					<span class="style4"><i><font color="#ff0000">Contoh</font> : </i><span class="style5">160140GRN00000576</span></span>
-            				-->
+            				
             				</td>
-        			</tr>
-        				
+        			</tr>-->
+        				#if($idJenisTanah == '1' || $idJenisTanah == '2')
+						#foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
+						<tr>
+				          <td width="1%"><span class="style1">*</span></td>
+				          <td width="28%">Negeri</td>
+				          <td width="1%">:</td>
+				          <td width="70%">
+				            $selectNegeri
+				          </td>
+				        </tr>
         				<tr>
           					<td>&nbsp;</td>
           					<td>Luas Lot</td>
@@ -282,9 +267,30 @@
           						<input type="hidden" name="idLuasTanah" id="idLuasTanah" value="$beanMaklumatTanah.idLuas" /> 
           						<input type="hidden" name="luasTanah" id="luasTanah" value="$beanMaklumatTanah.luasBersamaan" /></td>
         				</tr>
-
-
-<!--         				<tr>
+        				<tr>
+          					<td>&nbsp;</td>
+			          		<td>Mukim</td>
+          					<td>:</td>
+          					<td>$beanMaklumatTanah.mukim
+          						<input type="hidden" name="namaMukimTanah" id="namaMukimTanah" value="$beanMaklumatTanah.mukim" /></td>
+        				</tr>
+        				<tr>
+          					<td>&nbsp;</td>
+          					<td>Daerah</td>
+          					<td>:</td>
+          					<td>$beanMaklumatTanah.daerah
+          						<input type="hidden" name="namaDerahTanah" id="namaDerahTanah" value="$beanMaklumatTanah.daerah" /></td>
+        				</tr>
+        				<tr>
+          					<td>&nbsp;</td>
+          					<td>Negeri</td>
+          					<td>:</td>			
+          					<td>$beanMaklumatTanah.negeri
+            					<input type="hidden" name="idNegeriTanah" id="idNegeriTanah" value="$beanMaklumatTanah.idNegeriTanah">
+            					<input type="hidden" name="namaNegeriTanah" id="namaNegeriTanah" value="$$beanMaklumatTanah.negeri">
+          					</td>
+        				</tr>
+        				<!--<tr>
           					<td>&nbsp;</td>
           					<td>Kementerian</td>
           					<td>:</td>
@@ -292,14 +298,14 @@
             					<input type="hidden" name="idKementerianTanah" id="idKementerianTanah" value="$beanMaklumatTanah.idKementerian">
             					<input type="hidden" name="kodKementerian" id="kodKementerian" value="$beanMaklumatTanah.kodKementerian">
           					</td>
-        				</tr> -->
-<!--         				<tr>
+        				</tr>
+        				<tr>
           					<td>&nbsp;</td>
           					<td>Agensi</td>
           					<td>:</td>
           					<td>$beanMaklumatTanah.agensi
           						<input type="hidden" name="idAgensiTanah" id="idAgensiTanah" value="$beanMaklumatTanah.idAgensi">
-        				</tr> -->
+        				</tr>-->
         				
               			<tr>
                            	<td></td>
@@ -315,7 +321,7 @@
            				 	#end</td>
                         </tr>
 					</table>
-                    ##end
+                    #end
 				</fieldset>
 			</td>
 		</tr>

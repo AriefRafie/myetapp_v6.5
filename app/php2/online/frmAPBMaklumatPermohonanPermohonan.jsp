@@ -215,24 +215,24 @@ TAHUN </td>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
         <tr>
-          <td width="1%">&nbsp;</td>
+          <td valign="top">#if ($mode == 'update')<span class="style1">*</span>#end</td>
           <td width="29%">Luar Perairan Negeri</td>
           <td width="70%">: $selectFlagLuar</td>
         </tr>
         <tr>
-          <td>&nbsp;</td>
+          <td valign="top">#if ($mode == 'update')<span class="style1">*</span>#end</td>
           <td>Negeri</td>
           <td>: 
             $selectNegeri</td>
         </tr>
         <tr>
-          <td>&nbsp;</td>
+          <td valign="top">#if ($mode == 'update')<span class="style1">*</span>#end</td>
           <td>Lokasi</td>
           <td>:
             <input name="txtLokasi" type="text" class="$inputTextClass" id="txtLokasi" onblur="this.value=this.value.toUpperCase();" value="$beanMaklumatPermohonan.lokasi" size="43" maxlength="250" $readonly /></td>
         </tr>
         <tr>
-          <td>&nbsp;</td>
+          <td valign="top">#if ($mode == 'update')<span class="style1">*</span>#end</td>
           <td>Luas Dipohon</td>
           <td>:
             <input type="text" name="txtLuas" id="txtLuas" size="10" onkeyup="validateNumber(this,this.value);" maxlength="10" value="$beanMaklumatPermohonan.luas" $readonly class="$inputTextClass"/>

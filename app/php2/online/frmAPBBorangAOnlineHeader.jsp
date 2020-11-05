@@ -22,7 +22,7 @@
 	</td>
 	</tr>
 	<tr>
-	<td> <input name="idJadualKedua" type="hidden" id="idJadualKedua" value="$idJadualKedua"/>
+	<td> <input name="idJadualKedua" type="text" id="idJadualKedua" value="$idJadualKedua"/>
 	</td>
 	</tr>
   		<tr>
