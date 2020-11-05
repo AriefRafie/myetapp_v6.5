@@ -7722,9 +7722,14 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 		String txtJumBayaranEDIT = getParam("txtJumBayaranEDIT");
 		String txtNomborResitPerintahEDIT = getParam("txtNomborResitPerintahEDIT");
 		String txdTarikhBayaranPerintahEDIT = getParam("txdTarikhBayaranPerintahEDIT");
+		String check_pengecualianEDIT = getParam("check_pengecualianEDIT");//arief add
+		String catatan_pengecualianEDIT = getParam("catatan_pengecualianEDIT");//arief add
 
-	    FrmPrmhnnSek8KptsanBicaraData.add_BayaranPerintahEDIT(usid,idpermohonan,txtJumBayaranEDIT,
-	    		txtNomborResitPerintahEDIT,txdTarikhBayaranPerintahEDIT);
+	    /*FrmPrmhnnSek8KptsanBicaraData.add_BayaranPerintahEDIT(usid,idpermohonan,txtJumBayaranEDIT,
+	    		txtNomborResitPerintahEDIT,txdTarikhBayaranPerintahEDIT);*/
+		FrmPrmhnnSek8KptsanBicaraData.add_BayaranPerintahEDIT( usid, idpermohonan, txtJumBayaranEDIT,
+	    		 txtNomborResitPerintahEDIT, check_pengecualianEDIT,  catatan_pengecualianEDIT,
+	    		 txdTarikhBayaranPerintahEDIT);
 	}
 	
 
@@ -8324,11 +8329,16 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 		//TBLPPKBAYARAN
 		String id_jenisbayaranPerintah = getParam("id_jenisbayaranPerintah");
 		String txtJumBayaran = getParam("txtJumBayaran");
+		String check_pengecualian = getParam("check_pengecualian");//arief add
+		String catatan_pengecualian = getParam("catatan_pengecualian");//arief add
 		String txtNomborResitPerintah = getParam("txtNomborResitPerintah");
 		String txdTarikhBayaranPerintah = getParam("txdTarikhBayaranPerintah");
 
+		/*FrmPrmhnnSek8KptsanBicaraData.add_BayaranPerintah(idpermohonan,usid,
+				id_jenisbayaranPerintah,txtJumBayaran,txtNomborResitPerintah,txdTarikhBayaranPerintah);*/
 		FrmPrmhnnSek8KptsanBicaraData.add_BayaranPerintah(idpermohonan,usid,
-				id_jenisbayaranPerintah,txtJumBayaran,txtNomborResitPerintah,txdTarikhBayaranPerintah);
+				id_jenisbayaranPerintah,txtJumBayaran,check_pengecualian,catatan_pengecualian,
+				txtNomborResitPerintah,txdTarikhBayaranPerintah);
 	}
 
 	private void add_maklumatPerintah(String id_perbicaraan,

@@ -37,13 +37,6 @@
     <td>&nbsp;
       <div class="warning">SILA PILIH FAIL DI SENARAI FAIL TERLEBIH DAHULU</div></td>
   </tr>
-  #else
-  #foreach($beanHeader in $BeanHeader)
-  <tr>
-    <td>&nbsp;
-      <div class="warning">FAIL INI MASIH DI STATUS <strong>$beanHeader.status</strong></div></td>
-  </tr>
-  #end
   #end
   #if ($idFail != '' && $idStatus != '1610198' && $flagOpenDetail)
   <tr>
