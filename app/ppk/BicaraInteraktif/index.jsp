@@ -2331,7 +2331,7 @@ function showKeteranganBantahan(status,skrinName,mode)
 function showMaklumatKIVPerintah(checkKiv,skrinName,mode)
 {
 	//alert('showMaklumatMatiWaris : '+status);
-	if(checkKiv == "0" || checkKiv == "1")
+	if(checkKiv == "0" || checkKiv == "1" || checkKiv == "3")
 	{
 		document.getElementById("row"+skrinName+"DATE_KIV").style.display = "";
 		document.getElementById("row"+skrinName+"CATATAN_KIV").style.display = "";		

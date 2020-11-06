@@ -137,7 +137,8 @@ function kemaskiniMaklumatBarge(){
 	doAjaxCall${formName}("");
 }
 function doBatalMaklumatBarge(){
-	
+	document.${formName}.actionOnline.value = "doMaklumatPasir";
+	document.${formName}.hitButton.value = "";
 	document.${formName}.mode.value = "view";
 	doAjaxCall${formName}("");
 }

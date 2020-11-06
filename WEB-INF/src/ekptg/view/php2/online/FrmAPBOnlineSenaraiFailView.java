@@ -802,7 +802,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
         	 this.context.put("readonly", "");
 			 this.context.put("inputTextClass", "");
 			
-			 idJadualKeduaLesen = getParam("idJadualKedua");
+			 idJadualKeduaLesen = getParam("idJadualKeduaLesen");
 			 idBorangA = getParam("idBorangA");
 			 // HEADER
 			 beanHeaderBorangA = new Vector();
@@ -890,7 +890,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 				this.context.put("readonly", "");
 				this.context.put("inputTextClass", "");
 				 
-				idJadualKeduaLesen = getParam("idJadualKedua");
+				idJadualKeduaLesen = getParam("idJadualKeduaLesen");
 				// HEADER
 				beanHeaderBorangA = new Vector();
 				log.info("jadual kedua :"+idJadualKeduaLesen);

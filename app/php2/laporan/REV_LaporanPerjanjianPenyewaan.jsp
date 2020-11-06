@@ -16,7 +16,7 @@
               <option value="">SILA PILIH</option>
               <option value="1" #if($!idKategori == '1') selected #end >HARIAN</option>
               <option value="2" #if($!idKategori == '2') selected #end >BULANAN</option>
-              <option value="2" #if($!idKategori == '3') selected #end >TAHUNAN</option>
+              <option value="3" #if($!idKategori == '3') selected #end >TAHUNAN</option>
             </select></td>
         </tr>
         #if($!idKategori == '1')
@@ -67,7 +67,8 @@ function doChangeKategori() {
 <script>
 function janaLaporan() {
 	var idKategori = document.${formName}.idKategori.value;
-	var hari = "";
+	var tarikhMula = "";
+	var tarikhHingga = "";
 	var bulan = "";
 	var tahun = "";
 
