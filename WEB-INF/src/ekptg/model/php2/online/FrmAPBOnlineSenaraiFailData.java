@@ -3599,6 +3599,10 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 					h.put("namaDidaftarkan",
 							rs.getString("NAMA_BARGE") == null ? "" : rs.getString(
 									"NAMA_BARGE").toUpperCase());
+					// ika add 5/11/2020
+					h.put("idBorangA",
+							rs.getString("ID_BORANGA") == null ? "" : rs
+									.getString("ID_BORANGA"));
 					senaraiBarge.addElement(h);
 					bil++;
 				}

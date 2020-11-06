@@ -2247,17 +2247,17 @@ document.getElementById("header_lama").style.display="block";
         	<td width="79%">
         	#if($!check_pengecualian == "1")
         		#set($check_pengecualian_mode = "checked")
-				<input type="radio" name="check_pengecualian" id="check_pengecualian" value="1" onclick="putValue(this.value)"checked/>Sebahagian
-				<input type="radio" name="check_pengecualian" id="check_pengecualian" value="2" onclick="putValue(this.value)"/>Keseluruhan
+				<input type="radio" name="check_pengecualianEDIT" id="check_pengecualianEDIT" value="1" onclick="putValue(this.value)"checked/>Sebahagian
+				<input type="radio" name="check_pengecualianEDIT" id="check_pengecualianEDIT" value="2" onclick="putValue(this.value)"/>Keseluruhan
         	#elseif ($!check_pengecualian == "2")
         		#set($check_pengecualian_mode = "checked")
         		
-				<input type="radio" name="check_pengecualian" id="check_pengecualian" value="1" onclick="putValue(this.value)"/>Sebahagian
-				<input type="radio" name="check_pengecualian" id="check_pengecualian" value="2" onclick="putValue(this.value)"checked/>Keseluruhan
+				<input type="radio" name="check_pengecualianEDIT" id="check_pengecualianEDIT" value="1" onclick="putValue(this.value)"/>Sebahagian
+				<input type="radio" name="check_pengecualianEDIT" id="check_pengecualianEDIT" value="2" onclick="putValue(this.value)"checked/>Keseluruhan
         	#else
         		#set($check_pengecualian_mode = "")
-         		<input type="radio" name="check_pengecualian" id="check_pengecualian" value="1" onclick="putValue(this.value)"/>Sebahagian
-				<input type="radio" name="check_pengecualian" id="check_pengecualian" value="2" onclick="putValue(this.value)"/>Keseluruhan
+         		<input type="radio" name="check_pengecualianEDIT" id="check_pengecualianEDIT" value="1" onclick="putValue(this.value)"/>Sebahagian
+				<input type="radio" name="check_pengecualianEDIT" id="check_pengecualianEDIT" value="2" onclick="putValue(this.value)"/>Keseluruhan
         	#end
 			</td>
           </tr>
@@ -2267,7 +2267,7 @@ document.getElementById("header_lama").style.display="block";
         	<td width="47%" ><div align="left">Catatan Pengecualian</div></td>
         	<td width="1%"><div align="right">:</div></td>
         	<td width="79%">
-        	<textarea name="catatan_pengecualian" cols="35" rows="3" id="catatan_pengecualian"  >$!catatan_pengecualian</textarea>
+        	<textarea name="catatan_pengecualianEDIT" cols="35" rows="3" id="catatan_pengecualianEDIT"  >$!catatan_pengecualian</textarea>
         	</td>
         </tr>
         <!-- arief add textbox Pengecualian Bayaran CLOSE-->
