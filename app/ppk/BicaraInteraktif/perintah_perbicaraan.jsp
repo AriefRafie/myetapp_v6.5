@@ -7,8 +7,6 @@
 	</tr>
 </table>
 
-////$flagAdaHTATH -- $SenaraiHTATH.size()
-
 <!-- START PERINTAH PEMBAHAGIAN -->
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
 <!-- START HEADER -->
@@ -35,7 +33,7 @@
 		                <!-- START LIST HARTA TAK ALIH (ADA HAKMILIK) -->
 		                	<tr>
                   				<td>
-                  					#if ($flagAdaHTA )
+                  					#if ($flagAdaHTA)
                     				<fieldset>
                     					#set ($printalert = '1')
 
@@ -170,9 +168,10 @@
 	                        						</tr>
                         						#end
 					                      	</table>
-		                    	</fieldset>
-           						#else
-               					&nbsp;<font color="black">SIMATI TIDAK MEMILIKI SEBARANG HARTA TAK ALIH (TIADA HAKMILIK)</font> #end </td>
+		                    		</fieldset>
+           							#else
+               					&nbsp;<font color="black">SIMATI TIDAK MEMILIKI SEBARANG HARTA TAK ALIH (TIADA HAKMILIK)</font> #end
+               					</td>
            					</tr>
                 		<!-- END LIST HARTA TAK ALIH (TIADA HAKMILIK) -->
    						</table>
@@ -256,6 +255,7 @@
 					</div>
             <!-- START CONTENT HARTA ALIH -->
 
+					#if ($idStatus == 21)
 		            <div class="TabbedPanelsContent">
 		              	<table width="100%" border="0" cellspacing="2" cellpadding="2">
 		                 <!-- SALNIZAM EDIT START TAMBAH LAPORAN PENGHANTARAN PERINTAH -->
@@ -266,27 +266,27 @@
 						            <fieldset>
 				            			<legend><strong>PENGHANTARAN PERINTAH</strong></legend>
 				            			<fieldset>
-                      					<legend><strong>MAKLUMAT SERAHAN</strong></legend>
-				                      	<table width="100%" border="0">
-                                      		<tr>
-	                                     	#set ($sta="sta18")
+                      						<legend><strong>MAKLUMAT SERAHAN</strong></legend>
+				                      		<table width="100%" border="0">
+	                                      		<tr>
+		                                     		#set ($sta="sta18")
 
-							              		<td width="20%" >
-							              			<div align="right">#if($chkmode!="disabled")<font color="red">*</font>#end&nbsp;Nama Penyerah</div>
-						              			</td>
-								              	<td width="3%"><div align="right">:</div></td>
-								              	<td></td>
+								              		<td width="20%" >
+								              			<div align="right">#if($chkmode!="disabled")<font color="red">*</font>#end&nbsp;Nama Penyerah</div>
+							              			</td>
+									              	<td width="3%"><div align="right">:</div></td>
+									              	<td></td>
 
-								              	#if ($chkmode == "disabled")
-								              	<td width="77%"><input size = "50" type="text" $chkmode name="txtNamaPenghantarNotis" id="txtNamaPenghantarNotis" value="$!NAMA_PENYERAH"></td>
+									              	#if ($chkmode == "disabled")
+									              	<td width="77%"><input size = "50" type="text" $chkmode name="txtNamaPenghantarNotis" id="txtNamaPenghantarNotis" value="$!NAMA_PENYERAH"></td>
 
-               									#else
-								                <td width="77%">
-								                #if($NAMA_PENYERAH !="")
-								                	<input size = "50" type="text" name="txtNamaPenghantarNotis" id="txtNamaPenghantarNotis" value="$!NAMA_PENYERAH">
-								                #else
-								                	<input size = "50" type="text" name="txtNamaPenghantarNotis" id="txtNamaPenghantarNotis" value="">
-								                #end
+	               									#else
+									                <td width="77%">
+									                #if($NAMA_PENYERAH !="")
+									                	<input size = "50" type="text" name="txtNamaPenghantarNotis" id="txtNamaPenghantarNotis" value="$!NAMA_PENYERAH">
+									                #else
+									                	<input size = "50" type="text" name="txtNamaPenghantarNotis" id="txtNamaPenghantarNotis" value="">
+									                #end
                 <!-- User tak mahu tarikh nama penyerah daripada database
                 <select name="txtNamaPenghantarNotis" style="width:320">
         										#if($onchangeMyList=="no" && $NAMA !="")
@@ -308,38 +308,43 @@
 	                    						#end
                 </select>
                 User tak mahu tarikh nama penyerah daripada database -->
-                </td>
-               <!-- $ID_PENGHANTAR_NOTIS -  -->
-               #end
+									                </td>
+									               <!-- $ID_PENGHANTAR_NOTIS -  -->
+									               #end
               <!-- <td width="73%"><input type="text" $disableZERO $classZero name="txtNamaPenghantarNotis" $check $checkClass value="$namaPenghantar" maxlength="80" size="50" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase();" /></td> -->
-            </tr>
-                      <tr>
-                      <td width="20%" ><div align="right">#if($chkmode!="disabled")<font color="red">*</font>#end
-                      &nbsp;Jenis Serahan
-                      </div><input type="hidden" name="no_fail" value="$noFail"></td>
-                      <td width = "3%"><div align="right">
-                      :
-                      </div></td>
-                      <td >
-                      <input type="radio" name="radioJenis" id="radioJenis" $chkmode onClick="checkIt1()" #if ($Jenis_Penghantaran == "Serahan Tangan") checked #end value="Serahan Tangan">
-                      </td>
-                      <td width ="77%"><div align="left">
-                      Serahan Tangan
-                      </div></td>
-                      </tr>
-<tr>
-                      <td width="20%" ><div align="right">
-
-                      </div></td>
-                      <td width = "3%"><div align="right">
-
-                      </div></td>
-                      <td >
-                      <input type="radio" name="radioJenis" id="radioJenis" $chkmode #if ($Jenis_Penghantaran == "Pos") checked #end value="Pos">
-                      </td>
-                      <td width ="77%"><div align="left">
-                      Pos
-                      </div></td>
+           										/tr>
+						                      	<tr>
+						                      		<td width="20%" >
+							                      		<div align="right">
+							                      		#if($chkmode!="disabled")<font color="red">*</font>#end
+							                      		&nbsp;Jenis Serahan
+							                      		</div>
+						                      			<input type="hidden" name="no_fail" value="$noFail">
+						                      		</td>
+						                      		<td width = "3%">
+						                      			<div align="right"> : </div>
+						                      		</td>
+						                      		<td>
+						                      			<input type="radio" name="radioJenis" id="radioJenis" $chkmode onClick="checkIt1()" #if ($Jenis_Penghantaran == "Serahan Tangan") checked #end value="Serahan Tangan">
+						                      		</td>
+						                      		<td width ="77%">
+						                      			<div align="left">
+						                      				Serahan Tangan
+						                      			</div>
+						                      		</td>
+						                      	</tr>
+												<tr>
+                      								<td width="20%" >
+                      									<div align="right"></div>
+                      								</td>
+                      								<td width = "3%"><div align="right"></div>
+                      								</td>
+							                      	<td>
+							                      		<input type="radio" name="radioJenis" id="radioJenis" $chkmode #if ($Jenis_Penghantaran == "Pos") checked #end value="Pos">
+							                      	</td>
+							                      	<td width ="77%">
+							                      		<div align="left">Pos</div>
+							                      	</td>
                       </tr>
 
                       <tr>
@@ -540,6 +545,7 @@
 
               </table>
             </div>
+            #end
 
 
 
@@ -2096,4 +2102,37 @@
 </tr>
 </table>
 
-  <!-- END PEMBAHAGIAN HARTA -->
+<!-- END PEMBAHAGIAN HARTA -->
+
+<script type="text/javascript">
+// js untuk tabs
+var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedTabUpper});
+
+var TabbedPanels2 = new Spry.Widget.TabbedPanels("TabbedPanels2",{defaultTab:$selectedTabLower});
+
+function setSelectedTabUpper(tabId) {
+	document.${formName}.selectedTabUpper.value = tabId;
+	document.${formName}.flagPopup.value = "";
+	document.${formName}.modePopup.value = "";
+	document.${formName}.anchor.value = "tabUpper";
+	document.${formName}.submit();
+}
+function setSelectedTabLower(tabId) {
+	document.${formName}.selectedTabLower.value = tabId;
+	document.${formName}.flagPopup.value = "";
+	document.${formName}.modePopup.value = "";
+	document.${formName}.anchor.value = "tabLower";
+	document.${formName}.submit();
+}
+
+function paparHTA(idHTA) {
+	document.${formName}.actionPerintah.value = "papar";
+	document.${formName}.flagPopup.value = "openHTA";
+	document.${formName}.modePopup.value = "update";
+	document.${formName}.idHTA.value = idHTA;
+	document.${formName}.action = "?_portal_module=ekptg.view.ppk.BicaraInteraktif";
+	document.${formName}.anchor.value = "tabUpper";
+	document.${formName}.method = "POST";
+	document.${formName}.submit();
+}
+</script>

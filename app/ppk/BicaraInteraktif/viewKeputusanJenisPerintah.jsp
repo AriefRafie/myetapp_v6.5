@@ -8,22 +8,21 @@ $htmlSkrinMaklumat
 
 xxxxxxxxxxxxxxxxxxxx
 
+$selectedTabUpper -- $selectedTabLower -- ${formName}
+
+<input type="hidden" name="selectedTabLower" id="selectedTabLower" />
+<input type="hidden" name="actionPerintah" id="actionPerintah" />
+<input type="hidden" name="flagPopup" id="flagPopup" />
+<input type="hidden" name="idHTA" id="idHTA" />
+<input type="hidden" name="modePopup" id="modePopup" />
+<input type="hidden" name="anchor" id="anchor" />
+<input type="hidden" name="action" id="action" />
+<input type="hidden" name="method" id="method" />
+
 #parse("app/ppk/BicaraInteraktif/perintah_perbicaraan.jsp")
 
 yyyyyyyyyyyyyyyyyyyy
 
-<script type="text/javascript">
-function paparHTA(idHTA) {
-	document.Fekptg_view_ppk_BicaraInteraktif.actionPerintah.value = "papar";
-	document.Fekptg_view_ppk_BicaraInteraktif.flagPopup.value = "openHTA";
-	document.Fekptg_view_ppk_BicaraInteraktif.modePopup.value = "update";
-	document.Fekptg_view_ppk_BicaraInteraktif.idHTA.value = idHTA;
-	document.Fekptg_view_ppk_BicaraInteraktif.action = "?_portal_module=ekptg.view.ppk.FrmPerintahSek8";
-	document.Fekptg_view_ppk_BicaraInteraktif.anchor.value = "tabUpper";
-	document.Fekptg_view_ppk_BicaraInteraktif.method="POST";
-	document.Fekptg_view_ppk_BicaraInteraktif.submit();
-}
-</script>
 <!--
 ::::::::: $mode
 -->

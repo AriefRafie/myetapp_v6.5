@@ -1939,6 +1939,19 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				listHTATH.clear();
 				listHA.clear();
 
+				String selectedTabUpper = getParam("selectedTabUpper").toString();
+				if (selectedTabUpper == null || "".equals(selectedTabUpper) ) {
+					selectedTabUpper = "0";
+				}
+
+				String selectedTabLower = getParam("selectedTabLower").toString();
+				if (selectedTabLower == null || "".equals(selectedTabLower) ) {
+					selectedTabLower = "0";
+				}
+
+		        this.context.put("selectedTabUpper", selectedTabUpper);
+		        this.context.put("selectedTabLower", selectedTabLower);
+
 				if (setupKeputusan != null) {
 					myLogger.info("ID_PERINTAH -- " + (String)setupKeputusan.get("ID_PERINTAH"));
 
