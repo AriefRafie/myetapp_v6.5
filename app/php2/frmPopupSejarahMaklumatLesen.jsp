@@ -21,12 +21,12 @@
           <td>:</td>
           <td><input type="text" name="txtCarianNoLesen" id="txtCarianNoLesen" value=""></td>
         </tr>
-        <tr>
+        <!-- <tr>
           <td>No Fail</td>
           <td>:</td>
           <td>
             <input type="text" name="txtCarianNoFail" id="txtCarianNoFail" value=""></td>
-        </tr>
+        </tr> -->
         <tr>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
@@ -65,7 +65,7 @@
 	          ##<br />
 	          ##<font class="blink" ><span class="style2">$!list.statusLesen</span></font>
 	          ##<font class="blink" ><span class="style2">$!list.statusKelulusanDasar</span></font></td>
-	          <td class="$row">$list.noFail</td>
+	          <td class="$row"><a href="javascript:doPaparMaklumatDetail('$list.idFail')" class="style1">$list.noFail</a></td>
 	          <td class="$row">$list.namaPemohon</td>
 	          <td class="$row">$list.noLesen</td>
 	          <td class="$row">$list.kawasanDipohon</td>
@@ -86,6 +86,16 @@
 	 	#end
       </table>
       </fieldset></td>
+  </tr>
+  <tr>
+    <td>
+    	<fieldset>
+      		<legend><b>MAKLUMAT BERKAITAN</b></legend>
+      		<table align="center" width="100%">
+      			<tr></tr>
+      		</table>
+      	</fieldset>
+  	</td>
   </tr>
 </table>
 <script>

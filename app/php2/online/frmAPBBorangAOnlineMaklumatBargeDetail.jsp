@@ -11,6 +11,7 @@
 -->
 </style>
 <!-- saiz text -->
+
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   #foreach ($beanMaklumatBarge in $BeanMaklumatBarge)
   <tr>
