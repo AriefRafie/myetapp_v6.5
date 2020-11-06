@@ -6230,6 +6230,35 @@ $jquery("#inputMinify").on("input", function() {
 });
 */
 
+var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedTabUpper});
+
+var TabbedPanels2 = new Spry.Widget.TabbedPanels("TabbedPanels2",{defaultTab:$selectedTabLower});
+
+function setSelectedTabUpper(tabId) {
+	document.${formName}.selectedTabUpper.value = tabId;
+	document.${formName}.flagPopup.value = "";
+	document.${formName}.modePopup.value = "";
+	document.${formName}.anchor.value = "tabUpper";
+	document.${formName}.submit();
+}
+function setSelectedTabLower(tabId) {
+	document.${formName}.selectedTabLower.value = tabId;
+	document.${formName}.flagPopup.value = "";
+	document.${formName}.modePopup.value = "";
+	document.${formName}.anchor.value = "tabLower";
+	document.${formName}.submit();
+}
+
+function paparHTA(idHTA) {
+	document.${formName}.actionPerintah.value = "papar";
+	document.${formName}.flagPopup.value = "openHTA";
+	document.${formName}.modePopup.value = "update";
+	document.${formName}.idHTA.value = idHTA;
+	document.${formName}.action = "?_portal_module=ekptg.view.ppk.BicaraInteraktif";
+	document.${formName}.anchor.value = "tabUpper";
+	document.${formName}.method = "POST";
+	document.${formName}.submit();
+}
 </script>
 
 
