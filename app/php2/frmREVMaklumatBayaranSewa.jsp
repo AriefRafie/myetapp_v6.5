@@ -909,4 +909,37 @@ function janaMaklumatLot() {
 	strTajuk = str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan ;
 	document.${formName}.txtMaklumatLot.value = strTajuk;
 	}
+
+function simpanDokumen() {
+
+	$('err_dokumen').innerHTML = '';
+	var idHasil = $('idHasil').value;
+
+	if(document.${formName}.dokumen.value == ""){
+		alert('Sila pilih Dokumen yang Ingin Dimuatnaik.');
+  		document.${formName}.dokumen.focus();
+		return;
+	}
+
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+
+	$('dokumenMuatnaik').style.display = "";
+	document.${formName}.mode.value = "view";
+	document.${formName}.enctype='multipart/form-data';
+	document.${formName}.encoding ='multipart/form-data';
+	document.${formName}.target='upload_dokumen';
+	document.${formName}.action='?command=muatNaikDokumen&idHasil='+idHasil;
+	document.${formName}.submit();
+	$('dokumen').value = "";
+}
+
+function cetakDokumen(id){
+	var url = "../servlet/ekptg.view.php2.FrmDisplayImage?id="+id;
+    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener=document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
 </script>
