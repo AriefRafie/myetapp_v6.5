@@ -592,6 +592,17 @@ function doHapus(idMesyuaratPermohonan){
 }
 
 function doSelesaiMesyuarat(idMesyuaratPermohonan){
+	var listKeputusan=document.querySelectorAll('select[id^="idKeputusan"]');
+	for (i = 0; i < listKeputusan.length; i++) 
+	{
+		var id=listKeputusan[i].id;
+		var value = document.getElementById(id).value;
+		if(value==""){
+			alert("Sila kemaskini keputusan mesyuarat terlebih dahulu!")
+			return; 
+		}
+	}
+	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}

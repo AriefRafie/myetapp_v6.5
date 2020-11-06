@@ -144,7 +144,7 @@
             <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratKJPPagarTanah('$idFail')">
             #end
             #if($report == 'suratPanggilanOperasi')
-            <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratPanggilanOperasi('$idFail')">
+            <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratPanggilanOperasi('$idUlasanTeknikal')">
             #end
             #if($report == 'suratPenghargaan')
             <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratPenghargaan('$idFail')">
@@ -407,14 +407,14 @@ function cetakSuratKJPPagarTanah(idFail) {
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
 }
-function cetakSuratPanggilanOperasi(idFail) {
+function cetakSuratPanggilanOperasi(idUlasanTeknikal) {
 	if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih pegawai.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
 	}
 	var item = "&ID_PTG="+document.${formName}.socPejabatPTG.value+"&ID_PTD="+document.${formName}.socPejabatPTD.value+"&ID_PBT="+document.${formName}.socPejabatPBT.value+"&ID_JKPTG="+document.${formName}.socPejabatJKPTG.value+"&ID_KEMENTERIAN="+document.${formName}.socKementerian.value+"&ID_AGENSI="+document.${formName}.socAgensi.value+"&ID_AGENSI1="+document.${formName}.socAgensi1.value+"&ID_AGENSI2="+document.${formName}.socAgensi2.value;	
-	var url = "../../servlet/ekptg.report.php2.CBRSuratPanggilOperasi?ID_FAIL="+idFail+"&ID_PEGAWAI="+document.${formName}.socPegawai.value+"&BIL_DOKUMEN="+document.${formName}.txtKandungan.value+item;
+	var url = "../../servlet/ekptg.report.php2.CBRSuratPanggilOperasi?ID_ULASANTEKNIKAL="+idUlasanTeknikal+"&ID_PEGAWAI="+document.${formName}.socPegawai.value+"&BIL_DOKUMEN="+document.${formName}.txtKandungan.value+item;
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;

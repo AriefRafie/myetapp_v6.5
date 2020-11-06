@@ -133,10 +133,9 @@
             <input name="cmdCetak" type="button" value="Cetak Senarai Fail" onclick="javascript:cetakSenaraiFail('$flagDetail')"/></td>
         </tr>
         <tr class="table_header">
-          <td scope="row" width="4%" align="center"><strong>Bil</strong></td>
-          <td width="23%"><strong>No. Fail</strong></td>
-          <td width="18%"><strong>No. Fail Negeri</strong></td>
-          <td width="23%" align="center"><strong>KJP</strong></td>
+          <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
+          <td width="25%"><strong>No. Fail</strong></td>
+          <td width="20%"><strong>No. Fail Negeri</strong></td>
           <td width="30%" align="center"><strong>Keterangan Hakmilik</strong></td>
           <td width="10%" align="center"><strong>Tarikh Terima</strong></td>
           <td width="10%"><strong>Status</strong></td>
@@ -155,7 +154,6 @@
           <td class="$row" align="center">$list.bil</td>
           <td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus')" class="style1">$list.noFail</a></td>
           <td class="$row">$list.noFailNegeri</td>
-          <td class="$row">$list.namaKementerian</td>
           <td class="$row">$list.kodHakmilik  $list.noHakmilik$list.koma $list.keteranganLot $list.noLot$list.koma
             $list.namaMukim$list.koma $list.namaDaerah$list.koma $list.namaNegeri</td>
           <td class="$row" align="center">$list.tarikhTerima</td>

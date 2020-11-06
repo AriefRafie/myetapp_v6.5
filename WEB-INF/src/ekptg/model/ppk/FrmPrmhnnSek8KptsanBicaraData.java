@@ -982,7 +982,7 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 				if(db != null) db.close();
 			}	
 		}				
-
+		/*
 		public static void add_BayaranPerintah(String idpermohonan,String usid,
 				String id_jenisbayaranPerintah,String txtJumBayaran,String txtNomborResitPerintah,
 				String txdTarikhBayaranPerintah) throws Exception {
@@ -1015,8 +1015,47 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 				}finally {
 					if(db != null) db.close();
 				}			
-		}
+		}*/
 
+		//arief add open
+		public static void add_BayaranPerintah(String idpermohonan,String usid,
+				String id_jenisbayaranPerintah,String txtJumBayaran,String check_pengecualian,
+				String catatan_pengecualian, String txtNomborResitPerintah,
+				String txdTarikhBayaranPerintah) throws Exception {
+			
+				Db db = null;			
+				String sql2 = "";			
+				try
+				{			
+//					long id_perintah = DB.getNextID("TBLPPKPERINTAH_SEQ");
+					long id_bayaran = DB.getNextID("TBLPPKBAYARAN_SEQ"); 
+//					String TTP = "to_date('" + txdTarikhPerintah + "','dd/MM/yyyy')";
+					String TBP = "to_date('" + txdTarikhBayaranPerintah + "','dd/MM/yyyy')";		
+					
+					db = new Db();
+					Statement stmt2 = db.getStatement();
+					SQLRenderer r2 = new SQLRenderer();
+					r2.add("id_bayaran",id_bayaran);
+					r2.add("id_permohonan",idpermohonan);
+					r2.add("id_jenisbayaran",id_jenisbayaranPerintah);
+					r2.add("pengecualian_bayaran",check_pengecualian);
+					r2.add("catatan_pengecualian",catatan_pengecualian);
+					r2.add("no_resit",txtNomborResitPerintah);
+					r2.add("tarikh_bayaran", r2.unquote(TBP));
+					r2.add("jumlah_bayaran",txtJumBayaran);
+					r2.add("id_masuk",usid);
+					r2.add("tarikh_masuk",r2.unquote("sysdate"));					
+				
+					sql2 = r2.getSQLInsert("Tblppkbayaran");
+					myLogger.info("INSERT TBLPPKBAYARAN = "+sql2);
+					stmt2.executeUpdate(sql2);				
+					
+				}finally {
+					if(db != null) db.close();
+				}			
+		}
+		//arief add close
+		
 		public static void add_maklumatPerintah(String id_perbicaraan,String usid,String txdTarikhPerintah,
 				String EDITsocPegawaiPengendali,String flag_jenis_keputusan,String txtCatatanSelesai,
 				String check_kiv,String date_kiv,String catatan_kiv) throws Exception {
@@ -8171,7 +8210,7 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 					db.close();
 			}
 		}
-
+		/*
 		public static void add_BayaranPerintahEDIT(String usid,String idpermohonan,String txtJumBayaranEDIT,
 	    		String txtNomborResitPerintahEDIT,String txdTarikhBayaranPerintahEDIT) throws Exception {
 			Db db = null;
@@ -8205,7 +8244,47 @@ public class FrmPrmhnnSek8KptsanBicaraData {
 				}finally {
 					if(db != null) db.close();
 				}			
-		}			
+		}	*/		
+		
+		//arief add open
+		public static void add_BayaranPerintahEDIT(String usid,String idpermohonan,String txtJumBayaranEDIT,
+	    		String txtNomborResitPerintahEDIT,String check_pengecualianEDIT, String catatan_pengecualianEDIT,
+	    		String txdTarikhBayaranPerintahEDIT) throws Exception {
+			Db db = null;
+			String sql2 = "";
+			
+				try
+				{			
+					long id_bayaran = DB.getNextID("TBLPPKBAYARAN_SEQ"); 
+					String TBP = "to_date('" + txdTarikhBayaranPerintahEDIT + "','dd/MM/yyyy')";		
+					
+					//--------------------------------- TBLPPKBAYARAN -----------------------------------------
+										
+					db = new Db();
+					Statement stmt2 = db.getStatement();
+					SQLRenderer r2 = new SQLRenderer();
+					r2.add("id_bayaran",id_bayaran);
+					r2.add("id_permohonan",idpermohonan);
+					r2.add("id_jenisbayaran",24);
+					r2.add("check_pengecualianEDIT",check_pengecualianEDIT);
+					r2.add("catatan_pengecualianEDIT",catatan_pengecualianEDIT);
+					r2.add("no_resit",txtNomborResitPerintahEDIT);
+					r2.add("tarikh_bayaran", r2.unquote(TBP));
+					r2.add("jumlah_bayaran",Utils.RemoveComma(txtJumBayaranEDIT));
+					r2.add("id_masuk",usid);
+					r2.add("tarikh_masuk",r2.unquote("sysdate"));	
+					r2.add("id_kemaskini",usid);
+					r2.add("tarikh_kemaskini",r2.unquote("sysdate"));						
+										
+					sql2 = r2.getSQLInsert("Tblppkbayaran");		
+					myLogger.info("SQL INSERT BYRAN PERINTAH :: "+sql2);
+					stmt2.executeUpdate(sql2);
+					
+				}finally {
+					if(db != null) db.close();
+				}			
+		}
+		//arief add close
 		
 		private static String getIdJenisPerintahHTA(String idPerintahHTAOBMST) throws Exception{
 			

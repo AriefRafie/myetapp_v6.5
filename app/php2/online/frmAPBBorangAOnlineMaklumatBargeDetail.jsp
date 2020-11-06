@@ -66,6 +66,7 @@
       #if ($mode == 'viewBarge')
       <input name="cmdKemaskini1" type="button" value="Kemaskini" onClick="kemaskiniMaklumatBarge()" >
       <input name="cmdBatal" type="button" value="Kembali" onClick="doBatalMaklumatBarge()" />
+      <input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onclick="doHapusBarge()"/>
       #end      
       #if ($mode == 'updateBarge')
       <input name="cmdSimpanKemaskini" type="button" value="Simpan" onClick="simpanKemaskiniMaklumatBarge()" />

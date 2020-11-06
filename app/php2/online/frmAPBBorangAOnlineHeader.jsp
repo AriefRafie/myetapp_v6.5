@@ -24,6 +24,8 @@
 	<tr>
 	<td> <input name="idJadualKeduaLesen" type="hidden" id="idJadualKeduaLesen" value="$idJadualKeduaLesen"/>
 	</td>
+	<td> <input name="idJadualKedua" type="hidden" id="idJadualKedua" value="$idJadualKedua"/>
+	</td>
 	</tr>
   		<tr>
     		<td width="24%" align="right">NAMA PEMEGANG LESEN</td>
