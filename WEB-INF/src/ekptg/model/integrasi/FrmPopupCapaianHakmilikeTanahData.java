@@ -42,7 +42,13 @@ public class FrmPopupCapaianHakmilikeTanahData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			
-			sql = "SELECT * FROM TBLINTMAKLUMATANAH WHERE ID_PERMOHONAN = '" + idPermohonan + "' ORDER BY TARIKH_TERIMA, FLAG_AKTIF DESC";
+			sql = "SELECT FLAG_AKTIF "
+//					+ "* "
+					+ " ,ID_MAKLUMATANAH "
+					+ " ,ID_HAKMILIK "
+					+ " ,NO_RESIT "
+					+ " ,TARIKH_TERIMA "
+					+ " FROM TBLINTMAKLUMATANAH WHERE ID_PERMOHONAN = '" + idPermohonan + "' ORDER BY TARIKH_TERIMA, FLAG_AKTIF DESC";
 
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable<String,String> h;
