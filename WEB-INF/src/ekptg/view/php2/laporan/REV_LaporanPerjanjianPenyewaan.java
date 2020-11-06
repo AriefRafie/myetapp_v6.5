@@ -25,15 +25,15 @@ public class REV_LaporanPerjanjianPenyewaan extends AjaxBasedModule {
 		int bulan = cal.get(Calendar.MONTH) + 1;
 		int tahun = cal.get(Calendar.YEAR);
 
-		if ("".equals(idKategori)) {
+		if ("1".equals(idKategori)) {
 			context.put("tarikhMula", getParam("tarikhMula") == null || "".equals(getParam("tarikhMula"))? sdf.format(currentDate) : getParam("tarikhMula"));
 			context.put("tarikhHingga", getParam("tarikhHingga") == null || "".equals(getParam("tarikhHingga"))? sdf.format(currentDate) : getParam("tarikhHingga"));
-		} else if ("1".equals(idKategori)) {
+		} else if ("2".equals(idKategori)) {
 			context.put("selectBulan", HTML.SelectBulan("socBulan", Long.valueOf(bulan)));
 			context.put("tahun", getParam("tahun") == null || "".equals(getParam("tahun"))? tahun : getParam("tahun"));
 			context.put("selectBulanHingga", HTML.SelectBulan("socBulanHingga", Long.valueOf(bulan)));
 			context.put("tahunHingga", getParam("tahunHingga") == null || "".equals(getParam("tahunHingga"))? tahun : getParam("tahunHingga"));
-		} else if ("2".equals(idKategori)) {
+		} else if ("3".equals(idKategori)) {
 			context.put("tahun", getParam("tahun") == null || "".equals(getParam("tahun"))? tahun : getParam("tahun"));
 			context.put("tahunHingga", getParam("tahunHingga") == null || "".equals(getParam("tahunHingga"))? tahun : getParam("tahunHingga"));
 		}

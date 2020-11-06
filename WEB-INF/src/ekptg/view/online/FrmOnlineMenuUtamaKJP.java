@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Hashtable;
+import java.util.ResourceBundle;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
@@ -25,8 +26,10 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 	 */
 	static Logger myLog = Logger.getLogger(FrmOnlineMenuUtamaKJP.class);
 	private static final long serialVersionUID = -4427185828234591107L;
+	private final String PATHVER = ResourceBundle.getBundle("file").getString("ver_htp")+"/";
 	private static final String PATH = "app/online/manuUtama/";
 	private String vm = PATH + "frmMenuUtamaKJP.jsp";
+
 	private IHtp iErr = null;
 	//return Permohonan 1
 	private IStatus iStatus = null;
@@ -45,9 +48,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 
 		}
 
-		this.context.put("idKementerian", idKementerian);
-		
-		
+		this.context.put("idKementerian", idKementerian);	
 		
 		Pengumuman logic = new Pengumuman();
 		// String portal_role = (String) session.getAttribute("_portal_role");
@@ -69,16 +70,16 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 
 		Hashtable get_notifikasi_permohonan = null;
 		get_notifikasi_permohonan = (Hashtable) notifikasi_permohonan(user_id, Long.parseLong(jawatan));
-		String jumlah_notifikasi = (String) get_notifikasi_permohonan.get("jumlah_Permohonan");
-		context.put("jumlah_notifikasi", Long.parseLong(jumlah_notifikasi));
+		String jumlah_notifikasi_permohonan = (String) get_notifikasi_permohonan.get("jumlah_Permohonan");
+		context.put("jumlah_notifikasi_permohonan", Long.parseLong(jumlah_notifikasi_permohonan));
 		context.put("jawatan", jawatan);
 		context.put("portalRole", portal_role);
 		//System.out.println("*** jumlah_notifikasi --- "+jumlah_notifikasi);
 		
 		Hashtable get_notifikasi_pembayaran = null;
 		get_notifikasi_pembayaran = (Hashtable) notifikasi_pembayaran(user_id, Long.parseLong(jawatan));
-		String jumlah_pembayaran = (String) get_notifikasi_pembayaran.get("jumlah_Permohonan");
-		context.put("jumlah_notifikasi", Long.parseLong(jumlah_notifikasi));
+		String jumlah_pembayaran = (String) get_notifikasi_pembayaran.get("jumlah_Pembayaran");
+		context.put("jumlah_notifikasi_pembayaran", Long.parseLong(jumlah_pembayaran));
 		context.put("jawatan", jawatan);
 		context.put("portalRole", portal_role);
 
@@ -134,11 +135,26 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 		 context.put("bilPPTDikembali", dikembalikan("51").size() + dikembalikan("52").size());
 //		 context.put("vecPPT4", dikembalikan("51"));
 //		 context.put("vecPPT8", dikembalikan("52"));
+		 
+		String command = getParam("command");
+
+		if(command.equals("getdikembalikanHTP")) {
+				
+//				String id_cukaitemp = getParam("id_cukaitemp");				
+//				if(id_cukaitemp!=""){
+//					updateRead(session,id_cukaitemp);
+//				}
+				
+				this.context.put("div_senaraidikembalikan", "Y");
+				//Vector senaraiDikembalikan = DBListKemaskiniCukai(session);
+				//this.context.put("senaraiDikembalikan", senaraiDikembalikan);
+				vm = "app/htp/"+PATHVER+"/dashboard/div_SenaraiFailDikembalikan.jsp";
+			
+		}
 
 		return vm;
 
 	}
-	
 	
 	
 	public Vector getIdNegeriKJPByUserId(String userId) throws Exception {
@@ -272,7 +288,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 				        +" AND p.flag_semakan_online = 2) AS jumlahpermohonan FROM DUAL ";
 			}
 
-			///myLogger.info("JUMLAH DOKUMEN :"+sql.toUpperCase());
+			myLog.info("JUMLAH DOKUMEN PERMOHONAN:"+sql.toUpperCase());
 			System.out.println("**** sql PPT --- "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -309,50 +325,17 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 			SQLRenderer r = new SQLRenderer();
 
 
-			if (jawatan == 24) {
+			
+				sql += " SELECT (SELECT COUNT (p.flag_peruntukan) "
+				        +" FROM tblpptpermohonan p, tblpfdfail f, tblrujsuburusan su, tblrujstatus s, tblrujkementerian k, "
+				        +" users u, users_kementerian uk "
+				        +" WHERE f.id_fail = p.id_fail AND f.id_suburusan = su.id_suburusan AND f.id_kementerian = k.id_kementerian "
+				        +" AND u.user_id = uk.user_id AND p.id_status = s.id_status AND uk.id_kementerian = k.id_kementerian "
+				        +" AND f.id_suburusan IN ('51', '52', '53') AND u.user_id ='" + userID + "' "
+				        + " AND UPPER (s.id_status) = '76' ) AS jumlahpermohonan FROM DUAL ";
+			
 
-				sql += " SELECT SUM (JUMLAHPERMOHONAN) AS JUMLAHPERMOHONAN " +
-						" FROM (SELECT (SELECT COUNT (P.FLAG_STATUS_ONLINE) " +
-						" FROM TBLPPTPERMOHONAN P, TBLPFDFAIL F, TBLRUJSUBURUSAN SU, TBLRUJSTATUS S, TBLRUJKEMENTERIAN K, USERS U, USERS_KEMENTERIAN UK " +
-						" WHERE F.ID_FAIL = P.ID_FAIL AND F.ID_SUBURUSAN = SU.ID_SUBURUSAN AND F.ID_KEMENTERIAN = K.ID_KEMENTERIAN " +
-						" AND U.USER_ID = UK.USER_ID AND P.ID_STATUS = S.ID_STATUS AND UK.ID_KEMENTERIAN = K.ID_KEMENTERIAN " +
-						" AND F.ID_SUBURUSAN IN ('51', '52', '53') AND U.USER_ID = '" + userID + "' " +
-						/*" AND P.FLAG_STATUS_ONLINE = 'Y' " +*/
-						" AND P.FLAG_STATUS_ONLINE = 1) AS JUMLAHPERMOHONAN FROM DUAL " +
-						" UNION ALL " +
-						" SELECT (SELECT COUNT (P.FLAG_SEMAKAN_ONLINE) " +
-						" FROM TBLPPTPERMOHONAN P, TBLPFDFAIL F, TBLRUJSUBURUSAN SU, TBLRUJSTATUS S, TBLRUJKEMENTERIAN K, USERS U, USERS_KEMENTERIAN UK " +
-						" WHERE F.ID_FAIL = P.ID_FAIL AND F.ID_SUBURUSAN = SU.ID_SUBURUSAN AND F.ID_KEMENTERIAN = K.ID_KEMENTERIAN " +
-						" AND U.USER_ID = UK.USER_ID AND P.ID_STATUS = S.ID_STATUS AND UK.ID_KEMENTERIAN = K.ID_KEMENTERIAN " +
-						" AND F.ID_SUBURUSAN IN ('51', '52', '53') AND U.USER_ID = '" + userID + "' " +
-						" AND P.FLAG_SEMAKAN_ONLINE = 4) AS JUMLAHPERMOHONAN FROM DUAL) ";
-			} else if (jawatan == 9) {
-				sql += " SELECT (SELECT COUNT (p.flag_semakan_online) "
-				        +" FROM tblpptpermohonan p, tblpfdfail f, tblrujsuburusan su, tblrujstatus s, tblrujkementerian k, "
-				        +" users u, users_kementerian uk "
-				        +" WHERE f.id_fail = p.id_fail AND f.id_suburusan = su.id_suburusan AND f.id_kementerian = k.id_kementerian "
-				        +" AND u.user_id = uk.user_id AND p.id_status = s.id_status AND uk.id_kementerian = k.id_kementerian "
-				        +" AND f.id_suburusan IN ('51', '52', '53') AND u.user_id ='" + userID + "' "
-				        +" AND p.flag_semakan_online = 1) AS jumlahpermohonan FROM DUAL ";
-			} else if (jawatan == 4) {
-				sql += " SELECT (SELECT COUNT (p.flag_semakan_online) "
-				        +" FROM tblpptpermohonan p, tblpfdfail f, tblrujsuburusan su, tblrujstatus s, tblrujkementerian k, "
-				        +" users u, users_kementerian uk "
-				        +" WHERE f.id_fail = p.id_fail AND f.id_suburusan = su.id_suburusan AND f.id_kementerian = k.id_kementerian "
-				        +" AND u.user_id = uk.user_id AND p.id_status = s.id_status AND uk.id_kementerian = k.id_kementerian "
-				        +" AND f.id_suburusan IN ('51', '52', '53') AND u.user_id ='" + userID + "' "
-				        +" AND p.flag_semakan_online = 2) AS jumlahpermohonan FROM DUAL ";
-			} else {
-				sql += " SELECT (SELECT COUNT (p.flag_semakan_online) "
-				        +" FROM tblpptpermohonan p, tblpfdfail f, tblrujsuburusan su, tblrujstatus s, tblrujkementerian k, "
-				        +" users u, users_kementerian uk "
-				        +" WHERE f.id_fail = p.id_fail AND f.id_suburusan = su.id_suburusan AND f.id_kementerian = k.id_kementerian "
-				        +" AND u.user_id = uk.user_id AND p.id_status = s.id_status AND uk.id_kementerian = k.id_kementerian "
-				        +" AND f.id_suburusan IN ('51', '52', '53') AND u.user_id ='" + userID + "' "
-				        +" AND p.flag_semakan_online = 2) AS jumlahpermohonan FROM DUAL ";
-			}
-
-			///myLogger.info("JUMLAH DOKUMEN :"+sql.toUpperCase());
+			myLog.info("JUMLAH DOKUMEN PEMBAYARAN :"+sql.toUpperCase());
 			System.out.println("**** sql PPT --- "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -362,7 +345,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 			h = new Hashtable();
 			// h.put("jumlah_Permohonan", "0");
 			while (rs.next()) {
-				h.put("jumlah_Permohonan",
+				h.put("jumlah_Pembayaran",
 						rs.getString("jumlahPermohonan") == null ? "0" : rs
 								.getString("jumlahPermohonan"));
 			}

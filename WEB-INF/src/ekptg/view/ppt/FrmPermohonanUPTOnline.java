@@ -83,6 +83,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			String namaPB = "";
 			String noSerah = "";
 			String idExistPB = "";
+			
+			String statusPembayaran = getParam("idStatus");
 
 			context.put("showJajahan", "no");
 			context.put("onchange", "no");
