@@ -2889,16 +2889,19 @@ public class FrmREVMemantauBayaranSewaData {
 					+ " WHERE ID_HASIL=TBLPHPHASIL.ID_HASIL AND ID_JENIS_NOTIS='3') ,NULL) TARIKH_NOTIS_RAMPASAN, "
 					+ " NVL((SELECT TARIKH_NOTIS_TUNTUTAN FROM TBLPHPNOTISHASIL  "
 					+ " WHERE ID_HASIL=TBLPHPHASIL.ID_HASIL AND ID_JENIS_NOTIS='3') ,NULL) TARIKH_NOTIS_TUNTUTAN, "
-					+ " TBLPHPPERMOHONANSEWA.TARIKH_HANTARKEPUTUSAN "
-					+ " FROM TBLPHPAKAUN AKAUN, TBLPHPHASIL, TBLPFDFAIL, TBLPHPPEMOHON, TBLRUJURUSAN, TBLRUJSUBURUSAN, TBLPHPBAYARANPERLUDIBAYAR, TBLPHPPERMOHONANSEWA"
-					+ " WHERE TBLPHPHASIL.ID_FAIL = TBLPFDFAIL.ID_FAIL(+) AND AKAUN.ID_HASIL = TBLPHPHASIL.ID_HASIL AND TBLPHPHASIL.ID_PEMOHON = TBLPHPPEMOHON.ID_PEMOHON(+)"
-					+ " AND TBLPFDFAIL.ID_SUBURUSAN = TBLRUJSUBURUSAN.ID_SUBURUSAN(+) AND TBLRUJSUBURUSAN.ID_URUSAN = TBLRUJURUSAN.ID_URUSAN(+)"
-					+ " AND TBLPHPBAYARANPERLUDIBAYAR.ID_PERMOHONAN = TBLPHPPERMOHONANSEWA.ID_PERMOHONAN(+)"
-					+ " AND TBLPHPHASIL.ID_HASIL = TBLPHPBAYARANPERLUDIBAYAR.ID_HASIL(+) AND TBLPHPBAYARANPERLUDIBAYAR.FLAG_PERJANJIAN = 'U'"
-					+ " AND TBLPHPBAYARANPERLUDIBAYAR.FLAG_AKTIF = 'Y' AND TBLPHPBAYARANPERLUDIBAYAR.BAYARAN > 0 AND AKAUN.ID_JENISBAYARAN = 10"
+					+ " TBLPHPPERMOHONANSEWA.TARIKH_HANTARKEPUTUSAN,TBLPHPHASIL.ID_HASIL, "
+					+ " TBLPHPMESYUARATPERMOHONAN.ID_MESYUARAT, TBLPHPMESYUARAT.TARIKH_MESYUARAT, TBLPHPMESYUARAT.BIL_MESYUARAT, TBLPHPDOKUMEN.ID_DOKUMEN "
+					+ " FROM TBLPHPAKAUN AKAUN, TBLPHPHASIL, TBLPFDFAIL, TBLPHPPEMOHON, TBLRUJURUSAN, TBLRUJSUBURUSAN, TBLPHPBAYARANPERLUDIBAYAR, TBLPHPPERMOHONANSEWA, "
+					+ " TBLPHPMESYUARATPERMOHONAN, TBLPHPMESYUARAT, TBLPHPDOKUMEN "
+					+ " WHERE TBLPHPHASIL.ID_FAIL = TBLPFDFAIL.ID_FAIL(+) AND AKAUN.ID_HASIL = TBLPHPHASIL.ID_HASIL AND TBLPHPHASIL.ID_PEMOHON = TBLPHPPEMOHON.ID_PEMOHON(+) "
+					+ " AND TBLPFDFAIL.ID_SUBURUSAN = TBLRUJSUBURUSAN.ID_SUBURUSAN(+) AND TBLRUJSUBURUSAN.ID_URUSAN = TBLRUJURUSAN.ID_URUSAN(+) "
+					+ " AND TBLPHPBAYARANPERLUDIBAYAR.ID_PERMOHONAN = TBLPHPPERMOHONANSEWA.ID_PERMOHONAN(+) "
+					+ " AND TBLPHPBAYARANPERLUDIBAYAR.ID_PERMOHONAN = TBLPHPMESYUARATPERMOHONAN.ID_PERMOHONAN(+) "
+					+ " AND TBLPHPHASIL.ID_HASIL = TBLPHPDOKUMEN.ID_HASIL(+) AND TBLPHPMESYUARATPERMOHONAN.ID_MESYUARAT = TBLPHPMESYUARAT.ID_MESYUARAT(+) "
+					+ " AND TBLPHPHASIL.ID_HASIL = TBLPHPBAYARANPERLUDIBAYAR.ID_HASIL(+) AND TBLPHPBAYARANPERLUDIBAYAR.FLAG_PERJANJIAN = 'U' "
+					+ " AND TBLPHPBAYARANPERLUDIBAYAR.FLAG_AKTIF = 'Y' AND TBLPHPBAYARANPERLUDIBAYAR.BAYARAN > 0 AND AKAUN.ID_JENISBAYARAN = 10 "
 					+ " AND AKAUN.FLAG_AKTIF = 'Y' AND TBLPHPBAYARANPERLUDIBAYAR.BAYARAN > 0"
 					+ " AND TBLPHPHASIL.ID_HASIL = '" + idHasil + "'";
-
 			ResultSet rs = stmt.executeQuery(sql);
 
 			if (rs.next()) {
@@ -2915,6 +2918,10 @@ public class FrmREVMemantauBayaranSewaData {
 				tm.put("tarikh_notis_penamatan", rs.getDate("TARIKH_NOTIS_PENAMATAN") == null ? "" : sdf.format(rs.getDate("TARIKH_NOTIS_PENAMATAN")));
 				tm.put("tarikh_notis_rampasan", rs.getDate("TARIKH_NOTIS_RAMPASAN") == null ? "" : sdf.format(rs.getDate("TARIKH_NOTIS_RAMPASAN")));
 				tm.put("tarikh_notis_tuntutan", rs.getDate("TARIKH_NOTIS_TUNTUTAN") == null ? "" : sdf.format(rs.getDate("TARIKH_NOTIS_TUNTUTAN")));
+				tm.put("tarikh_mesyuarat", rs.getDate("TARIKH_MESYUARAT") == null ? "" : sdf.format(rs.getDate("TARIKH_MESYUARAT")));
+				tm.put("bil_mesyuarat", rs.getString("BIL_MESYUARAT") == null ? "" : rs.getString("BIL_MESYUARAT"));
+				tm.put("ID_DOKUMEN", rs.getString("ID_DOKUMEN") == null ? "" : rs.getString("ID_DOKUMEN"));
+				tm.put("idHasil", rs.getString("ID_HASIL") == null ? "" : rs.getString("ID_HASIL"));
 			}
 
 		} catch (Exception ex) {
@@ -2924,6 +2931,65 @@ public class FrmREVMemantauBayaranSewaData {
 		}
 
 		return tm;
+	}
+
+	public void hapusDokumen(String idHasil) throws Exception {
+		Db db = null;
+		Connection conn = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+
+			// TBLPHPDOKUMEN
+			SQLRenderer r = new SQLRenderer();
+			r.add("ID_HASIL", idHasil);
+
+			sql = r.getSQLDelete("TBLPHPDOKUMEN");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah menghapus data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
+	public String getIdPermohonanByIdHasil(String idHasil) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT ID_PERMOHONAN FROM TBLPHPBAYARANPERLUDIBAYAR WHERE ID_HASIL = '" + idHasil + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				return (String) rs.getString("ID_PERMOHONAN");
+			} else {
+				return "";
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
 	}
 
 	public Vector getSenaraiFail() {
