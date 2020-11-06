@@ -1381,7 +1381,8 @@ public class FrmOnlinePajakanSenaraiFailData {
 		r.update("ID_PERMOHONAN", idPermohonan);			
 		r.add("ID_JKPTG", "1");
 		r.add("ID_FAIL", idFail);
-		r.add("ID_STATUS", "1610197");
+		r.add("ID_STATUS", setIdStatus);
+		//r.add("ID_STATUS", "1610197"); Daftar
 						
 		r.add("ID_KEMASKINI", userId);
 		r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
