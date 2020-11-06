@@ -164,7 +164,7 @@
 		          <td>#if ($mode == 'view')
 		            <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>
 		            <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
-		            <input type="button" name="cmdSejarahMaklumatLesen" id="cmdSejarahMaklumatLesen" value="Sejarah Maklumat Lesen" onClick="doPaparSejarah()"/>
+		            <input type="button" name="cmdSejarahMaklumatLesen" id="cmdSejarahMaklumatLesen" value="Sejarah Maklumat Lesen" onClick="javascript:doPaparSejarah('$idFail')"/>
 		            #if($idStatus =='1610239')
 		            <input type="button" name="cmdSeterusnya" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
 		            <input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
@@ -173,7 +173,7 @@
 		            #if ($mode == 'update')
 		            <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniSuratKelulusanLesenKepadaPemohon()"/>
 		            <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskini()"/>
-		            <input type="button" name="cmdSejarahMaklumatLesen" id="cmdSejarahMaklumatLesen" value="Sejarah Maklumat Lesen" onClick="doPaparSejarah()"/>
+		            <input type="button" name="cmdSejarahMaklumatLesen" id="cmdSejarahMaklumatLesen" value="Sejarah Maklumat Lesen" onClick="javascript:doPaparSejarah('$idFail')"/>
 		            #end </td>
 		        </tr>
 		     #end
@@ -345,8 +345,8 @@ function gotoBatalPermohonan(){
 	document.${formName}.step.value = "batalPermohonan";
 	document.${formName}.submit();
 }
-function doPaparSejarah() {
-	var url = "../x/${securityToken}/ekptg.view.php2.FrmAPBPopupSejarahMaklumatLesen";
+function doPaparSejarah(idFail) {
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmAPBPopupSejarahMaklumatLesen?idFail="+idFail;
     var hWnd = window.open(url,'printuser','width=1000,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;

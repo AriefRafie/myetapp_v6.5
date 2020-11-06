@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Hashtable;
+import java.util.ResourceBundle;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
@@ -25,8 +26,10 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 	 */
 	static Logger myLog = Logger.getLogger(FrmOnlineMenuUtamaKJP.class);
 	private static final long serialVersionUID = -4427185828234591107L;
+	private final String PATHVER = ResourceBundle.getBundle("file").getString("ver_htp")+"/";
 	private static final String PATH = "app/online/manuUtama/";
 	private String vm = PATH + "frmMenuUtamaKJP.jsp";
+
 	private IHtp iErr = null;
 	//return Permohonan 1
 	private IStatus iStatus = null;
@@ -45,9 +48,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 
 		}
 
-		this.context.put("idKementerian", idKementerian);
-		
-		
+		this.context.put("idKementerian", idKementerian);	
 		
 		Pengumuman logic = new Pengumuman();
 		// String portal_role = (String) session.getAttribute("_portal_role");
@@ -134,11 +135,26 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 		 context.put("bilPPTDikembali", dikembalikan("51").size() + dikembalikan("52").size());
 //		 context.put("vecPPT4", dikembalikan("51"));
 //		 context.put("vecPPT8", dikembalikan("52"));
+		 
+		String command = getParam("command");
+
+		if(command.equals("getdikembalikanHTP")) {
+				
+//				String id_cukaitemp = getParam("id_cukaitemp");				
+//				if(id_cukaitemp!=""){
+//					updateRead(session,id_cukaitemp);
+//				}
+				
+				this.context.put("div_senaraidikembalikan", "Y");
+				//Vector senaraiDikembalikan = DBListKemaskiniCukai(session);
+				//this.context.put("senaraiDikembalikan", senaraiDikembalikan);
+				vm = "app/htp/"+PATHVER+"/dashboard/div_SenaraiFailDikembalikan.jsp";
+			
+		}
 
 		return vm;
 
 	}
-	
 	
 	
 	public Vector getIdNegeriKJPByUserId(String userId) throws Exception {
