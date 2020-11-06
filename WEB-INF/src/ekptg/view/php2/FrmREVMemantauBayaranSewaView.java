@@ -5,6 +5,7 @@ package ekptg.view.php2;
 
 import java.io.File;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,6 +13,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -20,6 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 
 import lebah.db.Db;
@@ -29,6 +35,7 @@ import lebah.util.Util;
 import ekptg.engine.EmailProperty;
 import ekptg.engine.EmailSender;
 import ekptg.engine.GetAttachment;
+import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
@@ -88,7 +95,6 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         String idAkaun = getParam("idAkaun");
         String idNotis = getParam("idNotis");
         String noLotTanah = getParam("noLotTanah");
-        System.out.println("noLotTanah >>>> "+noLotTanah);
 
         String idLuasKegunaan = getParam("idLuasKegunaan");
 		if (idLuasKegunaan == null || idLuasKegunaan.trim().length() == 0){
@@ -1196,15 +1202,12 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         	//MAKLUMAT TINDAKAN MAHKAMAH
         	if ("10".equals(selectedTabUpper)){
 
-        		System.out.println("selectedTabLower >>> "+selectedTabLower);
         		this.context.put("readonly", "readonly");
     			this.context.put("inputTextClass", "disabled");
     			this.context.put("disabled", "disabled");
 
         		if("0".equals(selectedTabLower)){
 
-        			System.out.println("masuk selectedTabLower 0");
-        			System.out.println("mode >>> "+mode);
             		if ("view".equals(mode)){
 
             			this.context.put("readonly", "readonly");
@@ -1237,16 +1240,18 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
             		}
         		}else if("1".equals(selectedTabLower)){
 
-        		}else if("0".equals(selectedTabLower)){
-
         		}else{
         			Hashtable tm = logic.getMaklumatTindakanMahkamah(idHasil);
             		context.put("tm", tm);
         		}
         	}
 
-        } else {
-
+        }else if ("muatNaikDokumen".equals(submit)) {//ros guna nie
+					logic.hapusDokumen(idHasil);
+					uploadFiles(idHasil, session);
+					vm = "app/php2/refreshDokumenMuatNaik.jsp";
+				}
+        else {
         	vm = "app/php2/frmREVSenaraiFail.jsp";
 
         	// DROP DOWN CARIAN
@@ -1674,6 +1679,61 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 			if (db != null)
 				db.close();
 		}
+	}
+
+	private void uploadFiles(String idHasil, HttpSession session) throws Exception {
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+		if (isMultipart != false) {
+			List items = upload.parseRequest(request);
+			Iterator itr = items.iterator();
+			while (itr.hasNext()) {
+				FileItem item = (FileItem) itr.next();
+				if ((!(item.isFormField())) && (item.getName() != null)
+						&& (!("".equals(item.getName())))) {
+					saveData(item, idHasil, logic.getIdPermohonanByIdHasil(idHasil), session);
+				}
+			}
+		}
+	}
+
+	private void saveData(FileItem item, String idHasil, String idPermohonan,
+			HttpSession session) {
+		Db db = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+
+		try {
+			db = new Db();
+			// TBLPHPDOKUMEN
+			long idDokumenUpload = DB.getNextID("TBLPHPDOKUMEN_SEQ");
+			Connection con = db.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement ps = con
+					.prepareStatement("insert into TBLPHPDOKUMEN "
+							+ "(ID_DOKUMEN, NAMA_DOKUMEN, CATATAN, ID_MASUK, TARIKH_MASUK, CONTENT, JENIS_MIME, NAMA_FAIL, ID_HASIL, FLAG_DOKUMEN, ID_PERMOHONAN) "
+							+ "values(?,?,?,?,SYSDATE,?,?,?,?,?,?)");
+			ps.setLong(1, idDokumenUpload);
+			ps.setString(2, null);
+			ps.setString(3, null);
+			ps.setString(4, userId);
+			ps.setBinaryStream(5, item.getInputStream(), (int) item.getSize());
+			ps.setString(6, item.getContentType());
+			ps.setString(7, item.getName());
+			ps.setString(8, idHasil);
+			ps.setString(9, "L");
+			ps.setString(10, idPermohonan);
+			ps.executeUpdate();
+
+			con.commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (db != null) db.close();
+		}
+
+		this.context.put("flagStatus", "Y");
+		this.context.put("idUlasanTeknikalReload", idHasil);
 	}
 
 }
