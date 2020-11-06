@@ -114,7 +114,7 @@ public class FrmSenaraiLaporanTanahView extends AjaxBasedModule {
 						getParam("txtPelapor"), getParam("txtJawatan"), idNegeri, session);
 			}
 			if ("kemaskini".equals(hitButton)) {
-				logic.kemaskiniLaporan(idLaporan, getParam("txdTarikhLawatan"), getParam("socFlagLawatan"), getParam("txtTujuanLaporan"), 
+				logic.kemaskiniLaporan(idLaporan, getParam("txdTarikhLawatan"), "2", getParam("txtTujuanLaporan"), 
 						getParam("txtLaporanAtasTanah"), getParam("txtIsuUlasan"), getParam("txtCatatan"), 
 						getParam("txtPelapor"), idJawatanPelapor, idNegeri, getParam("txtJalanHubungan"),
 						getParam("txtKawasanBerhampiran"), getParam("txtJarakDariBandar"), getParam("kemudahanAsasA"), 

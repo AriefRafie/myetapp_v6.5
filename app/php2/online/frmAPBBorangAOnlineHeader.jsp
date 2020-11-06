@@ -22,6 +22,8 @@
 	</td>
 	</tr>
 	<tr>
+	<td> <input name="idJadualKeduaLesen" type="hidden" id="idJadualKeduaLesen" value="$idJadualKeduaLesen"/>
+	</td>
 	<td> <input name="idJadualKedua" type="hidden" id="idJadualKedua" value="$idJadualKedua"/>
 	</td>
 	</tr>

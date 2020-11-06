@@ -84,7 +84,8 @@ public class FrmAPBOnlineSenaraiFailData {
 	public String daftarBaru(String idKaitanTujuan, String idJenistujuan, String undangUndang, String idJenisLesen, String tujuanPengambilan, String tempoh,
 			String pengalaman, String idNegeri, String lokasi,String luas, String idLuas, String idJenisPengenalanIndividu, 
 			String idKategoriIndividu, String idKategoriPemohon, String idJantina, String idBangsa, String idBandar, 
-			String idNegeriSykt, String idBandarSykt, String idJenisPermohonan, String idPermohonanLama, HttpSession session) throws Exception {
+			String idNegeriSykt, String idBandarSykt, HttpSession session) throws Exception {
+//			String idJenisPermohonan, String idPermohonanLama, HttpSession session) throws Exception {
 		
 		Db db = null;
 		Connection conn = null;
@@ -212,7 +213,7 @@ public class FrmAPBOnlineSenaraiFailData {
 			r.add("LUAS_DIPOHON", luas);
 			r.add("ID_UNITLUAS", idLuas);
 			r.add("LOKASI_PERMOHONAN", lokasi);
-			r.add("ID_JENISPERMOHONAN",idJenisPermohonan);
+//			r.add("ID_JENISPERMOHONAN",idJenisPermohonan);
 			r.add("ID_JENIS_LESEN",idJenisLesen);
 			r.add("ID_NEGERI_PERAIRAN", idNegeri);
 			r.add("ID_MASUK", userId);
@@ -1981,7 +1982,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			r.add("B.ID_KAITANTUJUAN");
 			r.add("B.ID_JENISTUJUAN");
 			r.add("B.ID_JENIS_LESEN");
-			r.add("B.ID_JENISPERMOHONAN");
+//			r.add("B.ID_JENISPERMOHONAN");
 			r.add("B.TUJUAN_PENGAMBILAN");
 			r.add("B.TEMPOH_DIPOHON");
 			r.add("B.ID_TEMPOH");
@@ -2013,7 +2014,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				h = new Hashtable();
 				h.put("idKaitanTujuan",rs.getString("ID_KAITANTUJUAN") == null ? "99999" : rs.getString("ID_KAITANTUJUAN"));
 				h.put("idJenistujuan",rs.getString("ID_JENISTUJUAN") == null ? "99999" : rs.getString("ID_JENISTUJUAN"));
-				h.put("idJenisPermohonan",rs.getString("ID_JENISPERMOHONAN") == null ? "" : rs.getString("ID_JENISPERMOHONAN"));
+//				h.put("idJenisPermohonan",rs.getString("ID_JENISPERMOHONAN") == null ? "" : rs.getString("ID_JENISPERMOHONAN"));
 				h.put("idJenisLesen",rs.getString("ID_JENIS_LESEN") == null ? "" : rs.getString("ID_JENIS_LESEN"));
 				h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMA")));
 				h.put("tarikhSurat", rs.getDate("TARIKH_SURAT") == null ? "" : sdf.format(rs.getDate("TARIKH_SURAT")));
@@ -2246,7 +2247,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			
 			if (rs.next()){
 				
-				if("1".equals(rs.getString("FLAG_LUAR_PERAIRANNEGERI")) || "2".equals(rs.getString("FLAG_LUAR_PERAIRANNEGERI"))){
+				if (!"".equals(rs.getString("FLAG_LUAR_PERAIRANNEGERI")) || rs.getString("FLAG_LUAR_PERAIRANNEGERI") != null) {
 					
 					sql = "SELECT ID_PERMOHONAN FROM TBLPHPPMOHONNJDUALPERTAMA WHERE "
 						+ "(ID_NEGERI_PERAIRAN IS NULL OR LOKASI_PERMOHONAN IS NULL OR LUAS_DIPOHON IS NULL OR ID_UNITLUAS IS NULL)"
@@ -2256,7 +2257,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 					if (rs2.next()){
 						bool = false;
 					} else {
-//						bool = true;
+						bool = true;
 					}
 						
 				} else{
@@ -3598,6 +3599,10 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 					h.put("namaDidaftarkan",
 							rs.getString("NAMA_BARGE") == null ? "" : rs.getString(
 									"NAMA_BARGE").toUpperCase());
+					// ika add 5/11/2020
+					h.put("idBorangA",
+							rs.getString("ID_BORANGA") == null ? "" : rs
+									.getString("ID_BORANGA"));
 					senaraiBarge.addElement(h);
 					bil++;
 				}

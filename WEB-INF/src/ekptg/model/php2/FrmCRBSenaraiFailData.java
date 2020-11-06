@@ -715,6 +715,8 @@ public class FrmCRBSenaraiFailData {
 		String userId = (String) session.getAttribute("_ekptg_user_id");
 		String idPHPHakMilikSementaraString = "";
 		String sql = "";
+		
+		String TW = "to_date('" + tarikhWarta + "','dd/MM/yyyy')";
 
 		try {
 			db = new Db();
@@ -740,7 +742,7 @@ public class FrmCRBSenaraiFailData {
 			r.add("ID_JENISHAKMILIK", jenisHakmilik);
 			r.add("NO_HAKMILIK", txtNoHakmilik);
 			r.add("NO_WARTA", noWarta);
-			r.add("TARIKH_WARTA", tarikhWarta);
+			r.add("TARIKH_WARTA", r.unquote(TW));
 			r.add("ID_LOT", jenisLot);
 			r.add("NO_LOT", txtNoLot);
 			r.add("ID_LUAS", "2");
@@ -1075,7 +1077,7 @@ public class FrmCRBSenaraiFailData {
 					stmt.executeUpdate(sql);
 
 				}
-			} else {
+			} else { 
 				setMaklumatTanah(idHakmilikAgensi, idHakmilikSementara);
 				if (getBeanMaklumatTanah().size() != 0) {
 					Hashtable hashTanah = (Hashtable) getBeanMaklumatTanah()
@@ -1178,6 +1180,7 @@ public class FrmCRBSenaraiFailData {
 				db.close();
 		}
 		session.setAttribute("ID_FAIL", idFailString);
+		session.setAttribute("FLAG_FROM", "failTugasan");
 		return idFailString;
 	}
 

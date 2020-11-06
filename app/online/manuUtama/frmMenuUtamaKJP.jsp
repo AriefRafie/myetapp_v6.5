@@ -117,9 +117,9 @@ function toggle_div(id) {
 																<!-- <a href="#" onclick="toggle_div('toggleDiv');" class="help" title="Membuat Permohonan Pengambilan Tanah"> -->
 																<a href="javascript:permohonanUPT()" class="help" title="Membuat Permohonan Pengambilan Tanah">
 																	<font color="blue"><li>
-																	#if($!jumlah_notifikasi > 0)
+																	#if($!jumlah_notifikasi_permohonan > 0)
 																		<label style="background-color:blue" align="center" valign="top" >
-																			<b><font color="WHITE"><blink>$!jumlah_notifikasi</blink></font></b>
+																			<b><font color="WHITE"><blink>$!jumlah_notifikasi_permohonan</blink></font></b>
 																		</label>&nbsp;
 																	#end
 
@@ -136,21 +136,16 @@ function toggle_div(id) {
 
 														<tr>
 															<td>
-																<!-- <a href="#" onclick="toggle_div('toggleDiv');" class="help" title="Membuat Permohonan Pengambilan Tanah"> -->
+																<a href="#" onclick="toggle_div('toggleDiv');" class="help" title="Membuat Permohonan Pengambilan Tanah">
 																<a href="javascript:maklumatPembayaran()" class="help" title="Notifikasi Masukkan Maklumat Pembayaran">
 																	<font color="blue"><li>
-																	#if($!jumlah_notifikasi > 0)
+																	#if($!jumlah_notifikasi_pembayaran > 0)
 																		<label style="background-color:blue" align="center" valign="top" >
-																			<b><font color="WHITE"><blink>$!jumlah_notifikasi</blink></font></b>
+																			<b><font color="WHITE"><blink>$!jumlah_notifikasi_pembayaran</blink></font></b>
 																		</label>&nbsp;
 																	#end
 
-																	<!--
-																	<label style="background-color:blue" align="center" valign="top" >
-																				<b><font color="WHITE"><blink>$!jumlah_notifikasitolak</blink></font></b>
-																		</label>&nbsp;
-																	 -->
-
+										
 																	Notifikasi Maklumat Pembayaran</li></font>
 																</a>
 															</td>
@@ -614,6 +609,7 @@ function toggle_div(id) {
 													#if($list_memo_aktif.size()>0)
 														<li class="TabbedPanelsTab" tabindex="0" id="Pengumuman_Head">Pengumuman</li>
 													#end
+													
 												</ul>
 												<div class="TabbedPanelsContentGroup">
 													#if($list_memo_aktif.size()>0)
@@ -634,7 +630,7 @@ function toggle_div(id) {
 															</table>
 														</div>
 													#end
-												</div>
+										</div>
 											</div>
 										</td>
 									</tr>
@@ -651,10 +647,11 @@ function toggle_div(id) {
 </p>
 <input type="hidden" name="jawatan" id="jawatan" value="$!jawatan">
 <input type="hidden" name="flag_noti" id="flag_noti" value="">
-<input type="hidden" name="notifikasi" id="notifikasi" value="$!jumlah_notifikasi">
+<input type="hidden" name="notifikasi" id="notifikasi" value="$!jumlah_notifikasi_permohonan">
 <div id="divMainStats">
 <script>
-
+//shiqa tambah - untuk keluarkan tab kanan 
+var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:0});
 
 <!-- AISHAH TAMBAH START -->
 function gotoSek4()
@@ -695,9 +692,8 @@ function permohonanUPT(){
 
 function maklumatPembayaran(){
 //	document.$(formName).jawatan.value = "$!jawatan";
-	document.${formName}.action = "$EkptgUtil.getTabID('Pengambilan Tanah',$portalRole)?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline";
-
-	var flag_noti = "";
+	document.${formName}.action = "$EkptgUtil.getTabID('Pengambilan Tanah',$portalRole)?_portal_module=ekptg.view.ppt.FrmNotifikasiPembayaran";
+	 var flag_noti = "";
 	var noti = document.getElementById('notifikasi').value;
 	//alert(" noti : "+noti);
 	if(noti!="")
@@ -710,7 +706,7 @@ function maklumatPembayaran(){
 
 	}
 	document.getElementById('flag_noti').value = flag_noti;
-
+ 
 
 //	document.${formName}.action = "$EkptgUtil.getTabID('Menu Utama',$portalRole)?_portal_module=ekptg.view.online.FrmOnlineMenuUtamaKJP";
 	document.${formName}.submit();

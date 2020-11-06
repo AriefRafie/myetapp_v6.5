@@ -19,17 +19,95 @@
     #end    
 #end
 
-<div id="fileupload_progress"></div>
-<div id="progressBar" style="display: none;">
-  <div id="progressBarBoxContent"></div>
-</div>
-#if ($completed)
-<script>
-parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"success\">Fail berjaya dimuatnaik.</div>";
-</script>
-#end
+<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
+<input type="hidden" name="id_dokumen" id="id_dokumen" value="$id_dokumen" />
+<input type="hidden" name="id_laporanpasir" id="id_laporanpasir" value="$id_laporanpasir" />
+<input type="hidden" name="actionOnline" id="actionOnline" value="$actionOnline"/>
+<input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
+<input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
+<input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
 
-<fieldset>
+<table width="100%" border="0" cellspacing="2" cellpadding="2">
+  <tr>
+    <td ><fieldset>
+      <legend>Muatnaik Laporan Pengeluaran Pasir Laut</legend>
+      <table width="100%" border="0" cellspacing="2" cellpadding="2">
+        #foreach ($beanMaklumatImejan in $BeanMaklumatImejan)
+        <tr>
+          <td width="1%">#if ($modePopup != 'view')<span class="style3">*</span>#end</td>
+          <td width="28%">Nama Dokumen</td>
+          <td width="1%">:</td>
+          <td width="70%">
+          		<input name="txtNamaDokumen" type="text" id="txtNamaDokumen" value="$beanMaklumatImejan.namaLampiran" size="43" maxlength="100" $readonlyPopup class="$inputTextClassPopup" >
+          </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td valign="top">Catatan</td>
+          <td valign="top">:</td>
+          <td valign="top"><textarea name="txtCatatan" cols="50" rows="5" class="$inputTextClassPopup" id="txtCatatan" $readonlyPopup>$beanMaklumatImejan.catatanLampiran</textarea></td>
+        </tr>
+        #if ($modePopup != 'new')
+        <tr>
+          <td width="1%">&nbsp;</td>
+          <td width="28%">Muat Turun Dokumen</td>
+          <td width="1%">:</td>
+          <td width="70%"><a href="#" onclick="cetakImej($idDokumen)" class="style2">$beanMaklumatImejan.namaFail</a> </td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        #end
+        #end
+        #if ($modePopup == 'new')
+        <tr>
+          <td>#if ($modePopup != 'view')<span class="style3">*</span>#end</td>
+          <td>Direktori Imej</td>
+          <td>:</td>
+          <td><input id="fileupload" name="fileupload" type="file" size="40" $readonlyPopup2  class="$inputTextClassPopup" /></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td><span class="style4"><i><font color="#ff0000">Perhatian</font> : </i><span class="style5">Saiz muat naik fail adalah tidak melebihi 2MB. Jika muat naik anda tidak berjaya sila cuba dengan saiz fail yang lebih kecil.</span></span></td>
+        </tr>
+        #end
+        #if ($modePopup != 'view')
+        <tr>
+          <td colspan="4" valign="bottom"><i><font color="#ff0000">Perhatian</font>: Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i></td>
+        </tr>
+        #end
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td> #if ($modePopup == 'new')
+            <input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="simpanDokumen('$id_laporanpasir','$idPermohonan')" />    
+		   	<input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="batalTambahDokumen()" />
+            #end
+            #if ($modePopup == 'view')
+            <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskiniDokumen()"/>
+		    <input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onclick="hapusDokumen('$id_dokumen')"/>
+		    <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembaliSenaraiDokumen()" /> 
+            #end
+            #if ($modePopup == 'update')
+            <input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="simpanKemaskiniDokumen()" />    
+		   	<input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="batalKemaskini()" />
+            #end </td>
+        </tr>
+      </table>
+      </fieldset></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+
+<!--<fieldset>
     <legend>Muatnaik Laporan Pengeluaran Pasir Laut</legend>
     <table width="100%">
    		<tr>
@@ -66,13 +144,6 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
     		  #end    
 			</td> 
   		</tr>
-  		 #if ($modePopup != 'new')
-        <tr>
-          <td width="1%">&nbsp;</td>
-          <td width="28%">Muat Turun Dokumen</td>
-          <td width="1%">:</td>
-          <td width="70%"><a href="#" onclick="cetakImej($idDokumen)" class="style2">$beanMaklumatImejan.namaFail</a> </td>
-        </tr>
   		<tr>
     		<td align="left" width="50%">
       		  #if ($button=="view")
@@ -83,65 +154,35 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
       		</td>
     		<td width="1%">:</td>
    			<td><input id="fileupload" name="fileupload" type="file" size="40" $readonlyPopup2  class="$inputTextClassPopup" /></td> 
-  		</tr>
+  		</tr>-->
   		
-  		<tr>
+  		<!--<tr>
   			<td colspan="3" align="center">
   			
-		      #if ($button=="add")
+		      ##if ($button=="add")
 		        <input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="simpanDokumen()" />    
 		   	    <input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="batalTambahDokumen()" />
-		   	  #end
+		   	  ##end
 		    
-		      #if ($button=="edit")
+		      ##if ($button=="edit")
 		      	<input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="simpanKemaskiniDokumen()" />    
 		   	  	<input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="batalKemaskini('$id_dokumen')" />
-		      #end
+		      ##end
 		    
-		      #if ($button=="view")
+		      ##if ($button=="view")
 		    	<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskiniDokumen('$id_dokumen')"/>
 		    	<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onclick="hapusDokumen('$id_dokumen')"/>
 		    	<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembaliSenaraiDokumen('$id_laporanpasir')" /> 
-		      #end        
+		      ##end        
 		        
     		</td>
   		</tr>
   
   	</table>
-</fieldset>
+</fieldset>-->
 
-<input type="hidden" name="id_dokumen" id="id_dokumen" value="$id_dokumen" />
-<input type="hidden" name="id_laporanpasir" id="id_laporanpasir" value="$id_laporanpasir" />
-<input type="hidden" name="actionOnline" id="actionOnline" value="$actionOnline"/>
 
 <script>
-function simpanDokumen() {
-//alert("simpan dokumen");
-	if(document.${formName}.txtNamaDokumen.value == ""){
-		alert("Sila masukkan \"Nama Dokumen\" terlebih dahulu.");
-  		document.${formName}.txtNamaDokumen.focus(); 
-		return;		
-	}
-//alert("simpan dokumen 1");
-	if(document.${formName}.txtCatatan.value == ""){
-		alert("Sila masukkan \"Catatan\" terlebih dahulu.");
-  		document.${formName}.txtCatatan.focus(); 
-		return;		
-	}
-//alert("simpan dokumen 3");	
-	if(document.${formName}.fileupload.value == ""){
-		alert('Sila pilih Fail yang Ingin Dimuatnaik.');
-  		document.${formName}.fileupload.focus(); 
-		return; 
-	}
-//alert("simpan dokumen 2");
-	else{
-		if ( !window.confirm("Adakah Anda Pasti?") ) return;
-		document.${formName}.actionOnline.value = "simpanDokumen";
-		document.${formName}.submit();
-	}			
-}
-
 function batalTambahDokumen() {
 	if ( !window.confirm("Adakah Anda Pasti?") ) return;
 	document.${formName}.actionOnline.value = "papar_laporan";
