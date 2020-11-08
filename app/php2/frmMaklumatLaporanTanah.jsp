@@ -7,6 +7,7 @@
 	<input type="hidden" name="modePopup" id="modePopup" value="$modePopup"/>
 	<input type="hidden" name="idLaporan" id="idLaporan" value="$idLaporan"/>
 	<input type="hidden" name="idPermohonan" id="idPermohonan" value="$idPermohonan"/>
+	<input name="idPenceroboh" type="hidden" id="idPenceroboh" value="$idPenceroboh"/>
 	<input type="hidden" name="idUlasanTeknikal" id="idUlasanTeknikal" value="$!idUlasanTeknikal"/>
 	<input type="hidden" name="idHakmilikAgensi" id="idHakmilikAgensi" value="$idHakmilikAgensi"/>
 	<input type="hidden" name="idPegawaiLaporanTanah"id="idPegawaiLaporanTanah" value="$idPegawaiLaporanTanah"/>
@@ -30,8 +31,9 @@
       <ul class="TabbedPanelsTabGroup">
         <li onClick="doChangeTab(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT LAWATAN TAPAK</li>
         <li onClick="doChangeTab(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT LAIN</li>
-        <li onClick="doChangeTab(2);" class="TabbedPanelsTab" tabindex="0">KEHADIRAN</li>
-        <li onClick="doChangeTab(3);" class="TabbedPanelsTab" tabindex="0">IMEJAN</li>
+        <li onClick="doChangeTab(2);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PENCEROBOHAN</li>
+        <li onClick="doChangeTab(3);" class="TabbedPanelsTab" tabindex="0">KEHADIRAN</li>
+        <li onClick="doChangeTab(4);" class="TabbedPanelsTab" tabindex="0">IMEJAN</li>
       </ul>
       <div class="TabbedPanelsContentGroup">
         <div class="TabbedPanelsContent">
@@ -39,10 +41,26 @@
             #foreach ($beanMaklumatLaporan in $BeanMaklumatLaporan)
             <tr>
               	<td width="1%"><font color="#ff0000">*</font></td>
+              	<td width="28%">Tarikh Fail Diterima</td>
+	            <td width="1%">:</td>
+	            <td width="70%"><input type="text" name="txtTarikhTerimaFail" id="txtTarikhTerimaFail" value="$beanMaklumatLaporan.tarikhTerimaFail" onBlur="check_date(this)" size="9"/>
+	                <a href="javascript:displayDatePicker('txtTarikhTerimaFail',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
+	            </td>
+            </tr>
+            <tr>
+              	<td width="1%"><font color="#ff0000">*</font></td>
               	<td width="28%">Tarikh Lawatan</td>
 	            <td width="1%">:</td>
 	            <td width="70%"><input type="text" name="txdTarikhLawatan" id="txdTarikhLawatan" value="$beanMaklumatLaporan.tarikhLawatan" onBlur="check_date(this)" size="9"/>
 	                <a href="javascript:displayDatePicker('txdTarikhLawatan',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
+	            </td>
+            </tr>
+            <tr>
+              	<td width="1%"><font color="#ff0000">*</font></td>
+              	<td width="28%">Tarikh Laporan</td>
+	            <td width="1%">:</td>
+	            <td width="70%"><input type="text" name="txtTarikhLaporan" id="txtTarikhLaporan" value="$beanMaklumatLaporan.tarikhLaporan" onBlur="check_date(this)" size="9"/>
+	                <a href="javascript:displayDatePicker('txtTarikhLaporan',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
 	            </td>
             </tr>
             <tr>
@@ -59,6 +77,16 @@
               		<textarea name="txtTujuanLaporan" id="txtTujuanLaporan" rows="5" cols="50">$beanMaklumatLaporan.tujuanLaporan</textarea>
               	</td>
             </tr>
+            
+            <tr>
+			    <td valign="top">&nbsp;</td>
+			    <td valign="top">Lokasi</td>
+			    <td valign="top">:</td>
+			    <td valign="top">
+			    	<textarea name="txtLokasi" id="txtLokasi" rows="5" cols="50">$beanMaklumatLaporan.lokasi</textarea>
+			    </td>
+			</tr>
+            
             <tr>
 		    	<td width="1%" valign="top"><font color="#ff0000">*</font></td>
 		    	<td width="28%" valign="top">Laporan Atas Tanah</td>
@@ -227,6 +255,7 @@
           </table>
           #end 
         </div>
+        <div class="TabbedPanelsContent"> #parse("app/php2/frmMaklumatPencerobohan.jsp") </div>
         <div class="TabbedPanelsContent"> #parse("app/php2/frmMaklumatKehadiranLaporanTanah.jsp") </div>
         <div class="TabbedPanelsContent"> #parse("app/php2/frmImejanLaporanTanah.jsp") </div>
       </div></td>
@@ -248,10 +277,19 @@ function doChangeTab(tabId) {
 	document.${formName}.submit();
 }
 function kemaskini() {
-
+	if(document.${formName}.txtTarikhTerimaFail.value == ""){
+		alert('Sila masukkan Tarikh Terima Fail.');
+  		document.${formName}.txtTarikhTerimaFail.focus(); 
+		return; 
+	}
 	if(document.${formName}.txdTarikhLawatan.value == ""){
 		alert('Sila masukkan Tarikh Lawatan.');
 		document.${formName}.txdTarikhLawatan.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtTarikhLaporan.value == ""){
+		alert('Sila masukkan Tarikh Laporan.');
+  		document.${formName}.txtTarikhLaporan.focus(); 
 		return; 
 	}
 	if(document.${formName}.txtTujuanLaporan.value == ""){
