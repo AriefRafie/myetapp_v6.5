@@ -14,6 +14,8 @@
   <input name="actionOnline" type="hidden" id="actionOnline" value="$actionOnline"/>
   <input name="mode" type="hidden" id="mode" value="$mode"/>
   <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
+    <input name="idfail" type="text" id="idfail" value="$idFail"/>
+  
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   
@@ -165,7 +167,8 @@ function doSimpanMaklumatPasir(){
 	document.${formName}.actionOnline.value = "doMaklumatPasir";
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "simpanMaklumatAmbilPasir";
-	document.${formName}.submit();
+	//document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function doSimpanKemasMaklumatPasir(){
 	
@@ -187,7 +190,8 @@ function doSimpanKemasMaklumatPasir(){
 	document.${formName}.actionOnline.value = "doMaklumatPasir";
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "simpanKemaskiniMaklumatPasir";
-	document.${formName}.submit();
+	//document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function doKemaskiniMaklumatPasir(){
 
@@ -197,7 +201,7 @@ function doKemaskiniMaklumatPasir(){
 }
 function doBatalKemaskiniMaklumatPasir(){
 	
-	document.${formName}.mode.value = "view";
+	document.${formName}.mode.value = "new";
 	doAjaxCall${formName}("");
 }
 function doKembali(){

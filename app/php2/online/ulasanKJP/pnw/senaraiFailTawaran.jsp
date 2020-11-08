@@ -507,7 +507,7 @@ function cetakImej(id){
     if (hWnd.focus != null) hWnd.focus();
 }
 function kembali() {
-	alert('baca kembali senaraiFailTawaran');
+	//alert('baca kembali senaraiFailTawaran');
 	document.${formName}.flagPopup.value = "carian";
 	document.${formName}.submit();
 }

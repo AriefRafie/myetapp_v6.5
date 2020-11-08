@@ -716,7 +716,7 @@
                                 #set($checked3="")
                           	#end
                                 
-                    		#if($listam.flag=="2")
+                    		#if($listamid.flag=="2")
                                 #set($listamid="checked")
                                 #set($checked1="")
                                 #set($checked3="")
@@ -728,7 +728,7 @@
                                 #set($checked1="")
                          	#end
                                                                 
-                      		#if($!htaHash.jenishta=="Y")
+                      		#if($!listamid.jenishta=="Y")
                             	#set($radioJenisHTA_update_checked1="checked")
                                	#set($radioJenisHTA_update_checked2="")
                               	#set($checked3="")
@@ -736,7 +736,7 @@
                             	#set($checked1="")
                       		#end
                                 
-                        	#if($!htaHash.jenishta=="T")
+                        	#if($!listamid.jenishta=="T")
                             	#set($radioJenisHTA_update_checked2="checked")
                              	#set($radioJenisHTA_update_checked1="")
                          	#end	
@@ -929,11 +929,10 @@
                                     <td>:</td>
                                     <td>
 	                        		#if($readmode == "disabled")
-	                        		
-	                        			#foreach($listHM in $listjenishakmilik)
+	                        			#foreach($listHM in $listJenisHakMilik)
 						                    #if($listamid.jenishakmilik==$listHM.id)
-							                    #set($listjenishakmilikK=$listHM.kod_jenishakmilik)
-							                    #set($listjenishakmilikN=$listHM.nama)
+							                    #set($listjenishakmilikK=$listHM.kod)
+							                    #set($listjenishakmilikN=$listHM.keterangan)
 							                #end
 						                #end
 	                                      
@@ -1115,17 +1114,25 @@
                            		<td width="29%" class="style38"><div align="left">Kategori Tanah</div></td>
                             	<td width="1%">:</td>
                             	<td width="70%"> 
-                       	#if($!htaHash.kategori == "2")                            
+                       	#if($!listamid.kategori == "2")                            
                        		#set($meterhektar = "Hektar")
-                      	#elseif($!htaHash == "1" 
-                      		|| $!htaHash.kategori == "3" 
-                      		|| $!htaHash.kategori == "4" 
-                      		|| $!htaHash.kategori == "5"
-							|| $!htaHash.kategori == "6")
+                      	#elseif($!listamid == "1" 
+                      		|| $!listamid.kategori == "3" 
+                      		|| $!listamid.kategori == "4" 
+                      		|| $!listamid.kategori == "5"
+							|| $!listamid.kategori == "6")
                   			#set($meterhektar = "Meter Persegi")
                     	#else
                 			#set($meterhektar = "")
                  		#end
+                 		
+                 		#foreach($listkate in $listkategori)
+	                        #if($listamid.kategori==$listkate.id)
+	                        
+		                        #set($listkategoriK=$listkate.kod)
+		                        #set($listkategoriN=$listkate.keterangan)
+	                        #end 
+                        #end
                                                                                 
                  			#if($readmode == "disabled")
                                                                            
@@ -1161,7 +1168,13 @@
                            		<td class="style38"><div align="left">Jenis Luas </div></td>
                               	<td>:</td>
                               	<td>
-                        	##foreach($listluashta in $listluas)
+                        		#foreach($listluashta in $listluas)
+                        		
+	                        		#if($listamid.jenisluas==$listluashta.id)
+	                              		#set($listluasK=$listluashta.kod)
+	                              		#set($listluasN=$listluashta.nama)
+	                              	#end 
+	                            #end
                                                                             
                          		#if($readmode == "disabled")                                      
                                       
@@ -1201,7 +1214,7 @@
                                     <td>:</td>
                                     <td><label>
                                       <input name="txtLuasHMpHtaamUpd" type="text" class="$readmode" id="txtLuasHMpHtaamUpd" onkeyup="javascript:validateIC(event,this,this.value,'txtLuasHMpHtaamUpd')" value="$!listamid.luashmp" size="15" maxlength="15" $readmodeR />
-                                      <input name="meterhektar" type="text" id="meterhektar" value="$!meterhektar" size="15" readonly class="disabled" />
+                                      <input name="meterhektar" type="text" id="meterhektar" value="$meterhektar" size="15" readonly class="disabled" />
                                       </label></td>
                          	</tr>
                                   
@@ -1225,6 +1238,17 @@
                         		<td class="style38"><div align="left">Status Pemilikan</div></td>
                                	<td>:</td>
                               	<td>
+                              	#foreach($listpemilik in $listpemilikan)
+                              
+	                              #if($listamid.pemilikan==$listpemilik.id)
+	                              
+	                              #set($listpemilikK=$listpemilik.kod)
+	                              #set($listpemilikN=$listpemilik.keterangan)
+	                              
+	                              
+	                              
+	                              #end 
+	                             #end
                               	#if($readmode == "disabled")
                                       
                                       #if($listamid.pemilikan!="" && $listamid.pemilikan!="0" )
@@ -1249,6 +1273,18 @@
                            		<td class="style38"><div align="left"><span class="style41">*</span>&nbsp;Jenis Tanah</div></td>
                             	<td>:</td>
                                	<td><label>
+                               	#foreach($listtan in $listtanah)
+                              
+                              #if($listamid.jenistanah==$listtan.id)
+                              
+                              #set($listtanK=$listtan.kod)
+                              #set($listtanN=$listtan.keterangan)
+                              
+                              
+                              
+                              #end 
+                              #end
+                               	
                            	#if($readmode == "disabled")
                                	#if($listamid.jenistanah!="" && $listamid.jenistanah!="0" )
                                 	<input name="jt" value="$listtanK - $listtanN" size="25" style="text-transform:uppercase;" $readmodeR class="$readmode" />
@@ -1258,17 +1294,17 @@
                                       
                            	#else
                            			<select name="socJenisTanahHtaamUpd" class="autoselect" $readmode id="socJenisTanahHtaam2" style="text-transform:uppercase;">
-                                    #if($!htaHash.jenistanah=="3")
+                                    #if($!listamid.jenistanah=="3")
                                     	<option selected value="3">TANAH GSA</option>
                                     	<option value="4">BUKAN TANAH GSA</option>                                  	
                                    	#end
                                    	
-                                	#if($!htaHash.jenistanah=="4")
+                                	#if($!listamid.jenistanah=="4")
                                        	<option selected value="4">BUKAN TANAH GSA</option>
                                   		<option value="3">TANAH GSA</option>         
                                    	#end
                                   	
-                                  	#if($!htaHash.jenistanah != "4" && $$!htaHash.jenistanah != "3"))
+                                  	#if($!listamid.jenistanah != "4" && $!listamid.jenistanah != "3"))
                                         <option value="3">TANAH GSA</option> 
                                        	<option value="4">BUKAN TANAH GSA</option>
                                    	#end
@@ -1595,7 +1631,7 @@
     	</tr>
   	</table>
   	#parse("app/ppk/paging_sek8.jsp") 
-	##parse("app/ppk/headerppkScript.jsp")
+  	#parse("app/ppk/headerppk_script.jsp")
 </form>
 
 <script>

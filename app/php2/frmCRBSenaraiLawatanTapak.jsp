@@ -37,13 +37,6 @@
     <td>&nbsp;
       <div class="warning">SILA PILIH FAIL DI SENARAI FAIL TERLEBIH DAHULU</div></td>
   </tr>
-  #else
-  #foreach($beanHeader in $BeanHeader)
-  <tr>
-    <td>&nbsp;
-      <div class="warning">FAIL INI MASIH DI STATUS <strong>$beanHeader.status</strong></div></td>
-  </tr>
-  #end
   #end
   #if ($idFail != '' && $idStatus != '1610198' && $flagOpenDetail)
   <tr>
@@ -53,7 +46,10 @@
           <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">LAWATAN TAPAK</li>
         </ul>
         <div class="TabbedPanelsContentGroup">
-          <div class="TabbedPanelsContent"> 
+          <div class="TabbedPanelsContent">
+          	#if ($errMsg != "")
+				<div class="info"><strong>$errMsg</strong></div>
+			#end 
           	#parse("app/php2/frmCRBSuratMintaLawatanTapak.jsp") 
           </div>
           <div class="TabbedPanelsContent">
@@ -78,7 +74,7 @@
                     </tr>
                     <tr class="table_header">
                       <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-                      <td width="15%" align="center"><strong>Tarikh Lawatan</strong></td>
+                      <td width="15%" align="center"><strong>Pegangan Hakmilik</strong></td>
                       <td width="70%" align="center"><strong>Tujuan Lawatan</strong></td>
                       <td width="10%" align="center"><strong>Hapus</strong></td>
                     </tr>
@@ -94,7 +90,7 @@
                     #end
                     <tr>
                       <td class="$row" align="center">$senaraiLawatanTapak.bil</td>
-                      <td class="$row" align="center"><a href="javascript:paparLawatanTapak('$senaraiLawatanTapak.idLaporanTanah')" class="style2">$senaraiLawatanTapak.tarikhLawatan</a></td>
+                      <td class="$row" align="center"><a href="javascript:paparLawatanTapak('$senaraiLawatanTapak.idLaporanTanah')" class="style2">$senaraiLawatanTapak.peganganHakmilik</a></td>
                       <td class="$row">$senaraiLawatanTapak.tujuanLawatan</td>
                       <td class="$row" align="center"><input name="cmdHapusLT" id="cmdHapusLT" type="button" value="Hapus" onClick="hapusLT('$senaraiLawatanTapak.idLaporanTanah')" ></td>
                     </tr>

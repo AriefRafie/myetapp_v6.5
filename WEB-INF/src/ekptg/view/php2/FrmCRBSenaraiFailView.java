@@ -142,7 +142,8 @@ public class FrmCRBSenaraiFailView extends AjaxBasedModule {
 				if ("4".equals(getParam("socJenisTanah"))) {
 					idHakmilikSementara = logic.saveHakmilikSementara(idJenisHakmilik, getParam("txtNoHakmilikTanah"),  
 							getParam("txtNoWarta"), getParam("tarikhWarta"), idJenisLot, getParam("txtNoLot"),  
-							getParam("txtLuasBersamaan"), idNegeriTanah, idDaerahTanah, idMukimTanah, session);
+							getParam("txtLuas1"), getParam("txtLuas2"), getParam("txtLuas3"), getParam("txtLuasBersamaan"), 
+							idNegeriTanah, idDaerahTanah, idMukimTanah, session);
 				}
 				idFail = logic.daftarBaru(idJenisTanah,
 						getParam("tarikhTerima"), getParam("tarikhSurat"),
@@ -171,6 +172,7 @@ public class FrmCRBSenaraiFailView extends AjaxBasedModule {
 			this.context.put("mode", "view");
 			this.context.put("readonly", "readonly");
 			this.context.put("inputTextClass", "disabled");
+			this.context.put("disabled", "disabled");
 
 			// MAKLUMAT PERMOHONAN
 			beanMaklumatPermohonan = new Vector();
@@ -260,12 +262,20 @@ public class FrmCRBSenaraiFailView extends AjaxBasedModule {
 	        	logic.setMaklumatTanah(idHakmilikAgensi, idHakmilikSementara);
 				beanMaklumatTanah = logic.getBeanMaklumatTanah();
 				this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
+				if (logic.getBeanMaklumatTanah().size() != 0) {
+					Hashtable hashMaklumatTanah = (Hashtable) logic.getBeanMaklumatTanah().get(0);
+					idJenisHakmilik = (String) hashMaklumatTanah.get("idJenisHakmilik");
+					idJenisLot = (String) hashMaklumatTanah.get("idLot");
+					idNegeriTanah = (String) hashMaklumatTanah.get("idNegeri");
+					idDaerahTanah = (String) hashMaklumatTanah.get("idDaerah");
+					idMukimTanah = (String) hashMaklumatTanah.get("idMukim");
+				}
 
-				this.context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("socJenisHakmilik", Long.parseLong(idJenisHakmilik), "disabled", "class=\"disabled\""));
-				this.context.put("selectJenisLot", HTML.SelectLot("socJenisLot", Long.parseLong(idJenisLot), "disabled", "class=\"disabled\""));
-				this.context.put("selectNegeriTanah", HTML.SelectNegeri("socNegeriTanah", Long.parseLong(idNegeriTanah), "disabled", "class=\"disabled\""));
-				this.context.put("selectDaerahTanah", HTML.SelectDaerahByIdNegeri(idNegeriTanah, "socDaerahTanah", Long.parseLong(idDaerahTanah), "disabled", "class=\"disabled\""));
-				this.context.put("selectMukimTanah", HTML.SelectMukimNoKodByDaerah(idDaerahTanah, "socMukimTanah", Long.parseLong(idMukimTanah), "disabled", "class=\"disabled\""));
+				this.context.put("selectJenisHakmilik", HTML.SelectPHPJenisHakmilik("socJenisHakmilik", Long.parseLong(idJenisHakmilik), "disabled", " class=\"disabled\""));
+				this.context.put("selectJenisLot", HTML.SelectLot("socJenisLot", Long.parseLong(idJenisLot), "disabled", " class=\"disabled\""));
+				this.context.put("selectNegeriTanah", HTML.SelectNegeri("socNegeriTanah", Long.parseLong(idNegeriTanah), "disabled", " class=\"disabled\""));
+				this.context.put("selectDaerahTanah", HTML.SelectDaerahByIdNegeri(idNegeriTanah, "socDaerahTanah", Long.parseLong(idDaerahTanah), "disabled", " class=\"disabled\""));
+				this.context.put("selectMukimTanah", HTML.SelectMukimNoKodByDaerah(idDaerahTanah, "socMukimTanah", Long.parseLong(idMukimTanah), "disabled", " class=\"disabled\""));
 
 			} else {
 				
@@ -464,12 +474,6 @@ public class FrmCRBSenaraiFailView extends AjaxBasedModule {
 				}
 			}						
 			
-			this.context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("socJenisHakmilik", Long.parseLong(idJenisHakmilik), "", "onChange=\"doChangeJenisHakmilik();\""));
-			this.context.put("selectJenisLot", HTML.SelectLot("socJenisLot", Long.parseLong(idJenisLot), "", "onChange=\"doChangeJenisLot();\"").toUpperCase());
-			this.context.put("selectNegeriTanah", HTML.SelectNegeri("socNegeriTanah", Long.parseLong(idNegeriTanah), "", "onChange=\"doChangeNegeriTanah();\""));
-			this.context.put("selectDaerahTanah", HTML.SelectDaerahByIdNegeri(idNegeriTanah, "socDaerahTanah", Long.parseLong(idDaerahTanah), "", "onChange=\"doChangeDaerahTanah();\""));
-			this.context.put("selectMukimTanah", HTML.SelectMukimNoKodByDaerah(idDaerahTanah, "socMukimTanah", Long.parseLong(idMukimTanah), "", "onChange=\"doChangeMukimTanah();\""));
-			
 			if ("4".equals(idJenisTanah)) {
 				//TODO
 				beanMaklumatTanah = new Vector();
@@ -530,7 +534,7 @@ public class FrmCRBSenaraiFailView extends AjaxBasedModule {
 	        		idMukimTanah = "99999";
 	        	}
 	        	
-	        	this.context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("socJenisHakmilik", Long.parseLong(idJenisHakmilik), "", "onChange=\"doChangeJenisHakmilik();\""));
+	        	this.context.put("selectJenisHakmilik", HTML.SelectPHPJenisHakmilik("socJenisHakmilik", Long.parseLong(idJenisHakmilik), "", "onChange=\"doChangeJenisHakmilik();\""));
 				this.context.put("selectJenisLot", HTML.SelectLot("socJenisLot", Long.parseLong(idJenisLot), "", "onChange=\"doChangeJenisLot();\""));
 				this.context.put("selectNegeriTanah", HTML.SelectNegeri("socNegeriTanah", Long.parseLong(idNegeriTanah), "", "onChange=\"doChangeNegeriTanah();\""));
 				this.context.put("selectDaerahTanah", HTML.SelectDaerahByIdNegeri(idNegeriTanah, "socDaerahTanah", Long.parseLong(idDaerahTanah), "", "onChange=\"doChangeDaerahTanah();\""));
@@ -623,8 +627,8 @@ public class FrmCRBSenaraiFailView extends AjaxBasedModule {
 			this.context.put("txtNoPegangan", getParam("txtNoPegangan"));
 			this.context.put(
 					"selectJenisHakmilik",
-					HTML.SelectJenisHakmilik("socJenisHakmilikC",
-							Long.parseLong(idJenisHakmilikC), ""));
+					HTML.SelectPHPJenisHakmilik("socJenisHakmilikC",
+							Long.parseLong(idJenisHakmilikC), "", ""));
 			this.context.put("txtNoHakmilik", getParam("txtNoHakmilik"));
 			this.context.put("txtNoWarta", getParam("txtNoWarta"));
 			this.context.put("selectLot",

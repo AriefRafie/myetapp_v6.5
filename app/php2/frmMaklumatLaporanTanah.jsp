@@ -46,26 +46,10 @@
 	            </td>
             </tr>
             <tr>
-			    <td width="1%"><font color="#ff0000">*</font></td>
+			    <td valign="top">&nbsp;</td>
 			    <td width="28%">Lawatan Tapak Oleh</td>
 			    <td width="1%">:</td>
-			    <td width="70%">
-			    	<select name="socFlagLawatan" id="socFlagLawatan">
-				      #if ($beanMaklumatLaporan.flagLawatan == '1')
-				          <option>SILA PILIH</option>
-				          <option selected="selected" value="1">JKPTG IBUPEJABAT</option>
-				          <option value="2">JKPTG NEGERI</option>
-				      #elseif ($beanMaklumatLaporan.flagLawatan == '2')
-				      	  <option>SILA PILIH</option>
-				          <option value="1">JKPTG IBUPEJABAT</option>
-				          <option selected="selected" value="2">JKPTG NEGERI</option>
-				      #else
-				      	  <option selected="selected">SILA PILIH</option>
-				          <option value="1">JKPTG IBUPEJABAT</option>
-				          <option value="2">JKPTG NEGERI</option>
-				      #end
-				    </select>
-			    </td>
+			    <td width="70%">JKPTG NEGERI</td>
 			</tr>
             <tr>
               	<td valign="top"><font color="#ff0000">*</font></td>
@@ -268,16 +252,6 @@ function kemaskini() {
 	if(document.${formName}.txdTarikhLawatan.value == ""){
 		alert('Sila masukkan Tarikh Lawatan.');
 		document.${formName}.txdTarikhLawatan.focus(); 
-		return; 
-	}
-	if(document.${formName}.txdTarikhLawatan.value == ""){
-		alert('Sila masukkan Tarikh Lawatan.');
-		document.${formName}.txdTarikhLawatan.focus(); 
-		return; 
-	}
-	if(document.${formName}.socFlagLawatan.value == ""){
-		alert('Sila pilih Lawatan Tapak Oleh.');
-		document.${formName}.socFlagLawatan.focus(); 
 		return; 
 	}
 	if(document.${formName}.txtTujuanLaporan.value == ""){

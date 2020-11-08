@@ -25,12 +25,12 @@ public class CBRLaporanOperasi extends EkptgReportServlet {
 		// TODO Auto-generated method stub
 		FrmPLPPopupCetakLaporanData logic = new FrmPLPPopupCetakLaporanData();
 		
-		String idPermohonan = "";
-		if (parameters.get("ID_PERMOHONAN") != null){
-			idPermohonan = (String)parameters.get("ID_PERMOHONAN");
+		String idLaporanTanah = "";
+		if (parameters.get("ID_LAPORANTANAH") != null){
+			idLaporanTanah = (String)parameters.get("ID_LAPORANTANAH");
 		}
 		
-		logic.getMesyuarat(idPermohonan);
+		logic.getMesyuarat(idLaporanTanah);
 		Vector listMesyuarat = logic.getBeanMesyuarat();
 		if (listMesyuarat.size() != 0){
 			Hashtable hMesyuarat = (Hashtable) listMesyuarat.get(0);

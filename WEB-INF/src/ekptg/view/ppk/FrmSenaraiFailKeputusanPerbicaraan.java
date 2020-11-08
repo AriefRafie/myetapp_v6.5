@@ -78,8 +78,8 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 	int bilHari = 365; //arief add
 	int bilHariSebenar = 370; //arief add
 	int bezaTahun = 0; //arief add
-	int tahunAktifDenda = 2020; // arief add
-	int tahunDaftar = 2021; //arief add
+	int tahunAktifDenda = 2021; // arief add
+	int tahunDaftar = 2022; //arief add
 	//double bayaranSebenar;
 	
 	
@@ -96,6 +96,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
     	headerppk_baru_default();
 
     	Vector list = new Vector();
+    	Vector listb = new Vector();//arief add
     	Vector listPemohon = new Vector();
     	Vector dataBayaran = new Vector();
     	Vector dataPerintah = new Vector();
@@ -136,6 +137,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
     	//bayaranFiSebenar = getParam("txtJumBayaranSebenar"); //arief add
     	
     	list.clear();
+    	listb.clear();//arief add
     	listPemohon.clear();
        	detailMahkamah.clear();
     	listMahkamah.clear();
@@ -189,9 +191,10 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 		flag5juta = FrmPrmhnnSek8KeputusanPermohonanInternalData.getFlag5Juta();
 		this.context.put("flag5juta", flag5juta);
 		
-		
+		//listb = logic_A.getSimati();//arief add	
 		list = logic3.getListSemak();
 		String idSimati = "";
+		String idSimatib = "";
 		String idstatus = "";
 		String idNegeriMhn = "";
 		String idFail = "";
@@ -200,7 +203,9 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 		String noFail = "";
 		if ( list.size() != 0 ){
 			Hashtable ls = (Hashtable) list.get(0);
+			//Hashtable lsb = (Hashtable) listb.get(0);//arief add
 			idSimati = (String)ls.get("idSimati");
+			//idSimatib = (String)lsb.get("idSimati");
 			idstatus = ls.get("id_Status").toString();
     		idNegeriMhn = ls.get("pmidnegeri").toString();
     		idFail = ls.get("idFail").toString();
@@ -209,6 +214,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
     		noFail = ls.get("noFail").toString();
 		}
 			context.put("listSemak", list);
+			//context.put("listTarikhMati", listb);//arief add
 
    	if	("papar_notis".equals(submit)){
 
@@ -416,18 +422,25 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
       							}**/
       			    		
       			    		//arief add
+      			    		/**
+      			    		 * 1.	denda lewat aktif selepas 1 tahun akta diluluskan
+      			    		 * 2.	nilaian denda lewat: RM20/tahun (max RM1000)
+      			    		 * 3.	bezaTahun = tahunAktifDenda - tarikhMati
+      			    		 * **/
+      			    		
       			    		bezaTahun = tahunDaftar - tahunAktifDenda;
       			    		myLogger.info("bayaranDenda1 = "+bayaranDenda);
       			    		if (bilHariSebenar > bilHari) {
       			    			if (bezaTahun == 20){
       			    				bayaranDenda = 1000;
   	      						}else {
-  	      							for (int bilTahun = 1; bilTahun <= bezaTahun; bilTahun++) {
+  	      							for (int i = 1; i <= bezaTahun; i++) {
   	      							bayaranDenda = bayaranDenda + 20;
   	      							}
   	      						}
+      			    			bayaranYuran = bayaranYuran + bayaranDenda;
   	      					}
-      			    		bayaranYuran = bayaranYuran + bayaranDenda;
+      			    		
       			    		
       			    		//String t_mohon = logic_A.getTarikhMohon(idpermohonan);
   	      					//String tarikhAktifFlagDendaLewat = "14/07/2020";
@@ -491,8 +504,9 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
   	      							bayaranDenda = bayaranDenda + 20;
   	      							}
   	      						}
+      			    			bayaranYuran = bayaranYuran + bayaranDenda;
   	      					}
-      			    		bayaranYuran = bayaranYuran + bayaranDenda;
+      			    		
       			    			
       			    			
       			    		this.context.put("txtJumBayaran", bayaranYuran);
@@ -3999,8 +4013,9 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
     							bayaranDenda = bayaranDenda + 20;
     							}
     						}
+			    			bayaranYuran = bayaranYuran + bayaranDenda;
     					}
-			    		bayaranYuran = bayaranYuran + bayaranDenda;
+			    		
 			    	
 						this.context.put("txtJumBayaran", bayaranYuran); //Yuran Perintah
 						//this.context.put("txtJumBayaranSebenar", bayaranSebenar); //arief add
@@ -4053,8 +4068,9 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
     							bayaranDenda = bayaranDenda + 20;
     							}
     						}
+			    			bayaranYuran = bayaranYuran + bayaranDenda;
     					}
-			    		bayaranYuran = bayaranYuran + bayaranDenda;
+			    		
     				
 		    		this.context.put("txtJumBayaran", bayaranYuran);
 		    		//this.context.put("txtJumBayaranSebenar", bayaranSebenar);//arief add
@@ -7706,9 +7722,14 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 		String txtJumBayaranEDIT = getParam("txtJumBayaranEDIT");
 		String txtNomborResitPerintahEDIT = getParam("txtNomborResitPerintahEDIT");
 		String txdTarikhBayaranPerintahEDIT = getParam("txdTarikhBayaranPerintahEDIT");
+		String check_pengecualianEDIT = getParam("check_pengecualianEDIT");//arief add
+		String catatan_pengecualianEDIT = getParam("catatan_pengecualianEDIT");//arief add
 
-	    FrmPrmhnnSek8KptsanBicaraData.add_BayaranPerintahEDIT(usid,idpermohonan,txtJumBayaranEDIT,
-	    		txtNomborResitPerintahEDIT,txdTarikhBayaranPerintahEDIT);
+	    /*FrmPrmhnnSek8KptsanBicaraData.add_BayaranPerintahEDIT(usid,idpermohonan,txtJumBayaranEDIT,
+	    		txtNomborResitPerintahEDIT,txdTarikhBayaranPerintahEDIT);*/
+		FrmPrmhnnSek8KptsanBicaraData.add_BayaranPerintahEDIT( usid, idpermohonan, txtJumBayaranEDIT,
+	    		 txtNomborResitPerintahEDIT, check_pengecualianEDIT,  catatan_pengecualianEDIT,
+	    		 txdTarikhBayaranPerintahEDIT);
 	}
 	
 
@@ -8308,11 +8329,16 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 		//TBLPPKBAYARAN
 		String id_jenisbayaranPerintah = getParam("id_jenisbayaranPerintah");
 		String txtJumBayaran = getParam("txtJumBayaran");
+		String check_pengecualian = getParam("check_pengecualian");//arief add
+		String catatan_pengecualian = getParam("catatan_pengecualian");//arief add
 		String txtNomborResitPerintah = getParam("txtNomborResitPerintah");
 		String txdTarikhBayaranPerintah = getParam("txdTarikhBayaranPerintah");
 
+		/*FrmPrmhnnSek8KptsanBicaraData.add_BayaranPerintah(idpermohonan,usid,
+				id_jenisbayaranPerintah,txtJumBayaran,txtNomborResitPerintah,txdTarikhBayaranPerintah);*/
 		FrmPrmhnnSek8KptsanBicaraData.add_BayaranPerintah(idpermohonan,usid,
-				id_jenisbayaranPerintah,txtJumBayaran,txtNomborResitPerintah,txdTarikhBayaranPerintah);
+				id_jenisbayaranPerintah,txtJumBayaran,check_pengecualian,catatan_pengecualian,
+				txtNomborResitPerintah,txdTarikhBayaranPerintah);
 	}
 
 	private void add_maklumatPerintah(String id_perbicaraan,

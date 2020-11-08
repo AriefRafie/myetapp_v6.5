@@ -1,5 +1,4 @@
 
-
 --------------------------------------10/6/2020----------------------------------
 ----------------------TBLRUJPEJABAT - Majlis Agama Islam
 
@@ -682,4 +681,14 @@ Insert into EKPTGHQUAT.TBLPPKRUJTARAFKPTG
    (20, '19', 'MAJLIS AGAMA ISLAM NEGERI ', NULL, NULL, 
     NULL, NULL, NULL);
 COMMIT;
+
+
+--------------------------------------5/11/2020----------------------------------
+-------TBLPPKBAYARAN
+
+20201106
+
+--
+ALTER TABLE TBLPPKBAYARAN ADD (PENGECUALIAN_BAYARAN NUMBER);
+ALTER TABLE TBLPPKBAYARAN ADD (CATATAN_PENGECUALIAN VARCHAR2(500)) ;
 

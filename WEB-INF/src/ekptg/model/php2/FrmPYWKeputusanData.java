@@ -274,7 +274,6 @@ public class FrmPYWKeputusanData {
 	public void setMaklumatHasil(String idFail) throws Exception {
 		Db db = null;
 		String sql = "";
-		System.out.println("idFail >>>> "+idFail);
 
 		try {
 			beanMaklumatHasil = new Vector();
@@ -283,7 +282,6 @@ public class FrmPYWKeputusanData {
 
 			sql = "SELECT FAIL.ID_FAIL, FAIL.NO_FAIL, HASIL.ID_HASIL FROM TBLPFDFAIL FAIL, TBLPHPHASIL HASIL"
 					+ " WHERE FAIL.ID_FAIL = HASIL.ID_FAIL AND FAIL.NO_FAIL = '" + idFail + "'";
-			System.out.println("sql >> "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -891,7 +889,7 @@ public class FrmPYWKeputusanData {
 				}
 
 				// GET MAKLUMAT PERJANJIAN
-				sqlSelect = "SELECT NO_SIRI, TARIKH_MULA_PERJANJIAN, TEMPOH, TARIKH_TAMAT_PERJANJIAN, KADAR_SEWA, CAGARAN FROM TBLPHPPERJANJIAN WHERE FLAG_PERJANJIAN = 'U' AND ID_PERMOHONAN = '"
+				sqlSelect = "SELECT NO_SIRI, TARIKH_MULA_PERJANJIAN, TEMPOH, TARIKH_TAMAT_PERJANJIAN,TARIKH_MULA_DASAR, TEMPOH_DASAR, TARIKH_TAMAT_DASAR, KADAR_SEWA, CAGARAN FROM TBLPHPPERJANJIAN WHERE FLAG_PERJANJIAN = 'U' AND ID_PERMOHONAN = '"
 						+ idPermohonan + "'";
 				ResultSet rsPerjanjian = stmt.executeQuery(sqlSelect);
 
@@ -905,6 +903,13 @@ public class FrmPYWKeputusanData {
 					tarikhMula = rsPerjanjian.getDate("TARIKH_MULA_PERJANJIAN");
 					tarikhTamat = rsPerjanjian
 							.getDate("TARIKH_TAMAT_PERJANJIAN");
+
+					String tempohDasar = rsPerjanjian.getString("TEMPOH_DASAR");
+					Date tarikhMulaDasar = new Date();
+					Date tarikhTamatDasar = new Date();
+					tarikhMulaDasar = rsPerjanjian.getDate("TARIKH_MULA_DASAR");
+					tarikhTamatDasar = rsPerjanjian
+							.getDate("TARIKH_TAMAT_DASAR");
 
 					// TBLPHPBAYARANPERLUDIBAYAR
 					r = new SQLRenderer();
@@ -938,6 +943,17 @@ public class FrmPYWKeputusanData {
 										+ "','dd/MM/yyyy')"));
 					}
 					r.add("TEMPOH", Integer.parseInt(tempoh));
+					if (!"".equals(tarikhMulaDasar)) {
+						r.add("TARIKH_MULA_DASAR",
+								r.unquote("to_date('" + sdf.format(tarikhMulaDasar)
+										+ "','dd/MM/yyyy')"));
+					}
+					if (!"".equals(tarikhTamatDasar)) {
+						r.add("TARIKH_TAMAT_DASAR",
+								r.unquote("to_date('" + sdf.format(tarikhTamatDasar)
+										+ "','dd/MM/yyyy')"));
+					}
+					r.add("TEMPOH_DASAR", Integer.parseInt(tempohDasar));
 					r.add("BAYARAN", bayaran);
 					r.add("DEPOSIT", deposit);
 					r.add("FLAG_AKTIF", "Y");
