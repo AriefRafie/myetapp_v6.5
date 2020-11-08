@@ -55,7 +55,7 @@
 				#end
 				
 				#if($modul=="php")
-					<input type="button" name="cmdKembali" value ="Sila Meninggal" onClick="javascript:kembaliDashboardPhp()">
+					<input type="button" name="cmdKembali" value ="Kembali" onClick="javascript:kembaliDashboardPhp()">
 				#else
 					<input type="button" name="cmdKembali" value ="Kembali" onClick="javascript:kembaliScreenUtama('$!id_permohonan','$jenisTolak')">
 				#end
