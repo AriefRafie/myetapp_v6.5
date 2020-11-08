@@ -103,7 +103,7 @@ function simpanDokumen(idLaporan,idPermohonan) {
 	var dp = document.${formName}.form_token.value ;
 	var dopost = "&form_token="+dp;
 
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmSenaraiLaporanTanahView&hitButton=simpanDokumen&namaImej="+namaImej+"&idPermohonan="+idPermohonan+"&catatanImej="+catatanImej+"&idLaporan="+idLaporan+"&selectedTab=3"+dopost+"&step=kemaskini&flagPopup=openPopupDokumen&modePopup=new";
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmSenaraiLaporanTanahView&hitButton=simpanDokumen&namaImej="+namaImej+"&idPermohonan="+idPermohonan+"&catatanImej="+catatanImej+"&idLaporan="+idLaporan+"&selectedTab=4"+dopost+"&step=kemaskini&flagPopup=openPopupDokumen&modePopup=new";
 	
 	document.${formName}.method="post";
 	document.${formName}.enctype="multipart/form-data";

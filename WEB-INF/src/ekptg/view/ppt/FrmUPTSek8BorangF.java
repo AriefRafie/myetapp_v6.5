@@ -744,14 +744,15 @@ public class FrmUPTSek8BorangF extends AjaxBasedModule {
 				int bil = i+1;
 				String txtMasaSiasatan = getParam("txtMasaSiasatan"+bil);
 				String socJenisWaktu = getParam("socJenisWaktu"+bil);
+				String txtCatatan= getParam("txtCatatan"+bil);
 				String id_borangehakmilik = getParam("id_borangehakmilik"+bil);
 				myLogger.info("txtMasaSiasatan :"+txtMasaSiasatan);
 				
 				if(id_borangehakmilik.equals("")){
 					long id_borangehakmilik_seq = DB.getNextID("TBLPPTBORANGEHAKMILIK_SEQ");
-					simpanBorangE(idUser,cb_id_hakmilik[i],id_borangehakmilik_seq,txtMasaSiasatan,socJenisWaktu,id_borange,db);
+					simpanBorangE(idUser,cb_id_hakmilik[i],id_borangehakmilik_seq,txtMasaSiasatan,socJenisWaktu,txtCatatan,id_borange,db);
 				}else{
-					updateBorangE(idUser,cb_id_hakmilik[i],id_borangehakmilik,txtMasaSiasatan,socJenisWaktu,id_borange,db);
+					updateBorangE(idUser,cb_id_hakmilik[i],id_borangehakmilik,txtMasaSiasatan,socJenisWaktu,txtCatatan,id_borange,db);
 				}
 			
 			}
@@ -832,14 +833,15 @@ public class FrmUPTSek8BorangF extends AjaxBasedModule {
 				int bil = i+1;
 				String txtMasaSiasatan = getParam("txtMasaSiasatan"+bil);
 				String socJenisWaktu = getParam("socJenisWaktu"+bil);
+				String txtCatatan = getParam("txtCatatan"+bil);
 				String id_borangehakmilik = getParam("id_borangehakmilik"+bil);
 				myLogger.info("txtMasaSiasatan :"+txtMasaSiasatan);
 				
 				if(id_borangehakmilik.equals("")){
 					long id_borangehakmilik_seq = DB.getNextID("TBLPPTBORANGEHAKMILIK_SEQ");
-					simpanBorangE(idUser,cb_id_hakmilik[i],id_borangehakmilik_seq,txtMasaSiasatan,socJenisWaktu,id_borangeString,db);
+					simpanBorangE(idUser,cb_id_hakmilik[i],id_borangehakmilik_seq,txtMasaSiasatan,socJenisWaktu, txtCatatan, id_borangeString,db);
 				}else{
-					updateBorangE(idUser,cb_id_hakmilik[i],id_borangehakmilik,txtMasaSiasatan,socJenisWaktu,id_borangeString,db);
+					updateBorangE(idUser,cb_id_hakmilik[i],id_borangehakmilik,txtMasaSiasatan,socJenisWaktu, txtCatatan, id_borangeString,db);
 				}
 			
 			}
@@ -1073,6 +1075,7 @@ public class FrmUPTSek8BorangF extends AjaxBasedModule {
 					int bil = i+1;
 					String txtMasaSiasatan = getParam("txtMasaSiasatan"+bil);
 					String socJenisWaktu = getParam("socJenisWaktu"+bil);
+					String txtCatatan = getParam("txtCatatan"+bil);
 					String id_borangehakmilik = getParam("id_borangehakmilik"+bil);
 					id_borange = getParam("id_borange"+bil);
 				
@@ -1081,9 +1084,9 @@ public class FrmUPTSek8BorangF extends AjaxBasedModule {
 			
 					if(id_borange.equals("")){
 						long id_borangehakmilik_seq = DB.getNextID("TBLPPTBORANGEHAKMILIK_SEQ");
-						simpanBorangE(idUser,cb_id_hakmilik[i],id_borangehakmilik_seq,txtMasaSiasatan,socJenisWaktu,id_borange,db);
+						simpanBorangE(idUser,cb_id_hakmilik[i],id_borangehakmilik_seq,txtMasaSiasatan,socJenisWaktu,txtCatatan,id_borange,db);
 					}else{
-						updateBorangE(idUser,cb_id_hakmilik[i],id_borangehakmilik,txtMasaSiasatan,socJenisWaktu,id_borange,db);
+						updateBorangE(idUser,cb_id_hakmilik[i],id_borangehakmilik,txtMasaSiasatan,socJenisWaktu,txtCatatan,id_borange,db);
 					}
 				
 				}
@@ -1092,7 +1095,7 @@ public class FrmUPTSek8BorangF extends AjaxBasedModule {
 		}//close simpanBorangL
 		
 		//function borang e-4/9/2020
-		public static void simpanBorangE(String idUser,String id_hakmilik,long id_borangehakmilik, String txtMasaSiasatan, String socJenisWaktu,String id_borange,Db db) throws Exception{
+		public static void simpanBorangE(String idUser,String id_hakmilik,long id_borangehakmilik, String txtMasaSiasatan, String socJenisWaktu, String txtCatatan, String id_borange,Db db) throws Exception{
 			
 			myLogger.info("DATA SIMPAN BORANGE HAKMILIK");
 			//   Db db = null;
@@ -1107,6 +1110,7 @@ public class FrmUPTSek8BorangF extends AjaxBasedModule {
 			 	    r.add("id_borange", id_borange);
 			 	    r.add("masa_siasatan", txtMasaSiasatan);
 			 	    r.add("jenis_waktu",socJenisWaktu);    
+			 	    r.add("catatan", txtCatatan);
 			 	    r.add("id_masuk",idUser);   
 			 	    r.add("tarikh_masuk",r.unquote("sysdate"));
 			 	    sql = r.getSQLInsert("tblpptborangehakmilik");
@@ -1120,7 +1124,7 @@ public class FrmUPTSek8BorangF extends AjaxBasedModule {
 			   
 			  }//close simpanBorangE
 		
-		public static void updateBorangE(String idUser,String id_hakmilik,String id_borangehakmilik, String txtMasaSiasatan, String socJenisWaktu,String id_borange,Db db) throws Exception{
+		public static void updateBorangE(String idUser,String id_hakmilik,String id_borangehakmilik, String txtMasaSiasatan, String socJenisWaktu, String txtCatatan,String id_borange,Db db) throws Exception{
 			
 			   // Db db = null;
 			    String sql = "";
@@ -1133,6 +1137,7 @@ public class FrmUPTSek8BorangF extends AjaxBasedModule {
 			 	    r.update("id_hakmilik", id_hakmilik);
 			 	    r.add("masa_siasatan",txtMasaSiasatan);  
 			 	    r.add("jenis_waktu",socJenisWaktu);  
+			 	    r.add("catatan",txtCatatan);  
 			 	    r.add("id_borange",id_borange); 
 			 	    r.add("id_kemaskini",idUser);   
 			 	    r.add("tarikh_kemaskini",r.unquote("sysdate"));

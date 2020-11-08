@@ -56,216 +56,242 @@
 
         <!-- START MAKLUMAT TANAH -->
           <div class="TabbedPanelsContent">
+
+				  #foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
-              #foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
-              <!-- <tr>
-                <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-                <td width="28%">Pegangan Hakmilik</td>
-                <td width="1%">:</td>
-                <td width="70%">
-                #if ($mode == 'update')
-                  <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" onblur="doChangePeganganHakmilik();">
-                  #else
-                  <input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" readonly="readonly" class="disabled">
-                  #end
-                  <input type="hidden" name="idHakmilikAgensi" id="idHakmilikAgensi" value="$idHakmilikAgensi" />
-                   <input type="hidden" name="idHakmilik" id="idHakmilik" value="$beanMaklumatTanah.idHakmilik" />
-                  <span class="style1">$errorPeganganHakmilik</span> </td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>No. Lot</td>
-                <td>:</td>
-                <td>$beanMaklumatTanah.noLot</td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>Luas Lot</td>
-                <td>:</td>
-                <td>$beanMaklumatTanah.luas</td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>No. Hakmilik</td>
-                <td>:</td>
-                <td>$beanMaklumatTanah.noHakmilik</td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>No. Warta</td>
-                <td>:</td>
-                <td>$beanMaklumatTanah.noWarta</td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>Tarikh Warta</td>
-                <td>:</td>
-                <td>$beanMaklumatTanah.tarikhWarta</td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>Mukim</td>
-                <td>:</td>
-                <td>$beanMaklumatTanah.mukim</td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>Daerah</td>
-                <td>:</td>
-                <td>$beanMaklumatTanah.daerah</td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>Negeri</td>
-                <td>:</td>
-                <td>$beanMaklumatTanah.negeri
-                  <input type="hidden" name="idNegeriTanah" id="idNegeriTanah" value="$beanMaklumatTanah.idNegeriTanah" />
-                  <input type="hidden" name="kodNegeriTanah" id="kodNegeriTanah" value="$beanMaklumatTanah.kodNegeriTanah" />
-                </td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>Kementerian</td>
-                <td>:</td>
-                <td>$beanMaklumatTanah.kementerian
-                  <input type="hidden" name="idKementerian" id="idKementerian" value="$beanMaklumatTanah.idKementerian" />
-                  <input type="hidden" name="kodKementerian" id="kodKementerian" value="$beanMaklumatTanah.kodKementerian" />
-                </td>
-              </tr>
-              <tr>
-                <td height="31">&nbsp;</td>
-                <td>Agensi</td>
-                <td>:</td>
-                <td>$beanMaklumatTanah.agensi</td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>Kegunaan Tanah</td>
-                <td>:</td>
-                <td>$beanMaklumatTanah.kegunaanTanah</td>
-              </tr> -->
-              <tr>
-          				<td width="1%">#if ($mode == 'update')<span class="style1">*</span>#end</td>
-          				<td>No. Lot</td>
-          				<td>:</td>
-          				<td>
-          					#if ($mode == 'update')
-          						<input type="text" name="txtnoLot" id="txtnoLot" value="$beanMaklumatTanah.noLot">
-          					#else
-          						<input type="text" name="txtnoLot" id="txtnoLot" value="$beanMaklumatTanah.noLot" readonly="readonly" class="disabled">
-          					#end
-          						<input type="hidden" name="noLotTanah" id="noLotTanah" value="$beanMaklumatTanah.lot" /></td>
-        			</tr>
+			<tr>
+				<td width="50%" valign="top">
 
-        			<tr>
-          				<td width="1%">#if ($mode == 'update')<span class="style1">*</span>#end</td>
-          				<td>No. Hakmilik</td>
-          				<td>:</td>
-          				<td>
-          				#if ($mode == 'update')
-          						<input type="text" name="txtnoHakmilik" id="txtnoHakmilik" value="$beanMaklumatTanah.noHakmilik" onblur="doChangePeganganHakmilik();">
-          					#else
-          						<input type="text" name="txtnoHakmilik" id="txtnoHakmilik" value="$beanMaklumatTanah.noHakmilik" readonly="readonly" class="disabled">
-          					#end
+				<table width="100%"  cellpadding="2" cellspacing="2" border="0">
+				  <tr>
+							<td width="1%">#if ($mode == 'update')<span class="style1">*</span>#end</td>
+							<td>No. Lot</td>
+							<td>:</td>
+							<td>
+								#if ($mode == 'update')
+									<input type="text" name="txtnoLot" id="txtnoLot" value="$beanMaklumatTanah.noLot">
+								#else
+									<input type="text" name="txtnoLot" id="txtnoLot" value="$beanMaklumatTanah.noLot" readonly="readonly" class="disabled">
+								#end
+									<input type="hidden" name="noLotTanah" id="noLotTanah" value="$beanMaklumatTanah.lot" /></td>
+						</tr>
 
-          					<input type="hidden" name="noMilikTanah" id="noMilikTanah" value="$beanMaklumatTanah.hakmilik" /><span class="style1">$errorPeganganHakmilik</span> </td>
-        			</tr>
-        			<tr>
-        				<td width="1%"></td>
-          				<td width="28%">Pegangan Hakmilik</td>
-          				<td width="1%">:</td>
-          				<td width="70%"> $beanMaklumatTanah.peganganHakmilik
-          						<!-- #if ($mode == 'new')
-            					<input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" onblur="doChangePeganganHakmilik();">
-            					<input class="stylobutton100" name="cmdDaftar" type="button" value="Carian Tanah" onClick="pilihTanah('$idPermohonan')">
-          						#else
-            					<input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" readonly="readonly" class="disabled">
-          						#end
-            					<input type="hidden" name="idHakmilikAgensi" id="idHakmilikAgensi" value="$idHakmilikAgensi">
-            					<span class="style1">$errorPeganganHakmilik</span>
-            					<span class="style4"><i><font color="#ff0000">Contoh</font> : </i><span class="style5">160140GRN00000576</span></span>
-            				-->
-            				</td>
-        			</tr>
+						<tr>
+							<td width="1%">#if ($mode == 'update')<span class="style1">*</span>#end</td>
+							<td>No. Hakmilik</td>
+							<td>:</td>
+							<td>
+							#if ($mode == 'update')
+									<input type="text" name="txtnoHakmilik" id="txtnoHakmilik" value="$beanMaklumatTanah.noHakmilik" onblur="doChangePeganganHakmilik();">
+								#else
+									<input type="text" name="txtnoHakmilik" id="txtnoHakmilik" value="$beanMaklumatTanah.noHakmilik" readonly="readonly" class="disabled">
+								#end
 
-        				<tr>
-          					<td>&nbsp;</td>
-          					<td>Luas Lot</td>
-          					<td>:</td>
-          					<td>$beanMaklumatTanah.luas
-          						<input type="hidden" name="idLuasTanah" id="idLuasTanah" value="$beanMaklumatTanah.idLuas" />
-          						<input type="hidden" name="luasTanah" id="luasTanah" value="$beanMaklumatTanah.luasBersamaan" /></td>
-        				</tr>
-        				<tr>
-          					<td>&nbsp;</td>
-			          		<td>Mukim</td>
-          					<td>:</td>
-          					<td>$beanMaklumatTanah.mukim
-          						<input type="hidden" name="namaMukimTanah" id="namaMukimTanah" value="$beanMaklumatTanah.mukim" /></td>
-        				</tr>
-        				<tr>
-          					<td>&nbsp;</td>
-          					<td>Daerah</td>
-          					<td>:</td>
-          					<td>$beanMaklumatTanah.daerah
-          						<input type="hidden" name="namaDerahTanah" id="namaDerahTanah" value="$beanMaklumatTanah.daerah" /></td>
-        				</tr>
-        				<tr>
-          					<td>&nbsp;</td>
-          					<td>Negeri</td>
-          					<td>:</td>
-          					<td>$beanMaklumatTanah.negeri
-            					<input type="hidden" name="idNegeriTanah" id="idNegeriTanah" value="$beanMaklumatTanah.idNegeriTanah">
-            					<input type="hidden" name="namaNegeriTanah" id="namaNegeriTanah" value="$$beanMaklumatTanah.negeri">
-          					</td>
-        				</tr>
-        				<!-- <tr>
-          					<td>&nbsp;</td>
-          					<td>Kementerian</td>
-          					<td>:</td>
-          					<td>$beanMaklumatTanah.kementerian
-            					<input type="hidden" name="idKementerianTanah" id="idKementerianTanah" value="$beanMaklumatTanah.idKementerian">
-            					<input type="hidden" name="kodKementerian" id="kodKementerian" value="$beanMaklumatTanah.kodKementerian">
-          					</td>
-        				</tr>
-        				<tr>
-          					<td>&nbsp;</td>
-          					<td>Agensi</td>
-          					<td>:</td>
-          					<td>$beanMaklumatTanah.agensi
-          						<input type="hidden" name="idAgensiTanah" id="idAgensiTanah" value="$beanMaklumatTanah.idAgensi">
-        				</tr> -->
-              <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>
-                #if ($mode == 'view')
-                  #if ($!statussemasa.equals("1") || $!statussemasa.equals("2"))
-                  <input type="button" name="cmdKmskiniTnh" id="cmdKmskiniTnh" value="Kemaskini" onClick="doKemaskini()"/>
-                  #end
-                  <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
-                  ##end
-                  #if ($mode == 'update')
-                  <input type="button" name="cmdSimpanKemaskiniTnh" id="cmdSimpanKemaskiniTnh" value="Simpan" onClick="doSimpanKemaskiniMaklumatTnh()"/>
-                  #end
-                  #else
-                  <input type="button" name="cmdSimpanKemaskiniTnh" id="cmdSimpanKemaskiniTnh" value="Simpan" onClick="doSimpanKemaskiniMaklumatTnh()"/>
-                  <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
-                 #end
-                 </td>
+								<input type="hidden" name="noMilikTanah" id="noMilikTanah" value="$beanMaklumatTanah.hakmilik" /><span class="style1">$errorPeganganHakmilik</span> </td>
+						</tr>
+						<tr>
+							<td width="1%"></td>
+							<td width="28%">Pegangan Hakmilik</td>
+							<td width="1%">:</td>
+							<td width="70%"> $beanMaklumatTanah.peganganHakmilik
+									<!-- #if ($mode == 'new')
+									<input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" onblur="doChangePeganganHakmilik();">
+									<input class="stylobutton100" name="cmdDaftar" type="button" value="Carian Tanah" onClick="pilihTanah('$idPermohonan')">
+									#else
+									<input type="text" name="txtPeganganHakmilik" id="txtPeganganHakmilik" value="$beanMaklumatTanah.peganganHakmilik" readonly="readonly" class="disabled">
+									#end
+									<input type="hidden" name="idHakmilikAgensi" id="idHakmilikAgensi" value="$idHakmilikAgensi">
+									<span class="style1">$errorPeganganHakmilik</span>
+									<span class="style4"><i><font color="#ff0000">Contoh</font> : </i><span class="style5">160140GRN00000576</span></span>
+								-->
+								</td>
+						</tr>
+
+							<tr>
+								<td>&nbsp;</td>
+								<td>Luas Lot</td>
+								<td>:</td>
+								<td>$beanMaklumatTanah.luas
+									<input type="hidden" name="idLuasTanah" id="idLuasTanah" value="$beanMaklumatTanah.idLuas" />
+									<input type="hidden" name="luasTanah" id="luasTanah" value="$beanMaklumatTanah.luasBersamaan" /></td>
+							</tr>
+							<tr>
+								<td>&nbsp;</td>
+								<td>No Warta</td>
+								<td>:</td>
+								<td>$beanMaklumatTanah.noWarta</td>
+							</tr>
+							<tr>
+								<td>&nbsp;</td>
+								<td>Tarikh Warta</td>
+								<td>:</td>
+								<td>$beanMaklumatTanah.tarikhWarta</td>
+							</tr>
+							<tr>
+								<td>&nbsp;</td>
+								<td>Mukim</td>
+								<td>:</td>
+								<td>$beanMaklumatTanah.mukim
+									<input type="hidden" name="namaMukimTanah" id="namaMukimTanah" value="$beanMaklumatTanah.mukim" /></td>
+							</tr>
+							<tr>
+								<td>&nbsp;</td>
+								<td>Daerah</td>
+								<td>:</td>
+								<td>$beanMaklumatTanah.daerah
+									<input type="hidden" name="namaDerahTanah" id="namaDerahTanah" value="$beanMaklumatTanah.daerah" /></td>
+							</tr>
+							<tr>
+								<td>&nbsp;</td>
+								<td>Negeri</td>
+								<td>:</td>
+								<td>$beanMaklumatTanah.negeri
+									<input type="hidden" name="idNegeriTanah" id="idNegeriTanah" value="$beanMaklumatTanah.idNegeriTanah">
+									<input type="hidden" name="namaNegeriTanah" id="namaNegeriTanah" value="$$beanMaklumatTanah.negeri">
+								</td>
+							</tr>
+							<tr>
+								<td>&nbsp;</td>
+								<td>Kategori Tanah</td>
+								<td>:</td>
+								<td>
+									$beanMaklumatTanah.kategoriTanah
+								</td>
+					        </tr>
+							<tr>
+								<td>&nbsp;</td>
+								<td>SubKategori Tanah</td>
+								<td>:</td>
+								<td>
+									$beanMaklumatTanah.subKategoriTanah
+								</td>
+					        </tr>
+							<!-- <tr>
+								<td>&nbsp;</td>
+								<td>Kementerian</td>
+								<td>:</td>
+								<td>$beanMaklumatTanah.kementerian
+									<input type="hidden" name="idKementerianTanah" id="idKementerianTanah" value="$beanMaklumatTanah.idKementerian">
+									<input type="hidden" name="kodKementerian" id="kodKementerian" value="$beanMaklumatTanah.kodKementerian">
+								</td>
+							</tr>
+							<tr>
+								<td>&nbsp;</td>
+								<td>Agensi</td>
+								<td>:</td>
+								<td>$beanMaklumatTanah.agensi
+									<input type="hidden" name="idAgensiTanah" id="idAgensiTanah" value="$beanMaklumatTanah.idAgensi">
+							</tr> -->
+				</table>
+			</td>
+			<td width="50%" valign="top">
+			<table width="100%"  cellpadding="2" cellspacing="2" border="0">
+				<tr>
+					<td>&nbsp;</td>
+					<td>Syarat Nyata</td>
+					<td>:</td>
+					<td>
+						$beanMaklumatTanah.syarat
+					</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>Sekatan Kepentingan</td>
+					<td>:</td>
+					<td>
+						$beanMaklumatTanah.sekatan
+					</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>Kegunaan Tanah</td>
+					<td>:</td>
+					<td>
+						$beanMaklumatTanah.kegunaanTanah
+					</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>Kementerian</td>
+					<td>:</td>
+					<td>
+						$beanMaklumatTanah.kementerian
+					</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>Agensi</td>
+					<td>:</td>
+					<td>
+						$beanMaklumatTanah.agensi
+					</td>
+		        </tr>
+			</table>
+			</td>
+			</tr>
+				  <tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				  </tr>
+				  <tr>
+					<td>&nbsp;</td>
+					<td>
+					#if ($mode == 'view')
+					  #if ($!statussemasa.equals("1") || $!statussemasa.equals("2"))
+					  <input type="button" name="cmdKmskiniTnh" id="cmdKmskiniTnh" value="Kemaskini" onClick="doKemaskini()"/>
+					  #end
+					  <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
+					  ##end
+					  #if ($mode == 'update')
+					  <input type="button" name="cmdSimpanKemaskiniTnh" id="cmdSimpanKemaskiniTnh" value="Simpan" onClick="doSimpanKemaskiniMaklumatTnh()"/>
+					  #end
+					  #else
+					  <input type="button" name="cmdSimpanKemaskiniTnh" id="cmdSimpanKemaskiniTnh" value="Simpan" onClick="doSimpanKemaskiniMaklumatTnh()"/>
+					  <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
+					 #end
+					 </td>
 
 
 
-              </tr>
-              #end
+				  </tr>
             </table>
+				  #end
           </div>
           <!-- END MAKLUMAT TANAH -->
 
@@ -507,6 +533,20 @@
             	</p>
             	<!-- <input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doBacklist()" /> -->
    			#end
+
+   			#else
+   			<td>
+                <!-- <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/> -->
+                <input type="checkbox" name="pengesahan" id="pengesahan" checked disabled>&nbsp&nbsp
+
+        	Saya, <b>$!namaPemohon</b>, $!kadPengenalanPemohon dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
+   			<br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
+      		<p align="center">
+           		<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
+            	<input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
+            	</p>
+            	<!-- <input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doBacklist()" /> -->
+            </td>
    			#end
    			#end
             </td>

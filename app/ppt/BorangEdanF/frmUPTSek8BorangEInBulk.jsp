@@ -15,6 +15,7 @@
 #set($txdTarikhBorangE=$data.tarikh_borange)
 #set($txdTarikhSiasatan=$data.tarikh_siasatan)
 #set($txtMasaSiasatan=$data.masa_siasatan)
+#set($txtCatatan=$data.catatan)
 #set($socJenisWaktu=$data.jenis_waktu)
 #set($txtAlamat1=$data.alamat1) #set($txtAlamat2=$data.alamat2)
 #set($txtAlamat3=$data.alamat3) #set($txtPoskod=$data.poskod)
@@ -59,7 +60,7 @@
 			</tr>
 
 			<tr>
-				<td>&nbsp;</td>
+				<td><font color="red">*</font></td>
 				<td>Tarikh Akhir Tampal</td>
 				<td>:</td>
 				<td><input $disability $disabilityx name="txdTarikhTampal"
@@ -172,15 +173,16 @@
 						<td align="center" width="5%"><b><input $disability1
 							type="checkbox" title="Sila Semak Untuk Pilih Semua"
 							name="checkall" id="checkall" onclick="checkALL()"></b></td> #end
-						<td align="center" width="15%"><b>No (Tarikh Borang E)</b></td>
-						<td width="20%"><b>No.Hakmilik</b></td>
-						<td width="15%"><b>No.LOT/No.PT</b></td>
+						<td align="center" width="7%"><b>No (Tarikh Borang E)</b></td>
+						<td width="10%"><b>No.Hakmilik</b></td>
+						<td width="10%"><b>No.LOT/No.PT</b></td>
 						<td width="20%"><b>Mukim/Pekan/Bandar</b></td>
 						#if($!flag_subjaket!="")
 						<td width="10%"><b>No.Subjaket</b></td>#end
 						<td width="20%"><b>Masa Siasatan</b></td>
-						<td width="50%"><b>Catatan</b></td>
+						<td width="30%"><b>Catatan</b></td>
 					</tr>
+					
 					
 					#if($saiz_listHakmilikBorangEInBulk!=0)
 					#foreach($listTanah in $listHakmilikBorangEInBulk)
@@ -239,10 +241,17 @@
 			      		$!listTanah.JENIS_WAKTU
 			      		#end     			
                 		</td>  
+                		<td class="$row" width ="30%">
+                		#if($isEdit=="yes")
+                		#set($catatan = "txtCatatan"+$!listTanah.bil)
+                		   	<textarea name="$!catatan" id="$!catatan"  value="$!listTanah.CATATAN"></textarea>           	  	
+			      		#else
+			      		$!listTanah.CATATAN
+			      		#end     			
+                		</td>
 
 					</tr>
-					<td class="$row"><input name="txtCatatan" id="txtCatatan" size="30" type="text" value="$!listTanah.MASA_SIASATAN"  ">            	  	
-            	  		</td>
+					
 					#end 
 					#else
 					<tr>
