@@ -621,7 +621,12 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 	    		sql += " WHERE A1.ID_HAKMILIK = M1.ID_HAKMILIK ";
 	    		sql += " AND A1.ID_BORANGE = B1.ID_BORANGE ";
 	    		sql += " AND M1.ID_HAKMILIK = M.ID_HAKMILIK ";
-	    		sql += " )AS MASA_SIASATAN ";
+	    		sql += " )AS MASA_SIASATAN, ";	
+	    		sql += " ( SELECT A1.CATATAN ";
+	    		sql += " FROM TBLPPTHAKMILIK M1, TBLPPTBORANGEHAKMILIK A1, TBLPPTBORANGE B1 ";
+	    		sql += " WHERE A1.ID_HAKMILIK = M1.ID_HAKMILIK ";
+	    		sql += " AND A1.ID_BORANGE = B1.ID_BORANGE ";
+	    		sql += "AND M1.ID_HAKMILIK = M.ID_HAKMILIK )AS CATATAN ";
 	    		
 	    		
 	    		sql += " FROM TBLPPTPERMOHONAN P, TBLRUJLOT LT, TBLRUJMUKIM MK, TBLRUJNEGERI N, TBLPPTHAKMILIK M, TBLRUJJENISHAKMILIK JH ";  
@@ -669,6 +674,7 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 	    			h.put("TARIKH_BORANGE", rs.getString("TARIKH_BORANGE")== null?"":rs.getString("TARIKH_BORANGE"));
 	    			h.put("MASA_SIASATAN", rs.getString("MASA_SIASATAN")== null?"":rs.getString("MASA_SIASATAN")); // PPT-06
 	    			h.put("JENIS_WAKTU", rs.getString("JENIS_WAKTU")== null?"":rs.getString("JENIS_WAKTU")); // PPT-06
+	    			h.put("CATATAN", rs.getString("CATATAN")== null?"":rs.getString("CATATAN")); // PPT-06
 	    			listHakmilikBorangEInBulk.addElement(h);
 	    			bil++;
 	    	}			    
@@ -815,7 +821,7 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 	    		sql += " WHEN A.JENIS_WAKTU = '2' THEN 'TENGAHARI' ";
 	    		sql += " WHEN A.JENIS_WAKTU = '3' THEN 'MALAM' ";
 	    		sql += " ELSE B.JENIS_WAKTU "; 
-	    		sql += " END AS JENIS_WAKTU, B.ID_BORANGE, B.TARIKH_BORANGF, B.TARIKH_BORANGE, B.TARIKH_SIASATAN,  "; // B.MASA_SIASATAN, B.JENIS_WAKTU,
+	    		sql += " END AS JENIS_WAKTU, B.ID_BORANGE, B.TARIKH_BORANGF, B.TARIKH_BORANGE, B.TARIKH_SIASATAN, A.CATATAN, "; // B.MASA_SIASATAN, B.JENIS_WAKTU,
 				sql += " B.ALAMAT1, B.ALAMAT2, B.ALAMAT3, B.POSKOD, B.ID_BANDAR, B.ID_NEGERI, B.TARIKH_CETAK, B.TARIKH_AKHIR_TAMPAL ";
 	    		sql += " FROM TBLPPTBORANGEHAKMILIK A, TBLPPTBORANGE B, TBLPPTHAKMILIK C ";
 	    		sql += " WHERE A.ID_BORANGE = B.ID_BORANGE ";
@@ -841,7 +847,8 @@ public int getListBorangEInBulk_count(String id_permohonan,String carianLotHakmi
 					h.put("tarikh_borange", rs.getDate("TARIKH_BORANGE")==null?"":Format.format(rs.getDate("TARIKH_BORANGE")));
 					h.put("tarikh_siasatan", rs.getDate("TARIKH_SIASATAN")==null?"":Format.format(rs.getDate("TARIKH_SIASATAN")));
 					h.put("MASA_SIASATAN", rs.getString("MASA_SIASATAN")==null?"":rs.getString("MASA_SIASATAN"));
-					h.put("JENIS_WAKTU", rs.getString("JENIS_WAKTU")==null?"":rs.getString("JENIS_WAKTU"));			
+					h.put("JENIS_WAKTU", rs.getString("JENIS_WAKTU")==null?"":rs.getString("JENIS_WAKTU"));	
+					h.put("CATATAN", rs.getString("CATATAN")==null?"":rs.getString("CATATAN"));
 					h.put("alamat1", rs.getString("ALAMAT1")==null?"":rs.getString("ALAMAT1"));	
 					h.put("alamat2", rs.getString("ALAMAT2")==null?"":rs.getString("ALAMAT2"));	
 					h.put("alamat3", rs.getString("ALAMAT3")==null?"":rs.getString("ALAMAT3"));	

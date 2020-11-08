@@ -7114,9 +7114,14 @@ public class FrmSenaraiFailLengkap extends AjaxBasedModule {
 		String txtJumBayaranEDIT = getParam("txtJumBayaranEDIT");
 		String txtNomborResitPerintahEDIT = getParam("txtNomborResitPerintahEDIT");
 		String txdTarikhBayaranPerintahEDIT = getParam("txdTarikhBayaranPerintahEDIT");
+		String check_pengecualianEDIT = getParam("check_pengecualianEDIT");//arief add
+		String catatan_pengecualianEDIT = getParam("catatan_pengecualianEDIT");//arief add
 
-	    FrmPrmhnnSek8KptsanBicaraData.add_BayaranPerintahEDIT(usid,idpermohonan,txtJumBayaranEDIT,
-	    		txtNomborResitPerintahEDIT,txdTarikhBayaranPerintahEDIT);
+		/*FrmPrmhnnSek8KptsanBicaraData.add_BayaranPerintahEDIT(usid,idpermohonan,txtJumBayaranEDIT,
+		txtNomborResitPerintahEDIT,txdTarikhBayaranPerintahEDIT);*/
+		FrmPrmhnnSek8KptsanBicaraData.add_BayaranPerintahEDIT( usid, idpermohonan, txtJumBayaranEDIT,
+		 txtNomborResitPerintahEDIT, check_pengecualianEDIT,  catatan_pengecualianEDIT,
+		 txdTarikhBayaranPerintahEDIT);//arief add
 	}
 	
 
@@ -7695,9 +7700,14 @@ public class FrmSenaraiFailLengkap extends AjaxBasedModule {
 		String txtJumBayaran = getParam("txtJumBayaran");
 		String txtNomborResitPerintah = getParam("txtNomborResitPerintah");
 		String txdTarikhBayaranPerintah = getParam("txdTarikhBayaranPerintah");
+		String check_pengecualian = getParam("check_pengecualian");//arief add
+		String catatan_pengecualian = getParam("catatan_pengecualian");//arief add
 
+		/*FrmPrmhnnSek8KptsanBicaraData.add_BayaranPerintah(idpermohonan,usid,
+		id_jenisbayaranPerintah,txtJumBayaran,txtNomborResitPerintah,txdTarikhBayaranPerintah);*/
 		FrmPrmhnnSek8KptsanBicaraData.add_BayaranPerintah(idpermohonan,usid,
-				id_jenisbayaranPerintah,txtJumBayaran,txtNomborResitPerintah,txdTarikhBayaranPerintah);
+		id_jenisbayaranPerintah,txtJumBayaran,check_pengecualian,catatan_pengecualian,
+		txtNomborResitPerintah,txdTarikhBayaranPerintah);//arief add
 	}
 
 	private void add_maklumatPerintah(String id_perbicaraan,

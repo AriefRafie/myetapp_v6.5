@@ -179,7 +179,7 @@
             					<input type="hidden" name="namaNegeriTanah" id="namaNegeriTanah" value="$$beanMaklumatTanah.negeri">
           					</td>
         				</tr>
-        				<!-- <tr>
+        				<tr>
           					<td>&nbsp;</td>
           					<td>Kementerian</td>
           					<td>:</td>
@@ -194,7 +194,7 @@
           					<td>:</td>
           					<td>$beanMaklumatTanah.agensi
           						<input type="hidden" name="idAgensiTanah" id="idAgensiTanah" value="$beanMaklumatTanah.idAgensi">
-        				</tr> -->
+        				</tr>
                         #end
 					</table>
       <!-- <table width="100%" border="0" cellspacing="2" cellpadding="2">

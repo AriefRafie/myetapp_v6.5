@@ -803,6 +803,13 @@ public class SkrinPopupCarianHakmilik_BorangE_F extends AjaxBasedModule {
     		sql += "AND M1.ID_HAKMILIK = M.ID_HAKMILIK ";
     		sql += ")AS MASA_SIASATAN ";
     		
+    		sql += ",(SELECT A1.CATATAN FROM TBLPPTHAKMILIK M1, TBLPPTBORANGEHAKMILIK A1, TBLPPTBORANGE B1 ";
+    		sql += "WHERE A1.ID_HAKMILIK = M1.ID_HAKMILIK ";
+    		sql += "AND A1.ID_BORANGE = B1.ID_BORANGE ";
+    		sql += "AND M1.ID_HAKMILIK = M.ID_HAKMILIK ";
+    		sql += ")AS CATATAN ";		
+    		
+    		
     		sql += " ,(SELECT DISTINCT TO_CHAR(B1.TARIKH_BORANGE,'DD/MM/YYYY') AS TARIKH_BORANGE FROM TBLPPTHAKMILIK M1, TBLPPTBORANGEHAKMILIK A1, TBLPPTBORANGE B1 ";  
     		sql += " WHERE A1.ID_HAKMILIK = M1.ID_HAKMILIK ";  
     		sql += " AND A1.ID_BORANGE = B1.ID_BORANGE ";  
@@ -842,6 +849,7 @@ public class SkrinPopupCarianHakmilik_BorangE_F extends AjaxBasedModule {
     			h.put("tarikh_siasatan", rs.getString("TARIKH_SIASATAN")== null?"":rs.getString("TARIKH_SIASATAN"));
     			h.put("masa_siasatan", rs.getString("MASA_SIASATAN")== null?"":rs.getString("MASA_SIASATAN"));
     			h.put("jenis_waktu", rs.getString("JENIS_WAKTU")== null?"":rs.getString("JENIS_WAKTU"));
+    			h.put("catatan", rs.getString("CATATAN")== null?"":rs.getString("CATATAN"));
     			h.put("seksyen", rs.getString("SEKSYEN")== null?"":rs.getString("SEKSYEN"));
     			h.put("no_subjaket", rs.getString("NO_SUBJAKET")== null?"":rs.getString("NO_SUBJAKET"));
     			h.put("TARIKH_BORANGE", rs.getString("TARIKH_BORANGE")== null?"":rs.getString("TARIKH_BORANGE"));
