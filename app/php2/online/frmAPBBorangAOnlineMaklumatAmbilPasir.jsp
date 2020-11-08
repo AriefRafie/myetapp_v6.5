@@ -91,8 +91,8 @@ function setTable(id){
 }
 function cetakAPBLaporanBorangA(id_borangA) {
 
-	var url = "../servlet/ekptg.report.php2.APBLaporanBorangA?idBorangA="+id_borangA;
-	
+	//var url = "../servlet/ekptg.report.php2.APBLaporanBorangA?idBorangA="+id_borangA;
+	var url = "../servlet/ekptg.report.php2.online.PengesahanOnline?template=APBLaporanBorangA&folder=ONLINE&idBorangA="+id_borangA;
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
