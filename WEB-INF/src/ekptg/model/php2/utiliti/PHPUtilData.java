@@ -69,7 +69,7 @@ public class PHPUtilData {
 			SQLRenderer r = new SQLRenderer();
 			r.add("id_fail");
 			r.add("no_fail");
-			r.add("id_masuk", Integer.parseInt(userId));
+			r.add("id_masuk",userId);
 			v = new Vector<Tblpfdfail>();
 			ResultSet rs = stmt.executeQuery(sql);
 			
