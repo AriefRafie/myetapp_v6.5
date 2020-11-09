@@ -216,6 +216,7 @@ alert("Sila Kembali Pada Skrin Pemilihan Hakmilik dan Klik 'Paging' No.19/No.20/
   					#set($txtTempatAmbil=$dataPN.tempat_ambil)
   					#set($txtAmaunCek=$dataPN.amaun_bayaran)
   					#set($txtDendaLewat=$dataPN.denda_lewat)
+  					#set($txdTarikhLewat=$dataPN.tarikh_cajlewat)
   					#set($txdTarikhAkhirBayar=$dataPN.tarikh_akhir_bayar)
   			
   				#end

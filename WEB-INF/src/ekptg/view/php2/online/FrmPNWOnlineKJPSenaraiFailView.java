@@ -690,7 +690,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 	    					
 	    					langkah2 = "2";
 	    					
-	    					kandungan = getEmelSemak().setKandungan(String.valueOf(permohonan2.get("namaAgensi")), String.valueOf(hUser.get("nama")));
+	    					/*kandungan = getEmelSemak().setKandungan(String.valueOf(permohonan2.get("namaAgensi")), String.valueOf(hUser.get("nama")));
 	    	    			
 	    					if(!getEmelSemak().checkEmail(userId).equals(""))
 	    						getIHTP().getErrorHTML("[ONLINE-HTP PENAWARAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
@@ -698,12 +698,12 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 	    					ec.sendByRoleKJP(getEmelSemak().checkEmail(userId)
 	    							, "9"
 	    							, String.valueOf(String.valueOf(permohonan2.get("idKementerian")))
-	    							, emelSubjek, kandungan);
+	    							, emelSubjek, kandungan);*/
 
 	    				}else if (idJawatan.equals("9")){
 	    					langkah2 = "3";				
 	    					
-	    					kandungan = getEmelSemak().setKandungan(String.valueOf(permohonan2.get("namaAgensi")), String.valueOf(hUser.get("nama")));
+	    					/*kandungan = getEmelSemak().setKandungan(String.valueOf(permohonan2.get("namaAgensi")), String.valueOf(hUser.get("nama")));
 	    	    			
 	    					if(!getEmelSemak().checkEmail(userId).equals(""))
 	    						getIHTP().getErrorHTML("[ONLINE-HTP PENAWARAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
@@ -711,13 +711,13 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 	    					ec.sendByRoleKJP(getEmelSemak().checkEmail(userId)
 	    							, "4"
 	    							, String.valueOf(String.valueOf(permohonan2.get("idKementerian")))
-	    							, emelSubjek, kandungan);
+	    							, emelSubjek, kandungan);*/
 	    								
 	    				}else if (idJawatan.equals("4")){
 	    					langkah2 = "4";
 	    					emelSubjek = ec.tajukHantarPermohonan + "Penawaran";
 	    							
-	    					kandungan = getEmelSemak().setKandungan(String.valueOf(permohonan2.get("namaAgensi")), String.valueOf(hUser.get("nama")));
+	    					/*kandungan = getEmelSemak().setKandungan(String.valueOf(permohonan2.get("namaAgensi")), String.valueOf(hUser.get("nama")));
 
 	    	    			
 	    					if(!getEmelSemak().checkEmail(userId).equals(""))
@@ -727,7 +727,7 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
 	    					ec.sendByRoleKJP(getEmelSemak().checkEmail(userId)
 	    							, "4"
 	    							, String.valueOf(String.valueOf(permohonan2.get("idKementerian")))
-	    							, emelSubjek, kandungan);
+	    							, emelSubjek, kandungan);*/
 	    									
 	    				}
 	    				Hashtable permohonan3 = (Hashtable) logic.getBeanMaklumatHeader().get(0);

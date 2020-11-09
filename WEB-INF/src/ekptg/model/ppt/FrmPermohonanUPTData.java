@@ -4309,26 +4309,27 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 		    }
 		}
 	 
-	 @SuppressWarnings("unchecked")
-		public static void  setListDokumenPembayaran(String id) throws Exception {
-			    Db db = null;
-			    listDokumenPembayaran.clear();
-			    String sql = "";
-			    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	public static void  setListDokumenPembayaran(String id) throws Exception {
+		Db db = null;
+	    listDokumenPembayaran.clear();
+	    String sql = "";
 			    
-			    try {
-			      db = new Db();
-			      Statement stmt = db.getStatement();
-			      SQLRenderer r = new SQLRenderer();		      
+	    try {
+	    	db = new Db();
+	    	Statement stmt = db.getStatement();
+	    	SQLRenderer r = new SQLRenderer();		      
 			    
-			      sql = " SELECT a.id_permohonan, a.id_Dokumen, a.nama_dokumen, a.kandungan, a.tarikh_pembayaran "+
-				    		" FROM TBLPPTDOKUMENHAKMILIK a "+
-				    		" WHERE a.id_permohonan = '"+id+"' ORDER BY a.tarikh_masuk DESC ";
+//	    	sql = " SELECT a.id_permohonan, a.id_Dokumen, a.nama_dokumen, a.kandungan, a.tarikh_pembayaran "+
+//	    		" FROM TBLPPTDOKUMENHAKMILIK a "+
+//				    		" WHERE a.id_permohonan = '"+id+"' ORDER BY a.tarikh_masuk DESC ";
 			      
-			      /*sql = " SELECT a.id_permohonan, a.id_Dokumen, a.nama_dokumen, a.kandungan, b.tarikh_pembayaran "+
-				    		" FROM TBLPPTDOKUMENHAKMILIK a, TBLPPTHAKMILIK b "+
-				    		" WHERE a.id_permohonan = b.id_permohonan "
-				    		+ " AND a.id_permohonan = '"+id+"'  ";*/
+	    	sql = " SELECT a.id_permohonan, a.id_dokumen, a.nama_fail nama_dokumen, a.content kandungan"+
+	    			", a.tarikh_masuk tarikh_pembayaran"+
+				 	" FROM TBLPPTDOKUMEN A"+
+//				 	+ ", TBLPPTHAKMILIK b "+
+				    " WHERE A.jenis_dokumen='buktibayar' "
+//				    + "a.id_permohonan = b.id_permohonan AND"
+				    + " AND A.id_permohonan = '"+id+"'  ";
 			      
 			     
 			      ResultSet rs = stmt.executeQuery(sql);
@@ -4337,16 +4338,14 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 			      Hashtable h;
 			      int bil = 1;
 			    
-			      while (rs.next()) {
-			    	  
-			    	  h = new Hashtable();
-			    	 
+			      while (rs.next()) {			    	  
+			    	  h = new Hashtable();		    	 
 			    	  h.put("bil", bil);
 			    	  h.put("id_permohonan", rs.getString("id_permohonan")== null?"":rs.getString("id_permohonan"));
 			    	  h.put("id_Dokumen", rs.getString("id_Dokumen")== null?"":rs.getString("id_Dokumen"));
 			    	  h.put("nama_dokumen", rs.getString("nama_dokumen")== null?"":rs.getString("nama_dokumen"));
 			    	  h.put("kandungan",rs.getString("kandungan")== null?"":rs.getString("kandungan"));
-			    	  h.put("txdTarikhPembayaran",rs.getDate("tarikh_pembayaran")== null?"": sdf.format(rs.getDate("tarikh_pembayaran")));
+			    	  h.put("txdTarikhPembayaran",rs.getDate("tarikh_pembayaran")== null?"": Format.format(rs.getDate("tarikh_pembayaran")));
 			          
 			    	  listDokumenPembayaran.addElement(h);
 			    	  bil++;	    	
@@ -4862,15 +4861,14 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 	    	db = new Db();
 	    	Statement stmt = db.getStatement();
 	    	String iddokumen = (String)data.get("id_dokumen");
-	    	sql = "DELETE FROM tblpptdokumenhakmilik where id_dokumen = '"+iddokumen+"'";
+	    	sql = "DELETE FROM tblpptdokumen where id_dokumen = '"+iddokumen+"'";
 	    	stmt.executeUpdate(sql);
 	    	myLogger.info("hapusDokumenPembayaran==="+sql);
 	    
 	    } catch (Exception re) {
 	    	log.error("Error: ", re);
 	    	throw re;
-	    }
-	    finally {
+	    }finally {
 	    	if (db != null) db.close();
 	    }
 	  

@@ -46,7 +46,7 @@
 						<td width="1%">:</td>
 						<td width="74%"><input type="text" name="txtNoRujSurat" id="txtNoRujSurat" value="" size="40" maxlength="50"   ></td>
 					</tr>
-					<tr>
+				 <tr>
 						<td>&nbsp;</td>
 			            <td>Tarikh Surat Agensi</td>
 			            <td>:</td>
@@ -130,7 +130,7 @@
 			            <td><input $disability $disabilityx name="txdTarikhSurat" id="txdTarikhSurat" size="11" type="text" value="$!txdTarikhSurat" onkeyup="validateTarikh(this,this.value)" onblur="check_date(this)" >
 			            #if($isEdit=="yes")<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhSurat',false,'dmy');">&nbsp;$!frmtdate#end</td>
 					</tr>	
-						<tr>
+						<!-- <tr>
 						<td>&nbsp;</td>
 			            <td>Tarikh Kuatkuasa Caj Lewat</td>
 			            <td>:</td>
@@ -156,7 +156,7 @@
   						&nbsp;RM&nbsp;<input $disability $disabilityx type="text" name="txtCekLewat" id="txtCekLewat" value="$!txtCekLewat" size="10" maxlength="8" style="text-align:right" onkeyup="validateNilai(this,this.value)" onblur="validateModal(this,this.value,'$!txtCekLewat')" >
   						#end
                         </td>
-  					</tr>
+  					</tr>  -->
 					<tr>
 						<td>&nbsp;</td>
 						<td>Tarikh Terima</td>
