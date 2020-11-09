@@ -14,6 +14,8 @@
 #set($socStatus="")
 #end
 -->
+
+<input type="hidden" name="modul" value="$!modul">
 <table width="100%">
   <tr>
     <td> 
@@ -164,7 +166,7 @@
   <!--  <td width="15%">No. Jkptg Negeri</td> -->
     <td><b>Kementerian</b></td>
     <!-- <td width="15%">Urusan</td> -->
-    <td><b>Status</b></td>
+    <td><b>Status Fail</b></td>
   </tr>
   
   #if($listdepan_size!=0)
@@ -175,18 +177,19 @@
          		#else
                		 #set( $row = "row1" )
          		#end
-         		
   <tr>
     <td class="$row" >
     $list.BIL          
     </td>
-    <td class="$row" ><!-- <a href="javascript:papar('$list.ID_PERMOHONAN','')">  -->
-    <div>$list.NO_FAIL</div>                                    
+   <td class="$row" ><a href="javascript:paparHM('$list.ID_PERMOHONAN','')">
+    <div class="style1" >$!list.NO_FAIL</div>                                     
     </a>       </td>
     <td class="$row" ><!--<a href="javascript:papar('$list.ID_PERMOHONAN','')"> -->
+    <a href="javascript:paparHM('$list.ID_PERMOHONAN','')">
     <div>$list.NO_RUJUKAN_PTG</div>                                    
     </a>       </td>
     <td class="$row" ><!--<a href="javascript:papar('$list.ID_PERMOHONAN','')"> -->
+    <a href="javascript:paparHM('$list.ID_PERMOHONAN','')">
     <div>$list.NO_RUJUKAN_PTD</div>                                    
     </a>       </td>
     <!--
@@ -218,18 +221,36 @@
  <input type="hidden" name="list_name" id="list_name" value="list_permohonan" />
 
 
-<script>
-function papar(id_permohonan,id_pembatalan)
+  <script>
+function paparHM(id_permohonan,id_pembatalan)
 {
 
 	document.${formName}.command.value = "Siasatan";
 	document.${formName}.sub_command.value = "Senarai";
 	document.${formName}.subminor_command.value = "View";
 	document.${formName}.id_permohonan.value = id_permohonan;
+	//alert("id permohonan :"+id_permohonan);
 	document.${formName}.id_pembatalan.value = id_pembatalan;
 	document.${formName}.action = "";
 	document.${formName}.submit();
 }
+
+function papar(id_siasatan,id_hakmilik)
+{
+	
+	
+	document.${formName}.command.value = "Siasatan";
+	document.${formName}.sub_command.value = "RecordSiasatan";
+	document.${formName}.subminor_command.value = "Papar";	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmSek8Siasatan";
+	document.${formName}.id_siasatan.value = id_siasatan;
+	document.${formName}.id_hakmilik.value = id_hakmilik;
+	document.${formName}.location.value = "maklumat_siasatan";
+	document.${formName}.point.value = "maklumat_siasatan";
+	document.${formName}.submit();
+	
+}
+
 function cari()
 {	
 	document.${formName}.action = "";

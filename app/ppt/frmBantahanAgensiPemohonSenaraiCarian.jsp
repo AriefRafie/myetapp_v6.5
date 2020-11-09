@@ -1,3 +1,5 @@
+
+<input type="hidden" name="modul" value="$!modul">
 <fieldset>
 	<legend>Carian</legend>
     	<table  width="100%" cellspacing="4" cellpadding="0" border="0">
@@ -46,8 +48,13 @@
           	
           <tr valign="top">
               <td class="$row" >$senarai.bil</td>
+              #if($modul == "ekptg.view.ppt.FrmRayuanBantahanOnline")
+              <td class="$row"><a href="javascript:papar_pb1('$senarai.id_fail','$senarai.id_permohonan','$senarai.id_status','rayuan_online')"><font color="blue">$senarai.no_fail</font></a></td>  
+              <td class="$row"><a href="javascript:papar_pb1('$senarai.id_fail','$senarai.id_permohonan','$senarai.id_status','rayuan_online')"><font color="blue">$senarai.no_rujukan_ptg</font></a></td>  
+              #else
               <td class="$row"><a href="javascript:papar_pb('$senarai.id_fail','$senarai.id_permohonan','$senarai.id_status')"><font color="blue">$senarai.no_fail</font></a></td>  
               <td class="$row"><a href="javascript:papar_pb('$senarai.id_fail','$senarai.id_permohonan','$senarai.id_status')"><font color="blue">$senarai.no_rujukan_ptg</font></a></td>  
+              #end
               <td class="$row">$senarai.nama_kementerian</td>
               <td class="$row">$senarai.keterangan</td>
           </tr>          
@@ -82,6 +89,17 @@ function papar_pb(id_fail,id_permohonan,id_status) {
 	document.${formName}.command.value = "papar_pb";
 	document.${formName}.method="POST";
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmBantahanAgensiPemohonSenaraiCarian";
+	document.${formName}.submit();
+}
+function papar_pb1(id_fail,id_permohonan,id_status,flag_skrin) {
+
+	document.${formName}.id_fail.value = id_fail;
+	document.${formName}.id_permohonan.value = id_permohonan;
+	document.${formName}.id_status.value = id_status;
+
+	document.${formName}.command.value = "papar_pb";
+	document.${formName}.method="POST";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmRayuanBantahanOnline";
 	document.${formName}.submit();
 }
 

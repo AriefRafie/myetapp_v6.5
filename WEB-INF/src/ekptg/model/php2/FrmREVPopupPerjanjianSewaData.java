@@ -39,7 +39,7 @@ public class FrmREVPopupPerjanjianSewaData {
 			Statement stmt = db.getStatement();
 
 			sql = "SELECT NO_RUJUKAN, TARIKH_MULA, TEMPOH, TARIKH_TAMAT, TARIKH_MULA_DASAR, TEMPOH_DASAR, TARIKH_TAMAT_DASAR, BAYARAN, DEPOSIT, FLAG_AKTIF, FLAG_LULUSDASAR, FLAG_PERJANJIAN,"
-					+ " CATATAN, MOD_CAJ_SEWAAN FROM TBLPHPBAYARANPERLUDIBAYAR"
+					+ " CATATAN, MOD_CAJ_SEWAAN, TARIKH_PENAMATAN, SEBAB_PENAMATAN FROM TBLPHPBAYARANPERLUDIBAYAR"
 					+ " WHERE ID_BAYARANPERLUDIBAYAR = '" + idPerjanjian + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -60,6 +60,8 @@ public class FrmREVPopupPerjanjianSewaData {
 				h.put("flagPerjanjian", rs.getString("FLAG_PERJANJIAN") == null ? "T" : rs.getString("FLAG_PERJANJIAN"));
 				h.put("modCajSewaan", rs.getString("MOD_CAJ_SEWAAN") == null ? "1" : rs.getString("MOD_CAJ_SEWAAN"));
 				h.put("catatan", rs.getString("CATATAN") == null ? "" : rs.getString("CATATAN"));
+				h.put("tarikhPenamatan", rs.getDate("TARIKH_PENAMATAN") == null ? "" : sdf.format(rs.getDate("TARIKH_PENAMATAN")));
+				h.put("sebabPenamatan", rs.getString("SEBAB_PENAMATAN") == null ? "1" : rs.getString("SEBAB_PENAMATAN"));
 				beanMaklumatPerjanjian.addElement(h);
 			}
 
@@ -95,7 +97,9 @@ public class FrmREVPopupPerjanjianSewaData {
 			String txtTarikhMula, String tempoh, String txtTarikhTamat,
 			String txtTarikhMulaDasar, String tempohDasar, String txtTarikhTamatDasar,
 			String kadarSewa, String cagaran, String flagKelulusanDasar, String catatan,
-			String modCajSewaan, String flagPerjanjian, String flagSkrin, HttpSession session) throws Exception {
+			String modCajSewaan, String flagPerjanjian,
+			String txtTarikhPenamatan, String txtSebabPenamatan, String flagSkrin,
+			HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -150,6 +154,7 @@ public class FrmREVPopupPerjanjianSewaData {
 					r.add("BAYARAN", Utils.RemoveComma(kadarSewa));
 					r.add("DEPOSIT", Utils.RemoveComma(cagaran));
 					r.add("MOD_CAJ_SEWAAN", modCajSewaan);
+					r.add("TARIKH_PENAMATAN", r.unquote(null));
 				} else {
 
 					if (!"".equals(txtTarikhMula)) {
@@ -169,28 +174,48 @@ public class FrmREVPopupPerjanjianSewaData {
 					r.add("BAYARAN", Utils.RemoveComma(kadarSewa));
 					r.add("DEPOSIT", Utils.RemoveComma(cagaran));
 					r.add("MOD_CAJ_SEWAAN", r.unquote(null));
+					r.add("TARIKH_PENAMATAN", r.unquote(null));
 				}
 			} else {
 				r.add("FLAG_LULUSDASAR", "T");
 				r.add("FLAG_PERJANJIAN", flagPerjanjian);
-				if (!"".equals(txtTarikhMula)) {
-					r.add("TARIKH_MULA",
-							r.unquote("to_date('" + txtTarikhMula
-									+ "','dd/MM/yyyy')"));
+				if("4".equals(flagPerjanjian)){
+					if (!"".equals(txtTarikhPenamatan)) {
+						r.add("TARIKH_PENAMATAN",
+								r.unquote("to_date('" + txtTarikhPenamatan
+										+ "','dd/MM/yyyy')"));
+					}
+					r.add("SEBAB_PENAMATAN", txtSebabPenamatan);
+					r.add("DEPOSIT", r.unquote(null));
+					r.add("MOD_CAJ_SEWAAN", r.unquote(null));
+					r.add("TARIKH_MULA_DASAR", r.unquote(null));
+					r.add("TEMPOH_DASAR", r.unquote(null));
+					r.add("TARIKH_TAMAT_DASAR", r.unquote(null));
+					r.add("TARIKH_MULA", r.unquote(null));
+					r.add("TEMPOH", r.unquote(null));
+					r.add("TARIKH_TAMAT", r.unquote(null));
+
+				}else{
+					r.add("TARIKH_PENAMATAN", r.unquote(null));
+					if (!"".equals(txtTarikhMula)) {
+						r.add("TARIKH_MULA",
+								r.unquote("to_date('" + txtTarikhMula
+										+ "','dd/MM/yyyy')"));
+					}
+					r.add("TEMPOH", tempoh);
+					if (!"".equals(txtTarikhTamat)) {
+						r.add("TARIKH_TAMAT",
+								r.unquote("to_date('" + txtTarikhTamat
+										+ "','dd/MM/yyyy')"));
+					}
+					if (!"3".equals(flagPerjanjian)) {
+						r.add("BAYARAN", Utils.RemoveComma(kadarSewa));
+					} else {
+						r.add("BAYARAN", "0");
+					}
+					r.add("DEPOSIT", r.unquote(null));
+					r.add("MOD_CAJ_SEWAAN", r.unquote(null));
 				}
-				r.add("TEMPOH", tempoh);
-				if (!"".equals(txtTarikhTamat)) {
-					r.add("TARIKH_TAMAT",
-							r.unquote("to_date('" + txtTarikhTamat
-									+ "','dd/MM/yyyy')"));
-				}
-				if (!"3".equals(flagPerjanjian)) {
-					r.add("BAYARAN", Utils.RemoveComma(kadarSewa));
-				} else {
-					r.add("BAYARAN", "0");
-				}
-				r.add("DEPOSIT", r.unquote(null));
-				r.add("MOD_CAJ_SEWAAN", r.unquote(null));
 			}
 
 			r.add("FLAG_AKTIF", "Y");
@@ -265,7 +290,9 @@ public class FrmREVPopupPerjanjianSewaData {
 			String txtTarikhMula, String tempoh, String txtTarikhTamat,
 			String txtTarikhMulaDasar, String tempohDasar, String txtTarikhTamatDasar,
 			String kadarSewa, String cagaran, String flagKelulusanDasar, String catatan,
-			String modCajSewaan, String flagPerjanjian, String flagSkrin, HttpSession session) throws Exception {
+			String modCajSewaan, String flagPerjanjian,
+			String txtTarikhPenamatan, String txtSebabPenamatan,String flagSkrin,
+			HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -318,6 +345,7 @@ public class FrmREVPopupPerjanjianSewaData {
 					r.add("BAYARAN", Utils.RemoveComma(kadarSewa));
 					r.add("DEPOSIT", Utils.RemoveComma(cagaran));
 					r.add("MOD_CAJ_SEWAAN", modCajSewaan);
+					r.add("TARIKH_PENAMATAN", r.unquote(null));
 				} else {
 
 					if (!"".equals(txtTarikhMula)) {
@@ -337,28 +365,45 @@ public class FrmREVPopupPerjanjianSewaData {
 					r.add("BAYARAN", Utils.RemoveComma(kadarSewa));
 					r.add("DEPOSIT", Utils.RemoveComma(cagaran));
 					r.add("MOD_CAJ_SEWAAN", r.unquote(null));
+					r.add("TARIKH_PENAMATAN", r.unquote(null));
 				}
 			} else {
 				r.add("FLAG_LULUSDASAR", "T");
 				r.add("FLAG_PERJANJIAN", flagPerjanjian);
-				if (!"".equals(txtTarikhMula)) {
-					r.add("TARIKH_MULA",
-							r.unquote("to_date('" + txtTarikhMula
-									+ "','dd/MM/yyyy')"));
+				if("4".equals(flagPerjanjian)){
+					r.add("DEPOSIT", r.unquote(null));
+					r.add("MOD_CAJ_SEWAAN", r.unquote(null));
+					r.add("TARIKH_MULA_DASAR", r.unquote(null));
+					r.add("TEMPOH_DASAR", r.unquote(null));
+					r.add("TARIKH_TAMAT_DASAR", r.unquote(null));
+					r.add("TARIKH_MULA", r.unquote(null));
+					r.add("TEMPOH", r.unquote(null));
+					r.add("TARIKH_TAMAT", r.unquote(null));
+					if (!"".equals(txtTarikhPenamatan)) {
+						r.add("TARIKH_PENAMATAN",
+								r.unquote("to_date('" + txtTarikhPenamatan
+										+ "','dd/MM/yyyy')"));
+					}
+					r.add("SEBAB_PENAMATAN", txtSebabPenamatan);
+				}else{
+					r.add("TARIKH_PENAMATAN", r.unquote(null));
+					if (!"".equals(txtTarikhMula)) {
+						r.add("TARIKH_MULA",
+								r.unquote("to_date('" + txtTarikhMula
+										+ "','dd/MM/yyyy')"));
+					}
+					r.add("TEMPOH", tempoh);
+					if (!"".equals(txtTarikhTamat)) {
+						r.add("TARIKH_TAMAT",
+								r.unquote("to_date('" + txtTarikhTamat
+										+ "','dd/MM/yyyy')"));
+					}
+					if (!"3".equals(flagPerjanjian) && !"4".equals(flagPerjanjian)) {
+						r.add("BAYARAN", Utils.RemoveComma(kadarSewa));
+					} else {
+						r.add("BAYARAN", "0");
+					}
 				}
-				r.add("TEMPOH", tempoh);
-				if (!"".equals(txtTarikhTamat)) {
-					r.add("TARIKH_TAMAT",
-							r.unquote("to_date('" + txtTarikhTamat
-									+ "','dd/MM/yyyy')"));
-				}
-				if (!"3".equals(flagPerjanjian)) {
-					r.add("BAYARAN", Utils.RemoveComma(kadarSewa));
-				} else {
-					r.add("BAYARAN", "0");
-				}
-				r.add("DEPOSIT", r.unquote(null));
-				r.add("MOD_CAJ_SEWAAN", r.unquote(null));
 			}
 
 			r.add("FLAG_AKTIF", "Y");

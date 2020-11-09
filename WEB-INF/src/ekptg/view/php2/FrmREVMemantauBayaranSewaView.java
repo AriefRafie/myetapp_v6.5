@@ -182,6 +182,10 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 						getParam("txtNoTel"), getParam("txtNoFaks"),
 						getParam("txtNoRujukan"), getParam("txtCatatan"), session);
         	}
+        	if("doSimpanKemaskiniTindakanMahkamah".equals(hitButton)){
+        		logic.updateTindakanMahkamah(idFail, idHasil,
+						getParam("tarikh_penamaan_sst"), getParam("tarikh_notis_rampasan"), getParam("tarikh_notis_tuntutan"), session);
+        	}
         	if ("doSimpanKemaskiniPermohonan".equals(hitButton)){
         		logic.updatePermohonan(idFail, idHasil, getParam("noFail"), idUrusan, idSuburusan, getParam("txtPerkara"), getParam("txtTujuan"), getParam("txtCatatanPermohonan"), session);
         	}
