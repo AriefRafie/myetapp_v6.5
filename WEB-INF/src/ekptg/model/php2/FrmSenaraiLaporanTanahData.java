@@ -562,6 +562,7 @@ public class FrmSenaraiLaporanTanahData {
 			Statement stmt = db.getStatement();
 
 			sql = "SELECT ID_LAPORANTANAH, ID_PERMOHONAN, ID_HAKMILIK, TARIKH_LAWATAN, FLAG_LAWATAN, TUJUAN_LAPORAN, LAPORAN_ATASTANAH, ULASAN,"
+					+ " TARIKH_TERIMA_FAIL, TARIKH_LAPORAN, LOKASI, "
 					+ " JALAN_HUBUNGAN, KAWASAN_BERHAMPIRAN, JARAK_DARIBANDAR, KEADAAN_RUPABUMI, KEADAAN_TANAH, FLAG_KEMUDAHANASAS_AIR,"
 					+ " FLAG_KEMUDAHANASAS_ELEKTRIK, FLAG_KEMUDAHANASAS_TEL, KEMUDAHAN_ASAS, SEMP_UTARA, SEMP_SELATAN, "
 					+ " SEMP_TIMUR, SEMP_BARAT, NAMA_JAWATAN_PELAPOR, NAMA_PELAPOR, ID_JAWATANPELAPOR, ID_NEGERIPELAPOR, CATATAN"
@@ -582,12 +583,21 @@ public class FrmSenaraiLaporanTanahData {
 								.getString("ID_HAKMILIK"));
 				h.put("flagLawatan", rs.getString("FLAG_LAWATAN") == null ? ""
 						: rs.getString("FLAG_LAWATAN"));
+				h.put("tarikhTerimaFail",
+						rs.getString("TARIKH_TERIMA_FAIL") == null ? "" : sdf
+								.format(rs.getDate("TARIKH_TERIMA_FAIL")));
 				h.put("tarikhLawatan",
 						rs.getString("TARIKH_LAWATAN") == null ? "" : sdf
 								.format(rs.getDate("TARIKH_LAWATAN")));
+				h.put("tarikhLaporan",
+						rs.getString("TARIKH_LAPORAN") == null ? "" : sdf
+								.format(rs.getDate("TARIKH_LAPORAN")));
 				h.put("tujuanLaporan",
 						rs.getString("TUJUAN_LAPORAN") == null ? "" : rs
 								.getString("TUJUAN_LAPORAN"));
+				h.put("lokasi",
+						rs.getString("LOKASI") == null ? "" : rs
+								.getString("LOKASI"));
 				h.put("laporanAtasTanah",
 						rs.getString("LAPORAN_ATASTANAH") == null ? "" : rs
 								.getString("LAPORAN_ATASTANAH"));
@@ -663,8 +673,9 @@ public class FrmSenaraiLaporanTanahData {
 		return maklumatLaporan;
 	}
 
-	public void kemaskiniLaporan(String idLaporan, String tarikhLawatan, String socFlagLawatan,
-			String tujuanLaporan, String txtLaporanAtasTanah, String txtIsuUlasan, String catatan,
+	public void kemaskiniLaporan(String idLaporan, String tarikhTerimaFail, String tarikhLawatan, 
+			String tarikhLaporan, String socFlagLawatan, String tujuanLaporan, String lokasi, 
+			String txtLaporanAtasTanah, String txtIsuUlasan, String catatan,
 			String pelapor, String idJawatanPelapor, String idNegeri, String jalanHubungan, 
 			String kawasanBerhampiran, String jarakDariBandar, String flagAir,
 			String flagElektrik, String flagTelefon, String kemudahanLain,
@@ -686,10 +697,15 @@ public class FrmSenaraiLaporanTanahData {
 
 			// TBLPHPLAPORANTANAH
 			r.update("ID_LAPORANTANAH", idLaporan);
+			r.add("TARIKH_TERIMA_FAIL",
+					r.unquote("to_date('" + tarikhTerimaFail + "','dd/MM/yyyy')"));
 			r.add("TARIKH_LAWATAN",
 					r.unquote("to_date('" + tarikhLawatan + "','dd/MM/yyyy')"));
+			r.add("TARIKH_LAPORAN",
+					r.unquote("to_date('" + tarikhLaporan + "','dd/MM/yyyy')"));
 			r.add("FLAG_LAWATAN", socFlagLawatan);
 			r.add("TUJUAN_LAPORAN", tujuanLaporan);
+			r.add("LOKASI", lokasi);
 			r.add("LAPORAN_ATASTANAH", txtLaporanAtasTanah);
 			r.add("ULASAN", txtIsuUlasan);
 			r.add("CATATAN", catatan);
@@ -969,6 +985,64 @@ public class FrmSenaraiLaporanTanahData {
 		return maklumatKehadiran;
 	}
 	
+	public Vector setSenaraiPenceroboh(String idPermohonan, String idLaporan)
+			throws Exception {
+		Db db = null;
+		String sql = "";
+		Vector senaraiPencerobohan = new Vector();
+
+		try {
+
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			r.add("A.ID_PENCEROBOH");
+			r.add("A.JENIS_PENCEROBOHAN");
+			r.add("A.NAMA");
+			r.add("A.ALAMAT1");
+			r.add("A.ALAMAT2");
+			r.add("A.ALAMAT3");
+			r.add("A.POSKOD");
+			r.add("A.ID_NEGERI");
+			r.add("A.ID_BANDAR");
+			r.add("A.ID_PERMOHONAN", idPermohonan);
+			r.add("A.ID_LAPORANTANAH", idLaporan);
+
+			sql = r.getSQLSelect("TBLPHPPENCEROBOH A ", "A.ID_PENCEROBOH ASC");
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("idPenceroboh",
+						rs.getString("ID_PENCEROBOH") == null ? "" : rs
+								.getString("ID_PENCEROBOH"));
+				h.put("namaPenceroboh",
+						rs.getString("NAMA") == null ? "" : rs
+								.getString("NAMA"));
+				h.put("alamatPenceroboh1", rs.getString("ALAMAT1") == null ? ""
+						: rs.getString("ALAMAT1"));
+				h.put("alamatPenceroboh2", rs.getString("ALAMAT2") == null ? ""
+						: rs.getString("ALAMAT2"));
+				h.put("alamatPenceroboh3", rs.getString("ALAMAT3") == null ? ""
+						: rs.getString("ALAMAT3"));
+				h.put("jenisPencerobohan", rs.getString("JENIS_PENCEROBOHAN") == null ? ""
+						: rs.getString("JENIS_PENCEROBOHAN"));
+				senaraiPencerobohan.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+
+		return senaraiPencerobohan;
+	}
+	
 	public void simpanKehadiran(String idLaporanTanah, String txtNamaPegawai,
 			String idNegeri, String idJawatan, HttpSession session)
 			throws Exception {
@@ -1093,6 +1167,236 @@ public class FrmSenaraiLaporanTanahData {
 			
 			AuditTrail.logActivity("1610200", "4", null, session, "DEL",
 					"FAIL PENAWARAN [" + idPegawaiLaporanTanah
+							+ "] DIHAPUSKAN");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah menghapus data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public Vector getMaklumatPenceroboh(String idPenceroboh) throws Exception {
+		Db db = null;
+		String sql = "";
+		Vector maklumatPenceroboh = new Vector();
+
+		try {
+			maklumatPenceroboh = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT NAMA, ID_BANGSA, NO_TEL_RUMAH, NO_TEL_BIMBIT, ALAMAT1, ALAMAT2, ALAMAT3, POSKOD,"
+					+ " ID_NEGERI,ID_BANDAR, EMEL, JENIS_PENCEROBOHAN"
+					+ " FROM TBLPHPPENCEROBOH WHERE ID_PENCEROBOH = '"
+					+ idPenceroboh + "'";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("namaPenceroboh",
+						rs.getString("NAMA") == null ? "" : rs
+								.getString("NAMA"));
+				h.put("idBangsa", rs.getString("ID_BANGSA") == null ? "99999"
+						: rs.getString("ID_BANGSA"));
+				h.put("noTelefon", rs.getString("NO_TEL_RUMAH") == null ? ""
+						: rs.getString("NO_TEL_RUMAH"));
+				h.put("noTelefonBimbit",
+						rs.getString("NO_TEL_BIMBIT") == null ? "" : rs
+								.getString("NO_TEL_BIMBIT"));
+				h.put("alamat1",
+						rs.getString("ALAMAT1") == null ? "" : rs
+								.getString("ALAMAT1"));
+				h.put("alamat2",
+						rs.getString("ALAMAT2") == null ? "" : rs
+								.getString("ALAMAT2"));
+				h.put("alamat3",
+						rs.getString("ALAMAT3") == null ? "" : rs
+								.getString("ALAMAT3"));
+				h.put("poskod",
+						rs.getString("POSKOD") == null ? "" : rs
+								.getString("POSKOD"));
+				h.put("idNegeriPenceroboh",
+						rs.getString("ID_NEGERI") == null ? "99999" : rs
+								.getString("ID_NEGERI"));
+				h.put("idBandarPenceroboh",
+						rs.getString("ID_BANDAR") == null ? "99999" : rs
+								.getString("ID_BANDAR"));
+				h.put("emel",
+						rs.getString("EMEL") == null ? "" : rs
+								.getString("EMEL"));
+				h.put("jenisPencerobohan",
+						rs.getString("JENIS_PENCEROBOHAN") == null ? "" : rs
+								.getString("JENIS_PENCEROBOHAN"));
+				maklumatPenceroboh.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		
+		return maklumatPenceroboh;
+	}
+	
+	public String savePenceroboh(String idPermohonan, String idLaporanTanah,
+			String namaPenceroboh, String noTelefon, String noTelefonBimbit,
+			String idBangsa, String alamat1, String alamat2, String alamat3,
+			String poskod, String idNegeri, String idBandar, String emel, String jenisPencerobohan,
+			HttpSession session) throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = session.getAttribute("_ekptg_user_id").toString();
+		String sql = "";
+		String idPencerobohString = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPPENCEROBOH
+			long idPenceroboh = DB.getNextID("TBLPHPPENCEROBOH_SEQ");
+			r.add("ID_PENCEROBOH", idPenceroboh);
+			idPencerobohString = String.valueOf(idPenceroboh);
+			r.add("ID_PERMOHONAN", idPermohonan);
+			r.add("ID_LAPORANTANAH", idLaporanTanah);
+			r.add("NAMA", namaPenceroboh);
+			r.add("ID_BANGSA", idBangsa);
+			r.add("NO_TEL_RUMAH", noTelefon);
+			r.add("NO_TEL_BIMBIT", noTelefonBimbit);
+			r.add("ALAMAT1", alamat1);
+			r.add("ALAMAT2", alamat2);
+			r.add("ALAMAT3", alamat3);
+			r.add("POSKOD", poskod);
+			r.add("ID_NEGERI", idNegeri);
+			r.add("ID_BANDAR", idBandar);
+			r.add("EMEL", emel);
+			r.add("JENIS_PENCEROBOHAN", jenisPencerobohan);
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPHPPENCEROBOH");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+			
+			AuditTrail.logActivity("1610200", "4", null, session, "INS",
+					"PENCEROBOH [" + idPenceroboh
+							+ "] DIDAFTARKAN");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		return idPencerobohString;
+	}
+	
+	public void updatePenceroboh(String idPenceroboh, String namaPenceroboh,
+			String noTelefon, String noTelefonBimbit, String idBangsa,
+			String alamat1, String alamat2, String alamat3, String poskod,
+			String idNegeri, String idBandar, String emel, String jenisPencerobohan, HttpSession session)
+			throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = session.getAttribute("_ekptg_user_id").toString();
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPPENCEROBOH
+			r.update("ID_PENCEROBOH", idPenceroboh);
+			r.add("NAMA", namaPenceroboh);
+			r.add("ID_BANGSA", idBangsa);
+			r.add("NO_TEL_RUMAH", noTelefon);
+			r.add("NO_TEL_BIMBIT", noTelefonBimbit);
+			r.add("ALAMAT1", alamat1);
+			r.add("ALAMAT2", alamat2);
+			r.add("ALAMAT3", alamat3);
+			r.add("POSKOD", poskod);
+			r.add("ID_NEGERI", idNegeri);
+			r.add("ID_BANDAR", idBandar);
+			r.add("EMEL", emel);
+			r.add("JENIS_PENCEROBOHAN", jenisPencerobohan);
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+			sql = r.getSQLUpdate("TBLPHPPENCEROBOH");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+			
+			AuditTrail.logActivity("1610200", "4", null, session, "UPD",
+					"MAKLUMAT PENCEROBOH [" + idPenceroboh
+							+ "] DIKEMASKINI");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public void hapusMaklumatPenceroboh(String idPenceroboh, HttpSession session) throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPPENCEROBOH
+			r.add("ID_PENCEROBOH", idPenceroboh);
+			sql = r.getSQLDelete("TBLPHPPENCEROBOH");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+			
+			AuditTrail.logActivity("1610200", "4", null, session, "DEL",
+					"MAKLUMAT PENCEROBOH [" + idPenceroboh
 							+ "] DIHAPUSKAN");
 
 		} catch (SQLException ex) {

@@ -43,12 +43,6 @@
           <td width="1%">&nbsp;</td>
           <td valign="top">Urusan</td>
           <td>:</td>
-          <td>PELEPASAN / PENYERAHANBALIK</td>
-        </tr>
-        <tr>
-          <td width="1%">&nbsp;</td>
-          <td valign="top">Suburusan</td>
-          <td>:</td>
           <td>$selectSubUrusanPelepasanMain</td>
         </tr>
         <tr>
@@ -169,7 +163,8 @@
           <td>&nbsp;</td>
           <td>Kementerian</td>
           <td>:</td>
-          <td>$selectKementerian</td>
+          <td>$selectKementerian
+          <input type="hidden" name="namaKementerian" id="namaKementerian" value="$namaKementerian" /></td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -419,6 +414,7 @@
     <td width="30%">&nbsp;</td>
     <td width="70%"> #if ($mode == 'new')
       <input type="button" name="cmdDaftarBaru" id="cmdDaftarBaru" value="Daftar" onclick="daftarBaru()"/>
+      <input type="button" name="cmdKembalikanFail" id="cmdKembalikanFail" value="Kembalikan Permohonan" onclick="kembalikanFailOnline('$idPermohonan', 'yes')"/>
       <input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="kembali()"/>
       #else
       <input type="button" name="cmdBatal" id="cmdBatal" value="Kembali" onclick="kembali()"/>
@@ -518,7 +514,7 @@ function janaTajukTKR() {
 	var strTujuan = " ";
 	var strTajuk = " ";
 	var milikOrRizab = " ";
-	var	pemohon = document.${formName}.namaAgensiKem.value;
+	var	pemohon = document.${formName}.namaKementerian.value;
 
 	var str1 = document.${formName}.noLotTanah.value;
 	var str2 = document.${formName}.noMilikTanah.value;
@@ -550,6 +546,18 @@ function janaTajukTKR() {
 	document.${formName}.txtPerkara.value = strTajuk;
 
 
+}
+function kembalikanFailOnline(id_permohonan,formnew) {
+	var w = "400";
+	var h = "200";
+	var left = (screen.width/2)-(w/2);
+	var top = (screen.height/2)-(h/2);
+	var url = "../x/${securityToken}/FrmPopupTolakPermohonan?id_permohonan="+id_permohonan+"&formnew="+formnew+"&modul=php&jenisTolak=internal";
+
+	var hWnd = window.open(url, "Permohonan Online Dikembalikan", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+	if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
 }
 </script>
 $javascriptLampiran
