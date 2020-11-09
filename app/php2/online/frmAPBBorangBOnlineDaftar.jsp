@@ -8,9 +8,7 @@
 	<input type="hidden" name="idJadualKeduaLesen" id="idJadualKeduaLesen" value="$idJadualKeduaLesen" />
 	<input type="hidden" name="id_laporanpasir" id="id_laporanpasir" value="$id_laporanpasir" />
 	<input name="mode" type="hidden" id="mode" value="$mode"/>
-  	<input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
-  	<input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
-  	<input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
+  <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
 </p>
 
 <!--  #if ($returnChecking == "true")
@@ -25,30 +23,26 @@
 #if ($clearForm=="yes")
     #set ($txtJumKuantiti = "")
     #set ($txtJumRoyalti = "")
-    #set ($txdTarikhPengeluaran ="")
+    #set ($txtTarikhOperasi ="")
     #set ($txtTahun = "")
     #set ($socBulan = "")
+    #set ($txtNamaKapal = "")
+    #set ($txtHariOperasi = "")
+    #set ($txtMasaOperasi = "")
 #end
 
 #if ($flag=="semak")
     #foreach ( $data in $dataLaporan )
         #set ($txtJumRoyalti=$data.jumlah_royalti)
-        #set ($txdTarikhPengeluaran=$data.tarikh_pengeluaran)
+        #set ($txtTarikhOperasi=$data.tarikh_pengeluaran)
         #set ($txtTahun=$data.tahun_pengambilan)
         #set ($txtKontraktor=$data.kontraktor)
         #set ($txtPembeli=$data.pembeli)
         #set ($txtJumKuantiti=$data.jumlah_kuantiti)
+        #set ($txtHariOperasi=$data.hari_operasi)
+        #set ($txtMasaOperasi=$data.masa_operasi)
+        #set ($txtNamaKapal=$data.nama_kapal)
     #end   
-#end
-
-<div id="fileupload_progress"></div>
-<div id="progressBar" style="display: none;">
-  <div id="progressBarBoxContent"></div>
-</div>
-#if ($completed)
-<script>
-parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"success\">Fail berjaya dimuatnaik.</div>";
-</script>
 #end
 
 <fieldset>
@@ -111,8 +105,25 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
     <!-- <input type="hidden" name="jumRoyaltiHidden" id="jumRoyaltiHidden" value="$!txtJumRoyalti" /> -->
     </td>
   </tr>
-  
- <tr>
+   <tr>
+	   <td align="left" width="50%">
+	      #if ($button=="view")
+	      &nbsp;&nbsp;&nbsp;Nama Kapal
+	      #else
+	      <font color="red">*</font>&nbsp;Nama Kapal
+	      #end       
+	    </td>
+	    <td width="1%">:</td>
+	    <td width="49%">
+	    	#if ($button=="view")
+		    <input type="text" name="txtNamaKapal" id="txtNamaKapal" value="$!txtNamaKapal" size="10" class="disabled" readonly />
+		    #else
+		    <input type="text" name="txtNamaKapal" id="txtNamaKapal" value="$!txtNamaKapal" size="10" />
+		    #end
+		</td>
+   </tr>
+ 
+ <!--<tr>
 	<td align="left" width="50%">
 	    
 	#if ($button=="view")
@@ -127,47 +138,87 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
 	   <input type="text" name="txdTarikhPengeluaran" id="txdTarikhPengeluaran" value="$txdTarikhPengeluaran" onblur="check_date(this)" size="9"/>
          <a href="javascript:displayDatePicker('txdTarikhPengeluaran',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
     </td>
-  </tr>
+  </tr>-->
 </table>
     </fieldset>    
     </td>    
-    <!--<td width="50%">
+    <td width="50%">
     <fieldset>    
     <table width="100%">
-  <tr>
-    <td align="left" width="50%">
+    	<tr>
+    		<td align="left" width="50%">
+	    		#if ($button=="view")
+		      	&nbsp;&nbsp;&nbsp;Tarikh Operasi
+		      	#else
+		      	<font color="red">*</font>&nbsp;Tarikh Operasi
+		      	#end  
+    		</td>
+    		<td width="1%">:</td>
+    		<td width="49%">
+    			 #if ($button=="view")
+			    <input type="text" name="txtTarikhOperasi" id="txtTarikhOperasi" value="$!txtTarikhOperasi" size="10" class="disabled" readonly/>
+			    #else
+			    <input type="text" name="txtTarikhOperasi" id="txtTarikhOperasi" size="10" value="$!txtTarikhOperasi"/><a
+							href="javascript:displayDatePicker('txtTarikhOperasi',false,'dmy');"> <img
+								border="0" src="../img/calendar.gif" /></a>
+			    #end  
+			</td>
+    	</tr>
+	   <tr>
+		   <td align="left" width="50%">
+		      #if ($button=="view")
+		      &nbsp;&nbsp;&nbsp;Hari
+		      #else
+		      <font color="red">*</font>&nbsp;Hari
+		      #end       
+		    </td>
+		    <td width="1%">:</td>
+		    <td width="49%">
+		    	#if ($button=="view")
+			    <input type="text" name="txtHariOperasi" id="txtHariOperasi" value="$!txtHariOperasi" size="10" class="disabled" readonly />
+			    #else
+			    <input type="text" name="txtHariOperasi" id="txtHariOperasi" value="$!txtHariOperasi" size="10" />
+			    #end
+			</td>
+	   </tr>
+	   <tr>
+		   <td align="left" width="50%">
+		      #if ($button=="view")
+		      &nbsp;&nbsp;&nbsp;Masa
+		      #else
+		      <font color="red">*</font>&nbsp;Masa
+		      #end       
+		    </td>
+		    <td width="1%">:</td>
+		    <td width="49%">
+		    	#if ($button=="view")
+			    <input type="text" name="txtMasaOperasi" id="txtMasaOperasi" value="$!txtMasaOperasi" size="10" class="disabled" readonly />
+			    #else
+			    <input type="text" name="txtMasaOperasi" id="txtMasaOperasi" value="$!txtMasaOperasi" size="10" />
+			    #end
+			</td>
+	   </tr>
+<!--   <tr> -->
+<!--     <td align="left"> -->
     
-      #if ($button=="view")
-      &nbsp;&nbsp;&nbsp;Bulan
-      #else
-      <font color="red">*</font>&nbsp;Bulan
-      #end       
-
-    </td>
-    <td width="1%">:</td>
-    <td width="49%">$selectBulan</td>
-  </tr>
-  <tr>
-    <td align="left">
+<!--       #if ($button=="view") -->
+<!--       &nbsp;&nbsp;&nbsp;Tahun Pengambilan -->
+<!--       #else -->
+<!--       <font color="red">*</font>&nbsp;Tahun Pengambilan -->
+<!--       #end           -->
     
-      #if ($button=="view")
-      &nbsp;&nbsp;&nbsp;Tahun Pengambilan
-      #else
-      <font color="red">*</font>&nbsp;Tahun Pengambilan
-      #end          
+<!--     </td> -->
+<!--     <td>:</td> -->
+<!--     <td> -->
     
-    </td>
-    <td>:</td>
-    <td>
+<!--     #if ($button=="view") -->
+<!--     <input type="text" name="txtTahun" id="txtTahun" value="$!txtTahun" size="10" class="disabled" readonly/> -->
+<!--     #else  -->
+<!--     <input type="text" name="txtTahun" id="txtTahun" value="$!txtTahun" size="10" onblur="validateNumber(this,this.value)" onkeyup="validateNumber(this,this.value);" maxlength="4" /> -->
+<!--     #end  -->
     
-    #if ($button=="view")
-    <input type="text" name="txtTahun" id="txtTahun" value="$!txtTahun" size="10" class="disabled" readonly/>
-    #else 
-    <input type="text" name="txtTahun" id="txtTahun" value="$!txtTahun" size="10" onblur="validateNumber(this,this.value)" onkeyup="validateNumber(this,this.value);" maxlength="4" />
-    #end 
-    
-    </td>
-  </tr>-->
+<!--     </td> -->
+<!--   </tr> -->
   
    <!-- <tr>
     <td align="left">
@@ -212,10 +263,10 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
     
     </td>
   </tr> -->
-<!--</table>
+</table>
     </fieldset>        
     </td>
-  </tr>-->
+  </tr>
   
   <tr>
     <td colspan="3" align="center">
@@ -234,9 +285,9 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
     	<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskiniLaporan('$id_laporanpasir')"/>
     	<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onclick="hapusLaporan('$id_laporanpasir')"/> 
         <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:setTable('tableReport1')" /> 
-          
+        <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembali_pelesen('$idJadualKeduaLesen')" />    
     #end        
-  	 <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembali_pelesen(id_jadualkedualesenAPB)" /> 
+  
     </td>
   </tr>
 </table>
@@ -250,7 +301,7 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
 	<!-- #parse("app/utils/record_paging.jsp") -->
 	<table width="100%"  cellpadding="1" cellspacing="2" border="0">
 		<tr>
-        	<td colspan="2" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onclick="javascript:daftarDokumen()"/></td>          
+        	<td><input name="cmdTambah" id="cmdTambah" value="Tambah" type="button" onclick="javascript:uploadBaruDokumen('$id_laporanpasir')" /></td>           
      	</tr>
 	</table>
 	<input type="hidden" name="id_dokumen" id="id_dokumen"  />
@@ -269,7 +320,7 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
                 <tr valign="top">
                   <td class="$row" align="center">$senarai.bil</td>            
                   <td class="$row">
-                  <a href="javascript:paparMaklumatDokumen('$listDokumen.idDokumen')"><font color="blue">$senarai.namaDokumen</font></a></td>  
+                  <a href="javascript:paparMaklumatDokumen('$senarai.id_dokumen')"><font color="blue">$senarai.nama_dokumen</font></a></td>  
               	</tr>          
             #end
             #else
@@ -357,8 +408,8 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
 
 function cetakAPBLaporanPengeluaranPasirLaut(id_jadualkedualesenAPB,bulan_pengambilan,id_laporanpasir) {
 
-	//var url = "../servlet/ekptg.report.php2.APBLaporanPengeluaranPasirLaut?id_jadualkedualesenapb="+id_jadualkedualesenAPB+"&bulan_pengambilan="+bulan_pengambilan+"&id_laporanpasir="+id_laporanpasir;
-	var url = "../servlet/ekptg.report.php2.online.PengesahanOnline?template=APBLaporanPengeluaranPasirLaut&folder=ONLINE&id_jadualkedualesenapb="+id_jadualkedualesenAPB+"&bulan_pengambilan="+bulan_pengambilan+"&id_laporanpasir="+id_laporanpasir;
+	var url = "../servlet/ekptg.report.php2.APBLaporanPengeluaranPasirLaut?id_jadualkedualesenapb="+id_jadualkedualesenAPB+"&bulan_pengambilan="+bulan_pengambilan+"&id_laporanpasir="+id_laporanpasir;
+	
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
@@ -392,9 +443,10 @@ function kemaskiniLaporan(id_laporanpasir) {
 	document.${formName}.id_laporanpasir.value = id_laporanpasir;
 	document.${formName}.submit();
 }
-function kembali_pelesen(id_jadualkedualesenAPB) {
-	document.${formName}.id_jadualkedualesenAPB.value = id_jadualkedualesenAPB;
-	document.${formName}.actionOnline.value = "papar_pelesen";
+function kembali_pelesen(idJadualKeduaLesen) {
+	document.${formName}.idJadualKeduaLesen.value = idJadualKeduaLesen;
+	document.${formName}.actionOnline.value = "daftarBaruBorangB";
+	//document.${formName}.actionOnline.value = "papar_pelesen";
 	document.${formName}.submit();
 }
 
@@ -403,9 +455,10 @@ function batalBaru() {
 	document.${formName}.submit();
 }
 
-function batalEdit(id_laporanpasir) {
+function batalEdit(idJadualKeduaLesen) {
 	//if ( !window.confirm("Adakah Anda Pasti?")) return;
-	document.${formName}.actionOnline.value = "papar_pelesen";
+	document.${formName}.idJadualKeduaLesen.value = idJadualKeduaLesen;
+	document.${formName}.actionOnline.value = "papar_laporan";
 	document.${formName}.submit();
 }
 
@@ -421,21 +474,41 @@ function simpanLaporan() {
   		document.${formName}.txtJumRoyalti.focus(); 
 		return;		
 	}
-	if(document.${formName}.txdTarikhPengeluaran.value == ""){
+	if(document.${formName}.txtNamaKapal.value == ""){
+		alert("Sila masukkan \"Nama Kapal\" terlebih dahulu.");
+  		document.${formName}.txtNamaKapal.focus(); 
+		return;		
+	}
+	if(document.${formName}.txtTarikhOperasi.value == ""){
+		alert("Sila masukkan \"Tarikh Operasi\" terlebih dahulu.");
+  		document.${formName}.txtTarikhOperasi.focus(); 
+		return;		
+	}
+	if(document.${formName}.txtHariOperasi.value == ""){
+		alert("Sila masukkan \"Hari\" terlebih dahulu.");
+  		document.${formName}.txtHariOperasi.focus(); 
+		return;		
+	}
+	if(document.${formName}.txtMasaOperasi.value == ""){
+		alert("Sila masukkan \"Masa\" terlebih dahulu.");
+  		document.${formName}.txtMasaOperasi.focus(); 
+		return;		
+	}
+	/*if(document.${formName}.txdTarikhPengeluaran.value == ""){
 		alert("Sila masukkan Tarikh Pengeluaran.");
   		document.${formName}.txdTarikhPengeluaran.focus(); 
 		return;		
-	}
-	/*if(document.${formName}.socBulan.value == ""){
-		alert("Sila masukkan \"Bulan\" terlebih dahulu.");
-  		document.${formName}.socBulan.focus(); 
-		return;		
 	}*/
-	if(document.${formName}.txtTahun.value == ""){
-		alert("Sila masukkan \"Tahun Pengambilan\" terlebih dahulu.");
-  		document.${formName}.txtTahun.focus(); 
-		return;		
-	}
+// 	if(document.${formName}.socBulan.value == ""){
+// 		alert("Sila masukkan \"Bulan\" terlebih dahulu.");
+//   		document.${formName}.socBulan.focus(); 
+// 		return;		
+// 	}
+// 	if(document.${formName}.txtTahun.value == ""){
+// 		alert("Sila masukkan \"Tahun Pengambilan\" terlebih dahulu.");
+//   		document.${formName}.txtTahun.focus(); 
+// 		return;		
+// 	}
 	
 	/* if(document.${formName}.txtKontraktor.value == ""){
 		alert("Sila masukkan \"Nama Kontraktor\" terlebih dahulu.");
@@ -447,7 +520,7 @@ function simpanLaporan() {
   		document.${formName}.txtPembeli.focus(); 
 		return;		
 	}	 */
-alert("simpan");
+
 	else{
 		if ( !window.confirm("Adakah Anda Pasti?") ) return;
 		document.${formName}.actionOnline.value = "simpanLaporan";
@@ -466,17 +539,37 @@ function simpanEditLaporan() {
 		alert("Sila masukkan \"Jumlah Royalti\" terlebih dahulu.");
   		document.${formName}.txtJumRoyalti.focus(); 
 		return;		
-	}	
-	if(document.${formName}.socBulan.value == ""){
-		alert("Sila masukkan \"Bulan\" terlebih dahulu.");
-  		document.${formName}.socBulan.focus(); 
-		return;		
-	}	
-	if(document.${formName}.txtTahun.value == ""){
-		alert("Sila masukkan \"Tahun Pengambilan\" terlebih dahulu.");
-  		document.${formName}.txtTahun.focus(); 
+	}
+	if(document.${formName}.txtNamaKapal.value == ""){
+		alert("Sila masukkan \"Nama Kapal\" terlebih dahulu.");
+  		document.${formName}.txtNamaKapal.focus(); 
 		return;		
 	}
+	if(document.${formName}.txtTarikhOperasi.value == ""){
+		alert("Sila masukkan \"Tarikh Operasi\" terlebih dahulu.");
+  		document.${formName}.txtTarikhOperasi.focus(); 
+		return;		
+	}
+	if(document.${formName}.txtHariOperasi.value == ""){
+		alert("Sila masukkan \"Hari\" terlebih dahulu.");
+  		document.${formName}.txtHariOperasi.focus(); 
+		return;		
+	}
+	if(document.${formName}.txtMasaOperasi.value == ""){
+		alert("Sila masukkan \"Masa\" terlebih dahulu.");
+  		document.${formName}.txtMasaOperasi.focus(); 
+		return;		
+	}
+// 	if(document.${formName}.socBulan.value == ""){
+// 		alert("Sila masukkan \"Bulan\" terlebih dahulu.");
+//   		document.${formName}.socBulan.focus(); 
+// 		return;		
+// 	}	
+// 	if(document.${formName}.txtTahun.value == ""){
+// 		alert("Sila masukkan \"Tahun Pengambilan\" terlebih dahulu.");
+//   		document.${formName}.txtTahun.focus(); 
+// 		return;		
+// 	}
 	/* if(document.${formName}.txtKontraktor.value == ""){
 		alert("Sila masukkan \"Nama Kontraktor\" terlebih dahulu.");
   		document.${formName}.txtKontraktor.focus(); 
@@ -559,59 +652,20 @@ function getAnggaranRoyalti(){
 	document.getElementById("txtJumRoyalti").value = AnggaranRoyalti.toFixed(2) ;
 	
 }
-
-function simpanDokumen(id_laporanpasir,idPermohonan) {
-
-if(document.${formName}.txtNamaDokumen.value == ""){
-		alert('Sila masukkan Nama Fail.');
-  		document.${formName}.txtNamaDokumen.focus(); 
-		return; 
-	}
-	if(document.${formName}.fileupload.value == ""){
-		alert('Sila pilih Fail yang Ingin Dimuatnaik.');
-  		document.${formName}.fileupload.focus(); 
-		return; 
-	}
-
-	if ( !window.confirm("Adakah Anda Pasti ?") ){
-		return;
-	}
-	
-	var namaLampiran = document.${formName}.txtNamaDokumen.value;
- 	var catatanLampiran = document.${formName}.txtCatatan.value ;
-	var dp = document.${formName}.form_token.value ;
-	var dopost = "&form_token="+dp;
-	
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView&hitButton=simpanDokumen&namaLampiran="+namaLampiran+"&catatanLampiran="
-	+catatanLampiran+"&idPermohonan="+idPermohonan+dopost+"&modePopup=view&flagPopup=openPopupDokumen&id_laporanpasir="+id_laporanpasir;
-	document.${formName}.method="post";
-	document.${formName}.enctype="multipart/form-data";
-    document.${formName}.encoding="multipart/form-data";
-	document.${formName}.submit();
-}
 </script>
 
 <!-- FUNCTION UPLOAD FILE PASIR LAUT -16102020 -->
 <script>
-function daftarDokumen() {	
-	document.${formName}.flagPopup.value = "openPopupDokumen";
-	document.${formName}.modePopup.value = "new";
-	document.${formName}.actionOnline.value = "uploadBaruDokumen"
-	doAjaxCall${formName}("");
-}
-
-function paparMaklumatDokumen(idDokumen) {
-	alert(id_dokumen);
-	document.${formName}.idDokumen.value = idDokumen;
-	document.${formName}.actionOnline.value = "paparDokumen";
+function uploadBaruDokumen(id_laporanpasir) {
+	document.${formName}.id_laporanpasir.value = id_laporanpasir;
+	document.${formName}.actionOnline.value = "uploadBaruDokumen";
 	document.${formName}.submit();
 }
-function paparDokumen(idDokumen){
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView";
-	document.${formName}.method="POST";
-	document.${formName}.idDokumen.value = idDokumen;
-	document.${formName}.flagPopup.value = "openPopupDokumen";
-	document.${formName}.modePopup.value = "view";
+
+function paparMaklumatDokumen(id_dokumen) {
+	alert(id_dokumen);
+	document.${formName}.id_dokumen.value = id_dokumen;
+	document.${formName}.actionOnline.value = "paparDokumen";
 	document.${formName}.submit();
 }
 function calculateRoyalti()
