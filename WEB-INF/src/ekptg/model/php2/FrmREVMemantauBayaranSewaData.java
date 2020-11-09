@@ -2291,6 +2291,8 @@ public class FrmREVMemantauBayaranSewaData {
 					keteranganFlagPerjanjian = "PENAMBAHAN KADAR SEWA";
 				} else if ("3".equals(rs.getString("FLAG_PERJANJIAN"))) {
 					keteranganFlagPerjanjian = "PENGECUALIAN KADAR SEWA";
+				} else if ("4".equals(rs.getString("FLAG_PERJANJIAN"))) {
+					keteranganFlagPerjanjian = "PENAMATAN SEWA";
 				}
 				h.put("keteranganFlagPerjanjian",keteranganFlagPerjanjian);
 
