@@ -93,7 +93,7 @@
   <tr>
     <td colspan="2">
     <fieldset>
-      <legend><strong>MAKLUMAT TANAH</strong></legend>
+      <legend><strong>MAKLUMAT TANAH YANG DIPOHON</strong></legend>
       <input type="hidden" name="idHakmilik" id="idHakmilik" value="$beanMaklumatTanah.idHakmilik" />
 
     			<table width="100%" border="0" cellspacing="2" cellpadding="2">
