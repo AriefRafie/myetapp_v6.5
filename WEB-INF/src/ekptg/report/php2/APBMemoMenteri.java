@@ -34,7 +34,6 @@ public class APBMemoMenteri extends EkptgReportServlet {
 		String nolesen="";
 		String tarikhmulalesen="";	
 		String tarikhtamatlesen="";	
-		String tarikhkeluarlesen="";
 		
 		if(!idfail.equals("")){
 			Db db = null;
@@ -47,7 +46,7 @@ public class APBMemoMenteri extends EkptgReportServlet {
 				tarikhtamatlesen=getTarikhTamatLesen(idfail,db);	
 				
 			}catch(Exception e){
-				System.out.println("ERROR KIRA ++++++++++++++++++++++++++++++++++++++ "+e.toString());
+				System.out.println(e.toString());
 			}finally {
 				if (db != null)
 					db.close();
@@ -73,7 +72,6 @@ public class APBMemoMenteri extends EkptgReportServlet {
 		String slash = "/";
 		String noFailremoveslash = nofail.replaceAll(slash,"");
 		noFailremoveslash=noFailremoveslash.replaceAll(" ","");
-		
 		parameters.put("noFailremoveslash", noFailremoveslash);
 		
 		//-----------------------QR CODE END-------------------------------------------------------------		
@@ -93,7 +91,6 @@ public class APBMemoMenteri extends EkptgReportServlet {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			if (rs.next()) {
-				String str1;
 				return rs.getString("NO_FAIL").toString();
 			}
 			return "";
@@ -118,7 +115,6 @@ public class APBMemoMenteri extends EkptgReportServlet {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			if (rs.next()) {
-				String str1;
 				return rs.getString("NAMA_PEMEGANG_LESEN").toString();
 			}
 			return "";
@@ -143,7 +139,6 @@ public class APBMemoMenteri extends EkptgReportServlet {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			if (rs.next()) {
-				String str1;
 				return rs.getString("NO_PENGENALAN").toString();
 			}
 			return "";
@@ -168,7 +163,6 @@ public class APBMemoMenteri extends EkptgReportServlet {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			if (rs.next()) {
-				String str1;
 				return rs.getString("NO_LESEN").toString();
 			}
 			return "";
@@ -193,7 +187,6 @@ public class APBMemoMenteri extends EkptgReportServlet {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			if (rs.next()) {
-				String str1;
 				return rs.getString("TARIKH_MULA_LESEN").toString();
 			}
 			return "";
@@ -218,7 +211,6 @@ public class APBMemoMenteri extends EkptgReportServlet {
 			ResultSet rs = stmt.executeQuery(sql);
 
 			if (rs.next()) {
-				String str1;
 				return rs.getString("TARIKH_TAMAT_LESEN").toString();
 			}
 			return "";

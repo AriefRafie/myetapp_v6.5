@@ -105,17 +105,32 @@ public class FrmPhpNotifikasiEmel {
 			 
 			email.RECIEPIENT = "nurulain.siprotech@gmail.com"; //untuk testing sementara
 			email.SUBJECT = "PERMOHONAN MENGEMUKAKAN LAPORAN TANAH URUSAN "+urusan+" BAGI NO. FAIL " + noFail;
-			email.MESSAGE =  "Tuan/ Puan,"
-							+ "<br><br><u><b>"+tajukFail+"</b></u>"
-							+ "<br><br>Dengan hormatnya saya diarah untuk menarik perhatian tuan kepada perkara di atas"
-							+ "<br><br>2.	Untuk makluman pihak tuan, lot tersebut di atas adalah tanah milik Persekutuan "
-							+ "di bawah kawalan " +pemilikTanah+ ". " +pemohon+ "telah mengemukakan permohonan untuk "
-							+ "menukarguna "+kegunaanTanah+" tanah tersebut bagi tujuan " +tujuan+ "."
-							+ "<br><br>3.	Sehubungan dengan itu, pihak tuan dipohon untuk memberi ulasan mengenai "
-							+ "permohonan tukarguna tersebut dalam tempoh " +tempoh+ " hari sebelum " +tarikhHantar+ ". "
-							+ "Kerjasama dan tindakan awal daripada pihak tuan/ puan amatlah dihargai."
-							+ "<br><br>Sekian, terima kasih.<br><br><br>"			
-							+ "Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
+			if (urusan.contains("PELEPASAN")) {
+				email.MESSAGE =  "Tuan/ Puan,"
+						+ "<br><br><u><b>"+tajukFail+"</b></u>"
+						+ "<br><br>Dengan hormatnya saya diarah untuk menarik perhatian tuan kepada perkara di atas "
+						+ "daripada " +pemohon+ "."
+						+ "<br><br>2.	Dimaklumkan bahawa Jabatan ini telah menerima permohonan pelepasan lot tersebut di atas."
+						+ "Tanah yang terlibat merupakan tanah di bawah kawalan " +pemilikTanah+ "."
+						+ "<br><br>3.	Sehubungan dengan itu, pihak tuan dipohon untuk memberi ulasan mengenai "
+						+ "permohonan tersebut dalam tempoh " +tempoh+ " hari sebelum " +tarikhHantar+ ". "
+						+ "Kerjasama dan tindakan awal daripada pihak tuan/ puan amatlah dihargai."
+						+ "<br><br>Sekian, terima kasih.<br><br><br>"			
+						+ "Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
+				
+			} else {
+				email.MESSAGE =  "Tuan/ Puan,"
+						+ "<br><br><u><b>"+tajukFail+"</b></u>"
+						+ "<br><br>Dengan hormatnya saya diarah untuk menarik perhatian tuan kepada perkara di atas"
+						+ "<br><br>2.	Untuk makluman pihak tuan, lot tersebut di atas adalah tanah milik Persekutuan "
+						+ "di bawah kawalan " +pemilikTanah+ ". " +pemohon+ " telah mengemukakan permohonan untuk "
+						+ "menukarguna "+kegunaanTanah+" tanah tersebut bagi tujuan " +tujuan+ "."
+						+ "<br><br>3.	Sehubungan dengan itu, pihak tuan dipohon untuk memberi ulasan mengenai "
+						+ "permohonan tukarguna tersebut dalam tempoh " +tempoh+ " hari sebelum " +tarikhHantar+ ". "
+						+ "Kerjasama dan tindakan awal daripada pihak tuan/ puan amatlah dihargai."
+						+ "<br><br>Sekian, terima kasih.<br><br><br>"			
+						+ "Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
+			}
 			email.sendEmail();
 			
 		} finally {
@@ -253,5 +268,9 @@ public class FrmPhpNotifikasiEmel {
 			if (db != null)
 				db.close();
 		}
+	}
+	
+	public void sendEmailtoJPPH(String idPermohonan, String idKementerian, HttpSession session) throws Exception {
+		
 	}
 }

@@ -91,9 +91,6 @@ public class QRCodeAPB {
 	                path.substring(path.lastIndexOf('.') + 1),
 	                new File(path));
 	    }
-		
-	
-	
 	/**
 	 * Fungsi mendapatkan nama context (folder fizikal applikasi)
 	 * Dibuat Oleh	: Mohamad Rosli
@@ -102,10 +99,6 @@ public class QRCodeAPB {
 	 * Dikemaskini Pada :
 	 * @return
 	 */
-	
-	
-	
-	
 	private String getAppContext(){
 		String appContext ="myetapp";
 		ResourceBundle rb = ResourceBundle.getBundle("file");
