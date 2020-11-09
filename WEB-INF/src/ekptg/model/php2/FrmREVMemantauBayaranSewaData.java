@@ -2131,6 +2131,63 @@ public class FrmREVMemantauBayaranSewaData {
 		}
 	}
 
+	//tindakanMahkamah
+	public void updateTindakanMahkamah(String idFail, String idHasil,
+			String tarikh_sst, String tarikh_notis_pampasan, String tarikh_notis_tuntutan, HttpSession session) throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+		String sql2 = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			SQLRenderer r2 = new SQLRenderer();
+
+			// TBLPHPPEMOHON
+			r.update("ID_HASIL", idHasil);
+			r.add("TARIKH_PENERIMAAN_SST", tarikh_sst);
+
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+			sql = r.getSQLUpdate("TBLPHPBAYARANPERLUDIBAYAR");
+			stmt.executeUpdate(sql);
+
+
+			// TBLPHPPEMOHON
+			r2.update("ID_HASIL", idHasil);
+			r2.update("ID_JENIS_NOTIS", "3");
+			r2.add("TARIKH_NOTIS_RAMPASAN", tarikh_notis_pampasan);
+			r2.add("TARIKH_NOTIS_TUNTUTAN", tarikh_notis_tuntutan);
+
+			r2.add("ID_KEMASKINI", userId);
+			r2.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+			sql2 = r2.getSQLUpdate("TBLPHPNOTISHASIL");
+			stmt.executeUpdate(sql2);
+			conn.commit();
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
 	public void updatePermohonan(String idFail, String idHasil, String noFail,
 			String idUrusan, String idSuburusan, String perkara, String tujuan,
 			String catatan, HttpSession session) throws Exception {
@@ -2650,7 +2707,6 @@ public class FrmREVMemantauBayaranSewaData {
 					+ " AND TBLPHPHASIL.ID_HASIL = '" + idHasil + "'"
 					+ " GROUP BY TBLPHPHASIL.CATATAN_ABT, TBLPFDFAIL.NO_FAIL, TBLPHPPEMOHON.NAMA, TBLPHPBAYARANPERLUDIBAYAR.TARIKH_MULA, TBLPHPBAYARANPERLUDIBAYAR.TARIKH_TAMAT,"
 					+ " TBLPHPBAYARANPERLUDIBAYAR.BAYARAN";
-
 			ResultSet rs = stmt.executeQuery(sql);
 
 			if (rs.next()) {
@@ -2885,8 +2941,8 @@ public class FrmREVMemantauBayaranSewaData {
 					+ " WHERE ID_HASIL=TBLPHPHASIL.ID_HASIL AND ID_JENIS_NOTIS='1' AND BIL_PERINGATAN='3' ) ,NULL) TARIKH_NOTIS_PERINGATAN_AKHIR, "
 					+ " NVL((SELECT TARIKH_AKHIR_NOTIS FROM TBLPHPNOTISHASIL  "
 					+ " WHERE ID_HASIL=TBLPHPHASIL.ID_HASIL AND ID_JENIS_NOTIS='2') ,NULL) TARIKH_MEMO_RAMPASAN_DEPOSIT, "
-					+ " NVL((SELECT TARIKH_NOTIS_PENAMATAN FROM TBLPHPNOTISHASIL  "
-					+ " WHERE ID_HASIL=TBLPHPHASIL.ID_HASIL AND ID_JENIS_NOTIS='3') ,NULL) TARIKH_NOTIS_PENAMATAN, "
+					+ " NVL((SELECT TARIKH_PENAMATAN FROM TBLPHPBAYARANPERLUDIBAYAR "
+					+ " WHERE ID_HASIL = TBLPHPHASIL.ID_HASIL AND FLAG_PERJANJIAN = '4') , NULL) TARIKH_NOTIS_PENAMATAN, "
 					+ " NVL((SELECT TARIKH_NOTIS_RAMPASAN FROM TBLPHPNOTISHASIL  "
 					+ " WHERE ID_HASIL=TBLPHPHASIL.ID_HASIL AND ID_JENIS_NOTIS='3') ,NULL) TARIKH_NOTIS_RAMPASAN, "
 					+ " NVL((SELECT TARIKH_NOTIS_TUNTUTAN FROM TBLPHPNOTISHASIL  "
