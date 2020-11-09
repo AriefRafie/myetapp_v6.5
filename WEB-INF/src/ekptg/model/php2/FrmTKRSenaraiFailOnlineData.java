@@ -595,12 +595,11 @@ public class FrmTKRSenaraiFailOnlineData {
 
 			sql = "SELECT C.ID_PEMOHON, C.NAMA, C.NO_PENGENALAN, C.ALAMAT1_TETAP, C.ALAMAT2_TETAP, C.ALAMAT3_TETAP,"
 					+ " C.POSKOD_TETAP, C.ID_NEGERITETAP, C.NO_TEL, C.NO_FAX,"
-					+ " C.EMEL, C.ID_KATEGORIPEMOHON, C.ID_PEJABAT, C.ID_AGENSI, E.ID_KEMENTERIAN "
+					+ " C.EMEL, C.ID_KATEGORIPEMOHON, C.ID_PEJABAT, C.ID_AGENSI, E.ID_KEMENTERIAN, D.NAMA_KEMENTERIAN "
 					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJKEMENTERIAN D,USERS_KEMENTERIAN E WHERE A.ID_FAIL = B.ID_FAIL "
 					+ " AND B.ID_PEMOHON = C.ID_PEMOHON AND E.ID_USERSKEMENTERIAN = B.ID_MASUK AND E.ID_KEMENTERIAN = D.ID_KEMENTERIAN AND A.ID_FAIL = '"
 					+ idFail + "'";
 			ResultSet rs = stmt.executeQuery(sql);
-System.out.println("setMaklumatPemohon sql >>> "+sql);
 			Hashtable h;
 			int bil = 1;
 			while (rs.next()) {
@@ -643,6 +642,9 @@ System.out.println("setMaklumatPemohon sql >>> "+sql);
 				h.put("idKementerian",
 						rs.getString("ID_KEMENTERIAN") == null ? "99999" : rs
 								.getString("ID_KEMENTERIAN").toUpperCase());
+				h.put("namaKementerian",
+						rs.getString("NAMA_KEMENTERIAN") == null ? "" : rs
+								.getString("NAMA_KEMENTERIAN"));
 				beanMaklumatPemohon.addElement(h);
 				bil++;
 
