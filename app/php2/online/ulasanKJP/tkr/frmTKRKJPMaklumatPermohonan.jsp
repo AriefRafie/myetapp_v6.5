@@ -46,7 +46,7 @@
   <tr>
     <td><div id="TabbedPanels1" class="TabbedPanels">
         <ul class="TabbedPanelsTabGroup">
-          <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TANAH</li>
+          <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TANAH YANG DIPOHON</li>
           <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TUKARGUNA</li>
           <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">SENARAI SEMAK</li>
           <!-- <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">LAMPIRAN</li> -->
@@ -513,8 +513,7 @@
    			<b><font color="BLUE" size="2"><span class="blink">Ambil Perhatian: Sila pastikan maklumat yang diisi pada permohonan adalah TEPAT dan MUKTAMAD.
 	Permohonan yang telah <br>dihantar TIDAK DIBENARKAN untuk dipinda/dikemaskini.</span></font></b>
    			<p align="center"><input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Permohonan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
-   			<input type="button" name="cmdPindaan" id="cmdPindaan" $buttonSend value="Kembalikan kepada penyedia" onclick="doAjaxCall${formName}('simpanpengesahan3')" /></p>
-
+   			<input type="button" name="cmdKembalikanFail" id="cmdKembalikanFail" value="Kembalikan kepada penyedia" onclick="kembalikanFailOnline('$idPermohonan', 'yes')"/>
       		</td>
 
 
@@ -1288,6 +1287,19 @@ function doChangeLuasKegunaan() {
 function doChangeLuas() {
 	document.${formName}.submit2.value = "seterusnya";
 	doAjaxCall${formName}("doChangeLuas");
+}
+
+function kembalikanFailOnline(id_permohonan,formnew) {
+	var w = "400";
+	var h = "200";
+	var left = (screen.width/2)-(w/2);
+	var top = (screen.height/2)-(h/2);
+	var url = "../x/${securityToken}/FrmPopupTolakPermohonan?id_permohonan="+id_permohonan+"&formnew="+formnew+"&modul=php&jenisTolak=pelulus";
+
+	var hWnd = window.open(url, "Permohonan Online Dikembalikan", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+	if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
 }
 </script>
 $javascriptLampiran
