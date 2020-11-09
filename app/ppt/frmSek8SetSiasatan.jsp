@@ -1,4 +1,9 @@
+<input type="hidden" name="modul" value="$!modul">
+
+#if($modul != "ekptg.view.ppt.FrmSiasatanOnline")
 #parse("app/ppt/Sek8Paging.jsp")
+#end
+
 <table width="100%">
   <tr>
     <td> #parse("app/ppt/header_1_ppt.jsp")</td>
@@ -11,8 +16,11 @@
  <table width="100%" border="0"> 
     <tr >
     <td align="left">
+     #if($modul == "ekptg.view.ppt.FrmSiasatanOnline")
+    <a href="javascript:popupCarianHakmilik('$id_permohonan','siasatan_online')"><font color="blue">>> SKRIN CAPAIAN HAKMILIK</font></a>
+   #else
     <a href="javascript:popupCarianHakmilik('$id_permohonan','senarai_siasatan')"><font color="blue">>> SKRIN CAPAIAN HAKMILIK</font></a>
-    </td>
+   #end </td>
     </tr>
     </table>
 
