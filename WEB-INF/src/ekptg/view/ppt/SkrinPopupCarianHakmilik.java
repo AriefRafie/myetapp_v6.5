@@ -21,6 +21,10 @@ import ekptg.helpers.Utils;
 import ekptg.model.ppt.PPTHeader;
 
 public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7789359329852177168L;
 	static Logger myLogger = Logger.getLogger(SkrinPopupCarianHakmilik.class);
 	private static SimpleDateFormat Format = new SimpleDateFormat("dd/MM/yyyy");
 	private final String PATH = "app/ppt/PopupHakmilik/";
@@ -50,7 +54,7 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 		this.context.put("flag_subjaket", "");
 		PPTHeader header = new PPTHeader();
 		context.put("showSJ", "no");
-		myLogger.info("command :" + command);
+//		myLogger.info("command :" + command);
 		context.put("refreshHakmilik", "");
 		String id_pegawai = getParam("id_pegawai");
 		this.context.put("tutup_skrin_popup", "");
@@ -82,17 +86,17 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 								getParam("NO_LOT"), getParam("NAMA_PB"),
 								getParam("NO_PB"), db, id_pegawai, id_borange));
 				context.put("refreshHakmilik", "yes");
+				
 			} else if ("janaSubjaket".equals(command)) {
-				janaSubjaket(session, id_permohonan, db,
-						getListSeqSubjaket(id_permohonan, db));
+				janaSubjaket(session, id_permohonan, db,getListSeqSubjaket(id_permohonan, db));
 				context.put("refreshHakmilik", "yes");
-			}
-
-			else if ("kemaskiniBorangL".equals(command)) {
+				
+			}else if ("kemaskiniBorangL".equals(command)) {
 				context.put("isEdit", "yes");
 			} else if ("simpanBorangL".equals(command)) {
 				context.put("isEdit", "no");
 				simpanBorangL(session, id_permohonan, db);
+			
 			}
 
 			header.setDataHeader(id_permohonan);
@@ -101,14 +105,20 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 				Hashtable dh = (Hashtable) dataHeader.get(0);
 				flag_subjaket = dh.get("flag_subjaket").toString();
 			}
+			
 			this.context.put("flag_subjaket", flag_subjaket);
-
 			this.context.put("NO_LOT", getParam("NO_LOT"));
 			this.context.put("NAMA_PB", getParam("NAMA_PB"));
 			this.context.put("NO_PB", getParam("NO_PB"));
-			displayHakmilik(id_permohonan, flag_skrin, action,
-					getParam("NO_LOT"), getParam("NAMA_PB"), getParam("NO_PB"),
-					db, id_pegawai, id_borange);
+			displayHakmilik(id_permohonan
+					, flag_skrin
+					, action
+					, getParam("NO_LOT")
+					, getParam("NAMA_PB")
+					, getParam("NO_PB")
+					, db
+					, id_pegawai
+					, id_borange);
 			context.put("saiz_listTanah",getTanah_count(id_permohonan, "", "", db));
 			
 			myLogger.info("vm SkrinPopupCarianHakmilik >>> "+vm);
@@ -444,14 +454,20 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 	 * context.put("", list); setupPage(session,action,list); }
 	 */
 
-	private void displayHakmilik(String id_permohonan, String flag_skrin,
-		String action, String no_lot, String nama_pb, String no_pb, Db db,
-		String id_pegawai, String id_borange) throws Exception {
+	private void displayHakmilik(String id_permohonan
+		, String flag_skrin
+		, String action
+		, String no_lot
+		, String nama_pb
+		, String no_pb
+		, Db db
+		, String id_pegawai
+		, String id_borange) throws Exception {
 		List<Hashtable> list = null;
-		list = getHakmilik(id_permohonan, flag_skrin, no_lot, nama_pb, no_pb,
-				db, id_pegawai, id_borange);
+		list = getHakmilik(id_permohonan, flag_skrin, no_lot, nama_pb, no_pb,db, id_pegawai, id_borange);
 		context.put("SenaraiFail", list);
 		setupPage(session, action, list);
+	
 	}
 
 	/*
@@ -599,11 +615,16 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 	 * } return list_fail; } finally { //if (db != null) //db.close(); } }
 	 */
 
-	Vector list_hakmilik = null;
+	Vector<Hashtable> list_hakmilik = null;
 
-	public Vector getHakmilik(String id_permohonan, String flag_skrin,
-		String no_lot, String nama_pb, String no_pb, Db db,
-		String idpegawai, String id_borange) throws Exception {
+	public Vector<Hashtable> getHakmilik(String id_permohonan
+		, String flag_skrin
+		, String no_lot
+		, String nama_pb
+		, String no_pb
+		, Db db
+		, String idpegawai
+		, String id_borange) throws Exception {
 		// temp
 
 		String noLOT = no_lot.trim();
@@ -611,14 +632,14 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 		String listLOT = "";
 		String listLOTHM = "";
 		double totalSize = 0;
-		list_hakmilik = new Vector();
+		list_hakmilik = new Vector<Hashtable>();
 		list_hakmilik.clear();
-		// Db db = null;
 		String sql = "";
+		
 		try {
 			// db = new Db();
 			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
+//			SQLRenderer r = new SQLRenderer();
 			/*
 			 * sql =
 			 * " SELECT (J.KOD_JENIS_HAKMILIK || ' ' || H.NO_HAKMILIK) AS NO_HAKMILIK, H.NO_LOT,UPPER(M.NAMA_MUKIM) AS NAMA_MUKIM, H.ID_PERMOHONAN "
@@ -673,18 +694,17 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 				sql += " ''  AS ID_SIASATAN,";
 			}
 
-			if (flag_skrin.equals("hakmilik_borangk")
-					|| flag_skrin.equals("hakmilik_borangL")) {
+			if (flag_skrin.equals("hakmilik_borangk") || flag_skrin.equals("hakmilik_borangL")
+					||(flag_skrin.equals("daftar_sek8_online"))) {
 				sql += " LL.id_borangl, LL.tarikh_borangl, LL.jenis_pilih,  LL.tempoh, ";
 			} else {
 				sql += " '' as id_borangl, '' as tarikh_borangl, '' as jenis_pilih,  '' as tempoh, ";
 			}
 
 			sql += " N.NAMA_NEGERI,  "
-					+
 					// "(SELECT COUNT(A.ID_HAKMILIKPB) FROM TBLPPTHAKMILIKPB A, TBLPPTPIHAKBERKEPENTINGAN B  WHERE A.ID_PIHAKBERKEPENTINGAN = B.ID_PIHAKBERKEPENTINGAN AND A.ID_HAKMILIK(+) = M.ID_HAKMILIK  "+
 					// " AND A.ID_JENISPB NOT IN (40,41,42))AS TOTALPB,  " +
-					" NVL(TEMP_COUNTPB.TOTALPB,0) AS TOTALPB, "
+					+" NVL(TEMP_COUNTPB.TOTALPB,0) AS TOTALPB, "
 					+ "M.ID_JENISHAKMILIK, M.ID_DAERAH, M.ID_MUKIM, MK.NAMA_MUKIM, M.ID_UNITLUASLOT, M.LUAS_AMBIL,   "
 					+ " M.NO_HAKMILIK, M.NO_LOT, M.LUAS_LOT, M.NO_PT, M.TARIKH_DAFTAR, M.TARIKH_LUPUT, M.TEMPOH_LUPUT, JH.KOD_JENIS_HAKMILIK,  M.LOKASI,M.SYARAT_NYATA,M.SYARAT_KHAS, "
 					+ " M.SEKATAN_HAK,M.SEKATAN_KEPENTINGAN,M.NO_SYIT, JH.KETERANGAN AS JENIS_HAKMILIK, M.ID_KATEGORITANAH,  M.FLAG_AMBIL_SEGERA,D.NAMA_DAERAH,M.FLAG_BORANGL, M.STATUS_BORANGL,  "
@@ -699,9 +719,7 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 					+ " TBLPPTHAKMILIKPB HPB, TBLPPTPIHAKBERKEPENTINGAN PPB "
 					+ " WHERE PHM.ID_HAKMILIK = HPB.ID_HAKMILIK AND HPB.ID_PIHAKBERKEPENTINGAN = PPB.ID_PIHAKBERKEPENTINGAN "
 					+ " AND HPB.ID_JENISPB NOT IN (40, 41, 42) "
-					+ " AND PHM.ID_PERMOHONAN = '"
-					+ id_permohonan
-					+ "' "
+					+ " AND PHM.ID_PERMOHONAN = '"+ id_permohonan+ "' "
 					+ " GROUP BY PHM.ID_HAKMILIK) TEMP_COUNTPB, ";
 
 			if (!id_permohonan.equals("") && id_permohonan != null
@@ -717,24 +735,19 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 				sql += " TBLPPTBORANGEHAKMILIK A, TBLPPTBORANGE B,";
 			}
 
-			if (flag_skrin.equals("bukti_notis_borangK")
-					|| flag_skrin.equals("senarai_pu")) {
-				sql += " Tblpptborangk BK, Tblppthakmilikborangk HBK, ";
+			if (flag_skrin.equals("bukti_notis_borangK") || flag_skrin.equals("senarai_pu")) {
+				sql += " tblpptborangk BK, tblppthakmilikborangk HBK, ";
 			}
 
-			// sql +=
-			// " AND (select count(*)from Tblpptborangk a, Tblppthakmilikborangk b where a.id_borangk = b.id_borangk and b.id_hakmilik(+) = m.id_hakmilik) > '0' ";
-
-			if (flag_skrin.equals("senarai_siasatan") || flag_skrin.equals("siasatan_online")) {
+//			if (flag_skrin.equals("senarai_siasatan") || flag_skrin.equals("siasatan_online")) {
 				//open komen temp by razman
 				//sql += " TBLPPTBORANGE BE,TBLPPTBORANGEHAKMILIK BEH, ";
 				//close komen temp by razman
-			}
+//			}
 
-			if (flag_skrin.equals("hakmilik_pampasan")
-					|| flag_skrin.equals("senarai_pampasan_sementara")) {
+//			if (flag_skrin.equals("hakmilik_pampasan")|| flag_skrin.equals("senarai_pampasan_sementara")) {
 				// sql += " Tblpptsiasatan SS, ";
-			}
+//			}
 
 			if (flag_skrin.equals("hakmilik_pampasan")
 					|| flag_skrin.equals("senarai_pampasan_sementara")
@@ -744,61 +757,51 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 						+ " (SELECT MAX(SS1.BIL_SIASATAN) AS BIL, SS1.ID_HAKMILIK FROM TBLPPTSIASATAN SS1   "
 						+ " GROUP BY SS1.ID_HAKMILIK) CS  "
 						+ " WHERE MSS.ID_HAKMILIK = CS.ID_HAKMILIK AND MSS.BIL_SIASATAN = CS.BIL) SS, ";
+
 			}
 
-			if (flag_skrin.equals("hakmilik_borangk")
-					|| flag_skrin.equals("hakmilik_borangL")) {
-				sql += " Tblpptborangl LL, ";
+			if (flag_skrin.equals("hakmilik_borangk")|| flag_skrin.equals("hakmilik_borangL")
+					|| flag_skrin.equals("daftar_sek8_online")) {
+				sql += " tblpptborangl LL, ";
 			}
 
 			sql += "TBLRUJLUAS LS, TBLRUJMUKIM MK, TBLRUJNEGERI N, TBLPPTHAKMILIK M, TBLRUJJENISHAKMILIK JH,  TBLRUJDAERAH D, USERS U, USERS_INTERNAL UI  "
-					+ " WHERE M.ID_PERMOHONAN = P.ID_PERMOHONAN  "
-					+ " AND M.ID_NEGERI = N.ID_NEGERI  "
-					+ " AND P.ID_FAIL = F.ID_FAIL  "
-					+ " AND M.ID_DAERAH = D.ID_DAERAH "
-					+ " AND TEMP_COUNTPB.ID_HAKMILIK(+) = M.ID_HAKMILIK "
-					+ " AND LS.ID_LUAS(+) = M.ID_UNITLUASLOT   "
-					+
-					// " AND M.ID_PEGAWAI = U.USER_ID(+) " +
-					" AND M.ID_JENISHAKMILIK = JH.ID_JENISHAKMILIK(+) "
-					+ " AND M.ID_LOT = LT.ID_LOT(+)  "
-					+ " AND M.ID_MUKIM = MK.ID_MUKIM(+)  AND NVL(M.FLAG_PEMBATALAN_KESELURUHAN,0) <> 'Y'   "
-					+ " AND NVL(M.FLAG_PENARIKAN_KESELURUHAN,0) <> 'Y' "
-					+ " AND P.ID_MASUK = U.USER_ID(+) AND U.USER_ID = UI.USER_ID(+) ";
-			sql += " AND P.ID_PERMOHONAN = '" + id_permohonan + "' ";
-
-			/*
-			 * if(flag_skrin.equals("daftar_sementara") ||
-			 * flag_skrin.equals("senarai_siasatan_sementara") ||
-			 * flag_skrin.equals("daftar_sek8") ||
-			 * flag_skrin.equals("skrin_hakmilik_sek4") ||
-			 * flag_skrin.equals("daftar_sek4") ||
-			 * flag_skrin.equals("skrin_hakmilik_sek8")){
-			 */
+				+ " WHERE M.ID_PERMOHONAN = P.ID_PERMOHONAN  "
+				+ " AND M.ID_NEGERI = N.ID_NEGERI  "
+				+ " AND P.ID_FAIL = F.ID_FAIL  "
+				+ " AND M.ID_DAERAH = D.ID_DAERAH "
+				+ " AND TEMP_COUNTPB.ID_HAKMILIK(+) = M.ID_HAKMILIK "
+				+ " AND LS.ID_LUAS(+) = M.ID_UNITLUASLOT   "
+//				+ " AND M.ID_PEGAWAI = U.USER_ID(+) " +
+				+ " AND M.ID_JENISHAKMILIK = JH.ID_JENISHAKMILIK(+) "
+				+ " AND M.ID_LOT = LT.ID_LOT(+)  "
+				+ " AND M.ID_MUKIM = MK.ID_MUKIM(+)  AND NVL(M.FLAG_PEMBATALAN_KESELURUHAN,0) <> 'Y'   "
+				+ " AND NVL(M.FLAG_PENARIKAN_KESELURUHAN,0) <> 'Y' "
+				+ " AND P.ID_MASUK = U.USER_ID(+) AND U.USER_ID = UI.USER_ID(+) ";
 			
+			sql += " AND P.ID_PERMOHONAN = '" + id_permohonan + "' ";
 
 			if (nama_pb != "" && nama_pb != null) {
 				if (!nama_pb.equals("")) {
 					sql += " AND M.ID_HAKMILIK IN (SELECT M1.ID_HAKMILIK FROM TBLPPTHAKMILIK M1,TBLPPTHAKMILIKPB HPB1, TBLPPTPIHAKBERKEPENTINGAN PB1 "
-							+ " WHERE M1.ID_HAKMILIK = HPB1.ID_HAKMILIK "
-							+ " AND HPB1.ID_PIHAKBERKEPENTINGAN = PB1.ID_PIHAKBERKEPENTINGAN "
-							+ " AND M1.ID_HAKMILIK = M.ID_HAKMILIK  "
-							+ "  "
-							+ " AND upper(PB1.NAMA_PB) LIKE ('%"
-							+ nama_pb.toUpperCase() + "%')) ";
+						+ " WHERE M1.ID_HAKMILIK = HPB1.ID_HAKMILIK "
+						+ " AND HPB1.ID_PIHAKBERKEPENTINGAN = PB1.ID_PIHAKBERKEPENTINGAN "
+						+ " AND M1.ID_HAKMILIK = M.ID_HAKMILIK  "
+						+ "  "
+						+ " AND upper(PB1.NAMA_PB) LIKE ('%"
+						+ nama_pb.toUpperCase() + "%')) ";
 				}
 			}
 			
-
 			if (no_pb != "" && no_pb != null) {
 				if (!no_pb.equals("")) {
 					sql += " AND M.ID_HAKMILIK IN (SELECT M1.ID_HAKMILIK FROM TBLPPTHAKMILIK M1,TBLPPTHAKMILIKPB HPB1, TBLPPTPIHAKBERKEPENTINGAN PB1 "
-							+ " WHERE M1.ID_HAKMILIK = HPB1.ID_HAKMILIK "
-							+ " AND HPB1.ID_PIHAKBERKEPENTINGAN = PB1.ID_PIHAKBERKEPENTINGAN "
-							+ " AND M1.ID_HAKMILIK = M.ID_HAKMILIK  "
-							+ "  "
-							+ " AND upper(PB1.NO_PB) LIKE ('%"
-							+ no_pb.toUpperCase() + "%')) ";
+						+ " WHERE M1.ID_HAKMILIK = HPB1.ID_HAKMILIK "
+						+ " AND HPB1.ID_PIHAKBERKEPENTINGAN = PB1.ID_PIHAKBERKEPENTINGAN "
+						+ " AND M1.ID_HAKMILIK = M.ID_HAKMILIK  "
+						+ "  "
+						+ " AND upper(PB1.NO_PB) LIKE ('%"
+						+ no_pb.toUpperCase() + "%')) ";
 				}
 			}
 
@@ -815,18 +818,20 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 			}
 			
 			if (!flag_skrin.equals("senarai_pampasan_sementara")
-					&& (!flag_skrin.equals("kemasukan_borangF"))
-					&& (!flag_skrin.equals("senarai_siasatan"))
-					&& (!flag_skrin.equals("siasatan_online"))
-					&& (!flag_skrin.equals("hakmilik_pampasan"))
-					&& (!flag_skrin.equals("hakmilik_borangk"))
-					&& (!flag_skrin.equals("hakmilik_borangL"))
-					&& (!flag_skrin.equals("bukti_notis_borangK"))
-					&& (!flag_skrin.equals("senarai_pu"))
-					&& (!flag_skrin.equals("laporan_awal_tanah"))
-					&& (!flag_skrin.equals("bantahan_mahkamah"))
-					&& (!flag_skrin.equals("bantahan_online"))
-					&& (!flag_skrin.equals("papar_lot_borangE"))) {
+				&& (!flag_skrin.equals("kemasukan_borangF"))
+				&& (!flag_skrin.equals("senarai_siasatan"))
+				&& (!flag_skrin.equals("siasatan_online"))
+				&& (!flag_skrin.equals("hakmilik_pampasan"))
+				&& (!flag_skrin.equals("hakmilik_borangk"))
+				&& (!flag_skrin.equals("hakmilik_borangL"))
+				&& (!flag_skrin.equals("bukti_notis_borangK"))
+				&& (!flag_skrin.equals("senarai_pu"))
+				&& (!flag_skrin.equals("laporan_awal_tanah"))
+				&& (!flag_skrin.equals("bantahan_mahkamah"))
+				&& (!flag_skrin.equals("bantahan_online"))
+				&& (!flag_skrin.equals("papar_lot_borangE"))
+				&& (!flag_skrin.equals("daftar_sek8_online"))
+				) {
 				sql += ")";
 			}
 
@@ -847,21 +852,7 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 
 			if (flag_skrin.equals("hakmilik_pampasan")
 					|| flag_skrin.equals("senarai_pampasan_sementara")) {
-				sql += " AND SS.id_hakmilik = M.id_hakmilik " /*
-															 * +
-															 * " AND SS.id_siasatan IN "
-															 * + //
-															 * " (SELECT MAX(SS.ID_SIASATAN) FROM TBLPPTSIASATAN SS WHERE M.ID_HAKMILIK = SS.ID_HAKMILIK) "
-															 * ;
-															 * " (SELECT ID_SIASATAN FROM TBLPPTSIASATAN MSS, "
-															 * +
-															 * " (SELECT MAX(SS.BIL_SIASATAN) AS BIL, SS.ID_HAKMILIK FROM TBLPPTSIASATAN SS  "
-															 * +
-															 * " GROUP BY SS.ID_HAKMILIK) CS "
-															 * +
-															 * " WHERE MSS.ID_HAKMILIK = CS.ID_HAKMILIK AND MSS.BIL_SIASATAN = CS.BIL)"
-															 */
-						+ " ";
+				sql += " AND SS.id_hakmilik = M.id_hakmilik " + " ";
 
 				sql += " AND (select count(aw.id_award) from tblpptaward aw where aw.id_siasatan = SS.id_siasatan) > 0 ";
 			}
@@ -881,16 +872,15 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 				sql += ")";
 			}
 
-			if (flag_skrin.equals("bukti_notis_borangK")
-					|| flag_skrin.equals("senarai_pu")) {
+			if (flag_skrin.equals("bukti_notis_borangK") || flag_skrin.equals("senarai_pu")) {
 				sql += " AND BK.id_borangk = HBK.id_borangk and HBK.id_hakmilik = M.id_hakmilik ";
 			}
 
 			// sql +=
 			// " AND (select count(*)from Tblpptborangk a, Tblppthakmilikborangk b where a.id_borangk = b.id_borangk and b.id_hakmilik(+) = m.id_hakmilik) > '0' ";
 
-			if (flag_skrin.equals("hakmilik_borangk")
-					|| flag_skrin.equals("hakmilik_borangL")) {
+			if (flag_skrin.equals("hakmilik_borangk") || flag_skrin.equals("hakmilik_borangL")
+					|| flag_skrin.equals("daftar_sek8_online")) {
 				sql += " AND M.id_hakmilik = LL.id_hakmilik(+) ";
 				sql += " AND (P.flag_segera = '3' AND M.id_hakmilik in (select distinct hx.id_hakmilik from Tblppthakmilik hx, Tblppthakmilikpb hpbx, Tblpptbayaran bx ";
 				sql += " where hx.id_permohonan = p.id_permohonan and hpbx.id_hakmilik = hx.id_hakmilik and bx.id_hakmilikpb = hpbx.id_hakmilikpb ";
@@ -899,7 +889,7 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 				sql += " where hx.id_permohonan = p.id_permohonan and hx.flag_segera_sebahagian = 'Y') ";
 				sql += " and (select count(*) from Tblpptborangi bix ";
 				sql += " where bix.id_permohonan = p.id_permohonan) > 0 ";
-				sql += " OR flag_segera = '2' AND (select count(*)from tblpptbayaran a, tblppthakmilikpb b ";
+				sql += " OR flag_segera = '2' AND (select count(*) from tblpptbayaran a, tblppthakmilikpb b ";
 				sql += " where a.id_hakmilikpb = b.id_hakmilikpb and b.id_hakmilik(+) = m.id_hakmilik) > 0 ";
 				sql += " OR flag_segera = '1' " +
 						//" AND (select count(*) from Tblpptborangi bix where bix.id_permohonan = p.id_permohonan) > 0" +
@@ -907,25 +897,15 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 
 			}
 
-			/*
-			 * if(flag_skrin.equals("daftar_sementara") ||
-			 * flag_skrin.equals("senarai_pampasan_sementara") ||
-			 * flag_skrin.equals("senarai_siasatan_sementara") ||
-			 * flag_skrin.equals("daftar_sek8") ||
-			 * flag_skrin.equals("skrin_hakmilik_sek4") ||
-			 * flag_skrin.equals("daftar_sek4")){ sql
-			 * +="    WHERE UPPER(no_lotpt) LIKE '%" +
-			 * noLOT.toUpperCase().trim() + "%'   "; }
-			 */
-
 			if (flag_skrin.equals("hakmilik_borangk")
 					|| flag_skrin.equals("hakmilik_borangL")
 					|| flag_skrin.equals("hakmilik_pampasan")
 					|| flag_skrin.equals("bukti_notis_borangK")
-					|| flag_skrin.equals("senarai_pu")) {
+					|| flag_skrin.equals("senarai_pu")
+					|| flag_skrin.equals("daftar_sek8_online")
+				) {
 				sql += ")";
 			}
-
 
 			if (!idpegawai.equals("") && idpegawai != null) {
 				sql += " AND AGHM.ID_HAKMILIK = M.ID_HAKMILIK  ";
@@ -937,46 +917,12 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 				sql += " AND U.USER_ID  = '" + idpegawai + "'";
 			}
 
-			/*
-			 * if ((no_lot != "" && no_lot != null) &&
-			 * !flag_skrin.equals("daftar_sementara") &&
-			 * !flag_skrin.equals("senarai_siasatan_sementara") &&
-			 * !flag_skrin.equals("senarai_pampasan_sementara") &&
-			 * !flag_skrin.equals("daftar_sek8") &&
-			 * !flag_skrin.equals("skrin_hakmilik_sek4") &&
-			 * !flag_skrin.equals("daftar_sek4") ) { if (!noLOT.equals("")) {
-			 * sql += " AND (" + "UPPER(m.no_lot) LIKE '%" +
-			 * noLOT.toUpperCase().trim() + "%' " +
-			 * " OR  UPPER(m.no_pt) LIKE '%" + noLOT.toUpperCase().trim() +
-			 * "%' " + " OR UPPER(lt.keterangan) LIKE '%" +
-			 * noLOT.toUpperCase().trim() + "%' "+ " ) "; } }
-			 */
-
-			/*
-			 * 
-			 * if (id_borange != "" && id_borange != null) { if
-			 * (!id_borange.equals("")) { sql += " AND M.ID_HAKMILIK IN ( "; sql
-			 * += "SELECT M.ID_HAKMILIK  "; sql +=
-			 * "FROM TBLPPTBORANGEHAKMILIK A, TBLPPTBORANGE B, TBLPPTHAKMILIK M "
-			 * ; sql += "WHERE A.ID_BORANGE = B.ID_BORANGE "; sql +=
-			 * "AND A.ID_HAKMILIK = M.ID_HAKMILIK "; sql +=
-			 * "AND B.ID_BORANGE = '"+id_borange+"') "; } }
-			 */
-
-			/*
-			 * if(flag_skrin.equals("daftar_sementara") ||
-			 * flag_skrin.equals("senarai_pampasan_sementara") ||
-			 * flag_skrin.equals("senarai_siasatan_sementara") ||
-			 * flag_skrin.equals("daftar_sek8") ||
-			 * flag_skrin.equals("skrin_hakmilik_sek4") ||
-			 * flag_skrin.equals("daftar_sek4")) {
-			 */
 			if (flag_skrin.equals("laporan_awal_tanah") ||  (flag_skrin.equals("bantahan_mahkamah")) 
 					||  (flag_skrin.equals("bantahan_online")) || (flag_skrin.equals("papar_lot_borangE"))) {
 				sql += ")";
 			}
 			
-			sql += "    WHERE UPPER(no_lotpt) LIKE '%"
+			sql += "  WHERE UPPER(no_lotpt) LIKE '%"
 					+ noLOT.toUpperCase().trim() + "%'   ";
 			
 			sql += " ORDER BY NAMA_MUKIM ASC, TARIKH_MASUK ASC, LPAD(NO_LOT,20) ASC, LPAD(NO_PT,20) ASC, LPAD(NO_LOTPT,20) ASC, LPAD(NO_SUBJAKET,20) ASC"
@@ -990,27 +936,22 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 			 * + //")  WHERE RN >= 0  AND  RN <= 50 " + ""; }
 			 */
 
-			myLogger.info("LIST HAKMILIK :" + sql.toUpperCase());
+			myLogger.info("getHakmilik:sql=" + sql.toUpperCase());
 
 			stmt.setFetchSize(10);
 			ResultSet rs = stmt.executeQuery(sql);
-			myLogger.info("getHakmilik======"+sql);
+			
 			int bil = 0;
 			while (rs.next()) {
 				bil = bil + 1;
-				Hashtable h = new Hashtable();
-				h.put("BIL", bil);
+				Hashtable<String,String> h = new Hashtable<String,String>();
+				h.put("bil", String.valueOf(bil));
 
-				h.put("id_borangl", rs.getString("id_borangl") == null ? ""
-						: rs.getString("id_borangl"));
-				h.put("jenis_pilih", rs.getString("jenis_pilih") == null ? ""
-						: rs.getString("jenis_pilih"));
-				h.put("tarikh_borangl",
-						rs.getDate("tarikh_borangl") == null ? "" : Format
-								.format(rs.getDate("tarikh_borangl")));
+				h.put("id_borangl", rs.getString("id_borangl") == null ? "": rs.getString("id_borangl"));
+				h.put("jenis_pilih", rs.getString("jenis_pilih") == null ? "": rs.getString("jenis_pilih"));
+				h.put("tarikh_borangl",rs.getDate("tarikh_borangl") == null ? "" : Format.format(rs.getDate("tarikh_borangl")));
 
-				if (rs.getString("jenis_pilih") != null
-						&& rs.getString("jenis_pilih") != "") {
+				if (rs.getString("jenis_pilih") != null && rs.getString("jenis_pilih") != "") {
 					if (rs.getString("jenis_pilih").equals("1")) {
 						h.put("status_borang_l", "Hakmilik Belum Diterima");
 					} else if (rs.getString("jenis_pilih").equals("2")) {
@@ -1020,63 +961,24 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 					h.put("status_borang_l", "");
 				}
 
-				/*
-				 * if (rs.getString("NO_HAKMILIK") == null) {
-				 * h.put("NO_HAKMILIK", ""); } else { h.put("NO_HAKMILIK",
-				 * rs.getString("NO_HAKMILIK").toUpperCase()); } if
-				 * (rs.getString("NO_LOT") == null) { h.put("NO_LOT", ""); }
-				 * else { h.put("NO_LOT", rs.getString("NO_LOT").toUpperCase());
-				 * } if (rs.getString("NAMA_MUKIM") == null) {
-				 * h.put("NAMA_MUKIM", ""); } else { h.put("NAMA_MUKIM",
-				 * rs.getString("NAMA_MUKIM").toUpperCase()); }
-				 */
-				
-				
-				
-				h.put("id_siasatan", rs.getString("ID_SIASATAN") == null ? ""
-					: rs.getString("ID_SIASATAN"));
-				
-				
-				h.put("rn",
-						rs.getString("rn") == null ? "" : rs.getString("rn"));
-				h.put("id_borange", rs.getString("ID_BORANGE") == null ? ""
-						: rs.getString("ID_BORANGE"));
-				h.put("flag_segera_sebahagian",
-						rs.getString("flag_segera_sebahagian") == null ? ""
-								: rs.getString("flag_segera_sebahagian"));
-				h.put("seksyen",
-						rs.getString("seksyen") == null ? "" : rs
-								.getString("seksyen"));
+				h.put("id_siasatan", rs.getString("ID_SIASATAN") == null ? "": rs.getString("ID_SIASATAN"));			
+				h.put("rn",rs.getString("rn") == null ? "" : rs.getString("rn"));
+				h.put("id_borange", rs.getString("ID_BORANGE") == null ? "": rs.getString("ID_BORANGE"));
+				h.put("flag_segera_sebahagian",rs.getString("flag_segera_sebahagian") == null ? "": rs.getString("flag_segera_sebahagian"));
+				h.put("seksyen",rs.getString("seksyen") == null ? "" : rs.getString("seksyen"));
 				h.put("listLOT", listLOT.toUpperCase());
 				h.put("listLOTHM", listLOTHM.toUpperCase());
 				h.put("nama2Mukim", nama2Mukim.toUpperCase());
 				h.put("nama2MukimInit", nama2Mukim);
-				h.put("bil", bil);
-				h.put("totalPB",
-						rs.getString("totalPB") == null ? "" : rs
-								.getString("totalPB"));
-				h.put("kod_jenis_hakmilik",
-						rs.getString("kod_jenis_hakmilik") == null ? "" : rs
-								.getString("kod_jenis_hakmilik"));
-				h.put("no_rujukan_ptg",
-						rs.getString("no_rujukan_ptg") == null ? "" : rs
-								.getString("no_rujukan_ptg"));
-				h.put("id_status",
-						rs.getString("id_status") == null ? "" : rs
-								.getString("id_status"));
-				h.put("no_lotpt",
-						rs.getString("NO_LOTPT") == null ? "" : rs
-								.getString("NO_LOTPT"));
-				h.put("no_fail",
-						rs.getString("no_fail") == null ? "" : rs
-								.getString("no_fail"));
-				h.put("no_subjaket", rs.getString("no_subjaket") == null ? ""
-						: rs.getString("no_subjaket"));
-				h.put("id_pegawai", rs.getString("id_pegawai") == null ? ""
-						: rs.getString("id_pegawai"));
-				h.put("id_permohonan",
-						rs.getString("id_Permohonan") == null ? "" : rs
-								.getString("id_Permohonan"));
+				h.put("totalPB",rs.getString("totalPB") == null ? "" : rs.getString("totalPB"));
+				h.put("kod_jenis_hakmilik",rs.getString("kod_jenis_hakmilik") == null ? "" : rs.getString("kod_jenis_hakmilik"));
+				h.put("no_rujukan_ptg",rs.getString("no_rujukan_ptg") == null ? "" : rs.getString("no_rujukan_ptg"));
+				h.put("id_status",rs.getString("id_status") == null ? "" : rs.getString("id_status"));
+				h.put("no_lotpt",rs.getString("NO_LOTPT") == null ? "" : rs.getString("NO_LOTPT"));
+				h.put("no_fail",rs.getString("no_fail") == null ? "" : rs.getString("no_fail"));
+				h.put("no_subjaket", rs.getString("no_subjaket") == null ? "": rs.getString("no_subjaket"));
+				h.put("id_pegawai", rs.getString("id_pegawai") == null ? "": rs.getString("id_pegawai"));
+				h.put("id_permohonan",rs.getString("id_Permohonan") == null ? "" : rs.getString("id_Permohonan"));
 				h.put("nama_pegawai", rs.getString("nama_pegawai") == null ? ""
 						: rs.getString("nama_pegawai"));
 				h.put("kod_lot",
@@ -1228,75 +1130,40 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 						totalSize += (rs.getDouble("luas_ambil") / 10000);
 					}
 				}
-				// ADDED BY ELLY
-				// myLogger.info("TOTAL SIZE LUAS >> "+totalSize);
-				h.put("luas_keseluruhan", totalSize);
+				h.put("luas_keseluruhan", String.valueOf(totalSize));
 
-				h.put("id_kategoritanah",
-						rs.getString("id_kategoritanah") == null ? "" : rs
-								.getString("id_kategoritanah"));
-				h.put("no_hakmilik", rs.getString("no_hakmilik") == null ? ""
-						: rs.getString("no_hakmilik"));
-				h.put("no_lot",
-						rs.getString("no_lot") == null ? "" : rs
-								.getString("no_lot"));
-				h.put("luas_lot",
-						rs.getString("luas_lot") == null ? "" : rs
-								.getDouble("luas_lot"));
-				h.put("no_pt",
-						rs.getString("no_pt") == null ? "" : rs
-								.getString("no_pt"));
-				h.put("catatan",
-						rs.getString("catatan") == null ? "" : rs
-								.getString("catatan"));
-
-				h.put("tarikh_daftar", rs.getDate("tarikh_daftar") == null ? ""
-						: Format.format(rs.getDate("tarikh_daftar")));
-				h.put("tarikh_luput", rs.getDate("tarikh_luput") == null ? ""
-						: Format.format(rs.getDate("tarikh_luput")));
-				h.put("tempoh_luput", rs.getString("tempoh_luput") == null ? ""
-						: rs.getString("tempoh_luput"));
-
-				h.put("lokasi",
-						rs.getString("lokasi") == null ? "" : rs
-								.getString("lokasi"));
-				h.put("syarat_nyata", rs.getString("syarat_nyata") == null ? ""
-						: rs.getString("syarat_nyata"));
-				h.put("syarat_khas", rs.getString("syarat_khas") == null ? ""
-						: rs.getString("syarat_khas"));
-
-				h.put("sekatan_hak", rs.getString("sekatan_hak") == null ? ""
-						: rs.getString("sekatan_hak"));
-				h.put("sekatan_kepentingan",
-						rs.getString("sekatan_kepentingan") == null ? "" : rs
-								.getString("sekatan_kepentingan"));
-				h.put("no_syit",
-						rs.getString("no_syit") == null ? "" : rs
-								.getString("no_syit"));
-				h.put("jenis_hakmilik",
-						rs.getString("jenis_hakmilik") == null ? "" : rs
-								.getString("jenis_hakmilik"));
-				h.put("flag_borangl", rs.getString("flag_borangl") == null ? ""
-						: rs.getString("flag_borangl"));
-
-				h.put("status_bantahan_ap",
-						rs.getString("STATUS_BANTAHAN_AP") == null ? "" : rs
-								.getString("STATUS_BANTAHAN_AP"));
-				h.put("keteranganStatusBantahan",
-						rs.getString("KETERANGAN") == null ? "" : rs
-								.getString("KETERANGAN"));
-				h.put("flag_online", rs.getString("FLAG_ONLINE") == null ? ""
-						: rs.getString("FLAG_ONLINE"));
-				h.put("tarikh_borangk", rs.getString("tarikh_borangk") == null ? ""
-						: rs.getString("tarikh_borangk"));
+				h.put("id_kategoritanah",rs.getString("id_kategoritanah") == null ? "" : rs.getString("id_kategoritanah"));
+				h.put("no_hakmilik", rs.getString("no_hakmilik") == null ? "": rs.getString("no_hakmilik"));
+				h.put("no_lot",rs.getString("no_lot") == null ? "" : rs.getString("no_lot"));
+				h.put("luas_lot",rs.getString("luas_lot") == null ? "" : String.valueOf(rs.getDouble("luas_lot")));
+				h.put("no_pt",rs.getString("no_pt") == null ? "" : rs.getString("no_pt"));
+				h.put("catatan",rs.getString("catatan") == null ? "" : rs.getString("catatan"));
+				h.put("tarikh_daftar", rs.getDate("tarikh_daftar") == null ? "": Format.format(rs.getDate("tarikh_daftar")));
+				h.put("tarikh_luput", rs.getDate("tarikh_luput") == null ? "": Format.format(rs.getDate("tarikh_luput")));
+				h.put("tempoh_luput", rs.getString("tempoh_luput") == null ? "": rs.getString("tempoh_luput"));
+				h.put("lokasi",rs.getString("lokasi") == null ? "" : rs.getString("lokasi"));
+				h.put("syarat_nyata", rs.getString("syarat_nyata") == null ? "": rs.getString("syarat_nyata"));
+				h.put("syarat_khas", rs.getString("syarat_khas") == null ? "": rs.getString("syarat_khas"));
+				h.put("sekatan_hak", rs.getString("sekatan_hak") == null ? "": rs.getString("sekatan_hak"));
+				h.put("sekatan_kepentingan",rs.getString("sekatan_kepentingan") == null ? "" : rs.getString("sekatan_kepentingan"));
+				h.put("no_syit",rs.getString("no_syit") == null ? "" : rs.getString("no_syit"));
+				h.put("jenis_hakmilik",rs.getString("jenis_hakmilik") == null ? "" : rs.getString("jenis_hakmilik"));
+				h.put("flag_borangl", rs.getString("flag_borangl") == null ? "": rs.getString("flag_borangl"));
+				h.put("status_bantahan_ap",rs.getString("STATUS_BANTAHAN_AP") == null ? "" : rs.getString("STATUS_BANTAHAN_AP"));
+				h.put("keteranganStatusBantahan",rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
+				h.put("flag_online", rs.getString("FLAG_ONLINE") == null ? "": rs.getString("FLAG_ONLINE"));
+//				h.put("tarikh_borangk", rs.getString("tarikh_borangk") == null ? "": rs.getString("tarikh_borangk"));
 
 				list_hakmilik.addElement(h);
+				
 			}
 			return list_hakmilik;
+			
 		} finally {
 			// if (db != null)
 			// db.close();
 		}
+		
 	}
 
 	protected void setupPage(HttpSession session, String action, List lists) {
