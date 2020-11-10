@@ -3265,14 +3265,17 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 		//YATI TAMBAH
 		public String simpanMaklumatAmbilPasir(String idJadualKedua, String idBulan, String tahun, String tujuanAmbil,
 				String destinasiHantar, String jumlahPasir, String jumlahRoyalti, String kontraktor, String pembeli,  
-				String tarikhMula, String tarikhTamat, String laluan, 
+				String tarikhMula, String tarikhTamat, String labelTitik, String darjahU, String minitU, String saatU, 
+				String darjahT, String minitT, String saatT, String laluan, 
 				String kaedah, String kawasan, HttpSession session) throws Exception {
 
 			Db db = null;
 			Connection conn = null;
 			String userId = (String) session.getAttribute("_ekptg_user_id");
 			String sql = "";
+			String sql2 = "";
 			String idBorangAString = "";
+			String idKoordinatString = "";
 
 			try {
 				db = new Db();
@@ -3280,6 +3283,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				conn.setAutoCommit(false);
 				Statement stmt = db.getStatement();
 				SQLRenderer r = new SQLRenderer();
+				SQLRenderer r2 = new SQLRenderer();
 
 				// TBLPHPBORANGA
 				long idBorangA = DB.getNextID("TBLPHPBORANGA_SEQ");
@@ -3313,6 +3317,24 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				myLog.info("sql simpan ambil pasir : "+sql);
 				stmt.executeUpdate(sql);
 
+				//ADD 08112020
+				//TBLPHPKOORDINATPERMOHONAN
+				long idKoordinat = DB.getNextID("TBLPHPKOORDINATPERMOHONAN_SEQ");
+				idKoordinatString = String.valueOf(idKoordinat);
+				
+				r2.add("ID_KOORDINATPERMOHONAN", idKoordinat);
+				r2.add("LABEL_TITIK", labelTitik);
+				r2.add("DARJAH_U", darjahU);
+				r2.add("MINIT_U", minitU);
+				r2.add("SAAT_U", saatU);
+				r2.add("DARJAH_T", darjahT);
+				r2.add("MINIT_T", minitT);
+				r2.add("SAAT_T", saatT);
+
+				sql2 = r2.getSQLInsert("TBLPHPKOORDINATPERMOHONAN");
+				myLog.info("sql :"+sql2);
+				stmt.executeUpdate(sql2);
+				
 				conn.commit();
 
 			} catch (SQLException ex) {
@@ -3333,14 +3355,17 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 		
 		//yati tambah
 		public void simpanKemaskiniMaklumatPasir(String idBorangA, String idBulan, String tahun, String tujuanAmbil, String destinasiHantar,
-				String jumlahPasir, String jumlahRoyalti, String kontraktor, String pembeli,
-				String tarikhMula, String tarikhTamat, String laluan, String kaedah, String kawasan, HttpSession session)
+				String jumlahPasir, String jumlahRoyalti, String kontraktor, String pembeli, String tarikhMula, String tarikhTamat, 
+				String laluan, String kaedah, String kawasan, String labelTitik, String darjahU, String minitU, String saatU, 
+				String darjahT, String minitT, String saatT, HttpSession session)
 				throws Exception {
 
 			Db db = null;
 			Connection conn = null;
 			String userId = (String) session.getAttribute("_ekptg_user_id");
 			String sql = "";
+			String sql2 = "";
+			String idKoordinatString = "";
 
 			try {
 				db = new Db();
@@ -3348,6 +3373,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				conn.setAutoCommit(false);
 				Statement stmt = db.getStatement();
 				SQLRenderer r = new SQLRenderer();
+				SQLRenderer r2 = new SQLRenderer();
 
 				// TBLPHPBORANGA
 				r.update("ID_BORANGA", idBorangA);
@@ -3376,6 +3402,23 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				sql = r.getSQLUpdate("TBLPHPBORANGA");
 				myLog.info("sql borang A : "+sql);
 				stmt.executeUpdate(sql);
+				
+				//ADD 08112020
+				//TBLPHPKOORDINATPERMOHONAN
+				long idKoordinat = DB.getNextID("TBLPHPKOORDINATPERMOHONAN_SEQ");
+				idKoordinatString = String.valueOf(idKoordinat);
+				
+				r2.add("ID_KOORDINATPERMOHONAN", idKoordinat);
+				r2.add("LABEL_TITIK", labelTitik);
+				r2.add("DARJAH_U", darjahU);
+				r2.add("MINIT_U", minitU);
+				r2.add("SAAT_U", saatU);
+				r2.add("DARJAH_T", darjahT);
+				r2.add("MINIT_T", minitT);
+				r2.add("SAAT_T", saatT);
+
+				sql2 = r2.getSQLInsert("TBLPHPKOORDINATPERMOHONAN");
+				stmt.executeUpdate(sql2);
 
 				conn.commit();
 
