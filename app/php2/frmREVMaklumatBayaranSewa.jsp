@@ -122,6 +122,15 @@ function janaPenyataAkaun(idHasil) {
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
 }
+function janaHapusKira(idHasil) {
+
+	var url = "../servlet/ekptg.report.php2.REVHapusKira?ID_HASIL="+idHasil;
+    var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
 function janaSuratIringanResit(idHasil) {
 
 	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupCetakLaporanView?idHasil="+idHasil+"&report=suratIringanResit";

@@ -1,3 +1,6 @@
+#foreach ($data2 in $beanHeaderBorangA)
+	#set ($id_jadualkedualesenAPB = $data2.idJadualKedua)
+#end
 <style type="text/css">
 <!--
 .style52 {font-size: 9px; font-style: italic; color: #0000FF; }
@@ -5,8 +8,11 @@
 </style>
 <p>
 	<input type="hidden" name="actionOnline" id="actionOnline" value="$actionOnline"/>
+	<input type="hidden" name="flagPopup" id="flagPopup" value="$flagPopup"/>
+	<input type="hidden" name="modePopup" id="modePopup" value="$modePopup"/>
 	<input type="hidden" name="idJadualKeduaLesen" id="idJadualKeduaLesen" value="$idJadualKeduaLesen" />
 	<input type="hidden" name="id_laporanpasir" id="id_laporanpasir" value="$id_laporanpasir" />
+	<input type="hidden" name="idDokumen" id="idDokumen" value="$idDokumen" />
 	<input name="mode" type="hidden" id="mode" value="$mode"/>
   <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
 </p>
@@ -194,7 +200,7 @@
 		    	#if ($button=="view")
 			    <input type="text" name="txtMasaOperasi" id="txtMasaOperasi" value="$!txtMasaOperasi" size="10" class="disabled" readonly />
 			    #else
-			    <input type="text" name="txtMasaOperasi" id="txtMasaOperasi" value="$!txtMasaOperasi" size="10" />
+			    <input type="text" name="txtMasaOperasi" id="txtMasaOperasi" value="$!txtMasaOperasi" size="10" /> &nbsp;&nbsp;<font color="red">Contoh: 8.00 AM</font>
 			    #end
 			</td>
 	   </tr>
@@ -273,7 +279,8 @@
     
     #if ($button=="add")
       <input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="simpanLaporan()" />    
-   	  <input type="button" name="cmdBatal" id="cmdBatal" value="Batal/Kembali" onclick="batalBaru()" />      
+<!--    	  <input type="button" name="cmdBatal" id="cmdBatal" value="Batal/Kembali" onclick="batalBaru()" />     -->
+   	  <input type="button" name="cmdBatal" id="cmdBatal" value="Batal/Kembali" onclick="kembali_pelesen('$idJadualKeduaLesen')" />   
     #end
     
     #if ($button=="edit")
@@ -304,7 +311,7 @@
         	<td><input name="cmdTambah" id="cmdTambah" value="Tambah" type="button" onclick="javascript:uploadBaruDokumen('$id_laporanpasir')" /></td>           
      	</tr>
 	</table>
-	<input type="hidden" name="id_dokumen" id="id_dokumen"  />
+<!-- 	<input type="hidden" name="id_dokumen" id="id_dokumen"  /> -->
 	<table width="100%"  cellpadding="1" cellspacing="2" border="0">
 		<tr class="table_header">
         	<td scope="row" width="0.5%" align="center">Bil</td>
@@ -320,7 +327,7 @@
                 <tr valign="top">
                   <td class="$row" align="center">$senarai.bil</td>            
                   <td class="$row">
-                  <a href="javascript:paparMaklumatDokumen('$senarai.id_dokumen')"><font color="blue">$senarai.nama_dokumen</font></a></td>  
+                  <a href="javascript:paparMaklumatDokumen('$senarai.idDokumen')"><font color="blue">$senarai.namaDokumen</font></a></td>  
               	</tr>          
             #end
             #else
@@ -408,7 +415,7 @@
 
 function cetakAPBLaporanPengeluaranPasirLaut(id_jadualkedualesenAPB,bulan_pengambilan,id_laporanpasir) {
 
-	var url = "../servlet/ekptg.report.php2.APBLaporanPengeluaranPasirLaut?id_jadualkedualesenapb="+id_jadualkedualesenAPB+"&bulan_pengambilan="+bulan_pengambilan+"&id_laporanpasir="+id_laporanpasir;
+	var url = "../servlet/ekptg.report.php2.online.PengesahanOnline?template=APBLaporanPengeluaranPasirLaut&folder=ONLINE&id_jadualkedualesenapb="+id_jadualkedualesenAPB+"&bulan_pengambilan="+bulan_pengambilan+"&id_laporanpasir="+id_laporanpasir;
 	
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
@@ -589,13 +596,20 @@ function simpanEditLaporan() {
 				
 }
 
+// function hapusLaporan(id_laporanpasir){
+// 	input_box = confirm("Adakah anda pasti?");
+// 	if (input_box == true) {
+// 	var id_laporanpasir = document.${formName}.id_laporanpasir.value ;		
+// 	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView&command=hapusLaporan&id_laporanpasir="+id_laporanpasir;	
+// 	document.${formName}.submit();
+// 	}	
+// }
+
 function hapusLaporan(id_laporanpasir){
-	input_box = confirm("Adakah anda pasti?");
-	if (input_box == true) {
-	var id_laporanpasir = document.${formName}.id_laporanpasir.value ;		
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView&command=hapusLaporan&id_laporanpasir="+id_laporanpasir;	
+	if ( !window.confirm("Adakah Anda Pasti?") ) return;
+	document.${formName}.id_laporanpasir.value = id_laporanpasir;
+	document.${formName}.actionOnline.value = "hapusLaporan";
 	document.${formName}.submit();
-	}	
 }
 
 
@@ -659,13 +673,16 @@ function getAnggaranRoyalti(){
 function uploadBaruDokumen(id_laporanpasir) {
 	document.${formName}.id_laporanpasir.value = id_laporanpasir;
 	document.${formName}.actionOnline.value = "uploadBaruDokumen";
+	// document.${formName}.flagPopup.value = "openPopupDokumen";
+	document.${formName}.modePopup.value = "new";
 	document.${formName}.submit();
 }
 
-function paparMaklumatDokumen(id_dokumen) {
-	alert(id_dokumen);
-	document.${formName}.id_dokumen.value = id_dokumen;
-	document.${formName}.actionOnline.value = "paparDokumen";
+function paparMaklumatDokumen(idDokumen) {
+	// alert(idDokumen);
+	document.${formName}.idDokumen.value = idDokumen;
+	document.${formName}.actionOnline.value = "uploadBaruDokumen";
+	document.${formName}.modePopup.value = "view";
 	document.${formName}.submit();
 }
 function calculateRoyalti()

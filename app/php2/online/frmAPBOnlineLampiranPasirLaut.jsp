@@ -20,8 +20,9 @@
 #end
 
 <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-<input type="hidden" name="id_dokumen" id="id_dokumen" value="$id_dokumen" />
 <input type="hidden" name="id_laporanpasir" id="id_laporanpasir" value="$id_laporanpasir" />
+<input type="hidden" name="idJadualKeduaLesen" id="idJadualKeduaLesen" value="$idJadualKeduaLesen" />
+<input type="hidden" name="idPermohonan" id="idPermohonan" value="$idPermohonan" />
 <input type="hidden" name="actionOnline" id="actionOnline" value="$actionOnline"/>
 <input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
 <input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
@@ -32,7 +33,8 @@
     <td ><fieldset>
       <legend>Muatnaik Laporan Pengeluaran Pasir Laut</legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
-        #foreach ($beanMaklumatImejan in $BeanMaklumatImejan)
+        #foreach ($beanMaklumatImejan in $BeanMaklumatDokumen)
+        <input type="hidden" name="idDokumen" id="idDokumen" value="$beanMaklumatImejan.idDokumen" />
         <tr>
           <td width="1%">#if ($modePopup != 'view')<span class="style3">*</span>#end</td>
           <td width="28%">Nama Dokumen</td>
@@ -61,7 +63,7 @@
           <td>&nbsp;</td>
         </tr>
         #end
-        #end
+      #end
         #if ($modePopup == 'new')
         <tr>
           <td>#if ($modePopup != 'view')<span class="style3">*</span>#end</td>
@@ -86,16 +88,16 @@
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td> #if ($modePopup == 'new')
-            <input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="simpanDokumen('$id_laporanpasir','$idPermohonan')" />    
+            <input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="simpanDokumen('$id_laporanpasir','$idPermohonan','$idJadualKeduaLesen')" />    
 		   	<input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="batalTambahDokumen()" />
             #end
             #if ($modePopup == 'view')
-            <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskiniDokumen()"/>
-		    <input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onclick="hapusDokumen('$id_dokumen')"/>
-		    <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembaliSenaraiDokumen()" /> 
+            <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskiniDokumen('$idDokumen')"/>
+		    <input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onclick="hapusDokumen('$idDokumen')"/>
+		    <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembaliSenaraiDokumen('$id_laporanpasir')" /> 
             #end
             #if ($modePopup == 'update')
-            <input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="simpanKemaskiniDokumen()" />    
+            <input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="simpanUpdateDokumen('$idDokumen')" />    
 		   	<input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="batalKemaskini()" />
             #end </td>
         </tr>
@@ -183,6 +185,44 @@
 
 
 <script>
+function simpanDokumen(id_laporanpasir,idPermohonan,idJadualKeduaLesen) {
+
+	if(document.${formName}.txtNamaDokumen.value == ""){
+	    alert('Sila masukkan Nama Fail.');
+	      document.${formName}.txtNamaDokumen.focus(); 
+	    return; 
+	  }
+	  if(document.${formName}.fileupload.value == ""){
+	    alert('Sila pilih Fail yang Ingin Dimuatnaik.');
+	      document.${formName}.fileupload.focus(); 
+	    return; 
+	  }
+
+	  if ( !window.confirm("Adakah Anda Pasti ?") ){
+	    return;
+	  }
+	  
+	  var namaLampiran = document.${formName}.txtNamaDokumen.value;
+	  var catatanLampiran = document.${formName}.txtCatatan.value ;
+	  var dp = document.${formName}.form_token.value ;
+	  var dopost = "&form_token="+dp;
+	  
+	  document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView&hitButton=simpanDokumen&namaLampiran="+namaLampiran+"&catatanLampiran="
+	  +catatanLampiran+"&idPermohonan="+idPermohonan+dopost+"&actionOnline=papar_laporan&id_laporanpasir="+id_laporanpasir+"&idJadualKeduaLesen="+idJadualKeduaLesen;
+	  document.${formName}.method="post";
+	  document.${formName}.enctype="multipart/form-data";
+	  document.${formName}.encoding="multipart/form-data";
+	  document.${formName}.submit();
+}
+
+function cetakImej(id){
+	var url = "../servlet/ekptg.view.php2.FrmDisplayImage?id="+id;
+    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener=document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+	
 function batalTambahDokumen() {
 	if ( !window.confirm("Adakah Anda Pasti?") ) return;
 	document.${formName}.actionOnline.value = "papar_laporan";
@@ -192,6 +232,8 @@ function batalTambahDokumen() {
 function kembaliSenaraiDokumen(id_laporanpasir) {
 	document.${formName}.id_laporanpasir.value = id_laporanpasir;
 	document.${formName}.actionOnline.value = "papar_laporan";
+	document.${formName}.hitButton.value = "";
+	document.${formName}.modePopup.value = "";
 	document.${formName}.submit();
 }
 
@@ -201,11 +243,44 @@ function batalKemaskini(id_dokumen) {
 	document.${formName}.submit();
 }
 
-function kemaskiniDokumen(id_dokumen) {
+function kemaskiniDokumen(idDokumen) {
 	
-	document.${formName}.id_dokumen.value = id_dokumen;
-	document.${formName}.actionOnline.value = "kemaskiniDokumen";
+	document.${formName}.idDokumen.value = idDokumen;
+	document.${formName}.actionOnline.value = "uploadBaruDokumen";
+	document.${formName}.modePopup.value = "update";
 	document.${formName}.submit();
+}
+
+function simpanUpdateDokumen(id_laporanpasir,idJadualKeduaLesen,idDokumen){
+	if(document.${formName}.txtNamaDokumen.value == ""){
+	    alert('Sila masukkan Nama Fail.');
+	      document.${formName}.txtNamaDokumen.focus(); 
+	    return; 
+	  }
+// 	  if(document.${formName}.fileupload.value == ""){
+// 	    alert('Sila pilih Fail yang Ingin Dimuatnaik.');
+// 	      document.${formName}.fileupload.focus(); 
+// 	    return; 
+// 	  }
+
+	  if ( !window.confirm("Adakah Anda Pasti ?") ){
+	    return;
+	  }
+	  
+	  var namaLampiran = document.${formName}.txtNamaDokumen.value;
+	  var catatanLampiran = document.${formName}.txtCatatan.value ;
+	  var dp = document.${formName}.form_token.value ;
+	  var dopost = "&form_token="+dp;
+	  
+// 	  document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView&hitButton=simpanKemaskiniLampiran&namaLampiran="+namaLampiran+"&catatanLampiran="
+// 	  +catatanLampiran+dopost+"&actionOnline=uploadBaruDokumen&modePopup=view&id_laporanpasir="+id_laporanpasir+"&idJadualKeduaLesen="+idJadualKeduaLesen+"&idDokumen="+idDokumen;
+	  
+	  document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView&hitButton=simpanKemaskiniLampiran&actionOnline=uploadBaruDokumen&modePopup=view";
+	  
+// 	  document.${formName}.method="post";
+// 	  document.${formName}.enctype="multipart/form-data";
+// 	  document.${formName}.encoding="multipart/form-data";
+	  document.${formName}.submit();
 }
 
 function simpanKemaskiniDokumen() {
@@ -232,11 +307,17 @@ function simpanKemaskiniDokumen() {
 	}				
 }
 
-function hapusDokumen(id_dokumen){
+function hapusDokumen(idDokumen){
 	input_box = confirm("Adakah anda pasti?");
 	if (input_box == true) {
-	var id_dokumen = document.${formName}.id_dokumen.value ;		
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView&command=hapusDokumen&id_dokumen="+id_dokumen;	
+// 	var idDokumen = document.${formName}.idDokumen.value ;		
+// 	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView&hitButton=hapusDokumen&actionOnline=papar_laporan&modePopup=&idDokumen="+idDokumen;
+	
+	document.${formName}.idDokumen.value = idDokumen;
+	document.${formName}.hitButton.value = "hapusDokumen";
+	document.${formName}.actionOnline.value = "papar_laporan";
+	document.${formName}.modePopup.value = "";
+	
 	document.${formName}.submit();
 	}	
 }
