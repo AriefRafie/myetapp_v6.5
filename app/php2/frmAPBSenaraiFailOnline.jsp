@@ -53,7 +53,7 @@
           <td width="10%"><strong>Kawasan Dipohon</strong></td>
           <td width="10%"><strong>Jenis Permohonan</strong></td>
           <td width="8%"><strong>Jenis Lesen</strong></td>
-          <td width="10%"><strong>Status</strong></td>
+          ##<td width="10%"><strong>Status</strong></td>
         </tr>
         #set ($list = "")
    		#if ($SenaraiFail.size() > 0)
@@ -76,7 +76,7 @@
           <td class="$row">$list.kawasanDipohon</td>
           <td class="$row">$list.jenisPermohonan</td>
           <td class="$row">$list.jenisLesen</td>
-          <td class="$row">$list.status</td>
+          ##<td class="$row">$list.status</td>
         </tr>
    		#end
  	

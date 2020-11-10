@@ -32,7 +32,7 @@
   #end
   <tr>
     <td ><span class="style1">*</span></td>
-    <td >Tarikh  Notis</td>
+    <td >Tarikh Mula Notis</td>
     <td >:</td>
     <td ><input type="text" name="tarikhNotis" id="tarikhNotis" onblur="check_date(this)" size="9"/>
       <a href="javascript:displayDatePicker('tarikhNotis',false,'dmy');"><img border="0" src="../../img/calendar.gif"/></a></td>
@@ -60,31 +60,31 @@
 function janaNotisTuntutanTunggakan(){
 	if(document.${formName}.bilPeringatan.value == ""){
 		alert('Sila pilih bilangan Peringatan.');
-  		document.${formName}.bilPeringatan.focus(); 
-		return; 
+  		document.${formName}.bilPeringatan.focus();
+		return;
 	}
 	if(document.${formName}.tarikhNotis.value == ""){
 		alert('Sila masukan Tarikh Notis.');
-  		document.${formName}.tarikhNotis.focus(); 
-		return; 
+  		document.${formName}.tarikhNotis.focus();
+		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
-	}	
+	}
 	doAjaxCall${formName}("janaNotisTuntutanTunggakan");
 }
 
 function janaNotisRampasanDeposit(){
 	if(document.${formName}.tarikhNotis.value == ""){
 		alert('Sila masukan Tarikh Notis.');
-  		document.${formName}.tarikhNotis.focus(); 
-		return; 
+  		document.${formName}.tarikhNotis.focus();
+		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
-	}	
+	}
 	doAjaxCall${formName}("janaNotisRampasanDeposit");
 }
 </script>
@@ -93,4 +93,4 @@ function janaNotisRampasanDeposit(){
 window.opener.doRefreshScreen();
 window.close();
 </script>
-#end 
+#end

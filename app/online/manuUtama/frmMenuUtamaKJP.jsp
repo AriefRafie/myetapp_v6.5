@@ -117,9 +117,9 @@ function toggle_div(id) {
 																<!-- <a href="#" onclick="toggle_div('toggleDiv');" class="help" title="Membuat Permohonan Pengambilan Tanah"> -->
 																<a href="javascript:permohonanUPT()" class="help" title="Membuat Permohonan Pengambilan Tanah">
 																	<font color="blue"><li>
-																	#if($!jumlah_notifikasi > 0)
+																	#if($!jumlah_notifikasi_permohonan > 0)
 																		<label style="background-color:blue" align="center" valign="top" >
-																			<b><font color="WHITE"><blink>$!jumlah_notifikasi</blink></font></b>
+																			<b><font color="WHITE"><blink>$!jumlah_notifikasi_permohonan</blink></font></b>
 																		</label>&nbsp;
 																	#end
 
@@ -136,21 +136,16 @@ function toggle_div(id) {
 
 														<tr>
 															<td>
-																<!-- <a href="#" onclick="toggle_div('toggleDiv');" class="help" title="Membuat Permohonan Pengambilan Tanah"> -->
+																<a href="#" onclick="toggle_div('toggleDiv');" class="help" title="Membuat Permohonan Pengambilan Tanah">
 																<a href="javascript:maklumatPembayaran()" class="help" title="Notifikasi Masukkan Maklumat Pembayaran">
 																	<font color="blue"><li>
-																	#if($!jumlah_notifikasi > 0)
+																	#if($!jumlah_notifikasi_pembayaran > 0)
 																		<label style="background-color:blue" align="center" valign="top" >
-																			<b><font color="WHITE"><blink>$!jumlah_notifikasi</blink></font></b>
+																			<b><font color="WHITE"><blink>$!jumlah_notifikasi_pembayaran</blink></font></b>
 																		</label>&nbsp;
 																	#end
 
-																	<!--
-																	<label style="background-color:blue" align="center" valign="top" >
-																				<b><font color="WHITE"><blink>$!jumlah_notifikasitolak</blink></font></b>
-																		</label>&nbsp;
-																	 -->
-
+										
 																	Notifikasi Maklumat Pembayaran</li></font>
 																</a>
 															</td>
@@ -207,14 +202,21 @@ function toggle_div(id) {
 														<tr>
 															<td>
 																<a href="javascript:pembayaranOnline()" class="help" title="Pembayaran Online">
-																	<font color="blue"><li>&nbsp;Pembayaran Online</li></font>
+																	<font color="blue"><li>&nbsp;Status Pembayaran Pampasan</li></font>
 																</a>
 															</td>
 														</tr>
 														<tr>
 															<td>
 																<a href="javascript:siasatanOnline()" class="help" title="Siasatan Online">
-																	<font color="blue"><li>&nbsp;Siasatan Online</li></font>
+																	<font color="blue"><li>&nbsp;Status Siasatan</li></font>
+																</a>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																<a href="javascript:rayuanOnline()" class="help" title="Status Rayuan Bantahan">
+																	<font color="blue"><li>&nbsp;Status Rayuan Bantahan</li></font>
 																</a>
 															</td>
 														</tr>
@@ -614,6 +616,7 @@ function toggle_div(id) {
 													#if($list_memo_aktif.size()>0)
 														<li class="TabbedPanelsTab" tabindex="0" id="Pengumuman_Head">Pengumuman</li>
 													#end
+													
 												</ul>
 												<div class="TabbedPanelsContentGroup">
 													#if($list_memo_aktif.size()>0)
@@ -634,7 +637,7 @@ function toggle_div(id) {
 															</table>
 														</div>
 													#end
-												</div>
+										</div>
 											</div>
 										</td>
 									</tr>
@@ -651,10 +654,11 @@ function toggle_div(id) {
 </p>
 <input type="hidden" name="jawatan" id="jawatan" value="$!jawatan">
 <input type="hidden" name="flag_noti" id="flag_noti" value="">
-<input type="hidden" name="notifikasi" id="notifikasi" value="$!jumlah_notifikasi">
+<input type="hidden" name="notifikasi" id="notifikasi" value="$!jumlah_notifikasi_permohonan">
 <div id="divMainStats">
 <script>
-
+//shiqa tambah - untuk keluarkan tab kanan 
+var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:0});
 
 <!-- AISHAH TAMBAH START -->
 function gotoSek4()
@@ -695,9 +699,8 @@ function permohonanUPT(){
 
 function maklumatPembayaran(){
 //	document.$(formName).jawatan.value = "$!jawatan";
-	document.${formName}.action = "$EkptgUtil.getTabID('Pengambilan Tanah',$portalRole)?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline";
-
-	var flag_noti = "";
+	document.${formName}.action = "$EkptgUtil.getTabID('Pengambilan Tanah',$portalRole)?_portal_module=ekptg.view.ppt.FrmNotifikasiPembayaran";
+	 var flag_noti = "";
 	var noti = document.getElementById('notifikasi').value;
 	//alert(" noti : "+noti);
 	if(noti!="")
@@ -710,7 +713,7 @@ function maklumatPembayaran(){
 
 	}
 	document.getElementById('flag_noti').value = flag_noti;
-
+ 
 
 //	document.${formName}.action = "$EkptgUtil.getTabID('Menu Utama',$portalRole)?_portal_module=ekptg.view.online.FrmOnlineMenuUtamaKJP";
 	document.${formName}.submit();
@@ -734,17 +737,21 @@ function permohonanDaftarBantahan(){
 	document.${formName}.submit();
 }
 function pembayaranOnline(){
-	document.${formName}.action = "$EkptgUtil.getTabID('Pengambilan Tanah',$portalRole)?_portal_module=ekptg.view.ppt.FrmPembayaranOnline";
+	document.${formName}.action = "$EkptgUtil.getTabID('Pengambilan Tanah',$portalRole)?_portal_module=ekptg.view.ppt.FrmStatusPampasanOnline";
+	document.${formName}.submit();
+}
+function rayuanOnline(){
+	document.${formName}.action = "$EkptgUtil.getTabID('Pengambilan Tanah',$portalRole)?_portal_module=ekptg.view.ppt.FrmRayuanBantahanOnline";
 	document.${formName}.submit();
 }
 function siasatanOnline(){
 	document.${formName}.action = "$EkptgUtil.getTabID('Pengambilan Tanah',$portalRole)?_portal_module=ekptg.view.ppt.FrmSiasatanOnline";
 	document.${formName}.submit();
 }
-function rayuanOnline(){
+/*function rayuanOnline(){
 	document.${formName}.action = "$EkptgUtil.getTabID('Pengambilan Tanah',$portalRole)?_portal_module=ekptg.view.ppt.FrmRayuanOnline";
 	document.${formName}.submit();
-}
+}*/
 function ulasanJPBD(){
 	document.${formName}.action = "$EkptgUtil.getTabID('Pengambilan Tanah',$portalRole)?_portal_module=ekptg.view.ppt.FrmUlasanJPBDOnline";
 	document.${formName}.submit();

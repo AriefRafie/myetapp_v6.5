@@ -217,7 +217,7 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
 		socDaerahBaru =  UtilHTML.SelectDaerahByNegeri(String.valueOf(tempIdNegeri),"socDaerahBaru");
 
 		socUnit = UtilHTML.selectKementerianLaporanPemantauan("socUnit", Long.parseLong(getParam("socUnit")==""?"-1":getParam("socUnit")), null, "onChange=\"doChangeKementerian()\" style=\"width:400\"");
-		socAgensi = UtilHTML.SelectAgensiLaporan("socDaerah","-1","-1"," style=\"width:400\"","");
+		socAgensi = UtilHTML.SelectAgensiLaporanPemantauan("socDaerah","-1","-1"," style=\"width:400\"","");
 
 	}
 
@@ -227,12 +227,11 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
 		String idAgen = getParam("socDaerah")==""?"-1":getParam("socDaerah");
 
 		socStatus = UtilHTML.selectStatusLaporanPenyewaan("4", "socStatus" ,idStatus, "", "");
-		displayNegeri(tempIdNegeri);
+		socNegeri = UtilHTML.selectNegeriLaporanPemantauan("socNegeri",tempIdNegeri, "", " onChange=\"doChangeNegeri()\"", null);
 		socDaerahBaru =  UtilHTML.SelectDaerahByNegeri(String.valueOf(tempIdNegeri),"socDaerahBaru",tempIdDaerah, "");
 
 		socUnit = UtilHTML.selectKementerianLaporanPemantauan("socUnit", Long.parseLong(idKementerian), null, "onChange=\"doChangeKementerian()\" style=\"width:400\"");
-		socAgensi = UtilHTML.SelectAgensiLaporan("socDaerah",idKementerian,Long.parseLong(idAgen)," style=\"width:400\"","");
-
+		socAgensi = UtilHTML.SelectAgensiLaporanPemantauan("socDaerah",idKementerian,Long.parseLong(idAgen)," style=\"width:400\"","");
 	}
 
 	public void setSOC(Long tempIdNegeri, String idStatus, String idDaerah, String idAgen) throws Exception{
@@ -247,13 +246,10 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
 		socDaerahBaru =  UtilHTML.SelectDaerahByNegeri(String.valueOf(tempIdNegeri),"socDaerahBaru",tempIdDaerah, "");
 
 		socUnit = UtilHTML.selectKementerianLaporanPemantauan("socUnit", Long.parseLong(getParam("socUnit")==""?"-1":getParam("socUnit")), null, "onChange=\"doChangeKementerian()\" style=\"width:400\"");
-		socAgensi = UtilHTML.SelectAgensiLaporan("socDaerah",idKementerian,Long.parseLong(idAgen)," style=\"width:400\"","");
-
+		socAgensi = UtilHTML.SelectAgensiLaporanPemantauan("socDaerah",idKementerian,Long.parseLong(idAgen)," style=\"width:400\"","");
 	}
 
 	public void setSOC(Long tempIdNegeri, String idStatus, String idDaerah, String idAgen,String idKementerian) throws Exception{
-		System.out.println("tempIdNegeri >>> "+tempIdNegeri+" idStatus >>>> "+idStatus+" idDaerah >>> "
-	+idDaerah+" idAgen >>> "+idAgen+" idKementerian >> "+idKementerian);
 		Long tempIdDaerah = Long.parseLong(idDaerah);
 		//String idKementerian = getParam("socUnit")==""?"-1":getParam("socUnit");
 		//String idAgen = getParam("socDaerah")==""?"-1":getParam("socDaerah");
@@ -263,7 +259,7 @@ public class PYWLaporanPemantauan extends AjaxBasedModule {
 		socDaerahBaru =  UtilHTML.SelectDaerahByNegeri(String.valueOf(tempIdNegeri),"socDaerahBaru",tempIdDaerah, "");
 
 		socUnit = UtilHTML.selectKementerianLaporanPemantauan("socUnit", Long.parseLong(idKementerian), null, "");
-		socAgensi = UtilHTML.SelectAgensiLaporan("socDaerah",idKementerian,Long.parseLong(idAgen)," style=\"width:400\"","");
+		socAgensi = UtilHTML.SelectAgensiLaporanPemantauan("socDaerah",idKementerian,Long.parseLong(idAgen)," style=\"width:400\"","");
 
 	}
 

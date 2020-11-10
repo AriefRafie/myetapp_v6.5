@@ -7,7 +7,8 @@
 
 
 
-#if($flag_skrin == "daftar_sek8_online" || $flag_skrin == "skrin_hakmilik_sek8_KJP" ) 
+#if($flag_skrin == "daftar_sek8_online" || $flag_skrin == "skrin_hakmilik_sek8_KJP" 
+|| $flag_skrin == "siasatan_online" || $flag_skrin == "bantahan_online") 
 <link rel="stylesheet" type="text/css" href="../../css/eTapp_KJP.css">
 #else
 <link rel="stylesheet" type="text/css" href="../../css/eTapp_PPT.css">
@@ -166,7 +167,7 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                         #if($flag_skrin == "daftar_sek8_online")  
                         
                         
-                        #elseif($flag_skrin == "bantahan_mahkamah") 
+                        #elseif($flag_skrin == "bantahan_mahkamah" || $flag_skrin == "bantahan_online") 
                      
                         <td ><b><font color="white">STATUS BANTAHAN</font></b></td>
                         #else
@@ -182,7 +183,7 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                 		<td   align="center"><b><font color="white">TAMBAH BANGUNAN</font></b></td>                		 
                         #end 
                         
-                         #if($flag_skrin == "senarai_siasatan" || $flag_skrin == "senarai_siasatan_sementara")
+                         #if($flag_skrin == "senarai_siasatan" || $flag_skrin == "senarai_siasatan_sementara" || $flag_skrin == "siasatan_online")
                         
                 		<td   align="center"><b><font color="white">SIASATAN</font></b></td>   
                 		 
@@ -232,7 +233,10 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                         
                         <a href="javascript:paparByAgensi('$listTanah.id_hakmilik','$listTanah.status_bantahan_ap','$id_permohonan','$flag_skrin')"><font color="blue">$!listTanah.kod_jenis_hakmilik $!listTanah.no_hakmilik</font></a>
                        
-                       	#elseif($flag_skrin == "kemasukan_borangF")
+                        #elseif($flag_skrin == "bantahan_online")
+                        <a href="javascript:paparByAgensi('$listTanah.id_hakmilik','$listTanah.status_bantahan_ap','$id_permohonan','$flag_skrin')">$!listTanah.kod_jenis_hakmilik $!listTanah.no_hakmilik</a>
+                       
+                       	#elseif($flag_skrin == "kemasukan_borangF" )
                         <a href="javascript:kemasukanBorangF('$!listTanah.id_hakmilik','$id_permohonan','$flag_skrin','$!listTanah.id_borange')"><font color="blue">
                         
                         #if($!listTanah.no_hakmilik != "")
@@ -243,7 +247,7 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                         
                         
                         </font></a>
-                       	#elseif($flag_skrin == "senarai_siasatan" || $flag_skrin == "senarai_siasatan_sementara"  || $flag_skrin == "hakmilik_borangL")
+                       	#elseif($flag_skrin == "senarai_siasatan" || $flag_skrin == "senarai_siasatan_sementara"  || $flag_skrin == "hakmilik_borangL" || $flag_skrin == "siasatan_online")
                         $!listTanah.kod_jenis_hakmilik $!listTanah.no_hakmilik
                         
                         
@@ -293,7 +297,7 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                         
                         #if($flag_skrin == "daftar_sek8_online") 
                         
-                        #elseif($flag_skrin == "bantahan_mahkamah") 
+                        #elseif($flag_skrin == "bantahan_mahkamah" || $flag_skrin == "bantahan_online") 
                         <td class="$rowx">
                           #if ( ($listTanah.flag_online == '1') || ($listTanah.flag_online == '2') )
                           <font color="red">$listTanah.keteranganStatusBantahan (Permohonan Online)</font>
@@ -355,36 +359,35 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                 		</td> 
                         #end
                         
-                         #if($flag_skrin == "senarai_siasatan" || $flag_skrin == "senarai_siasatan_sementara")
+                         #if($flag_skrin == "senarai_siasatan" || $flag_skrin == "senarai_siasatan_sementara" || $flag_skrin == "siasatan_online")
                         
                 		 <td class="$rowx">
             
 
        
-       #if($listTanah.id_siasatan != "")      
+       #if($listTanah.id_siasatan != "" && $flag_skrin != "siasatan_online")      
              
                          <table width="100%"  >
 <tr>
 <td colspan="3">
  <div align="left"><a href="javascript:papar('$listTanah.id_siasatan','$listTanah.id_hakmilik','$flag_skrin')" title="Memaparkan secara lengkap maklumat siasatan"><font color="blue">MAKLUMAT  SIASATAN</font></a></div></td>
 </tr>
-
 <tr>
 <td colspan="3">
  <div align="left"><a href="javascript:kehadiran('$listTanah.id_siasatan','$flag_skrin')" title="Memaparkan secara lengkap maklumat kehadiran"><font color="blue">MAKLUMAT KEHADIRAN</font></a></div></td>
 </tr>
-
-
 <tr>
 <td colspan="3">
  <div align="left"><a href="javascript:maklumatsiasatan('$listTanah.id_siasatan','$flag_skrin')" title="Memaparkan secara lengkap nota siasatan"><font color="blue">NOTA SIASATAN </font></a></div></td>
 </tr>
 </table> 
-               #else      
-            
+         #elseif($flag_skrin == "siasatan_online" && $listTanah.id_siasatan != "")
+ <div align="left"><a href="javascript:papar1('$listTanah.id_siasatan','$listTanah.id_hakmilik','$flag_skrin')" title="Memaparkan secara lengkap maklumat siasatan"><font color="blue">MAKLUMAT  SIASATAN</font></a></div></td>
+               #elseif($flag_skrin == "siasatan_online" && $listTanah.id_siasatan == "")
+               <div align="left"><font color="red">Siasatan Masih Belum Dijalankan</font></div>         
+           #else
            <div align="left"><a href="javascript:UrusanSiasatanSingle('$listTanah.id_hakmilik','','$flag_skrin')" title="Memaparkan secara lengkap maklumat siasatan"><font color="blue">MAKLUMAT SIASATAN</font></a></div>
-                
-                #end    
+           #end    
                      
                      
                       </td>     
@@ -473,7 +476,7 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 </table>
 -->
 
- #if($flag_skrin == "senarai_siasatan" || $flag_skrin == "senarai_siasatan_sementara")
+ #if($flag_skrin == "senarai_siasatan" || $flag_skrin == "senarai_siasatan_sementara" || $flag_skrin == "siasatan_online")
  <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td>
@@ -658,7 +661,7 @@ function refreshSkrinHakmilik(id_permohonan,flag_skrin)
 function UrusanSiasatanSingle(id_hakmilik,id_pembatalan,flag_skrin)
 {
    try {
-	    if(flag_skrin=="senarai_siasatan")
+	    if(flag_skrin=="senarai_siasatan" || $flag_skrin == "siasatan_online")
 		{	    
         window.opener.UrusanSiasatanSingle(id_hakmilik,'');	
 		}
@@ -678,6 +681,7 @@ function UrusanSiasatanSingle(id_hakmilik,id_pembatalan,flag_skrin)
 
 function papar(id_siasatan,id_hakmilik,flag_skrin)
 {
+
 	try {	    
         window.opener.papar(id_siasatan,id_hakmilik);		
 	}
@@ -686,6 +690,20 @@ function papar(id_siasatan,id_hakmilik,flag_skrin)
     return false;
 	
 }
+function papar1(id_siasatan,id_hakmilik)
+{
+
+	try {	    
+	
+        window.opener.papar1(id_siasatan,id_hakmilik);		
+
+	}
+	catch (err) {}
+   	window.close();	
+    return false;
+	
+}
+
 
 
 function kehadiran(id_siasatan,flag_skrin)

@@ -33,10 +33,13 @@ import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
 import ekptg.helpers.Utils;
 import ekptg.model.entities.Tblrujnegeri;
+import ekptg.model.htp.IHTPBayaran;
 import ekptg.model.htp.entity.Permohonan;
+import ekptg.model.htp.permohonan.HTPBayaranPermohonanBean;
 import ekptg.model.htp.rekod.FrmTanahKementerianBean;
 import ekptg.model.htp.rekod.ITanahKementerian;
 import ekptg.model.permohonan.IPermohonan;
+import ekptg.model.ppt.BantahanPampasanOperations;
 import ekptg.model.ppt.FrmPembatalanInternalData;
 import ekptg.model.ppt.FrmPermohonanUPTData;
 import ekptg.model.ppt.FrmPermohonanUPTOnlineData;
@@ -48,6 +51,7 @@ import ekptg.model.utils.IUtilHTMLPilihan;
 import ekptg.model.utils.emel.EmailConfig;
 import ekptg.model.utils.emel.EmelSemakanBean;
 import ekptg.model.utils.emel.IEmel;
+import ekptg.model.utils.lampiran.ILampiran;
 import ekptg.model.utils.rujukan.UtilHTMLPilihanJenisHakmilik;
 import ekptg.view.ppt.email.EmailOnline;
 
@@ -65,6 +69,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 	private IPermohonan iPermohonan = null;
 	private IUtilHTMLPilihan iPilihanJH = null;
 	private ekptg.model.utils.emel.IEmel iEmel = null;
+    private ILampiran iLampiran = null;
+	private IHTPBayaran iBayaran = null;
 
 	@SuppressWarnings({ "unchecked", "static-access" })
 	@Override
@@ -83,6 +89,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			String namaPB = "";
 			String noSerah = "";
 			String idExistPB = "";
+			
+			String statusPembayaran = getParam("idStatus");
 
 			context.put("showJajahan", "no");
 			context.put("onchange", "no");
@@ -402,7 +410,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 						ListDokumen(idpermohonan);
 						
 						// list dokumen pembayaran
-						ListDokumenPembayaran(idpermohonan);
+						//ListDokumenPembayaran(idpermohonan);
 						
 						// list hakmilik
 						ListHakmilik(idpermohonan, noLOT, idpegawai);
@@ -458,7 +466,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				ListDokumen(idpermohonan);
 				
 				// list dokumen pembayaran
-				ListDokumenPembayaran(idpermohonan);
+//				ListDokumenPembayaran(idpermohonan);
 
 				// GO TO ULASAN JABATAN TEKNIKAL
 				Vector listJabatanTeknikal = new Vector();
@@ -683,7 +691,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				ListDokumen(idpermohonan);
 				
 				// list dokumen pembayaran
-				ListDokumenPembayaran(idpermohonan);
+				//ListDokumenPembayaran(idpermohonan);
 
 				String submit2 = getParam("command2");
 				myLogger.info("submit[2] : " + submit2);
@@ -758,7 +766,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				ListDokumen(idpermohonan);
 				
 				// list dokumen pembayaran
-				ListDokumenPembayaran(idpermohonan);
+				//ListDokumenPembayaran(idpermohonan);
 
 				// screen
 				vm = screenUtama;
@@ -776,7 +784,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				ListDokumen(idpermohonan);
 				
 				// list dokumen pembayaran
-				ListDokumenPembayaran(idpermohonan);
+				//ListDokumenPembayaran(idpermohonan);
 
 				// screen
 				vm = screenDokumen;
@@ -956,8 +964,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 				// myLog.debug("xxxxx="+xxxxx);
 				myLogger.debug("session=" + session);
-
-				uploadFiles(id_permohonan, txdTarikhPembayaran, session);
+//				uploadFiles(id_permohonan, txdTarikhPembayaran, session);
 				//context.put("mode", "view");
 				
 				// form validation
@@ -998,9 +1005,8 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				
 				
 				vm = screenTanah;
-			}
 			
-			else if ("viewHM".equals(submit)) {
+			}else if ("viewHM".equals(submit)) {
 
 				// form validation
 				context.put("mode", "view");
@@ -1035,9 +1041,10 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				// list Bebanan
 				listBebanan(session, idHakmilik, noSerah);
 
+				String idcarabayar = getParam("socBayaran").equals("")?"0":getParam("socBayaran");
+
 				String submit2 = getParam("command2");
 				myLogger.info("submit[2] : " + submit2);
-
 				if ("kemaskiniHM".equals(submit2)) {
 
 					// form validation
@@ -1164,14 +1171,59 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 					} // close updateHM
 
-				} // close kemaskiniHM
+				// close kemaskiniHM
+				}else if (submit2.equals("uploadDoc")) {
+					String id_permohonan = getParam("id_permohonan");
+					String txdTarikhPembayaran = getParam("txdTarikhPembayaran");
+//					String xxxxx = getParam("txtNamaDokumen2");
+					// myLog.debug("xxxxx="+xxxxx);
+//					myLogger.debug("session=" + session);
+					
+					Hashtable<String,String> bay = new Hashtable<String,String>();
+					bay.put("idPermohonan", id_permohonan);
+					bay.put("idHakmilik", getParam("idTanah"));
+					bay.put("tarikhSerah", txdTarikhPembayaran);
+					bay.put("tarikh", getParam("txtarikh"));
+					bay.put("no", getParam("txtno"));
+					bay.put("jenisBayar", getParam("socBayaran"));
+					bay.put("idUser", id_user);
+					bay.put("bayaran",Utils.RemoveComma(getParam("txtbayaran")));
+					bay.put("idBayaran",getParam("idbayaran"));
+					myLogger.info("bayaran="+bay);
+					BantahanPampasanOperations b = new BantahanPampasanOperations();
+					String idRujukan = b.setBayaran(bay);
+						
+					bay.put("idRujukan",idRujukan);
+					bay.put("namaTable","tblpptdokumen");
+					bay.put("jenisDok",getParam("jenisDokumen"));
+					bay.put("dokumen",getParam("nama_dokumen"));
+					bay.put("keterangan",getParam("keterangan"));
+										
+//					String idPermohonan = data.get("idPermohonan");
+//					String idTanah = data.get("idTanah");
+//					String idRujukan = data.get("idRujukan");
+//					String idUser = data.get("idUser");
+//					String namaTable = data.get("namaTable");
+//					String jenisDok = data.get("jenisDok");
+//					String dokumen = data.get("dokumen");
+//					String keterangan = data.get("keterangan");
+					uploadFiles(bay);
+				
+					
+				}else if (submit2.equals("hapusDokumenPembayaran")) {
+					hapusDokumenPembayaran(session);
+				}
+//				String idcarabayar = getParam("socBayaran").equals("")?"0":getParam("socBayaran");
+				String caraBayaran = getIBayaran().selectCaraBayaran("socBayaran", Utils.parseLong(idcarabayar)
+						,"" + " style=\"width:200\"", "","");
+				this.context.put("socBayaran", caraBayaran);
+				ListDokumenPembayaran(idHakmilik);
 
 				// screen
 				vm = screenTanah;
-
-			} // close viewHM
-
-			else if ("hapusHM".equals(submit)) {
+			
+				// close viewHM
+			} else if ("hapusHM".equals(submit)) {
 
 				hapusHM(session);
 
@@ -1861,7 +1913,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				ListDokumen(idpermohonan);
 				
 				// list dokumen pembayaran
-				ListDokumenPembayaran(idpermohonan);
+				//ListDokumenPembayaran(idpermohonan);
 
 			} // close hantarPendaftaran
 			/*
@@ -1934,8 +1986,6 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 			context.put("flag_semakan_online", flag_semakan_online);
 			// context.put("ulasanjt", ulasanjt);
 			
-			
-
 			this.context.put("selectedTab", selectedTab);
 			setupPage(session, action, listPageDepan);
 			return vm;
@@ -1986,15 +2036,41 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				db.close();
 		}
 	}
-
+	
+	
 	private void sendEmail(String nama_projek, String tarikh_permohonan, String userIdKementerian,
 		String id_jawatan_user, String id_user, String purpose,HttpSession session) throws Exception {
 		//hantarSemakan,hantarLulus,lulus
-		EmailOnline et = new EmailOnline();
-		et.setEmail("", "", purpose, "", nama_projek, tarikh_permohonan, "", userIdKementerian, id_jawatan_user,id_user
-				,String.valueOf(session.getAttribute("portal_username")));
+		Vector listPemohon = new Vector();
+		listPemohon.clear();
+		listPemohon = modelOnline.getListPemohon(id_user, "", "");
+		String nama_kementerian = "";
+		Hashtable t = (Hashtable) listPemohon.get(0);
+		nama_kementerian = t.get("nama_kementerian").toString();
+		
+		myLogger.info("nama_kementerian===="+nama_kementerian);
+		
+		//EmailOnline et = new EmailOnline();
+		EmailConfig ec = new EmailConfig();
+//		et.setEmail("", "", purpose, "", nama_projek, tarikh_permohonan, "", userIdKementerian, id_jawatan_user,id_user
+//				,String.valueOf(session.getAttribute("portal_username")));
 //		System.out.println("*** sendEmail : " + nama_projek + " " + tarikh_permohonan);
-
+		
+		Vector checkEmail= new Vector();
+		checkEmail.clear();
+		checkEmail = myInfo.checkEmail(id_user);
+		String emel = "";
+		String emelSubjek = ec.tajukSemakan+"Online Pengambilan Tanah";
+		if(checkEmail.size()!=0){
+			Hashtable ceP = (Hashtable)checkEmail.get(0);
+			emel = (String)ceP.get("EMEL");
+		}
+		String userMail = emel;
+		String kandungan = nama_projek+" daripada "+nama_kementerian;
+		ec.sendTo(userMail, emelSubjek, kandungan);
+		
+		System.out.println("*** sendEmail : " + nama_projek + " " + tarikh_permohonan);
+		
 	}// close sendEmail
 
 	private void resetValueCarian() throws Exception {
@@ -4392,17 +4468,14 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 
 	}// close hapusdokumen
 	
-	@SuppressWarnings("unchecked")
 	private void hapusDokumenPembayaran(HttpSession session) throws Exception {
+		FrmPermohonanUPTData.hapusDokumenPembayaran(getParam("id_dokumen"));
+		FrmPermohonanUPTData.hapusPembayaran(getParam("idbayar"));
 
-		Hashtable h = new Hashtable();
-		h.put("id_dokumen", getParam("id_dokumen"));
-		FrmPermohonanUPTData.hapusDokumenPembayaran(h);
 
 	}// close hapusdokumenpembayaran
 	
-	private void uploadFiles(String id_permohonan, String txdTarikhPembayaran,
-			 HttpSession session) throws Exception {
+	private void uploadFiles(Hashtable<String,String> data) throws Exception {
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		List items = upload.parseRequest(request);
@@ -4410,13 +4483,16 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		while (itr.hasNext()) {
 			FileItem item = (FileItem) itr.next();
 			if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
-				saveData(item, id_permohonan, txdTarikhPembayaran, session);
+				ekptg.model.ppt.util.LampiranBean lb = new ekptg.model.ppt.util.LampiranBean();
+				lb.simpanLampiranBayaran(item, data);
+//				getDoc().simpan(item,request);
 			}
 		}
+		
 	}
 	
 	private void saveData(FileItem item, String id_permohonan,
-			String txdTarikhPembayaran, HttpSession session) throws Exception {
+		String txdTarikhPembayaran, HttpSession session) throws Exception {
 		//System.out.println("saveDAta ");
 		Db db = null;
 		Date date = null;
@@ -4462,6 +4538,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		}
 		
 		context.put("id_permohonan", id_permohonan);
+	
 	}
 
 	@SuppressWarnings("unchecked")
@@ -4578,6 +4655,7 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		listDokumenPembayaran = model.getListDokumenPembayaran();
 		context.put("listDokumenPembayaran", listDokumenPembayaran);
 		context.put("listDPem_size", listDokumenPembayaran.size());
+		
 
 	}// close ListDokumen
 
@@ -5322,10 +5400,26 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 		return iPilihanJH;
 	}
 	
-	
 	private IEmel getEmelSemak(){
 		if(iEmel == null)
 			iEmel = new EmelSemakanBean();
 		return iEmel;
 	}
+	
+	private ILampiran getDoc(){
+		if(iLampiran == null){
+			iLampiran = new ekptg.model.ppt.util.LampiranBean();
+		}
+		return iLampiran;
+				
+	}
+	
+	private IHTPBayaran getIBayaran(){
+		if(iBayaran==null){
+			iBayaran = new HTPBayaranPermohonanBean();
+		}
+		return iBayaran;
+			
+	}
+	
 }//close here

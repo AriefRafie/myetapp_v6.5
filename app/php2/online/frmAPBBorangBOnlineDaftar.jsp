@@ -23,19 +23,25 @@
 #if ($clearForm=="yes")
     #set ($txtJumKuantiti = "")
     #set ($txtJumRoyalti = "")
-    #set ($txdTarikhPengeluaran ="")
+    #set ($txtTarikhOperasi ="")
     #set ($txtTahun = "")
     #set ($socBulan = "")
+    #set ($txtNamaKapal = "")
+    #set ($txtHariOperasi = "")
+    #set ($txtMasaOperasi = "")
 #end
 
 #if ($flag=="semak")
     #foreach ( $data in $dataLaporan )
         #set ($txtJumRoyalti=$data.jumlah_royalti)
-        #set ($txdTarikhPengeluaran=$data.tarikh_pengeluaran)
+        #set ($txtTarikhOperasi=$data.tarikh_pengeluaran)
         #set ($txtTahun=$data.tahun_pengambilan)
         #set ($txtKontraktor=$data.kontraktor)
         #set ($txtPembeli=$data.pembeli)
         #set ($txtJumKuantiti=$data.jumlah_kuantiti)
+        #set ($txtHariOperasi=$data.hari_operasi)
+        #set ($txtMasaOperasi=$data.masa_operasi)
+        #set ($txtNamaKapal=$data.nama_kapal)
     #end   
 #end
 
@@ -99,7 +105,24 @@
     <!-- <input type="hidden" name="jumRoyaltiHidden" id="jumRoyaltiHidden" value="$!txtJumRoyalti" /> -->
     </td>
   </tr>
-  
+   <tr>
+	   <td align="left" width="50%">
+	      #if ($button=="view")
+	      &nbsp;&nbsp;&nbsp;Nama Kapal
+	      #else
+	      <font color="red">*</font>&nbsp;Nama Kapal
+	      #end       
+	    </td>
+	    <td width="1%">:</td>
+	    <td width="49%">
+	    	#if ($button=="view")
+		    <input type="text" name="txtNamaKapal" id="txtNamaKapal" value="$!txtNamaKapal" size="10" class="disabled" readonly />
+		    #else
+		    <input type="text" name="txtNamaKapal" id="txtNamaKapal" value="$!txtNamaKapal" size="10" />
+		    #end
+		</td>
+   </tr>
+ 
  <!--<tr>
 	<td align="left" width="50%">
 	    
@@ -122,40 +145,80 @@
     <td width="50%">
     <fieldset>    
     <table width="100%">
-  <tr>
-    <td align="left" width="50%">
+    	<tr>
+    		<td align="left" width="50%">
+	    		#if ($button=="view")
+		      	&nbsp;&nbsp;&nbsp;Tarikh Operasi
+		      	#else
+		      	<font color="red">*</font>&nbsp;Tarikh Operasi
+		      	#end  
+    		</td>
+    		<td width="1%">:</td>
+    		<td width="49%">
+    			 #if ($button=="view")
+			    <input type="text" name="txtTarikhOperasi" id="txtTarikhOperasi" value="$!txtTarikhOperasi" size="10" class="disabled" readonly/>
+			    #else
+			    <input type="text" name="txtTarikhOperasi" id="txtTarikhOperasi" size="10" value="$!txtTarikhOperasi"/><a
+							href="javascript:displayDatePicker('txtTarikhOperasi',false,'dmy');"> <img
+								border="0" src="../img/calendar.gif" /></a>
+			    #end  
+			</td>
+    	</tr>
+	   <tr>
+		   <td align="left" width="50%">
+		      #if ($button=="view")
+		      &nbsp;&nbsp;&nbsp;Hari
+		      #else
+		      <font color="red">*</font>&nbsp;Hari
+		      #end       
+		    </td>
+		    <td width="1%">:</td>
+		    <td width="49%">
+		    	#if ($button=="view")
+			    <input type="text" name="txtHariOperasi" id="txtHariOperasi" value="$!txtHariOperasi" size="10" class="disabled" readonly />
+			    #else
+			    <input type="text" name="txtHariOperasi" id="txtHariOperasi" value="$!txtHariOperasi" size="10" />
+			    #end
+			</td>
+	   </tr>
+	   <tr>
+		   <td align="left" width="50%">
+		      #if ($button=="view")
+		      &nbsp;&nbsp;&nbsp;Masa
+		      #else
+		      <font color="red">*</font>&nbsp;Masa
+		      #end       
+		    </td>
+		    <td width="1%">:</td>
+		    <td width="49%">
+		    	#if ($button=="view")
+			    <input type="text" name="txtMasaOperasi" id="txtMasaOperasi" value="$!txtMasaOperasi" size="10" class="disabled" readonly />
+			    #else
+			    <input type="text" name="txtMasaOperasi" id="txtMasaOperasi" value="$!txtMasaOperasi" size="10" />
+			    #end
+			</td>
+	   </tr>
+<!--   <tr> -->
+<!--     <td align="left"> -->
     
-      #if ($button=="view")
-      &nbsp;&nbsp;&nbsp;Bulan
-      #else
-      <font color="red">*</font>&nbsp;Bulan
-      #end       
-
-    </td>
-    <td width="1%">:</td>
-    <td width="49%">$selectBulan</td>
-  </tr>
-  <tr>
-    <td align="left">
+<!--       #if ($button=="view") -->
+<!--       &nbsp;&nbsp;&nbsp;Tahun Pengambilan -->
+<!--       #else -->
+<!--       <font color="red">*</font>&nbsp;Tahun Pengambilan -->
+<!--       #end           -->
     
-      #if ($button=="view")
-      &nbsp;&nbsp;&nbsp;Tahun Pengambilan
-      #else
-      <font color="red">*</font>&nbsp;Tahun Pengambilan
-      #end          
+<!--     </td> -->
+<!--     <td>:</td> -->
+<!--     <td> -->
     
-    </td>
-    <td>:</td>
-    <td>
+<!--     #if ($button=="view") -->
+<!--     <input type="text" name="txtTahun" id="txtTahun" value="$!txtTahun" size="10" class="disabled" readonly/> -->
+<!--     #else  -->
+<!--     <input type="text" name="txtTahun" id="txtTahun" value="$!txtTahun" size="10" onblur="validateNumber(this,this.value)" onkeyup="validateNumber(this,this.value);" maxlength="4" /> -->
+<!--     #end  -->
     
-    #if ($button=="view")
-    <input type="text" name="txtTahun" id="txtTahun" value="$!txtTahun" size="10" class="disabled" readonly/>
-    #else 
-    <input type="text" name="txtTahun" id="txtTahun" value="$!txtTahun" size="10" onblur="validateNumber(this,this.value)" onkeyup="validateNumber(this,this.value);" maxlength="4" />
-    #end 
-    
-    </td>
-  </tr>
+<!--     </td> -->
+<!--   </tr> -->
   
    <!-- <tr>
     <td align="left">
@@ -222,7 +285,7 @@
     	<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="kemaskiniLaporan('$id_laporanpasir')"/>
     	<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onclick="hapusLaporan('$id_laporanpasir')"/> 
         <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:setTable('tableReport1')" /> 
-        <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembali_pelesen(id_jadualkedualesenAPB)" />    
+        <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembali_pelesen('$idJadualKeduaLesen')" />    
     #end        
   
     </td>
@@ -380,9 +443,10 @@ function kemaskiniLaporan(id_laporanpasir) {
 	document.${formName}.id_laporanpasir.value = id_laporanpasir;
 	document.${formName}.submit();
 }
-function kembali_pelesen(id_jadualkedualesenAPB) {
-	document.${formName}.id_jadualkedualesenAPB.value = id_jadualkedualesenAPB;
-	document.${formName}.actionOnline.value = "papar_pelesen";
+function kembali_pelesen(idJadualKeduaLesen) {
+	document.${formName}.idJadualKeduaLesen.value = idJadualKeduaLesen;
+	document.${formName}.actionOnline.value = "daftarBaruBorangB";
+	//document.${formName}.actionOnline.value = "papar_pelesen";
 	document.${formName}.submit();
 }
 
@@ -391,9 +455,10 @@ function batalBaru() {
 	document.${formName}.submit();
 }
 
-function batalEdit(id_laporanpasir) {
+function batalEdit(idJadualKeduaLesen) {
 	//if ( !window.confirm("Adakah Anda Pasti?")) return;
-	document.${formName}.actionOnline.value = "papar_pelesen";
+	document.${formName}.idJadualKeduaLesen.value = idJadualKeduaLesen;
+	document.${formName}.actionOnline.value = "papar_laporan";
 	document.${formName}.submit();
 }
 
@@ -409,21 +474,41 @@ function simpanLaporan() {
   		document.${formName}.txtJumRoyalti.focus(); 
 		return;		
 	}
+	if(document.${formName}.txtNamaKapal.value == ""){
+		alert("Sila masukkan \"Nama Kapal\" terlebih dahulu.");
+  		document.${formName}.txtNamaKapal.focus(); 
+		return;		
+	}
+	if(document.${formName}.txtTarikhOperasi.value == ""){
+		alert("Sila masukkan \"Tarikh Operasi\" terlebih dahulu.");
+  		document.${formName}.txtTarikhOperasi.focus(); 
+		return;		
+	}
+	if(document.${formName}.txtHariOperasi.value == ""){
+		alert("Sila masukkan \"Hari\" terlebih dahulu.");
+  		document.${formName}.txtHariOperasi.focus(); 
+		return;		
+	}
+	if(document.${formName}.txtMasaOperasi.value == ""){
+		alert("Sila masukkan \"Masa\" terlebih dahulu.");
+  		document.${formName}.txtMasaOperasi.focus(); 
+		return;		
+	}
 	/*if(document.${formName}.txdTarikhPengeluaran.value == ""){
 		alert("Sila masukkan Tarikh Pengeluaran.");
   		document.${formName}.txdTarikhPengeluaran.focus(); 
 		return;		
 	}*/
-	if(document.${formName}.socBulan.value == ""){
-		alert("Sila masukkan \"Bulan\" terlebih dahulu.");
-  		document.${formName}.socBulan.focus(); 
-		return;		
-	}
-	if(document.${formName}.txtTahun.value == ""){
-		alert("Sila masukkan \"Tahun Pengambilan\" terlebih dahulu.");
-  		document.${formName}.txtTahun.focus(); 
-		return;		
-	}
+// 	if(document.${formName}.socBulan.value == ""){
+// 		alert("Sila masukkan \"Bulan\" terlebih dahulu.");
+//   		document.${formName}.socBulan.focus(); 
+// 		return;		
+// 	}
+// 	if(document.${formName}.txtTahun.value == ""){
+// 		alert("Sila masukkan \"Tahun Pengambilan\" terlebih dahulu.");
+//   		document.${formName}.txtTahun.focus(); 
+// 		return;		
+// 	}
 	
 	/* if(document.${formName}.txtKontraktor.value == ""){
 		alert("Sila masukkan \"Nama Kontraktor\" terlebih dahulu.");
@@ -454,17 +539,37 @@ function simpanEditLaporan() {
 		alert("Sila masukkan \"Jumlah Royalti\" terlebih dahulu.");
   		document.${formName}.txtJumRoyalti.focus(); 
 		return;		
-	}	
-	if(document.${formName}.socBulan.value == ""){
-		alert("Sila masukkan \"Bulan\" terlebih dahulu.");
-  		document.${formName}.socBulan.focus(); 
-		return;		
-	}	
-	if(document.${formName}.txtTahun.value == ""){
-		alert("Sila masukkan \"Tahun Pengambilan\" terlebih dahulu.");
-  		document.${formName}.txtTahun.focus(); 
+	}
+	if(document.${formName}.txtNamaKapal.value == ""){
+		alert("Sila masukkan \"Nama Kapal\" terlebih dahulu.");
+  		document.${formName}.txtNamaKapal.focus(); 
 		return;		
 	}
+	if(document.${formName}.txtTarikhOperasi.value == ""){
+		alert("Sila masukkan \"Tarikh Operasi\" terlebih dahulu.");
+  		document.${formName}.txtTarikhOperasi.focus(); 
+		return;		
+	}
+	if(document.${formName}.txtHariOperasi.value == ""){
+		alert("Sila masukkan \"Hari\" terlebih dahulu.");
+  		document.${formName}.txtHariOperasi.focus(); 
+		return;		
+	}
+	if(document.${formName}.txtMasaOperasi.value == ""){
+		alert("Sila masukkan \"Masa\" terlebih dahulu.");
+  		document.${formName}.txtMasaOperasi.focus(); 
+		return;		
+	}
+// 	if(document.${formName}.socBulan.value == ""){
+// 		alert("Sila masukkan \"Bulan\" terlebih dahulu.");
+//   		document.${formName}.socBulan.focus(); 
+// 		return;		
+// 	}	
+// 	if(document.${formName}.txtTahun.value == ""){
+// 		alert("Sila masukkan \"Tahun Pengambilan\" terlebih dahulu.");
+//   		document.${formName}.txtTahun.focus(); 
+// 		return;		
+// 	}
 	/* if(document.${formName}.txtKontraktor.value == ""){
 		alert("Sila masukkan \"Nama Kontraktor\" terlebih dahulu.");
   		document.${formName}.txtKontraktor.focus(); 

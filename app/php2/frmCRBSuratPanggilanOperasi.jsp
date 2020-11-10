@@ -76,6 +76,22 @@ function doDaftarMaklumatSuratPanggilanOperasi(){
 	doAjaxCall${formName}("");
 }
 function doSimpanMaklumatSuratPanggilanOperasi(){
+	if(document.${formName}.txtTarikhOperasi.value == ""){
+		alert('Sila masukkan tarikh operasi.');
+		document.${formName}.txtTarikhOperasi.focus();
+		return;
+	}
+	if(document.${formName}.txtMasaOperasi.value == ""){
+		alert('Sila masukkan masa operasi.');
+		document.${formName}.txtMasaOperasi.focus();
+		return;
+	}
+	if(document.${formName}.txtLokasiOperasi.value == ""){
+		alert('Sila masukkan lokasi operasi.');
+		document.${formName}.txtLokasiOperasi.focus();
+		return;
+	}
+	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}

@@ -180,7 +180,8 @@ public class FrmCRBCetakSuratTindakanData {
 	}
 	
 	public String simpanMaklumatSuratPanggilanOperasi(String idPermohonan,
-			String idPejabat, String txtTarikhHantar, HttpSession session)
+			String idPejabat, String txtTarikhHantar, String txtTarikhOperasi,
+			String txtMasaOperasi, String txtLokasiOperasi, HttpSession session)
 			throws Exception {
 
 		Db db = null;
@@ -209,6 +210,13 @@ public class FrmCRBCetakSuratTindakanData {
 						r.unquote("to_date('" + txtTarikhHantar
 								+ "','dd/MM/yyyy')"));
 			}
+			if (!"".equals(txtTarikhOperasi)) {
+				r.add("TARIKH_JANGKAOPERASI",
+						r.unquote("to_date('" + txtTarikhOperasi
+								+ "','dd/MM/yyyy')"));
+			}
+			r.add("MASA_JANGKAOPERASI", txtMasaOperasi);
+			r.add("LOKASI_JANGKAOPERASI", txtLokasiOperasi);
 			r.add("FLAG_STATUS", "1");
 			r.add("FLAG_AKTIF", "Y");
 			r.add("BIL_ULANGAN", "0");
@@ -242,7 +250,8 @@ public class FrmCRBCetakSuratTindakanData {
 	}
 
 	public void simpanKemaskiniMaklumatSuratPanggilanOperasi(String idUlasanTeknikal,
-			String txtTarikhHantar, HttpSession session) throws Exception {
+			String txtTarikhHantar, String txtTarikhOperasi, String txtMasaOperasi,
+			String txtLokasiOperasi, HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -263,6 +272,13 @@ public class FrmCRBCetakSuratTindakanData {
 						r.unquote("to_date('" + txtTarikhHantar
 								+ "','dd/MM/yyyy')"));
 			}
+			if (!"".equals(txtTarikhOperasi)) {
+				r.add("TARIKH_JANGKAOPERASI",
+						r.unquote("to_date('" + txtTarikhOperasi
+								+ "','dd/MM/yyyy')"));
+			}
+			r.add("MASA_JANGKAOPERASI", txtMasaOperasi);
+			r.add("LOKASI_JANGKAOPERASI", txtLokasiOperasi);
 
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
@@ -710,7 +726,8 @@ public class FrmCRBCetakSuratTindakanData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT ID_ULASANTEKNIKAL, ID_DOKUMEN, ID_PEJABAT, TARIKH_HANTAR, FLAG_STATUS, FLAG_AKTIF"
+			sql = "SELECT ID_ULASANTEKNIKAL, ID_DOKUMEN, ID_PEJABAT, TARIKH_HANTAR, FLAG_STATUS, FLAG_AKTIF,"
+					+ " TARIKH_JANGKAOPERASI, MASA_JANGKAOPERASI, LOKASI_JANGKAOPERASI"
 					+ " FROM TBLPHPULASANTEKNIKAL WHERE ID_ULASANTEKNIKAL = '"
 					+ idUlasanTeknikal + "'";
 
@@ -735,6 +752,14 @@ public class FrmCRBCetakSuratTindakanData {
 				h.put("flagAktif",
 						rs.getString("FLAG_AKTIF") == null ? "" : rs
 								.getString("FLAG_AKTIF"));
+				h.put("tarikhOperasi", rs.getDate("TARIKH_JANGKAOPERASI") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_JANGKAOPERASI")));
+				h.put("masaOperasi",
+						rs.getString("MASA_JANGKAOPERASI") == null ? "" : rs
+								.getString("MASA_JANGKAOPERASI"));
+				h.put("lokasiOperasi",
+						rs.getString("LOKASI_JANGKAOPERASI") == null ? "" : rs
+								.getString("LOKASI_JANGKAOPERASI"));
 				beanMaklumatSuratPanggilanOperasi.addElement(h);
 				bil++;
 			}

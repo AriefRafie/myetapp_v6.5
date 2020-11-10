@@ -15,6 +15,7 @@ import ekptg.helpers.HTML;
 import ekptg.helpers.Utils;
 import ekptg.model.php2.FrmPLPHeaderData;
 import ekptg.model.php2.FrmPLPJabatanTeknikalData;
+import ekptg.model.php2.FrmPhpNotifikasiEmel;
 import ekptg.model.php2.online.FrmPLPOnlineKJPSenaraiFailData;
 import ekptg.model.utils.emel.EmailConfig;
 
@@ -25,8 +26,8 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
 	
 	FrmPLPHeaderData logicHeader = new FrmPLPHeaderData();
 	FrmPLPJabatanTeknikalData logic = new FrmPLPJabatanTeknikalData();
+	FrmPhpNotifikasiEmel logicEmel = new FrmPhpNotifikasiEmel();
 	FrmPLPOnlineKJPSenaraiFailData logicKJP = new FrmPLPOnlineKJPSenaraiFailData();
-	EmailConfig email = new EmailConfig();
 	
 	String userId = null;
 	String userRole = null;
@@ -151,13 +152,13 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
         	if ("simpanMaklumatKJP".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatKJP(idPermohonan, idKementerianTanah, idAgensiTanah, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
-        		logic.sendEmailtoKJP(idPermohonan, idKementerianTanah, session);
+        		logicEmel.sendEmailtoKJP(idPermohonan, idUlasanTeknikal, idKementerianTanah, session);
         		session.setAttribute("MSG", "EMEL TELAH DIHANTAR KEPADA KEMENTERIAN BERKENAAN");
     		}
         	if ("simpanMaklumatUlanganKJP".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatUlanganKJP(idUlasanTeknikal, idPermohonan, idKementerianTanah, idAgensiTanah, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
-        		logic.sendEmailtoKJP(idPermohonan, idKementerianTanah, session);
+        		logicEmel.sendEmailtoKJP(idPermohonan, idUlasanTeknikal, idKementerianTanah, session);
         		session.setAttribute("MSG", "EMEL ULANGAN TELAH DIHANTAR KEPADA KEMENTERIAN BERKENAAN");
     		}
         	if ("simpanKemaskiniMaklumatKJP".equals(hitButton)){
@@ -178,7 +179,6 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
 			}
         	if ("doSimpanKemaskiniMaklumatNilaian".equals(hitButton)){
         		simpanKemaskiniMaklumatNilaian(idPermohonan, session);
-          		logic.sendEmailtoUserJKPTGN(idPermohonan, idNegeriUser, session);
 			}
         	if ("simpanMaklumatJPPH".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatJPPH(idPermohonan, idPejabatJPPH, getParam("txtTarikhHantar"), 

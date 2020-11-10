@@ -137,7 +137,8 @@ function kemaskiniMaklumatBarge(){
 	doAjaxCall${formName}("");
 }
 function doBatalMaklumatBarge(){
-	
+	document.${formName}.actionOnline.value = "doMaklumatPasir";
+	document.${formName}.hitButton.value = "";
 	document.${formName}.mode.value = "view";
 	doAjaxCall${formName}("");
 }
@@ -149,4 +150,15 @@ function validateNumber(elmnt,content) {
 	}
 }
 
+function doHapusBarge(){
+
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.mode.value = "viewBarge";
+		return;
+	}
+	
+	document.${formName}.mode.value = "view";
+	document.${formName}.hitButton.value = "doHapusBarge";
+	document.${formName}.submit();
+}
 </script>

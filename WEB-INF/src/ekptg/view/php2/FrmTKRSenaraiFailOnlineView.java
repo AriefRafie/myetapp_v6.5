@@ -47,6 +47,7 @@ public class FrmTKRSenaraiFailOnlineView extends AjaxBasedModule {
         String hitButton = getParam("hitButton");
         String idHakmilikAgensi = getParam("idHakmilikAgensi");
         String idSuburusan = getParam("idSuburusan");
+        String namaKementerian = "";
 
         //VECTOR
         Vector list = null;
@@ -128,6 +129,7 @@ public class FrmTKRSenaraiFailOnlineView extends AjaxBasedModule {
 				idNegeri = (String) hashPemohon.get("idNegeri");
 				idKementerian = (String) hashPemohon.get("idKementerian");
 				idAgensi = (String) hashPemohon.get("idAgensi");
+				namaKementerian = (String) hashPemohon.get("namaKementerian");
 
 			}
 
@@ -135,6 +137,7 @@ public class FrmTKRSenaraiFailOnlineView extends AjaxBasedModule {
 			this.context.put("selectKementerian",HTML.SelectKementerian("socKementerian", Long.parseLong(idKementerian), "disabled", " class=\"disabled\""));
 			this.context.put("selectAgensi",HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Long.parseLong(idAgensi), "disabled", " class=\"disabled\""));
 			this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), "disabled", " class=\"disabled\""));
+			this.context.put("namaKementerian", namaKementerian);
 
 			beanMaklumatAgensi = new Vector();
 			logic.setMaklumatAgensi(idAgensi);
@@ -204,12 +207,14 @@ public class FrmTKRSenaraiFailOnlineView extends AjaxBasedModule {
 				idNegeri = (String) hashPemohon.get("idNegeri");
 				idKementerian = (String) hashPemohon.get("idKementerian");
 				idAgensi = (String) hashPemohon.get("idAgensi");
+				namaKementerian = (String) hashPemohon.get("namaKementerian");
 			}
 
 			this.context.put("selectKategoriPemohon", HTML.SelectKategoriPemohonPelepasan("socKategoriPemohon", Long.parseLong(idKategoriPemohon), "disabled", " class=\"disabled\""));
 			this.context.put("selectKementerian",HTML.SelectKementerian("socKementerian", Long.parseLong(idKementerian), "disabled", " class=\"disabled\""));
 			this.context.put("selectAgensi",HTML.SelectAgensiByKementerian("socAgensi", idKementerian, Long.parseLong(idAgensi), "disabled", " class=\"disabled\""));
 			this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), "disabled", " class=\"disabled\""));
+			this.context.put("namaKementerian", namaKementerian);
 
 			beanMaklumatAgensi = new Vector();
 			logic.setMaklumatAgensi(idAgensi);
