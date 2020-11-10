@@ -1581,6 +1581,85 @@ public class UtilHTML {
 		return sb.toString();
 
 	}
+	
+	public static String SelectAgensiLaporanPemantauan(String selectName,
+			String idKementerian, String selectedValue, String disability,
+			String jsFunction) throws Exception {
+		StringBuffer sb = new StringBuffer("");
+		try {
+			sb.append("<select name='" + selectName + "'");
+			if (disability != null)
+				sb.append(disability);
+			if (jsFunction != null)
+				sb.append(jsFunction);
+			sb.append(" > ");
+			String s_ = "";
+			if(selectedValue.equals("0"))
+				s_ = "selected";
+
+			sb.append("<option value=\"-1\">SILA PILIH</option>\n");
+
+			Vector<Tblrujagensi> v = DB.getAgensiByKementerian(idKementerian);
+			Tblrujagensi f = null;
+			String s = "";
+			for (int i = 0; i < v.size(); i++) {
+				f = (Tblrujagensi) v.get(i);
+				if (f.getIdAgensi().equals(selectedValue))
+					s = "selected";
+				else
+					s = "";
+
+				sb.append("<option " + s + " value=" + f.getIdAgensi() + ">"
+						+ f.getNamaAgensi()
+						+ "</option>\n");
+			}
+			sb.append("</select>");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw ex;
+		}
+		return sb.toString();
+
+	}
+	
+	public static String SelectAgensiLaporanPemantauan(String selectName,
+			String idKementerian, Long selectedValue, String disability,
+			String jsFunction) throws Exception {
+		StringBuffer sb = new StringBuffer("");
+		try {
+			sb.append("<select name='" + selectName + "'");
+			if (disability != null)
+				sb.append(disability);
+			if (jsFunction != null)
+				sb.append(jsFunction);
+			sb.append(" > ");
+			String s_ = "";
+			if(selectedValue==0)
+				s_ = "selected";
+
+			sb.append("<option value=\"-1\">SILA PILIH</option>\n");
+
+			Vector<Tblrujagensi> v = DB.getAgensiByKementerian(idKementerian);
+			Tblrujagensi f = null;
+			String s = "";
+			for (int i = 0; i < v.size(); i++) {
+				f = (Tblrujagensi) v.get(i);
+				if (f.getIdAgensi().equals(selectedValue))
+					s = "selected";
+				else
+					s = "";
+
+				sb.append("<option " + s + " value=" + f.getIdAgensi() + ">"
+						+ f.getNamaAgensi()
+						+ "</option>\n");
+			}
+			sb.append("</select>");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw ex;
+		}
+		return sb.toString();
+	}
 
 	private ICukai getICukai(){
 		if(iCukai==null){

@@ -15,6 +15,7 @@
   <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
   <input name="idHakmilikAgensi" type="hidden" id="idHakmilikAgensi" value="$idHakmilikAgensi"/>
+  <input name="idHakmilikSementara" type="hidden" id="idHakmilikSementara" value="$idHakmilikSementara"/>
   <input name="idUrusan" type="hidden" id="idUrusan" value="$idUrusan"/>
   <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
   <input name="idSuburusan" type="hidden" id="idSuburusan" value="$idSuburusan"/>
