@@ -1,3 +1,5 @@
+<input type="hidden" name="modul" value="$!modul">
+
 <style type="text/css">
 <!--
 .style1 {color: #FF0000}
@@ -47,9 +49,11 @@
 <fieldset>
 <legend>Senarai Hakmilik</legend>
 
-
+#if($modul == "ekptg.view.ppt.FrmRayuanBantahanOnline")
+<a href="javascript:popupCarianHakmilik('$id_permohonan','bantahan_online')"><font color="blue">>> SKRIN CAPAIAN HAKMILIK</font></a>	
+#else
 <a href="javascript:popupCarianHakmilik('$id_permohonan','bantahan_mahkamah')"><font color="blue">>> SKRIN CAPAIAN HAKMILIK</font></a>	
-
+#end
 <!--
 
         <table width="100%" border="0">   

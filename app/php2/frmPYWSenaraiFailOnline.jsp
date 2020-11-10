@@ -14,7 +14,7 @@
       <legend><b>CARIAN</b></legend>
       <table width="100%" align="center" border="0">
         <tr>
-          <td width="30%" height="24" scope="row" align="right">No Permohonan : </td>
+          <td width="30%" height="24" scope="row" align="right">No. Rujukan <i>Online</i> : </td>
           <td width="70%"><input name="txtNoPermohonan" id="txtNoPermohonan" type="text" value="$txtNoPermohonan" size="50" maxlength="50" style="text-transform:uppercase;" >
             <input type="hidden" name="idFail" />
             <input type="hidden" name="idPermohonan" />
@@ -53,13 +53,13 @@
       <legend><b>SENARAI PERMOHONAN</b></legend>
       #parse("app/utils/record_paging.jsp")
       <table align="center" width="100%">
-        <tr class="table_header">
-          <td scope="row" width="4%" align="left"><strong>Bil</strong></td>
-          <td width="25%" align="left"><strong>No Permohonan</strong></td>
-          <td width="26%" align="left"><strong>Nama Pemohon</strong></td>
-          <td width="10%" align="center"><strong>Tarikh Mohon</strong></td>
-          <td width="15%" align="left"><strong>Urusan</strong></td>
-          <td width="20%" align="left"><strong>Sub Urusan</strong></td>
+        <tr class="table_header" align="center">
+          <td scope="row" width="4%"><strong>Bil</strong></td>
+          <td width="25%"><strong>No. Rujukan <i>Online</i></strong></td>
+          <td width="26%"><strong>Nama Pemohon</strong></td>
+          <td width="10%"><strong>Tarikh Mohon</strong></td>
+          <td width="15%"><strong>Urusan</strong></td>
+          <td width="20%"><strong>Sub Urusan</strong></td>
         </tr>
         #set ($list = "")
         #if ($SenaraiFail.size() > 0)
@@ -76,8 +76,8 @@
           <td class="$row"><a href="javascript:papar('$list.idFail','$list.idUrusan','$list.idPermohonan','$list.idSubUrusan')" class="style1">$list.noPermohonan</a></td>
           <td class="$row">$list.namaPemohon</td>
           <td class="$row" align="center">$list.tarikhPermohonan </td>
-          <td class="$row">$list.namaUrusan</td>
-          <td class="$row">$list.subUrusan</td>
+          <td class="$row" align="center">$list.namaUrusan</td>
+          <td class="$row" align="center">$list.subUrusan</td>
         </tr>
         #end
         #else

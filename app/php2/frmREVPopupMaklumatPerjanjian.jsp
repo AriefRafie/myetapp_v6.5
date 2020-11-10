@@ -138,8 +138,10 @@ color: #FF0000
               <option #if ( $!beanMaklumatPerjanjian.flagPerjanjian =="1" ) selected #end value="1">PENGURANGAN KADAR SEWA</option>
               <option #if ( $!beanMaklumatPerjanjian.flagPerjanjian =="2" ) selected #end value="2">PENAMBAHAN KADAR SEWA</option>
               <option #if ( $!beanMaklumatPerjanjian.flagPerjanjian =="3" ) selected #end value="3">PENGECUALIAN KADAR SEWA</option>
+              <option #if ( $!beanMaklumatPerjanjian.flagPerjanjian =="4" ) selected #end value="4">PENAMATAN SEWA</option>
             </select></td>
         </tr>
+        #if ( $!beanMaklumatPerjanjian.flagPerjanjian != '4' )
         <tr>
           <td><span class="style1">*</span></td>
           <td>Tarikh Mula Kuatkuasa</td>
@@ -167,6 +169,23 @@ color: #FF0000
           <td> Kadar Sewa (RM)</td>
           <td>:</td>
           <td><input name="txtKadarSewa" type="text" value="$!beanMaklumatPerjanjian.kadarSewa" $readonly class="$inputTextClass" onBlur="validateCurrency(this,this.value,'$!beanMaklumatPerjanjian.kadarSewa');" /></td>
+        </tr>
+        #end
+        #end
+        #if ( $!beanMaklumatPerjanjian.flagPerjanjian == '4' )
+        <tr>
+          <td><span class="style1">*</span></td>
+          <td>Tarikh Penamatan</td>
+          <td>:</td>
+          <td><input name="txtTarikhPenamatan" type="text" class="$inputTextClass" id="txtTarikhPenamatan" onBlur="check_date(this);calcDate()" value="$!beanMaklumatPerjanjian.tarikhPenamatan" size="9" maxlength="10" $readonly />
+            #if ($mode != 'view')<a href="javascript:displayDatePicker('txtTarikhPenamatan',false,'dmy');"><img border="0" src="../../img/calendar.gif"/>#end</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Sebab Penamatan</td>
+          <td>:</td>
+          <td><textarea name="txtSebabPenamatan" rows="5" cols="50">$!beanMaklumatPerjanjian.sebabPenamatan</textarea>
+          </td>
         </tr>
         #end
         <tr>
@@ -343,23 +362,33 @@ function simpan() {
 			document.${formName}.flagPerjanjian.focus();
 			return;
 		}
-		if(document.${formName}.txtTarikhMula.value == ""){
-			alert('Sila masukan Tarikh Mula.');
-			document.${formName}.txtTarikhMula.focus();
-			return;
-		}
-		if(document.${formName}.txtTarikhTamat.value == ""){
-			alert('Sila masukan Tarikh Tamat.');
-			document.${formName}.txtTarikhTamat.focus();
-			return;
-		}
-		if (document.${formName}.flagPerjanjian.value != "3") {
-			if(document.${formName}.txtKadarSewa.value == ""){
-				alert('Sila masukkan Kadar Sewa.');
-				document.${formName}.txtKadarSewa.focus();
+		var flagPerjanjian = document.${formName}.flagPerjanjian.value;
+		if( flagPerjanjian != '4'){
+			if(document.${formName}.txtTarikhMula.value == ""){
+				alert('Sila masukan Tarikh Mula.');
+				document.${formName}.txtTarikhMula.focus();
+				return;
+			}
+			if(document.${formName}.txtTarikhTamat.value == ""){
+				alert('Sila masukan Tarikh Tamat.');
+				document.${formName}.txtTarikhTamat.focus();
+				return;
+			}
+			if (document.${formName}.flagPerjanjian.value != "3") {
+				if(document.${formName}.txtKadarSewa.value == ""){
+					alert('Sila masukkan Kadar Sewa.');
+					document.${formName}.txtKadarSewa.focus();
+					return;
+				}
+			}
+		}else{
+			if(document.${formName}.txtTarikhPenamatan.value == ""){
+				alert('Sila masukan Tarikh Penamatan.');
+				document.${formName}.txtTarikhPenamatan.focus();
 				return;
 			}
 		}
+
 	}
 
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
@@ -408,20 +437,29 @@ function simpanKemaskini() {
 			document.${formName}.flagPerjanjian.focus();
 			return;
 		}
-		if(document.${formName}.txtTarikhMula.value == ""){
-			alert('Sila masukan Tarikh Mula.');
-			document.${formName}.txtTarikhMula.focus();
-			return;
-		}
-		if(document.${formName}.txtTarikhTamat.value == ""){
-			alert('Sila masukan Tarikh Tamat.');
-			document.${formName}.txtTarikhTamat.focus();
-			return;
-		}
-		if (document.${formName}.flagPerjanjian.value != "3") {
-			if(document.${formName}.txtKadarSewa.value == ""){
-				alert('Sila masukkan Kadar Sewa.');
-				document.${formName}.txtKadarSewa.focus();
+		var flagPerjanjian = document.${formName}.flagPerjanjian.value;
+		if( flagPerjanjian != '4'){
+			if(document.${formName}.txtTarikhMula.value == ""){
+				alert('Sila masukan Tarikh Mula.');
+				document.${formName}.txtTarikhMula.focus();
+				return;
+			}
+			if(document.${formName}.txtTarikhTamat.value == ""){
+				alert('Sila masukan Tarikh Tamat.');
+				document.${formName}.txtTarikhTamat.focus();
+				return;
+			}
+			if (document.${formName}.flagPerjanjian.value != "3") {
+				if(document.${formName}.txtKadarSewa.value == ""){
+					alert('Sila masukkan Kadar Sewa.');
+					document.${formName}.txtKadarSewa.focus();
+					return;
+				}
+			}
+		}else{
+			if(document.${formName}.txtTarikhPenamatan.value == ""){
+				alert('Sila masukan Tarikh Penamatan.');
+				document.${formName}.txtTarikhPenamatan.focus();
 				return;
 			}
 		}
