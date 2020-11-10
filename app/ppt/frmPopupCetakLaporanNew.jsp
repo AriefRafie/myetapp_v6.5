@@ -823,7 +823,7 @@ background: #f4eff4 !important;
               
               
               
-              #if($report == 'SuratMintaBayaran'||$report=='Surat_Iringan_Mohon_Bayaran')
+              #if($report == 'SuratMintaBayaran'||$report=='Surat_Iringan_Mohon_Bayaran' || $report =='EmailSuratMintaBayaran' )
               
                 #set($eftemail = "")
               	#if($id_negeri=='10')
@@ -950,11 +950,11 @@ background: #f4eff4 !important;
             
         </fieldset>
         
-        #if($report == 'SuratMintaBayaran' || (($report == 'BorangG' || $report == 'BorangH') && ($showG_MT=='yes' || $showG_ARB=='yes'))||$report=='Surat_Iringan_Mohon_Bayaran' || $report=='SuratBayaranAgensi')
+        #if(($report == 'SuratMintaBayaran' || $report =='EmailSuratMintaBayaran') || (($report == 'BorangG' || $report == 'BorangH') && ($showG_MT=='yes' || $showG_ARB=='yes'))||$report=='Surat_Iringan_Mohon_Bayaran' || $report=='SuratBayaranAgensi')
         
         <fieldset>
             <table width="100%" border="0" cellspacing="2" cellpadding="2">            
-            #if($report == 'SuratMintaBayaran' || (($report == 'BorangG' || $report == 'BorangH') && $showG_MT=='yes')||$report=='Surat_Iringan_Mohon_Bayaran' || $report=='SuratBayaranAgensi')
+            #if(($report == 'SuratMintaBayaran' || $report =='EmailSuratMintaBayaran') || (($report == 'BorangG' || $report == 'BorangH') && $showG_MT=='yes')||$report=='Surat_Iringan_Mohon_Bayaran' || $report=='SuratBayaranAgensi')
             	<tr class="table_header">
             		<td colspan="4"><b>Maklumat Akaun Mahkamah Tinggi</b></td>
             	</tr>
@@ -978,7 +978,7 @@ background: #f4eff4 !important;
             	</tr>            	
             	
             #end
-            #if($report == 'SuratMintaBayaran' || (($report == 'BorangG' || $report == 'BorangH') && $showG_ARB=='yes')||$report=='Surat_Iringan_Mohon_Bayaran' || $report=='SuratBayaranAgensi')	
+            #if(($report == 'SuratMintaBayaran' || $report =='EmailSuratMintaBayaran') || (($report == 'BorangG' || $report == 'BorangH') && $showG_ARB=='yes')||$report=='Surat_Iringan_Mohon_Bayaran' || $report=='SuratBayaranAgensi')	
             	<tr class="table_header">
             		<td colspan="4"><b>Maklumat Akaun Amanah Raya Berhad</b></td>
             	</tr>
@@ -1001,7 +1001,7 @@ background: #f4eff4 !important;
             		<td><input type="text" id="txtNomborAkaunARB" name="txtNomborAkaunARB" value="$!noAkaunARB" maxlength="80" size="30"  /></td>
             	</tr>
             #end	
-            #if($report == 'SuratMintaBayaran' || (($report == 'BorangG' || $report == 'BorangH') && ($showG_MT=='yes' || $showG_ARB=='yes')))
+            #if(($report == 'SuratMintaBayaran' || $report =='EmailSuratMintaBayaran') || (($report == 'BorangG' || $report == 'BorangH') && ($showG_MT=='yes' || $showG_ARB=='yes')))
        		<tr>
             <td></td>
             		<td></td>
@@ -1251,6 +1251,11 @@ background: #f4eff4 !important;
                 	#if($report == 'SuratMintaBayaran')
                 	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakMohonBayaran('$!id_hakmilik','$!username','$!id_jawatan','$!nama2Mukim','$!id_negeri','$!ic_login')">
                 	#end
+     
+                	#if($report == 'EmailSuratMintaBayaran')
+                	<input type="button" name="cmdSentEmail" id="cmdSentEmail" value="Hantar Email ke Kementerian Jabatan Pengguna" onclick="javascript:emailMohonBayaran('$!id_hakmilik','$!username','$!id_jawatan','$!nama2Mukim','$!id_negeri','$!ic_login')">
+                	#end
+                	
                 	
                 	#if($report == 'SuratPBBayarBalik')
                 	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratPUBayarBalik('$!id_hakmilikpb','$!nama_pegawai','$!id_jawatan','$!nama2Mukim')">
@@ -6591,6 +6596,18 @@ function cetakBorangJ(id_fail,ic_login) {
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
 		if (hWnd.focus != null) hWnd.focus();
+}
+
+//FUNCTION yati-10112020
+function emailMohonBayaran(id_permohonan,id_hakmilik) {
+	
+	if ( !window.confirm("Adakah Anda Pasti?") ) return;
+	//document.${formName}.ScreenLocation.value = "TabbedPanels1";
+	//document.${formName}.tabId.value = "0";
+	//document.${formName}.id_hakmilik.value = id_hakmilik;
+	//document.${formName}.command.value = "viewJumlahAward";
+	document.${formName}.action = "?_portal_module=ekptg.report.ppt.FrmPopupPilihPegawaiReportView?report=EmailSuratMintaBayaran&updateFlagHantarEmel=Y";
+	document.${formName}.submit();
 }
 
 </script>
