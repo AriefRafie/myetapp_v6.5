@@ -381,9 +381,9 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
  <div align="left"><a href="javascript:maklumatsiasatan('$listTanah.id_siasatan','$flag_skrin')" title="Memaparkan secara lengkap nota siasatan"><font color="blue">NOTA SIASATAN </font></a></div></td>
 </tr>
 </table> 
-         #elseif($flag_skrin == "siasatan_online" && $$listTanah.id_siasatan != "")
-         aaaaaa
-               #elseif($flag_skrin == "siasatan_online" && $$listTanah.id_siasatan == "")
+         #elseif($flag_skrin == "siasatan_online" && $listTanah.id_siasatan != "")
+ <div align="left"><a href="javascript:papar1('$listTanah.id_siasatan','$listTanah.id_hakmilik','$flag_skrin')" title="Memaparkan secara lengkap maklumat siasatan"><font color="blue">MAKLUMAT  SIASATAN</font></a></div></td>
+               #elseif($flag_skrin == "siasatan_online" && $listTanah.id_siasatan == "")
                <div align="left"><font color="red">Siasatan Masih Belum Dijalankan</font></div>         
            #else
            <div align="left"><a href="javascript:UrusanSiasatanSingle('$listTanah.id_hakmilik','','$flag_skrin')" title="Memaparkan secara lengkap maklumat siasatan"><font color="blue">MAKLUMAT SIASATAN</font></a></div>
@@ -690,7 +690,7 @@ function papar(id_siasatan,id_hakmilik,flag_skrin)
     return false;
 	
 }
-function papar1(id_siasatan,id_hakmilik,flag_skrin)
+function papar1(id_siasatan,id_hakmilik)
 {
 
 	try {	    
