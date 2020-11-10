@@ -889,42 +889,100 @@ Maklumat Hakmilik telah berjaya disimpan.
 
 <!-- ****************** START UNTUK MAKLUMAT PEMBAYARAN ************************* -->
 #if($no_fail != "")
-	#if($listDPem_size < 1)
+	##if($listDPem_size < 1)
 <fieldset>
 	<legend>Maklumat Pembayaran</legend>
 	<table width="100%" border="0">
-	<tr>
+		<tr>
 			<td width="1%"></td>
 			<td valign="top" width="23%">Tarikh Pembayaran</td>
 			<td valign="top" width="1%">:</td>
 			<td><input name="txdTarikhPembayaran" id="txdTarikhPembayaran"
-				size="12" type="text" value="$!txdTarikhPembayaran"
+				size="11" type="text" value="$!txdTarikhPembayaran"
 				onkeyup="validateTarikh(this,this.value)"
 				onblur="check_date(this);javascript:updatetxdTarikhPembayaran()">
 				<img src="../img/calendar.gif"
-				onclick="displayDatePicker('txdTarikhPembayaran',false,'dmy');">&nbsp;$!frmtdate</td>
+				onclick="displayDatePicker('txdTarikhPembayaran',false,'dmy');">&nbsp;$!frmtdate
+			</td>
+		</tr>
+		<tr>
+			<td width="1%">&nbsp;</td>
+			<td width="23%">
+						            	<div align="right" class="labelinput">
+											<div align="left">Cara Bayaran</div>
+										</div>             
+			</td>
+			<td width="1%">:</td>
+			<td width="75%">$!socBayaran</td>
+		</tr>
+		<tr>
+			<td width="1%">&nbsp;</td>
+			<td width="23%">
+				<div align="right" class="labelinput">
+				<div align="left">Tarikh Baucer/Cek/Bank Draf/EFT</div>
+				</div>             
+			</td>
+			<td width="1%">:</td>
+			<td width="75%">
+				#if($pagemode == "view")
+					$!pembayaran.getTarikhBayaranStr()
+				#else						            	
+				<input name="txtarikh" type="text" id="txtTarikhBaucerCek" value="$!pembayaran.getTarikhBayaranStr()" size="11" maxlength="10" $style/>
+					<a href="javascript:displayDatePicker('txtarikh',false,'dmy');"><img src="../img/calendar.gif" alt="" border="0"/></a>
+				#end
+			</td>
+		</tr>
+		<tr>
+			<td width="1%">&nbsp;</td>
+			<td width="23%">
+				<div align="right" class="labelinput">
+											<div align="left">No. Baucer/Cek/Bank Draft/EFT</div>
+										</div>             
+			</td>
+			<td width="1%">:</td>
+			<td width="75%">
+				#if($pagemode == "view")
+					$!pembayaran.getNoRujukan()
+				#else	
+					<input type="text" name="txtno" id="txtNoBaucerCekDraft" size="30"  value="$!pembayaran.getNoRujukan()" onKeyUp="this.value=this.value.toUpperCase();" $style>
+				#end
+			</td>
+		</tr>
+		<tr>
+			<td width="1%">&nbsp;</td>
+			<td width="23%">
+				<div align="right" class="labelinput">
+											<div align="left">Jumlah Bayaran</div>
+										</div>             
+			</td>
+			<td width="1%">:</td>
+			<td width="75%">
+				#if($pagemode == "view")
+					$!jumlahBayaranFormat		            		
+				#else
+				<input type="text" name="txtbayaran" id="txtBayaranProses" size="11" 
+    						value="$!jumlahBayaranFormat" onBlur="validateCurrency(this,this.value,'')"  $style>
+    			#end
+    		</td>
 		</tr>
 		<tr>
 			<td></td>
-			<td>
-					<div align="left">Bukti Pembayaran (baucer)</div>
-			
-			</td>
+			<td><div align="left">Bukti Pembayaran (baucer)</div></td>
 			<td>:</td>
-			<td ><input class="texts" id="txtNamaDokumen2" name="txtNamaDokumen2" type="file"></td>
-			
+			<td ><input class="texts" id="txtNamaDokumen2" name="txtNamaDokumen2" type="file"></td>		
 		</tr>
-		<table align="center">
-		<tr width="100%" border="0">
-			<td></td>
-			<td></td>
-			<td></td>
-			<td>
-				<input type="button" name="cmdUpdate" value="Simpan" onClick="javascript:simpanMD('$!id_permohonan', '$!mode')">
-				<input name="cmdKembali" type="button" value="Kembali" onClick="kembali('$!id_permohonan')" />
+		<tr>
+			<td colspan="4" align="center">	
+				<table >
+				<tr>
+					<td >
+						<input type="button" name="cmdUpdate" value="Simpan" onClick="javascript:simpanMD('$!id_permohonan', '$!mode')">
+						<!-- <input name="cmdKembali" type="button" value="Kembali" onClick="kembali('$!id_permohonan')" />-->
+					</td>
+				</tr> 
+				</table>
 			</td>
 		</tr>
-		</table>
 		
 	</table>
 </fieldset>
@@ -932,25 +990,24 @@ Maklumat Hakmilik telah berjaya disimpan.
 <input type="hidden" name="txtNamaDokumenHidden">
 <input type="hidden" name="txtKeteranganHidden" value="$!txtKeterangan">
 <input type="hidden" name="no_fail" value="$!no_fail">
+<input type="hidden" name="idbayaran" >
 
-#else
+	##else
 
 <!-- ****************** END UNTUK MAKLUMAT PEMBAYARAN *************************** -->
 
-<!-- ****************** START SEBARAI MAKLUMAT PEMBAYARAN *************************** -->
+<!-- ****************** START SENARAI MAKLUMAT PEMBAYARAN *************************** -->
 <fieldset>
-    <legend><strong>&nbsp;Senarai Maklumat Pembayaran</strong></legend>
-    
-       	<table width="100%"  cellpadding="0" cellspacing="2" border="0">   
-        	<tr class="table_header">
-           		<td width="4%" align="center"><b>Bil</b></td>
-                <td width="42%" align="center"><b>Tarikh Pembayaran</b></td>
-                <td width="42%" align="center"><b>Muat Turun</b></td>
-                <td width="12%" align="center"><b>Tindakan</b></td>
-                #if($listDPem_size!=0)
-                #end
-            </tr>
-              
+    <legend><strong>&nbsp;Senarai Maklumat Pembayaran</strong></legend>    
+	<table width="100%"  cellpadding="0" cellspacing="2" border="0">   
+        <tr class="table_header">
+         	<td width="3%" align="center"><b>Bil.</b></td>
+            <td width="15%" align="center"><b>Tarikh Pembayaran</b></td>
+            <td width="20%" align="center"><b>No. Baucer/Cek/Bank Draft/EFT</b></td>
+          	<td width="27%" align="center"><b>Nama Fail</b></td>
+          	<td width="15" align="center"><b>Jumlah</b></td>
+    		<td width="20%" align="center"><b>Tindakan</b></td>
+      	</tr>              
          #if($listDPem_size!=0)
           
              #foreach($listD in $listDokumenPembayaran)  
@@ -962,14 +1019,19 @@ Maklumat Hakmilik telah berjaya disimpan.
                		#set( $row = "row1" )
          		#end
          		      
-          	<tr>
-                <td class="$row" align="center">$listD.bil</td>
-                <td class="$row" align="center">$listD.txdTarikhPembayaran</td>
-                <td class="$row" align="center"><a href="javascript:papar_Lampiran('$!listD.id_Dokumen')"><font color="blue">$listD.nama_dokumen</font></a></td>
-                #if($listDPem_size!=0)
-                <td class="$row" align="center"><input type="button" name="cmdHapusDoc" value ="Hapus" onClick="hapusDokumenPembayaran('$!listD.id_Dokumen')"></td>	
-                #end
-            </tr>
+       	<tr class="$row" >
+        	<td align="center"><a href="javascript:paparBayaran('$!listD.id_Dokumen')">$listD.bil .</a></td>	
+       	    <td class="$row" align="center">$listD.txdTarikhPembayaran</td>
+         	<td class="$row" align="center"><a href="javascript:paparBayaran('$!listD.idBayaran','$!listD.txdTarikhPembayaran','$!listD.caraBayar','$!listD.txdTarikh','$!listD.rujukan','$!listD.bayaran')"><font color="blue">$listD.rujukan</font></a></td>
+         	<td class="$row" align="left"><a href="javascript:papar_Lampiran('$!listD.id_Dokumen')">$listD.nama_dokumen</a></td>
+      	    <td class="$row" align="center">$listD.bayaran</td>
+         	<td class="$row" align="center">	
+       		#if($listDPem_size!=0)
+               <input type="button" name="cmdHapusDoc" value ="Hapus" onClick="hapusDokumenPembayaran('$!listD.idBayaran','$!listD.id_Dokumen')">
+          		<input type="button" name="cmdHapusDoc" value ="Papar" onClick="papar_Lampiran('$!listD.id_Dokumen')">
+        	#end
+         	</td>	
+   		</tr>
              #end  
               		 
          #else
@@ -978,11 +1040,11 @@ Maklumat Hakmilik telah berjaya disimpan.
             </tr>
          #end
                     
-       </table>        	
-    </fieldset>	
+	</table>        	
+</fieldset>	
 <!-- ****************** END SEBARAI MAKLUMAT PEMBAYARAN *************************** -->
-#end
-#end
+		#end
+	##end
 #end
 
 
@@ -1294,6 +1356,19 @@ function submitForm(){
 		goTo('$CursorPoint');
 	}
 }
+
+	//idBayaran
+	function paparBayaran(a,b,c,d,e,f){
+		document.${formName}.idbayaran.value = a;
+		document.${formName}.txdTarikhPembayaran.value = b;
+		document.${formName}.txdTarikhPembayaranHidden.value = b;
+		document.${formName}.socBayaran.value = c;
+		document.${formName}.txtarikh.value = d;
+		document.${formName}.txtno.value = e;
+		document.${formName}.txtbayaran.value = f;
+		
+	}
+
 function popupCarianHakmilikSalin(id_permohonan,flag_skrin,id_daerah)
 {
 	var no_lot = document.${formName}.txtNoLot.value;	
@@ -2141,34 +2216,49 @@ function isDate(dtStr){
 return true
 }
 
-//simpan maklumat dokumen
-function simpanMD(id_permohonan, mode){
-	//var txtNamaDokumen = document.${formName}.txtNamaDokumenHidden.value;
-	
-	var txdTarikhPembayaran = document.${formName}.txdTarikhPembayaranHidden.value;
-	var command = document.${formName}.command.value;
-	var command2 = document.${formName}.command2.value;
-	( !window.confirm("Adakah Anda Pasti?") ) 
-			
+	//simpan maklumat dokumen
+	function simpanMD(id_permohonan, mode){
+		//var txtNamaDokumen = document.${formName}.txtNamaDokumenHidden.value;
+		
 		var txdTarikhPembayaran = document.${formName}.txdTarikhPembayaranHidden.value;
-		//document.${formName}.id_permohonan.value = id_permohonan;
-		document.${formName}.enctype = "multipart/form-data";
-		document.${formName}.encoding = "multipart/form-data";
-		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline&command=uploadDoc&command2=simpanMaklumatDokumen&id_permohonan="+id_permohonan+"&txdTarikhPembayaran="+txdTarikhPembayaran;
-		document.${formName}.submit();
-}
-function hapusDokumenPembayaran(id_dokumen) {
+		var command = document.${formName}.command.value;
+		var command2 = document.${formName}.command2.value;
+		( !window.confirm("Adakah Anda Pasti?") ) 
+				
+			var txdTarikhPembayaran = document.${formName}.txdTarikhPembayaranHidden.value;
+			//document.${formName}.id_permohonan.value = id_permohonan;
+			document.${formName}.enctype = "multipart/form-data";
+			document.${formName}.encoding = "multipart/form-data";
+			//nama_dokumen|keterangan|jenisDokumen
+			paramUpload = "&id_permohonan="+id_permohonan+"&txdTarikhPembayaran="+txdTarikhPembayaran
+			paramUpload += "&nama_dokumen=buktibayar&keterangan=Bukti Pembayaran&jenisDokumen=909&idTanah="+$!id_hakmilik;
+			paramUpload += "&txtarikh="+document.${formName}.txtarikh.value;
+			paramUpload += "&txtno="+document.${formName}.txtno.value;
+			paramUpload += "&socBayaran="+document.${formName}.socBayaran.value;
+			paramUpload += "&txtbayaran="+document.${formName}.txtbayaran.value;
+			paramUpload += '&iduser=$!session.getAttribute("_ekptg_user_id")';
+			paramUpload += "&idbayaran="+document.${formName}.idbayaran.value;
+			paramUpload += "&id_hakmilik="+$!id_hakmilik;
+			//alert(paramUpload);
+			document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline&command=viewHM&command2=uploadDoc"+paramUpload;
+			document.${formName}.submit();
+			
+	}
 	
-	document.${formName}.ScreenLocation.value = "middle";
-	if ( !window.confirm("Adakah Anda Pasti?")) return;
-	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline&command=hapusDokumenPembayaran&id_dokumen="+id_dokumen;
-	document.${formName}.submit();
-}
-function papar_Lampiran(id_dokumen) {
-    var url = "../servlet/ekptg.view.ppt.DisplayBlob2?id="+id_dokumen;
-    var hWnd = window.open(url,'displayfile','width=800,height=600, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-    hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-}
+	function hapusDokumenPembayaran(idbayar,id_dokumen) {
+		
+		document.${formName}.ScreenLocation.value = "middle";
+		if ( !window.confirm("Adakah Anda Pasti?")) return;
+		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline&command=viewHM&command2=hapusDokumenPembayaran&id_dokumen="+id_dokumen+"&idbayar="+idbayar;
+		document.${formName}.submit();
+	}
+	
+	function papar_Lampiran(id_dokumen) {
+	    var url = '../servlet/ekptg.model.utils.DisplayBlob?id='+id_dokumen+'&tablename=tblpptdokumen';
+	    //var url = "../servlet/ekptg.view.ppt.DisplayBlob2?id="+id_dokumen;
+	    var hWnd = window.open(url,'displayfile','width=800,height=600, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	    hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+	}
 </script>

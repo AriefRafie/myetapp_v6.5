@@ -150,6 +150,10 @@ public class FrmSiasatanOnline extends AjaxBasedModule{
 		
     	//validation for "permohonan selesai"
     	context.put("willShowAlertSelesai","yes");
+      	String modul = (String)session.getAttribute("_portal_module"); // getParam("modul");
+      	
+    	context.put("modul",modul);
+    	myLogger.info("modul : " + modul);
     	
 		this.context.put("pampasani",getParam("pampasani"));
 
@@ -2232,7 +2236,8 @@ public class FrmSiasatanOnline extends AjaxBasedModule{
    				this.context.put("tajuk_header","SENARAI SIASATAN");   				
    				}        		
         		else if ("Papar".equals(subminor_command))
-   				{        	    		
+   				{        	  
+        			myLogger.info("siasatan masuk: ");
         		context.put("id_permohonan",getParam("id_permohonan"));	
    				this.context.put("readmode", "view");   				
    				this.context.put("record_siasatan","yes");   				

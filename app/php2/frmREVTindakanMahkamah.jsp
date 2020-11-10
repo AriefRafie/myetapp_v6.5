@@ -31,7 +31,7 @@
      <td width="28%">Tarikh Minit Mesyuarat</td>
      <td width="1%">:</td>
      <td width="70%">
-     	<input type="text" name="txtTarikh" id="txtTarikh" value="$tm.tarikh_mesyuarat" size="9" class="disabled" onblur="check_date(this)"/>
+     	<input type="text" name="txtTarikh" id="txtTarikh" value="$!tm.tarikh_mesyuarat" size="9" class="disabled" onblur="check_date(this)"/>
      </td>
    </tr>
    <tr>
@@ -85,8 +85,7 @@
      <td width="28%">Tarikh Notis Penamatan</td>
      <td width="1%">:</td>
      <td width="70%">
-        <input type="text" name="tarikh_notis_penamatan" id="tarikh_notis_penamatan" value="$!tm.tarikh_notis_penamatan" $readonly class="$inputTextClass" size="9" onblur="check_date(this)"/>
-        #if ($mode == 'update') <a href="javascript:displayDatePicker('tarikh_notis_penamatan',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a> #end
+        <input type="text" name="tarikh_notis_penamatan" id="tarikh_notis_penamatan" value="$!tm.tarikh_notis_penamatan"  size="9" class="disabled" onblur="check_date(this)"/>
      </td>
    </tr>
   <tr>

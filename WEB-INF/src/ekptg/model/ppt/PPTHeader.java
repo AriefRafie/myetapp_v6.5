@@ -954,7 +954,7 @@ public class PPTHeader {
 	    				"P.CATATAN_BORANGK_PTD, P.CATATAN_ENDOSAN_PTG, P.CATATAN_ENDOSAN_PTD, P.FLAG_STATUS_ONLINE," +
 	    				"P.CATATAN_STATUS_ONLINE, P.TARIKH_SURAT,AG.NAMA_AGENSI,PNK.NAMA_NEGERI, P.FLAG_SEMAKAN_ONLINE";
 	    		*/
-//				myLogger.info(":::::::::::::::::::::::::::: NEW MAIN HEADER:::::"+sql.toUpperCase());				
+				myLogger.info("setDataHeaderBaru:sql="+sql.toUpperCase());				
 	    		ResultSet rs = stmt.executeQuery(sql);
 	     
 	    		Hashtable h;
@@ -1358,7 +1358,7 @@ public class PPTHeader {
 				sql += " AND p.id_endosan_borangk_ptd = rk2.id_pejabat(+) ";
 				sql += " AND p.id_permohonan = '"+id_permohonan+"'";
 	    	
-			myLogger.info(":::::::::::::::::::::::::::: MAIN HEADER:::::"+sql.toUpperCase());
+			myLogger.info("setDataHeaderLama:sql="+sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 			//Hashtable<String,String> h;	
 			Hashtable h;	

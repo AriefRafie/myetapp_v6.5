@@ -210,7 +210,7 @@
           <td width="1%" >:</td>
           <td width="70%">
           	<input name="txtNoFailNegeri" type="text" class="$inputTextClass" id="txtNoFailNegeri" value="$beanMaklumatPermohonan.noFailNegeri" $readonly onblur="this.value=this.value.toUpperCase();" size="50" maxlength="50" />
-		  </td>		  
+		  </td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -231,7 +231,7 @@
 			<td>$selectSubSuburusan
 				<input type="hidden" name="namaTujuan" id="namaTujuan" value="$beanMaklumatPermohonan.namaTujuan"/>
 			</td>
-			
+
 		</tr>
         <tr>
           <td>&nbsp;</td>
@@ -284,7 +284,7 @@
           <td width="1%"></td>
           <td width="28%"></td>
           <td width="1%"></td>
-          <td width="70%"> 
+          <td width="70%">
           	#if ($mode == 'new')
             	<input type="button" name="cmdDaftar" id="cmdDaftar" value="Daftar" onclick="daftar()"/>
             	<input type="button" name="cmdKembalikanFail" id="cmdKembalikanFail" value="Kembalikan Permohonan" onclick="kembalikanFailOnline('$idPermohonan', 'yes')"/>
@@ -292,7 +292,7 @@
             #else
             	<input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onclick="seterusnya()"/>
             	<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembali()"/>
-            #end 
+            #end
           </td>
         </tr>
       </table></td>
@@ -302,14 +302,14 @@
 function daftar() {
 	if(document.${formName}.txtPerkara.value == ""){
 		alert('Sila masukkan Perkara.');
-  		document.${formName}.txtPerkara.focus(); 
-		return; 
+  		document.${formName}.txtPerkara.focus();
+		return;
 	}
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.actionOnline.value = "daftar";
 		return;
 	}
-	
+
 	document.${formName}.actionOnline.value = "papar";
 	document.${formName}.hitButton.value = "daftarBaru";
 	document.${formName}.submit();
@@ -319,19 +319,19 @@ function seterusnya() {
 	document.${formName}.actionPenyewaan = "";
 	document.${formName}.submit();
 }
-function kembalikanFailOnline(id_permohonan,formnew) {	
+function kembalikanFailOnline(id_permohonan,formnew) {
 	var w = "400";
 	var h = "200";
 	var left = (screen.width/2)-(w/2);
 	var top = (screen.height/2)-(h/2);
 	var url = "../x/${securityToken}/FrmPopupTolakPermohonan?id_permohonan="+id_permohonan+"&formnew="+formnew+"&modul=php&jenisTolak=internal";
-		
+
 	var hWnd = window.open(url, "Permohonan Online Dikembalikan", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
 	if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();		
+    if (hWnd.focus != null) hWnd.focus();
 }
-function kembali() {	
+function kembali() {
 	document.${formName}.actionOnline.value = "";
 	document.${formName}.submit();
 }
@@ -349,13 +349,13 @@ function janaTajuk() {
 	var str1  = document.${formName}.noLotTanah.value;
 	var str2  = document.${formName}.noMilikTanah.value;
 	var str3  = document.${formName}.namaMukimTanah.value;
-	var str4  = document.${formName}.namaDerahTanah.value;	
-	var str5  = document.${formName}.namaNegeriTanah.value;	
+	var str4  = document.${formName}.namaDerahTanah.value;
+	var str5  = document.${formName}.namaNegeriTanah.value;
 	var str6 = document.${formName}.noWartaTanah.value;
 	var strTujuan = document.${formName}.namaTujuan.value;
 	var namaPemohon = document.${formName}.namaPemohon.value;
 	var statusRizabTnh = document.${formName}.statusRizab.value;
-	
+
 	if(statusRizabTnh == 'MILIK') {
 		milikOrRizab = str2;
 	} else if(statusRizabTnh == 'RIZAB') {
@@ -368,14 +368,14 @@ function janaTajuk() {
 		} else {
 			strTajuk = "PERMOHONAN PENYEWAAN TANAH PERSEKUTUAN " + str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH" + namaPemohon + " UNTUK TUJUAN " + strTujuan;
 		}
-	} else if(document.${formName}.socUrusan.value == "12"){ 
+	} else if(document.${formName}.socUrusan.value == "12"){
 		strTajuk = "PERMOHONAN MENGELUARKAN HASIL " + strTujuan + " DI " +  str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH" + namaPemohon + " UNTUK TUJUAN " + strTujuan;
 	} else if(document.${formName}.socUrusan.value == "13"){
 		strTajuk = "PERMOHONAN MENGELUARKAN " + strTujuan + " DI " +  str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH" + namaPemohon + " UNTUK TUJUAN " + strTujuan;
 	} else {
 	    strTajuk;
 	 }
-		
+
 	document.${formName}.txtPerkara.value = strTajuk;
 }
 </script>
