@@ -408,7 +408,7 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                    		<td align="center">$!listTanah.tarikh_borangl</td>
                       	<td>$!listTanah.tarikh_borangk</td>
 	               		<td  align="center">$!listTanah.cetak
-	               		#if($!listTanah.tarikh_borangl != '')
+	               		#if($!listTanah.tarikh_borangk != '')
 	                		 <input type="button" value="Cetak" onClick="javascript:cetakBorangK('$!id_permohonan','$listTanah.id_hakmilik')">
 	        			#end
 	        			</td>
