@@ -407,9 +407,11 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
                    #if($flag_skrin == "daftar_sek8_online" || $flag_skrin == "skrin_hakmilik_sek8_KJP")
                    		<td align="center">$!listTanah.tarikh_borangl</td>
                       	<td>$!listTanah.tarikh_borangk</td>
-	               		<td  align="center" class="$rowx" >$!listTanah.cetak
+	               		<td  align="center">$!listTanah.cetak
+	               		#if($!listTanah.tarikh_borangl != '')
 	                		 <input type="button" value="Cetak" onClick="javascript:cetakBorangK('$!id_permohonan','$listTanah.id_hakmilik')">
-	        			 </td>
+	        			#end
+	        			</td>
 	               	#end  
             		</tr>
                     
@@ -661,7 +663,7 @@ function papar(id_siasatan,id_hakmilik,flag_skrin)
     return false;
 	
 }
-function papar1(id_siasatan,id_hakmilik,flag_skrin)
+function papar1(id_siasatan,id_hakmilik)
 {
 
 	try {	    

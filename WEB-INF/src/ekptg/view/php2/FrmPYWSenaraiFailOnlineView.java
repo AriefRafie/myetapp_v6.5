@@ -55,6 +55,7 @@ public class FrmPYWSenaraiFailOnlineView extends AjaxBasedModule {
         String idUrusan = getParam("idUrusan");
         String hitButton = getParam("hitButton");
         String idHakmilikAgensi = getParam("idHakmilikAgensi");
+        String idHakmilikSementara = getParam("idHakmilikSementara");
         String idSuburusan = getParam("idSuburusan");
         String idSubsuburusan = getParam("idSuburusan");
 		        
@@ -81,8 +82,8 @@ public class FrmPYWSenaraiFailOnlineView extends AjaxBasedModule {
        //ACTION BUTTON
 		if (postDB){
         	if ("daftarBaru".equals(hitButton)){
-        		logic.updateDaftarOnline(idUrusan,idFail,idPermohonan,getParam("txtNoFailNegeri"),getParam("txtPerkara"),getParam("txtCatatan"),
-        				idHakmilikAgensi,idSuburusan,session);
+        		logic.updateDaftarOnline(idUrusan,idFail,idPermohonan,getParam("txtNoFailNegeri"),getParam("txtPerkara"),
+        				getParam("txtCatatan"), idHakmilikSementara, idSuburusan,session);
         	}
     	}
 	    		
@@ -128,7 +129,8 @@ public class FrmPYWSenaraiFailOnlineView extends AjaxBasedModule {
 			// MAKLUMAT TANAH
 			beanMaklumatTanah = new Vector();
 			idHakmilikAgensi = logic.getIdHakmilik(idFail);
-			logic.setMaklumatTanah(idHakmilikAgensi);
+			idHakmilikSementara = logic.getIdHakmilikSementara(idFail);
+			logic.setMaklumatTanah(idHakmilikAgensi, idHakmilikSementara);
 			beanMaklumatTanah = logic.getBeanMaklumatTanah();
 			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
            		      	
@@ -176,7 +178,8 @@ public class FrmPYWSenaraiFailOnlineView extends AjaxBasedModule {
    			//MAKLUMAT TANAH
    			beanMaklumatTanah = new Vector();
    			idHakmilikAgensi = logic.getIdHakmilik(idFail);
-   			logic.setMaklumatTanah(idHakmilikAgensi);
+   			idHakmilikSementara = logic.getIdHakmilikSementara(idFail);
+   			logic.setMaklumatTanah(idHakmilikAgensi, idHakmilikSementara);
    			beanMaklumatTanah = logic.getBeanMaklumatTanah();
    			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
    			
@@ -221,7 +224,8 @@ public class FrmPYWSenaraiFailOnlineView extends AjaxBasedModule {
 		this.context.put("idStatus", idStatus);
 		this.context.put("idPermohonan", idPermohonan);
 	    this.context.put("idPemohon", idPemohon);
-	    this.context.put("idHakmilikAgensi", idHakmilikAgensi);
+	    this.context.put("idHakmilikAgensi", idHakmilikAgensi); 
+	    this.context.put("idHakmilikSementara", idHakmilikSementara);
 	    this.context.put("idUrusan", idUrusan);
 	    this.context.put("idSuburusan", idSuburusan);
 	    this.context.put("idSubsuburusan", idSubsuburusan);

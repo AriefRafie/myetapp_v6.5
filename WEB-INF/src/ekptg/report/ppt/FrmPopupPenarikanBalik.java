@@ -7,11 +7,14 @@ package ekptg.report.ppt;
 
 
 
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import lebah.db.Db;
 import lebah.portal.AjaxBasedModule;
 
 import org.apache.log4j.Logger;
@@ -57,6 +60,11 @@ public class FrmPopupPenarikanBalik extends AjaxBasedModule{
 		String bil_lot = getParam("bil_lot");
 		this.context.put("id_jawatan","0");	
 		String selectNoFail = getParam("sorSelectNoFail");
+		
+		String token = getParam("token");
+		String usid = (String) session.getAttribute("_portal_username");
+		String login = (String) session.getAttribute("_ekptg_user_id");
+		context.put("username", usid);
 
 		
 		
@@ -69,7 +77,7 @@ public class FrmPopupPenarikanBalik extends AjaxBasedModule{
 		Vector list_pegawai_byid = null;
 		Vector list_jpph = null;
 		Vector maklumat_penyediaan = null;
-		
+		Vector dataIcLogin = new Vector();
 		
 		list_pegawai1 = logic.list_pegawai((String) session.getAttribute("_ekptg_user_negeri"),"1",(String) session.getAttribute("_ekptg_user_negeri"),(String) session.getAttribute("_portal_role"));
 	    this.context.put("list_pegawai1",list_pegawai1);
@@ -84,6 +92,7 @@ public class FrmPopupPenarikanBalik extends AjaxBasedModule{
 		String no_rujukan_ptd = "";
 		String no_rujukan_upt = "";
     	String idpermohonan = getParam("id_permohonan");
+    	String userlogin = "";
     	
     	
     	myLogger.info("ID_PERMOHONAN :::"+getParam("id_permohonan"));
@@ -102,6 +111,39 @@ public class FrmPopupPenarikanBalik extends AjaxBasedModule{
 			no_rujukan_ptd = (String)dh.get("no_rujukan_ptd");	
 			no_rujukan_upt = (String)dh.get("no_rujukan_upt");
 		}
+		
+		
+		String ic_login = "";
+	    String id_jawatan1 = "";
+	    String jawatan1 = "";
+	    setIcLogin(login);
+	    dataIcLogin = getIcLogin();
+	    if(dataIcLogin.size()!=0){
+	    	Hashtable np = (Hashtable)dataIcLogin.get(0);
+	    	ic_login = np.get("ic_login").toString();
+	    	id_jawatan1 = np.get("id_jawatan1").toString();
+	    	jawatan1 = np.get("jawatan1").toString();
+	    }
+		
+	    myLogger.info("ic_login :"+ic_login);
+	    myLogger.info("id_jawatan1 :"+id_jawatan1);
+	    myLogger.info("id_jawatan1 :"+id_jawatan1);
+	    context.put("ic_login",ic_login);
+	    context.put("id_jawatan1",id_jawatan1);
+	    context.put("jawatan1",jawatan1);
+	    this.context.put("token", token);
+	    
+		//tambah 08112020 - v7	
+      	if ("sendDGcert".equals(submit)) {
+      		
+      		myLogger.info("send CERT SIGN");
+      		context.put("token",token);
+      		context.put("userlogin",login);
+      		myLogger.info("token adalah :"+token);
+				      	
+      		myLogger.info("userlogin :"+userlogin);
+      		
+      	}
 	 
 	    
 	    if ("getJawatan".equals(main_command)){
@@ -162,6 +204,7 @@ public class FrmPopupPenarikanBalik extends AjaxBasedModule{
 	    	
 	    	this.context.put("selectNoFail",selectNoFail);
 	    	this.context.put("sorSelectNoFail",getParam("sorSelectNoFail"));
+	    	
 	    	
 	    	
 	    	context.put("id_fail", id_fail);
@@ -440,4 +483,57 @@ public class FrmPopupPenarikanBalik extends AjaxBasedModule{
 		
 		return vm;
 	}
+	
+
+	@SuppressWarnings("unchecked")
+	public static void setIcLogin(String idlogin) throws Exception {
+		
+		icLogin = new Vector();
+		
+		Db db = null;
+		String sql = "";
+		
+		try {
+				db = new Db();
+				Statement stmt = db.getStatement();
+			
+				/*sql =  "SELECT DISTINCT A.USER_ID, A.USER_NAME, A.USER_LOGIN ";
+				sql += " FROM USERS A, USERS_INTERNAL B ";
+				sql += " WHERE A.USER_ID = B.USER_ID ";
+				sql += " AND B.FLAG_AKTIF = '1' ";
+				sql += " AND A.USER_ID= '"+idlogin+"'";*/
+				
+				sql =  "SELECT DISTINCT A.USER_ID, A.USER_NAME, A.USER_LOGIN, B.ID_JAWATAN, C.KETERANGAN";
+				sql += " FROM USERS A, USERS_INTERNAL B, TBLRUJJAWATAN C";
+				sql += " WHERE A.USER_ID = B.USER_ID";
+				sql += " AND B.ID_JAWATAN = C.ID_JAWATAN(+)";
+				sql += " AND B.FLAG_AKTIF = '1' ";
+				sql += " AND A.USER_ID= '"+idlogin+"'";
+				
+				
+				ResultSet rs = stmt.executeQuery(sql);
+				myLogger.info("sql icLogin :"+sql);
+				
+				while (rs.next()) {
+					Hashtable h = new Hashtable();
+					h.put("ic_login", rs.getString("USER_LOGIN")== null?"":rs.getString("USER_LOGIN"));
+					h.put("id_jawatan1", rs.getString("ID_JAWATAN")== null?"":rs.getString("ID_JAWATAN"));
+					h.put("jawatan1", rs.getString("KETERANGAN")== null?"":rs.getString("KETERANGAN"));
+					icLogin.addElement(h);
+				
+			}
+		} catch (Exception re) {
+			myLogger.error("Error: ", re);
+			throw re;
+			} finally {
+			if(db != null)db.close();
+		}
+	}//close setIcLOGIN
+	
+	//get detail user
+			private static Vector icLogin = null;
+			
+			public static Vector getIcLogin() {
+				return icLogin;
+			}
 }

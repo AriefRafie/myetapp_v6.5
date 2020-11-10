@@ -17,10 +17,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
 
+import ekptg.engine.EmailProperty;
+import ekptg.engine.EmailSender;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Utils;
 import ekptg.model.ppt.FrmPermohonanUPTData;
 import ekptg.model.ppt.FrmSek8LaporanAwalTanahData;
+import ekptg.model.ppt.FrmSek8PampasanData;
 import ekptg.model.ppt.PPTHeader;
 /**
  * @author Syah/Man/Elly
@@ -38,6 +41,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 	FrmPermohonanUPTData modelUPT = new FrmPermohonanUPTData();
 	PPTHeader header = new PPTHeader();
 	FrmSek8LaporanAwalTanahData modelLaporanAwal = new FrmSek8LaporanAwalTanahData();
+	FrmSek8PampasanData model = new FrmSek8PampasanData(); //yati tambah 10112020
 	
 	@SuppressWarnings({ "unchecked", "static-access" })
 	@Override
@@ -85,6 +89,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		String id_jawatan = "";
 		String selectNoFail = getParam("selectNoFail");
 		String report = getParam("report");
+		myLogger.info("report : "+report);
 		String flagReport = getParam("flagReport");
 		String id_fail = getParam("id_fail");
 		String bilDokumen = getParam("bilDokumen");
@@ -122,6 +127,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		
 		myLogger.info("login : "+login);
 		myLogger.info("--------- report :"+report);
+		myLogger.info("ID_SIASATAN : "+id_siasatan);
 		
 		String bydate = getParam("bydate");
 		
@@ -143,6 +149,61 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		String id_hakmilikpb = getParam("id_hakmilikpb");
 		String id_bayaran = getParam("id_bayaran");
 		// END REPORT BANTAHAN
+		
+		//yati tambah function emel ke KJP 10112020
+		if(getParam("report").equals("EmailSuratMintaBayaran") && getParam("updateFlagHantarEmel").equals("Y"))
+		{			
+	
+			//header
+			String id_status = "";
+			String nama_kementerian = "";
+			String flagSegera = "";
+			String id_negeriProjek = "";
+			String namaProjek = "";
+			String flag_subjaket = "";
+			String no_fail = "";
+			String tarikh_permohonan = "";
+			String tujuan = "";
+			//String no_lot = "";
+			
+			emel = getParam("txtEmel");
+			
+			myLogger.info("emel hantar ke KJP :"+emel);
+	    	String idpermohonan = getParam("id_permohonan");
+	    	Vector dataHeader = null;
+	    	if(!idpermohonan.equals(""))
+	    	{
+	    	header.setDataHeader(idpermohonan);    	
+			dataHeader = header.getDataHeader();
+			context.put("dataHeader", dataHeader);
+			if(dataHeader.size()!=0){
+				Hashtable dh = (Hashtable) dataHeader.get(0);
+				id_status = (String)dh.get("id_status");
+				nama_kementerian = (String)dh.get("nama_kementerian");
+				flagSegera = dh.get("flag_segera").toString();
+				id_fail = (String)dh.get("id_fail");
+				no_fail = (String) dh.get("no_fail");
+				id_negeriProjek = (String)dh.get("id_projekNegeri");
+				namaProjek = dh.get("tujuan").toString();
+				flag_subjaket = dh.get("flag_subjaket").toString();
+				tujuan = (String) dh.get("tujuan");
+				tarikh_permohonan = (String) dh.get("tarikh_permohonan");
+				//no_lot = (String) dh.get("no_lot");
+				
+				Vector list_sub = null;
+				list_sub = header.listPerjalananFail(idpermohonan);
+				this.context.put("list_sub_header", list_sub);
+				this.context.put("listPenghantarNotis", listPenghantarNotis(id_negeriProjek));
+			}
+	    	}
+	    	String idHakmilik = getParam("id_hakmilik");
+	    	String no_lot = getNoLot(idHakmilik);
+
+			hantarEmel("content","MAKLUMAN MEMOHON BAYARAN PAMPASAN PENGAMBILAN TANAH:  "+tujuan+" No.Lot:"+no_lot+" " ,no_fail, tujuan, tarikh_permohonan,emel,nama_kementerian,no_lot);												
+			myLogger.info("update flag");
+			updateFlagEmelMohonBayarKJP(idHakmilik);
+		}
+			
 		
 		if (id_pegawai == null || id_pegawai.trim().length() == 0){
 			id_pegawai = "0";
@@ -204,15 +265,24 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		//get ic login 
 		//GET NAMA PENGARAH
 	    String ic_login = "";
+	    String id_jawatan1 = "";
+	    String jawatan1 = "";
 	    setIcLogin(login);
 	    dataIcLogin = getIcLogin();
 	    if(dataIcLogin.size()!=0){
 	    	Hashtable np = (Hashtable)dataIcLogin.get(0);
 	    	ic_login = np.get("ic_login").toString();
+	    	id_jawatan1 = np.get("id_jawatan1").toString();
+	    	jawatan1 = np.get("jawatan1").toString();
 	    }
 		
 	    myLogger.info("ic_login :"+ic_login);
+	    myLogger.info("id_jawatan1 :"+id_jawatan1);
+	    myLogger.info("id_jawatan1 :"+id_jawatan1);
 	    context.put("ic_login",ic_login);
+	    context.put("id_jawatan1",id_jawatan1);
+	    context.put("jawatan1",jawatan1);
+	    
 		//GET NAMA PENGARAH
 	    String nama_pengarah = "";
 	    modelUPT.setNamaPengarah(id_negeri);
@@ -799,9 +869,16 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 				db = new Db();
 				Statement stmt = db.getStatement();
 			
-				sql =  "SELECT DISTINCT A.USER_ID, A.USER_NAME, A.USER_LOGIN ";
+				/*sql =  "SELECT DISTINCT A.USER_ID, A.USER_NAME, A.USER_LOGIN ";
 				sql += " FROM USERS A, USERS_INTERNAL B ";
 				sql += " WHERE A.USER_ID = B.USER_ID ";
+				sql += " AND B.FLAG_AKTIF = '1' ";
+				sql += " AND A.USER_ID= '"+idlogin+"'";*/
+				
+				sql =  "SELECT DISTINCT A.USER_ID, A.USER_NAME, A.USER_LOGIN, B.ID_JAWATAN, C.KETERANGAN";
+				sql += " FROM USERS A, USERS_INTERNAL B, TBLRUJJAWATAN C";
+				sql += " WHERE A.USER_ID = B.USER_ID";
+				sql += " AND B.ID_JAWATAN = C.ID_JAWATAN(+)";
 				sql += " AND B.FLAG_AKTIF = '1' ";
 				sql += " AND A.USER_ID= '"+idlogin+"'";
 				
@@ -812,6 +889,8 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 				while (rs.next()) {
 					Hashtable h = new Hashtable();
 					h.put("ic_login", rs.getString("USER_LOGIN")== null?"":rs.getString("USER_LOGIN"));
+					h.put("id_jawatan1", rs.getString("ID_JAWATAN")== null?"":rs.getString("ID_JAWATAN"));
+					h.put("jawatan1", rs.getString("KETERANGAN")== null?"":rs.getString("KETERANGAN"));
 					icLogin.addElement(h);
 				
 			}
@@ -829,5 +908,80 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 			public static Vector getIcLogin() {
 				return icLogin;
 			}
+			
+			//yati tambah 10112020
+			@SuppressWarnings({ "unchecked" })
+			private String getNoLot(String idHakmilik) throws Exception{
+		    	
+				Vector dataByHM = new Vector();
+				dataByHM.clear();
+				
+				String no_lot = "";
+				model.setDataByHM(idHakmilik);
+				dataByHM = model.getDataByHM();
+				if(dataByHM.size()!=0){
+					Hashtable db = (Hashtable)dataByHM.get(0);
+					no_lot = (String)db.get("no_lot");
+				}
+				context.put("lblNoLot", no_lot);
+				return no_lot;	
+				
+			}//close getNoLot
+			
+			//YATI TAMBAH 10112020
+			 public void hantarEmel(String content,String subjek,String nofail,
+					 String nama_projek, String tarikh_permohonan, String emel, String nama_kementerian, String no_lot) throws Exception {
+
+					Vector checkEmailKJP = new Vector();
+					checkEmailKJP.clear();		
+				
+					EmailProperty pro = EmailProperty.getInstance();
+					//String EMAIL_HOST = pro.getHost_GM();
+					EmailSender email = EmailSender.getInstance();
+				
+				//myLogger.info("EMAIL_HOST :"+EMAIL_HOST);
+				//myLogger.info("EMAIL_FROM :"+pro.getFrom_GM());
+				email.FROM = pro.getFrom();
+				email.SUBJECT = subjek;
+				email.MESSAGE = "<html><table><tr><td>Makluman permohonan pembayaran bagi</td></tr>" +
+						"<tr><td>No.Fail</td><td>:</td><td>"+nofail+"</td></tr>" +
+						"<tr><td>Nama Projek</td><td>:</td><td>"+nama_projek+"</td></tr>" +
+						"<tr><td>No.Lot</td><td>:</td><td>"+no_lot+"</td></tr>" +
+						"<tr><td>Tarikh Permohonan</td><td>:</td><td>"+tarikh_permohonan+"</td></tr>" +
+						"<tr><td>Nama Kementerian</td><td>:</td><td>"+nama_kementerian+"</td></tr>" +
+						"<tr><td>&nbsp;</td><td>&nbsp;</td><td><em>Emel ini dijana oleh sistem MyeTaPP dan tidak perlu dibalas.</em></td></tr>" +
+						"</table></html>" ;
+				email.RECIEPIENT = emel;
+				
+				myLogger.info(" ---------- email :"+email);	
+				//email.MULTIPLE_RECIEPIENT[0] = "razman.zainal@gmail.com";	
+				email.TO_CC = new String[1];		
+				email.TO_CC[0] = "testingetapp@gmail.com";
+				email.sendEmail();
+				
+			 } //close hantar emel
+			 
+			 public void updateFlagEmelMohonBayarKJP(String idHakmilik) 
+						throws Exception {
+						Db db = null;
+//						String sql = "";
+						try {
+							db = new Db();
+
+							Statement stmt = db.getStatement();
+//							SQLRenderer r = new SQLRenderer();
+							String sql1 = " UPDATE TBLPPTHAKMILIK SET FLAG_HANTAR_KJP = 'BARU'"
+									+ " WHERE ID_HAKMILIK = '" + idHakmilik + "' "
+											+ " ";
+							myLogger.info("UPDATE TBLPPTHAKMILIK :" + sql1.toUpperCase());
+							stmt.executeUpdate(sql1);
+							// conn.commit();
+						} finally {
+							if (db != null)
+								db.close();
+						}
+
+					}
+			 
 	
 }//close class

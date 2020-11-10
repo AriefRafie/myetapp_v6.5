@@ -21,19 +21,19 @@
   </tr>
   <tr>
     <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-    <td>Kontraktor yang Mengambil Pasir</td>
+    <td>Kontraktor yang Mengambil Pasir/Galian Selain Pasir</td>
     <td>:</td>
     <td><input type="text" value="$beanMaklumatAmbilPasir.kontraktor" name="txtKontraktor" id="txtKontraktor" style="width:300px" $readonly class="$inputTextClass" ></td>
   </tr>
   <tr>
     <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-    <td>Tujuan Pengambilan</td>
+    <td>Tujuan Pengambilan Pasir/Galian Selain Pasir</td>
     <td>:</td>
     <td><textarea name="txtTujuanAmbil" id="txtTujuanAmbil" cols="45" rows="5" $readonly class="$inputTextClass" >$beanMaklumatAmbilPasir.tujuanAmbil</textarea></td>
   </tr>
   <tr>
     <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
-    <td>Destinasi Pasir Dihantar</td>
+    <td>Destinasi Pasir/Galian Pasir Dasar Laut dihantar</td>
     <td>:</td>
     <td><textarea name="txtDestinasiDihantar" id="txtDestinasiDihantar" cols="45" rows="5" $readonly class="$inputTextClass"  >$beanMaklumatAmbilPasir.destinasiHantar</textarea></td>
   </tr>
@@ -56,7 +56,18 @@
     <td>:</td>
     <td><input type="text" name="txtTarikhTamat" id="txtTarikhTamat" value="$beanMaklumatAmbilPasir.tarikhTamat" onblur="check_date(this);cekTarikh(this)" size="11" $readonly class="$inputTextClass"/>#if ($mode != 'view') <a href="javascript:displayDatePicker('txtTarikhTamat',false,'dmy');"><img border="0" src="../img/calendar.gif"/> #end </td></td></td>
   </tr>
-    </tr>
+  <tr>
+    <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
+    <td>Kordinat Kawasan Pengorekan</td>
+    <td>:</td>
+    <td width="29%">Label Titik :<input type="text" name="txtLabelTitik" id="txtLabelTitik" size="3" maxlength="3" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();" value="$beanMaklumatAmbilPasir.labelTitik">
+					Darjah U :<input type="text" name="txtDarjahU" id="txtDarjahU" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatAmbilPasir.darjahU" onkeyup="validateNumber(this,this.value);"> &deg;
+    				Minit U :<input type="text" name="txtMinitU" id="txtMinitU" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatAmbilPasir.minitU" onkeyup="validateNumber(this,this.value);"> &prime;
+    				Saat U :<input type="text" name="txtSaatU" id="txtSaatU" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatAmbilPasir.saatU" onkeyup="validateNumber(this,this.value);"> &Prime;
+    				Darjah T :<input type="text" name="txtDarjahT" id="txtDarjahT" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatAmbilPasir.darjahT" onkeyup="validateNumber(this,this.value);"> &deg;
+    				Minit T :<input type="text" name="txtMinitT" id="txtMinitT" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatAmbilPasir.minitT" onkeyup="validateNumber(this,this.value);"> &prime;
+    				Saat T :<input type="text" name="txtSaatT" id="txtSaatT" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatAmbilPasir.saatT" onkeyup="validateNumber(this,this.value);"> &Prime;</td>
+  </tr>
    <tr>
     <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
     <td>Laluan Vessel</td>

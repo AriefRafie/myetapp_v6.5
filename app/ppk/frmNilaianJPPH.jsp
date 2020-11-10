@@ -39,14 +39,14 @@ input[readonly] {
                                       #if($readmode == "disabled")
                                       
                                       #if($listamid.negeri!="" && $listamid.negeri!="0" )
-                                      <input name="n" value="$negerikodpemoP - $negeriketeranganpemoP" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+                                      <input name="n" value="$!kodNegeri - $!namaNegeri" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #else
                                       <input name="n" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #end
                                       
                                       #else
                                       #if($listamid.negeri!="")
-                                      <input name="n" value="$negerikodpemoP - $negeriketeranganpemoP" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+                                      <input name="n" value="$!kodNegeri - $!namaNegeri" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #else
                                       <input name="n" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       <!-- <input name="txtNoHakmilikHtaamUp" type="text" id="txtNoHakmilikHtaam2" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" value="$listnegpomo.kod_Negeri - $listnegpomo.nama_Negeri" size="50" maxlength="50" $readmodeR class="$readmode"  />-->
@@ -72,7 +72,7 @@ input[readonly] {
                                       #if($readmode == "disabled")
                                       
                                       #if($listamid.daerah!="" && $listamid.daerah!="0" )
-                                      <input name="d" value="$listDaerahbyNegeriK - $listDaerahbyNegeriN" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+                                      <input name="d" value="$!kodDaerah - $!namaDaeraH" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #else
                                       <input name="d" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #end
@@ -81,7 +81,7 @@ input[readonly] {
                                       
                                       
                                       #if($listamid.daerah!="")
-                                      <input name="d" value="$listDaerahbyNegeriK - $listDaerahbyNegeriN" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+                                      <input name="d" value="$!kodDaerah - $!namaDaeraH" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #else
                                       <input name="d" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #end           #end 
@@ -107,7 +107,7 @@ input[readonly] {
                                       #if($readmode == "disabled")
                                       
                                       #if($listamid.mukim!="" && $listamid.mukim!="0" )
-                                      <input name="m" value="$!idMukim - $listMukimbyDaerahN" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+                                      <input name="m" value="$!kodMukim - $!namaMukim" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #else
                                       <input name="m" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #end
@@ -115,7 +115,7 @@ input[readonly] {
                                       #else
                              
                                       #if($listamid.mukim!="")
-                                      <input name="m" value="$!idMukim - $listMukimbyDaerahN" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+                                      <input name="m" value="$!kodMukim - $!namaMukim" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #else
                                       <input name="m" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #end                #end </td>
@@ -143,7 +143,7 @@ input[readonly] {
                                       #if($readmode == "disabled")
                                       
                                       #if($listamid.jenishakmilik!="" && $listamid.jenishakmilik!="0")
-                                      <input name="jh" value="$jenisHM - $listjenishakmilikN" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+                                      <input name="jh" value="$!kodHM - $!keteranganHM" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #else
                                       <input name="jh" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #end
@@ -151,7 +151,7 @@ input[readonly] {
                                       #else
                                 
                                       #if($listamid.jenishakmilik!="")
-                                      <input name="jh" value="$jenisHM - $listjenishakmilikN" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+                                      <input name="jh" value="$!kodHM - $!keteranganHM" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #else
                                       <input name="jh" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #end                    #end </td>
@@ -241,7 +241,7 @@ input[readonly] {
                                   
                                    -->
                
-                                    <tr>
+                                  <tr>
                                                               
                                     <td class="style38 style43 style45"></td>
                                    <!-- Kemaskini -->
@@ -266,13 +266,13 @@ input[readonly] {
 											#end
                                     
                                      		#if($listamid.bandar!="" && $listamid.bandar!="0" )
-                                     			<input name="ntbb2" value="$kodbx" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+                                     			<input name="ntbb2" value="$!kodBandar - $!ketBandar" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                      		#else
                                      			<input name="ntbb3" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                      		#end                     
                                    		#else                             
                                   			#if($listamid.bandar!="" && $listamid.bandar!="0" )
-                                     			<input name="ntbb2" value="$kodbx" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+                                     			<input name="ntbb2" value="$!kodBandar - $!ketBandar" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                      		#else
                                      			<input name="ntbb3" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                      		#end 
@@ -321,14 +321,14 @@ input[readonly] {
                                       
                                       
                                       #if($listamid.kategori!="" && $listamid.kategori!="0" )
-                                      <input name="ktt" value="$listkategoriK - $listkategoriN" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+                                      <input name="ktt" value="$!kodKategori - $!keteranganKa" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #else
                                       <input name="ktt" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #end
                                       
                                       #else
                                       #if($listamid.kategori!="")
-                                      <input name="ktt" value="$listkategoriK - $listkategoriN" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+                                      <input name="ktt" value="$!kodKategori - $!keteranganKa" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #else
                                       <input name="ktt" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #end        #end </td>
@@ -376,14 +376,14 @@ input[readonly] {
                                       
                                       
                                       #if($listamid.jenisluas!="" && $listamid.jenisluas!="0")
-                                      <input name="txtLuas" type="text" id="txtLuas" value="$listluasK - $listluasN" size="25"  $readmodeR class="$readmode"  />
+                                      <input name="txtLuas" type="text" id="txtLuas" value="$!kodLuas - $!ketLuas" size="25"  $readmodeR class="$readmode"  />
                                       #else
                                       <input name="txtLuas" type="text" id="txtLuas" value="" size="25"  $readmodeR class="$readmode"  />
                                       #end 
                                       
                                       #else
                                       #if($listamid.jenisluas!="")
-                                      <input name="txtLuas" type="text" id="txtLuas" value="$listluasK - $listluasN" size="25"  $readmodeR class="$readmode"  />
+                                      <input name="txtLuas" type="text" id="txtLuas" value="$!kodLuas - $!ketLuas" size="25"  $readmodeR class="$readmode"  />
                                       #else
                                       <input name="txtLuas" type="text" id="txtLuas" value="" size="25"  $readmodeR class="$readmode"  />
                                       #end             #end </td>
@@ -411,7 +411,7 @@ input[readonly] {
                                     <td>:</td>
                                     <td><label>
                                       <input name="txtLuasHMpHtaamUpd" type="text" class="$readmode" id="txtLuasHMpHtaamUpd" onkeyup="javascript:validateIC(event,this,this.value,'txtLuasHMpHtaamUpd')" value="$!luasHMP" size="15" maxlength="15" $readmodeR />
-                                      <input name="meterhektar" type="text" id="meterhektar" value="$meterhektar" size="15" readonly class="disabled" />
+                                      <input name="meterhektar" type="text" id="meterhektar" value="$!ketLuas" size="15" readonly class="disabled" />
                                       </label></td>
                                   </tr>
                                   <tr>
@@ -446,20 +446,54 @@ input[readonly] {
                                   <tr>
                                     <td class="style38"><div align="left"><span class="style41">*</span>&nbsp;Status Pemilikan</div></td>
                                     <td>:</td>
-                                    <td>#foreach($listpemilik in $listpemilikan)
+                                    <td>
+                                      #set($text_daftar = "")
+                                      #if($!status_pemilikan == '1')
+                                      #set($text_daftar = "PM - PEMILIK")
+                                      #elseif($!status_pemilikan == '2') 
+                                      #set($text_daftar = "JA - PENJAGA AMANAH")
+                                      #elseif($!status_pemilikan == '3') 
+                                      #set($text_daftar = "KL - K.A (L.A)")
+                                      #elseif($!status_pemilikan == '4') 
+                                      #set($text_daftar = "PA - PEMEGANG AMANAH")
+                                      #elseif($!status_pemilikan == '5') 
+                                      #set($text_daftar = "PBD - PIHAK BERKEPENTINGAN BERDAFTAR")
+                                      #elseif($!status_pemilikan == '6') 
+                                      #set($text_daftar = "PG -- PEMEGANG GADAIAN")
+                                      #elseif($!status_pemilikan == '7') 
+                                      #set($text_daftar = "PJ - PEMEGANG PAJAKAN")
+                                      #elseif($!status_pemilikan == '8') 
+                                      #set($text_daftar = "PJK - PEMEGANG PAJAKAN KECIL")
+                                      #elseif($!status_pemilikan == '9') 
+                                      #set($text_daftar = "PJL - PENJUAL")
+                                      #elseif($!status_pemilikan == '10') 
+                                      #set($text_daftar = "PK - PEMEGANG KUASA (PROBATE)/EXECUTOR")
+                                      #elseif($!status_pemilikan == '11') 
+                                      #set($text_daftar = "PMB - PEMILIK BANGUNAN") 
+                                      #elseif($!status_pemilikan == '12') 
+                                      #set($text_daftar = "PMG - PEMEGANG MORTGAGE")
+                                      #elseif($!status_pemilikan == '13') 
+                                      #set($text_daftar = "PP - PENTADBIR")
+                                      #elseif($!status_pemilikan == '14') 
+                                      #set($text_daftar = "PY - PENYEWA")
+                                      #elseif($!status_pemilikan == '15') 
+                                      #set($text_daftar = "RP - REPRESENTATIVE")
+                                      #elseif($!status_pemilikan == '16') 
+                                      #set($text_daftar = "WAR - WARIS")
+                                      #elseif($!status_pemilikan == '17') 
+                                      #set($text_daftar = "WKL - WAKIL")
+                                      #elseif($!status_pemilikan == '18') 
+                                      #set($text_daftar = "WPA - WASI DAN PEMEGANG AMANAH")                                  
+                                      #elseif($!status_pemilikan == '19') 
+                                      #set($text_daftar = "WPS - WAKIL PENILAI SWASTA")
+                                      #elseif($!status_pemilikan == '20') 
+                                      #set($text_daftar = "WS - WASI")
+                                      #end                                     
                                       
-                                      #if($listamid.pemilikan==$listpemilik.id)
-                                      
-                                      #set($listpemilikK=$listpemilik.kod)
-                                      #set($listpemilikN=$listpemilik.keterangan)
-                                      
-                                      #end 
-                                      #end
-                                     
                                       #if($readmode == "disabled")
                                       
                                       #if($listamid.pemilikan!="" && $listamid.pemilikan!="0" )
-                                      <input name="jstm" value="$listpemilikK - $listpemilikN" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+                                      <input name="jstm" value="$text_daftar" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #else
                                       <input name="jstm" value="" size="15" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #end
@@ -467,16 +501,16 @@ input[readonly] {
                                       #else
                                     
                                       #if($listamid.pemilikan!="")
-                                      <input name="jstm" value="$listpemilikK - $listpemilikN" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+                                      <input name="jstm" value="$text_daftar" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #else
                                       <input name="jstm" value="" size="15" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #end                         #end </td>
                                   </tr>
-                                  <tr>
+                                  <!--<tr>
                                     <td class="style38"><div align="left">Tanggungan </div></td>
                                     <td>:</td>
                                     <td><input name="txtTanggunganHtaamUp" type="text" id="txtTanggunganHtaam2" value="$!tanggungan" size="15"$readmodeR class="$readmode" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" /></td>
-                                  </tr>
+                                  </tr>-->
                                   <tr>
                                     <td class="style38"><div align="left"><span class="style41">*</span>&nbsp;Jenis Tanah</div></td>
                                     <td>:</td>
@@ -495,7 +529,7 @@ input[readonly] {
                                       #if($readmode == "disabled")
                                       
                                       #if($listamid.jenistanah!="" && $listamid.jenistanah!="0" )
-                                      <input name="jt" value="$listtanK - $listtanN" size="25" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+                                      <input name="jt" value="$!kodTanah - $!ketTanah" size="25" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #else
                                       <input name="jt" value="" size="15" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #end
@@ -503,7 +537,7 @@ input[readonly] {
                                       #else
                                       
                                       #if($listamid.jenistanah!="")
-                                      <input name="jt" value="$listtanK - $listtanN" size="25" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+                                      <input name="jt" value="$!kodTanah - $!ketTanah" size="25" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #else
                                       <input name="jt" value="" size="15" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #end            #end </label></td>
@@ -511,9 +545,7 @@ input[readonly] {
                                   <tr>
                                     <td class="style38" valign="top"><div align="left">Catatan</div></td>
                                     <td valign="top">:</td>
-                                    #if($readmode == "disabled")
-                                    <td><textarea name="txtCatatanHt" id="txtCatatanHt" $readmodeR class="$readmode" value="$!catatan" cols="31" rows="5"  >$!catatan</textarea>
-                                    #end
+                                    <td><textarea name="txtCatatanHt" id="txtCatatanHt" readonly="" class="disabled" value="$!catatan" cols="31" rows="5"></textarea>
                                     </td>
                                   </tr>
                                   <tr id="tr_flag_daftar"  style="display:none">
@@ -524,9 +556,9 @@ input[readonly] {
                                       #if($readmode != "enabled" )
                                       
                                       #set($text_daftar = "")
-                                      #if($FLAG_DAFTAR == '1')
+                                      #if($!flag_daftar == '1')
                                       #set($text_daftar = "PENDAFTARAN")
-                                      #elseif($FLAG_DAFTAR == '2') 
+                                      #elseif($!flag_daftar == '2') 
                                       #set($text_daftar = "PERBICARAAN")                                         
                                       #end
                                       <input name="FLAG_DAFTAR_TEXT" type="text" id="FLAG_DAFTAR_TEXT" style="text-transform:uppercase;"  value="$text_daftar" size="18" maxlength="40" $readmodeR class="$readmode" />

@@ -10,9 +10,9 @@
   <input name="mode" type="hidden" id="mode" value="$mode" />
   <input name="idBorangA" type="hidden" id="idBorangA" value="$idBorangA" />
   <input name="actionOnline" type="hidden" id="actionOnline" value="$actionOnline"/>
-  <input name="idJadualKeduaLesen" type="text" id="idJadualKeduaLesen" value="$idJadualKeduaLesen"/>
+  <input name="idJadualKeduaLesen" type="hidden" id="idJadualKeduaLesen" value="$idJadualKeduaLesen"/>
   <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
-  <input name="idfail" type="text" id="idfail" value="$idFail"/>
+  <input name="idfail" type="hidden" id="idfail" value="$idFail"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>

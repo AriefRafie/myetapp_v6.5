@@ -946,7 +946,7 @@ function cetakMMK(idpermohonan,idfail,negeriMMK,nofail) {
 	}else if(negeriMMK=="4"){
 		var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&report=MMKSek8Melaka&flagReport=S";
 	}else if(negeriMMK=="5"){
-		var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&report=MMKSek8NSembilan&flagReport=S&flagShowTarikhCetak=yes";
+		var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&report=MMKSek8NSembilan&flagReport=S&flagShowTarikhCetak=yes&selectNoFail=yes";
 	}else if(negeriMMK=="6"){
 		var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&report=MMKSek8Pahang&flagReport=S";
 		//var url = "../servlet/ekptg.report.ppt.MMKSek8Pahang?idFail="+idfail+"&no_fail="+nofail+"&namaPentadbir="+namaPentadbir;
@@ -980,8 +980,8 @@ function cetakMMK(idpermohonan,idfail,negeriMMK,nofail) {
 }
 function cetakKertasMinitMB(idfail,namaPengarah) {
 
-	var url = "../servlet/ekptg.report.ppt.KertasMinitMB?idfail="+idfail+"&namaPengarah="+namaPengarah;
-	//var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&report=KertasMinitMB&flagReport=S";
+	//var url = "../servlet/ekptg.report.ppt.KertasMinitMB?id_fail="+idfail+"&namaPengarah="+namaPengarah;
+	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_fail="+idfail+"&namaPengarah="+namaPengarah+"&report=KertasMinitMB&selectNoFail=yes";
 	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
