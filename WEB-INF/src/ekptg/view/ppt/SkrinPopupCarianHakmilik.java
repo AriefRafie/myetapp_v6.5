@@ -99,8 +99,8 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 			
 			}
 
-			header.setDataHeader(id_permohonan);
-			Vector dataHeader = header.getDataHeader();
+			PPTHeader.setDataHeader(id_permohonan);
+			Vector dataHeader = PPTHeader.getDataHeader();
 			if (dataHeader.size() != 0) {
 				Hashtable dh = (Hashtable) dataHeader.get(0);
 				flag_subjaket = dh.get("flag_subjaket").toString();
@@ -228,9 +228,7 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 
 	Vector listSeqSubjaket = null;
 
-	public Vector getListSeqSubjaket(String idPermohonan, Db db)
-			throws Exception {
-
+	public Vector getListSeqSubjaket(String idPermohonan, Db db) throws Exception {
 		listSeqSubjaket = new Vector();
 
 		// Db db = null;
@@ -280,8 +278,7 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 		}
 	}// close setDataListKertas
 
-	private void janaSubjaket(HttpSession session, String idpermohonan, Db db,
-			Vector listSeqSubjaket) throws Exception {
+	private void janaSubjaket(HttpSession session, String idpermohonan, Db db,Vector listSeqSubjaket) throws Exception {
 
 		// String[] listIdHM = request.getParameterValues("ListIdHM");
 		String id_user = (String) session.getAttribute("_ekptg_user_id");
@@ -1316,5 +1313,6 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 			// db.close();
 		}
 	}
+	
 
 }
