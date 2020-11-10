@@ -159,7 +159,6 @@
 <input type="hidden" id="action2" name="action2" value="$action2" />
 <script type="text/javascript">
 function viewBorangLampiranA1(ID_PERMOHONAN) {
-	alert("baca viewBorangLampiranA1");
     document.${formName}.action = "$EkptgUtil.getTabID("JPBD",$portal_role)?_portal_module=ekptg.view.ppt.FrmUlasanJPBDOnline&action2=viewBorangLampiranA1&ID_PERMOHONAN=" + ID_PERMOHONAN;
     document.${formName}.submit();
 }

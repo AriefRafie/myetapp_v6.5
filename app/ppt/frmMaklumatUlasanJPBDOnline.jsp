@@ -420,7 +420,6 @@
 	  if (hWnd.focus != null) hWnd.focus();
   }
   function saveBorangLampiranA1(ID_PERMOHONAN) {
-	  alert('baca saveUlasanJPBD---1'+ID_PERMOHONAN);
       if (!window.confirm("Adakah anda pasti?")) return;
 	  document.${formName}.method = "POST";
       //document.${formName}.action = "?_portal_module=ekptg.view.integrasi.FrmUlasanJPBDOnline&action2=saveUlasanJPBD&ID_PERMOHONAN="+ID_PERMOHONAN;

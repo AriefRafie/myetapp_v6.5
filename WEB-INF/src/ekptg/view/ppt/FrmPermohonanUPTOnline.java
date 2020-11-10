@@ -2036,15 +2036,41 @@ public class FrmPermohonanUPTOnline extends AjaxBasedModule {
 				db.close();
 		}
 	}
-
+	
+	
 	private void sendEmail(String nama_projek, String tarikh_permohonan, String userIdKementerian,
 		String id_jawatan_user, String id_user, String purpose,HttpSession session) throws Exception {
 		//hantarSemakan,hantarLulus,lulus
-		EmailOnline et = new EmailOnline();
-		et.setEmail("", "", purpose, "", nama_projek, tarikh_permohonan, "", userIdKementerian, id_jawatan_user,id_user
-				,String.valueOf(session.getAttribute("portal_username")));
+		Vector listPemohon = new Vector();
+		listPemohon.clear();
+		listPemohon = modelOnline.getListPemohon(id_user, "", "");
+		String nama_kementerian = "";
+		Hashtable t = (Hashtable) listPemohon.get(0);
+		nama_kementerian = t.get("nama_kementerian").toString();
+		
+		myLogger.info("nama_kementerian===="+nama_kementerian);
+		
+		//EmailOnline et = new EmailOnline();
+		EmailConfig ec = new EmailConfig();
+//		et.setEmail("", "", purpose, "", nama_projek, tarikh_permohonan, "", userIdKementerian, id_jawatan_user,id_user
+//				,String.valueOf(session.getAttribute("portal_username")));
 //		System.out.println("*** sendEmail : " + nama_projek + " " + tarikh_permohonan);
-
+		
+		Vector checkEmail= new Vector();
+		checkEmail.clear();
+		checkEmail = myInfo.checkEmail(id_user);
+		String emel = "";
+		String emelSubjek = ec.tajukSemakan+"Online Pengambilan Tanah";
+		if(checkEmail.size()!=0){
+			Hashtable ceP = (Hashtable)checkEmail.get(0);
+			emel = (String)ceP.get("EMEL");
+		}
+		String userMail = emel;
+		String kandungan = nama_projek+" daripada "+nama_kementerian;
+		ec.sendTo(userMail, emelSubjek, kandungan);
+		
+		System.out.println("*** sendEmail : " + nama_projek + " " + tarikh_permohonan);
+		
 	}// close sendEmail
 
 	private void resetValueCarian() throws Exception {
