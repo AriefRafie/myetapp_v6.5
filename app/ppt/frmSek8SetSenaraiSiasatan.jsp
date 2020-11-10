@@ -582,10 +582,14 @@
     <div align="center" >
     #if($readmode == "view")
       <label>
+      #if($modul != "ekptg.view.ppt.FrmSiasatanOnline")
       <input type="button" name="cmdKemaskini " id="cmdKemaskini " value="Kemaskini" onClick="kemaskini('$id_siasatan')">
+      #end
       </label>
       <label>
+      #if($modul != "ekptg.view.ppt.FrmSiasatanOnline")
       <input type="button" name="cmdHapus1" id="cmdHapus1" value="Hapus" onClick="hapus()">
+      #end
       </label>
     #end
     #if($readmode == "edit")  
@@ -634,19 +638,22 @@
 <legend>SENARAI SIASATAN</legend>
 
 
-
+#if($modul != "ekptg.view.ppt.FrmSiasatanOnline")
  <input type="button" value="Kembali Skrin Utama" onClick="screen5('$id_permohonan')"> 
-
+#end
 <!-- PPT-19 -->
+#if($modul != "ekptg.view.ppt.FrmSiasatanOnline")
 <input type="button" value="Kembali Skrin Hakmilik" onClick="popupCarianHakmilik('$id_permohonan','senarai_siasatan')">   
+#end
 
 #if($flag_stop_siasatan!="Y")
 	#if($list_siasatan.size() == 0 && $record_siasatan != "yes")
 	  <input name="" type="button" value="Daftar Siasatan" onClick="tambah('$id_hakmilik','$!id_pembatalan')">
 	#end
-	
+	#if($modul != "ekptg.view.ppt.FrmSiasatanOnline")
 	#if($list_siasatan.size() > 0)
 	<input name="" type="button" value="Hapus" onClick="hapus_beramai()">
+	#end
 	#end
 
 
@@ -658,8 +665,12 @@
 	<span><font color="red"><b>*Siasatan Tidak Diteruskan</b></font></span>
 #end
 
+	#if($modul != "ekptg.view.ppt.FrmSiasatanOnline")
 	#if($list_siasatan.size() > 0)
 	<input name="" type="button" value="Cetak Nota Siasatan Kosong" onClick="cetakNotaSiasatan('$!id_siasatan','$!id_hakmilik')">
+	#end
+	#else
+	<input type="button" value="Kembali" onClick="screen6('$id_permohonan')"> 
 	#end
 
 #if($flag_stop_siasatan!="Y")
@@ -2173,6 +2184,19 @@ function screen5(id_permohonan)
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmSek8Siasatan";
 	document.${formName}.submit();
 }
+
+function screen6(id_permohonan)
+{
+    document.${formName}.command.value = "Siasatan";
+	document.${formName}.sub_command.value = "Senarai";
+	document.${formName}.subminor_command.value = "View";
+	document.${formName}.location.value = "paging";
+	document.${formName}.point.value = "paging";	
+	document.${formName}.id_permohonan.value = id_permohonan;
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmSiasatanOnline";
+	document.${formName}.submit();
+}
+
 
 
 function popupCarianHakmilik(id_permohonan,flag_skrin)

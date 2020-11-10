@@ -3376,6 +3376,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
 		h.put("id_hakmilikpb", getParam("id_hakmilikpb"));
 		
 		h.put("txtBilLewat", getParam("txtBilLewat"));
+		h.put("txdTarikhLewat", getParam("txdTarikhLewat"));
 		h.put("txtDendaLewat", getParam("txtDendaLewat"));
 		h.put("sorJenisAward", getParam("sorJenisAward"));
 		h.put("sorFlagSerah", getParam("sorFlagSerah"));	

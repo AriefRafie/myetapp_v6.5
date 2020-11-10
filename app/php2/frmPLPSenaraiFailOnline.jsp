@@ -51,7 +51,6 @@
           <td width="11%" align="left"><strong>No. Fail</strong></td>
           <td width="25%" align="left"><strong>Nama Pemohon</strong></td>
           <td width="10%" align="center"><strong>Tarikh Mohon</strong></td>
-          <td width="25%" align="left"><strong>Sub Urusan</strong></td>
         </tr>
         #set ($list = "")
         #if ($SenaraiFail.size() > 0)
@@ -60,7 +59,7 @@
         #set( $row = "row1" )
         #elseif (($list.bil % 2) != 0)
         #set( $row = "row1" )
-        #else 
+        #else
         #set( $row = "row2" )
         #end
         <tr>
@@ -69,7 +68,6 @@
           <td class="$row">$list.noFail</td>
           <td class="$row">$list.namaPemohon</td>
           <td class="$row" align="center">$list.tarikhPermohonan </td>
-          <td class="$row">$list.namaSubUrusan</td>
         </tr>
         #end
         #else
@@ -79,7 +77,6 @@
           <td class="row1">&nbsp;</td>
           <td class="row1">&nbsp;</td>
           <td class="row1" align="center">&nbsp;</td>
-          <td class="row1">&nbsp;</td>
         </tr>
         #end
       </table>
@@ -102,7 +99,7 @@ function papar(idFail,idSubUrusan,idPermohonan) {
 	document.${formName}.idFail.value = idFail;
 	document.${formName}.idSubUrusan.value = idSubUrusan;
 	document.${formName}.idPermohonan.value = idPermohonan;
-	document.${formName}.actionOnline.value = "daftar"; 	
+	document.${formName}.actionOnline.value = "daftar";
 	document.${formName}.submit();
 }
 </script>

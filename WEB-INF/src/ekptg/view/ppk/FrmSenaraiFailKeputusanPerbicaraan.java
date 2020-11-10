@@ -7729,7 +7729,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 	    		txtNomborResitPerintahEDIT,txdTarikhBayaranPerintahEDIT);*/
 		FrmPrmhnnSek8KptsanBicaraData.add_BayaranPerintahEDIT( usid, idpermohonan, txtJumBayaranEDIT,
 	    		 txtNomborResitPerintahEDIT, check_pengecualianEDIT,  catatan_pengecualianEDIT,
-	    		 txdTarikhBayaranPerintahEDIT);
+	    		 txdTarikhBayaranPerintahEDIT);//arief add
 	}
 	
 
@@ -8338,7 +8338,7 @@ public class FrmSenaraiFailKeputusanPerbicaraan extends AjaxBasedModule {
 				id_jenisbayaranPerintah,txtJumBayaran,txtNomborResitPerintah,txdTarikhBayaranPerintah);*/
 		FrmPrmhnnSek8KptsanBicaraData.add_BayaranPerintah(idpermohonan,usid,
 				id_jenisbayaranPerintah,txtJumBayaran,check_pengecualian,catatan_pengecualian,
-				txtNomborResitPerintah,txdTarikhBayaranPerintah);
+				txtNomborResitPerintah,txdTarikhBayaranPerintah);//arief add
 	}
 
 	private void add_maklumatPerintah(String id_perbicaraan,

@@ -1,12 +1,13 @@
 <fieldset>
 <legend>MAKLUMAT TINDAKAN MAHKAMAH</legend>
+<input type="hidden" name="idHasil" id="idHasil" value="$!tm.idHasil" class="disabled"/>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
      <td width="1%"></td>
      <td width="28%">Tarikh Buka Fail</td>
      <td width="1%">:</td>
      <td width="70%">
-     	<input type="text" name="tarikh_daftar_fail" id="tarikh_daftar_fail" value="$tm.tarikh_daftar_fail" size="9" class="disabled" onblur="check_date(this)"/>
+     	<input type="text" name="tarikh_daftar_fail" id="tarikh_daftar_fail" value="$!tm.tarikh_daftar_fail" size="9" class="disabled" onblur="check_date(this)"/>
      </td>
    </tr>
   <tr>
@@ -14,7 +15,7 @@
      <td width="28%">Tarikh Mula Penyewaaan</td>
      <td width="1%">:</td>
      <td width="70%">
-     	<input type="text" name="tarikh_mula_penyewaan" id="tarikh_mula_penyewaan" value="$tm.tarikh_mula_penyewaan" size="9" class="disabled" onblur="check_date(this)"/>
+     	<input type="text" name="tarikh_mula_penyewaan" id="tarikh_mula_penyewaan" value="$!tm.tarikh_mula_penyewaan" size="9" class="disabled" onblur="check_date(this)"/>
      </td>
    </tr>
   <tr>
@@ -22,7 +23,7 @@
      <td width="28%">Tarikh Tamat Penyewaan</td>
      <td width="1%">:</td>
      <td width="70%">
-     	<input type="text" name="tarikh_tamat_penyewaan" id="tarikh_tamat_penyewaan" value="$tm.tarikh_tamat_penyewaan" size="9" class="disabled" onblur="check_date(this)"/>
+     	<input type="text" name="tarikh_tamat_penyewaan" id="tarikh_tamat_penyewaan" value="$!tm.tarikh_tamat_penyewaan" size="9" class="disabled" onblur="check_date(this)"/>
      </td>
    </tr>
   <tr>
@@ -30,21 +31,21 @@
      <td width="28%">Tarikh Minit Mesyuarat</td>
      <td width="1%">:</td>
      <td width="70%">
-     	<input type="text" name="txtTarikh" id="txtTarikh" value="$tm.tarikh_daftar_fail" size="9" class="disabled" onblur="check_date(this)"/>
+     	<input type="text" name="txtTarikh" id="txtTarikh" value="$!tm.tarikh_mesyuarat" size="9" class="disabled" onblur="check_date(this)"/>
      </td>
    </tr>
    <tr>
       <td>&nbsp;</td>
       <td>Bil Mesyuarat</td>
       <td>:</td>
-      <td><input type="text" name="txtNoRujukan" id="txtNoRujukan" value="$beanMaklumatBayaranD.noRujukan" class="disabled" onBlur="this.value=this.value.toUpperCase();"/></td>
+      <td><input type="text" name="txtNoRujukan" id="txtNoRujukan" value="$!tm.bil_mesyuarat" class="disabled" onBlur="this.value=this.value.toUpperCase();"/></td>
   </tr>
   <tr>
      <td width="1%"></td>
      <td width="28%">Tarikh Surat Tawaran</td>
      <td width="1%">:</td>
      <td width="70%">
-     	<input type="text" name="tarikh_surat_tawaran" id="tarikh_surat_tawaran" value="$tm.tarikh_surat_tawaran" size="9" class="disabled" onblur="check_date(this)"/>
+     	<input type="text" name="tarikh_surat_tawaran" id="tarikh_surat_tawaran" value="$!tm.tarikh_surat_tawaran" size="9" class="disabled" onblur="check_date(this)"/>
      </td>
    </tr>
   <tr>
@@ -52,7 +53,7 @@
      <td width="28%">Tarikh Penerimaan SST</td>
      <td width="1%">:</td>
      <td width="70%">
-     	<input type="text" name="tarikh_penamaan_sst" id="tarikh_penamaan_sst" value="$tm.tarikh_penamaan_sst" $readonly class="$inputTextClass" size="9" onblur="check_date(this)"/>
+     	<input type="text" name="tarikh_penamaan_sst" id="tarikh_penamaan_sst" value="$!tm.tarikh_penamaan_sst" $readonly class="$inputTextClass" size="9" onblur="check_date(this)"/>
        #if ($mode == 'update') <a href="javascript:displayDatePicker('tarikh_penamaan_sst',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a> #end</td>
    </tr>
   <tr>
@@ -60,7 +61,7 @@
      <td width="28%">Tarikh Penerimaan Deposit</td>
      <td width="1%">:</td>
      <td width="70%">
-     	<input type="text" name="tarikh_penerimaan_deposit" id="tarikh_penerimaan_deposit" value="$tm.tarikh_penerimaan_deposit" size="9" class="disabled" onblur="check_date(this)"/>
+     	<input type="text" name="tarikh_penerimaan_deposit" id="tarikh_penerimaan_deposit" value="$!tm.tarikh_penerimaan_deposit" size="9" class="disabled" onblur="check_date(this)"/>
      </td>
    </tr>
   <tr>
@@ -68,7 +69,7 @@
      <td width="28%">Tarikh Notis Peringatan</td>
      <td width="1%">:</td>
      <td width="70%">
-     	<input type="text" name="tarikh_notis_peringatan" id="tarikh_notis_peringatan" value="$tm.tarikh_notis_peringatan" size="9" class="disabled" onblur="check_date(this)"/>
+     	<input type="text" name="tarikh_notis_peringatan" id="tarikh_notis_peringatan" value="$!tm.tarikh_notis_peringatan" size="9" class="disabled" onblur="check_date(this)"/>
      </td>
    </tr>
   <tr>
@@ -76,7 +77,7 @@
      <td width="28%">Tarikh Notis Peringatan Terakhir</td>
      <td width="1%">:</td>
      <td width="70%">
-     	<input type="text" name="tarikh_notis_peringatan_akhir" id="tarikh_notis_peringatan_akhir" value="$tm.tarikh_notis_peringatan_akhir" size="9" class="disabled" onblur="check_date(this)"/>
+     	<input type="text" name="tarikh_notis_peringatan_akhir" id="tarikh_notis_peringatan_akhir" value="$!tm.tarikh_notis_peringatan_akhir" size="9" class="disabled" onblur="check_date(this)"/>
      </td>
    </tr>
   <tr>
@@ -84,8 +85,7 @@
      <td width="28%">Tarikh Notis Penamatan</td>
      <td width="1%">:</td>
      <td width="70%">
-        <input type="text" name="tarikh_notis_penamatan" id="tarikh_notis_penamatan" value="$tm.tarikh_notis_penamatan" $readonly class="$inputTextClass" size="9" onblur="check_date(this)"/>
-        #if ($mode == 'update') <a href="javascript:displayDatePicker('tarikh_notis_penamatan',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a> #end
+        <input type="text" name="tarikh_notis_penamatan" id="tarikh_notis_penamatan" value="$!tm.tarikh_notis_penamatan"  size="9" class="disabled" onblur="check_date(this)"/>
      </td>
    </tr>
   <tr>
@@ -93,7 +93,7 @@
      <td width="28%">Tarikh Notis Rampasan</td>
      <td width="1%">:</td>
      <td width="70%">
-     	 <input type="text" name="tarikh_notis_rampasan" id="tarikh_notis_rampasan" value="$tm.tarikh_notis_rampasan" $readonly class="$inputTextClass" size="9" onblur="check_date(this)"/>
+     	 <input type="text" name="tarikh_notis_rampasan" id="tarikh_notis_rampasan" value="$!tm.tarikh_notis_rampasan" $readonly class="$inputTextClass" size="9" onblur="check_date(this)"/>
      	 #if ($mode == 'update') <a href="javascript:displayDatePicker('tarikh_notis_rampasan',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a> #end
      </td>
    </tr>
@@ -102,7 +102,7 @@
      <td width="28%">Tarikh Memo Rampasan Deposit</td>
      <td width="1%">:</td>
      <td width="70%">
-     	<input type="text" name="txtTarikh" id="txtTarikh" value="$tm.tarikh_memo_rampasan_deposit" size="9" class="disabled" onblur="check_date(this)"/>
+     	<input type="text" name="txtTarikh" id="txtTarikh" value="$!tm.tarikh_memo_rampasan_deposit" size="9" class="disabled" onblur="check_date(this)"/>
      </td>
    </tr>
   <tr>
@@ -110,9 +110,38 @@
      <td width="28%">Tarikh Notis Tuntutan</td>
      <td width="1%">:</td>
      <td width="70%">
-     	<input type="text" name="tarikh_notis_tuntutan" id="tarikh_notis_tuntutan" value="$tm.tarikh_notis_tuntutan" $readonly class="$inputTextClass" size="9" onblur="check_date(this)"/>
+     	<input type="text" name="tarikh_notis_tuntutan" id="tarikh_notis_tuntutan" value="$!tm.tarikh_notis_tuntutan" $readonly class="$inputTextClass" size="9" onblur="check_date(this)"/>
         #if ($mode == 'update') <a href="javascript:displayDatePicker('tarikh_notis_tuntutan',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a> #end
      </td>
+   </tr>
+   <tr>
+   	<td colspan="4">
+   		<fieldset><legend>LAMPIRAN</legend>
+			<table width="100%" border="0" cellspacing="2" cellpadding="2">
+			  <tr>
+			    <td width="1%">&nbsp;</td>
+			    <td width="28%">Lampiran</td>
+			    <td width="1%">:</td>
+			    <td width="70%">#if ($!tm.ID_DOKUMEN) #if ($!tm.ID_DOKUMEN != '') <a href="#" onclick="cetakDokumen($!tm.ID_DOKUMEN)" class="style2">LAMPIRAN</a> &nbsp;&nbsp; #end #end</td>
+			  </tr>
+			  <tr>
+			    <td width="1%"><span class="style1">*</span></td>
+			    <td>Muatnaik Lampiran</td>
+			    <td>:</td>
+			    <td><input class="texts" type="file" id="dokumen" name="dokumen" style="width:100%" onfocus="$('err_dokumen').innerHTML = '';" onchange="simpanDokumen()">
+			      <div id="dokumenMuatnaik" style="display:none"> <img src="../img/indicator.gif"> <span style="font-weight:bold;color:#008000;">Sedang Muatnaik...</span> </div>
+			      <div id="err_dokumen" style="color:#CC0000;font-weight:bold;border:2px #000"></div></td>
+			  </tr>
+			  <tr>
+			    <td width="1%">&nbsp;</td>
+			    <td width="28%">&nbsp;</td>
+			    <td width="1%">&nbsp;</td>
+			    <td width="70%"><span class="style4"><i><font color="#ff0000">Perhatian</font> : </i><span class="style5">Saiz muat naik imej adalah tidak melebihi 2MB. Jika muat naik anda tidak berjaya sila cuba dengan saiz imej yang lebih kecil.</span></span></td>
+			  </tr>
+			</table>
+		</fieldset>
+		<iframe id="upload_dokumen" name="upload_dokumen" width="0px" height="0px" style="visibility:hidden"></iframe>
+   	</td>
    </tr>
    #if ($mode == 'update')
   <tr>

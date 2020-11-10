@@ -366,7 +366,8 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 						Log.info("idJadualKeduaxx :"+idJadualKedua);
 					idBorangA = logic.simpanMaklumatAmbilPasir(getParam("idJadualKedua"), idBulan, getParam("txtTahun"), getParam("txtTujuanAmbil"), 
 							getParam("txtDestinasiDihantar"), getParam("txtAnggaranPasir"), Utils.RemoveSymbol(getParam("txtJumlahRoyalti")), getParam("txtKontraktor"), getParam("txtPembeli"),
-								getParam("txtTarikhMula"), getParam("txtTarikhTamat"), getParam("txtLaluan"), 
+								getParam("txtTarikhMula"), getParam("txtTarikhTamat"), getParam("txtLabelTitik"), getParam("txtDarjahU"), getParam("txtMinitU"), getParam("txtSaatU"), 
+								getParam("txtDarjahT"), getParam("txtMinitT"), getParam("txtSaatT"), getParam("txtLaluan"), 
 								getParam("txtKaedah"), getParam("txtKawasan"), session);
 					}
 
@@ -374,7 +375,8 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 						log.info("idJadualKedua kemaskini :"+idJadualKedua);
 						logic.simpanKemaskiniMaklumatPasir(idBorangA, idBulan, getParam("txtTahun"), getParam("txtTujuanAmbil"), getParam("txtDestinasiDihantar"),
 								getParam("txtAnggaranPasir"), Utils.RemoveSymbol(getParam("txtJumlahRoyalti")), getParam("txtKontraktor"), getParam("txtPembeli"), 
-								getParam("txtTarikhMula"), getParam("txtTarikhTamat"), getParam("txtLaluan"), getParam("txtKaedah"), getParam("txtKawasan"), session);
+								getParam("txtTarikhMula"), getParam("txtTarikhTamat"), getParam("txtLabelTitik"), getParam("txtDarjahU"), getParam("txtMinitU"), getParam("txtSaatU"), 
+								getParam("txtDarjahT"), getParam("txtMinitT"), getParam("txtSaatT"), getParam("txtLaluan"), getParam("txtKaedah"), getParam("txtKawasan"), session);
 					}
 					if ("simpanMaklumatBarge".equals(hitButton)) {
 
@@ -599,6 +601,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 			setupPage(session, action, list);
 
 	} else if ("daftarBaruBorangB".equals(actionOnline)){
+		idJadualKeduaLesen = getParam("idJadualKeduaLesen");
 			
 		log.info("daftar Baru Borang B");
 		vm = "app/php2/online/frmAPBBorangBOnline.jsp";
@@ -763,6 +766,14 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 				 hashMaklumatAmbilPasir.put("laluan",getParam("txtLaluan") == null ?"": getParam("txtLaluan"));
 				 hashMaklumatAmbilPasir.put("kaedah",getParam("txtKaedah") == null ? "": getParam("txtKaedah"));
 				 hashMaklumatAmbilPasir.put("kawasan",getParam("txtKawasan") == null ? "": getParam("txtKawasan"));
+				 
+				 hashMaklumatAmbilPasir.put("labelTitik", getParam("txtLabelTitik") == null ? "" : getParam("txtLabelTitik"));	
+				 hashMaklumatAmbilPasir.put("darjahU", getParam("txtDarjahU") == null ? "" : getParam("txtDarjahU"));	
+				 hashMaklumatAmbilPasir.put("minitU", getParam("txtMinitU") == null ? "" : getParam("txtMinitU"));	
+				 hashMaklumatAmbilPasir.put("saatU", getParam("txtSaatU") == null ? "" : getParam("txtMinitU"));
+				 hashMaklumatAmbilPasir.put("darjahT", getParam("txtDarjahT") == null ? "" : getParam("txtDarjahT"));	
+				 hashMaklumatAmbilPasir.put("minitT", getParam("txtMinitT") == null ? "" : getParam("txtMinitT"));	
+				 hashMaklumatAmbilPasir.put("saatT", getParam("txtSaatT") == null ? "" : getParam("txtSaatT"));
 
 				 beanMaklumatAmbilPasir.addElement(hashMaklumatAmbilPasir);
 				
@@ -828,7 +839,15 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 			 hashMaklumatAmbilPasir.put("laluan",getParam("txtLaluan") == null ?"": getParam("txtLaluan"));
 			 hashMaklumatAmbilPasir.put("kaedah",getParam("txtKaedah") == null ? "": getParam("txtKaedah"));
 			 hashMaklumatAmbilPasir.put("kawasan",getParam("txtKawasan") == null ? "": getParam("txtKawasan"));
-			
+			 
+			 hashMaklumatAmbilPasir.put("labelTitik", getParam("txtLabelTitik") == null ? "" : getParam("txtLabelTitik"));
+			 hashMaklumatAmbilPasir.put("darjahU", getParam("txtDarjahU") == null ? "" : getParam("txtDarjahU"));	
+			 hashMaklumatAmbilPasir.put("minitU", getParam("txtMinitU") == null ? "" : getParam("txtMinitU"));	
+			 hashMaklumatAmbilPasir.put("saatU", getParam("txtSaatU") == null ? "" : getParam("txtMinitU"));
+			 hashMaklumatAmbilPasir.put("darjahT", getParam("txtDarjahT") == null ? "" : getParam("txtDarjahT"));	
+			 hashMaklumatAmbilPasir.put("minitT", getParam("txtMinitT") == null ? "" : getParam("txtMinitT"));	
+			 hashMaklumatAmbilPasir.put("saatT", getParam("txtSaatT") == null ? "" : getParam("txtSaatT"));
+			 
 			 beanMaklumatAmbilPasir.addElement(hashMaklumatAmbilPasir);
 			 this.context.put("BeanMaklumatAmbilPasir",beanMaklumatAmbilPasir);
 			 
@@ -1007,9 +1026,16 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 					
 				String socBulan = getParam("socBulan");
 		        String txtTahun = getParam("txtTahun");
+		        
+		        // ika tambah 9/11/2020
+		        String txtTarikh = getParam("txtTarikhOperasi");
+		        String txtBulan = txtTarikh.substring(3,5);
+				String txtTahunOps = txtTarikh.substring(6,10);
+				
 		        boolean returnChecking = false;
-		        	
-		        returnChecking = FrmAPBLaporanPasirData.isBulanExist(idJadualKeduaLesen,socBulan,txtTahun);
+		        
+		        returnChecking = FrmAPBLaporanPasirData.isBulanExist(idJadualKeduaLesen,txtBulan,txtTahunOps);
+		        //returnChecking = FrmAPBLaporanPasirData.isBulanExist(idJadualKeduaLesen,txtTarikh);
 		        log.info("returnChecking "+returnChecking);
 		        	
 		        if(returnChecking == false){
@@ -1155,6 +1181,8 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 	    		vm = "app/php2/online/frmAPBBorangBOnlineDaftar.jsp";        	
 	        	
 			} else if("kemaskiniLaporan".equals(actionOnline)){
+				idJadualKeduaLesen = getParam("idJadualKeduaLesen");
+        		log.info("jadual kedua kemaskini :"+idJadualKeduaLesen);
 	        	
 	       		// GET LATEST DATA LAPORAN
 	    		logic.getMaklumatLaporan(id_laporanpasir);
@@ -1181,6 +1209,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 	        	vm = "app/php2/online/frmAPBBorangBOnlineDaftar.jsp";        	  
 	        	
 	        } else if("simpanEditLaporan".equals(actionOnline)){
+	        	idJadualKeduaLesen = getParam("idJadualKeduaLesen");
 	        	
 	        	simpanEditLaporan(id_user,id_laporanpasir);
 	        	
@@ -1202,7 +1231,8 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 	        	context.put("button", "view");
 	        	context.put("clearForm", "");
 	        	context.put("flag", "semak");
-	        	context.put("mode", "disabled");        	
+	        	context.put("mode", "disabled");
+	        	context.put("idJadualKeduaLesen",idJadualKeduaLesen);
 	        	
 	        	// SCREEN
 	        	vm = "app/php2/online/frmAPBBorangBOnlineDaftar.jsp";           	        	 
@@ -1245,7 +1275,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 				hashMaklumatDokumen.put("namaLampiran", "");
 				hashMaklumatDokumen.put("catatanLampiran", "");
 				beanMaklumatDokumen.addElement(hashMaklumatDokumen);
-				this.context.put("BeanMaklumatImejan", beanMaklumatDokumen);
+				this.context.put("BeanMaklumatDokumen", beanMaklumatDokumen);
 				
 				this.context.put("beanHeaderBorangA", beanHeaderBorangA);
 				
@@ -1253,7 +1283,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 	        	vm = "app/php2/online/frmAPBOnlineLampiranPasirLaut.jsp";
 	        }
 	        else if ("openPopupDokumen".equals(flagPopup)) { 
-	        	vm = "app/php2/online/frmAPBOnlineLampiranPasirLaut.jsp";
+//	        	vm = "app/php2/online/frmAPBOnlineLampiranPasirLaut.jsp";
 	        	 
 				if ("new".equals(modePopup)) {
 		
@@ -2073,13 +2103,18 @@ private void maklumatProjek(String mode, String idPermohonan, String idProjek) t
 					
 					String txtJumKuantiti = getParam("txtJumKuantiti");
 					String txtJumRoyalti = getParam("txtJumRoyalti");
-					String txdTarikhPengeluaran = getParam("txdTarikhPengeluaran");
-					String socBulan = getParam("socBulan");
-					String txtTahun = getParam("txtTahun");
+					String txtTarikhOperasi = getParam("txtTarikhOperasi");
+					//String socBulan = getParam("socBulan");
+					//String txtTahun = getParam("txtTahun");
 					/*String txtKontraktor = getParam("txtKontraktor");*/
 					/*String txtPembeli = getParam("txtPembeli");*/
+					String txtMasaOperasi  = getParam("txtMasaOperasi");
+					String txtHariOperasi  = getParam("txtHariOperasi");
+					String txtBulan = txtTarikhOperasi.substring(3,5);
+					String txtTahun = txtTarikhOperasi.substring(6,10);
+					String txtKapal = getParam("txtNamaKapal");
 					
-					return logic.simpanLaporan(id_user,idJadualKeduaLesen,txtJumKuantiti,txtJumRoyalti,txdTarikhPengeluaran,socBulan,txtTahun);		
+					return logic.simpanLaporan(id_user,idJadualKeduaLesen,txtJumKuantiti,txtJumRoyalti,txtTarikhOperasi,txtBulan,txtTahun,txtMasaOperasi,txtHariOperasi,txtKapal);		
 					
 				}// CLOSE SIMPAN LAPORAN
 				
@@ -2160,13 +2195,19 @@ private void maklumatProjek(String mode, String idPermohonan, String idProjek) t
 					
 					String txtJumKuantiti = getParam("txtJumKuantiti");
 					String txtJumRoyalti = getParam("txtJumRoyalti");
-					String socBulan = getParam("socBulan");
-					String txtTahun = getParam("txtTahun");
-					String txtKontraktor = getParam("txtKontraktor");
-					String txtPembeli = getParam("txtPembeli");
+					String txtTarikhOperasi = getParam("txtTarikhOperasi");
+//					String socBulan = getParam("socBulan");
+//					String txtTahun = getParam("txtTahun");
+//					String txtKontraktor = getParam("txtKontraktor");
+//					String txtPembeli = getParam("txtPembeli");
+					String txtMasaOperasi  = getParam("txtMasaOperasi");
+					String txtHariOperasi  = getParam("txtHariOperasi");
+					String txtBulan = txtTarikhOperasi.substring(3,5);
+					String txtTahun = txtTarikhOperasi.substring(6,10);
+					String txtKapal = getParam("txtNamaKapal");
 					
-					logic.simpanEditLaporan(id_user,id_laporanpasir,txtJumKuantiti,txtJumRoyalti,
-							socBulan,txtTahun, txtKontraktor, txtPembeli);
+					logic.simpanEditLaporan(id_user,id_laporanpasir,txtJumKuantiti,txtJumRoyalti,txtTarikhOperasi,
+							txtBulan,txtTahun,txtMasaOperasi,txtHariOperasi,txtKapal);
 							
 				}// CLOSE UPDATELAPORAN	
 

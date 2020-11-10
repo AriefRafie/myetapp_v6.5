@@ -46,8 +46,10 @@ public class QRCodeAPB {
 		noFailremoveslash = noFailremoveslash.replaceAll("\\s+","");
 		myLog.info("noFail = "+noFail+",noFailremoveslash = "+noFailremoveslash);
 		
-		//---deploy---------
-		String path =  getAppContext()+"/reports/php2/qrcode/"+noFailremoveslash+".png";
+		//String path =  getAppContext()+"/reports/php2/qrcode/"+noFailremoveslash+".png";
+		
+		ResourceBundle rb = ResourceBundle.getBundle("file");
+		String path = rb.getString("apbQRpath")+noFailremoveslash+".png";
 		
 		//---untuk local dev----
 		//String path =  "C:/eclipse/workspace/reports/php2/qrcode/"+noFailremoveslash+".png";
@@ -91,9 +93,6 @@ public class QRCodeAPB {
 	                path.substring(path.lastIndexOf('.') + 1),
 	                new File(path));
 	    }
-		
-	
-	
 	/**
 	 * Fungsi mendapatkan nama context (folder fizikal applikasi)
 	 * Dibuat Oleh	: Mohamad Rosli
@@ -102,10 +101,6 @@ public class QRCodeAPB {
 	 * Dikemaskini Pada :
 	 * @return
 	 */
-	
-	
-	
-	
 	private String getAppContext(){
 		String appContext ="myetapp";
 		ResourceBundle rb = ResourceBundle.getBundle("file");
@@ -114,9 +109,6 @@ public class QRCodeAPB {
 		
 		myLog.info("getAppContext="+appContext);
 		return appContext;
-		
 	}
-
-
 }
 

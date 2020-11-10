@@ -14,7 +14,7 @@
   <input name="actionOnline" type="hidden" id="actionOnline" value="$actionOnline"/>
   <input name="mode" type="hidden" id="mode" value="$mode"/>
   <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
-    <input name="idfail" type="text" id="idfail" value="$idFail"/>
+   <input name="idfail" type="hidden" id="idfail" value="$idFail"/>
   
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -91,8 +91,8 @@ function setTable(id){
 }
 function cetakAPBLaporanBorangA(id_borangA) {
 
-	var url = "../servlet/ekptg.report.php2.APBLaporanBorangA?idBorangA="+id_borangA;
-	
+	//var url = "../servlet/ekptg.report.php2.APBLaporanBorangA?idBorangA="+id_borangA;
+	var url = "../servlet/ekptg.report.php2.online.PengesahanOnline?template=APBLaporanBorangA&folder=ONLINE&idBorangA="+id_borangA;
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
@@ -206,7 +206,7 @@ function doBatalKemaskiniMaklumatPasir(){
 }
 function doKembali(){
 	
-	document.${formName}.actionOnline.value = "papar";
+	document.${formName}.actionOnline.value = "";
 	document.${formName}.submit();
 }
 function validateCurrency(elmnt,content,content2) {

@@ -288,7 +288,7 @@ public class FrmTKROnlineKJPSenaraiUlasanFailData {
 					+ "UT.ID_ULASANTEKNIKAL"
 					+ " ,F.ID_FAIL, F.NO_FAIL, F.TAJUK_FAIL"
 					+ " ,RS.KETERANGAN STATUS, P.TARIKH_TERIMA, P.NO_PERMOHONAN, P.ID_STATUS"
-					+ ", UT.TARIKH_HANTAR, UT.TARIKH_JANGKA_TERIMA"
+					+ ", UT.TARIKH_HANTAR, UT.TARIKH_JANGKA_TERIMA,UT.TARIKH_TERIMA AS TARIKH_HANTAR_ULASAN "
 					+ " FROM TBLPFDFAIL F, TBLPERMOHONAN P"
 					+ " ,USERS_KEMENTERIAN UK"
 					+ " ,TBLRUJSTATUS RS"
@@ -429,6 +429,7 @@ public class FrmTKROnlineKJPSenaraiUlasanFailData {
 				h.put("TARIKH_TERIMA", rs.getDate("TARIKH_TERIMA") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMA")));
 				h.put("ID_STATUS", rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS"));
 				h.put("TARIKH_JANGKA_TERIMA", rs.getDate("TARIKH_JANGKA_TERIMA") == null ? "" : sdf.format(rs.getDate("TARIKH_JANGKA_TERIMA")));
+				h.put("TARIKH_HANTAR_ULASAN", rs.getDate("TARIKH_HANTAR_ULASAN") == null ? "" : sdf.format(rs.getDate("TARIKH_HANTAR_ULASAN")));
 				listFail.addElement(h);
 
 			}

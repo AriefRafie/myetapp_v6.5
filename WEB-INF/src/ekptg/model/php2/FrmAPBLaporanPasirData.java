@@ -620,7 +620,41 @@ public class FrmAPBLaporanPasirData extends EkptgCache implements Serializable {
 				db.close();
 		}
 		return false;
-	}// CLOSE CHECKING EXISTING BULAN
+	}
+	
+	public static boolean isBulanExist(String id_jadualkedualesenAPB,
+			String txtTarikh) {
+		Db db = null;
+		String sql = "";
+		
+		String bulan = "";
+		String tahun = "";
+		
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			sql = " SELECT bulan_pengambilan,tahun_pengambilan FROM Tblphplaporanpasir ";
+			sql += " WHERE bulan_pengambilan = '" + bulan + "' ";
+			sql += " and tahun_pengambilan = '" + tahun + "' ";
+			sql += " and id_jadualkedualesenapb = '" + id_jadualkedualesenAPB
+					+ "' ";
+
+			myLogger.info("checking bulan :: " + sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		return false;
+	}
+	// CLOSE CHECKING EXISTING BULAN
 	
 	// getMaklumatDokumen
 	public static void getMaklumatDokumen(String id_dokumen) throws Exception {

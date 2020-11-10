@@ -90,9 +90,9 @@
             <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
            	<td width="19%"><strong>No. Rujukan <i>Online</i></strong></td>
            	<td width="19%"><strong>No. Fail</i></strong></td>
-            <td width="32%"><strong>Tajuk Fail</strong></td>
-            <td width="10%" align="center"><strong>Tarikh Mohon</strong></td>
-            <td width="15%"><strong>Status</strong></td>
+            <td width="31%"><strong>Tajuk Fail</strong></td>
+            <td width="13%"><strong>Tarikh Terima Ulasan</strong></td>
+            <td width="13%"><strong>Tarikh Hantar Ulasan</strong></td>
 
           </tr>
         #set ($list = "")
@@ -113,7 +113,7 @@
             <td class="$row"><a href="javascript:paparFail('$!list.ID_FAIL', '$!list.ID_ULASANTEKNIKAL')" class="style2">$list.NO_FAIL</a></td>
             <td class="$row">$list.TAJUK_FAIL</td>
             <td class="$row" align="center">$list.TARIKH_TERIMA</td>
-            <td class="$row" align="center">$list.STATUS</td>
+            <td class="$row" align="center">$list.TARIKH_HANTAR_ULASAN</td>
           </tr>
           #end
           #else

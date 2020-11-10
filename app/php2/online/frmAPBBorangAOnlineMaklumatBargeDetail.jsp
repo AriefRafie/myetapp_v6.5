@@ -16,13 +16,19 @@
   #foreach ($beanMaklumatBarge in $BeanMaklumatBarge)
   <tr>
     <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-    <td width="28%">Nama Didaftarkan</td>
+    <td width="28%">Nama Kapal/Baj Yang Didaftarkan</td>
     <td width="1%">:</td>
     <td width="70%"><input name="txtNamaDaftar" type="text" class="$inputTextClass" id="txtNamaDaftar" value="$beanMaklumatBarge.namaDidaftarkan" $readonly /></td>
   </tr>
   <tr>
     <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-    <td>Jenis Kapal</td>
+    <td>No. Telefon INMARSAT (Satellite Phone)</td>
+    <td>:</td>
+    <td><input type="text" name="txtNoTel" id="txtNoTel" value="$beanMaklumatBarge.noTel" class="$inputTextClass" $readonly onkeyup="validateNumber(this,this.value);" /></td>
+  </tr>
+  <tr>
+    <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+    <td>Jenis Kapal/Baj</td>
     <td>:</td>
     <td><input type="text" name="txtJenis" id="txtJenis" value="$beanMaklumatBarge.jenis" class="$inputTextClass" $readonly  /></td>
   </tr>
@@ -32,12 +38,7 @@
     <td>:</td>
     <td><input type="text" name="txtNoPendaftaran" id="txtNoPendaftaran" value="$beanMaklumatBarge.noPendaftaran" class="$inputTextClass" $readonly  />    </td>
   </tr>
-  <tr>
-    <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
-    <td>No. Telefon INMARSAT (Satellite Phone)</td>
-    <td>:</td>
-    <td><input type="text" name="txtNoTel" id="txtNoTel" value="$beanMaklumatBarge.noTel" class="$inputTextClass" $readonly onkeyup="validateNumber(this,this.value);" /></td>
-  </tr>
+  
   <tr>
     <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
     <td valign="top">Kapasiti</td>

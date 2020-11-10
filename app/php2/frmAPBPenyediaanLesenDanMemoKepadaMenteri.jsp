@@ -203,6 +203,7 @@ function setTable(id){
 		document.getElementById(id).style.display="none";
 	}
 }
+
 function cetakMemo(idFail) {
 	var url = "..//servlet/ekptg.report.php2.APBMemoMenteri?ID_FAIL="+idFail;
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');

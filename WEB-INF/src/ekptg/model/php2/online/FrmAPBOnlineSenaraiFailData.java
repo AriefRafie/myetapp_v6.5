@@ -3265,14 +3265,17 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 		//YATI TAMBAH
 		public String simpanMaklumatAmbilPasir(String idJadualKedua, String idBulan, String tahun, String tujuanAmbil,
 				String destinasiHantar, String jumlahPasir, String jumlahRoyalti, String kontraktor, String pembeli,  
-				String tarikhMula, String tarikhTamat, String laluan, 
+				String tarikhMula, String tarikhTamat, String labelTitik, String darjahU, String minitU, String saatU, 
+				String darjahT, String minitT, String saatT, String laluan, 
 				String kaedah, String kawasan, HttpSession session) throws Exception {
 
 			Db db = null;
 			Connection conn = null;
 			String userId = (String) session.getAttribute("_ekptg_user_id");
 			String sql = "";
+			String sql2 = "";
 			String idBorangAString = "";
+			String idKoordinatString = "";
 
 			try {
 				db = new Db();
@@ -3280,6 +3283,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				conn.setAutoCommit(false);
 				Statement stmt = db.getStatement();
 				SQLRenderer r = new SQLRenderer();
+				SQLRenderer r2 = new SQLRenderer();
 
 				// TBLPHPBORANGA
 				long idBorangA = DB.getNextID("TBLPHPBORANGA_SEQ");
@@ -3313,6 +3317,24 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				myLog.info("sql simpan ambil pasir : "+sql);
 				stmt.executeUpdate(sql);
 
+				//ADD 08112020
+				//TBLPHPKOORDINATPERMOHONAN
+				long idKoordinat = DB.getNextID("TBLPHPKOORDINATPERMOHONAN_SEQ");
+				idKoordinatString = String.valueOf(idKoordinat);
+				
+				r2.add("ID_KOORDINATPERMOHONAN", idKoordinat);
+				r2.add("LABEL_TITIK", labelTitik);
+				r2.add("DARJAH_U", darjahU);
+				r2.add("MINIT_U", minitU);
+				r2.add("SAAT_U", saatU);
+				r2.add("DARJAH_T", darjahT);
+				r2.add("MINIT_T", minitT);
+				r2.add("SAAT_T", saatT);
+
+				sql2 = r2.getSQLInsert("TBLPHPKOORDINATPERMOHONAN");
+				myLog.info("sql :"+sql2);
+				stmt.executeUpdate(sql2);
+				
 				conn.commit();
 
 			} catch (SQLException ex) {
@@ -3333,14 +3355,17 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 		
 		//yati tambah
 		public void simpanKemaskiniMaklumatPasir(String idBorangA, String idBulan, String tahun, String tujuanAmbil, String destinasiHantar,
-				String jumlahPasir, String jumlahRoyalti, String kontraktor, String pembeli,
-				String tarikhMula, String tarikhTamat, String laluan, String kaedah, String kawasan, HttpSession session)
+				String jumlahPasir, String jumlahRoyalti, String kontraktor, String pembeli, String tarikhMula, String tarikhTamat, 
+				String laluan, String kaedah, String kawasan, String labelTitik, String darjahU, String minitU, String saatU, 
+				String darjahT, String minitT, String saatT, HttpSession session)
 				throws Exception {
 
 			Db db = null;
 			Connection conn = null;
 			String userId = (String) session.getAttribute("_ekptg_user_id");
 			String sql = "";
+			String sql2 = "";
+			String idKoordinatString = "";
 
 			try {
 				db = new Db();
@@ -3348,6 +3373,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				conn.setAutoCommit(false);
 				Statement stmt = db.getStatement();
 				SQLRenderer r = new SQLRenderer();
+				SQLRenderer r2 = new SQLRenderer();
 
 				// TBLPHPBORANGA
 				r.update("ID_BORANGA", idBorangA);
@@ -3376,6 +3402,23 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				sql = r.getSQLUpdate("TBLPHPBORANGA");
 				myLog.info("sql borang A : "+sql);
 				stmt.executeUpdate(sql);
+				
+				//ADD 08112020
+				//TBLPHPKOORDINATPERMOHONAN
+				long idKoordinat = DB.getNextID("TBLPHPKOORDINATPERMOHONAN_SEQ");
+				idKoordinatString = String.valueOf(idKoordinat);
+				
+				r2.add("ID_KOORDINATPERMOHONAN", idKoordinat);
+				r2.add("LABEL_TITIK", labelTitik);
+				r2.add("DARJAH_U", darjahU);
+				r2.add("MINIT_U", minitU);
+				r2.add("SAAT_U", saatU);
+				r2.add("DARJAH_T", darjahT);
+				r2.add("MINIT_T", minitT);
+				r2.add("SAAT_T", saatT);
+
+				sql2 = r2.getSQLInsert("TBLPHPKOORDINATPERMOHONAN");
+				stmt.executeUpdate(sql2);
 
 				conn.commit();
 
@@ -3655,13 +3698,14 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				throws Exception {
 			Db db = null;
 			String sql = "";
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			try {
 				MaklumatLaporan = new Vector();
 				db = new Db();
 				Statement stmt = db.getStatement();
 
 				sql = " SELECT A.ID_LAPORANPASIR,A.BULAN_PENGAMBILAN,A.TAHUN_PENGAMBILAN,A.JUMLAH_KUANTITI, A.KONTRAKTOR, A.PEMBELI_PASIR,";
-				sql += " A.JUMLAH_ROYALTI, A.ID_UNITISIPADU, A.TARIKH_PENGELUARAN ";
+				sql += " A.JUMLAH_ROYALTI, A.ID_UNITISIPADU, A.TARIKH_PENGELUARAN, A.HARI_OPERASI, A.MASA_OPERASI, A.NAMA_KAPAL ";
 				sql += " FROM TBLPHPLAPORANPASIR A ";
 				sql += " WHERE A.ID_LAPORANPASIR = '" + id_laporanpasir + "' ";
 
@@ -3680,7 +3724,11 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 					h.put("pembeli", rs.getString("PEMBELI_PASIR") == null ? "" : rs.getString("PEMBELI_PASIR"));
 					h.put("jumlah_royalti", rs.getString("jumlah_royalti") == null ? "" : Double.parseDouble(rs.getString("jumlah_royalti")));
 					h.put("id_unitisipadu", rs.getString("id_unitisipadu") == null ? "" : rs.getString("id_unitisipadu"));
-					h.put("tarikhPengeluaran", rs.getString("tarikhPengeluaran") == null ? "" : rs.getString("tarikhPengeluaran"));
+					//h.put("tarikh_pengeluaran", rs.getString("tarikh_pengeluaran") == null ? "" : rs.getString("tarikh_pengeluaran"));
+					h.put("tarikh_pengeluaran", rs.getString("tarikh_pengeluaran") == null ? "" : sdf.format(rs.getDate("tarikh_pengeluaran")));
+					h.put("nama_kapal", rs.getString("nama_kapal") == null ? "" : rs.getString("nama_kapal"));
+					h.put("hari_operasi", rs.getString("hari_operasi") == null ? "" : rs.getString("hari_operasi"));
+					h.put("masa_operasi", rs.getString("masa_operasi") == null ? "" : rs.getString("masa_operasi"));
 					MaklumatLaporan.addElement(h);
 				}
 			} finally {
@@ -3769,6 +3817,72 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				r.add("tarikh_masuk", r.unquote("sysdate"));
 				r.add("id_kemaskini", usid);
 				r.add("tarikh_kemaskini", r.unquote("sysdate"));
+				sql = r.getSQLInsert("Tblphplaporanpasir");
+				myLog.info("INSERT Tblphplaporanpasir ::" + sql);
+				
+				stmt.executeUpdate(sql);
+			
+				myLog.info("sql laporan b : "+sql);
+				conn.commit();
+
+			} catch (SQLException ex) {
+				try {
+					conn.rollback();
+				} catch (SQLException e) {
+					throw new Exception("Rollback error : " + e.getMessage());
+				}
+				throw new Exception("Ralat : Masalah penyimpanan data "
+						+ ex.getMessage());
+
+			} finally {
+				if (db != null)
+					db.close();
+			}
+			return id_laporanpasir;
+		}
+		
+		public String simpanLaporan(String usid, String id_jadualkedualesenAPB, String txtJumKuantiti,
+				String txtJumRoyalti, String txtTarikhPengeluaran, String txtBulan, String txtTahun, String txtMasa, String txtHari, String txtKapal)
+				throws Exception {
+
+			Db db = null;
+			Connection conn = null;
+			String sql = "";
+			String output = "";
+			Date now = new Date();			
+			String id_laporanpasir = "";
+			String tarikhOperasi = "to_date('" + txtTarikhPengeluaran + "','dd/MM/yyyy')";
+
+			try {
+				db = new Db();
+				conn = db.getConnection();
+				conn.setAutoCommit(false);
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+
+				long id_laporanpasirLong = DB.getNextID("TBLPHPLAPORANPASIR_SEQ");
+			
+				// TBLPHPLAPORANPASIR
+				r = new SQLRenderer();
+				r.add("id_laporanpasir", id_laporanpasirLong);
+				id_laporanpasir = String.valueOf(id_laporanpasirLong);
+				r.add("id_jadualkedualesenAPB", id_jadualkedualesenAPB);
+				r.add("bulan_pengambilan", txtBulan);
+				r.add("tahun_pengambilan", txtTahun);
+				r.add("jumlah_kuantiti", txtJumKuantiti);
+				r.add("id_unitisipadu", 3); // 3 = METER PERSEGI
+				r.add("jumlah_royalti", txtJumRoyalti);
+				r.add("tarikh_pengeluaran", r.unquote(tarikhOperasi));
+				r.add("masa_operasi",txtMasa);
+				r.add("hari_operasi",txtHari);
+				r.add("nama_kapal", txtKapal);
+				/*r.add("kontraktor", txtKontraktor);*/
+				/*r.add("pembeli_pasir", txtPembeli);*/
+				r.add("id_masuk", usid);
+				r.add("tarikh_masuk", r.unquote("sysdate"));
+				r.add("id_kemaskini", usid);
+				r.add("tarikh_kemaskini", r.unquote("sysdate"));
+				
 				sql = r.getSQLInsert("Tblphplaporanpasir");
 				myLog.info("INSERT Tblphplaporanpasir ::" + sql);
 				
@@ -4063,7 +4177,43 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				if (db != null)
 					db.close();
 			}
-		} // CLOSE EDIT LAPORAN PASIR
+		} 
+		
+		public void simpanEditLaporan(String userId, String id_laporanpasir,
+				String txtJumKuantiti, String txtJumRoyalti, String txtTarikhPengeluaran,String txtBulan,
+				String txtTahun, String txtMasa, String txtHari, String txtKapal) throws Exception {
+
+			Db db = null;
+			String sql = "";
+			
+			String tarikhOperasi = "to_date('" + txtTarikhPengeluaran + "','dd/MM/yyyy')";
+			try {
+				db = new Db();
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+				r.update("id_laporanpasir", id_laporanpasir);
+				r.add("bulan_pengambilan", txtBulan);
+				r.add("tahun_pengambilan", txtTahun);
+				r.add("jumlah_kuantiti", txtJumKuantiti);
+				r.add("jumlah_royalti", txtJumRoyalti);
+				r.add("tarikh_pengeluaran",r.unquote(tarikhOperasi));
+				r.add("masa_operasi", txtMasa);
+				r.add("hari_operasi", txtHari);
+				r.add("nama_kapal", txtKapal);
+//				r.add("kontraktor", txtKontraktor);
+//				r.add("pembeli_pasir", txtPembeli);
+				r.add("id_kemaskini", userId);
+				r.add("tarikh_kemaskini", r.unquote("sysdate"));
+				//r.add("tarikhPengeluaran", r.unquote("sysdate"));
+				sql = r.getSQLUpdate("Tblphplaporanpasir");
+				myLog.info("SQL UPDATE LAPORAN :" + sql.toUpperCase());
+				stmt.executeUpdate(sql);
+			} finally {
+				if (db != null)
+					db.close();
+			}
+		}
+		// CLOSE EDIT LAPORAN PASIR
 
 		// SIMPAN PASIR
 		public static String simpanPasir(String userId, String id_laporanpasir,

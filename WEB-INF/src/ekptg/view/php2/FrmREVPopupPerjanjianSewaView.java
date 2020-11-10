@@ -50,20 +50,25 @@ public class FrmREVPopupPerjanjianSewaView extends AjaxBasedModule {
         this.context.put("close_window", "");
         this.context.put("error_msg", "");
 
+        System.out.println("flagPerjanjian >>> "+ getParam("flagPerjanjian"));
+        System.out.println("flagSkrin >>> "+ getParam("flagSkrin"));
+
         vm = "app/php2/frmREVPopupMaklumatPerjanjian.jsp";
 
         //SEND TO MODEL
         if ("simpan".equals(hitButton)) {
     	  idPerjanjian = logic.savePerjanjian(idFail, idHasil, getParam("txtNoSiri"), getParam("txtTarikhMula"), getParam("txtTempoh"), getParam("txtTarikhTamat"),
     			  	getParam("txtTarikhMulaDasar"), getParam("txtTempohDasar"), getParam("txtTarikhTamatDasar"),getParam("txtKadarSewa"),
-					getParam("txtCagaran"), getParam("flagKelulusanDasar"), getParam("txtCatatan"), getParam("modCajSewaan"), getParam("flagPerjanjian"), flagSkrin, session);
+					getParam("txtCagaran"), getParam("flagKelulusanDasar"), getParam("txtCatatan"), getParam("modCajSewaan"), getParam("flagPerjanjian"),
+					getParam("txtTarikhPenamatan"),getParam("txtSebabPenamatan"),flagSkrin, session);
     	  this.context.put("close_window", "yes");
       	}
 
         if ("simpanKemaskini".equals(hitButton)) {
       	  logic.kemaskiniPerjanjian(idFail, idHasil, idPerjanjian, getParam("txtNoSiri"), getParam("txtTarikhMula"), getParam("txtTempoh"), getParam("txtTarikhTamat"),
       			  	getParam("txtTarikhMulaDasar"), getParam("txtTempohDasar"), getParam("txtTarikhTamatDasar"),getParam("txtKadarSewa"),
-					getParam("txtCagaran"), getParam("flagKelulusanDasar"), getParam("txtCatatan"), getParam("modCajSewaan"), getParam("flagPerjanjian"), flagSkrin, session);
+					getParam("txtCagaran"), getParam("flagKelulusanDasar"), getParam("txtCatatan"), getParam("modCajSewaan"), getParam("flagPerjanjian"),
+					getParam("txtTarikhPenamatan"),getParam("txtSebabPenamatan"),flagSkrin, session);
       	  this.context.put("close_window", "yes");
         }
 
@@ -99,6 +104,8 @@ public class FrmREVPopupPerjanjianSewaView extends AjaxBasedModule {
 			hashPerjanjian.put("kadarSewa", getParam("txtKadarSewa") == null ? "": getParam("txtKadarSewa"));
 			hashPerjanjian.put("cagaran", getParam("txtCagaran") == null ? "": getParam("txtCagaran"));
 			hashPerjanjian.put("catatan", getParam("txtCatatan") == null ? "": getParam("txtCatatan"));
+			hashPerjanjian.put("tarikhPenamatan", getParam("txtTarikhPenamatan") == null ? "": getParam("txtTarikhPenamatan"));
+			hashPerjanjian.put("sebabPenamatan", getParam("txtSebabPenamatan") == null ? "": getParam("txtSebabPenamatan"));
 			hashPerjanjian.put("modCajSewaan", getParam("modCajSewaan") == null ? "": getParam("modCajSewaan"));
 			beanMaklumatPerjanjian.addElement(hashPerjanjian);
 			this.context.put("BeanMaklumatPerjanjian", beanMaklumatPerjanjian);
@@ -123,6 +130,8 @@ public class FrmREVPopupPerjanjianSewaView extends AjaxBasedModule {
 				hashPerjanjian.put("cagaran", getParam("txtCagaran") == null ? "": getParam("txtCagaran"));
 				hashPerjanjian.put("catatan", getParam("txtCatatan") == null ? "": getParam("txtCatatan"));
 				hashPerjanjian.put("modCajSewaan", getParam("modCajSewaan") == null ? "": getParam("modCajSewaan"));
+				hashPerjanjian.put("tarikhPenamatan", getParam("txtTarikhPenamatan") == null ? "": getParam("txtTarikhPenamatan"));
+				hashPerjanjian.put("sebabPenamatan", getParam("txtSebabPenamatan") == null ? "": getParam("txtSebabPenamatan"));
 				beanMaklumatPerjanjian.addElement(hashPerjanjian);
 				this.context.put("BeanMaklumatPerjanjian", beanMaklumatPerjanjian);
 	    	} else {
