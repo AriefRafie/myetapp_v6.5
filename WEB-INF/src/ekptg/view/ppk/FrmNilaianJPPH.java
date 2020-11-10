@@ -92,6 +92,24 @@ public class FrmNilaianJPPH extends VTemplate {
 			String idnegeri = (String) permohonanJPPH.get("idnegeri");
 			String idMukim = (String) permohonanJPPH.get("idMukim");
 			String bandarhta = (String) permohonanJPPH.get("bandarhta");
+			String kodHM = (String) permohonanJPPH.get("kodHM");
+			String keteranganHM = (String) permohonanJPPH.get("keteranganHM");
+			String kodMukim = (String) permohonanJPPH.get("kodMukim");
+			String namaMukim = (String) permohonanJPPH.get("namaMukim");
+			String kodDaerah = (String) permohonanJPPH.get("kodDaerah");
+			String namaDaeraH = (String) permohonanJPPH.get("namaDaeraH");
+			String kodNegeri = (String) permohonanJPPH.get("kodNegeri");
+			String namaNegeri = (String) permohonanJPPH.get("namaNegeri");
+			String kodKategori = (String) permohonanJPPH.get("kodKategori");
+			String keteranganKa = (String) permohonanJPPH.get("keteranganKa");
+			String kodLuas = (String) permohonanJPPH.get("kodLuas");
+			String ketLuas = (String) permohonanJPPH.get("ketLuas");
+			String flag_daftar = (String) permohonanJPPH.get("flag_daftar");
+			String kodBandar = (String) permohonanJPPH.get("kodBandar");
+			String ketBandar = (String) permohonanJPPH.get("ketBandar");
+			String kodTanah = (String) permohonanJPPH.get("kodTanah");
+			String ketTanah = (String) permohonanJPPH.get("ketTanah");
+			String status_pemilikan = (String) permohonanJPPH.get("status_pemilikan");
 			
 			context.put("noHakmilik", noHakmilik);
 			context.put("alamat1", alamat1);
@@ -112,6 +130,24 @@ public class FrmNilaianJPPH extends VTemplate {
 			context.put("idnegeri", idnegeri);
 			context.put("idMukim", idMukim);
 			context.put("bandarhta", bandarhta);
+			context.put("kodHM", kodHM);
+			context.put("keteranganHM", keteranganHM);
+			context.put("kodMukim", kodMukim);
+			context.put("namaMukim", namaMukim);
+			context.put("kodDaerah", kodDaerah);
+			context.put("namaDaeraH", namaDaeraH);
+			context.put("kodNegeri", kodNegeri);
+			context.put("namaNegeri", namaNegeri);
+			context.put("kodKategori", kodKategori);
+			context.put("keteranganKa", keteranganKa);
+			context.put("kodLuas", kodLuas);
+			context.put("ketLuas", ketLuas);
+			context.put("flag_daftar", flag_daftar);
+			context.put("kodBandar", kodBandar);
+			context.put("ketBandar", ketBandar);
+			context.put("kodTanah", kodTanah);
+			context.put("ketTanah", ketTanah);
+			context.put("status_pemilikan", status_pemilikan);
 			
 			vm = "app/ppk/frmNilaianJPPH.jsp";
 			
@@ -233,17 +269,31 @@ else if ("hantarPermohonanPetioner".equals(submit)) {
 					+ " H.NILAI_HTA_TARIKHMOHON AS nilaihtaTM,"
 					+ " H.NILAI_HTA_TARIKHMATI AS nilaihtaTMA,"
 					+ " H.ID_KATEGORI AS idkategori,"
+					+ " T.KOD_KATEGORI AS kodKategori," 
+					+ "	T.KETERANGAN AS keteranganKa,"
 					+ " H.ID_JENISHM AS jenisHM,"
+					+ " J.KOD_JENIS_HAKMILIK AS kodHM,"
+					+ " J.KETERANGAN AS keteranganHM,"
 					+ " H.ID_JENISPB AS idjenisPB,"
 					+ " H.ID_NEGERI AS idnegeri,"
+					+ " N.KOD_NEGERI AS kodNegeri," 
+					+ "	N.NAMA_NEGERI AS namaNegeri,"
 					+ " H.ID_DAERAH as idDaerah,"
+					+ " D.KOD_DAERAH AS kodDaerah," 
+					+ "	D.NAMA_DAERAH AS namaDaeraH,"
 					+ " H.ID_LUAS AS idLuas,"
+					+ " A.KOD_LUAS AS kodLuas,"
+					+ "	A.KETERANGAN AS ketLuas,"
 					+ " H.ID_MUKIM AS idMukim,"
+					+ " M.KOD_MUKIM AS kodMukim," 
+					+ " M.NAMA_MUKIM AS namaMukim,"
 					+ " H.LUAS_HMP AS luasHMP,"
 					+ " H.LUAS AS luas,"
 					+ " H.NO_CAGARAN AS noCagaran,"
 					+ " H.NO_PAJAKAN AS no_pajakan,"
 					+ " H.JENIS_TNH AS jenisTNH,"
+					+ " RT.KOD_JENIS_TANAH AS kodTanah," 
+					+ "	RT.KETERANGAN AS ketTanah,"
 					+ " H.BA_SIMATI AS baSimati,"
 					+ " H.BB_SIMATI AS bbSimati,"
 					+ " H.JENIS_HTA AS jenisHta,"
@@ -253,7 +303,9 @@ else if ("hantarPermohonanPetioner".equals(submit)) {
 					+ " H.ALAMAT_HTA3 AS alamat3,"
 					+ " H.BANDAR_HTA AS bandarhta,"
 					+ " H.POSKOD_HTA AS poskodhta,"
-					+ " H.ID_BANDARHTA AS idBandarhta,"		
+					+ " H.ID_BANDARHTA AS idBandarhta,"	
+					+ " B.KOD_BANDAR AS kodBandar,"  
+					+ "	B.KETERANGAN AS ketBandar,"
 					+ " H.NO_PERSERAHAN AS noPerserahan,"  
 					+ " H.CATATAN AS catatan,"
 					+ " H.STATUS_PEMILIKAN AS status_pemilikan,"
@@ -265,10 +317,26 @@ else if ("hantarPermohonanPetioner".equals(submit)) {
 					+ " TBLPPKHTAPERMOHONAN H,"
 					+ " TBLPPKSIMATI S,"
 					+ " TBLPPKUPLOADPELAN PELAN,"
-					+ " TBLPPKDOKUMEN DOKUMEN"
+					+ " TBLPPKDOKUMEN DOKUMEN,"
+					+ " TBLRUJJENISHAKMILIK J,"
+					+ " TBLRUJMUKIM M,"
+					+ " TBLRUJDAERAH D,"
+					+ " TBLRUJNEGERI N,"
+					+ " TBLRUJKATEGORI T,"
+					+ " TBLRUJLUAS A,"
+					+ " TBLRUJBANDAR B,"
+					+ " TBLPPKRUJJENISTANAH RT"
 					+ " WHERE H.ID_SIMATI = S.ID_SIMATI"
 					+ " AND HP.ID_HTA = H.ID_HTA"
 					+ " AND PELAN.ID_HTA (+) = H.ID_HTA"
+					+ " AND H.ID_JENISHM = J.ID_JENISHAKMILIK"
+					+ " AND H.ID_MUKIM = M.ID_MUKIM"
+					+ " AND H.ID_DAERAH = D.ID_DAERAH"
+					+ " AND H.ID_NEGERI = N.ID_NEGERI"
+					+ " AND H.ID_KATEGORI = T.ID_KATEGORI "
+					+ " AND H.ID_LUAS = A.ID_LUAS "
+					+ " AND H.ID_BANDARHTA = B.ID_BANDAR"
+					+ " AND H.JENIS_TNH = RT.ID_JENISTANAH"
 					+ " AND DOKUMEN.ID_DOKUMEN (+)= PELAN.ID_DOKUMEN"
 					+ " AND H.ID_PERMOHONANSIMATI = '"+idPermohonanSimati+"'"
 					+ " AND H.JENIS_HTA = 'Y'"
@@ -357,106 +425,77 @@ else if ("hantarPermohonanPetioner".equals(submit)) {
 								.getString("bandarhta"));
 				
 				permohonanJPPH.put(
-						"namaPemohon",
-						rs.getString("namaPemohon") == null ? "" : rs
-								.getString("namaPemohon"));
+						"kodHM",
+						rs.getString("kodHM") == null ? "" : rs
+								.getString("kodHM"));
 				permohonanJPPH.put(
-						"noKPBaruPemohon",
-						rs.getString("noKPBaruPemohon") == null ? "" : rs
-								.getString("noKPBaruPemohon"));
+						"keteranganHM",
+						rs.getString("keteranganHM") == null ? "" : rs
+								.getString("keteranganHM"));
 				permohonanJPPH.put(
-						"noKPLamaPemohon",
-						rs.getString("noKPLamaPemohon") == null ? "" : rs
-								.getString("noKPLamaPemohon"));
+						"kodMukim",
+						rs.getString("kodMukim") == null ? "" : rs
+								.getString("kodMukim"));
 				permohonanJPPH.put(
-						"noKPLainPemohon",
-						rs.getString("noKPLainPemohon") == null ? "" : rs
-								.getString("noKPLainPemohon"));
+						"namaMukim",
+						rs.getString("namaMukim") == null ? "" : rs
+								.getString("namaMukim"));
 				permohonanJPPH.put(
-						"jenisKPPemohon",
-						rs.getString("jenisKPPemohon") == null ? "" : rs
-								.getString("jenisKPPemohon"));
+						"kodDaerah",
+						rs.getString("kodDaerah") == null ? "" : rs
+								.getString("kodDaerah"));
 				permohonanJPPH.put(
-						"umurPemohon",
-						rs.getString("umurPemohon") == null ? "" : rs
-								.getString("umurPemohon"));
+						"namaDaeraH",
+						rs.getString("namaDaeraH") == null ? "" : rs
+								.getString("namaDaeraH"));
 				permohonanJPPH.put(
-						"jantinaPemohon",
-						rs.getString("jantinaPemohon") == null ? "" : rs
-								.getString("jantinaPemohon"));
+						"kodNegeri",
+						rs.getString("kodNegeri") == null ? "" : rs
+								.getString("kodNegeri"));
 				permohonanJPPH.put(
-						"alamat1",
-						rs.getString("alamat1") == null ? "" : rs
-								.getString("alamat1"));
+						"namaNegeri",
+						rs.getString("namaNegeri") == null ? "" : rs
+								.getString("namaNegeri"));
 				permohonanJPPH.put(
-						"alamat2",
-						rs.getString("alamat2") == null ? "" : rs
-								.getString("alamat2"));
+						"kodKategori",
+						rs.getString("kodKategori") == null ? "" : rs
+								.getString("kodKategori"));
 				permohonanJPPH.put(
-						"alamat3",
-						rs.getString("alamat3") == null ? "" : rs
-								.getString("alamat3"));
+						"keteranganKa",
+						rs.getString("keteranganKa") == null ? "" : rs
+								.getString("keteranganKa"));
 				permohonanJPPH.put(
-						"poskod",
-						rs.getString("poskod") == null ? "" : rs
-								.getString("poskod"));
+						"kodLuas",
+						rs.getString("kodLuas") == null ? "" : rs
+								.getString("kodLuas"));
 				permohonanJPPH.put(
-						"idBandar",
-						rs.getString("idBandar") == null ? "" : rs
-								.getString("idBandar"));
+						"ketLuas",
+						rs.getString("ketLuas") == null ? "" : rs
+								.getString("ketLuas"));
 				permohonanJPPH.put(
-						"idNegeriPemohon",
-						rs.getString("idNegeriPemohon") == null ? "" : rs
-								.getString("idNegeriPemohon"));
+						"flag_daftar",
+						rs.getString("flag_daftar") == null ? "" : rs
+								.getString("flag_daftar"));
 				permohonanJPPH.put(
-						"hubSimatiPemohon",
-						rs.getString("hubSimatiPemohon") == null ? "" : rs
-								.getString("hubSimatiPemohon"));
+						"ketBandar",
+						rs.getString("ketBandar") == null ? "" : rs
+								.getString("ketBandar"));
 				permohonanJPPH.put(
-						"tarikhJanaBorangB",
-						rs.getString("tarikhJanaBorangB") == null ? "" : rs
-								.getString("tarikhJanaBorangB"));
+						"kodBandar",
+						rs.getString("kodBandar") == null ? "" : rs
+								.getString("kodBandar"));
 				permohonanJPPH.put(
-						"kodPejabat",
-						rs.getString("kodPejabat") == null ? "" : rs
-								.getString("kodPejabat"));
+						"kodTanah",
+						rs.getString("kodTanah") == null ? "" : rs
+								.getString("kodTanah"));
 				permohonanJPPH.put(
-						"jenisTransaksi",
-						rs.getString("jenisTransaksi") == null ? "" : rs
-								.getString("jenisTransaksi"));
+						"ketTanah",
+						rs.getString("ketTanah") == null ? "" : rs
+								.getString("ketTanah"));
 				permohonanJPPH.put(
-						"ID_HUBSIMATIPEMOHON",
-						rs.getString("ID_HUBSIMATIPEMOHON") == null ? "" : rs
-								.getString("ID_HUBSIMATIPEMOHON"));
-				permohonanJPPH.put(
-						"idnegeriPemohon",
-						rs.getString("idnegeriPemohon") == null ? "" : rs
-								.getString("idnegeriPemohon"));
-				permohonanJPPH.put(
-						"WAKTU_KEMATIAN",
-						rs.getString("WAKTU_KEMATIAN") == null ? "" : rs
-								.getString("WAKTU_KEMATIAN"));
-				permohonanJPPH.put(
-						"JENIS_WAKTU_MATI",
-						rs.getString("JENIS_WAKTU_MATI") == null ? "" : rs
-								.getString("JENIS_WAKTU_MATI"));
-				permohonanJPPH.put(
-						"idPermohonan",
-						rs.getString("ID_PERMOHONAN") == null ? "" : rs
-								.getString("ID_PERMOHONAN"));
-				permohonanJPPH.put(
-						"idSimati",
-						rs.getString("idSimati") == null ? "" : rs
-								.getString("idSimati"));
-				permohonanJPPH.put(
-						"jumlahharta",
-						rs.getString("jumlahharta") == null ? "" : rs
-								.getString("jumlahharta"));
-				
-				permohonanJPPH.put(
-						"namaDokumen",
-						rs.getString("NAMA_DOKUMEN") == null ? "" : rs
-								.getString("NAMA_DOKUMEN"));
+						"status_pemilikan",
+						rs.getString("status_pemilikan") == null ? "" : rs
+								.getString("status_pemilikan"));
 				
 				Blob  b = rs.getBlob("KANDUNGAN");
 				InputStream is = b.getBinaryStream();

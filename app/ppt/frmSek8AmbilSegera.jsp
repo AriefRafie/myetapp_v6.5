@@ -1072,7 +1072,8 @@ function popupEtanah(id_fail,id_permohonan,jenis_skrin,command) {
 
 function cetakBorangJ(idfail) {
 
-	var url = "../servlet/ekptg.report.ppt.BorangJ?id_Fail='"+idfail+"'";
+	//var url = "../servlet/ekptg.report.ppt.BorangJ?id_Fail="+idfail;
+	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_fail="+idfail+"&report=BorangJ";
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;

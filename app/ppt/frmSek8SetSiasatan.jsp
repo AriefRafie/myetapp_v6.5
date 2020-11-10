@@ -637,8 +637,11 @@ $list.TARIKH_AKHIR_TAMPAL     </td>
 </tr>
 -->
 </table>
- <!-- <input type="hidden" name="sub_command" id="sub_command" />
-  <input type="hidden" name="subminor_command" id="subminor_command" /> -->
+<!-- yati buat condition utk control view online siasatan dan internal -->
+#if($modul == "ekptg.view.ppt.FrmSiasatanOnline")
+  <input type="hidden" name="sub_command" id="sub_command" />
+   <input type="hidden" name="subminor_command" id="subminor_command" /> 
+   #end
    <input type="hidden" name="ScreenLocation" id="ScreenLocation" />
   <input type="hidden" name="location" id="location" />
   <input type="hidden" name="point" id="point" />
@@ -778,10 +781,25 @@ hp = document.getElementById(tab);
 
 function papar(id_siasatan,id_hakmilik)
 {
+	alert("masuk");
 	document.${formName}.command.value = "Siasatan";
 	document.${formName}.sub_command.value = "RecordSiasatan";
 	document.${formName}.subminor_command.value = "Papar";	
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmSek8Siasatan";
+	document.${formName}.id_siasatan.value = id_siasatan;
+	document.${formName}.id_hakmilik.value = id_hakmilik;
+	document.${formName}.location.value = "maklumat_siasatan";
+	document.${formName}.point.value = "maklumat_siasatan";
+	document.${formName}.submit();
+	
+}
+
+function papar1(id_siasatan,id_hakmilik)
+{
+	document.${formName}.command.value = "Siasatan";
+	document.${formName}.sub_command.value = "RecordSiasatan";
+	document.${formName}.subminor_command.value = "Papar";	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmSiasatanOnline";
 	document.${formName}.id_siasatan.value = id_siasatan;
 	document.${formName}.id_hakmilik.value = id_hakmilik;
 	document.${formName}.location.value = "maklumat_siasatan";
