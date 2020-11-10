@@ -496,15 +496,11 @@ var xxx = document.getElementById(f_if).value;
 $jquery("#"+div_temp).html("<input type='text' id='getSJ' name='getSJ' value='"+xxx+"' >");	
 </script>
 #end
-
-
-
  
 #if($refreshHakmilik == "yes")
 <script>
 
-		$jquery(document).ready(function()
-		{
+		$jquery(document).ready(function(){
 			refreshSkrinHakmilik('$id_permohonan');
 		});
 
@@ -512,8 +508,7 @@ $jquery("#"+div_temp).html("<input type='text' id='getSJ' name='getSJ' value='"+
 #end
 
 <script>
-function checkDuplicated(value,div_id,bil,div_alert)
-{
+function checkDuplicated(value,div_id,bil,div_alert){
 	$jquery("#"+div_id).html("<input type='text' id='getSJ' name='getSJ' value='"+value+"' >");
 	
 	var arr2 = [];
@@ -663,8 +658,8 @@ function papar(id_siasatan,id_hakmilik,flag_skrin)
     return false;
 	
 }
-function papar1(id_siasatan,id_hakmilik)
-{
+
+function papar1(id_siasatan,id_hakmilik){
 
 	try {	    
 	
@@ -677,10 +672,7 @@ function papar1(id_siasatan,id_hakmilik)
 	
 }
 
-
-
-function kehadiran(id_siasatan,flag_skrin)
-{
+function kehadiran(id_siasatan,flag_skrin){
 
 	try {	    
         window.opener.kehadiran(id_siasatan);		
@@ -691,9 +683,7 @@ function kehadiran(id_siasatan,flag_skrin)
 	
 }
 
-
-function maklumatsiasatan(id_siasatan,flag_skrin)
-{
+function maklumatsiasatan(id_siasatan,flag_skrin){
 	try {	    
         window.opener.maklumatsiasatan(id_siasatan,flag_skrin);	
 	}
@@ -703,9 +693,6 @@ function maklumatsiasatan(id_siasatan,flag_skrin)
 	
 
 }
-
-
-
 
 function simpanBorangL(id_permohonan,flag_skrin) {
 	
@@ -774,23 +761,17 @@ function janaSubjaket(id_permohonan,flag_skrin){
 	document.${formName}.submit();
 }
 
-if('$tutup_skrin_popup' == "yes")
-{
+if('$tutup_skrin_popup' == "yes"){
 	kembaliKeSkrinUtama('$id_permohonan');
 }
 
-
-
-
-function carian() 
- {	
+function carian(){	
 	document.${formName}.command.value = "cari";
 	document.${formName}.submit();			
 				
  }	
  
- function kosongkan() 
- {
+ function kosongkan() {
 	document.${formName}.NO_LOT.value = "";	
 	document.${formName}.NO_PB.value = "";
 	document.${formName}.NAMA_PB.value = "";
@@ -927,7 +908,6 @@ function paparHakmilik(id_hakmilik,id_permohonan,flag_skrin){
     return false;
 }
 
-
 function tambahPbPopup(id_hakmilik,flag_skrin)	{
 	alert(id_hakmilik);
 	try {
@@ -957,7 +937,6 @@ function tambahPbPopup(id_hakmilik,flag_skrin)	{
     return false;
 }
 
-
 function kembaliKeSkrinUtama(id_permohonan) {
 	
 	try {
@@ -969,7 +948,6 @@ function kembaliKeSkrinUtama(id_permohonan) {
     return false;
 	document.${formName}.cmdKembaliSkrinUtama.value = "Sila Tunggu....";		
 }
-
 
 //PPT-30(ii)
 function checkALL() {
@@ -995,17 +973,14 @@ function checkALL() {
 }
 
 //pilihan cetak surat hakmilik belum ada 260220
-function cetakSuratIringan(id_hakmilik,id_fail,id_permohonan,tarikhBorangL,tempohBL) {
-	
+function cetakSuratIringan(id_hakmilik,id_fail,id_permohonan,tarikhBorangL,tempohBL) {	
 	//alert("tarikhBorangL : "+tarikhBorangL);
-
 	var url = "../${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_hakmilik="+id_hakmilik+"&id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&report=BorangL&selectNoFail=yes&tarikhBorangL="+tarikhBorangL+"&tempohBL="+tempohBL;
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
-
 
 function cetakSuratEndorsanBorangK(idpermohonan, idhakmilik) {
 	
@@ -1050,7 +1025,6 @@ function cetakSuratEndorsanBorangK(idpermohonan, idhakmilik) {
     
     }
 }
-
 
 function cetakSuratIringanAgensiPemohon(idpermohonan,idhakmilik) {
 	
@@ -1103,12 +1077,10 @@ function cetakBorangK(idpermohonan,idhakmilik) {
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
+    
 }
 //PPT-30(ii)
-function tambahWakil()
-{
-
-	
+function tambahWakil(){	
 	document.${formName}.command.value = "tambahPB";	
 	document.${formName}.subminor_command.value = "tambah_wakil";	
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmUPTSek8Hakmilik";
@@ -1119,9 +1091,7 @@ function tambahWakil()
 	
 }
 
-function screen5(id_permohonan)
-{
-
+function screen5(id_permohonan){
 	  window.close();   // Closes the new window
 }
 
