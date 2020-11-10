@@ -77,10 +77,12 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 					+ " AND A.ID_KEMENTERIAN = C.ID_KEMENTERIAN "
 					+ " AND C.USER_ID = '" + userId + "'";*/
 			
-			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, A.TAJUK_FAIL, B.TARIKH_TERIMA, C.NAMA "
+			sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, A.TAJUK_FAIL, B.TARIKH_TERIMA, C.NAMA, B.CATATAN_BATAL "
 					+ ", CASE  "
-					+ "	WHEN B.ID_STATUS IN (148,240,245) THEN 'PRA PERMOHONAN ('||D.KETERANGAN ||')'	"
-					//+ "	WHEN B.ID_STATUS IN (1610198, 1610199, 1610200, 1610210, 1610201) THEN 'SEDANG DIPROSES' "
+					+ "	WHEN B.ID_STATUS IN (148,240,245) THEN 'PRA PERMOHONAN ('||D.KETERANGAN ||')'	" //penyedia,penyemak,pelulus
+					+ "	WHEN B.ID_STATUS = 1610212 THEN 'BATAL : '||B.CATATAN_BATAL||'' "
+					+ " WHEN B.ID_STATUS IN (1610206,1610201) THEN 'MENUNGGU KEPUTUSAN' " //mesyuarat dan keputusan
+					+ "	WHEN B.ID_STATUS IN (1610198, 1610199, 1610200, 1610201) THEN 'SEDANG DIPROSES' " // pendaftaran, jabatan teknikal, lawatan tapak, tawaran
 				 	+ "	ELSE D.KETERANGAN  "
 				 	+ " END KETERANGAN "
 					//+ ", D.KETERANGAN, "
@@ -243,6 +245,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 				h.put("namaSuburusan", "PENAWARAN");
 				h.put("tajukFail", rs.getString("TAJUK_FAIL") == null ? "" : rs.getString("TAJUK_FAIL").toUpperCase());
 				h.put("keterangan", rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
+				h.put("catatanBatal", rs.getString("CATATAN_BATAL") == null ? "" : rs.getString("CATATAN_BATAL"));
 				// h.put("tajukFail", "TAJUK_FAIL");
 				senaraiFail.addElement(h);
 				bil++;

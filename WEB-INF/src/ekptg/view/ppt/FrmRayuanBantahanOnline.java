@@ -99,6 +99,11 @@ public class FrmRayuanBantahanOnline  extends AjaxBasedModule {
     	listPageDepan.clear();
     	listPageNoLot.clear();
     	
+    	String id_user = (String) session.getAttribute("_ekptg_user_id");
+		// get nama pengarah dan id negeri user
+		nameAndId(id_user);
+		String userIdKementerian = nameAndId(id_user);
+    	
     	Db dbx = null;
 		try {
 			dbx = new Db();			
@@ -2795,9 +2800,15 @@ public class FrmRayuanBantahanOnline  extends AjaxBasedModule {
         		
         		String txtNoFail = "";
     			context.put("txtNoFail", "");
-    			
+    			myLogger.info("testing abc masuk x");
                	//GET LIST DATA
+    			if ("ekptg.view.ppt.FrmRayuanBantahanOnline".equals(modul)) {
+    				myLogger.info("masuk sini la");
+    			listPageDepan = modelBantahanPB.getListPemohonAPOnline(userIdKementerian);
+    			}
+    			else{
         		listPageDepan = modelBantahanPB.getListPemohonAP(userIdNeg );	
+    			}
 
         		context.put("PermohonanList", listPageDepan);
         		context.put("list_size", listPageDepan.size());  
@@ -3519,5 +3530,23 @@ public class FrmRayuanBantahanOnline  extends AjaxBasedModule {
     		return total;
     	}
 
+   	 private String nameAndId(String id_user) throws Exception {
+
+			Vector dataKementerianOnline = new Vector();
+
+			dataKementerianOnline.clear();
+
+			modelUPT.setDataKementerianOnline(id_user);
+			dataKementerianOnline = modelUPT.getDataKementerianOnline();
+			String userIdKementerian = "";
+			if (dataKementerianOnline.size() != 0) {
+				Hashtable t = (Hashtable) dataKementerianOnline.get(0);
+				userIdKementerian = t.get("id_kementerian").toString();
+			}
+
+			return userIdKementerian;
+
+		}// close nameAndId
+	 
 
 }

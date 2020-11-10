@@ -955,7 +955,7 @@ Lain - Lain Kos</td>
        
        <!-- Tambah Borang LC -->
       <tr>
-      	<td><a href="#" class="style2" onClick="CetakBorangLC('$id_hakmilik')"><font color="blue">Borang LC</font></a></td>
+      	<td><a href="#" class="style2" onClick="CetakBorangLC('$id_hakmilik','$!id_fail','$id_permohonan')"><font color="blue">Borang LC</font></a></td>
       </tr>
        
     </table>
@@ -3291,7 +3291,7 @@ input_box = confirm("Adakah anda pasti?");
 	}
 }
 
-function CetakBorangLC(id_hakmilik)
+function CetakBorangLC(id_hakmilik,id_fail,id_permohonan)
 {
    
 	/*var url = "../servlet/ekptg.report.ppt.BorangLC?id_hakmilik="+id_hakmilik;  
@@ -3300,7 +3300,7 @@ function CetakBorangLC(id_hakmilik)
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();*/
     
-    var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_hakmilik="+id_hakmilik+"&report=BorangLC&selectNoFail=yes";
+    var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_hakmilik="+id_hakmilik+"&id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&report=BorangLC";
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
