@@ -1826,5 +1826,120 @@ public class FrmNotifikasiPembayaranData {
 	  }//close update
 	
 	
+	//yati tambah 10112020
+	public static Vector getListBayarPampasan(String idKementerian,String portal_role,String flag_noti)throws Exception {	 		
+		Db db = null;
+		String sql = "";
+		try{
+			db = new Db();
+			Statement stmt = db.getStatement();			
+			
+			//modified 21112011 : Papar senarai kesemua fail by kementerian
+		    sql = "SELECT distinct UPPER(p.tujuan) tujuan, p.id_status, p.flag_jenispermohonan, p.id_permohonan, p.no_permohonan" +
+		    	" , f.id_fail, f.no_fail, p.tarikh_permohonan_kjp, p.tarikh_permohonan, su.nama_suburusan, k.nama_kementerian" +
+		    	" , s.keterangan, p.tarikh_masuk, p.flag_semak, p.flag_semakan_online, "; 
+		    sql +="p.no_rujukan_ptg, p.no_rujukan_ptd, f.id_suburusan, p.tarikh_kemaskini, p.no_rujukan_upt" +
+		    	" , p.flag_status_online, p.catatan_status_online, p.CATATANTOLAK_PELULUS,p.CATATANTOLAK_PENYEMAK,";  //addby matjuju for column p.catatan_status_online, 
+		    sql +="p.no_permohonan_online "; 
+		    sql +="FROM Tblpptpermohonan p, Tblpfdfail f,Tblrujsuburusan su,Tblrujstatus s, Tblrujkementerian k, tblppthakmilik hm, ";
+		    sql +="Users u, Users_kementerian uk "; 
+		    sql +="WHERE f.id_fail = p.id_fail "; 
+		    sql +="AND f.id_suburusan = su.id_suburusan "; 
+		    sql +="AND f.id_kementerian = k.id_kementerian "; 
+		    sql +="AND p.id_permohonan = hm.id_permohonan "; 
+		    sql +="AND u.user_id = uk.user_id "; 
+		    sql +="AND p.id_status = s.id_status "; 
+		    sql +="AND uk.id_kementerian = k.id_kementerian ";
+		    sql +="AND f.id_suburusan in ('51','52','53') "; 
+		   // sql +="AND u.user_id ='"+userId+"' "
+		    sql += "AND hm.flag_hantar_kjp = 'BARU' ";
+		    sql += "AND uk.id_kementerian = '"+idKementerian+"' ";
+		    	//	+ "AND s.id_status = '76'";
+		    		
+		    
+		    //nvl(p.flag_status_online,0) desc, nvl(p.flag_semakan_online,0) desc, 
+		    myLogger.info("getList FAIL NOTI BAYAR PAMPASAN:sql=" + sql);
+		    ResultSet rs = stmt.executeQuery(sql);
+		    Vector list = new Vector();
+		    Hashtable h = null;
+		    int bil = 1;
+
+		    while (rs.next()) {
+		    	h = new Hashtable();
+		    	h.put("bil", bil);
+		    			
+		    	h.put("tujuan", rs.getString("tujuan")== null?"":rs.getString("tujuan"));
+		    	h.put("flag_jenispermohonan", rs.getString("flag_jenispermohonan")== null?"":rs.getString("flag_jenispermohonan"));
+		    	h.put("no_permohonan_online", rs.getString("no_permohonan_online")== null?"BELUM DIHANTAR":rs.getString("no_permohonan_online"));
+		    	h.put("flag_status_online", rs.getString("flag_status_online")== null?"":rs.getString("flag_status_online"));
+		    			
+		    	h.put("id_suburusan", rs.getString("id_suburusan")== null?"":rs.getString("id_suburusan"));
+		    	h.put("id_fail", rs.getString("id_fail")== null?"":rs.getString("id_fail"));
+		    	h.put("id_status", rs.getString("id_status")== null?"":rs.getString("id_status"));
+		    	h.put("id_permohonan", rs.getString("id_permohonan")== null?"":rs.getString("id_permohonan"));
+		    	h.put("no_permohonan", rs.getString("no_permohonan")== null?"":rs.getString("no_permohonan"));
+		    	h.put("nama_suburusan", rs.getString("nama_suburusan")== null?"":rs.getString("nama_suburusan"));
+		    	h.put("nama_kementerian", rs.getString("nama_kementerian")== null?"":rs.getString("nama_kementerian"));
+		    	h.put("status", rs.getString("keterangan")== null?"":rs.getString("keterangan"));
+		    		
+		    	h.put("flag_semakan_online", rs.getString("flag_semakan_online")== null?"":rs.getString("flag_semakan_online"));
+		    	h.put("catatan_status_online", rs.getString("catatan_status_online")== null?"":rs.getString("catatan_status_online")); //addby matjuju for column p.catatan_status_online, 
+		    	
+		    	h.put("CATATANTOLAK_PELULUS", rs.getString("CATATANTOLAK_PELULUS")== null?"":rs.getString("CATATANTOLAK_PELULUS")); //addby matjuju for column p.catatan_status_online, 
+		    	h.put("CATATANTOLAK_PENYEMAK", rs.getString("CATATANTOLAK_PENYEMAK")== null?"":rs.getString("CATATANTOLAK_PENYEMAK")); //addby matjuju for column p.catatan_status_online, 
+		    	
+		    	
+		    	h.put("no_rujukan_ptg", rs.getString("no_rujukan_ptg")== null?"":rs.getString("no_rujukan_ptg"));
+		    	h.put("no_rujukan_ptd", rs.getString("no_rujukan_ptd")== null?"":rs.getString("no_rujukan_ptd"));
+		    	h.put("no_rujukan_upt", rs.getString("no_rujukan_upt")== null?"":rs.getString("no_rujukan_upt"));
+		    	
+		    	h.put("tarikh_permohonan", rs.getDate("tarikh_permohonan")==null?"":Format.format(rs.getDate("tarikh_permohonan")));
+		    	h.put("tarikh_permohonan_kjp", rs.getDate("tarikh_permohonan_kjp")==null?"":Format.format(rs.getDate("tarikh_permohonan_kjp")));
+		    			
+		    	if(rs.getString("id_suburusan") != null && rs.getString("id_suburusan") != ""){		    				
+		    		if(rs.getString("id_suburusan").equals("51")){
+		    			h.put("suburusan","SEKSYEN 4");
+		    		}else if(rs.getString("id_suburusan").equals("52")){
+		    			h.put("suburusan","SEKSYEN 8");
+		    		}else if(rs.getString("id_suburusan").equals("53")){
+		    			h.put("suburusan","PENGAMBILAN SEMENTARA");
+		    		}else{
+		    			h.put("suburusan","");
+		    		}		    				
+		    	}else{
+		    		h.put("suburusan","");
+		    	}
+		    			
+		    	if(rs.getString("flag_semak") != null && rs.getString("flag_semak") != ""){		    				
+		    		if(rs.getString("flag_semak").equals("1")){
+		    			h.put("status_fail","<b>TUNGGU PENGESAHAN</b>");
+		    		}else if(rs.getString("flag_semak").equals("2")){
+		    			h.put("status_fail","<b>TELAH DISAHKAN</b>");
+		    		}else{
+		    			h.put("status_fail","PENDAFTARAN");
+		    		}	    				
+		    	}else{
+		    		h.put("status_fail","PENDAFTARAN");
+		    	}
+		    				    			
+		    	if(rs.getString("no_fail") == null){
+		    		h.put("no_fail","BELUM DISAHKAN");
+		    	}else{
+		    		h.put("no_fail",rs.getString("no_fail"));
+		    	}
+		    	list.addElement(h);
+		    	bil++;
+		    	  
+		    }//close while
+		    return list;
+		}catch (SQLException se) { 
+	    	throw new Exception("Ralat : Masalah Carian ");
+		}finally{	//close try 
+			if (db != null) db.close();
+		}//close finally
+		    	
+	}//close getListPemohon
+	
+	
 	
 }//close class
