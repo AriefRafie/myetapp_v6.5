@@ -1030,15 +1030,12 @@ public class FrmPermohonanUPTData {
 	}//close setlistpohon
 	
 	@SuppressWarnings("unchecked")
-	public void setListAgensi(int id) throws Exception {
-		
+	public void setListAgensi(int id) throws Exception {		
 		Db db = null;
 		listAgensi.clear();
 		String sql = "";
-		
-		
-		try{
 			
+		try{			
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
@@ -4309,7 +4306,7 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 		    }
 		}
 	 
-	public static void  setListDokumenPembayaran(String id) throws Exception {
+	public static void setListDokumenPembayaran(String id) throws Exception {
 		Db db = null;
 	    listDokumenPembayaran.clear();
 	    String sql = "";
@@ -4317,38 +4314,48 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 	    try {
 	    	db = new Db();
 	    	Statement stmt = db.getStatement();
-	    	SQLRenderer r = new SQLRenderer();		      
-			    
+	    	SQLRenderer r = new SQLRenderer();		      			    
 //	    	sql = " SELECT a.id_permohonan, a.id_Dokumen, a.nama_dokumen, a.kandungan, a.tarikh_pembayaran "+
 //	    		" FROM TBLPPTDOKUMENHAKMILIK a "+
 //				    		" WHERE a.id_permohonan = '"+id+"' ORDER BY a.tarikh_masuk DESC ";
 			      
 	    	sql = " SELECT a.id_permohonan, a.id_dokumen, a.nama_fail nama_dokumen, a.content kandungan"+
-	    			", a.tarikh_masuk tarikh_pembayaran"+
+	    			", B.ID_BAYARAN,NVL(B.AMAUN_BAYARAN,0) BAYARAN,B.TARIKH_KEMASUKAN TARIKH_PEMBAYARAN"+
+	    			",B.NO_BAYARAN NO_RUJUKAN,B.CARA_BAYAR,B.TARIKH_CEK "+
 				 	" FROM TBLPPTDOKUMEN A"+
-//				 	+ ", TBLPPTHAKMILIK b "+
-				    " WHERE A.jenis_dokumen='buktibayar' "
+				 	", TBLPPTBAYARAN B "+
+				    " WHERE "+
+				    " B.ID_HAKMILIK = A.ID_HAKMILIK(+) "+
+//				    + "A.jenis_dokumen='buktibayar' "
 //				    + "a.id_permohonan = b.id_permohonan AND"
-				    + " AND A.id_permohonan = '"+id+"'  ";
-			      
-			     
+				    " AND B.ID_HAKMILIK = '"+id+"'  ";      			     
 			      ResultSet rs = stmt.executeQuery(sql);
-			      myLogger.info(" sql TBLPPTDOKUMENHAKMILIK==="+sql);
-			     
+			      myLogger.info("setListDokumenPembayaran:sql="+sql);
+//			  	B.ID_HAKMILIK,B.TARIKH_KEMASUKAN,B.NO_BAYARAN,B.AMAUN_BAYARAN
+//				,D.NAMA_FAIL,D.CONTENT
+//				FROM TBLPPTBAYARAN B, TBLPPTDOKUMEN D
+//				WHERE B.ID_HAKMILIK = D.ID_HAKMILIK(+)
 			      Hashtable h;
-			      int bil = 1;
-			    
+			      int bil = 1;		    
 			      while (rs.next()) {			    	  
 			    	  h = new Hashtable();		    	 
 			    	  h.put("bil", bil);
+			    	  
 			    	  h.put("id_permohonan", rs.getString("id_permohonan")== null?"":rs.getString("id_permohonan"));
 			    	  h.put("id_Dokumen", rs.getString("id_Dokumen")== null?"":rs.getString("id_Dokumen"));
 			    	  h.put("nama_dokumen", rs.getString("nama_dokumen")== null?"":rs.getString("nama_dokumen"));
 			    	  h.put("kandungan",rs.getString("kandungan")== null?"":rs.getString("kandungan"));
+			    	  
+			    	  h.put("idBayaran",rs.getString("id_bayaran"));
+			    	  h.put("caraBayar",rs.getString("cara_bayar"));
+			    	  h.put("bayaran",Utils.format2Decimal(rs.getDouble("bayaran")));
+			    	  h.put("rujukan",rs.getString("no_rujukan")== null?"":rs.getString("no_rujukan"));
 			    	  h.put("txdTarikhPembayaran",rs.getDate("tarikh_pembayaran")== null?"": Format.format(rs.getDate("tarikh_pembayaran")));
-			          
+			    	  h.put("txdTarikh",rs.getDate("tarikh_cek")== null?"": Format.format(rs.getDate("tarikh_cek")));
+
 			    	  listDokumenPembayaran.addElement(h);
-			    	  bil++;	    	
+			    	  bil++;
+			    	  
 			      }			    
 			      //return list;
 			    }  catch (Exception re) {
@@ -4389,10 +4396,7 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 					db.close();
 			}
 		}	
-	 
-	 
-	 
-	 
+	  
 	 /*
 	  * 
 	  * 
@@ -4401,15 +4405,11 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 	  * 
 	  */
 	 
-	
 	private static Vector listCarianSek8 = null;
-	
 	
 	public static  Vector getListCarianSek8(){
 		return listCarianSek8;
 	} 
-	 
-	
 	
 	@SuppressWarnings("unchecked")
 	public List listPermohonanUmum(HttpSession session)throws Exception {
@@ -4853,17 +4853,34 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 	  
 	}//close hapus
 	
-	@SuppressWarnings("unchecked")
-	public static void hapusDokumenPembayaran(Hashtable data) throws Exception {	   
+	public static void hapusDokumenPembayaran(String idokumen) throws Exception {	   
 		Db db = null;
 	    String sql = "";	   
 	    try{	    	
 	    	db = new Db();
 	    	Statement stmt = db.getStatement();
-	    	String iddokumen = (String)data.get("id_dokumen");
-	    	sql = "DELETE FROM tblpptdokumen where id_dokumen = '"+iddokumen+"'";
+	    	sql = "DELETE FROM tblpptdokumen where id_dokumen = '"+idokumen+"'";
 	    	stmt.executeUpdate(sql);
-	    	myLogger.info("hapusDokumenPembayaran==="+sql);
+//	    	myLogger.info("hapusDokumenPembayaran==="+sql);
+	    
+	    } catch (Exception re) {
+	    	log.error("Error: ", re);
+	    	throw re;
+	    }finally {
+	    	if (db != null) db.close();
+	    }
+	  
+	}//close hapus
+	
+	public static void hapusPembayaran(String idBayar) throws Exception {	   
+		Db db = null;
+	    String sql = "";	   
+	    try{	    	
+	    	db = new Db();
+	    	Statement stmt = db.getStatement();
+	    	sql = "delete from tblpptbayaran where id_bayaran= '"+idBayar+"'";
+	    	stmt.executeUpdate(sql);
+//	    	myLogger.info("hapusPembayaran:sql="+sql);
 	    
 	    } catch (Exception re) {
 	    	log.error("Error: ", re);

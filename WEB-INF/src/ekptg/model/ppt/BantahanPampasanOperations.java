@@ -1174,6 +1174,62 @@ public class BantahanPampasanOperations {
 					      if (db != null) db.close();
 					    }//close finally
 					   
-					  }//close updateSuburusanStatusFailPPT_selesaiBantahanAgensi						
+					  }//close updateSuburusanStatusFailPPT_selesaiBantahanAgensi	
+
+	public String setBayaran(Hashtable<String,String> hash) throws Exception {
+    	String idBayaran = "";
+			
+		Db db = null;
+		String sql = "";	    
+		try{
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			Hashtable<String,String> bayaran = hash;
+			String TS = "to_date('" + bayaran.get("tarikhSerah") + "','dd/MM/yyyy')";	    	
+			String tarikh = "to_date('" + bayaran.get("tarikh") + "','dd/MM/yyyy')";	    	
+			//r.add("TARIKH_HANTAR_DERAF", r.unquote("to_date('" + hash.get("tarikhHantar") + "','dd/MM/yyyy')"));
+
+			if(bayaran.get("idBayaran").equals("")) {
+				idBayaran = String.valueOf(DB.getNextID("TBLPPTBAYARAN_SEQ"));
+
+				r.add("id_bayaran",idBayaran);
+				r.add("id_hakmilik",bayaran.get("idHakmilik"));
+				r.add("tarikh_kemasukan", r.unquote(TS));
+			    r.add("cara_bayar",bayaran.get("jenisBayar"));
+			    //cek -5 6 11 
+			    r.add("tarikh_cek", r.unquote(tarikh));
+			    r.add("no_bayaran",bayaran.get("no"));
+			    r.add("amaun_bayaran",bayaran.get("bayaran"));
+			    r.add("id_masuk",bayaran.get("idUser"));
+				r.add("tarikh_masuk",r.unquote("sysdate"));
+			    sql = r.getSQLInsert("tblpptbayaran");	
+			    myLogger.info("EDIT TBLPPTBAYARAN = "+sql);
+			    stmt.executeUpdate(sql);	
+			    
+			}else {
+				idBayaran = bayaran.get("idBayaran");
+			    r.update("id_bayaran", idBayaran);	
+			    r.add("tarikh_kemasukan",r.unquote(TS));
+			    r.add("cara_bayar",bayaran.get("jenisBayar"));
+			    //cek -5 6 11 
+			    r.add("tarikh_cek",r.unquote(tarikh));
+			    r.add("no_bayaran",bayaran.get("no"));
+			    r.add("amaun_bayaran",bayaran.get("bayaran"));
+			    r.add("id_kemaskini",bayaran.get("idUser"));
+				r.add("tarikh_kemaskini",r.unquote("sysdate"));
+			    sql = r.getSQLUpdate("tblpptbayaran");	
+			    myLogger.info("EDIT TBLPPTBAYARAN = "+sql);
+			    stmt.executeUpdate(sql);	
+			    
+			}
+			    		    
+		}finally {
+			if (db != null) db.close();
+		}									
+		return idBayaran;
+				
+	}				
+					
 				
 }
