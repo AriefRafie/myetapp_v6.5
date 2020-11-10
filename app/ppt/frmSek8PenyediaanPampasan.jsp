@@ -1131,13 +1131,21 @@ function cetakMohonBayaran(idpermohonan,idhakmilik) {
     if (hWnd.focus != null) hWnd.focus();
 }
 
-function cetakEmailMohonBayaran(idpermohonan,idhakmilik) {
+/*function cetakEmailMohonBayaran(idpermohonan,idhakmilik) {
 	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+idhakmilik+"&report=EmailMintaBayaran&selectNoFail=yes&flagShowTarikhCetak=yes";
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
+}*/
+function cetakEmailMohonBayaran(idpermohonan,idhakmilik) {
+	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+idhakmilik+"&report=EmailSuratMintaBayaran&selectNoFail=yes&flagShowTarikhCetak=yes";
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
 }
+
 
 function hantarEmailMohonBayaran(idpermohonan,idhakmilik) {
 	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+idhakmilik+"&report=SuratMintaBayaran&selectNoFail=yes&flagShowTarikhCetak=yes&todo=sendEmail";
