@@ -891,7 +891,7 @@
          #if($userIdNeg=='2')
          <a href="#" onClick="javascript:cetakBayaranLainKosKedah('$!id_permohonan','$!id_hakmilik')"><font color="blue">Bayaran Lain-Lain Kos</font></a>
          #else
-         <a href="#" onClick="javascript:cetakBayaranLainKos('$!id_hakmilik')"><font color="blue">Bayaran Lain-Lain Kos</font></a>
+         <a href="#" onClick="javascript:cetakBayaranLainKos('$!id_permohonan','$!id_hakmilik')"><font color="blue">Bayaran Lain-Lain Kos</font></a>
          #end
          
          </td>
@@ -1098,8 +1098,9 @@ function onchangeGetname(){
 	document.${formName}.submit();
 }
 
-function cetakBayaranLainKos(idhakmilik) {
-	var url = "../servlet/ekptg.report.ppt.BayaranLainKos?id_hakmilik="+idhakmilik;
+function cetakBayaranLainKos(idpermohonan,idhakmilik) {
+	//var url = "../servlet/ekptg.report.ppt.BayaranLainKos?id_hakmilik="+idhakmilik;
+	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_hakmilik="+idhakmilik+"&id_permohonan="+idpermohonan+"&report=BayaranLainKos1&selectNoFail=yes";
 	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;

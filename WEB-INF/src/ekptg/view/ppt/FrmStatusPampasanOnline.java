@@ -7,8 +7,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
@@ -19,6 +21,7 @@ import org.apache.log4j.Logger;
 
 import ekptg.model.ppk.FrmHeaderPpk;
 import ekptg.model.ppk.FrmTukaranStatus;
+import ekptg.model.ppt.FrmPermohonanUPTData;
 
 /*
  * @author
@@ -29,6 +32,7 @@ public class FrmStatusPampasanOnline extends AjaxBasedModule{
 	static Logger myLogger = Logger.getLogger(FrmStatusPampasanOnline.class);	
 	FrmTukaranStatus model = new FrmTukaranStatus();
 	FrmHeaderPpk mainheader = new FrmHeaderPpk();
+	FrmPermohonanUPTData modelUPT = new FrmPermohonanUPTData();
 	HttpSession session = null;
 	String action = null;
 	private final String PATH="app/ppt/";
@@ -46,6 +50,9 @@ public class FrmStatusPampasanOnline extends AjaxBasedModule{
 		String usid=(String)session.getAttribute("_ekptg_user_id");		
 		context.put("ScrollX",getParam("ScrollX"));
     	context.put("ScrollY",getParam("ScrollY"));
+    	
+    	nameAndId(usid);
+		
     	
     	context.put("view_list_fail","");
     	context.put("txtNoFailSub",""); 
@@ -73,6 +80,7 @@ public class FrmStatusPampasanOnline extends AjaxBasedModule{
 
 		String userId = (String)session.getAttribute("_ekptg_user_id");
 		String negeriUser = (String) session.getAttribute("_ekptg_user_negeri");
+		String userIdKementerian = nameAndId(userId);
 
 		Db db = null;
 		ResultSet rs = null;
@@ -144,7 +152,8 @@ public class FrmStatusPampasanOnline extends AjaxBasedModule{
 					+" AND MK2.ID_MMK = MKK.ID_MMK(+) " 
 					+" AND F.ID_SUBURUSAN IN (51,52,53) "
 					+" AND P.ID_STATUS NOT IN (8,999) "
-					+" AND U.USER_ID = UI.USER_ID(+) ";	   
+					+" AND U.USER_ID = UI.USER_ID(+) "	   
+					+ " AND JK.ID_KEMENTERIAN = '"+userIdKementerian+"'" ;
 			   
 					if(type.equals("hakmilik"))
 			   		{
@@ -179,8 +188,9 @@ public class FrmStatusPampasanOnline extends AjaxBasedModule{
 									" OR UPPER(P.NO_RUJUKAN_PTD) LIKE '%" + search.toUpperCase().trim() + "%' " +
 									" OR UPPER(P.NO_RUJUKAN_UPT) LIKE '%" + search.toUpperCase().trim() + "%' ";
 								sql += " OR  UPPER(P.TUJUAN)  LIKE UPPER('%' ||'"+search.toUpperCase().trim()+"'|| '%')";
-								sql += " OR  UPPER(JK.NAMA_KEMENTERIAN)  LIKE UPPER('%' ||'"+search.toUpperCase().trim()+"'|| '%')" +
-										")  ";			
+							//	sql += " OR  UPPER(JK.NAMA_KEMENTERIAN)  LIKE UPPER('%' ||'"+search.toUpperCase().trim()+"'|| '%')" +
+					
+								sql += ")  ";			
 							}
 				   		}
 			   		}
@@ -200,7 +210,8 @@ public class FrmStatusPampasanOnline extends AjaxBasedModule{
 					    			 sql +=" OR UPPER(P.NO_RUJUKAN_PTD) LIKE '%" + search.toUpperCase().trim() + "%' ";
 					    			 sql +=" OR UPPER(P.NO_RUJUKAN_UPT) LIKE '%" + search.toUpperCase().trim() + "%' ";
 									 sql += " OR  UPPER(P.TUJUAN)  LIKE UPPER('%' ||'"+search.toUpperCase().trim()+"'|| '%')";
-									 sql += " OR  UPPER(JK.NAMA_KEMENTERIAN)  LIKE UPPER('%' ||'"+search.toUpperCase().trim()+"'|| '%')";
+									// sql += " OR  UPPER(JK.NAMA_KEMENTERIAN)  LIKE UPPER('%' ||'"+search.toUpperCase().trim()+"'|| '%')";
+									//sql += " AND JK.ID_KEMENTERIAN = '"+userIdKementerian+"'" ;
 									
 					    			 
 					    			 sql += ")  ";
@@ -222,7 +233,7 @@ public class FrmStatusPampasanOnline extends AjaxBasedModule{
 					    			 sql +=" OR UPPER(P.NO_RUJUKAN_PTD) LIKE '%" + search.toUpperCase().trim() + "%' ";
 					    			 sql +=" OR UPPER(P.NO_RUJUKAN_UPT) LIKE '%" + search.toUpperCase().trim() + "%' ";
 									 sql += " OR  UPPER(P.TUJUAN)  LIKE UPPER('%' ||'"+search.toUpperCase().trim()+"'|| '%')";
-									 sql += " OR  UPPER(JK.NAMA_KEMENTERIAN)  LIKE UPPER('%' ||'"+search.toUpperCase().trim()+"'|| '%')";
+									// sql += " OR  UPPER(JK.ID_KEMENTERIAN)  LIKE UPPER('%' ||'"+search.toUpperCase().trim()+"'|| '%')";
 									 sql += " OR UPPER(PB.NAMA_PB)  LIKE UPPER('%' ||'"+search.trim()+"'|| '%')";
 									 sql += " OR UPPER(PB.NO_PB)  LIKE ('%' ||'"+search.trim()+"'|| '%') "; 
 									 sql += " OR UPPER(HPB.NO_AKAUN)  LIKE ('%' ||'"+search.trim()+"'|| '%') ";
@@ -235,14 +246,14 @@ public class FrmStatusPampasanOnline extends AjaxBasedModule{
 			    	
 			    	
 			    	
-					if(!negeriUser.equals("16") && !negeriUser.isEmpty()){
+				/*	if(!negeriUser.equals("16") && !negeriUser.isEmpty()){
 						if(negeriUser.equals("14")){
 							sql += "AND F.ID_NEGERI in (14,15,16) ";
 						}else{
 							sql += "AND F.ID_NEGERI = '"+negeriUser+"'";
 						}		
 					}
-				
+				*/
 					sql = sql + " ORDER BY " 
 							+ " CASE nvl(p.flag_semak,0)"
 							+ " WHEN '1' THEN 1" 
@@ -345,6 +356,24 @@ public class FrmStatusPampasanOnline extends AjaxBasedModule{
 		
 	}
 
+	//yati tambah
+	 private String nameAndId(String id_user) throws Exception {
+
+			Vector dataKementerianOnline = new Vector();
+
+			dataKementerianOnline.clear();
+
+			modelUPT.setDataKementerianOnline(id_user);
+			dataKementerianOnline = modelUPT.getDataKementerianOnline();
+			String userIdKementerian = "";
+			if (dataKementerianOnline.size() != 0) {
+				Hashtable t = (Hashtable) dataKementerianOnline.get(0);
+				userIdKementerian = t.get("id_kementerian").toString();
+			}
+
+			return userIdKementerian;
+
+		}// close nameAndId
 
 
 }
