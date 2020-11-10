@@ -9,10 +9,15 @@ background: #f4eff4 !important;
 	<!-- SEKSYEN 4 DAN 8 --><strong></strong>
 <!-- test xxxxx -->
 
- #if($report == 'BorangE' || $report == 'BorangF' || $report == 'BorangG' || $report == 'BorangH' || $report == 'BorangJ' 
- || $report == 'BorangK' || $report == 'BorangL' || $report == 'BorangLB' || $report == 'BorangLC' || $report == 'BorangQ'
- || $report == 'BorangO' || $report == 'BorangP' || $report == 'BorangR' || $report == 'BorangM' 
- || $report =='SementaraMMKSelangor' || $report == 'KertasMinitMB' || $report == 'LaporanTanahSementara')
+ #if($report == 'BorangE' || $report == 'BorangF' || $report == 'BorangG' || $report == 'BorangH' || $report == 'BorangJ' || $report == 'BorangK' || $report == 'BorangL' || $report == 'BorangLB' || $report == 'BorangLC' || $report == 'BorangQ'
+ || $report == 'BorangO' || $report == 'BorangP' || $report == 'BorangR' || $report == 'BorangM' || $report =='SementaraMMKSelangor' || $report == 'KertasMinitMB' || $report == 'LaporanTanahSementara' || $report == 'SuratKpdPTGDariJKPTGIbuPejabat' 
+ || $report == 'LampiranASek4' || $report == 'laporanTanahSS4' || $report == 'SuratMintaDepositDalam30Hari' || $report == 'SuratIringanBorangO' || $report == 'suratKepadaAPSupayaMembayarPampasanTambahan' || $report == 'SuratMintaDepositDalam30HariAP'
+ || $report == 'BorangO_AP' || $report == 'SuratIringanBorangO_AP' || $report == 'suratKepadaAPSupayaMembayarPampasanTambahan_AP' || $report == 'SuratPanggilanPerundinganSementara' || $report == 'SuratPanggilanPerundinganSementaraAgensi' 
+ || $report == 'SuratPanggilanPerundinganSementaraPB' || $report == 'SuratPanggilanPerundinganSambunganSementara' || $report == 'SuratPanggilanPerundinganSementaraSambunganAgensi' || $report == 'SuratPanggilanPerundinganSementaraSambunganPB' 
+ || $report == 'SuratKpdAPRundingan' || $report == 'SuratKepadaJPPHSupayaMenghadiriPerundingan' || $report=='SuratBayaranAgensi' || $report == 'MMKSek8Selangor' || $report == 'SuratIringanMMK' || $report == 'JPBDkeJPPH' || $report == 'SiasatanJPPH'
+ || $report == 'SuratSiasatanKpdAP' || $report == 'SuratMintaBayaran' || $report == 'SuratLainKos' || $report == 'SuratEndorsanBorangK1' || $report == 'SuratIringanAP' || $report == 'SuratPengosonganTanah' || $report == 'suratPelupusanHakmilik'
+ || $report == 'Perkara1JPBD' || $report == 'Perkara2PTD' || $report == 'Perkara3KSU' || $report == 'Perkara4JPPH' || $report == 'Perkara4PEKELILING' || $report == 'laporanTanahSS8' || $report == 'LampiranASek8' || $report == 'LaporanTerperinciTanah'
+ || $report == 'EndosanDSUK' || $report == 'NotaSiasatanSek8' || $report == 'IringanARB' || $report == 'EndosanDPTD' || $report == 'EndorsanKHQ' || $report == 'EndorsanKSUK' || $report == 'coveringPU' || $report == 'coveringSijilPU' || $report == 'minitSijilPU')
 #parse("app/ppt/tindakanPegawaiSignPPT.jsp")
 #end
 #set($frmtdate = "&nbsp;<i><font color='blue' style='font-size:10px'>dd/mm/yyyy</font></i>")
@@ -29,9 +34,6 @@ background: #f4eff4 !important;
    <input name="nama_pegawai" type="hidden" id="nama_pegawai" value="$!nama_pegawai"/> 
    <input name="nama_pegawai1" type="hidden" id="nama_pegawai1" value="$!nama_pegawai1"/> 
    <input name="nama_pegawai2" type="hidden" id="nama_pegawai2" value="$!nama_pegawai2"/> 
-   
-   
-   
    
    <input name="jawatan" type="hidden" id="jawatan" value="$!jawatan"/> 
    <input name="nama_pengarah" type="hidden" id="nama_pengarah" value="$!nama_pengarah"/> 
@@ -66,7 +68,6 @@ background: #f4eff4 !important;
    <input name="id_hakmilikpb" type="hidden" id="id_hakmilikpb" value="$!id_hakmilikpb"/> 
    <input name="id_bayaran" type="hidden" id="id_bayaran" value="$!id_bayaran"/> 
    
-   
    <input name="id_buktipenyampaian" type="hidden" id="id_buktipenyampaian" value="$!id_buktipenyampaian"/> 
    
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
@@ -76,16 +77,29 @@ background: #f4eff4 !important;
   <input name="ic_login" type="hidden" id="ic_login" value="$!ic_login"/>
    <input name="token" type="hidden" id="token" value="$token"/>
    <input name="id_penarikan" type="hidden" id="id_penarikan" value="$!id_penarikan"/>
+   <input name="id_jawatan1" type="hidden" id="id_jawatan1" value="$!id_jawatan1"/>
+   <input name="jawatan1" type="hidden" id="jawatan1" value="$!jawatan1"/>
   
                
-#if(($token != "" && ($report == 'BorangE' || $report == 'BorangF' || $report == 'BorangG' || $report == 'BorangH' 
-|| $report == 'BorangJ' || $report == 'BorangK' || $report == 'BorangL' || $report == 'BorangLB' || $report == 'BorangLC' 
-|| $report == 'BorangQ' || $report == 'BorangO' || $report == 'BorangM' || $report == 'BorangR' 
-|| $report =='SementaraMMKSelangor' || $report == 'KertasMinitMB' || $report == 'LaporanTanahSementara') )
-|| ($token == "" && ($report !='BorangE' && $report != 'BorangF' && $report != 'BorangG' 
-&& $report != 'BorangH' && $report != 'BorangJ' && $report != 'BorangK' && $report != 'BorangL' && $report != 'BorangLB' 
-&& $report != 'BorangLC' && $report != 'BorangQ' && $report != 'BorangO' && $report != 'BorangM' && $report != 'BorangR' 
-&& $report != 'SementaraMMKSelangor' && $report != 'KertasMinitMB' && $report != 'LaporanTanahSementara')))
+#if(($token != "" && ($report == 'BorangE' || $report == 'BorangF' || $report == 'BorangG' || $report == 'BorangH' || $report == 'BorangJ' || $report == 'BorangK' || $report == 'BorangL' || $report == 'BorangLB' || $report == 'BorangLC' 
+|| $report == 'BorangQ' || $report == 'BorangO' || $report == 'BorangM' || $report == 'BorangR' || $report =='SementaraMMKSelangor' || $report == 'KertasMinitMB' || $report == 'LaporanTanahSementara' || $report =='SuratKpdPTGDariJKPTGIbuPejabat' 
+|| $report == 'LampiranASek4' || $report == 'laporanTanahSS4' || $report == 'SuratMintaDepositDalam30Hari' || $report == 'SuratIringanBorangO' || $report == 'suratKepadaAPSupayaMembayarPampasanTambahan' || $report == 'SuratMintaDepositDalam30HariAP'
+|| $report == 'BorangO_AP' || $report == 'SuratIringanBorangO_AP' || $report == 'suratKepadaAPSupayaMembayarPampasanTambahan_AP' || $report == 'SuratPanggilanPerundinganSementara' || $report == 'SuratPanggilanPerundinganSementaraAgensi' 
+|| $report == 'SuratPanggilanPerundinganSementaraPB' || $report == 'SuratPanggilanPerundinganSambunganSementara' ||$report == 'SuratPanggilanPerundinganSementaraSambunganAgensi' || $report == 'SuratPanggilanPerundinganSementaraSambunganPB'
+|| $report == 'SuratKpdAPRundingan' || $report == 'SuratKepadaJPPHSupayaMenghadiriPerundingan' || $report =='SuratBayaranAgensi' || $report == 'MMKSek8Selangor' || $report == 'SuratIringanMMK' || $report == 'JPBDkeJPPH' || $report == 'SiasatanJPPH' 
+|| $report == 'SuratSiasatanKpdAP' || $report == 'SuratMintaBayaran' || $report == 'SuratLainKos' || $report == 'SuratEndorsanBorangK1' || $report == 'SuratIringanAP' || $report == 'SuratPengosonganTanah' || $report == 'suratPelupusanHakmilik'
+|| $report == 'Perkara1JPBD' || $report == 'Perkara2PTD' || $report == 'Perkara3KSU' || $report == 'Perkara4JPPH' || $report == 'Perkara4PEKELILING' || $report == 'laporanTanahSS8' || $report == 'LampiranASek8' || $report == 'LaporanTerperinciTanah'
+|| $report == 'EndosanDSUK' || $report == 'NotaSiasatanSek8' || $report == 'IringanARB' || $report == 'EndosanDPTD' || $report == 'EndorsanKHQ' || $report == 'EndorsanKSUK' || $report == 'coveringPU' || $report == 'coveringSijilPU' || $report == 'minitSijilPU'))
+
+|| ($token == "" && ($report !='BorangE' && $report != 'BorangF' && $report != 'BorangG' && $report != 'BorangH' && $report != 'BorangJ' && $report != 'BorangK' && $report != 'BorangL' && $report != 'BorangLB' && $report != 'BorangLC' 
+&& $report != 'BorangQ' && $report != 'BorangO' && $report != 'BorangM' && $report != 'BorangR' && $report != 'SementaraMMKSelangor' && $report != 'KertasMinitMB' && $report != 'LaporanTanahSementara' && $report !='SuratKpdPTGDariJKPTGIbuPejabat' 
+&& $report != 'LampiranASek4' && $report != 'laporanTanahSS4' && $report != 'SuratMintaDepositDalam30Hari' && $report != 'SuratIringanBorangO' && $report != 'suratKepadaAPSupayaMembayarPampasanTambahan' && $report != 'SuratMintaDepositDalam30HariAP'
+&& $report != 'BorangO_AP' && $report != 'SuratIringanBorangO_AP' && $report != 'suratKepadaAPSupayaMembayarPampasanTambahan_AP' && $report != 'SuratPanggilanPerundinganSementara' && $report != 'SuratPanggilanPerundinganSementaraAgensi' 
+&& $report != 'SuratPanggilanPerundinganSementaraPB' && $report != 'SuratPanggilanPerundinganSambunganSementara' && $report != 'SuratPanggilanPerundinganSementaraSambunganAgensi' && $report != 'SuratPanggilanPerundinganSementaraSambunganPB'
+&& $report != 'SuratKpdAPRundingan' && $report != 'SuratKepadaJPPHSupayaMenghadiriPerundingan' && $report !='SuratBayaranAgensi' && $report != 'MMKSek8Selangor' && $report != 'SuratIringanMMK' && $report != 'JPBDkeJPPH' && $report != 'SiasatanJPPH' 
+&& $report != 'SuratSiasatanKpdAP' && $report != 'SuratMintaBayaran' && $report != 'SuratLainKos' && $report != 'SuratEndorsanBorangK1' && $report != 'SuratIringanAP' && $report != 'SuratPengosonganTanah' && $report != 'suratPelupusanHakmilik'
+&& $report != 'Perkara1JPBD' && $report != 'Perkara2PTD' && $report != 'Perkara3KSU' && $report != 'Perkara4JPPH' && $report != 'Perkara4PEKELILING' && $report != 'laporanTanahSS8' && $report != 'LampiranASek8' && $report != 'LaporanTerperinciTanah'
+&& $report != 'EndosanDSUK' && $report != 'NotaSiasatanSek8' && $report != 'IringanARB' && $report != 'EndosanDPTD' && $report != 'EndorsanKHQ' && $report != 'EndorsanKSUK' && $report != 'coveringPU' && $report != 'coveringSijilPU' && $report != 'minitSijilPU')))
     	<fieldset><legend><strong>Cetakan Laporan</strong></legend>
         	<table width="100%" border="0" cellspacing="2" cellpadding="2" margin="10px">
         	
@@ -171,7 +185,7 @@ background: #f4eff4 !important;
                
               
             #if($report != "BorangC_TGANU" && $report != "BorangCLebih_TGANU" && $report != "CoveringPU_SA" && $report != "coveringSijilPU_SA" && $report != "minitSijilPU_SA" 
-            && $report != "BorangM" && $report != 'LaporanTanahSementara')  
+            && $report != "BorangM" && $report != 'LaporanTanahSementara' && $report != 'BorangO_AP' && $report != 'BorangJ')  
               <tr>
                 <td>&nbsp;</td>
                 <td>No. Fail Permohonan</td>
@@ -208,25 +222,27 @@ background: #f4eff4 !important;
 			  #end 	
               #end	
             
-              #if($report != 'MBSelangor' && $report != 'MBPerak' && $report != 'MBSelangorSS8' && $report != 'MMKSek4NSembilan'
-              && $report != 'MMKSek4Selangor' && $report != 'MMKSek4Melaka' && $report != 'MMKSek8Selangor' && $report != 'MMKSek8NSembilan'
-              && $report != 'MMKSek8Melaka' && $report != 'MMKSek4WPKL' && $report != 'MMKSek8WPKL' && $report != 'MMKSek4Kedah' && $report != 'MMKSek4Perak'
-              && $report != 'MMKSek8Perak' && $report != 'MMKSek8PPinang' && $report != 'MMKSek8Kedah' && $report != 'BorangDBI'
-              && $report != 'MMKSek4Perlis' && $report != 'MMKSek8Perlis' && $report != 'MMKSek4Terengganu' && $report != 'MMKSek8Terengganu'
-              && $report != 'MMKSek8Kelantan' && $report != 'MMKSek8Pahang' && $report != 'MMKSek4Kelantan' && $report != 'SementaraMMKSelangor' 
-              && $report != 'SementaraMMKKL' && $report != 'BorangM' && $report != 'laporanTanahSS8' && $report != 'BorangA' 
-              && $report != 'BorangB'  && $report != 'LaporanTerperinciTanah' && $report != 'BorangD' && $report != 'LampiranA1'
-              && $report != 'Perkara4PEKELILING' && $report != 'BuktiPenyampaian' && $report != 'BuktiPenyampaianH' && $report != 'BuktiPenyampaianK' && $report != 'BorangE' && $report != 'BorangF'
-              && $report != 'BorangG' && $report != 'BorangH' && $report != 'SuratAkuanPenerimaanCek' && $report != 'SuratAkuanPenerimaanCekBayaranLewat'
-              && $report != 'BorangK' && $report != "BorangC_TGANU" && $report != "BorangCLebih_TGANU"   
-              && $report != 'NotaSiasatanSek8' && $report != 'borangAkta486' && $report != 'KertasMinitMB' && $report != 'BuktiPenyampaianRamai' && $report != 'BuktiPenyampaianRamaiH' && $report != 'BuktiPenyampaianRamaiK' 
-              && $report != 'BorangL' && $report != 'SuratAkuanPenerimaanCekLainKos' && $report != 'borangAkta486Penarikan' 
-              && $report != 'coveringPU' && $report != 'coveringPU_SA' && $report != 'borangPU' && $report != 'lampiranAPU' && $report != 'lampiranBPU'
-              && $report != 'BorangL' && $report != 'SuratEndorsanBorangK' && $report != 'SuratIringanAgensiPemohon' 
+              #if($report != 'MBSelangor' && $report != 'MBPerak' && $report != 'MBSelangorSS8' && $report != 'MMKSek4NSembilan' && $report != 'MMKSek4Selangor' && $report != 'MMKSek4Melaka' && $report != 'MMKSek8Selangor' && $report != 'MMKSek8NSembilan'
+              && $report != 'MMKSek8Melaka' && $report != 'MMKSek4WPKL' && $report != 'MMKSek8WPKL' && $report != 'MMKSek4Kedah' && $report != 'MMKSek4Perak' && $report != 'MMKSek8Perak' && $report != 'MMKSek8PPinang' && $report != 'MMKSek8Kedah' 
+              && $report != 'BorangDBI' && $report != 'MMKSek4Perlis' && $report != 'MMKSek8Perlis' && $report != 'MMKSek4Terengganu' && $report != 'MMKSek8Terengganu' && $report != 'MMKSek8Kelantan' && $report != 'MMKSek8Pahang' && $report != 'MMKSek4Kelantan' 
+              && $report != 'SementaraMMKSelangor' && $report != 'SementaraMMKKL' && $report != 'BorangM' && $report != 'laporanTanahSS8' && $report != 'BorangA' && $report != 'BorangB'  && $report != 'LaporanTerperinciTanah' && $report != 'BorangD' 
+              && $report != 'LampiranA1' && $report != 'Perkara4PEKELILING' && $report != 'BuktiPenyampaian' && $report != 'BuktiPenyampaianH' && $report != 'BuktiPenyampaianK' && $report != 'BorangE' && $report != 'BorangF' && $report != 'BorangG' 
+              && $report != 'BorangH' && $report != 'SuratAkuanPenerimaanCek' && $report != 'SuratAkuanPenerimaanCekBayaranLewat' && $report != 'BorangK' && $report != "BorangC_TGANU" && $report != "BorangCLebih_TGANU" && $report != 'NotaSiasatanSek8' 
+              && $report != 'borangAkta486' && $report != 'KertasMinitMB' && $report != 'BuktiPenyampaianRamai' && $report != 'BuktiPenyampaianRamaiH' && $report != 'BuktiPenyampaianRamaiK' && $report != 'BorangL' && $report != 'SuratAkuanPenerimaanCekLainKos' 
+              && $report != 'borangAkta486Penarikan' && $report != 'coveringPU' && $report != 'coveringPU_SA' && $report != 'borangPU' && $report != 'lampiranAPU' && $report != 'lampiranBPU'
+              && $report != 'BorangL' && $report != 'SuratEndorsanBorangK' && $report != 'SuratIringanAgensiPemohon' && $report != 'EndorsanKSUK'
               && $report != 'coveringSijilPU' && $report != 'minitSijilPU' && $report != 'cetakNotis' && $report != 'senaraiKehadiran' 
               && $report != 'senaraiKehadiranKosong' && $report != 'BayaranLainKos_Nofail' && $report != 'sabpn_notis_awam_sek4' && $report != 'sabpn_notis_awam_sek8'  && $report != 'sabpn_notis_borange'  
               && $report != 'sabpn_notis_borangk'  && $report != 'sabpn_notis_borangh' && $report != 'BorangO' && $report != 'BorangLB' && $report != 'BorangLC'
-              && $report != 'BorangM' && $report != 'BorangR' && $report != 'LaporanTanahSementara' )
+              && $report != 'BorangM' && $report != 'BorangR' && $report != 'LaporanTanahSementara' && $report != 'SuratKpdPTGDariJKPTGIbuPejabat' && $report != 'LampiranASek4'
+              && $report != 'laporanTanahSS4' && $report != 'SuratMintaDepositDalam30Hari' && $report != 'SuratIringanBorangO' && $report != 'suratKepadaAPSupayaMembayarPampasanTambahan'
+              && $report != 'BorangO_AP' && $report != 'SuratIringanBorangO_AP' && $report != 'suratKepadaAPSupayaMembayarPampasanTambahan_AP' && $report != 'SuratPanggilanPerundinganSementara'
+              && $report != 'SuratPanggilanPerundinganSementaraAgensi' && $report != 'SuratPanggilanPerundinganSementaraPB' && $report != 'SuratPanggilanPerundinganSambunganSementara'
+              && $report != 'SuratPanggilanPerundinganSementaraSambunganAgensi' && $report != 'SuratPanggilanPerundinganSementaraSambunganPB' && $report != 'SuratKpdAPRundingan'
+              && $report != 'SuratKepadaJPPHSupayaMenghadiriPerundingan' && $report != 'BorangQ' && $report !='SuratBayaranAgensi' && $report != 'MMKSek8Selangor'
+              && $report != 'SuratIringanMMK' && $report != 'JPBDkeJPPH' && $report != 'SiasatanJPPH' && $report != 'SuratSiasatanKpdAP' && $report != 'SuratMintaBayaran' && $report != 'SuratLainKos'
+              && $report != 'SuratEndorsanBorangK1' && $report != 'SuratIringanAP' && $report != 'SuratPengosonganTanah' && $report != 'suratPelupusanHakmilik' && $report != 'BorangJ' && $report != 'Perkara1JPBD'
+              && $report != 'Perkara2PTD' && $report != 'Perkara3KSU' && $report != 'Perkara4JPPH' && $report != 'LampiranASek8' && $report != 'IringanARB' && $report != 'EndosanDPTD' && $report != 'EndorsanKHQ')
             
 <!--               || $report == 'SuratPengosonganTanah' || -->
               <!-- PPT-27 & PPT-30-->
@@ -653,7 +669,7 @@ background: #f4eff4 !important;
               </tr>
               #end
               
-              #if($report == 'MMKSek8Selangor'  || $report == 'MMKSek8PPinang' || $report == 'SementaraMMKSelangor' || $report == 'SementaraMMKKL' )
+              #if($report == 'MMKSek8PPinang' || $report == 'SementaraMMKKL' )
               <tr>
                 	<td>&nbsp;</td>
                 	<td>Nama Pentadbir Tanah</td>
@@ -1079,11 +1095,11 @@ background: #f4eff4 !important;
                 	<!-- REPORT SEKSYEN 4 & 8 ------------->
                 
                 	#if($report == 'LampiranASek4')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakLampiranA('$!id_fail','$!nama2Mukim','$!nama_pegawai','$!jawatan')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakLampiranA('$!id_fail','$!nama2Mukim','$!nama_pegawai','$!jawatan1','$!ic_login','$!username')">
                 	#end
                 
                 	#if($report == 'LampiranASek8')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakLampiranA8('$!id_fail','$!nama2Mukim','$!nama_pegawai','$!jawatan')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakLampiranA8('$!id_fail','$!nama2Mukim','$!username','$!jawatan1','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'MBSelangor')
@@ -1099,39 +1115,39 @@ background: #f4eff4 !important;
                 	#end
                 	
                 	#if($report == 'KertasMinitMB')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakKertasMinitMB('$!id_fail','$!nama_pengarah')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakKertasMinitMB('$!id_fail','$!username','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'laporanTanahSS4')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakLaporanTanah('$!id_tanahumum','$!nama_pegawai')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakLaporanTanah('$!id_tanahumum','$!nama_pegawai', '$!ic_login','$!username')">
                 	#end
                 	
                 	#if($report == 'NotaSiasatanSek8')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakNotaSiasatan('$!id_siasatan','$!nama_pengarah','$!nama_pegawai','$!id_hakmilik')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakNotaSiasatan('$!id_siasatan','$!nama_pengarah','$!username','$!id_hakmilik','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'IringanARB')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakIringanARB('$!id_siasatan','$!id_jawatan','$!nama_pegawai')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakIringanARB('$!id_siasatan','$!id_jawatan1','$!username','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'Perkara4JPPH')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakJPPH('$!id_fail','$!nama_pegawai','$!id_jawatan','$!nama2Mukim')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakJPPH('$!id_fail','$!username','$!id_jawatan1','$!nama2Mukim','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'Perkara1JPBD')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakPerkara1JPBD('$!id_fail','$!nama_pegawai','$!id_jawatan','$!nama2Mukim','$!totalHM')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakPerkara1JPBD('$!id_fail','$!username','$!id_jawatan1','$!nama2Mukim','$!totalHM','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'Perkara2PTD')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakPerkara2PTD('$!id_fail','$!nama_pegawai','$!id_jawatan','$!nama2Mukim')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakPerkara2PTD('$!id_fail','$!username','$!id_jawatan1','$!nama2Mukim','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'Perkara3KSU')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakPerkara3KSU('$!id_fail','$!nama_pegawai','$!id_jawatan','$!nama2Mukim')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakPerkara3KSU('$!id_fail','$!username','$!id_jawatan1','$!nama2Mukim','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'EndosanDSUK')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakEndosanDSUK('$!id_fail','$!nama_pegawai','$!id_jawatan','$!nama2Mukim')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakEndosanDSUK('$!id_fail','$!username','$!id_jawatan1','$!nama2Mukim','$!ic_login')">
                 	#end
                     
                     #if($report == 'BatalEndosDPTG')
@@ -1155,7 +1171,7 @@ background: #f4eff4 !important;
                 	#end
                 	
                 	#if($report == 'EndosanDPTD')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakEndosanDPTD('$!id_fail','$!nama_pegawai','$!id_jawatan','$!nama2Mukim')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakEndosanDPTD('$!id_fail','$!username','$!id_jawatan1','$!nama2Mukim','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'EndorsanKPTD')
@@ -1163,11 +1179,11 @@ background: #f4eff4 !important;
                 	#end
                 	
                 	#if($report == 'EndorsanKHQ')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakEndorsanKHQ('$!id_fail','$!nama_pegawai','$!id_jawatan','$!nama2Mukim','$!listLOTHM')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakEndorsanKHQ('$!id_fail','$!username','$!id_jawatan1','$!nama2Mukim','$!listLOTHM','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'EndorsanKSUK')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakEndorsanKSUK('$!id_fail','$!nama_pegawai','$!id_jawatan','$!nama2Mukim','$!listLOT')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakEndorsanKSUK('$!id_fail','$!username','$!id_jawatan1','$!nama2Mukim','$!listLOT','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'EndorsanKSUKSeluruh')
@@ -1175,7 +1191,7 @@ background: #f4eff4 !important;
                 	#end
                 	
                 	#if($report == 'SuratSiasatanKpdAP')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSiasatanAP('$!id_fail','$!id_borange','$!nama_pegawai','$!id_jawatan','$!flagCetakSiasatan','$!nama2Mukim')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSiasatanAP('$!id_fail','$!id_borange','$!username','$!id_jawatan1','$!flagCetakSiasatan','$!nama2Mukim','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'SuratKpdAPPBUlangSiasatan')
@@ -1221,11 +1237,11 @@ background: #f4eff4 !important;
                 	#end
                 	
                 	#if($report == 'JPBDkeJPPH')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakJPBDkeJPPH('$!id_permohonan','$!nama_pegawai','$!id_jawatan','$!nama2Mukim')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakJPBDkeJPPH('$!id_permohonan','$!username','$!id_jawatan1','$!nama2Mukim','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'SiasatanJPPH')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSiasatanJPPH('$!id_permohonan','$!nama_pegawai','$!id_jawatan','$!id_borange')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSiasatanJPPH('$!id_permohonan','$username','$!id_jawatan','$!id_borange','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'SuratAPBayarTambahan')
@@ -1233,7 +1249,7 @@ background: #f4eff4 !important;
                 	#end
                 	
                 	#if($report == 'SuratMintaBayaran')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakMohonBayaran('$!id_hakmilik','$!nama_pegawai','$!id_jawatan','$!nama2Mukim','$!id_negeri')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakMohonBayaran('$!id_hakmilik','$!username','$!id_jawatan','$!nama2Mukim','$!id_negeri','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'SuratPBBayarBalik')
@@ -1241,7 +1257,7 @@ background: #f4eff4 !important;
                 	#end
                 	
                 	#if($report == 'SuratLainKos')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratLainKos('$!id_hakmilik','$!nama_pegawai','$!id_jawatan')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratLainKos('$!id_hakmilik','$!username','$!id_jawatan1','$!ic_login')">
                 	#end
                     
                     #if($report == 'BayaranLainKos_Nofail')
@@ -1261,7 +1277,7 @@ background: #f4eff4 !important;
                 	#end
                 	
                 	#if($report == 'MMKSek8Selangor')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakMMKSek8Selangor('$!id_fail','$!nama_pengarah','$!no_fail','$!id_negeri')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakMMKSek8Selangor('$!id_fail','$!nama_pengarah','$!no_fail','$!id_negeri','$!username','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'MMKSek4NSembilan')
@@ -1338,7 +1354,7 @@ background: #f4eff4 !important;
                 	#end
                 	
                 	#if($report == 'SuratIringanMMK')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratIringanMMK('$!id_fail','$!nama_pegawai','$!id_jawatan','$!id_negeri')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratIringanMMK('$!id_fail','$!username','$!id_jawatan1','$!id_negeri','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'LampiranA1')
@@ -1369,7 +1385,7 @@ background: #f4eff4 !important;
                 	#end
                 	
                 	#if($report == 'SuratKpdPTGDariJKPTGIbuPejabat')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratKPTG('$!selectNoFail','$!id_fail','$!nama_pegawai','$!id_jawatan')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratKPTG('$!selectNoFail','$!id_fail','$!nama_pegawai','$!id_jawatan1', '$!ic_login', '$!username')">
                 	#end
                 	
                 	#if($report == 'cetakNotis')
@@ -1389,7 +1405,7 @@ background: #f4eff4 !important;
                 	#end
                 	
                     #if($report == 'SuratPengosonganTanah')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratPengosonganTanah('$!id_permohonan','$!id_fail','$!id_hakmilik','$!nama_pegawai')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratPengosonganTanah('$!id_permohonan','$!id_fail','$!id_hakmilik','$!username', '$!ic_login')">
                 	#end
                 	
                 	#if($report == 'SuratEndorsanBorangK')
@@ -1402,7 +1418,7 @@ background: #f4eff4 !important;
                 	#end
                 	<!-- PPT-30 END -->
                 	#if($report == 'laporanTanahSS8')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakLaporanAwalSS8('$!id_tanahumum','$!id_negeri')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakLaporanAwalSS8('$!id_tanahumum','$!id_negeri','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'BorangA' )
@@ -1414,7 +1430,7 @@ background: #f4eff4 !important;
                 	#end
                 	
                 	#if($report == 'LaporanTerperinciTanah')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakLaporanTanahSS8('$!id_fail','$!id_hakmilik')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakLaporanTanahSS8('$!id_fail','$!id_hakmilik','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'BorangD')
@@ -1426,23 +1442,23 @@ background: #f4eff4 !important;
                 	#end
                 	
                 	#if($report == 'Perkara4PEKELILING')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakPerkara4PEKELILING('$!id_fail')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakPerkara4PEKELILING('$!id_fail','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'BorangE')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangE('$!id_borange','$!nama_pengarah')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangE('$!id_borange','$!username','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'BorangF')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangF('$!id_hakmilik','$!nama_pengarah')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangF('$!id_hakmilik','$!username','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'BorangG')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangG('$!id_permohonan','$!id_fail','$!id_hakmilik','$showG_MT','$showG_ARB','$bydate')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangG('$!id_permohonan','$!id_fail','$!id_hakmilik','$showG_MT','$showG_ARB','$bydate','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'BorangH')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangH('$!id_fail','$!id_hakmilik','$!id_negeri','$!showG_MT','$!showG_ARB')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangH('$!id_fail','$!id_hakmilik','$!id_negeri','$!showG_MT','$!showG_ARB','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'SuratPanggilPBTerimaPampasan')
@@ -1474,19 +1490,19 @@ background: #f4eff4 !important;
                 	#end
                 	
                 	#if($report == 'BorangK')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangK('$!id_fail','$!id_hakmilik')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangK('$!id_fail','$!id_hakmilik','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'BorangQ')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangQ('$!id_permohonan','$!id_hakmilik')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangQ('$!id_permohonan','$!id_hakmilik','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'BorangL')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangL('$!id_hakmilik','$!totalHM')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangL('$!id_hakmilik','$!totalHM','$!ic_login')">
 					#end
 					
                 	#if($report == 'coveringPU')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakCoveringPU('$!id_permintaanukur','$!nama_pengarah')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakCoveringPU('$!id_permintaanukur','$!username','$!ic_login')">
                 	#end
                     
                     #if($report == 'CoveringPU_SA') 
@@ -1510,30 +1526,34 @@ background: #f4eff4 !important;
                 	#end
                 	
                 	#if($report == 'coveringSijilPU')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakCoveringSijilPU('$!id_permintaanukur','$!nama_pengarah')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakCoveringSijilPU('$!id_permintaanukur','$!username','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'minitSijilPU')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakMinitSijilPU('$!id_permintaanukur','$!nama_pengarah')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakMinitSijilPU('$!id_permintaanukur','$!username', '$!ic_login')">
                 	#end
                 	
                 	<!-- PPT-11 -->
                 	#if($report == 'suratPelupusanHakmilik')
-                		<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak Surat Pelupusan" onclick="javascript:cetakSuratPelupusanHakmilik('$!id_hakmilik','$!id_fail', '$!id_permohonan', '$!bilLot','$!nama_pengarah','$!id_jawatan')">
+                		<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak Surat Pelupusan" onclick="javascript:cetakSuratPelupusanHakmilik('$!id_hakmilik','$!id_fail', '$!id_permohonan', '$!bilLot','$!username','$!id_jawatan1', '$!ic_login')">
                 	#end
                     
                     <!--SURAT ENDORSAN BORANG K 1 -->
                     #if($report == 'SuratEndorsanBorangK1')
-                		<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratEndorsanBorangK1('$!id_hakmilik','$!id_fail','$!nama_pengarah','$!id_jawatan')">
+                		<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratEndorsanBorangK1('$!id_hakmilik','$!id_fail','$!username','$!id_jawatan1','$!ic_login')">
                 	#end
                 	
                 	<!--SURAT IRINGAN AP -->
                     #if($report == 'SuratIringanAP')
-                		<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratIringanAP('$!id_hakmilik','$!id_fail','$!nama_pengarah','$!id_jawatan')">
+                		<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratIringanAP('$!id_hakmilik','$!id_fail','$!username','$!id_jawatan1','$!ic_login')">
                 	#end
                 	<!--SURAT IRINGAN AP -->
                     #if($report == 'LaporanTanahSementara')
                 		<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakLaporanTanahPPS('$!id_fail','$!id_tanahumum','$!ic_login')">
+                	#end
+                	
+                	#if($report == 'BorangJ')
+                		<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangJ('$!id_fail','$!ic_login')">
                 	#end
                 	
                     <!-- END REPORT SEKSYEN 4 & 8 --------->
@@ -1542,7 +1562,7 @@ background: #f4eff4 !important;
                     <!-- REPORT SEMENTARA -------------->
                     
                     #if($report == 'SementaraMMKSelangor')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSementaraMMKSelangor('$!id_fail','$!nama_pengarah','$!no_fail','$!id_negeri')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSementaraMMKSelangor('$!id_fail','$!nama_pengarah','$!no_fail','$!id_negeri','$!username','$!ic_login')">
                 	#end
                     
                     #if($report == 'SementaraMMKKL')
@@ -1564,7 +1584,7 @@ background: #f4eff4 !important;
                     
                     <!-- PPT 43i-->
                     #if($report == 'SuratBayaranAgensi')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakMohonBayaranAgensi('$!id_fail','$!nama_pegawai','$!no_fail','$!id_hakmilik')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakMohonBayaranAgensi('$!id_fail','$!username','$!no_fail','$!id_hakmilik','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'BorangM')
@@ -1572,7 +1592,7 @@ background: #f4eff4 !important;
                 	#end
                 	
                 	#if($report == 'BorangR')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangR('$id_siasatan','$!id_hakmilik','$!id_fail')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangR('$id_siasatan','$!id_hakmilik','$!id_fail','$!ic_login')">
                 	#end
                     
                     <!-- END REPORT SEMENTARA ------------->
@@ -1581,27 +1601,27 @@ background: #f4eff4 !important;
                     <!-- REPORT BANTAHAN ------------------>
                     
                 	#if($report == 'SuratMintaDepositDalam30Hari')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratMintaDepositDalam30Hari('$!id_fail','$id_bantahan','$id_hakmilikpb','$!nama_pegawai')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratMintaDepositDalam30Hari('$!id_fail','$id_bantahan','$id_hakmilikpb','$!nama_pegawai','$!ic_login','$!username')">
                 	#end  
                     
                 	#if($report == 'SuratMintaDepositDalam30HariAP')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratMintaDepositDalam30HariAP('$!id_fail','$id_bantahan','$id_hakmilik','$id_siasatan','$!nama_pegawai')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratMintaDepositDalam30HariAP('$!id_fail','$id_bantahan','$id_hakmilik','$id_siasatan','$!nama_pegawai','$!ic_login','$!username')">
                 	#end                                              
                     
                 	#if($report == 'SuratIringanBorangO_AP')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratIringanBorangO_AP('$!id_fail','$id_bantahan','$id_hakmilik','$!nama_pegawai')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratIringanBorangO_AP('$!id_fail','$id_bantahan','$id_hakmilik','$!nama_pegawai','$!username','$!ic_login')">
                 	#end                                                        
                     
                 	#if($report == 'SuratIringanBorangO')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratIringanBorangO('$!id_fail','$id_bantahan','$id_hakmilikpb','$!nama_pegawai','$!id_jawatan')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratIringanBorangO('$!id_fail','$id_bantahan','$id_hakmilikpb','$!nama_pegawai','$!id_jawatan1','$!username','$!ic_login')">
                 	#end 
                     
                     #if($report == 'suratKepadaAPSupayaMembayarPampasanTambahan')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetaksuratKepadaAPSupayaMembayarPampasanTambahan('$!id_fail','$id_bantahan','$!nama_pegawai','$!id_negeri')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetaksuratKepadaAPSupayaMembayarPampasanTambahan('$!id_fail','$id_bantahan','$!nama_pegawai','$!id_negeri','$!username','$!ic_login')">
                 	#end 
                     
                     #if($report == 'suratKepadaAPSupayaMembayarPampasanTambahan_AP')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetaksuratKepadaAPSupayaMembayarPampasanTambahan_AP('$!id_fail','$id_bantahan','$!nama_pegawai')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetaksuratKepadaAPSupayaMembayarPampasanTambahan_AP('$!id_fail','$id_bantahan','$!nama_pegawai','$!username','$!ic_login','$!id_jawatan1')">
                 	#end 
                     
                     #if($report == 'suratUtkPanggilanTerimaPampasanKpdPB_bantahan')
@@ -1613,35 +1633,35 @@ background: #f4eff4 !important;
                 	#end                
                            
                 	#if($report == 'SuratKepadaJPPHSupayaMenghadiriPerundingan')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratKepadaJPPHSupayaMenghadiriPerundingan('$!id_fail','$!nama_pegawai')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratKepadaJPPHSupayaMenghadiriPerundingan('$!id_fail','$!username','$!ic_login')">
                 	#end  
                     
                     #if($report == 'SuratPanggilanPerundinganSementara')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratPanggilanPerundinganSementara('$!id_fail','$!nama_pegawai','$!id_siasatan','$!id_jawatan','$id_hakmilik')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratPanggilanPerundinganSementara('$!id_fail','$!nama_pegawai','$!id_siasatan','$!id_jawatan1','$id_hakmilik','$!username','$!ic_login')">
                 	#end  
                     
                      #if($report == 'SuratPanggilanPerundinganSementaraAgensi')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratPanggilanPerundinganSementaraAgensi('$!id_fail','$!nama_pegawai','$!id_siasatan','$!id_jawatan','$id_hakmilik')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratPanggilanPerundinganSementaraAgensi('$!id_fail','$!nama_pegawai','$!id_siasatan','$!id_jawatan1','$id_hakmilik','$!username','$!ic_login')">
                 	#end  
                     
                     #if($report == 'SuratPanggilanPerundinganSementaraSambunganAgensi')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratPanggilanPerundinganSementaraSambunganAgensi('$!id_fail','$!nama_pegawai','$!id_siasatan','$!id_jawatan','$id_hakmilik')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratPanggilanPerundinganSementaraSambunganAgensi('$!id_fail','$!username','$!id_siasatan','$!id_jawatan1','$id_hakmilik','$!ic_login')">
                 	#end 
                     
                       #if($report == 'SuratPanggilanPerundinganSementaraSambunganPB')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratPanggilanPerundinganSementaraSambunganPB('$!id_fail','$!nama_pegawai','$!id_siasatan','$!id_jawatan','$id_hakmilik')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratPanggilanPerundinganSementaraSambunganPB('$!id_fail','$!username','$!id_siasatan','$!id_jawatan1','$id_hakmilik','$!ic_login')">
                 	#end   
                     
                      #if($report == 'SuratPanggilanPerundinganSementaraPB')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratPanggilanPerundinganSementaraPB('$!id_fail','$!nama_pegawai','$!id_siasatan','$!id_jawatan','$id_hakmilik')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratPanggilanPerundinganSementaraPB('$!id_fail','$!nama_pegawai','$!id_siasatan','$!id_jawatan1','$id_hakmilik','$!username','$!ic_login')">
                 	#end  
                     
                      #if($report == 'SuratPanggilanPerundinganSambunganSementara')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratPanggilanPerundinganSambunganSementara('$!id_fail','$!nama_pegawai','$!id_siasatan','$!id_jawatan','$id_hakmilik')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratPanggilanPerundinganSambunganSementara('$!id_fail','$!nama_pegawai','$!id_siasatan','$!id_jawatan1','$id_hakmilik','$!username','$!ic_login')">
                 	#end    
                     
                 	#if($report == 'SuratKpdAPRundingan')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratKpdAPRundingan('$!id_fail','$id_hakmilik','$!nama_pegawai')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakSuratKpdAPRundingan('$!id_fail','$id_hakmilik','$!username','$!ic_login')">
                 	#end    
                     
                 	#if($report == 'AkuanPenerimaanCek_bantahan')
@@ -1680,7 +1700,11 @@ background: #f4eff4 !important;
                 	#end                                                               
                       
                     #if($report == 'BorangO')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangO('$!id_fail','$!id_bantahan','$!id_siasatan')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangO('$!id_fail','$!id_bantahan','$!id_siasatan','$!ic_login')">
+                	#end
+                	
+                	#if($report == 'BorangO_AP')
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangO_AP('$!id_fail','$!id_bantahan','$!id_siasatan','$!ic_login','$!id_warta')">
                 	#end
                       
                     <!-- END REPORT BANTAHAN -------------->
@@ -1688,11 +1712,11 @@ background: #f4eff4 !important;
                     <!-- REPORT PENARIKAN BALIK -->
                     
                     #if($report == 'BorangLB')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangLB('$!id_fail','$!id_penarikan')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangLB('$!id_fail','$!id_penarikan','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'BorangLC')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangLC('$!id_fail','$!id_hakmilik')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangLC('$!id_fail','$!id_hakmilik','$!ic_login')">
                 	#end
                     
                     <!-- END REPORT PENARIKAN BALIK -->
@@ -2078,11 +2102,10 @@ function sabpn_notis_borangh(id_borangh,id_permohonan)
 		if (hWnd.focus != null) hWnd.focus();
 	}
 	
-	
 }
 
 
-function cetakMinitSijilPU(id_permintaanukur,nama_pengarah) {
+function cetakMinitSijilPU(id_permintaanukur,nama_pengarah,ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
@@ -2108,14 +2131,14 @@ function cetakMinitSijilPU(id_permintaanukur,nama_pengarah) {
 
 		//var sysdate = document.${formName}.txtTarikhSuratCetak.value;
 		
-		var url = "../../servlet/ekptg.report.ppt.minitSijilPU?id_permintaanukur="+id_permintaanukur+"&namaPengarah="+nama_pengarah+"&no_fail="+nofail;
+		var url = "../../servlet/ekptg.report.ppt.minitSijilPU?id_permintaanukur="+id_permintaanukur+"&namaPengarah="+nama_pengarah+"&no_fail="+nofail+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
-function cetakCoveringSijilPU(id_permintaanukur,nama_pengarah) {
+function cetakCoveringSijilPU(id_permintaanukur,nama_pengarah,ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
@@ -2143,7 +2166,7 @@ function cetakCoveringSijilPU(id_permintaanukur,nama_pengarah) {
 		
 		var tp = document.${formName}.type_pej.value;
 		
-		var url = "../../servlet/ekptg.report.ppt.coveringSijilPU?id_permintaanukur="+id_permintaanukur+"&typePej="+tp+"&namaPengarah="+nama_pengarah+"&no_fail="+nofail+"&sysdate="+sysdate;
+		var url = "../../servlet/ekptg.report.ppt.coveringSijilPU?id_permintaanukur="+id_permintaanukur+"&typePej="+tp+"&namaPengarah="+nama_pengarah+"&no_fail="+nofail+"&sysdate="+sysdate+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -2216,7 +2239,7 @@ function cetakLampiranAPU(id_permintaanukur) {
 		if (hWnd.focus != null) hWnd.focus();
 	}
 }
-function cetakCoveringPU(id_permintaanukur,nama_pengarah) {
+function cetakCoveringPU(id_permintaanukur,nama_pengarah,ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
@@ -2242,7 +2265,7 @@ function cetakCoveringPU(id_permintaanukur,nama_pengarah) {
 
 		var sysdate = document.${formName}.txtTarikhSuratCetak.value;
 		
-		var url = "../../servlet/ekptg.report.ppt.coveringPU?id_permintaanukur="+id_permintaanukur+"&namaPengarah="+nama_pengarah+"&no_fail="+nofail+"&sysdate="+sysdate;
+		var url = "../../servlet/ekptg.report.ppt.coveringPU?id_permintaanukur="+id_permintaanukur+"&namaPengarah="+nama_pengarah+"&no_fail="+nofail+"&sysdate="+sysdate+"&userlogin="ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -2305,7 +2328,7 @@ function cetakCoveringSijilPU_SA(id_permintaanukur,nama_pengarah) {
 
 
 
-function cetakBorangL(id_hakmilik,totalhm) {
+function cetakBorangL(id_hakmilik,totalhm,ic_login) {
 	
 	var bilHariBorangL = document.${formName}.txtBilHariBorangL.value;
 	var tarikhBorangL = document.${formName}.tarikhBorangL.value;
@@ -2337,7 +2360,7 @@ function cetakBorangL(id_hakmilik,totalhm) {
 		//if(totalhm > 1){
 		//	url = "../../servlet/ekptg.report.ppt.BorangLLebih?id_Fail="+idfail+"&no_fail="+nofail; 
 		//}else{
-			url = "../../servlet/ekptg.report.ppt.BorangL?id_hakmilik="+id_hakmilik+"&no_fail="+nofail+"&bilHariBorangL="+bilHariBorangL+"&tarikhBorangL="+tarikhBorangL;
+			url = "../../servlet/ekptg.report.ppt.BorangL?id_hakmilik="+id_hakmilik+"&no_fail="+nofail+"&bilHariBorangL="+bilHariBorangL+"&tarikhBorangL="+tarikhBorangL+"&userlogin="+ic_login;
 		//}
 		
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
@@ -2637,18 +2660,18 @@ function cetakEndorsanKPTDSeluruh(idfail,nama_pegawai,id_jawatan) {
 }
 
 
-function cetakEndorsanKSUK(idfail,nama_pegawai,id_jawatan,mukim,listLOT) {
+function cetakEndorsanKSUK(idfail,nama_pegawai,id_jawatan,mukim,listLOT,ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
-	}
+	}/*
 	else if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}else{
+	}*/else{
 
 		var idJawatan = 0;
 		if(id_jawatan!=""){
@@ -2672,7 +2695,7 @@ function cetakEndorsanKSUK(idfail,nama_pegawai,id_jawatan,mukim,listLOT) {
 
 		var sysdate = document.${formName}.txtTarikhSuratCetak.value;
 		
-		var url = "../../servlet/ekptg.report.ppt.EndorsanKSUK?id_fail="+idfail+"&nama_pegawai="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&mukim="+mukim+"&no_lot="+listLOT+"&no_fail="+nofail+"&sysdate="+sysdate;
+		var url = "../../servlet/ekptg.report.ppt.EndorsanKSUK?id_fail="+idfail+"&nama_pegawai="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&mukim="+mukim+"&no_lot="+listLOT+"&no_fail="+nofail+"&sysdate="+sysdate+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -2681,18 +2704,18 @@ function cetakEndorsanKSUK(idfail,nama_pegawai,id_jawatan,mukim,listLOT) {
 }
 
 
-function cetakEndorsanKHQ(idfail,nama_pegawai,id_jawatan,mukim,listLOT) {
+function cetakEndorsanKHQ(idfail,nama_pegawai,id_jawatan,mukim,listLOT,ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
-	}
+	}/*
 	else if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}else{
+	}*/else{
 
 		var idJawatan = 0;
 		if(id_jawatan!=""){
@@ -2716,7 +2739,7 @@ function cetakEndorsanKHQ(idfail,nama_pegawai,id_jawatan,mukim,listLOT) {
 
 		var sysdate = document.${formName}.txtTarikhSuratCetak.value;
 		
-		var url = "../../servlet/ekptg.report.ppt.EndorsanKHQ?id_fail="+idfail+"&nama_pegawai="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&mukim="+mukim+"&no_lot="+listLOT+"&no_fail="+nofail+"&sysdate="+sysdate;
+		var url = "../../servlet/ekptg.report.ppt.EndorsanKHQ?id_fail="+idfail+"&nama_pegawai="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&mukim="+mukim+"&no_lot="+listLOT+"&no_fail="+nofail+"&sysdate="+sysdate+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -2769,7 +2792,7 @@ function cetakEndorsanKSUKSeluruh(idfail,nama_pegawai,id_jawatan) {
 }
 
 
-function cetakBorangK(idfail,idhakmilik) {
+function cetakBorangK(idfail,idhakmilik,ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
@@ -2793,7 +2816,7 @@ function cetakBorangK(idfail,idhakmilik) {
 			nofail = document.${formName}.no_fail.value;
 		}
 
-		var url = "../../servlet/ekptg.report.ppt.BorangK?id_hakmilik="+idhakmilik+"&id_Fail="+idfail+"&no_fail="+nofail;
+		var url = "../../servlet/ekptg.report.ppt.BorangK?id_hakmilik="+idhakmilik+"&id_Fail="+idfail+"&no_fail="+nofail+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -2803,14 +2826,14 @@ function cetakBorangK(idfail,idhakmilik) {
 }
 
 
-function cetakBorangQ(id_permohonan,idhakmilik) {
+function cetakBorangQ(id_permohonan,idhakmilik,ic_login) {
 
-	if (document.${formName}.sorSelectNoFail.value == ""){
+	/*if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
 	}
-	else{
+	else{*/
 
 		var valType = document.${formName}.sorSelectNoFail.value;
 		var nofail = "";
@@ -2827,12 +2850,12 @@ function cetakBorangQ(id_permohonan,idhakmilik) {
 			nofail = document.${formName}.no_fail.value;
 		}
 
-		var url = "../../servlet/ekptg.report.ppt.BorangQ?idhakmilik="+idhakmilik;
+		var url = "../../servlet/ekptg.report.ppt.BorangQ?idhakmilik="+idhakmilik+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
 		if (hWnd.focus != null) hWnd.focus();
-	}
+	//}
 	
 }
 
@@ -3207,18 +3230,18 @@ function cetakSuratPanggilPBTerimaPampasan(idfail,idbayaran,nama_pengarah,nama_p
 }
 
 
-function cetakSuratLainKos(idhakmilik,nama_pegawai,id_jawatan) {
+function cetakSuratLainKos(idhakmilik,nama_pegawai,id_jawatan,ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
-	}
+	}/*
 	else if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}else{
+	}*/else{
 
 		var idJawatan = 0;
 		if(id_jawatan!=""){
@@ -3242,7 +3265,7 @@ function cetakSuratLainKos(idhakmilik,nama_pegawai,id_jawatan) {
 
 		var sysdate = document.${formName}.txtTarikhSuratCetak.value;
 		
-		var url = "../../servlet/ekptg.report.ppt.SuratLainKos?id_hakmilik="+idhakmilik+"&namaPengarah="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&no_fail="+nofail+"&sysdate="+sysdate;
+		var url = "../../servlet/ekptg.report.ppt.SuratLainKos?id_hakmilik="+idhakmilik+"&namaPengarah="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&no_fail="+nofail+"&sysdate="+sysdate+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -3286,7 +3309,7 @@ function cetakBayaranLainKosKedah(idhakmilik) {
 }
 
 
-function cetakBorangH(idfail,idhakmilik,id_negeri,showG_MT,showG_ARB) {
+function cetakBorangH(idfail,idhakmilik,id_negeri,showG_MT,showG_ARB,ic_login) {
 	
 	var mula = document.${formName}.mulaPB.value;
 	var akhir = document.${formName}.akhirPB.value;
@@ -3337,7 +3360,7 @@ function cetakBorangH(idfail,idhakmilik,id_negeri,showG_MT,showG_ARB) {
 
 		var item = "&valMT="+valMT+"&bankMT="+bankMT+"&noMT="+noMT+"&akaunMT="+akaunMT+"&bankARB="+bankARB+"&noARB="+noARB+"&akaunARB="+akaunARB;
 		
-		var url = "../../servlet/ekptg.report.ppt.BorangH?id_Fail="+idfail+"&id_hakmilik="+idhakmilik+"&no_fail="+nofail+"&userIdNegeri="+id_negeri+item+"&mula="+mula+"&akhir="+akhir;
+		var url = "../../servlet/ekptg.report.ppt.BorangH?id_Fail="+idfail+"&id_hakmilik="+idhakmilik+"&no_fail="+nofail+"&userIdNegeri="+id_negeri+item+"&mula="+mula+"&akhir="+akhir+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -3346,7 +3369,7 @@ function cetakBorangH(idfail,idhakmilik,id_negeri,showG_MT,showG_ARB) {
 }
 
 
-function cetakBorangG(idpermohonan,idfail,idhakmilik,showG_MT,showG_ARB,bydate) {
+function cetakBorangG(idpermohonan,idfail,idhakmilik,showG_MT,showG_ARB,bydate,ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
@@ -3391,7 +3414,7 @@ function cetakBorangG(idpermohonan,idfail,idhakmilik,showG_MT,showG_ARB,bydate) 
 			akaunARB = document.${formName}.txtNamaAkaunARB.value;
 		}
 
-		var item = "&valMT="+valMT+"&bankMT="+bankMT+"&noMT="+noMT+"&akaunMT="+akaunMT+"&bankARB="+bankARB+"&noARB="+noARB+"&akaunARB="+akaunARB;
+		var item = "&valMT="+valMT+"&bankMT="+bankMT+"&noMT="+noMT+"&akaunMT="+akaunMT+"&bankARB="+bankARB+"&noARB="+noARB+"&akaunARB="+akaunARB+"&userlogin="+ic_login;
 		
 		var url = "../../servlet/ekptg.report.ppt.BorangG?id_permohonan="+idpermohonan+"&bydate="+bydate+"&id_Fail="+idfail+"&id_hakmilik="+idhakmilik+"&no_fail="+nofail+item;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
@@ -3402,18 +3425,18 @@ function cetakBorangG(idpermohonan,idfail,idhakmilik,showG_MT,showG_ARB,bydate) 
 }
 
 
-function cetakMohonBayaran(idhakmilik,nama_pegawai,id_jawatan,mukim,id_negeri) {
+function cetakMohonBayaran(idhakmilik,nama_pegawai,id_jawatan,mukim,id_negeri,ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
-	}
+	}/*
 	else if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}else{
+	}*/else{
 
 		var idJawatan = 0;
 		if(id_jawatan!=""){
@@ -3451,7 +3474,7 @@ function cetakMohonBayaran(idhakmilik,nama_pegawai,id_jawatan,mukim,id_negeri) {
 		var item2 = "&mukim="+mukim+"&no_fail="+nofail+"&emel_eft="+emelEFT+"&sysdate="+sysdate; 
 		var item3 = "&emel="+emel+"&no_tel="+noTel+"&bankMT="+bankMT+"&noMT="+noMT+"&akaunMT="+akaunMT+"&bankARB="+bankARB+"&noARB="+noARB+"&akaunARB="+akaunARB;
 		
-		var url = "../../servlet/ekptg.report.ppt.SuratMintaBayaran?"+item1+item2+item3;
+		var url = "../../servlet/ekptg.report.ppt.SuratMintaBayaran?"+item1+item2+item3+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -3544,18 +3567,18 @@ function cetakSiasatanAPPBUlang(idfail,idhakmilik,nama_pegawai,id_jawatan) {
 }
 
 
-function cetakIringanARB(id_siasatan,idjawatan,nama_pegawai) {
+function cetakIringanARB(id_siasatan,idjawatan,nama_pegawai,ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
 	}
-	else if(document.${formName}.socPegawai.value == ""){
+	/*else if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}
+	}*/
 	else if(document.${formName}.socPejabatARB.value == ""){
 		alert('Sila pilih pejabat Amanah Raya Berhad terlebih dahulu.');
   		document.${formName}.socPejabatARB.focus(); 
@@ -3579,7 +3602,7 @@ function cetakIringanARB(id_siasatan,idjawatan,nama_pegawai) {
 			nofail = document.${formName}.no_fail.value;
 		}
 		
-    	var url = "../../servlet/ekptg.report.ppt.IringanARB?id_siasatan="+id_siasatan+"&id_pejabat="+id_pejabat+"&id_jawatan="+idjawatan+"&namaPegawai="+nama_pegawai+"&no_fail="+nofail;
+    	var url = "../../servlet/ekptg.report.ppt.IringanARB?id_siasatan="+id_siasatan+"&id_pejabat="+id_pejabat+"&id_jawatan="+idjawatan+"&namaPegawai="+nama_pegawai+"&no_fail="+nofail+"&userlogin="+ic_login;
     	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     	if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -3588,7 +3611,7 @@ function cetakIringanARB(id_siasatan,idjawatan,nama_pegawai) {
 }
 
 
-function cetakNotaSiasatan(id_siasatan,nama_pengarah,nama_pegawai,id_hakmilik) {
+function cetakNotaSiasatan(id_siasatan,nama_pengarah,nama_pegawai,id_hakmilik,ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
@@ -3617,7 +3640,7 @@ function cetakNotaSiasatan(id_siasatan,nama_pengarah,nama_pegawai,id_hakmilik) {
 			nofail = document.${formName}.no_fail.value;
 		}
 		
-    	var url = "../../servlet/ekptg.report.ppt.NotaSiasatanSek8?id_siasatan="+id_siasatan+"&namaPegawai=''&namaPengarah=''&no_fail="+nofail+"&id_hakmilik="+id_hakmilik;
+    	var url = "../../servlet/ekptg.report.ppt.NotaSiasatanSek8?id_siasatan="+id_siasatan+"&namaPegawai=''&namaPengarah=''&no_fail="+nofail+"&id_hakmilik="+id_hakmilik+"&userlogin="+ic_login;
     	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     	if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -3626,7 +3649,7 @@ function cetakNotaSiasatan(id_siasatan,nama_pengarah,nama_pegawai,id_hakmilik) {
 }
 
 
-function cetakBorangF(idhakmilik,nama_pengarah) {
+function cetakBorangF(idhakmilik,nama_pengarah,ic_login) {
 
 
 	
@@ -3657,7 +3680,7 @@ function cetakBorangF(idhakmilik,nama_pengarah) {
 			nofail = document.${formName}.no_fail.value;
 		}
 
-		var url = "../../servlet/ekptg.report.ppt.BorangF?id_hakmilik="+idhakmilik+"&namaPegawai="+nama_pengarah+"&no_fail="+nofail+"&mula="+mula+"&akhir="+akhir;
+		var url = "../../servlet/ekptg.report.ppt.BorangF?id_hakmilik="+idhakmilik+"&namaPegawai="+nama_pengarah+"&no_fail="+nofail+"&mula="+mula+"&akhir="+akhir+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -3666,7 +3689,7 @@ function cetakBorangF(idhakmilik,nama_pengarah) {
 }
 
 
-function cetakBorangE(id_borange,nama_pengarah) {
+function cetakBorangE(id_borange,nama_pengarah,ic_login) {
 
 	var masa_siasatan_awal = "";
 	var masa_siasatan_akhir = "";
@@ -3698,7 +3721,8 @@ function cetakBorangE(id_borange,nama_pengarah) {
 		masa_siasatan_awal = document.${formName}.masa_siasatan_awal.value;
 		masa_siasatan_akhir = document.${formName}.masa_siasatan_akhir.value;
 		
-		var url = "../../servlet/ekptg.report.ppt.BorangE?id_borange="+id_borange+"&namaPegawai="+nama_pengarah+"&no_fail="+nofail+"&id_permohonan="+id_permohonan+"&masa_siasatan_awal="+masa_siasatan_awal+"&masa_siasatan_akhir="+masa_siasatan_akhir;
+		var url = "../../servlet/ekptg.report.ppt.BorangE?id_borange="+id_borange+"&namaPegawai="+nama_pengarah+"&no_fail="+nofail
+		+"&id_permohonan="+id_permohonan+"&masa_siasatan_awal="+masa_siasatan_awal+"&masa_siasatan_akhir="+masa_siasatan_akhir+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -3822,7 +3846,7 @@ function cetakBuktiPenyampaianL(idhakmilik,flag) {
 }
 
 
-function cetakSuratPengosonganTanah(idpermohonan,idfail,idhakmilik,nama_pegawai) {
+function cetakSuratPengosonganTanah(idpermohonan,idfail,idhakmilik,nama_pegawai,ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
@@ -3846,7 +3870,7 @@ function cetakSuratPengosonganTanah(idpermohonan,idfail,idhakmilik,nama_pegawai)
 			nofail = document.${formName}.no_fail.value;
 		}
 		
-		var url = "../../servlet/ekptg.report.ppt.SuratPengosonganTanah?id_hakmilik="+idhakmilik+"&id_fail="+idfail+"&no_fail="+nofail+"&nama_pegawai="+nama_pegawai;
+		var url = "../../servlet/ekptg.report.ppt.SuratPengosonganTanah?id_hakmilik="+idhakmilik+"&id_fail="+idfail+"&no_fail="+nofail+"&nama_pegawai="+nama_pegawai+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -3893,48 +3917,62 @@ function cetakSuratEndorsanBorangK(idhakmilik, idfail)	{  //(idhakmilik, idfail,
 }
 
 
-function cetakSuratEndorsanBorangK1(idhakmilik, idfail, namaPegawai, idjawatan)	{  //(idhakmilik, idfail, idpermohonan, nofail) {
+function cetakSuratEndorsanBorangK1(idhakmilik, idfail, namaPegawai, idjawatan, ic_login)	{  //(idhakmilik, idfail, idpermohonan, nofail, ic_login) {
 
-	var id_pegawai = document.${formName}.socPegawai.value;
+	//var id_pegawai = document.${formName}.socPegawai.value;
 	nofail = document.${formName}.no_fail.value;
 	
+	/*
 	if (document.${formName}.socPegawai.value == "")	{
 	alert("Sila pilih \"Nama Pegawai\" terlebih dahulu.");
 	document.${formName}.socPegawai.focus();
 	return;
 	
+	}else{*/
+	var valType = document.${formName}.sorSelectNoFail.value;
+	var nofail = "";
+	
+	if(valType=="1"){
+		nofail = document.${formName}.no_fail.value;
+	}else if(valType=="2"){
+		nofail = document.${formName}.no_rujukan_ptg.value;
+	}else if(valType=="3"){
+		nofail = document.${formName}.no_rujukan_ptd.value;
+	}else if(valType=="4"){
+		nofail = document.${formName}.no_rujukan_upt.value;
 	}else{
-		
-		var url = "../../servlet/ekptg.report.ppt.SuratEndorsanBorangK?id_hakmilik="+idhakmilik+"&id_fail="+idfail+"&nama_pegawai="+namaPegawai+"&id_jawatan="+idjawatan;
+		nofail = document.${formName}.no_fail.value;
+	}
+	var url = "../../servlet/ekptg.report.ppt.SuratEndorsanBorangK?id_hakmilik="+idhakmilik+"&id_fail="+idfail+"&nama_pegawai="+namaPegawai+"&id_jawatan="+idjawatan+"&userlogin="+ic_login+"&no_fail="+nofail;
 		//	var url = "../../servlet/ekptg.report.ppt.SuratEndorsanBorangK_Perak?id_permohonan="+idpermohonan+"&no_fail="+nofail;
 		//	var url = "../../servlet/ekptg.report.ppt.SuratEndorsanBorangK_Perak?idHakmilik="+idhakmilik+"&idfail="+idfail+"&id_permohonan="+idpermohonan+"&no_fail="+nofail;
-		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
-		if ((document.window != null) && (!hWnd.opener))
-		hWnd.opener = document.window;
-		if (hWnd.focus != null) hWnd.focus();
+	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+	if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+	if (hWnd.focus != null) hWnd.focus();
 		
-	}
+	//}
 }
 
-function cetakSuratIringanAP(idhakmilik, idfail, namaPegawai, idjawatan) {
+function cetakSuratIringanAP(idhakmilik, idfail, namaPegawai, idjawatan, ic_login) {
 
-	var id_pegawai = document.${formName}.socPegawai.value;
+	//var id_pegawai = document.${formName}.socPegawai.value;
 	nofail = document.${formName}.no_fail.value;
 	
-	if (document.${formName}.socPegawai.value == "")	{
+	/*if (document.${formName}.socPegawai.value == "")	{
 	alert("Sila pilih \"Nama Pegawai\" terlebih dahulu.");
 	document.${formName}.socPegawai.focus();
 	return;
 	
-	}else{
+	}else{*/
 		
-		var url = "../../servlet/ekptg.report.ppt.SuratIringanAP?id_hakmilik="+idhakmilik+"&id_fail="+idfail+"&nama_pegawai="+namaPegawai+"&id_jawatan="+idjawatan;
+		var url = "../../servlet/ekptg.report.ppt.SuratIringanAP?id_hakmilik="+idhakmilik+"&id_fail="+idfail+"&nama_pegawai="+namaPegawai+"&id_jawatan="+idjawatan+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
 		if (hWnd.focus != null) hWnd.focus();
 		
-	}
+	//}
 }
 //PPT-30(i) END
 
@@ -4076,18 +4114,18 @@ function cetakBuktiPenyampaianRamai(idhakmilik,flag,id_borange) {
 }
 
 
-function cetakSiasatanAP(id_fail,id_borange,nama_pegawai,id_jawatan,flagCetakSiasatan,mukim) {
+function cetakSiasatanAP(id_fail,id_borange,nama_pegawai,id_jawatan,flagCetakSiasatan,mukim,ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
-	}
+	}/*
 	else if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}else{
+	}*/else{
 
 		var idJawatan = 0;
 		if(id_jawatan!=""){
@@ -4126,7 +4164,8 @@ function cetakSiasatanAP(id_fail,id_borange,nama_pegawai,id_jawatan,flagCetakSia
 
         var sysdate = document.${formName}.txtTarikhSuratCetak.value;
         
-		var urlItem = "id_Fail="+id_fail+"&id_borange="+id_borange+"&namaPegawai="+nama_pegawai+"&emel="+emel+"&telefon="+telefon+"&id_jawatan='"+idJawatan+"'&no_fail="+nofail+"&up_ptd="+upPTD+"&up_kjp="+upKJP+"&tarikh_siasatan="+date+"&mukim="+mukim+"&sysdate="+sysdate;
+		var urlItem = "id_Fail="+id_fail+"&id_borange="+id_borange+"&namaPegawai="+nama_pegawai+"&emel="+emel+"&telefon="+telefon+"&id_jawatan='"
+		+idJawatan+"'&no_fail="+nofail+"&up_ptd="+upPTD+"&up_kjp="+upKJP+"&tarikh_siasatan="+date+"&mukim="+mukim+"&sysdate="+sysdate+"&userlogin="+ic_login;
 
 		if(flagCetakSiasatan=="projek"){
 			url = "../../servlet/ekptg.report.ppt.SuratSiasatanKpdAP_Prmhn?"+urlItem;
@@ -4142,18 +4181,18 @@ function cetakSiasatanAP(id_fail,id_borange,nama_pegawai,id_jawatan,flagCetakSia
 }
 
 
-function cetakEndosanDPTD(idfail,nama_pegawai,id_jawatan,mukim) {
+function cetakEndosanDPTD(idfail,nama_pegawai,id_jawatan,mukim,ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
-	}
+	}/*
 	else if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}else{
+	}*/else{
 
 		var idJawatan = 0;
 		if(id_jawatan!=""){
@@ -4177,7 +4216,7 @@ function cetakEndosanDPTD(idfail,nama_pegawai,id_jawatan,mukim) {
 
 		var sysdate = document.${formName}.txtTarikhSuratCetak.value;
 		
-		var url = "../../servlet/ekptg.report.ppt.EndosanDPTD?id_fail="+idfail+"&nama_pegawai="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&mukim="+mukim+"&no_fail="+nofail+"&sysdate="+sysdate;
+		var url = "../../servlet/ekptg.report.ppt.EndosanDPTD?id_fail="+idfail+"&nama_pegawai="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&mukim="+mukim+"&no_fail="+nofail+"&sysdate="+sysdate+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -4186,18 +4225,18 @@ function cetakEndosanDPTD(idfail,nama_pegawai,id_jawatan,mukim) {
 }
 
 
-function cetakEndosanDSUK(idfail,nama_pegawai,id_jawatan,mukim) {
+function cetakEndosanDSUK(idfail,nama_pegawai,id_jawatan,mukim,ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
-	}
+	}/*
 	else if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}else{
+	}*/else{
 
 		var idJawatan = 0;
 		if(id_jawatan!=""){
@@ -4221,7 +4260,7 @@ function cetakEndosanDSUK(idfail,nama_pegawai,id_jawatan,mukim) {
 
 		var sysdate = document.${formName}.txtTarikhSuratCetak.value;
 		
-		var url = "../../servlet/ekptg.report.ppt.EndosanDSUK?id_fail="+idfail+"&nama_pegawai="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&mukim="+mukim+"&no_fail="+nofail+"&sysdate="+sysdate;
+		var url = "../../servlet/ekptg.report.ppt.EndosanDSUK?id_fail="+idfail+"&nama_pegawai="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&mukim="+mukim+"&no_fail="+nofail+"&sysdate="+sysdate+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -4321,7 +4360,7 @@ function cetakBatalEndosDPTD(idfail,nama_pegawai,id_jawatan,mukim) {
 }
 
 
-function cetakPerkara4PEKELILING(idfail) {
+function cetakPerkara4PEKELILING(idfail,ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
@@ -4347,7 +4386,7 @@ function cetakPerkara4PEKELILING(idfail) {
 
 		var sysdate = document.${formName}.txtTarikhSuratCetak.value;
 		
-		var url = "../../servlet/ekptg.report.ppt.Perkara4PEKELILING?idFail="+idfail+"&no_fail="+nofail+"&sysdate="+sysdate;
+		var url = "../../servlet/ekptg.report.ppt.Perkara4PEKELILING?idFail="+idfail+"&no_fail="+nofail+"&sysdate="+sysdate+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -4356,18 +4395,18 @@ function cetakPerkara4PEKELILING(idfail) {
 }
 
 
-function cetakJPPH(idfail,nama_pegawai,id_jawatan,mukim) {
+function cetakJPPH(idfail,nama_pegawai,id_jawatan,mukim,ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
-	}
+	}/*
 	else if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}
+	}*/
 	else if(document.${formName}.socPejabatJPPH.value == ""){
 		alert('Sila pilih pejabat JPPH terlebih dahulu.');
   		document.${formName}.socPejabatJPPH.focus(); 
@@ -4398,7 +4437,7 @@ function cetakJPPH(idfail,nama_pegawai,id_jawatan,mukim) {
 
 		var sysdate = document.${formName}.txtTarikhSuratCetak.value;
 		
-		var url = "../../servlet/ekptg.report.ppt.Perkara4JPPH?idFail="+idfail+"&id_pejabat="+id_pejabat+"&namaPengarah="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&mukim="+mukim+"&no_fail="+nofail+"&sysdate="+sysdate;
+		var url = "../../servlet/ekptg.report.ppt.Perkara4JPPH?idFail="+idfail+"&id_pejabat="+id_pejabat+"&namaPengarah="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&mukim="+mukim+"&no_fail="+nofail+"&sysdate="+sysdate+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -4407,18 +4446,18 @@ function cetakJPPH(idfail,nama_pegawai,id_jawatan,mukim) {
 }
 
 
-function cetakPerkara3KSU(idfail,nama_pegawai,id_jawatan,mukim) {
+function cetakPerkara3KSU(idfail,nama_pegawai,id_jawatan,mukim,ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
 	}
-	else if(document.${formName}.socPegawai.value == ""){
+	/*else if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}else{
+	}*/else{
 
 		var idJawatan = 0;
 		if(id_jawatan!=""){
@@ -4442,7 +4481,7 @@ function cetakPerkara3KSU(idfail,nama_pegawai,id_jawatan,mukim) {
 
 		var sysdate = document.${formName}.txtTarikhSuratCetak.value;
 		
-		var url = "../../servlet/ekptg.report.ppt.Perkara3KSU?idFail="+idfail+"&namaPengarah="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&mukim="+mukim+"&no_fail="+nofail+"&sysdate="+sysdate;
+		var url = "../../servlet/ekptg.report.ppt.Perkara3KSU?idFail="+idfail+"&namaPengarah="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&mukim="+mukim+"&no_fail="+nofail+"&sysdate="+sysdate+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -4451,18 +4490,18 @@ function cetakPerkara3KSU(idfail,nama_pegawai,id_jawatan,mukim) {
 }
 
 
-function cetakPerkara2PTD(idfail,nama_pegawai,id_jawatan,mukim) {
+function cetakPerkara2PTD(idfail,nama_pegawai,id_jawatan,mukim, ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
 	}
-	else if(document.${formName}.socPegawai.value == ""){
+	/*else if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}else{
+	}*/else{
 
 		var idJawatan = 0;
 		if(id_jawatan!=""){
@@ -4486,7 +4525,7 @@ function cetakPerkara2PTD(idfail,nama_pegawai,id_jawatan,mukim) {
 
 		var sysdate = document.${formName}.txtTarikhSuratCetak.value;
 		
-		var url = "../../servlet/ekptg.report.ppt.Perkara2PTD?idFail="+idfail+"&namaPengarah="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&mukim="+mukim+"&no_fail="+nofail+"&sysdate="+sysdate;
+		var url = "../../servlet/ekptg.report.ppt.Perkara2PTD?idFail="+idfail+"&namaPengarah="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&mukim="+mukim+"&no_fail="+nofail+"&sysdate="+sysdate+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -4495,19 +4534,19 @@ function cetakPerkara2PTD(idfail,nama_pegawai,id_jawatan,mukim) {
 }
 
 
-function cetakSiasatanJPPH(idpermohonan,nama_pegawai,id_jawatan,id_borange) {
+function cetakSiasatanJPPH(idpermohonan,nama_pegawai,id_jawatan,id_borange,ic_login) {
 
 	
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
-	}
+	}/*
 	else if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}
+	}*/
 	else if(document.${formName}.socPejabatJPPH.value == ""){
 		alert('Sila pilih pejabat JPPH terlebih dahulu.');
   		document.${formName}.socPejabatJPPH.focus(); 
@@ -4537,7 +4576,7 @@ function cetakSiasatanJPPH(idpermohonan,nama_pegawai,id_jawatan,id_borange) {
 		var id_pejabat = document.${formName}.socPejabatJPPH.value;
 		var sysdate = document.${formName}.txtTarikhSuratCetak.value;
 		
-		var url = "../../servlet/ekptg.report.ppt.SuratSiasatanJPPH?id_pejabat="+id_pejabat+"&nama_pegawai="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&id_borange="+id_borange+"&no_fail="+nofail+"&sysdate="+sysdate;
+		var url = "../../servlet/ekptg.report.ppt.SuratSiasatanJPPH?id_pejabat="+id_pejabat+"&nama_pegawai="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&id_borange="+id_borange+"&no_fail="+nofail+"&sysdate="+sysdate+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -4546,19 +4585,19 @@ function cetakSiasatanJPPH(idpermohonan,nama_pegawai,id_jawatan,id_borange) {
 }
 
 
-function cetakJPBDkeJPPH(idpermohonan,nama_pegawai,id_jawatan,mukim) {
+function cetakJPBDkeJPPH(idpermohonan,nama_pegawai,id_jawatan,mukim,ic_login) {
 
 	
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
-	}
+	}/*
 	else if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}
+	}*/
 	else if(document.${formName}.socPejabatJPPH.value == ""){
 		alert('Sila pilih pejabat JPPH terlebih dahulu.');
   		document.${formName}.socPejabatJPPH.focus(); 
@@ -4588,7 +4627,7 @@ function cetakJPBDkeJPPH(idpermohonan,nama_pegawai,id_jawatan,mukim) {
 		var id_pejabat = document.${formName}.socPejabatJPPH.value;
 		var sysdate = document.${formName}.txtTarikhSuratCetak.value;
 		
-		var url = "../../servlet/ekptg.report.ppt.JPBDkeJPPH?id_permohonan="+idpermohonan+"&id_pejabat="+id_pejabat+"&nama_pegawai="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&mukim="+mukim+"&no_fail="+nofail+"&sysdate="+sysdate;
+		var url = "../../servlet/ekptg.report.ppt.JPBDkeJPPH?id_permohonan="+idpermohonan+"&id_pejabat="+id_pejabat+"&nama_pegawai="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&mukim="+mukim+"&no_fail="+nofail+"&sysdate="+sysdate+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -4722,7 +4761,7 @@ function cetakBorangD(idfail,totalhm) {
 }
 
 
-function cetakSuratIringanMMK(idfail,nama_pegawai,id_jawatan,id_negeri) {
+function cetakSuratIringanMMK(idfail,nama_pegawai,id_jawatan,id_negeri,ic_login) {
 
 	
 	
@@ -4731,11 +4770,11 @@ function cetakSuratIringanMMK(idfail,nama_pegawai,id_jawatan,id_negeri) {
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
 		
-	}else if(document.${formName}.socPegawai.value == ""){
+	}/*else if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}else{
+	}*/else{
 
 		var idJawatan = 0;
 		if(id_jawatan!=""){
@@ -4766,7 +4805,7 @@ function cetakSuratIringanMMK(idfail,nama_pegawai,id_jawatan,id_negeri) {
 
 		var sysdate = document.${formName}.txtTarikhSuratCetak.value;
 		
-		var url = "../../servlet/ekptg.report.ppt.SuratIringanMMK?idFail="+idfail+"&namaPengarah="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&bilRujKami="+bilRujKami+"&bilRujTuan="+bilRujTuan+"&no_fail="+nofail+"&sysdate="+sysdate;
+		var url = "../../servlet/ekptg.report.ppt.SuratIringanMMK?idFail="+idfail+"&namaPengarah="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&bilRujKami="+bilRujKami+"&bilRujTuan="+bilRujTuan+"&no_fail="+nofail+"&sysdate="+sysdate+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -4776,7 +4815,7 @@ function cetakSuratIringanMMK(idfail,nama_pegawai,id_jawatan,id_negeri) {
 }
 
 
-function cetakLaporanTanahSS8(idfail,id_hakmilik) {
+function cetakLaporanTanahSS8(idfail,id_hakmilik,ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
@@ -4800,7 +4839,7 @@ function cetakLaporanTanahSS8(idfail,id_hakmilik) {
 			nofail = document.${formName}.no_fail.value;
 		}	
 
-		var url = "../../servlet/ekptg.report.ppt.LaporanTanah?id_Fail="+idfail+"&idHakmilik="+id_hakmilik+"&no_fail="+nofail;
+		var url = "../../servlet/ekptg.report.ppt.LaporanTanah?id_Fail="+idfail+"&idHakmilik="+id_hakmilik+"&no_fail="+nofail+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -4809,19 +4848,19 @@ function cetakLaporanTanahSS8(idfail,id_hakmilik) {
 }
 
 
-function cetakPerkara1JPBD(idfail,nama_pegawai,id_jawatan,mukim,totalHM) {
+function cetakPerkara1JPBD(idfail,nama_pegawai,id_jawatan,mukim,totalHM,ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
 		
-	}else if(document.${formName}.socPegawai.value == ""){
+	}/*else if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
 		
-	}else{
+	}*/else{
 
 		var idJawatan = 0;
 		if(id_jawatan!=""){
@@ -4845,7 +4884,7 @@ function cetakPerkara1JPBD(idfail,nama_pegawai,id_jawatan,mukim,totalHM) {
 
 		var sysdate = document.${formName}.txtTarikhSuratCetak.value;
 		
-		var url = "../../servlet/ekptg.report.ppt.Perkara1JPBD?idFail="+idfail+"&namaPengarah="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&mukim="+mukim+"&no_fail="+nofail+"&sysdate="+sysdate+"&bil_lot="+totalHM;
+		var url = "../../servlet/ekptg.report.ppt.Perkara1JPBD?idFail="+idfail+"&namaPengarah="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&mukim="+mukim+"&no_fail="+nofail+"&sysdate="+sysdate+"&bil_lot="+totalHM+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -4980,17 +5019,17 @@ function cetakBorangA(idfail,nama2mukim,userlogin) {
 }
 
 
-function cetakLaporanTanah(id_tanahumuum,nama_pegawai) {
+function cetakLaporanTanah(id_tanahumuum,nama_pegawai,ic_login,username) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
-	}else if(document.${formName}.socPegawai.value == ""){
+	}/*else if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}else{
+	}*/else{
 
 		var valType = document.${formName}.sorSelectNoFail.value;
 		var nofail = "";
@@ -5008,7 +5047,7 @@ function cetakLaporanTanah(id_tanahumuum,nama_pegawai) {
 		}		
 
 				
-		var url = "../../servlet/ekptg.report.ppt.laporanTanahSS4?idTanahumum="+id_tanahumuum+"&namaPegawai="+nama_pegawai+"&no_fail="+nofail;
+		var url = "../../servlet/ekptg.report.ppt.laporanTanahSS4?idTanahumum="+id_tanahumuum+"&namaPegawai="+username+"&no_fail="+nofail+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -5018,7 +5057,7 @@ function cetakLaporanTanah(id_tanahumuum,nama_pegawai) {
 }
 
 
-function cetakLaporanAwalSS8(id_tanahumum,id_negeri) {
+function cetakLaporanAwalSS8(id_tanahumum,id_negeri,ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
@@ -5041,7 +5080,7 @@ function cetakLaporanAwalSS8(id_tanahumum,id_negeri) {
 			nofail = document.${formName}.no_fail.value;
 		}		
 
-		var url = "../../servlet/ekptg.report.ppt.laporanTanahSS8?idTanahumum="+id_tanahumum+"&no_fail="+nofail+"&id_negeri="+id_negeri;	
+		var url = "../../servlet/ekptg.report.ppt.laporanTanahSS8?idTanahumum="+id_tanahumum+"&no_fail="+nofail+"&id_negeri="+id_negeri+"&userlogin="+ic_login;	
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -5122,17 +5161,17 @@ function cetakMMKSek4Terengganu(idfail,mukim,no_fail) {
 }
 
 
-function cetakSuratKPTG(selectNoFail,idfail,nama_pegawai,id_jawatan) {
+function cetakSuratKPTG(selectNoFail,idfail,nama_pegawai,id_jawatan,ic_login,username) {
 
 	if (selectNoFail == "yes" && document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
-	}else if(document.${formName}.socPegawai.value == ""){
+	}/*else if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}else{
+	}*/else{
 
 		var idJawatan = 0;
 		if(id_jawatan!=""){
@@ -5156,7 +5195,7 @@ function cetakSuratKPTG(selectNoFail,idfail,nama_pegawai,id_jawatan) {
 
 		var sysdate = document.${formName}.txtTarikhSuratCetak.value;
 		
-		var url = "../../servlet/ekptg.report.ppt.SuratKpdPTGDariJKPTGIbuPejabat?idFail="+idfail+"&namaPegawai="+nama_pegawai+"&id_jawatan='"+idJawatan+"'&no_fail="+nofail+"&sysdate="+sysdate;
+		var url = "../../servlet/ekptg.report.ppt.SuratKpdPTGDariJKPTGIbuPejabat?idFail="+idfail+"&namaPegawai="+username+"&id_jawatan='"+idJawatan+"'&no_fail="+nofail+"&sysdate="+sysdate+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -5466,15 +5505,15 @@ function cetakMMKSek8NSembilan(idfail,mukim,no_fail) {
 }
 
 
-function cetakMMKSek8Selangor(idfail,nama_pengarah,no_fail,id_negeri) {
+function cetakMMKSek8Selangor(idfail,nama_pengarah,no_fail,id_negeri,username,ic_login) {
 	
 	var bil = document.${formName}.txtBil.value;
-	var namaPentadbir = document.${formName}.txtNamaPentadbir.value;
+	//var namaPentadbir = document.${formName}.txtNamaPentadbir.value;
 
 	if(id_negeri=="1"){
-		var url = "../../servlet/ekptg.report.ppt.MMKSek8Johor?idFail="+idfail+"&namaPentadbir="+namaPentadbir+"&bilSurat="+bil+"&no_fail="+no_fail;
+		var url = "../../servlet/ekptg.report.ppt.MMKSek8Johor?idFail="+idfail+"&namaPentadbir="+username+"&bilSurat="+bil+"&no_fail="+no_fail;
 	}else{
-		var url = "../../servlet/ekptg.report.ppt.MMKSek8Selangor?idFail="+idfail+"&namaPentadbir="+namaPentadbir+"&bilSurat="+bil+"&no_fail="+no_fail;
+		var url = "../../servlet/ekptg.report.ppt.MMKSek8Selangor?idFail="+idfail+"&namaPentadbir="+username+"&bilSurat="+bil+"&no_fail="+no_fail+"&userlogin="+ic_login;
 	}
 	
 	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
@@ -5601,9 +5640,9 @@ function cetakAfidavitSijilPerakuan(idhakmilikpb) {
 }
 
 
-function cetakKertasMinitMB(idfail,namaPengarah) {
+function cetakKertasMinitMB(idfail,namaPengarah,ic_login) {
 
-	var url = "../../servlet/ekptg.report.ppt.KertasMinitMB?idfail="+idfail+"&namaPengarah="+namaPengarah;
+	var url = "../../servlet/ekptg.report.ppt.KertasMinitMB?idfail="+idfail+"&namaPengarah="+namaPengarah+"&userlogin="+ic_login;
 	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 	if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
@@ -5627,126 +5666,126 @@ function cetakMBSelangorSS8(idfail,mukim) {
 	if (hWnd.focus != null) hWnd.focus();
 }
 
-function cetakLampiranA(idfail,nama2Mukim,nama_pegawai,jawatan) {
+function cetakLampiranA(idfail,nama2Mukim,nama_pegawai,jawatan,ic_login,username) {
 
-	if(document.${formName}.socPegawai.value == ""){
+	/*if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}else{
+	}else{*/
 
 		var sysdate = document.${formName}.txtTarikhSuratCetak.value;
 		
-    	var url = "../../servlet/ekptg.report.ppt.LampiranASek4?idfail="+idfail+"&nama_mukim="+nama2Mukim+"&namaPegawai="+nama_pegawai+"&jawatan="+jawatan+"&sysdate="+sysdate;
+    	var url = "../../servlet/ekptg.report.ppt.LampiranASek4?idfail="+idfail+"&nama_mukim="+nama2Mukim+"&namaPegawai="+username+"&jawatan="
+    	+jawatan+"&sysdate="+sysdate+"&userlogin="+ic_login;
     	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     	if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
     	if (hWnd.focus != null) hWnd.focus();
-	}
+	/*}*/
 }
 
 
-function cetakLampiranA8(idfail,nama2Mukim,nama_pegawai,jawatan) {
+function cetakLampiranA8(idfail,nama2Mukim,nama_pegawai,jawatan,ic_login) {
 
-	if(document.${formName}.socPegawai.value == ""){
+	/*if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}else{
+	}else{*/
 
 		var sysdate = document.${formName}.txtTarikhSuratCetak.value;
 		
-    	var url = "../../servlet/ekptg.report.ppt.LampiranASek8?idfail="+idfail+"&nama_mukim="+nama2Mukim+"&namaPegawai="+nama_pegawai+"&jawatan="+jawatan+"&sysdate="+sysdate;
+    	var url = "../../servlet/ekptg.report.ppt.LampiranASek8?idfail="+idfail+"&nama_mukim="+nama2Mukim+"&namaPegawai="+nama_pegawai+"&jawatan="+jawatan+"&sysdate="+sysdate+"&userlogin="+ic_login;
     	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     	if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
     	if (hWnd.focus != null) hWnd.focus();
-	}
+	//}
 }
 
 
 <!-- REPORT BANTAHAN -->
-function cetakSuratMintaDepositDalam30Hari(idfail,id_bantahan,id_hakmilikpb,nama_pegawai) {
+function cetakSuratMintaDepositDalam30Hari(idfail,id_bantahan,id_hakmilikpb,nama_pegawai,ic_login,username){
 
-	if(document.${formName}.socPegawai.value == ""){
+	/*if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}else{
-    	var url = "../../servlet/ekptg.report.ppt.SuratMintaDepositDalam30Hari?idfail="+idfail+"&id_bantahan="+id_bantahan+"&id_hakmilikpb="+id_hakmilikpb+"&namaPegawai="+nama_pegawai;
+	}else{*/
+    	var url = "../../servlet/ekptg.report.ppt.SuratMintaDepositDalam30Hari?idfail="+idfail+"&id_bantahan="+id_bantahan+"&id_hakmilikpb="+id_hakmilikpb+"&namaPegawai="+username+"&userlogin="+ic_login;
     	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     	if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
     	if (hWnd.focus != null) hWnd.focus();
-	}
+	//}
 }
 
 
-function cetakSuratMintaDepositDalam30HariAP(idfail,id_bantahan,id_hakmilik,id_siasatan,nama_pegawai) {
+function cetakSuratMintaDepositDalam30HariAP(idfail,id_bantahan,id_hakmilik,id_siasatan,nama_pegawai,ic_login,username) {
 
-	if(document.${formName}.socPegawai.value == ""){
+	/*if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}else{
-    	var url = "../../servlet/ekptg.report.ppt.SuratMintaDepositDalam30HariAP?idFail="+idfail+"&id_bantahan="+id_bantahan+"&idHakmilik="+id_hakmilik+"&idSiasatan="+id_siasatan+"&namaPegawai="+nama_pegawai;
+	}else{*/
+    	var url = "../../servlet/ekptg.report.ppt.SuratMintaDepositDalam30HariAP?idFail="+idfail+"&id_bantahan="+id_bantahan+"&idHakmilik="+id_hakmilik+"&idSiasatan="+id_siasatan+"&namaPegawai="+username+"&userlogin="+ic_login;
     	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     	if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
     	if (hWnd.focus != null) hWnd.focus();
-	}
+	//}
 }
 
 
-function cetaksuratKepadaAPSupayaMembayarPampasanTambahan(idfail,id_bantahan,nama_pegawai,id_negeri) {
+function cetaksuratKepadaAPSupayaMembayarPampasanTambahan(idfail,id_bantahan,nama_pegawai,id_negeri,username,ic_login) {
 
-	if(document.${formName}.socPegawai.value == ""){
+	/*if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}else{
-    	var url = "../../servlet/ekptg.report.ppt.suratKepadaAPSupayaMembayarPampasanTambahan?idFail="+idfail+"&id_bantahan="+id_bantahan+"&namaPegawai="+nama_pegawai;
+	}else{*/
+    	var url = "../../servlet/ekptg.report.ppt.suratKepadaAPSupayaMembayarPampasanTambahan?idFail="+idfail+"&id_bantahan="+id_bantahan+"&namaPegawai="+username+"&userlogin="+ic_login;
     	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     	if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
     	if (hWnd.focus != null) hWnd.focus();
-	}
+	//}
 }
 
 
-function cetaksuratKepadaAPSupayaMembayarPampasanTambahan_AP(idfail,id_bantahan,nama_pegawai) {
+function cetaksuratKepadaAPSupayaMembayarPampasanTambahan_AP(idfail,id_bantahan,nama_pegawai,username,ic_login,id_jawatan) {
 
-	if(document.${formName}.socPegawai.value == ""){
+	/*if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}else{
-    	var url = "../../servlet/ekptg.report.ppt.suratKepadaAPSupayaMembayarPampasanTambahan_AP?idFail="+idfail+"&id_bantahan="+id_bantahan+"&namaPegawai="+nama_pegawai;
+	}else{*/
+    	var url = "../../servlet/ekptg.report.ppt.suratKepadaAPSupayaMembayarPampasanTambahan_AP?idFail="+idfail+"&id_bantahan="+id_bantahan+"&namaPegawai="+username+"&userlogin="+ic_login+"&id_jawatan="+id_jawatan;
     	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     	if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
     	if (hWnd.focus != null) hWnd.focus();
-	}
+	//}
 }
 
 
-function cetakSuratIringanBorangO_AP(idfail,id_bantahan,id_hakmilik,nama_pegawai) {
+function cetakSuratIringanBorangO_AP(idfail,id_bantahan,id_hakmilik,nama_pegawai,username,ic_login) {
 
 	var id_pejabat = document.${formName}.socPejabatJPPH.value;
 
-	if(document.${formName}.socPegawai.value == ""){
+	/*if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}
-	
-		else if(document.${formName}.socPejabatJPPH.value == ""){
+	}else */
+	if(document.${formName}.socPejabatJPPH.value == ""){
 		alert('Sila pilih pejabat JPPH terlebih dahulu.');
   		document.${formName}.socPejabatJPPH.focus(); 
 		return; 
 	}
 	
-    	var url = "../../servlet/ekptg.report.ppt.SuratIringanBorangO_AP?idFail="+idfail+"&id_bantahan="+id_bantahan+"&idHakmilik="+id_hakmilik+"&namaPegawai="+nama_pegawai+"&id_pejabat='"+id_pejabat+"'";
+    	var url = "../../servlet/ekptg.report.ppt.SuratIringanBorangO_AP?idFail="+idfail+"&id_bantahan="+id_bantahan+"&idHakmilik="+id_hakmilik+"&namaPegawai="+username+"&userlogin="+ic_login+"&id_pejabat='"+id_pejabat+"'";
     	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     	if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -5754,23 +5793,23 @@ function cetakSuratIringanBorangO_AP(idfail,id_bantahan,id_hakmilik,nama_pegawai
 }
 
 
-function cetakSuratIringanBorangO(idfail,id_bantahan,id_hakmilikpb,nama_pegawai,id_jawatan) {
+function cetakSuratIringanBorangO(idfail,id_bantahan,id_hakmilikpb,nama_pegawai,id_jawatan,username,ic_login) {
 
 	var id_pejabat = document.${formName}.socPejabatJPPH.value;
 
-	if(document.${formName}.socPegawai.value == ""){
+	/*if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
 	}
 	
-	else if(document.${formName}.socPejabatJPPH.value == ""){
+	else*/ if(document.${formName}.socPejabatJPPH.value == ""){
 		alert('Sila pilih pejabat JPPH terlebih dahulu.');
   		document.${formName}.socPejabatJPPH.focus(); 
 		return; 
 	}
 	
-    	var url = "../../servlet/ekptg.report.ppt.SuratIringanBorangO?idFail="+idfail+"&id_bantahan="+id_bantahan+"&id_hakmilikpb="+id_hakmilikpb+"&namaPegawai="+nama_pegawai+"&id_pejabat='"+id_pejabat+"'&id_jawatan="+id_jawatan;
+    	var url = "../../servlet/ekptg.report.ppt.SuratIringanBorangO?idFail="+idfail+"&id_bantahan="+id_bantahan+"&id_hakmilikpb="+id_hakmilikpb+"&namaPegawai="+username+"&id_pejabat='"+id_pejabat+"'&id_jawatan="+id_jawatan+"&userlogin="+ic_login;
     	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     	if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -5811,23 +5850,22 @@ function cetaksuratMaklumanSerahBayaranPampasanKpdAP_bantahan(id_bayaran,idfail,
 }
 
 
-function cetakSuratKepadaJPPHSupayaMenghadiriPerundingan(idfail,nama_pegawai) {
+function cetakSuratKepadaJPPHSupayaMenghadiriPerundingan(idfail,nama_pegawai,ic_login) {
 
 	var id_pejabat = document.${formName}.socPejabatJPPH.value;
 
-	if(document.${formName}.socPegawai.value == ""){
+	/*if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
 	}
-	
-		else if(document.${formName}.socPejabatJPPH.value == ""){
+		else */if(document.${formName}.socPejabatJPPH.value == ""){
 		alert('Sila pilih pejabat JPPH terlebih dahulu.');
   		document.${formName}.socPejabatJPPH.focus(); 
 		return; 
 	}
 	
-    	var url = "../../servlet/ekptg.report.ppt.SuratKepadaJPPHSupayaMenghadiriPerundingan?idFail="+idfail+"&namaPegawai="+nama_pegawai+"&id_pejabat='"+id_pejabat+"'";
+    	var url = "../../servlet/ekptg.report.ppt.SuratKepadaJPPHSupayaMenghadiriPerundingan?idFail="+idfail+"&namaPegawai="+nama_pegawai+"&userlogin="+ic_login+"&id_pejabat='"+id_pejabat+"'";
     	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     	if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -5835,23 +5873,24 @@ function cetakSuratKepadaJPPHSupayaMenghadiriPerundingan(idfail,nama_pegawai) {
 }
 
 
-function cetakSuratPanggilanPerundinganSementara(idfail,nama_pegawai,id_siasatan,id_jawatan,id_hakmilik) {
+function cetakSuratPanggilanPerundinganSementara(idfail,nama_pegawai,id_siasatan,id_jawatan,id_hakmilik,username,ic_login) {
 
 	var id_pejabat = document.${formName}.socPejabatJPPH.value;
 
-	if(document.${formName}.socPegawai.value == ""){
+	/*if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
 	}
 	
-		else if(document.${formName}.socPejabatJPPH.value == ""){
+		else*/ if(document.${formName}.socPejabatJPPH.value == ""){
 		alert('Sila pilih pejabat JPPH terlebih dahulu.');
   		document.${formName}.socPejabatJPPH.focus(); 
 		return; 
 	}
 	
-    	var url = "../../servlet/ekptg.report.ppt.SuratPanggilanPerundinganSementara?idFail="+idfail+"&namaPegawai="+nama_pegawai+"&id_pejabat='"+id_pejabat+"'&id_siasatan='"+id_siasatan+"'&id_jawatan='"+id_jawatan+"'&id_hakmilik="+id_hakmilik;
+    	var url = "../../servlet/ekptg.report.ppt.SuratPanggilanPerundinganSementara?idFail="+idfail+"&namaPegawai="+username+"&id_pejabat='"
+    	+id_pejabat+"'&id_siasatan='"+id_siasatan+"'&id_jawatan='"+id_jawatan+"'&id_hakmilik="+id_hakmilik+"&userlogin="+ic_login;
     	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     	if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -5859,19 +5898,19 @@ function cetakSuratPanggilanPerundinganSementara(idfail,nama_pegawai,id_siasatan
 }
 
 
-function cetakSuratPanggilanPerundinganSementaraAgensi(idfail,nama_pegawai,id_siasatan,id_jawatan,id_hakmilik) {
+function cetakSuratPanggilanPerundinganSementaraAgensi(idfail,nama_pegawai,id_siasatan,id_jawatan,id_hakmilik,username,ic_login) {
 
 	var id_pejabat = "";
 
-	if(document.${formName}.socPegawai.value == ""){
+	/*if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}
+	}*/
 	
 	
 	
-    	var url = "../../servlet/ekptg.report.ppt.SuratPanggilanPerundinganSementaraAgensi?idFail="+idfail+"&namaPegawai="+nama_pegawai+"&id_pejabat='"+id_pejabat+"'&id_siasatan='"+id_siasatan+"'&id_jawatan='"+id_jawatan+"'&id_hakmilik="+id_hakmilik;
+    	var url = "../../servlet/ekptg.report.ppt.SuratPanggilanPerundinganSementaraAgensi?idFail="+idfail+"&namaPegawai="+username+"&id_pejabat='"+id_pejabat+"'&id_siasatan='"+id_siasatan+"'&id_jawatan='"+id_jawatan+"'&id_hakmilik="+id_hakmilik+"&userlogin="+ic_login;
     	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     	if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -5879,19 +5918,20 @@ function cetakSuratPanggilanPerundinganSementaraAgensi(idfail,nama_pegawai,id_si
 }
 
 
-function cetakSuratPanggilanPerundinganSementaraSambunganAgensi(idfail,nama_pegawai,id_siasatan,id_jawatan,id_hakmilik) {
+function cetakSuratPanggilanPerundinganSementaraSambunganAgensi(idfail,nama_pegawai,id_siasatan,id_jawatan,id_hakmilik,ic_login) {
 
 	var id_pejabat = "";
 
-	if(document.${formName}.socPegawai.value == ""){
+	/*if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}
+	}*/
 	
 	
 	
-    	var url = "../../servlet/ekptg.report.ppt.SuratPanggilanPerundinganSementaraSambunganAgensi?idFail="+idfail+"&namaPegawai="+nama_pegawai+"&id_pejabat='"+id_pejabat+"'&id_siasatan='"+id_siasatan+"'&id_jawatan='"+id_jawatan+"'&id_hakmilik="+id_hakmilik;
+    	var url = "../../servlet/ekptg.report.ppt.SuratPanggilanPerundinganSementaraSambunganAgensi?idFail="+idfail+"&namaPegawai="+nama_pegawai
+    	+"&id_pejabat='"+id_pejabat+"'&id_siasatan='"+id_siasatan+"'&id_jawatan='"+id_jawatan+"'&id_hakmilik="+id_hakmilik+"&userlogin="+ic_login;
     	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     	if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -5899,19 +5939,37 @@ function cetakSuratPanggilanPerundinganSementaraSambunganAgensi(idfail,nama_pega
 }
 
 
-function cetakSuratPanggilanPerundinganSementaraSambunganPB(idfail,nama_pegawai,id_siasatan,id_jawatan,id_hakmilik) {
+function cetakSuratPanggilanPerundinganSementaraSambunganPB(idfail,nama_pegawai,id_siasatan,id_jawatan,id_hakmilik,ic_login) {
 
 	var id_pejabat = "";
 
-	if(document.${formName}.socPegawai.value == ""){
+	/*if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}
+	}*/	
+	
+    	var url = "../../servlet/ekptg.report.ppt.SuratPanggilanPerundinganSementaraSambunganPB?idFail="+idfail+"&namaPegawai="+nama_pegawai+"&id_pejabat='"+id_pejabat+"'&id_siasatan='"+id_siasatan+"'&id_jawatan='"+id_jawatan+"'&id_hakmilik="+id_hakmilik+"&userlogin="+ic_login;
+    	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    	if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+    	if (hWnd.focus != null) hWnd.focus();
+}
+
+
+function cetakSuratPanggilanPerundinganSementaraPB(idfail,nama_pegawai,id_siasatan,id_jawatan,id_hakmilik,username,ic_login) {
+
+	var id_pejabat = "";
+
+	/*if(document.${formName}.socPegawai.value == ""){
+		alert('Sila pilih nama pegawai terlebih dahulu.');
+  		document.${formName}.socPegawai.focus(); 
+		return; 
+	}*/
 	
 		
 	
-    	var url = "../../servlet/ekptg.report.ppt.SuratPanggilanPerundinganSementaraSambunganPB?idFail="+idfail+"&namaPegawai="+nama_pegawai+"&id_pejabat='"+id_pejabat+"'&id_siasatan='"+id_siasatan+"'&id_jawatan='"+id_jawatan+"'&id_hakmilik="+id_hakmilik;
+    	var url = "../../servlet/ekptg.report.ppt.SuratPanggilanPerundinganSementaraPB?idFail="+idfail+"&namaPegawai="+username+"&id_pejabat='"+id_pejabat+"'&id_siasatan='"+id_siasatan+"'&id_jawatan='"+id_jawatan+"'&id_hakmilik="+id_hakmilik+"&userlogin="+ic_login;
     	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     	if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -5919,43 +5977,23 @@ function cetakSuratPanggilanPerundinganSementaraSambunganPB(idfail,nama_pegawai,
 }
 
 
-function cetakSuratPanggilanPerundinganSementaraPB(idfail,nama_pegawai,id_siasatan,id_jawatan,id_hakmilik) {
-
-	var id_pejabat = "";
-
-	if(document.${formName}.socPegawai.value == ""){
-		alert('Sila pilih nama pegawai terlebih dahulu.');
-  		document.${formName}.socPegawai.focus(); 
-		return; 
-	}
-	
-		
-	
-    	var url = "../../servlet/ekptg.report.ppt.SuratPanggilanPerundinganSementaraPB?idFail="+idfail+"&namaPegawai="+nama_pegawai+"&id_pejabat='"+id_pejabat+"'&id_siasatan='"+id_siasatan+"'&id_jawatan='"+id_jawatan+"'&id_hakmilik="+id_hakmilik;
-    	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
-    	if ((document.window != null) && (!hWnd.opener))
-		hWnd.opener = document.window;
-    	if (hWnd.focus != null) hWnd.focus();
-}
-
-
-function cetakSuratPanggilanPerundinganSambunganSementara(idfail,nama_pegawai,id_siasatan,id_jawatan,id_hakmilik) {
+function cetakSuratPanggilanPerundinganSambunganSementara(idfail,nama_pegawai,id_siasatan,id_jawatan,id_hakmilik,username,ic_login) {
 
 	var id_pejabat = document.${formName}.socPejabatJPPH.value;
 
-	if(document.${formName}.socPegawai.value == ""){
+	/*if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
 	}
 	
-		else if(document.${formName}.socPejabatJPPH.value == ""){
+		else */if(document.${formName}.socPejabatJPPH.value == ""){
 		alert('Sila pilih pejabat JPPH terlebih dahulu.');
   		document.${formName}.socPejabatJPPH.focus(); 
 		return; 
 	}
 	
-    	var url = "../../servlet/ekptg.report.ppt.SuratPanggilanPerundinganSambunganSementara?idFail="+idfail+"&namaPegawai="+nama_pegawai+"&id_pejabat='"+id_pejabat+"'&id_siasatan='"+id_siasatan+"'&id_jawatan='"+id_jawatan+"'&id_hakmilik="+id_hakmilik;
+    	var url = "../../servlet/ekptg.report.ppt.SuratPanggilanPerundinganSambunganSementara?idFail="+idfail+"&namaPegawai="+username+"&id_pejabat='"+id_pejabat+"'&id_siasatan='"+id_siasatan+"'&id_jawatan='"+id_jawatan+"'&id_hakmilik="+id_hakmilik+"&userlogin="+ic_login;
     	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     	if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -5963,19 +6001,19 @@ function cetakSuratPanggilanPerundinganSambunganSementara(idfail,nama_pegawai,id
 }
 
 
-function cetakSuratKpdAPRundingan(idfail,id_hakmilik,nama_pegawai) {
+function cetakSuratKpdAPRundingan(idfail,id_hakmilik,nama_pegawai,ic_login) {
 
-	if(document.${formName}.socPegawai.value == ""){
+	/*if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
   		document.${formName}.socPegawai.focus(); 
 		return; 
-	}else{
-    	var url = "../../servlet/ekptg.report.ppt.SuratKpdAPRundingan?idfail="+idfail+"&idhakmilik="+id_hakmilik+"&namaPegawai="+nama_pegawai;
+	}else{*/
+    	var url = "../../servlet/ekptg.report.ppt.SuratKpdAPRundingan?idfail="+idfail+"&idhakmilik="+id_hakmilik+"&namaPegawai="+nama_pegawai+"&userlogin="+ic_login;
     	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     	if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
     	if (hWnd.focus != null) hWnd.focus();
-	}
+	//}
 }
 
 
@@ -6040,12 +6078,12 @@ function cetaksuratUtkPanggilanTerimaPampasanKpdPB(idfail,id_bayaran,nama_pegawa
 }
 
 
-function cetakSementaraMMKSelangor(idfail,nama_pengarah,no_fail,id_negeri) {
+function cetakSementaraMMKSelangor(idfail,nama_pengarah,no_fail,id_negeri,username,ic_login) {
 	
 	var bil = document.${formName}.txtBil.value;
-	var namaPentadbir = document.${formName}.txtNamaPentadbir.value;
+	//var namaPentadbir = document.${formName}.txtNamaPentadbir.value;
 	
-	var url = "../../servlet/ekptg.report.ppt.SementaraMMKSelangor?idFail="+idfail+"&nama_pengarah="+namaPentadbir+"&bilSurat="+bil+"&no_fail="+no_fail;
+	var url = "../../servlet/ekptg.report.ppt.SementaraMMKSelangor?idFail="+idfail+"&nama_pengarah="+username+"&bilSurat="+bil+"&no_fail="+no_fail+"&userlogin="+ic_login;
 	
 	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 	if ((document.window != null) && (!hWnd.opener))
@@ -6069,12 +6107,12 @@ function cetakSementaraMMKKL(idfail,nama_pengarah,no_fail,id_negeri) {
 
 
 //PPT-43(i)
-function cetakMohonBayaranAgensi(id_fail,nama_pengarah,no_fail,id_hakmilik) {
-	if(document.${formName}.socPegawai.value == ""){
+function cetakMohonBayaranAgensi(id_fail,nama_pengarah,no_fail,id_hakmilik,ic_login) {
+	/*if(document.${formName}.socPegawai.value == ""){
 		alert('Sila pilih nama pegawai terlebih dahulu.');
 		document.${formName}.socPegawai.focus(); 
 		return; 
-	}else{
+	}else{*/
 		var bankMT = document.${formName}.txtNamaBankMT.value;
 		var noMT = document.${formName}.txtNomborAkaunMT.value;
 		var akaunMT = document.${formName}.txtNamaAkaunMT.value; 
@@ -6093,7 +6131,7 @@ function cetakMohonBayaranAgensi(id_fail,nama_pengarah,no_fail,id_hakmilik) {
 	    if ((document.window != null) && (!hWnd.opener))
 			hWnd.opener = document.window;
 	    if (hWnd.focus != null) hWnd.focus();
-	}
+	//}
 }
 <!-- END REPORT SEMENTARA -->
 
@@ -6284,14 +6322,14 @@ function cetakSuratIringanPembayaran(idhakmilikpb,id_fail,nama_pegawai,id_jawata
 
 
 // PPT-11 CETAK SURAT PELUPUSAN
-function cetakSuratPelupusanHakmilik(idhakmilik, idfail, idpermohonan, bilLot, nama_pegawai, id_jawatan)	{
+function cetakSuratPelupusanHakmilik(idhakmilik, idfail, idpermohonan, bilLot, nama_pegawai, id_jawatan, ic_login)	{
 	
 	// Get bitLot from URL
 	// var url_string = (window.location.href).toLowerCase();
 	// var url = new URL(url_string);
 	// var bilLot = url.searchParams.get("bilLot");
 	
-	var id_pegawai = document.${formName}.socPegawai.value;
+	//var id_pegawai = document.${formName}.socPegawai.value;
 	//nofail = document.${formName}.no_fail.value;
 	
 	var valType = document.${formName}.sorSelectNoFail.value;
@@ -6308,23 +6346,23 @@ function cetakSuratPelupusanHakmilik(idhakmilik, idfail, idpermohonan, bilLot, n
 			nofail = document.${formName}.no_fail.value;
 		}
 	
-	if (document.${formName}.socPegawai.value == "")	{
+	/*if (document.${formName}.socPegawai.value == "")	{
 	alert("Sila pilih \"Nama Pegawai\" terlebih dahulu.");
 	document.${formName}.socPegawai.focus();
 	return;
 	
-	}	else	{
+	}	else	{*/
 	
-	var url = "../../servlet/ekptg.report.ppt.SuratPelupusanHakmilik?idHakmilik="+idhakmilik+"&idfail="+idfail+"&id_permohonan="+idpermohonan+"&no_fail="+nofail+"&bilLot="+bilLot+"&namaPengarah="+nama_pegawai+"&id_jawatan="+id_jawatan;
+	var url = "../../servlet/ekptg.report.ppt.SuratPelupusanHakmilik?idHakmilik="+idhakmilik+"&idfail="+idfail+"&id_permohonan="+idpermohonan+"&no_fail="+nofail+"&bilLot="+bilLot+"&namaPengarah="+nama_pegawai+"&id_jawatan="+id_jawatan+"&userlogin="+ic_login;
 	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 	if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
 	
-	}
+	//}
 }
 
-function cetakBorangO(id_fail,id_bantahan,id_siasatan) {
+function cetakBorangO(id_fail,id_bantahan,id_siasatan,ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
@@ -6350,7 +6388,7 @@ function cetakBorangO(id_fail,id_bantahan,id_siasatan) {
 			nofail = document.${formName}.no_fail.value;
 		}
 		
-		var url = "../../servlet/ekptg.report.ppt.BorangO?idFail="+id_fail+"&id_permohonan="+id_permohonan+"&id_bantahan="+id_bantahan+"&idSiasatan="+id_siasatan;
+		var url = "../../servlet/ekptg.report.ppt.BorangO?idFail="+id_fail+"&id_permohonan="+id_permohonan+"&id_bantahan="+id_bantahan+"&idSiasatan="+id_siasatan+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -6358,7 +6396,7 @@ function cetakBorangO(id_fail,id_bantahan,id_siasatan) {
 	}
 }
 
-function cetakBorangLB(id_fail,id_penarikan) {
+function cetakBorangO_AP(id_fail,id_bantahan,id_siasatan,ic_login,id_warta) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
@@ -6384,7 +6422,41 @@ function cetakBorangLB(id_fail,id_penarikan) {
 			nofail = document.${formName}.no_fail.value;
 		}
 		
-		var url = "../../servlet/ekptg.report.ppt.BorangLB?idFail="+id_fail+"&id_permohonan="+id_permohonan+"&id_penarikan="+id_penarikan;
+		var url = "../../servlet/ekptg.report.ppt.BorangO_AP?idFail="+id_fail+"&id_permohonan="+id_permohonan+"&id_bantahan="+id_bantahan+"&idSiasatan="+id_siasatan+"&userlogin="+ic_login+"&idWarta="+id_warta;
+		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+		if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+		if (hWnd.focus != null) hWnd.focus();
+	}
+}
+
+function cetakBorangLB(id_fail,id_penarikan,ic_login) {
+
+	if (document.${formName}.sorSelectNoFail.value == ""){
+		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
+		document.${formName}.sorSelectNoFail.focus(); 
+		return;
+	}
+	
+	else{
+
+		var valType = document.${formName}.sorSelectNoFail.value;
+		var id_permohonan = document.${formName}.id_permohonan.value;
+		var nofail = "";
+		
+		if(valType=="1"){
+			nofail = document.${formName}.no_fail.value;
+		}else if(valType=="2"){
+			nofail = document.${formName}.no_rujukan_ptg.value;
+		}else if(valType=="3"){
+			nofail = document.${formName}.no_rujukan_ptd.value;
+		}else if(valType=="4"){
+			nofail = document.${formName}.no_rujukan_upt.value;
+		}else{
+			nofail = document.${formName}.no_fail.value;
+		}
+		
+		var url = "../../servlet/ekptg.report.ppt.BorangLB?idFail="+id_fail+"&id_permohonan="+id_permohonan+"&id_penarikan="+id_penarikan+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -6431,7 +6503,7 @@ function cetakBorangM(id_fail,id_hakmilikpb,id_permohonan) {
 	}
 }
 
-function cetakBorangR(id_siasatan,id_hakmilik,id_fail) {
+function cetakBorangR(id_siasatan,id_hakmilik,id_fail,ic_login) {
 
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
@@ -6455,7 +6527,7 @@ function cetakBorangR(id_siasatan,id_hakmilik,id_fail) {
 			nofail = document.${formName}.no_fail.value;
 		}
 		
-		var url = "../../servlet/ekptg.report.ppt.BorangR?id_siasatan="+id_siasatan+"&id_hakmilik="+id_hakmilik+"&id_Fail="+id_fail+"&id_permohonan="+id_permohonan+"&no_fail="+nofail;
+		var url = "../../servlet/ekptg.report.ppt.BorangR?id_siasatan="+id_siasatan+"&id_hakmilik="+id_hakmilik+"&id_Fail="+id_fail+"&id_permohonan="+id_permohonan+"&no_fail="+nofail+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -6476,5 +6548,49 @@ function cetakLaporanTanahPPS(idfail,idTanahumum,icLogin) {
     if (hWnd.focus != null) hWnd.focus();	
 }
 
+function cetakBorangLC(id_fail,id_hakmilik,ic_login) {
+
+	/*if (document.${formName}.sorSelectNoFail.value == ""){
+		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
+		document.${formName}.sorSelectNoFail.focus(); 
+		return;
+	}
+	
+	else{
+
+		var valType = document.${formName}.sorSelectNoFail.value;
+		var id_permohonan = document.${formName}.id_permohonan.value;
+		var nofail = "";
+		
+		if(valType=="1"){
+			nofail = document.${formName}.no_fail.value;
+		}else if(valType=="2"){
+			nofail = document.${formName}.no_rujukan_ptg.value;
+		}else if(valType=="3"){
+			nofail = document.${formName}.no_rujukan_ptd.value;
+		}else if(valType=="4"){
+			nofail = document.${formName}.no_rujukan_upt.value;
+		}else{
+			nofail = document.${formName}.no_fail.value;
+		}*/
+		
+		var url = "../../servlet/ekptg.report.ppt.BorangLC?idFail="+id_fail+"&no_fail="+no_fail+"&id_hakmilik="+id_hakmilik+"&userlogin="+ic_login;
+		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+		if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+		if (hWnd.focus != null) hWnd.focus();
+	//}
+	
+}
+
+function cetakBorangJ(id_fail,ic_login) {
+		
+		alert("id_fail ="+id_fail);
+		var url = "../../servlet/ekptg.report.ppt.BorangJ?id_Fail="+id_fail+"&userlogin="+ic_login;
+		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+		if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+		if (hWnd.focus != null) hWnd.focus();
+}
 
 </script>

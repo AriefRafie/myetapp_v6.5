@@ -122,6 +122,7 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		
 		myLogger.info("login : "+login);
 		myLogger.info("--------- report :"+report);
+		myLogger.info("ID_SIASATAN : "+id_siasatan);
 		
 		String bydate = getParam("bydate");
 		
@@ -204,15 +205,24 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 		//get ic login 
 		//GET NAMA PENGARAH
 	    String ic_login = "";
+	    String id_jawatan1 = "";
+	    String jawatan1 = "";
 	    setIcLogin(login);
 	    dataIcLogin = getIcLogin();
 	    if(dataIcLogin.size()!=0){
 	    	Hashtable np = (Hashtable)dataIcLogin.get(0);
 	    	ic_login = np.get("ic_login").toString();
+	    	id_jawatan1 = np.get("id_jawatan1").toString();
+	    	jawatan1 = np.get("jawatan1").toString();
 	    }
 		
 	    myLogger.info("ic_login :"+ic_login);
+	    myLogger.info("id_jawatan1 :"+id_jawatan1);
+	    myLogger.info("id_jawatan1 :"+id_jawatan1);
 	    context.put("ic_login",ic_login);
+	    context.put("id_jawatan1",id_jawatan1);
+	    context.put("jawatan1",jawatan1);
+	    
 		//GET NAMA PENGARAH
 	    String nama_pengarah = "";
 	    modelUPT.setNamaPengarah(id_negeri);
@@ -799,9 +809,16 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 				db = new Db();
 				Statement stmt = db.getStatement();
 			
-				sql =  "SELECT DISTINCT A.USER_ID, A.USER_NAME, A.USER_LOGIN ";
+				/*sql =  "SELECT DISTINCT A.USER_ID, A.USER_NAME, A.USER_LOGIN ";
 				sql += " FROM USERS A, USERS_INTERNAL B ";
 				sql += " WHERE A.USER_ID = B.USER_ID ";
+				sql += " AND B.FLAG_AKTIF = '1' ";
+				sql += " AND A.USER_ID= '"+idlogin+"'";*/
+				
+				sql =  "SELECT DISTINCT A.USER_ID, A.USER_NAME, A.USER_LOGIN, B.ID_JAWATAN, C.KETERANGAN";
+				sql += " FROM USERS A, USERS_INTERNAL B, TBLRUJJAWATAN C";
+				sql += " WHERE A.USER_ID = B.USER_ID";
+				sql += " AND B.ID_JAWATAN = C.ID_JAWATAN(+)";
 				sql += " AND B.FLAG_AKTIF = '1' ";
 				sql += " AND A.USER_ID= '"+idlogin+"'";
 				
@@ -812,6 +829,8 @@ public class FrmPopupPilihPegawaiReportView extends AjaxBasedModule{
 				while (rs.next()) {
 					Hashtable h = new Hashtable();
 					h.put("ic_login", rs.getString("USER_LOGIN")== null?"":rs.getString("USER_LOGIN"));
+					h.put("id_jawatan1", rs.getString("ID_JAWATAN")== null?"":rs.getString("ID_JAWATAN"));
+					h.put("jawatan1", rs.getString("KETERANGAN")== null?"":rs.getString("KETERANGAN"));
 					icLogin.addElement(h);
 				
 			}
