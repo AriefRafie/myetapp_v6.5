@@ -1150,7 +1150,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 	    			Hashtable a = (Hashtable) getMaklumatLaporan.get(0);
 	    			bulan = (String)a.get("bulan_pengambilan");
 	    		}
-		
+	    		this.context.put("bulan_pengambilan", bulan);
 	        	// DATA LAPORAN
 	        	context.put("selectBulan",HTML.SelectBulan( "socBulan",Utils.parseLong(bulan), "style=width:auto disabled", " class=\"disabled\""));   	
 	        	
