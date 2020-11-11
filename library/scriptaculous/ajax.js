@@ -8,7 +8,7 @@ function doAjaxSubmit(myForm, target, actionName) {
         },
 		on404: function(t) {
 			alert('error 404');
-		} 
+		}
     });
 
 }
@@ -23,7 +23,7 @@ function doAjaxSubmit(myForm, target, actionName, qs) {
         },
 		on404: function(t) {
 			alert('error 404');
-		} 
+		}
     });
 
 }
@@ -40,7 +40,7 @@ function doAjaxSubmitChain(myForm, target, actionName, qs, target2, actionName2,
         },
 		on404: function(t) {
 			alert('error 404');
-		} 
+		}
     });
 
 }
@@ -62,21 +62,19 @@ function doAjaxUpdater(objForm, url, target, actionName) {
 	}
 	var result;
     var myAjax = new Ajax.Updater(target, url, {
-    							  				method: 'post', 
-    							  				parameters: pars,
-    							  				onComplete: function(t) {
-    							  				  	result = t.responseText;
-            									},
-									            on404: function(t) {
-													alert('error 404');
-									            },
-									            onFailure: function(t) {
-													alert('failure get response');
-									            } 
-    							  				});		 
+		method: 'post',
+		parameters: pars,
+		onComplete: function(t) {
+		  	result = t.responseText;
+		},
+        on404: function(t) {
+			alert('error 404');
+        },
+        onFailure: function(t) {
+			alert('failure get response');
+        }
+	});
 }
-
-
 
 function doAjaxUpdater(objForm, url, target, actionName, qs) {
 	//alert('MASUK');
@@ -85,20 +83,20 @@ function doAjaxUpdater(objForm, url, target, actionName, qs) {
 	var count = theForm.elements.length;
 	theForm.command.value = actionName;
 	var readparam = false;
-	
+
 	for ( var i=0; i < count; i++) {
-	   
+
 	   if ( theForm.elements[i].type != "button" ) {
-	   
+
 		   readparam = false;
 		   if ( theForm.elements[i].type == "checkbox" || theForm.elements[i].type == "radio" ) {
 			  if ( theForm.elements[i].checked ) {
 			     readparam = true;
-			  } 
+			  }
 		   } else {
 		   	  readparam = true;
 		   }
-		  
+
 		   if ( readparam ) {
 		  	   var id = theForm.elements[i].id;
 			   var name = theForm.elements[i].name;
@@ -108,23 +106,23 @@ function doAjaxUpdater(objForm, url, target, actionName, qs) {
 			   var value = theForm.elements[i].value;
 		       pars = pars + '&' + name + '=' + encodeURIComponent(value);
 	       }
-		   
-       
+
+
        }
 	}
 	pars = pars + '&' + qs;
-	//alert(pars);
+	//console.log(pars);
 	//alert(" pars : "+pars+" target : "+target+" url : "+url);
     var myAjax = new Ajax.Updater(target, url, {
-    											method: 'post', 
+    											method: 'post',
     											parameters: pars,
-    											contentType: 'application/x-www-form-urlencoded',  
-												encoding: 'UTF-8', 
-    											evalScripts: true, 
+    											contentType: 'application/x-www-form-urlencoded',
+												encoding: 'UTF-8',
+    											evalScripts: true,
     							  				/*onComplete: function(t) {
 													alert('respond');
     							  				  	result = t.responseText;
-    							  				  	
+
             									},*/
 												 onSuccess: function(t) {
 													// alert('respond 2'+t.responseText);
@@ -136,8 +134,8 @@ function doAjaxUpdater(objForm, url, target, actionName, qs) {
 									            },
 									            onFailure: function(t) {
 													alert('failure get response');
-									            }     											
-    											});		 
+									            }
+    											});
 }
 
 
@@ -148,17 +146,17 @@ function doAjaxUpdaterChain(objForm, url, target, actionName, qs, target2, actio
 	var count = theForm.elements.length;
 	theForm.command.value = actionName;
 	var readparam = false;
-	
+
 	for ( var i=0; i < count; i++) {
 	   readparam = false;
 	   if ( theForm.elements[i].type == "checkbox" || theForm.elements[i].type == "radio" ) {
 		  if ( theForm.elements[i].checked ) {
 		     readparam = true;
-		  } 
+		  }
 	   } else {
 	   	  readparam = true;
 	   }
-	  
+
 	   if ( readparam ) {
 	  	   var id = theForm.elements[i].id;
 		   var name = theForm.elements[i].name;
@@ -171,7 +169,7 @@ function doAjaxUpdaterChain(objForm, url, target, actionName, qs, target2, actio
 	}
 	pars = pars + '&' + qs;
     var myAjax = new Ajax.Updater(target, url, {
-    											method: 'post', 
+    											method: 'post',
     											parameters: pars,
     							  				onComplete: function(t) {
     							  				  	result = t.responseText;
@@ -182,14 +180,14 @@ function doAjaxUpdaterChain(objForm, url, target, actionName, qs, target2, actio
 									            },
 									            onFailure: function(t) {
 													alert('failure get response');
-									            }     											
-    											});		 
+									            }
+    											});
 }
 
 
 function numeralsOnly(evt) {
     evt = (evt) ? evt : event;
-    var charCode = (evt.charCode) ? evt.charCode : ((evt.keyCode) ? evt.keyCode : 
+    var charCode = (evt.charCode) ? evt.charCode : ((evt.keyCode) ? evt.keyCode :
         ((evt.which) ? evt.which : 0));
     if ( charCode == 46 || charCode== 45) return true;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -197,11 +195,11 @@ function numeralsOnly(evt) {
     }
     return true;
 }
-	
+
 function get_page_size() {
     var xScroll, yScroll;
 
-    if (window.innerHeight && window.scrollMaxY) {	
+    if (window.innerHeight && window.scrollMaxY) {
       xScroll = document.body.scrollWidth;
       yScroll = window.innerHeight + window.scrollMaxY;
     } else if (document.body.scrollHeight > document.body.offsetHeight){ // all but Explorer Mac
@@ -222,17 +220,17 @@ function get_page_size() {
     } else if (document.body) { // other Explorers
       windowWidth = document.body.clientWidth;
       windowHeight = document.body.clientHeight;
-    }	
-    
+    }
+
     // for small pages with total height less then height of the viewport
     if(yScroll < windowHeight){
       pageHeight = windowHeight;
-    } else { 
+    } else {
       pageHeight = yScroll;
     }
 
     // for small pages with total width less then width of the viewport
-    if(xScroll < windowWidth){	
+    if(xScroll < windowWidth){
       pageWidth = windowWidth;
     } else {
       pageWidth = xScroll;
@@ -241,4 +239,3 @@ function get_page_size() {
     arrayPageSize = new Array(pageWidth,pageHeight,windowWidth,windowHeight);
     return arrayPageSize;
 }
-	

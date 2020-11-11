@@ -1,12 +1,12 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
  <persistence-unit name="persistence">
-   	 
-   	<!-- 
+
+   	<!--
    	<provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
    	-->
    	<!--  use eclipse link from now on -->
 	<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-		
+
 	<class>etapp.entity.ppt.PPTBorangK</class>
 	<class>etapp.entity.ppt.PPTEndosanBorangK</class>
 
@@ -49,9 +49,9 @@
 	<class>etapp.entity.ppt.PPTStatus</class>
 	<class>etapp.entity.ppt.PPTStatusUpdate</class>
 	<class>etapp.entity.ppt.PPTHakmilik</class>
-	
+
 	<class>etapp.entity.ppt.PPTTempHakmilik</class>
-	
+
 	<class>etapp.entity.ppt.PPTDokumen</class>
 	<class>etapp.entity.rujukan.Agensi</class>
 	<class>etapp.entity.rujukan.Bandar</class>
@@ -84,24 +84,24 @@
 	<class>etapp.entity.rujukan.Unit</class>
 	<class>etapp.entity.rujukan.Urusan</class>
 	<class>etapp.entity.rujukan.Warganegara</class>
-	
-	 
-	<!-- Mobile Data --> 
-	
+
+
+	<!-- Mobile Data -->
+
 	<class>etapp.data.HTPHakmilikMobile</class>
 	<class>etapp.data.OnlineEAduanMobile</class>
 	<class>etapp.data.OnlineLampiranEAduanMobile</class>
 	<class>etapp.data.PermohonanMobile</class>
 	<class>etapp.data.PFDFailMobile</class>
 	<class>etapp.data.PHPPemohonMobile</class>
-	<class>etapp.data.PPKPemohonMobile</class>    
+	<class>etapp.data.PPKPemohonMobile</class>
 	<class>etapp.data.PPKPermohonanMobile</class>
 	<class>etapp.data.PPKPermohonanSimatiMobile</class>
 	<class>etapp.data.PPKSimatiMobile</class>
 	<class>etapp.data.PPTAwardMobile</class>
 	<class>etapp.data.PPTBantahanMobile</class>
 	<class>etapp.data.PPTBorangHMobile</class>
-	<class>etapp.data.PPTBorangOMobile</class>   
+	<class>etapp.data.PPTBorangOMobile</class>
 	<class>etapp.data.PPTHakmilikMobile</class>
 	<class>etapp.data.PPTHakmilikPBMobile</class>
 	<class>etapp.data.PPTMMKMobile</class>
@@ -126,47 +126,47 @@
 	<class>etapp.data.UsersMobile</class>
 	<class>etapp.data.UsersDataMobile</class>
 	<class>etapp.data.UsersInternalMobile</class>
-	<class>etapp.data.UsersKementerianMobile</class> 
-	
-	
+	<class>etapp.data.UsersKementerianMobile</class>
+
+
 	<!-- Module Editor Data -->
-	<class>etapp.template.Module</class>	 
-	
-	
+	<class>etapp.template.Module</class>
+
+
 	<!-- Calendar data -->
 	<class>lebah.pm.entity.ActivityEvent</class>
 	<class>lebah.pm.entity.UserActivityEvent</class>
-   
-   
+
+
     <!-- Tambahan Baru -->
     <class>ekptg.view.ppk.MTPermohonan</class>
     <class>ekptg.view.ppk.MTKeputusan</class>
     <class>ekptg.view.ppk.MTKaveat</class>
     <class>ekptg.view.ppk.MTFailAwal</class>
-	  
+
 	<properties>
-	
+
 	<!-- DB LOCAL  -->
 	<!--<property name="javax.persistence.jdbc.user" value="ekptghqlive"/>
 	<property name="javax.persistence.jdbc.password" value="ekptghqlive"/>
-	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//localhost:1521/ORCL"/> --> 
-	
+	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//localhost:1521/ORCL"/> -->
+
 	<!-- DB POC  -->
 	<property name="javax.persistence.jdbc.user" value="ekptghquat"/>
 	<property name="javax.persistence.jdbc.password" value="ekptghquat"/>
-	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//10.19.144.140:1521/myetapp"/>
-	
+	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//192.168.0.122:1521/orcl"/>
+
 	<!-- DB LIVE -->
 	<!--<property name="javax.persistence.jdbc.user" value="ekptghqlive"/>
-	<property name="javax.persistence.jdbc.password" value="ekptghqv6live"/>	
+	<property name="javax.persistence.jdbc.password" value="ekptghqv6live"/>
 	<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//10.19.144.76:1521/myetapp"/>   -->
-		
-<!--  	<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>	
+
+<!--  	<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>
 	<property name="eclipselink.weaving" value="false" />
-	<property name="eclipselink.id-validation" value="NULL"/> 	
+	<property name="eclipselink.id-validation" value="NULL"/>
 	<property name="eclipselink.logging.level" value="OFF"/>
 	</properties> -->
-	
+
 <!-- 	<property name="eclipselink.ddl-generation" value="create-tables"/> -->
 	</properties>
  </persistence-unit>

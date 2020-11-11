@@ -7,6 +7,8 @@
 	</tr>
 </table>
 
+<input type="hidden" name="idHTA" value="" />
+
 <!-- START PERINTAH PEMBAHAGIAN -->
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
 <!-- START HEADER -->
@@ -28,6 +30,13 @@
 
 		            <!-- START CONTENT HARTA TAK ALIH (ADA HAKMILIK) -->
 		            <div class="TabbedPanelsContent">
+		            	<div id="keputusan_perintah_htaah"></div>
+
+
+
+
+
+
 	              		<table width="100%" border="0" cellspacing="2" cellpadding="2">
 
 		                <!-- START LIST HARTA TAK ALIH (ADA HAKMILIK) -->
@@ -83,7 +92,18 @@
 						                            #if($listHTA.idPerintahHTAOBMST == '')
 						                            <td class="$row">$listHTA.keteranganHakmilik</td>
 						                            #else
-						                            <td class="$row"><a href="javascript:paparHTA($listHTA.idPerintahHTAOBMST)"><font color="#0000FF">$listHTA.keteranganHakmilik</font></a></td>
+
+
+
+						                            <td class="$row">
+						                            	<a href="javascript:void(0);" onClick="paparFmPerintahHTA('keputusan_perintah_htaah', 'kemaskiniKeputusanPerintahHtaah', $listHTA.idPerintahHTAOBMST)">
+						                            		<font color="#0000FF">$listHTA.keteranganHakmilik</font>
+						                            	</a>
+						                            </td>
+
+
+						                            <!-- td class="$row"><a href="javascript:paparHTA($listHTA.idPerintahHTAOBMST)"><font color="#0000FF">$listHTA.keteranganHakmilik</font></a></td -->
+
 						                            #end
 						                            <td class="$row">$listHTA.jenisPerintah
 
@@ -2103,36 +2123,3 @@
 </table>
 
 <!-- END PEMBAHAGIAN HARTA -->
-
-<script type="text/javascript">
-// js untuk tabs
-var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedTabUpper});
-
-var TabbedPanels2 = new Spry.Widget.TabbedPanels("TabbedPanels2",{defaultTab:$selectedTabLower});
-
-function setSelectedTabUpper(tabId) {
-	document.${formName}.selectedTabUpper.value = tabId;
-	document.${formName}.flagPopup.value = "";
-	document.${formName}.modePopup.value = "";
-	document.${formName}.anchor.value = "tabUpper";
-	document.${formName}.submit();
-}
-function setSelectedTabLower(tabId) {
-	document.${formName}.selectedTabLower.value = tabId;
-	document.${formName}.flagPopup.value = "";
-	document.${formName}.modePopup.value = "";
-	document.${formName}.anchor.value = "tabLower";
-	document.${formName}.submit();
-}
-
-function paparHTA(idHTA) {
-	document.${formName}.actionPerintah.value = "papar";
-	document.${formName}.flagPopup.value = "openHTA";
-	document.${formName}.modePopup.value = "update";
-	document.${formName}.idHTA.value = idHTA;
-	document.${formName}.action = "?_portal_module=ekptg.view.ppk.BicaraInteraktif";
-	document.${formName}.anchor.value = "tabUpper";
-	document.${formName}.method = "POST";
-	document.${formName}.submit();
-}
-</script>

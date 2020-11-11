@@ -63,6 +63,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 
 	// delang
     FrmPerintahSek8Data logic = new FrmPerintahSek8Data();
+    PerintahPerbicaraan perintahBicara = new PerintahPerbicaraan();
 
 	// List listPerbicaraan = null;
 	@SuppressWarnings("unused")
@@ -108,7 +109,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 		List listTidakHadir = null;// arief add
 		Map viewTidakHadir = null;// arief add
 		List listSaksi = null;// arief add
-		Map viewSaksi = null;// arief add
+		Map viewSaksi = null;// arief adds
 		List listPerbicaraan = null;
 		List listKronologiStatus = null;
 		defaultPut();
@@ -3089,15 +3090,47 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			this.context.put("formDynamicDropDown", formDynamicDropDown);
 			skrin_name = "app/ppk/BicaraInteraktif/formDynamicDropDown.jsp";
 		}
+
+		// delang
+		else if (command.equals("kemaskiniKeputusanPerintahHtaah")) {
+
+			myLogger.info("command -- kemaskiniKeputusanPerintahHtaah");
+			skrin_name = perintahBicara.perintahHtaah(getParam("idHTA"));
+
+			//myLogger.info("idHTA -- " + getParam("idHTA"));
+
+			//this.context.put("idHTA", getParam("idHTA"));
+			//skrin_name = "app/ppk/BicaraInteraktif/fm_perintah_perbicaraan_htaah.jsp";
+		}
+
 		// }
 		// close dynamic ajax call
 		myLogger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>> skrin_name : " + skrin_name);
 		return skrin_name;
 	}
 
+	/*
+	 * delang
+	 * */
+	public String perintahHtaah(String idHTA, String idPermohonanSimati) throws Exception {
+
+		myLogger.info("idHTA -- " + idHTA);
+		myLogger.info("idPermohonanSimati -- " + idPermohonanSimati);
+
+        Vector<Hashtable<String, String>> beanMaklumatHTA = new Vector<Hashtable<String, String>>();
+		beanMaklumatHTA.clear();
+
+		logic.setDataMaklumatHTA(idHTA, idPermohonanSimati);
+		beanMaklumatHTA = logic.getBeanMaklumatHTA();
+
+		this.context.put("beanMaklumatHTA", beanMaklumatHTA);
+		return "app/ppk/BicaraInteraktif/fm_perintah_perbicaraan_htaah.jsp";
+	}
+
 	public void defaultPut() {
 		context.put("errorMesej", "");
 		this.context.put("carianBicaraNO_FAIL", "");
+
 		this.context.put("carianBicaraNAMAPENGENALAN_SIMATI", "");
 		this.context.put("carianBicaraNAMAPENGENALAN_PEMOHON", "");
 
