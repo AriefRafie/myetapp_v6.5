@@ -84,8 +84,7 @@ public class FrmAPBOnlineSenaraiFailData {
 	public String daftarBaru(String idKaitanTujuan, String idJenistujuan, String undangUndang, String idJenisLesen, String tujuanPengambilan, String tempoh,
 			String pengalaman, String idNegeri, String lokasi,String luas, String idLuas, String idJenisPengenalanIndividu, 
 			String idKategoriIndividu, String idKategoriPemohon, String idJantina, String idBangsa, String idBandar, 
-			String idNegeriSykt, String idBandarSykt, HttpSession session) throws Exception {
-//			String idJenisPermohonan, String idPermohonanLama, HttpSession session) throws Exception {
+			String idNegeriSykt, String idBandarSykt, String idJenisPermohonan, String idPermohonanLama, HttpSession session) throws Exception {
 		
 		Db db = null;
 		Connection conn = null;
@@ -213,7 +212,7 @@ public class FrmAPBOnlineSenaraiFailData {
 			r.add("LUAS_DIPOHON", luas);
 			r.add("ID_UNITLUAS", idLuas);
 			r.add("LOKASI_PERMOHONAN", lokasi);
-//			r.add("ID_JENISPERMOHONAN",idJenisPermohonan);
+			r.add("ID_JENISPERMOHONAN",idJenisPermohonan);
 			r.add("ID_JENIS_LESEN",idJenisLesen);
 			r.add("ID_NEGERI_PERAIRAN", idNegeri);
 			r.add("ID_MASUK", userId);
@@ -2250,7 +2249,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				if (!"".equals(rs.getString("FLAG_LUAR_PERAIRANNEGERI")) || rs.getString("FLAG_LUAR_PERAIRANNEGERI") != null) {
 					
 					sql = "SELECT ID_PERMOHONAN FROM TBLPHPPMOHONNJDUALPERTAMA WHERE "
-						+ "(ID_NEGERI_PERAIRAN IS NULL OR LOKASI_PERMOHONAN IS NULL OR LUAS_DIPOHON IS NULL OR ID_UNITLUAS IS NULL)"
+						+ "(ID_NEGERI_PERAIRAN IS NOT NULL OR LOKASI_PERMOHONAN IS NULL OR LUAS_DIPOHON IS NULL OR ID_UNITLUAS IS NULL)"
 						+ " AND ID_PERMOHONAN= '" +idPermohonan+ "'";
 					
 					ResultSet rs2 = stmt.executeQuery(sql);
