@@ -24,34 +24,18 @@
 	        #else
 	        	#set($checked = '')
 	        #end
-	        #if ($mode == 'update')
-		    	<tr class="$row">
-		          <td class="$row" width="3%"><input type="checkbox" value="$list.id" name="idsSenaraiSemak" $checked /></td>
-		          <td class="$row" width="82%">$i. $list.keterangan</td>
-		          <td class="$row" width="15%">$!list.lampirans</td>
-		        </tr>
-		    #end
-		    #if ($mode == 'view')
-		      	<tr class="$row">
-		          <td class="$row" width="3%"><input type="checkbox" value="$list.id" name="idsSenaraiSemak" $checked $disabled /></td>
-		          <td class="$row" width="82%">$i. $list.keterangan</td>
-		          <td class="$row" width="15%">$!list.lampirans</td>
-		        </tr>
-		    #end      
-		    #if ($mode == 'new')
-		      	<tr class="$row">
-		          <td class="$row" width="3%"></td>
-		          <td class="$row" width="82%">$i. $list.keterangan</td>
-		          <td class="$row" width="15%">$!list.lampirans</td>
-		        </tr>
-		    #end      
+		    <tr class="$row">
+		         <td class="$row" width="3%"></td>
+		         <td class="$row" width="82%">$i. $list.keterangan</td>
+		         <td class="$row" width="15%">$!list.lampirans</td>
+		    </tr>   
 	    	#end
 	    	#else
 	    	<tr>
 	        	<td class="$row" width="3%">&nbsp;</td>
 	         	<td class="$row" colspan="2" width="95%">Tiada Rekod</td>
 	        </tr>
-	        #end
+	     #end
       </table></td>
   </tr>
   <tr>

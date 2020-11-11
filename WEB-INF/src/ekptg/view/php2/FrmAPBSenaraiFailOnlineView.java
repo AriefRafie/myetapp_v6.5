@@ -81,7 +81,7 @@ public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
 	    	}
     	}
 		
-		this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("", "paparLampiran", "idDokumen",session));
+		this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("", "paparLampiran", "idDokumen",session, "phpapb"));
 		        
         if ("papar".equals(actionOnline)){
         	
@@ -117,6 +117,7 @@ public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
            	this.context.put("mode", "new");
         	this.context.put("readonly", "");
         	this.context.put("inputTextClass", "");
+        	this.context.put("disabled", "disabled");
         	
         	vm = "app/php2/frmAPBDaftarOnline.jsp";
         	
@@ -142,7 +143,7 @@ public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
 			this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
 			
 			semak = new FrmSemakan();
-			senaraiSemak = semak.getSenaraiSemakanAttach("phpapb",idPermohonan);
+			senaraiSemak = semak.getSenaraiSemakanAttach2("phpapb",idPermohonan);
 			this.context.put("SenaraiSemak", senaraiSemak);
 			
         }

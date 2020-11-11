@@ -1,12 +1,28 @@
-<style type="text/css">
-tr.tr_class td {
-	background-color:#01DFD7;	
-	font-weight:bold;
-	color:white;
-}
-</style>
+## head
+<head>
+	## scripts
+	<script src="../bootstrap-wysihtml5-master/lib/js/wysihtml5-0.3.0.js"></script>
+	<script src="../bootstrap-wysihtml5-master/lib/js/jquery-1.7.2.min.js"></script>
+	<script src="../bootstrap-wysihtml5-master/lib/js/prettify.js"></script>
+	<script src="../bootstrap-wysihtml5-master/lib/js/bootstrap.min.js"></script>
+	<script src="../bootstrap-wysihtml5-master/src/bootstrap-wysihtml5.js"></script>
+	## links
+	<link rel="stylesheet" type="text/css" href="../bootstrap-wysihtml5-master/lib/css/bootstrap.min.css"></link>
+	<link rel="stylesheet" type="text/css" href="../bootstrap-wysihtml5-master/lib/css/prettify.css"></link>
+	<link rel="stylesheet" type="text/css" href="../bootstrap-wysihtml5-master/src/bootstrap-wysihtml5.css"></link>
+	## styles
+	<style type="text/css">
+	tr.tr_class td {
+		background-color:#01DFD7;	
+		font-weight:bold;
+		color:white;
+	}
+	</style>
+</head>
+
 <br>
 <br>
+
 <body onLoad="ResetScrollPosition();" >
 <fieldset><legend><b>
  Semak Nota Bicara</b></legend>
@@ -157,16 +173,20 @@ tr.tr_class td {
 	<legend><b>Nota Bicara</b></legend>
 		<table width="100%" align="center" border="0">
 			<tr align="center">
-				<td><textarea name="txtNotaBicara" id="txtNotaBicara" $check cols="100%" rows="15">$!notaBicara</textarea><br/></td>
+				## <td><textarea name="txtNotaBicara" id="txtNotaBicara" $check cols="100%" rows="15">$!notaBicara</textarea><br/></td>	 
+				 <td><textarea name="txtNotaBicara" id="txtNotaBicara" disabled class='disabled' cols="100%" rows="15">$!notaBicara</textarea><br/></td>
 			</tr>
-		</table>
-		<table width="100%" align="center" border="0">
+			<tr align="center">
+				<td><b>Jumlah Perkataan :&nbsp;</b>$!totalWordNotaBicara &nbsp;&nbsp;<b>Bayaran Nota Bicara :&nbsp;</b>RM$!bayaranNB &nbsp;<b></td>
+			</tr>
 			<tr>
-	 			<td><b>Jumlah Perkataan :&nbsp;</b>$!totalWordNotaBicara &nbsp;&nbsp;<b>Bayaran Nota Bicara :&nbsp;</b>RM$!bayaranNB &nbsp;<b></td>
+	 			<td width='100%' align='left'>
+	 				<a href="javascript:printCatatanPerintah('$list_size');" title="Klik untuk cetak Catatan Perintah">&nbsp;
+	 				<u style="color: blue">Nota Keterangan & Perintah</u></a>
+	 			</td>
 	 		</tr>
-	 	</table>	
+		</table>
 	</fieldset>
-	
 	
 	#if($mode=="new")   
     		<input type="hidden" id="contentoE" value="true">
@@ -179,6 +199,8 @@ tr.tr_class td {
     		<input type="hidden" id="designoE" value="off">		
     #end
 	
+	
+	<!-- 
 	<script> 
             var area = new FCKeditor("txtNotaBicara");
 	      	area.BasePath = '/${appname}/library/fck/' ;
@@ -199,7 +221,8 @@ tr.tr_class td {
     				oEditor.EditorDocument.body.style.cssText += 'color: #322805;background-color: #F2F2EE;';	
     			}	
     		}
-	</script> 
+	</script>
+	 -->
 	
 	
 		<table width="100%" align="center" border="0">
@@ -606,6 +629,15 @@ function batalNotaBicara(id_fail,nama_butang){
 	document.${formName}.id_fail_carian.value = id_fail;
 	document.${formName}.submit();
 	document.getElementById(nama_butang).value = "Sila Tunggu...";
+}
+function printCatatanPerintah(ID_PERBICARAAN)
+{
+	var url = "../x/${securityToken}/ekptg.view.ppk.BicaraInteraktifPrint?&ID_PERBICARAAN="+ID_PERBICARAAN+"&command=showCatatanPerintah";
+	var hWnd = window.open(url,'printuser','width=1200,height=800, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();		
 }
 
 
