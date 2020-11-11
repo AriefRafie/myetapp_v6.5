@@ -59,13 +59,24 @@ private static final long serialVersionUID = 1L;
 		String id_Permohonan = getParam("id_Permohonan"); //lps klik dr cetakborangf senarai
 		String idFail = getParam("idFail");
 		
+		//11112020
+		String flagBorang = getParam("flagBorang");
+		String idCetakan = getParam("idCetakan");
+		String idPermohonan = getParam("idPermohonan");
+		
 		vm = "app/ppk/frmPopupTAC.jsp";	
 
 		context.put("notac","");
+		context.put("verify","");
 		this.context.put("idFail", idFail);
 		this.context.put("id_Permohonan", id_Permohonan);
 		
+		this.context.put("flagBorang", flagBorang);
+		this.context.put("idCetakan", idCetakan);
+		this.context.put("idPermohonan", idPermohonan);
+		
 		String submit = getParam("command");
+		
     	myLogger.info("submit : " + submit);
     	
     	if ("simpan".equals(submit)) {
@@ -78,6 +89,9 @@ private static final long serialVersionUID = 1L;
     		
     		id_Permohonan = (String) context.get("ResultAdd");
     		idFail = getParam("idFail");
+    		flagBorang = getParam("flagBorang");
+    		idCetakan = getParam("idCetakan");
+    		idPermohonan = getParam("idPermohonan");
     
     		//OTP();
     		otp =  FrmPopupTAC.OTP();
@@ -105,7 +119,7 @@ private static final long serialVersionUID = 1L;
     		String dateotpDB = "";
     		
     		dateotpDB =  FrmPopupTAC.dateOtpDB(USER_LOGIN_SYSTEM, idFail);
-    		context.put("notac", "notac");
+    		context.put("notac", notac);
     		//myLogger.info("notac" +notac);
     		context.put("otp", "otp");
     		context.put("otpDB", "otpDB");
@@ -113,19 +127,61 @@ private static final long serialVersionUID = 1L;
     		context.put("exp", "exp");
     		context.put("dateDB", "dateDB");
     		myLogger.info("dateotpDB : " +dateotpDB);
-
-			String verifyOTP = "";
-			
-    		verifyOTP = FrmPopupTAC.verifyOTP(notac, otpDB, dateotpDB);
-    		myLogger.info("verifyotp : "+verifyOTP);
     		
-    		//if(verifyOTP)
-    		//{
+    		idCetakan = getParam("idCetakan");
+    		idPermohonan = getParam("idPermohonan");
+    		
+    		String flagCetak = "";
+    		
+    		flagCetak = FrmPopupTAC.semakCetakan(idPermohonan, idCetakan);
+    		myLogger.info("flag  : "+ flagCetak);
+    		
+    		if (flagCetak.equals("1")) {
     			
-    		//}
+    			String verifyOTP = "";
+    			
+        		verifyOTP = FrmPopupTAC.verifyOTP(notac, otpDB, dateotpDB);
+        		myLogger.info("verifyotp : "+verifyOTP);
+        		
+        		if(verifyOTP == "false"){
+        			
+        			myLogger.info("No. TAC tidak tepat");
+        			
+        			context.put("verify", "false");
+        			context.put("note", "No. TAC tidak sah!");
+        			
+        		} 
+        		else if (verifyOTP == "expired"){
+        			
+        			myLogger.info("No. TAC expired");
+        			
+        			context.put("verify", "false");
+        			context.put("note", "No. TAC telah tamat tempoh!");
+        			
+        		} 
+        		else if (verifyOTP == "true"){
+        			
+        			myLogger.info("No. TAC sah");
+        			
+        			context.put("verify", "true");
+        			context.put("note", "No. TAC sah.");
+        		}
+    		} else {
+    			context.put("verify", "false");
+    			context.put("note", "Perintah telah dimuat turun!");
+    		}
     		
     		//context.put("notac", "notac");
-    	}    		
+    	} else
+    		if ("update".equals(submit)){
+    			
+        		idPermohonan = getParam("idPermohonan");
+        		idCetakan = getParam("idCetakan");
+        		
+        		myLogger.info("UPDATE FLAG 1: " + idCetakan + " - "+idPermohonan);
+        		
+        		updateFlag(idPermohonan,idCetakan);
+    		}
 		return vm;		
 	}
 	
@@ -230,6 +286,21 @@ private static final long serialVersionUID = 1L;
 	 
 	    return FrmPrmhnnStatusPengunaOnlineData.addTAC(h,otp,flag);	  
 	}//close add
+	
+	// update flag cetakan 11112020
+	@SuppressWarnings("unchecked")
+	private String updateFlag(String idPermohonan,String idCetakan) throws Exception{
+		
+	    Hashtable h = new Hashtable();
+	    	    	
+	    h.put("idPermohonan", idPermohonan);
+	    h.put("idCetakan", idCetakan);	    		    	
+	    h.put("flagCetakan","2");
+	    
+	    myLogger.info("UPDATE FLAG 2: " + idCetakan + " - "+idPermohonan);
+	 
+	    return FrmPrmhnnStatusPengunaOnlineData.updateFlag(h);	  
+	}//close add
 		 	 	
 	private static String verifyOTP(String otpFrmUser,String otpFrmDB, String masaMasukOTPdb) 
     { 	  
@@ -291,19 +362,35 @@ private static final long serialVersionUID = 1L;
 	 		//waktu kita set 5 minit di atas td, kira expired lah otp tu
              if(diffDays>otptime){               
             	myLogger.info("otp already expired"); 
-                return "otp expired";                 
+                return "expired";                 
              }else{
                 //ni otp valid
-            	myLogger.info("otp valid");                
+            	myLogger.info("otp valid");  
              }          
          }else{
              //ni otp x sama..yg dia terima dgn yg dia verify
         	 myLogger.info("otp not match");
-             return "otp not match";            
+             return "false";            
          }       
         //class ni return string
          //ubah lah ikut kesesuaian
-         	return "otp valid"; 
+         	return "true"; 
     }
+	
+	//11112020
+	private static String semakCetakan(String idPermohonan, String idCetakan) throws Exception {
+		Vector checkMuatTurun = new Vector();
+		checkMuatTurun.clear();
+		checkMuatTurun = myInfo.checkFlagCetakan(idPermohonan,idCetakan);
+		
+		String flagDownload = "";
+		
+		if(checkMuatTurun.size()!=0){
+			Hashtable h = (Hashtable)checkMuatTurun.get(0);
+			flagDownload = (String)h.get("FLAG_CETAK_PERINTAH");
+		}
+		myLogger.info("FLAG_CETAK_PERINTAH -> " + flagDownload);
+		return flagDownload;	
+	}
 
 }
