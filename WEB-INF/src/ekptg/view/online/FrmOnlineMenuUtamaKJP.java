@@ -83,6 +83,14 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 		context.put("jawatan", jawatan);
 		context.put("portalRole", portal_role);
 
+		//yati
+		Hashtable get_notifikasi_bayarpampasan = null;
+		get_notifikasi_bayarpampasan = (Hashtable) notifikasi_bayarpampasan(idKementerian);
+		String jumlah_bayarpampasan = (String) get_notifikasi_bayarpampasan.get("jumlahnotifikasi");
+		context.put("jumlah_notifikasi_bayarpampasan", Long.parseLong(jumlah_bayarpampasan));
+		
+		myLog.info("notifikasi pampasan : "+jumlah_bayarpampasan);
+		
 		 Hashtable get_notifikasi_pelepasan = null;
 		 get_notifikasi_pelepasan = (Hashtable) notifikasi_pelepasan(user_id);
 		 String jumlah_notifikasi_pelepasan = (String)get_notifikasi_pelepasan.get("JUMLAHPERMOHONAN");
@@ -361,6 +369,49 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 		}
 	}
 	
+	
+	// yati	
+	public Hashtable notifikasi_bayarpampasan(String idKementerian)
+			throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+		
+				sql = " SELECT (SELECT COUNT(HM.ID_HAKMILIK) ";
+				sql += " FROM TBLPFDFAIL F, TBLPPTPERMOHONAN P, TBLPPTHAKMILIK HM ";
+				sql += " WHERE F.ID_FAIL = P.ID_FAIL ";
+				sql += " AND P.ID_PERMOHONAN = HM.ID_PERMOHONAN ";
+				sql += " AND HM.FLAG_HANTAR_KJP = 'BARU' "; 
+				sql += " AND F.ID_KEMENTERIAN = '" +idKementerian+"' ) AS jumlahnotifikasi FROM DUAL ";
+			
+
+			myLog.info("JUMLAH noti pampasan :"+sql.toUpperCase());
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			h = new Hashtable();
+			// h.put("jumlah_Permohonan", "0");
+			while (rs.next()) {
+				h.put("jumlahnotifikasi",
+						rs.getString("jumlahnotifikasi") == null ? "0" : rs
+								.getString("jumlahnotifikasi"));
+			}
+			return h;
+
+			/*
+			 * } else { Hashtable h; h = new Hashtable();
+			 * h.put("jumlah_Permohonan", "0"); return h; }
+			 */
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
 	public Hashtable notifikasi_penawaran(String userID)
 			throws Exception {
 		Db db = null;

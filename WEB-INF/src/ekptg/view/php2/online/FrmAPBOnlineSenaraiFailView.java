@@ -73,7 +73,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
         String idFail = getParam("idFail");
         String idStatus = getParam("idStatus");
 //        String idJenisPermohonan = getParam("idJenisPermohonan");
-//        String idPermohonanLama = getParam("idPermohonanLama");
+        String idPermohonanLama = getParam("idPermohonanLama");
  
         String mode = getParam("mode");
         if (mode.isEmpty()){
@@ -232,16 +232,15 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 							getParam("txtTujuanPengambilan"), getParam("socTempoh"), getParam("txtRingkasanPengalaman"), getParam("socNegeri"), 
 							getParam("txtLokasi"), getParam("txtLuas"), getParam("socLuas"),getParam("socJenisPengenalanIndividu"),getParam("socKategoriPemohon"),
 							getParam("socIndividuBukanIndividu"), getParam("socJantina"), getParam("socBangsa"), getParam("socBandar"),
-							getParam("socNegeriSykt"), getParam("socBandarSykt"), session);
-//							getParam("idJenisPermohonan"), getParam("idPermohonanLama"), session);
+							getParam("socNegeriSykt"), getParam("socBandarSykt"), getParam("idJenisPermohonan"), getParam("idPermohonanLama"), session);
 	        	}
 				if ("daftarBaruLesen".equals(hitButton)){
 					
 					idFail = logic.daftarBaru(getParam("socKaitanTujuan"),getParam("socJenisTujuan"), getParam("socJenisLesen"), getParam("txtTujuanPengambilan"), getParam("socTempoh"),
 							getParam("txtRingkasanPengalaman"), getParam("socNegeri"), getParam("txtLokasi"), getParam("txtLuas"), 
 							getParam("socLuas"),getParam("socJenisPengenalanIndividu"),getParam("socKategoriPemohon"), getParam("socIndividuBukanIndividu"), getParam("socJantina"), 
-							getParam("socBangsa"), getParam("socBandar"), getParam("socNegeriSykt"), getParam("socBandarSykt"), getParam("txtUndang"), session);
-//							getParam("idJenisPermohonan"), getParam("idPermohonanLama"), getParam("txtUndang"), session);
+							getParam("socBangsa"), getParam("socBandar"), getParam("socNegeriSykt"), getParam("socBandarSykt"), 
+							getParam("idJenisPermohonan"), getParam("idPermohonanLama"), getParam("txtUndang"), session);
 	        	}
 				if ("daftarBaruBorangA".equals(hitButton)){ //yati tambah borang A
 					
@@ -249,8 +248,8 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 							getParam("txtRingkasanPengalaman"), getParam("socNegeri"), getParam("txtLokasi"), getParam("txtLuas"), 
 							getParam("socLuas"),getParam("socJenisPengenalanIndividu"),getParam("socKategoriPemohon"),
 							getParam("socIndividuBukanIndividu"), getParam("socJantina"), getParam("socBangsa"), getParam("socBandar"),
-							getParam("socNegeriSykt"), getParam("socBandarSykt"), getParam("txtUndang"), session);
-//							getParam("idJenisPermohonan"), getParam("idPermohonanLama"), getParam("txtUndang"), session);
+							getParam("socNegeriSykt"), getParam("socBandarSykt"),
+							getParam("idJenisPermohonan"), getParam("idPermohonanLama"), getParam("txtUndang"), session);
 	        	}
 				if ("doSimpanKemaskiniPermohonan".equals(hitButton)){
 					logic.updatePermohonan(idFail,idPermohonan,idPemohon,getParam("socKaitanTujuan"), getParam("txtTujuanPengambilan"), getParam("socTempoh"), 
@@ -419,11 +418,11 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
     	this.context.put("readonly", "");
     	this.context.put("inputTextClass", "");
     	this.context.put("disabled", "");
-//    	this.context.put("jenisPermohonan", "PERMOHONAN BARU");
-//    	this.context.put("idJenisPermohonan", "1");
+    	this.context.put("jenisPermohonan", "PERMOHONAN BARU");
+    	this.context.put("idJenisPermohonan", "1");
     	this.context.put("idJenisLesen", idJenisLesen);
     	this.context.put("idStatus", "");
-//    	this.context.put("noFailLama", "");
+    	this.context.put("noFailLama", "");
     
     	//JENIS PERMOHONAN
 		this.context.put("selectJenisPermohonan", HTML.SelectJenisPermohonanAPB("socJenisPermohonan", Long.parseLong(idJenisPermohonan), "", " onChange=\"doChangeJenisPermohonan();\""));
@@ -1150,7 +1149,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 	    			Hashtable a = (Hashtable) getMaklumatLaporan.get(0);
 	    			bulan = (String)a.get("bulan_pengambilan");
 	    		}
-		
+	    		this.context.put("bulan_pengambilan", bulan);
 	        	// DATA LAPORAN
 	        	context.put("selectBulan",HTML.SelectBulan( "socBulan",Utils.parseLong(bulan), "style=width:auto disabled", " class=\"disabled\""));   	
 	        	
