@@ -11,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Hashtable;
+import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
@@ -18,6 +20,7 @@ import lebah.db.Db;
 import lebah.db.SQLRenderer;
 import lebah.portal.AjaxBasedModule;
 import ekptg.helpers.DB;
+import ekptg.helpers.Utils;
 
 /**
  * @author Mohd Faizal
@@ -30,6 +33,7 @@ public class FrmREVPopupNotisTunggakanView extends AjaxBasedModule {
 	 */
 	private static final long serialVersionUID = 1L;
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	Vector beanMaklumatNotis = null;
 
 	@Override
 	public String doTemplate2() throws Exception {
@@ -47,12 +51,37 @@ public class FrmREVPopupNotisTunggakanView extends AjaxBasedModule {
 	    String report = getParam("report");
 	    String bilPeringatan = getParam("bilPeringatan");
 	    String tarikhNotis = getParam("tarikhNotis");
+	    String idNotis = getParam("idNotis");
+	    String mode = getParam("mode");
+
+	    System.out.println("id notis >>> "+idNotis);
 
 	    if ("janaNotisTuntutanTunggakan".equals(submit)) {
 	    	janaNotisTuntutanTunggakan(idHasil, bilPeringatan, tarikhNotis, session);
 	    }
 	    if ("janaNotisRampasanDeposit".equals(submit)) {
 	    	janaNotisRampasanDeposit(idHasil, tarikhNotis, session);
+	    }
+	    if ("janaNotisTuntutan".equals(submit)) {
+	    	janaNotisTuntutan(idHasil, tarikhNotis, session);
+	    }
+
+	    if ("kemaskiniNotisTuntutanTunggakan".equals(submit)) {
+	    	kemaskiniNotisTuntutanTunggakan(idNotis, idHasil, bilPeringatan, tarikhNotis, session);
+	    }
+	    if ("kemaskiniNotisRampasanDeposit".equals(submit)) {
+	    	kemaskiniNotisRampasanDeposit(idNotis, idHasil,tarikhNotis, session);
+	    }
+	    if ("kemaskiniNotisTuntutan".equals(submit)) {
+	    	kemaskiniNotisTuntutan(idNotis, idHasil, tarikhNotis, session);
+	    }
+
+	    if(mode.equals("update")){
+	    	vm = "app/php2/frmREVPopupNotis.jsp";
+
+	    	beanMaklumatNotis = new Vector();
+			getMaklumatHasil(idNotis);
+	    	this.context.put("BeanMaklumatNotis", beanMaklumatNotis);
 	    }
 
 		this.context.put("idHasil", idHasil);
@@ -188,6 +217,69 @@ public class FrmREVPopupNotisTunggakanView extends AjaxBasedModule {
 		}
 	}
 
+	private void janaNotisTuntutan(String idHasil,
+			String tarikhNotis, HttpSession session) throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			Double kadarSewaSebulan = getKadarSewaSebulan(idHasil, tarikhNotis, db);
+			Double jumlahTunggakan = getJumlahTunggakan(idHasil, tarikhNotis, db);
+			Double bulanTunggakan = Math.ceil(jumlahTunggakan / kadarSewaSebulan);
+
+			// TBLPHPNOTISHASIL
+			long idNotis = DB.getNextID("TBLPHPNOTISHASIL_SEQ");
+			r.add("ID_NOTIS", idNotis);
+			r.add("ID_HASIL", idHasil);
+			if (!"".equals(tarikhNotis)) {
+				r.add("TARIKH_NOTIS",
+						r.unquote("to_date('" + tarikhNotis + "','dd/MM/yyyy')"));
+
+				Calendar calMula = new GregorianCalendar();
+				Date dateMula = sdf.parse(tarikhNotis);
+				calMula.setTime(dateMula);
+				calMula.add(Calendar.MONTH, 2);
+				r.add("TARIKH_AKHIR_NOTIS",
+						r.unquote("to_date('" + sdf.format(calMula.getTime()) + "','dd/MM/yyyy')"));
+
+			}
+			r.add("KADAR_SEWA", kadarSewaSebulan);
+			r.add("BULAN_TUNGGAKAN", bulanTunggakan);
+			r.add("JUMLAH_TUNGGAKAN", jumlahTunggakan);
+			r.add("ID_JENIS_NOTIS", "3"); // NOTIS TUNTUTAN
+
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPHPNOTISHASIL");
+			stmt.executeUpdate(sql);
+			conn.commit();
+			this.context.put("successSave", "Y");
+
+		} catch (Exception ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
 	public double getKadarSewaSebulan(String idHasil, String tarikhNotis, Db db) {
 		double kadarSewaSebulan = 0D;
 		String sql = "";
@@ -262,5 +354,226 @@ public class FrmREVPopupNotisTunggakanView extends AjaxBasedModule {
 		}
 		return tunggakanSewa;
 	}
+
+	public void getMaklumatHasil(String idNotis) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			beanMaklumatNotis = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT ID_NOTIS,TARIKH_NOTIS,ID_JENIS_NOTIS,BIL_PERINGATAN FROM TBLPHPNOTISHASIL WHERE ID_NOTIS = '" + idNotis + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			if (rs.next()) {
+				h = new Hashtable();
+				h.put("bilPeringatan", rs.getString("BIL_PERINGATAN") == null ? "" : rs.getString("BIL_PERINGATAN"));
+				h.put("tarikhNotis", rs.getDate("TARIKH_NOTIS") == null ? "" : sdf.format(rs.getDate("TARIKH_NOTIS")));
+				h.put("idJenisNotis", rs.getString("ID_JENIS_NOTIS") == null ? "" : rs.getString("ID_JENIS_NOTIS"));
+				beanMaklumatNotis.addElement(h);
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	private void kemaskiniNotisTuntutanTunggakan(String idNotis, String idHasil,
+			String bilPeringatan, String tarikhNotis, HttpSession session) throws Exception {
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			Double kadarSewaSebulan = getKadarSewaSebulan(idHasil, tarikhNotis, db);
+			Double jumlahTunggakan = getJumlahTunggakan(idHasil, tarikhNotis, db);
+			Double bulanTunggakan = Math.ceil(jumlahTunggakan / kadarSewaSebulan);
+
+			// TBLPHPNOTISHASIL
+			r.update("ID_NOTIS", idNotis);
+			r.add("ID_HASIL", idHasil);
+			if (!"".equals(tarikhNotis)) {
+				r.add("TARIKH_NOTIS",
+						r.unquote("to_date('" + tarikhNotis + "','dd/MM/yyyy')"));
+
+				Calendar calMula = new GregorianCalendar();
+				Date dateMula = sdf.parse(tarikhNotis);
+				calMula.setTime(dateMula);
+				//calMula.add(Calendar.MONTH, 2);
+				calMula.add(Calendar.DATE, 14);
+				r.add("TARIKH_AKHIR_NOTIS",
+						r.unquote("to_date('" + sdf.format(calMula.getTime()) + "','dd/MM/yyyy')"));
+
+			}
+			r.add("KADAR_SEWA", kadarSewaSebulan);
+			r.add("BULAN_TUNGGAKAN", bulanTunggakan);
+			r.add("JUMLAH_TUNGGAKAN", jumlahTunggakan);
+			r.add("BIL_PERINGATAN", bilPeringatan);
+			r.add("ID_JENIS_NOTIS", "1"); //NOTIS TUNTUTAN TUNGGAKAN
+
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+			sql = r.getSQLUpdate("TBLPHPNOTISHASIL");
+
+			System.out.println("NotisTuntutan 1 >>>> "+sql);
+			stmt.executeUpdate(sql);
+			conn.commit();
+			this.context.put("successSave", "Y");
+
+		} catch (Exception ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
+	private void kemaskiniNotisRampasanDeposit(String idNotis, String idHasil,
+			String tarikhNotis, HttpSession session) throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			Double kadarSewaSebulan = getKadarSewaSebulan(idHasil, tarikhNotis, db);
+			Double jumlahTunggakan = getJumlahTunggakan(idHasil, tarikhNotis, db);
+			Double bulanTunggakan = Math.ceil(jumlahTunggakan / kadarSewaSebulan);
+
+			// TBLPHPNOTISHASIL
+			r.update("ID_NOTIS", idNotis);
+			r.add("ID_NOTIS", idNotis);
+			r.add("ID_HASIL", idHasil);
+			if (!"".equals(tarikhNotis)) {
+				r.add("TARIKH_NOTIS",
+						r.unquote("to_date('" + tarikhNotis + "','dd/MM/yyyy')"));
+
+				Calendar calMula = new GregorianCalendar();
+				Date dateMula = sdf.parse(tarikhNotis);
+				calMula.setTime(dateMula);
+				calMula.add(Calendar.MONTH, 2);
+				r.add("TARIKH_AKHIR_NOTIS",
+						r.unquote("to_date('" + sdf.format(calMula.getTime()) + "','dd/MM/yyyy')"));
+
+			}
+			r.add("KADAR_SEWA", kadarSewaSebulan);
+			r.add("BULAN_TUNGGAKAN", bulanTunggakan);
+			r.add("JUMLAH_TUNGGAKAN", jumlahTunggakan);
+			r.add("ID_JENIS_NOTIS", "2"); // NOTIS RAMPASAN DEPOSIT
+
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+			sql = r.getSQLUpdate("TBLPHPNOTISHASIL");
+
+			System.out.println("NotisTuntutan 2 >>>> "+sql);
+			stmt.executeUpdate(sql);
+			conn.commit();
+			this.context.put("successSave", "Y");
+
+		} catch (Exception ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
+	private void kemaskiniNotisTuntutan(String idNotis, String idHasil,
+			String tarikhNotis, HttpSession session) throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			Double kadarSewaSebulan = getKadarSewaSebulan(idHasil, tarikhNotis, db);
+			Double jumlahTunggakan = getJumlahTunggakan(idHasil, tarikhNotis, db);
+			Double bulanTunggakan = Math.ceil(jumlahTunggakan / kadarSewaSebulan);
+
+			// TBLPHPNOTISHASIL
+			r.update("ID_NOTIS", idNotis);
+			r.add("ID_NOTIS", idNotis);
+			r.add("ID_HASIL", idHasil);
+			if (!"".equals(tarikhNotis)) {
+				r.add("TARIKH_NOTIS",
+						r.unquote("to_date('" + tarikhNotis + "','dd/MM/yyyy')"));
+
+				Calendar calMula = new GregorianCalendar();
+				Date dateMula = sdf.parse(tarikhNotis);
+				calMula.setTime(dateMula);
+				calMula.add(Calendar.MONTH, 2);
+				r.add("TARIKH_AKHIR_NOTIS",
+						r.unquote("to_date('" + sdf.format(calMula.getTime()) + "','dd/MM/yyyy')"));
+
+			}
+			r.add("KADAR_SEWA", kadarSewaSebulan);
+			r.add("BULAN_TUNGGAKAN", bulanTunggakan);
+			r.add("JUMLAH_TUNGGAKAN", jumlahTunggakan);
+			r.add("ID_JENIS_NOTIS", "3"); // NOTIS TUNTUTAN
+
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+			sql = r.getSQLUpdate("TBLPHPNOTISHASIL");
+			System.out.println("NotisTuntutan 3 >>>> "+sql);
+			stmt.executeUpdate(sql);
+			conn.commit();
+			this.context.put("successSave", "Y");
+
+		} catch (Exception ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
 
 }

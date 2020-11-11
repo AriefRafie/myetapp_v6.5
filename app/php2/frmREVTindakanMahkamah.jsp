@@ -53,8 +53,8 @@
      <td width="28%">Tarikh Penerimaan SST</td>
      <td width="1%">:</td>
      <td width="70%">
-     	<input type="text" name="tarikh_penamaan_sst" id="tarikh_penamaan_sst" value="$!tm.tarikh_penamaan_sst" $readonly class="$inputTextClass" size="9" onblur="check_date(this)"/>
-       #if ($mode == 'update') <a href="javascript:displayDatePicker('tarikh_penamaan_sst',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a> #end</td>
+     	<input type="text" name="tarikh_penamaan_sst" id="tarikh_penamaan_sst" value="$!tm.tarikh_penamaan_sst" size="9" class="disabled" onblur="check_date(this)"/>
+       </td>
    </tr>
   <tr>
      <td width="1%"></td>
@@ -93,8 +93,7 @@
      <td width="28%">Tarikh Notis Rampasan</td>
      <td width="1%">:</td>
      <td width="70%">
-     	 <input type="text" name="tarikh_notis_rampasan" id="tarikh_notis_rampasan" value="$!tm.tarikh_notis_rampasan" $readonly class="$inputTextClass" size="9" onblur="check_date(this)"/>
-     	 #if ($mode == 'update') <a href="javascript:displayDatePicker('tarikh_notis_rampasan',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a> #end
+     	 <input type="text" name="tarikh_notis_rampasan" id="tarikh_notis_rampasan" value="$!tm.tarikh_notis_rampasan" size="9" class="disabled" onblur="check_date(this)"/>
      </td>
    </tr>
   <tr>
@@ -110,8 +109,7 @@
      <td width="28%">Tarikh Notis Tuntutan</td>
      <td width="1%">:</td>
      <td width="70%">
-     	<input type="text" name="tarikh_notis_tuntutan" id="tarikh_notis_tuntutan" value="$!tm.tarikh_notis_tuntutan" $readonly class="$inputTextClass" size="9" onblur="check_date(this)"/>
-        #if ($mode == 'update') <a href="javascript:displayDatePicker('tarikh_notis_tuntutan',false,'dmy');"><img border="0" src="../img/calendar.gif"/></a> #end
+     	<input type="text" name="tarikh_notis_tuntutan" id="tarikh_notis_tuntutan" value="$!tm.tarikh_notis_tuntutan" size="9" class="disabled" onblur="check_date(this)"/>
      </td>
    </tr>
    <tr>
@@ -143,22 +141,5 @@
 		<iframe id="upload_dokumen" name="upload_dokumen" width="0px" height="0px" style="visibility:hidden"></iframe>
    	</td>
    </tr>
-   #if ($mode == 'update')
-  <tr>
-    <td colspan="4" valign="bottom"><i><font color="#ff0000">Perhatian</font> : Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i></td>
-  </tr>
-  #end
-  <tr>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
-    <td> #if ($mode == 'update')
-      <input type="button" name="cmdSimpanKemaskini2" id="cmdSimpanKemaskini2" value="Simpan" onClick="doSimpanKemaskiniTindakanMahkamah()"/>
-      <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskini()"/>
-      #end
-      #if ($mode == 'view')
-      <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskiniTindakanMahkamah()"/>
-      #end </td>
-  </tr>
 </table>
 </fieldset>

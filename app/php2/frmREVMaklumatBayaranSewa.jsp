@@ -810,6 +810,25 @@ function paparPerjanjian(idPerjanjian,idHasil, idFail, flagSkrin) {
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
 }
+
+function paparNotis(idNotis,idJenisNotis,idHasil) {
+	var jenisNotis="";
+	if(idJenisNotis == "1"){
+		jenisNotis = "notisTuntutanTunggakan";
+	}else if(idJenisNotis == "2"){
+		jenisNotis = "notisRampasanDeposit";
+	}else if(idJenisNotis == "3"){
+		jenisNotis = "notisTuntutan";
+	}
+
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupNotisTunggakanView?idNotis="+idNotis+"&report="+jenisNotis+"&mode=update&idHasil="+idHasil;
+    var hWnd = window.open(url,'printuser','width=1000,height=400, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+
 function doRefreshScreen() {
 	doAjaxCall${formName}("");
 }
@@ -839,6 +858,14 @@ function cetakSuratTuntutanTunggakanSewa(idNotis) {
 }
 function cetakSuratRampasanDeposit(idNotis) {
 	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupCetakLaporanView?idNotis="+idNotis+"&report=SuratRampasanDeposit";
+    var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function cetakSuratTuntutan(idNotis) {
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupCetakLaporanView?idNotis="+idNotis+"&report=SuratTuntutan";
     var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;

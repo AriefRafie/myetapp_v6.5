@@ -49,7 +49,7 @@ public class QRCodeAPB {
 		//String path =  getAppContext()+"/reports/php2/qrcode/"+noFailremoveslash+".png";
 		
 		ResourceBundle rb = ResourceBundle.getBundle("file");
-		String path = rb.getString("apbQRpath")+noFailremoveslash+".png";
+		String path = rb.getString("qrcodepath")+noFailremoveslash+".png";
 		
 		//---untuk local dev----
 		//String path =  "C:/eclipse/workspace/reports/php2/qrcode/"+noFailremoveslash+".png";

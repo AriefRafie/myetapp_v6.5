@@ -34,7 +34,8 @@
                       <td>Saat U</td>
                       <td>:
                         <input type="text" name="txtSaatU" id="txtSaatU" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatKoordinat.saatU" onkeyup="validateNumber(this,this.value);">
-&Prime;</td>
+						&Prime;
+					  </td>
                     </tr>
                   </table></td>
                 <td width="50%" valign="top"><table width="100%" border="0" cellspacing="2" cellpadding="2">

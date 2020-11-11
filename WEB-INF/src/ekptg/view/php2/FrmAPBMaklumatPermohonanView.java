@@ -174,12 +174,12 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
 			maklumatPakar(mode, idPermohonan, idPakar);
 			maklumatKoordinat(mode, idPermohonan, idKoordinat);
 			
-    		//SENARAI TITIK KOORDINAT
+    		//SENARAI TITIK KOORDINAT BARU
 			logic.setSenaraiKoordinat(idPermohonan);
 			senaraiKoordinat = logic.getListKoordinat();
 			this.context.put("SenaraiKoordinat", senaraiKoordinat);
 			
-			//SENARAI TITIK KOORDINAT (LAMA)
+			//SENARAI TITIK KOORDINAT LAMA
 			logic.setSenaraiKoordinatHistory(idPermohonan);
 			senaraiKoordinatHistory = logic.getListKoordinatHistory();
 			this.context.put("SenaraiKoordinatHistory", senaraiKoordinatHistory);
