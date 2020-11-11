@@ -10,8 +10,11 @@ import javax.servlet.http.HttpSession;
 
 import lebah.portal.AjaxBasedModule;
 import ekptg.helpers.HTML;
+import ekptg.model.htp.FrmSemakan;
 import ekptg.model.php2.FrmAPBHeaderData;
 import ekptg.model.php2.FrmAPBMaklumatPermohonanData;
+import ekptg.model.php2.utiliti.LampiranBean;
+import ekptg.model.utils.lampiran.ILampiran;
 
 /**
  * 
@@ -23,6 +26,8 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
 	
 	FrmAPBHeaderData logicHeader = new FrmAPBHeaderData();
 	FrmAPBMaklumatPermohonanData logic = new FrmAPBMaklumatPermohonanData();
+	private ILampiran iLampiran = null;
+	FrmSemakan semak = null;
 
 	@Override
 	public String doTemplate2() throws Exception {
@@ -69,6 +74,7 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
         Vector senaraiKoordinat = null;
         Vector senaraiKoordinatHistory = null;
         Vector senaraiPakar = null;
+        Vector senaraiSemak = null;
         
 		String step = getParam("step");
         
@@ -210,11 +216,19 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
         	
         	maklumatPembeliPasir(mode, idPembeliPasir, idPermohonan);
         	
-    		
         	//SENARAI PEMBELI PASIR
     		logic.setSenaraiPembeliPasir(idPermohonan);
     		senaraiPembeliPasir = logic.getListPembeliPasir();
     		this.context.put("SenaraiPembeliPasir", senaraiPembeliPasir);
+    		
+        } else if ("3".equals(selectedTabUpper)){
+        	
+        	//SENARAI SEMAK
+        	this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("", "paparLampiran", "idDokumen",session, "phpapb"));
+        	
+        	semak = new FrmSemakan();
+			senaraiSemak = semak.getSenaraiSemakanAttach2("phpapb",idPermohonan);
+			this.context.put("SenaraiSemak", senaraiSemak);
         }
 		
 		if ("selesaiPermohonan".equals(step)){
@@ -774,5 +788,13 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
 		hash.put("modalJelas", getParam("txtModalJelas"));
 		
 		logic.updatePemohon(idPemohon, hash, session);
+	}
+	
+	private ILampiran getDocPHP(){
+		if(iLampiran == null){
+			iLampiran = new LampiranBean();
+		}
+		return iLampiran;
+				
 	}
 }

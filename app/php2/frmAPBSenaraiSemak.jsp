@@ -1,5 +1,4 @@
 <fieldset>
-<legend>SENARAI SEMAK</legend>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td colspan="2">
@@ -36,25 +35,17 @@
 	         	<td class="$row" colspan="2" width="95%">Tiada Rekod</td>
 	        </tr>
 	     #end
-      </table></td>
+    </table>
+    </td>
   </tr>
   <tr>
-    <td colspan="3">&nbsp;</td>
+    <td colspan="2">&nbsp;</td>
   </tr>
   <tr>
     <td width="30%">&nbsp;</td>
     <td width="70%">
-    	#if ($mode == 'update')
-      		<input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniSenaraiSemak()"/>
-      		<input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskini()"/>
-      	#end
-      	#if ($mode == 'view')
-      		<!-- <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/> -->
-      		#if($idStatus == '1610198')
-      			<input type="button" name="cmdSeterusnya" id="cmdHantar" value="Ke Jabatan Teknikal" onClick="doSeterusnya()"/>
-      			<input type="button" name="cmdBatalPermohonan" id="cmdBatalPermohonan" value="Batal Permohonan" onClick="gotoBatalPermohonan()"/>
-      		#end
-       #end
+      <input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onclick="seterusnya()"/>
+      <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
     </td>
   </tr>
 </table>
