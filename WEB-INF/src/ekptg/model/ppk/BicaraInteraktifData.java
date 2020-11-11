@@ -16639,7 +16639,7 @@ public class BicaraInteraktifData {
 			if(column_name.equals("ID_INTROPERINTAH"))
 			{
 				sql += " UNION ALL "+
-							" SELECT NULL AS ID_INTROPERINTAH, 'Tiada Pilihan' AS INTRO FROM DUAL ORDER BY "+field_VALUE_refTable;
+							" SELECT NULL AS ID_INTROPERINTAH, 'Lain-lain ayat Perintah' AS INTRO FROM DUAL ORDER BY ID_INTROPERINTAH";
 			}
 			
 			myLogger.info(" ("+refTable+") BICARA INTERAKTIF : SQL listRefTable :"+ sql);	
