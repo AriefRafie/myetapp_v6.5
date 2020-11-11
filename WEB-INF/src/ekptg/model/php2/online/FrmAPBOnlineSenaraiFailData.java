@@ -3841,6 +3841,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			return id_laporanpasir;
 		}
 		
+		// ADD 9/11/2020
 		public String simpanLaporan(String usid, String id_jadualkedualesenAPB, String txtJumKuantiti,
 				String txtJumRoyalti, String txtTarikhPengeluaran, String txtBulan, String txtTahun, String txtMasa, String txtHari, String txtKapal)
 				throws Exception {
@@ -3906,6 +3907,44 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			}
 			return id_laporanpasir;
 		}
+		// END
+		
+		// ADD 10/11/2020
+		public void hapusLaporan(String idLaporanPasir, HttpSession session) throws Exception {
+			Db db = null;
+			Connection conn = null;
+			String sql = "";
+
+			try {
+				db = new Db();
+				conn = db.getConnection();
+		    	conn.setAutoCommit(false);
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+				
+				//TBLPHPBARGE
+				r.add("ID_LAPORANPASIR", idLaporanPasir);
+
+				sql = r.getSQLDelete("TBLPHPLAPORANPASIR");
+				myLog.info("HAPUS BY ID LAPORAN PASIR: " + sql);
+				stmt.executeUpdate(sql);
+				
+				conn.commit();
+				
+			} catch (SQLException ex) { 
+		    	try {
+		    		conn.rollback();
+		    	} catch (SQLException e) {
+		    		throw new Exception("Rollback error : " + e.getMessage());
+		    	}
+		    	throw new Exception("Ralat : Masalah penyimpanan data " + ex.getMessage());
+		    	
+		    } finally {
+				if (db != null)
+					db.close();
+			}
+		}
+		// END
 	
 		// getListLaporan
 		public Vector getListLaporan(String id_jadualkedualesenAPB)
@@ -4179,6 +4218,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			}
 		} 
 		
+		// ADD 9/11/2020
 		public void simpanEditLaporan(String userId, String id_laporanpasir,
 				String txtJumKuantiti, String txtJumRoyalti, String txtTarikhPengeluaran,String txtBulan,
 				String txtTahun, String txtMasa, String txtHari, String txtKapal) throws Exception {
@@ -4213,6 +4253,8 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 					db.close();
 			}
 		}
+		// END
+		
 		// CLOSE EDIT LAPORAN PASIR
 
 		// SIMPAN PASIR
@@ -4291,6 +4333,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 
 				sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN, NAMA_FAIL FROM TBLPHPDOKUMEN WHERE ID_DOKUMEN = '"
 						+ idDokumen + "'";
+				myLog.info("DATA BY ID DOKUMEN: "+sql);
 				ResultSet rs = stmt.executeQuery(sql);
 
 				Hashtable h;
@@ -4311,9 +4354,14 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 					db.close();
 			}
 		}
-	public Vector getbeanMaklumatDokumen() {
-		return beanMaklumatDokumen;
-	}
+		
+		public void setbeanMaklumatDokumen(Vector beanMaklumatDokumen) {
+			this.beanMaklumatDokumen = beanMaklumatDokumen;
+		}
+		
+		public Vector getbeanMaklumatDokumen() {
+			return beanMaklumatDokumen;
+		}
 		
 		public void setSenaraiDokumen(String idLaporanPasir) throws Exception {
 			Db db = null;
@@ -4325,8 +4373,10 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				listDokumen = new Vector();
 				Statement stmt = db.getStatement();
 
-				sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN FROM TBLPHPDOKUMEN"
+				sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN, NAMA_FAIL FROM TBLPHPDOKUMEN"
 						+ " WHERE ID_LAPORANPASIR = '" + idLaporanPasir + "'";
+				
+				myLog.info("get senarai dokumen : "+ sql);
 
 				ResultSet rs = stmt.executeQuery(sql);
 				Hashtable h;
@@ -4341,6 +4391,8 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 					h.put("catatan",
 							rs.getString("CATATAN") == null ? "" : rs
 									.getString("CATATAN"));
+					h.put("namaFail", rs.getString("NAMA_FAIL") == null ? ""
+							: rs.getString("NAMA_FAIL"));
 					listDokumen.addElement(h);
 					bil++;
 					count++;
