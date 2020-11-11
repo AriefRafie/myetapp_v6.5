@@ -8,6 +8,7 @@
         <tr >
           <td colspan="9"><input name="cmdNotisTuntutan" type="button" value="Jana Notis Tuntutan Tunggakan" onClick="janaNotisTunggakan('$!idHasil')">
             <input name="cmdNotisRampasan" type="button" value="Jana Notis Rampasan Deposit" onClick="janaNotisRampasan('$!idHasil')">
+            <input name="cmdNotisRampasan" type="button" value="Jana Notis Tuntutan" onClick="janaNotisTuntutan('$!idHasil')">
           </td>
         </tr>
         #end
@@ -54,6 +55,7 @@
         <tr>
           <td class="$row" align="center">$count</td>
           <td class="$row">
+          <a href="javascript:paparNotis('$list.idNotis','$list.idJenisNotis','$!idHasil')">
           #if ($list.idJenisNotis == '1' && $list.bilPeringatan == '1')
           	<font color="#006600">$list.jenisNotis</font>
           #elseif ($list.idJenisNotis == '1' && $list.bilPeringatan == '2')
@@ -63,6 +65,7 @@
           #else
           	$list.jenisNotis
           #end
+          </a>
           </td>
           <td class="$row" align="center">$list.peringatan</td>
           <td class="$row" align="center">$list.tarikhNotis</td>
@@ -87,6 +90,9 @@
           #end
           #if ($list.idJenisNotis == '2')
           <a href="#" class="style2" onClick="javascript:cetakSuratRampasanDeposit('$list.idNotis')"><img border="0" src="../img/print.gif"/></a>
+          #end
+          #if ($list.idJenisNotis == '3')
+          <a href="#" class="style2" onClick="javascript:cetakSuratTuntutan('$list.idNotis')"><img border="0" src="../img/print.gif"/></a>
           #end
           </td>
           <td class="$row" align="center"><a href="javascript:void()" onClick="hapusNotis('$!list.idNotis')" ><img src="../img/hapus.gif" border="0"></a></td>
@@ -115,6 +121,31 @@ function janaNotisTunggakan(idHasil) {
 function janaNotisRampasan(idHasil) {
 	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupNotisTunggakanView?idHasil="+idHasil+"&report=notisRampasanDeposit";
     var hWnd = window.open(url,'printuser','width=1000,height=300, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function janaNotisTuntutan(idHasil) {
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupNotisTunggakanView?idHasil="+idHasil+"&report=notisTuntutan";
+    var hWnd = window.open(url,'printuser','width=1000,height=300, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function paparNotis(idNotis,idJenisNotis,idHasil) {
+	var jenisNotis="";
+	if(idJenisNotis == "1"){
+		jenisNotis = "notisTuntutanTunggakan";
+	}else if(idJenisNotis == "2"){
+		jenisNotis = "notisRampasanDeposit";
+	}else if(idJenisNotis == "3"){
+		jenisNotis = "notisTuntutan";
+	}
+
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupNotisTunggakanView?idNotis="+idNotis+"&report="+jenisNotis+"&mode=update&idHasil="+idHasil;
+    var hWnd = window.open(url,'printuser','width=1000,height=400, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();

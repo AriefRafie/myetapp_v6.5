@@ -9,6 +9,9 @@
 <input type="hidden" name="actionPopup"/>
 <input type="hidden" name="idHakmilikAgensi"/>
 <input type="hidden" name="idPemohon"/>
+<input type="hidden" name="idFail"/>
+<input type="hidden" name="paparDetail"/>
+
 <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
 
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -87,16 +90,183 @@
       </table>
       </fieldset></td>
   </tr>
+  #if ($paparDetail == 'true')
   <tr>
-    <td>
-    	<fieldset>
-      		<legend><b>MAKLUMAT BERKAITAN</b></legend>
-      		<table align="center" width="100%">
-      			<tr></tr>
-      		</table>
+  <td>
+ 	<fieldset id="tableDetail" style="display:block;">
+   		<legend><b>MAKLUMAT BERKAITAN</b></legend>
+   		
+     	<table width="100%" border="0" cellspacing="2" cellpadding="2">
+		 #if ($mode == 'view')
+		 <tr>
+		   <td colspan="2"><fieldset>
+		     <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
+		     <table width="100%" border="0" cellspacing="2" cellpadding="2">
+		       #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
+		       <tr>
+		         <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
+		         <td valign="top">Tarikh Terima</td>
+		         <td>:</td>
+		         <td><input type="text" name="tarikhTerima" id="tarikhTerima" value="$beanMaklumatPermohonan.tarikhTerima" onblur="check_date(this);cekTarikhTerima(this)" size="11" $readonly class="$inputTextClass"/>
+		           #if ($mode != 'view') <a href="javascript:displayDatePicker('tarikhTerima',false,'dmy');"><img border="0" src="../img/calendar.gif"/> #end </td>
+		       </tr>
+		       <tr>
+		         <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
+		         <td valign="top">Tarikh Surat</td>
+		         <td>:</td>
+		         <td><input type="text" name="tarikhSurat" id="tarikhSurat" value="$beanMaklumatPermohonan.tarikhSurat" onblur="check_date(this);cekTarikhSurat(this)" size="11" $readonly class="$inputTextClass"/>
+		           <a href="javascript:displayDatePicker('tarikhSurat',false,'dmy');">#if ($mode != 'view')<img border="0" src="../img/calendar.gif"/>#end</td>
+		       </tr>
+		       <tr>
+		         <td valign="top">#if ($mode == 'update')<span class="style1">*</span>#end</td>
+		         <td valign="top">No. Rujukan Surat</td>
+		         <td valign="top">:</td>
+		         <td><input name="txtNoRujukanSurat" type="text" class="$inputTextClass" id="txtNoRujukanSurat"  value="$beanMaklumatPermohonan.noRujSurat" size="43" maxlength="250" $readonly />
+		         </td>
+		       </tr>
+		       <tr>
+		         <td valign="top">#if ($mode == 'update')<span class="style1">*</span>#end</td>
+		         <td valign="top">Perkara</td>
+		         <td valign="top">:</td>
+		         <td><textarea name="txtPerkara" id="txtPerkara" rows="5" cols="50" $readonly class="$inputTextClass"  onkeyup="textCounter(this.form.sebabTamat,this.form.remLen1,$!saizPerkara);" onkeydown="textCounter(this.form.sebabTamat,this.form.remLen1,$!saizPerkara);">$beanMaklumatPermohonan.perkara</textarea></td>
+		       </tr>
+		       <tr>
+		         <td width="1%">&nbsp;</td>
+		         <td width="28%">Jenis Tujuan</td>
+		         <td width="1%">:</td>
+		         <td width="70%">MENGOREK</td>
+		       </tr>
+		      ## <tr>
+		      ##   <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
+		      ##   <td>Kaitan Tujuan</td>
+		      ##   <td>:</td>
+		      ##   <td>$selectTujuanKaitan</td>
+		       ##</tr>
+		     ##  <tr>
+		     ##    <td valign="top">#if ($mode == 'update')<span class="style1">*</span>#end</td>
+		     ##    <td valign="top">Tujuan Pengambilan</td>
+		     ##    <td valign="top">:</td>
+		      ##   <td valign="top"><textarea name="txtTujuanPengambilan" id="txtTujuanPengambilan" cols="43" rows="5" $readonly class="$inputTextClass"  onKeyUp="textCounter(this.form.txtTujuanPengambilan,this.form.remLen1,$!saizTxtTujuanPengambilan);" onKeyDown="textCounter(this.form.txtTujuanPengambilan,this.form.remLen1,$!saizTxtTujuanPengambilan);" >$beanMaklumatPermohonan.tujuanPengambilan</textarea></td>
+		      ## </tr>
+		       #if ($mode == 'update')
+		       <tr>
+		         <td valign="top">&nbsp;</td>
+		         <td valign="top">&nbsp;</td>
+		         <td valign="top">&nbsp;</td>
+		         <td valign="top">Baki Aksara :&nbsp;
+		           <input type="text" readonly="readonly" class="disabled" name="remLen1" size="3" maxlength="3" value="$!saizTxtTujuanPengambilan" /></td>
+		       </tr>
+		       #end
+		        #end
+		      </table>
+		      </fieldset>
+		      
+			  <fieldset>
+				<legend><strong>MAKLUMAT LESEN</strong></legend>
+				<table width="100%" border="0" cellspacing="2" cellpadding="2">
+		  		#if ($paparDetail == 'true')
+			  		#foreach ($beanMaklumatSuratKelulusanLesenKepadaPemohon in $BeanMaklumatSuratKelulusanLesenKepadaPemohon)
+			  		<tr>
+				      <td width="1%" valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+				      <td width="28%" valign="top">No Lesen</td>
+				      <td width="1%" valign="top">:</td>
+				      <td width="70%" valign="top"><input name="txtNoLesen" type="text" class="$inputTextClass" id="txtNoLesen" value="$beanMaklumatSuratKelulusanLesenKepadaPemohon.txtNoLesen" size="30" maxlength="100" $readonly/></td>
+				    </tr>
+			    	<tr>
+				      <td valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+				      <td valign="top">Tarikh Mula</td>
+				      <td valign="top">:</td>
+				      <td valign="top"><input name="txtTarikhMula" type="text" class="$inputTextClass" id="txtTarikhMula" onBlur="check_date(this);calcDate();" value="$beanMaklumatSuratKelulusanLesenKepadaPemohon.txtTarikhMula" size="9" maxlength="10" $readonly />
+				    #if ($mode != 'view') <a href="javascript:displayDatePicker('txtTarikhMula',false,'dmy');"><img border="0" src="../img/calendar.gif"/> #end </td>
+					</tr>
+					<tr>
+						<td valign="top">&nbsp;</td>
+						<td valign="top">Tempoh</td>
+						<td valign="top">:</td>
+						<td>$beanMaklumatSuratKelulusanLesenKepadaPemohon.txtTempohDiluluskan #if($beanMaklumatSuratKelulusanLesenKepadaPemohon.idTempoh=='1') Bulan #else Tahun #end
+						   <input name="idTempoh" type="hidden" id="idTempoh" value="$!beanMaklumatSuratKelulusanLesenKepadaPemohon.idTempoh"/>
+						   <input name="tempoh" type="hidden" id="tempoh" value="$!beanMaklumatSuratKelulusanLesenKepadaPemohon.txtTempohDiluluskan"/>
+						</td>
+				 	</tr>
+					<tr>
+					  <td valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+					  <td valign="top">Tarikh Tamat</td>
+					  <td valign="top">:</td>
+					  <td valign="top"><input name="txtTarikhTamat" type="text" class="$inputTextClass" id="txtTarikhTamat" onBlur="check_date(this)" value="$beanMaklumatSuratKelulusanLesenKepadaPemohon.txtTarikhTamat" size="9" maxlength="10" $readonly/>
+					    #if ($mode != 'view') <a href="javascript:displayDatePicker('txtTarikhTamat',false,'dmy');"><img border="0" src="../img/calendar.gif"/> #end 
+					  </td>
+					</tr>
+					<tr>
+					  <td>&nbsp;</td>
+					  <td>Fee Lesen</td>
+					  <td>:</td>
+					  <td>RM $beanMaklumatSuratKelulusanLesenKepadaPemohon.kadarFeeLesen          bagi setiap
+					    $beanMaklumatSuratKelulusanLesenKepadaPemohon.kmPersegi
+					    km persegi</td>
+					</tr>
+					<tr>
+					  <td>&nbsp;</td>
+					  <td>Jumlah Fee Lesen</td>
+					  <td>:</td>
+					  <td>RM
+					    $beanMaklumatSuratKelulusanLesenKepadaPemohon.jumlahFeeLesen </td>
+					</tr>
+					<tr>
+					  <td>&nbsp;</td>
+					  <td>Kadar Royalti Pasir</td>
+					  <td>:</td>
+					  <td>RM
+					    $beanMaklumatSuratKelulusanLesenKepadaPemohon.kadarRoyaltiPasir / meter padu</td>
+					</tr>
+					<tr>
+					  <td>&nbsp;</td>
+					  <td>Jumlah Royalti Keseluruhan</td>
+					  <td>:</td>
+					  <td>RM $beanMaklumatSuratKelulusanLesenKepadaPemohon.jumlahRoyaltiSeluruh</td>
+					</tr>
+					<tr>
+					  <td>&nbsp;</td>
+					  <td>Jumlah Pendahuluan Royalti</td>
+					  <td>:</td>
+					  <td>RM          $beanMaklumatSuratKelulusanLesenKepadaPemohon.jumDahuluRoyalti</td>
+					</tr>
+					<tr>
+					  <td>&nbsp;</td>
+					  <td>Luar Perairan Negeri</td>
+					  <td>: </td>
+					  <td>#if($beanMaklumatSuratKelulusanLesenKepadaPemohon.flagLuar=='1') Ya #else Tidak #end</td>
+					</tr>
+					<tr>
+					  <td>&nbsp;</td>
+					  <td>Negeri</td>
+					  <td>: </td>
+					  <td>$beanMaklumatSuratKelulusanLesenKepadaPemohon.namaNegeri</td>
+					</tr>
+					<tr>
+					  <td>&nbsp;</td>
+					  <td>Lokasi</td>
+					  <td>: </td>
+					  <td>$beanMaklumatSuratKelulusanLesenKepadaPemohon.lokasi</td>
+					</tr>
+					<tr>
+					  <td>&nbsp;</td>
+					  <td>Luas Kawasan</td>
+					  <td>: </td>
+					  <td>$beanMaklumatSuratKelulusanLesenKepadaPemohon.luas $beanMaklumatSuratKelulusanLesenKepadaPemohon.jenisLuas</td>
+					</tr>
+					#end
+				
+		  		#end
+				</table>
+				</fieldset>
+				</td>
+				</tr>
+		  #end
+		</table>
       	</fieldset>
   	</td>
   </tr>
+  #end
 </table>
 <script>
 function doCarian() {
@@ -109,9 +279,11 @@ function kosongkan() {
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmAPBPopupSejarahMaklumatLesen";
 	document.${formName}.submit();
 }
-function papar(noFail) {	
-	document.${formName}.noFail.value = noFail;
-	document.${formName}.actionPopup.value = "paparMaklumatLesen";
+
+function doPaparMaklumatDetail(idFail) {
+	document.${formName}.idFail.value = idFail;
+	document.${formName}.paparDetail.value = "true";
+	document.${formName}.actionPopup.value = "doPaparMaklumatDetail";
 	document.${formName}.submit();
 }
 </script>

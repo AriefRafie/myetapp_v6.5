@@ -241,7 +241,7 @@ function kosongkan() {
 function cetaksek4(jenisTempoh){
 	//alert("masuk");
 
-	if(document.${formName}.socPejabat.value == ""){
+	/*if(document.${formName}.socPejabat.value == ""){
 	   	alert("Sila pilih \"Pejabat JKPTG\" terlebih dahulu.");
 		document.${formName}.socPejabat.focus();
 		return;
@@ -284,11 +284,73 @@ function cetaksek4(jenisTempoh){
 			type = "1";
 		}else{
 			type = "3";
+		}*/
+		
+		//TAMBAH
+		if(document.${formName}.socPejabat.value == ""){
+	   	alert("Sila pilih \"Pejabat JKPTG\" terlebih dahulu.");
+		document.${formName}.socPejabat.focus();
+		return;
+	//Sehingga	
+	}else if((jenisTempoh=="sehingga") && document.${formName}.socBulan.value == ""){
+		alert("Sila pilih \"Bulan\" terlebih dahulu.");
+		document.${formName}.socBulan.focus();
+		return;
+
+	}else if((jenisTempoh=="sehingga") && document.${formName}.socTahun.value == ""){
+		alert("Sila pilih \"Tahun\" terlebih dahulu.");
+		document.${formName}.socTahun.focus();
+		return;
+	//julat	
+	}/*else if(jenisTempoh=="julat" && document.${formName}.socBulanSehingga.value == ""){
+		alert("Sila pilih \"Bulan\" terlebih dahulu.");
+		document.${formName}.socBulanSehingga.focus();
+		return;
+
+	}*/else if(jenisTempoh=="julat" && document.${formName}.socTahunSehingga.value == ""){
+		alert("Sila pilih \"Tahun\" terlebih dahulu.");
+		document.${formName}.socTahunSehingga.focus();
+		return;
+
+	}else{		
+
+		var bulanSE = "00";
+		var bulanSE2 = "00";
+		var bulan = "00";
+		var tahunSE = "";
+		var bulantahunSE = "";
+		var type = "";
+		if(jenisTempoh=="julat"){
+			
+			if(document.${formName}.socBulanSehingga.value == ""){
+				bulanSE2 = parseInt("12");
+				bulanSE = parseInt("12");
+				bulan = parseInt("01");
+			}
+			else if(document.${formName}.bulan.value == ""){
+				bulanSE2 = parseInt(document.${formName}.socBulanSehingga.value);
+				bulanSE = parseInt(document.${formName}.socBulanSehingga.value);
+				bulan = parseInt("01");
+			}
+			else{
+				bulanSE = parseInt(document.${formName}.socBulanSehingga.value);
+				bulanSE2 = parseInt(document.${formName}.socBulanSehingga.value);
+				bulan = parseInt(document.${formName}.bulan.value);
+			}
+				tahunSE = document.${formName}.socTahunSehingga.value;
+				bulantahunSE = bulanSE+"/"+tahunSE
+				type = "2";
+			
+		}else if(jenisTempoh=="sehingga"){
+			type = "1";
+			bulan = parseInt(document.${formName}.bulan.value);
+		}else{
+			type = "3";
 		}
 	
 		var id_pejabat = document.${formName}.id_pejabat.value;
 		var id_daerah = document.${formName}.id_daerah.value;
-		var bulan = document.${formName}.bulan.value;
+		//var bulan = document.${formName}.bulan.value;
 		var tahun = document.${formName}.tahun.value;
 		var projek = document.${formName}.projek.value;
 		var no_fail = document.${formName}.no_fail.value;
@@ -361,7 +423,7 @@ function cetaksek4(jenisTempoh){
 
 	function cetak(jenisTempoh){
 
-		if(document.${formName}.socPejabat.value == ""){
+		/*if(document.${formName}.socPejabat.value == ""){
 		   	alert("Sila pilih \"Pejabat JKPTG\" terlebih dahulu.");
 			document.${formName}.socPejabat.focus();
 			return;
@@ -404,11 +466,73 @@ function cetaksek4(jenisTempoh){
 				type = "1";
 			}else{
 				type = "3";
+			}*/
+			
+			//TAMBAH
+	if(document.${formName}.socPejabat.value == ""){
+	   	alert("Sila pilih \"Pejabat JKPTG\" terlebih dahulu.");
+		document.${formName}.socPejabat.focus();
+		return;
+	//Sehingga	
+	}else if((jenisTempoh=="sehingga") && document.${formName}.socBulan.value == ""){
+		alert("Sila pilih \"Bulan\" terlebih dahulu.");
+		document.${formName}.socBulan.focus();
+		return;
+
+	}else if((jenisTempoh=="sehingga") && document.${formName}.socTahun.value == ""){
+		alert("Sila pilih \"Tahun\" terlebih dahulu.");
+		document.${formName}.socTahun.focus();
+		return;
+	//julat	
+	}/*else if(jenisTempoh=="julat" && document.${formName}.socBulanSehingga.value == ""){
+		alert("Sila pilih \"Bulan\" terlebih dahulu.");
+		document.${formName}.socBulanSehingga.focus();
+		return;
+
+	}*/else if(jenisTempoh=="julat" && document.${formName}.socTahunSehingga.value == ""){
+		alert("Sila pilih \"Tahun\" terlebih dahulu.");
+		document.${formName}.socTahunSehingga.focus();
+		return;
+
+	}else{		
+
+		var bulanSE = "00";
+		var bulanSE2 = "00";
+		var bulan = "00";
+		var tahunSE = "";
+		var bulantahunSE = "";
+		var type = "";
+		if(jenisTempoh=="julat"){
+			
+			if(document.${formName}.socBulanSehingga.value == ""){
+				bulanSE2 = parseInt("12");
+				bulanSE = parseInt("12");
+				bulan = parseInt("01");
 			}
+			else if(document.${formName}.bulan.value == ""){
+				bulanSE2 = parseInt(document.${formName}.socBulanSehingga.value);
+				bulanSE = parseInt(document.${formName}.socBulanSehingga.value);
+				bulan = parseInt("01");
+			}
+			else{
+				bulanSE = parseInt(document.${formName}.socBulanSehingga.value);
+				bulanSE2 = parseInt(document.${formName}.socBulanSehingga.value);
+				bulan = parseInt(document.${formName}.bulan.value);
+			}
+				tahunSE = document.${formName}.socTahunSehingga.value;
+				bulantahunSE = bulanSE+"/"+tahunSE
+				type = "2";
+			
+		}else if(jenisTempoh=="sehingga"){
+			type = "1";
+			bulan = parseInt(document.${formName}.bulan.value);
+		}else{
+			type = "3";
+		}
 		
 			var id_pejabat = document.${formName}.id_pejabat.value;
 			var id_daerah = document.${formName}.id_daerah.value;
-			var bulan = document.${formName}.bulan.value;
+			//var bulan = document.${formName}.bulan.value;
 			var tahun = document.${formName}.tahun.value;
 			var projek = document.${formName}.projek.value;
 			var no_fail = document.${formName}.no_fail.value;
@@ -486,7 +610,7 @@ function cetaksek4(jenisTempoh){
 			
 		}	
 		//Sehingga	
-		else if((jenisTempoh=="sehingga" || jenisTempoh=="julat") && document.${formName}.socBulan.value == ""){
+		else if((jenisTempoh=="sehingga") && document.${formName}.socBulan.value == ""){
 			alert("Sila pilih \"Bulan\" terlebih dahulu.");
 			document.${formName}.socBulan.focus();
 			return;
@@ -498,11 +622,11 @@ function cetaksek4(jenisTempoh){
 
 		}
 		//julat
-		else if(jenisTempoh=="julat" && document.${formName}.socBulanSehingga.value == ""){
+		/*else if(jenisTempoh=="julat" && document.${formName}.socBulanSehingga.value == ""){
 			alert("Sila pilih \"Bulan\" terlebih dahulu.");
 			document.${formName}.socBulanSehingga.focus();
 			return;
-		}else if(jenisTempoh=="julat" && document.${formName}.socTahunSehingga.value == ""){
+		}*/else if(jenisTempoh=="julat" && document.${formName}.socTahunSehingga.value == ""){
 			alert("Sila pilih \"Tahun\" terlebih dahulu.");
 			document.${formName}.socTahunSehingga.focus();
 			return;
@@ -514,24 +638,49 @@ function cetaksek4(jenisTempoh){
 			var tahunSE = "";
 			var bulantahunSE = "";
 			var type = "";
+			var bulan = "";
 			var template = "LaporanRingkasanProjekMain";
 			if(jenisTempoh=="julat"){
-				bulanSE = parseInt(document.${formName}.socBulanSehingga.value);
+				if(document.${formName}.socBulanSehingga.value == "" && document.${formName}.bulan.value == ""){
+					bulanSE = parseInt("12");
+					bulanSE2 = parseInt("12");
+					bulan = parseInt("01");
+				}
+				else if(document.${formName}.socBulanSehingga.value == ""){
+					bulanSE = parseInt("12");
+					bulanSE2 = parseInt("12");
+					bulan = parseInt(document.${formName}.bulan.value);
+				}
+				else if(document.${formName}.bulan.value == ""){
+					bulanSE = parseInt(document.${formName}.socBulanSehingga.value);
+					bulanSE2 = parseInt(document.${formName}.socBulanSehingga.value);
+					bulan = parseInt("01");
+				}else{
+					bulanSE = parseInt(document.${formName}.socBulanSehingga.value);
+					bulanSE2 = parseInt(document.${formName}.socBulanSehingga.value);
+					bulan = parseInt(document.${formName}.bulan.value);
+				}
+				tahunSE = document.${formName}.socTahunSehingga.value;
+				bulantahunSE = bulanSE+"/"+tahunSE
+				type = "2";
+				
+				/*bulanSE = parseInt(document.${formName}.socBulanSehingga.value);
 				bulanSE2 = parseInt(document.${formName}.socBulanSehingga.value);
 				tahunSE = document.${formName}.socTahunSehingga.value;
 				bulantahunSE = bulanSE+"/"+tahunSE
 				type = "2";
-				//template += "Selang";
+				//template += "Selang";   */
 					
 			}else if(jenisTempoh=="sehingga"){
-				type = "1";									
+				type = "1";
+				bulan = document.${formName}.bulan.value;
 			}else{
 				//template += "Selang";
 				type = "3";
 			}
 			var id_pejabat = document.${formName}.id_pejabat.value;
 			var id_daerah = document.${formName}.id_daerah.value;
-			var bulan = document.${formName}.bulan.value;
+			//var bulan = document.${formName}.bulan.value;
 			var tahun = document.${formName}.tahun.value;
 			var projek = document.${formName}.projek.value;	
 			var no_fail = document.${formName}.no_fail.value;
@@ -621,22 +770,22 @@ function cetakRingkasanBorangA(jenisTempoh){
 		document.${formName}.socPejabat.focus();
 		return;
 	//Sehingga	
-	}else if((jenisTempoh=="sehingga" || jenisTempoh=="julat") && document.${formName}.socBulan.value == ""){
+	}else if((jenisTempoh=="sehingga") && document.${formName}.socBulan.value == ""){
 		alert("Sila pilih \"Bulan\" terlebih dahulu.");
 		document.${formName}.socBulan.focus();
 		return;
 
-	}else if((jenisTempoh=="sehingga" || jenisTempoh=="julat") && document.${formName}.socTahun.value == ""){
+	}else if((jenisTempoh=="sehingga") && document.${formName}.socTahun.value == ""){
 		alert("Sila pilih \"Tahun\" terlebih dahulu.");
 		document.${formName}.socTahun.focus();
 		return;
 	//julat	
-	}else if(jenisTempoh=="julat" && document.${formName}.socBulanSehingga.value == ""){
+	}/*else if(jenisTempoh=="julat" && document.${formName}.socBulanSehingga.value == ""){
 		alert("Sila pilih \"Bulan\" terlebih dahulu.");
 		document.${formName}.socBulanSehingga.focus();
 		return;
 
-	}else if(jenisTempoh=="julat" && document.${formName}.socTahunSehingga.value == ""){
+	}*/else if(jenisTempoh=="julat" && document.${formName}.socTahunSehingga.value == ""){
 		alert("Sila pilih \"Tahun\" terlebih dahulu.");
 		document.${formName}.socTahunSehingga.focus();
 		return;
@@ -645,28 +794,44 @@ function cetakRingkasanBorangA(jenisTempoh){
 
 		var bulanSE = "00";
 		var bulanSE2 = "00";
+		var bulan = "00";
 		var tahunSE = "";
 		var bulantahunSE = "";
 		var type = "";
 		if(jenisTempoh=="julat"){
-			bulanSE = parseInt(document.${formName}.socBulanSehingga.value);
-			bulanSE2 = parseInt(document.${formName}.socBulanSehingga.value);
-			tahunSE = document.${formName}.socTahunSehingga.value;
-			bulantahunSE = bulanSE+"/"+tahunSE
-			type = "2";
+			
+			if(document.${formName}.socBulanSehingga.value == ""){
+				bulanSE2 = parseInt("12");
+				bulanSE = parseInt("12");
+				bulan = parseInt("01");
+			}
+			else if(document.${formName}.bulan.value == ""){
+				bulanSE2 = parseInt(document.${formName}.socBulanSehingga.value);
+				bulanSE = parseInt(document.${formName}.socBulanSehingga.value);
+				bulan = parseInt("01");
+			}
+			else{
+				bulanSE = parseInt(document.${formName}.socBulanSehingga.value);
+				bulanSE2 = parseInt(document.${formName}.socBulanSehingga.value);
+				bulan = parseInt(document.${formName}.bulan.value);
+			}
+				tahunSE = document.${formName}.socTahunSehingga.value;
+				bulantahunSE = bulanSE+"/"+tahunSE
+				type = "2";
 			
 		}else if(jenisTempoh=="sehingga"){
 			type = "1";
+			bulan = parseInt(document.${formName}.bulan.value);
 		}else{
 			type = "3";
 		}
 	
 		var id_pejabat = document.${formName}.id_pejabat.value;
 		var id_daerah = document.${formName}.id_daerah.value;
-		var bulan = document.${formName}.bulan.value;
 		var tahun = document.${formName}.tahun.value;
 		var projek = document.${formName}.projek.value;
 		var no_fail = document.${formName}.no_fail.value;
+		
 	
 		//alert("JGCGHSCGHVDH :"+projek.trim());		
 		if(projek!=""){

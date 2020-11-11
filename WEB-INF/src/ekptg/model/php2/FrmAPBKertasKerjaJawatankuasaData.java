@@ -284,6 +284,7 @@ public class FrmAPBKertasKerjaJawatankuasaData {
 					+ "FROM TBLPHPKOORDINATPERMOHONAN "
 					+ "WHERE "
 					+ "TBLPHPKOORDINATPERMOHONAN.ID_ULASANTEKNIKAL IS NULL "
+					+ "AND TBLPHPKOORDINATPERMOHONAN.FLAG_HISTORY = 'N' "
 					+ "AND TBLPHPKOORDINATPERMOHONAN.ID_PERMOHONAN = '"
 					+ idPermohonan + "'" + " ORDER BY ID_KOORDINATPERMOHONAN ";
 			ResultSet rs = stmt.executeQuery(sql);
