@@ -279,3 +279,4 @@ function textCounter(field, countfield, maxlimit) {
 	 countfield.value = maxlimit - field.value.length;
 }
 </script>
+$javascriptLampiran
