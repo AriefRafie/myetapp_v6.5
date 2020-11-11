@@ -18,21 +18,13 @@ public class FrmAPBPopupSejarahMaklumatLesen extends AjaxBasedModule{
 	
 	public String doTemplate2() throws Exception {
 		
-		//GET DEFAULT PARAM
 		Vector<Hashtable<String,String>> listSyarikat = null;
 		HttpSession session = this.request.getSession();
-		
-		//Boolean postDB = false;
-		//String doPost = (String)session.getAttribute("doPost");
-	    //if (doPost.equals("true")) {
-	   //     postDB = true;
-	    //}  
-	    
+		    
 		String action = getParam("action");
 		String actionPopup = getParam("actionPopup");
 		String paparDetail = getParam("paparDetail");
 		
-		//String idPermohonan=getParam("idPermohonan");
 		String idFail = getParam("idFail");
 	    String noLesen = getParam("txtCarianNoLesen");
 	    String noFail = getParam("txtCarianNoFail");
@@ -40,38 +32,27 @@ public class FrmAPBPopupSejarahMaklumatLesen extends AjaxBasedModule{
 	    String idPermohonan=logic.getIdPermohonan(idFail);
 	    
 		this.context.put("paparDetail",paparDetail);
-		//if (postDB) {
-		//	if ("paparMaklumatDetail".equals(actionPopup)){
-				
-		    	//if(logic.checkMaklumatPenyediaanLesen(actionPopup)){
-    			//	this.context.put("onload", " \"alert('Sila masukkan nombor lesen.')\"");
-    			//} else {
-    			//	logic.updateStatus(idFail, idPermohonan, session);
-    			//}
-    	//	}        
-    	//}
-		//if (postDB){
-		
+
 		//VECTOR
         Vector beanMaklumatPermohonan = null;
         Vector beanMaklumatSuratKelulusanLesenKepadaPemohon = null;
 
-        	if ("doPaparMaklumatDetail".equals(actionPopup)){
-        		
-        		beanMaklumatPermohonan = new Vector();
-                logic.setMaklumatPermohonan(idFail);
-                beanMaklumatPermohonan = logic.getBeanMaklumatPermohonan();
-        		this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
-        		
-        		beanMaklumatSuratKelulusanLesenKepadaPemohon = new Vector();
-        		
-                logic.setMaklumatSuratKelulusanLesenKepadaPemohon(idPermohonan);
-                beanMaklumatSuratKelulusanLesenKepadaPemohon = logic.getBeanMaklumatSuratKelulusanLesenKepadaPemohon();
-        		this.context.put("BeanMaklumatSuratKelulusanLesenKepadaPemohon", beanMaklumatSuratKelulusanLesenKepadaPemohon);	
-        		this.context.put("paparDetail",paparDetail);
-        		this.context.put("mode", "view");
-        	}
-    	//}
+    	if ("doPaparMaklumatDetail".equals(actionPopup)){
+    		
+    		beanMaklumatPermohonan = new Vector();
+            logic.setMaklumatPermohonan(idFail);
+            beanMaklumatPermohonan = logic.getBeanMaklumatPermohonan();
+    		this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
+    		
+    		beanMaklumatSuratKelulusanLesenKepadaPemohon = new Vector();
+    		
+            logic.setMaklumatSuratKelulusanLesenKepadaPemohon(idPermohonan);
+            beanMaklumatSuratKelulusanLesenKepadaPemohon = logic.getBeanMaklumatSuratKelulusanLesenKepadaPemohon();
+    		this.context.put("BeanMaklumatSuratKelulusanLesenKepadaPemohon", beanMaklumatSuratKelulusanLesenKepadaPemohon);	
+    		this.context.put("paparDetail",paparDetail);
+    		this.context.put("mode", "view");
+    	}
+   
 		
 	    String vm = "app/php2/frmPopupSejarahMaklumatLesen.jsp";
 	    context.put("SenaraiFailSyarikat","");
@@ -84,7 +65,6 @@ public class FrmAPBPopupSejarahMaklumatLesen extends AjaxBasedModule{
 	    	noFailBaru = noFail.trim();
 	    }
 	   
-	    
 	    listSyarikat = new Vector<Hashtable<String,String>>();
 	    listSyarikat = logic.getCarianFailSyarikat(noFailBaru,noLesen);
 	    
