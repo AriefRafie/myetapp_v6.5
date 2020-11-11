@@ -42,12 +42,15 @@
          <!-- <li onClick="doChangeTab(2);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PEMBELI PASIR</li>-->
         </ul>
         <div class="TabbedPanelsContentGroup">
-          <div class="TabbedPanelsContent"> #if ($selectedTabUpper == '0')
-            #parse("app/php2/frmAPBMaklumatPermohonanPermohonan.jsp")
+          <div class="TabbedPanelsContent"> 
+          	#if ($selectedTabUpper == '0')
+            	#parse("app/php2/frmAPBMaklumatPermohonanPermohonan.jsp")
             #end </div>
-          <div class="TabbedPanelsContent"> #if ($selectedTabUpper == '1')
-            #parse("app/php2/frmAPBMaklumatPermohonanPemohon.jsp")
-            #end </div>
+          <div class="TabbedPanelsContent"> 
+          	#if ($selectedTabUpper == '1')
+            	#parse("app/php2/frmAPBMaklumatPermohonanPemohon.jsp")
+            #end 
+          </div>
          <!-- <div class="TabbedPanelsContent"> #if ($selectedTabUpper == '2')
             #parse("app/php2/frmAPBMaklumatPermohonanPembeliPasir.jsp")
             #end </div>-->

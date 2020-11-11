@@ -48,6 +48,18 @@
         </tr>
         <tr>
           <td width="1%">&nbsp;</td>
+          <td width="28%" valign="top">Jenis Lesen</td>
+          <td width="1%">:</td>
+          #if ($beanMaklumatPermohonan.idJenisLesen == '2')
+          <td width="70%"><strong>BORANG 2(LESEN PASIR)</strong></td>
+          #elseif ($beanMaklumatPermohonan.idJenisLesen == '3')
+          <td width="70%"><strong>BORANG 3(LESEN MENJELAJAH/MENCARIGALI/MENGGEREK SELAIN PASIR)</strong></td>
+          #elseif ($beanMaklumatPermohonan.idJenisLesen == '4')
+          <td width="70%"><strong>BORANG 4(LESEN GALIAN SELAIN PASIR)</strong></td>
+          #end
+        </tr>
+        <tr>
+          <td width="1%">&nbsp;</td>
           <td width="28%" valign="top">No. Rujukan <i>Online</i></td>
           <td width="1%" >:</td>
           <td width="70%">$beanMaklumatPermohonan.noPermohonan</td>
@@ -179,6 +191,11 @@
         #end
       </table>
       </fieldset></td>
+  </tr>
+  <tr>
+	<td colspan="2">
+		#parse("app/php2/frmAPBSenaraiSemak.jsp")
+	</td>
   </tr>
   <tr>
     <td colspan="2"></td>

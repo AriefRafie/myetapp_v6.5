@@ -228,6 +228,44 @@
             </table>
             </fieldset></td>
         </tr>
+        <tr>
+          <td><fieldset>
+            <legend><strong>SENARAI SEJARAH KOORDINAT</strong></legend>
+            <table align="center" width="100%">
+              <tr class="table_header">
+                <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
+                <td width="35%" align="center"><strong>Label Koordinat</strong></td>
+                <td align="center"><strong>Latitud (U)</strong></td>
+                <td align="center"><strong>Longitud (T)</strong></td>
+              </tr>
+              #set ($listKoordinatHistory = "")
+              #if ($SenaraiKoordinatHistory.size() > 0)
+              #foreach ($listKoordinatHistory in $SenaraiKoordinatHistory)
+              #if ($listKoordinatHistory.bil == '')
+              #set( $row = "row1" )
+              #elseif (($listKoordinatHistory.bil % 2) != 0)
+              #set( $row = "row1" )
+              #else 
+              #set( $row = "row2" )
+              #end
+              <tr>
+                <td class="$row" align="center">$listKoordinatHistory.bil</td>
+                <td class="$row">$listKoordinatHistory.labelTitik</a></td>
+                <td align="center" class="$row">$listKoordinatHistory.darjahU&deg; &nbsp; $listKoordinatHistory.minitU&prime; &nbsp; #if($!listKoordinatHistory.saatU != '') $listKoordinatHistory.saatU&Prime; #end</td>
+                <td align="center" class="$row">$listKoordinatHistory.darjahT&deg; &nbsp; $listKoordinatHistory.minitT&prime; &nbsp; #if($!listKoordinatHistory.saatT != '') $listKoordinatHistory.saatT&Prime; #end</td>
+              </tr>
+              #end
+              #else
+              <tr>
+                <td class="row1" align="center">&nbsp;</td>
+                <td class="row1">Tiada Rekod</td>
+                <td align="center" class="row1">&nbsp;</td>
+                <td align="center" class="row1">&nbsp;</td>
+              </tr>
+              #end
+            </table>
+          </fieldset></td>
+        </tr>
         #end
       </table></td>
   </tr>

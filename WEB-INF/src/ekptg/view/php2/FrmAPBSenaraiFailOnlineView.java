@@ -8,13 +8,18 @@ import javax.servlet.http.HttpSession;
 import lebah.portal.AjaxBasedModule;
 import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
+import ekptg.model.htp.FrmSemakan;
 import ekptg.model.php2.FrmAPBSenaraiFailData;
+import ekptg.model.php2.utiliti.LampiranBean;
 //import ekptg.model.php2.FrmAPBSenaraiFailOnlineData;
+import ekptg.model.utils.lampiran.ILampiran;
 
 @SuppressWarnings("serial")
 public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
 
 	FrmAPBSenaraiFailData logic = new FrmAPBSenaraiFailData();
+	private ILampiran iLampiran = null;
+	FrmSemakan semak = null;
 	
 	@Override
 	public String doTemplate2() throws Exception {
@@ -44,9 +49,10 @@ public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
         
         //VECTOR
         Vector list = null;
-        //Vector beanMaklumatPermohonan = null;
-        //Vector beanMaklumatPemohon = null;
-        
+        Vector beanMaklumatPermohonan = null;
+        Vector beanMaklumatPemohon = null;
+        Vector senaraiSemak = null;
+
         String idKategoriPemohon = getParam("socKategoriPemohon");
 		if (idKategoriPemohon == null || idKategoriPemohon.trim().length() == 0) {
 			idKategoriPemohon = "99999";
@@ -75,9 +81,8 @@ public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
 	    	}
     	}
 		
-		Vector beanMaklumatPermohonan = null;
-        Vector beanMaklumatPemohon = null;
-        
+		this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("", "paparLampiran", "idDokumen",session));
+		        
         if ("papar".equals(actionOnline)){
         	
         	
@@ -135,7 +140,11 @@ public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
 			logic.setMaklumatPermohonan(idFail);
 			beanMaklumatPermohonan = logic.getBeanMaklumatPermohonan();
 			this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
-   
+			
+			semak = new FrmSemakan();
+			senaraiSemak = semak.getSenaraiSemakanAttach("phpapb",idPermohonan);
+			this.context.put("SenaraiSemak", senaraiSemak);
+			
         }
         else {
 	     	// GO TO LIST FAIL APB
@@ -160,6 +169,14 @@ public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
 	    this.context.put("idUrusan", idUrusan);
 	    
 		return vm;
+	}
+	
+	private ILampiran getDocPHP(){
+		if(iLampiran == null){
+			iLampiran = new LampiranBean();
+		}
+		return iLampiran;
+				
 	}
 }
 	

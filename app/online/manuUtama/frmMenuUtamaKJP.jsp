@@ -129,7 +129,7 @@ function toggle_div(id) {
 																		</label>&nbsp;
 																	 -->
 
-																	Pengambilan Tanah</li></font>
+																	&nbsp;Pengambilan Tanah</li></font>
 																</a>
 															</td>
 														</tr>
@@ -146,7 +146,7 @@ function toggle_div(id) {
 																	#end
 
 										
-																	Notifikasi Maklumat Pembayaran</li></font>
+																	&nbsp;Notifikasi Maklumat Pembayaran</li></font>
 																</a>
 															</td>
 														</tr>
@@ -217,6 +217,22 @@ function toggle_div(id) {
 															<td>
 																<a href="javascript:rayuanOnline()" class="help" title="Status Rayuan Bantahan">
 																	<font color="blue"><li>&nbsp;Status Rayuan Bantahan</li></font>
+																</a>
+															</td>
+														</tr>
+															<tr>
+															<td>
+																<a href="#" onclick="toggle_div('toggleDiv');" class="help" title="Membuat Permohonan Pengambilan Tanah">
+														<a href="javascript:maklumatPembayaranPampasan()" class="help" title="Notifikasi Masukkan Maklumat Pembayaran">
+																	<font color="blue"><li>
+																	#if($!jumlah_notifikasi_bayarpampasan > 0)
+																		<label style="background-color:blue" align="center" valign="top" >
+																			<b><font color="WHITE"><blink>$!jumlah_notifikasi_bayarpampasan</blink></font></b>
+																		</label>&nbsp;
+																	#end
+
+										
+																	&nbsp;Makluman Bayaran Pampasan</li></font>
 																</a>
 															</td>
 														</tr>
@@ -700,6 +716,29 @@ function permohonanUPT(){
 function maklumatPembayaran(){
 //	document.$(formName).jawatan.value = "$!jawatan";
 	document.${formName}.action = "$EkptgUtil.getTabID('Pengambilan Tanah',$portalRole)?_portal_module=ekptg.view.ppt.FrmNotifikasiPembayaran";
+	 var flag_noti = "";
+	var noti = document.getElementById('notifikasi').value;
+	//alert(" noti : "+noti);
+	if(noti!="")
+	{
+		if(parseInt(noti)>0)
+		{
+			//alert(" parseInt(noti) : "+parseInt(noti));
+			flag_noti = "Y";
+		}
+
+	}
+	document.getElementById('flag_noti').value = flag_noti;
+ 
+
+//	document.${formName}.action = "$EkptgUtil.getTabID('Menu Utama',$portalRole)?_portal_module=ekptg.view.online.FrmOnlineMenuUtamaKJP";
+	document.${formName}.submit();
+}
+
+//yati 10112020
+function maklumatPembayaranPampasan(){
+//	document.$(formName).jawatan.value = "$!jawatan";
+	document.${formName}.action = "$EkptgUtil.getTabID('Pengambilan Tanah',$portalRole)?_portal_module=ekptg.view.ppt.FrmNotifikasiPembayaranOnline";
 	 var flag_noti = "";
 	var noti = document.getElementById('notifikasi').value;
 	//alert(" noti : "+noti);
