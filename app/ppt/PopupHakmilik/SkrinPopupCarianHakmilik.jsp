@@ -349,13 +349,13 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 								 <div align="left"><a href="javascript:maklumatsiasatan('$listTanah.id_siasatan','$flag_skrin')" title="Memaparkan secara lengkap nota siasatan"><font color="blue">NOTA SIASATAN </font></a></div></td>
 								</tr>
 							</table> 
-         				#elseif($flag_skrin == "siasatan_online" && $$listTanah.id_siasatan != "")
-         ##aaaaaa
-               			#elseif($flag_skrin == "siasatan_online" && $$listTanah.id_siasatan == "")
-               				<div align="left"><font color="red">Siasatan Masih Belum Dijalankan</font></div>         
-           				#else
-           					<div align="left"><a href="javascript:UrusanSiasatanSingle('$listTanah.id_hakmilik','','$flag_skrin')" title="Memaparkan secara lengkap maklumat siasatan"><font color="blue">MAKLUMAT SIASATAN</font></a></div>
-           				#end                         
+         				 #elseif($flag_skrin == "siasatan_online" && $listTanah.id_siasatan != "")
+ <div align="left"><a href="javascript:papar1('$listTanah.id_siasatan','$listTanah.id_hakmilik','$flag_skrin')" title="Memaparkan secara lengkap maklumat siasatan"><font color="blue">MAKLUMAT  SIASATAN</font></a></div></td>
+               #elseif($flag_skrin == "siasatan_online" && $listTanah.id_siasatan == "")
+               <div align="left"><font color="red">Siasatan Masih Belum Dijalankan</font></div>         
+           #else
+           <div align="left"><a href="javascript:UrusanSiasatanSingle('$listTanah.id_hakmilik','','$flag_skrin')" title="Memaparkan secara lengkap maklumat siasatan"><font color="blue">MAKLUMAT SIASATAN</font></a></div>
+           #end                  
                       	</td>     
                 		 
                  	#end 
@@ -628,14 +628,14 @@ function refreshSkrinHakmilik(id_permohonan,flag_skrin)
 
 function UrusanSiasatanSingle(id_hakmilik,id_pembatalan,flag_skrin)
 {
+
    try {
-	    if(flag_skrin=="senarai_siasatan" || $flag_skrin == "siasatan_online")
-		{	    
+	    if(flag_skrin=="senarai_siasatan" || flag_skrin == "siasatan_online")
+		{	   
         window.opener.UrusanSiasatanSingle(id_hakmilik,'');	
 		}
 		else if(flag_skrin=="senarai_siasatan_sementara")
 		{
-		
 		window.opener.UrusanSiasatan(id_hakmilik,'');	
 		}
 			
