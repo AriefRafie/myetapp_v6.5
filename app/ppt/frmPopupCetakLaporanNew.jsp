@@ -5477,7 +5477,7 @@ function cetakMMKSek4WPKL(idfail,no_fail) {
 function cetakMMKSek8Melaka(idfail,mukim,no_fail) {
 	
 	var namaPTG = document.${formName}.txtNamaPTG.value;
-	var gelaranPTG = document.${formName}.selectgelaranPTG.value;
+	var gelaranPTG = document.${formName}.selectGelaranPTG.value;
 	
 	var url = "../../servlet/ekptg.report.ppt.MMKSek8Melaka?idFail="+idfail+"&namaPengarah="+namaPTG+"&mukim="+mukim+"&no_fail="+no_fail+"&gelaranPTG="+gelaranPTG;
 	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');

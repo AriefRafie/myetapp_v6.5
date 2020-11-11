@@ -10,7 +10,8 @@
 <input name="report" type="hidden" id="report" value="$report"/>
 <fieldset>
 <legend> #if ($!report == 'notisTuntutanTunggakan') <strong>NOTIS TUNTUTAN TUNGGAKAN SEWA</strong> #end
-#if ($!report == 'notisRampasanDeposit') <strong>NOTIS RAMPASAN DEPOSIT</strong> #end </legend>
+#if ($!report == 'notisRampasanDeposit') <strong>NOTIS RAMPASAN DEPOSIT</strong> #end
+#if ($!report == 'notisTuntutan') <strong>NOTIS TUNTUTAN</strong> #end </legend>
 <table align="center" width="100%">
   <tr>
     <td width="1%">&nbsp;</td>
@@ -52,6 +53,9 @@
       #end
       #if ($!report == 'notisRampasanDeposit')
       <input type="button" name="cmdCetak" id="cmdCetak" value="Simpan" onClick="janaNotisRampasanDeposit()"/>
+      #end
+      #if($report=="notisTuntutan")
+      <input type="button" name="cmdCetak" id="cmdCetak" value="Simpan" onClick="janaNotisTuntutan()"/>
       #end </td>
   </tr>
 </table>
@@ -86,6 +90,19 @@ function janaNotisRampasanDeposit(){
 		return;
 	}
 	doAjaxCall${formName}("janaNotisRampasanDeposit");
+}
+
+function janaNotisTuntutan(){
+	if(document.${formName}.tarikhNotis.value == ""){
+		alert('Sila masukan Tarikh Notis.');
+  		document.${formName}.tarikhNotis.focus();
+		return;
+	}
+
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+	doAjaxCall${formName}("janaNotisTuntutan");
 }
 </script>
 #if ($!successSave == 'Y')
