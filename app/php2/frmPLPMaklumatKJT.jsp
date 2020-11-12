@@ -190,7 +190,7 @@
       <input name="cmdKemaskini" type="button" onClick="doKemaskiniMaklumatKJT()" value="Kemaskini">
       <input name="cmdHapus" type="button" onClick="doHapusMaklumatKJT()" value="Hapus">
       #if ($flagStatus == '1')
-      <input name="cmdTerima" type="button" onClick="doTerimaKJT()" value="Terima">
+      <!-- <input name="cmdTerima" type="button" onClick="doTerimaKJT()" value="Terima"> -->
       <input name="cmdUlangan" type="button" onClick="doUlanganKJT()" value="Ulangan">
       #end
       #end
