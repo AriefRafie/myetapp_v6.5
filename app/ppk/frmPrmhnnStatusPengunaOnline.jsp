@@ -236,9 +236,17 @@
 			
 			#elseif($senarai.id_status == '21'|| ($senarai.id_status == '177') || ($senarai.id_status == '175'))
 				<strong>$senarai.status</strong>
-				<br>
-				<a href="#" title="Permohonan Cetak Perintah" onClick="javascript:cetakBorangF('$!senarai.idFail','$!senarai.id_Permohonan')"><small style="color:blue"> CETAK PERINTAH </small></a>
-			
+<!-- 				<br> -->
+<!-- 				<a href="#" title="Permohonan Cetak Perintah" onClick="javascript:cetakBorangF('$!senarai.idFail','$!senarai.id_Permohonan')"><small style="color:blue"> CETAK PERINTAH </small></a> -->
+				
+				<!-- check perintah dari internal 11112020-->
+				#foreach ($senaraiperintah in $senaraiPerintah)
+					#if ($senaraiperintah.id_permohonan == $!senarai.id_Permohonan)
+						<br><a href="javascript:openPopupTAC('$!senarai.idFail','$!senarai.id_Permohonan','$!senaraiperintah.flag_borang','$!senaraiperintah.id_cetakan')"><span class="blink"><small style="color:blue">PERINTAH (KLIK DI SINI)</small></span></a>
+					#else
+					#end
+				#end
+				
 			#elseif($senarai.id_status == '8')
 				<a href="#" title="Papar Surat Akuan Terima" onclick="javascript:cetakSuratAkuanTerima('$!senarai.nofail.toUpperCase()','$!senarai.idFail','S')"><strong>$senarai.status </strong><small style="color:blue">(KLIK DI SINI)</small></a>
 			
@@ -424,6 +432,18 @@ function cetakBorangE(idFail,idPermohonanSimati,idSimati,idPerintahHTAOBMST) {
        hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
+}
+
+function openPopupTAC(idFail,id_Permohonan, flagBorang, idCetakan) {	
+//	alert(flagBorang + ":"+ idCetakan);
+	
+	var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupTAC?idFail="+idFail+"&flagBorang="+flagBorang+"&idCetakan="+idCetakan+"&idPermohonan="+id_Permohonan; 
+	
+	var hWnd = window.open(url,'printuser','width=700,height=315, resizable=yes,scrollbars=yes');
+	if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
 }
 
 function cetakBorangF(idFail,id_Permohonan) {

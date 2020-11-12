@@ -1931,7 +1931,7 @@ public class FrmAPBPopupSejarahMaklumatLesenData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT ID_PERMOHONAN FROM TBLPERMOHONAN WHERE ID_FAIL="+idFail;
+			sql = "SELECT ID_PERMOHONAN FROM TBLPERMOHONAN WHERE ID_FAIL='"+idFail+"'";
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				idPermohonan= rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN");	
