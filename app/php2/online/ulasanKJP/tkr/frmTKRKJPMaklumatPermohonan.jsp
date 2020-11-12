@@ -57,12 +57,193 @@
         <!-- START MAKLUMAT TANAH -->
           <div class="TabbedPanelsContent">
 
-				  #foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
+#if($BeanMaklumatTanah == "")
+
+<table width="100%" border="0" cellspacing="2" cellpadding="2">
+			<tr>
+				<td width="50%" valign="top">
+
+				<table width="100%"  cellpadding="2" cellspacing="2" border="0">
+					<tr>
+			          <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+			          <td width="28%">Negeri</td>
+			          <td width="1%">:</td>
+			          <td width="70%">$selectNegeri</td>
+			        </tr>
+				  <tr>
+							<td width="1%">#if ($mode == 'update')<span class="style1">*</span>#end</td>
+							<td>No. Lot</td>
+							<td>:</td>
+							<td><input type="text" name="txtnoLot" id="txtnoLot" value=""></td>
+						</tr>
+
+						<tr>
+							<td width="1%">#if ($mode == 'update')<span class="style1">*</span>#end</td>
+							<td>No. Hakmilik</td>
+							<td>:</td>
+							<td><input type="text" name="txtnoHakmilik" id="txtnoHakmilik" value="" onblur="doChangePeganganHakmilik();"><span class="style1">$errorPeganganHakmilik</span> </td>
+						</tr>
+						<tr>
+							<td width="1%"></td>
+							<td width="28%">Pegangan Hakmilik</td>
+							<td width="1%">:</td>
+							<td width="70%"></td>
+						</tr>
+
+							<tr>
+								<td>&nbsp;</td>
+								<td>Luas Lot</td>
+								<td>:</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>&nbsp;</td>
+								<td>No Warta</td>
+								<td>:</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>&nbsp;</td>
+								<td>Tarikh Warta</td>
+								<td>:</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>&nbsp;</td>
+								<td>Mukim</td>
+								<td>:</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>&nbsp;</td>
+								<td>Daerah</td>
+								<td>:</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>&nbsp;</td>
+								<td>Kategori Tanah</td>
+								<td>:</td>
+								<td></td>
+					        </tr>
+							<tr>
+								<td>&nbsp;</td>
+								<td>SubKategori Tanah</td>
+								<td>:</td>
+								<td></td>
+					        </tr>
+				</table>
+			</td>
+			<td width="50%" valign="top">
+			<table width="100%"  cellpadding="2" cellspacing="2" border="0">
+				<tr>
+					<td>&nbsp;</td>
+					<td>Syarat Nyata</td>
+					<td>:</td>
+					<td></td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>Sekatan Kepentingan</td>
+					<td>:</td>
+					<td></td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>Kegunaan Tanah</td>
+					<td>:</td>
+					<td></td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>Kementerian</td>
+					<td>:</td>
+					<td></td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>Agensi</td>
+					<td>:</td>
+					<td></td>
+		        </tr>
+			</table>
+			</td>
+			</tr>
+				  <tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				  </tr>
+				  <tr>
+					<td>&nbsp;</td>
+					<td>
+					#if ($mode == 'view')
+					  #if ($!statussemasa.equals("1") || $!statussemasa.equals("2"))
+					  <input type="button" name="cmdKmskiniTnh" id="cmdKmskiniTnh" value="Kemaskini" onClick="doKemaskini()"/>
+					  #end
+					  <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
+					  ##end
+					  #if ($mode == 'update')
+					  <input type="button" name="cmdSimpanKemaskiniTnh" id="cmdSimpanKemaskiniTnh" value="Simpan" onClick="doSimpanKemaskiniMaklumatTnh()"/>
+					  #end
+					  #else
+					  <input type="button" name="cmdSimpanKemaskiniTnh" id="cmdSimpanKemaskiniTnh" value="Simpan" onClick="doSimpanKemaskiniMaklumatTnh()"/>
+					  <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
+					 #end
+					 </td>
+
+
+
+				  </tr>
+            </table>
+#else
+		#foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
 			<tr>
 				<td width="50%" valign="top">
 
 				<table width="100%"  cellpadding="2" cellspacing="2" border="0">
+					<tr>
+			          <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+			          <td width="28%">Negeri</td>
+			          <td width="1%">:</td>
+			          <td width="70%">$selectNegeri</td>
+			        </tr>
 				  <tr>
 							<td width="1%">#if ($mode == 'update')<span class="style1">*</span>#end</td>
 							<td>No. Lot</td>
@@ -140,22 +321,23 @@
 								<td>:</td>
 								<td>$beanMaklumatTanah.daerah
 									<input type="hidden" name="namaDerahTanah" id="namaDerahTanah" value="$beanMaklumatTanah.daerah" /></td>
-							</tr>
+							</tr><!--
 							<tr>
 								<td>&nbsp;</td>
 								<td>Negeri</td>
 								<td>:</td>
 								<td>$beanMaklumatTanah.negeri
-									<input type="hidden" name="idNegeriTanah" id="idNegeriTanah" value="$beanMaklumatTanah.idNegeriTanah">
-									<input type="hidden" name="namaNegeriTanah" id="namaNegeriTanah" value="$$beanMaklumatTanah.negeri">
+
 								</td>
-							</tr>
+							</tr> -->
 							<tr>
 								<td>&nbsp;</td>
 								<td>Kategori Tanah</td>
 								<td>:</td>
 								<td>
 									$beanMaklumatTanah.kategoriTanah
+									<input type="hidden" name="idNegeriTanah" id="idNegeriTanah" value="$beanMaklumatTanah.idNegeriTanah">
+									<input type="hidden" name="namaNegeriTanah" id="namaNegeriTanah" value="$$beanMaklumatTanah.negeri">
 								</td>
 					        </tr>
 							<tr>
@@ -292,6 +474,7 @@
 				  </tr>
             </table>
 				  #end
+#end
           </div>
           <!-- END MAKLUMAT TANAH -->
 
@@ -1282,6 +1465,11 @@ function papar(idFail,idStatus) {
 function doChangeLuasKegunaan() {
 	document.${formName}.submit2.value = "seterusnya";
 	doAjaxCall${formName}("doChangeLuasKegunaan");
+}
+
+function doChangeNegeri() {
+	document.${formName}.submit2.value = "seterusnya";
+	doAjaxCall${formName}("doChangeNegeri");
 }
 
 function doChangeLuas() {
