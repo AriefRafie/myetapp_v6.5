@@ -2492,8 +2492,6 @@ public abstract class EkptgReportServlet implements IServlet2 {
 	
 	}
 	
-	
-	
 	public Hashtable<String,String> infoPerbicaraan(String ID_FAIL, String ID_PERBICARAAN) throws Exception {
 		Db db = null;
 		String sql = "";
