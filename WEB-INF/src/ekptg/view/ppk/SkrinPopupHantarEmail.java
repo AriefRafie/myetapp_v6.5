@@ -87,7 +87,15 @@ public class SkrinPopupHantarEmail extends AjaxBasedModule {
 		
 		if ("hantarEmail".equals(hitButt)) {
 			myLogger.info("Read here SkrinPopupHantarEmail");
-			//hantarEmail();
+			Hashtable infoPemohon = getinfoPemohon(user, idFail);
+			
+			String namaPemohon  = (String) infoPemohon.get("namapemohon");
+			String emailPemohon = (String) infoPemohon.get("emailpemohon");
+			String idFail2 = (String) infoPemohon.get("idFail");
+			Hashtable infoNoFail = getinfoNoFail(idFail2);
+			String noFail = (String) infoNoFail.get("NO_FAIL");
+			
+			sendEmail(emailPemohon, noFail);
 			vm = PATH +"skrinPopupHantarEmailsuccess.jsp";  //note: tiada source ini. ada di en.zam
 		}
 		
@@ -97,6 +105,23 @@ public class SkrinPopupHantarEmail extends AjaxBasedModule {
 	
 	
 	//TODO
+	
+	private void sendEmail(String emailPemohon, String noFail) throws Exception{
+		
+    	Vector checkEmail = new Vector();
+    	checkEmail.clear();
+		
+		
+		EmailConfig ef = new EmailConfig();
+		String userMail = emailPemohon;
+		String tajuk = "Perintah telah tersedia.";
+		String kandungan = "<br/>" +
+				"Merujuk kepada perkara di atas, permohonan tuan/puan bagi fail yang bernombor " + 
+				noFail + " telah tersedia. Sila muat turun perintah tersebut melalui Sistem Myetapp. Terima kasih.";
+				
+		ef.sendTo(userMail,tajuk, kandungan);
+		
+	}//close sendEmail
 	
 	
 public void hantarEmail() throws Exception 
@@ -130,7 +155,7 @@ public Hashtable<String,String> getinfoPemohon(String userLogin, String idFail) 
 		db = new Db();
 		Statement stmt = db.getStatement();
 		
-		sql = " SELECT A.NAMA_PEMOHON, A.EMEL FROM TBLPPKPEMOHON A, TBLPPKPERMOHONAN B "
+		sql = " SELECT A.NAMA_PEMOHON, A.EMEL, B.ID_FAIL FROM TBLPPKPEMOHON A, TBLPPKPERMOHONAN B "
 			 + " WHERE A.ID_PEMOHON = B.ID_PEMOHON AND B.ID_FAIL = '" +idFail+"'";
 		myLogger.info("SQL STATEMENT - getinfoPemohon : " + sql);
 
@@ -139,6 +164,7 @@ public Hashtable<String,String> getinfoPemohon(String userLogin, String idFail) 
 		if (rs.next()) {
 			permohonanMT.put("namapemohon",rs.getString("NAMA_PEMOHON") == null ? "" : rs.getString("NAMA_PEMOHON"));
 			permohonanMT.put("emailpemohon",rs.getString("EMEL") == null ? "" : rs.getString("EMEL"));
+			permohonanMT.put("idFail",rs.getString("ID_FAIL") == null ? "" : rs.getString("ID_FAIL"));
 			
 			
 			
@@ -152,6 +178,36 @@ public Hashtable<String,String> getinfoPemohon(String userLogin, String idFail) 
 	}
 	return permohonanMT;
 }
+
+public Hashtable<String,String> getinfoNoFail(String idFail) {
+	Db db = null;
+	String sql = "";
+	Hashtable<String,String> permohonanMT = new Hashtable<String,String>();
+	ByteArrayOutputStream bos = new ByteArrayOutputStream();
+	try {
+		db = new Db();
+		Statement stmt = db.getStatement();
+		
+		sql = " SELECT NO_FAIL FROM TBLPFDFAIL WHERE ID_FAIL = '" +idFail+"'";
+		myLogger.info("SQL STATEMENT - getinfoPemohon : " + sql);
+
+		ResultSet rs = stmt.executeQuery(sql);
+
+		if (rs.next()) {
+			permohonanMT.put("NO_FAIL",rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL"));
+		
+			
+		}
+	} catch (Exception ex) {
+		ex.printStackTrace();
+	} finally {
+		if (db != null)
+			db.close();
+	}
+	return permohonanMT;
+}
+
+
 			
 			
 	public void nakUpload(String id_permohonan,HttpSession session, String id_Masuk, String id_Simati, String id_jenisDoc)
