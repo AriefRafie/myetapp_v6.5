@@ -19,7 +19,7 @@
 }
 -->
 </style>
-<p>  
+<p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input name="mode" type="hidden" id="mode" value="$mode"/>
   <input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
@@ -35,7 +35,7 @@
   <input name="idKementerianTanah" type="hidden" id="idKementerianTanah" value="$idKementerianTanah"/>
   <input name="idAgensiTanah" type="hidden" id="idAgensiTanah" value="$idAgensiTanah"/>
   <input name="flagStatus" type="hidden" id="flagStatus" value="$flagStatus"/>
-  <input name="flagAktif" type="hidden" id="flagAktif" value="$flagAktif"/>  
+  <input name="flagAktif" type="hidden" id="flagAktif" value="$flagAktif"/>
   <input name="step" type="hidden" id="step" value="$step"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -49,7 +49,7 @@
       <div class="warning">SILA PILIH FAIL DI SENARAI FAIL TERLEBIH DAHULU</div></td>
   </tr>
   #end
-  
+
   #if ($idFail != '' && $idStatus != '1610198')
   <tr>
     <td><div id="TabbedPanels1" class="TabbedPanels">
@@ -57,28 +57,28 @@
           <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">SENARAI DOKUMEN</li>
           <!--<li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">ULASAN JABATAN TEKNIKAL (KJT)</li>-->
           <!-- <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">ULASAN JPPH</li> -->
-          <!-- <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">NILAIAN</li> -->                       
+          <!-- <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">NILAIAN</li> -->
         </ul>
         <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent">
           	#if ($errMsg != "")
 				<div class="info"><strong>$errMsg</strong></div>
-			#end 
-            #parse("app/php2/frmTKRDokumenKJP.jsp") 
+			#end
+            #parse("app/php2/frmTKRDokumenKJP.jsp")
           </div>
           <!--<div class="TabbedPanelsContent">
             #parse("app/php2/frmTKRDokumenKJT.jsp") </div>-->
           <div class="TabbedPanelsContent">
            #if ($errMsg != "")
 				<div class="info"><strong>$errMsg</strong></div>
-		   #end 
-           #parse("app/php2/frmTKRUlasanJPPH.jsp") 
+		   #end
+           #parse("app/php2/frmTKRUlasanJPPH.jsp")
           </div>
           <div class="TabbedPanelsContent">
            #if ($errMsg != "")
 				<div class="info"><strong>$errMsg</strong></div>
-		    #end 
-           #parse("app/php2/frmTKRNilaianJPPH.jsp") 
+		    #end
+           #parse("app/php2/frmTKRNilaianJPPH.jsp")
           </div>
         </div>
       </div></td>
@@ -102,11 +102,11 @@ function doSeterusnya(){
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}
-	
+
 	document.${formName}.hitButton.value = "doSeterusnya";
 	document.${formName}.submit();
 }
-function gotoBatalPermohonan(){	
+function gotoBatalPermohonan(){
 	document.${formName}.step.value = "batalPermohonan";
 	document.${formName}.submit();
 }
