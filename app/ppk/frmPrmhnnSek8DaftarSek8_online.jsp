@@ -1329,7 +1329,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
             #if($negeri!="" && $negeri!="0"  )
             
             <span id="socNegeri_1a">
-						<select name="socNegeri" class="autoselect" $setmode  onchange="getBandar('socBandar');get_bandar_simati();semakLampiran('socBandar');" style="text-transform:uppercase;" onBlur="uppercase()">
+						<select name="socNegeri" class="autoselect" $setmode  onchange="getBandar('socBandar');get_bandar_simati();" style="text-transform:uppercase;" onBlur="uppercase()">
                           <option value="$negeri">$negerikodpemoP - $negeriketeranganpemoP</option>
                                   #foreach($listnegpomo in $listnegeri)                                 
                                   #if($negeri!=$listnegpomo.id_Negeri)
@@ -1353,7 +1353,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
                         
             #else
             <span id="socNegeri_2a" >
-            <select name="socNegeri" class="autoselect" $setmode  onchange="getBandar('socBandar');get_bandar_simati();semakLampiran('socBandar');" style="text-transform:uppercase;" onBlur="uppercase()">
+            <select name="socNegeri" class="autoselect" $setmode  onchange="getBandar('socBandar');get_bandar_simati();" style="text-transform:uppercase;" onBlur="uppercase()">
               <option value="">Sila Pilih Negeri</option>
                                   #foreach($listnegpomo in $listnegeri)
               <option value="$listnegpomo.id_Negeri">$listnegpomo.kod_Negeri - $listnegpomo.nama_Negeri</option>                    
@@ -1955,7 +1955,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
               #if ($idAlert == "1" || $idAlert == "2")
               	 <input name="txtTarikhMati" id="txtTarikhMati" type="text" style="width: 80px;" value="$tarikhMatix" size="11" maxlength="10" $setmodeR class="$setmode" onFocus="qryHowOld()" onBlur="trans_date(this.value);qryHowOld()"  />
               #else
-              		<input name="txtTarikhMati" id="txtTarikhMati" type="text" style="width: 80px;" value="$tarikhMati" size="11" maxlength="10" $setmodeR class="$setmode"  onfocus="qryHowOld()" onBlur="trans_date(this.value);qryHowOld();semakLampiran('socBandar');" />
+              		<input name="txtTarikhMati" id="txtTarikhMati" type="text" style="width: 80px;" value="$tarikhMati" size="11" maxlength="10" $setmodeR class="$setmode"  onfocus="qryHowOld()" onBlur="trans_date(this.value);qryHowOld();" />
               #end
               #if ($setmode != "disabled" )
               		<a href="javascript:displayDatePicker('txtTarikhMati',false,'dmy');"/>#parse("app/ppk/ppk_calender.jsp")</a>
