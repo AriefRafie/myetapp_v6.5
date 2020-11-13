@@ -266,12 +266,12 @@ input[readonly] {
 											#end
                                     
                                      		#if($listamid.bandar!="" && $listamid.bandar!="0" )
-                                     			<input name="ntbb2" value="$!kodBandar - $!ketBandar" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
+                                     			<input name="ntbb2" value="" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                      		#else
                                      			<input name="ntbb3" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                      		#end                     
                                    		#else                             
-                                  			#if($listamid.bandar!="" && $listamid.bandar!="0" )
+                                  			#if($listamid.bandar!="")
                                      			<input name="ntbb2" value="$!kodBandar - $!ketBandar" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                      		#else
                                      			<input name="ntbb3" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
@@ -376,7 +376,7 @@ input[readonly] {
                                       
                                       
                                       #if($listamid.jenisluas!="" && $listamid.jenisluas!="0")
-                                      <input name="txtLuas" type="text" id="txtLuas" value="$!kodLuas - $!ketLuas" size="25"  $readmodeR class="$readmode"  />
+                                      <input name="txtLuas" type="text" id="txtLuas" value="" size="25"  $readmodeR class="$readmode"  />
                                       #else
                                       <input name="txtLuas" type="text" id="txtLuas" value="" size="25"  $readmodeR class="$readmode"  />
                                       #end 
