@@ -475,7 +475,7 @@ public class FrmTKROnlineKJPSenaraiFailData {
 		}
 	}*/
 
-	public String getIdHakmilikAgensiByPeganganHakmilik(String noLot, String noHakmilik) throws Exception {
+	public String getIdHakmilikAgensiByPeganganHakmilik(String noLot, String noHakmilik, String idNegeri) throws Exception {
 		Db db = null;
 		String sql = "";
 
@@ -483,22 +483,33 @@ public class FrmTKROnlineKJPSenaraiFailData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			/*sql = "SELECT TBLHTPHAKMILIKAGENSI.ID_HAKMILIKAGENSI FROM TBLHTPHAKMILIK, TBLHTPHAKMILIKAGENSI WHERE TBLHTPHAKMILIK.ID_HAKMILIK = TBLHTPHAKMILIKAGENSI.ID_HAKMILIK"
-				+ " AND UPPER(TBLHTPHAKMILIK.PEGANGAN_HAKMILIK) = '" + peganganHakmilik.toUpperCase() + "'";
-			*/
-
-			/*sql= " SELECT TBLHTPHAKMILIKAGENSI.ID_HAKMILIKAGENSI FROM TBLHTPHAKMILIK, TBLHTPHAKMILIKAGENSI " +
-					" WHERE TBLHTPHAKMILIK.ID_HAKMILIK = TBLHTPHAKMILIKAGENSI.ID_HAKMILIK " +
-					" AND UPPER(TBLHTPHAKMILIK.NO_LOT) = '"+ noLot +"' AND TBLHTPHAKMILIK.NO_HAKMILIK LIKE '%"+ noHakmilik +"'";
-					*/
-			sql = "SELECT A.ID_HAKMILIK, A.PEGANGAN_HAKMILIK, B.KETERANGAN, A.NO_LOT, A.NO_HAKMILIK, A.NO_WARTA, " +
-					" E.NAMA_MUKIM, D.NAMA_DAERAH,C.NAMA_NEGERI, A.ID_JENISHAKMILIK, A.ID_LOT, A.TARIKH_WARTA, " +
-					" A.ID_MUKIM, A.ID_DAERAH, A.ID_NEGERI,HM.kod_jenis_hakmilik"+
-//				    "(SELECT RJH.KOD_JENIS_HAKMILIK FROM TBLRUJJENISHAKMILIK RJH " +
-//					" WHERE RJH.ID_JENISHAKMILIK=A.ID_JENISHAKMILIK) KOD_JENIS_HAKMILIK " +
-					" FROM TBLHTPHAKMILIK A, TBLRUJLOT B, TBLRUJNEGERI C, TBLRUJDAERAH D, TBLRUJMUKIM E, TBLRUJJENISHAKMILIK HM" +
-					" WHERE A.ID_LOT = B.ID_LOT(+) AND A.ID_NEGERI = C.ID_NEGERI(+) AND A.ID_DAERAH = D.ID_DAERAH(+) " +
-					" AND A.ID_MUKIM = E.ID_MUKIM(+) AND A.ID_JENISHAKMILIK = HM.ID_JENISHAKMILIK AND A.NO_LOT = '" + noLot + "' AND A.NO_HAKMILIK LIKE '%" + noHakmilik + "'";
+			if (noHakmilik != null && noLot != null && idNegeri !=null) {
+				if (!noHakmilik.trim().equals("") && !noLot.trim().equals("") && !idNegeri.equals("99999")) {
+					sql = "SELECT A.ID_HAKMILIK, A.PEGANGAN_HAKMILIK, B.KETERANGAN, A.NO_LOT, A.NO_HAKMILIK, A.NO_WARTA, " +
+							" E.NAMA_MUKIM, D.NAMA_DAERAH,C.NAMA_NEGERI, A.ID_JENISHAKMILIK, A.ID_LOT, A.TARIKH_WARTA, " +
+							" A.ID_MUKIM, A.ID_DAERAH, A.ID_NEGERI,HM.kod_jenis_hakmilik"+
+							" FROM TBLHTPHAKMILIK A, TBLRUJLOT B, TBLRUJNEGERI C, TBLRUJDAERAH D, TBLRUJMUKIM E, TBLRUJJENISHAKMILIK HM" +
+							" WHERE A.ID_LOT = B.ID_LOT(+) AND A.ID_NEGERI = C.ID_NEGERI(+) AND A.ID_DAERAH = D.ID_DAERAH(+) " +
+							" AND A.ID_MUKIM = E.ID_MUKIM(+) AND A.ID_JENISHAKMILIK = HM.ID_JENISHAKMILIK " +
+							" AND A.NO_LOT = '" + noLot + "' AND A.NO_HAKMILIK LIKE '%" + noHakmilik + "' AND A.ID_NEGERI = '" + idNegeri + "'";
+				}else{
+					sql = "SELECT A.ID_HAKMILIK, A.PEGANGAN_HAKMILIK, B.KETERANGAN, A.NO_LOT, A.NO_HAKMILIK, A.NO_WARTA, " +
+							" E.NAMA_MUKIM, D.NAMA_DAERAH,C.NAMA_NEGERI, A.ID_JENISHAKMILIK, A.ID_LOT, A.TARIKH_WARTA, " +
+							" A.ID_MUKIM, A.ID_DAERAH, A.ID_NEGERI,HM.kod_jenis_hakmilik"+
+							" FROM TBLHTPHAKMILIK A, TBLRUJLOT B, TBLRUJNEGERI C, TBLRUJDAERAH D, TBLRUJMUKIM E, TBLRUJJENISHAKMILIK HM" +
+							" WHERE A.ID_LOT = B.ID_LOT(+) AND A.ID_NEGERI = C.ID_NEGERI(+) AND A.ID_DAERAH = D.ID_DAERAH(+) " +
+							" AND A.ID_MUKIM = E.ID_MUKIM(+) AND A.ID_JENISHAKMILIK = HM.ID_JENISHAKMILIK " +
+							" AND A.NO_LOT = '" + noLot + "' AND A.NO_HAKMILIK = '" + noHakmilik + "' AND A.ID_NEGERI = '" + idNegeri + "'";
+				}
+			}else{
+				sql = "SELECT A.ID_HAKMILIK, A.PEGANGAN_HAKMILIK, B.KETERANGAN, A.NO_LOT, A.NO_HAKMILIK, A.NO_WARTA, " +
+						" E.NAMA_MUKIM, D.NAMA_DAERAH,C.NAMA_NEGERI, A.ID_JENISHAKMILIK, A.ID_LOT, A.TARIKH_WARTA, " +
+						" A.ID_MUKIM, A.ID_DAERAH, A.ID_NEGERI,HM.kod_jenis_hakmilik"+
+						" FROM TBLHTPHAKMILIK A, TBLRUJLOT B, TBLRUJNEGERI C, TBLRUJDAERAH D, TBLRUJMUKIM E, TBLRUJJENISHAKMILIK HM" +
+						" WHERE A.ID_LOT = B.ID_LOT(+) AND A.ID_NEGERI = C.ID_NEGERI(+) AND A.ID_DAERAH = D.ID_DAERAH(+) " +
+						" AND A.ID_MUKIM = E.ID_MUKIM(+) AND A.ID_JENISHAKMILIK = HM.ID_JENISHAKMILIK " +
+						" AND A.NO_LOT = '" + noLot + "' AND A.NO_HAKMILIK = '" + noHakmilik + "' AND A.ID_NEGERI = '" + idNegeri + "'";
+			}
 
 			System.out.println("getIdHakmilikAgensiByPeganganHakmilik :: sql >>> "+sql);
 			ResultSet rs = stmt.executeQuery(sql);

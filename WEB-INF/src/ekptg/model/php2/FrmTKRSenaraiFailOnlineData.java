@@ -188,6 +188,7 @@ public class FrmTKRSenaraiFailOnlineData {
 
 			}
 
+			System.out.println("idNegeriHakmilik >>> "+idNegeriHakmilik);
 			// TBLPFDFAIL
 			r.update("ID_FAIL", idFail);
 			String noFail = "";
@@ -305,6 +306,7 @@ public class FrmTKRSenaraiFailOnlineData {
 	public String generateNoFail(String kodUrusan, String kodKementerian,
 			String idKementerian, String kodNegeri, String idNegeri)
 			throws Exception {
+		System.out.println("kodNegeri >>> "+kodNegeri);
 		String noFail = "";
 		//JKPTG/SPHP/
 		noFail = "JKPTG/BPHP/"
@@ -321,6 +323,7 @@ public class FrmTKRSenaraiFailOnlineData {
 	}
 
 	public String getKodNegeriByIdNegeri(String idNegeri) throws Exception {
+		System.out.println("idNegeri >>> "+idNegeri);
 		Db db = null;
 		String sql = "";
 
@@ -330,7 +333,7 @@ public class FrmTKRSenaraiFailOnlineData {
 
 			sql = "SELECT KOD_MAMPU FROM TBLRUJNEGERI WHERE ID_NEGERI = '"
 					+ idNegeri + "'";
-
+			System.out.println("getKodNegeriByIdNegeri :: sql >>> "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			if (rs.next()) {

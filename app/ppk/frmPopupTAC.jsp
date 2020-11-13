@@ -8,6 +8,11 @@
  <input type="hidden" name="idFail" id="idFail" value="$idFail"> 
   <input type="hidden" name="userId" id="userId" value="$userId">
 
+  
+   <input type="hidden" name="flagBorang" id="flagBorang" value="$flagBorang"> 
+   <input type="hidden" name="idCetakan" id="idCetakan" value="$idCetakan"> 
+   <input type="hidden" name="idPermohonan" id="idPermohonan" value="$idPermohonan">
+
     <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
     <input type="hidden" name="otp" id="otp" value="$!otp">
 <script type="text/javascript" src="../../library/js/SpryTabbedPanels.js"></script>
@@ -40,9 +45,9 @@
   </tr>
   
   <tr>
-    <td><div align="center">No.TAC</div></td>
+    <td><div align="center">No. TAC</div></td>
     <td>:</td>
-    <td><input type='text' name="notac"  value="$!notac"><font color="blue">6 digit TAC</font></td> 
+    <td><input type='text' name="notac"  value="$!notac"><font color="blue"> 6 digit TAC</font></td> 
 
   </tr>
   
@@ -74,7 +79,7 @@
     	<td></td>
   	</tr>
   	<tr>
- 		<td>&nbsp;</td>
+ 		<td>&nbsp;#if($!verify == "false") <font color="red">$!note</font> #end #if($!verify == "true") <font color="red"><i>Perhatian</i></font> : Muat turun perintah adalah dibenarkan <b>1 KALI</b> sahaja. Sila klik pada pautan dibawah.<br><br> &nbsp;<a href="#" style="color:blue" onclick="javascript:cetakPerintah('$!idFail','$!flagBorang','$!idCetakan')"> Muat Turun Perintah</a> #end </td>
   	</tr>
 </table>
 
@@ -95,7 +100,8 @@ function mohonTAC(idFail,id_Permohonan) {
     //alert("id_Permohonan xxx"+id_Permohonan);
     
     //alert("id_FAIL CCC"+idFail);
-	document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmPopupTAC&command=simpan";
+	document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmPopupTAC";
+	document.${formName}.command.value = "simpan";
 	//alert(document.${formName}.action);
 	//if ( !window.confirm("No TAC telah dihantar") ){
 		alert("No. TAC telah dihantar ke emel pengguna");
@@ -105,22 +111,49 @@ function mohonTAC(idFail,id_Permohonan) {
 	
 }
 function hantarTAC(idFail,id_Permohonan) {
-		//alert(idFail);
-		document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmPopupTAC&command=hantar";	
-		document.${formName}.submit();			
 	
- 		var url = "../../servlet/ekptg.report.ppk.BorangE?idfail=99191115318&flagVersion=view&flag_batal=Y&idborang=99191253813";
-		//var url = "../servlet/ekptg.report.ppk.BorangF?idfail="+idFail;
-		//var url = "../x/${securityToken}/ekptg.view.ppk.BorangF?idFail="+idFail+"&id_Permohonan="+id_Permohonan;
-		//var url = "../x/${securityToken}/ekptg.report.ppk.BorangF?idfail="+idFail;
-		var hWnd = window.open(url,'printuser','width=700,height=315, resizable=yes,scrollbars=yes');
-		if ((document.window != null) && (!hWnd.opener))
-		       hWnd.opener = document.window;
-		if (hWnd.focus != null) hWnd.focus();
-			hWnd.focus();
+	if (document.${formName}.notac.value == ""){
+		alert("Sila isi No. TAC");
+		document.${formName}.notac.focus();
+		return;
+	} else {
+		//alert(idFail);
+		document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmPopupTAC";
+		document.${formName}.command.value = "hantar";
+		document.${formName}.submit();			
+	}
+//  		var url = "../../servlet/ekptg.report.ppk.BorangE?idfail=99191115318&flagVersion=view&flag_batal=Y&idborang=99191253813";
+// 		//var url = "../../servlet/ekptg.report.ppk.BorangF?idfail="+idFail; 
+// 		//var url = "../x/${securityToken}/ekptg.view.ppk.BorangF?idFail="+idFail+"&id_Permohonan="+id_Permohonan;
+// 		//var url = "../x/${securityToken}/ekptg.report.ppk.BorangF?idfail="+idFail;
+// 		var hWnd = window.open(url,'printuser','width=700,height=315, resizable=yes,scrollbars=yes');
+// 		if ((document.window != null) && (!hWnd.opener))
+// 		       hWnd.opener = document.window;
+// 		if (hWnd.focus != null) hWnd.focus();
+// 			hWnd.focus();
 			
 		
+}
+
+function cetakPerintah(idFail, flagBorang, idCetakan){
+	
+	if ( !window.confirm("Adakah anda pasti?") ){
+		return;
 	}
+	
+	document.${formName}.action = "?_portal_module=ekptg.view.ppk.FrmPopupTAC";
+	document.${formName}.command.value = "update";
+	document.${formName}.submit();
+	
+	var url = "../../servlet/ekptg.report.ppk.Borang"+flagBorang+"?idfail="+idFail+"&flagVersion=view&flag_batal=Y&idborang="+idCetakan;
+
+	var hWnd = window.open(url,'Cetak','width=700,height=315, resizable=yes,scrollbars=yes');
+	if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
+		
+}
 
 function cetakBorangD(noFail,idfail,idPerbicaraan) {
 	var url = "../../servlet/ekptg.report.ppk.BorangD_ORI?nofail="+noFail+"&idfail="+idfail+"&idperbicaraan="+idPerbicaraan;

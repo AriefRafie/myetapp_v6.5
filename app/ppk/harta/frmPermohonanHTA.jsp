@@ -1432,9 +1432,13 @@
                     			<tr>
                        				<td align="center"> 
 					
-  										#if($show_simpan_add_htaam == "yes" || $show_kemaskini_htaam == "yes")
+  										#if($show_simpan_add_htaam == "yes")
 				 						<input type="submit" name="simpanhta" id="simpanhta" $readmode value="Simpan" onclick="setSelected(1,0,0,0);add_Htaam('$idhta','$idPermohonan')"/>                      	
   										#end 
+  										
+  										#if($show_kemaskini_htaam == "yes")
+				 						<input type="submit" name="simpanhta" id="simpanhta" $readmode value="Simpan" onclick="setSelected(1,0,0,0);save_Htaam('$idhta','$idPermohonan')"/>                      	
+  										#end
   						
 				  						#if($show_hapus_htaam=="yes") 
 				  						<input type="button" name="cmdHapus1" id="cmdHapus1" $readmode value="Hapus"  onclick="setSelected(1,0,0,1);hapus_Htaam()"/>
@@ -2224,7 +2228,9 @@ function edit_Htaam(idhta){
 		document.f1.submit();
 }
 
-	function save_Htaam(idPermohonanSimati,idhta,idSimati,idDokumen){
+	//function save_Htaam(idPermohonanSimati,idhta,idSimati,idDokumen){
+	function save_Htaam(idPermohonanSimati,idhta){
+	
 		alert('save_Htaam');
 		var b1=parseInt(document.f1.txtBahagianSimati1Up.value);
       	var b2=parseInt(document.f1.txtBahagianSimati2Up.value);
@@ -2258,12 +2264,14 @@ function edit_Htaam(idhta){
      	  	document.f1.txtAlamatPoskodHtaam.focus(); 
      		return; 
                  
-       	}else if (document.f1.txtAlamat1Htaam1.value != "" && document.f1.txtBandarHartaHtaamX2.value == ""){
-      		alert('Sila masukkan " Alamat Bandar " terlebih dahulu.');
-      	  	document.f1.txtBandarHartaHtaamX2.focus(); 
-      		return; 
+       	}
+//        	else if (document.f1.txtAlamat1Htaam1.value != "" && document.f1.txtBandarHartaHtaamX2.value == ""){
+//       		alert('Sila masukkan " Alamat Bandar " terlebih dahulu.');
+//       	  	document.f1.txtBandarHartaHtaamX2.focus(); 
+//       		return; 
                   
-       	} else if(document.f1.socJenisHakmilikHtaamUp.value == ""){
+//        	} 
+       	else if(document.f1.socJenisHakmilikHtaamUp.value == ""){
 			alert('Sila pilih " Jenis hakmilik" terlebih dahulu.');
 	  		document.f1.socJenisHakmilikHtaamUp.focus(); 
 			return; 
@@ -2314,8 +2322,8 @@ function edit_Htaam(idhta){
         	if (input_box == true) {
 
 			document.f1.id_Permohonansimati.value= idPermohonanSimati;
-		    document.f1.idDokumen.value=idDokumen;
-		    document.f1.idSimati.value=idSimati;
+		    //document.f1.idDokumen.value=idDokumen;
+		    //document.f1.idSimati.value=idSimati;
 		    document.f1.idhtaam.value=idhta;
 		    
 		    //lama
