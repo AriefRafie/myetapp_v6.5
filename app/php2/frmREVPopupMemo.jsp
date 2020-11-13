@@ -22,10 +22,10 @@
     <td >Jenis Memo</td>
     <td >:</td>
     <td ><select name="bilPeringatan" id="bilPeringatan">
-        <option value="1">PERTAMA</option>
-        <option value="2">KEDUA</option>
-        <option value="3">KETIGA</option>
-        <option value="4">KEEMPAT</option>
+        <option value="1">MEMO TUNTUTAN DEPOSIT</option>
+        <option value="2">MEMO PELARASAN DEPOSIT</option>
+        <option value="3">MEMO TUNTUTAN HASIL</option>
+        <option value="4">MEMO RAMPASAN DEPOSIT</option>
       </select></td>
   </tr>
   <tr>
