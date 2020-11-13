@@ -79,7 +79,7 @@
     	<td></td>
   	</tr>
   	<tr>
- 		<td>&nbsp;#if($!verify == "false") <font color="red">$!note</font> #end #if($!verify == "true") <font color="red">Perhatian: Muat turun perintah adalah dibenarkan <b>1 KALI</b> sahaja. Sila klik pada pautan dibawah.</font><br><br> &nbsp;<a href="#" style="color:blue" onclick="javascript:cetakPerintah('$!idFail','$!flagBorang','$!idCetakan')"> Muat Turun Perintah</a> #end </td>
+ 		<td>&nbsp;#if($!verify == "false") <font color="red">$!note</font> #end #if($!verify == "true") <font color="red"><i>Perhatian</i></font> : Muat turun perintah adalah dibenarkan <b>1 KALI</b> sahaja. Sila klik pada pautan dibawah.<br><br> &nbsp;<a href="#" style="color:blue" onclick="javascript:cetakPerintah('$!idFail','$!flagBorang','$!idCetakan')"> Muat Turun Perintah</a> #end </td>
   	</tr>
 </table>
 
