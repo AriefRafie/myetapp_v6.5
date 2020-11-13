@@ -4564,11 +4564,13 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 					+ "NO_PERMOHONAN_ONLINE = '"+ no_fail_online+"'"
 					+ ", TARIKH_MOHON_ONLINE = sysdate, id_status = 171, id_negerimhn = "
 					+ idnegeri + ",id_daerahmhn = " + iddaerah
-					+ ",ID_MASUK = '" + userid
+					+ ", FLAG_PERMOHONANDIKEMBALIKAN = ''"
+					+ ", ID_MASUK = '" + userid
 					+ "', TARIKH_MASUK = sysdate,  ID_KEMASKINI = '" + userid
 					+ "', TARIKH_KEMASKINI = sysdate where id_permohonan = '"
 					+ idpermohonan + "'";
 			// System.out.println("sql-->>"+sql);
+			myLogger.info("UPDATE FLAG KEMBALI 13112020 : "+sql);
 			stmtT.executeUpdate(sql);
 			
 			// auto generate no fail
