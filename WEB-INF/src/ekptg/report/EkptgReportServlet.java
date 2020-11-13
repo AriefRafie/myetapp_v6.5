@@ -2463,10 +2463,11 @@ public abstract class EkptgReportServlet implements IServlet2 {
 	 * @return
 	 */
 	private String getReportPath(ServletContext context,String rtype){
+//		
 //		myLogger.info("getReportPath length="+getAppContext().length());
-		myLogger.info("getReportPath length="+rtype);
-		myLogger.info("contextPath ="+context.getRealPath("").substring(0,context.getRealPath("").length()- getAppContext().length()));
-		myLogger.info("contextPath 2 ="+context.getRealPath(rtype));
+//		myLogger.info("getReportPath length="+rtype);
+//		myLogger.info("contextPath ="+context.getRealPath("").substring(0,context.getRealPath("").length()- getAppContext().length()));
+//		myLogger.info("contextPath 2 ="+context.getRealPath(rtype));
 
 //		String realPathReport = context.getRealPath(File.separator + rtype + File.separator)
 //			.replace("johor" + File.separator, "")
@@ -2485,8 +2486,8 @@ public abstract class EkptgReportServlet implements IServlet2 {
 //			.replace("ekptgv2" + File.separator, "")
 //			.replace("wp" + File.separator, "")
 //			.replace(getAppContext() + File.separator, "");
-		String realPathReport = context.getRealPath("").substring(0,context.getRealPath("").length() - (getAppContext().length())) + rtype;
-		//myLogger.info("realPathReport() 0="+context.getRealPath("").substring(0,context.getRealPath("").length() - getAppContext().length()) + rtype);
+		String realPathReport = context.getRealPath("").substring(0,context.getRealPath("").length() - (getAppContext().length()+1)) + rtype;
+		//myLogger.info("realPathReport() 0="+context.getRealPath("").substring(0,context.getRealPath("").length() - getAppContext().length()));
 		myLogger.info("realPathReport()="+realPathReport);
 		return realPathReport;
 	
