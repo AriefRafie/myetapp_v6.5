@@ -7626,15 +7626,19 @@ public class BicaraInteraktifData {
 	    		tajukPerintah = "PEMBETULAN PERINTAH ("+NO_PINDAAN+")";
 	    	}
 	    	
+	    	// create new div for Nota section
 	    	htmlPageSetup += "<br><div style=\"border-bottom: 1px solid #000;width:100%;font-size: 140%;\" ><b>"+tajukPerintah+"</b></div>";
 			htmlPageSetup += openHTMLTableCatatanPerintah();    	
 	    	htmlPageSetup += "<tr>";
 	        htmlPageSetup += "<td valign=\"top\"   > ";
 	       
+	        // update contents of Nota based on conditions
+	        // if CATATAN_INTRO contents available
 	        if(!CATATAN_INTRO.equals(""))
 	    	{        	
 	        	String specialKeterangan = CATATAN_INTRO;
-				if(specialKeterangan.contains("[[FIELD1]]"))
+				
+	        	if(specialKeterangan.contains("[[FIELD1]]"))
 				{
 					if(INTROFIELD1.equals(""))
 					{
@@ -7664,25 +7668,31 @@ public class BicaraInteraktifData {
 	        	
 	         	htmlPageSetup += "<div style=\"width:100%;"+fontSize+"\" align=\"justify\" ><br>"+CATATAN_INTRO+"</div>";
 	    	}
+	        
+	        // redundant line : already placed at line 7630
 	        //htmlPageSetup += "<div style=\"width:100%;border-bottom: 1px solid #000;font-size: 100%;\" align=\"left\" ><b>PERINTAH</b></div>";
-	             
-	        /*
+	        
+	        // if CATATAN_SKRIN_PERINTAH contents available
 	        if(!CATATAN_SKRIN_PERINTAH.equals(""))
 	    	{
 	        	htmlPageSetup += "<div style=\"width:100%;"+fontSize+"\" ><br>"+CATATAN_SKRIN_PERINTAH+"</div>";
 	    	}
-	    	*/
+	    	
 	        
 	        if(!INTRO_CATATAN.equals(""))
 	    	{
 	        	htmlPageSetup += "<div style=\"width:100%;"+fontSize+"\" ><br>"+INTRO_CATATAN+"</div>";
 	    	}
 	        
+	        // redundant conditions
+	        /*
 	        if(!CATATAN_SKRIN_PERINTAH.equals("") || !CATATAN_INTRO.equals(""))
 	    	{
 	        	//htmlPageSetup += "<div align=\"right\" class=\"onTT\" ><br><br>T.T....................................</div>";
 	    	}
+	    	*/
 	        
+	        // closing div sections
 	    	htmlPageSetup += "</td>";
 	    	htmlPageSetup += "</tr>";
 	    	
@@ -16629,7 +16639,7 @@ public class BicaraInteraktifData {
 			if(column_name.equals("ID_INTROPERINTAH"))
 			{
 				sql += " UNION ALL "+
-							" SELECT NULL AS ID_INTROPERINTAH, 'Tiada Pilihan' AS INTRO FROM DUAL ORDER BY "+field_VALUE_refTable;
+							" SELECT NULL AS ID_INTROPERINTAH, 'Lain-lain ayat Perintah' AS INTRO FROM DUAL ORDER BY ID_INTROPERINTAH";
 			}
 			
 			myLogger.info(" ("+refTable+") BICARA INTERAKTIF : SQL listRefTable :"+ sql);	

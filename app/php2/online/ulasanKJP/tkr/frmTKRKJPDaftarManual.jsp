@@ -104,6 +104,13 @@
 		          <td width="70%">$namaJenisTanah</td>
 		        </tr>
 		        #foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
+
+        			<tr>
+			          <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+			          <td width="28%">Negeri</td>
+			          <td width="1%">:</td>
+			          <td width="70%">$selectNegeri</td>
+			        </tr>
         			<tr>
           				<td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>
           				<td>No. Lot</td>
@@ -128,7 +135,7 @@
           						<input type="text" name="txtnoHakmilik" id="txtnoHakmilik" value="$beanMaklumatTanah.noHakmilik" readonly="readonly" class="disabled">
           					#end
 
-          					<input type="hidden" name="noMilikTanah" id="noMilikTanah" value="$beanMaklumatTanah.hakmilik" /><span class="style1">$errorPeganganHakmilik</span> </td>
+          					<input type="hidden" name="noMilikTanah" id="noMilikTanah" value="$beanMaklumatTanah.hakmilik" /> <span class="style1">$errorPeganganHakmilik</span> </td>
         			</tr>
         			<tr>
         				<td width="1%"></td>
@@ -170,15 +177,14 @@
           					<td>$beanMaklumatTanah.daerah
           						<input type="hidden" name="namaDerahTanah" id="namaDerahTanah" value="$beanMaklumatTanah.daerah" /></td>
         				</tr>
-        				<tr>
+        				<!-- <tr>
           					<td>&nbsp;</td>
           					<td>Negeri</td>
           					<td>:</td>
           					<td>$beanMaklumatTanah.negeri
-            					<input type="hidden" name="idNegeriTanah" id="idNegeriTanah" value="$beanMaklumatTanah.idNegeriTanah">
-            					<input type="hidden" name="namaNegeriTanah" id="namaNegeriTanah" value="$$beanMaklumatTanah.negeri">
+
           					</td>
-        				</tr>
+        				</tr> -->
         				<tr>
           					<td>&nbsp;</td>
           					<td>Kementerian</td>
@@ -186,6 +192,8 @@
           					<td>$beanMaklumatTanah.kementerian
             					<input type="hidden" name="idKementerianTanah" id="idKementerianTanah" value="$beanMaklumatTanah.idKementerian">
             					<input type="hidden" name="kodKementerian" id="kodKementerian" value="$beanMaklumatTanah.kodKementerian">
+            					<input type="hidden" name="idNegeriTanah" id="idNegeriTanah" value="$beanMaklumatTanah.idNegeriTanah">
+            					<input type="hidden" name="namaNegeriTanah" id="namaNegeriTanah" value="$$beanMaklumatTanah.negeri">
           					</td>
         				</tr>
         				<tr>

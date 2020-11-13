@@ -400,7 +400,7 @@
 function cetakAPBLaporanPengeluaranPasirLaut(id_jadualkedualesenAPB,bulan_pengambilan,id_laporanpasir) {
 
 	var url = "../servlet/ekptg.report.php2.online.PengesahanOnline?template=APBLaporanPengeluaranPasirLaut&folder=ONLINE&id_jadualkedualesenapb="+id_jadualkedualesenAPB+"&bulan_pengambilan="+bulan_pengambilan+"&id_laporanpasir="+id_laporanpasir;
-	
+	//alert(url);
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;

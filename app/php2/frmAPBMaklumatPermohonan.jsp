@@ -39,21 +39,28 @@
         <ul class="TabbedPanelsTabGroup">
           <li onClick="doChangeTab(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PERMOHONAN</li>
           <li onClick="doChangeTab(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PEMOHON</li>
-         <!-- <li onClick="doChangeTab(2);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PEMBELI PASIR</li>-->
+          <!-- <li onClick="doChangeTab(2);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PEMBELI PASIR</li>-->
+          <li onClick="doChangeTab(3);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT SENARAI SEMAK</li>
         </ul>
         <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent"> 
           	#if ($selectedTabUpper == '0')
             	#parse("app/php2/frmAPBMaklumatPermohonanPermohonan.jsp")
-            #end </div>
+            #end 
+          </div>
           <div class="TabbedPanelsContent"> 
           	#if ($selectedTabUpper == '1')
             	#parse("app/php2/frmAPBMaklumatPermohonanPemohon.jsp")
             #end 
           </div>
-         <!-- <div class="TabbedPanelsContent"> #if ($selectedTabUpper == '2')
+          <!-- <div class="TabbedPanelsContent"> #if ($selectedTabUpper == '2')
             #parse("app/php2/frmAPBMaklumatPermohonanPembeliPasir.jsp")
             #end </div>-->
+          <div class="TabbedPanelsContent"> 
+          	#if ($selectedTabUpper == '3')
+            	#parse("app/php2/frmAPBSenaraiSemak.jsp")
+            #end 
+          </div>
         </div>
       </div></td>
   </tr>
@@ -918,3 +925,4 @@ function cetakSuratAkuanTerima(idFail) {
 	hWnd.focus();
 }
 </script>
+$javascriptLampiran
