@@ -250,7 +250,7 @@
     <td width="30%">&nbsp;</td>
     <td width="70%"> #if ($mode == 'newPengarah')
       <input type="button" name="cmdSimpanPengarah" id="cmdSimpanPengarah" value="Simpan" onClick="simpanPengarah()"/>
-      <input type="button" name="cmdBatalPengarah" id="cmdBatalPengarah" value="Batal/Kembali" onClick="batalPengarah()"/>
+      <input type="button" name="cmdBatalPengarah" id="cmdBatalPengarah" value="Kembali" onClick="batalPengarah()"/>
       #end
       #if ($idStatus == '')
       #if ($mode == 'viewPengarah')
@@ -261,7 +261,7 @@
       #end
       #if ($mode == 'updatePengarah')
       <input type="button" name="cmdSimpanKemaskiniPengarah" id="cmdSimpanKemaskiniPengarah" value="Simpan" onClick="simpanKemaskiniPengarah()"/>
-      <input type="button" name="cmdBatalKemaskiniPengarah" id="cmdSimpanKemaskiniPengarah" value="Batal/Kembali" onClick="batalKemaskiniPengarah()"/>
+      <input type="button" name="cmdBatalKemaskiniPengarah" id="cmdSimpanKemaskiniPengarah" value="Kembali" onClick="batalKemaskiniPengarah()"/>
       #end </td>
   </tr>
 </table>

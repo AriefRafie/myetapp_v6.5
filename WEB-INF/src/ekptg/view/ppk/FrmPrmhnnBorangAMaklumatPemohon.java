@@ -1425,7 +1425,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			listPemohonOB = logic.getDataPemohonOB();
 			this.context.put("listPemohonOB", listPemohonOB);
 
-			if(submit.equals("getlampiran")){
+			//if(submit.equals("getlampiran")){
+				myLogger.info("check dokumen lalu sini");
 				lBean = new LampiranBean();
 				String idRujukan ="";
 				myLogger.info("idRujukan="+idRujukan);
@@ -1440,7 +1441,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("lampirans", lBean.getLampiranSimatiPapar(idRujukan, "99201"));				
 				this.context.put("lampiranSijil", lBean.getLampiranSimatiPapar(idRujukan, "99202"));				
 
-			}
+			//}
 			
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp";
 
@@ -4049,6 +4050,28 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			dataParam.put("idPermohonan",idPermohonan);
 			dataParam.put("idSimati",getParam("idSimati"));			
 			dataParam.put("id_Permohonansimati",mati);
+			
+			//SOC
+			dataParam.put("socNegeriHtaamUp", getParam("socNegeriHtaamUp"));
+			dataParam.put("socDaerahHtaamUp", getParam("socDaerahHtaamUp"));
+			dataParam.put("socMukimHtaamUp", getParam("socMukimHtaamUp"));
+			dataParam.put("txtBandarHartaHtaamX2", getParam("txtBandarHartaHtaamX2"));
+			dataParam.put("socKategoriTanahHtaamUp", getParam("socKategoriTanahHtaamUp"));
+			dataParam.put("socJenisLuasHtaamUp", getParam("socJenisLuasHtaamUp").equals("")?"0":getParam("socJenisLuasHtaamUp"));
+			
+			dataParam.put("txtBahagianSimati1Up", getParam("txtBahagianSimati1Up"));
+			dataParam.put("txtBahagianSimati2Up", getParam("txtBahagianSimati2Up"));
+			dataParam.put("txtSekatan", getParam("txtSekatan"));
+			dataParam.put("txtSyaratNyata", getParam("txtSyaratNyata"));
+			
+			dataParam.put("txtAlamat1Htaam1", getParam("txtAlamat1Htaam1"));
+			dataParam.put("txtAlamat2Htaam", getParam("txtAlamat2Htaam"));
+			dataParam.put("txtAlamat3Htaam", getParam("txtAlamat3Htaam"));
+			dataParam.put("txtAlamatPoskodHtaam", getParam("txtAlamatPoskodHtaam"));
+			
+			
+			
+			dataParam.put("idhtaamid", getParam("idhtaamid"));
 			
 			getHTA().getHarta(mode, dataParam, logic, request, session, context);
 			
@@ -6922,10 +6945,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 	}
 
 	private void getSenaraiSemak(String idSimati,String idPermohonan) throws Exception{
-		Vector <Hashtable<String,String>> sm = FrmSemakan.getSenaraiSemakanByIDAttach("4,1,3,99201000035,17,99201000036",idSimati,idPermohonan);
-		// 4 Bukti kematian
-		// 11 Dokumen hakmilik semua harta yang dituntut
-		// 2 Salinan kad pengenalan pemohon
+		Vector <Hashtable<String,String>> sm = FrmSemakan.getSenaraiSemakanByIDAttach("4,1,3,99201000041,17,99201000052",idSimati,idPermohonan);
+		// 4 Bukti kematian, 99201000035 Sijil Perkahwinan
+		// 1 Borang A, 17 Harta Alih
+		// 3 Salinan Kad Pengenalan Waris, 99201000036 Harta Tak Alih
 		context.put("senaraiSemakan", sm);
 		context.put("semakclass", new FrmSemakan());
 		

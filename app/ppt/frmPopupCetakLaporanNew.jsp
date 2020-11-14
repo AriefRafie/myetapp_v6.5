@@ -1731,7 +1731,7 @@ background: #f4eff4 !important;
                 	#end
                 	
                 	#if($report == 'BorangLC')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangLC('$!id_fail','$!id_hakmilik','$!ic_login')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangLC('$!id_fail','$!id_hakmilik','$!ic_login','$!no_rujukan_ptg')">
                 	#end
                     
                     <!-- END REPORT PENARIKAN BALIK -->
@@ -6561,7 +6561,7 @@ function cetakLaporanTanahPPS(idfail,idTanahumum,icLogin) {
     if (hWnd.focus != null) hWnd.focus();	
 }
 
-function cetakBorangLC(id_fail,id_hakmilik,ic_login) {
+function cetakBorangLC(id_fail,id_hakmilik,ic_login,no_fail) {
 
 	/*if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");

@@ -284,6 +284,119 @@ $selectUnit
   		<a href="javascript:PrintLaporanPBN12()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA PBN (MENGIKUT DAERAH & BULAN)</a>
  	</td>
    	</tr>
+   	<td></td>
+  	
+  	<td>
+  		<b>BAITULMAL (PEMEGANG AMANAH)</b>
+ 	</td>
+   	</tr>
+    
+    <tr bgcolor="$bg">
+  	<td>1.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalA()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT UNIT)</a>
+ 	</td>
+   	</tr>
+    	
+   	  	<tr>
+  	<td>2.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalB()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT UNIT & TAHUN)</a>
+ 	</td>
+   	</tr>
+    
+    <tr bgcolor="$bg">
+  	<td>3.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalC()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT UNIT & SELANG MASA)</a>
+ 	</td>
+   	</tr>
+   
+   	   	  	<tr >
+  	<td>4.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalD()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT UNIT & BULAN)</a>
+ 	</td>
+   	</tr>
+    
+    <tr bgcolor="$bg">
+  	<td>5.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalE()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT NEGERI)</a>
+ 	</td>
+   	</tr>	
+    
+    
+   	  	<tr>
+  	<td>6.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalF()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT NEGERI & TAHUN)</a>
+ 	</td>
+   	</tr>
+    
+    <tr bgcolor="$bg">
+  	<td>7.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalG()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT NEGERI & SELANG MASA)</a>
+ 	</td>
+   	</tr>
+    
+    
+   	   	  	<tr >
+  	<td>8.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalH()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT NEGERI & BULAN)</a>
+ 	</td>
+   	</tr>
+    
+    <tr bgcolor="$bg">
+  	<td>9.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalI()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT DAERAH)</a>
+ 	</td>
+   	</tr>
+    
+    	
+   	  	<tr>
+  	<td>10.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalJ()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT DAERAH & TAHUN)</a>
+ 	</td>
+   	</tr>
+    
+    <tr bgcolor="$bg">
+  	<td>11.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalK()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT DAERAH & SELANG MASA)</a>
+ 	</td>
+   	</tr>
+    
+   	   	  	<tr >
+  	<td>12.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalL()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT DAERAH & BULAN)</a>
+ 	</td>
+   	</tr>
+   	<tr >
+  	<td></td>
+  	
+  	<td>
+  		
+ 	</td>
+	</tr>
+		<tr >
 </table>
 </fieldset>	
 

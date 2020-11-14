@@ -840,6 +840,41 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	    }
 	}
 	
+	// ADD 11112020
+	public static Vector getMaklumatPerintah(String search,String idMasuk,String role, String USER_LOGIN_SYSTEM, String flag_draff) throws Exception {
+		Db db = null;
+	    String sql = "";
+	    Format formatter = new SimpleDateFormat("dd/MM/yyyy h:MM:ss a");
+	    try {
+	      db = new Db();
+	      Statement stmt = db.getStatement();
+	      
+	      sql = " SELECT P.ID_PERMOHONAN, P.ID_FAIL, P.ID_CETAKAN, P.FLAG_BORANG "
+	      		+ "FROM TBLPPKPERMOHONAN P "
+	      		+ "WHERE P.ID_CETAKAN IS NOT NULL";
+	      
+	      myLogger.info("SQL LIST PERINTAH >>>>>>>>>>>>> "+sql.toUpperCase());
+	      ResultSet rs = stmt.executeQuery(sql);
+	      Vector list = new Vector();
+	      Hashtable h;
+	      
+	      while (rs.next()) {
+	    	  h = new Hashtable();
+	    	  
+	    	  h.put("id_permohonan", rs.getString("ID_PERMOHONAN")==null?"":rs.getString("ID_PERMOHONAN"));
+	    	  h.put("id_fail", rs.getString("ID_FAIL")==null?"":rs.getString("ID_FAIL"));
+	    	  h.put("id_cetakan", rs.getString("ID_CETAKAN")==null?"":rs.getString("ID_CETAKAN"));
+	    	  h.put("flag_borang", rs.getString("FLAG_BORANG")==null?"":rs.getString("FLAG_BORANG"));
+	    	  
+	    	  list.addElement(h);
+	      }
+	      myLogger.info("DATA LIST PERINTAH >>>>>>>>>>>>> "+list);
+	      return list;
+	    } finally {
+	      if (db != null) db.close();
+	    }
+	}
+	
 	public static Vector getMaklumatPraPerbicaraan(String search,String idMasuk,String role, String USER_LOGIN_SYSTEM, String flag_draff) throws Exception {
 		Db db = null;
 	    String sql = "";
@@ -850,8 +885,8 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	      
 	      sql = "SELECT PC.ID_NOTISPRAPERBICARAAN, PC.ID_PRAPERBICARAAN, PC.ALAMAT_BICARA1, PC.ALAMAT_BICARA2, PC.ALAMAT_BICARA3, PC.CATATAN_NOTIS, PC.ID_PERMOHONAN "
 	      		+ "FROM TBLPPKPRAPERBICARAAN PC, TBLPPKPERMOHONAN P "
-	      		+ "WHERE PC.ID_PERMOHONAN = P.ID_PERMOHONAN "
-	      		+ "AND P.ID_MASUK = '"+idMasuk+"'";
+	      		+ "WHERE PC.ID_PERMOHONAN = P.ID_PERMOHONAN ";
+//	      		+ "AND P.ID_MASUK = '"+idMasuk+"'";
 	      
 	      myLogger.info("SQL LIST PRA PERBICARAAN >>>>>>>>>>>>> "+sql.toUpperCase());
 	      ResultSet rs = stmt.executeQuery(sql);
@@ -871,7 +906,7 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	    	  
 	    	  list.addElement(h);
 	      }
-	      
+	      myLogger.info("DATA LIST PRA PERBICARAAN >>>>>>>>>>>>> "+list);
 	      return list;
 	    } finally {
 	      if (db != null) db.close();
@@ -1362,5 +1397,121 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 	    return output;
 	   
 	  }//close add
+	
+	// syafiqah tambah kemaskini flag cetakan
+	@SuppressWarnings("unchecked")
+	public static String updateFlag(Hashtable data) throws Exception {
+		
+		myLogger.info("UPDATE FLAG 3");
+		
+		Connection conn = null;
+	    Db db = null;
+	    String sql = "";
+	    
+	    try {
+	    	db = new Db();
+	    	conn = db.getConnection();
+			conn.setAutoCommit(false);
+	    	Statement stmt = db.getStatement();
+	    	   
+	    	String idPermohonan = (String)data.get("idPermohonan");	 
+	    	String idCetakan = (String)data.get("idCetakan");
+	    	String flagCetakan = (String)data.get("flagCetakan");
+	    		    	
+	      
+	    	SQLRenderer r = new SQLRenderer();
+	    	r.add("FLAG_CETAK_PERINTAH",flagCetakan);
+	    	r.update("ID_PERMOHONAN",idPermohonan);
+	    	r.update("ID_CETAKAN", idCetakan);	    	
+	
+	    	sql = r.getSQLUpdate("TBLPPKPERMOHONAN");
+	    	myLogger.info("UPDATE FLAG CETAK PERINTAH 4: "+sql);
+	    	stmt.executeUpdate(sql);
+	    	
+	     	conn.commit();	
+		      
+	    }catch (SQLException se) { 
+	    	try {
+	    		conn.rollback();
+	    	} catch (SQLException se2) {
+	    		throw new Exception("Rollback error:"+se2.getMessage());
+	    	}
+	    	throw new Exception("Ralat : Masalah penyimpanan data ");
+	    }
+	    finally {
+	    if (db != null) db.close();
+	    }
+	    
+	    return sql;
+	   
+	  }//close add
+	
+	// syafiqah tambah semak flag cetakan
+	
+	Vector checkFlagCetakan = null;
+	
+	@SuppressWarnings("unchecked")
+	public Vector checkFlagCetakan(String idPermohonan,String idCetakan) throws Exception {
+		
+		checkFlagCetakan = new Vector();
+		checkFlagCetakan.clear();
+		
+		Db db = null;
+		String sql = "";
+		
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT P.FLAG_CETAK_PERINTAH FROM TBLPPKPERMOHONAN P WHERE P.ID_PERMOHONAN = '"+idPermohonan+"' AND P.ID_CETAKAN = '"+idCetakan+"'";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			myLogger.info("SQL SEMAK FLAG CETAK PERINTAH : "+sql);
+			Hashtable h;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("FLAG_CETAK_PERINTAH", rs.getString("FLAG_CETAK_PERINTAH")== null?"":rs.getString("FLAG_CETAK_PERINTAH"));					
+				checkFlagCetakan.addElement(h);
+			}
+			return checkFlagCetakan;
+		
+		} finally {
+			if (db != null)	db.close();
+		}
+	}
+	
+	// syafiqah tambah 14112020 get id semakan based in id jenis dokumen
+	
+	Vector checkIDSemakan = null;
+	
+	@SuppressWarnings("unchecked")
+	public Vector checkIDSemakan(String idJenisDokumen) throws Exception {
+		
+		checkIDSemakan = new Vector();
+		checkIDSemakan.clear();
+		
+		Db db = null;
+		String sql = "";
+		
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT J.ID_SEMAKAN FROM TBLSEMAKANJENISDOKUMEN J WHERE J.ID_JENISDOKUMEN = '"+idJenisDokumen+"'";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			myLogger.info("SQL GET ID_SEMAKAN : "+sql);
+			Hashtable h;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("ID_SEMAKAN", rs.getString("ID_SEMAKAN")== null?"":rs.getString("ID_SEMAKAN"));					
+				checkIDSemakan.addElement(h);
+			}
+			return checkIDSemakan;
+		
+		} finally {
+			if (db != null)	db.close();
+		}
+	}
 
 }
