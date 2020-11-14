@@ -22,7 +22,7 @@
   <input name="flagPampasan" type="hidden" id="flagPampasan" value="$flagPampasan"/>
   <input name="pampasan" type="hidden" id="pampasan" value="$pampasan"/>
   <input name="flagAktif" type="hidden" id="flagAktif" value="$flagAktif"/>
-  <input name="noRayuan" type="hidden" id="noRayuan" value="$noRayuan"/>  
+  <input name="noRayuan" type="hidden" id="noRayuan" value="$noRayuan"/>
   <input name="step" type="hidden" id="step" value="$step"/>
 </p>
 <table width="100%">
@@ -52,7 +52,7 @@
           <td width="28%">Keputusan</td>
           <td width="1%">:</td>
           <td width="70%"><select name="socKeputusan" id="socKeputusan" style="width:140px;" $readonly class="$disabled" $disabled onchange="doChangeKeputusan()">
-      	
+
         #if ($beanMaklumatKeputusan.keputusan == 'L')
               <option value=""> SILA PILIH</option>
               <option value="L" selected>LULUS</option>
@@ -67,13 +67,13 @@
               <option value="">SILA PILIH</option>
               <option value="L">LULUS</option>
               <option value="B">LULUS BERSYARAT</option>
-              <option value="T" selected>TOLAK</option>  
+              <option value="T" selected>TOLAK</option>
         #else
               <option selected value="">SILA PILIH</option>
               <option value="L">LULUS</option>
               <option value="B">LULUS BERSYARAT</option>
               <option value="T">TOLAK</option>
-         #end     
+         #end
             </select>
           </td>
         </tr>
@@ -87,7 +87,7 @@
           <td width="27%" align="top">Jenis Pampasan</td>
           <td width="1%">:</td>
 		  <td width="71%">
-          
+
 			#if ($idPampasan == '1')
               TANAH GANTI
             #elseif($idPampasan == '2')
@@ -119,9 +119,9 @@
         #end
         #end
         <!-- medan baru by Ain -->
-        #if ($beanMaklumatKeputusan.keputusan == 'B')
+        #if ($beanMaklumatKeputusan.keputusan == 'B' || $beanMaklumatKeputusan.keputusan == 'T')
         <tr>
-          <td width="1%">&nbsp;</td>
+          <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
           <td>Ulasan</td>
           <td>:</td>
 		  <td>
@@ -129,7 +129,7 @@
           </td>
         </tr>
         #end
-        
+
         <tr>
           <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
           <td>Tarikh Hantar Surat</td>
@@ -190,7 +190,7 @@
   <tr>
     <td ><a href="#" class="style2" onClick="javascript:cetakTKRSuratLulusBersyarat('$idFail')"> Surat Lulus Bersyarat</a></td>
   </tr>
-  #else  
+  #else
   <tr>
     <td ><a href="#" class="style2" onClick="javascript:cetakTKRSuratTolak('$idFail')"> Surat Tolak </a></td>
   </tr>
@@ -210,7 +210,7 @@ function validateCurrency(elmnt,content,content2) {
 		elmnt.value = content2;
 		return;
 	}
-	
+
 	if(content != ""){
 		var num = content * 1;
 		elmnt.value = num.toFixed(2);
@@ -223,16 +223,28 @@ function validateCurrency(elmnt,content,content2) {
 function simpanKeputusan(idPampasan,idKeputusan) {
 	if(document.${formName}.txtTarikhKeputusan.value == ""){
 		alert('Sila masukkan Tarikh Hantar Surat');
-  		document.${formName}.txtTarikhKeputusan.focus(); 
-		return; 
+  		document.${formName}.txtTarikhKeputusan.focus();
+		return;
 	}
-	
-	
+
+	if(idKeputusan == ""){
+
+	}else{
+		if(idKeputusan == "B" || idKeputusan == "T"){
+			if(document.${formName}.txtUlasan.value == ""){
+				alert('Sila masukkan Ulasan');
+		  		document.${formName}.txtUlasan.focus();
+				return;
+			}
+		}
+	}
+
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "update";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doSimpan";
 	doAjaxCall${formName}("");
@@ -251,17 +263,17 @@ function doHantarProses(){
 		alert('Sila masukkan Keputusan.');
 		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "view";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doHantarProses";
 	document.${formName}.submit();
 }
-function gotoBatalPermohonan(){	
+function gotoBatalPermohonan(){
 	document.${formName}.step.value = "batalPermohonan";
 	document.${formName}.submit();
 }
@@ -275,7 +287,7 @@ function daftarEPU() {
 		document.${formName}.mode.value = "view";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "daftarEPU";
 	document.${formName}.submit();
