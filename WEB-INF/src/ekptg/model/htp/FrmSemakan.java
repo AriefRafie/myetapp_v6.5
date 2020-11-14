@@ -212,26 +212,46 @@ public class FrmSemakan {
 		      db = new Db();
 		      Statement stmt = db.getStatement();
 		      SQLRenderer r = new SQLRenderer();
-		      r.add("DISTINCT i.aturan");
-		      r.add("i.id_semakansenarai");
-	    	  r.add("i.kod_form");
-	    	  r.add("s.perihal");
-		      r.add("NVL(SJD.ID_JENISDOKUMEN,0) jenis_dokumen");
-		      r.add("NVL(JD.KETERANGAN,'TIADA') nama_dokumen");
-		      r.add("CASE "+
-		    		  "WHEN sh.ID_SEMAKANHANTAR IS NULL "+
-		    		  "	THEN 'N' "+
-		    		  "ELSE 'Y'	"+
-		    		 "END FLAG ");
-		      r.add("i.id_semakan",r.unquote("s.id_semakan"));
-		      r.add("i.id_semakan",r.unquote("sjd.id_semakan(+)"));
-		      r.add("sjd.id_jenisdokumen",r.unquote("jd.id_jenisdokumen(+)"));
-		      r.add("i.id_semakansenarai",r.unquote("sh.id_semakansenarai(+)"));
+		      
+		      //TUKAR SQL to LEFT OUTER JOIN
+//		      r.add("DISTINCT i.aturan");
+//		      r.add("i.id_semakansenarai");
+//	    	  r.add("i.kod_form");
+//	    	  r.add("s.perihal");
+//		      r.add("NVL(SJD.ID_JENISDOKUMEN,0) jenis_dokumen");
+//		      r.add("NVL(JD.KETERANGAN,'TIADA') nama_dokumen");
+//		      r.add("CASE "+
+//		    		  "WHEN sh.ID_SEMAKANHANTAR IS NULL "+
+//		    		  "	THEN 'N' "+
+//		    		  "ELSE 'Y'	"+
+//		    		 "END FLAG ");
+//		      r.add("i.id_semakan",r.unquote("s.id_semakan"));
+//		      r.add("i.id_semakan",r.unquote("sjd.id_semakan(+)"));
+//		      r.add("sjd.id_jenisdokumen",r.unquote("jd.id_jenisdokumen(+)"));
+//		      r.add("i.id_semakansenarai",r.unquote("sh.id_semakansenarai(+)"));
 
-		      if(!kodForm.equals("0"))
-		    	  r.add("i.kod_form",kodForm);
-		      sql = " tblsemakan s,tblsemakansenarai i,tblsemakanjenisdokumen sjd,tblrujjenisdokumen jd,tblsemakanhantar sh";
-		      sql = r.getSQLSelect(sql,"i.kod_form,i.aturan");
+//		      if(!kodForm.equals("0"))
+//		    	  r.add("i.kod_form",kodForm);
+//		      sql = " tblsemakan s,tblsemakansenarai i,tblsemakanjenisdokumen sjd,tblrujjenisdokumen jd,tblsemakanhantar sh";
+//		      sql = r.getSQLSelect(sql,"i.kod_form,i.aturan");
+		      
+		      //NEW SQL
+		    sql = "SELECT DISTINCT i.aturan, i.id_semakansenarai, i.kod_form, s.perihal,"
+		    		+ "NVL (sjd.id_jenisdokumen, 0) jenis_dokumen, "
+		    		+ "NVL (jd.keterangan, 'TIADA') nama_dokumen, "
+		    		+ "sh.id_permohonan,sh.id_semakanhantar, "
+		    		+ "CASE "
+		    		+ "	WHEN sh.id_semakanhantar IS NULL "
+		    		+ "		THEN 'N' "
+		    		+ "			ELSE 'Y' "
+		    		+ "	END flag "
+              + "FROM tblsemakan s INNER JOIN  tblsemakansenarai i ON i.id_semakan = s.id_semakan "
+              + "	INNER JOIN tblsemakanjenisdokumen sjd ON  i.id_semakan = sjd.id_semakan "
+              + "	INNER JOIN tblrujjenisdokumen jd ON  sjd.id_jenisdokumen = jd.id_jenisdokumen "
+              + "	LEFT OUTER JOIN tblsemakanhantar sh ON i.id_semakansenarai = sh.id_semakansenarai AND sh.id_permohonan='" + idPermohonan + "'"
+              + " WHERE i.kod_form = '" + kodForm + "'"
+              + " ORDER BY i.kod_form, i.aturan ";
+	          
 	          myLog.info("getSenaraiSemakanAttach :sql= " + sql);
 		      ResultSet rs = stmt.executeQuery(sql);
 		      Hashtable<String,String> h;
@@ -486,6 +506,7 @@ public class FrmSemakan {
 		      SQLRenderer r = new SQLRenderer();
 		      r.add("id_permohonan", r.unquote(idpermohonan));
 		      sql = r.getSQLDelete("tblsemakanhantar");
+		      myLog.info("semakanHantar" +idpermohonan);
 		      stmt.executeUpdate(sql);
 
 		 }catch(Exception e){
