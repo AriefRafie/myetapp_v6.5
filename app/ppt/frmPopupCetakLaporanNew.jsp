@@ -830,7 +830,7 @@ background: #f4eff4 !important;
               
               
               
-              #if($report == 'SuratMintaBayaran'||$report=='Surat_Iringan_Mohon_Bayaran')
+              #if($report == 'SuratMintaBayaran'||$report=='Surat_Iringan_Mohon_Bayaran' || $report == 'EmailSuratMintaBayaran')
               
                 #set($eftemail = "")
               	#if($id_negeri=='10')
@@ -957,7 +957,7 @@ background: #f4eff4 !important;
             
         </fieldset>
         
-        #if($report == 'SuratMintaBayaran' || (($report == 'BorangG' || $report == 'BorangH') && ($showG_MT=='yes' || $showG_ARB=='yes'))||$report=='Surat_Iringan_Mohon_Bayaran' || $report=='SuratBayaranAgensi')
+        #if(($report == 'SuratMintaBayaran' || $report == 'EmailSuratMintaBayaran' ) || (($report == 'BorangG' || $report == 'BorangH') && ($showG_MT=='yes' || $showG_ARB=='yes'))||$report=='Surat_Iringan_Mohon_Bayaran' || $report=='SuratBayaranAgensi')
         
         <fieldset>
             <table width="100%" border="0" cellspacing="2" cellpadding="2">            
