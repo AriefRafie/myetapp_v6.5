@@ -6945,10 +6945,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 	}
 
 	private void getSenaraiSemak(String idSimati,String idPermohonan) throws Exception{
-		Vector <Hashtable<String,String>> sm = FrmSemakan.getSenaraiSemakanByIDAttach("4,1,3,99201000035,17,99201000036",idSimati,idPermohonan);
-		// 4 Bukti kematian
-		// 11 Dokumen hakmilik semua harta yang dituntut
-		// 2 Salinan kad pengenalan pemohon
+		Vector <Hashtable<String,String>> sm = FrmSemakan.getSenaraiSemakanByIDAttach("4,1,3,99201000041,17,99201000052",idSimati,idPermohonan);
+		// 4 Bukti kematian, 99201000035 Sijil Perkahwinan
+		// 1 Borang A, 17 Harta Alih
+		// 3 Salinan Kad Pengenalan Waris, 99201000036 Harta Tak Alih
 		context.put("senaraiSemakan", sm);
 		context.put("semakclass", new FrmSemakan());
 		

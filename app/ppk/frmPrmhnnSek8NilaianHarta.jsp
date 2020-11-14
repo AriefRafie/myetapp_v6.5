@@ -1250,7 +1250,7 @@ kod :: $listhath.kod_hakmilik
 	<tr class="row2">
 		<td width="3%"></td>
 		<td width="92%">Keterangan</td>
-		<td width="5%">#</td>
+		<td width="5%">Dokumen</td>
 	</tr>  
           		#set ( $checked = "" )
             	#foreach ( $semak in $senaraiSemakan )
@@ -1275,6 +1275,8 @@ kod :: $listhath.kod_hakmilik
 				    #else
 				        <input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked disabled/>
 				    #end
+				    
+				    $semak.id
 				    
 	</td>
 	<td width="92%">$i. $semak.keterangan</td>
@@ -1560,7 +1562,7 @@ kod :: $listhath.kod_hakmilik
 	<td>:</td>
 	<td>#if($!skrin_deraf == "yes" || $!skrin_kembali == "yes")
 			#if ($idStatus == "150")
-			<input type="button" name="boranga" id="boranga" size="40" value="Muatnaik Borang A" size="40" onClick="lampiran('$!idSimati','dokumenA')"/>
+			<input type="button" name="boranga" id="boranga" size="40" value="Muatnaik Borang A" size="40" onClick="lampiran('$!idSimati','dokumenA','$!id')"/>
 			#end
 		#end
 		<br>
@@ -2434,10 +2436,10 @@ document.f1.txtHaNilaiTarikhMati.value = document.f1.txtHaNilaiTarikhMohon.value
 
 }
 
-function lampiran(idSimati,jenisUpload) {	
+function lampiran(idSimati,jenisUpload, idPermohonan) {	
 	// console.log("syafiqah :"+idPermohonan);
 	jenisUpload = "paparboranga";
-	var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=dokumenA&actionPopup="+jenisUpload+"&rujukan="+idSimati+"&flagOnline=$!flagOnline";
+	var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=dokumenA&actionPopup="+jenisUpload+"&rujukan="+idSimati+"&flagOnline=$!flagOnline&idPermohonan="+idPermohonan;
     url +="&jenisdokumen=99211";
 		
 	//
