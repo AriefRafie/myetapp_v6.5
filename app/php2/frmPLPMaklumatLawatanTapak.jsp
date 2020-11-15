@@ -42,6 +42,7 @@
           <li onClick="doChangeTab(3);" class="TabbedPanelsTab" tabindex="0">KEHADIRAN</li>
           <li onClick="doChangeTab(4);" class="TabbedPanelsTab" tabindex="0">PEGAWAI PELAPOR</li>
           <li onClick="doChangeTab(5);" class="TabbedPanelsTab" tabindex="0">IMEJAN</li>
+          <li onClick="doChangeTab(6);" class="TabbedPanelsTab" tabindex="0">LAMPIRAN</li>
         </ul>
         <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent"> <br>
@@ -56,6 +57,8 @@
             #parse("app/php2/frmPLPPegawaiPelapor.jsp") </div>
           <div class="TabbedPanelsContent"> <br>
             #parse("app/php2/frmPLPImejan.jsp") </div>
+          <div class="TabbedPanelsContent"> <br>
+            #parse("app/php2/frmPLPLampiran.jsp") </div>
         </div>
       </div></td>
   </tr>
@@ -82,7 +85,7 @@ function doChangeTab(tabId) {
 	document.${formName}.mode.value = "view";
 	document.${formName}.selectedTabUpper.value = tabId;
 	document.${formName}.flagPopup.value = "";
-	document.${formName}.modePopup.value = "";	
+	document.${formName}.modePopup.value = "";
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmPLPLawatanTapakView";
 	document.${formName}.method="POST";
 	doAjaxCall${formName}("");
@@ -90,7 +93,7 @@ function doChangeTab(tabId) {
 function kembali() {
 	document.${formName}.actionPelepasan.value = "";
 	document.${formName}.flagPopup.value = "";
-	document.${formName}.modePopup.value = "";	
+	document.${formName}.modePopup.value = "";
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmPLPLawatanTapakView";
 	document.${formName}.method="POST";
 	document.${formName}.submit();

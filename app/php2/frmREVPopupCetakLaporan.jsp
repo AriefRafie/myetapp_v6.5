@@ -43,6 +43,9 @@
       CETAKAN DAFTAR MEL
       #elseif($!report == 'BorangDaftarMelAPB')
       CETAKAN DAFTAR MEL
+      #elseif($!report == 'suratKuiriCek')
+      CETAKAN SURAT KUIRI CEK
+
       #end </strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         <tr>
@@ -77,7 +80,7 @@
             <a href="javascript:displayDatePicker('txtRujTarikh',false,'dmy');"><img border="0" src="../../img/calendar.gif"/></a></td>
         </tr>
         #end-->
-        #if($!report == 'SuratPemulanganSemula' || $!report == 'SuratTuntutanTunggakanSewa' || $!report == 'SuratRampasanDeposit' || $!report == 'suratIringanResit' || $!report == 'suratTuntutanDeposit' || $!report == 'SuratTuntutan')
+        #if($!report == 'SuratPemulanganSemula' || $!report == 'SuratTuntutanTunggakanSewa' || $!report == 'SuratRampasanDeposit' || $!report == 'suratIringanResit' || $!report == 'suratTuntutanDeposit' || $!report == 'SuratTuntutan' || $!report == 'suratKuiriCek')
         <tr>
           <td ><span class="style1">*</span></td>
           <td >Nama Pegawai yang Menandatangani</td>
@@ -174,6 +177,8 @@
             <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onClick="javascript:cetakSuratTuntutanDeposit()">
             #elseif($report == 'SuratTuntutan')
             <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onClick="javascript:cetakSuratTuntutan()">
+            #elseif($report == 'suratKuiriCek')
+            <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onClick="javascript:cetakSuratKuiriCek()">
             #end
             <!-- END CETAK --></td>
         </tr>
@@ -454,6 +459,21 @@ function cetakSuratTuntutan() {
 		return;
 	}
 	var url = "../../servlet/ekptg.report.php2.REVSuratTuntutan?ID_PEGAWAI="+document.${formName}.socPegawai.value+"&ID_NOTIS="+document.${formName}.idNotis.value;
+    var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+
+function cetakSuratKuiriCek() {
+
+	if(document.${formName}.socPegawai.value == ""){
+		alert('Sila pilih pegawai.');
+  		document.${formName}.socPegawai.focus();
+		return;
+	}
+	var url = "../../servlet/ekptg.report.php2.REVSuratKuiriCek?ID_PEGAWAI="+document.${formName}.socPegawai.value+"&ID_HASIL="+document.${formName}.idHasil.value;
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;

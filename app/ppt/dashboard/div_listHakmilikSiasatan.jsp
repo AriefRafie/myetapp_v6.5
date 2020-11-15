@@ -164,33 +164,38 @@ SENARAI HAKMILIK SIASATAN
 #end
  
   
-   <script type="text/javascript">
+    <script type="text/javascript">
       $jquery(function() {
 		   var width  = 0;
 		   var height = 0;			
 		   var left = 0;
            var top  = 0;	  
 		  
-      $jquery(document).ready(function(e) {
-		   
-		    width  = 600;			
-		    left = width+e.pageX;
-            top  = height+e.pageY;			
+    //  $jquery(document).ready(function(e) {
+		    
+		    width  = 500;			
+		   // left = width+e.pageX;
+           // top  = height+e.pageY;			
 			height = 300;
-			$jquery("#boxListHakmilikSiasatan").css('width', width).css('height', height).css('top', top).css('left', left);
-			$jquery("#scroll_boxListHakmilikSiasatan").css('width', width).css('height', height-55).css('top', top).css('left', left).css('overflow-y','scroll');
-		   // $jquery('#boxListHakmilik').show();	     
-        });	
+			//$jquery("#boxListFailSiasatan").css('width', width).css('height', height).css('top', top).css('left', left);	
+			//$jquery("#scroll_boxListFailSiasatan").css('width', width).css('height', height-55).css('top', top).css('left', left).css('overflow-y','scroll');
+		   $jquery("#boxListHakmilikSiasatan").css('width', width).css('height', height);
+			//.css('top', top).css('left', left);	
+			$jquery("#scroll_boxListHakmilikSiasatan").css('width', width).css('height', height-55)
+			//.css('top', top).css('left', left)
+			.css('overflow-y','scroll');
+			//$jquery('#boxListFail').show();     
+       // });	
 		
 		/*
-		 $jquery("div#boxListHakmilik").mousemove(function(e) {
-			 $jquery("div#boxListHakmilik").css('top', e.pageY).css('left', e.pageX);
+		 $jquery("div#boxListFail").mousemove(function(e) {
+			 $jquery("div#boxListFail").css('top', e.pageY).css('left', e.pageX);
 			});
 		*/	
 		
 		
-		var boxListHakmilikSiasatan = $jquery("#boxListHakmilikSiasatan")
-		boxListHakmilikSiasatan.offset({
+		/*var boxListFailSiasatan = $jquery("#boxListFailSiasatan")
+		boxListFailSiasatan.offset({
 			left: left,
 			top: top
 		});		
@@ -203,7 +208,7 @@ SENARAI HAKMILIK SIASATAN
 		var delta = {
 			x: 0,
 			y: 0
-		};		
+		};	*/	
 		$jquery("#move").mousedown(function(e) {
 			//alert("mousedown");
 			if (!drag.state) {
@@ -226,7 +231,7 @@ SENARAI HAKMILIK SIASATAN
 				delta.y = e.pageY - drag.y;
 		
 				//$jquery('#log').text(e.pageX + ' ' + e.pageY + ' ' + delta.x + ' ' + delta.y+'get_inside_top :'+get_inside_top);
-				//$jquery("div#boxListHakmilik").css('top', e.pageY).css('left', e.pageX);
+				//$jquery("div#boxListFail").css('top', e.pageY).css('left', e.pageX);
 				var cur_offset = $jquery(drag.elem).offset();
 		
 				$jquery(drag.elem).offset({
@@ -235,7 +240,7 @@ SENARAI HAKMILIK SIASATAN
 								
 				});
 		
-				//$jquery("div#boxListHakmilik").css('top', e.pageY).css('left', e.pageX);
+				//$jquery("div#boxListFail").css('top', e.pageY).css('left', e.pageX);
 				drag.x = e.pageX;
 				drag.y = e.pageY;
 				$jquery("div#boxListHakmilikSiasatan").css('top', e.pageY).css('left', e.pageX);
