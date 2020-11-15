@@ -64,6 +64,62 @@
       </table>
       </fieldset></td>
   </tr>
+  
+  <tr>
+    <td>&nbsp;</td>
+  </tr>
+  #if ($flagNotifikasi == 'openNotifikasi')
+  <tr>
+	<td> #parse("app/php2/frmAPBNotifikasiEmailDetail.jsp") </td>
+  </tr>
+  <tr>
+	<td>&nbsp;</td>
+  </tr>
+  #end
+  <tr>
+    <td><fieldset>
+      <legend><b>SENARAI NOTIFIKASI EMAIL</b></legend>
+      <table align="center" width="100%">
+        <tr>
+          <td colspan="9" scope="row"><input name="cmdTambah" type="button" value="Tambah" onClick="javascript:doDaftarNotifikasi()"/></td>
+        </tr>
+        <tr class="table_header">
+          <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
+          <td width="25%"><strong>Nama Pegawai</strong></td>
+          <td width="15%" align="center"><strong>Emel</strong></td>
+          <td width="15%" align="center"><strong>Jawatan</strong></td>
+          <td width="10%"><strong>Status</strong></td>
+        </tr>
+        #set ($list = "")
+        #if ($SenaraiNotifikasiEmel.size() > 0)
+        #foreach ($list in $SenaraiNotifikasiEmel)
+        #if ($list.bil == '')
+        #set( $row = "row1" )
+        #elseif (($list.bil % 2) != 0)
+        #set( $row = "row1" )
+        #else 
+        #set( $row = "row2" )
+        #end
+        <tr>
+          <td class="$row" align="center">$list.bil</td>
+          <td class="$row">$list.namaPegawai</td>
+          <td class="$row" align="center">$list.emel</td>
+          <td class="$row" align="center">$list.jawatan</td>
+          <td class="$row">$list.status</td>
+        </tr>
+        #end
+        #else
+        <tr>
+          <td class="row1" align="center">&nbsp;</td>
+          <td class="row1" >Tiada Rekod</td>
+          ##<td class="row1">&nbsp;</td>
+          <td class="row1">&nbsp;</td>
+          <td class="row1">&nbsp;</td>
+        </tr>
+        #end
+      </table>
+    </fieldset></td>
+  </tr>
 </table>
 <script>
 function calcDate(){
@@ -242,7 +298,7 @@ function doUlanganJUPEM(){
 	document.${formName}.method="POST";
 	document.${formName}.submit();
 }
-function simpanDokumenJUPEM(idUlasanTeknikal,idPermohonan,flagLampiran) {
+function simpanDokumenJUPEM(idUlasanTeknikal,idPermohonan) {
 	
 	if(document.${formName}.fileuploadJUPEM.value == ""){
 		alert('Sila pilih Fail yang Ingin Dimuatnaik.');
@@ -257,28 +313,7 @@ function simpanDokumenJUPEM(idUlasanTeknikal,idPermohonan,flagLampiran) {
 	var dp = document.${formName}.form_token.value ;
 	var dopost = "&form_token="+dp;
 	
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmAPBJabatanTeknikalView&hitButton=simpanDokumenKJT&selectedTabUpper=0&idPermohonan="+idPermohonan+"&flagLampiran="+flagLampiran+"&idUlasanTeknikal="+idUlasanTeknikal+"&flagPopup=openJUPEM&modePopup=view"+dopost;
-	document.${formName}.method="post";
-	document.${formName}.enctype="multipart/form-data";
-    document.${formName}.encoding="multipart/form-data";
-	document.${formName}.submit();
-}
-function simpanDokumenJUPEM2(idUlasanTeknikal,idPermohonan,flagLampiran) {
-	
-	if(document.${formName}.fileuploadJUPEM2.value == ""){
-		alert('Sila pilih Fail yang Ingin Dimuatnaik.');
-  		document.${formName}.fileuploadJUPEM2.focus(); 
-		return; 
-	}
-
-	if ( !window.confirm("Adakah Anda Pasti ?") ){
-		return;
-	}
-	
-	var dp = document.${formName}.form_token.value ;
-	var dopost = "&form_token="+dp;
-	
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmAPBJabatanTeknikalView&hitButton=simpanDokumenKJT&selectedTabUpper=0&idPermohonan="+idPermohonan+"&flagLampiran="+flagLampiran+"&idUlasanTeknikal="+idUlasanTeknikal+"&flagPopup=openJUPEM&modePopup=view"+dopost;
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmAPBJabatanTeknikalView&hitButton=simpanDokumenKJT&selectedTabUpper=0&idPermohonan="+idPermohonan+"&idUlasanTeknikal="+idUlasanTeknikal+"&flagPopup=openJUPEM&modePopup=view"+dopost;
 	document.${formName}.method="post";
 	document.${formName}.enctype="multipart/form-data";
     document.${formName}.encoding="multipart/form-data";
@@ -323,6 +358,7 @@ function doSimpanRekodEmailJUPEM(){
   		document.${formName}.namaPegawai.focus(); 
 		return; 
 	}
+	alert(document.${formName}.namaPegawai.value);
 	if(document.${formName}.emel.value == ""){
 		alert('Sila isikan alamat emel .');
   		document.${formName}.emel.focus(); 

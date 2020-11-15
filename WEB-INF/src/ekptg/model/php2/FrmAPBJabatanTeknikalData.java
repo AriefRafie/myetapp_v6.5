@@ -55,7 +55,6 @@ public class FrmAPBJabatanTeknikalData {
 	private Vector listNotifikasi = null;
 	private Vector beanMaklumatKJP = null;
 	private Vector beanMaklumatLampiranKJP = null;
-	private Vector beanDocJUPEM = null;
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -461,7 +460,7 @@ public class FrmAPBJabatanTeknikalData {
 		}
 	}
 
-	public void hapusDokumen(String idUlasanTeknikal, String flagLampiran, HttpSession session)
+	public void hapusDokumen(String idUlasanTeknikal, HttpSession session)
 			throws Exception {
 		Db db = null;
 		Connection conn = null;
@@ -476,7 +475,6 @@ public class FrmAPBJabatanTeknikalData {
 			// TBLPHPDOKUMEN
 			SQLRenderer r = new SQLRenderer();
 			r.add("ID_ULASANTEKNIKAL", idUlasanTeknikal);
-			r.add("FLAG_DOKUMEN", flagLampiran);
 
 			sql = r.getSQLDelete("TBLPHPDOKUMEN");
 			stmt.executeUpdate(sql);
@@ -4876,49 +4874,6 @@ public class FrmAPBJabatanTeknikalData {
 			if (db != null)
 				db.close();
 		}
-	}
-	
-	public Vector findDocJUPEM(String idUlasanTeknikal) throws Exception {
-		Db db = null;
-		String sql = "";
-		
-		try {
-			db = new Db();
-			beanDocJUPEM = new Vector();
-			Statement stmt = db.getStatement();
-		
-			sql = "SELECT ID_DOKUMEN, ID_ULASANTEKNIKAL, FLAG_DOKUMEN, NAMA_DOKUMEN, CATATAN, NAMA_FAIL, CONTENT "
-				+ "FROM TBLPHPDOKUMEN WHERE ID_ULASANTEKNIKAL = '"+ idUlasanTeknikal +"'";
-			
-			ResultSet rs = stmt.executeQuery(sql);
-
-			Hashtable h;
-			while (rs.next()) {
-				h = new Hashtable();
-				h.put("idDokumen", rs.getString("ID_DOKUMEN"));
-				h.put("idUlasanTeknikal", rs.getString("ID_ULASANTEKNIKAL") == null ? ""
-						: rs.getString("ID_ULASANTEKNIKAL"));
-				h.put("flagDokumen", rs.getString("FLAG_DOKUMEN") == null ? ""
-						: rs.getString("FLAG_DOKUMEN"));
-				h.put("namaDokumen", rs.getString("NAMA_DOKUMEN") == null ? ""
-						: rs.getString("NAMA_DOKUMEN"));
-				h.put("catatan",
-						rs.getString("CATATAN") == null ? "" : rs
-								.getString("CATATAN"));
-				h.put("namaFail",
-						rs.getString("NAMA_FAIL") == null ? "" : rs
-								.getString("NAMA_FAIL"));
-				h.put("content",
-						rs.getString("CONTENT") == null ? "" : rs
-								.getString("CONTENT"));
-				beanDocJUPEM.addElement(h);	
-			} 
-		} finally {
-			if (db != null)
-				db.close();
-		}
-		
-		return beanDocJUPEM;
 	}
 	
 	public Vector getListJUPEM() {
