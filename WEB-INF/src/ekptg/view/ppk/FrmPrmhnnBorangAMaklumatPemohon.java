@@ -60,7 +60,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 	static Logger myLogger = Logger.getLogger(FrmPrmhnnBorangAMaklumatPemohon.class);
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private String idUser = "";
 	FrmPermohonanHTAData permohonanInternal = null;
 	FrmPrmhnnSek8InternalData logic = null;
@@ -80,19 +80,19 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 	String disability1 = "";
 	String disability2 = "";
 	String readability1 = "";
-	String readability2 = "";	
+	String readability2 = "";
 	Vector senaraiHTAX = null;
 	private HTABean htaBean = null;
 	private HTATHBean htathBean = null;
 	private HABean haBean = null;
 	private UtilHTMLPilihanJenisPBPPK jenisPB = null;
 	private LampiranBean lBean = null;
-	
+
 	@Override
 	public Template doTemplate() throws Exception {
-		
+
 		String command = getParam("command");
-		
+
 		logic = new FrmPrmhnnSek8InternalData();
 		logic_A = new FrmPrmhnnSek8DaftarSek8InternalData();
 		logic_B = new FrmPrmhnnSek8SenaraiHTATHInternalData();
@@ -278,7 +278,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			}
 			this.context.put("daftar", "yes");
 			vm = "app/ppk/frmPrmhnnSek8SenaraiSemakDaftar_online";
-		
+
 		} else if ("papar".equals(submit)) {
 			readability1 = " ";
 			readability2 = "readonly";
@@ -311,17 +311,17 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("daftar", "yes");
 			this.context.put("list2", list2);
 			vm = "app/ppk/frmPrmhnnSek8SenaraiSemakDaftar_online.jsp";
-			
+
 		} else if ("onlineSub".equals(command)){
 			myLogger.info("syafiqah: TestSub");
 			vm = "app/ppk/frmTukarPemohonSek8.jsp";
-			
+
 		}else if("hantarPempetisyen".equals(command)) {
 			myLogger.info("Step 1 SYAFIQAH");
-			
+
 			String xxxxx = getParam("docSokongan");
 			// addPertukaran(session);
-			
+
 		} else if ("kembali_daftar_pemohon".equals(submit)) {
 			String tempid = getParam("idtemp");
 			String idper = tempid;
@@ -344,7 +344,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("list2", list2);
 
 			vm = "app/ppk/frmPrmhnnSek8SenaraiSemakDaftar_online.jsp";
-		
+
 		}else if ("Simpan".equals(submit)) {
 			myLogger.info("Simpan");
 			String eventstatus = getParam("eventStatus");
@@ -398,7 +398,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				view_get_userid(session);
 				listUserid = logic_A.getUserIds();
 				listDaerahByUser = logic_A.getDaerahByNegeriUser((String) session.getAttribute("_ekptg_user_id"));
-				
+
 				// comment dulu sebab online xleh dapat user id internal
 				view_get_userid(session);
 				listUserid = logic_A.getUserIds();
@@ -417,10 +417,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				listSemak = logic_C.getListSemakan();
 				this.context.put("ListSemakan", listSemak);
 				this.context.put("ViewFail", "");
-				
+
 				/** Majlis Agama (20) & Baitulmal (8)
-				 * 
-				 * */ 
+				 *
+				 * */
 				String taraf = "";
 				String idpej = "0";
 				FrmPYWHeaderData header = new FrmPYWHeaderData();
@@ -435,9 +435,9 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
     			this.context.put("tarafKepentingan", taraf);
 				this.context.put("idPejabat", idpej);
     			//this.context.put("pemohon", vec.get(0));
- 
+
 				//subKategoriPemohon
-			
+
 			}else {
 				this.context.put("tarikhmohon", currentDate);
 				String id = getParam("idtemp");
@@ -671,7 +671,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			view1 = logic_A.getJenisKp();
 			this.context.put("listkp", view1);
 			*/
-			
+
 			idFlag = 2;
 			flag_no = 2;
 			eventStatus = 1;
@@ -857,7 +857,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 						daerah_mohon = mt.get("NAMA_DAERAH").toString();
 						no_rujukan_online = mt.get("NO_PERMOHONAN_ONLINE").toString();
 						id_status_daftar = mt.get("ID_STATUS").toString();
-						
+
 					} else if (maklumatSimati_WithoutNoFail.size() != 0) {
 						Hashtable mz = (Hashtable) maklumatSimati_WithoutNoFail.get(0);
 						nama_simati = mz.get("NAMA_SIMATI").toString();
@@ -870,7 +870,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					context.put("POPDaerahMohon", daerah_mohon.toUpperCase());
 					context.put("POPNoOnline", no_rujukan_online);
 					context.put("id_status_daftar", id_status_daftar);
-					
+
 					this.context.put("tarikhmohondaftar", currentDate);
 
 					int idflag = 0;
@@ -903,7 +903,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					String negri = getParam("socNegeri");
 
 					// Hashtable h = (Hashtable)list2.get(0);
-					if (negri == "") {						
+					if (negri == "") {
 						this.context.put("negeri", "");
 						this.context.put("daerah", "");
 
@@ -913,7 +913,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 						Vector s1 = logic_A.getListBandarByNegeri(Integer.parseInt(negri));
 						this.context.put("listBandarbyNegeri", s1);
 					}
-					
+
 					if (getParam("socBandar") == "") {
 						this.context.put("daerah", "");
 
@@ -1080,7 +1080,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 						myLogger.info("Bolehsimpan");
 						addPermohonan(session);
 						this.context.put("appear_skrin_info", "simpan_daftar");
-						
+
 					}
 				} else {
 					if (bolehsimpan.equals("yes")) {
@@ -1231,7 +1231,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					this.context.put("negara", "");
 					this.context.put("daerah", "");
 					this.context.put("listBandarbyNegeri", "");
-				
+
 				} else {
 					this.context.put("negeri", negri);
 					Vector s = logic_A.getListBandarByNegeri(Integer.parseInt(negri));
@@ -1357,9 +1357,9 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
     			myLogger.info("taraf_penting 1354");
 				k.put("no_tel", getParam("no_tel"));
 				k.put("nama_pelbagainegara", getParam("nama_pelbagainegara"));
-				
+
 				k.put("jenisWarga", getParam("socWarganegaraPemohon"));
-								
+
 				k.put("jenis_pej", getParam("jenis_pej"));
 				k.put("no_hp", getParam("no_hp"));
 				k.put("emel", getParam("txtEmelPemohon"));
@@ -1398,7 +1398,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					// this.context.put("selectNegeri",
 					// HTML.SelectNegeri("socNegeri",Long.parseLong(h.get("pmidnegeri").toString()),"class=\"autoselect\" disabled"));
 				}
-						
+
 				listDaerahByUser = logic_A.getDaerahByNegeriUser(idUser);
 				this.context.put("ListDaerahByUser", listDaerahByUser);
 
@@ -1438,11 +1438,11 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				idRujukan += getParam("socJenisKPLainSimati").equals("0")?"-":getParam("socJenisKPLainSimati");
 				idRujukan += (getParam("check_no_kp_lain_simati").equals("")?"-":getParam("check_no_kp_lain_simati"));
 				myLogger.info("idRujukan="+idRujukan);
-				this.context.put("lampirans", lBean.getLampiranSimatiPapar(idRujukan, "99201"));				
-				this.context.put("lampiranSijil", lBean.getLampiranSimatiPapar(idRujukan, "99202"));				
+				this.context.put("lampirans", lBean.getLampiranSimatiPapar(idRujukan, "99201"));
+				this.context.put("lampiranSijil", lBean.getLampiranSimatiPapar(idRujukan, "99202"));
 
 			//}
-			
+
 			vm = "app/ppk/frmPrmhnnSek8DaftarSek8_online.jsp";
 
 		} else if ("Pemohon".equals(submit)) {
@@ -1687,7 +1687,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				k.put("idsaudara", id_saudare);
 
 				k.put("jenisWarga", getParam("socWarganegaraPemohon"));
-				
+
 				k.put("jenisAgama", getParam("socAgamaPemohon"));
 				if (getParam("txtUmurPemohon") != "") {
 					k.put("umur", getParam("txtUmurPemohon"));
@@ -1720,7 +1720,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					k.put("poskodSurat", getParam("txtPoskodPemohon"));
 					k.put("bandarsurat", id_bandartetap);
 					k.put("idnegeriSurat", getParam("socNegeriPemohon"));
-					
+
 					k.put("nama_pelbagainegara", getParam("nama_pelbagainegara"));
 					k.put("nama_pelbagainegara_surat",getParam("nama_pelbagainegara"));
 				} else if (bandarevent.equals("copycancel")) {
@@ -1737,9 +1737,9 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					k.put("poskodSurat", "");
 					k.put("bandarsurat", "");
 					k.put("idnegeriSurat", "");
-					
+
 					k.put("nama_pelbagainegara", getParam("nama_pelbagainegara"));
-					k.put("nama_pelbagainegara_surat",""); 
+					k.put("nama_pelbagainegara_surat","");
 
 				} else {
 					k.put("alamat1", getParam("txtAlamatTerakhir1Pemohon"));
@@ -1758,7 +1758,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					k.put("poskodSurat", getParam("txtPoskodPemohonSurat"));
 					k.put("bandarsurat", id_bandarsurat);
 					k.put("idnegeriSurat", getParam("socNegeriPemohonSurat"));
-					
+
 					k.put("nama_pelbagainegara", getParam("nama_pelbagainegara"));
 					k.put("nama_pelbagainegara_surat", getParam("nama_pelbagainegara_surat"));
 
@@ -1841,7 +1841,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 			list = logic_A.setData_online(id, (String) session
 					.getAttribute("_ekptg_user_id"));
-			
+
 			// logic_A.setData_online(id,(String)
 			// session.getAttribute("_ekptg_user_id"));
 			list = logic_A.setData_online(id, idUser);
@@ -1857,7 +1857,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			context.put("hideTabPengesahan_hta", hideTabPengesahan_hta);
 
 			vm = "app/ppk/frmPrmhnnSek8Pemohon.jsp";
-			
+
 		} else if ("Waris".equals(submit)) {
 			this.context.put("flag_dup", getParam("flag_dup"));
 			readability1 = "";
@@ -2045,7 +2045,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				}
 				if (getParam("simpanmode").equals("copy1_true")) {
 					this.context.put("nama_pelbagainegara_surat",getParam("nama_pelbagainegara"));
-					
+
 					this.context.put("txtAlamatTerakhir1WarisSurat",
 							getParam("txtAlamatTerakhir1Waris"));
 					this.context.put("txtAlamatTerakhir2WarisSurat",
@@ -2072,7 +2072,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				}
 				if (getParam("simpanmode").equals("copy1_false")) {
 					this.context.put("nama_pelbagainegara_surat", "");
-					
+
 					this.context.put("txtAlamatTerakhir1WarisSurat", "");
 					this.context.put("txtAlamatTerakhir2WarisSurat", "");
 					this.context.put("txtAlamatTerakhir3WarisSurat", "");
@@ -2270,7 +2270,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				if (getParam("simpanmode").equals("copy1_false")) {
 					this.context.put("nama_pelbagainegara_surat", "");
 		             this.context.put("nama_pelbagainegara", "");
-		             
+
 					this.context.put("txtAlamatTerakhir1WarisSurat", "");
 					this.context.put("txtAlamatTerakhir2WarisSurat", "");
 					this.context.put("txtAlamatTerakhir3WarisSurat", "");
@@ -2373,7 +2373,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("buttonwaris", "Kemaskini");
 				this.context.put("show_senarai_lapis_pertama", "yes");
 				this.context.put("show_tambah_waris1", "yes");
-				
+
 			} else if ("Lapisan_berikut".equals(mode)) {
 				String idwaris = getParam("idwarisup");
 				this.context.put("idparent", idwaris);
@@ -2387,7 +2387,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("listWa", listWarisParent);
 				this.context.put("show_lapisan_berikut", "yes");
 				this.context.put("nk_tambah_lapisan", "yes");
-			
+
 			} else if ("Lapisan_berikut_lapisan".equals(mode)) {
 				String idwaris = getParam("idwarisup");
 				this.context.put("ip", idwaris);
@@ -2545,7 +2545,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("show_lapisan_berikut", "yes");
 				this.context.put("buttonwarislapisan", "Kemaskini");
 				this.context.put("readmode", "disabled");
-				
+
 			} else if ("Tambah_lapisan_berikut".equals(mode)) {
 				listWarisup = new Vector();
 				String idp = getParam("idparentlapis");
@@ -2586,7 +2586,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("show_lapisan_bawah", "yes");
 				this.context.put("show_tambah_waris1", "yes");
 				this.context.put("button_Kembali1", "yes");
-			
+
 			} else if ("hapus_waris".equals(mode)) {
 				String idwarisup = getParam("idwarisup");
 				logic.deleteWaris(idwarisup, getParam("id_Permohonansimati"));
@@ -2604,7 +2604,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("show_lapisan_bawah", "yes");
 				this.context.put("show_tambah_waris1", "yes");
 				this.context.put("button_Kembali1", "yes");
-			
+
 			} else if ("kemaskini_waris".equals(mode)) {
 				String idwaris = getParam("idwarisup");
 				logic.setDataWarisUpdate(idwaris,getParam("id_Permohonansimati"));
@@ -2634,7 +2634,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("show_batal_waris", "yes");
 				this.context.put("show_senarai_lapis_pertama", "yes");
 				this.context.put("show_tambah_waris1", "yes");
-				
+
 			} else if ("kemaskini_waris_lapisan".equals(mode)) {
 				String idwaris = getParam("idwarisup");
 				String idparent = getParam("idparentlapis");
@@ -2681,7 +2681,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("show_lapisan_berikut_update", "yes");
 				this.context.put("show_lapisan_berikut", "yes");
 				this.context.put("buttonwarislapisan", "Simpan");
-				
+
 			} else if ("simpan_waris".equals(mode)) {
 
 				disability1 = "disabled";
@@ -2812,7 +2812,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("kenegaraan", kenegaraan);
 	*/
 			vm = "app/ppk/frmPrmhnnSek8Waris.jsp";
-		
+
 		} else if ("Penting".equals(submit) || "Saksi".equals(submit)
 				|| "Pemiutang".equals(submit) || "Penghutang".equals(submit)) {
 			String check_copy = getParam("copyAlamat");
@@ -2927,7 +2927,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				if (jenisbandar.equals("copy")
 						&& getParam("simpanmode").equals("insert")) {
 					this.context.put("nama_pelbagainegara_surat",getParam("nama_pelbagainegara"));
-					
+
 					this.context.put("txtAlamatTerakhir1WarisSurat",
 							getParam("txtAlamatTerakhir1Penting"));
 					this.context.put("txtAlamatTerakhir2WarisSurat",
@@ -2971,11 +2971,11 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 						Vector s3 = logic_A.getListBandarByNegeri(Integer.parseInt(getParam("socNegeriPentingU")));
 						this.context.put("listBandarSuratbyNegeri", s3);
 						this.context.put("listBandarTetapbyNegeri", s3);
-						
+
 					} else {
 						this.context.put("listBandarSuratbyNegeri", "");
 						this.context.put("listBandarTetapbyNegeri", "");
-					
+
 					}
 				}
 				if (jenisbandar.equals("copyfalse")) {
@@ -2987,20 +2987,20 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					this.context.put("socNegeriWarisSurat", "");
 					this.context.put("txtBandarWarisSurat", "");
 					this.context.put("socBandarWarisSurat", "");
-				
+
 				}
 				if (getParam("simpanmode").equals("insert")) {
 					this.context.put("buttonpenting", "tambah");
 					this.context.put("nk_tambah_penting", "yes");
 					this.context.put("nk_button_penting", "yes");
-				
+
 				}
 				if (getParam("simpanmode").equals("update")) {
 					this.context.put("nk_button_penting", "yes");
 					this.context.put("nk_update_penting", "yes");
 					this.context.put("buttonpenting", "Simpan");
 					this.context.put("tambah_ob_button", "yes");
-				
+
 				}
 			} else if ("tambah_penting_baru".equals(mode)) {
 				this.context.put("insertbaru", "yes");
@@ -3013,7 +3013,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("readmodekp", "disabled");
 				this.context.put("readmodesy", "disabled");
 				this.context.put("readmodesy", "disabled");
-			
+
 			}else if ("hapus_penting".equals(mode)) {
 				String iddob = getParam("txtIdOb");
 
@@ -3024,7 +3024,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				}
 				this.context.put("tambah_ob_button", "yes");
 				this.context.put("kembali_ob_button", "yes");
-			
+
 			}else if ("GetPenting".equals(mode)) {
 
 				String idob = getParam("txtIdOb");
@@ -3136,7 +3136,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("tambah_ob_button", "yes");
 
 			}
-			
+
 			String id_Permohonansimati = getParam("id_Permohonansimati");
 			logic.setDataPenting(id_Permohonansimati);
 			listPenting = logic.getDataPenting();
@@ -3194,26 +3194,26 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("check_copyP", check_copyP);
 
 			clearContext();
-			
+
 			String id = getParam("idPermohonan");
 			String id_Permohonansimati = getParam("id_Permohonansimati");
-			
+
 			logic.setDataSimati(id);
 			listSimati = logic.getDataSimati();
 			this.context.put("listSimati", listSimati);
-			
+
 			logic.setDataWaris(id_Permohonansimati);
 			listWaris = logic.getDataWaris();
 			this.context.put("listWaris", listWaris);
-			
+
 			logic.setDataWarisLapisanIdMati(id_Permohonansimati);
 			listWarisLapisanIdMati = logic.getDataWarisLapisanIdMati();
 			this.context.put("listWarisLapisanIdMati", listWarisLapisanIdMati);
-			
+
 			logic.setDataWarisOB(id_Permohonansimati);
 			listWarisOB = logic.getDataWarisOB();
 			this.context.put("listWarisOB", listWarisOB);
-			
+
 //			this.context.put("selectedTabatas", 0);
 //			this.context.put("selectedTabtengah", 2);
 //			this.context.put("selectedTabbawah", 0);
@@ -3222,7 +3222,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			// logic_A.setData_online(id,(String)
 			// session.getAttribute("_ekptg_user_id"));
 			// list = logic_A.getData();
-			
+
 			list = logic_A.setData_online(id, idUser);
 			this.context.put("View", list);
 			headerppk_baru(session, id, "Y", "", "T");
@@ -3237,15 +3237,15 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			Vector list_getListOBUpdate = null;
 			list_getListOBUpdate = logic_A.getListOBUpdate(id_Permohonansimati);
 			this.context.put("list_getListOBUpdate", list_getListOBUpdate);
-			
-			
-			// boolean listCheckPertukaran_ = 
+
+
+			// boolean listCheckPertukaran_ =
 			testCheckPertukaran = logic.setCheckPertukaran(id_Permohonansimati);
 			listCheckPertukaran = logic.getCheckPertukaran();
 			this.context.put("listCheckPertukaran", listCheckPertukaran);
-			
-			// myLogger.info("SYAFIQAH : " + listCheckPertukaran.size()); 
-			
+
+			// myLogger.info("SYAFIQAH : " + listCheckPertukaran.size());
+
 			// if(listCheckPertukaran_) {
 			myLogger.info("testCheckPertukaran.size() = "+testCheckPertukaran.size());
 			myLogger.info("listCheckPertukaran.size() = "+listCheckPertukaran.size());
@@ -3256,29 +3256,29 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				//myLogger.info("SYAFIQAH 2");
 				this.context.put("show_hantar_btn", "");
 			}
-			
+
 			if ("TukarPemohonview".equals(mode)) {
 				String idwaris = getParam("id_ob_pemohon");
 				String sebabganti = getParam("sebab");
 				String tarikhmati = getParam("tarikh_mati");
-				
+
 				myLogger.info("syafiqah: "+idwaris+sebabganti+tarikhmati);
-				
+
 				this.context.put("show_senarai_lapis_pertama", "yes");
 				this.context.put("id_Pemohonbaru", idwaris);
 				this.context.put("sebabTukar", sebabganti);
 				this.context.put("tarikhMati", tarikhmati);
-				
+
 			}
 			else if ("hantarPertukaran".equals(mode)) {
 				String xxxxx = getParam("docSokongan");
-				
+
 				myLogger.info("STEP 1 SYAFIQAH");
 				addPertukaran(session);
-				
+
 				testCheckPertukaran = logic.setCheckPertukaran(id_Permohonansimati);
 				listCheckPertukaran = logic.getCheckPertukaran();
-				
+
 				if (listCheckPertukaran.size() > 0) {
 					// myLogger.info("SYAFIQAH 1");
 					this.context.put("show_hantar_btn", "yes");
@@ -3286,17 +3286,17 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					// myLogger.info("SYAFIQAH 2");
 					this.context.put("show_hantar_btn", "");
 				}
-				
-				
+
+
 				this.context.put("show_senarai_lapis_pertama", "yes");
 				this.context.put("listCheckPertukaran", listCheckPertukaran);
 			}
-			
+
 			//Lampiran
 			LampiranBean lBean = new LampiranBean();
 			this.context.put("lampirans", lBean.getLampiranSimatiPapar(id, "99210"));
 			vm = "app/ppk/frmTukarPemohonSek8.jsp";
-			
+
 		} else if ("harta_alih".equals(submit)) {
 
 			this.context.put("showbuttonkembali", "");
@@ -3321,7 +3321,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 			String socJenisha = "0";
 			myLogger.info("harta_alih:"+mode);
-			
+
 			Hashtable dataParam = new Hashtable();
 			dataParam.put("bolehSimpan",bolehsimpan);
 			dataParam.put("idUser",idUser);
@@ -3352,7 +3352,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 			//vm = "app/ppk/frmPrmhnnSek8HA.jsp";
 			vm = "app/ppk/harta/frmPermohonanHA.jsp";
-		
+
 		}else if ("Peguam".equals(submit)) {
 
 			String id = getParam("idPermohonan");
@@ -3406,7 +3406,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				}
 
 				this.context.put("add_new_peguam", "yes");
-				
+
 			} else if ("getBandar".equals(mode)) {
 
 				Hashtable h = new Hashtable();
@@ -3589,17 +3589,17 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			View_pengesahan_pemohonan = logic_A.setData_online(getParam("idPermohonan"), (String) session.getAttribute("_ekptg_user_id"));
 			headerppk_baru(session, getParam("idPermohonan"), "Y", "", "T");
 			this.context.put("View_pengesahan_pemohonan", View_pengesahan_pemohonan);
-			
+
 			Hashtable n = (Hashtable) list.get(0);
 			String id1 = (String) n.get("idsimati");
 			String id2 = (String) n.get("idPemohon");
 			String id = getParam("idPermohonan");
-			//String namaPemohon = 
+			//String namaPemohon =
 			this.context.put("idStatus", (String) n.get("idstatus"));
 			this.context.put("IdPermohonan", id);
 			this.context.put("idSimati", id1);
 			this.context.put("idPemohon", id2);
-			
+
 			if (n.get("nopermohonanonline") == "") n.put("nopermohonanonline", "");
 			this.context.put("nopermohonanonline", n.get("nopermohonanonline").toString());
 
@@ -3647,10 +3647,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				//myLogger.info("part 3");
 				initInputPpkPengesahan();
 			}
-			
+
 			//Senarai semak
 			getSenaraiSemak(id1,id);
-			
+
 			if ("pengesahan_permohonan".equals(mode)) {
 				initTabData();
 
@@ -3708,7 +3708,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					this.context.put("selectedPpkAddress", getPpkAddress);
 					initInputPpkPengesahan();
 				}
-				
+
 			} else if ("selection_daerah".equals(mode)) {
 				initTabData();
 
@@ -3737,7 +3737,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					this.context.put("selNegeri", 0);
 				}
 				this.context.put("kemaskini_pejabat", "yes");
-			
+
 			} else if ("ppkAddressView".equals(mode)) {
 				initTabData();
 
@@ -3782,7 +3782,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				if (temp.equals("")) {
 					temp = "0";
 				}
-				
+
 				String temp2 = getParam("socDaerahPengesahan");
 				if(temp2.equals("1613161")){
 					temp2 = "121";
@@ -3801,7 +3801,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				context.put("readonly", "readonly");
 				Vector idfail = logiconline.getIdFail(idPermohonan);
 				Hashtable t = (Hashtable) idfail.get(0);
-				
+
 				if (bolehsimpan.equals("yes")) {
 					logiconline.insertDaerahMohon(idnegeri, iddaerah,
 							idPermohonan, (String) session.getAttribute("_ekptg_user_id"), (String) t.get("noidfail"));
@@ -3821,7 +3821,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 						.toString());
 
 				listnegeribydaerah = logiconline.getListDaerahByhta(Integer
-						.parseInt(getParam("socNegeriPengesahan")), 
+						.parseInt(getParam("socNegeriPengesahan")),
 						id1);
 				this.context.put("selectedDaerah", listnegeribydaerah);
 
@@ -3952,7 +3952,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				// vm = "app/ppk/frmPrmhnnBorangAPengesahan.jsp";
 
 			}
-	
+
 			list = logic_A.setData_online(getParam("idPermohonan"),idUser);
 			headerppk_baru(session, getParam("idPermohonan"), "Y", "", "T");
 			this.context.put("View", list);
@@ -3976,13 +3976,13 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			context.put("hideTabPengesahan_pemohon", hideTabPengesahan_pemohon);
 			hideTabPengesahan_hta = checkEmptyField_hta(getParam("idPermohonan"));
 			context.put("hideTabPengesahan_hta", hideTabPengesahan_hta);
-			
+
 			//Lampiran
 			String simati = getParam("idSimati");
 			myLogger.info("Syafiqah test :" +simati);
 			LampiranBean lBean = new LampiranBean();
 			this.context.put("lampirans", lBean.getLampiranSimatiPapar(simati, "99211"));
-			
+
 			// Checking mandatori file upload 14/10/2020
 			if (logiconline.getDokumenHTA(mati).size() == logiconline.getBilanganHTA(mati).size()) {
 				this.context.put("bil_hta", "1");
@@ -3990,21 +3990,21 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			else {
 				this.context.put("bil_hta", "0");
 			}
-			
+
 			if (logiconline.getDokumenHA(mati).size() == logiconline.getBilanganHA(mati).size()) {
 				this.context.put("bil_ha", "1");
 			}
 			else {
 				this.context.put("bil_ha", "0");
 			}
-			
+
 			if (logiconline.getDokumenIC(mati).size() == logiconline.getBilanganWaris(mati).size()) {
 				this.context.put("bil_ic", "1");
 			}
 			else {
 				this.context.put("bil_ic", "0");
 			}
-			
+
 			vm = "app/ppk/frmPrmhnnSek8NilaianHarta.jsp";
 
 		// START HTAAM
@@ -4039,18 +4039,18 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			String socMukim = "";
 			String socBandar = "";
 			permohonanInternal = new FrmPermohonanHTAData();
-			String mati = getParam("id_Permohonansimati");				
-			
+			String mati = getParam("id_Permohonansimati");
+
 			//2018
 			String idPermohonan = getParam("idPermohonan");
-			
+
 			Hashtable dataParam = new Hashtable();
 			dataParam.put("bolehSimpan",bolehsimpan);
 			dataParam.put("idUser",idUser);
 			dataParam.put("idPermohonan",idPermohonan);
-			dataParam.put("idSimati",getParam("idSimati"));			
+			dataParam.put("idSimati",getParam("idSimati"));
 			dataParam.put("id_Permohonansimati",mati);
-			
+
 			//SOC
 			dataParam.put("socNegeriHtaamUp", getParam("socNegeriHtaamUp"));
 			dataParam.put("socDaerahHtaamUp", getParam("socDaerahHtaamUp"));
@@ -4058,23 +4058,23 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			dataParam.put("txtBandarHartaHtaamX2", getParam("txtBandarHartaHtaamX2"));
 			dataParam.put("socKategoriTanahHtaamUp", getParam("socKategoriTanahHtaamUp"));
 			dataParam.put("socJenisLuasHtaamUp", getParam("socJenisLuasHtaamUp").equals("")?"0":getParam("socJenisLuasHtaamUp"));
-			
+
 			dataParam.put("txtBahagianSimati1Up", getParam("txtBahagianSimati1Up"));
 			dataParam.put("txtBahagianSimati2Up", getParam("txtBahagianSimati2Up"));
 			dataParam.put("txtSekatan", getParam("txtSekatan"));
 			dataParam.put("txtSyaratNyata", getParam("txtSyaratNyata"));
-			
+
 			dataParam.put("txtAlamat1Htaam1", getParam("txtAlamat1Htaam1"));
 			dataParam.put("txtAlamat2Htaam", getParam("txtAlamat2Htaam"));
 			dataParam.put("txtAlamat3Htaam", getParam("txtAlamat3Htaam"));
 			dataParam.put("txtAlamatPoskodHtaam", getParam("txtAlamatPoskodHtaam"));
-			
-			
-			
+
+
+
 			dataParam.put("idhtaamid", getParam("idhtaamid"));
-			
+
 			getHTA().getHarta(mode, dataParam, logic, request, session, context);
-			
+
 			this.context.put("selectedTabatas", 1);
 			this.context.put("selectedTabtengah", 0);
 			this.context.put("selectedTabbawah", 0);
@@ -4098,23 +4098,23 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			hideTabPengesahan_pemohon = checkEmptyField_pemohon(idPermohonan);
 			context.put("hideTabPengesahan_pemohon", hideTabPengesahan_pemohon);
 			hideTabPengesahan_hta = checkEmptyField_hta(idPermohonan);
-			context.put("hideTabPengesahan_hta", hideTabPengesahan_hta);			
+			context.put("hideTabPengesahan_hta", hideTabPengesahan_hta);
 			//2018
 			this.context.put("listNegeri", socNegeri);
 			this.context.put("listDaerah", socDaerah);
 			this.context.put("listBandar", socBandar);
 			this.context.put("listMukim", socMukim);
 
-			listHTA = permohonanInternal.getDataHTA(mati,"Y");								
+			listHTA = permohonanInternal.getDataHTA(mati,"Y");
 			this.context.put("listHTA", listHTA);
 			this.context.put("idPermohonan", idPermohonan); //2020/03/05
-			
+
 			//vm = "app/ppk/frmPrmhnnSek8HTAAH.jsp";
 			vm = "app/ppk/harta/frmPermohonanHTA.jsp";
-	
-		//END HTAAM	
+
+		//END HTAAM
 		}else if ("HtaamX".equals(submit)) {
-			
+
 			Hashtable dataParam = new Hashtable();
 			dataParam.put("id_Permohonansimati", getParam("id_Permohonansimati"));
 			dataParam.put("idPermohonan", getParam("idPermohonan"));
@@ -4122,7 +4122,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			dataParam.put("radioHtaamViewX2", getParam("radioHtaamViewX2"));
 			dataParam.put("radioHtaamViewX3", getParam("radioHtaamViewX3"));
 			dataParam.put("selectedHartaTakAlih", getParam("selectedHartaTakAlih"));
-			
+
 			dataParam.put("idUser", idUser);
 			dataParam.put("bolehsimpan", bolehsimpan);
 			//SOC
@@ -4136,10 +4136,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			dataParam.put("socNegeriPemajuHtaamX", getParam("socNegeriPemajuHtaamX"));
 			dataParam.put("txtBandarPemaju1HtaamX", getParam("txtBandarPemaju1HtaamX"));
 			dataParam.put("txtJenisKepentinganX", getParam("txtJenisKepentinganX"));
-				
+
 			//dataParam.put("radioHtaamViewX", getParam("id_Permohonansimati"));
 			dataParam.put("noradio", getParam("noradio"));
-			
+
 			//dataParam.put("idSimatiX", getParam("idSimatiX"));
 			dataParam.put("idSimati", getParam("idSimati"));
 			dataParam.put("txtNoPTHtaamX", getParam("txtNoPTHtaamX"));
@@ -4161,17 +4161,17 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			dataParam.put("txtAlamatPemaju2HtaamX", getParam("txtAlamatPemaju2HtaamX"));
 			dataParam.put("txtAlamatPemaju3HtaamX", getParam("txtAlamatPemaju3HtaamX"));
 			dataParam.put("txtPoskodPemaju1HtaamX", getParam("txtPoskodPemaju1HtaamX"));
-			dataParam.put("txtBandarPemaju1HtaamX", getParam("txtBandarPemaju1HtaamX"));			
+			dataParam.put("txtBandarPemaju1HtaamX", getParam("txtBandarPemaju1HtaamX"));
 			dataParam.put("txtPoskodPemaju1HtaamX", getParam("txtPoskodPemaju1HtaamX"));
-			
+
 			dataParam.put("txtAlamatHarta1HtaamX", getParam("txtAlamatHarta1HtaamX"));
 			dataParam.put("txtAlamatHarta2HtaamX", getParam("txtAlamatHarta2HtaamX"));
 			dataParam.put("txtAlamatHarta3HtaamX", getParam("txtAlamatHarta3HtaamX"));
 			dataParam.put("txtPoskodHartaHtaamX", getParam("txtPoskodHartaHtaamX"));
-			
+
 			dataParam.put("txtNoPerjanjianHtaamX", getParam("txtNoPerjanjianHtaamX"));
 			dataParam.put("txtTarikhPerjanjianHtaamX", getParam("txtTarikhPerjanjianHtaamX"));
-			dataParam.put("txtNamaRancanganHtaamX", getParam("txtNamaRancanganHtaamX"));			
+			dataParam.put("txtNamaRancanganHtaamX", getParam("txtNamaRancanganHtaamX"));
 			dataParam.put("txtNoRohHtaamX", getParam("txtNoRohHtaamX"));
 			dataParam.put("txtLotIdHtaamX", getParam("txtLotIdHtaamX"));
 			dataParam.put("txtNoCagaranX", getParam("txtNoCagaranX"));
@@ -4207,7 +4207,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			context.put("hideTabPengesahan_pemohon", hideTabPengesahan_pemohon);
 			hideTabPengesahan_hta = checkEmptyField_hta(getParam("idPermohonan"));
 			context.put("hideTabPengesahan_hta", hideTabPengesahan_hta);
-			
+
 			//vm = "app/ppk/frmPrmhnnSek8HTATH.jsp";
 			vm = "app/ppk/harta/frmPermohonanHTATH.jsp";
 
@@ -4231,7 +4231,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			} else {
 				this.context.put("listBandarTetapbyNegeri", "");
 			}
-			
+
 			//myLogger.info("mode-------------------------------------"+mode);
 			if (mode.equals("Simatiview")) {
 				String idRujukan ="";
@@ -4239,7 +4239,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				String check_no_kp_lama_simati = String.valueOf(h1.get("noKpLama"));
 				String socJenisKPLainSimati = String.valueOf(h1.get("jenisKp"));
 				String check_no_kp_lain_simati = String.valueOf(h1.get("noKpLain"));
-				
+
 				idRujukan = check_no_kp_baru_simati.equals("")?"-":check_no_kp_baru_simati;
 				idRujukan += check_no_kp_lama_simati.equals("")?"-":check_no_kp_lama_simati;
 				idRujukan += socJenisKPLainSimati.equals("0")?"-":socJenisKPLainSimati;
@@ -4257,8 +4257,9 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					lb.kemaskiniLampiranSimati(idRujukan,"99201",String.valueOf(h1.get("idSimati")));
 					myLogger.info("lalu sini 3");
 					// update tblsemakanhantar untuk maklumat perkahwinan
-				}	FrmSemakan.semakanTambah("99201000041", id);
-				
+					FrmSemakan.semakanTambah("99201000041", id);
+				}
+
 
 				/*
 				 * String id = getParam("idPermohonan"); String id2 =
@@ -4270,7 +4271,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				 */
 				this.context.put("readmode", disability1);
 				this.context.put("show_kemaskini_button", "yes");
-				
+
 
 			} else if ("batal_simati".equals(mode)) {
 				/*
@@ -4286,7 +4287,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				/*
 				 * String id = getParam("idPermohonan"); String id2 =
 				 * getParam("idPemohon"); String id1 = getParam("idSimati");
-				 * 
+				 *
 				 * logic.setDataSimati(id); listSimati = logic.getDataSimati();
 				 * this.context.put("listSimati", listSimati);
 				 */
@@ -4321,8 +4322,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				} else {
 					this.context.put("listBandarTetapbyNegeri", "");
 				}
-				
-				
+
+
 				// System.out.println("PEJE END-------------------------------------");
 			} else if ("getBandar".equals(mode)) {
 				Hashtable h = new Hashtable();
@@ -4397,14 +4398,14 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			hideTabPengesahan_hta = checkEmptyField_hta(getParam("idPermohonan"));
 			context.put("hideTabPengesahan_hta", hideTabPengesahan_hta);
 			vm = "app/ppk/frmPrmhnnSek8Simati.jsp";
-		
+
 		} else if ("simpanUploadHTAAH".equals(submit)) {
-			System.out.println("peje");			
-			String idhtaam = getParam("idhtaam");//IL			
-			
-			updateHtaam(session);	
+			System.out.println("peje");
+			String idhtaam = getParam("idhtaam");//IL
+
+			updateHtaam(session);
 			vm = "app/ppk/frmPrmhnnSek8HTAAHLampiran.jsp";
-			
+
 		} else {
 			// System.out.println("cal :"+cal+"currentcal :"+currentcal);
 			if (cal.before(currentcal)) {
@@ -4417,77 +4418,77 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 			vm = "app/ppk/frmPrmhnnSek8SenaraiSemakDaftar_online.jsp";
 
-		}		
-		//System.out.println("vm :::::: "+vm);		
+		}
+		//System.out.println("vm :::::: "+vm);
 		myLogger.info("vm="+vm);
 
 		this.context.put("usid", idUser);
 		this.context.put("DATEUTIL", new DateUtil());
-		
+
 		Db db = null;
 		try {
 			db = new Db();
-	
+
 			listnegeri = logic_A.getListnegeriDb(db);
 			this.context.put("listnegeri", listnegeri);
-	
+
 			Vector count_dunia = logic_A.getNofailduniaDb(2, 1, 8,db);
 			this.context.put("count_dunia", count_dunia);
-	
+
 			Vector listtaraf = logic_A.getListtarafDb(db);
 			this.context.put("listtaraf", listtaraf);
-	
+
 			Vector listsaudara = logic_A.getListsaudaraDb(db);
 			this.context.put("listsaudara", listsaudara);
-	
+
 			Vector listbuktimati = logic_A.getListbuktimatiDb(db);
 			this.context.put("listbuktimati", listbuktimati);
-	
+
 			listdaerah = logic_A.getListDaerahDb(db);
 			this.context.put("listdaerah", listdaerah);
-			
+
 			listbandar = logic_A.getListBandar();
 			this.context.put("listbandar", listbandar);
-	
+
 			Vector listluas = logic_A.getListLuasDb(db);
 			this.context.put("listluas", listluas);
-	
+
 			String statuspemilik = "Y";
 			Vector listpemilikan = logic_A.getListStatusPemilikDb(statuspemilik,db);
 			this.context.put("listpemilikan", listpemilikan);
-	
+
 			Vector listtanah = logic_A.getListJenisTanahDb(db);
 			this.context.put("listtanah", listtanah);
-	
+
 			listmukim = logic_A.getListMukimDb(db);
 			this.context.put("listmukim", listmukim);
-	
+
 			String statushak = "Y";
 			Vector listjenishakmilik = logic_A.getListJenisHakMilikDb(statushak,db);
 			this.context.put("listJenisHakMilik", listjenishakmilik);
-	
+
 			Vector listkategori = logic_A.getListKategoriDb(db);
 			this.context.put("listkategori", listkategori);
-	
+
 			this.context.put("flagFromSenaraiFailSek8", flagFromSenaraiFailSek8);
 			this.context.put("flagForView", flagForView);
 			this.context.put("flagFromSenaraiPermohonanSek8",flagFromSenaraiPermohonanSek8);
-			
+
 			Vector kenegaraan = null;
 			kenegaraan = mainheader.kenegaraanDb(db);
 			this.context.put("kenegaraan", kenegaraan);
-	
+
 			FrmPrmhnnSek8KeputusanPermohonanInternalData.setMaklumatMahkamahARBDb(db);
 			Vector listMaklumatMahkamahM = FrmPrmhnnSek8KeputusanPermohonanInternalData.getMaklumatMahkamahARB();
 			this.context.put("listMaklumatMahkamahJ", listMaklumatMahkamahM);
-			
+
 			view1 = logic_A.getJenisKpDb(db);
 			this.context.put("listkp", view1);
-			this.context.put("listkp2", view1);		
-			
+			this.context.put("listkp2", view1);
+
 		}catch (SQLException se2) {
 			throw new Exception("Error:" + se2.getMessage());
-		}finally {		
+		}finally {
 			if (db != null)
 				db.close();
 		}
@@ -4531,8 +4532,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		this.context.put("show_lapisan_bawah", "");
 		this.context.put("show_lapisan_berikut_update", "");
 		this.context.put("showdefaulttarikh", "");
-		
-		
+
+
 		this.context.put("CheckWujudLot", "");
 		this.context.put("daftar", "");
 		this.context.put("nofail", "");
@@ -4603,12 +4604,12 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		// FrmPrmhnnSek8SenaraiSemakInternalData();
 		logic_C.semakanDelete(idPermohonan);
 	}
-	
+
 	private void addPertukaran(HttpSession session) throws Exception {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = new Date();
 		String currentDate = dateFormat.format(date);
-		
+
 		String idPermohonan = getParam("idPermohonan");
 		String noFail = getParam("noFail");
 		String id_simati = getParam("idSimati");
@@ -4617,12 +4618,12 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		String sebab_tukar = getParam("sebab");
 		String id_permohonansimati = getParam("idPermohonansimati");
 		String tarikhmati_pemohon = getParam("tarikh_mati");
-	
+
 		myLogger.info("Step 2 SYAFIQAH");
-		
+
 		Hashtable h = null;
 		h = new Hashtable();
-		
+
 		h.put("id_permohonan", idPermohonan);
 		h.put("no_fail", noFail);
 		h.put("id_simati", id_simati);
@@ -4633,7 +4634,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		h.put("tarikhmati_pemohon", tarikhmati_pemohon);
 		h.put("tarikh_hantar", currentDate);
 		h.put("id_masuk", idUser);
-		
+
 		logiconline.insertPertukaranPemohon(h);
 	}
 
@@ -4798,15 +4799,15 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		h.put("tarikh_Kemaskini", getParam(""));
 		h.put("id_Db", getParam(""));
 		h.put("jeniswaktu", getParam("jeniswaktu"));
-		
+
 		if(getParam("socBuktiKematianSimati").equals("2")){
 			h.put("tarikhSuratAkuan", getParam("txdTarikhSuratAkuan"));
 		}else{
 			h.put("tarikhSuratAkuan", "");
 		}
-		
-		
-		
+
+
+
 		logic.updatesimati_online(h);
 	}
 
@@ -4820,8 +4821,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		// System.out.println("CW SIZE :"+cpw.size());
 
 		k.put("pemohonwaris", cpw.size());
-		
-		
+
+
 		String nkpbarupemohon = getParam("txtnoKpBaru1Pemohon")
 				+ getParam("txtnoKpBaru2Pemohon")
 				+ getParam("txtnoKpBaru3Pemohon");
@@ -4923,8 +4924,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			k.put("idnegeriSurat", Integer
 					.parseInt(getParam("socNegeriPemohonSurat")));
 		}
-		
-		
+
+
 		k.put("nama_pelbagainegara", getParam("nama_pelbagainegara"));
         k.put("nama_pelbagainegara_surat", getParam("nama_pelbagainegara_surat"));
 
@@ -5088,8 +5089,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		h.put("id_Masuk", (String) session.getAttribute("_ekptg_user_id"));
 		h.put("tarikh_Masuk", currentDate);
 		h.put("jeniswaktu", getParam("jeniswaktu"));
-		
-		
+
+
 		h.put("nama_pelbagainegara", getParam("nama_pelbagainegara"));
         h.put("nama_pelbagainegara_surat", getParam("nama_pelbagainegara_surat"));
 		logic.addWaris(h);
@@ -5215,7 +5216,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 		h.put("nama_pelbagainegara", getParam("nama_pelbagainegara"));
         h.put("nama_pelbagainegara_surat", getParam("nama_pelbagainegara_surat"));
-        
+
 		logic.addWarisBerikut(h);
 	}
 
@@ -5340,10 +5341,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				getParam("id_ob_list_getListOBUpdate"));
 
 		h.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
-		
+
 		h.put("nama_pelbagainegara", getParam("nama_pelbagainegara"));
         h.put("nama_pelbagainegara_surat", getParam("nama_pelbagainegara_surat"));
-        
+
 		logic.updateWaris(h);
 
 	}
@@ -5669,10 +5670,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 	public void addHtaam(HttpSession session) throws Exception {
 		//System.out.println("-------Read Here8----");
 		Hashtable h = new Hashtable();
-		
+
 		h.put("FLAG_DAFTAR", getParam("FLAG_DAFTAR"));
 		h.put("noHakmilik", getParam("txtNoHakmilikHtaam"));
-		
+
 		// ADD BY AISHAH - TAMBAH FIELD ALAMAT
 		h.put("alamat_hta1", getParam("txtAlamat1Htaam1"));
 		h.put("alamat_hta2", getParam("txtAlamat2Htaam"));
@@ -5680,8 +5681,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		h.put("poskod", getParam("txtAlamatPoskodHtaam"));
 
 		h.put("id_bandarhta", getParam("txtBandarHartaHtaamX2"));
-		
-		
+
+
 		h.put("idSimati", getParam("idSimati"));
 		h.put("id_Permohonansimati", getParam("id_Permohonansimati"));
 		// String mati = getParam("id_Permohonansimati");
@@ -5765,7 +5766,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 
 		h.put("catatan", getParam("txtCatatanHtaam"));
 		h.put("noperserahan", getParam("txtNoPersHtaam"));
-		
+
 		h.put("id_Masuk", (String) session.getAttribute("_ekptg_user_id"));
 		h.put("tarikh_Masuk", currentDate);
 
@@ -5780,7 +5781,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		logic.addHtaam(h);
 		//System.out.println("-------Read Here8j ends----");
 	}
-	
+
 	public void addHtaamX(HttpSession session) throws Exception {
 
 		Hashtable h = new Hashtable();
@@ -5934,7 +5935,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		logic.addHtaamX(h);
 
 	}
-	
+
 	private void addHa(HttpSession session) throws Exception {
 		String id = getParam("id");
 		String id1 = getParam("idSimati");
@@ -6277,10 +6278,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		h.put("adaob", getParam("adaob"));
 		h.put("jenis_pej", getParam("jenis_pej"));
 		h.put("tahun", getParam("tahun"));
-		myLogger.info("*****READ HERE1******"); 
+		myLogger.info("*****READ HERE1******");
 		logic_A.addPermohonan_online(session, h);
-		
-		myLogger.info("*****READ HERE2******"); 
+
+		myLogger.info("*****READ HERE2******");
 		String nokp = null;
 		if (no_kpbaru_simati != null){
 			nokp = no_kpbaru_simati;
@@ -6291,7 +6292,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		}
 
 	}
-		
+
 	private void ha_negeri(HttpSession session) throws Exception {
 		String id = getParam("idPermohonan");
 		String id2 = getParam("idPemohon");
@@ -6351,7 +6352,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		this.context.put("selectedTabtengah", getParam("tabIdtengah"));
 		this.context.put("selectedTabbawah", getParam("tabIdbawah"));
 		this.context.put("selectedTabtepi", getParam("tabIdtepi"));
-		
+
 	}
 
 	public void initInputPpkPengesahan() {
@@ -6406,7 +6407,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			 * "0".equals(hEmpty.get("ID_NEGERI")) ||
 			 * "".equals(hEmpty.get("ID_NEGERISURAT")) ||
 			 * hEmpty.get("ID_HTA").equals("0")){
-			 * 
+			 *
 			 * hideTabPengesahan = "hide"; } else{ hideTabPengesahan = "show"; }
 			 */
 			if ("".equals(hEmpty.get("ID_BUKTIMATI"))
@@ -6497,7 +6498,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		 * h.put("nilai_Hta_memohon", Double
 		 * .parseDouble(getParam("txtNilaiTarikhMohonHtaaX"))); } else {
 		 * h.put("nilai_Hta_memohon", 0.0); }
-		 * 
+		 *
 		 * if (getParam("txtNilaiTarikhMatiHtaamX") != "") {
 		 * h.put("nilai_Hta_mati", Double
 		 * .parseDouble(getParam("txtNilaiTarikhMatiHtaamX"))); } else {
@@ -6649,7 +6650,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		logic.updateHtaamX(h);
 
 	}
-		
+
 	public void hapusDokumenPPK(String idHta) throws Exception {
 		Db db = null;
 		Connection conn = null;
@@ -6661,15 +6662,15 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			
+
 			sql = " DELETE FROM TBLPPKUPLOADPELAN P WHERE P.ID_HTA = '"+idHta+"'";
 			System.out.println("sql1 >>> "+sql);
 			stmt.executeUpdate(sql);
-			
+
 			sql = " DELETE FROM TBLPPKDOKUMEN D WHERE D.ID_DOKUMEN IN (SELECT P.ID_DOKUMEN FROM TBLPPKUPLOADPELAN P WHERE P.ID_HTA = '"+idHta+"') ";
 			System.out.println("sql2 >>> "+sql);
 			stmt.executeUpdate(sql);
-			
+
 			conn.commit();
 
 		} catch (SQLException ex) {
@@ -6697,7 +6698,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		h.put("noHakmilik", getParam("txtNoHakmilikHtaamUp"));
 		h.put("idSimati", getParam("idSimati"));
 		h.put("nopt", getParam("txtNoPTHtaamUp"));
-		
+
 		// ADD BY SALNIZAM - TAMBAH FIELD ALAMAT
 		h.put("alamat_hta1", getParam("txtAlamat1Htaam1"));
 		h.put("alamat_hta2", getParam("txtAlamat2Htaam"));
@@ -6830,7 +6831,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		this.context.put("flag_jenis_vm", "vtemplate");
 		this.context.put("kenegaraan", "");
 	}
-	
+
 	private void setSocValues(Hashtable b
 		,String negeriNama,String negeriFunc
 		,String daerahNama,String daerahFunc
@@ -6841,10 +6842,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		) throws Exception{
 		myLogger.info("setSocValues:b="+b);
 		String socStyle = "class=\"autoselect\" style=\"text-transform:uppercase;\" ";
-		
+
 		try{
 			String nn = String.valueOf(b.get("negeri"));
-			String dd = String.valueOf(b.get("daerah"));				
+			String dd = String.valueOf(b.get("daerah"));
 			String idMukim = String.valueOf(b.get("mukim"));
 			String socNegeri = HTML.SelectNegeri(negeriNama, Long.valueOf(nn)
 					," $!readmodenegeri id=\""+negeriNama+"\" onchange=\""+negeriFunc+"('"+daerahNama+"')\" "+socStyle);
@@ -6852,27 +6853,27 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					," $!readmodedaerah id=\""+daerahNama+"\" onchange=\"setSelected(1,0,0,0);"+daerahFunc+"('"+mukimNama+"');daerah_harta();check_harta()\" "+socStyle);
 			String socMukim = HTML.SelectMukimByDaerah(dd, mukimNama, Utils.parseLong(idMukim)
 					," $!readmodemukim id=\""+mukimNama+"\" "+socStyle);
-			
+
 			String bandar = String.valueOf(b.get("bandar"));
 			String socBandar = HTML.SelectBandarByNegeri(nn,bandarNama, Utils.parseLong(bandar)
 					," id=\""+bandarNama+"\" onclick=\"CheckBandarSurat()\" "+socStyle);
-			
+
 			String jenisHakmilik = String.valueOf(b.get("jenishakmilik"));
 			String socJenisHakmilik = HTML.SelectJenisHakmilik(jenisNama, Utils.parseLong(jenisHakmilik)
 					," $!socJenisHakmilikHtaam2 id=\""+jenisNama+"\" "+socStyle);
-			
+
 			String kaTanah = String.valueOf(b.get("kategori"));
 			String socKaTanah = HTML.SelectKategoriTanah(katNama, Utils.parseLong(kaTanah),""
 					," $!readmode id=\""+katNama+"\" "+socStyle);
-	
+
 			String jenisLuas = String.valueOf(b.get("jenisluas"));
 			String socLuas = HTML.SelectLuas(luasNama,Utils.parseLong(jenisLuas), ""
 				," $!readmode id=\""+luasNama+"\"" +
 				"onchange=\"pilih_jenis_luas('"+luasNama+"','tr_luasharta','tr_luasharta_b','luas1','luas2','luas3','txtLuasAsalHtaam1','txtLuasAsalHtaam2','txtLuasAsalHtaam3','txtLuasAsalHtaamUpd','txtLuasHMpHtaamUpd','meterhektar')\" "+socStyle);
-			
+
 			String jenisPB = String.valueOf(b.get("pemilikan"));
 			String socPB = getPilihanPB().Pilihan(pbNama,jenisPB,"",socStyle,null);
-			
+
 			this.context.put("socNegeri", socNegeri);
 			this.context.put("socDaerah", socDaerah);
 			this.context.put("socMukim", socMukim);
@@ -6881,21 +6882,21 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			this.context.put("socKaTanah", socKaTanah);
 			this.context.put("socLuas", socLuas);
 			this.context.put("socPB", socPB);
-			
+
 		}catch (Exception e){
 			throw new Exception("setSocValues:Ralat");
 		}
-				
+
 	}
-	
+
 	private void uploadFiles(Db db,Connection conn, String nama_pemohon_lama) throws Exception {
-		myLogger.info("Baca uploadFiles:--------------"); 
+		myLogger.info("Baca uploadFiles:--------------");
 		String nama_pemohon_lama2 = nama_pemohon_lama;
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 	    ServletFileUpload upload = new ServletFileUpload(factory);
 	    List items = upload.parseRequest(this.request);
-	    Iterator itr = items.iterator();	   
-	    while (itr.hasNext()) {    	
+	    Iterator itr = items.iterator();
+	    while (itr.hasNext()) {
 	      FileItem item = (FileItem)itr.next();
 	      if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
 	    	  System.out.println("item.getName = "+ item.getName());
@@ -6903,10 +6904,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 	      }
 	    }
 	  }
-	
+
 	private void saveData(FileItem item,Db db,Connection conn, String nama_pemohon_lama2) throws Exception {
 		//Db db = null;
-	
+
     try {
     	db = new Db();
 
@@ -6914,7 +6915,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
     	con.setAutoCommit(false);
     	String nama_pemohon_lama3 = nama_pemohon_lama2;
     	String id_permohonansimati = getParam("id_permohonansimati_atheader");
-    	PreparedStatement ps = con.prepareStatement("UPDATE TBLPPKTUKARPEMOHON SET bukti = ?, content = ?, jenis_Mime = ? WHERE (ID_PERMOHONANSIMATI = ? AND NAMA_PEMOHONLAMA = ?)");		
+    	PreparedStatement ps = con.prepareStatement("UPDATE TBLPPKTUKARPEMOHON SET bukti = ?, content = ?, jenis_Mime = ? WHERE (ID_PERMOHONANSIMATI = ? AND NAMA_PEMOHONLAMA = ?)");
     	System.out.println("+nama_pemohon_lama3+ " + nama_pemohon_lama3);
     	System.out.println(con.prepareStatement("UPDATE TBLPPKTUKARPEMOHON SET bukti = ?, content = ?, jenis_Mime = ? WHERE ID_PERMOHONANSIMATI = ?"));
     	ps.setString(1,item.getName());
@@ -6926,9 +6927,9 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
     	ps.setString(4,id_permohonansimati);
     	ps.setString(5,nama_pemohon_lama3);
     	//ps.setString(4,getParam("id_permohonansimati_atheader"));
-    	myLogger.info("Baca SaveData:---------------"); 
-    	ps.executeUpdate();	
-    	myLogger.info("Baca SaveData 2:---------------"); 
+    	myLogger.info("Baca SaveData:---------------");
+    	ps.executeUpdate();
+    	myLogger.info("Baca SaveData 2:---------------");
         con.commit();
     } finally {
 	      if (db != null) db.close();
@@ -6947,7 +6948,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		b.put("jenisluas", luas);
 		b.put("pemilikan", pemilikan);
 		return b;
-		
+
 	}
 
 	private void getSenaraiSemak(String idSimati,String idPermohonan) throws Exception{
@@ -6957,53 +6958,53 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		// 3 Salinan Kad Pengenalan Waris, 99201000036 Harta Tak Alih
 		context.put("senaraiSemakan", sm);
 		context.put("semakclass", new FrmSemakan());
-		
+
 		for (int i = 0; i < sm.size(); i++) {
 			Hashtable hash = sm.elementAt(i);
 			String idsemakansenarai = String.valueOf(hash.get("id"));
-			
+
 			if(idsemakansenarai.equals("4")) {
 				if(FrmSemakan.isSemakan(idPermohonan, idsemakansenarai)==false)
 					FrmSemakan.semakanTambah(idsemakansenarai, idPermohonan);
-		
+
 			} else if (hash.get("id").equals("11")) {
-				
+
 			} else {
 			}
 		}
-		
+
 	}
-	
+
 	private IMaklumatHarta getHTA(){
 		if(htaBean==null){
 			htaBean = new HTABean();
 		}
 		return htaBean;
-				
+
 	}
 	private IMaklumatHarta getHTATH(){
 		if(htathBean==null){
 			htathBean = new HTATHBean();
 		}
 		return htathBean;
-				
-	}	
+
+	}
 	private IMaklumatHarta getHA(){
 		if(haBean==null){
 			haBean = new HABean();
 		}
 		return haBean;
-				
-	}	
-	
+
+	}
+
 	private IUtilHTMLPilihanExt getPilihanPB(){
 		if(jenisPB==null){
 			jenisPB = new UtilHTMLPilihanJenisPBPPK();
 		}
 		return jenisPB;
-				
+
 	}
-	
-	
+
+
 }
 //20200824

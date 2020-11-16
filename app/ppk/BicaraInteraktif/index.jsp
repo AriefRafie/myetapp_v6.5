@@ -1,10 +1,11 @@
+
 <link rel="stylesheet" type="text/css"  href="../bootstrap-wysihtml5-master/lib/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css"  href="../bootstrap-wysihtml5-master/lib/css/prettify.css" />
 <link rel="stylesheet" type="text/css"  href="../bootstrap-wysihtml5-master/src/bootstrap-wysihtml5.css" />
 
 
 <style>
-.red { color:#FF0000 }
+
 
 .onTT {display:none;}
 
@@ -1415,6 +1416,26 @@ function openCloseTukarPegawai()
 	}
 }
 
+//arief add tukar pegawai 2
+function openCloseTukarPegawai2()
+{
+	//alert('masuk');
+	if(document.getElementById("flag_senarai_tukarpegawai2").value == "close")
+	{
+		$jquery("#icon_tukarpegawai2").html("< ");
+		document.getElementById("flag_senarai_tukarpegawai2").value = "open";
+		doDivAjaxCall$formname('listPermohonanTukarPegawai2','showPermohonanTukarPegawai2','');
+		//call ajax list
+	}
+	else
+	{
+		$jquery("#icon_tukarpegawai2").html("> ");
+		document.getElementById("flag_senarai_tukarpegawai2").value = "close";
+		$jquery("#listPermohonanTukarPegawai2").html("");
+		$jquery("#view_tukarpegawaiKPP2").html("");
+	}
+}
+
 /*
 
 doDivAjaxCallFekptg_view_ppk_BicaraInteraktif('listPerbicaraan','cariListPerbicaraan','action=doChangeItemPerPage&scrolPosition='+getPageLocation()
@@ -1467,6 +1488,45 @@ function openCloseMultipleTPKfirst(DIV,SKRINNAME,command)
 	}
 }
 
+//arief add tukar pegawai 2
+function openCloseMultipleTPSecond(ID_PERMOHONAN,ID_FAIL,ID_SIMATI,ID_PERMOHONANSIMATI,ID_PERBICARAAN,DIV,SKRINNAME,command)
+{
+	if(document.getElementById("flag_tukarpegawai2").value == "close")
+	{
+		document.getElementById("itemsPerPage"+command).value = '100';
+		doDivAjaxCall$formname('listPerbicaraan',command,'flagOpenTP2=Y&action=specialFromList&scrolPosition='+getPageLocation());
+
+	}
+	else
+	{
+		$jquery("#icon_tukarpegawai2").html(">> ");
+		document.getElementById("flag_tukarpegawai2").value = "close";
+		$jquery("#view_tukarpegawai2").html("");
+		showHideCheckBox('listID_PERBICARAAN2');
+	}
+}
+
+//arief add tukar pegawai 2
+function openCloseMultipleTPKSecond(DIV,SKRINNAME,command)
+{
+	//alert('1');
+	if(document.getElementById("flag_tukarpegawaiKPP2").value == "close")
+	{
+		//alert('2');
+		document.getElementById("itemsPerPage"+command).value = '100';
+		//alert('3');
+		doDivAjaxCall$formname('listPermohonanTukarPegawai2',command,'flagOpenTPK2=Y&action=specialFromList&scrolPosition='+getPageLocation());
+	}
+	else
+	{
+		//alert('3');
+		$jquery("#icon_tukarpegawaiKPP2").html(">> ");
+		document.getElementById("flag_tukarpegawaiKPP2").value = "close";
+		$jquery("#view_tukarpegawaiKPP2").html("");
+		showHideCheckBoxKPP('listkID_TUKARPEGAWAI2');
+	}
+}
+
 function tutupSkrinPegawaiMultiple(skrinName)
 {
 	$jquery('#view_'+skrinName).html('');
@@ -1490,6 +1550,29 @@ function tutupSkrinPegawaiMultiple(skrinName)
 	}
 }
 
+//arief add tukar pegawai 2
+function tutupSkrinPegawaiMultiple2(skrinName)
+{
+	$jquery('#view_'+skrinName).html('');
+	//alert("1"+skrinName);
+	if(skrinName == "tukarpegawai2")
+	{
+		$jquery("#icon_tukarpegawai2").html(">> ");
+		document.getElementById("flag_tukarpegawai2").value = "close";
+		$jquery("#view_tukarpegawai2").html("");
+		//showHideCheckBox('listID_PERBICARAAN');
+	}
+	else if(skrinName == "tukarpegawaiKPP_multiple")
+	{
+		//alert("2");
+		$jquery("#icon_tukarpegawaiKPP_multiple").html(">> ");
+		//alert("3");
+		document.getElementById("flag_tukarpegawaiKPP_multiple").value = "close";
+		//alert("4");
+		$jquery("#view_tukarpegawaiKPP_multiple").html("");
+		showHideCheckBoxKPP('listkID_TUKARPEGAWAI');
+	}
+}
 
 function openCloseMultipleTP(ID_PERMOHONAN,ID_FAIL,ID_SIMATI,ID_PERMOHONANSIMATI,ID_PERBICARAAN,DIV,SKRINNAME)
 {
@@ -1509,6 +1592,25 @@ function openCloseMultipleTP(ID_PERMOHONAN,ID_FAIL,ID_SIMATI,ID_PERMOHONANSIMATI
 		document.getElementById("flag_tukarpegawai_multiple").value = "close";
 		$jquery("#view_tukarpegawai_multiple").html("");
 		showHideCheckBox('listID_PERBICARAAN');
+	}
+}
+
+//arief add tukar pegawai 2
+function openCloseMultipleTP2(ID_PERMOHONAN,ID_FAIL,ID_SIMATI,ID_PERMOHONANSIMATI,ID_PERBICARAAN,DIV,SKRINNAME)
+{
+	if(document.getElementById("flag_tukarpegawai2").value == "close")
+	{
+		$jquery("#icon_tukarpegawai2").html("<< ");
+		document.getElementById("flag_tukarpegawai2").value = "open";
+		$jquery(document).ready(function () {
+			doDivAjaxCall$formname(DIV,'openSkrinTukarPegawai2','mode=edit&div=view_tukarpegawai2&ID_PERMOHONAN='+ID_PERMOHONAN+'&FIELD_PK=ID_TUKARPEGAWAI&NAMA_TABLE=TBLPPKTUKARPEGAWAI&ID_FAIL='+ID_FAIL+'&ID_SIMATI='+ID_SIMATI+'&ID_PERMOHONANSIMATI='+ID_PERMOHONANSIMATI+'&ID_PERBICARAAN='+ID_PERBICARAAN+'&skrinName='+SKRINNAME);
+		});
+	}
+	else
+	{
+		$jquery("#icon_tukarpegawai2").html(">> ");
+		document.getElementById("flag_tukarpegawai2").value = "close";
+		$jquery("#view_tukarpegawai2").html("");
 	}
 }
 
@@ -1538,6 +1640,36 @@ function openCloseMultipleTPK(ID_PERMOHONAN,ID_FAIL,ID_SIMATI,ID_PERMOHONANSIMAT
 		document.getElementById("flag_tukarpegawaiKPP_multiple").value = "close";
 		$jquery("#view_tukarpegawaiKPP_multiple").html("");
 		showHideCheckBoxKPP('listkID_TUKARPEGAWAI');
+	}
+}
+
+//arief add tukar pegawai 2
+function openCloseMultipleTPK2(ID_PERMOHONAN,ID_FAIL,ID_SIMATI,ID_PERMOHONANSIMATI,ID_PERBICARAAN,DIV,SKRINNAME)
+{
+	//alert('1');
+	if(document.getElementById("flag_tukarpegawaiKPP2").value == "close")
+	{
+		//alert('2');
+		$jquery("#icon_tukarpegawaiKPP2").html("<< ");
+		//alert('2.1');
+		document.getElementById("flag_tukarpegawaiKPP2").value = "open";
+		//alert('2.2');
+		//showHideCheckBox('listkID_TUKARPEGAWAI');
+		//alert('2.3');
+		$jquery(document).ready(function () {
+			doDivAjaxCall$formname(DIV,'openSkrinTukarPegawai2','mode=edit&div=view_tukarpegawaiKPP2&ID_PERMOHONAN='+ID_PERMOHONAN+'&FIELD_PK=ID_TUKARPEGAWAI&NAMA_TABLE=TBLPPKTUKARPEGAWAI&ID_FAIL='+ID_FAIL+'&ID_SIMATI='+ID_SIMATI+'&ID_PERMOHONANSIMATI='+ID_PERMOHONANSIMATI+'&ID_PERBICARAAN='+ID_PERBICARAAN+'&skrinName='+SKRINNAME);
+		});
+		//alert('2.3');
+		showHideCheckBoxKPP('listkID_TUKARPEGAWAI');
+		//alert('2.4');
+	}
+	else
+	{
+		//alert('3');
+		$jquery("#icon_tukarpegawaiKPP2").html(">> ");
+		document.getElementById("flag_tukarpegawaiKPP2").value = "close";
+		$jquery("#view_tukarpegawaiKPP2").html("");
+		showHideCheckBoxKPP('listkID_TUKARPEGAWAI2');
 	}
 }
 
@@ -6284,6 +6416,8 @@ function kemaskiniPerintahHTA() {
 	document.${formName}.submit();
 }
 </script>
+
+
 
 
 #if($command == "viewPerbicaraanFromPerintah")
