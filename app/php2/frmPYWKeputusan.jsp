@@ -136,6 +136,13 @@
                   #if ($mode != 'view')<a href="javascript:displayDatePicker('txtTarikhTamat',false,'dmy');"><img border="0" src="../img/calendar.gif"/>#end</td>
               </tr>
               <tr>
+                <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
+                <td>Tarikh SST</td>
+                <td>:</td>
+                <td><input name="txtTarikhSst" type="text" class="$inputTextClass" id="txtTarikhSst" onBlur="check_date(this);calcDate()" value="$beanMaklumatPerjanjian.tarikhSst" size="9" maxlength="10" $readonly />
+                  #if ($mode != 'view')<a href="javascript:displayDatePicker('txtTarikhSst',false,'dmy');"><img border="0" src="../img/calendar.gif"/>#end</td>
+              </tr>
+              <tr>
               	<td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
               	<td>Jenis Kadar Sewa</td>
               	<td>:</td>
@@ -261,6 +268,13 @@
                 <td>:</td>
                 <td><input name="txtTarikhTamat" type="text" class="$inputTextClass" id="txtTarikhTamat" onBlur="check_date(this);calcDate()" value="$beanMaklumatPerjanjian.tarikhTamat" size="9" maxlength="10" $readonly />
                   #if ($mode != 'view')<a href="javascript:displayDatePicker('txtTarikhTamat',false,'dmy');"><img border="0" src="../img/calendar.gif"/>#end</td>
+              </tr>
+              <tr>
+                <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
+                <td>Tarikh SST</td>
+                <td>:</td>
+                <td><input name="txtTarikhSst" type="text" class="$inputTextClass" id="txtTarikhSst" onBlur="check_date(this);" value="$beanMaklumatPerjanjian.tarikhSst" size="9" maxlength="10" $readonly />
+                  #if ($mode != 'view')<a href="javascript:displayDatePicker('txtTarikhSst',false,'dmy');"><img border="0" src="../img/calendar.gif"/>#end</td>
               </tr>
               <tr>
               	<td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
@@ -462,6 +476,11 @@ function simpanKeputusan(idKeputusan,idSuburusan) {
 		if(document.${formName}.txtTarikhTamat.value == ""){
 			alert('Sila masukkan Tarikh Tamat Perjanjian');
 			document.${formName}.txtTarikhTamat.focus();
+			return;
+		}
+		if(document.${formName}.txtTarikhSst.value == ""){
+			alert('Sila masukkan Tarikh SST');
+			document.${formName}.txtTarikhSst.focus();
 			return;
 		}
 		if(document.${formName}.socJenisKadarSewa.value == ""){
