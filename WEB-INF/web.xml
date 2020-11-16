@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+
+	<listener>
+		<listener-class>ekptg.engine.ContextListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>ekptg.engine.SessionListener</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>interceptor</servlet-name>
+		<servlet-class>lebah.portal.InterceptorServlet</servlet-class>
+		<init-param>
+			<param-name>MMP</param-name>
+			<param-value>lebah.portal.handler.MMPHandler</param-value>
+		</init-param>
+		<init-param>
+			<param-name>Opera Mobi/32904</param-name>
+			<param-value>lebah.portal.handler.MMPHandler</param-value>
+		</init-param>
+		<init-param>
+			<param-name>Mobile/10A523</param-name>
+			<param-value>lebah.portal.handler.MMPHandler</param-value>
+		</init-param>
+		<init-param>
+			<param-name>Safari/8536.25</param-name>
+			<param-value>lebah.portal.handler.MMPHandler</param-value>
+		</init-param>
+		<init-param>
+			<param-name>Version/6.0</param-name>
+			<param-value>lebah.portal.handler.MMPHandler</param-value>
+		</init-param>
+		<init-param>
+			<param-name>AppleWebKit/536.26</param-name>
+			<param-value>lebah.portal.handler.MMPHandler</param-value>
+		</init-param>
+		<init-param>
+			<param-name>MIDP</param-name>
+			<param-value>lebah.portal.handler.MMPHandler</param-value>
+		</init-param>
+		<init-param>
+			<param-name>DESKTOP</param-name>
+			<param-value>lebah.portal.handler.DesktopHandler</param-value>
+		</init-param>
+		<init-param>
+			<param-name>NORMAL</param-name>
+			<param-value>lebah.portal.handler.DesktopHandler</param-value>
+		</init-param>
+	</servlet>
+
+
+	<servlet>
+		<servlet-name>OnlineController</servlet-name>
+		<servlet-class>lebah.portal.OnlineController</servlet-class>
+		<init-param>
+			<param-name>properties</param-name>
+			<param-value>/velocity.properties</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet>
+		<servlet-name>FpxSender</servlet-name>
+		<servlet-class>ekptg.intergration.FpxSender</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>desktop</servlet-name>
+		<servlet-class>lebah.portal.DesktopController</servlet-class>
+		<init-param>
+			<param-name>properties</param-name>
+			<param-value>/velocity.properties</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet>
+		<servlet-name>mobile</servlet-name>
+		<servlet-class>lebah.portal.MobileController</servlet-class>
+		<init-param>
+			<param-name>properties</param-name>
+			<param-value>/velocity.properties</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet>
+		<servlet-name>controller2</servlet-name>
+		<servlet-class>lebah.portal.ControllerServlet2</servlet-class>
+		<init-param>
+			<param-name>properties</param-name>
+			<param-value>/velocity.properties</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet>
+		<servlet-name>controller3</servlet-name>
+		<servlet-class>lebah.portal.ControllerServlet3</servlet-class>
+		<init-param>
+			<param-name>properties</param-name>
+			<param-value>/velocity.properties</param-value>
+		</init-param>
+	</servlet>
+
+
+	<servlet>
+		<servlet-name>controllerDiv</servlet-name>
+		<servlet-class>lebah.portal.DivControllerServlet</servlet-class>
+		<init-param>
+			<param-name>properties</param-name>
+			<param-value>/velocity.properties</param-value>
+		</init-param>
+	</servlet>
+
+
+	<servlet>
+		<servlet-name>launcher</servlet-name>
+		<servlet-class>educate.lcms.LauncherServlet</servlet-class>
+		<init-param>
+			<param-name>properties</param-name>
+			<param-value>/velocity.properties</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>controllerDiv</servlet-name>
+		<url-pattern>/div/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>servlet</servlet-name>
+		<servlet-class>lebah.servlets.ServletTemplate</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>download</servlet-name>
+		<servlet-class>lebah.util.DownloadServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>viewImage</servlet-name>
+		<servlet-class>lebah.util.ThumbnailServlet</servlet-class>
+	</servlet>
+
+
+	<servlet>
+		<servlet-name>CompileServlet</servlet-name>
+		<servlet-class>lebah.servlets.CompileServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ImageServlet</servlet-name>
+		<servlet-class>lebah.servlets.ImageServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>CompileReportServlet</servlet-name>
+		<servlet-class>lebah.servlets.CompileReportServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>Pdf2Servlet</servlet-name>
+		<servlet-class>educate.sis.servlets.Pdf2Servlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ProformaInvoiceServlet</servlet-name>
+		<servlet-class>educate.sis.servlets.ProformaInvoiceServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>BillingPdfServlet</servlet-name>
+		<servlet-class>educate.sis.servlets.BillingPdfServlet</servlet-class>
+	</servlet>
+
+	<!-- JFREECHART -->
+	<servlet>
+		<servlet-name>chart</servlet-name>
+		<servlet-class>lebah.chart.ChartServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>chart2</servlet-name>
+		<servlet-class>lebah.chart.ChartServlet2</servlet-class>
+	</servlet>
+
+	<!-- DWR servlet -->
+
+	<servlet>
+		<servlet-name>dwr-invoker</servlet-name>
+		<display-name>DWR Servlet</display-name>
+		<servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>false</param-value>
+		</init-param>
+	</servlet>
+
+
+
+	<servlet-mapping>
+		<servlet-name>interceptor</servlet-name>
+		<url-pattern>/c/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>FpxSender</servlet-name>
+		<url-pattern>/integration/fpxsender</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>OnlineController</servlet-name>
+		<url-pattern>/online/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet-mapping>
+		<servlet-name>desktop</servlet-name>
+		<url-pattern>/desktop/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>mobile</servlet-name>
+		<url-pattern>/mobile/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>controller2</servlet-name>
+		<url-pattern>/x/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>controller3</servlet-name>
+		<url-pattern>/y/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>launcher</servlet-name>
+		<url-pattern>/c2/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>servlet</servlet-name>
+		<url-pattern>/servlet/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>download</servlet-name>
+		<url-pattern>/download</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>viewImage</servlet-name>
+		<url-pattern>/viewImage</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet-mapping>
+		<servlet-name>CompileServlet</servlet-name>
+		<url-pattern>/servlets/compile</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ImageServlet</servlet-name>
+		<url-pattern>/servlets/image</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>CompileReportServlet</servlet-name>
+		<url-pattern>/servlets/rcompile</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>Pdf2Servlet</servlet-name>
+		<url-pattern>/servlets/pdf2</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet-mapping>
+		<servlet-name>ProformaInvoiceServlet</servlet-name>
+		<url-pattern>/servlets/proforma</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>BillingPdfServlet</servlet-name>
+		<url-pattern>/servlets/billingpdf</url-pattern>
+	</servlet-mapping>
+
+	<!-- JFREE CHART -->
+	<servlet-mapping>
+		<servlet-name>chart</servlet-name>
+		<url-pattern>/chart</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>chart2</servlet-name>
+		<url-pattern>/chart2</url-pattern>
+	</servlet-mapping>
+
+
+
+	<!-- AZAM TESTING -->
+	<servlet>
+		<servlet-name>HelloWorld</servlet-name>
+		<servlet-class>ekptg.test.HelloWorld</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HelloWorld</servlet-name>
+		<url-pattern>/HelloWorld</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- DWR servlet mapping -->
+
+	<servlet-mapping>
+		<servlet-name>dwr-invoker</servlet-name>
+		<url-pattern>/dwr/*</url-pattern>
+	</servlet-mapping>
+
+	<resource-ref>
+		<description>Portal Db</description>
+		<res-ref-name>jdbc/portalDb</res-ref-name>
+		<res-type>javax.sql.DataSource</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+	<session-config>
+		<session-timeout>30</session-timeout>    <!-- 30 minutes -->
+	</session-config>
+
+	<!-- SCHEDULER START -->
+	<!-- <context-param>
+		<param-name>quartz:shutdown-on-unload</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	<context-param>
+		<param-name>quartz:wait-on-shutdown</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>quartz:start-scheduler-on-load</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>quartz:config-file</param-name>
+		<param-value>quartz.properties</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.quartz.ee.servlet.QuartzInitializerListener</listener-class>
+	</listener>  -->
+	<!-- SCHEDULER END -->
+	
+</web-app>
