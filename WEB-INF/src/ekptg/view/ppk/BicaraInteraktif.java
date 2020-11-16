@@ -198,7 +198,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			this.context.put("htmlCarianTukarPegawai", htmlSkrin);
 			this.context.put("flagOpenTPK", getParam("flagOpenTPK"));
 			setupPageMainList(session, action, listPermohonanTukarPegawai, "listPermohonanTukarPegawai", command);
-			skrin_name = "app/ppk/BicaraInteraktif/listPermohonan.Pegawai.jsp";
+			skrin_name = "app/ppk/BicaraInteraktif/listPermohonanTukarPegawai.jsp";
 		} else if (command.equals("viewPerbicaraan") || command.equals("viewPerbicaraanFromPerintah")) {
 
 			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
@@ -6151,7 +6151,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			htmlPageSetup += "</td></tr>";
 
 			htmlPageSetup += modelBI.setRowTextArea(session, ID_SEJARAHBIMAIN, ID_PERMOHONANSIMATI, skrinName, mode,
-					setupSkrin, "Catatan Dokumen TELAH / GAGAL Dikembalikan", table_name, field_main_PK, value_main_PK,
+					setupSkrin, "Catatan Dokumen TELAH / GAGAL Dikemukakan", table_name, field_main_PK, value_main_PK,
 					ID_PERBICARAAN, "CATATAN_DOCKIV", "", "text", "", "4000", "", CATATAN_DOCKIVT, 0, db1); // arief add
 																											// GAGAL
 																											// Dikembalikan
@@ -6562,6 +6562,135 @@ public class BicaraInteraktif extends AjaxBasedModule {
 
 		return htmlPageSetup;
 	}
+	
+	//arief add skrin tukar pegawai 2
+	public String setupPegawaiMultiple2(HttpSession session, String mode, String skrinName, Map setupSkrin,
+			String table_name, String field_main_PK, String command, String id_jawatan_login, String id_negeri_login,
+			String standardParam, String pemohonOrKPP, String openFrom, Db db) throws Exception {
+		String htmlPageSetup = "";
+		Db db1 = null;
+		String USER_ID_SYSTEM = (String) session.getAttribute("_ekptg_user_id");
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = new Date();
+		String currentDate = dateFormat.format(date) + "";
+
+		try {
+			if (db != null) {
+				db1 = db;
+			} else {
+				db1 = new Db();
+			}
+
+			String STATUS_TUKARPEGAWAI = modelBI.getValue(session, "", setupSkrin, table_name, field_main_PK, "", "",
+					"STATUS_TUKARPEGAWAI", db1);
+
+			htmlPageSetup += "<br><div><i><font color='red'>Perhatian</font> : Pastikan label bertanda <font color='red'>*</font> diisi.</i></div>";
+			htmlPageSetup += "<div><i><font color='blue'>Info</font> : Pegawai bicara yang ditetapkan semasa peringkat notis boleh memohon permohonan tukar pegawai perbicaraan sebelum perbicaraan berlangsung. Permohonan penukaran akan dipanjangkan kepada KPP negeri atau HQ untuk kelulusan.</i></div>";
+			htmlPageSetup += "<div><i><font color='blue'>Info</font> : KPP negeri boleh menukar pegawai perbicaraan dikalangan negeri sendiri sahaja.</i></div>";
+			htmlPageSetup += "<div><i><font color='blue'>Info</font> : KPP dan Pegarah Bahagian Pusaka di HQ boleh menukar pegawai perbicaraan meliputi seluruh negara.</i></div>";
+			if (id_jawatan_login.equals("5") || id_jawatan_login.equals("4")) {
+				htmlPageSetup += "<div><i><font color='blue'>Info</font> : Untuk keputusan 'TOLAK' tidak perlu mengisi maklumat pegawai dan negeri ganti.</i></div>";
+			}
+
+			htmlPageSetup += "<br><fieldset>";
+			htmlPageSetup += modelBI.openHTMLTable();
+			htmlPageSetup += modelBI.setRowText(session, "", "", "", skrinName, mode, setupSkrin, "", table_name,
+					field_main_PK, "", "", "ID_TUKARPEGAWAI", "", "hidden", "", "", "", "", 0, db1);
+			htmlPageSetup += modelBI.setRowText(session, "", "", "", skrinName, mode, setupSkrin, "", table_name,
+					field_main_PK, "", "", "ID_PEMOHONTUKARPEGAWAI", "", "hidden", "", "", "", USER_ID_SYSTEM, 0, db1);
+			htmlPageSetup += modelBI.setRowTextTarikh(session, "", "", skrinName, "view", setupSkrin,
+					"Tarikh Permohonan Tukar Pegawai", table_name, field_main_PK, "", "", "TARIKH_MOHON", "Y", "text",
+					"Y", "10", "Y", currentDate, 0, db1);
+
+			htmlPageSetup += modelBI.setRowSelect(session, "", "", skrinName, command, "view", setupSkrin,
+					"Status Tukar Pegawai", table_name, field_main_PK, "", "", "STATUS_TUKARPEGAWAI", "Y", "select",
+					"Y", "", "", "", "", "", "", "", "", "", "", "", "", "", formName, "1", 0, db1);
+
+			String flag_daftar_terus = "";
+
+			// PEGAWAI BICARA
+			// GET ID_PEGAWAI BY LOGIN
+			Map getDetailUsers = modelBI.getDetailUsers(session, "", USER_ID_SYSTEM, "", db);
+			String username = "";
+			String id_pegawai = "";
+			if (getDetailUsers != null) {
+				username = (String) getDetailUsers.get("USER_NAME");
+			}
+			String LIST_ID_UNITPSK = modelBI.getDetailPegawaiList(session, username, db);
+
+			if ((id_jawatan_login.equals("5") || id_jawatan_login.equals("4"))) {
+				if (id_negeri_login.equals("16")) {
+					htmlPageSetup += modelBI.setRowSelect(session, "", "", skrinName, command, mode, setupSkrin,
+							"Negeri Pegawai di Ganti", table_name, field_main_PK, "", "", "ID_NEGERIPEGAWAIASAL", "Y",
+							"select", "Y", "TBLRUJNEGERI", "ID_NEGERI", "KOD_NEGERI", "NAMA_NEGERI", "", "",
+							"div" + skrinName + "ID_PEGAWAIASAL", "TBLPPKRUJUNIT", "ID_PEGAWAIASAL", "ID_NEGERI",
+							"ID_UNITPSK", "", "NAMA_PEGAWAI", formName, "", 0, db1);// dynamic ajax call
+					htmlPageSetup += modelBI.setRowSelect(session, "", "", skrinName, command, mode, setupSkrin,
+							"Pegawai di Ganti", table_name, field_main_PK, "", "", "ID_PEGAWAILASAL", "Y", "select", "Y",
+							"TBLPPKRUJUNIT", "ID_UNITPSK", "", "NAMA_PEGAWAI", "", "", "", "", "", "", "", "", "",
+							formName, "", 0, db1);
+				} else {
+					htmlPageSetup += modelBI.setRowText(session, "", "", "", skrinName, mode, setupSkrin, "",
+							table_name, field_main_PK, "", "", "ID_NEGERIPEGAWAIBARU", "", "hidden", "", "", "",
+							id_negeri_login, 0, db1);
+					htmlPageSetup += modelBI.setRowSelect(session, "", "", skrinName, command, mode, setupSkrin,
+							"Pegawai di Ganti", table_name, field_main_PK, "", "", "ID_PEGAWAIASAL", "Y", "select", "Y",
+							"TBLPPKRUJUNIT", "ID_UNITPSK", "", "NAMA_PEGAWAI", "ID_NEGERI", id_negeri_login, "", "", "",
+							"", "", "", "", formName, "", 0, db1);
+				}
+				flag_daftar_terus = "Y";
+			} else {
+				htmlPageSetup += modelBI.setRowSelect(session, "", "", skrinName, command, mode, setupSkrin,
+						"Negeri Pegawai di Ganti", table_name, field_main_PK, "", "", "ID_NEGERIPEGAWAIASAL", "Y",
+						"select", "Y", "TBLRUJNEGERI", "ID_NEGERI", "KOD_NEGERI", "NAMA_NEGERI", "", "",
+						"div" + skrinName + "ID_PEGAWAIASAL", "TBLPPKRUJUNIT", "ID_PEGAWAIASAL", "ID_NEGERI",
+						"ID_UNITPSK", "", "NAMA_PEGAWAI", formName, "", 0, db1);// dynamic ajax call
+				htmlPageSetup += modelBI.setRowSelect(session, "", "", skrinName, command, mode, setupSkrin,
+						"Pegawai di Ganti", table_name, field_main_PK, "", "", "ID_PEGAWAIASAL", "Y", "select", "Y",
+						"TBLPPKRUJUNIT", "ID_UNITPSK", "", "NAMA_PEGAWAI", "", "", "", "", "", "", "", "", "", formName,
+						"", 0, db1);
+			}
+
+			htmlPageSetup += modelBI.setRowText(session, "", "", "", skrinName, mode, setupSkrin, "", table_name,
+					field_main_PK, "", "", "FLAG_DAFTAR_TERUS", "", "hidden", "", "", "", flag_daftar_terus, 0, db1);
+
+			if (skrinName.equals("tukarpegawaiKPP2")) {
+				// htmlPageSetup +=
+				// modelBI.setRowTextArea(session,"","",skrinName,"view",setupSkrin,"Catatan
+				// Pemohon",table_name,field_main_PK,"","","CATATAN_PEMOHON","","text","Y","4000","Y","",0,db1);
+				htmlPageSetup += modelBI.setRowTextTarikh(session, "", "", skrinName, "view", setupSkrin,
+						"Tarikh Kelulusan Tukar Pegawai", table_name, field_main_PK, "", "", "TARIKH_KEPUTUSAN", "Y",
+						"hidden", "Y", "10", "Y", "", 0, db1);
+				htmlPageSetup += modelBI.setRowTextArea(session, "", "", skrinName, mode, setupSkrin, "Catatan Pelulus",
+						table_name, field_main_PK, "", "", "CATATAN_PELULUS", "", "text", "Y", "4000", "Y", "", 0, db1);
+			} else {
+				htmlPageSetup += modelBI.setRowTextArea(session, "", "", skrinName, mode, setupSkrin, "Catatan Pemohon",
+						table_name, field_main_PK, "", "", "CATATAN_PEMOHON", "", "text", "Y", "4000", "Y", "", 0, db1);
+
+			}
+
+			htmlPageSetup += "<tr>" + "<td></td>"
+					+ "<td valign = \"top\" align = \"left\" >No.Fail </td>"
+					+ "<td valign = \"top\" align = \"center\" >:</td>"
+					+ "<td width=\"70%\"><input name=\"txtNoFailSub\" id=\"txtNoFailSub\" type=\"text\" value=\"$txtNoFailSub\" size=\"30\" maxlength=\"50\" style=\"text-transform:uppercase;\" onBlur=\"this.value=this.value.toUpperCase();\" />";
+			
+			
+
+			htmlPageSetup += modelBI.closeHTMLTable();
+			htmlPageSetup += "</fieldset>";
+
+			htmlPageSetup += modelBI.setupButtonTukarPegawai2(session, "", "", null, field_main_PK, id, "",
+					skrinName, formName, "Y", mode, setupSkrin, table_name, "view_" + skrinName, standardParam, "",
+					pemohonOrKPP, openFrom, db1);
+
+		} finally {
+			if (db == null) {
+				db1.close();
+			}
+		}
+
+		return htmlPageSetup;
+	}
 
 	@SuppressWarnings("unchecked")
 	public String setupSkrinTukarPegawai(HttpSession session, String jenis_transaction, String current_previous,
@@ -6845,6 +6974,253 @@ public class BicaraInteraktif extends AjaxBasedModule {
 
 	}
 
+	//arief add tukar pegawai 2
+	@SuppressWarnings("unchecked")
+	public String setupSkrinTukarPegawai2(HttpSession session, String jenis_transaction, String current_previous,
+			String aktiviti, String ID_SIMATI, String ID_SEJARAHBIMAIN, Map setupSkrinHistory, Map setupSkrin,
+			String ID_PERMOHONAN, String ID_PERMOHONANSIMATI, String ID_PERBICARAAN, String skrinName, String command,
+			String id, String formName, String divViewMaklumat, String table_name, String field_main_PK, String mode,
+			String paramsButton, String flag_editable, String pemohonOrKPP, String id_jawatan_login,
+			String id_negeri_login, String openFrom, Db db) throws Exception {
+		String htmlPageSetup = "";
+		Db db1 = null;
+		String USER_ID_SYSTEM = (String) session.getAttribute("_ekptg_user_id");
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = new Date();
+		String currentDate = dateFormat.format(date) + "";
+
+		try {
+			if (db != null) {
+				db1 = db;
+			} else {
+				db1 = new Db();
+			}
+
+			String pegawaiAsal = "";
+			Map viewPerbicaraan = modelBI.viewPerbicaraan(session, ID_PERBICARAAN, ID_PERMOHONAN, db);
+			if (viewPerbicaraan != null) {
+				pegawaiAsal = (String) viewPerbicaraan.get("ID_UNITPSK");
+			}
+
+			String value_main_PK = modelBI.getValue(session, ID_PERMOHONANSIMATI, setupSkrin, table_name, field_main_PK,
+					"", ID_PERBICARAAN, field_main_PK, db1);
+			myLogger.info("value_main_PK perintah : " + value_main_PK);
+
+			String id_negeri_fail = "";
+			Map getFail = modelBI.getFail(session, ID_PERMOHONAN, db);
+			if (getFail != null) {
+				id_negeri_fail = (String) getFail.get("ID_NEGERI");
+			}
+			myLogger.info("id_negeri_fail perintah : " + id_negeri_fail);
+
+			String STATUS_TUKARPEGAWAI = modelBI.getValue(session, ID_PERMOHONANSIMATI, setupSkrin, table_name,
+					field_main_PK, value_main_PK, ID_PERBICARAAN, "STATUS_TUKARPEGAWAI", db1);
+			if (!mode.equals("view")) {
+				htmlPageSetup += "<br><div><i><font color='red'>Perhatian</font> : Pastikan label bertanda <font color='red'>*</font> diisi.</i></div>";
+				htmlPageSetup += "<div><i><font color='blue'>Info</font> : Pegawai bicara yang ditetapkan semasa peringkat notis boleh memohon permohonan tukar pegawai perbicaraan sebelum perbicaraan berlangsung. Permohonan penukaran akan dipanjangkan kepada KPP negeri atau HQ untuk kelulusan.</i></div>";
+				htmlPageSetup += "<div><i><font color='blue'>Info</font> : KPP negeri boleh menukar pegawai perbicaraan dikalangan negeri sendiri sahaja.</i></div>";
+				htmlPageSetup += "<div><i><font color='blue'>Info</font> : KPP dan Pegarah Bahagian Pusaka di HQ boleh menukar pegawai perbicaraan meliputi seluruh negara.</i></div>";
+
+			} else {
+				htmlPageSetup += "<br>";
+			}
+
+			htmlPageSetup += "<fieldset>";
+			htmlPageSetup += modelBI.openHTMLTable();
+			htmlPageSetup += modelBI.setRowText(session, "", ID_SEJARAHBIMAIN, ID_PERMOHONANSIMATI, skrinName, mode,
+					setupSkrin, "", table_name, field_main_PK, value_main_PK, ID_PERBICARAAN, "ID_TUKARPEGAWAI", "",
+					"hidden", "", "", "", "", 0, db1);
+			htmlPageSetup += modelBI.setRowText(session, "", ID_SEJARAHBIMAIN, ID_PERMOHONANSIMATI, skrinName, mode,
+					setupSkrin, "", table_name, field_main_PK, value_main_PK, ID_PERBICARAAN, "ID_PEMOHONTUKARPEGAWAI",
+					"", "hidden", "", "", "", USER_ID_SYSTEM, 0, db1);
+
+			htmlPageSetup += modelBI.setRowText(session, "", ID_SEJARAHBIMAIN, ID_PERMOHONANSIMATI, skrinName, "view",
+					setupSkrin, "No. Permohonan Tukar Pegawai", table_name, field_main_PK, value_main_PK,
+					ID_PERBICARAAN, "NO_TUKARPEGAWAI", "", "text", "Y", "", "", "-", 0, db1);
+			htmlPageSetup += modelBI.setRowTextTarikh(session, ID_SEJARAHBIMAIN, ID_PERMOHONANSIMATI, skrinName, "view",
+					setupSkrin, "Tarikh Permohonan Tukar Pegawai", table_name, field_main_PK, value_main_PK,
+					ID_PERBICARAAN, "TARIKH_MOHON", "Y", "text", "Y", "10", "Y", currentDate, 0, db1);
+
+			htmlPageSetup += modelBI.setRowText(session, "", ID_SEJARAHBIMAIN, ID_PERMOHONANSIMATI, skrinName, mode,
+					setupSkrin, "", table_name, field_main_PK, value_main_PK, ID_PERBICARAAN, "ID_NEGERIPEGAWAIBARU",
+					"", "hidden", "", "", "", id_negeri_fail, 0, db1);
+			htmlPageSetup += modelBI.setRowSelect(session, ID_SEJARAHBIMAIN, ID_PERMOHONANSIMATI, skrinName, command,
+					"view", setupSkrin, "Pegawai Baru", table_name, field_main_PK, value_main_PK, ID_PERBICARAAN,
+					"ID_PEGAWAIBARU", "Y", "select", "Y", "TBLPPKRUJUNIT", "ID_UNITPSK", "", "NAMA_PEGAWAI",
+					"ID_NEGERI", id_negeri_fail, "", "", "", "", "", "", "", formName, pegawaiAsal, 0, db1);
+
+			// PEGAWAI BICARA
+			// GET ID_PEGAWAI BY LOGIN
+			Map getDetailUsers = modelBI.getDetailUsers(session, "", USER_ID_SYSTEM, "", db);
+			String username = "";
+			String id_pegawai = "";
+			if (getDetailUsers != null) {
+				username = (String) getDetailUsers.get("USER_NAME");
+			}
+			String LIST_ID_UNITPSK = modelBI.getDetailPegawaiList(session, username, db);
+
+			String flag_daftar_terus = "";
+			if ((id_jawatan_login.equals("5") || id_jawatan_login.equals("4"))
+					&& LIST_ID_UNITPSK.contains(pegawaiAsal + ",") == false) {
+				if (id_negeri_login.equals("16")) {
+					htmlPageSetup += modelBI.setRowSelect(session, ID_SEJARAHBIMAIN, ID_PERMOHONANSIMATI, skrinName,
+							command, mode, setupSkrin, "Negeri Pegawai Ganti", table_name, field_main_PK, value_main_PK,
+							ID_PERBICARAAN, "ID_NEGERIPEGAWAIBARU", "Y", "select", "Y", "TBLRUJNEGERI", "ID_NEGERI",
+							"KOD_NEGERI", "NAMA_NEGERI", "", "", "div" + skrinName + "ID_PEGAWAIBARU", "TBLPPKRUJUNIT",
+							"ID_PEGAWAIBARU", "ID_NEGERI", "ID_UNITPSK", "", "NAMA_PEGAWAI", formName, "", 0, db1);// dynamic
+																													// ajax
+																													// call
+					htmlPageSetup += modelBI.setRowSelect(session, ID_SEJARAHBIMAIN, ID_PERMOHONANSIMATI, skrinName,
+							command, mode, setupSkrin, "Pegawai Ganti", table_name, field_main_PK, value_main_PK,
+							ID_PERBICARAAN, "ID_PEGAWAIBARU", "Y", "select", "Y", "TBLPPKRUJUNIT", "ID_UNITPSK", "",
+							"NAMA_PEGAWAI", "ID_NEGERI",
+							modelBI.getValue(session, ID_PERMOHONANSIMATI, setupSkrin, table_name, field_main_PK,
+									value_main_PK, ID_PERBICARAAN, "ID_NEGERIPEGAWAIBARU", db1),
+							"", "", "", "", "", "", "", formName, "", 0, db1);
+				} else {
+					htmlPageSetup += modelBI.setRowText(session, "", ID_SEJARAHBIMAIN, ID_PERMOHONANSIMATI, skrinName,
+							mode, setupSkrin, "", table_name, field_main_PK, value_main_PK, ID_PERBICARAAN,
+							"ID_NEGERIPEGAWAIBARU", "", "hidden", "", "", "", id_negeri_fail, 0, db1);
+
+					String id_negeri_pegawai = modelBI.getValue(session, ID_PERMOHONANSIMATI, setupSkrin, table_name,
+							field_main_PK, value_main_PK, ID_PERBICARAAN, "ID_NEGERIPEGAWAIBARU", db1);
+					if (id_negeri_pegawai.equals("")) {
+						id_negeri_pegawai = id_negeri_fail;
+					}
+
+					htmlPageSetup += modelBI.setRowSelect(session, ID_SEJARAHBIMAIN, ID_PERMOHONANSIMATI, skrinName,
+							command, mode, setupSkrin, "Pegawai Ganti", table_name, field_main_PK, value_main_PK,
+							ID_PERBICARAAN, "ID_PEGAWAIBARU", "Y", "select", "Y", "TBLPPKRUJUNIT", "ID_UNITPSK", "",
+							"NAMA_PEGAWAI", "ID_NEGERI", id_negeri_pegawai, "", "", "", "", "", "", "", formName, "", 0,
+							db1);
+				}
+				flag_daftar_terus = "Y";
+			} else {
+				htmlPageSetup += modelBI.setRowSelect(session, ID_SEJARAHBIMAIN, ID_PERMOHONANSIMATI, skrinName,
+						command, mode, setupSkrin, "Negeri Pegawai Ganti", table_name, field_main_PK, value_main_PK,
+						ID_PERBICARAAN, "ID_NEGERIPEGAWAIBARU", "Y", "select", "Y", "TBLRUJNEGERI", "ID_NEGERI",
+						"KOD_NEGERI", "NAMA_NEGERI", "", "", "div" + skrinName + "ID_PEGAWAIBARU", "TBLPPKRUJUNIT",
+						"ID_PEGAWAIBARU", "ID_NEGERI", "ID_UNITPSK", "", "NAMA_PEGAWAI", formName, "", 0, db1);// dynamic
+																												// ajax
+																												// call
+				htmlPageSetup += modelBI.setRowSelect(session, ID_SEJARAHBIMAIN, ID_PERMOHONANSIMATI, skrinName,
+						command, mode, setupSkrin, "Pegawai Ganti", table_name, field_main_PK, value_main_PK,
+						ID_PERBICARAAN, "ID_PEGAWAIBARU", "Y", "select", "Y", "TBLPPKRUJUNIT", "ID_UNITPSK", "",
+						"NAMA_PEGAWAI", "ID_NEGERI",
+						modelBI.getValue(session, ID_PERMOHONANSIMATI, setupSkrin, table_name, field_main_PK,
+								value_main_PK, ID_PERBICARAAN, "ID_NEGERIPEGAWAIBARU", db1),
+						"", "", "", "", "", "", "", formName, "", 0, db1);
+			}
+			htmlPageSetup += modelBI.setRowText(session, "", ID_SEJARAHBIMAIN, ID_PERMOHONANSIMATI, skrinName, mode,
+					setupSkrin, "", table_name, field_main_PK, value_main_PK, ID_PERBICARAAN, "FLAG_DAFTAR_TERUS", "",
+					"hidden", "", "", "", flag_daftar_terus, 0, db1);
+
+			/*
+			 * String id_negeri_pegawai =
+			 * modelBI.getValue(session,ID_PERMOHONANSIMATI,setupSkrin,table_name,
+			 * field_main_PK,value_main_PK,ID_PERBICARAAN,"ID_NEGERIPEGAWAIBARU",db1);
+			 * if(id_negeri_pegawai.equals("")) { id_negeri_pegawai = id_negeri_fail; }
+			 */
+			// htmlPageSetup +=
+			// modelBI.setRowSelect(session,ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,command,mode,setupSkrin,"Pegawai
+			// Ganti",table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"ID_PEGAWAIBARU","Y","select","Y","TBLPPKRUJUNIT","ID_UNITPSK","","NAMA_PEGAWAI","ID_NEGERI",modelBI.getValue(session,ID_PERMOHONANSIMATI,setupSkrin,table_name,field_main_PK,value_main_PK,ID_PERBICARAAN,"ID_NEGERIPEGAWAIBARU",db1),"","","","","","","",formName,"",0,db1);
+
+			/*
+			 * if((id_jawatan_login.equals("5") || id_jawatan_login.equals("4")) &&
+			 * STATUS_TUKARPEGAWAI.equals("1") && skrinName.equals("tukarpegawaiKPP")) {
+			 * htmlPageSetup +=
+			 * modelBI.setRowSelect(session,ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,
+			 * command,mode,setupSkrin,"Status Tukar Pegawai",table_name,field_main_PK,
+			 * value_main_PK,ID_PERBICARAAN,"STATUS_TUKARPEGAWAI","Y","select","Y","","","",
+			 * "","","","","","","","","","",formName,"1",0,db1); } else { htmlPageSetup +=
+			 * modelBI.setRowSelect(session,ID_SEJARAHBIMAIN,ID_PERMOHONANSIMATI,skrinName,
+			 * command,"view",setupSkrin,"Status Tukar Pegawai",table_name,field_main_PK,
+			 * value_main_PK,ID_PERBICARAAN,"STATUS_TUKARPEGAWAI","Y","select","Y","","","",
+			 * "","","","","","","","","","",formName,"1",0,db1); }
+			 */
+			htmlPageSetup += modelBI.setRowSelect(session, ID_SEJARAHBIMAIN, ID_PERMOHONANSIMATI, skrinName, command,
+					"view", setupSkrin, "Status Tukar Pegawai", table_name, field_main_PK, value_main_PK,
+					ID_PERBICARAAN, "STATUS_TUKARPEGAWAI", "Y", "select", "Y", "", "", "", "", "", "", "", "", "", "",
+					"", "", "", formName, "1", 0, db1);
+
+			String statusTukarPegawai = modelBI.getValue(session, ID_PERMOHONANSIMATI, setupSkrin, table_name,
+					field_main_PK, value_main_PK, ID_PERBICARAAN, "STATUS_TUKARPEGAWAI", db1);
+			String tarikhKelulusan = modelBI.getValue(session, ID_PERMOHONANSIMATI, setupSkrin, table_name,
+					field_main_PK, value_main_PK, ID_PERBICARAAN, "TARIKH_KEPUTUSAN", db1);
+			String catatanKelulusan = modelBI.getValue(session, ID_PERMOHONANSIMATI, setupSkrin, table_name,
+					field_main_PK, value_main_PK, ID_PERBICARAAN, "CATATAN_PELULUS", db1);
+			htmlPageSetup += modelBI.setRowTextArea(session, ID_SEJARAHBIMAIN, ID_PERMOHONANSIMATI, skrinName, mode,
+					setupSkrin, "Catatan Pemohon", table_name, field_main_PK, value_main_PK, ID_PERBICARAAN,
+					"CATATAN_PEMOHON", "", "text", "Y", "4000", "Y", "", 0, db1);
+
+			String ID_PELULUS = modelBI.getValue(session, ID_PERMOHONANSIMATI, setupSkrin, table_name, field_main_PK,
+					value_main_PK, ID_PERBICARAAN, "ID_PELULUS", db1);
+			if (!ID_PELULUS.equals("")) {
+				htmlPageSetup += modelBI.setRowSelect(session, ID_SEJARAHBIMAIN, ID_PERMOHONANSIMATI, skrinName,
+						command, "view", setupSkrin, "Pegawai Pelulus", table_name, field_main_PK, value_main_PK,
+						ID_PERBICARAAN, "ID_PELULUS", "Y", "select", "Y", "USERS", "USER_ID", "", "USER_NAME", "", "",
+						"", "", "", "", "", "", "", formName, "", 0, db1);// dynamic ajax call
+			}
+
+			if (STATUS_TUKARPEGAWAI.equals("1") && (id_jawatan_login.equals("5") || id_jawatan_login.equals("4"))) {
+				htmlPageSetup += modelBI.setRowTextTarikh(session, ID_SEJARAHBIMAIN, ID_PERMOHONANSIMATI, skrinName,
+						"view", setupSkrin, "Tarikh Kelulusan Tukar Pegawai", table_name, field_main_PK, value_main_PK,
+						ID_PERBICARAAN, "TARIKH_KEPUTUSAN", "Y", "hidden", "Y", "10", "Y", "", 0, db1);
+				htmlPageSetup += modelBI.setRowTextArea(session, ID_SEJARAHBIMAIN, ID_PERMOHONANSIMATI, skrinName, mode,
+						setupSkrin, "Catatan Pelulus", table_name, field_main_PK, value_main_PK, ID_PERBICARAAN,
+						"CATATAN_PELULUS", "", "text", "Y", "4000", "Y", "", 0, db1);
+
+			} else if (STATUS_TUKARPEGAWAI.equals("2") || STATUS_TUKARPEGAWAI.equals("3")) {
+				htmlPageSetup += modelBI.setRowTextTarikh(session, ID_SEJARAHBIMAIN, ID_PERMOHONANSIMATI, skrinName,
+						"view", setupSkrin, "Tarikh Kelulusan Tukar Pegawai", table_name, field_main_PK, value_main_PK,
+						ID_PERBICARAAN, "TARIKH_KEPUTUSAN", "Y", "text", "Y", "10", "Y", "", 0, db1);
+				htmlPageSetup += modelBI.setRowTextArea(session, ID_SEJARAHBIMAIN, ID_PERMOHONANSIMATI, skrinName, mode,
+						setupSkrin, "Catatan Pelulus", table_name, field_main_PK, value_main_PK, ID_PERBICARAAN,
+						"CATATAN_PELULUS", "", "text", "Y", "4000", "Y", "", 0, db1);
+			} else {
+				htmlPageSetup += modelBI.setRowTextTarikh(session, ID_SEJARAHBIMAIN, ID_PERMOHONANSIMATI, skrinName,
+						"view", setupSkrin, "Tarikh Kelulusan Tukar Pegawai", table_name, field_main_PK, value_main_PK,
+						ID_PERBICARAAN, "TARIKH_KEPUTUSAN", "Y", "hidden", "Y", "10", "Y", "", 0, db1);
+				htmlPageSetup += modelBI.setRowTextArea(session, ID_SEJARAHBIMAIN, ID_PERMOHONANSIMATI, skrinName,
+						"view", setupSkrin, "Catatan Pelulus", table_name, field_main_PK, value_main_PK, ID_PERBICARAAN,
+						"CATATAN_PELULUS", "", "hidden", "Y", "4000", "Y", "", 0, db1);
+			}
+			htmlPageSetup += modelBI.closeHTMLTable();
+			htmlPageSetup += "</fieldset>";
+			htmlPageSetup += modelBI.setupButtonTukarPegawai(session, "", jenis_transaction, setupSkrinHistory,
+					field_main_PK, id, current_previous, skrinName, formName, flag_editable, mode, setupSkrin,
+					table_name, divViewMaklumat, paramsButton, "", pemohonOrKPP, openFrom, db1);
+
+			if (command.equals("saveTukarPegawai") || command.equals("lulusTukarPegawai")
+					|| command.equals("tolakTukarPegawai")) {
+
+				htmlPageSetup += "<script>" +
+				// " $jquery(document).ready(function (){" +
+						" doDivAjaxCall" + formNameAjax + "('viewHeader','showHeader','ID_PERBICARAAN=" + ID_PERBICARAAN
+						+ "&ID_PERMOHONAN=" + ID_PERMOHONAN + "&ID_PERMOHONANSIMATI=" + ID_PERMOHONANSIMATI + "'); " +
+						// "});" +
+						" </script>";
+			}
+			/*
+			 * setupSkrin = "<script>$jquery(document).ready(function (){" +
+			 * " doDivAjaxCall"+formNameAjax+"('senarai_"+skrinName+
+			 * "current','showSenarai','NAMA_TABLE="+NAMA_TABLE+"&ID_SIMATI="+ID_SIMATI+
+			 * "&FIELD_PK="+FIELD_PK+"&ID_PERBICARAAN="+ID_PERBICARAAN+"&ID_PERMOHONAN="+
+			 * ID_PERMOHONAN+"&ID_PERMOHONANSIMATI="+ID_PERMOHONANSIMATI+"&skrinName="+
+			 * skrinName+
+			 * "&current_previous=current&tajukList=&scrolPosition='+getPageLocation());" +
+			 * " });$jquery(\"#"+divId+"\").html(\"\");</script>";
+			 */
+
+		} finally {
+			if (db == null) {
+				db1.close();
+			}
+		}
+		return htmlPageSetup;
+
+	}
+	
 	@SuppressWarnings("unchecked")
 	public String setupSkrinKeputusan(HttpSession session, String jenis_transaction, String current_previous,
 			String aktiviti, String ID_SIMATI, String ID_SEJARAHBIMAIN, Map setupSkrinHistory, Map setupSkrin,

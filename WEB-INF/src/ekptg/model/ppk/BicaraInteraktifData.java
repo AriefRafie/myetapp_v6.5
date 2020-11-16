@@ -13455,6 +13455,43 @@ public class BicaraInteraktifData {
 		return html;
 	}
 	
+	//arief add tukar pegawai 2 
+	public String setRowSaveButtonTukarPegawai2(HttpSession session,String jenis_transaction,String AKTIVITI,String FIELD_PK,String id,String current_previous,String skrinName,String mode, Map map_data, String formName, String table_name,String divLoad, String commandSimpan,String commandBatal, String params, String retainScrollPosition, String pemohonOrKPP,String openFrom, Db db) throws Exception {
+		String html = "<table width='100%' align='center' border='0' cellpadding='1' cellspacing='1' style='margin-top:5px' id=\"button"+skrinName+"\"  >";
+		html += "<tr>";
+		html += "<td align='center' valign='top' width='100%'>";
+		if(skrinName.equals("tukarpegawaiKPP2"))
+		{
+			html += " <input type=\"button\" id=\"cmdLulus"+skrinName+"\" name=\"cmdLulus"+skrinName+"\" value=\"Lulus\" onClick=\"if(valSimpanTukarPegawaiMultiple('"+skrinName+"') == true){" +
+					"doDivAjaxCall"+formName+"('view_"+skrinName+"','lulusTukarPegawaiMultiple','"+params+"" +
+							"&SELECTED_NAMA_NEGERI='+getValueFromDrop('"+skrinName+"ID_NEGERIPEGAWAIBARU')+'" +
+							"&SELECTED_NAMA_PEGAWAI='+getValueFromDrop('"+skrinName+"ID_PEGAWAIBARU')+'" +
+									"&scrolPosition='+getPageLocation());" +
+							"}\" >";
+			html += " <input type=\"button\" id=\"cmdTolak"+skrinName+"\" name=\"cmdTolak"+skrinName+"\" value=\"Tolak\" onClick=\"if(valSimpanTukarPegawaiMultipleTolak('"+skrinName+"') == true){" +
+					"doDivAjaxCall"+formName+"('view_"+skrinName+"','tolakTukarPegawaiMultiple','"+params+"" +
+							"&SELECTED_NAMA_NEGERI='+getValueFromDrop('"+skrinName+"ID_NEGERIPEGAWAIBARU')+'" +
+							"&SELECTED_NAMA_PEGAWAI='+getValueFromDrop('"+skrinName+"ID_PEGAWAIBARU')+'" +
+							"&scrolPosition='+getPageLocation());" +
+							"}\" >";
+		}		
+		else
+		{
+			html += " <input type=\"button\" id=\"cmdSimpan"+skrinName+"\" name=\"cmdSimpan"+skrinName+"\" value=\"Hantar\" " +
+					"onClick=\"if(valSimpanTukarPegawaiMultiple('"+skrinName+"') == true){" +
+					"doDivAjaxCall"+formName+"('view_"+skrinName+"','saveTukarPegawaiMultiple','"+params+"" +
+							"&SELECTED_NAMA_NEGERI='+getValueFromDrop('"+skrinName+"ID_NEGERIPEGAWAIBARU')+'" +
+							"&SELECTED_NAMA_PEGAWAI='+getValueFromDrop('"+skrinName+"ID_PEGAWAIBARU')+'" +
+							"&scrolPosition='+getPageLocation());" +
+							"}\" >";
+		}
+		html += " <input type=\"button\" id=\"cmdKemaskini"+skrinName+"\" name=\"cmdKemaskini"+skrinName+"\" value=\"Batal\" onClick=\"doDivAjaxCall"+formName+"('view_"+skrinName+"','resetTukarPegawaiMultiple','"+params+"&scrolPosition='+getPageLocation());\" >";
+		html += " <input type=\"button\" id=\"cmdTutup"+skrinName+"\" name=\"cmdTutup"+skrinName+"\" value=\"Tutup\" onClick=\"tutupSkrinPegawaiMultiple('"+skrinName+"');\" >";
+		html +=	"</td>";
+		html += "</tr></table>";
+		return html;
+	}
+	
 	public String setRowEditButtonTukarPegawai(HttpSession session,String jenis_transaction,String AKTIVITI,String FIELD_PK,String id,String current_previous,String skrinName,String mode, Map map_data, String formName, String table_name,String divLoad, String commandSimpan,String commandBatal, String params, String retainScrollPosition, String pemohonOrKPP, String openFrom,Db db) throws Exception {
 		
 		String STATUS_TUKARPEGAWAI = map_data == null ? "" :(String) map_data.get("STATUS_TUKARPEGAWAI") == null ? "" : (String) map_data.get("STATUS_TUKARPEGAWAI");
@@ -13513,6 +13550,19 @@ public class BicaraInteraktifData {
 		return html;
 	}
 	
+	//arief add tukar pegawai 2 
+	public String setRowEditButtonTukarPegawai2(HttpSession session,String jenis_transaction,String AKTIVITI,String FIELD_PK,String id,String current_previous,String skrinName,String mode, Map map_data, String formName, String table_name,String divLoad, String commandSimpan,String commandBatal, String params, String retainScrollPosition, String pemohonOrKPP, String openFrom,Db db) throws Exception {
+		
+		String STATUS_TUKARPEGAWAI = map_data == null ? "" :(String) map_data.get("STATUS_TUKARPEGAWAI") == null ? "" : (String) map_data.get("STATUS_TUKARPEGAWAI");
+		
+		String html = "<table width='100%' align='center' border='0' cellpadding='1' cellspacing='1' style='margin-top:5px' id=\"button"+skrinName+"\"  >";
+		html += "<tr>";
+		html += "<td align='center' valign='top' width='100%'>";
+		html += " <input type=\"button\" id=\"cmdTutup"+skrinName+"\" name=\"cmdTutup"+skrinName+"\" value=\"Tutup\" onClick=\"$jquery('#view_"+skrinName+"').html('');\" >";
+		html +=	"</td>";
+		html += "</tr></table>";
+		return html;
+	}
 	
 	
 	public String setDataList(HttpSession session,String NamaDataList, String skrinName, String column_name,
@@ -17724,8 +17774,23 @@ public class BicaraInteraktifData {
 		return html;
 	}
 	
-	
-	
+	//arief add tukar pegawai 2 
+	public String setupButtonTukarPegawai2(HttpSession session,String flagShowLantik,String jenis_transaction,Map setupSkrinHistory,String FIELD_PK,String id,String current_previous,String skrinName,String formName,String flag_editable,String mode,Map setupSkrin,String table_name,String divViewMaklumat,String paramsButton,String ID_PEMOHON_MAIN,String pemohonOrKPP,String openFrom,Db db) throws Exception {
+		String html = "";
+		String AKTIVITI = "";
+		if(flag_editable.equals("Y"))
+		{
+			if(mode.equals("view"))
+			{
+				html += setRowEditButtonTukarPegawai2(session,jenis_transaction,AKTIVITI,FIELD_PK,id,current_previous,skrinName,mode,setupSkrin,formName,table_name,divViewMaklumat, "simpanMaklumat","resetMaklumat", paramsButton, "Y", pemohonOrKPP,openFrom, db);
+			}
+			else
+			{
+				html += setRowSaveButtonTukarPegawai2(session,jenis_transaction,AKTIVITI,FIELD_PK,id,current_previous,skrinName,mode,setupSkrin,formName,table_name,divViewMaklumat, "simpanMaklumat","resetMaklumat", paramsButton, "Y", pemohonOrKPP,openFrom, db);
+			}
+		}
+		return html;
+	}
 	
 
 	public Double getBundaranBayaran(double bayaran) {
