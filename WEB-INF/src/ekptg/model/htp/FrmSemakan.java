@@ -230,6 +230,9 @@ public class FrmSemakan {
 
 		      if(!kodForm.equals("0"))
 		    	  r.add("i.kod_form",kodForm);
+		      if(!idPermohonan.equals(null))
+		    	  r.add("sh.id_permohonan",idPermohonan);
+		  
 		      sql = " tblsemakan s,tblsemakansenarai i,tblsemakanjenisdokumen sjd,tblrujjenisdokumen jd,tblsemakanhantar sh";
 		      sql = r.getSQLSelect(sql,"i.kod_form,i.aturan");
 	          myLog.info("getSenaraiSemakanAttach :sql= " + sql);
