@@ -4257,7 +4257,8 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 					lb.kemaskiniLampiranSimati(idRujukan,"99201",String.valueOf(h1.get("idSimati")));
 					myLogger.info("lalu sini 3");
 					// update tblsemakanhantar untuk maklumat perkahwinan
-				}	FrmSemakan.semakanTambah("99201000041", id);
+					FrmSemakan.semakanTambah("99201000041", id);
+				}
 				
 
 				/*
