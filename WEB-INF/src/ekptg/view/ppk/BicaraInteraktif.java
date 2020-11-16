@@ -246,6 +246,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 
 				this.context.put("viewPerbicaraan",
 						modelBI.viewPerbicaraan(session, ID_PERBICARAAN, ID_PERMOHONAN, db));
+
 				this.context.put("listPerbicaraanLain",
 						modelBI.listPerbicaraanLain(session, ID_PERMOHONAN, ID_PERMOHONANSIMATI, db));
 			} finally {
@@ -3092,15 +3093,19 @@ public class BicaraInteraktif extends AjaxBasedModule {
 		}
 
 		// delang
-		else if (command.equals("kemaskiniKeputusanPerintahHtaah")) {
+		else if (command.equals("fmKeputusanPerintahHtaah")) {
 
-			myLogger.info("command -- kemaskiniKeputusanPerintahHtaah");
-			skrin_name = perintahBicara.perintahHtaah(getParam("idHTA"));
-
-			//myLogger.info("idHTA -- " + getParam("idHTA"));
-
-			//this.context.put("idHTA", getParam("idHTA"));
-			//skrin_name = "app/ppk/BicaraInteraktif/fm_perintah_perbicaraan_htaah.jsp";
+			myLogger.info("command -- fmKeputusanPerintahHtaah");
+			myLogger.info("perintahHtaah(" + getParam("idHTAAH") + ", "+ getParam("idPermohonanSimati_perintah"));
+			skrin_name = perintahHtaah(getParam("idHTAAH"), getParam("idPermohonanSimati_perintah"));
+		}
+		else if (command.equals("fmKeputusanPerintahHtath")) {
+			myLogger.info("command -- fmKeputusanPerintahHtath");
+		}
+		else if (command.equals("fmKeputusanPerintahHa")) {
+			myLogger.info("command -- fmKeputusanPerintahHa");
+			myLogger.info("perintahHA(" + getParam("idHA") + ", "+ getParam("idPermohonanSimati_perintah"));
+			skrin_name = perintahHA(getParam("idHA"), getParam("idPermohonanSimati_perintah"));
 		}
 
 		// }
@@ -3114,17 +3119,45 @@ public class BicaraInteraktif extends AjaxBasedModule {
 	 * */
 	public String perintahHtaah(String idHTA, String idPermohonanSimati) throws Exception {
 
-		myLogger.info("idHTA -- " + idHTA);
-		myLogger.info("idPermohonanSimati -- " + idPermohonanSimati);
-
         Vector<Hashtable<String, String>> beanMaklumatHTA = new Vector<Hashtable<String, String>>();
 		beanMaklumatHTA.clear();
 
 		logic.setDataMaklumatHTA(idHTA, idPermohonanSimati);
 		beanMaklumatHTA = logic.getBeanMaklumatHTA();
 
-		this.context.put("beanMaklumatHTA", beanMaklumatHTA);
+		Vector jenisPerintahs = DB.getJenisPerintahSek8();
+
+		this.context.put("idHTA", idHTA);
+		this.context.put("beanMaklumatHTA", beanMaklumatHTA.get(0));
+		this.context.put("jenisPerintahs", jenisPerintahs);
 		return "app/ppk/BicaraInteraktif/fm_perintah_perbicaraan_htaah.jsp";
+	}
+
+	public String perintahHtath(String idHTA, String idPermohonanSimati) {
+
+		myLogger.info("-- perintahHtath(" + idHTA + ", " + idPermohonanSimati);
+		return "app/ppk/BicaraInteraktif/fm_perintah_perbicaraan_htath.jsp";
+	}
+
+	public String perintahHA(String idPerintah, String idPermohonanSimati) throws Exception {
+		logic.setDataMaklumatHA(idPerintah, idPermohonanSimati);
+		Vector<Hashtable<String, String>> maklumatHA = logic.getBeanMaklumatHA();
+
+		myLogger.info("BeanMaklumatHA -- " + logic.getBeanMaklumatHA());
+
+		this.context.put("maklumatHA", maklumatHA.get(0));
+		return "app/ppk/BicaraInteraktif/fm_perintah_perbicaraan_ha.jsp";
+	}
+
+	public String kemaskiniPerintahHTAAH() {
+		HttpSession session = this.request.getSession();
+		String jenisPerintahHTAAH = getParam("jenisPerintahHTAAH");
+		String txtCatatanHTA = getParam("txtCatatanHTA");
+		String idHTA = getParam("idHTA");
+
+		return "11";
+		/*logic.updateHTA(jenisPerintahHTAAH, txtCatatanHTA, idHTA, idPermohonan,
+				idSimati, idPermohonanSimati, idPerintah, session);*/
 	}
 
 	public void defaultPut() {

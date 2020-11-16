@@ -82,6 +82,15 @@ public class UploadDokumenSemak extends AjaxBasedModule {
 		}else if(hitButton.equals("hapus")){
 			String iDokumen = getParam("idokumen");
 			getDoc().hapus(iDokumen);
+			
+			//HAPUS SENARAI SEMAK
+			String idPermohonan = getParam("idRujukan"); //idRujukan adalah wakil bagi idPermohonan
+			String idSemakanSenarai = getParam("idSenarai"); //idSenarai adalah wakil bagi idSemakanSenarai
+			uploadFiles();
+			FrmSemakan fs = new FrmSemakan();
+			fs.semakanHapusByPermohonan(idPermohonan,idSemakanSenarai);
+			hitButton = "";
+			
 //			uploadFiles(idRujukan,false);
 			hitButton = "";
 		

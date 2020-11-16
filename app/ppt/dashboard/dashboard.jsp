@@ -255,8 +255,7 @@ bagi modul yang ada tugas spesifik untuk penguna yang login
 
 <tr>
 <td>
-<b>Utiliti</b>
-</td>
+<b>Utiliti</b></td>
 </tr>
 
 <tr>
@@ -267,7 +266,40 @@ bagi modul yang ada tugas spesifik untuk penguna yang login
 </td>
 </tr>
 
+<!--<tr>
+<td>
 
+
+<a href="javascript:gotoEtanah()" class="help" title="EndorsanEtanahWPKL">
+                            <font color="blue">
+                            <li>          
+                             #if($!check_notifikasi_aduan > 0)                        
+                             <label style="background-color:blue"  align="center" valign="top" > 
+                            <b><font color="WHITE"><span class="blink">$!check_notifikasi_aduan</span></font></b>
+                             </label>&nbsp;
+                             #end
+                           Endorsan Dari eTanah</li></font>	
+						</a>
+
+
+
+                      
+                        
+</td>
+</tr>-->
+
+#if($!user_negeri_login == '14')
+
+<tr>
+<td id="showCountEndorsan" >
+<script>
+$jquery(document).ready(function () {
+	doDivAjaxCall$formname('showCountEndorsan','showCountEndorsan','');					
+});
+</script>
+</td>
+</tr>
+#end
 
 
 
@@ -707,7 +739,6 @@ new_window.close();
 
 
 
-
 function cari()
 {
 	if(document.getElementById('search').value=="")	
@@ -804,6 +835,7 @@ all_reset('div_listFailSiasatan');
 document.getElementById('div_listFailSiasatan').style.display="";		
 doDivAjaxCall$formname('div_listFailSiasatan','getListFailSiasatan','');
 }
+
 
 function getListHakmilik()
 {
@@ -1330,6 +1362,11 @@ function gotoKemaskini() {
 	document.${formName}.submit();
 }
 
+function gotoEndorsanEtanah() {
+	document.${formName}.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.ppt.UtilitiSenaraiEndorsan";
+	document.${formName}.submit();
+}
+
 function gotoBKE() {
 	document.${formName}.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.ppk.FrmPemindahanBKE";
 	document.${formName}.submit();
@@ -1346,6 +1383,11 @@ function gotoAddLama() {
 
 function gotoFLMS() {
 	document.${formName}.action = "$EkptgUtil.getTabID("'My Info'",$portal_role)?_portal_module=ekptg.view.esaduan.FrmEtappSupportAduan";
+	document.${formName}.submit();
+}
+
+function gotoEtanah() {
+	document.${formName}.action = "$EkptgUtil.getTabID("'My Info'",$portal_role)?_portal_module=ekptg.view.ppt.UtilitiSenaraiEndorsan";
 	document.${formName}.submit();
 }
 
@@ -1435,6 +1477,19 @@ function paparFail(ID_PERMOHONAN,ID_STATUS,ID_FAIL,TARIKH_PERMOHONAN,FLAG_JENISP
 	}//close 
 	document.${formName}.submit();
 	
+}
+
+//bella buat bijak here
+// JPPH
+    var target = 'TotalEndorsan';
+    var actionName = 'getTotalEndorsan';
+ 	doAjaxUpdater(document.Fekptg_view_ppt_FrmDashboard, url, target, actionName);
+
+function gotoEndorsan() {
+
+	document.${formName}.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.ppt.UtilitiSenaraiEndorsan";
+	document.${formName}.method="POST";
+	document.${formName}.submit();
 }
 
 

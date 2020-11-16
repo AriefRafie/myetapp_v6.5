@@ -1,8 +1,5 @@
 
 
-  
-
-
    <style>
     #boxListFail {        
         position: absolute;       
@@ -33,7 +30,10 @@
 <input type="hidden" id="div_getListFail_open" name="div_getListFail_open" value="Y">
 <table border="0" width="100%" > 
 <tr>
-<td align="left" valign="top"><img src="../img/drag.png" id="move" name="move" title='Ubah Lokasi' onMouseOver="this.style.cursor='move'" width="18" height="18" align="center"/>
+<td align="left" valign="top">
+<!--
+<img src="../img/drag.png" id="move" name="move" title='Ubah Lokasi' onMouseOver="this.style.cursor='move'" width="18" height="18" align="center"/>
+-->
 </td>
 <td align="right" valign="top"><a href="javascript:getListFail()" id="trigger">
 <img  src="../img/validno.png" title='Tutup' align="center"/>
@@ -148,23 +148,26 @@ SENARAI FAIL
  
   
    <script type="text/javascript">
-      $jquery(function() {
+      //$jquery(function() {
 		   var width  = 0;
 		   var height = 0;			
 		   var left = 0;
            var top  = 0;	  
 		  
-      $jquery(document).ready(function(e) {
+      //$jquery(document).ready(function(e) {
 		    
 		    width  = 500;			
-		    left = width+e.pageX;
-            top  = height+e.pageY;			
+		    //left = width+e.pageX;
+            //top  = height+e.pageY;			
 			height = 300;
-			$jquery("#boxListFail").css('width', width).css('height', height).css('top', top).css('left', left);	
-			$jquery("#scroll_boxListFail").css('width', width).css('height', height-55).css('top', top).css('left', left).css('overflow-y','scroll');
+			$jquery("#boxListFail").css('width', width).css('height', height);
+			//.css('top', top).css('left', left);	
+			$jquery("#scroll_boxListFail").css('width', width).css('height', height-55)
+			//.css('top', top).css('left', left)
+			.css('overflow-y','scroll');
 		   
 			//$jquery('#boxListFail').show();     
-        });	
+       // });	
 		
 		/*
 		 $jquery("div#boxListFail").mousemove(function(e) {
@@ -172,7 +175,7 @@ SENARAI FAIL
 			});
 		*/	
 		
-		
+		/*
 		var boxListFail = $jquery("#boxListFail")
 		boxListFail.offset({
 			left: left,
@@ -187,7 +190,10 @@ SENARAI FAIL
 		var delta = {
 			x: 0,
 			y: 0
-		};		
+		};
+		*/
+		
+			
 		$jquery("#move").mousedown(function(e) {
 			//alert("mousedown");
 			if (!drag.state) {
@@ -200,7 +206,10 @@ SENARAI FAIL
 			
 			}
 			return false;
-		});		
+		});
+		
+		
+				
 		$jquery(document).mousemove(function(e) {
 			//alert("mousemove");
 			if (drag.state) {
@@ -235,7 +244,7 @@ SENARAI FAIL
 		});
 
 		
-      });
+   //   });
 	  
 	  
 	  

@@ -25,7 +25,7 @@
   <input name="flagDetail" type="hidden" id="flagDetail" value="$flagDetail"/>
   <input name="checkTanah" type="hidden" id="checkTanah" value= "$checkTanah"/>
   <input name="initiateFlagBuka" type="hidden" id="initiateFlagBuka"/>
-  <input name="flagFrom" type="hidden" id="flagFrom"/>  
+  <input name="flagFrom" type="hidden" id="flagFrom"/>
 </p>
 
 #if ($errMsg != "")
@@ -76,7 +76,7 @@
                 <option value="0">SILA PILIH</option>
 				<option value="1" selected>HAKMILIK</option>
 				<option value="2">RIZAB</option>
-                
+
                 #elseif($checkTanah == '2')
                 <option value="0">SILA PILIH</option>
 				<option value="1" >HAKMILIK</option>
@@ -161,7 +161,8 @@
       <table align="center" width="100%">
         <tr>
           <td colspan="6" scope="row">
-          	#if ($userRole == '(PHP)PYWPenolongPegawaiTanahNegeri')
+          	#if ($userRole == '(PHP)PYWPenolongPegawaiTanahNegeri' || $userRole == '(PHP)PYWPengarahHQ' ||
+          	$userRole == '(PHP)PYWPenolongPegawaiTanahHQ' || $userRole == '(PHP)PYWPenolongPengarahHQ')
           	<input name="cmdDaftar" type="button" value="Daftar Permohonan Baru" onclick="javascript:daftarBaru()"/>
             &nbsp;
             #end
@@ -187,14 +188,14 @@
         #set( $row = "row1" )
         #elseif (($list.bil % 2) != 0)
         #set( $row = "row1" )
-        #else 
+        #else
         #set( $row = "row2" )
         #end
         <tr>
           <td class="$row" align="center">$list.bil</td>
           <td class="$row"><a href="javascript:papar('$list.idFail','$list.idStatus')" class="style1">$list.noFail</a>
           &nbsp;&nbsp;
-          #if($list.flagTerimaUlasanKJP == 'Y') 
+          #if($list.flagTerimaUlasanKJP == 'Y')
           <span class="style3 blink"><i><strong>Ulasan KJP telah dibuat</strong></i></span>
           #end
           </td>
@@ -226,7 +227,7 @@
 <script>
 function onChangeValue(str){
 	 document.${formName}.checkTanah.value = str.value;
-	 doAjaxCall${formName}("onChangeValue");	
+	 doAjaxCall${formName}("onChangeValue");
 }
 function doChangeNegeri() {
 	doAjaxCall${formName}("doChangeNegeri");
@@ -248,14 +249,14 @@ function tutupCarian(){
 	document.${formName}.txtNoFail.value = "";
 	document.${formName}.txtNoFailNegeri.value = "";
 	document.${formName}.txtTajukFail.value = "";
-	document.${formName}.socTanah.value = "";		
+	document.${formName}.socTanah.value = "";
 	document.${formName}.socStatusC.value = "";
 	document.${formName}.socLotC.value = "";
-	document.${formName}.txtNoLot.value = "";		
+	document.${formName}.txtNoLot.value = "";
 	document.${formName}.socNegeriC.value = "";
 	document.${formName}.socDaerahC.value = "";
 	document.${formName}.socMukimC.value = "";
-	document.${formName}.socKementerianC.value = "";	
+	document.${formName}.socKementerianC.value = "";
 	document.${formName}.socAgensiC.value = "";
 	document.${formName}.socJenisHakmilikC.value = "";
 	document.${formName}.checkTanah.value = "";
@@ -273,10 +274,10 @@ function kosongkan(flagDetail) {
 	document.${formName}.socTanah.value = "";
 	document.${formName}.socStatusC.value = "";
 	document.${formName}.checkTanah.value = "";
-		
+
 	if (flagDetail == 'buka'){
 		document.${formName}.socLotC.value = "";
-		document.${formName}.txtNoLot.value = "";		
+		document.${formName}.txtNoLot.value = "";
 		document.${formName}.socNegeriC.value = "";
 		document.${formName}.socDaerahC.value = "";
 		document.${formName}.socMukimC.value = "";
@@ -314,7 +315,7 @@ function papar(idFail,idStatus) {
 		document.${formName}.action = "$EkptgUtil.getTabID("Pelepasan",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPKeputusanView";
 	}else{
 		document.${formName}.action = "$EkptgUtil.getTabID("Pelepasan",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPMaklumatPermohonanView";
-	} 
+	}
 	document.${formName}.submit();
 }
 function daftarBaru(){

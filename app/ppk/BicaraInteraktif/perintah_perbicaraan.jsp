@@ -7,7 +7,20 @@
 	</tr>
 </table>
 
-<input type="hidden" name="idHTA" value="" />
+<input type="hidden" name="idPermohonanSimati_perintah" value="$ID_PERMOHONANSIMATI" />
+<input type="hidden" name="idPermohonan" value="$ID_PERMOHONAN" />
+<input type="hidden" name="idSimati" value="$ID_SIMATI" />
+<input type="hidden" name="selectedTabLower" id="selectedTabLower" />
+<input type="hidden" name="actionPerintah" id="actionPerintah" />
+<input type="hidden" name="flagPopup" id="flagPopup" />
+<input type="hidden" name="idHTA" id="idHTA" />
+<input type="hidden" name="idHTAAH" id="idHTAAH" />
+<input type="hidden" name="idHA" id="idHA" />
+<input type="hidden" name="modePopup" id="modePopup" />
+<input type="hidden" name="anchor" id="anchor" />
+<input type="hidden" name="action" id="action" />
+<input type="hidden" name="method" id="method" />
+
 
 <!-- START PERINTAH PEMBAHAGIAN -->
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -30,19 +43,14 @@
 
 		            <!-- START CONTENT HARTA TAK ALIH (ADA HAKMILIK) -->
 		            <div class="TabbedPanelsContent">
-		            	<div id="keputusan_perintah_htaah"></div>
-
-
-
-
-
+		            	<div id="div_keputusan_perintah_htaah"></div>
 
 	              		<table width="100%" border="0" cellspacing="2" cellpadding="2">
 
 		                <!-- START LIST HARTA TAK ALIH (ADA HAKMILIK) -->
 		                	<tr>
                   				<td>
-                  					#if ($flagAdaHTA)
+                  					#if($flagAdaHTA == '1')
                     				<fieldset>
                     					#set ($printalert = '1')
 
@@ -93,29 +101,23 @@
 						                            <td class="$row">$listHTA.keteranganHakmilik</td>
 						                            #else
 
-
-
 						                            <td class="$row">
-						                            	<a href="javascript:void(0);" onClick="paparFmPerintahHTA('keputusan_perintah_htaah', 'kemaskiniKeputusanPerintahHtaah', $listHTA.idPerintahHTAOBMST)">
+						                            	<a href="javascript:void(0);" onClick="paparFmPerintahHTAAH('div_keputusan_perintah_htaah', 'fmKeputusanPerintahHtaah', $listHTA.idPerintahHTAOBMST)">
 						                            		<font color="#0000FF">$listHTA.keteranganHakmilik</font>
 						                            	</a>
 						                            </td>
 
-
-						                            <!-- td class="$row"><a href="javascript:paparHTA($listHTA.idPerintahHTAOBMST)"><font color="#0000FF">$listHTA.keteranganHakmilik</font></a></td -->
+						                            ###<!-- td class="$row"><a href="javascript:paparHTA($listHTA.idPerintahHTAOBMST)"><font color="#0000FF">$listHTA.keteranganHakmilik</font></a></td -->
 
 						                            #end
 						                            <td class="$row">$listHTA.jenisPerintah
 
 						                            #if ($listHTA.jenisPerintah == "PERINTAH PEMBAHAGIAN TERUS" || $listHTA.jenisPerintah == "PERINTAH PEMBAHAGIAN TERUS  (FARAID)" || $listHTA.jenisPerintah == "PERINTAH PEMBAHAGIAN TERUS (AKTA 1958)")
-
 						                            	#set ($PPT = "Ada")
-
 						                            #end
 
 						                            #if ($listHTA.jenisPerintah == "PERINTAH  KUASA PENTADBIR" || $listHTA.jenisPerintah == "PERINTAH KUASA PENTADBIR")
 						                               	#set ($PKP = "Ada")
-
 						                            #end
 						                            </td>
 						                            <td class="$row" align="center">$listHTA.kodPB</td>
@@ -126,9 +128,11 @@
 				                        #if ($SenaraiHTA.size() > 10)
 			                        	</div>
 				                      	#end
-			                    </fieldset>
+			                    	</fieldset>
 			                    #else
-                    			&nbsp;<font color="black">SIMATI TIDAK MEMILIKI SEBARANG HARTA TAK ALIH (ADA HAKMILIK)</font> #end </td>
+                    			&nbsp;<font color="black">SIMATI TIDAK MEMILIKI SEBARANG HARTA TAK ALIH (ADA HAKMILIK)</font>
+                   				#end
+                   				</td>
                				</tr>
                			<!-- END LIST HARTA TAK ALIH (ADA HAKMILIK) -->
               			</table>
@@ -137,12 +141,14 @@
 
             		<!-- START CONTENT HARTA TAK ALIH (TIADA HAKMILIK) -->
 		           	<div class="TabbedPanelsContent">
+		            	<div id="div_keputusan_perintah_htath"></div>
+
 	             		<table width="100%" border="0" cellspacing="2" cellpadding="2">
 
                 		<!-- START LIST HARTA TAK ALIH (TIADA HAKMILIK) -->
 			                <tr>
 		                  		<td>
-		                  			#if ($flagAdaHTATH)
+		                  			#if ($flagAdaHTATH == '1')
                     				<fieldset>
 			                      		<legend><strong>SENARAI HARTA TAK ALIH (TIADA HAKMILIK)</strong></legend>
 				                      		<table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -171,7 +177,15 @@
 						                          		#if($listHTATH.idPerintahHTAOBMST == '')
 							                          	<td class="$row">$listHTATH.keteranganHakmilik</td>
 						                          		#else
-							                          	<td class="$row"><a href="javascript:paparHTATH($listHTATH.idPerintahHTAOBMST)"><font color="#0000FF">$listHTATH.keteranganHakmilik</font><font color="#000000">$listHTATH.keterangan</font></a></td>
+														<td class="$row">
+							                            	<a href="javascript:void(0);"
+							                            		onClick="paparFmPerintahHTATH('div_keputusan_perintah_htath', 'fmKeputusanPerintahHtath', $listHTATH.idPerintahHTAOBMST)">
+							                            		<font color="#0000FF">$listHTATH.keteranganHakmilik</font><font color="#000000">$listHTATH.keterangan</font>
+							                            	</a>
+							                            </td>
+
+							                          		###<!-- td class="$row"><a href="javascript:paparHTATH($listHTATH.idPerintahHTAOBMST)"><font color="#0000FF">$listHTATH.keteranganHakmilik</font><font color="#000000">$listHTATH.keterangan</font></a></td -->
+
 						                          		#end
 							                          	<td class="$row">$listHTATH.jenisPerintah</td>
 	                      								#if ($listHTATH.jenisPerintah == "PERINTAH PEMBAHAGIAN TERUS" || $listHTA.jenisPerintah == "PERINTAH PEMBAHAGIAN TERUS  (FARAID)" || $listHTA.jenisPerintah == "PERINTAH PEMBAHAGIAN TERUS (AKTA 1958)")
@@ -200,12 +214,14 @@
 
             <!-- START CONTENT HARTA ALIH -->
 		            <div class="TabbedPanelsContent">
+		            	<div id="div_keputusan_perintah_ha"></div>
+
           				<table width="100%" border="0" cellspacing="2" cellpadding="2">
 
                 <!-- START LIST HARTA ALIH -->
 			                <tr>
 			                	<td>
-				                	#if ($flagAdaHA)
+				                	#if ($flagAdaHA == '1')
 				                    <fieldset>
 				               			<legend><strong>SENARAI HARTA ALIH </strong></legend>
 				                      	#if ($SenaraiHA.size() > 10)
@@ -246,7 +262,17 @@
 					                           		#if($listHA.idPerintahHAOBMST == '')
 					                            	<td class="$row">$listHA.jenisHarta</td>
 					                            	#else
-					                            	<td class="$row"><a href="javascript:paparHA($listHA.idPerintahHAOBMST)"><font color="#0000FF">$listHA.jenisHarta</font><font color="#000000">$listHA.keterangan</font></a></td>
+
+														<td class="$row">
+							                            	<a href="javascript:void(0);"
+							                            		onClick="paparFmPerintahHA('div_keputusan_perintah_ha', 'fmKeputusanPerintahHa', $listHA.idPerintahHAOBMST)">
+							                            		<font color="#0000FF">$listHA.jenisHarta</font><font color="#000000">$listHA.keterangan</font>
+							                            	</a>
+							                            </td>
+
+
+					                            	###<!-- td class="$row"><a href="javascript:paparHA($listHA.idPerintahHAOBMST)"><font color="#0000FF">$listHA.jenisHarta</font><font color="#000000">$listHA.keterangan</font></a></td -->
+
 					                            	#end
 					                            	<td class="$row">$listHA.jenisPerintah
 
@@ -2123,3 +2149,8 @@
 </table>
 
 <!-- END PEMBAHAGIAN HARTA -->
+<script type="text/javascript">
+var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedTabUpper});
+
+var TabbedPanels2 = new Spry.Widget.TabbedPanels("TabbedPanels2",{defaultTab:$selectedTabLower});
+</script>

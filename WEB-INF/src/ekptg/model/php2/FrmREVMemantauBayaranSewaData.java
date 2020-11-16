@@ -2866,11 +2866,13 @@ public class FrmREVMemantauBayaranSewaData {
 				h.put("jumlahTunggakan",rs.getString("JUMLAH_TUNGGAKAN") == null || rs.getString("JUMLAH_TUNGGAKAN").equals("0") ? "0.00" : Util.formatDecimal(Double.valueOf(rs.getString("JUMLAH_TUNGGAKAN"))));
 				h.put("bilPeringatan", rs.getString("BIL_PERINGATAN") == null ? "" : rs.getString("BIL_PERINGATAN"));
 				if ("1".equals(rs.getString("BIL_PERINGATAN"))) {
-					h.put("peringatan", "PERTAMA");
+					h.put("peringatan", "MEMO TUNTUTAN DEPOSIT");
 				} else if ("2".equals(rs.getString("BIL_PERINGATAN"))) {
-					h.put("peringatan", "KEDUA");
+					h.put("peringatan", "MEMO PELARASAN DEPOSIT");
 				} else if ("3".equals(rs.getString("BIL_PERINGATAN"))) {
-					h.put("peringatan", "KETIGA");
+					h.put("peringatan", "MEMO TUNTUTAN HASIL");
+				} else if ("4".equals(rs.getString("BIL_PERINGATAN"))) {
+					h.put("peringatan", "MEMO RAMPASAN DEPOSIT");
 				} else {
 					h.put("peringatan", "");
 				}
@@ -2942,11 +2944,11 @@ public class FrmREVMemantauBayaranSewaData {
 					+ " NVL((SELECT TARIKH_NOTIS FROM TBLPHPNOTISHASIL  "
 					+ " WHERE ID_HASIL=TBLPHPHASIL.ID_HASIL AND ID_JENIS_NOTIS='1' AND BIL_PERINGATAN='3' AND FLAG_NOTIS IS NULL ) ,NULL) TARIKH_NOTIS_PERINGATAN_AKHIR, "
 					+ " NVL((SELECT TARIKH_NOTIS FROM TBLPHPNOTISHASIL  "
-					+ " WHERE ID_HASIL=TBLPHPHASIL.ID_HASIL AND ID_JENIS_NOTIS='2') ,NULL) TARIKH_MEMO_RAMPASAN_DEPOSIT, "
+					+ " WHERE ID_HASIL=TBLPHPHASIL.ID_HASIL AND ID_JENIS_NOTIS='2') ,NULL) TARIKH_NOTIS_RAMPASAN, "
 					+ " NVL((SELECT TARIKH_PENAMATAN FROM TBLPHPBAYARANPERLUDIBAYAR "
 					+ " WHERE ID_HASIL = TBLPHPHASIL.ID_HASIL AND FLAG_PERJANJIAN = '4') , NULL) TARIKH_NOTIS_PENAMATAN, "
 					+ " NVL((SELECT TARIKH_NOTIS FROM TBLPHPNOTISHASIL  "
-					+ " WHERE ID_HASIL=TBLPHPHASIL.ID_HASIL AND BIL_PERINGATAN = '1' AND FLAG_NOTIS = 'MEMO') ,NULL) TARIKH_NOTIS_RAMPASAN, "
+					+ " WHERE ID_HASIL=TBLPHPHASIL.ID_HASIL AND BIL_PERINGATAN = '1' AND FLAG_NOTIS = 'MEMO') ,NULL) TARIKH_MEMO_RAMPASAN_DEPOSIT, "
 					+ " NVL((SELECT TARIKH_NOTIS FROM TBLPHPNOTISHASIL  "
 					+ " WHERE ID_HASIL=TBLPHPHASIL.ID_HASIL AND ID_JENIS_NOTIS='3' AND FLAG_NOTIS IS NULL) ,NULL) TARIKH_NOTIS_TUNTUTAN, "
 					+ " TBLPHPPERMOHONANSEWA.TARIKH_HANTARKEPUTUSAN,TBLPHPHASIL.ID_HASIL, "

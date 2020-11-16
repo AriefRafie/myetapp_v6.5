@@ -1056,7 +1056,6 @@ function textCounter(field, countfield, maxlimit) {
 	 countfield.value = maxlimit - field.value.length;
 }
 function doHantarEmel(){
-	//alert($!idPermohonan);
 	if(pengesahan.checked != true){
 		alert('Sila tanda pada checkbox untuk teruskan permohonan. ');
 		return; 

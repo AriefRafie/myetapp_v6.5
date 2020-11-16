@@ -18,7 +18,7 @@
     <td colspan="2">
     <table width="100%" border="0" cellspacing="2" cellpadding="2">
     	<tr class="row2">
-		<!--<td width="3%"></td>-->
+		<td width="3%"></td>
 		<td width="82%"><b>Keterangan</b></td>
 		<td width="15%"><b>Dokumen</b></td>
 	</tr>  
@@ -33,16 +33,16 @@
                	#set( $row = "row1" )
           	#end
                 	
-        <!--#if($list.flag == 'Y')
+        #if($list.flag == 'Y')
         	#set($checked = 'checked')
         	#set($disabled = 'disabled')
         #else
         	#set($checked = '')
-        #end-->
+        #end
         
         #if ($mode == 'update')
 	        <tr class="$row">
-	          <!--<td class="$row" width="3%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" $checked /></td>-->
+	          <td class="$row" width="3%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" $checked /></td>
 	          <td class="$row" width="82%">$i. $list.keterangan</td>
 	          	<td class="$row" width="15%">
 	          	$!list.lampirans
@@ -51,7 +51,7 @@
 	      #end
 	      #if ($mode == 'view')
 	      	<tr class="$row">
-	          <!--<td class="$row" width="3%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" $checked $disabled /></td>-->
+	          <td class="$row" width="3%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" $checked $disabled /></td>
 	          <td class="$row" width="82%">$i. $list.keterangan</td>
 	          <td class="$row" width="15%">
 	          $!list.lampirans

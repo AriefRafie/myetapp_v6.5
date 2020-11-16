@@ -6229,10 +6229,6 @@ $jquery("#inputMinify").on("input", function() {
 });
 */
 
-var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedTabUpper});
-
-var TabbedPanels2 = new Spry.Widget.TabbedPanels("TabbedPanels2",{defaultTab:$selectedTabLower});
-
 function setSelectedTabUpper(tabId) {
 	document.${formName}.selectedTabUpper.value = tabId;
 	document.${formName}.flagPopup.value = "";
@@ -6248,21 +6244,44 @@ function setSelectedTabLower(tabId) {
 	document.${formName}.submit();
 }
 
-function paparHTA(idHTA) {
+/*
+ * papar fm perinah htaah / htath
+ */
+
+function paparFmPerintahHTAAH(div, cmd, idHTAAH) {
+
+	document.${formname}.idHTAAH.value = idHTAAH;
+	doDivAjaxCall$formname(div, cmd, '');
+}
+
+/*
+ * papar fm perinah ha
+ */
+
+function paparFmPerintahHA(div, cmd, idHA) {
+
+	document.${formname}.idHA.value = idHA;
+	doDivAjaxCall$formname(div, cmd, '');
+}
+
+function kemaskiniPerintahHTA() {
+	if(document.${formName}.socJenisPerintahHTA.value == ""){
+		alert('Sila pilih Jenis Perintah.');
+  		document.${formName}.socJenisPerintahHTA.focus();
+		return;
+	}
+
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.actionPerintah.value = "papar";
+		return;
+	}
+
 	document.${formName}.actionPerintah.value = "papar";
 	document.${formName}.flagPopup.value = "openHTA";
 	document.${formName}.modePopup.value = "update";
-	document.${formName}.idHTA.value = idHTA;
-	document.${formName}.action = "?_portal_module=ekptg.view.ppk.BicaraInteraktif";
+	document.${formName}.hitButt.value = "simpanKemaskiniHTA";
 	document.${formName}.anchor.value = "tabUpper";
-	document.${formName}.method = "POST";
 	document.${formName}.submit();
-}
-
-function paparFmPerintahHTA(div, cmd, idHTA) {
-
-	document.getElementById('idHTA').value = idHTA;
-	doDivAjaxCall$formname(div, cmd, '');
 }
 </script>
 

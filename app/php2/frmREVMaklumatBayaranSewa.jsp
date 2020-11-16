@@ -131,6 +131,15 @@ function janaHapusKira(idHasil) {
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
 }
+function janaSuratKuiriCek(idHasil) {
+
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupCetakLaporanView?idHasil="+idHasil+"&report=suratKuiriCek";
+    var hWnd = window.open(url,'printuser','width=1000,height=300, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
 function janaSuratIringanResit(idHasil) {
 
 	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupCetakLaporanView?idHasil="+idHasil+"&report=suratIringanResit";

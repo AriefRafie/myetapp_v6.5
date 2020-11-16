@@ -1,22 +1,14 @@
+fm perintah perbicaraan ha.jsp
+
+$maklumatHA
+
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
 	<tr>
 		<td>&nbsp;</td>
-	   	<td>Keterangan Hakmilik</td>
+	   	<td>Jenis Harta Alih</td>
 	   	<td valign="top">:</td>
-	   	<td>$beanMaklumatHTA.keteranganHakmilik</td>
+	   	<td>$maklumatHA.jenisHartaAlih $maklumatHA.keterangan</td>
 	</tr>
-	<tr>
-	   	<td>&nbsp;</td>
-	   	<td>Status Pemilikan</td>
-	   	<td valign="top">:</td>
-	   	<td>$beanMaklumatHTA.jenisPB</td>
-	 </tr>
- 	<tr>
-   		<td>&nbsp;</td>
-   		<td>Jenis Tanah</td>
-   		<td valign="top">:</td>
-   		<td>$beanMaklumatHTA.jenisTanah</td>
- 	</tr>
  	<tr>
    		<td width="1%"><span class="red">*</span></td>
    		<td width="20%">Jenis Perintah</td>
@@ -26,7 +18,7 @@
    				<option value="">SILA PILIH</option>
 	   			#foreach ($jenisPerintah in $jenisPerintahs)
 	   				#set ($selected = "")
-	   				#if ($beanMaklumatHTA.idJenisPerintah == $jenisPerintah.IdJenisperintah)
+	   				#if ($beanMaklumatHA.idJenisPerintah == $jenisPerintah.IdJenisperintah)
 	   					#set ($selected = "selected ")
 	   				#end
 	   				<option $selected value='$jenisPerintah.IdJenisperintah'>$jenisPerintah.kod - $jenisPerintah.keterangan</option>
@@ -35,7 +27,7 @@
    		</td>
  	</tr>
  	<tr>
-        <td valign="top">&nbsp;</td>s
+        <td valign="top">&nbsp;</td>
         <td valign="top">Catatan</td>
         <td valign="top">:</td>
         <td>
@@ -48,9 +40,9 @@
         <td>&nbsp;</td>
         <td>&nbsp;</td>
         <td>
-			<input type="button" name="updatePerintahPerbicaraanHTAAH" id="updatePerintahPerbicaraanHTAAH"
-				value="Kemaskini" onClick="javascript:simpanKemaskiniHTA()"/>
-			<input type="button" name="cmdBatalHTA" id="cmdBatalHTA" value="Kembali" onClick="javascript:batalHTA()"/>
+			<input type="button" name="updatePerintahPerbicaraanHA" id="updatePerintahPerbicaraanHA"
+				value="Kemaskini" onClick="javascript:simpanKemaskiniHA()"/>
+			<input type="button" name="cmdBatalHA" id="cmdBatalHA" value="Kembali" onClick="javascript:batalHA()"/>
 		</td>
 	</tr>
 </table>

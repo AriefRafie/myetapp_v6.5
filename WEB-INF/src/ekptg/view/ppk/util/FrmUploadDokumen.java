@@ -16,17 +16,26 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.log4j.Logger;
 
+import ekptg.model.htp.FrmSemakan;
+import ekptg.model.ppk.FrmPrmhnnStatusPengunaOnlineData;
+import ekptg.view.ppk.FrmPopupTAC;
+
 public class FrmUploadDokumen extends AjaxBasedModule {
 
 	private final String PATH="app/ppk/util/";
 	private static final long serialVersionUID = 1L;
 	private static Logger myLog = Logger.getLogger(ekptg.view.ppk.util.FrmUploadDokumen.class);
+	static FrmPrmhnnStatusPengunaOnlineData myInfo = new FrmPrmhnnStatusPengunaOnlineData();
 	
 	String readability = "";
 	String disability = "";
 	String idUser = "0"; 
     String idRujukan = "";
     String idSimati = "";
+    
+    // 13112020
+    String idPermohonan = "";
+    String idSenarai = "";
 
 	@Override
 	public String doTemplate2() throws Exception {		
@@ -42,6 +51,9 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 	    idRujukan = getParam("rujukan"); 
 	    idSimati = getParam("idSimati"); 
 	    
+	    // 13112020
+	    idPermohonan = getParam("idPermohonan");
+	    
 	    //VECTOR
 		Vector<Hashtable<String, String>> dokumens = null;
 		idUser = (String) session.getAttribute("_ekptg_user_id");
@@ -51,11 +63,17 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 		myLog.info("hitButton="+hitButton);
 		myLog.info("idRujukan="+idRujukan);
 		myLog.info("idSimati="+idSimati);
+		myLog.info("idPermohonan="+idPermohonan);
 		
 		if ("simpanHakmilik".equals(hitButton)){
 
 		}else if(hitButton.equals("simpan")){
 			uploadFiles(idHarta,false);
+			
+			// 14112020
+			idSenarai =  FrmUploadDokumen.getIdSemakan(getParam("jenisdokumen"));
+			FrmSemakan.semakanTambah(idSenarai, idPermohonan);
+			
 			hitButton = "";
 			
 		}else if(hitButton.equals("hapus")){
@@ -66,6 +84,11 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 		
 		}else if(hitButton.equals("simpanHA")){
 			uploadFiles(idHarta,true);
+			
+			// 14112020
+			idSenarai =  FrmUploadDokumen.getIdSemakan(getParam("jenisdokumen"));
+			FrmSemakan.semakanTambah(idSenarai, idPermohonan);
+			
 			hitButton = "";
 		
 		}else if(hitButton.equals("hapusHA")){
@@ -83,6 +106,11 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 		}else if(hitButton.equals("hapusmyid")){
 			String iDokumen = getParam("iDokumen");
 			l.hapusLampiranSimati(iDokumen, null,true);
+			
+			idSenarai =  FrmUploadDokumen.getIdSemakan(getParam("jenisdokumen"));
+			// komen dulu 14112020
+			FrmSemakan.semakanHapusByPermohonan(idPermohonan,idSenarai);
+			
 			//uploadFiles(idHarta,true);
 			hitButton = "";
 
@@ -101,11 +129,21 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 		else if(hitButton.equals("simpanboranga")){ //14/08/2020
 			//99211 (Borang A)
 			l.lampiranBorangA(request,idRujukan,getParam("jenisdokumen"),idUser);
+			
+			// 14112020
+			idSenarai =  FrmUploadDokumen.getIdSemakan(getParam("jenisdokumen"));
+			FrmSemakan.semakanTambah(idSenarai, idPermohonan);
+			
 			hitButton = "";
 			//this.context.put("num_files", jumLampiran);
 		}else if(hitButton.equals("simpanicwaris")){ //07/09/2020
 			//99212 (IC Waris)
 			l.lampiranICWaris(request,idRujukan,getParam("jenisdokumen"),idSimati,idUser);
+			
+			// 14112020
+			idSenarai =  FrmUploadDokumen.getIdSemakan(getParam("jenisdokumen"));
+			FrmSemakan.semakanTambah(idSenarai, idPermohonan);
+			
 			hitButton = "";
 			//this.context.put("num_files", jumLampiran);
 		}
@@ -231,6 +269,7 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 	    //lampiran simati
 	   	this.context.put("idRujukan",idRujukan);
 	   	this.context.put("idSimati",idSimati);
+	   	this.context.put("idPermohonan",idPermohonan);
 	   	this.context.put("jenisdokumen",getParam("jenisdokumen"));
 	   	
 		this.context.put("senaraidokumen",dokumens);
@@ -251,6 +290,23 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 
 	   	return vm;
 		
+	}
+	
+	// get ID_SEMAKAN 14112020 based in ID_JENISDOKUMEN
+	private static String getIdSemakan(String idJenisDokumen) throws Exception {
+		Vector checkID = new Vector();
+		checkID.clear();
+		checkID = myInfo.checkIDSemakan(idJenisDokumen);
+		
+		String idSemakan = "";
+		
+		if(checkID.size()!=0){
+			Hashtable h = (Hashtable)checkID.get(0);
+			idSemakan = (String)h.get("ID_SEMAKAN");
+		}
+		myLog.info("ID_SEMAKAN BASED ON ID_JENISDOKUMEN -> " + idSemakan);
+		
+		return idSemakan;
 	}
 	
 	private void uploadFiles(String idhtaam,boolean isHA) throws Exception {

@@ -2012,7 +2012,7 @@
 									                      	&& $id_Status != "164" 
 									                      	&& $id_Status != "165")	 									                 		
 									                 	#if($open_button_online == "yes")
-										                   		<a href = "javascript:lampiranHarta('$listam.idhta','$!paramOnline');">
+										                   		<a href = "javascript:lampiranHarta('$listam.idhta','$!paramOnline','$!id');">
 																	<img border="0" src="../img/plus.gif" width="20" height="15"/>
 																</a><br>
 														#end
@@ -2085,7 +2085,7 @@
 									                      	&& $id_Status != "164" 
 									                      	&& $id_Status != "165")	 									              			  
 									              		##if($open_button_online == "yes")
-										                      	<a href = "javascript:lampiranHarta('$listam.idhta','$!paramOnline');">
+										                      	<a href = "javascript:lampiranHarta('$listam.idhta','$!paramOnline','$!id');">
 																	<img border="0" src="../img/plus.gif" width="20" height="15"/>
 																</a><br>
 														##end
@@ -2156,7 +2156,7 @@
 									                      	&& $id_Status != "164" 
 									                      	&& $id_Status != "165")	 									              			 
 									              			##if($open_button_online == "yes")
-									                      	<a href = "javascript:lampiranHarta('$listam.idhta','$!paramOnline');">
+									                      	<a href = "javascript:lampiranHarta('$listam.idhta','$!paramOnline','$!id');">
 																<img border="0" src="../img/plus.gif" width="20" height="15"/>
 															</a><br>
 															##end
@@ -4301,9 +4301,10 @@ var dt=document.f1.txtTarikhPerjanjianHtaamX
 
 }
 	//Mula Lampiran
-	function lampiranHarta(idHarta) {
-		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumenHarta?actionrefresh=paparHTATH&actionPopup=papar&idHarta="+idHarta+"&flagOnline=$!flagOnline";
-	    //
+	function lampiranHarta(idHarta,paramOnline,idPermohonan) {
+		// alert(idPermohonan);
+		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumenHarta?actionrefresh=paparHTATH&actionPopup=papar&idHarta="+idHarta+"&flagOnline=$!flagOnline&idPermohonan="+idPermohonan;
+		url +="&jenisdokumen=1108";
 	    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 	       hWnd.opener = document.window;

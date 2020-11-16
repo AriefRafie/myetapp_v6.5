@@ -3,11 +3,6 @@
  */
 package ekptg.view.ppk;
 
-import java.util.Hashtable;
-import java.util.Vector;
-
-import org.apache.velocity.VelocityContext;
-
 import lebah.portal.velocity.VTemplate;
 
 /**
@@ -23,14 +18,14 @@ public class PerintahPerbicaraan extends VTemplate {
 	public String perintahHtaah(String idHTA)
 		throws Exception {
 
-        Vector<Hashtable<String, String>> beanMaklumatHTA = new Vector<Hashtable<String, String>>();
-		beanMaklumatHTA.clear();
+		//VelocityContext context = new VelocityContext();
+
+        //Vector beanMaklumatHTA = null;
+		//beanMaklumatHTA.clear();
 		//logic.setDataMaklumatHTA(idHTA, idPermohonanSimati);
 		//beanMaklumatHTA = logic.getBeanMaklumatHTA();
 
-		this.context.put("beanMaklumatHTA", "beanMaklumatHTA");
+		this.context.put("beanMaklumatHTA", "123");
 		return "app/ppk/BicaraInteraktif/fm_perintah_perbicaraan_htaah.jsp";
 	}
-
-    protected VelocityContext context;
 }

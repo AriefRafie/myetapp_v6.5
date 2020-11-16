@@ -10,15 +10,6 @@ xxxxxxxxxxxxxxxxxxxx
 
 $selectedTabUpper -- $selectedTabLower -- ${formName}
 
-<input type="hidden" name="selectedTabLower" id="selectedTabLower" />
-<input type="hidden" name="actionPerintah" id="actionPerintah" />
-<input type="hidden" name="flagPopup" id="flagPopup" />
-<input type="hidden" name="idHTA" id="idHTA" />
-<input type="hidden" name="modePopup" id="modePopup" />
-<input type="hidden" name="anchor" id="anchor" />
-<input type="hidden" name="action" id="action" />
-<input type="hidden" name="method" id="method" />
-
 #parse("app/ppk/BicaraInteraktif/perintah_perbicaraan.jsp")
 
 yyyyyyyyyyyyyyyyyyyy
