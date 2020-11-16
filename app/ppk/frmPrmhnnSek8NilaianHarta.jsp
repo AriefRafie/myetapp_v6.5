@@ -1276,7 +1276,7 @@ kod :: $listhath.kod_hakmilik
 				        <input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked disabled/>
 				    #end
 				    
-				    $semak.id
+<!-- 				    $semak.id -->
 				    
 	</td>
 	<td width="92%">$i. $semak.keterangan</td>
