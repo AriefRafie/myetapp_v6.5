@@ -64,9 +64,6 @@ public class FrmPYWKeputusanView extends AjaxBasedModule {
 
 		this.context.put("errMsg", "");
 
-		System.out.println("hitButton ros >>>> "+hitButton);
-		System.out.println("ros idFail >>>> "+idFail);
-
 		//SEND TO DB
 		if (postDB) {
 	    	if ("doHantarProses".equals(hitButton)){
@@ -79,7 +76,8 @@ public class FrmPYWKeputusanView extends AjaxBasedModule {
 			if ("doSimpan".equals(hitButton)){
 			    logic.simpanMaklumatKeputusan(idPermohonan, idKeputusan, getParam("txtTarikhKeputusan"), idPerjanjian,
 			    		getParam("txtTarikhMulaDasar"), getParam("txtTempohDasar"), getParam("txtTarikhTamatDasar"), getParam("txtTarikhMula"),
-			    		getParam("txtTempoh"), getParam("txtTarikhTamat"), getParam("socJenisKadarSewa"), getParam("txtKadarSewa"),getParam("txtRoyalti"), getParam("txtCagaran"), session);
+			    		getParam("txtTempoh"), getParam("txtTarikhTamat"), getParam("socJenisKadarSewa"), getParam("txtKadarSewa"),getParam("txtRoyalti"),
+			    		getParam("txtCagaran"), session, getParam("txtTarikhSst"));
 			}
 	    	if ("doHantarHasil".equals(hitButton)){
 	    		logic.updateHasil(idFail, idPermohonan, idKeputusan, idSuburusan, session);
@@ -110,9 +108,7 @@ public class FrmPYWKeputusanView extends AjaxBasedModule {
 		//MAKLUMAT HASIL
 		beanMaklumatHasil = new Vector();
 		logic.setMaklumatHasil(noFail);
-		System.out.println("buat x nin ros noFail >>>> "+noFail);
 		beanMaklumatHasil = logic.getBeanMaklumatHasil();
-		System.out.println("buat x nin ros beanMaklumatHasil >>>> "+beanMaklumatHasil);
     	this.context.put("BeanMaklumatHasil", beanMaklumatHasil);
 
 		idPerjanjian = logic.getIdPerjanjianByIdPermohonan(idPermohonan);

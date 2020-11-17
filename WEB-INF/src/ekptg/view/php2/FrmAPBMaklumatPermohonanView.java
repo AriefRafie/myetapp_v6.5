@@ -27,7 +27,7 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
 	FrmAPBHeaderData logicHeader = new FrmAPBHeaderData();
 	FrmAPBMaklumatPermohonanData logic = new FrmAPBMaklumatPermohonanData();
 	private ILampiran iLampiran = null;
-	FrmSemakan semak = null;
+	FrmSemakan semak = null;  
 
 	@Override
 	public String doTemplate2() throws Exception {
@@ -167,7 +167,6 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
 			idKategoriPemohon =(String)hashHeader.get("idKategoriPemohon");	
 			String status = (String) hashHeader.get("status");
 			this.context.put("status", status.toUpperCase());
-			
 		}
 		
 		// GET FLAG OPEN DETAIL
@@ -255,6 +254,7 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
         this.context.put("idKategoriPemohon", idKategoriPemohon);
 
 		return vm;
+		
 	}
 
 	private void maklumatPermohonan(String mode, String idPermohonan) throws Exception, Exception {
@@ -797,4 +797,6 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
 		return iLampiran;
 				
 	}
+	
+	
 }

@@ -987,4 +987,35 @@ function cetakDokumen(id){
 	hWnd.opener=document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
+
+function printLaporan(divName,tajuk) {
+	$jquery("#"+divName+" :button").hide();
+
+	var head_style = " <head> "+
+    " <style> "+
+    " @media print { "+
+	" 	body { "+
+    "  -webkit-print-color-adjust: exact; "+  /*Chrome, Safari */
+    "  color-adjust: exact;  "+  /*Firefox*/
+    " 	} "+
+	"         table { page-break-inside:auto; } "+
+  	"		  tr    { page-break-inside:avoid; page-break-after:auto;  } "+
+    "   } "+
+	"		  td    { border:1px solid black;font-size:75%;  } "+
+    " </style> "+
+	" </head> ";
+
+	var tajuk = '<div style="width:95%;margin: auto;font-size:100%;" align="center" ><b>'+tajuk.toUpperCase()+'</b></div>'
+    var printContents = document.getElementById(divName).innerHTML;
+	printContents = printContents.replace("<table ", "<table style=\"border-collapse:collapse;\" ");
+	printContents = printContents.replace('class="table_header"',' style="background-color:#d5d1d0;" ');
+
+	var footer ="";
+    var popupWin = window.open('Cetakan', '_blank', 'width=1100,height=600');
+    popupWin.document.open();
+
+    popupWin.document.write('<html><body onload="window.print()"><div style="width:95%;margin: auto;"  >'+head_style+'<br>'+tajuk+'<br>'+printContents+'</div></html>');
+	popupWin.document.close();
+    return false;
+}
 </script>
