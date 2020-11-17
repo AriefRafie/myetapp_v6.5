@@ -376,7 +376,7 @@ input[readonly] {
                                       
                                       
                                       #if($listamid.jenisluas!="" && $listamid.jenisluas!="0")
-                                      <input name="txtLuas" type="text" id="txtLuas" value="" size="25"  $readmodeR class="$readmode"  />
+                                      <input name="txtLuas" type="text" id="txtLuas" value="$!kodLuas - $!ketLuas" size="25"  $readmodeR class="$readmode"  />
                                       #else
                                       <input name="txtLuas" type="text" id="txtLuas" value="" size="25"  $readmodeR class="$readmode"  />
                                       #end 

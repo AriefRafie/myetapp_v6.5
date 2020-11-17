@@ -12,13 +12,13 @@
 <!-- <div class="success">Permohonan bagi mendapatkan ulasan telah berjaya dihantar ke JPBD.</div> -->
         ##end
 	#else
-    	#if ($isJPBDUser == 'true')
-			#if ($verifyBorangLampiranA1 == 'true')
-<div class="success">Ulasan telah berjaya disimpan dan sedang menunggu pengesahan pegawai.</div>
+    	##if ($isJPBDUser == 'true')
+			#if ($saveBorangLampiranA1 == 'true')
+<!-- <div class="success">Ulasan telah berjaya disimpan dan sedang menunggu pengesahan pegawai.</div> -->
 			#else
 <div class="success">Ulasan telah berjaya disimpan.</div>
 			#end
-		#end
+		##end
     #end
 <br />
 <br />

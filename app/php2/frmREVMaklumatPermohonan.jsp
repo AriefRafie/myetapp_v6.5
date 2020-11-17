@@ -5,7 +5,7 @@
     <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
     <td width="28%" valign="top">No. Fail</td>
     <td width="1%" >:</td>
-    <td width="70%"><input name="noFail" type="text" id="noFail" size="49" maxlength="100" $readonly class="$inputTextClass" value="$!BeanMaklumatPermohonan.get(0).noFail" onBlur="this.value=this.value.toUpperCase();checkingExistNoFailUpdate();" />    </td>
+    <td width="70%"><input name="noFail" type="text" id="noFail" size="49" maxlength="100" readonly="readonly" class="disabled" value="$!BeanMaklumatPermohonan.get(0).noFail" onBlur="this.value=this.value.toUpperCase();checkingExistNoFailUpdate();" />    </td>
   </tr>
   <tr>
     <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
@@ -23,13 +23,13 @@
     <td width="1%" valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
     <td valign="top">Perkara</td>
     <td valign="top">:</td>
-    <td><textarea name="txtPerkara" id="txtPerkara" rows="5" cols="50" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();"  >$!BeanMaklumatPermohonan.get(0).perkara</textarea>    </td>
+    <td><textarea name="txtPerkara" id="txtPerkara" rows="5" cols="50" readonly="readonly" class="disabled" onblur="this.value=this.value.toUpperCase();"  >$!BeanMaklumatPermohonan.get(0).perkara</textarea>    </td>
   </tr>
   <tr>
     <td width="1%" valign="top">&nbsp;</td>
     <td valign="top">Tujuan Sewa</td>
     <td valign="top">:</td>
-    <td><textarea name="txtTujuan" id="txtTujuan" rows="5" cols="50" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();"  >$!BeanMaklumatPermohonan.get(0).tujuan</textarea>    </td>
+    <td><textarea name="txtTujuan" id="txtTujuan" rows="5" cols="50" readonly="readonly" class="disabled" onblur="this.value=this.value.toUpperCase();"  >$!BeanMaklumatPermohonan.get(0).tujuan</textarea>    </td>
   </tr>
   <tr>
     <td width="1%" valign="top">&nbsp;</td>
@@ -41,7 +41,7 @@
      <td>&nbsp;</td>
      <td>Tempoh Permohonan Sewa</td>
      <td>:</td>
-     <td><select name="socTempohSewa" id="socTempohSewa" style="width:140px;" $readonly class="$disabled" $disabled>
+     <td><select name="socTempohSewa" id="socTempohSewa" style="width:140px;"  readonly="readonly" class="disabled" >
 
  #if ($!BeanMaklumatPermohonan.get(0).flagTempohSewa == 'B')
 
@@ -102,14 +102,14 @@
      <td>Luas Dipohon Sewa</td>
      <td>:</td>
      <td> #if ($idLuas == '0' || $idLuas == '1' || $idLuas == '2' || $idLuas == '3' )
-       <input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$!BeanMaklumatPermohonan.get(0).luas1" style="text-align:right" onkeyup="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6"  $readonly class="$inputTextClass"/>
+       <input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$!BeanMaklumatPermohonan.get(0).luas1" style="text-align:right" onkeyup="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6" readonly="readonly" class="disabled" />
        #elseif ($idLuas == '7')
-       <input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$!BeanMaklumatPermohonan.get(0).luas1" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
-       <input type="text" name="txtLuasMohon2" id="txtLuasMohon2" value="$!BeanMaklumatPermohonan.get(0).luas2" style="text-align:right" onkeyup="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6" / $readonly class="$inputTextClass">
+       <input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$!BeanMaklumatPermohonan.get(0).luas1" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" readonly="readonly" class="disabled"  onBlur="kiraLuas('$idLuas')"/>
+       <input type="text" name="txtLuasMohon2" id="txtLuasMohon2" value="$!BeanMaklumatPermohonan.get(0).luas2" style="text-align:right" onkeyup="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6" readonly="readonly" class="disabled" />
        #elseif ($idLuas == '8' || $idLuas == '4')
-       <input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$!BeanMaklumatPermohonan.get(0).luas1" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
-       <input type="text" name="txtLuasMohon2" id="txtLuasMohon2" value="$!BeanMaklumatPermohonan.get(0).luas2" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
-       <input type="text" name="txtLuasMohon3" id="txtLuasMohon3" value="$!BeanMaklumatPermohonan.get(0).luas3" style="text-align:right" onkeyup="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6"  $readonly class="$inputTextClass"/>
+       <input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$!BeanMaklumatPermohonan.get(0).luas1" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" readonly="readonly" class="disabled" onBlur="kiraLuas('$idLuas')"/>
+       <input type="text" name="txtLuasMohon2" id="txtLuasMohon2" value="$!BeanMaklumatPermohonan.get(0).luas2" style="text-align:right" onkeyup="validateNumber(this,this.value);" size="6" readonly="readonly" class="disabled" onBlur="kiraLuas('$idLuas')"/>
+       <input type="text" name="txtLuasMohon3" id="txtLuasMohon3" value="$!BeanMaklumatPermohonan.get(0).luas3" style="text-align:right" onkeyup="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6" readonly="readonly" class="disabled" />
        #end </td>
    </tr>
    #end
@@ -128,11 +128,22 @@
      <td><input type="text" name="txtBakiLuas" id="txtBakiLuas" value="$!BeanMaklumatPermohonan.get(0).luasBaki" readonly="readonly" class="disabled" style="text-align:right"/>
        HEKTAR</td>
    </tr>
-   <tr>
-     <td>&nbsp;</td>
-     <td>&nbsp;</td>
-     <td>&nbsp;</td>
-     <td>&nbsp;</td>
-   </tr>
+  #if ($mode == 'update')
+  <tr>
+    <td colspan="4" valign="bottom"><i><font color="#ff0000">Perhatian</font> : Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i></td>
+  </tr>
+  #end
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td> #if ($mode == 'update')
+      <input type="button" name="cmdSimpanKemaskini2" id="cmdSimpanKemaskini2" value="Simpan" onClick="doSimpanKemaskiniPermohonan()"/>
+      <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskini()"/>
+      #end
+      #if ($mode == 'view')
+      <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskiniPermohonan()"/>
+      #end </td>
+  </tr>
 </table>
 </fieldset>

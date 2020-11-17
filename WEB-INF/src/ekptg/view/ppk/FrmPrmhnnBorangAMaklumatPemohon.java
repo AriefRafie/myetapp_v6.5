@@ -4248,10 +4248,17 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				LampiranBean lb = new LampiranBean();
 				myLogger.info("Lampiran="+lb.getLampiranSimati(idRujukan, null, "99201").size());
 				myLogger.info("Lampiran="+lb.getLampiranSimati(idRujukan, null, "99202").size());
-				if(lb.getLampiranSimati(idRujukan, null, "99202").size() > -1)
+				if(lb.getLampiranSimati(idRujukan, null, "99202").size() > -1) {
+					myLogger.info("lalu sini 1: " + lb.getLampiranSimati(idRujukan, null, "99202").size());
 					lb.kemaskiniLampiranSimati(idRujukan,"99202",String.valueOf(h1.get("idSimati")));
-				if(lb.getLampiranSimati(idRujukan, null, "99201").size() > -1)
+				}
+				if(lb.getLampiranSimati(idRujukan, null, "99201").size() > 0) {
+					myLogger.info("lalu sini 2: " + lb.getLampiranSimati(idRujukan, null, "99201").size());
 					lb.kemaskiniLampiranSimati(idRujukan,"99201",String.valueOf(h1.get("idSimati")));
+					myLogger.info("lalu sini 3");
+					// update tblsemakanhantar untuk maklumat perkahwinan
+					FrmSemakan.semakanTambah("99201000041", id);
+				}
 				
 
 				/*

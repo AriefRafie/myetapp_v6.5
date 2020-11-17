@@ -162,7 +162,7 @@ public class FrmAPBSenaraiFailData {
 				
 				String jenisPermohonan = "";			
 				if("1".equals(rs.getString("ID_JENISPERMOHONAN"))) {
-					jenisPermohonan = "PERMOHONAN LESEN";
+					jenisPermohonan = "PERMOHONAN BAHARU";
 				} else if("2".equals(rs.getString("ID_JENISPERMOHONAN"))) {
 					jenisPermohonan = "PEMBAHARUAN LESEN";
 				}
@@ -1118,7 +1118,7 @@ public class FrmAPBSenaraiFailData {
 						+ " E.TARIKH_MULA_LESEN, E.TARIKH_TAMAT_LESEN, E.NO_LESEN, F.NAMA_NEGERI, G.ID_JENISPERMOHONAN, G.ID_JENIS_LESEN"
 						+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPBYRNSYRTKLLSNLESENAPB E, TBLRUJNEGERI F, TBLPHPPMOHONNJDUALPERTAMA G"
 						+ " WHERE A.ID_URUSAN = '9' AND A.ID_SUBURUSAN = '57' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS AND B.ID_PEMOHON = C.ID_PEMOHON "
-						+ " AND C.ID_NEGERITETAP = F.ID_NEGERI AND B.ID_PERMOHONAN = E.ID_PERMOHONAN(+) AND B.ID_PERMOHONAN = G.ID_PERMOHONAN(+) AND E.FLAG_AKTIF(+) = 'Y' AND A.NO_FAIL IS NULL ";
+						+ " AND C.ID_NEGERITETAP = F.ID_NEGERI(+) AND B.ID_PERMOHONAN = E.ID_PERMOHONAN(+) AND B.ID_PERMOHONAN = G.ID_PERMOHONAN(+) AND E.FLAG_AKTIF(+) = 'Y' AND A.NO_FAIL IS NULL ";
 				
 				// noFail
 				if (noPermohonan != null) {
@@ -1191,7 +1191,7 @@ public class FrmAPBSenaraiFailData {
 					
 					String jenisPermohonan = "";			
 					if("1".equals(rs.getString("ID_JENISPERMOHONAN"))) {
-						jenisPermohonan = "PERMOHONAN LESEN";
+						jenisPermohonan = "PERMOHONAN BAHARU";
 					} else if("2".equals(rs.getString("ID_JENISPERMOHONAN"))) {
 						jenisPermohonan = "PEMBAHARUAN LESEN";
 					}

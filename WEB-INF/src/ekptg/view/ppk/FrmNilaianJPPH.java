@@ -336,7 +336,7 @@ else if ("hantarPermohonanPetioner".equals(submit)) {
 					+ " AND H.ID_KATEGORI = T.ID_KATEGORI "
 					+ " AND H.ID_LUAS = A.ID_LUAS (+)"
 					+ " AND H.ID_BANDARHTA = B.ID_BANDAR (+)"
-					+ " AND H.JENIS_TNH = RT.ID_JENISTANAH"
+					+ " AND H.JENIS_TNH = RT.ID_JENISTANAH (+)"
 					+ " AND DOKUMEN.ID_DOKUMEN (+)= PELAN.ID_DOKUMEN"
 					+ " AND H.ID_PERMOHONANSIMATI = '"+idPermohonanSimati+"'"
 					+ " AND H.JENIS_HTA = 'Y'"

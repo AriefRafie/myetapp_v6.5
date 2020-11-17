@@ -83,8 +83,8 @@ public class FrmAPBOnlineSenaraiFailData {
 	
 	public String daftarBaru(String idKaitanTujuan, String idJenistujuan, String undangUndang, String idJenisLesen, String tujuanPengambilan, String tempoh,
 			String pengalaman, String idNegeri, String lokasi,String luas, String idLuas, String idJenisPengenalanIndividu, 
-			String idKategoriIndividu, String idKategoriPemohon, String idJantina, String idBangsa, String idBandar, 
-			String idNegeriSykt, String idBandarSykt, String idJenisPermohonan, String idPermohonanLama, HttpSession session) throws Exception {
+			String idKategoriIndividu, String idKategoriPemohon, String idJantina, String idBangsa, String idBandar, String idNegeriSykt, 
+			String idBandarSykt, String idJenisPermohonan, String idPermohonanLama, String idFlagLuar, HttpSession session) throws Exception {
 		
 		Db db = null;
 		Connection conn = null;
@@ -94,7 +94,7 @@ public class FrmAPBOnlineSenaraiFailData {
 		String idUrusan = "9";
 		String namaUser = "";
 		String emelUser = "";	
-		myLog.info("idJenisLesen : "+idJenisLesen);
+
 		try {
 			db = new Db();
 			conn = db.getConnection();
@@ -105,9 +105,8 @@ public class FrmAPBOnlineSenaraiFailData {
 			//TBLPFDFAIL
 			long idFail = DB.getNextID("TBLPFDFAIL_SEQ");
 			idFailString = String.valueOf(idFail);
-
 			r.add("ID_FAIL", idFail);
-			r.add("ID_URUSAN", "9");
+			r.add("ID_URUSAN", idUrusan);
 			r.add("ID_SUBURUSAN", "57");
 			r.add("ID_TARAFKESELAMATAN", "1");
 			r.add("ID_SEKSYEN", "4");
@@ -119,19 +118,19 @@ public class FrmAPBOnlineSenaraiFailData {
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLPFDFAIL");
-			myLog.info("sql pfdfail "+sql);
 			stmt.executeUpdate(sql);
+			
+			sql = "SELECT A.USER_NAME,B.ALAMAT1, B.ALAMAT2, B.ALAMAT3, B.POSKOD, B.ID_NEGERI,B.NO_FAX, B.NO_HP," 
+					+ " B.NO_KP_BARU, B.NO_TEL, B.EMEL, B.ID_BANDAR, C.UNDANG_UNDANG_DIPERBADANKAN "
+					+ " FROM USERS A, USERS_ONLINE B, TBLPHPPEMOHON C"
+					+ " WHERE A.USER_ID = B.USER_ID AND A.USER_ID = '" + userId + "'";
+			ResultSet rsUserOnline = stmt.executeQuery(sql);
 
 			//TBLPHPPEMOHON
 			r = new SQLRenderer();
 			long idPemohon = DB.getNextID("TBLPHPPEMOHON_SEQ");
 			r.add("ID_PEMOHON", idPemohon);
 			r.add("ID_KATEGORIPEMOHON", "2");
-			sql = "SELECT A.USER_NAME,B.ALAMAT1, B.ALAMAT2, B.ALAMAT3, B.POSKOD, B.ID_NEGERI,B.NO_FAX, B.NO_HP," 
-				+ " B.NO_KP_BARU, B.NO_TEL, B.EMEL, B.ID_BANDAR, C.UNDANG_UNDANG_DIPERBADANKAN "
-				+ " FROM USERS A, USERS_ONLINE B, TBLPHPPEMOHON C"
-				+ " WHERE A.USER_ID = B.USER_ID AND A.USER_ID = '" + userId + "'";
-			ResultSet rsUserOnline = stmt.executeQuery(sql);
 			
 			if (rsUserOnline.next()){
 				if (rsUserOnline.getString("USER_NAME") != null){
@@ -142,18 +141,16 @@ public class FrmAPBOnlineSenaraiFailData {
 				r.add("ALAMAT2_TETAP", rsUserOnline.getString("ALAMAT2") == null ? "" : rsUserOnline.getString("ALAMAT2"));
 				r.add("ALAMAT3_TETAP", rsUserOnline.getString("ALAMAT3") == null ? "" : rsUserOnline.getString("ALAMAT3"));
 				r.add("POSKOD_TETAP", rsUserOnline.getString("POSKOD") == null ? "" : rsUserOnline.getString("POSKOD"));
+				r.add("ID_BANDARTETAP",rsUserOnline.getString("ID_BANDAR") == null ? "99999" : rsUserOnline.getString("ID_BANDAR"));
 				r.add("ID_NEGERITETAP", rsUserOnline.getString("ID_NEGERI") == null ? "99999" : rsUserOnline.getString("ID_NEGERI"));
 				r.add("NO_FAX", rsUserOnline.getString("NO_FAX") == null ? "" : rsUserOnline.getString("NO_FAX"));
 				r.add("NO_PENGENALAN", rsUserOnline.getString("NO_KP_BARU") == null ? "" : rsUserOnline.getString("NO_KP_BARU"));
 				r.add("NO_TEL", rsUserOnline.getString("NO_TEL") == null ? "" : rsUserOnline.getString("NO_TEL"));
 				r.add("UNDANG_UNDANG_DIPERBADANKAN",undangUndang);
-				myLog.info("sql undangUndang "+undangUndang);
-				
 				if (rsUserOnline.getString("EMEL") != null){
 					emelUser = rsUserOnline.getString("EMEL");
 				}
 				r.add("EMEL", emelUser);
-				r.add("ID_BANDARTETAP",rsUserOnline.getString("ID_BANDAR") == null ? "99999" : rsUserOnline.getString("ID_BANDAR"));
 			}		
 			
 			r.add("ID_MASUK", userId);
@@ -188,7 +185,6 @@ public class FrmAPBOnlineSenaraiFailData {
 			sql = r.getSQLInsert("TBLPERMOHONAN");
 			stmt.executeUpdate(sql);
 			
-			
 			//TBLPHPPMOHONNJDUALPERTAMA
 			r = new SQLRenderer();
 			long id = DB.getNextID("TBLPHPPMOHONNJDUALPERTAMA_SEQ");
@@ -197,9 +193,9 @@ public class FrmAPBOnlineSenaraiFailData {
 			r.add("FLAG_RAYUAN", 0);
 //			r.add("ID_JENISTUJUAN",idJenistujuan);
 			if ("2".equals(idJenisLesen)){
-				r.add("ID_JENISTUJUAN", idJenisLesen);
+				r.add("ID_JENISTUJUAN", "3");
 			} else if ("3".equals(idJenisLesen) || "4".equals(idJenisLesen)) {
-				r.add("ID_JENISTUJUAN", idJenisLesen);
+				r.add("ID_JENISTUJUAN", "2");
 			} else {
 				r.add("ID_JENISTUJUAN", "");
 			}
@@ -208,7 +204,7 @@ public class FrmAPBOnlineSenaraiFailData {
 			r.add("TEMPOH_DIPOHON", tempoh);
 			r.add("ID_TEMPOH", 2);
 			r.add("PENGALAMAN", pengalaman);
-			r.add("FLAG_LUAR_PERAIRANNEGERI", "1");
+			r.add("FLAG_LUAR_PERAIRANNEGERI", idFlagLuar);
 			r.add("LUAS_DIPOHON", luas);
 			r.add("ID_UNITLUAS", idLuas);
 			r.add("LOKASI_PERMOHONAN", lokasi);
@@ -1981,7 +1977,7 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			r.add("B.ID_KAITANTUJUAN");
 			r.add("B.ID_JENISTUJUAN");
 			r.add("B.ID_JENIS_LESEN");
-//			r.add("B.ID_JENISPERMOHONAN");
+			r.add("B.ID_JENISPERMOHONAN");
 			r.add("B.TUJUAN_PENGAMBILAN");
 			r.add("B.TEMPOH_DIPOHON");
 			r.add("B.ID_TEMPOH");
@@ -1997,11 +1993,11 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			r.add("D.ID_PEMOHON");
 			r.add("D.MODAL_DIBENARKAN");
 			r.add("D.MODAL_JELAS");
+			r.add("D.UNDANG_UNDANG_DIPERBADANKAN");
 			r.add("C.ID_PERMOHONAN",r.unquote("B.ID_PERMOHONAN"));
 			r.add("A.ID_FAIL", r.unquote("C.ID_FAIL"));
 			r.add("C.ID_PEMOHON", r.unquote("D.ID_PEMOHON"));
 			r.add("B.ID_PERMOHONAN", idPermohonan);
-			r.add("D.UNDANG_UNDANG_DIPERBADANKAN");
 
 			sql = r.getSQLSelect("TBLPFDFAIL A,TBLPHPPMOHONNJDUALPERTAMA B, TBLPERMOHONAN C,TBLPHPPEMOHON D ");
 			ResultSet rs = stmt.executeQuery(sql);
@@ -2170,7 +2166,6 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 				+ " FROM TBLPERMOHONAN A,TBLPHPHAKMILIKPERMOHONAN B, TBLPFDFAIL C WHERE "
 				+ " C.ID_FAIL = A.ID_FAIL AND A.ID_PERMOHONAN = B.ID_PERMOHONAN AND A.ID_PERMOHONAN = '" + idPermohonan + "'";
 			
-			
 			ResultSet rsPermohonan = stmt.executeQuery(sql);
 			if (rsPermohonan.next()){
 				idhakmilikPermohonan = rsPermohonan.getString("ID_HAKMILIKPERMOHONAN");
@@ -2206,7 +2201,6 @@ public void setSenaraiProjek(String idPermohonan) throws Exception {
 			
 			conn.commit();
 			
-
 			if (!"".equals(namaUser) && !"".equals(emelUser)){
 				EkptgEmailSender email = EkptgEmailSender.getInstance();
 				email.FROM = "etapp_webmaster@kptg.gov.my";

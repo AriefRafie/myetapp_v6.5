@@ -70,7 +70,7 @@
       <legend><b>SENARAI PERMOHONAN</b></legend>
       #parse("app/utils/record_paging.jsp")
       <table align="center" width="100%">
-        <tr class="table_header">
+        <tr class="table_header" align="center">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
           <td width="20%"><strong>No Fail</strong></td>
           <td width="28%"><strong>Nama Pemohon/Syarikat</strong></td>

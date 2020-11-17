@@ -566,5 +566,119 @@
 	function doChangeDaerahX() {
 		doAjaxCall${formName}("","mode=changeDaerah");
 	}
+	function validateCurrency(elmnt,content,content2) {
+		//if it is character, then remove it..
+		if (isNaN(content)) {
+			elmnt.value = content2;
+			return;
+		}
+	
+		
+		if(content != ""){
+			var num = content * 1;
+			elmnt.value = num.toFixed(2);
+			return;
+		} else {
+			elmnt.value ="";
+			return;
+		}
+	}
+	function calculate(){
+		var Cukai1 = document.${formname}.txtCukaiTahunPertama.value * 1;
+		
+		//removed
+		//var BayaranNotis = document.${formname}.txtBayaranNotis.value * 1;
+		
+		var BayaranNotisF = document.${formname}.txtBayaranNotisF.value * 1;
+		var BayaranFail = document.${formname}.txtBayaranFail.value * 1;
+		var Premium = document.${formname}.txtPremium.value * 1;
+		var phakmilik = document.${formname}.txtPendaftaranHakmilik.value * 1;
+		var bayarukur = document.${formname}.txtBayarUkur.value * 1;
+		var bayarperenggan = document.${formname}.txtBayaranPerenggan.value * 1;
+		var tandasempadan = document.${formname}.txtTandaSempadan.value * 1;
+		var lain = document.${formname}.txtBayaranLain.value * 1;
+		var lain2 = document.${formname}.txtBayaranLain2.value * 1;
+		var lain3 = document.${formname}.txtBayaranLain3.value * 1;
+		var RayuanPremium = document.${formname}.txtRayuanPremium.value * 1;
+		
+		//var Lebihan = document.${formname}.txtLebihan.value * 1;
+		var jumBayaran1 = bayarukur + bayarperenggan + tandasempadan + 
+				  lain + phakmilik + Cukai1 + 
+				  BayaranNotisF + Premium + BayaranFail + lain2 + lain3;
+		var jumBayaran = jumBayaran1 - RayuanPremium;
+	
+		document.${formname}.txtJumBayaran.value = jumBayaran.toFixed(2);
+	}
+	function doCalculateTarikh() {
+		var TB  = document.${formName}.txtTarikhNotis5A.value;
+	    	var date = getDate(TB);
+	
+	    	var date1 = DateAdd('m',date,2);
+	    	document.${formName}.txtTarikhLuputPertama.value = convertDate(date1) ;
+	
+	    	var date2 = DateAdd('m',date1,3);
+	    	document.${formName}.txtTarikhLuputNotisKedua.value = convertDate(date2) ;
+	    	
+	    	var date3 = DateAdd('m',date2,3);
+	    	document.${formName}.txtTarikhLuputNotisKetiga.value = convertDate(date3) ;
+	}
+	function getDate(strDate) {
+		return new Date(strDate.substring(6,10),strDate.substring(3,5),strDate.substring(0,2));
+	}
+	function convertDate(myDate) {
+		var day = myDate.getDate();
+		var month = myDate.getMonth()+1;
+		var year = myDate.getFullYear();
+		var myTarikh = "";
+		if(month>=10){
+			if(day>=10){
+				myTarikh = day + "/" + month + "/" + year;	
+			}else{
+				myTarikh = "0"+ day + "/" + month + "/" + year;	
+			}
+	
+		}else{
+			if(day>=10){
+				myTarikh = day + "/0" + month + "/" + year;	
+			}else{
+				myTarikh = "0"+ day + "/0" + month + "/" + year;	
+			}
+		}
+		return myTarikh;
+	}
+	function DateAdd(ItemType, DateToWorkOn, ValueToBeAdded)
+	{
+	    switch (ItemType)
+	    {
+	        //date portion        
+	        case 'd': //add days
+	            DateToWorkOn.setDate(DateToWorkOn.getDate() + ValueToBeAdded)
+	            break;
+	        case 'm': //add months
+	            DateToWorkOn.setMonth(DateToWorkOn.getMonth() + ValueToBeAdded)
+	            break;
+	        case 'y': //add years
+	            DateToWorkOn.setYear(DateToWorkOn.getFullYear() + ValueToBeAdded)
+	            break;
+	        //time portion        
+	        case 'h': //add days
+	            DateToWorkOn.setHours(DateToWorkOn.getHours() + ValueToBeAdded)
+	            break;
+	        case 'n': //add minutes
+	            DateToWorkOn.setMinutes(DateToWorkOn.getMinutes() + ValueToBeAdded)
+	            break;
+	        case 's': //add seconds
+	            DateToWorkOn.setSeconds(DateToWorkOn.getSeconds() + ValueToBeAdded)
+	            break;
+	    }
+	    return DateToWorkOn;
+	}
+	
+	function formatNumber(input ) {
+	    var string=input.value;
+	    var result=new Intl.NumberFormat().format(string.replace(/,/g, "")) ;
+	    input.value = result;
+	}
+	
 	
 </script>

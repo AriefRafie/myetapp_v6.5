@@ -16,7 +16,7 @@ background: #f4eff4 !important;
  || $report == 'SuratKpdAPRundingan' || $report == 'SuratKepadaJPPHSupayaMenghadiriPerundingan' || $report=='SuratBayaranAgensi' || $report == 'MMKSek8Selangor' || $report == 'SuratIringanMMK' || $report == 'JPBDkeJPPH' || $report == 'SiasatanJPPH'
  || $report == 'SuratSiasatanKpdAP' || $report == 'SuratMintaBayaran' || $report == 'SuratLainKos' || $report == 'SuratEndorsanBorangK1' || $report == 'SuratIringanAP' || $report == 'SuratPengosonganTanah' || $report == 'suratPelupusanHakmilik'
  || $report == 'Perkara1JPBD' || $report == 'Perkara2PTD' || $report == 'Perkara3KSU' || $report == 'Perkara4JPPH' || $report == 'Perkara4PEKELILING' || $report == 'laporanTanahSS8' || $report == 'LampiranASek8' || $report == 'LaporanTerperinciTanah'
- || $report == 'EndosanDSUK' 
+ || $report == 'EndosanDSUK' || $report == 'MMKSek4Selangor'
  
  || $report == 'EndosanDPTD' || $report == 'NotaSiasatanSek8' || $report == 'IringanARB' || $report == 'EndorsanKHQ' || $report== 'BayaranLainKos1' || $report == 'EndorsanKPTDSeluruh' || $report == 'coveringPU' || $report == 'coveringSijilPU' || $report == 'minitSijilPU')
 #parse("app/ppt/tindakanPegawaiSignPPT.jsp")
@@ -90,7 +90,7 @@ background: #f4eff4 !important;
 || $report == 'SuratKpdAPRundingan' || $report == 'SuratKepadaJPPHSupayaMenghadiriPerundingan' || $report =='SuratBayaranAgensi' || $report == 'MMKSek8Selangor' || $report == 'SuratIringanMMK' || $report == 'JPBDkeJPPH' || $report == 'SiasatanJPPH' 
 || $report == 'SuratSiasatanKpdAP' || $report == 'SuratMintaBayaran' || $report == 'SuratLainKos' || $report == 'SuratEndorsanBorangK1' || $report == 'SuratIringanAP' || $report == 'SuratPengosonganTanah' || $report == 'suratPelupusanHakmilik'
 || $report == 'Perkara1JPBD' || $report == 'Perkara2PTD' || $report == 'Perkara3KSU' || $report == 'Perkara4JPPH' || $report == 'Perkara4PEKELILING' || $report == 'laporanTanahSS8' || $report == 'LampiranASek8' || $report == 'LaporanTerperinciTanah'
-|| $report == 'EndosanDSUK' 
+|| $report == 'EndosanDSUK' || $report == 'MMKSek4Selangor'
 
 || $report == 'EndosanDPTD' || $report == 'NotaSiasatanSek8' || $report == 'IringanARB' || $report == 'EndorsanKHQ' || $report== 'BayaranLainKos1' || $report == 'EndorsanKPTDSeluruh' || $report == 'coveringPU' || $report == 'coveringSijilPU' || $report == 'minitSijilPU'))
 
@@ -102,7 +102,7 @@ background: #f4eff4 !important;
 && $report != 'SuratKpdAPRundingan' && $report != 'SuratKepadaJPPHSupayaMenghadiriPerundingan' && $report !='SuratBayaranAgensi' && $report != 'MMKSek8Selangor' && $report != 'SuratIringanMMK' && $report != 'JPBDkeJPPH' && $report != 'SiasatanJPPH' 
 && $report != 'SuratSiasatanKpdAP' && $report != 'SuratMintaBayaran' && $report != 'SuratLainKos' && $report != 'SuratEndorsanBorangK1' && $report != 'SuratIringanAP' && $report != 'SuratPengosonganTanah' && $report != 'suratPelupusanHakmilik'
 && $report != 'Perkara1JPBD' && $report != 'Perkara2PTD' && $report != 'Perkara3KSU' && $report != 'Perkara4JPPH' && $report != 'Perkara4PEKELILING' && $report != 'laporanTanahSS8' && $report != 'LampiranASek8' && $report != 'LaporanTerperinciTanah'
-&& $report != 'EndosanDSUK'
+&& $report != 'EndosanDSUK' && $report != 'MMKSek4Selangor'
 
 && $report != 'EndosanDPTD' && $report != 'NotaSiasatanSek8' && $report != 'IringanARB' && $report != 'EndorsanKHQ' && $report != 'BayaranLainKos1' && $report != 'EndorsanKPTDSeluruh' && $report != 'coveringPU' && $report != 'coveringSijilPU' && $report != 'minitSijilPU')))
     	<fieldset><legend><strong>Cetakan Laporan</strong></legend>
@@ -718,14 +718,14 @@ background: #f4eff4 !important;
               </tr>
               #end
               
-              #if($report == 'BorangM' )
-              <tr>
+              ##if($report == 'BorangM' )
+              <!-- <tr>
                 <td>&nbsp;</td>
                 <td>Nama Pengarah Negeri</td>
                 <td>:</td>
                 <td><input type="text" id="txtNamaPengarahNeg" name="txtNamaPengarahNeg" value="" maxlength="50" size="30" onBlur="this.value=this.value.toUpperCase();" style="text-transform:uppercase;" /></td>
-              </tr>        
-              #end
+              </tr>  -->  
+              ##end
               
               
               
@@ -1280,7 +1280,7 @@ background: #f4eff4 !important;
                 	#end
                 
                 	#if($report == 'MMKSek4Selangor')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakMMKSek4Selangor('$!id_fail','$!nama_pengarah','$!no_fail','$!id_negeri')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakMMKSek4Selangor('$!id_fail','$!username','$!no_fail','$!id_negeri','$!ic_login')">
                 	#end
                 
                 	#if($report == 'MMKSek4Melaka')
@@ -1603,7 +1603,7 @@ background: #f4eff4 !important;
                 	#end
                 	
                 	#if($report == 'BorangM')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangM('$!id_fail','$!id_hakmilikpb','$!id_permohonan')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakBorangM('$!id_fail','$!id_hakmilikpb','$!id_permohonan','$!ic_login','$!username')">
                 	#end
                 	
                 	#if($report == 'BorangR')
@@ -5549,7 +5549,7 @@ function cetakMMKSek4Melaka(idfail,mukim,no_fail) {
 }
 
 
-function cetakMMKSek4Selangor(idfail,nama_pengarah,no_fail,id_negeri) {
+function cetakMMKSek4Selangor(idfail,nama_pengarah,no_fail,id_negeri,ic_login) {
 	
 	var bil = document.${formName}.txtBil.value;
 
@@ -5571,7 +5571,7 @@ function cetakMMKSek4Selangor(idfail,nama_pengarah,no_fail,id_negeri) {
 	if(id_negeri=="1"){
 		var url = "../../servlet/ekptg.report.ppt.MMKSek4Johor?idFail="+idfail+"&namaPentadbir="+nama_pengarah+"&bilSurat="+bil+"&no_fail="+nofail;
 	}else{
-		var url = "../../servlet/ekptg.report.ppt.MMKSek4Selangor?idFail="+idfail+"&namaPentadbir="+nama_pengarah+"&bilSurat="+bil+"&no_fail="+nofail;
+		var url = "../../servlet/ekptg.report.ppt.MMKSek4Selangor?idFail="+idfail+"&namaPentadbir="+nama_pengarah+"&bilSurat="+bil+"&no_fail="+nofail+"&userlogin="+ic_login;
 	}
 	
 	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
@@ -6138,7 +6138,7 @@ function cetakMohonBayaranAgensi(id_fail,nama_pengarah,no_fail,id_hakmilik,ic_lo
 		var item2 = "&bankMT="+bankMT+"&noMT="+noMT+"&akaunMT="+akaunMT;
 		var item3 = "&bankARB="+bankARB+"&noARB="+noARB+"&akaunARB="+akaunARB;
 			
-	    var url = "../../servlet/ekptg.report.ppt.SuratMohonBayaranAgensi?"+item1+item2+item3;
+	    var url = "../../servlet/ekptg.report.ppt.SuratMohonBayaranAgensi?"+item1+item2+item3+"&userlogin="+ic_login;
 	    			
 	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
@@ -6477,20 +6477,16 @@ function cetakBorangLB(id_fail,id_penarikan,ic_login) {
 	}
 }
 
-function cetakBorangM(id_fail,id_hakmilikpb,id_permohonan) {
+function cetakBorangM(id_fail,id_hakmilikpb,id_permohonan,ic_login,namapegawai) {
 
-	var namaPengarahNeg = document.${formName}.txtNamaPengarahNeg.value;
+	//var namaPengarahNeg = document.${formName}.txtNamaPengarahNeg.value;
 	if (document.${formName}.sorSelectNoFail.value == ""){
 		alert("Sila pilih jenis \"No Fail\" terlebih dahulu.");
 		document.${formName}.sorSelectNoFail.focus(); 
 		return;
 	}
 	
-	else if(document.${formName}.txtNamaPengarahNeg.value ==""){
-		alert("Sila masukkan nama pengarah terlebih dahulu.");
-		document.${formName}.txtNamaPengarahNeg.focus(); 
-		return;
-	}else{
+	else{
 
 		var valType = document.${formName}.sorSelectNoFail.value;
 		var id_permohonan = document.${formName}.id_permohonan.value;
@@ -6508,7 +6504,7 @@ function cetakBorangM(id_fail,id_hakmilikpb,id_permohonan) {
 			nofail = document.${formName}.no_fail.value;
 		}
 		
-		var url = "../../servlet/ekptg.report.ppt.BorangM?idfail="+id_fail+"&idhakmilikpb="+id_hakmilikpb+"&id_permohonan="+id_permohonan+"&namaPegawai="+namaPengarahNeg;
+		var url = "../../servlet/ekptg.report.ppt.BorangM?idfail="+id_fail+"&idhakmilikpb="+id_hakmilikpb+"&id_permohonan="+id_permohonan+"&namaPegawai="+namapegawai+"&userlogin="+ic_login;
 		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 		if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;

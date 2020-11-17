@@ -133,24 +133,6 @@ function toggle_div(id) {
 																</a>
 															</td>
 														</tr>
-
-														<tr>
-															<td>
-																<a href="#" onclick="toggle_div('toggleDiv');" class="help" title="Membuat Permohonan Pengambilan Tanah">
-																<a href="javascript:maklumatPembayaran()" class="help" title="Notifikasi Masukkan Maklumat Pembayaran">
-																	<font color="blue"><li>
-																	#if($!jumlah_notifikasi_pembayaran > 0)
-																		<label style="background-color:blue" align="center" valign="top" >
-																			<b><font color="WHITE"><blink>$!jumlah_notifikasi_pembayaran</blink></font></b>
-																		</label>&nbsp;
-																	#end
-
-										
-																	&nbsp;Notifikasi Maklumat Pembayaran</li></font>
-																</a>
-															</td>
-														</tr>
-
 														<!-- <tr>
 															<td>
 																<a href="javascript:paparanMalumatPermohonan()" class="help" title="Paparan maklumat permohonan KJP yang dihantar ke negeri">

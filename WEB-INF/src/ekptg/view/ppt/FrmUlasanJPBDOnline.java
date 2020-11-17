@@ -18,8 +18,7 @@ import org.apache.log4j.Logger;
 import ekptg.helpers.Paging;
 import ekptg.model.htp.HtpBean;
 import ekptg.model.htp.IHtp;
-import ekptg.model.integrasi.FrmModelBorangLampiranA1;
-import ekptg.model.integrasi.FrmModelMyInfoBorangLampiranA1;
+import ekptg.model.ppt.FrmModelMyInfoUlasanJPBD;
 import ekptg.model.ppt.FrmUlasanJPBDOnlineData;
 import ekptg.model.ppt.PPTHeader;
 import ekptg.model.utils.IUserPegawai;
@@ -98,7 +97,7 @@ public class FrmUlasanJPBDOnline extends AjaxBasedModule {
 		String vm = "";
 
         HttpSession session = this.request.getSession();
-        FrmModelMyInfoBorangLampiranA1 modelBorang = new FrmModelMyInfoBorangLampiranA1();
+        FrmModelMyInfoUlasanJPBD modelBorang = new FrmModelMyInfoUlasanJPBD();
         FrmUlasanJPBDOnlineData logic = new FrmUlasanJPBDOnlineData();
         
         
@@ -268,13 +267,13 @@ public class FrmUlasanJPBDOnline extends AjaxBasedModule {
     		EmailConfig ec = new EmailConfig();
 
 			
-			String emelSubjek = ec.tajukSemakanInt + "Penerima Tawaran";
+			String emelSubjek = "MAKLUMAN MAKLUMAT ULASAN JPBD: " + MP_NOFAIL;
 			String kandungan = "";
 			
 			//kandungan = getEmelSemak().setEmailSign(String.valueOf(hashHeader.get("noFail")));
 				
-			kandungan = getEmelSemak().setEmailSign(String.valueOf(hashHeader.get("noFail")),
-					String.valueOf(hashHeader.get("tajukFail")), String.valueOf(hashRayuanDB.get("namaPemohon")));
+			kandungan = setKandungan(String.valueOf(hashHeader.get("MP_TAJUKPERMOHONAN")),
+					String.valueOf(hashHeader.get("NAMA_KEMENTERIAN")), String.valueOf(hashHeader.get("MP_NOFAIL")));
 
 			if (!getEmelSemak().checkEmail(userID).equals(""))
 				getIHTP().getErrorHTML("[ONLINE-PHP PELEPASAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
@@ -515,9 +514,9 @@ public class FrmUlasanJPBDOnline extends AjaxBasedModule {
 	    	context.put("ID_NEGERI", ID_NEGERI);
         }
         
-        vList = modelBorang.searchBorangLampiranA1(false);
+        vList = modelBorang.searchBorangLampiranA1(false, userID);
         context.put("ListBorangLampiranA1", vList);
-        vList = modelBorang.searchBorangLampiranA1(true);
+        vList = modelBorang.searchBorangLampiranA1(true, userID);
         context.put("ListBorangLampiranA1Selesai", vList);
         vList = modelBorang.searchBorangLampiranA1TungguPengesahan();
         context.put("ListBorangLampiranA1Pengesahan", vList);
@@ -619,6 +618,20 @@ public class FrmUlasanJPBDOnline extends AjaxBasedModule {
 			this.context.put("error",e.getMessage());
 		}	
 	}
+	
+	public String setKandungan(String tajuk, String kementerian,String noRujukan){	
+		String kandungan = getSignHeader();
+		
+		StringBuffer sb = new StringBuffer();
+	    sb.append("Mohon Tuan/Puan Menyemak Maklumat Ulasan JPBD " +
+	    		"<b>"+tajuk+"</b> daripada <b>"+kementerian+"</b> dan Nombor Fail adalah seperti berikut <b>"+noRujukan+"</b>.");
+ 
+		kandungan += sb.toString();
+		kandungan += getSignFooter();
+		
+		return kandungan;
+
+	}
 	private IHtp getIHTP(){
 		if(iHTP== null)
 			iHTP = new HtpBean();
@@ -628,6 +641,14 @@ public class FrmUlasanJPBDOnline extends AjaxBasedModule {
 		if(emelSemak == null)
 			emelSemak = new HTPEmelJRPBean();
 		return emelSemak;
+	}
+	public String getSignHeader() {
+		return EmailConfig.getHeader();
+		
+	}
+	public String getSignFooter() {
+		return EmailConfig.getFooter();
+		
 	}
 	private IUserPegawai getIUser(){
 		if(iUser==null){

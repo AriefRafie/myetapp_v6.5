@@ -85,7 +85,6 @@ public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
 		        
         if ("papar".equals(actionOnline)){
         	
-        	
         	this.context.put("mode", "view");
         	this.context.put("readonly", "readonly");
         	this.context.put("inputTextClass", "disabled");

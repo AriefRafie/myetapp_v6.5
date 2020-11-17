@@ -518,7 +518,7 @@ public class FrmSemakan {
 
 	 }
 
-	 public void semakanHapusByPermohonan(String idPermohonan,String idSemakanSenarai) throws Exception {
+	 public static void semakanHapusByPermohonan(String idPermohonan,String idSemakanSenarai) throws Exception {
 		 try {
 		      db = new Db();
 		      Statement stmt = db.getStatement();

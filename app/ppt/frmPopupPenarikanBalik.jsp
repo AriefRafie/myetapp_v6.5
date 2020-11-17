@@ -27,7 +27,8 @@
 -->
 
  #if($report == 'mmk_selangor' || $report == 'surat_ap_siasatan' || $report == 'surat_pb_siasatan' || $report == 'surat_pemilik_siasatan'
- || $report == 'surat_JPPH_siasatan' || $report == 'surat_PTG_siasatan' || $report == 'surat_PTD_siasatan' || $report == 'surat_suruh_AP_Bayar')
+ || $report == 'surat_JPPH_siasatan' || $report == 'surat_PTG_siasatan' || $report == 'surat_PTD_siasatan' || $report == 'surat_suruh_AP_Bayar'
+ || $report == 'laporan_tanah')
 #parse("app/ppt/tindakanPegawaiSignPPT.jsp")
 #end
 
@@ -65,9 +66,9 @@
   <tr>
     <td>
     #if(($token != "" && ($report == 'mmk_selangor' || $report == 'surat_ap_siasatan' || $report == 'surat_pb_siasatan' || $report == 'surat_pemilik_siasatan'
-    || $report == 'surat_JPPH_siasatan' || $report == 'surat_PTG_siasatan' || $report == 'surat_PTD_siasatan' || $report == 'surat_suruh_AP_Bayar') )
+    || $report == 'surat_JPPH_siasatan' || $report == 'surat_PTG_siasatan' || $report == 'surat_PTD_siasatan' || $report == 'surat_suruh_AP_Bayar' || $report == 'laporan_tanah') )
 	|| ($token == "" && ($report !='mmk_selangor' && $report != 'surat_ap_siasatan' && $report != 'surat_pb_siasatan' && $report != 'surat_pemilik_siasatan'
-	&& $report != 'surat_JPPH_siasatan' && $report != 'surat_PTG_siasatan' && $report != 'surat_PTD_siasatan' && $report != 'surat_suruh_AP_Bayar')))
+	&& $report != 'surat_JPPH_siasatan' && $report != 'surat_PTG_siasatan' && $report != 'surat_PTD_siasatan' && $report != 'surat_suruh_AP_Bayar' && $report != 'laporan_tanah')))
     	<fieldset><legend><strong>Cetakan Laporan</strong></legend>
         	<table width="100%" border="0" cellspacing="2" cellpadding="2">
               
@@ -217,7 +218,7 @@
           && $report != 'mmk_mb_selangor_jadual' && $report != 'mmk_jadual_kl' && $report != 'mmk_kl' && $report != 'mmk_melaka' 
           && $report != 'mmk_N9' && $report != 'jadual_mmk_N9' && $report != 'mmk_selangor' && $report != 'surat_ap_siasatan' && $report != 'surat_pb_siasatan'
           && $report != 'surat_pemilik_siasatan' && $report != 'surat_JPPH_siasatan' && $report != 'surat_PTG_siasatan' && $report != 'surat_PTD_siasatan'
-          && $report != 'surat_suruh_AP_Bayar')    
+          && $report != 'surat_suruh_AP_Bayar' && $report != 'laporan_tanah')    
               <tr>
       
         <td width="30%" valign="top">
@@ -523,7 +524,7 @@
                 #end
                 
                 #if($report == 'laporan_tanah')
-                <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakLaporanTanah('$id_tanah')">
+                <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakLaporanTanah('$id_tanah','$!username','$!ic_login','$!id_jawatan1')">
                 #end
                 
                 #if($report == 'surat_JPPH_siasatan')
@@ -621,7 +622,7 @@ function RemoveNonNumeric( strString ){
       return strReturn;
 }
 
-function cetakLaporanTanah(id_tanah) {
+function cetakLaporanTanah(id_tanah,username,ic_login,id_jawatan) {
 window.close();
 
         var nofail = "";
@@ -642,7 +643,7 @@ window.close();
 			nofail = document.${formName}.no_fail.value;
 		}
 
- var url = "../../servlet/ekptg.report.ppt.LaporanTanahPB?id_tanah="+id_tanah+"&nama_pegawai="+document.${formName}.nama_pegawai.value+"&id_jawatan="+document.${formName}.id_jawatan.value+"&no_fail="+nofail;  
+ var url = "../../servlet/ekptg.report.ppt.LaporanTanahPB?id_tanah="+id_tanah+"&nama_pegawai="+username+"&id_jawatan="+id_jawatan+"&no_fail="+nofail+"&userlogin="+ic_login;  
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;

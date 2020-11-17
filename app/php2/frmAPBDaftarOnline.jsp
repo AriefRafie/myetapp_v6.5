@@ -26,9 +26,9 @@
       <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
-          <input name="noFailLama" type="hidden" id="noFailLama" value="$beanMaklumatPermohonan.noFailLama"/>
-          <input name="idPermohonanLama" type="hidden" id="idPermohonanLama" value="$beanMaklumatPermohonan.idPermohonanLama"/>
-          <input name="noPermohonanLama" type="hidden" id="noPermohonanLama" value="$beanMaklumatPermohonan.noPermohonanLama"/>
+        <input name="noFailLama" type="hidden" id="noFailLama" value="$beanMaklumatPermohonan.noFailLama"/>
+        <input name="idPermohonanLama" type="hidden" id="idPermohonanLama" value="$beanMaklumatPermohonan.idPermohonanLama"/>
+        <input name="noPermohonanLama" type="hidden" id="noPermohonanLama" value="$beanMaklumatPermohonan.noPermohonanLama"/>
         
         <tr>
           <td width="1%">&nbsp;</td>
@@ -263,7 +263,7 @@ function kembali() {
 	document.${formName}.submit();
 }
 function janaTajuk(){	
-	var strTajuk = "Permohonan Untuk Mendapatkan Lesen Bagi Mengeluarkan Pasir Dasar Laut Di Bawah Seksyen 4, Akta Pelantar Benua 1966 P.U 2009 di Kawasan Luar Perairan ";
+	var strTajuk = "Permohonan Lesen Untuk Mendapatkan Pasir Dasar Laut Di Bawah Seksyen 4, Akta Pelantar Benua 1966 di Kawasan";
 	document.${formName}.txtPerkara.value = strTajuk;
 }
 

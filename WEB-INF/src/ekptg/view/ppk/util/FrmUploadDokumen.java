@@ -109,7 +109,7 @@ public class FrmUploadDokumen extends AjaxBasedModule {
 			
 			idSenarai =  FrmUploadDokumen.getIdSemakan(getParam("jenisdokumen"));
 			// komen dulu 14112020
-			// FrmSemakan.semakanHapusByPermohonan(idPermohonan,idSenarai);
+			FrmSemakan.semakanHapusByPermohonan(idPermohonan,idSenarai);
 			
 			//uploadFiles(idHarta,true);
 			hitButton = "";

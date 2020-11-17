@@ -23,6 +23,7 @@
   <input name="selectedTabUpper" type="hidden" id="selectedTabUpper" value="$selectedTabUpper"/>
   <input name="hitButton" type="hidden" id="hitButton"/>
 </p>
+
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   #if ($idFail != '')
   <tr>
@@ -62,7 +63,7 @@
             #end 
           </div>
         </div>
-      </div></td>
+    </div></td>
   </tr>
   #end
   <tr>
@@ -70,16 +71,16 @@
   </tr>
 </table>
 <fieldset id="tableReport" style="display:none;"-->
-<legend><strong>SENARAI DOKUMEN</strong></legend>
-<table width="100%" border="0" cellspacing="2" cellpadding="2">
-  <tr>
-    <td ><a href="#" class="style2" onClick="javascript:cetakKulitFail('$idFail')"> Kulit Fail </a></td>
-  </tr>
-  <tr>
-    <td ><a href="#" class="style2" onClick="javascript:cetakSuratAkuanTerima('$idFail')"> Akuan Penerimaan Permohonan </a></td>
-  </tr>
-</table>
-<div id="calculateTotalPercentPengarah_result"></div>
+	<legend><strong>SENARAI DOKUMEN</strong></legend>
+	<table width="100%" border="0" cellspacing="2" cellpadding="2">
+	  <tr>
+	    <td ><a href="#" class="style2" onClick="javascript:cetakKulitFail('$idFail')"> Kulit Fail </a></td>
+	  </tr>
+	  <tr>
+	    <td ><a href="#" class="style2" onClick="javascript:cetakSuratAkuanTerima('$idFail')"> Akuan Penerimaan Permohonan </a></td>
+	  </tr>
+	</table>
+	<div id="calculateTotalPercentPengarah_result"></div>
 </fieldset>
 <script type="text/javascript">
 #if ($idFail != '')
