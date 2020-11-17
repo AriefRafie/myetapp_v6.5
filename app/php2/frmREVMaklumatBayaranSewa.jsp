@@ -941,9 +941,7 @@ function janaMaklumatLot() {
 	var str4  = document.${formName}.namaDerahTanah.value;
 	var str5  = document.${formName}.namaNegeriTanah.value;
 	var str6 = document.${formName}.noWartaTanah.value;
-	var strTujuan = document.${formName}.namatujuan.value;
 	var statusRizabTnh = document.${formName}.status.value;
-	var namaPemohon = document.${formName}.txtNama.value;
 
 	if(statusRizabTnh == 'MILIK') {
 		milikOrRizab = str2;
@@ -951,7 +949,7 @@ function janaMaklumatLot() {
 		milikOrRizab = str6;
 	}
 
-	strTajuk = str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan ;
+	strTajuk = str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5;
 	document.${formName}.txtMaklumatLot.value = strTajuk;
 	}
 

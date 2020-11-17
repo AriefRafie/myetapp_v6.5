@@ -139,7 +139,7 @@
                 <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
                 <td>Tarikh SST</td>
                 <td>:</td>
-                <td><input name="txtTarikhSst" type="text" class="$inputTextClass" id="txtTarikhSst" onBlur="check_date(this);calcDate()" value="$beanMaklumatPerjanjian.tarikhSst" size="9" maxlength="10" $readonly />
+                <td><input name="txtTarikhSst" type="text" class="$inputTextClass" id="txtTarikhSst" onBlur="check_date(this);calcDate()" value="$!beanMaklumatPerjanjian.tarikhSst" size="9" maxlength="10" $readonly />
                   #if ($mode != 'view')<a href="javascript:displayDatePicker('txtTarikhSst',false,'dmy');"><img border="0" src="../img/calendar.gif"/>#end</td>
               </tr>
               <tr>
