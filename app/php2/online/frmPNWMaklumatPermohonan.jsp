@@ -738,7 +738,7 @@ checker.onchange = function(){
 	for (i = 0; i < listcheckbox.length; i++) 
 	{
 		if(listcheckbox[i].checked==false){
-			alert('Sila muatnaik dokumen.');
+			alert('Sila Lengkapkan Senarai Semak.');
 			sendbtn.disabled = true;
 			checker.checked=false;
 			return;
