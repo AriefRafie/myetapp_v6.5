@@ -915,7 +915,7 @@ public class CetakLaporanSerahanBaitulmalPBNInternalData1 {
 		    	sqlJanaLaporanBaitulmalPBN += " and b.id_pemohon=e.id_pemohon";
 		    	sqlJanaLaporanBaitulmalPBN += " and c.id_simati=f.id_simati";
 		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=g.id_tarafkptg";
-		    	sqlJanaLaporanBaitulmalPBN += " and (d.id_tarafkptg=8 and e-id_tarafkptg=8)";
+		    	sqlJanaLaporanBaitulmalPBN += " and (d.id_tarafkptg=8 and e.id_tarafkptg=8)";
 		    	sqlJanaLaporanBaitulmalPBN += " and b.id_status=21 ";
 		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=h.id_permohonan";
 		    	sqlJanaLaporanBaitulmalPBN += " and h.ID_KEPUTUSANPERMOHONAN=i.id_keputusanpermohonan";
@@ -2205,7 +2205,7 @@ sqlJanaLaporanBaitulmalPBN += " order by 3";
 		    	sqlJanaLaporanBaitulmalPBN += " and b.id_pemohon=e.id_pemohon";
 		    	sqlJanaLaporanBaitulmalPBN += " and c.id_simati=f.id_simati";
 		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=g.id_tarafkptg";
-		    	sqlJanaLaporanBaitulmalPBN += " and (d.id_tarafkptg=8 and d.id_tarafkptg=8)";
+		    	sqlJanaLaporanBaitulmalPBN += " and (d.id_tarafkptg=8 and e.id_tarafkptg=8)";
 		    	sqlJanaLaporanBaitulmalPBN += " and b.id_status=21 ";
 		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=h.id_permohonan";
 		    	sqlJanaLaporanBaitulmalPBN += " and h.ID_KEPUTUSANPERMOHONAN=i.id_keputusanpermohonan";
