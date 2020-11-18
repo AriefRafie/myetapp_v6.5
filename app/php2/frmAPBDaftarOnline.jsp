@@ -57,6 +57,7 @@
           #elseif ($beanMaklumatPermohonan.idJenisLesen == '4')
           <td width="70%"><strong>BORANG 4(LESEN GALIAN SELAIN PASIR)</strong></td>
           #end
+          <input type="hidden" name="idJenisLesen" id="idJenisLesen" value="$beanMaklumatPermohonan.idJenisLesen" />
         </tr>
         <tr>
           <td width="1%">&nbsp;</td>
@@ -127,7 +128,8 @@
           <td>Nama</td>
           <td>:</td>
           <td>$beanMaklumatPemohon.nama
-            <input type="hidden" name="namaPemohon" id="namaPemohon" value="$beanMaklumatPemohon.nama " /></td>
+            <input type="hidden" name="namaPemohon" id="namaPemohon" value="$beanMaklumatPemohon.nama " />
+          </td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -297,14 +299,28 @@ function kembali() {
 	document.${formName}.actionOnline.value = "";
 	document.${formName}.submit();
 }
-function janaTajuk(){	
-	var strTajuk = "Permohonan Lesen Untuk Mendapatkan Pasir Dasar Laut Di Bawah Seksyen 4, Akta Pelantar Benua 1966 di Kawasan";
+function janaTajuk(){
+
+	var strTajuk = "";
+	
+	if (document.${formName}.idJenisLesen.value == '2') {
+		strTajuk = "Permohonan Lesen Untuk Mendapatkan Pasir Dasar Laut Di Bawah Seksyen 4, Akta Pelantar Benua 1966 di Kawasan";
+				 
+	} else if (document.${formName}.idJenisLesen.value == '3') {
+		strTajuk = "Permohonan Lesen Untuk Menjelajah/ Mencari Gali/ Menggerek berkaitan dengan mencari gali "
+				 + "Di Bawah Seksyen 4, Akta Pelantar Benua 1966 di Kawasan";
+				 
+	} else if (document.${formName}.idJenisLesen.value == '4') {
+		strTajuk = "Permohonan Lesen Untuk Melombong atau Menjalankan apa-apa operasi bagi mendapatkan ...... "
+				 + "Di Bawah Seksyen 4, Akta Pelantar Benua 1966 di Kawasan";
+	}
+	
 	if (document.${formName}.flagLuar.value == 'YA') {
 		strTajuk = strTajuk + " Luar"
 	}
 	strTajuk = strTajuk + " Perairan Negeri " + document.${formName}.namaNegeriPerairan.value + " Oleh "
 			 + document.${formName}.namaPemohon.value;
-		
+	
 	document.${formName}.txtPerkara.value = strTajuk.toUpperCase();
 }
 
