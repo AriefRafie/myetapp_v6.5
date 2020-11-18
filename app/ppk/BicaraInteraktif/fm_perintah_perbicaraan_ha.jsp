@@ -1,7 +1,5 @@
 fm perintah perbicaraan ha.jsp
 
-$maklumatHA
-
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
 	<tr>
 		<td>&nbsp;</td>
@@ -18,7 +16,7 @@ $maklumatHA
    				<option value="">SILA PILIH</option>
 	   			#foreach ($jenisPerintah in $jenisPerintahs)
 	   				#set ($selected = "")
-	   				#if ($beanMaklumatHA.idJenisPerintah == $jenisPerintah.IdJenisperintah)
+	   				#if ($maklumatHA.idJenisPerintah == $jenisPerintah.IdJenisperintah)
 	   					#set ($selected = "selected ")
 	   				#end
 	   				<option $selected value='$jenisPerintah.IdJenisperintah'>$jenisPerintah.kod - $jenisPerintah.keterangan</option>

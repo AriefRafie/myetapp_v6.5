@@ -6380,9 +6380,9 @@ function setSelectedTabLower(tabId) {
  * papar fm perinah htaah / htath
  */
 
-function paparFmPerintahHTAAH(div, cmd, idHTAAH) {
+function paparFmPerintahHTAAH(div, cmd, id) {
 
-	document.${formname}.idHTAAH.value = idHTAAH;
+	document.${formname}.idHTA.value = id;
 	doDivAjaxCall$formname(div, cmd, '');
 }
 
@@ -6390,9 +6390,15 @@ function paparFmPerintahHTAAH(div, cmd, idHTAAH) {
  * papar fm perinah ha
  */
 
-function paparFmPerintahHA(div, cmd, idHA) {
+function paparFmPerintahHA(div, cmd, id) {
 
-	document.${formname}.idHA.value = idHA;
+	document.${formname}.idHA.value = id;
+	doDivAjaxCall$formname(div, cmd, '');
+}
+
+function paparFmPerintahHTAPT(div, cmd, id) {
+
+	document.${formname}.idHTA.value = id;
 	doDivAjaxCall$formname(div, cmd, '');
 }
 

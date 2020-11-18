@@ -1,3 +1,5 @@
+package ekptg.view.ppk;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,6 +26,7 @@ import lebah.portal.AjaxBasedModule;
 
 import org.apache.log4j.Logger;
 
+import EDU.oswego.cs.dl.util.concurrent.misc.Fraction;
 import ekptg.engine.CacheManager;
 import ekptg.engine.CachedObject;
 import ekptg.helpers.AuditTrail;
@@ -34,6 +37,7 @@ import ekptg.helpers.Utils;
 import ekptg.model.RazTemplete;
 import ekptg.model.ppk.BicaraInteraktifData;
 import ekptg.model.ppk.FrmHeaderPpk;
+import ekptg.model.ppk.FrmPerintahSek8Data;
 import ekptg.model.ppk.FrmPrmhnnSek8BicaraData;
 import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8InternalData;
 import ekptg.model.ppk.FrmPrmhnnSek8KptsanBicaraData;
@@ -57,7 +61,6 @@ public class BicaraInteraktif extends AjaxBasedModule {
 	String checkedSelesai = "";// arief add
 	String checkedTangguh = "";// arief add
 	String checkedBatal = "";// arief add
-
 
 	// List listPerbicaraan = null;
 	@SuppressWarnings("unused")
@@ -1920,6 +1923,11 @@ public class BicaraInteraktif extends AjaxBasedModule {
 						"Y", ID_PEMOHON, db);
 				this.context.put("htmlSkrinMaklumat", setupSkrin);
 
+				// delang
+				// harta tak alih (ada hakmilik)
+				skrinPerintahPerbicaraan(setupKeputusan, ID_PERMOHONANSIMATI);
+
+
 			} finally {
 				if (db != null)
 					db.close();
@@ -3027,10 +3035,321 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			this.context.put("formDynamicDropDown", formDynamicDropDown);
 			skrin_name = "app/ppk/BicaraInteraktif/formDynamicDropDown.jsp";
 		}
+
+		// delang
+		else if (command.equals("fmKeputusanPerintahHtaah")) {
+
+			myLogger.info("command -- fmKeputusanPerintahHtaah");
+			myLogger.info("perintahHtaah(" + getParam("idHTA") + ", "+ getParam("idPermohonanSimati_perintah"));
+
+			skrin_name = perintahHtaah(getParam("idHTA"), getParam("idPermohonanSimati_perintah"));
+		}
+		else if (command.equals("fmKeputusanPerintahHtath")) {
+			myLogger.info("command -- fmKeputusanPerintahHtath");
+		}
+		else if (command.equals("fmKeputusanPerintahHa")) {
+			myLogger.info("command -- fmKeputusanPerintahHa");
+			myLogger.info("perintahHA(" + getParam("idHA") + ", "+ getParam("idPermohonanSimati_perintah"));
+
+			skrin_name = perintahHA(getParam("idHA"), getParam("idPermohonanSimati_perintah"));
+		}
+		else if (command.equals("fmKeputusanPerintahHtapt")) {
+			myLogger.info("command -- fmKeputusanPerintahHtapt");
+			myLogger.info("perintahHA(" + getParam("idHTA") + ", " + getParam("idSimati_perintah") + ", "+ getParam("idPermohonanSimati_perintah"));
+
+			skrin_name = perintahHTAPT(getParam("idHTA"), getParam("idSimati_perintah"), getParam("idPermohonanSimati_perintah"));
+		}
+		else if (command.equals("simpanKemaskiniPerintahHtaah")) {
+			myLogger.info("command -- simpanKemaskiniPerintahHtaah");
+		}
+
 		// }
 		// close dynamic ajax call
 		myLogger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>> skrin_name : " + skrin_name);
 		return skrin_name;
+	}
+
+	/*
+	 * delang
+	 * */
+    FrmPerintahSek8Data logic = new FrmPerintahSek8Data();
+
+	public void skrinPerintahPerbicaraan(Map setupKeputusan,
+			String ID_PERMOHONANSIMATI) throws Exception {
+		// delang
+		Vector<Hashtable<String, String>> listHTA = new Vector<Hashtable<String, String>>();
+		Vector<Hashtable<String, String>> listHA = new Vector<Hashtable<String, String>>();
+		Vector<Hashtable<String, String>> listHTATH = new Vector<Hashtable<String, String>>();
+		Vector<Hashtable<String, String>> listHTAPT = new Vector<Hashtable<String, String>>();
+		Vector<Hashtable<String, String>> listHAPT = new Vector<Hashtable<String, String>>();
+		Vector<Hashtable<String, String>> listHTAPKT = new Vector<Hashtable<String, String>>();
+		Vector<Hashtable<String, String>> listHAPKT = new Vector<Hashtable<String, String>>();
+		Vector<Hashtable<String, String>> listHTAPL = new Vector<Hashtable<String, String>>();
+		Vector<Hashtable<String, String>> listHAPL = new Vector<Hashtable<String, String>>();
+		Vector<Hashtable<String, String>> listHTAPF = new Vector<Hashtable<String, String>>();
+		Vector<Hashtable<String, String>> listHAPF = new Vector<Hashtable<String, String>>();
+
+		/*listHTA.clear();
+		listHTATH.clear();
+		listHA.clear();
+		listHTAPT.clear();
+		listHAPT.clear();
+		listHTAPKT.clear();
+		listHAPKT.clear();
+		listHTAPL.clear();
+		listHAPL.clear();
+		listHTAPF.clear();
+		listHAPF.clear();*/
+
+
+        this.context.put("selectedTabUpper", "0");
+        this.context.put("selectedTabLower", "0");
+
+		if (setupKeputusan != null) {
+			myLogger.info("ID_PERINTAH -- " + (String)setupKeputusan.get("ID_PERINTAH"));
+
+			// harta tak alih ada hakmilik
+			boolean flagAdaHTA = logic.checkExistHTA(ID_PERMOHONANSIMATI);
+
+			myLogger.info("flagAdaHTA -- " +flagAdaHTA);
+
+	        this.context.put("flagAdaHTA", flagAdaHTA);
+			if (flagAdaHTA) {
+				logic.setDataSenaraiHTA((String)setupKeputusan.get("ID_PERINTAH"), ID_PERMOHONANSIMATI);
+				listHTA = logic.getSenaraiHTA();
+				this.context.put("SenaraiHTA", listHTA);
+			}
+
+			// harta tak alih (tiada hakmilik)
+			boolean flagAdaHTATH = logic.checkExistHTATH(ID_PERMOHONANSIMATI);
+
+			myLogger.info("flagAdaHTATH -- " +flagAdaHTATH);
+
+			this.context.put("flagAdaHTATH", flagAdaHTATH);
+			if (flagAdaHTATH) {
+				logic.setDataSenaraiHTATH((String)setupKeputusan.get("ID_PERINTAH"), ID_PERMOHONANSIMATI);
+				listHTATH = logic.getSenaraiHTA();
+				this.context.put("SenaraiHTATH", listHTATH);
+			}
+
+	        // harta alih
+			boolean flagAdaHA = logic.checkExistHA(ID_PERMOHONANSIMATI);
+
+			myLogger.info("flagAdaHA -- " +flagAdaHA);
+
+	        this.context.put("flagAdaHA", flagAdaHA);
+			if (flagAdaHA) {
+		        logic.setDataSenaraiHA((String)setupKeputusan.get("ID_PERINTAH"), ID_PERMOHONANSIMATI);
+		        listHA = logic.getSenaraiHA();
+				this.context.put("SenaraiHA", listHA);
+			}
+
+			// pembahagian harta - perintah terus
+			boolean flagAdaHTAPT = logic.checkExistHTAPT((String)setupKeputusan.get("ID_PERINTAH"));
+
+			myLogger.info("flagAdaHTAPT -- " +flagAdaHTAPT);
+			this.context.put("flagAdaHTAPT", flagAdaHTAPT);
+			if (flagAdaHTAPT) {
+				logic.setDataSenaraiHTAPT((String)setupKeputusan.get("ID_PERINTAH"), ID_PERMOHONANSIMATI);
+				listHTAPT = logic.getSenaraiHTAPT();
+				this.context.put("SenaraiHTAPT", listHTAPT);
+			}
+
+			boolean flagAdaHAPT = logic.checkExistHAPT((String)setupKeputusan.get("ID_PERINTAH"));
+
+			myLogger.info("flagAdaHAPT -- " +flagAdaHAPT);
+
+			this.context.put("flagAdaHAPT", flagAdaHAPT);
+			if (flagAdaHAPT) {
+				logic.setDataSenaraiHAPT((String)setupKeputusan.get("ID_PERINTAH"), ID_PERMOHONANSIMATI);
+				listHAPT = logic.getSenaraiHAPT();
+				this.context.put("SenaraiHAPT", listHAPT);
+			}
+
+			// pembahagian harta - perintah kuasa tadbir - hta
+			boolean flagAdaHTAPKT = logic.checkExistHTAPKT((String)setupKeputusan.get("ID_PERINTAH"));
+
+			myLogger.info("flagAdaHTAPKT -- " +flagAdaHTAPKT);
+
+			this.context.put("flagAdaHTAPKT", flagAdaHTAPKT);
+			if (flagAdaHTAPKT) {
+				logic.setDataSenaraiHTAPKT((String)setupKeputusan.get("ID_PERINTAH"), ID_PERMOHONANSIMATI);
+				listHTAPKT = logic.getSenaraiHTAPKT();
+				this.context.put("SenaraiHTAPKT", listHTAPKT);
+			}
+
+			// pembahagian harta - perintah kuasa tadbir - ha
+			boolean flagAdaHAPKT = logic.checkExistHAPKT((String)setupKeputusan.get("ID_PERINTAH"));
+
+			myLogger.info("flagAdaHAPKT -- " +flagAdaHAPKT);
+
+			this.context.put("flagAdaHAPKT", flagAdaHAPKT);
+			if (flagAdaHAPKT) {
+				logic.setDataSenaraiHAPKT((String)setupKeputusan.get("ID_PERINTAH"), ID_PERMOHONANSIMATI);
+				listHAPKT = logic.getSenaraiHAPKT();
+				this.context.put("SenaraiHAPKT", listHAPKT);
+			}
+
+			// pembahagian harta - perintah lelong hta
+			boolean flagAdaHTAPL = logic.checkExistHTAPL((String)setupKeputusan.get("ID_PERINTAH"));
+
+			myLogger.info("flagAdaHTAPL -- " +flagAdaHTAPL);
+
+			this.context.put("flagAdaHTAPL", flagAdaHTAPL);
+			if (flagAdaHTAPL) {
+				logic.setDataSenaraiHTAPL((String)setupKeputusan.get("ID_PERINTAH"), ID_PERMOHONANSIMATI);
+				listHTAPL = logic.getSenaraiHTAPL();
+				this.context.put("SenaraiHTAPL", listHTAPL);
+			}
+
+			// pembahagian harta - perintah lelong ha
+			boolean flagAdaHAPL = logic.checkExistHAPL((String)setupKeputusan.get("ID_PERINTAH"));
+
+			myLogger.info("flagAdaHAPL -- " +flagAdaHAPL);
+
+			this.context.put("flagAdaHAPL", flagAdaHAPL);
+			if (flagAdaHAPL) {
+				logic.setDataSenaraiHAPL((String)setupKeputusan.get("ID_PERINTAH"), ID_PERMOHONANSIMATI);
+				listHAPL = logic.getSenaraiHAPL();
+				this.context.put("SenaraiHAPL", listHAPL);
+			}
+
+			// pembahagian harta - perintah faraid hta
+			boolean flagAdaHTAPF = logic.checkExistHTAPF((String)setupKeputusan.get("ID_PERINTAH"));
+
+			myLogger.info("flagAdaHTAPF -- " +flagAdaHTAPF);
+
+			this.context.put("flagAdaHTAPF", flagAdaHTAPF);
+			if (flagAdaHTAPF) {
+				logic.setDataSenaraiHTAPF((String)setupKeputusan.get("ID_PERINTAH"), ID_PERMOHONANSIMATI);
+				listHTAPF = logic.getSenaraiHTAPF();
+				this.context.put("SenaraiHTAPF", listHTAPF);
+			}
+
+			// pembahagian harta - perintah faraid ha
+			boolean flagAdaHAPF = logic.checkExistHAPF((String)setupKeputusan.get("ID_PERINTAH"));
+
+			myLogger.info("flagAdaHAPF -- " +flagAdaHAPF);
+
+			this.context.put("flagAdaHAPF", flagAdaHAPF);
+			if (flagAdaHAPF) {
+				logic.setDataSenaraiHAPF((String)setupKeputusan.get("ID_PERINTAH"), ID_PERMOHONANSIMATI);
+				listHAPF = logic.getSenaraiHAPF();
+				this.context.put("SenaraiHAPF", listHAPF);
+			}
+
+			// pembahagian harta - perintah akta1958 hta
+			boolean flagAdaHTAPA1958 = false;
+			boolean flagAdaHAPA1958 = false;
+		}
+	}
+
+	public String perintahHtaah(String idHTA, String idPermohonanSimati) throws Exception {
+
+        Vector<Hashtable<String, String>> beanMaklumatHTA = new Vector<Hashtable<String, String>>();
+		beanMaklumatHTA.clear();
+
+		logic.setDataMaklumatHTA(idHTA, idPermohonanSimati);
+		beanMaklumatHTA = logic.getBeanMaklumatHTA();
+
+		Vector jenisPerintahs = DB.getJenisPerintahSek8();
+
+		this.context.put("idHTA", idHTA);
+		this.context.put("beanMaklumatHTA", beanMaklumatHTA.get(0));
+		this.context.put("jenisPerintahs", jenisPerintahs);
+		return "app/ppk/BicaraInteraktif/fm_perintah_perbicaraan_htaah.jsp";
+	}
+
+	public String perintahHtath(String idHTA, String idPermohonanSimati) {
+
+		myLogger.info("-- perintahHtath(" + idHTA + ", " + idPermohonanSimati);
+		return "app/ppk/BicaraInteraktif/fm_perintah_perbicaraan_htath.jsp";
+	}
+
+	public String perintahHA(String idPerintah, String idPermohonanSimati) throws Exception {
+		logic.setDataMaklumatHA(idPerintah, idPermohonanSimati);
+		Vector<Hashtable<String, String>> maklumatHA = logic.getBeanMaklumatHA();
+
+		myLogger.info("BeanMaklumatHA -- " + logic.getBeanMaklumatHA());
+
+		Vector jenisPerintahs = DB.getJenisPerintahSek8();
+
+		this.context.put("maklumatHA", maklumatHA.get(0));
+		this.context.put("jenisPerintahs", jenisPerintahs);
+		return "app/ppk/BicaraInteraktif/fm_perintah_perbicaraan_ha.jsp";
+	}
+
+	public String perintahHTAPT(String idHTA, String idSimati, String idPermohonanSimati)
+			throws Exception {
+
+		logic.setMaklumatHeaderDetailHTA(idHTA, idPermohonanSimati);
+        Vector beanHeaderDetail = logic.getBeanHeaderDetail();
+        Vector listHTAPTDTL = new Vector();
+
+        logic.setDataSenaraiHTAPTDTL(idHTA, idSimati, idPermohonanSimati);
+		listHTAPTDTL = logic.getSenaraiHTAPTDTL();
+		this.context.put("SenaraiHTAPTDTL", listHTAPTDTL);
+
+		Fraction f = new Fraction(0,1);
+		for (int i = 0; i < listHTAPTDTL.size(); i++) {
+			Hashtable hash = (Hashtable) listHTAPTDTL.get(i);
+			long pembawah = 1;
+			//Azam add checking
+			if ("".equals(hash.get("BB"))) {
+				hash.put("BB","0");
+			}
+			if ("".equals(hash.get("BA"))) {
+				hash.put("BA","0");
+			}
+			//end here
+			if (!hash.get("BB").equals("0")){
+				pembawah = Long.parseLong(hash.get("BB").toString());
+			}
+			Fraction f2 = new Fraction(Long.parseLong(hash.get("BA").toString()),pembawah);
+			f = f.plus(f2);
+		}
+
+		logic.setDataSenaraiHTAPTDTLHilang(idHTA);
+		if (logic.getSenaraiHTAPTDTLHilang().size() != 0){
+			Hashtable hash = (Hashtable) logic.getSenaraiHTAPTDTLHilang().get(0);
+
+			this.context.put("idHilang", hash.get("idPerintahHTAOBDTL"));
+			this.context.put("BAHilang", hash.get("BA"));
+			this.context.put("BBHilang", hash.get("BB"));
+			this.context.put("checked", "checked");
+			this.context.put("readonlyHilang", "");
+			this.context.put("disabledHilang", "");
+
+			Fraction f2 = new Fraction(Long.parseLong(hash.get("BA").toString()),Long.parseLong(hash.get("BB").toString()));
+			f = f.plus(f2);
+
+		}
+		else {
+
+			this.context.put("idHilang", "");
+			this.context.put("BAHilang", "0");
+			this.context.put("BBHilang", "0");
+			this.context.put("checked", "");
+			this.context.put("readonlyHilang", "readonly");
+			this.context.put("disabledHilang", "disabled");
+		}
+
+		this.context.put("txtJumlahBA", f.numerator());
+		this.context.put("txtJumlahBB", f.denominator());
+		this.context.put("BeanHeaderDetail", beanHeaderDetail);
+
+		return "app/ppk/BicaraInteraktif/fm_perintah_perbicaraan_htapt.jsp";
+	}
+
+	public String kemaskiniPerintahHTAAH() {
+		HttpSession session = this.request.getSession();
+		String jenisPerintahHTAAH = getParam("jenisPerintahHTAAH");
+		String txtCatatanHTA = getParam("txtCatatanHTA");
+		String idHTA = getParam("idHTA");
+
+		return "11";
+		/*logic.updateHTA(jenisPerintahHTAAH, txtCatatanHTA, idHTA, idPermohonan,
+				idSimati, idPermohonanSimati, idPerintah, session);*/
 	}
 
 	public void defaultPut() {
@@ -6286,10 +6605,10 @@ public class BicaraInteraktif extends AjaxBasedModule {
 
 			htmlPageSetup += modelBI.closeHTMLTable();
 			//arief add
-			htmlPageSetup += modelBI.openHTMLTable();
-			htmlPageSetup += "<tr  ><td colspan=\"4\" class=\"table_header\">Perintah Perbicaraan</td></tr>";
-			htmlPageSetup += modelBI.closeHTMLTable();
-			htmlPageSetup += "<iframe src = \"?_portal_module=ekptg.view.ppk.FrmPerintahSek8\" style=\"border: 1px none; margin-right: -35px; height: 812px; width: 1070px;\"</iframe>";
+			//htmlPageSetup += modelBI.openHTMLTable();
+			//htmlPageSetup += "<tr  ><td colspan=\"4\" class=\"table_header\">Perintah Perbicaraan</td></tr>";
+			//htmlPageSetup += modelBI.closeHTMLTable();
+			//htmlPageSetup += "<iframe src = \"?_portal_module=ekptg.view.ppk.FrmPerintahSek8\" style=\"border: 1px none; margin-right: -35px; height: 812px; width: 1070px;\"</iframe>";
 			//htmlPageSetup += "<p><a href=\"?_portal_module=ekptg.view.ppk.FrmPerintahSek8\" target=\"iframe_a\">FrmPerintahSek8</a></p>";
 			//perlu repair iframe bagi kegunaan daftar perintah di Bicara Interaktif :: 3/9/2020
 			//arief add

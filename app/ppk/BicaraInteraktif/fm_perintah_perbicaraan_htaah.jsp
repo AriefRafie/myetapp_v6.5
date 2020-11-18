@@ -35,7 +35,7 @@
    		</td>
  	</tr>
  	<tr>
-        <td valign="top">&nbsp;</td>s
+        <td valign="top">&nbsp;</td>
         <td valign="top">Catatan</td>
         <td valign="top">:</td>
         <td>
