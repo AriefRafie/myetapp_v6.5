@@ -108,10 +108,10 @@
             </tr>
             
 			<tr id="individux_" style="display:none;">
-		        <td><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1"> No. Pasport</span></td>
+		        <td><span class="style1"><i><font color="#ff0000">*</font> </i></span><span class="style1"> No. Pasport / Lain-lain</span></td>
 		        <td><span class="style1">:</span></td>
                 <td>
-              <input name="pasport" id="pasport" style="width: 100px;" type="text" value="" size="20" maxlength="10"/>             
+              <input name="pasport" id="pasport" type="text" value="" size="25" maxlength="20"/>             
                 </td>
 			</tr>
 			<tr id="Individu">
