@@ -1125,7 +1125,7 @@ public class FrmAPBSenaraiFailData {
 				Statement stmt = db.getStatement();
 
 				sql = "SELECT A.ID_FAIL, B.ID_PERMOHONAN, B.NO_PERMOHONAN, A.NO_FAIL, B.TARIKH_TERIMA, C.NAMA, D.KETERANGAN, B.ID_STATUS, B.NO_RAYUAN,"
-						+ " E.TARIKH_MULA_LESEN, E.TARIKH_TAMAT_LESEN, E.NO_LESEN, F.NAMA_NEGERI, G.ID_JENISPERMOHONAN, G.ID_JENIS_LESEN"
+						+ " E.TARIKH_MULA_LESEN, E.TARIKH_TAMAT_LESEN, E.NO_LESEN, F.NAMA_NEGERI, G.ID_JENISPERMOHONAN, G.ID_JENIS_LESEN, G.LOKASI_PERMOHONAN"
 						+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPBYRNSYRTKLLSNLESENAPB E, TBLRUJNEGERI F, TBLPHPPMOHONNJDUALPERTAMA G"
 						+ " WHERE A.ID_URUSAN = '9' AND A.ID_SUBURUSAN = '57' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS AND B.ID_PEMOHON = C.ID_PEMOHON "
 						+ " AND C.ID_NEGERITETAP = F.ID_NEGERI(+) AND B.ID_PERMOHONAN = E.ID_PERMOHONAN(+) AND B.ID_PERMOHONAN = G.ID_PERMOHONAN(+) AND E.FLAG_AKTIF(+) = 'Y' AND A.NO_FAIL IS NULL ";
@@ -1158,9 +1158,6 @@ public class FrmAPBSenaraiFailData {
 				int bil = 1;
 				while (rs.next()) {
 					h = new Hashtable<String,String>();
-					String idPermohonan = rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN");
-					String statusID = rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS");
-					
 					h.put("bil", String.valueOf(bil));
 					h.put("idFail",rs.getString("ID_FAIL") == null ? "" : rs.getString("ID_FAIL"));
 					h.put("idPermohonan", rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN"));
@@ -1171,10 +1168,11 @@ public class FrmAPBSenaraiFailData {
 					h.put("namaPemohon", rs.getString("NAMA") == null ? "" : rs.getString("NAMA").toUpperCase());
 					h.put("idStatus", rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS"));
 					h.put("status",rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
-					h.put("kawasanDipohon",rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI"));	
+					h.put("kawasanDipohon",rs.getString("LOKASI_PERMOHONAN") == null ? "" : rs.getString("LOKASI_PERMOHONAN"));	
 					//CODING UNTUK CEK TARIKH TAMAT KELULUSAN DASAR
+					String idPermohonan = rs.getString("ID_PERMOHONAN") == null ? "" : rs.getString("ID_PERMOHONAN");
+					String statusID = rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS");
 					h.put("statusKelulusanDasar", getStatusKelulusanDasar(statusID, idPermohonan));
-					
 					String statusLesen = "";
 					int bilHari = 0;
 					if (statusID != null && statusID.equals("1610207")) {
