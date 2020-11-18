@@ -56,18 +56,47 @@
     <td>:</td>
     <td><input type="text" name="txtTarikhTamat" id="txtTarikhTamat" value="$beanMaklumatAmbilPasir.tarikhTamat" onblur="check_date(this);cekTarikh(this)" size="11" $readonly class="$inputTextClass"/>#if ($mode != 'view') <a href="javascript:displayDatePicker('txtTarikhTamat',false,'dmy');"><img border="0" src="../img/calendar.gif"/> #end </td></td></td>
   </tr>
+  #foreach ($beanMaklumatKoordinat in $BeanMaklumatKoordinat)
   <tr>
     <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
     <td>Kordinat Kawasan Pengorekan</td>
     <td>:</td>
-    <td width="29%">Label Titik :<input type="text" name="txtLabelTitik" id="txtLabelTitik" size="3" maxlength="3" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();" value="$beanMaklumatAmbilPasir.labelTitik">
-					Darjah U :<input type="text" name="txtDarjahU" id="txtDarjahU" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatAmbilPasir.darjahU" onkeyup="validateNumber(this,this.value);"> &deg;
-    				Minit U :<input type="text" name="txtMinitU" id="txtMinitU" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatAmbilPasir.minitU" onkeyup="validateNumber(this,this.value);"> &prime;
-    				Saat U :<input type="text" name="txtSaatU" id="txtSaatU" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatAmbilPasir.saatU" onkeyup="validateNumber(this,this.value);"> &Prime;
-    				Darjah T :<input type="text" name="txtDarjahT" id="txtDarjahT" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatAmbilPasir.darjahT" onkeyup="validateNumber(this,this.value);"> &deg;
-    				Minit T :<input type="text" name="txtMinitT" id="txtMinitT" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatAmbilPasir.minitT" onkeyup="validateNumber(this,this.value);"> &prime;
-    				Saat T :<input type="text" name="txtSaatT" id="txtSaatT" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatAmbilPasir.saatT" onkeyup="validateNumber(this,this.value);"> &Prime;</td>
+    <td>Label Titik  : 
+    	<input type="text" name="txtLabelTitik" id="txtLabelTitik" size="3" maxlength="3" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();" value="$beanMaklumatKoordinat.labelTitik">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Darjah T &nbsp;:
+        <input type="text" name="txtDarjahT" id="txtDarjahT" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatKoordinat.darjahT" onkeyup="validateNumber(this,this.value);">
+    &deg;</td>
   </tr>
+  <tr>
+	 <td>&nbsp;</td>
+	 <td>&nbsp;</td>
+	 <td>&nbsp;</td>
+	 <td>Darjah U  &nbsp;&nbsp;: 
+	 	 <input type="text" name="txtDarjahU" id="txtDarjahU" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatKoordinat.darjahU" onkeyup="validateNumber(this,this.value);">&deg;
+	 	 &nbsp;&nbsp;Minit T &nbsp;&nbsp; :
+	 	 <input type="text" name="txtMinitT" id="txtMinitT" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatKoordinat.minitT" onkeyup="validateNumber(this,this.value);">
+                        &prime;
+	 </td>
+  </tr>
+   <tr>
+	 <td>&nbsp;</td>
+	 <td>&nbsp;</td>
+	 <td>&nbsp;</td>
+	 <td>Minit U  &nbsp;&nbsp;&nbsp;&nbsp;: 
+	 	 <input type="text" name="txtMinitU" id="txtMinitU" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatKoordinat.minitU" onkeyup="validateNumber(this,this.value);">&prime;
+	 	 &nbsp;&nbsp;&nbsp;Saat T &nbsp;&nbsp;&nbsp;:
+         <input type="text" name="txtSaatT" id="txtSaatT" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatKoordinat.saatT" onkeyup="validateNumber(this,this.value);">&Prime;
+	 </td>
+  </tr>
+  <tr>
+	 <td>&nbsp;</td>
+	 <td>&nbsp;</td>
+	 <td>&nbsp;</td>
+	 <td>Saat U &nbsp;&nbsp;&nbsp;&nbsp;:
+         <input type="text" name="txtSaatT" id="txtSaatT" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatKoordinat.saatT" onkeyup="validateNumber(this,this.value);">&Prime;
+	 </td>
+  </tr>
+  #end
    <tr>
     <td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
     <td>Laluan Vessel</td>
