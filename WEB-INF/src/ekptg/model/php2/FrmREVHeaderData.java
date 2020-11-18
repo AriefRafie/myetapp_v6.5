@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package ekptg.model.php2;
 
@@ -18,7 +18,7 @@ import org.apache.commons.logging.LogFactory;
 import ekptg.helpers.Utils;
 
 /**
- * 
+ *
  *
  */
 public class FrmREVHeaderData {
@@ -28,7 +28,7 @@ public class FrmREVHeaderData {
 	private static final Log log = LogFactory.getLog(FrmREVHeaderData.class);
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-	
+
 	public void setMaklumatPemohon(String idFail) throws Exception {
 		Db db = null;
 		String sql = "";
