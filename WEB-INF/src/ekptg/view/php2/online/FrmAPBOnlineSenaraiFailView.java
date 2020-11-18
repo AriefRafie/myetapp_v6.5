@@ -70,7 +70,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
  
         //GET ID PARAM
         String idFailSession = "";  
-        String idFailLama = "";
+//        String idFailLama = "";
 
         if (session.getAttribute("idFail") != null){
         	idFailSession = (String) session.getAttribute("idFail");
@@ -152,6 +152,10 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 		if (idJenisPermohonan == null || idJenisPermohonan.trim().length() == 0){
 			idJenisPermohonan = "99999";
 		}
+		String idFailLama = getParam("socNoFailLama"); //new ADD 
+		if (idFailLama == null || idFailLama.trim().length() == 0) {
+			idFailLama = "99999";
+		}
 		String idLuas = getParam("socLuas");
 		if (idLuas == null || idLuas.trim().length() == 0){
 			idLuas = "99999"; 
@@ -218,18 +222,18 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 		//SAVE TO DB		
 		if (postDB){
 				if ("daftarBaru".equals(hitButton)){
-					idFail = logic.daftarBaru(getParam("socKaitanTujuan"), getParam("socJenisTujuan"), getParam("txtUndang"), getParam("socJenisLesen"), 
+					idFail = logic.daftarBaru(getParam("socKaitanTujuan"), getParam("socJenisTujuan"), getParam("txtUndangUndang"), getParam("socJenisLesen"), 
 							getParam("txtTujuanPengambilan"), getParam("socTempoh"), getParam("txtRingkasanPengalaman"), getParam("socNegeri"), 
 							getParam("txtLokasi"), getParam("txtLuas"), getParam("socLuas"),getParam("socJenisPengenalanIndividu"),getParam("socKategoriPemohon"),
 							getParam("socIndividuBukanIndividu"), getParam("socJantina"), getParam("socBangsa"), getParam("socBandar"), getParam("socNegeriSykt"), 
-							getParam("socBandarSykt"), getParam("idJenisPermohonan"), getParam("idPermohonanLama"), getParam("socFlagLuar"), session);
+							getParam("socBandarSykt"), getParam("idJenisPermohonan"), getParam("idPermohonanLama"), getParam("socFlagLuar"), getParam("txtJenisPerniagaan"), session);
 	        	}
 				if ("daftarBaruLesen".equals(hitButton)){
 					idFail = logic.daftarBaru(getParam("socKaitanTujuan"),getParam("socJenisTujuan"), getParam("socJenisLesen"), getParam("txtTujuanPengambilan"), getParam("socTempoh"),
 							getParam("txtRingkasanPengalaman"), getParam("socNegeri"), getParam("txtLokasi"), getParam("txtLuas"), getParam("socLuas"),
 							getParam("socJenisPengenalanIndividu"),getParam("socKategoriPemohon"), getParam("socIndividuBukanIndividu"), getParam("socJantina"), 
 							getParam("socBangsa"), getParam("socBandar"), getParam("socNegeriSykt"), getParam("socBandarSykt"), 
-							getParam("idJenisPermohonan"), getParam("idPermohonanLama"), getParam("txtUndang"), getParam("socFlagLuar"), session);
+							getParam("idJenisPermohonan"), getParam("idPermohonanLama"), getParam("txtUndangUndang"), getParam("socFlagLuar"), getParam("txtJenisPerniagaan"), session);
 	        	}
 				if ("daftarBaruBorangA".equals(hitButton)){ //yati tambah borang A
 					
@@ -238,13 +242,15 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 							getParam("socLuas"),getParam("socJenisPengenalanIndividu"),getParam("socKategoriPemohon"),
 							getParam("socIndividuBukanIndividu"), getParam("socJantina"), getParam("socBangsa"), getParam("socBandar"),
 							getParam("socNegeriSykt"), getParam("socBandarSykt"), getParam("idJenisPermohonan"), 
-							getParam("idPermohonanLama"), getParam("txtUndang"), getParam("socFlagLuar"), session);
+							getParam("idPermohonanLama"), getParam("txtUndangUndang"), getParam("socFlagLuar"), getParam("txtJenisPerniagaan"), session);
 	        	}
 				if ("doSimpanKemaskiniPermohonan".equals(hitButton)){
+					log.info("txtModalBenar : " +getParam("txtModalBenar"));
+					log.info("txtModalJelas : " +getParam("txtModalJelas"));
 					logic.updatePermohonan(idFail,idPermohonan,idPemohon,getParam("socKaitanTujuan"), getParam("txtTujuanPengambilan"), getParam("socTempoh"), 
 							getParam("txtRingkasanPengalaman"), getParam("socNegeri"), getParam("txtLokasi"), getParam("txtLuas"), 
 							getParam("socLuas"),getParam("txtModalBenar"),getParam("txtModalJelas"), getParam("socJenisTujuan"), getParam("idJenisPermohonan"), 
-							getParam("idJenisLesen"), session);
+							getParam("idJenisLesen"), getParam("txtUndangUndang"), getParam("txtJenisPerniagaan"), getParam("txtJumlahModal"), getParam("txtJumlahModal1"), session);
 	        	}
 				if ("doSimpanPengarah".equals(hitButton)){
 	        		idPengarah = logic.savePengarah(idPemohon, getParam("socWarganegara"), getParam("txtNamaPengarah"), getParam("socJenisPengenalan"),
@@ -343,8 +349,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 						Log.info("idJadualKeduaxx :"+idJadualKedua);
 					idBorangA = logic.simpanMaklumatAmbilPasir(getParam("idJadualKedua"), idBulan, getParam("txtTahun"), getParam("txtTujuanAmbil"), 
 							getParam("txtDestinasiDihantar"), getParam("txtAnggaranPasir"), Utils.RemoveSymbol(getParam("txtJumlahRoyalti")), getParam("txtKontraktor"), getParam("txtPembeli"),
-								getParam("txtTarikhMula"), getParam("txtTarikhTamat"), getParam("txtLabelTitik"), getParam("txtDarjahU"), getParam("txtMinitU"), getParam("txtSaatU"), 
-								getParam("txtDarjahT"), getParam("txtMinitT"), getParam("txtSaatT"), getParam("txtLaluan"), 
+								getParam("txtTarikhMula"), getParam("txtTarikhTamat"), getParam("txtLaluan"), 
 								getParam("txtKaedah"), getParam("txtKawasan"), session);
 				}
 
@@ -352,8 +357,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 					log.info("idJadualKedua kemaskini :"+idJadualKedua);
 					logic.simpanKemaskiniMaklumatPasir(idBorangA, idBulan, getParam("txtTahun"), getParam("txtTujuanAmbil"), getParam("txtDestinasiDihantar"),
 							getParam("txtAnggaranPasir"), Utils.RemoveSymbol(getParam("txtJumlahRoyalti")), getParam("txtKontraktor"), getParam("txtPembeli"), 
-							getParam("txtTarikhMula"), getParam("txtTarikhTamat"), getParam("txtLabelTitik"), getParam("txtDarjahU"), getParam("txtMinitU"), getParam("txtSaatU"), 
-							getParam("txtDarjahT"), getParam("txtMinitT"), getParam("txtSaatT"), getParam("txtLaluan"), getParam("txtKaedah"), getParam("txtKawasan"), session);
+							getParam("txtTarikhMula"), getParam("txtTarikhTamat"), getParam("txtLaluan"), getParam("txtKaedah"), getParam("txtKawasan"), session);
 				}
 				if ("simpanMaklumatBarge".equals(hitButton)) {
 
@@ -405,7 +409,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 			String noFailLama = getParam("txtNoFailLama");
 			
 			beanMaklumatPermohonan = new Vector();
-			idFailLama = logic.getIdFailByNoFail(noFailLama);
+//			idFailLama = logic.getIdFailByNoFail(noFailLama);
 			
 			if ("doChangeNoFailAPB".equals(submit)) {
 				
@@ -438,6 +442,13 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 			Vector<Hashtable<String,String>> vec = header.setMaklumatPemohon(id_user);
 			this.context.put("pemohon", vec.get(0));
 	    	
+//			if("2".equals(idJenisPermohonan)){
+//				this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(vec.get(0).get("noPengenalan"), "socNoFailLama", Long.parseLong(idFailLama), "", " onChange=\"doChangeNoFailLama();\"", "9"));  
+//	    	}
+			if("2".equals(idJenisPermohonan)){
+				this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(id_user, "socNoFailLama", Long.parseLong(idFailLama), "disabled", " class=\"disabled\""));  
+	        }
+			
 	    	//MAKLUMAT PERMOHONAN
 	    	this.context.put("selectNegeri",HTML.SelectNegeriAPB("socNegeri",Long.parseLong(idNegeri),"", " "));
 			this.context.put("selectTujuanKaitan",HTML.SelectPHPRujTujuanKaitan("socKaitanTujuan", Long.parseLong(idKaitanTujuan),"", " "));
@@ -445,6 +456,8 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 			//KAWASAN PERMOHONAN
 			this.context.put("selectFlagLuar",HTML.SelectFlagYaTidak("socFlagLuar", Long.parseLong(idFlagLuar),"", " style=\"width:100px\""));
 			this.context.put("selectLuas",HTML.SelectLuasAPB("socLuas", Long.parseLong(idLuas),"", " style=\"width:250px\""));
+			
+			String idFail2 = getParam("socNoFailLama");
 			
 			beanMaklumatPermohonan = new Vector();
 			Hashtable hashMaklumatPermohonan = new Hashtable();
@@ -459,9 +472,22 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 			hashMaklumatPermohonan.put("pengalaman", getParam("txtPengalaman"));
 			hashMaklumatPermohonan.put("lokasi", getParam("txtLokasi"));
 			hashMaklumatPermohonan.put("luas", getParam("txtLuas"));
-			hashMaklumatPermohonan.put("undangUndang", getParam("txtUndang"));
+			hashMaklumatPermohonan.put("undangUndang", getParam("txtUndangUndang"));
+			//ADD 13112020
+			hashMaklumatPermohonan.put("jenisPerniagaan", getParam("txtJenisPerniagaan")); 
+//			hashMaklumatPermohonan.put("jumlahModal", getParam("txtJumlahModal"));
+//			hashMaklumatPermohonan.put("jumlahModal1", getParam("txtJumlahModal1"));
 			beanMaklumatPermohonan.addElement(hashMaklumatPermohonan);
 			this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);	
+			
+			log.info("idFail2 = "+idFail2);	
+			idPermohonan = logic.getIdPermohonanByNoFail(idFail2);	
+			if (idFail2 != "")	
+			{	
+			  logic.setMaklumatPermohonan(idPermohonan); 	
+			  beanMaklumatPermohonan = logic.getBeanMaklumatPermohonan(); 	
+			  this.context.put("BeanMaklumatPermohonan",beanMaklumatPermohonan);	
+			}
 			
 			//JENIS LESEN
 			this.context.put("selectJenisLesen", HTML.SelectJenisLesen("socJenisLesen", Long.parseLong(idJenisLesen), "", "onChange=\"doChangeJenisLesen();\""));
@@ -558,7 +584,11 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 			hashMaklumatPermohonan.put("pengalaman", getParam("txtPengalaman"));
 			hashMaklumatPermohonan.put("lokasi", getParam("txtLokasi"));
 			hashMaklumatPermohonan.put("luas", getParam("txtLuas"));
-			hashMaklumatPermohonan.put("undangUndang", getParam("txtUndang"));
+			hashMaklumatPermohonan.put("undangUndang", getParam("txtUndangUndang"));
+			//ADD 13112020
+			hashMaklumatPermohonan.put("jenisPerniagaan", getParam("txtJenisPerniagaan"));
+			hashMaklumatPermohonan.put("jumlahModal", getParam("txtJumlahModal"));
+			hashMaklumatPermohonan.put("jumlahModal1", getParam("txtJumlahModal1"));
 			beanMaklumatPermohonan.addElement(hashMaklumatPermohonan);
 			this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);	
 
@@ -741,17 +771,22 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 				hashMaklumatAmbilPasir.put("laluan",getParam("txtLaluan") == null ?"": getParam("txtLaluan"));
 				hashMaklumatAmbilPasir.put("kaedah",getParam("txtKaedah") == null ? "": getParam("txtKaedah"));
 				hashMaklumatAmbilPasir.put("kawasan",getParam("txtKawasan") == null ? "": getParam("txtKawasan"));
-				hashMaklumatAmbilPasir.put("labelTitik", getParam("txtLabelTitik") == null ? "" : getParam("txtLabelTitik"));	
-				hashMaklumatAmbilPasir.put("darjahU", getParam("txtDarjahU") == null ? "" : getParam("txtDarjahU"));	
-				hashMaklumatAmbilPasir.put("minitU", getParam("txtMinitU") == null ? "" : getParam("txtMinitU"));	
-				hashMaklumatAmbilPasir.put("saatU", getParam("txtSaatU") == null ? "" : getParam("txtMinitU"));
-				hashMaklumatAmbilPasir.put("darjahT", getParam("txtDarjahT") == null ? "" : getParam("txtDarjahT"));	
-				hashMaklumatAmbilPasir.put("minitT", getParam("txtMinitT") == null ? "" : getParam("txtMinitT"));	
-				hashMaklumatAmbilPasir.put("saatT", getParam("txtSaatT") == null ? "" : getParam("txtSaatT"));
 				beanMaklumatAmbilPasir.addElement(hashMaklumatAmbilPasir);
 				this.context.put("BeanMaklumatAmbilPasir",beanMaklumatAmbilPasir);
 				this.context.put("selectBulan",HTML.SelectBulan("socBulan", Long.parseLong(idBulan), ""));
-				 
+				
+//				//MAKLUMAT KOORDINAT
+//				hashMaklumatAmbilPasir.put("labelTitik",getParam("txtLabelTitik") == null ? "": getParam("txtLabelTitik"));
+//				hashMaklumatAmbilPasir.put("darjahU",getParam("txtDarjahU") == null ? "": getParam("txtDarjahU"));
+//				hashMaklumatAmbilPasir.put("minitU",getParam("txtMinitU") == null ? "": getParam("txtMinitU"));
+//				hashMaklumatAmbilPasir.put("saatU",getParam("txtSaatU") == null ? "": getParam("txtSaatU"));
+//				hashMaklumatAmbilPasir.put("darjahT",getParam("txtDarjahT") == null ? "": getParam("txtDarjahT"));
+//				hashMaklumatAmbilPasir.put("minitT",getParam("txtMinitT") == null ? "": getParam("txtMinitT"));
+//				hashMaklumatAmbilPasir.put("saatT",getParam("txtSaatT") == null ? "": getParam("txtSaatT"));
+//				logic.setMaklumatKoordinat(idKoordinat);
+//				beanMaklumatAmbilPasir = logic.getBeanMaklumatKoordinat();
+//				this.context.put("BeanMaklumatKoordinat", beanMaklumatAmbilPasir);
+				
 			} if ("view".equals(mode)) {
 
 				
@@ -781,7 +816,11 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 				 }
 				 
 				 this.context.put("selectBulan",HTML.SelectBulan("socBulan", Long.parseLong(idBulan), "disabled", " class=\"disabled\""));
-		   
+				
+//				 //SENARAI TITIK KOORDINAT
+//	    		 logic.setSenaraiKoordinat(idPermohonan);
+//	    		 senaraiKoordinat = logic.getListKoordinat();
+//	    		 this.context.put("SenaraiKoordinat", senaraiKoordinat);
 			}
 			
 		    if ("update".equals(mode)) {
@@ -815,16 +854,14 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 				 hashMaklumatAmbilPasir.put("laluan",getParam("txtLaluan") == null ?"": getParam("txtLaluan"));
 				 hashMaklumatAmbilPasir.put("kaedah",getParam("txtKaedah") == null ? "": getParam("txtKaedah"));
 				 hashMaklumatAmbilPasir.put("kawasan",getParam("txtKawasan") == null ? "": getParam("txtKawasan"));
-				 hashMaklumatAmbilPasir.put("labelTitik", getParam("txtLabelTitik") == null ? "" : getParam("txtLabelTitik"));
-				 hashMaklumatAmbilPasir.put("darjahU", getParam("txtDarjahU") == null ? "" : getParam("txtDarjahU"));	
-				 hashMaklumatAmbilPasir.put("minitU", getParam("txtMinitU") == null ? "" : getParam("txtMinitU"));	
-				 hashMaklumatAmbilPasir.put("saatU", getParam("txtSaatU") == null ? "" : getParam("txtMinitU"));
-				 hashMaklumatAmbilPasir.put("darjahT", getParam("txtDarjahT") == null ? "" : getParam("txtDarjahT"));	
-				 hashMaklumatAmbilPasir.put("minitT", getParam("txtMinitT") == null ? "" : getParam("txtMinitT"));	
-				 hashMaklumatAmbilPasir.put("saatT", getParam("txtSaatT") == null ? "" : getParam("txtSaatT"));
 				 beanMaklumatAmbilPasir.addElement(hashMaklumatAmbilPasir);
 				 this.context.put("BeanMaklumatAmbilPasir",beanMaklumatAmbilPasir);
 				 this.context.put("selectBulan",HTML.SelectBulan("socBulan", Long.parseLong(idBulan), ""));
+				 
+//				//SENARAI TITIK KOORDINAT
+//	    		logic.setSenaraiKoordinat(idPermohonan);
+//	    		senaraiKoordinat = logic.getListKoordinat();
+//	    		this.context.put("SenaraiKoordinat", senaraiKoordinat);
 
 		    } 
 		    
@@ -1320,6 +1357,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 		this.context.put("idFail", idFail);
 		this.context.put("idStatus", idStatus);
 		this.context.put("idPermohonan", idPermohonan);
+		this.context.put("idFailLama", idFailLama);
 		
 		//Log.info("ID PERMOHONAN LAMA : "+idPermohonanLama);
 		this.context.put("idPengarah", idPengarah);
@@ -1463,7 +1501,11 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 			hashMaklumatPermohonan.put("modalSedia", getParam("txtModalSedia"));
 			hashMaklumatPermohonan.put("modalBenar", getParam("txtModalBenar"));
 			hashMaklumatPermohonan.put("modalJelas", getParam("txtModalJelas"));
-			//hashMaklumatPermohonan.put("undangUndang", getParam("txtUndang"));
+			hashMaklumatPermohonan.put("undangUndang", getParam("txtUndangUndang"));
+			//ADD 13112020
+			hashMaklumatPermohonan.put("jenisPerniagaan", getParam("txtJenisPerniagaan"));
+			hashMaklumatPermohonan.put("jumlahModal", getParam("txtJumlahModal"));
+			hashMaklumatPermohonan.put("jumlahModal1", getParam("txtJumlahModal1"));
 			beanMaklumatPermohonan.addElement(hashMaklumatPermohonan);
 			this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);		
 		

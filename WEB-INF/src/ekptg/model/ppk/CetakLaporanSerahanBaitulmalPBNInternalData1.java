@@ -488,6 +488,73 @@ public class CetakLaporanSerahanBaitulmalPBNInternalData1 {
 		    
 			}
 	
+	public static void setDataSenaraiSerahanUnitPA(String unit) throws Exception {
+		//SenaraiSerahan = null;
+		SenaraiSerahan.clear();
+		Db db = null;
+		String sqlJanaLaporanBaitulmalPBN = "";
+		List senaraiFail = null;
+		//System.out.println("Dalam SaveData");
+		    try {
+		    	db = new Db();
+		    	Connection con = db.getConnection();
+		    	//con.setAutoCommit(false);
+		    	Statement stmt = db.getStatement();
+		    	sqlJanaLaporanBaitulmalPBN = "select distinct a.no_fail as noFail, f.nama_simati as namaSimati, e.nama_pemohon as namaPemohon, TO_CHAR(b.tarikh_mohon,'dd/mm/yyyy') as tarikhMohon, d.nama_ob AS NAMA_BAITULMAL ";
+		    	sqlJanaLaporanBaitulmalPBN += "from tblpfdfail a , tblppkpermohonan b,";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkpermohonansimati c, tblppkob d, tblppkpemohon e, tblppksimati f, tblppkrujtarafkptg g, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkkeputusanpermohonan h, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkperbicaraan i, tblppkperintah j, tblppkperintahhtaobmst k, tblppkperintahhtaobdtl l ";
+		    	sqlJanaLaporanBaitulmalPBN += " where a.id_fail=b.id_fail ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_permohonansimati=d.id_permohonansimati";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_pemohon=e.id_pemohon";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_simati=f.id_simati";
+		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=g.id_tarafkptg";
+		    	sqlJanaLaporanBaitulmalPBN += " and (d.id_tarafkptg=8 and e.id_tarafkptg=8)";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_status=21 ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=h.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and h.ID_KEPUTUSANPERMOHONAN=i.id_keputusanpermohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and i.id_perbicaraan=j.id_perbicaraan";
+		    	sqlJanaLaporanBaitulmalPBN += " and j.id_perintah = k.id_perintah";
+		    	sqlJanaLaporanBaitulmalPBN += " and k.id_perintahhtaobmst =l.id_perintahhtaobmst";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_unitpskawal ="+unit;
+		    	sqlJanaLaporanBaitulmalPBN += " and l.ba > 0  order by a.no_fail";
+		    	System.out.println("sqlJanaLaporanBaitulmalPBNUnit8 = " + sqlJanaLaporanBaitulmalPBN);
+		    	ResultSet rs = stmt.executeQuery(sqlJanaLaporanBaitulmalPBN);
+		    	Hashtable h;
+		    	//con.commit();
+		    	while (rs.next()) {
+					h = new Hashtable();
+
+					if (rs.getString("noFail") != null && rs.getString("noFail") != "") {
+						h.put("noFail", rs.getString("noFail"));
+					}
+					if (rs.getString("namaSimati") != null && rs.getString("namaSimati") != "") {
+						h.put("namaSimati", rs.getString("namaSimati"));
+					}
+					if (rs.getString("namaPemohon") != null && rs.getString("namaPemohon") != "") {
+						h.put("namaPemohon", rs.getString("namaPemohon"));
+					}
+					if (rs.getString("NAMA_BAITULMAL") != null && rs.getString("NAMA_BAITULMAL") != "") {
+						h.put("NAMA_BAITULMAL", rs.getString("NAMA_BAITULMAL"));
+					}
+					if (rs.getString("tarikhMohon") != null && rs.getString("tarikhMohon") != "") {
+						h.put("tarikhMohon", rs.getString("tarikhMohon"));
+					}
+					SenaraiSerahan.addElement(h);
+					}
+		   
+		    	}
+		    
+		    finally {
+			      if (db != null) db.close();
+		    }
+			
+		    
+			}
+	
 	public static void setDataSenaraiSerahannegeri(String negeri) throws Exception {
 		//SenaraiSerahan = null;
 		SenaraiSerahan.clear();
@@ -555,6 +622,73 @@ public class CetakLaporanSerahanBaitulmalPBNInternalData1 {
 		    
 			}
 	
+	public static void setDataSenaraiSerahannegeriPA(String negeri) throws Exception {
+		//SenaraiSerahan = null;
+		SenaraiSerahan.clear();
+		Db db = null;
+		String sqlJanaLaporanBaitulmalPBN = "";
+		List senaraiFail = null;
+		//System.out.println("Dalam SaveData");
+		    try {
+		    	db = new Db();
+		    	Connection con = db.getConnection();
+		    	//con.setAutoCommit(false);
+		    	Statement stmt = db.getStatement();
+		    	sqlJanaLaporanBaitulmalPBN = "select distinct a.no_fail as noFail, f.nama_simati as namaSimati, e.nama_pemohon as namaPemohon, TO_CHAR(b.tarikh_mohon,'dd/mm/yyyy') as tarikhMohon, d.nama_ob AS NAMA_BAITULMAL ";
+		    	sqlJanaLaporanBaitulmalPBN += "from tblpfdfail a , tblppkpermohonan b,";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkpermohonansimati c, tblppkob d, tblppkpemohon e, tblppksimati f, tblppkrujtarafkptg g, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkkeputusanpermohonan h, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkperbicaraan i, tblppkperintah j, tblppkperintahhtaobmst k, tblppkperintahhtaobdtl l ";
+		    	sqlJanaLaporanBaitulmalPBN += " where a.id_fail=b.id_fail ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_permohonansimati=d.id_permohonansimati";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_pemohon=e.id_pemohon";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_simati=f.id_simati";
+		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=g.id_tarafkptg";
+		    	sqlJanaLaporanBaitulmalPBN += " and (d.id_tarafkptg=8 and e.id_tarafkptg=8)";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_status=21 ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=h.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and h.ID_KEPUTUSANPERMOHONAN=i.id_keputusanpermohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and i.id_perbicaraan=j.id_perbicaraan";
+		    	sqlJanaLaporanBaitulmalPBN += " and j.id_perintah = k.id_perintah";
+		    	sqlJanaLaporanBaitulmalPBN += " and k.id_perintahhtaobmst =l.id_perintahhtaobmst";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.ID_NEGERIMHN ="+negeri;
+		    	sqlJanaLaporanBaitulmalPBN += " and l.ba > 0  order by a.no_fail";
+		    	System.out.println("sqlJanaLaporanBaitulmalPBNUnit9 = " + sqlJanaLaporanBaitulmalPBN);
+		    	ResultSet rs = stmt.executeQuery(sqlJanaLaporanBaitulmalPBN);
+		    	Hashtable h;
+		    	//con.commit();
+		    	while (rs.next()) {
+					h = new Hashtable();
+
+					if (rs.getString("noFail") != null && rs.getString("noFail") != "") {
+						h.put("noFail", rs.getString("noFail"));
+					}
+					if (rs.getString("namaSimati") != null && rs.getString("namaSimati") != "") {
+						h.put("namaSimati", rs.getString("namaSimati"));
+					}
+					if (rs.getString("namaPemohon") != null && rs.getString("namaPemohon") != "") {
+						h.put("namaPemohon", rs.getString("namaPemohon"));
+					}
+					if (rs.getString("NAMA_BAITULMAL") != null && rs.getString("NAMA_BAITULMAL") != "") {
+						h.put("NAMA_BAITULMAL", rs.getString("NAMA_BAITULMAL"));
+					}
+					if (rs.getString("tarikhMohon") != null && rs.getString("tarikhMohon") != "") {
+						h.put("tarikhMohon", rs.getString("tarikhMohon"));
+					}
+					SenaraiSerahan.addElement(h);
+					}
+		   
+		    	}
+		    
+		    finally {
+			      if (db != null) db.close();
+		    }
+			
+		    
+			}
+	
 	public static void setDataSenaraiSerahanDaerah(String daerah) throws Exception {
 		//SenaraiSerahan = null;
 		SenaraiSerahan.clear();
@@ -580,6 +714,73 @@ public class CetakLaporanSerahanBaitulmalPBNInternalData1 {
 		    	sqlJanaLaporanBaitulmalPBN += " and c.id_simati=f.id_simati";
 		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=g.id_tarafkptg";
 		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=8";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_status=21 ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=h.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and h.ID_KEPUTUSANPERMOHONAN=i.id_keputusanpermohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and i.id_perbicaraan=j.id_perbicaraan";
+		    	sqlJanaLaporanBaitulmalPBN += " and j.id_perintah = k.id_perintah";
+		    	sqlJanaLaporanBaitulmalPBN += " and k.id_perintahhtaobmst =l.id_perintahhtaobmst";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.ID_DAERAHMHN ="+daerah;
+		    	sqlJanaLaporanBaitulmalPBN += " and l.ba > 0  order by a.no_fail";
+		    	System.out.println("sqlJanaLaporanBaitulmalPBNUnit10 = " + sqlJanaLaporanBaitulmalPBN);
+		    	ResultSet rs = stmt.executeQuery(sqlJanaLaporanBaitulmalPBN);
+		    	Hashtable h;
+		    	//con.commit();
+		    	while (rs.next()) {
+					h = new Hashtable();
+
+					if (rs.getString("noFail") != null && rs.getString("noFail") != "") {
+						h.put("noFail", rs.getString("noFail"));
+					}
+					if (rs.getString("namaSimati") != null && rs.getString("namaSimati") != "") {
+						h.put("namaSimati", rs.getString("namaSimati"));
+					}
+					if (rs.getString("namaPemohon") != null && rs.getString("namaPemohon") != "") {
+						h.put("namaPemohon", rs.getString("namaPemohon"));
+					}
+					if (rs.getString("NAMA_BAITULMAL") != null && rs.getString("NAMA_BAITULMAL") != "") {
+						h.put("NAMA_BAITULMAL", rs.getString("NAMA_BAITULMAL"));
+					}
+					if (rs.getString("tarikhMohon") != null && rs.getString("tarikhMohon") != "") {
+						h.put("tarikhMohon", rs.getString("tarikhMohon"));
+					}
+					SenaraiSerahan.addElement(h);
+					}
+		   
+		    	}
+		    
+		    finally {
+			      if (db != null) db.close();
+		    }
+			
+		    
+			}
+	
+	public static void setDataSenaraiSerahanDaerahPA(String daerah) throws Exception {
+		//SenaraiSerahan = null;
+		SenaraiSerahan.clear();
+		Db db = null;
+		String sqlJanaLaporanBaitulmalPBN = "";
+		List senaraiFail = null;
+		//System.out.println("Dalam SaveData");
+		    try {
+		    	db = new Db();
+		    	Connection con = db.getConnection();
+		    	//con.setAutoCommit(false);
+		    	Statement stmt = db.getStatement();
+		    	sqlJanaLaporanBaitulmalPBN = "select distinct a.no_fail as noFail, f.nama_simati as namaSimati, e.nama_pemohon as namaPemohon, TO_CHAR(b.tarikh_mohon,'dd/mm/yyyy') as tarikhMohon, d.nama_ob AS NAMA_BAITULMAL ";
+		    	sqlJanaLaporanBaitulmalPBN += "from tblpfdfail a , tblppkpermohonan b,";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkpermohonansimati c, tblppkob d, tblppkpemohon e, tblppksimati f, tblppkrujtarafkptg g, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkkeputusanpermohonan h, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkperbicaraan i, tblppkperintah j, tblppkperintahhtaobmst k, tblppkperintahhtaobdtl l ";
+		    	sqlJanaLaporanBaitulmalPBN += " where a.id_fail=b.id_fail ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_permohonansimati=d.id_permohonansimati";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_pemohon=e.id_pemohon";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_simati=f.id_simati";
+		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=g.id_tarafkptg";
+		    	sqlJanaLaporanBaitulmalPBN += " and (d.id_tarafkptg=8 and e.id_tarafkptg=8";
 		    	sqlJanaLaporanBaitulmalPBN += " and b.id_status=21 ";
 		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=h.id_permohonan";
 		    	sqlJanaLaporanBaitulmalPBN += " and h.ID_KEPUTUSANPERMOHONAN=i.id_keputusanpermohonan";
@@ -690,6 +891,74 @@ public class CetakLaporanSerahanBaitulmalPBNInternalData1 {
 		    
 			}
 	
+	public static void setDataSenaraiSerahanUnittahunPA(String unit, String tahun) throws Exception {
+		//SenaraiSerahan = null;
+		SenaraiSerahan.clear();
+		Db db = null;
+		String sqlJanaLaporanBaitulmalPBN = "";
+		List senaraiFail = null;
+		//System.out.println("Dalam SaveData");
+		    try {
+		    	db = new Db();
+		    	Connection con = db.getConnection();
+		    	//con.setAutoCommit(false);
+		    	Statement stmt = db.getStatement();
+		    	sqlJanaLaporanBaitulmalPBN = "select distinct a.no_fail as noFail, f.nama_simati as namaSimati, e.nama_pemohon as namaPemohon, TO_CHAR(b.tarikh_mohon,'dd/mm/yyyy') as tarikhMohon, d.nama_ob AS NAMA_BAITULMAL ";
+		    	sqlJanaLaporanBaitulmalPBN += "from tblpfdfail a , tblppkpermohonan b,";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkpermohonansimati c, tblppkob d, tblppkpemohon e, tblppksimati f, tblppkrujtarafkptg g, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkkeputusanpermohonan h, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkperbicaraan i, tblppkperintah j, tblppkperintahhtaobmst k, tblppkperintahhtaobdtl l ";
+		    	sqlJanaLaporanBaitulmalPBN += " where a.id_fail=b.id_fail ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_permohonansimati=d.id_permohonansimati";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_pemohon=e.id_pemohon";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_simati=f.id_simati";
+		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=g.id_tarafkptg";
+		    	sqlJanaLaporanBaitulmalPBN += " and (d.id_tarafkptg=8 and e.id_tarafkptg=8)";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_status=21 ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=h.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and h.ID_KEPUTUSANPERMOHONAN=i.id_keputusanpermohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and i.id_perbicaraan=j.id_perbicaraan";
+		    	sqlJanaLaporanBaitulmalPBN += " and j.id_perintah = k.id_perintah";
+		    	sqlJanaLaporanBaitulmalPBN += " and k.id_perintahhtaobmst =l.id_perintahhtaobmst";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_unitpskawal ="+unit;
+		    	sqlJanaLaporanBaitulmalPBN += " and TO_CHAR(b.TARIKH_MOHON,'yyyy') ="+tahun;
+		    	sqlJanaLaporanBaitulmalPBN += " and l.ba > 0  order by a.no_fail";
+		    	System.out.println("sqlJanaLaporanBaitulmalPBNUnit11 = " + sqlJanaLaporanBaitulmalPBN);
+		    	ResultSet rs = stmt.executeQuery(sqlJanaLaporanBaitulmalPBN);
+		    	Hashtable h;
+		    	//con.commit();
+		    	while (rs.next()) {
+					h = new Hashtable();
+
+					if (rs.getString("noFail") != null && rs.getString("noFail") != "") {
+						h.put("noFail", rs.getString("noFail"));
+					}
+					if (rs.getString("namaSimati") != null && rs.getString("namaSimati") != "") {
+						h.put("namaSimati", rs.getString("namaSimati"));
+					}
+					if (rs.getString("namaPemohon") != null && rs.getString("namaPemohon") != "") {
+						h.put("namaPemohon", rs.getString("namaPemohon"));
+					}
+					if (rs.getString("NAMA_BAITULMAL") != null && rs.getString("NAMA_BAITULMAL") != "") {
+						h.put("NAMA_BAITULMAL", rs.getString("NAMA_BAITULMAL"));
+					}
+					if (rs.getString("tarikhMohon") != null && rs.getString("tarikhMohon") != "") {
+						h.put("tarikhMohon", rs.getString("tarikhMohon"));
+					}
+					SenaraiSerahan.addElement(h);
+					}
+		   
+		    	}
+		    
+		    finally {
+			      if (db != null) db.close();
+		    }
+			
+		    
+			}
+	
 	public static void setDataSenaraiSerahanNegeritahun(String negeri, String tahun) throws Exception {
 		//SenaraiSerahan = null;
 		SenaraiSerahan.clear();
@@ -715,6 +984,74 @@ public class CetakLaporanSerahanBaitulmalPBNInternalData1 {
 		    	sqlJanaLaporanBaitulmalPBN += " and c.id_simati=f.id_simati";
 		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=g.id_tarafkptg";
 		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=8";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_status=21 ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=h.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and h.ID_KEPUTUSANPERMOHONAN=i.id_keputusanpermohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and i.id_perbicaraan=j.id_perbicaraan";
+		    	sqlJanaLaporanBaitulmalPBN += " and j.id_perintah = k.id_perintah";
+		    	sqlJanaLaporanBaitulmalPBN += " and k.id_perintahhtaobmst =l.id_perintahhtaobmst";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.ID_NEGERIMHN ="+negeri;
+		    	sqlJanaLaporanBaitulmalPBN += " and TO_CHAR(b.TARIKH_MOHON,'yyyy') ="+tahun;
+		    	sqlJanaLaporanBaitulmalPBN += " and l.ba > 0  order by a.no_fail";
+		    	System.out.println("sqlJanaLaporanBaitulmalPBNUnit = " + sqlJanaLaporanBaitulmalPBN);
+		    	ResultSet rs = stmt.executeQuery(sqlJanaLaporanBaitulmalPBN);
+		    	Hashtable h;
+		    	//con.commit();
+		    	while (rs.next()) {
+					h = new Hashtable();
+
+					if (rs.getString("noFail") != null && rs.getString("noFail") != "") {
+						h.put("noFail", rs.getString("noFail"));
+					}
+					if (rs.getString("namaSimati") != null && rs.getString("namaSimati") != "") {
+						h.put("namaSimati", rs.getString("namaSimati"));
+					}
+					if (rs.getString("namaPemohon") != null && rs.getString("namaPemohon") != "") {
+						h.put("namaPemohon", rs.getString("namaPemohon"));
+					}
+					if (rs.getString("NAMA_BAITULMAL") != null && rs.getString("NAMA_BAITULMAL") != "") {
+						h.put("NAMA_BAITULMAL", rs.getString("NAMA_BAITULMAL"));
+					}
+					if (rs.getString("tarikhMohon") != null && rs.getString("tarikhMohon") != "") {
+						h.put("tarikhMohon", rs.getString("tarikhMohon"));
+					}
+					SenaraiSerahan.addElement(h);
+					}
+		   
+		    	}
+		    
+		    finally {
+			      if (db != null) db.close();
+		    }
+			
+		    
+			}
+	
+	public static void setDataSenaraiSerahanNegeritahunPA(String negeri, String tahun) throws Exception {
+		//SenaraiSerahan = null;
+		SenaraiSerahan.clear();
+		Db db = null;
+		String sqlJanaLaporanBaitulmalPBN = "";
+		List senaraiFail = null;
+		//System.out.println("Dalam SaveData");
+		    try {
+		    	db = new Db();
+		    	Connection con = db.getConnection();
+		    	//con.setAutoCommit(false);
+		    	Statement stmt = db.getStatement();
+		    	sqlJanaLaporanBaitulmalPBN = "select distinct a.no_fail as noFail, f.nama_simati as namaSimati, e.nama_pemohon as namaPemohon, TO_CHAR(b.tarikh_mohon,'dd/mm/yyyy') as tarikhMohon, d.nama_ob AS NAMA_BAITULMAL ";
+		    	sqlJanaLaporanBaitulmalPBN += "from tblpfdfail a , tblppkpermohonan b,";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkpermohonansimati c, tblppkob d, tblppkpemohon e, tblppksimati f, tblppkrujtarafkptg g, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkkeputusanpermohonan h, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkperbicaraan i, tblppkperintah j, tblppkperintahhtaobmst k, tblppkperintahhtaobdtl l ";
+		    	sqlJanaLaporanBaitulmalPBN += " where a.id_fail=b.id_fail ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_permohonansimati=d.id_permohonansimati";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_pemohon=e.id_pemohon";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_simati=f.id_simati";
+		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=g.id_tarafkptg";
+		    	sqlJanaLaporanBaitulmalPBN += " and (d.id_tarafkptg=8 and e.id_tarafkptg=8)";
 		    	sqlJanaLaporanBaitulmalPBN += " and b.id_status=21 ";
 		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=h.id_permohonan";
 		    	sqlJanaLaporanBaitulmalPBN += " and h.ID_KEPUTUSANPERMOHONAN=i.id_keputusanpermohonan";
@@ -1299,6 +1636,74 @@ sqlJanaLaporanBaitulmalPBN += " order by 3";
 		    
 			}
 	
+	public static void setDataSenaraiSerahanDaerahtahunPA(String daerah, String tahun) throws Exception {
+		//SenaraiSerahan = null;
+		SenaraiSerahan.clear();
+		Db db = null;
+		String sqlJanaLaporanBaitulmalPBN = "";
+		List senaraiFail = null;
+		//System.out.println("Dalam SaveData");
+		    try {
+		    	db = new Db();
+		    	Connection con = db.getConnection();
+		    	//con.setAutoCommit(false);
+		    	Statement stmt = db.getStatement();
+		    	sqlJanaLaporanBaitulmalPBN = "select distinct a.no_fail as noFail, f.nama_simati as namaSimati, e.nama_pemohon as namaPemohon, TO_CHAR(b.tarikh_mohon,'dd/mm/yyyy') as tarikhMohon, d.nama_ob AS NAMA_BAITULMAL ";
+		    	sqlJanaLaporanBaitulmalPBN += "from tblpfdfail a , tblppkpermohonan b,";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkpermohonansimati c, tblppkob d, tblppkpemohon e, tblppksimati f, tblppkrujtarafkptg g, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkkeputusanpermohonan h, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkperbicaraan i, tblppkperintah j, tblppkperintahhtaobmst k, tblppkperintahhtaobdtl l ";
+		    	sqlJanaLaporanBaitulmalPBN += " where a.id_fail=b.id_fail ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_permohonansimati=d.id_permohonansimati";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_pemohon=e.id_pemohon";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_simati=f.id_simati";
+		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=g.id_tarafkptg";
+		    	sqlJanaLaporanBaitulmalPBN += " and (d.id_tarafkptg=8 and e.id_tarafkptg=8)";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_status=21 ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=h.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and h.ID_KEPUTUSANPERMOHONAN=i.id_keputusanpermohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and i.id_perbicaraan=j.id_perbicaraan";
+		    	sqlJanaLaporanBaitulmalPBN += " and j.id_perintah = k.id_perintah";
+		    	sqlJanaLaporanBaitulmalPBN += " and k.id_perintahhtaobmst =l.id_perintahhtaobmst";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.ID_DAERAHMHN ="+daerah;
+		    	sqlJanaLaporanBaitulmalPBN += " and TO_CHAR(b.TARIKH_MOHON,'yyyy') ="+tahun;
+		    	sqlJanaLaporanBaitulmalPBN += " and l.ba > 0  order by a.no_fail";
+		    	System.out.println("sqlJanaLaporanBaitulmalPBNUnit = " + sqlJanaLaporanBaitulmalPBN);
+		    	ResultSet rs = stmt.executeQuery(sqlJanaLaporanBaitulmalPBN);
+		    	Hashtable h;
+		    	//con.commit();
+		    	while (rs.next()) {
+					h = new Hashtable();
+
+					if (rs.getString("noFail") != null && rs.getString("noFail") != "") {
+						h.put("noFail", rs.getString("noFail"));
+					}
+					if (rs.getString("namaSimati") != null && rs.getString("namaSimati") != "") {
+						h.put("namaSimati", rs.getString("namaSimati"));
+					}
+					if (rs.getString("namaPemohon") != null && rs.getString("namaPemohon") != "") {
+						h.put("namaPemohon", rs.getString("namaPemohon"));
+					}
+					if (rs.getString("NAMA_BAITULMAL") != null && rs.getString("NAMA_BAITULMAL") != "") {
+						h.put("NAMA_BAITULMAL", rs.getString("NAMA_BAITULMAL"));
+					}
+					if (rs.getString("tarikhMohon") != null && rs.getString("tarikhMohon") != "") {
+						h.put("tarikhMohon", rs.getString("tarikhMohon"));
+					}
+					SenaraiSerahan.addElement(h);
+					}
+		   
+		    	}
+		    
+		    finally {
+			      if (db != null) db.close();
+		    }
+			
+		    
+			}
+	
 	public static void setDataSenaraiSerahanUnitselangmasa(String unit, String tarikh_mula, String tarikh_akhir) throws Exception {
 		//SenaraiSerahan = null;
 		SenaraiSerahan.clear();
@@ -1324,6 +1729,74 @@ sqlJanaLaporanBaitulmalPBN += " order by 3";
 		    	sqlJanaLaporanBaitulmalPBN += " and c.id_simati=f.id_simati";
 		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=g.id_tarafkptg";
 		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=8";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_status=21 ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=h.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and h.ID_KEPUTUSANPERMOHONAN=i.id_keputusanpermohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and i.id_perbicaraan=j.id_perbicaraan";
+		    	sqlJanaLaporanBaitulmalPBN += " and j.id_perintah = k.id_perintah";
+		    	sqlJanaLaporanBaitulmalPBN += " and k.id_perintahhtaobmst =l.id_perintahhtaobmst";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_unitpskawal ="+unit;
+		    	sqlJanaLaporanBaitulmalPBN += " AND b.TARIKH_MOHON between TO_DATE('"+tarikh_mula+"','dd/mm/yyyy') and TO_DATE('"+tarikh_akhir+"','dd/mm/yyyy')";
+		    	sqlJanaLaporanBaitulmalPBN += " and l.ba > 0  order by a.no_fail";
+		    	System.out.println("sqlJanaLaporanBaitulmalPBNUnit = " + sqlJanaLaporanBaitulmalPBN);
+		    	ResultSet rs = stmt.executeQuery(sqlJanaLaporanBaitulmalPBN);
+		    	Hashtable h;
+		    	//con.commit();
+		    	while (rs.next()) {
+					h = new Hashtable();
+
+					if (rs.getString("noFail") != null && rs.getString("noFail") != "") {
+						h.put("noFail", rs.getString("noFail"));
+					}
+					if (rs.getString("namaSimati") != null && rs.getString("namaSimati") != "") {
+						h.put("namaSimati", rs.getString("namaSimati"));
+					}
+					if (rs.getString("namaPemohon") != null && rs.getString("namaPemohon") != "") {
+						h.put("namaPemohon", rs.getString("namaPemohon"));
+					}
+					if (rs.getString("NAMA_BAITULMAL") != null && rs.getString("NAMA_BAITULMAL") != "") {
+						h.put("NAMA_BAITULMAL", rs.getString("NAMA_BAITULMAL"));
+					}
+					if (rs.getString("tarikhMohon") != null && rs.getString("tarikhMohon") != "") {
+						h.put("tarikhMohon", rs.getString("tarikhMohon"));
+					}
+					SenaraiSerahan.addElement(h);
+					}
+		   
+		    	}
+		    
+		    finally {
+			      if (db != null) db.close();
+		    }
+			
+		    
+			}
+	
+	public static void setDataSenaraiSerahanUnitselangmasaPA(String unit, String tarikh_mula, String tarikh_akhir) throws Exception {
+		//SenaraiSerahan = null;
+		SenaraiSerahan.clear();
+		Db db = null;
+		String sqlJanaLaporanBaitulmalPBN = "";
+		List senaraiFail = null;
+		//System.out.println("Dalam SaveData");
+		    try {
+		    	db = new Db();
+		    	Connection con = db.getConnection();
+		    	//con.setAutoCommit(false);
+		    	Statement stmt = db.getStatement();
+		    	sqlJanaLaporanBaitulmalPBN = "select distinct a.no_fail as noFail, f.nama_simati as namaSimati, e.nama_pemohon as namaPemohon, TO_CHAR(b.tarikh_mohon,'dd/mm/yyyy') as tarikhMohon, d.nama_ob AS NAMA_BAITULMAL ";
+		    	sqlJanaLaporanBaitulmalPBN += "from tblpfdfail a , tblppkpermohonan b,";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkpermohonansimati c, tblppkob d, tblppkpemohon e, tblppksimati f, tblppkrujtarafkptg g, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkkeputusanpermohonan h, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkperbicaraan i, tblppkperintah j, tblppkperintahhtaobmst k, tblppkperintahhtaobdtl l ";
+		    	sqlJanaLaporanBaitulmalPBN += " where a.id_fail=b.id_fail ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_permohonansimati=d.id_permohonansimati";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_pemohon=e.id_pemohon";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_simati=f.id_simati";
+		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=g.id_tarafkptg";
+		    	sqlJanaLaporanBaitulmalPBN += " and (d.id_tarafkptg=8 and e.id_tarafkptg=8)";
 		    	sqlJanaLaporanBaitulmalPBN += " and b.id_status=21 ";
 		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=h.id_permohonan";
 		    	sqlJanaLaporanBaitulmalPBN += " and h.ID_KEPUTUSANPERMOHONAN=i.id_keputusanpermohonan";
@@ -1435,6 +1908,74 @@ sqlJanaLaporanBaitulmalPBN += " order by 3";
 		    
 			}
 	
+	public static void setDataSenaraiSerahanNegeriselangmasaPA(String negeri, String tarikh_mula, String tarikh_akhir) throws Exception {
+		//SenaraiSerahan = null;
+		SenaraiSerahan.clear();
+		Db db = null;
+		String sqlJanaLaporanBaitulmalPBN = "";
+		List senaraiFail = null;
+		//System.out.println("Dalam SaveData");
+		    try {
+		    	db = new Db();
+		    	Connection con = db.getConnection();
+		    	//con.setAutoCommit(false);
+		    	Statement stmt = db.getStatement();
+		    	sqlJanaLaporanBaitulmalPBN = "select distinct a.no_fail as noFail, f.nama_simati as namaSimati, e.nama_pemohon as namaPemohon, TO_CHAR(b.tarikh_mohon,'dd/mm/yyyy') as tarikhMohon, d.nama_ob AS NAMA_BAITULMAL ";
+		    	sqlJanaLaporanBaitulmalPBN += "from tblpfdfail a , tblppkpermohonan b,";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkpermohonansimati c, tblppkob d, tblppkpemohon e, tblppksimati f, tblppkrujtarafkptg g, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkkeputusanpermohonan h, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkperbicaraan i, tblppkperintah j, tblppkperintahhtaobmst k, tblppkperintahhtaobdtl l ";
+		    	sqlJanaLaporanBaitulmalPBN += " where a.id_fail=b.id_fail ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_permohonansimati=d.id_permohonansimati";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_pemohon=e.id_pemohon";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_simati=f.id_simati";
+		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=g.id_tarafkptg";
+		    	sqlJanaLaporanBaitulmalPBN += " and (d.id_tarafkptg=8 and e.id_tarafkptg=8)";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_status=21 ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=h.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and h.ID_KEPUTUSANPERMOHONAN=i.id_keputusanpermohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and i.id_perbicaraan=j.id_perbicaraan";
+		    	sqlJanaLaporanBaitulmalPBN += " and j.id_perintah = k.id_perintah";
+		    	sqlJanaLaporanBaitulmalPBN += " and k.id_perintahhtaobmst =l.id_perintahhtaobmst";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.ID_NEGERIMHN ="+negeri;
+		    	sqlJanaLaporanBaitulmalPBN += " AND b.TARIKH_MOHON between TO_DATE('"+tarikh_mula+"','dd/mm/yyyy') and TO_DATE('"+tarikh_akhir+"','dd/mm/yyyy')";
+		    	sqlJanaLaporanBaitulmalPBN += " and l.ba > 0  order by a.no_fail";
+		    	System.out.println("sqlJanaLaporanBaitulmalPBNUnit = " + sqlJanaLaporanBaitulmalPBN);
+		    	ResultSet rs = stmt.executeQuery(sqlJanaLaporanBaitulmalPBN);
+		    	Hashtable h;
+		    	//con.commit();
+		    	while (rs.next()) {
+					h = new Hashtable();
+
+					if (rs.getString("noFail") != null && rs.getString("noFail") != "") {
+						h.put("noFail", rs.getString("noFail"));
+					}
+					if (rs.getString("namaSimati") != null && rs.getString("namaSimati") != "") {
+						h.put("namaSimati", rs.getString("namaSimati"));
+					}
+					if (rs.getString("namaPemohon") != null && rs.getString("namaPemohon") != "") {
+						h.put("namaPemohon", rs.getString("namaPemohon"));
+					}
+					if (rs.getString("NAMA_BAITULMAL") != null && rs.getString("NAMA_BAITULMAL") != "") {
+						h.put("NAMA_BAITULMAL", rs.getString("NAMA_BAITULMAL"));
+					}
+					if (rs.getString("tarikhMohon") != null && rs.getString("tarikhMohon") != "") {
+						h.put("tarikhMohon", rs.getString("tarikhMohon"));
+					}
+					SenaraiSerahan.addElement(h);
+					}
+		   
+		    	}
+		    
+		    finally {
+			      if (db != null) db.close();
+		    }
+			
+		    
+			}
+	
 	public static void setDataSenaraiSerahanDaerahselangmasa(String daerah, String tarikh_mula, String tarikh_akhir) throws Exception {
 		//SenaraiSerahan = null;
 		SenaraiSerahan.clear();
@@ -1503,6 +2044,74 @@ sqlJanaLaporanBaitulmalPBN += " order by 3";
 		    
 			}
 	
+	public static void setDataSenaraiSerahanDaerahselangmasaPA(String daerah, String tarikh_mula, String tarikh_akhir) throws Exception {
+		//SenaraiSerahan = null;
+		SenaraiSerahan.clear();
+		Db db = null;
+		String sqlJanaLaporanBaitulmalPBN = "";
+		List senaraiFail = null;
+		//System.out.println("Dalam SaveData");
+		    try {
+		    	db = new Db();
+		    	Connection con = db.getConnection();
+		    	//con.setAutoCommit(false);
+		    	Statement stmt = db.getStatement();
+		    	sqlJanaLaporanBaitulmalPBN = "select distinct a.no_fail as noFail, f.nama_simati as namaSimati, e.nama_pemohon as namaPemohon, TO_CHAR(b.tarikh_mohon,'dd/mm/yyyy') as tarikhMohon, d.nama_ob AS NAMA_BAITULMAL ";
+		    	sqlJanaLaporanBaitulmalPBN += "from tblpfdfail a , tblppkpermohonan b,";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkpermohonansimati c, tblppkob d, tblppkpemohon e, tblppksimati f, tblppkrujtarafkptg g, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkkeputusanpermohonan h, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkperbicaraan i, tblppkperintah j, tblppkperintahhtaobmst k, tblppkperintahhtaobdtl l ";
+		    	sqlJanaLaporanBaitulmalPBN += " where a.id_fail=b.id_fail ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_permohonansimati=d.id_permohonansimati";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_pemohon=e.id_pemohon";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_simati=f.id_simati";
+		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=g.id_tarafkptg";
+		    	sqlJanaLaporanBaitulmalPBN += " and (d.id_tarafkptg=8 and e.id_tarafkptg=8)";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_status=21 ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=h.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and h.ID_KEPUTUSANPERMOHONAN=i.id_keputusanpermohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and i.id_perbicaraan=j.id_perbicaraan";
+		    	sqlJanaLaporanBaitulmalPBN += " and j.id_perintah = k.id_perintah";
+		    	sqlJanaLaporanBaitulmalPBN += " and k.id_perintahhtaobmst =l.id_perintahhtaobmst";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.ID_DAERAHMHN ="+daerah;
+		    	sqlJanaLaporanBaitulmalPBN += " AND b.TARIKH_MOHON between TO_DATE('"+tarikh_mula+"','dd/mm/yyyy') and TO_DATE('"+tarikh_akhir+"','dd/mm/yyyy')";
+		    	sqlJanaLaporanBaitulmalPBN += " and l.ba > 0  order by a.no_fail";
+		    	System.out.println("sqlJanaLaporanBaitulmalPBNUnit = " + sqlJanaLaporanBaitulmalPBN);
+		    	ResultSet rs = stmt.executeQuery(sqlJanaLaporanBaitulmalPBN);
+		    	Hashtable h;
+		    	//con.commit();
+		    	while (rs.next()) {
+					h = new Hashtable();
+
+					if (rs.getString("noFail") != null && rs.getString("noFail") != "") {
+						h.put("noFail", rs.getString("noFail"));
+					}
+					if (rs.getString("namaSimati") != null && rs.getString("namaSimati") != "") {
+						h.put("namaSimati", rs.getString("namaSimati"));
+					}
+					if (rs.getString("namaPemohon") != null && rs.getString("namaPemohon") != "") {
+						h.put("namaPemohon", rs.getString("namaPemohon"));
+					}
+					if (rs.getString("NAMA_BAITULMAL") != null && rs.getString("NAMA_BAITULMAL") != "") {
+						h.put("NAMA_BAITULMAL", rs.getString("NAMA_BAITULMAL"));
+					}
+					if (rs.getString("tarikhMohon") != null && rs.getString("tarikhMohon") != "") {
+						h.put("tarikhMohon", rs.getString("tarikhMohon"));
+					}
+					SenaraiSerahan.addElement(h);
+					}
+		   
+		    	}
+		    
+		    finally {
+			      if (db != null) db.close();
+		    }
+			
+		    
+			}
+	
 	public static void setDataSenaraiSerahanUnitbulan(String unit, String mula_bulan, String mula_tahun) throws Exception {
 		//SenaraiSerahan = null;
 		SenaraiSerahan.clear();
@@ -1528,6 +2137,75 @@ sqlJanaLaporanBaitulmalPBN += " order by 3";
 		    	sqlJanaLaporanBaitulmalPBN += " and c.id_simati=f.id_simati";
 		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=g.id_tarafkptg";
 		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=8";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_status=21 ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=h.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and h.ID_KEPUTUSANPERMOHONAN=i.id_keputusanpermohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and i.id_perbicaraan=j.id_perbicaraan";
+		    	sqlJanaLaporanBaitulmalPBN += " and j.id_perintah = k.id_perintah";
+		    	sqlJanaLaporanBaitulmalPBN += " and k.id_perintahhtaobmst =l.id_perintahhtaobmst";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_unitpskawal ="+unit;
+		    	sqlJanaLaporanBaitulmalPBN += " AND TO_CHAR(b.TARIKH_MOHON,'mm') = '"+mula_bulan+"'";
+		    	sqlJanaLaporanBaitulmalPBN += " AND TO_CHAR(b.TARIKH_MOHON,'yyyy') = '"+mula_tahun+"'";
+		    	sqlJanaLaporanBaitulmalPBN += " and l.ba > 0  order by a.no_fail";
+		    	System.out.println("sqlJanaLaporanBaitulmalPBNUnit = " + sqlJanaLaporanBaitulmalPBN);
+		    	ResultSet rs = stmt.executeQuery(sqlJanaLaporanBaitulmalPBN);
+		    	Hashtable h;
+		    	//con.commit();
+		    	while (rs.next()) {
+					h = new Hashtable();
+
+					if (rs.getString("noFail") != null && rs.getString("noFail") != "") {
+						h.put("noFail", rs.getString("noFail"));
+					}
+					if (rs.getString("namaSimati") != null && rs.getString("namaSimati") != "") {
+						h.put("namaSimati", rs.getString("namaSimati"));
+					}
+					if (rs.getString("namaPemohon") != null && rs.getString("namaPemohon") != "") {
+						h.put("namaPemohon", rs.getString("namaPemohon"));
+					}
+					if (rs.getString("NAMA_BAITULMAL") != null && rs.getString("NAMA_BAITULMAL") != "") {
+						h.put("NAMA_BAITULMAL", rs.getString("NAMA_BAITULMAL"));
+					}
+					if (rs.getString("tarikhMohon") != null && rs.getString("tarikhMohon") != "") {
+						h.put("tarikhMohon", rs.getString("tarikhMohon"));
+					}
+					SenaraiSerahan.addElement(h);
+					}
+		   
+		    	}
+		    
+		    finally {
+			      if (db != null) db.close();
+		    }
+			
+		    
+			}
+	
+	public static void setDataSenaraiSerahanUnitbulanPA(String unit, String mula_bulan, String mula_tahun) throws Exception {
+		//SenaraiSerahan = null;
+		SenaraiSerahan.clear();
+		Db db = null;
+		String sqlJanaLaporanBaitulmalPBN = "";
+		List senaraiFail = null;
+		//System.out.println("Dalam SaveData");
+		    try {
+		    	db = new Db();
+		    	Connection con = db.getConnection();
+		    	//con.setAutoCommit(false);
+		    	Statement stmt = db.getStatement();
+		    	sqlJanaLaporanBaitulmalPBN = "select distinct a.no_fail as noFail, f.nama_simati as namaSimati, e.nama_pemohon as namaPemohon, TO_CHAR(b.tarikh_mohon,'dd/mm/yyyy') as tarikhMohon, d.nama_ob AS NAMA_BAITULMAL ";
+		    	sqlJanaLaporanBaitulmalPBN += "from tblpfdfail a , tblppkpermohonan b,";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkpermohonansimati c, tblppkob d, tblppkpemohon e, tblppksimati f, tblppkrujtarafkptg g, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkkeputusanpermohonan h, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkperbicaraan i, tblppkperintah j, tblppkperintahhtaobmst k, tblppkperintahhtaobdtl l ";
+		    	sqlJanaLaporanBaitulmalPBN += " where a.id_fail=b.id_fail ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_permohonansimati=d.id_permohonansimati";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_pemohon=e.id_pemohon";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_simati=f.id_simati";
+		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=g.id_tarafkptg";
+		    	sqlJanaLaporanBaitulmalPBN += " and (d.id_tarafkptg=8 and e.id_tarafkptg=8)";
 		    	sqlJanaLaporanBaitulmalPBN += " and b.id_status=21 ";
 		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=h.id_permohonan";
 		    	sqlJanaLaporanBaitulmalPBN += " and h.ID_KEPUTUSANPERMOHONAN=i.id_keputusanpermohonan";
@@ -1641,6 +2319,77 @@ sqlJanaLaporanBaitulmalPBN += " order by 3";
 		    
 			}
 	
+	
+	
+	public static void setDataSenaraiSerahanNegeribulanPA(String negeri, String mula_bulan, String mula_tahun) throws Exception {
+		//SenaraiSerahan = null;
+		SenaraiSerahan.clear();
+		Db db = null;
+		String sqlJanaLaporanBaitulmalPBN = "";
+		List senaraiFail = null;
+		//System.out.println("Dalam SaveData");
+		    try {
+		    	db = new Db();
+		    	Connection con = db.getConnection();
+		    	//con.setAutoCommit(false);
+		    	Statement stmt = db.getStatement();
+		    	sqlJanaLaporanBaitulmalPBN = "select distinct a.no_fail as noFail, f.nama_simati as namaSimati, e.nama_pemohon as namaPemohon, TO_CHAR(b.tarikh_mohon,'dd/mm/yyyy') as tarikhMohon, d.nama_ob AS NAMA_BAITULMAL ";
+		    	sqlJanaLaporanBaitulmalPBN += "from tblpfdfail a , tblppkpermohonan b,";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkpermohonansimati c, tblppkob d, tblppkpemohon e, tblppksimati f, tblppkrujtarafkptg g, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkkeputusanpermohonan h, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkperbicaraan i, tblppkperintah j, tblppkperintahhtaobmst k, tblppkperintahhtaobdtl l ";
+		    	sqlJanaLaporanBaitulmalPBN += " where a.id_fail=b.id_fail ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_permohonansimati=d.id_permohonansimati";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_pemohon=e.id_pemohon";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_simati=f.id_simati";
+		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=g.id_tarafkptg";
+		    	sqlJanaLaporanBaitulmalPBN += " and (d.id_tarafkptg=8 and e.id_tarafkptg=8)";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_status=21 ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=h.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and h.ID_KEPUTUSANPERMOHONAN=i.id_keputusanpermohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and i.id_perbicaraan=j.id_perbicaraan";
+		    	sqlJanaLaporanBaitulmalPBN += " and j.id_perintah = k.id_perintah";
+		    	sqlJanaLaporanBaitulmalPBN += " and k.id_perintahhtaobmst =l.id_perintahhtaobmst";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.ID_NEGERIMHN ="+negeri;
+		    	sqlJanaLaporanBaitulmalPBN += " AND TO_CHAR(b.TARIKH_MOHON,'mm') = '"+mula_bulan+"'";
+		    	sqlJanaLaporanBaitulmalPBN += " AND TO_CHAR(b.TARIKH_MOHON,'yyyy') = '"+mula_tahun+"'";
+		    	sqlJanaLaporanBaitulmalPBN += " and l.ba > 0  order by a.no_fail";
+		    	System.out.println("sqlJanaLaporanBaitulmalPBNUnit = " + sqlJanaLaporanBaitulmalPBN);
+		    	ResultSet rs = stmt.executeQuery(sqlJanaLaporanBaitulmalPBN);
+		    	Hashtable h;
+		    	//con.commit();
+		    	while (rs.next()) {
+					h = new Hashtable();
+
+					if (rs.getString("noFail") != null && rs.getString("noFail") != "") {
+						h.put("noFail", rs.getString("noFail"));
+					}
+					if (rs.getString("namaSimati") != null && rs.getString("namaSimati") != "") {
+						h.put("namaSimati", rs.getString("namaSimati"));
+					}
+					if (rs.getString("namaPemohon") != null && rs.getString("namaPemohon") != "") {
+						h.put("namaPemohon", rs.getString("namaPemohon"));
+					}
+					if (rs.getString("NAMA_BAITULMAL") != null && rs.getString("NAMA_BAITULMAL") != "") {
+						h.put("NAMA_BAITULMAL", rs.getString("NAMA_BAITULMAL"));
+					}
+					if (rs.getString("tarikhMohon") != null && rs.getString("tarikhMohon") != "") {
+						h.put("tarikhMohon", rs.getString("tarikhMohon"));
+					}
+					SenaraiSerahan.addElement(h);
+					}
+		   
+		    	}
+		    
+		    finally {
+			      if (db != null) db.close();
+		    }
+			
+		    
+			}
+	
 	public static void setDataSenaraiSerahanDaerahbulan(String daerah, String mula_bulan, String mula_tahun) throws Exception {
 		//SenaraiSerahan = null;
 		SenaraiSerahan.clear();
@@ -1666,6 +2415,75 @@ sqlJanaLaporanBaitulmalPBN += " order by 3";
 		    	sqlJanaLaporanBaitulmalPBN += " and c.id_simati=f.id_simati";
 		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=g.id_tarafkptg";
 		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=8";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_status=21 ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=h.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and h.ID_KEPUTUSANPERMOHONAN=i.id_keputusanpermohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and i.id_perbicaraan=j.id_perbicaraan";
+		    	sqlJanaLaporanBaitulmalPBN += " and j.id_perintah = k.id_perintah";
+		    	sqlJanaLaporanBaitulmalPBN += " and k.id_perintahhtaobmst =l.id_perintahhtaobmst";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.ID_DAERAHMHN ="+daerah;
+		    	sqlJanaLaporanBaitulmalPBN += " AND TO_CHAR(b.TARIKH_MOHON,'mm') = '"+mula_bulan+"'";
+		    	sqlJanaLaporanBaitulmalPBN += " AND TO_CHAR(b.TARIKH_MOHON,'yyyy') = '"+mula_tahun+"'";
+		    	sqlJanaLaporanBaitulmalPBN += " and l.ba > 0  order by a.no_fail";
+		    	System.out.println("sqlJanaLaporanBaitulmalPBNUnit = " + sqlJanaLaporanBaitulmalPBN);
+		    	ResultSet rs = stmt.executeQuery(sqlJanaLaporanBaitulmalPBN);
+		    	Hashtable h;
+		    	//con.commit();
+		    	while (rs.next()) {
+					h = new Hashtable();
+
+					if (rs.getString("noFail") != null && rs.getString("noFail") != "") {
+						h.put("noFail", rs.getString("noFail"));
+					}
+					if (rs.getString("namaSimati") != null && rs.getString("namaSimati") != "") {
+						h.put("namaSimati", rs.getString("namaSimati"));
+					}
+					if (rs.getString("namaPemohon") != null && rs.getString("namaPemohon") != "") {
+						h.put("namaPemohon", rs.getString("namaPemohon"));
+					}
+					if (rs.getString("NAMA_BAITULMAL") != null && rs.getString("NAMA_BAITULMAL") != "") {
+						h.put("NAMA_BAITULMAL", rs.getString("NAMA_BAITULMAL"));
+					}
+					if (rs.getString("tarikhMohon") != null && rs.getString("tarikhMohon") != "") {
+						h.put("tarikhMohon", rs.getString("tarikhMohon"));
+					}
+					SenaraiSerahan.addElement(h);
+					}
+		   
+		    	}
+		    
+		    finally {
+			      if (db != null) db.close();
+		    }
+			
+		    
+			}
+	
+	public static void setDataSenaraiSerahanDaerahbulanPA(String daerah, String mula_bulan, String mula_tahun) throws Exception {
+		//SenaraiSerahan = null;
+		SenaraiSerahan.clear();
+		Db db = null;
+		String sqlJanaLaporanBaitulmalPBN = "";
+		List senaraiFail = null;
+		//System.out.println("Dalam SaveData");
+		    try {
+		    	db = new Db();
+		    	Connection con = db.getConnection();
+		    	//con.setAutoCommit(false);
+		    	Statement stmt = db.getStatement();
+		    	sqlJanaLaporanBaitulmalPBN = "select distinct a.no_fail as noFail, f.nama_simati as namaSimati, e.nama_pemohon as namaPemohon, TO_CHAR(b.tarikh_mohon,'dd/mm/yyyy') as tarikhMohon, d.nama_ob AS NAMA_BAITULMAL ";
+		    	sqlJanaLaporanBaitulmalPBN += "from tblpfdfail a , tblppkpermohonan b,";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkpermohonansimati c, tblppkob d, tblppkpemohon e, tblppksimati f, tblppkrujtarafkptg g, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkkeputusanpermohonan h, ";
+		    	sqlJanaLaporanBaitulmalPBN += " tblppkperbicaraan i, tblppkperintah j, tblppkperintahhtaobmst k, tblppkperintahhtaobdtl l ";
+		    	sqlJanaLaporanBaitulmalPBN += " where a.id_fail=b.id_fail ";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=c.id_permohonan";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_permohonansimati=d.id_permohonansimati";
+		    	sqlJanaLaporanBaitulmalPBN += " and b.id_pemohon=e.id_pemohon";
+		    	sqlJanaLaporanBaitulmalPBN += " and c.id_simati=f.id_simati";
+		    	sqlJanaLaporanBaitulmalPBN += " and d.id_tarafkptg=g.id_tarafkptg";
+		    	sqlJanaLaporanBaitulmalPBN += " and (d.id_tarafkptg=8 and e.id_tarafkptg=8)";
 		    	sqlJanaLaporanBaitulmalPBN += " and b.id_status=21 ";
 		    	sqlJanaLaporanBaitulmalPBN += " and b.id_permohonan=h.id_permohonan";
 		    	sqlJanaLaporanBaitulmalPBN += " and h.ID_KEPUTUSANPERMOHONAN=i.id_keputusanpermohonan";

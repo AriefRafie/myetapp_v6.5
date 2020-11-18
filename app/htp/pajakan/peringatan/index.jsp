@@ -44,21 +44,22 @@
 -->  
   <td class="$row">
   	<img src='../img/alert.gif' alt='' border='0'/><b><i>&nbsp;<blink><a href="#">Peringatan Bayaran</a></blink></i></b>
-  	<a alt="Cetak" href = "javascript:cetakSuratBayaran('$!senarai.permohonan.getIdPermohonan()');">
-		<img border="0" src="../img/print.gif" />
-	</a>
-	<!-- --> <br>
-	  <a href = "javascript:emelPeringatan('$!senarai.permohonan.getIdPermohonan()');">Peringatan
-		<img border="0" src="../img/emel.gif" />
-	</a>
-	<a href = "javascript:emeLewat('$!senarai.permohonan.getIdPermohonan()');"><font color="red">Lewat</font>
-		<img border="0" src="../img/emel.gif" />
-	</a> <br>
-	  	<img src='../img/alert.gif' alt='' border='0'/><b><i>&nbsp;<blink><a href="#"> Bayaran Lewat</a></blink></i></b>
+  		<a alt="Cetak" href = "javascript:cetakSuratBayaran('$!senarai.permohonan.getIdPermohonan()');">
+			<img border="0" src="../img/print.gif" />
+		</a>	  
+		<a href = "javascript:emelPeringatan('$!senarai.permohonan.getIdPermohonan()');">
+			<img border="0" src="../img/emel.gif" />
+		</a>
+
+	 <br>
+	  	<img src='../img/alert.gif' alt='' border='0'/><b><i>&nbsp;<blink><a href="#"><font color="red">Bayaran Lewat</font></a></blink></i></b>
 	  	<a alt="Cetak" href = "javascript:cetakSuratBayaranLewat('$!senarai.permohonan.getIdPermohonan()');">
-		<img border="0" src="../img/print.gif" />
-	</a>
-  </td>
+			<img border="0" src="../img/print.gif" />
+		</a>
+		<a href = "javascript:emeLewat('$!senarai.permohonan.getIdPermohonan()');"><!-- <font color="red">Lewat</font> -->
+			<img border="0" src="../img/emel.gif" />
+		</a>
+  	</td>
   </tr>
   
   #end

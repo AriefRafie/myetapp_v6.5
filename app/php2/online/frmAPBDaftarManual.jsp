@@ -8,7 +8,8 @@
 </style>
 #set($saizTxtTujuanPengambilan="500")
 #set($saizTxtRingkasanPengalaman="900")
-#set($saizTxtUndang="900")
+#set($saizTxtUndangUndang="900")
+#set($saizTxtJenisPerniagaan="900")
 <p>
   <input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
   <input name="actionOnline" type="hidden" id="actionOnline" value="$actionOnline"/>
@@ -288,10 +289,10 @@
 		  	  <td width="28%" valign="top">Undang-Undang Diperbadankan</td>
 		  	  <td width="1%" valign="top">:</td>
 		  	  <td width="70%">
-	          	<textarea name="txtUndang" id="txtUndang" cols="43" rows="5" onKeyUp="textCounter(this.form.txtUndang,this.form.remLen2,$!saizTxtUndang);" onKeyDown="textCounter(this.form.txtUndang,this.form.remLen2,$!saizTxtUndang);" $readonly class="$inputTextClass">$beanMaklumatPermohonan.undangUndang</textarea>
+	          	<textarea name="txtUndangUndang" id="txtUndangUndang" cols="43" rows="5" onblur="this.value=this.value.toUpperCase();" onKeyUp="textCounter(this.form.txtUndangUndang,this.form.remLen2,$!saizTxtUndangUndang);" onKeyDown="textCounter(this.form.txtUndangUndang,this.form.remLen2,$!saizTxtUndangUndang);" $readonly class="$inputTextClass">$beanMaklumatPermohonan.undangUndang</textarea>
 		      </td>
 		    </tr>
-	        #if ($mode == 'new')
+	         #if ($mode == 'new')
 	        <tr>
 	          <td valign="top">&nbsp;</td>
 	          <td valign="top">&nbsp;</td>
@@ -301,6 +302,26 @@
 	          </td>
 	        </tr>
 	        #end
+	        <tr>
+		        <td valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+		        <td valign="top">Jenis Perniagaan</td>
+		        <td valign="top">:</td>
+		        <td valign="top">
+		        	<textarea name="txtJenisPerniagaan" id="txtJenisPerniagaan" cols="43" rows="5" $readonly onblur="this.value=this.value.toUpperCase();" class="$inputTextClass" onKeyUp="textCounter(this.form.txtJenisPerniagaan,this.form.remLen4,$!saizTxtJenisPerniagaan);" onKeyDown="textCounter(this.form.txtJenisPerniagaan,this.form.remLen4,$!saizTxtJenisPerniagaan);" >$beanMaklumatPermohonan.jenisPerniagaan</textarea>
+		        	<a href="javascript:open_info1()" class="help" title="info">							
+						<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+					</a>
+		        </td>
+		    </tr>
+		    #if ($mode == 'new')
+		    <tr>
+		        <td valign="top">&nbsp;</td>
+		        <td valign="top">&nbsp;</td>
+		        <td valign="top">&nbsp;</td>
+		        <td width="28%">Baki Aksara :&nbsp;
+		          <input type="text" readonly="readonly" class="disabled" name="remLen4" size="3" maxlength="3" value="$!saizTxtJenisPerniagaan" /></td>
+		    </tr>
+		    #end
       		#end
       	</table>
     </fieldset></td>
@@ -397,9 +418,14 @@ function daftarBaru() {
   		document.${formName}.txtRingkasanPengalaman.focus(); 
 		return; 
 	}
-	if(document.${formName}.txtUndang.value == ""){
+	if(document.${formName}.txtUndangUndang.value == ""){
 		alert('Sila masukkan maklumat Undang-Undang Diperbadankan.');
-  		document.${formName}.txtUndang.focus(); 
+  		document.${formName}.txtUndangUndang.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtJenisPerniagaan.value == ""){
+		alert('Sila masukkan maklumat Undang-Undang Diperbadankan.');
+  		document.${formName}.txtJenisPerniagaan.focus(); 
 		return; 
 	}
 	if(document.${formName}.socFlagLuar.value == ""){
@@ -476,7 +502,36 @@ function open_info() {
 	
 	new_window.document.write("<table width='100%'><tr><td width='50%' valign='top'>");
 	
-	new_window.document.write("<table><tr><td align='justify'><b>Borang 2(Lesen Pasir)</b> pilih 'Menjalankan operasi', <b>Borang 3(Lesen Menjelajah/Mencari Gali/Menggerek)</b> pilih 'Mencari gali', <b>Borang 4(Lesen galian selain pasir)</b> pilih 'Melombong'. </td></tr></table>");
+	new_window.document.write("<table><tr><td align='justify'><b>1. Borang 2(Lesen Pasir)</b> Pilih 'Menjalankan operasi'.</td> <tr><td align='justify'><b>2. Borang 3(Lesen Menjelajah/Mencari Gali/Menggerek)</b> Pilih 'Mencari gali'. <b>3. Borang 4(Lesen galian selain pasir)</b> Pilih 'Melombong'. </td></tr></table>");
+	new_window.document.write("</body></html>");
+	new_window.document.close();
+}
+function open_info1() {
+	var width  = 550;
+	var height = 300;
+	var left   = (screen.width  - width)/2;
+	var top    = (screen.height - height)/2;
+ 
+	var params = 'width='+width+', height='+height;
+ 	params += ', top='+top+', left='+left;
+	params += ', directories=no';
+	params += ', location=front';
+	params += ', menubar=no';
+	params += ', resizable=no';
+	params += ', scrollbars=no';
+	params += ', status=no';
+	params += ', toolbar=no';
+	new_window = open("","title",params);
+	new_window.document.open();
+
+	new_window.document.write("<html><title>Info Jenis Perniagaan</title>");
+	new_window.document.write("<body bgcolor=\"#FFFFFF\">");
+	
+	new_window.document.write("<table><tr><td><b>Jenis Perniagaan</b></td></tr>");
+	new_window.document.write("<tr><td><font><li>&nbsp;Berhad </li></font>");
+	new_window.document.write("<font><li>&nbsp;Sendirian Berhad</li></font>");
+	new_window.document.write("<font><li>&nbsp;Enterprise</li></font></td></tr></table>");
+	
 	new_window.document.write("</body></html>");
 	new_window.document.close();
 }
