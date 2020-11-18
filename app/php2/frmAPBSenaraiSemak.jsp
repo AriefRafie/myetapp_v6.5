@@ -41,12 +41,5 @@
   <tr>
     <td colspan="2">&nbsp;</td>
   </tr>
-  <tr>
-    <td width="30%">&nbsp;</td>
-    <td width="70%">
-      <input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onclick="seterusnya()"/>
-      <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
-    </td>
-  </tr>
 </table>
 </fieldset>

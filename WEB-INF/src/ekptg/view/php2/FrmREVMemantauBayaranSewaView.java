@@ -1087,9 +1087,9 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
             		this.context.put("inputTextClass", "");
             		this.context.put("disabled", "");
 
-            		this.context.put("selectUrusan", HTML.SelectUrusanPHPPenyewaan("socUrusan", Long.parseLong(idUrusan), "", " onChange=\"doChangeUrusan();\""));
-        			this.context.put("selectSuburusan", HTML.SelectSuburusanByIdUrusan(idUrusan, "socSuburusan", Long.parseLong(idSuburusan), "", " "));
-        			this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan),"", ""));
+            		this.context.put("selectUrusan", HTML.SelectUrusanPHPPenyewaan("socUrusan", Long.parseLong(idUrusan), "disabled", " onChange=\"doChangeUrusan();\" class=\"disabled\""));
+        			this.context.put("selectSuburusan", HTML.SelectSuburusanByIdUrusan(idUrusan, "socSuburusan", Long.parseLong(idSuburusan), "disabled", " class=\"disabled\""));
+        			this.context.put("selectLuasKegunaan",HTML.SelectLuasKegunaan("socLuasKegunaan", Long.parseLong(idLuasKegunaan),"disabled", "class=\"disabled\""));
 
         			// MAKLUMAT PERMOHONAN
         			beanMaklumatPermohonan = new Vector();

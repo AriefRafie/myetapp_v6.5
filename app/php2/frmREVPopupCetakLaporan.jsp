@@ -140,6 +140,14 @@
           <td ><input type="text" name="bakiLebihan" id="bakiLebihan" onblur="this.value=this.value.toUpperCase();" style="width:300px"/></td>
         </tr>
         #end
+        #if( $report == 'suratKuiriCek')
+        <tr>
+          <td >&nbsp;</td>
+          <td >Lain-lain Kuiri</td>
+          <td >:</td>
+          <td ><textarea name="txtCatatan" id="txtCatatan" rows="5" cols="50"></textarea></td>
+        </tr>
+        #end
         <tr>
           <td >&nbsp;</td>
           <td >&nbsp;</td>
@@ -473,7 +481,7 @@ function cetakSuratKuiriCek() {
   		document.${formName}.socPegawai.focus();
 		return;
 	}
-	var url = "../../servlet/ekptg.report.php2.REVSuratKuiriCek?ID_PEGAWAI="+document.${formName}.socPegawai.value+"&ID_HASIL="+document.${formName}.idHasil.value;
+	var url = "../../servlet/ekptg.report.php2.REVSuratKuiriCek?ID_PEGAWAI="+document.${formName}.socPegawai.value+"&ID_HASIL="+document.${formName}.idHasil.value+"&LAINKUIRI="+document.${formName}.txtCatatan.value;
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
