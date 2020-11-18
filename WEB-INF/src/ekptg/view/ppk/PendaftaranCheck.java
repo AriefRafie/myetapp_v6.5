@@ -2335,6 +2335,9 @@ public class PendaftaranCheck implements IServlet2 {
 									+ " document.f1.txtAlamat1[1].value = '"
 									+ removeSymbol(k.get("alamat1").toString())
 									+ "'; "
+									+ " document.f1.txtEmelPemohon.value = '"
+									+ k.get("emel").toString()
+									+ "'; "
 									+" document.f1.txtNamaPemohon[0].disabled = 'disabled';"
 									+ " document.f1.txtAlamat1[0].disabled = 'disabled';"
 									+ " document.f1.txtAlamat2[0].disabled = 'disabled'; "

@@ -1532,7 +1532,7 @@ public class PendaftaranCheckModel {
 //			SQLRenderer r = new SQLRenderer();
 
 			sql = "SELECT PEJ.ID_PEJABAT,PEJ.NAMA_PEJABAT, PEJ.ALAMAT1, PEJ.ALAMAT2, PEJ.ALAMAT3, "
-					+ "PEJ.POSKOD, PEJ.ID_BANDAR, PEJ.ID_NEGERI, PEJ.NO_TEL, PEJ.NO_FAX, "
+					+ "PEJ.POSKOD, PEJ.ID_BANDAR, PEJ.ID_NEGERI, PEJ.NO_TEL, PEJ.NO_FAX, PEJ.EMEL,"
 					+ "NEG.NAMA_NEGERI, NEG.KOD_NEGERI, BAN.KOD_BANDAR, "
 					+ "BAN.KETERANGAN AS NAMA_BANDAR "
 					+ "FROM TBLRUJPEJABAT PEJ, TBLRUJNEGERI NEG,TBLRUJBANDAR BAN "
@@ -1560,6 +1560,7 @@ public class PendaftaranCheckModel {
 				h.put("nama_bandar", rs.getString("NAMA_BANDAR") == null ? "": rs.getString("NAMA_BANDAR"));
 				h.put("id_bandar", rs.getString("ID_BANDAR") == null ? "" : rs.getString("ID_BANDAR"));
 				h.put("kod_bandar", rs.getString("KOD_BANDAR") == null ? "": rs.getString("KOD_BANDAR"));
+				h.put("emel", rs.getString("EMEL") == null ? "": rs.getString("EMEL"));
 				alamat_raya.addElement(h);
 				
 			}
