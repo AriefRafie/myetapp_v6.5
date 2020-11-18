@@ -1,3 +1,4 @@
+
 <style type="text/css">
 
 
@@ -1148,13 +1149,12 @@ alert("Sila Klik 'Paging' No.2 Untuk Penambahan Hakmilik dan Pihak Berkepentinga
 					||($portal_role == "(PPT)KetuaPenolongPengarahUnit" || $portal_role == "(PPT)PengarahUnit" || $portal_role == "adminppt"))
                     
                     
-                    
-                    
 					<input type="button" name="cmdKemaskini" value="Kemaskini" onClick="javascript:kemaskiniPendaftaran('$!id_permohonan')">
-                 		#if($ID_NEGERIPROJEK == "4")    
+                 		##if(($ID_NEGERIPROJEK == "4")   || $!negeriIntegrasi == "4"))
                  		## 2020/10/23 tukar "WartaS8" kepada "Sekyen8"
-                  	<input type="button" name="cmdpopupetanah" value="Integrasi e-Tanah Melaka(Hantar Permohonan)" onClick="eTanahPermohonan('$id_fail','$id_permohonan','Seksyen8','')">
-                    	#end
+                 <!--  	<input type="button" name="cmdpopupetanah" value="Integrasi e-Tanah Melaka(Hantar Permohonan)" onClick="eTanahPermohonan('$id_fail','$id_permohonan','Seksyen8','')">  
+                    	 <input type="button" name="cmdPopupeTanah" value="Integrasi e-Tanah (Daftar Permohonan)" onClick="popupEtanah('$!id_fail','$!id_permohonan','$!id_mmk','Seksyen8')">-->
+                    	##end
                     <!--
                     <input type="button" name="cmdPopupeTanah" value="Integrasi eTanah (Hantar Pelan untuk Charting)" onClick="popupEtanah('$id_fail','$id_permohonan','hantarPelanChartingS8','')">
                     -->
@@ -1163,6 +1163,11 @@ alert("Sila Klik 'Paging' No.2 Untuk Penambahan Hakmilik dan Pihak Berkepentinga
 					
 					#if($id_status!="11" && $id_status!="113" && $id_status!="138")
           				<input type="button" name="button" id="button" value="Cetak" onClick="javascript:setTable('tableReport1')" />
+          				#if($ID_NEGERIPROJEK == "4"   || $!negeriIntegrasi == "4")
+                 		## 2020/10/23 tukar "WartaS8" kepada "Sekyen8"
+                 <!--  	<input type="button" name="cmdpopupetanah" value="Integrasi e-Tanah Melaka(Hantar Permohonan)" onClick="eTanahPermohonan('$id_fail','$id_permohonan','Seksyen8','')">  -->
+                    	 <input type="button" name="cmdPopupeTanah" value="Integrasi e-Tanah (Daftar Permohonan)" onClick="popupEtanah('$!id_fail','$!id_permohonan','$!id_mmk','Seksyen8')">
+                    	#end
           			#end
 				#else
 					<input type="button" name="cmdUpdate" value ="Simpan" onClick="javascript:simpanPendaftaran('$!id_permohonan','$!mode','$!userIdNeg')">
@@ -1854,6 +1859,19 @@ function isDate(dtStr){
 	}
 return true
 }
+
+function popupEtanah(id_fail,id_permohonan,idMMK,jenis_skrin,command) {	
+	
+	//alert("id MMK :"+idMMK);
+		//var url = "../x/${securityToken}/etanah.ppt.sek4?id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&jenis_skrin="+jenis_skrin+"&command="+command;	
+		var url = "../x/${securityToken}/ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah?id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&jenis_skrin="+jenis_skrin+"&command="+command+"&idMMK="+idMMK;	
+	    var hWnd = window.open(url,'printuser','width=1200,height=1000, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
+		
+	}                                                
 </script>
 
 <script type="text/javascript">

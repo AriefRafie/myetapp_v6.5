@@ -76,14 +76,6 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 		context.put("portalRole", portal_role);
 		//System.out.println("*** jumlah_notifikasi --- "+jumlah_notifikasi);
 		
-		Hashtable get_notifikasi_pembayaran = null;
-		get_notifikasi_pembayaran = (Hashtable) notifikasi_pembayaran(user_id, Long.parseLong(jawatan));
-		String jumlah_pembayaran = (String) get_notifikasi_pembayaran.get("jumlah_Pembayaran");
-		context.put("jumlah_notifikasi_pembayaran", Long.parseLong(jumlah_pembayaran));
-		context.put("jawatan", jawatan);
-		context.put("portalRole", portal_role);
-
-		//yati
 		Hashtable get_notifikasi_bayarpampasan = null;
 		get_notifikasi_bayarpampasan = (Hashtable) notifikasi_bayarpampasan(idKementerian);
 		String jumlah_bayarpampasan = (String) get_notifikasi_bayarpampasan.get("jumlahnotifikasi");
@@ -307,53 +299,6 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 			// h.put("jumlah_Permohonan", "0");
 			while (rs.next()) {
 				h.put("jumlah_Permohonan",
-						rs.getString("jumlahPermohonan") == null ? "0" : rs
-								.getString("jumlahPermohonan"));
-			}
-			return h;
-
-			/*
-			 * } else { Hashtable h; h = new Hashtable();
-			 * h.put("jumlah_Permohonan", "0"); return h; }
-			 */
-		} finally {
-			if (db != null)
-				db.close();
-		}
-	}
-	
-	public Hashtable notifikasi_pembayaran(String userID, long jawatan)
-			throws Exception {
-		Db db = null;
-		String sql = "";
-
-		try {
-			db = new Db();
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
-
-
-			
-				sql += " SELECT (SELECT COUNT (p.flag_peruntukan) "
-				        +" FROM tblpptpermohonan p, tblpfdfail f, tblrujsuburusan su, tblrujstatus s, tblrujkementerian k, "
-				        +" users u, users_kementerian uk "
-				        +" WHERE f.id_fail = p.id_fail AND f.id_suburusan = su.id_suburusan AND f.id_kementerian = k.id_kementerian "
-				        +" AND u.user_id = uk.user_id AND p.id_status = s.id_status AND uk.id_kementerian = k.id_kementerian "
-				        +" AND f.id_suburusan IN ('51', '52', '53') AND u.user_id ='" + userID + "' "
-				        + " AND UPPER (s.id_status) = '76' ) AS jumlahpermohonan FROM DUAL ";
-			
-
-			myLog.info("JUMLAH DOKUMEN PEMBAYARAN :"+sql.toUpperCase());
-			System.out.println("**** sql PPT --- "+sql);
-			ResultSet rs = stmt.executeQuery(sql);
-
-			//System.out.println("**** sql PPT --- "+sql);
-
-			Hashtable h;
-			h = new Hashtable();
-			// h.put("jumlah_Permohonan", "0");
-			while (rs.next()) {
-				h.put("jumlah_Pembayaran",
 						rs.getString("jumlahPermohonan") == null ? "0" : rs
 								.getString("jumlahPermohonan"));
 			}

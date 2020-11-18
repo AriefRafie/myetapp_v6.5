@@ -273,4 +273,95 @@ public class FrmPhpNotifikasiEmel {
 	public void sendEmailtoJPPH(String idPermohonan, String idKementerian, HttpSession session) throws Exception {
 		
 	}
+	
+	public void sendEmailtoKJPAPB(String idUlasanTeknikal, HttpSession session) throws Exception {
+		Db db = null;
+		Connection conn = null;
+		Vector beanMaklumatEmail = null;
+		EmailSender email = EmailSender.getInstance();
+		String sql = "";
+		String tajuk = "";
+		String noFail = "";
+		String namaPelesen = "";
+		String namaJabatan = "";
+		String tempoh = "";
+		String tarikhHantar = "";
+		String tarikhTerima = "";
+		
+		try {
+			db = new Db();
+			conn = db.getConnection();
+	    	conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			sql = "SELECT TBLPHPULASANTEKNIKAL.ID_ULASANTEKNIKAL, TBLPHPULASANTEKNIKAL.FLAG_KJP, TBLPHPULASANTEKNIKAL.JANGKAMASA, "
+				+ "TBLPHPULASANTEKNIKAL.TARIKH_HANTAR, TBLPHPULASANTEKNIKAL.TARIKH_JANGKA_TERIMA, "
+				+ "TBLPFDFAIL.NO_FAIL, TBLPFDFAIL.TAJUK_FAIL, TBLPHPPEMOHON.NAMA "
+				+ "FROM TBLPHPULASANTEKNIKAL, TBLPERMOHONAN, TBLPHPPEMOHON, TBLPFDFAIL "
+				+ "WHERE TBLPHPULASANTEKNIKAL.ID_PERMOHONAN = TBLPERMOHONAN.ID_PERMOHONAN "
+				+ "AND TBLPERMOHONAN.ID_PEMOHON = TBLPHPPEMOHON.ID_PEMOHON AND TBLPERMOHONAN.ID_FAIL = TBLPFDFAIL.ID_FAIL "
+				+ "AND TBLPHPULASANTEKNIKAL.ID_ULASANTEKNIKAL =  '"+idUlasanTeknikal+"'";
+			
+			ResultSet rsEmel = stmt.executeQuery(sql);
+			if (rsEmel.next()){
+				tajuk = rsEmel.getString("TAJUK_FAIL") == null ? "" :
+							rsEmel.getString("TAJUK_FAIL");
+				noFail = rsEmel.getString("NO_FAIL") == null ? "" :
+							rsEmel.getString("NO_FAIL");
+				namaPelesen = rsEmel.getString("NAMA") == null ? "" :
+							rsEmel.getString("NAMA");
+				namaJabatan = rsEmel.getString("FLAG_KJP") == null ? "" :
+					rsEmel.getString("FLAG_KJP");
+				tempoh = rsEmel.getString("JANGKAMASA") == null ? "" :
+							rsEmel.getString("JANGKAMASA");
+				tarikhHantar = sdf.format(rsEmel.getDate("TARIKH_HANTAR"));
+				tarikhTerima = sdf.format(rsEmel.getDate("TARIKH_JANGKA_TERIMA"));
+			}
+			
+			//TO GET USER EMAIL BY ROLE (PHP)PYWPenolongPegawaiTanahNegeri
+//			sql = "SELECT U.USER_ID, U.USER_LOGIN, U.USER_ROLE AS USER_ROLE, UI.EMEL "
+//				+ "FROM USERS U, USERS_INTERNAL UI "
+//				+ "WHERE U.USER_ID = UI.USER_ID AND U.USER_ROLE = '(PHP)PYWPenolongPegawaiTanahNegeri' "
+//				+ "UNION "
+//				+ "SELECT U.USER_ID, U.USER_LOGIN, UR.ROLE_ID AS USER_ROLE, UI.EMEL "
+//				+ "FROM USERS U, USER_ROLE UR, USERS_INTERNAL UI "
+//				+ "WHERE U.USER_LOGIN = UR.USER_ID AND U.USER_ID = UI.USER_ID "
+//				+ "AND UR.ROLE_ID = '(PHP)PYWPenolongPegawaiTanahNegeri'";
+//			
+//			ResultSet rsPenerimaEmel = stmt.executeQuery(sql);
+//			
+//			List<String> strPenerima = new ArrayList<String>(); 
+//			while (rsPenerimaEmel.next()) {
+//				if (rsPenerimaEmel.getString("EMEL") != null && rsPenerimaEmel.getString("EMEL").trim().length() > 0) {
+//					strPenerima.add(rsPenerimaEmel.getString("EMEL")); 
+//				} 			 
+//			}
+//			email.MULTIPLE_RECIEPIENT = new String[strPenerima.size()];
+//			  
+//			for (int i = 0; i < strPenerima.size(); i++) {
+//				email.MULTIPLE_RECIEPIENT[i] = strPenerima.get(i); 
+//			}
+			email.RECIEPIENT = "nurulain.siprotech@gmail.com"; //untuk testing sementara
+			email.SUBJECT = "Mohon Ulasan " +namaJabatan+ " untuk " +namaPelesen+ " (" +noFail+ ")";
+			email.MESSAGE =  "Assalamualaikum dan Salam Sejahtera"
+							 +"<br><br>Tuan/ Puan,"
+							 +"<br><br><u><b>" +tajuk.toUpperCase()+ "</b></u>"
+							 +"<br>Dengan hormatnya saya diarah merujuk berhubung perkara di atas."
+							 +"<br><br>2.		Sukacita dipohon pihak tuan/puan mengemukakan maklum balas dan ulasan "
+							 +"bagi permohonan tersebut kepada Jabatan ini melalui Sitem MyeTaPP sebelum atau pada "
+							 +tarikhTerima+ " untuk tindakan Jabatan selanjutnya."
+							 +"<br><br>3.		Kerjasama dan maklum balas awal pihak tuan/puan berhubung perkara tersebut amat dihargai."
+							 +"<br><br><br>Sekian, terima kasih.<br><br><br>"
+							 +"Unit Maritim"
+							 +"<br>Bahagian Penguatkuasa dan Hasil Persekutuan"
+							 +"<br>Jabatan Ketua Pengarah Tanah dan Galian Persekutuan<br><br><br>"
+							 +"Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
+			email.sendEmail();
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
 }

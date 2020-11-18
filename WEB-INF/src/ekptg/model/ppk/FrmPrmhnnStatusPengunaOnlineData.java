@@ -1479,5 +1479,39 @@ public static Vector getSenaraiTugasanA(String search,String idMasuk,String role
 			if (db != null)	db.close();
 		}
 	}
+	
+	// syafiqah tambah 14112020 get id semakan based in id jenis dokumen
+	
+	Vector checkIDSemakan = null;
+	
+	@SuppressWarnings("unchecked")
+	public Vector checkIDSemakan(String idJenisDokumen) throws Exception {
+		
+		checkIDSemakan = new Vector();
+		checkIDSemakan.clear();
+		
+		Db db = null;
+		String sql = "";
+		
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT J.ID_SEMAKAN FROM TBLSEMAKANJENISDOKUMEN J WHERE J.ID_JENISDOKUMEN = '"+idJenisDokumen+"'";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			myLogger.info("SQL GET ID_SEMAKAN : "+sql);
+			Hashtable h;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("ID_SEMAKAN", rs.getString("ID_SEMAKAN")== null?"":rs.getString("ID_SEMAKAN"));					
+				checkIDSemakan.addElement(h);
+			}
+			return checkIDSemakan;
+		
+		} finally {
+			if (db != null)	db.close();
+		}
+	}
 
 }

@@ -86,7 +86,7 @@
     <td width="30%">&nbsp;</td>
     <td width="70%"> #if ($mode == 'newKoordinat')
       <input type="button" name="cmdSimpanKoordinat" id="cmdSimpanKoordinat" value="Simpan" onClick="simpanKoordinat()"/>
-      <input type="button" name="cmdBatalKoordinat" id="cmdBatalKoordinat" value="Batal/Kembali" onClick="batalKoordinat()"/>
+      <input type="button" name="cmdBatalKoordinat" id="cmdBatalKoordinat" value="Kembali" onClick="batalKoordinat()"/>
       #end
       #if ($mode == 'viewKoordinat')
       <input type="button" name="cmdKemaskiniKoordinat" id="cmdKemaskiniKoordinat" value="Kemaskini" onClick="kemaskiniKoordinat()"/>
@@ -95,7 +95,7 @@
       #end
       #if ($mode == 'updateKoordinat')
       <input type="button" name="cmdSimpanKemaskiniKoordinat" id="cmdSimpanKemaskiniKoordinat" value="Simpan" onClick="simpanKemaskiniKoordinat()"/>
-      <input type="button" name="cmdBatalKemaskiniKoordinat" id="cmdSimpanKemaskiniKoordinat" value="Batal" onClick="batalKemaskiniKoordinat()"/>
+      <input type="button" name="cmdBatalKemaskiniKoordinat" id="cmdSimpanKemaskiniKoordinat" value="Kembali" onClick="batalKemaskiniKoordinat()"/>
       #end </td>
   </tr>
 </table>

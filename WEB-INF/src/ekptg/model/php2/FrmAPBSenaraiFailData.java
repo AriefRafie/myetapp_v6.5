@@ -162,7 +162,7 @@ public class FrmAPBSenaraiFailData {
 				
 				String jenisPermohonan = "";			
 				if("1".equals(rs.getString("ID_JENISPERMOHONAN"))) {
-					jenisPermohonan = "PERMOHONAN LESEN";
+					jenisPermohonan = "PERMOHONAN BAHARU";
 				} else if("2".equals(rs.getString("ID_JENISPERMOHONAN"))) {
 					jenisPermohonan = "PEMBAHARUAN LESEN";
 				}
@@ -674,15 +674,17 @@ public class FrmAPBSenaraiFailData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_FAIL, A.NO_FAIL, B.ID_PERMOHONAN, B.NO_PERMOHONAN, C.ID_JENISPERMOHONAN, C.ID_PERMOHONANLAMA, B.TARIKH_SURAT,"
-				+ " B.TARIKH_TERIMA, B.NO_RUJ_SURAT, A.TAJUK_FAIL, B.TUJUAN, B.ID_PEMOHON, C.ID_JENIS_LESEN"
-				+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPMOHONNJDUALPERTAMA C WHERE A.ID_FAIL = B.ID_FAIL"
-				+ " AND B.ID_PERMOHONAN = C.ID_PERMOHONAN AND A.ID_FAIL = '"
+			sql = "SELECT A.ID_FAIL, A.NO_FAIL, B.ID_PERMOHONAN, B.NO_PERMOHONAN, C.ID_JENISPERMOHONAN, C.ID_PERMOHONANLAMA,"
+				+ " B.TARIKH_SURAT, B.TARIKH_TERIMA, B.NO_RUJ_SURAT, A.TAJUK_FAIL, B.TUJUAN, B.ID_PEMOHON, C.ID_JENIS_LESEN,"
+				+ " C.FLAG_LUAR_PERAIRANNEGERI, D.NAMA_NEGERI AS NAMA_NEGERI_PERAIRAN"
+				+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPMOHONNJDUALPERTAMA C, TBLRUJNEGERI D"
+				+ " WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PERMOHONAN = C.ID_PERMOHONAN"
+				+ " AND C.ID_NEGERI_PERAIRAN = D.ID_NEGERI AND A.ID_FAIL = '"
 				+ idFail + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
-			ResultSet rsi=null;
-			ResultSet rsj=null;
+			ResultSet rsi = null;
+			ResultSet rsj = null;
 					
 			Hashtable h;
 			int bil = 1;
@@ -715,6 +717,14 @@ public class FrmAPBSenaraiFailData {
 						: sdf.format(rs.getDate("TARIKH_TERIMA")));
 				h.put("noRujSurat", rs.getString("NO_RUJ_SURAT") == null ? "" : rs
 						.getString("NO_RUJ_SURAT").toUpperCase());
+				String idFlagLuar = "";
+				if("1".equals(rs.getString("FLAG_LUAR_PERAIRANNEGERI"))) {
+					h.put("idFlagLuar", "YA");
+				} else {
+					h.put("idFlagLuar", "TIDAK");
+				}
+				h.put("namaNegeriPerairan", rs.getString("NAMA_NEGERI_PERAIRAN") == null ? "" : rs
+						.getString("NAMA_NEGERI_PERAIRAN").toUpperCase());
 				h.put("perkara", rs.getString("TAJUK_FAIL") == null ? "" : rs
 						.getString("TAJUK_FAIL").toUpperCase());
 				h.put("perkara2", rs.getString("TAJUK_FAIL") == null ? "" : "PEMBAHARUAN " + rs
@@ -1118,7 +1128,7 @@ public class FrmAPBSenaraiFailData {
 						+ " E.TARIKH_MULA_LESEN, E.TARIKH_TAMAT_LESEN, E.NO_LESEN, F.NAMA_NEGERI, G.ID_JENISPERMOHONAN, G.ID_JENIS_LESEN"
 						+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPBYRNSYRTKLLSNLESENAPB E, TBLRUJNEGERI F, TBLPHPPMOHONNJDUALPERTAMA G"
 						+ " WHERE A.ID_URUSAN = '9' AND A.ID_SUBURUSAN = '57' AND A.ID_FAIL = B.ID_FAIL AND B.ID_STATUS = D.ID_STATUS AND B.ID_PEMOHON = C.ID_PEMOHON "
-						+ " AND C.ID_NEGERITETAP = F.ID_NEGERI AND B.ID_PERMOHONAN = E.ID_PERMOHONAN(+) AND B.ID_PERMOHONAN = G.ID_PERMOHONAN(+) AND E.FLAG_AKTIF(+) = 'Y' AND A.NO_FAIL IS NULL ";
+						+ " AND C.ID_NEGERITETAP = F.ID_NEGERI(+) AND B.ID_PERMOHONAN = E.ID_PERMOHONAN(+) AND B.ID_PERMOHONAN = G.ID_PERMOHONAN(+) AND E.FLAG_AKTIF(+) = 'Y' AND A.NO_FAIL IS NULL ";
 				
 				// noFail
 				if (noPermohonan != null) {
@@ -1191,7 +1201,7 @@ public class FrmAPBSenaraiFailData {
 					
 					String jenisPermohonan = "";			
 					if("1".equals(rs.getString("ID_JENISPERMOHONAN"))) {
-						jenisPermohonan = "PERMOHONAN LESEN";
+						jenisPermohonan = "PERMOHONAN BAHARU";
 					} else if("2".equals(rs.getString("ID_JENISPERMOHONAN"))) {
 						jenisPermohonan = "PEMBAHARUAN LESEN";
 					}
