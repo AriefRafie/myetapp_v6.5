@@ -32,7 +32,7 @@
 <input type="hidden" name="showBoxAsal2" value="$!showBoxAsal2">
 <input type="hidden" name="showBoxAsal3" value="$!showBoxAsal3">
 <input type="hidden" name="resetRadio">
-
+<input type="hidden"   name="showlotPT" id="showlotPT" value="$!showlotPT">
 </p>
 
 
@@ -165,18 +165,11 @@
   				</td>
         </tr>
 			
-        <tr>
-            	<td>No.PT</td>
-            	<td>:</td>
-            	<td>$!selectLot</td>
-       </tr>
-            
-       <tr>
-            	<td>&nbsp;</td>
-            	<td>&nbsp;</td>
-                <td><input type="text" name="txtnopt" size="22" value="$txtnopt" maxlength="20" id="txtnopt"  ></td>
-       </tr>
-             
+   
+       ##yati
+       ##101,23,103,4,133,124,81,31,13,8,105,9918129,102,84,8,104,105,1,9,128,126
+       ##document.${formName}.editJenisHakmilik.value == ""
+             #if($showlotPT == "lot")
        <tr>
             	<td>No.LOT</td>
             	<td>:</td>
@@ -189,6 +182,13 @@
               
                 </td>
        </tr>
+       #else
+         <tr>
+            	<td>No.PT</td>
+            	<td>:</td>
+            	<td>$!selectLot</td>
+       </tr>
+       #end
             <!-- PENAMBAHBAIKAN V7 yati -->
        <tr>
 				<td>Kategori Tanah</td>

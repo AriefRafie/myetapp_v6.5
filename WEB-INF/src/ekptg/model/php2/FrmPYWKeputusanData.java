@@ -770,6 +770,7 @@ public class FrmPYWKeputusanData {
 
 		String sql = "";
 		String sqlSelect = "";
+		String sqlSelect2 = "";
 		String sqlCheckExistFailHasil = "";
 		String noFail = "";
 		String idPemohon = "";
@@ -791,6 +792,7 @@ public class FrmPYWKeputusanData {
 				String idSuburusan = rsFail.getString("ID_SUBURUSAN");
 				long idFail = 0;
 				long idHasil = 0;
+				String tujuan = "";
 				noFail = rsFail.getString("NO_FAIL");
 				/**
 				 * Kemaskini pada : 29/01/2020
@@ -873,6 +875,14 @@ public class FrmPYWKeputusanData {
 					idPemohon = rsPermohonan.getString("ID_PEMOHON");
 				}
 
+				sqlSelect2 = "SELECT TUJUAN FROM TBLPHPPERMOHONANSEWA SEWA WHERE SEWA.ID_PERMOHONAN = '"
+						+ idPermohonan + "'";
+				ResultSet rsSewa = stmt
+						.executeQuery(sqlSelect2);
+				if (rsSewa.next()) {
+					tujuan = rsSewa.getString("TUJUAN");
+				}
+
 				if (failHasilExist) {
 					// TBLPHPHASIL
 					r = new SQLRenderer();
@@ -880,6 +890,7 @@ public class FrmPYWKeputusanData {
 					r.add("ID_FAIL", idFail);
 					r.add("ID_FAILPERMOHONAN", idFailPenyewaan);
 					r.add("ID_PEMOHON", idPemohon);
+					r.add("TUJUAN", tujuan);
 
 					r.add("ID_KEMASKINI", userId);
 					r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
@@ -895,6 +906,7 @@ public class FrmPYWKeputusanData {
 					r.add("ID_FAIL", idFail);
 					r.add("ID_FAILPERMOHONAN", idFailPenyewaan);
 					r.add("ID_PEMOHON", idPemohon);
+					r.add("TUJUAN", tujuan);
 
 					r.add("ID_MASUK", userId);
 					r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
@@ -925,6 +937,8 @@ public class FrmPYWKeputusanData {
 					Date tarikhMulaDasar = new Date();
 					Date tarikhTamatDasar = new Date();
 					tarikhMulaDasar = rsPerjanjian.getDate("TARIKH_MULA_DASAR");
+					System.out.println("tarikhMulaDasar >> "+tarikhMulaDasar);
+					System.out.println("tempohDasar >>>> "+tempohDasar);
 					tarikhTamatDasar = rsPerjanjian
 							.getDate("TARIKH_TAMAT_DASAR");
 
@@ -960,17 +974,19 @@ public class FrmPYWKeputusanData {
 										+ "','dd/MM/yyyy')"));
 					}
 					r.add("TEMPOH", Integer.parseInt(tempoh));
-					if (!"".equals(tarikhMulaDasar)) {
+					if (!"".equals(tarikhMulaDasar) && !"null".equals(tarikhMulaDasar) && tarikhMulaDasar != null) {
 						r.add("TARIKH_MULA_DASAR",
 								r.unquote("to_date('" + sdf.format(tarikhMulaDasar)
 										+ "','dd/MM/yyyy')"));
 					}
-					if (!"".equals(tarikhTamatDasar)) {
+					if (!"".equals(tarikhTamatDasar) && !"null".equals(tarikhTamatDasar) && tarikhTamatDasar != null) {
 						r.add("TARIKH_TAMAT_DASAR",
 								r.unquote("to_date('" + sdf.format(tarikhTamatDasar)
 										+ "','dd/MM/yyyy')"));
 					}
-					r.add("TEMPOH_DASAR", Integer.parseInt(tempohDasar));
+					if (tempohDasar != null) {
+						r.add("TEMPOH_DASAR", Integer.parseInt(tempohDasar));
+					}
 					if (!"".equals(tarikhSst)) {
 						r.add("TARIKH_SST",
 								r.unquote("to_date('" + sdf.format(tarikhSst)
