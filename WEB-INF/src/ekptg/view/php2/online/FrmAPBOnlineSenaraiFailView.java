@@ -442,9 +442,12 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 			Vector<Hashtable<String,String>> vec = header.setMaklumatPemohon(id_user);
 			this.context.put("pemohon", vec.get(0));
 	    	
+//			if("2".equals(idJenisPermohonan)){
+//				this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(vec.get(0).get("noPengenalan"), "socNoFailLama", Long.parseLong(idFailLama), "", " onChange=\"doChangeNoFailLama();\"", "9"));  
+//	    	}
 			if("2".equals(idJenisPermohonan)){
-				this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(vec.get(0).get("noPengenalan"), "socNoFailLama", Long.parseLong(idFailLama), "", " onChange=\"doChangeNoFailLama();\"", "9"));  
-	    	}
+				this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(id_user, "socNoFailLama", Long.parseLong(idFailLama), "disabled", " class=\"disabled\""));  
+	        }
 			
 	    	//MAKLUMAT PERMOHONAN
 	    	this.context.put("selectNegeri",HTML.SelectNegeriAPB("socNegeri",Long.parseLong(idNegeri),"", " "));
