@@ -51,7 +51,7 @@
 <legend><strong>Senarai Laporan</strong></legend>
 	<table width="100%" border="0" cellspacing="2" cellpadding="2">
        <tr>
-        <td><a href="#" class="style2" onClick="javascript:cetakAPBLaporanBorangA('$idBorangA')"><font color="blue"> Borang A </font></a></td>
+        <td><a href="#" class="style2" onClick="javascript:cetakAPBBorangA('$idBorangA')"><font color="blue"> Borang A </font></a></td>
       </tr>           
     </table>
 </fieldset>
