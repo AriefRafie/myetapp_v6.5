@@ -2108,8 +2108,6 @@ document.f1.action = "";
 }
 function jenis_hutangU(val)
 {
-alert(val);
-
 if(val=="1")
 {
 
