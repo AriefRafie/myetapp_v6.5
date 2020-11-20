@@ -1105,7 +1105,7 @@
  			
  			if (document.f1.nama.value == "") { 
  			// alert("namaorga = "+ document.f1.nama.value);
- 				alert('Sila pastikan nama nOrganisasi dimasukkan');
+ 				alert('Sila pastikan nama Organisasi dimasukkan');
  				document.f1.nama.focus();
  				doRefreshCaptcha();
  			return;
