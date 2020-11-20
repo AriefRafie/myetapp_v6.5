@@ -339,7 +339,7 @@
 						</td>
 						<td width="1%">:</td>
 						<td width="58%">
-							<input name="txtRayuanPremium" $!inputStyleNum type="text" id="txtRayuanPremium" onblur="validateCurrency(this,this.value,'');calculate()" value="$!dat.rayuanpremium"/>							
+							<input name="txtRayuanPremium" $!inputStyleNum type="text" id="txtRayuanPremium"  onblur="validateCurrency(this,this.value,'');"  value="$!dat.rayuanpremium"/>							
 						</td>
 					</tr>					
 				</table>			          
@@ -401,3 +401,5 @@
 
 	
 	<input type="hidden" name="idNotis" value="$idNotis" />
+	
+	

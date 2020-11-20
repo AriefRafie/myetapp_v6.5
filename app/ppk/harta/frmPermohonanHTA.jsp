@@ -38,6 +38,15 @@
 	font-size: 10px;
 	color: #FF0000;
 }
+.infotips {
+	border:1px solid;
+	background-repeat:no-repeat;
+ 	background-position:10px center; 
+ 	margin:10px 0; 
+ 	padding:15px 10px 15px 10px; 
+	color:#515F2C;
+	background-color:#A6BB72;
+}
 -->
 </style>
 </head>
@@ -1432,9 +1441,13 @@
                     			<tr>
                        				<td align="center"> 
 					
-  										#if($show_simpan_add_htaam == "yes" || $show_kemaskini_htaam == "yes")
+  										#if($show_simpan_add_htaam == "yes")
 				 						<input type="submit" name="simpanhta" id="simpanhta" $readmode value="Simpan" onclick="setSelected(1,0,0,0);add_Htaam('$idhta','$idPermohonan')"/>                      	
   										#end 
+  										
+  										#if($show_kemaskini_htaam == "yes")
+				 						<input type="submit" name="simpanhta" id="simpanhta" $readmode value="Simpan" onclick="setSelected(1,0,0,0);save_Htaam('$idhta','$idPermohonan')"/>                      	
+  										#end
   						
 				  						#if($show_hapus_htaam=="yes") 
 				  						<input type="button" name="cmdHapus1" id="cmdHapus1" $readmode value="Hapus"  onclick="setSelected(1,0,0,1);hapus_Htaam()"/>
@@ -1453,9 +1466,9 @@
                         	<fieldset><legend>SENARAI HARTA TAK ALIH (ADA HAKMILIK) </legend>
                         	#if($!skrin_online == "yes")
                           		<div id="info_skrin_daftar_sek8"></div>
-								<script>
-									parent.document.getElementById("info_skrin_daftar_sek8").innerHTML="<div class=\"warning_online_ppk\"><font color=\"black\"><b>* Harta Tak Alih : Tanah, rumah dan kepentingan-kepentingan, hak atau faedah yang terdapat atau yang akan didapati daripada tanah.</b><br><b><blink>*</blink> Harta Tak Alih (Ada Hakmilik): Harta tak alih yang mempunyai hakmilik/geran yang berdaftar nama si mati sebagai pemilik.</br></b></font></div>";
-								</script> 
+<!-- 								<script> -->
+									<div class="infotips"><font color="black"><b>* Harta Tak Alih : Tanah, rumah dan kepentingan-kepentingan, hak atau faedah yang terdapat atau yang akan didapati daripada tanah.</b><br><b><blink>*</blink> Harta Tak Alih (Ada Hakmilik): Harta tak alih yang mempunyai hakmilik/geran yang berdaftar nama si mati sebagai pemilik.</br></b></font></div>
+<!-- 								</script>  -->
 							#end
                           	<table width="100%">
                             	<tr>
@@ -1563,7 +1576,7 @@
                           					&& $id_Status != "164" 
                           					&& $id_Status != "165")
 	                              			#if($open_button_online == "yes")
-			                        		<a href = "javascript:lampiranHarta('$listam.idhta');">
+			                        		<a href = "javascript:lampiranHarta('$listam.idhta','$!id');">
 												<img border="0" src="../img/plus.gif" width="20" height="15"/>
 											</a><br>
 											#end	
@@ -2224,8 +2237,9 @@ function edit_Htaam(idhta){
 		document.f1.submit();
 }
 
-	function save_Htaam(idPermohonanSimati,idhta,idSimati,idDokumen){
-		alert('save_Htaam');
+	//function save_Htaam(idPermohonanSimati,idhta,idSimati,idDokumen){
+	function save_Htaam(idPermohonanSimati,idhta){
+		//alert('save_Htaam');
 		var b1=parseInt(document.f1.txtBahagianSimati1Up.value);
       	var b2=parseInt(document.f1.txtBahagianSimati2Up.value);
 		
@@ -2258,12 +2272,14 @@ function edit_Htaam(idhta){
      	  	document.f1.txtAlamatPoskodHtaam.focus(); 
      		return; 
                  
-       	}else if (document.f1.txtAlamat1Htaam1.value != "" && document.f1.txtBandarHartaHtaamX2.value == ""){
-      		alert('Sila masukkan " Alamat Bandar " terlebih dahulu.');
-      	  	document.f1.txtBandarHartaHtaamX2.focus(); 
-      		return; 
+       	}
+//        	else if (document.f1.txtAlamat1Htaam1.value != "" && document.f1.txtBandarHartaHtaamX2.value == ""){
+//       		alert('Sila masukkan " Alamat Bandar " terlebih dahulu.');
+//       	  	document.f1.txtBandarHartaHtaamX2.focus(); 
+//       		return; 
                   
-       	} else if(document.f1.socJenisHakmilikHtaamUp.value == ""){
+//        	} 
+       	else if(document.f1.socJenisHakmilikHtaamUp.value == ""){
 			alert('Sila pilih " Jenis hakmilik" terlebih dahulu.');
 	  		document.f1.socJenisHakmilikHtaamUp.focus(); 
 			return; 
@@ -2314,8 +2330,8 @@ function edit_Htaam(idhta){
         	if (input_box == true) {
 
 			document.f1.id_Permohonansimati.value= idPermohonanSimati;
-		    document.f1.idDokumen.value=idDokumen;
-		    document.f1.idSimati.value=idSimati;
+		    //document.f1.idDokumen.value=idDokumen;
+		    //document.f1.idSimati.value=idSimati;
 		    document.f1.idhtaam.value=idhta;
 		    
 		    //lama
@@ -2325,11 +2341,11 @@ function edit_Htaam(idhta){
 			document.f1.action="";
 		   	document.f1.submit();
 		
-			//}else{	return;	
+			 else {	
+        		return;
 			}
 	
-        }
-      	      	
+        }	      	
 	}
 
 function hapus_Htaam(){
@@ -3576,9 +3592,10 @@ function cetakDokumen(id){
 		document.f1.submit();
 		
 	}	
-	function lampiranHarta(idHarta) {
-	    //
-		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=paparHTA&actionPopup=papar&idHarta="+idHarta+"&flagOnline=$!flagOnline";
+	function lampiranHarta(idHarta, idPermohonan) {
+	    //alert(idPermohonan);
+		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=paparHTA&actionPopup=papar&idHarta="+idHarta+"&flagOnline=$!flagOnline&idPermohonan="+idPermohonan;
+		url +="&jenisdokumen=1108";
 	    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 	       hWnd.opener = document.window;

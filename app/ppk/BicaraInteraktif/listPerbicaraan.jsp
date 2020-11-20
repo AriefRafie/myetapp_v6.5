@@ -99,6 +99,21 @@ Nama Simati
           
 		   </td>		     
 	</tr>
+	
+	<!-- arief add tukar pegawai 2 OPEN-->
+	<tr >
+		   <td  align="right" valign="top" colspan="14" >
+		  <a class="blue" href="javascript:openCloseMultipleTPSecond('','','','','','view_tukarpegawai2','tukarpegawai2','$command');"><u><b>
+          <span id="icon_tukarpegawai2" >>> </span>Skrin Tukar Pegawai 2<br /><br />
+          </b></u></a>
+          <input type="hidden" name="flag_tukarpegawai2" id="flag_tukarpegawai2" value="close" />
+          <div id="view_tukarpegawai2">
+          
+          </div>
+          
+		   </td>		     
+	</tr>
+	<!-- arief add tukar pegawai 2 CLOSE -->
     #end
     
     
@@ -240,4 +255,11 @@ Nama Simati
 <script>
 openCloseMultipleTP('','','','','','view_tukarpegawai_multiple','tukarpegawai_multiple');
 </script>
+#end
+
+#if($flagOpenTP2 == "Y")
+<script>
+openCloseMultipleTP2('','','','','','view_tukarpegawai2','tukarpegawai2');
+</script>
+
 #end

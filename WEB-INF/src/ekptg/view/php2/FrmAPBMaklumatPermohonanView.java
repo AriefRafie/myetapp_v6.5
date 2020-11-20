@@ -27,7 +27,7 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
 	FrmAPBHeaderData logicHeader = new FrmAPBHeaderData();
 	FrmAPBMaklumatPermohonanData logic = new FrmAPBMaklumatPermohonanData();
 	private ILampiran iLampiran = null;
-	FrmSemakan semak = null;
+	FrmSemakan semak = null;  
 
 	@Override
 	public String doTemplate2() throws Exception {
@@ -167,7 +167,6 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
 			idKategoriPemohon =(String)hashHeader.get("idKategoriPemohon");	
 			String status = (String) hashHeader.get("status");
 			this.context.put("status", status.toUpperCase());
-			
 		}
 		
 		// GET FLAG OPEN DETAIL
@@ -201,7 +200,6 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
         	maklumatProjek(mode, idPermohonan, idProjek);
         	maklumatPengarah(mode, idPemohon, idPengarah);
         	
-
         	//SENARAI PROJEK
 			logic.setSenaraiProjek(idPermohonan);
 			senaraiProjek = logic.getListProjek();
@@ -255,6 +253,7 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
         this.context.put("idKategoriPemohon", idKategoriPemohon);
 
 		return vm;
+		
 	}
 
 	private void maklumatPermohonan(String mode, String idPermohonan) throws Exception, Exception {
@@ -303,7 +302,7 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
 			hashMaklumatPermohonan.put("perkara", getParam("txtPerkara"));	
 			hashMaklumatPermohonan.put("tujuanPengambilan", getParam("txtTujuanPengambilan"));	
 			hashMaklumatPermohonan.put("tempoh", getParam("txtTempoh"));
-			hashMaklumatPermohonan.put("pengalaman", getParam("txtPengalaman"));
+			hashMaklumatPermohonan.put("pengalaman", getParam("txtRingkasanPengalaman"));
 			hashMaklumatPermohonan.put("lokasi", getParam("txtLokasi"));
 			hashMaklumatPermohonan.put("luas", getParam("txtLuas"));
 			hashMaklumatPermohonan.put("modalSemasa", getParam("txtModalSemasa"));
@@ -797,4 +796,6 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
 		return iLampiran;
 				
 	}
+	
+	
 }

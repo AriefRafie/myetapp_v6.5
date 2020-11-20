@@ -8,14 +8,14 @@ import ekptg.helpers.HTML;
 import ekptg.helpers.Utils;
 
 public class FrmREVPopupCetakLaporanView extends AjaxBasedModule{
-	
+
 	private static final long serialVersionUID = 1L;
 
 	public String doTemplate2() throws Exception {
 
 		//GET DEFAULT PARAM
 	    String vm = "app/php2/frmREVPopupCetakLaporan.jsp";
-	    
+
 	    String idPegawai = getParam("socPegawai");
 		if (idPegawai == null || idPegawai.trim().length() == 0){
 			idPegawai = "99999";
@@ -38,13 +38,13 @@ public class FrmREVPopupCetakLaporanView extends AjaxBasedModule{
 		}
 
 		String pattern = "dd/MM/yyyy";
-		String currentDateInString =new SimpleDateFormat(pattern).format(new Date());		
-		
+		String currentDateInString =new SimpleDateFormat(pattern).format(new Date());
+
 		String tahunDari = getParam("socTahunDari");
 		String tahunHingga = getParam("socTahunHingga");
 		String bulanDari = getParam("socBulanDari");
-		String bulanHingga = getParam("socBulanHingga");		
-	    
+		String bulanHingga = getParam("socBulanHingga");
+
 	    String tarikhMula = getParam("txdTarikhMula");
 	    String tarikhTamat = getParam("txdTarikhTamat");
 	    String rujTarikh = getParam("txtRujSurat");
@@ -54,8 +54,9 @@ public class FrmREVPopupCetakLaporanView extends AjaxBasedModule{
 		String idAkaun = getParam("idAkaun");
 		String idHasil = getParam("idHasil");
 		String idNotis = getParam("idNotis");
+		String idMemo = getParam("idMemo");
 		String idJadualPertama = getParam("idJadualPertama");
-		
+
 		this.context.put("selectPegawai",HTML.selectPegawaiUnitHasil("socPegawai", Utils.parseLong(idPegawai), "", ""));
 		this.context.put("selectPegawaiPenyemak",HTML.selectPegawaiUnitHasil("socPegawaiPenyemak", Utils.parseLong(idPegawaiPenyemak), "", ""));
 		this.context.put("selectPegawaiPengesah",HTML.selectPegawaiUnitHasil("socPegawaiPengesah", Utils.parseLong(idPegawaiPengesah), "", ""));
@@ -65,27 +66,28 @@ public class FrmREVPopupCetakLaporanView extends AjaxBasedModule{
 		this.context.put("selectTahunHingga",HTML.SelectTahun("socTahunHingga",tahunHingga, null, "style=width:auto"));
 		this.context.put("selectModBayaran",HTML.SelectModBayaran("socModBayaran", idModBayaran, "", "")); //ADD BY AIN
 		this.context.put("selectKategoriPemohon",HTML.SelectKategoriPemohonIndividuAndSyarikat("socKategoriPemohon",Utils.parseLong(idKategoriPemohon), null, "style=width:auto"));
-		
+
 		if(tarikhMula.equals(""))
 		{
 			tarikhMula = currentDateInString;
 		}
 		this.context.put("txdTarikhMula", tarikhMula);
-		
+
 		if(tarikhTamat.equals(""))
 		{
 			tarikhTamat = currentDateInString;
 		}
 		this.context.put("txdTarikhTamat", tarikhTamat);
-		
-		
+
+
 		this.context.put("idHasil", idHasil);
 		this.context.put("idNotis", idNotis);
+		this.context.put("idMemo", idMemo);
 		this.context.put("idJadualPertama", idJadualPertama);
-		
+
 		this.context.put("txtNoTel", noTel);
 		this.context.put("report", report);
-		
+
 		return vm;
 	}
 

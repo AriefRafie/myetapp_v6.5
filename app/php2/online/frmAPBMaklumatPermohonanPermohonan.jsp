@@ -12,14 +12,16 @@
 
 #set($saizTxtTujuanPengambilan="500")
 #set($saizTxtRingkasanPengalaman="900")
+#set($saizTxtJenisPerniagaan="500")
+#set($saizTxtUndangUndang="500")
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   #if ($mode == 'view' || $mode == 'update')
   <tr>
     <td colspan="2"><fieldset>
       <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
-        #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
-          <tr>
+        #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)        
+        <tr>
           <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
           <td width="28%">Jenis Lesen</td>
           <td width="1%">:</td>
@@ -50,7 +52,7 @@
           <td valign="top">#if ($mode == 'update')<span class="style1">*</span>#end</td>
           <td valign="top">Tujuan </td>
           <td valign="top">:</td>
-          <td valign="top"><textarea name="txtTujuanPengambilan" id="txtTujuanPengambilan" cols="43" rows="5" $readonly class="$inputTextClass" onKeyUp="textCounter(this.form.txtTujuanPengambilan,this.form.remLen1,$!saizTxtTujuanPengambilan);" onKeyDown="textCounter(this.form.txtTujuanPengambilan,this.form.remLen1,$!saizTxtTujuanPengambilan);" >$beanMaklumatPermohonan.tujuanPengambilan</textarea></td>
+          <td valign="top"><textarea name="txtTujuanPengambilan" id="txtTujuanPengambilan" cols="43" rows="5" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();" onKeyUp="textCounter(this.form.txtTujuanPengambilan,this.form.remLen1,$!saizTxtTujuanPengambilan);" onKeyDown="textCounter(this.form.txtTujuanPengambilan,this.form.remLen1,$!saizTxtTujuanPengambilan);" >$beanMaklumatPermohonan.tujuanPengambilan</textarea></td>
         </tr>
         #if ($mode == 'update')
         <tr>
@@ -139,7 +141,7 @@ TAHUN </td>
           <td valign="top">#if ($mode == 'update')<span class="style1">*</span>#end</td>
           <td valign="top">Ringkasan Pengalaman Pemohon</td>
           <td valign="top">:</td>
-          <td valign="top"><textarea name="txtRingkasanPengalaman" id="txtRingkasanPengalaman" cols="43" rows="5" onKeyUp="textCounter(this.form.txtRingkasanPengalaman,this.form.remLen2,$!saizTxtRingkasanPengalaman);" onKeyDown="textCounter(this.form.txtRingkasanPengalaman,this.form.remLen2,$!saizTxtRingkasanPengalaman);" $readonly class="$inputTextClass">$beanMaklumatPermohonan.pengalaman</textarea></td>
+          <td valign="top"><textarea name="txtRingkasanPengalaman" id="txtRingkasanPengalaman" cols="43" rows="5" onblur="this.value=this.value.toUpperCase();" onKeyUp="textCounter(this.form.txtRingkasanPengalaman,this.form.remLen2,$!saizTxtRingkasanPengalaman);" onKeyDown="textCounter(this.form.txtRingkasanPengalaman,this.form.remLen2,$!saizTxtRingkasanPengalaman);" $readonly class="$inputTextClass">$beanMaklumatPermohonan.pengalaman</textarea></td>
         </tr>
         #if ($mode == 'update')
         <tr>
@@ -148,6 +150,39 @@ TAHUN </td>
           <td valign="top">&nbsp;</td>
           <td valign="top">Baki Aksara :&nbsp;
             <input type="text" readonly="readonly" class="disabled" name="remLen2" size="3" maxlength="3" value="$!saizTxtRingkasanPengalaman" /></td>
+        </tr>
+        #end
+        <tr>
+	  	   <td valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+	  	   <td valign="top">Undang-Undang Diperbadankan</td>
+	  	   <td valign="top">:</td>
+	  	   <td valign="top">
+           	  <textarea name="txtUndangUndang" id="txtUndangUndang" cols="43" rows="5" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();" onKeyUp="textCounter(this.form.txtUndangUndang,this.form.remLen3,$!saizTxtUndangUndang);" onKeyDown="textCounter(this.form.txtUndangUndang,this.form.remLen3,$!saizTxtUndangUndang);" >$beanMaklumatPermohonan.undangUndang</textarea></td>
+    	</tr>
+        #if ($mode == 'update')
+        <tr>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">&nbsp;</td>
+          <td width="28%">Baki Aksara :&nbsp;
+          <input type="text" readonly="readonly" class="disabled" name="remLen3" size="3" maxlength="3" value="$!saizTxtUndangUndang" /></td>
+        </tr>
+        #end
+        <tr>
+		  	<td valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+		    <td valign="top">Jenis Perniagaan</td>
+		    <td valign="top">:</td>
+		    <td valign="top">
+		       <textarea name="txtJenisPerniagaan" id="txtJenisPerniagaan" cols="43" rows="5" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();" onKeyUp="textCounter(this.form.txtJenisPerniagaan,this.form.remLen4,$!saizTxtJenisPerniagaan);" onKeyDown="textCounter(this.form.txtJenisPerniagaan,this.form.remLen4,$!saizTxtJenisPerniagaan);" >$beanMaklumatPermohonan.jenisPerniagaan</textarea>
+		    </td>
+		</tr>
+		#if ($mode == 'update')
+        <tr>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">&nbsp;</td>
+          <td valign="top">&nbsp;</td>
+          <td width="28%">Baki Aksara :&nbsp;
+          <input type="text" readonly="readonly" class="disabled" name="remLen4" size="3" maxlength="3" value="$!saizTxtJenisPerniagaan" /></td>
         </tr>
         #end
         #end
@@ -253,9 +288,10 @@ TAHUN </td>
           <td width="50%"><table width="100%" border="0" cellspacing="2" cellpadding="2">
               <tr>
                 <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+                
                 <td width="29%">Modal Dibenarkan</td>
                 <td width="70%">: RM
-                  <input type="text" name="txtModalBenar" id="txtModalBenar" onblur="validateCurrency(this,this.value,'$beanMaklumatPermohonan.modalBenar');" value="$beanMaklumatPermohonan.modalBenar" $readonly class="$inputTextClass"/></td>
+                  <input name="txtModalBenar" type="text" class="$inputTextClass" id="txtModalBenar" value="$beanMaklumatPermohonan.modalBenar" size="20" $readonly /></td>
               </tr>
             </table></td>
           <td width="50%"><table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -263,7 +299,7 @@ TAHUN </td>
                 <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
                 <td width="29%">Modal Jelas</td>
                 <td width="70%">: RM
-                  <input type="text" name="txtModalJelas" id="txtModalJelas" onblur="validateCurrency(this,this.value,'$beanMaklumatPermohonan.modalJelas');" value="$beanMaklumatPermohonan.modalJelas" $readonly class="$inputTextClass"/></td>
+   				   <input name="txtModalJelas" type="text" class="$inputTextClass" id="txtModalJelas" value="$beanMaklumatPermohonan.modalJelas" size="20" $readonly /></td>
               </tr>
             </table></td>
         </tr>
@@ -272,7 +308,40 @@ TAHUN </td>
       </fieldset>
     </td>
   </tr>
-  #end 
+  
+   <tr>
+    <td colspan="2">
+    <fieldset>
+      <legend><strong>JUMLAH MODAL UNTUK OPERASI</strong></legend>
+      #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
+      <table width="100%" border="0" cellspacing="2" cellpadding="2">
+        <tr>
+          <td width="50%"><table width="100%" border="0" cellspacing="2" cellpadding="2">
+              <tr>
+                <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+                <td width="29%">Yang Terdapat Pada Masa Ini</td>
+		        <td width="1%">:</td>
+          		<td width="70%"><input name="txtJumlahModal" type="text" class="$inputTextClass" id="txtJumlahModal" value="$beanMaklumatPermohonan.jumlahModal" size="43" maxlength="80" $readonly onBlur="this.value=this.value.toUpperCase();"/>
+          		</td>
+          	  </tr>
+            </table></td>
+            
+          <td width="50%"><table width="100%" border="0" cellspacing="2" cellpadding="2">
+              <tr>
+	             <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+	             <td width="29%">Yang Boleh Diadakan Oleh Pemohon dan Sumbernya</td>
+	             <td width="1%">:</td>
+          		 <td width="70%"><input name="txtJumlahModal1" type="text" class="$inputTextClass" id="txtJumlahModal1" value="$beanMaklumatPermohonan.jumlahModal1" size="43" maxlength="80" $readonly onBlur="this.value=this.value.toUpperCase();"/>
+          		 </td>
+              </tr>
+            </table></td>
+        </tr>
+      </table>
+      #end
+      </fieldset>
+    </td>
+  </tr>  
+  #end
   
   <tr>
     <td colspan="2"><table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -315,8 +384,8 @@ TAHUN </td>
               <tr>
                 <td class="$row" align="center">$listKoordinat.bil</td>
                 <td class="$row"><a href="javascript:paparKoordinat('$listKoordinat.idKoordinat')" class="style2">$listKoordinat.labelTitik</a></td>
-                <td align="center" class="$row">$listKoordinat.darjahU&deg;$listKoordinat.minitU&prime;$listKoordinat.saatU&Prime;</td>
-                <td align="center" class="$row">$listKoordinat.darjahT&deg;$listKoordinat.minitT&prime;$listKoordinat.saatT&Prime;</td>
+                <td align="center" class="$row">$listKoordinat.darjahU&deg; &nbsp; $listKoordinat.minitU&prime; &nbsp; #if($!listKoordinat.saatU != '') $listKoordinat.saatU&Prime; #end</td>
+                <td align="center" class="$row">$listKoordinat.darjahT&deg; &nbsp; $listKoordinat.minitT&prime; &nbsp; #if($!listKoordinat.saatT != '') $listKoordinat.saatT&Prime; #end</td>
               </tr>
               #end
               #else
@@ -430,7 +499,7 @@ TAHUN </td>
                 <td class="$row"><a href="javascript:paparPengarah('$listPengarah.idPengarah')" class="style2">$listPengarah.nama</a></td>
                 <td class="$row">$listPengarah.noPengenalan</td>
                 <td class="$row">$listPengarah.warganegara</td>
-                <td class="$row" align="center">$listPengarah.saham%</td>
+                <td class="$row" align="center">RM $listPengarah.saham</td> 
               </tr>
               #end
               #else
@@ -457,6 +526,7 @@ TAHUN </td>
     <td colspan="2" align="center"> 
     #if ($idStatus == '')
       #if ($mode == 'view')
+      <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang 1" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
       <input type="button" name="cmdKemaskiniPermohonan" id="cmdKemaskiniPermohonan" value="Kemaskini" onclick="kemaskiniPermohonan()"/>
       <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onclick="doBacklist()"/>
       #end
@@ -467,7 +537,6 @@ TAHUN </td>
      #else
       <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
   	 #end
-  	
       </td>
       
   </tr>
@@ -482,6 +551,12 @@ function validateCurrency(elmnt,content,content2) {
 	var num = content * 1;
 	elmnt.value = num.toFixed(2);
 	return;
+}
+function formatNumber(input){
+	var String = input.value;
+	var result = new Intl.NumberFormat().format(String.replace(/, /g, ''));
+	input.value = result;
+
 }
 
 </script>

@@ -284,6 +284,119 @@ $selectUnit
   		<a href="javascript:PrintLaporanPBN12()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA PBN (MENGIKUT DAERAH & BULAN)</a>
  	</td>
    	</tr>
+   	<td></td>
+  	
+  	<td>
+  		<b>BAITULMAL SEBAGAI PEMEGANG AMANAH</b>
+ 	</td>
+   	</tr>
+    
+    <tr bgcolor="$bg">
+  	<td>1.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalPAA()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT UNIT)</a>
+ 	</td>
+   	</tr>
+    	
+   	  	<tr>
+  	<td>2.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalPAB()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT UNIT & TAHUN)</a>
+ 	</td>
+   	</tr>
+    
+    <tr bgcolor="$bg">
+  	<td>3.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalPAC()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT UNIT & SELANG MASA)</a>
+ 	</td>
+   	</tr>
+   
+   	   	  	<tr >
+  	<td>4.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalPAD()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT UNIT & BULAN)</a>
+ 	</td>
+   	</tr>
+    
+    <tr bgcolor="$bg">
+  	<td>5.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalPAE()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT NEGERI)</a>
+ 	</td>
+   	</tr>	
+    
+    
+   	  	<tr>
+  	<td>6.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalPAF()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT NEGERI & TAHUN)</a>
+ 	</td>
+   	</tr>
+    
+    <tr bgcolor="$bg">
+  	<td>7.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalPAG()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT NEGERI & SELANG MASA)</a>
+ 	</td>
+   	</tr>
+    
+    
+   	   	  	<tr >
+  	<td>8.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalPAH()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT NEGERI & BULAN)</a>
+ 	</td>
+   	</tr>
+    
+    <tr bgcolor="$bg">
+  	<td>9.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalPAI()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT DAERAH)</a>
+ 	</td>
+   	</tr>
+    
+    	
+   	  	<tr>
+  	<td>10.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalPAJ()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT DAERAH & TAHUN)</a>
+ 	</td>
+   	</tr>
+    
+    <tr bgcolor="$bg">
+  	<td>11.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalPAK()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT DAERAH & SELANG MASA)</a>
+ 	</td>
+   	</tr>
+    
+   	   	  	<tr >
+  	<td>12.</td>
+  	
+  	<td>
+  		<a href="javascript:PrintLaporanBaitulmalPAL()" class="style1" >LAPORAN HARTA DISERAHKAN KEPADA BAITULMAL (MENGIKUT DAERAH & BULAN)</a>
+ 	</td>
+   	</tr>
+   	<tr >
+  	<td></td>
+  	
+  	<td>
+  		
+ 	</td>
+	</tr>
+		<tr >
 </table>
 </fieldset>	
 
@@ -1236,6 +1349,501 @@ function PrintLaporanPBN12()
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();	
 		}
+	
+}
+
+function PrintLaporanBaitulmalPAA()
+{
+//MENGIKUT UNIT	
+		var unit = document.${formName}.socUnit.value;
+		var akhir_bulan = document.${formName}.txdAkhir.value.substring(3,5);
+		var	akhir_hari = document.${formName}.txdAkhir.value.substring(0,2);
+		var	akhir_tahun = document.${formName}.txdAkhir.value.substring(6,10);
+		var akhirtemp = akhir_bulan+"/"+akhir_hari+"/"+akhir_tahun; 
+		var	mula_bulan = document.${formName}.txdMula.value.substring(3,5);
+		var	mula_hari = document.${formName}.txdMula.value.substring(0,2);
+		var	mula_tahun = document.${formName}.txdMula.value.substring(6,10);
+		var mulatemp = mula_bulan+"/"+mula_hari+"/"+mula_tahun;
+
+		var mula = Date.parse(mulatemp);
+		var akhir = Date.parse(akhirtemp);
+		var tarikhsemasa = new Date();
+		if(unit==""|| unit=="0")
+		{
+			alert("Sila pilih \"Unit\" terlebih dahulu.");
+			document.${formName}.socUnit.focus(); 
+			return;
+		}
+		else
+			{
+		var url = "../x/${securityToken}/ekptg.view.ppk.PaparanLaporanSerahanBaitulmalPBN1?mula_hari="+mula_hari+"&mula_bulan="+mula_bulan+"&mula_tahun="+mula_tahun+"&akhir_hari="+akhir_hari+"&akhir_bulan="+akhir_bulan+"&akhir_tahun="+akhir_tahun+"&jenis_laporan=BaitulmalPAUNIT&unit="+unit;
+		var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
+  		if ((document.window != null) && (!hWnd.opener))
+  	    hWnd.opener = document.window;
+   		if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();	
+			}
+	
+}
+
+function PrintLaporanBaitulmalPAB()
+{
+		
+		var unit = document.${formName}.socUnit.value;
+		var daerah = document.${formName}.socDaerah.value;
+		var akhir_bulan = document.${formName}.txdAkhir.value.substring(3,5);
+		var	akhir_hari = document.${formName}.txdAkhir.value.substring(0,2);
+		var	akhir_tahun = document.${formName}.txdAkhir.value.substring(6,10);
+		var akhirtemp = akhir_bulan+"/"+akhir_hari+"/"+akhir_tahun; 
+		var	mula_bulan = document.${formName}.txdMula.value.substring(3,5);
+		var	mula_hari = document.${formName}.txdMula.value.substring(0,2);
+		var	mula_tahun = document.${formName}.txdMula.value.substring(6,10);
+		var mulatemp = mula_bulan+"/"+mula_hari+"/"+mula_tahun;
+		
+		var mula = Date.parse(mulatemp);
+		var akhir = Date.parse(akhirtemp);
+		var tarikhsemasa = new Date();
+		if(unit==""|| unit=="0")
+		{
+			alert("Sila pilih \"Unit\" terlebih dahulu.");
+			document.${formName}.socUnit.focus(); 
+			return;
+		}
+		else if (mula_tahun==""){
+			alert("Sila pilih \"Tarikh\" terlebih dahulu.");
+			document.${formName}.txdMula.focus(); 
+			return;
+		}	
+		else
+			{
+		var url = "../x/${securityToken}/ekptg.view.ppk.PaparanLaporanSerahanBaitulmalPBN1?mula_hari="+mula_hari+"&mula_bulan="+mula_bulan+"&mula_tahun="+mula_tahun+"&akhir_hari="+akhir_hari+"&akhir_bulan="+akhir_bulan+"&akhir_tahun="+akhir_tahun+"&jenis_laporan=BaitulmalPAUNITtahun&unit="+unit;
+		var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
+		
+		if ((document.window != null) && (!hWnd.opener))
+  	    hWnd.opener = document.window;
+   		if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();	
+			}
+	
+}
+
+function PrintLaporanBaitulmalPAC()
+{
+		
+		var unit = document.${formName}.socUnit.value;
+		var daerah = document.${formName}.socDaerah.value;
+		var akhir_bulan = document.${formName}.txdAkhir.value.substring(3,5);
+		var	akhir_hari = document.${formName}.txdAkhir.value.substring(0,2);
+		var	akhir_tahun = document.${formName}.txdAkhir.value.substring(6,10);
+		var akhirtemp = akhir_hari+"/"+akhir_bulan+"/"+akhir_tahun; 
+		var	mula_bulan = document.${formName}.txdMula.value.substring(3,5);
+		var	mula_hari = document.${formName}.txdMula.value.substring(0,2);
+		var	mula_tahun = document.${formName}.txdMula.value.substring(6,10);
+		var mulatemp = mula_hari+"/"+mula_bulan+"/"+mula_tahun;
+		
+		//var mula = Date.parse(mulatemp);
+		//var akhir = Date.parse(akhirtemp);
+		
+		var mula = document.${formName}.txdMula.value;
+		var akhir = document.${formName}.txdAkhir.value;
+		var tarikhsemasa = new Date();
+		if(unit==""|| unit=="0")
+		{
+			alert("Sila pilih \"Unit\" terlebih dahulu.");
+			document.${formName}.socUnit.focus(); 
+			return;
+		}
+		else if (mula_tahun==""){
+			alert("Sila pilih \"Tarikh\" terlebih dahulu.");
+			document.${formName}.txdMula.focus(); 
+			return;
+		}	
+		else if (akhir_tahun==""){
+			alert("Sila pilih \"Tarikh\" terlebih dahulu.");
+			document.${formName}.txdAkhir.focus(); 
+			return;
+		}
+		else
+			{
+		var url = "../x/${securityToken}/ekptg.view.ppk.PaparanLaporanSerahanBaitulmalPBN1?mula="+mula+"&mula_bulan="+mula_bulan+"&mula_tahun="+mula_tahun+"&akhir="+akhir+"&akhir_bulan="+akhir_bulan+"&akhir_tahun="+akhir_tahun+"&jenis_laporan=BaitulmalPAUNITselangmasa&unit="+unit;
+		var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
+		
+		if ((document.window != null) && (!hWnd.opener))
+  	    hWnd.opener = document.window;
+   		if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();	
+			}
+	
+}
+
+
+function PrintLaporanBaitulmalPAD()
+{
+		
+		var unit = document.${formName}.socUnit.value;
+		var daerah = document.${formName}.socDaerah.value;
+		var akhir_bulan = document.${formName}.txdAkhir.value.substring(3,5);
+		var	akhir_hari = document.${formName}.txdAkhir.value.substring(0,2);
+		var	akhir_tahun = document.${formName}.txdAkhir.value.substring(6,10);
+		var akhirtemp = akhir_hari+"/"+akhir_bulan+"/"+akhir_tahun; 
+		var	mula_bulan = document.${formName}.txdMula.value.substring(3,5);
+		var	mula_hari = document.${formName}.txdMula.value.substring(0,2);
+		var	mula_tahun = document.${formName}.txdMula.value.substring(6,10);
+		var mulatemp = mula_hari+"/"+mula_bulan+"/"+mula_tahun;
+		
+		//var mula = Date.parse(mulatemp);
+		//var akhir = Date.parse(akhirtemp);
+		
+		var mula = document.${formName}.txdMula.value;
+		var akhir = document.${formName}.txdAkhir.value;
+		var tarikhsemasa = new Date();
+		if(unit==""|| unit=="0")
+		{
+			alert("Sila pilih \"Unit\" terlebih dahulu.");
+			document.${formName}.socUnit.focus(); 
+			return;
+		}
+		else if (mula_bulan==""){
+			alert("Sila pilih \"Tarikh\" terlebih dahulu.");
+			document.${formName}.txdMula.focus(); 
+			return;
+		}	
+		else
+			{
+		var url = "../x/${securityToken}/ekptg.view.ppk.PaparanLaporanSerahanBaitulmalPBN1?mula="+mula+"&mula_bulan="+mula_bulan+"&mula_tahun="+mula_tahun+"&akhir="+akhir+"&akhir_bulan="+akhir_bulan+"&akhir_tahun="+akhir_tahun+"&jenis_laporan=BaitulmalPAUNITbulan&unit="+unit;
+		var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
+		
+		if ((document.window != null) && (!hWnd.opener))
+  	    hWnd.opener = document.window;
+   		if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();	
+			}
+	
+}
+
+function PrintLaporanBaitulmalPAE()
+{
+	//MENGIKUT NEGERI
+			var negeri = document.${formName}.socNegeri.value;
+			var akhir_bulan = document.${formName}.txdAkhir.value.substring(3,5);
+			var	akhir_hari = document.${formName}.txdAkhir.value.substring(0,2);
+			var	akhir_tahun = document.${formName}.txdAkhir.value.substring(6,10);
+			var akhirtemp = akhir_bulan+"/"+akhir_hari+"/"+akhir_tahun; 
+			var	mula_bulan = document.${formName}.txdMula.value.substring(3,5);
+			var	mula_hari = document.${formName}.txdMula.value.substring(0,2);
+			var	mula_tahun = document.${formName}.txdMula.value.substring(6,10);
+			var mulatemp = mula_bulan+"/"+mula_hari+"/"+mula_tahun;
+
+			var mula = Date.parse(mulatemp);
+			var akhir = Date.parse(akhirtemp);
+			var tarikhsemasa = new Date();
+			if(negeri==""){
+				alert("Sila pilih \"Negeri\" terlebih dahulu.");
+				document.${formName}.socNegeri.focus(); 
+				return;
+			}	
+			else
+				{
+			var url = "../x/${securityToken}/ekptg.view.ppk.PaparanLaporanSerahanBaitulmalPBN1?mula_hari="+mula_hari+"&mula_bulan="+mula_bulan+"&mula_tahun="+mula_tahun+"&akhir_hari="+akhir_hari+"&akhir_bulan="+akhir_bulan+"&akhir_tahun="+akhir_tahun+"&jenis_laporan=BaitulmalPANegeri&negeri="+negeri;
+			var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
+	  		if ((document.window != null) && (!hWnd.opener))
+	  	    hWnd.opener = document.window;
+	    	if (hWnd.focus != null) hWnd.focus();
+			hWnd.focus();	
+				}
+			
+		
+	}
+
+function PrintLaporanBaitulmalPAF()
+{
+		
+		var negeri = document.${formName}.socNegeri.value;
+		var daerah = document.${formName}.socDaerah.value;
+		var akhir_bulan = document.${formName}.txdAkhir.value.substring(3,5);
+		var	akhir_hari = document.${formName}.txdAkhir.value.substring(0,2);
+		var	akhir_tahun = document.${formName}.txdAkhir.value.substring(6,10);
+		var akhirtemp = akhir_bulan+"/"+akhir_hari+"/"+akhir_tahun; 
+		var	mula_bulan = document.${formName}.txdMula.value.substring(3,5);
+		var	mula_hari = document.${formName}.txdMula.value.substring(0,2);
+		var	mula_tahun = document.${formName}.txdMula.value.substring(6,10);
+		var mulatemp = mula_bulan+"/"+mula_hari+"/"+mula_tahun;
+		
+		var mula = Date.parse(mulatemp);
+		var akhir = Date.parse(akhirtemp);
+		var tarikhsemasa = new Date();
+		if(negeri==""){
+			alert("Sila pilih \"Negeri\" terlebih dahulu.");
+			document.${formName}.socNegeri.focus(); 
+			return;
+		}	
+		else if (mula_tahun==""){
+			alert("Sila pilih \"Tarikh\" terlebih dahulu.");
+			document.${formName}.txdMula.focus(); 
+			return;
+		}	
+		else
+			{
+		var url = "../x/${securityToken}/ekptg.view.ppk.PaparanLaporanSerahanBaitulmalPBN1?mula_hari="+mula_hari+"&mula_bulan="+mula_bulan+"&mula_tahun="+mula_tahun+"&akhir_hari="+akhir_hari+"&akhir_bulan="+akhir_bulan+"&akhir_tahun="+akhir_tahun+"&jenis_laporan=BaitulmalPANegeritahun&negeri="+negeri;
+		var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
+		
+		if ((document.window != null) && (!hWnd.opener))
+  	    hWnd.opener = document.window;
+    	if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();	
+			}
+	
+}
+
+function PrintLaporanBaitulmalPAG()
+{
+		
+		var negeri = document.${formName}.socNegeri.value;
+		var daerah = document.${formName}.socDaerah.value;
+		var akhir_bulan = document.${formName}.txdAkhir.value.substring(3,5);
+		var	akhir_hari = document.${formName}.txdAkhir.value.substring(0,2);
+		var	akhir_tahun = document.${formName}.txdAkhir.value.substring(6,10);
+		var akhirtemp = akhir_hari+"/"+akhir_bulan+"/"+akhir_tahun; 
+		var	mula_bulan = document.${formName}.txdMula.value.substring(3,5);
+		var	mula_hari = document.${formName}.txdMula.value.substring(0,2);
+		var	mula_tahun = document.${formName}.txdMula.value.substring(6,10);
+		var mulatemp = mula_hari+"/"+mula_bulan+"/"+mula_tahun;
+		
+		//var mula = Date.parse(mulatemp);
+		//var akhir = Date.parse(akhirtemp);
+		
+		var mula = document.${formName}.txdMula.value;
+		var akhir = document.${formName}.txdAkhir.value;
+		var tarikhsemasa = new Date();
+		if(negeri==""){
+			alert("Sila pilih \"Negeri\" terlebih dahulu.");
+			document.${formName}.socNegeri.focus(); 
+			return;
+		}
+		else if (mula_tahun==""){
+			alert("Sila pilih \"Tarikh\" terlebih dahulu.");
+			document.${formName}.txdMula.focus(); 
+			return;
+		}	
+		else if (akhir_tahun==""){
+			alert("Sila pilih \"Tarikh\" terlebih dahulu.");
+			document.${formName}.txdAkhir.focus(); 
+			return;
+		}
+		else
+			{
+		var url = "../x/${securityToken}/ekptg.view.ppk.PaparanLaporanSerahanBaitulmalPBN1?mula="+mula+"&mula_bulan="+mula_bulan+"&mula_tahun="+mula_tahun+"&akhir="+akhir+"&akhir_bulan="+akhir_bulan+"&akhir_tahun="+akhir_tahun+"&jenis_laporan=BaitulmalPANegeriselangmasa&negeri="+negeri;
+		var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
+		
+		if ((document.window != null) && (!hWnd.opener))
+  	    hWnd.opener = document.window;
+  		if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();	
+			}
+	
+}
+
+function PrintLaporanBaitulmalPAH()
+{
+		
+		var negeri = document.${formName}.socNegeri.value;
+		var daerah = document.${formName}.socDaerah.value;
+		var akhir_bulan = document.${formName}.txdAkhir.value.substring(3,5);
+		var	akhir_hari = document.${formName}.txdAkhir.value.substring(0,2);
+		var	akhir_tahun = document.${formName}.txdAkhir.value.substring(6,10);
+		var akhirtemp = akhir_hari+"/"+akhir_bulan+"/"+akhir_tahun; 
+		var	mula_bulan = document.${formName}.txdMula.value.substring(3,5);
+		var	mula_hari = document.${formName}.txdMula.value.substring(0,2);
+		var	mula_tahun = document.${formName}.txdMula.value.substring(6,10);
+		var mulatemp = mula_hari+"/"+mula_bulan+"/"+mula_tahun;
+		
+		//var mula = Date.parse(mulatemp);
+		//var akhir = Date.parse(akhirtemp);
+		
+		var mula = document.${formName}.txdMula.value;
+		var akhir = document.${formName}.txdAkhir.value;
+		var tarikhsemasa = new Date();
+		if(negeri==""){
+			alert("Sila pilih \"Negeri\" terlebih dahulu.");
+			document.${formName}.socNegeri.focus(); 
+			return;
+		}
+		else if (mula_bulan==""){
+			alert("Sila pilih \"Tarikh\" terlebih dahulu.");
+			document.${formName}.txdMula.focus(); 
+			return;
+		}	
+		else
+			{
+		var url = "../x/${securityToken}/ekptg.view.ppk.PaparanLaporanSerahanBaitulmalPBN1?mula="+mula+"&mula_bulan="+mula_bulan+"&mula_tahun="+mula_tahun+"&akhir="+akhir+"&akhir_bulan="+akhir_bulan+"&akhir_tahun="+akhir_tahun+"&jenis_laporan=BaitulmalPANegeribulan&unit="+negeri;
+		var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
+		
+		if ((document.window != null) && (!hWnd.opener))
+  	    hWnd.opener = document.window;
+    	if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();	
+			}
+	
+}
+
+function PrintLaporanBaitulmalPAI()
+{
+//MENGIKUT DAERAH
+		var daerah = document.${formName}.socDaerah.value;
+		var akhir_bulan = document.${formName}.txdAkhir.value.substring(3,5);
+		var	akhir_hari = document.${formName}.txdAkhir.value.substring(0,2);
+		var	akhir_tahun = document.${formName}.txdAkhir.value.substring(6,10);
+		var akhirtemp = akhir_bulan+"/"+akhir_hari+"/"+akhir_tahun; 
+		var	mula_bulan = document.${formName}.txdMula.value.substring(3,5);
+		var	mula_hari = document.${formName}.txdMula.value.substring(0,2);
+		var	mula_tahun = document.${formName}.txdMula.value.substring(6,10);
+		var mulatemp = mula_bulan+"/"+mula_hari+"/"+mula_tahun;
+
+		var mula = Date.parse(mulatemp);
+		var akhir = Date.parse(akhirtemp);
+		var tarikhsemasa = new Date();
+		if(daerah==""){
+			alert("Sila pilih \"Daerah\" terlebih dahulu.");
+			document.${formName}.socDaerah.focus(); 
+			return;
+		}	
+		else
+			{
+		var url = "../x/${securityToken}/ekptg.view.ppk.PaparanLaporanSerahanBaitulmalPBN1?mula_hari="+mula_hari+"&mula_bulan="+mula_bulan+"&mula_tahun="+mula_tahun+"&akhir_hari="+akhir_hari+"&akhir_bulan="+akhir_bulan+"&akhir_tahun="+akhir_tahun+"&jenis_laporan=BaitulmalPADAERAH&daerah="+daerah;
+		var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
+  		if ((document.window != null) && (!hWnd.opener))
+  	    hWnd.opener = document.window;
+   		if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();	
+			}
+	
+}
+
+function PrintLaporanBaitulmalPAJ()
+{
+		
+		
+		var daerah = document.${formName}.socDaerah.value;
+		var akhir_bulan = document.${formName}.txdAkhir.value.substring(3,5);
+		var	akhir_hari = document.${formName}.txdAkhir.value.substring(0,2);
+		var	akhir_tahun = document.${formName}.txdAkhir.value.substring(6,10);
+		var akhirtemp = akhir_bulan+"/"+akhir_hari+"/"+akhir_tahun; 
+		var	mula_bulan = document.${formName}.txdMula.value.substring(3,5);
+		var	mula_hari = document.${formName}.txdMula.value.substring(0,2);
+		var	mula_tahun = document.${formName}.txdMula.value.substring(6,10);
+		var mulatemp = mula_bulan+"/"+mula_hari+"/"+mula_tahun;
+		
+		var mula = Date.parse(mulatemp);
+		var akhir = Date.parse(akhirtemp);
+		var tarikhsemasa = new Date();
+		if(daerah==""){
+			alert("Sila pilih \"Daerah\" terlebih dahulu.");
+			document.${formName}.socDaerah.focus(); 
+			return;
+		}
+		else if (mula_tahun==""){
+			alert("Sila pilih \"Tarikh\" terlebih dahulu.");
+			document.${formName}.txdMula.focus(); 
+			return;
+		}	
+		else
+			{
+		var url = "../x/${securityToken}/ekptg.view.ppk.PaparanLaporanSerahanBaitulmalPBN1?mula_hari="+mula_hari+"&mula_bulan="+mula_bulan+"&mula_tahun="+mula_tahun+"&akhir_hari="+akhir_hari+"&akhir_bulan="+akhir_bulan+"&akhir_tahun="+akhir_tahun+"&jenis_laporan=BaitulmalPADAERAHtahun&daerah="+daerah;
+		var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
+		
+		if ((document.window != null) && (!hWnd.opener))
+  	    hWnd.opener = document.window;
+  		if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();	
+			}
+	
+}
+
+function PrintLaporanBaitulmalPAK()
+{
+		var daerah = document.${formName}.socDaerah.value;
+		var akhir_bulan = document.${formName}.txdAkhir.value.substring(3,5);
+		var	akhir_hari = document.${formName}.txdAkhir.value.substring(0,2);
+		var	akhir_tahun = document.${formName}.txdAkhir.value.substring(6,10);
+		var akhirtemp = akhir_hari+"/"+akhir_bulan+"/"+akhir_tahun; 
+		var	mula_bulan = document.${formName}.txdMula.value.substring(3,5);
+		var	mula_hari = document.${formName}.txdMula.value.substring(0,2);
+		var	mula_tahun = document.${formName}.txdMula.value.substring(6,10);
+		var mulatemp = mula_hari+"/"+mula_bulan+"/"+mula_tahun;
+		
+		//var mula = Date.parse(mulatemp);
+		//var akhir = Date.parse(akhirtemp);
+		
+		var mula = document.${formName}.txdMula.value;
+		var akhir = document.${formName}.txdAkhir.value;
+		var tarikhsemasa = new Date();
+		if(daerah==""){
+			alert("Sila pilih \"Daerah\" terlebih dahulu.");
+			document.${formName}.socDaerah.focus(); 
+			return;
+		}
+		else if (mula_tahun==""){
+			alert("Sila pilih \"Tarikh\" terlebih dahulu.");
+			document.${formName}.txdMula.focus(); 
+			return;
+		}	
+		else if (akhir_tahun==""){
+			alert("Sila pilih \"Tarikh\" terlebih dahulu.");
+			document.${formName}.txdAkhir.focus(); 
+			return;
+		}
+		else
+			{
+		var url = "../x/${securityToken}/ekptg.view.ppk.PaparanLaporanSerahanBaitulmalPBN1?mula="+mula+"&mula_bulan="+mula_bulan+"&mula_tahun="+mula_tahun+"&akhir="+akhir+"&akhir_bulan="+akhir_bulan+"&akhir_tahun="+akhir_tahun+"&jenis_laporan=BaitulmalPADAERAHselangmasa&daerah="+daerah;
+		var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
+		
+		if ((document.window != null) && (!hWnd.opener))
+  	    hWnd.opener = document.window;
+   		if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();	
+			}
+	
+}
+
+function PrintLaporanBaitulmalPAL()
+{
+		var daerah = document.${formName}.socDaerah.value;
+		var akhir_bulan = document.${formName}.txdAkhir.value.substring(3,5);
+		var	akhir_hari = document.${formName}.txdAkhir.value.substring(0,2);
+		var	akhir_tahun = document.${formName}.txdAkhir.value.substring(6,10);
+		var akhirtemp = akhir_hari+"/"+akhir_bulan+"/"+akhir_tahun; 
+		var	mula_bulan = document.${formName}.txdMula.value.substring(3,5);
+		var	mula_hari = document.${formName}.txdMula.value.substring(0,2);
+		var	mula_tahun = document.${formName}.txdMula.value.substring(6,10);
+		var mulatemp = mula_hari+"/"+mula_bulan+"/"+mula_tahun;
+		
+		//var mula = Date.parse(mulatemp);
+		//var akhir = Date.parse(akhirtemp);
+		
+		var mula = document.${formName}.txdMula.value;
+		var akhir = document.${formName}.txdAkhir.value;
+		var tarikhsemasa = new Date();
+		if(daerah==""){
+			alert("Sila pilih \"Daerah\" terlebih dahulu.");
+			document.${formName}.socDaerah.focus(); 
+			return;
+		}
+		else if (mula_bulan==""){
+			alert("Sila pilih \"Tarikh\" terlebih dahulu.");
+			document.${formName}.txdMula.focus(); 
+			return;
+		}	
+		else
+			{
+		var url = "../x/${securityToken}/ekptg.view.ppk.PaparanLaporanSerahanBaitulmalPBN1?mula="+mula+"&mula_bulan="+mula_bulan+"&mula_tahun="+mula_tahun+"&akhir="+akhir+"&akhir_bulan="+akhir_bulan+"&akhir_tahun="+akhir_tahun+"&jenis_laporan=BaitulmalPADAERAHbulan&daerah="+daerah;
+		var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
+		
+		if ((document.window != null) && (!hWnd.opener))
+  	    hWnd.opener = document.window;
+   		if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();	
+			}
+		
 	
 }
 

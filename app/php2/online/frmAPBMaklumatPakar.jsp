@@ -40,7 +40,7 @@
     <td width="30%">&nbsp;</td>
     <td width="70%"> #if ($mode == 'newPakar')
       <input type="button" name="cmdSimpanPakar" id="cmdSimpanPakar" value="Simpan" onClick="simpanPakar()"/>
-      <input type="button" name="cmdBatalPakar" id="cmdBatalPakar" value="Batal/Kembali" onClick="batalPakar()"/>
+      <input type="button" name="cmdBatalPakar" id="cmdBatalPakar" value="Kembali" onClick="batalPakar()"/>
       #end
       #if ($mode == 'viewPakar')
       <input type="button" name="cmdKemaskiniPakar" id="cmdKemaskiniPakar" value="Kemaskini" onClick="kemaskiniPakar()"/>
@@ -49,7 +49,7 @@
       #end
       #if ($mode == 'updatePakar')
       <input type="button" name="cmdSimpanKemaskiniPakar" id="cmdSimpanKemaskiniPakar" value="Simpan" onClick="simpanKemaskiniPakar()"/>
-      <input type="button" name="cmdBatalKemaskiniPakar" id="cmdSimpanKemaskiniPakar" value="Batal" onClick="batalKemaskiniPakar()"/>
+      <input type="button" name="cmdBatalKemaskiniPakar" id="cmdSimpanKemaskiniPakar" value="Kembali" onClick="batalKemaskiniPakar()"/>
       #end </td>
   </tr>
 </table>

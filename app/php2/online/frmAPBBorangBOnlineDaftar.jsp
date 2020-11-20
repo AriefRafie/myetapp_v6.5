@@ -129,22 +129,6 @@
 		</td>
    </tr>
  
- <!--<tr>
-	<td align="left" width="50%">
-	    
-	#if ($button=="view")
-	&nbsp;&nbsp;&nbsp;Tarikh Pengeluaran
-	#else
-	<font color="red">*</font>&nbsp;Tarikh Operasi
-	#end       
-	
-	</td>
-	<td width="1%">:</td>
-	<td width="49%">
-	   <input type="text" name="txdTarikhPengeluaran" id="txdTarikhPengeluaran" value="$txdTarikhPengeluaran" onblur="check_date(this)" size="9"/>
-         <a href="javascript:displayDatePicker('txdTarikhPengeluaran',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
-    </td>
-  </tr>-->
 </table>
     </fieldset>    
     </td>    
@@ -164,9 +148,8 @@
     			 #if ($button=="view")
 			    <input type="text" name="txtTarikhOperasi" id="txtTarikhOperasi" value="$!txtTarikhOperasi" size="10" class="disabled" readonly/>
 			    #else
-			    <input type="text" name="txtTarikhOperasi" id="txtTarikhOperasi" size="10" value="$!txtTarikhOperasi"/><a
-							href="javascript:displayDatePicker('txtTarikhOperasi',false,'dmy');"> <img
-								border="0" src="../img/calendar.gif" /></a>
+			    <input type="text" name="txtTarikhOperasi" id="txtTarikhOperasi" size="10" value="$!txtTarikhOperasi"/>
+							<a href="javascript:displayDatePicker('txtTarikhOperasi',false,'dmy');"> <img border="0" src="../img/calendar.gif" /></a>
 			    #end  
 			</td>
     	</tr>
@@ -304,7 +287,7 @@
 
 #if ($button!="add")
 <fieldset>
-	<legend>Senarai Laporan Pengeluaran Pasir Laut</legend>
+	<legend>Senarai Dokumen Pengeluaran Pasir Laut</legend>
 	<!-- #parse("app/utils/record_paging.jsp") -->
 	<table width="100%"  cellpadding="1" cellspacing="2" border="0">
 		<tr>
@@ -396,6 +379,7 @@
 <fieldset id="tableReport1" style="display:none;">
 <legend><strong>Senarai Dokumen</strong></legend>
 	<table width="100%" border="0" cellspacing="2" cellpadding="2">
+	
        <tr>
         <td><a href="#" class="style2" onClick="javascript:cetakAPBLaporanPengeluaranPasirLaut('$id_jadualkedualesenAPB','$bulan_pengambilan','$id_laporanpasir')"><font color="blue"> Laporan Pengeluaran Pasir Laut </font></a></td>
       </tr>           
@@ -627,7 +611,14 @@ function validateNumber(elmnt,content) {
 	//if it is character, then remove it..
 	if (isNaN(content)) {
 		elmnt.value = RemoveNonNumeric(content);
+		//document.write("getDay() : " + dt.getDay() );
 		return;
+	}
+	//BARU ADD
+	Date.prototype.addDays = function(days) {
+    	var date = new Date(this.valueOf());
+    	date.setDate(date.getDate() + days);
+    return date;
 	}
 }
 function RemoveNonNumeric( strString )

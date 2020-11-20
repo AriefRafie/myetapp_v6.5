@@ -162,17 +162,21 @@ SENARAI FAIL SIASATAN
 		   var left = 0;
            var top  = 0;	  
 		  
-      $jquery(document).ready(function(e) {
+    //  $jquery(document).ready(function(e) {
 		    
 		    width  = 500;			
-		    left = width+e.pageX;
-            top  = height+e.pageY;			
+		   // left = width+e.pageX;
+           // top  = height+e.pageY;			
 			height = 300;
-			$jquery("#boxListFailSiasatan").css('width', width).css('height', height).css('top', top).css('left', left);	
-			$jquery("#scroll_boxListFailSiasatan").css('width', width).css('height', height-55).css('top', top).css('left', left).css('overflow-y','scroll');
-		   
+			//$jquery("#boxListFailSiasatan").css('width', width).css('height', height).css('top', top).css('left', left);	
+			//$jquery("#scroll_boxListFailSiasatan").css('width', width).css('height', height-55).css('top', top).css('left', left).css('overflow-y','scroll');
+		   $jquery("#boxListFail").css('width', width).css('height', height);
+			//.css('top', top).css('left', left);	
+			$jquery("#scroll_boxListFail").css('width', width).css('height', height-55)
+			//.css('top', top).css('left', left)
+			.css('overflow-y','scroll');
 			//$jquery('#boxListFail').show();     
-        });	
+       // });	
 		
 		/*
 		 $jquery("div#boxListFail").mousemove(function(e) {
@@ -181,7 +185,7 @@ SENARAI FAIL SIASATAN
 		*/	
 		
 		
-		var boxListFailSiasatan = $jquery("#boxListFailSiasatan")
+		/*var boxListFailSiasatan = $jquery("#boxListFailSiasatan")
 		boxListFailSiasatan.offset({
 			left: left,
 			top: top
@@ -195,7 +199,7 @@ SENARAI FAIL SIASATAN
 		var delta = {
 			x: 0,
 			y: 0
-		};		
+		};	*/	
 		$jquery("#move").mousedown(function(e) {
 			//alert("mousedown");
 			if (!drag.state) {

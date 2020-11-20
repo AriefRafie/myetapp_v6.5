@@ -1,7 +1,5 @@
 <!-- comment -->
 
-  
-
 
    <style>
     #boxListHakmilik {        
@@ -35,7 +33,10 @@
 <input type="hidden" id="div_getListHakmilik_open" name="div_getListHakmilik_open" value="Y">
 <table border="0" width="100%" > 
 <tr>
-<td align="left" valign="top"><img src="../img/drag.png" id="move" name="move" title='Ubah Lokasi' onMouseOver="this.style.cursor='move'" width="18" height="18" align="center"/>
+<td align="left" valign="top">
+<!--
+<img src="../img/drag.png" id="move" name="move" title='Ubah Lokasi' onMouseOver="this.style.cursor='move'" width="18" height="18" align="center"/>
+-->
 </td>
 <td align="right" valign="top"><a href="javascript:getListHakmilik()" id="trigger">
 <img  src="../img/validno.png" title='Tutup' align="center"/>
@@ -57,10 +58,9 @@ SENARAI HAKMILIK
    <tr class="table_header">
           
               <td scope="row" width="5%" align="center">BIL</td>
-              <td width="22%">NO HAKMILIK</td> 
-              <td width="23%">NO FAIL JKPTG</td>             
-              <td width="40%">KEMENTERIAN DAN PROJEK</td>
-              <td width="20%">STATUS</td> <!-- PPT-31 -->
+              <td width="30%">NO HAKMILIK</td> 
+              <td width="30%">NO FAIL JKPTG</td>             
+              <td width="45%">KEMENTERIAN DAN PROJEK</td>
               
                            
      
@@ -136,7 +136,6 @@ SENARAI HAKMILIK
             $list.TUJUAN.toUpperCase()
             </span>
             </td>
-            <td> ---</td>
            
             
             </tr>            
@@ -163,22 +162,25 @@ SENARAI HAKMILIK
  
   
    <script type="text/javascript">
-      $jquery(function() {
+      //$jquery(function() {
 		   var width  = 0;
 		   var height = 0;			
 		   var left = 0;
            var top  = 0;	  
 		  
-      $jquery(document).ready(function(e) {
+     // $jquery(document).ready(function(e) {
 		   
 		    width  = 600;			
-		    left = width+e.pageX;
-            top  = height+e.pageY;			
+		   // left = width+e.pageX;
+           // top  = height+e.pageY;			
 			height = 300;
-			$jquery("#boxListHakmilik").css('width', width).css('height', height).css('top', top).css('left', left);
-			$jquery("#scroll_boxListHakmilik").css('width', width).css('height', height-55).css('top', top).css('left', left).css('overflow-y','scroll');
+			$jquery("#boxListHakmilik").css('width', width).css('height', height);
+			//.css('top', top).css('left', left);
+			$jquery("#scroll_boxListHakmilik").css('width', width).css('height', height-55)
+			//.css('top', top).css('left', left)
+			.css('overflow-y','scroll');
 		   // $jquery('#boxListHakmilik').show();	     
-        });	
+        //});	
 		
 		/*
 		 $jquery("div#boxListHakmilik").mousemove(function(e) {
@@ -186,7 +188,7 @@ SENARAI HAKMILIK
 			});
 		*/	
 		
-		
+		/*
 		var boxListHakmilik = $jquery("#boxListHakmilik")
 		boxListHakmilik.offset({
 			left: left,
@@ -201,7 +203,10 @@ SENARAI HAKMILIK
 		var delta = {
 			x: 0,
 			y: 0
-		};		
+		};	
+		*/
+		
+		
 		$jquery("#move").mousedown(function(e) {
 			//alert("mousedown");
 			if (!drag.state) {
@@ -214,7 +219,9 @@ SENARAI HAKMILIK
 			
 			}
 			return false;
-		});		
+		});	
+		
+			
 		$jquery(document).mousemove(function(e) {
 			//alert("mousemove");
 			if (drag.state) {
@@ -249,7 +256,7 @@ SENARAI HAKMILIK
 		});
 
 		
-      });
+      //});
 	  
 	  
 	  

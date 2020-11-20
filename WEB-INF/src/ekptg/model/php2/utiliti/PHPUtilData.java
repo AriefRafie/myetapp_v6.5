@@ -52,14 +52,14 @@ public class PHPUtilData {
 		}
 	}
 	
-	public static Vector<Tblpfdfail> getNoFailByIdPemohon (String userId) throws Exception {
+	public static Vector<Tblpfdfail> getNoFailByIdPemohon (String userId, String idUrusan) throws Exception {
 		Vector<Tblpfdfail> v = null;
 		Db db = null;
 		String sql = " SELECT A.ID_FAIL, A.NO_FAIL, A.ID_MASUK "
-				   	+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B "
-				   	+ " WHERE A.ID_FAIL = B.ID_FAIL AND A.NO_FAIL IS NOT NULL "
-				   	+ " AND A.ID_SEKSYEN = 4 AND A.ID_URUSAN = 7 "
-				   	+ " AND A.FLAG_FAIL = 1 AND A.ID_MASUK = '" + userId + "'";
+			   	+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B "
+			   	+ " WHERE A.ID_FAIL = B.ID_FAIL AND A.NO_FAIL IS NOT NULL "
+			   	+ " AND A.ID_SEKSYEN = 4 AND A.ID_URUSAN = '" + idUrusan + "' "
+			   	+ " AND A.FLAG_FAIL = 1 AND A.ID_MASUK = '" + userId + "'";
 		
 		myLogger.info("Tblpfdfail :" +sql);
 		try {

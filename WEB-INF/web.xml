@@ -348,7 +348,7 @@
 	</context-param>
 	<listener>
 		<listener-class>org.quartz.ee.servlet.QuartzInitializerListener</listener-class>
-	</listener> -->
+	</listener>  -->
 	<!-- SCHEDULER END -->
 	
 </web-app>

@@ -1,4 +1,28 @@
 <fieldset>
+	<legend>Carian</legend>
+    	<table  width="100%" cellspacing="4" cellpadding="0" border="0">
+        	<tr>
+            	<td width="8%">&nbsp;</td>
+            	<td width="22%" align="right">No. Fail Permohonan</td>
+              	<td width="1%">:</td>
+              	<td width="69%"><input type="text" name="txtNoFail" id="txtNoFail" value="$!txtNoFail" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase();" size="50" /></td>
+          </tr>  
+            <!-- <tr>
+            	<td width="8%">&nbsp;</td>
+           	  	<td align="right">Kementerian</td>
+                <td>:</td>
+              	<td>$socKementerian</td>               
+            </tr> -->
+      	  	<tr>
+      	    	<td>&nbsp;</td>
+          		<td></td>
+                <td></td>
+                <td><input name="cmdCari" id="cmdCari" value="Cari" type="button" onclick="javascript:search_data()" />
+                <input name="cmdKosongkan" id="cmdKosongkan" value="Kosongkan" type="reset" onclick="javascript:kosongkan()" /></td>
+          	</tr>                  
+        </table>
+</fieldset>
+<fieldset>
   <legend><strong>SENARAI FAIL</strong>
   </legend><table width="100%" cellspacing="0" cellpadding="2" style="border:1px solid #000">
     <tr class="table_header">
@@ -166,5 +190,16 @@ function viewFullPermohonan(ID_PERMOHONAN) {
     document.${formName}.ID_PERMOHONAN.value = ID_PERMOHONAN;
     document.${formName}.action = "?_portal_module=ekptg.view.integrasi.FrmViewMyInfoBorangLampiranA1&ID_PERMOHONAN=" + ID_PERMOHONAN;
     doAjaxCall${formName}("viewFullPermohonan");
+}
+function kosongkan() {
+	document.${formName}.reset();
+	document.${formName}.txtNoFail.value = "";
+	//document.${formName}.socKementerian.value = "";
+	document.${formName}.submit();
+}
+function search_data(){
+	document.${formName}.command.value = "";
+	document.${formName}.action = "$EkptgUtil.getTabID("JPBD",$portal_role)?_portal_module=ekptg.view.ppt.FrmUlasanJPBDOnline";
+	document.${formName}.submit();
 }
 </script>

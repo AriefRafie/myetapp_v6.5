@@ -3609,7 +3609,7 @@ Click me</a>
                        					&& $id_Status != "165")	
                           					#if($!skrin_online == "yes")
                           						#if($open_button_online == "yes")
-	                                      		<a href = "javascript:lampiranICWaris('$listwaris.idwaris','$idSimati','dokumenIC');">
+	                                      		<a href = "javascript:lampiranICWaris('$listwaris.idwaris','$idSimati','dokumenIC','$!id');">
 													<img border="0" src="../img/plus.gif" width="20" height="15"/>
 												</a><br>
 												#end
@@ -3659,7 +3659,7 @@ Click me</a>
                        					&& $id_Status != "165")	
                           					#if($!skrin_online == "yes")
                           						#if($open_button_online == "yes")
-	                                      		<a href = "javascript:lampiranICWaris('$listwaris.idwaris','$idSimati','dokumenIC');">
+	                                      		<a href = "javascript:lampiranICWaris('$listwaris.idwaris','$idSimati','dokumenIC','$!id');">
 													<img border="0" src="../img/plus.gif" width="20" height="15"/>
 												</a><br>
 												#end
@@ -10752,10 +10752,10 @@ function defineStatusWarisByUmur(){
 }
 
 	// SYAFIQAH ADD UPLOAD IC WARIS	
-	function lampiranICWaris(idWaris,idSimati,jenisUpload) {	
-		// alert("syafiqah :"+idSimati);
+	function lampiranICWaris(idWaris,idSimati,jenisUpload,idPermohonan) {	
+		// alert("syafiqah :"+idPermohonan);
 		jenisUpload = "paparicwaris";
-		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=dokumenIC&actionPopup="+jenisUpload+"&rujukan="+idWaris+"&flagOnline=$!flagOnline";
+		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=dokumenIC&actionPopup="+jenisUpload+"&rujukan="+idWaris+"&flagOnline=$!flagOnline&idPermohonan="+idPermohonan;
 	    url +="&jenisdokumen=99212&idSimati="+idSimati;
 			
 		//

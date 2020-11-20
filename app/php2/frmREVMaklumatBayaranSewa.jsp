@@ -22,6 +22,7 @@
   <input name="anchor" type="hidden" id="anchor"/>
   <input type="hidden" name="txtNamaPemohon" id="txtNamaPemohon" value="$txtNamaPemohon"/>
   <input type="hidden" name="txtNoFail" id="txtNoFail" value="$txtNoFail"/>
+  <input type="text" name="idCatatan" id="idCatatan" value="$idCatatan"/>
 
 </p>
 
@@ -37,19 +38,21 @@
         <ul class="TabbedPanelsTabGroup">
           <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT DEPOSIT</li>
           <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT SEWA</li>
-          <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT BAYARAN LAIN LAIN</li>
-          <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PERJANJIAN</li>
-          <li onClick="doChangeTabUpper(4);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PEMOHON</li>
-          <li onClick="doChangeTabUpper(5);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PERMOHONAN</li>
-          <li onClick="doChangeTabUpper(6);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TANAH</li>
-          <li onClick="doChangeTabUpper(7);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT ABT</li>
-          <li onClick="doChangeTabUpper(8);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT NOTIS</li>
-          <li onClick="doChangeTabUpper(9);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT MEMO</li>
-          <li onClick="doChangeTabUpper(10);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TINDAKAN MAHKAMAH</li>
+          <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT CATATAN</li>
+          <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT BAYARAN LAIN LAIN</li>
+          <li onClick="doChangeTabUpper(4);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PERJANJIAN</li>
+          <li onClick="doChangeTabUpper(5);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PEMOHON</li>
+          <li onClick="doChangeTabUpper(6);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PERMOHONAN</li>
+          <li onClick="doChangeTabUpper(7);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TANAH</li>
+          <li onClick="doChangeTabUpper(8);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT ABT</li>
+          <li onClick="doChangeTabUpper(9);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT NOTIS</li>
+          <li onClick="doChangeTabUpper(10);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT MEMO</li>
+          <li onClick="doChangeTabUpper(11);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TINDAKAN MAHKAMAH</li>
         </ul>
         <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent">#parse("app/php2/frmREVMaklumatDeposit.jsp")</div>
           <div class="TabbedPanelsContent">#parse("app/php2/frmREVMaklumatSewa.jsp")</div>
+          <div class="TabbedPanelsContent">#parse("app/php2/frmREVMaklumatCatatan.jsp")</div>
           <div class="TabbedPanelsContent">#parse("app/php2/frmREVMaklumatBayaranLain.jsp")</div>
           <div class="TabbedPanelsContent">#parse("app/php2/frmREVMaklumatPerjanjian.jsp")</div>
           <div class="TabbedPanelsContent">#parse("app/php2/frmREVMaklumatPemohon.jsp")</div>
@@ -126,6 +129,15 @@ function janaHapusKira(idHasil) {
 
 	var url = "../servlet/ekptg.report.php2.REVHapusKira?ID_HASIL="+idHasil;
     var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function janaSuratKuiriCek(idHasil) {
+
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupCetakLaporanView?idHasil="+idHasil+"&report=suratKuiriCek";
+    var hWnd = window.open(url,'printuser','width=1000,height=300, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
@@ -608,6 +620,66 @@ function batalKemaskiniBayaranLL(){
 
 
 </script>
+<!-- CATATAN -->
+<script>
+function paparCatatan(idCatatan){
+	document.${formName}.mode.value = "viewCatatan";
+	document.${formName}.idCatatan.value = idCatatan;
+	doAjaxCall${formName}("");
+}
+function tambahCatatan(){
+	document.${formName}.mode.value = "newCatatan";
+	doAjaxCall${formName}("");
+}
+function simpanCatatan(){
+
+	if(document.${formName}.txtCatatan.value == ""){
+		alert('Sila masukkan Catatan.');
+  		document.${formName}.txtCatatan.focus();
+		return;
+	}
+
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.mode.value = "newCatatan";
+		return;
+	}
+
+	document.${formName}.mode.value = "viewCatatan";
+	document.${formName}.hitButton.value = "simpanCatatan";
+	doAjaxCall${formName}("");
+}
+function kemaskiniCatatan(){
+	document.${formName}.mode.value = "updateCatatan";
+	doAjaxCall${formName}("");
+}
+function hapusCatatan(){
+
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.mode.value = "viewCatatan";
+		return;
+	}
+
+	document.${formName}.mode.value = "view";
+	document.${formName}.hitButton.value = "hapusCatatan";
+	doAjaxCall${formName}("");
+}
+function simpanKemaskiniCatatan(){
+	if(document.${formName}.txtCatatan.value == ""){
+		alert('Sila masukkan Catatan.');
+  		document.${formName}.txtCatatan.focus();
+		return;
+	}
+	document.${formName}.mode.value = "viewCatatan";
+	document.${formName}.hitButton.value = "simpanKemaskiniCatatan";
+	doAjaxCall${formName}("");
+}
+function batalKemaskiniCatatan(){
+	document.${formName}.mode.value = "viewCatatan";
+	doAjaxCall${formName}("");
+}
+
+
+</script>
 <!-- PELARASAN DEPOSIT -->
 <script>
 function onChangeCek(str) {
@@ -864,6 +936,38 @@ function cetakSuratRampasanDeposit(idNotis) {
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
 }
+function cetakMemoTuntutanDeposit(idNotis) {
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupCetakLaporanView?idNotis="+idNotis+"&report=SuratMemoTuntutanDeposit";
+    var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function cetakMemoTuntutanHasil(idNotis) {
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupCetakLaporanView?idNotis="+idNotis+"&report=SuratMemoTuntutanHasil";
+    var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function cetakMemoPelarasanDeposit(idNotis) {
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupCetakLaporanView?idNotis="+idNotis+"&report=SuratMemoPelarasanDeposit";
+    var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function cetakMemoRampasanDeposit(idNotis) {
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupCetakLaporanView?idNotis="+idNotis+"&report=SuratMemoRampasanDeposit";
+    var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
 function cetakSuratTuntutan(idNotis) {
 	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupCetakLaporanView?idNotis="+idNotis+"&report=SuratTuntutan";
     var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
@@ -932,9 +1036,7 @@ function janaMaklumatLot() {
 	var str4  = document.${formName}.namaDerahTanah.value;
 	var str5  = document.${formName}.namaNegeriTanah.value;
 	var str6 = document.${formName}.noWartaTanah.value;
-	var strTujuan = document.${formName}.namatujuan.value;
 	var statusRizabTnh = document.${formName}.status.value;
-	var namaPemohon = document.${formName}.txtNama.value;
 
 	if(statusRizabTnh == 'MILIK') {
 		milikOrRizab = str2;
@@ -942,7 +1044,7 @@ function janaMaklumatLot() {
 		milikOrRizab = str6;
 	}
 
-	strTajuk = str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5  + " OLEH " + namaPemohon + " UNTUK TUJUAN " + strTujuan ;
+	strTajuk = str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5;
 	document.${formName}.txtMaklumatLot.value = strTajuk;
 	}
 
@@ -977,5 +1079,36 @@ function cetakDokumen(id){
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener=document.window;
     if (hWnd.focus != null) hWnd.focus();
+}
+
+function printLaporan(divName,tajuk) {
+	$jquery("#"+divName+" :button").hide();
+
+	var head_style = " <head> "+
+    " <style> "+
+    " @media print { "+
+	" 	body { "+
+    "  -webkit-print-color-adjust: exact; "+  /*Chrome, Safari */
+    "  color-adjust: exact;  "+  /*Firefox*/
+    " 	} "+
+	"         table { page-break-inside:auto; } "+
+  	"		  tr    { page-break-inside:avoid; page-break-after:auto;  } "+
+    "   } "+
+	"		  td    { border:1px solid black;font-size:75%;  } "+
+    " </style> "+
+	" </head> ";
+
+	var tajuk = '<div style="width:95%;margin: auto;font-size:100%;" align="center" ><b>'+tajuk.toUpperCase()+'</b></div>'
+    var printContents = document.getElementById(divName).innerHTML;
+	printContents = printContents.replace("<table ", "<table style=\"border-collapse:collapse;\" ");
+	printContents = printContents.replace('class="table_header"',' style="background-color:#d5d1d0;" ');
+
+	var footer ="";
+    var popupWin = window.open('Cetakan', '_blank', 'width=1100,height=600');
+    popupWin.document.open();
+
+    popupWin.document.write('<html><body onload="window.print()"><div style="width:95%;margin: auto;"  >'+head_style+'<br>'+tajuk+'<br>'+printContents+'</div></html>');
+	popupWin.document.close();
+    return false;
 }
 </script>

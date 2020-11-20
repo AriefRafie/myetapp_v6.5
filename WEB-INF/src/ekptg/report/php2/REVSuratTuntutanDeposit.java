@@ -11,7 +11,7 @@ import ekptg.model.php2.FrmREVPopupCetakLaporanData;
 import ekptg.report.EkptgReportServlet;
 
 public class REVSuratTuntutanDeposit extends EkptgReportServlet {
-	
+
 	FrmREVPopupCetakLaporanData logic = new FrmREVPopupCetakLaporanData();
 
 	public REVSuratTuntutanDeposit() {
@@ -32,7 +32,7 @@ public class REVSuratTuntutanDeposit extends EkptgReportServlet {
 		if (parameters.get("BAKI_LEBIHAN") != null){
 			bakiLebihan = (String)parameters.get("BAKI_LEBIHAN");
 		}
-		
+
 		Hashtable pegawai = logic.getMaklumatPegawai(idPegawai);
 		if (pegawai != null) {
 			parameters.put("NAMA_PEGAWAI", (String) pegawai.get("nama"));
@@ -41,8 +41,8 @@ public class REVSuratTuntutanDeposit extends EkptgReportServlet {
 			parameters.put("NO_FAKS",(String)pegawai.get("noFaks"));
 			parameters.put("EMAIL",(String)pegawai.get("emel"));
 		}
-		
-		super.setReportName("REVSuratTuntutanDeposit");
+
+		super.setReportName("REVSuratTuntutanResit");
 		super.setFolderName("php2\\REV");
 	}
 }

@@ -1,4 +1,4 @@
-##<table width="100%" border="0" cellspacing="2" cellpadding="2">
+<table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td colspan="4"><fieldset>
       <legend>UNTUK PIHAK</legend>
@@ -64,4 +64,4 @@
       </table>
       </fieldset></td>
   </tr>
-##</table>
+</table>

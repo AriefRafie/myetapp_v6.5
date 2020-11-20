@@ -1,5 +1,3 @@
-<!-- comment -->
-
 
    <style>
     #boxListPB{        
@@ -33,7 +31,10 @@
 <input type="hidden" id="div_getListPB_open" name="div_getListPB_open" value="Y">
 <table border="0" width="100%" > 
 <tr>
-<td align="left" valign="top"><img src="../img/drag.png" id="move" name="move" title='Ubah Lokasi' onMouseOver="this.style.cursor='move'" width="18" height="18" align="center"/>
+<td align="left" valign="top">
+<!--
+<img src="../img/drag.png" id="move" name="move" title='Ubah Lokasi' onMouseOver="this.style.cursor='move'" width="18" height="18" align="center"/>
+-->
 </td>
 <td align="right" valign="top"><a href="javascript:getListPB()" id="trigger">
 <img  src="../img/validno.png" title='Tutup' align="center"/>
@@ -176,22 +177,25 @@ SENARAI PIHAK BERKEPENTINGAN
  
   
    <script type="text/javascript">
-      $jquery(function() {
+     // $jquery(function() {
 		   var width  = 0;
 		   var height = 0;			
 		   var left = 0;
            var top  = 0;	  
 		  
-      $jquery(document).ready(function(e) {
+     // $jquery(document).ready(function(e) {
 		   
 		    width  = 700;			
-		    left = width+e.pageX;
-            top  = height+e.pageY;			
+		    //left = width+e.pageX;
+            //top  = height+e.pageY;			
 			height = 300;
-			$jquery("#boxListPB").css('width', width).css('height', height).css('top', top).css('left', left);
-			$jquery("#scroll_boxListPB").css('width', width).css('height', height-55).css('top', top).css('left', left).css('overflow-y','scroll');
+			$jquery("#boxListPB").css('width', width).css('height', height);
+			//.css('top', top).css('left', left);
+			$jquery("#scroll_boxListPB").css('width', width).css('height', height-55)
+			//.css('top', top).css('left', left)
+			.css('overflow-y','scroll');
 		   // $jquery('#boxListPB').show();	     
-        });	
+       // });	
 		
 		/*
 		 $jquery("div#boxListPB").mousemove(function(e) {
@@ -199,7 +203,7 @@ SENARAI PIHAK BERKEPENTINGAN
 			});
 		*/	
 		
-		
+		/*
 		var boxListPB = $jquery("#boxListPB")
 		boxListPB.offset({
 			left: left,
@@ -215,6 +219,8 @@ SENARAI PIHAK BERKEPENTINGAN
 			x: 0,
 			y: 0
 		};		
+		*/
+		
 		$jquery("#move").mousedown(function(e) {
 			//alert("mousedown");
 			if (!drag.state) {
@@ -227,7 +233,10 @@ SENARAI PIHAK BERKEPENTINGAN
 			
 			}
 			return false;
-		});		
+		});
+		
+		
+				
 		$jquery(document).mousemove(function(e) {
 			//alert("mousemove");
 			if (drag.state) {
@@ -262,7 +271,7 @@ SENARAI PIHAK BERKEPENTINGAN
 		});
 
 		
-      });
+      //});
 	  
 	  
 	  

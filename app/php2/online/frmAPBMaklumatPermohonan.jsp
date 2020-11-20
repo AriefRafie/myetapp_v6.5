@@ -663,11 +663,21 @@ function simpanKemaskiniPermohonan() {
   		document.${formName}.txtRingkasanPengalaman.focus(); 
 		return; 
 	}
+	if(document.${formName}.txtUndangUndang.value == ""){
+		alert('Sila masukkan maklumat Undang-Undang Diperbadankan.');
+  		document.${formName}.txtUndangUndang.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtJenisPerniagaan.value == ""){
+		alert('Sila masukkan Jenis Perniagaan.');
+  		document.${formName}.txtJenisPerniagaan.focus(); 
+		return; 
+	}
 	if(document.${formName}.txtModalBenar.value == ""){
 		alert('Sila masukkan Modal Dibenarkan.');
 			document.${formName}.txtModalBenar.focus(); 
 			return; 
-		}
+	}
 	if(document.${formName}.txtModalJelas.value == ""){
 		alert('Sila masukkan Modal Jelas.');
 		document.${formName}.txtModalJelas.focus(); 
@@ -697,6 +707,16 @@ function simpanKemaskiniPermohonan() {
 		alert('Sila masukkan jenis luas.');
 		document.${formName}.socLuas.focus(); 
 		return; 
+	}
+	if(document.${formName}.txtJumlahModal.value == ""){
+		alert('Sila masukkan jumlah modal untuk operasi yang terdapat pada masa ini.')
+		document.${formName}.txtJumlahModal.focus();
+		return;
+	}
+	if(document.${formName}.txtJumlahModal1.value == ""){
+		alert('Sila masukkan jumlah modal untuk operasi yang boleh diadakan oleh pemohon dan sumbernya.')
+		document.${formName}.txtJumlahModal1.focus();
+		return;
 	}
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "update";
@@ -1056,7 +1076,6 @@ function textCounter(field, countfield, maxlimit) {
 	 countfield.value = maxlimit - field.value.length;
 }
 function doHantarEmel(){
-	//alert($!idPermohonan);
 	if(pengesahan.checked != true){
 		alert('Sila tanda pada checkbox untuk teruskan permohonan. ');
 		return; 

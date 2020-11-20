@@ -47,6 +47,8 @@ public class FrmREVMemantauBayaranSewaData {
 	private Vector beanMaklumatPermohonan = null;
 	private Vector beanMaklumatTanah = null;
 	private Vector beanMaklumatBayaranLL = null;
+	private Vector beanMaklumatCatatan = null;
+	private Vector senaraiCatatan = null;
 	private static final Log log = LogFactory
 			.getLog(FrmREVMemantauBayaranSewaData.class);
 
@@ -1772,6 +1774,42 @@ public class FrmREVMemantauBayaranSewaData {
 	}
 
 	@SuppressWarnings("unchecked")
+	public void setMaklumatCatatan(String idCatatan) throws Exception {
+
+		Db db = null;
+		String sql = "";
+
+		try {
+			beanMaklumatCatatan = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT CATATAN"
+					+ " FROM TBLPHPCATATAN WHERE ID_CATATAN = '" + idCatatan + "'";
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("catatan",
+						rs.getString("CATATAN") == null ? "" : rs
+								.getString("CATATAN"));
+				beanMaklumatCatatan.addElement(h);
+				bil++;
+			}
+
+		} catch (Exception re) {
+			log.error("Error: ", re);
+			throw re;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
+	@SuppressWarnings("unchecked")
 	public void setMaklumatPelarasan(String idAkaun) throws Exception {
 
 		Db db = null;
@@ -2403,10 +2441,9 @@ public class FrmREVMemantauBayaranSewaData {
 					+ " FROM TBLPFDFAIL FAIL, TBLPHPHASIL HASIL, TBLRUJSUBURUSAN SUBURUSAN,"
 					+ " TBLPHPBAYARANPERLUDIBAYAR BAYAR, TBLPHPPERMOHONANSEWA SEWA, TBLRUJLUAS LUAS"
 					+ " WHERE FAIL.ID_FAIL = HASIL.ID_FAIL"
-					+ " AND HASIL.ID_FAIL = BAYAR.ID_FAIL(+) AND BAYAR.ID_PERMOHONAN = SEWA.ID_PERMOHONAN(+)"
+					+ " AND HASIL.ID_HASIL = BAYAR.ID_HASIL(+) AND BAYAR.ID_PERMOHONAN = SEWA.ID_PERMOHONAN(+)"
 					+ " AND FAIL.ID_SUBURUSAN = SUBURUSAN.ID_SUBURUSAN(+) AND SEWA.ID_LUASASAL = LUAS.ID_LUAS(+)"
 					+ " AND HASIL.ID_HASIL = '" + idHasil + "'";
-
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -2485,7 +2522,7 @@ public class FrmREVMemantauBayaranSewaData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT D.ID_NEGERI, D.ID_KEMENTERIAN, D.ID_AGENSI, HASIL.MAKLUMAT_LOT, D.ID_LUAS, D.LUAS, HASIL.CATATAN_TANAH,"
+			sql = "SELECT DISTINCT D.ID_NEGERI, D.ID_KEMENTERIAN, D.ID_AGENSI, HASIL.MAKLUMAT_LOT, D.ID_LUAS, D.LUAS, HASIL.CATATAN_TANAH,"
 					+ " D.NO_LOT, D.NO_HAKMILIK, D.NO_WARTA, RUJLOT.KETERANGAN AS JENIS_LOT, D.ID_JENISHAKMILIK, RUJJENISHM.KOD_JENIS_HAKMILIK,"
 					+ " D.ID_MUKIM, RUJMUKIM.NAMA_MUKIM, D.ID_DAERAH, RUJDAERAH.NAMA_DAERAH, D.ID_NEGERI, RUJNEGERI.NAMA_NEGERI,"
 					+ " PEMOHON.NAMA, SEWA.TUJUAN"
@@ -2853,9 +2890,13 @@ public class FrmREVMemantauBayaranSewaData {
 				h.put("idNotis", rs.getString("ID_NOTIS") == null ? "" : rs.getString("ID_NOTIS"));
 				h.put("idJenisNotis", rs.getString("ID_JENIS_NOTIS") == null ? "" : rs.getString("ID_JENIS_NOTIS"));
 				if ("1".equals(rs.getString("ID_JENIS_NOTIS"))) {
-					h.put("jenisNotis", "NOTIS TUNTUTAN TUNGGAKAN");
+					h.put("jenisNotis", "MEMO TUNTUTAN DEPOSIT");
 				} else if ("2".equals(rs.getString("ID_JENIS_NOTIS"))) {
-					h.put("jenisNotis", "NOTIS RAMPASAN DEPOSIT");
+					h.put("jenisNotis", "MEMO PELARASAN DEPOSIT");
+				} else if ("3".equals(rs.getString("ID_JENIS_NOTIS"))) {
+					h.put("jenisNotis", "MEMO TUNTUTAN HASIL");
+				} else if ("4".equals(rs.getString("ID_JENIS_NOTIS"))) {
+					h.put("jenisNotis", "MEMO RAMPASAN DEPOSIT");
 				} else {
 					h.put("jenisNotis", "");
 				}
@@ -2866,11 +2907,13 @@ public class FrmREVMemantauBayaranSewaData {
 				h.put("jumlahTunggakan",rs.getString("JUMLAH_TUNGGAKAN") == null || rs.getString("JUMLAH_TUNGGAKAN").equals("0") ? "0.00" : Util.formatDecimal(Double.valueOf(rs.getString("JUMLAH_TUNGGAKAN"))));
 				h.put("bilPeringatan", rs.getString("BIL_PERINGATAN") == null ? "" : rs.getString("BIL_PERINGATAN"));
 				if ("1".equals(rs.getString("BIL_PERINGATAN"))) {
-					h.put("peringatan", "PERTAMA");
+					h.put("peringatan", "MEMO TUNTUTAN DEPOSIT");
 				} else if ("2".equals(rs.getString("BIL_PERINGATAN"))) {
-					h.put("peringatan", "KEDUA");
+					h.put("peringatan", "MEMO PELARASAN DEPOSIT");
 				} else if ("3".equals(rs.getString("BIL_PERINGATAN"))) {
-					h.put("peringatan", "KETIGA");
+					h.put("peringatan", "MEMO TUNTUTAN HASIL");
+				} else if ("4".equals(rs.getString("BIL_PERINGATAN"))) {
+					h.put("peringatan", "MEMO RAMPASAN DEPOSIT");
 				} else {
 					h.put("peringatan", "");
 				}
@@ -2936,17 +2979,17 @@ public class FrmREVMemantauBayaranSewaData {
 			Statement stmt = db.getStatement();
 
 			sql = " SELECT TBLPFDFAIL.TARIKH_DAFTAR_FAIL, TBLPHPBAYARANPERLUDIBAYAR.TARIKH_MULA, TBLPHPBAYARANPERLUDIBAYAR.TARIKH_TAMAT, "
-					+ " TBLPHPBAYARANPERLUDIBAYAR.TARIKH_PENERIMAAN_SST, AKAUN.TARIKH, TBLPHPBAYARANPERLUDIBAYAR.ID_PERMOHONAN, "
+					+ " TBLPHPBAYARANPERLUDIBAYAR.TARIKH_SST, AKAUN.TARIKH, TBLPHPBAYARANPERLUDIBAYAR.ID_PERMOHONAN, "
 					+ " NVL((SELECT TARIKH_NOTIS FROM TBLPHPNOTISHASIL "
 					+ " WHERE ID_HASIL=TBLPHPHASIL.ID_HASIL AND ID_JENIS_NOTIS='1' AND BIL_PERINGATAN='1' AND FLAG_NOTIS IS NULL) ,NULL) TARIKH_NOTIS_PERINGATAN, "
 					+ " NVL((SELECT TARIKH_NOTIS FROM TBLPHPNOTISHASIL  "
 					+ " WHERE ID_HASIL=TBLPHPHASIL.ID_HASIL AND ID_JENIS_NOTIS='1' AND BIL_PERINGATAN='3' AND FLAG_NOTIS IS NULL ) ,NULL) TARIKH_NOTIS_PERINGATAN_AKHIR, "
 					+ " NVL((SELECT TARIKH_NOTIS FROM TBLPHPNOTISHASIL  "
-					+ " WHERE ID_HASIL=TBLPHPHASIL.ID_HASIL AND ID_JENIS_NOTIS='2') ,NULL) TARIKH_MEMO_RAMPASAN_DEPOSIT, "
+					+ " WHERE ID_HASIL=TBLPHPHASIL.ID_HASIL AND ID_JENIS_NOTIS='2') ,NULL) TARIKH_NOTIS_RAMPASAN, "
 					+ " NVL((SELECT TARIKH_PENAMATAN FROM TBLPHPBAYARANPERLUDIBAYAR "
 					+ " WHERE ID_HASIL = TBLPHPHASIL.ID_HASIL AND FLAG_PERJANJIAN = '4') , NULL) TARIKH_NOTIS_PENAMATAN, "
 					+ " NVL((SELECT TARIKH_NOTIS FROM TBLPHPNOTISHASIL  "
-					+ " WHERE ID_HASIL=TBLPHPHASIL.ID_HASIL AND BIL_PERINGATAN = '1' AND FLAG_NOTIS = 'MEMO') ,NULL) TARIKH_NOTIS_RAMPASAN, "
+					+ " WHERE ID_HASIL=TBLPHPHASIL.ID_HASIL AND BIL_PERINGATAN = '1' AND FLAG_NOTIS = 'MEMO') ,NULL) TARIKH_MEMO_RAMPASAN_DEPOSIT, "
 					+ " NVL((SELECT TARIKH_NOTIS FROM TBLPHPNOTISHASIL  "
 					+ " WHERE ID_HASIL=TBLPHPHASIL.ID_HASIL AND ID_JENIS_NOTIS='3' AND FLAG_NOTIS IS NULL) ,NULL) TARIKH_NOTIS_TUNTUTAN, "
 					+ " TBLPHPPERMOHONANSEWA.TARIKH_HANTARKEPUTUSAN,TBLPHPHASIL.ID_HASIL, "
@@ -2962,7 +3005,6 @@ public class FrmREVMemantauBayaranSewaData {
 					+ " AND TBLPHPBAYARANPERLUDIBAYAR.FLAG_AKTIF = 'Y' AND TBLPHPBAYARANPERLUDIBAYAR.BAYARAN > 0 AND AKAUN.ID_JENISBAYARAN = 10 "
 					+ " AND AKAUN.FLAG_AKTIF = 'Y' AND TBLPHPBAYARANPERLUDIBAYAR.BAYARAN > 0"
 					+ " AND TBLPHPHASIL.ID_HASIL = '" + idHasil + "'";
-			System.out.println("sql >> "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			if (rs.next()) {
@@ -2970,7 +3012,7 @@ public class FrmREVMemantauBayaranSewaData {
 				tm.put("tarikh_daftar_fail", rs.getDate("TARIKH_DAFTAR_FAIL") == null ? "" : sdf.format(rs.getDate("TARIKH_DAFTAR_FAIL")));
 				tm.put("tarikh_mula_penyewaan", rs.getDate("TARIKH_MULA") == null ? "" : sdf.format(rs.getDate("TARIKH_MULA")));
 				tm.put("tarikh_tamat_penyewaan", rs.getDate("TARIKH_TAMAT") == null ? "" : sdf.format(rs.getDate("TARIKH_TAMAT")));
-				tm.put("tarikh_penamaan_sst", rs.getDate("TARIKH_PENERIMAAN_SST") == null ? "" : sdf.format(rs.getDate("TARIKH_PENERIMAAN_SST")));
+				tm.put("tarikh_penamaan_sst", rs.getDate("TARIKH_SST") == null ? "" : sdf.format(rs.getDate("TARIKH_SST")));
 				tm.put("tarikh_penerimaan_deposit", rs.getDate("TARIKH") == null ? "" : sdf.format(rs.getDate("TARIKH")));
 				tm.put("tarikh_surat_tawaran", rs.getDate("TARIKH_HANTARKEPUTUSAN") == null ? "" : sdf.format(rs.getDate("TARIKH_HANTARKEPUTUSAN")));
 				tm.put("tarikh_notis_peringatan", rs.getDate("TARIKH_NOTIS_PERINGATAN") == null ? "" : sdf.format(rs.getDate("TARIKH_NOTIS_PERINGATAN")));
@@ -3047,6 +3089,182 @@ public class FrmREVMemantauBayaranSewaData {
 				return "";
 			}
 
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
+	public String simpanCatatan(String idHasil, String txtCatatan, HttpSession session)
+			throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = session.getAttribute("_ekptg_user_id").toString();
+		String sql = "";
+		String idCatatanString = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPAKAUN
+			long idCatatan = DB.getNextID("TBLPHPCATATAN_SEQ");
+			System.out.println("idCatatan >>>> "+idCatatan);
+			idCatatanString = String.valueOf(idCatatan);
+			r.add("ID_CATATAN", idCatatan);
+			r.add("ID_HASIL", idHasil);
+			if (!"".equals(txtCatatan)) {
+				r.add("CATATAN", txtCatatan);
+			}
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPHPCATATAN");
+			System.out.println("sql >>>> "+sql);
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+
+			AuditTrail.logActivity("", "4", null, session, "INS",
+					"FAIL [" + idCatatan
+							+ "] DIDAFTARKAN");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		return idCatatanString;
+	}
+
+	public void simpanKemaskiniCatatan(String idHasil, String idCatatan, String txtCatatan, HttpSession session) throws Exception {
+
+		Db db = null;
+		Connection conn = null;
+		String userId = session.getAttribute("_ekptg_user_id").toString();
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPAKAUN
+			r.update("ID_CATATAN", idCatatan);
+			if (!"".equals(txtCatatan)) {
+				r.add("CATATAN", txtCatatan);
+			}
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+			sql = r.getSQLUpdate("TBLPHPCATATAN");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+
+			AuditTrail.logActivity("", "4", null, session, "UPD",
+					"FAIL [" + idCatatan
+							+ "] DIKEMASKINI");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
+	public void hapusCatatan(String idHasil, String idCatatan,
+			HttpSession session) throws Exception {
+		Db db = null;
+		Connection conn = null;
+		String userId = session.getAttribute("_ekptg_user_id").toString();
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPAKAUN
+			sql = "DELETE FROM TBLPHPCATATAN WHERE ID_CATATAN = '" + idCatatan + "'";
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+
+			AuditTrail.logActivity("", "4", null, session, "DEL",
+					"FAIL [" + idCatatan
+							+ "] DIHAPUSKAN");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public void setListCatatan(String idHasil) throws Exception {
+
+		Db db = null;
+		String sql = "";
+
+		try {
+			senaraiCatatan = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT * FROM TBLPHPCATATAN WHERE ID_HASIL = '"
+					+ idHasil
+					+ "'";
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("bil", bil);
+				h.put("idCatatan", rs.getString("ID_CATATAN") == null ? "" : rs.getString("ID_CATATAN"));
+				h.put("catatan",
+						rs.getString("CATATAN") == null ? "" : rs
+								.getString("CATATAN"));
+				senaraiCatatan.addElement(h);
+				bil++;
+			}
+
+		} catch (Exception re) {
+			log.error("Error: ", re);
+			throw re;
 		} finally {
 			if (db != null)
 				db.close();
@@ -3147,5 +3365,21 @@ public class FrmREVMemantauBayaranSewaData {
 
 	public void setBeanMaklumatBayaranLL(Vector beanMaklumatBayaranLL) {
 		this.beanMaklumatBayaranLL = beanMaklumatBayaranLL;
+	}
+
+	public Vector getBeanMaklumatCatatan() {
+		return beanMaklumatCatatan;
+	}
+
+	public void setBeanMaklumatCatatan(Vector beanMaklumatCatatan) {
+		this.beanMaklumatCatatan = beanMaklumatCatatan;
+	}
+
+	public Vector getSenaraiCatatan() {
+		return senaraiCatatan;
+	}
+
+	public void setSenaraiCatatan(Vector senaraiCatatan) {
+		this.senaraiCatatan = senaraiCatatan;
 	}
 }
