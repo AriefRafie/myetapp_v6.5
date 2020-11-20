@@ -207,7 +207,187 @@ public class PendaftaranCheck implements IServlet2 {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
+		// 19112020 syafiqah ambil dari v6
+		}else if ("check_simati_kp_baru_online".equals(submit)) {
+			PendaftaranCheckModel userdata = PendaftaranCheckModel
+					.getInstance();
 
+			try {
+				mati1 = userdata
+						.List_KP_Baru_Simati_Online(id_permohonan, no_kp_baru_simati,
+								no_kp_lama_simati, no_kp_lain_simati, id_simati);
+				if (mati1.size() > 0) {
+					Hashtable k = (Hashtable) mati1.get(0);
+
+					String nama_simati = k.get("NAMA_SIMATI").toString();
+					String no_fail = k.get("NO_FAIL").toString();
+					String nama_pejabat = k.get("NAMA_PEJABAT").toString();
+					String daerah_pejabat = k.get("DAERAH_PEJABAT").toString();
+					String daerah_mohon = k.get("NAMA_DAERAH").toString();
+					String no_tel = k.get("NO_TEL").toString();
+					//String id_permohonan2 = k.get("ID_PERMOHONAN").toString();
+					String op = "";
+
+					String kp1 = "";
+					String kp2 = "";
+					String kp3 = "";
+
+					String no_kp_baru = k.get("NO_KP_BARU").toString();
+					String no_kp_lama = k.get("NO_KP_LAMA").toString();
+					String no_kp_lain = k.get("NO_KP_LAIN").toString();
+					String jenis_kp = k.get("JENIS_KP").toString();
+
+					String t_mati = k.get("TARIKH_MATI").toString();
+
+					if (!no_kp_baru.equals("")) {
+						kp1 = k.get("NO_KP_BARU").toString().substring(0, 6);
+						kp2 = k.get("NO_KP_BARU").toString().substring(6, 8);
+						kp3 = k.get("NO_KP_BARU").toString().substring(8, 12);
+					}
+
+					if (no_kp_baru_simati.length() == 12) {
+						
+						if (userdata.checkKP_Baru_Simati_Online(id_permohonan,
+								no_kp_baru_simati, no_kp_lama_simati,
+								no_kp_lain_simati) == true) {
+							
+								displaySuratBatalAlertOnline(id_permohonan, "No kad pengenalan baru", out, nama_simati, nama_pejabat,
+									daerah_mohon, no_tel, no_fail, no_kp_baru_simati, "SuratBatalPermohonanKpBaru", securityToken);
+							
+							
+						} else {
+							System.out.println("&&If x wujud&&");
+							out.println("<input name='no_kp1' type='hidden' value='' />");
+						}
+					} else {
+						out
+								.println("<input name='no_kp1' type='hidden' value='' />");
+					}
+
+				} else {
+					out
+							.println("<input name='no_kp1' type='hidden' value='' />");
+				}
+
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		// 19112020 syafiqah ambil dari v6
+		}else if ("check_simati_kp_lama_online".equals(submit)) {
+			PendaftaranCheckModel userdata = PendaftaranCheckModel
+					.getInstance();
+			try {
+				mati2 = null;
+				mati2 = userdata
+						.List_KP_Lama_Simati_Online(id_permohonan, no_kp_baru_simati,
+								no_kp_lama_simati, no_kp_lain_simati, id_simati);
+				
+				if (mati2.size() > 0) {
+					Hashtable k = (Hashtable) mati2.get(0);
+
+					String nama_simati = k.get("NAMA_SIMATI").toString();
+					String no_fail = k.get("NO_FAIL").toString();
+					String nama_pejabat = k.get("NAMA_PEJABAT").toString();
+					String daerah_pejabat = k.get("DAERAH_PEJABAT").toString();
+					String daerah_mohon = k.get("NAMA_DAERAH").toString();
+					String no_tel = k.get("NO_TEL").toString();
+					//String id_permohonan2 = k.get("ID_PERMOHONAN").toString();
+					
+					if (no_kp_lama_simati != "") {
+						if (userdata.checkKP_Lama_Simati_Online(id_permohonan,
+								no_kp_baru_simati, no_kp_lama_simati,
+								no_kp_lain_simati) == true) {
+							
+								displaySuratBatalAlertOnline(id_permohonan, "No kad pengenalan lama",
+									out, nama_simati, nama_pejabat,
+									daerah_mohon, no_tel, no_fail, no_kp_lama_simati,
+									"SuratBatalPermohonanKpLama", securityToken);
+						} else {
+							out
+									.println("<input name='no_kp2' type='hidden' value='' />");
+						}
+						
+
+					} else {
+						out
+								.println("<input name='no_kp2' type='hidden' value='' />");
+					}
+				} else {
+					out
+							.println("<input name='no_kp2' type='hidden' value='' />");
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		// 19112020 syafiqah ambil dari v6	
+		}else if ("check_simati_kp_lain_online".equals(submit)) {
+			PendaftaranCheckModel userdata = PendaftaranCheckModel
+					.getInstance();
+			try {
+				mati3 = userdata
+						.List_KP_Lain_Simati_Online(id_permohonan, no_kp_baru_simati,
+								no_kp_lama_simati, no_kp_lain_simati);
+				if (mati3.size() > 0) {
+					Hashtable k = (Hashtable) mati3.get(0);
+					
+					String nama_simati = k.get("NAMA_SIMATI").toString();
+					String no_fail = k.get("NO_FAIL").toString();
+					String nama_pejabat = k.get("NAMA_PEJABAT").toString();
+					String daerah_pejabat = k.get("DAERAH_PEJABAT").toString();
+					String daerah_mohon = k.get("NAMA_DAERAH").toString();
+					String no_tel = k.get("NO_TEL").toString();
+					//String id_permohonan2 = k.get("ID_PERMOHONAN").toString();
+					String op = "";
+
+					String kp1 = "";
+					String kp2 = "";
+					String kp3 = "";
+
+					String no_kp_baru = k.get("NO_KP_BARU").toString();
+					String no_kp_lama = k.get("NO_KP_LAMA").toString();
+					String no_kp_lain = k.get("NO_KP_LAIN").toString();
+					String jenis_kp = k.get("JENIS_KP").toString();
+
+					String t_mati = k.get("TARIKH_MATI").toString();
+
+					if (!no_kp_baru.equals("")) {
+						kp1 = k.get("NO_KP_BARU").toString().substring(0, 6);
+						kp2 = k.get("NO_KP_BARU").toString().substring(6, 8);
+						kp3 = k.get("NO_KP_BARU").toString().substring(8, 12);
+					} 
+
+					if (no_kp_lain_simati != "") {
+						if (userdata.checkKP_Lain_Simati_Online(id_permohonan,
+								no_kp_baru_simati, no_kp_lama_simati,
+								no_kp_lain_simati) == true)
+
+						{
+							displaySuratBatalAlertOnline(id_permohonan, "No kad pengenalan lain",
+									out, nama_simati, nama_pejabat,
+									daerah_mohon, no_tel, no_fail, no_kp_lain_simati,
+									"SuratBatalPermohonanKpLain", securityToken);
+						} else {
+							out
+									.println("<input name='no_kp3' type='hidden' value='' />");
+						}
+					} else {
+						out
+								.println("<input name='no_kp3' type='hidden' value='' />");
+					}
+				} else {
+					out
+							.println("<input name='no_kp3' type='hidden' value='' />");
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}else if ("check_simati_kp_lama".equals(submit)) {} else if ("check_simati_kp_lain".equals(submit)) {
 			PendaftaranCheckModel userdata = PendaftaranCheckModel.getInstance();
 			try {
@@ -2581,6 +2761,45 @@ public class PendaftaranCheck implements IServlet2 {
 		op += " <input id='"+jenisFieldKP+"' name='"+jenisFieldKP+"' type='hidden' value='yes' /> " +" ";
 		out.print(op);
 	
+	}
+	
+	// 19112020 syafiqah ambil dari v6
+	public void displaySuratBatalAlertOnline(String id_permohonan, String a, PrintWriter out,
+			String nama_simati, String nama_pejabat, String daerah_mohon, String no_tel,
+			String no_fail, String nokp, String reportName, String securityToken) throws Exception {
+
+		// ekptg.report.ppk.FrmPopupPilihPegawaiRepor
+		myLogger.info("id_permohonan = "+id_permohonan);
+		//myLogger.info("id_permohonan2 = "+id_permohonan2);
+		String op;
+
+		op = "<div>"
+				+ "<font color='red'><b>MyID simati telah wujud!</b></font>"
+				+ "<br/>" + "<font color='black'>No kad pengenalan simati sudah wujud pada permohonan yang bernombor fail <b>"
+				+ no_fail.toUpperCase() +"</b>.<br/>"
+				+ "Permohonan telah dibuat di <b>"+nama_pejabat.toUpperCase()
+				+ "</b>.<br/>" + "Sila hubungi " + "<b>03 - 8871 2999</b>" + "(Pusat Pertanyaan Pusaka) untuk maklumat lanjut.</font>";
+				//+ "<input name=\"online_skrin\" type=\"hidden\" id=\"online_skrin\" value="$online_skrin"/>"
+			//+ " </div> <script>alert('xxxxxxxxxxxxxxxxxxx');document.getElementById('nama_pelbagainegara').value = \"Y\";</script> " +
+			
+				String jenisFieldKP = ""; 
+				if(reportName.equals("SuratBatalPermohonanKpBaru"))
+				{
+					jenisFieldKP = "no_kp1"; 
+				}
+				else if(reportName.equals("SuratBatalPermohonanKpLama"))
+				{
+					jenisFieldKP = "no_kp2"; 
+				}
+				else if(reportName.equals("SuratBatalPermohonanKpLain"))
+				{
+					jenisFieldKP = "no_kp3"; 
+				}
+			
+			
+			op += " <input id='"+jenisFieldKP+"' name='"+jenisFieldKP+"' type='hidden' value='yes' /> " 	
+			+" ";
+		out.print(op);
 	}
 
 	public String myFunction(String test) throws Exception{

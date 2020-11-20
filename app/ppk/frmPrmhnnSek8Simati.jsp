@@ -426,14 +426,14 @@ resetOnBlur:false
 	                                    <option value="4" selected>PASPORT</option>
 	                                    <option value="6">POLIS</option>
 	                                    <option value="5" >TENTERA</option>
-	                                    <option value="13" >PERINTAH MAHKAMAH TINGGI</option>
+	                                  <!-- <option value="13" >PERINTAH MAHKAMAH TINGGI</option>  -->  
                                           <option value="7" >LAIN-LAIN</option>
                                          <option value="0" >-KOSONGKAN-</option>
 		                               #elseif($listmati.jenisKp=="5")
                                          <option value="5" selected>TENTERA</option>
 										<option value="4">PASPORT</option>
 	                                    <option value="6">POLIS</option>
-	                                    <option value="13" >PERINTAH MAHKAMAH TINGGI</option>
+	                                    <!-- <option value="13" >PERINTAH MAHKAMAH TINGGI</option>  -->
                                          <option value="7" >LAIN-LAIN</option>
                                        <option value="0" >-KOSONGKAN-</option>
 	                                  
@@ -442,7 +442,7 @@ resetOnBlur:false
 										<option value="4">PASPORT</option>
 	                                    
 	                                    <option value="5">TENTERA</option>
-	                                    <option value="13" >PERINTAH MAHKAMAH TINGGI</option>
+	                                   <!--  <option value="13" >PERINTAH MAHKAMAH TINGGI</option>  -->
                                          <option value="7" >LAIN-LAIN</option>
                                          
                                          <option value="0" >-KOSONGKAN-</option>
@@ -452,11 +452,11 @@ resetOnBlur:false
 										<option value="4">PASPORT</option>
 	                                    
 	                                    <option value="5">TENTERA</option>
-                                        <option value="13" >PERINTAH MAHKAMAH TINGGI</option>
+                                       <!-- <option value="13" >PERINTAH MAHKAMAH TINGGI</option>  --> 
                                          <option value="0" >-KOSONGKAN-</option>
                                          
                                          #elseif($listmati.jenisKp=="13")
-                                           <option value="13" selected>PERINTAH MAHKAMAH TINGGI</option>
+                                          <!--  <option value="13" selected>PERINTAH MAHKAMAH TINGGI</option>  -->
                                        <option value="6" >POLIS</option>
 										<option value="4">PASPORT</option>
 	                                    
@@ -468,7 +468,8 @@ resetOnBlur:false
 	                                    <option value="4">PASPORT</option>
 	                                    <option value="6">POLIS</option>
 	                                    <option value="5">TENTERA</option>
-	                                    <option value="13" >PERINTAH MAHKAMAH TINGGI</option>
+	                                   <!-- 
+	                                    <option value="13" >PERINTAH MAHKAMAH TINGGI</option>  -->
                                          <option value="7" >LAIN-LAIN</option>
                                          
 		                               #end
@@ -2479,7 +2480,7 @@ document.f1.txdTarikhLahirSimati.value=dob;
 
 function trans_date(t_d){
 
-	if(t_d.length == 8){
+	if(t_d.length == 10){
 		var a = t_d.charAt(0);
 		var b = t_d.charAt(1);
 		var c = t_d.charAt(2);
@@ -2490,9 +2491,9 @@ function trans_date(t_d){
 		var h = t_d.charAt(7);
 		
 		var trans = a+""+b+"/"+c+""+d+"/"+e+""+f+""+g+""+h;
-		alert("value :"+t_d+"lenght :"+t_d.length+"trans :"+trans)
+		//alert("value :"+t_d+"lenght :"+t_d.length+"trans :"+trans)
 		
-		document.f1.txdTarikhMatiSimati.value = trans;
+		document.f1.txdTarikhMatiSimati.value = t_d;
 	
 	}else{
 		alert("trans_date return");

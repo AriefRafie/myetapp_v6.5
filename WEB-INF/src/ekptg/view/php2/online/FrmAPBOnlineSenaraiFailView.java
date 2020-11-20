@@ -218,178 +218,163 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 		if (idBulanList == null || idBulanList.trim().length() == 0){
 			idBulanList = "99999";
 		}
-   		
+
 		//SAVE TO DB		
 		if (postDB){
-				if ("daftarBaru".equals(hitButton)){
-					idFail = logic.daftarBaru(getParam("socKaitanTujuan"), getParam("socJenisTujuan"), getParam("txtUndangUndang"), getParam("socJenisLesen"), 
-							getParam("txtTujuanPengambilan"), getParam("socTempoh"), getParam("txtRingkasanPengalaman"), getParam("socNegeri"), 
-							getParam("txtLokasi"), getParam("txtLuas"), getParam("socLuas"),getParam("socJenisPengenalanIndividu"),getParam("socKategoriPemohon"),
-							getParam("socIndividuBukanIndividu"), getParam("socJantina"), getParam("socBangsa"), getParam("socBandar"), getParam("socNegeriSykt"), 
-							getParam("socBandarSykt"), getParam("idJenisPermohonan"), getParam("idPermohonanLama"), getParam("socFlagLuar"), getParam("txtJenisPerniagaan"), session);
-	        	}
-				if ("daftarBaruLesen".equals(hitButton)){
-					idFail = logic.daftarBaru(getParam("socKaitanTujuan"),getParam("socJenisTujuan"), getParam("socJenisLesen"), getParam("txtTujuanPengambilan"), getParam("socTempoh"),
-							getParam("txtRingkasanPengalaman"), getParam("socNegeri"), getParam("txtLokasi"), getParam("txtLuas"), getParam("socLuas"),
-							getParam("socJenisPengenalanIndividu"),getParam("socKategoriPemohon"), getParam("socIndividuBukanIndividu"), getParam("socJantina"), 
-							getParam("socBangsa"), getParam("socBandar"), getParam("socNegeriSykt"), getParam("socBandarSykt"), 
-							getParam("idJenisPermohonan"), getParam("idPermohonanLama"), getParam("txtUndangUndang"), getParam("socFlagLuar"), getParam("txtJenisPerniagaan"), session);
-	        	}
-				if ("daftarBaruBorangA".equals(hitButton)){ //yati tambah borang A
-					
-					idFail = logic.daftarBaru(getParam("socKaitanTujuan"),getParam("socJenisTujuan"), getParam("socJenisLesen"), getParam("txtTujuanPengambilan"), getParam("socTempoh"),
-							getParam("txtRingkasanPengalaman"), getParam("socNegeri"), getParam("txtLokasi"), getParam("txtLuas"), 
-							getParam("socLuas"),getParam("socJenisPengenalanIndividu"),getParam("socKategoriPemohon"),
-							getParam("socIndividuBukanIndividu"), getParam("socJantina"), getParam("socBangsa"), getParam("socBandar"),
-							getParam("socNegeriSykt"), getParam("socBandarSykt"), getParam("idJenisPermohonan"), 
-							getParam("idPermohonanLama"), getParam("txtUndangUndang"), getParam("socFlagLuar"), getParam("txtJenisPerniagaan"), session);
-	        	}
-				if ("doSimpanKemaskiniPermohonan".equals(hitButton)){
-					log.info("txtModalBenar : " +getParam("txtModalBenar"));
-					log.info("txtModalJelas : " +getParam("txtModalJelas"));
-					logic.updatePermohonan(idFail,idPermohonan,idPemohon,getParam("socKaitanTujuan"), getParam("txtTujuanPengambilan"), getParam("socTempoh"), 
-							getParam("txtRingkasanPengalaman"), getParam("socNegeri"), getParam("txtLokasi"), getParam("txtLuas"), 
-							getParam("socLuas"),getParam("txtModalBenar"),getParam("txtModalJelas"), getParam("socJenisTujuan"), getParam("idJenisPermohonan"), 
-							getParam("idJenisLesen"), getParam("txtUndangUndang"), getParam("txtJenisPerniagaan"), getParam("txtJumlahModal"), getParam("txtJumlahModal1"), session);
-	        	}
-				if ("doSimpanPengarah".equals(hitButton)){
-	        		idPengarah = logic.savePengarah(idPemohon, getParam("socWarganegara"), getParam("txtNamaPengarah"), getParam("socJenisPengenalan"),
-	        				getParam("txtNoPengenalan"), getParam("socBangsa"), getParam("txtSaham"), getParam("txtWarga"), getParam("txtBangsa"), session);
-		
-	        	}
-	        	if ("doSimpanKemaskiniPengarah".equals(hitButton)){
-	        		logic.updatePengarah(idPengarah, getParam("socWarganegara"), getParam("txtNamaPengarah"), getParam("socJenisPengenalan"),
-	        				getParam("socBangsa"), getParam("txtNoPengenalan"), getParam("txtSaham"), getParam("txtWarga"), getParam("txtBangsa"), session);
-	        	}
-	        	if ("doHapusPengarah".equals(hitButton)){
-	        		logic.removePengarah(idPengarah);
-	        	}
-	        	if ("doSimpanPembeliPasir".equals(hitButton)){
-	        		idPembeliPasir = logic.savePembeliPasir(idPermohonan, getParam("txtNamaPembeliPasir"), getParam("txtAlamat1PembeliPasir"), getParam("txtAlamat2PembeliPasir"),
-	        				getParam("txtAlamat3PembeliPasir"), getParam("txtPoskodPembeliPasir"), getParam("socNegeriPembeliPasir"), getParam("socBandarPembeliPasir"), 
-	        				getParam("txtNoTelPembeliPasir"), getParam("txtNoFaxPembeliPasir"), getParam("socJenisPerjanjian"), session);
-	        	}
-	        	if ("doSimpanKemaskiniPembeliPasir".equals(hitButton)){
-	        		logic.updatePembeliPasir(idPembeliPasir, getParam("txtNamaPembeliPasir"), getParam("txtAlamat1PembeliPasir"), getParam("txtAlamat2PembeliPasir"),
-	        				getParam("txtAlamat3PembeliPasir"), getParam("txtPoskodPembeliPasir"), getParam("socNegeriPembeliPasir"), getParam("socBandarPembeliPasir"), getParam("txtNoTelPembeliPasir"),
-	        				getParam("txtNoFaxPembeliPasir"), getParam("socJenisPerjanjian"), session);
-	        	}
-	        	if ("doHapusPembeliPasir".equals(hitButton)){
-	        		logic.removePembeliPasir(idPembeliPasir);
-	        	}        	
-	        	if ("doSimpanProjek".equals(hitButton)){
-	        		logic.saveProjek(idPermohonan, getParam("txtNamaProjek"), session);	
-	        	}
-	        	if ("doSimpanKemaskiniProjek".equals(hitButton)){
-	        		logic.updateProjek(idProjek, getParam("txtNamaProjek"), session);
-	        	}
-	        	if ("doHapusProjek".equals(hitButton)){
-	        		logic.removeProjek(idProjek);
-	        	}
-	        	if ("doSimpanPakar".equals(hitButton)){
-	        		idPakar = logic.savePakar(idPermohonan, getParam("txtNamaPakar"), getParam("txtKelayakan"), session);
-	        	}
-	        	if ("doSimpanKemaskiniPakar".equals(hitButton)){
-	        		logic.updatePakar(idPakar, getParam("txtNamaPakar"), getParam("txtKelayakan"), session);
-	        	}
-	        	if ("doHapusPakar".equals(hitButton)){
-	        		logic.removePakar(idPakar);
-	        	}        	
-	        	if ("doSimpanKoordinat".equals(hitButton)){
-	        		idKoordinat = logic.saveKoordinat(idPermohonan, getParam("txtLabelTitik"), getParam("txtDarjahU"), 
-	        				getParam("txtMinitU"), getParam("txtSaatU"), getParam("txtDarjahT"), getParam("txtMinitT"), getParam("txtSaatT"), session);
-	        	}
-	        	if ("doSimpanKemaskiniKoordinat".equals(hitButton)){
-	        		logic.updateKoordinat(idKoordinat, getParam("txtLabelTitik"), getParam("txtDarjahU"), 
-	        				getParam("txtMinitU"), getParam("txtSaatU"), getParam("txtDarjahT"), getParam("txtMinitT"), getParam("txtSaatT"), session);
-	        	}
-	        	if ("doHapusKoordinat".equals(hitButton)){
-	        		logic.removeKoordinat(idKoordinat);
-	        	}
-	        	if ("doHantarEmel".equals(hitButton)){
-	        		if (logic.checkMaklumatAPBLengkap(idPermohonan)){
-	        			this.context.put("onload","\"alert('Masih terdapat maklumat permohonan yang belum lengkap.')\"");
-	        		} else {
-	        			logic.updatePermohonanEmel(idFail,idPermohonan,session);
-	        		}
-				}
-				if ("doHapus".equals(hitButton)){
-					logic.hapusPermohonan(idFail);
-				}
-				//SENARAI SEMAK		
-				if ("doSimpanKemaskiniSenaraiSemak".equals(hitButton)) {
-	        		String cbsemaks [] = this.request.getParameterValues("idsSenaraiSemak");
-//	    			logic.updateSenaraiSemak(idPermohonan,semaks,session);
-	    				
-//	        		String[] cbsemaks = this.request.getParameterValues("cbsemaks");
-	    			FrmSemakan frmSemak = new FrmSemakan();
-	    			frmSemak.semakanHapusByPermohonan(idPermohonan);
-	    			if (cbsemaks != null) {
-	    				for (int i = 0; i < cbsemaks.length; i++) {
-	    					FrmSemakan.semakanTambah(cbsemaks[i], String.valueOf(idPermohonan));
-	    				}
-	    			}
-	    				
-	        	}
-				if ("simpanDokumen".equals(hitButton)) {
-					uploadFiles(id_laporanpasir, idPermohonan, session);
-				}
-				if ("simpanKemaskiniLampiran".equals(hitButton)) {
-					log.info("kemaskini dokumen BARU");
-					//uploadFilesUpdate(id_laporanpasir, idDokumen,session);
-					logic.simpanKemaskiniLampiran(idDokumen, getParam("txtNamaDokumen"), getParam("txtCatatan"), session);
-				}
-				if ("hapusDokumen".equals(hitButton)) {
-					logic.hapusLampiran(idDokumen, session);
-				}
+			if ("daftarBaru".equals(hitButton)){
+				idFail = logic.daftarBaru(getParam("socKaitanTujuan"), getParam("socJenisTujuan"), getParam("txtUndangUndang"), getParam("socJenisLesen"), 
+						getParam("txtTujuanPengambilan"), getParam("socTempoh"), getParam("txtRingkasanPengalaman"), getParam("socNegeri"), 
+						getParam("txtLokasi"), getParam("txtLuas"), getParam("socLuas"),getParam("socJenisPengenalanIndividu"),getParam("socKategoriPemohon"),
+						getParam("socIndividuBukanIndividu"), getParam("socJantina"), getParam("socBangsa"), getParam("socBandar"), getParam("socNegeriSykt"), 
+						getParam("socBandarSykt"), getParam("idJenisPermohonan"), getParam("idPermohonanLama"), getParam("socFlagLuar"), getParam("txtJenisPerniagaan"), session);
+	    	}
+			if ("daftarBaruLesen".equals(hitButton)){
+				idFail = logic.daftarBaru(getParam("socKaitanTujuan"),getParam("socJenisTujuan"), getParam("socJenisLesen"), getParam("txtTujuanPengambilan"), getParam("socTempoh"),
+						getParam("txtRingkasanPengalaman"), getParam("socNegeri"), getParam("txtLokasi"), getParam("txtLuas"), getParam("socLuas"),
+						getParam("socJenisPengenalanIndividu"),getParam("socKategoriPemohon"), getParam("socIndividuBukanIndividu"), getParam("socJantina"), 
+						getParam("socBangsa"), getParam("socBandar"), getParam("socNegeriSykt"), getParam("socBandarSykt"), 
+						getParam("idJenisPermohonan"), getParam("idPermohonanLama"), getParam("txtUndangUndang"), getParam("socFlagLuar"), getParam("txtJenisPerniagaan"), session);
+	    	}
+			if ("daftarBaruBorangA".equals(hitButton)){ //yati tambah borang A
 				
-				// HITBUTTON FOR POPUP MAKLUMAT KJPKJT
-				if ("simpanMaklumatAmbilPasir".equals(hitButton)) {
-					//	idJadualKedua = getParam("idJadualKedua");
-						Log.info("idJadualKeduaxx :"+idJadualKedua);
-					idBorangA = logic.simpanMaklumatAmbilPasir(getParam("idJadualKedua"), idBulan, getParam("txtTahun"), getParam("txtTujuanAmbil"), 
-							getParam("txtDestinasiDihantar"), getParam("txtAnggaranPasir"), Utils.RemoveSymbol(getParam("txtJumlahRoyalti")), getParam("txtKontraktor"), getParam("txtPembeli"),
-								getParam("txtTarikhMula"), getParam("txtTarikhTamat"), getParam("txtLaluan"), 
-								getParam("txtKaedah"), getParam("txtKawasan"), session);
-				}
+				idFail = logic.daftarBaru(getParam("socKaitanTujuan"),getParam("socJenisTujuan"), getParam("socJenisLesen"), getParam("txtTujuanPengambilan"), getParam("socTempoh"),
+						getParam("txtRingkasanPengalaman"), getParam("socNegeri"), getParam("txtLokasi"), getParam("txtLuas"), 
+						getParam("socLuas"),getParam("socJenisPengenalanIndividu"),getParam("socKategoriPemohon"),
+						getParam("socIndividuBukanIndividu"), getParam("socJantina"), getParam("socBangsa"), getParam("socBandar"),
+						getParam("socNegeriSykt"), getParam("socBandarSykt"), getParam("idJenisPermohonan"), 
+						getParam("idPermohonanLama"), getParam("txtUndangUndang"), getParam("socFlagLuar"), getParam("txtJenisPerniagaan"), session);
+	    	}
+			if ("doSimpanKemaskiniPermohonan".equals(hitButton)){
+				logic.updatePermohonan(idFail,idPermohonan,idPemohon,getParam("socKaitanTujuan"), getParam("txtTujuanPengambilan"), getParam("socTempoh"), 
+						getParam("txtRingkasanPengalaman"), getParam("socNegeri"), getParam("txtLokasi"), getParam("txtLuas"), 
+						getParam("socLuas"),getParam("txtModalBenar"),getParam("txtModalJelas"), getParam("socJenisTujuan"), getParam("idJenisPermohonan"), 
+						getParam("idJenisLesen"), getParam("txtUndangUndang"), getParam("txtJenisPerniagaan"), getParam("txtJumlahModal"), getParam("txtJumlahModal1"), session);
+	    	}
+			if ("doSimpanPengarah".equals(hitButton)){
+	    		idPengarah = logic.savePengarah(idPemohon, getParam("socWarganegara"), getParam("txtNamaPengarah"), getParam("socJenisPengenalan"),
+	    				getParam("txtNoPengenalan"), getParam("socBangsa"), getParam("txtSaham"), getParam("txtWarga"), getParam("txtBangsa"), session);
 
-				if ("simpanKemaskiniMaklumatPasir".equals(hitButton)) {
-					log.info("idJadualKedua kemaskini :"+idJadualKedua);
-					logic.simpanKemaskiniMaklumatPasir(idBorangA, idBulan, getParam("txtTahun"), getParam("txtTujuanAmbil"), getParam("txtDestinasiDihantar"),
-							getParam("txtAnggaranPasir"), Utils.RemoveSymbol(getParam("txtJumlahRoyalti")), getParam("txtKontraktor"), getParam("txtPembeli"), 
-							getParam("txtTarikhMula"), getParam("txtTarikhTamat"), getParam("txtLaluan"), getParam("txtKaedah"), getParam("txtKawasan"), session);
+	    	}
+			if ("doSimpanKemaskiniPengarah".equals(hitButton)){
+	    		logic.updatePengarah(idPengarah, getParam("socWarganegara"), getParam("txtNamaPengarah"), getParam("socJenisPengenalan"),
+	    				getParam("socBangsa"), getParam("txtNoPengenalan"), getParam("txtSaham"), getParam("txtWarga"), getParam("txtBangsa"), session);
+	    	}
+			if ("doHapusPengarah".equals(hitButton)){
+	    		logic.removePengarah(idPengarah);
+	    	}
+	    	if ("doSimpanPembeliPasir".equals(hitButton)){
+	    		idPembeliPasir = logic.savePembeliPasir(idPermohonan, getParam("txtNamaPembeliPasir"), getParam("txtAlamat1PembeliPasir"), getParam("txtAlamat2PembeliPasir"),
+	    				getParam("txtAlamat3PembeliPasir"), getParam("txtPoskodPembeliPasir"), getParam("socNegeriPembeliPasir"), getParam("socBandarPembeliPasir"), 
+	    				getParam("txtNoTelPembeliPasir"), getParam("txtNoFaxPembeliPasir"), getParam("socJenisPerjanjian"), session);
+	    	}
+	    	if ("doSimpanKemaskiniPembeliPasir".equals(hitButton)){
+	    		logic.updatePembeliPasir(idPembeliPasir, getParam("txtNamaPembeliPasir"), getParam("txtAlamat1PembeliPasir"), getParam("txtAlamat2PembeliPasir"),
+	    				getParam("txtAlamat3PembeliPasir"), getParam("txtPoskodPembeliPasir"), getParam("socNegeriPembeliPasir"), getParam("socBandarPembeliPasir"), getParam("txtNoTelPembeliPasir"),
+	    				getParam("txtNoFaxPembeliPasir"), getParam("socJenisPerjanjian"), session);
+	    	}
+	    	if ("doHapusPembeliPasir".equals(hitButton)){
+	    		logic.removePembeliPasir(idPembeliPasir);
+	    	}        	
+	    	if ("doSimpanProjek".equals(hitButton)){
+	    		logic.saveProjek(idPermohonan, getParam("txtNamaProjek"), session);	
+	    	}
+	    	if ("doSimpanKemaskiniProjek".equals(hitButton)){
+	    		logic.updateProjek(idProjek, getParam("txtNamaProjek"), session);
+	    	}
+	    	if ("doHapusProjek".equals(hitButton)){
+	    		logic.removeProjek(idProjek);
+	    	}
+	    	if ("doSimpanPakar".equals(hitButton)){
+	    		idPakar = logic.savePakar(idPermohonan, getParam("txtNamaPakar"), getParam("txtKelayakan"), session);
+	    	}
+	    	if ("doSimpanKemaskiniPakar".equals(hitButton)){
+	    		logic.updatePakar(idPakar, getParam("txtNamaPakar"), getParam("txtKelayakan"), session);
+	    	}
+	    	if ("doHapusPakar".equals(hitButton)){
+	    		logic.removePakar(idPakar);
+	    	}        	
+	    	if ("doSimpanKoordinat".equals(hitButton)){
+	    		idKoordinat = logic.saveKoordinat(idPermohonan, getParam("txtLabelTitik"), getParam("txtDarjahU"), 
+	    				getParam("txtMinitU"), getParam("txtSaatU"), getParam("txtDarjahT"), getParam("txtMinitT"), getParam("txtSaatT"), session);
+	    	}
+	    	if ("doSimpanKemaskiniKoordinat".equals(hitButton)){
+	    		logic.updateKoordinat(idKoordinat, getParam("txtLabelTitik"), getParam("txtDarjahU"), 
+	    				getParam("txtMinitU"), getParam("txtSaatU"), getParam("txtDarjahT"), getParam("txtMinitT"), getParam("txtSaatT"), session);
+	    	}
+	    	if ("doHapusKoordinat".equals(hitButton)){
+	    		logic.removeKoordinat(idKoordinat);
+	    	}
+	    	if ("doHantarEmel".equals(hitButton)){
+	    		if (logic.checkMaklumatAPBLengkap(idPermohonan)){
+	    			this.context.put("onload","\"alert('Masih terdapat maklumat permohonan yang belum lengkap.')\"");
+	    		} else {
+	    			logic.updatePermohonanEmel(idFail,idPermohonan,session);
+	    		}
+			}
+	    	if ("doHapus".equals(hitButton)){
+				logic.hapusPermohonan(idFail);
+			}
+			//SENARAI SEMAK		
+			if ("doSimpanKemaskiniSenaraiSemak".equals(hitButton)) {
+	    		String cbsemaks [] = this.request.getParameterValues("idsSenaraiSemak");
+					
+				FrmSemakan frmSemak = new FrmSemakan();
+				frmSemak.semakanHapusByPermohonan(idPermohonan);
+				if (cbsemaks != null) {
+					for (int i = 0; i < cbsemaks.length; i++) {
+						FrmSemakan.semakanTambah(cbsemaks[i], String.valueOf(idPermohonan));
+					}
 				}
-				if ("simpanMaklumatBarge".equals(hitButton)) {
+					
+	    	}
+			if ("simpanDokumen".equals(hitButton)) {
+				uploadFiles(id_laporanpasir, idPermohonan, session);
+			}
+			if ("simpanKemaskiniLampiran".equals(hitButton)) {
+				//uploadFilesUpdate(id_laporanpasir, idDokumen,session);
+				logic.simpanKemaskiniLampiran(idDokumen, getParam("txtNamaDokumen"), getParam("txtCatatan"), session);
+			}
+			if ("hapusDokumen".equals(hitButton)) {
+				logic.hapusLampiran(idDokumen, session);
+			}
+			if ("simpanMaklumatAmbilPasir".equals(hitButton)) {
+				idBorangA = logic.simpanMaklumatAmbilPasir(getParam("idJadualKedua"), idBulan, getParam("txtTahun"), getParam("txtTujuanAmbil"), 
+						getParam("txtDestinasiDihantar"), getParam("txtAnggaranPasir"), Utils.RemoveSymbol(getParam("txtJumlahRoyalti")), getParam("txtKontraktor"), getParam("txtPembeli"),
+						getParam("txtTarikhMula"), getParam("txtTarikhTamat"), getParam("txtLaluan"), 
+						getParam("txtKaedah"), getParam("txtKawasan"), session);
+			}
+			if ("simpanKemaskiniMaklumatPasir".equals(hitButton)) {
+				log.info("idJadualKedua kemaskini :"+idJadualKedua);
+				logic.simpanKemaskiniMaklumatPasir(idBorangA, idBulan, getParam("txtTahun"), getParam("txtTujuanAmbil"), getParam("txtDestinasiDihantar"),
+						getParam("txtAnggaranPasir"), Utils.RemoveSymbol(getParam("txtJumlahRoyalti")), getParam("txtKontraktor"), getParam("txtPembeli"), 
+						getParam("txtTarikhMula"), getParam("txtTarikhTamat"), getParam("txtLaluan"), getParam("txtKaedah"), getParam("txtKawasan"), session);
+			}
+			if ("simpanMaklumatBarge".equals(hitButton)) {
 
-					idBarge = logic.simpanMaklumatBarge(idBorangA, getParam("txtNamaDaftar"), getParam("txtNoPendaftaran"), 
-							getParam("txtKapasiti"), getParam("txtJenis"), getParam("txtNoTel"), session);
-				}
-				if ("simpanKemaskiniMaklumatBarge".equals(hitButton)) {
+				idBarge = logic.simpanMaklumatBarge(idBorangA, getParam("txtNamaDaftar"), getParam("txtNoPendaftaran"), 
+						getParam("txtKapasiti"), getParam("txtJenis"), getParam("txtNoTel"), session);
+			}
+			if ("simpanKemaskiniMaklumatBarge".equals(hitButton)) {
 
-					logic.simpanKemaskiniMaklumatBarge(idBarge,getParam("txtNamaDaftar"),
-							getParam("txtNoPendaftaran"), getParam("txtKapasiti"), getParam("txtJenis"), getParam("txtNoTel"), session);
-				}
-				if ("doHapusBarge".equals(hitButton)) {
+				logic.simpanKemaskiniMaklumatBarge(idBarge,getParam("txtNamaDaftar"),
+						getParam("txtNoPendaftaran"), getParam("txtKapasiti"), getParam("txtJenis"), getParam("txtNoTel"), session);
+			}
+			if ("doHapusBarge".equals(hitButton)) {
 				logic.hapusBarge(idBarge, session);
-				}
-				if ("simpanLaporan".equals(hitButton)) {
-					idBorangB = logic.simpanLaporan(id_user, getParam("idJadualKeduaLesen"),
-							getParam("txtJumKuantiti"), getParam("txtJumRoyalti"), getParam("txdTarikhPengeluaran"), getParam("socBulan"),getParam("txtTahun"));
-
-				}
-				if ("simpanKemaskiniMaklumatLaporan".equals(hitButton)) {
-					logic.simpanLaporan(id_user, getParam("idJadualKeduaLesen"), getParam("txtJumKuantiti"), getParam("txtJumRoyalti"),
-							getParam("txdTarikhPengeluaran"), getParam("socBulan"),getParam("txtTahun"));
-				}
-		
+			}
+			if ("simpanLaporan".equals(hitButton)) {
+				idBorangB = logic.simpanLaporan(id_user, getParam("idJadualKeduaLesen"),
+						getParam("txtJumKuantiti"), getParam("txtJumRoyalti"), getParam("txdTarikhPengeluaran"), getParam("socBulan"),getParam("txtTahun"));
+			}
+			if ("simpanKemaskiniMaklumatLaporan".equals(hitButton)) {
+				logic.simpanLaporan(id_user, getParam("idJadualKeduaLesen"), getParam("txtJumKuantiti"), getParam("txtJumRoyalti"),
+						getParam("txdTarikhPengeluaran"), getParam("socBulan"),getParam("txtTahun"));
+			}
 		}
-		
 		this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("", "paparLampiran", "idDokumen",session));
 		
-		//daftar Baru
 		if ("daftarBaru".equals(actionOnline)) {
 
-			log.info("masuk daftar Baru");
 			vm = "app/php2/online/frmAPBDaftarManual.jsp";
 			
 			mode = "new";
@@ -397,27 +382,36 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 	    	this.context.put("readonly", "");
 	    	this.context.put("inputTextClass", "");
 	    	this.context.put("disabled", "");
-	    	this.context.put("jenisPermohonan", "PERMOHONAN BARU");
-	    	this.context.put("idJenisPermohonan", "1");
-	    	this.context.put("idJenisLesen", idJenisLesen);
 	    	this.context.put("idStatus", "");
-	    	this.context.put("noFailLama", "");
+	    	
+	    	//MAKLUMAT PEMOHON
+			Vector<Hashtable<String,String>> vec = header.setMaklumatPemohon(id_user);
+			this.context.put("pemohon", vec.get(0));
 	    
 	    	//JENIS PERMOHONAN
 			this.context.put("selectJenisPermohonan", HTML.SelectJenisPermohonanAPB("socJenisPermohonan", Long.parseLong(idJenisPermohonan), "", " onChange=\"doChangeJenisPermohonan();\""));
-	    	
-			String noFailLama = getParam("txtNoFailLama");
 			
-			beanMaklumatPermohonan = new Vector();
-//			idFailLama = logic.getIdFailByNoFail(noFailLama);
+			if("2".equals(idJenisPermohonan)) {
+    			this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(id_user, "9", "socNoFailLama", Long.parseLong(idFailLama), "", " onChange=\"doChangeNoFailLama();\""));
+        	}
 			
-			if ("doChangeNoFailAPB".equals(submit)) {
+			if ("doChangeNoFailLama".equals(submit)) {
+				
+				idPermohonanLama = logic.getIdPermohonanByNoFail(idFailLama);
 				
 				beanMaklumatPermohonan = new Vector();   				
-				logic.setMaklumatPermohonan(idFailLama);
+				logic.setMaklumatPermohonan(idPermohonanLama);
 				beanMaklumatPermohonan = logic.getBeanMaklumatPermohonan();
 				this.context.put("BeanMaklumatPermohonan", beanMaklumatPermohonan);
-				
+				if(logic.getBeanMaklumatPermohonan().size() != 0) {
+					Hashtable hashPermohonan = (Hashtable) logic.getBeanMaklumatPermohonan().get(0);
+					idJenisLesen = (String) hashPermohonan.get("idJenisLesen");
+					idKaitanTujuan = (String) hashPermohonan.get("idKaitanTujuan");
+				}
+				this.context.put("selectJenisLesen", HTML.SelectJenisLesen("socJenisLesen", Long.parseLong(idJenisLesen), "disabled", " class=\"disabled\""));
+				this.context.put("selectTujuanKaitan",HTML.SelectPHPRujTujuanKaitan("socKaitanTujuan", Long.parseLong(idKaitanTujuan),"", " "));
+
+				//KAWASAN PERMOHONAN
 				beanMaklumatKawasanMohon = new Vector();
 				logic.setBeanMaklumatKawasanMohon(idFailLama);
 				beanMaklumatKawasanMohon = logic.getBeanMaklumatKawasanMohon();
@@ -425,29 +419,19 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 				if(logic.getBeanMaklumatKawasanMohon().size() != 0){
 					Hashtable hashKwsnMhn = (Hashtable) logic.getBeanMaklumatKawasanMohon().get(0);
 					idFlagLuar = (String) hashKwsnMhn.get("idFlagLuar");
-					idNegeriPerairan = (String) hashKwsnMhn.get("idNegeriPerairan");
-					idJenisLesen = (String) hashKwsnMhn.get("idJenisLesen");
-					idJenistujuan = (String) hashKwsnMhn.get("idJenistujuan");
-				}
-				
-				//KAWASAN PERMOHONAN
+					idNegeri = (String) hashKwsnMhn.get("idNegeriPerairan");
+				}				
 				this.context.put("selectFlagLuar",HTML.SelectFlagYaTidak("socFlagLuar", Long.parseLong(idFlagLuar),"disabled", " class=\"disabled\""));
 				this.context.put("selectNegeriPerairan",HTML.SelectNegeri("socNegeriPerairan",Long.parseLong(idNegeriPerairan),"disabled", " class=\"disabled\""));
-				this.context.put("selectJenisLesen", HTML.SelectJenisLesen("socJenisLesen", Long.parseLong(idJenisLesen), "disabled", " class=\"disabled\""));
-				this.context.put("selectJenisTujuan", PHPUtilHTML.SelectJenisTujuanAPB("socJenisTujuan", Long.parseLong(idJenistujuan), "disabled", " class=\"disabled\"")); //yati tambah
-		
+				this.context.put("selectNegeri",HTML.SelectNegeriAPB("socNegeri",Long.parseLong(idNegeri),"", " "));
 			}
-			
-	    	//MAKLUMAT PEMOHON
-			Vector<Hashtable<String,String>> vec = header.setMaklumatPemohon(id_user);
-			this.context.put("pemohon", vec.get(0));
 	    	
 //			if("2".equals(idJenisPermohonan)){
 //				this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(vec.get(0).get("noPengenalan"), "socNoFailLama", Long.parseLong(idFailLama), "", " onChange=\"doChangeNoFailLama();\"", "9"));  
 //	    	}
-			if("2".equals(idJenisPermohonan)){
-				this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(id_user, "socNoFailLama", Long.parseLong(idFailLama), "disabled", " class=\"disabled\""));  
-	        }
+//			if("2".equals(idJenisPermohonan)){
+//				this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(id_user, "9", "socNoFailLama", Long.parseLong(idFailLama), "disabled", " class=\"disabled\""));  
+//	        }
 			
 	    	//MAKLUMAT PERMOHONAN
 	    	this.context.put("selectNegeri",HTML.SelectNegeriAPB("socNegeri",Long.parseLong(idNegeri),"", " "));
@@ -1351,15 +1335,16 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 		this.context.put("hitButton", hitButton);
 		this.context.put("mode", mode);
 		this.context.put("selectedTabUpper", selectedTabUpper);
+		
+		this.context.put("idJenisLesen", idJenisLesen);
+		this.context.put("idNegeriPerairan", idNegeriPerairan);
 		this.context.put("idJenisPermohonan", idJenisPermohonan);
 		this.context.put("flagPopup", flagPopup);
 		this.context.put("modePopup", modePopup);
 		this.context.put("idFail", idFail);
 		this.context.put("idStatus", idStatus);
 		this.context.put("idPermohonan", idPermohonan);
-		this.context.put("idFailLama", idFailLama);
-		
-		//Log.info("ID PERMOHONAN LAMA : "+idPermohonanLama);
+		this.context.put("idFailLama", idFailLama);		
 		this.context.put("idPengarah", idPengarah);
 		this.context.put("idPembeliPasir", idPembeliPasir);
 	    this.context.put("idProjek", idProjek);
@@ -1374,7 +1359,6 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 		this.context.put("idBorangA", idBorangA);
 		this.context.put("idBarge", idBarge);
 
-		log.info("vm : "+vm);
 		return vm;
 	}
 	
@@ -1760,8 +1744,6 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 			beanMaklumatPengarah.addElement(hashPengarah);
 			this.context.put("BeanMaklumatPengarah", beanMaklumatPengarah);
 		}
-    	//log.info("socWarganegara 1>>>> "+idWarganegara);
-    	//this.context.put("socWarganegara", "");
 	}
 	
 	private void maklumatProjek(String mode, String idPermohonan, String idProjek) throws Exception {
@@ -1870,72 +1852,74 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 			this.context.put("BeanMaklumatKoordinat", beanMaklumatKoordinat);			
 		}
 	}
+	
 	//BARU TAMBAH21062020
-		//UPLOAD LAMPIRAN
-		private void uploadLampiran(String idPermohonan, HttpSession session) throws Exception {
-			log.info("lalu A");
-			DiskFileItemFactory factory = new DiskFileItemFactory();
-			ServletFileUpload upload = new ServletFileUpload(factory);
-				boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-				if (isMultipart != false) {
-					List items = upload.parseRequest(request);
-					Iterator itr = items.iterator();
-					while (itr.hasNext()) {
-						FileItem item = (FileItem) itr.next();
-						if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
-							log.info("lalu B");
-							saveLampiran(item, idPermohonan, session);
-						}
-					}
+	//UPLOAD LAMPIRAN
+	private void uploadLampiran(String idPermohonan, HttpSession session) throws Exception {
+		log.info("lalu A");
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+		if (isMultipart != false) {
+			List items = upload.parseRequest(request);
+			Iterator itr = items.iterator();
+			while (itr.hasNext()) {
+				FileItem item = (FileItem) itr.next();
+				if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
+					log.info("lalu B");
+					saveLampiran(item, idPermohonan, session);
 				}
+			}
 		}
+	}
 		
-		private void saveLampiran(FileItem item, String idPermohonan, HttpSession session) throws Exception {
-			log.info("lalu C");
+	private void saveLampiran(FileItem item, String idPermohonan, HttpSession session) throws Exception {
+		log.info("lalu C");
 
-			Db db = null;
-				String userId = (String) session.getAttribute("_ekptg_user_id");
-					
-				try {
-					db = new Db();
+		Db db = null;
+			String userId = (String) session.getAttribute("_ekptg_user_id");
+				
+			try {
+
+				db = new Db();
 
 				// TBLPHPDOKUMEN
 				long idDokumen = DB.getNextID("TBLPHPDOKUMEN_SEQ");
 				Connection con = db.getConnection();
 				con.setAutoCommit(false);
-					PreparedStatement ps = con.prepareStatement("INSERT INTO TBLPHPDOKUMEN "
-								+ "(ID_DOKUMEN,NAMA_DOKUMEN,CATATAN,ID_MASUK,TARIKH_MASUK,CONTENT,JENIS_MIME,NAMA_FAIL,FLAG_DOKUMEN,ID_PERMOHONAN) "
-								+ "VALUES(?,?,?,?,SYSDATE,?,?,?,?,?)");
-					ps.setLong(1, idDokumen);
-					ps.setString(2, getParam("namaLampiran"));
-					ps.setString(3, getParam("catatanLampiran"));
-					ps.setString(4, userId);
-					ps.setBinaryStream(5, item.getInputStream(), (int) item.getSize());
-					ps.setString(6, item.getContentType());
-					ps.setString(7, item.getName());
-					ps.setString(8, "L");
-					ps.setString(9, idPermohonan);
-					ps.executeUpdate();
+				PreparedStatement ps = con.prepareStatement("INSERT INTO TBLPHPDOKUMEN "
+							+ "(ID_DOKUMEN,NAMA_DOKUMEN,CATATAN,ID_MASUK,TARIKH_MASUK,CONTENT,JENIS_MIME,NAMA_FAIL,FLAG_DOKUMEN,ID_PERMOHONAN) "
+							+ "VALUES(?,?,?,?,SYSDATE,?,?,?,?,?)");
+				ps.setLong(1, idDokumen);
+				ps.setString(2, getParam("namaLampiran"));
+				ps.setString(3, getParam("catatanLampiran"));
+				ps.setString(4, userId);
+				ps.setBinaryStream(5, item.getInputStream(), (int) item.getSize());
+				ps.setString(6, item.getContentType());
+				ps.setString(7, item.getName());
+				ps.setString(8, "L");
+				ps.setString(9, idPermohonan);
+				ps.executeUpdate();
 
-					con.commit();
-					log.info("lalu D");
-						
-					AuditTrail.logActivity("1610198", "4", null, session, "INS", "FAIL [" + idPermohonan + "] DIDAFTARKAN");
-						
+				con.commit();
+				log.info("lalu D");
+					
+				AuditTrail.logActivity("1610198", "4", null, session, "INS", "FAIL [" + idPermohonan + "] DIDAFTARKAN");
+					
 			} finally {
 				if (db != null)
 					db.close();
 			}
-			this.context.put("completed", true);
-		}
+		this.context.put("completed", true);
+	}
 		
-		private ILampiran getDocPHP(){
-			if(iLampiran == null){
-				iLampiran = new LampiranBean();
-			}
-			return iLampiran;
-					
+	private ILampiran getDocPHP(){
+		if(iLampiran == null){
+			iLampiran = new LampiranBean();
 		}
+		return iLampiran;
+	}
+	
 	//yati tambah
 	private static String namaPemohon(String idFail) throws Exception{
 	    
@@ -1949,389 +1933,395 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 			Hashtable ceP = (Hashtable)checkPemohon.get(0);
 			namaPemohonOnline = (String)ceP.get("NAMA_PEMOHON");
 		}
-	       return namaPemohonOnline;        	        		
+	    return namaPemohonOnline;        	        		
 	} 
 
 	//yati tambah
-		private static String noLesen(String idFail) throws Exception{
-		    
-			Vector checkLesen = null;
-			FrmAPBOnlineSenaraiFailData logic = new FrmAPBOnlineSenaraiFailData();
-			
-			checkLesen = logic.setnoLesen(idFail);
-
-			String noLesen = "";
-			if(checkLesen.size()!=0){
-				Hashtable ceP = (Hashtable)checkLesen.get(0);
-				noLesen = (String)ceP.get("NO_SIRI_LESEN");
-			}
-		       return noLesen;        	        		
-		} 
+	private static String noLesen(String idFail) throws Exception{
+	    
+		Vector checkLesen = null;
+		FrmAPBOnlineSenaraiFailData logic = new FrmAPBOnlineSenaraiFailData();
 		
-		//yati tambah
-				private static String setIdJadualKeduaLesen(String idFail) throws Exception{
-				    
-					Vector checkJadualLesen = null;
-					FrmAPBOnlineSenaraiFailData logic = new FrmAPBOnlineSenaraiFailData();
-					
-					checkJadualLesen = logic.setIdJadualKeduaLesen(idFail);
+		checkLesen = logic.setnoLesen(idFail);
+		String noLesen = "";
+		if(checkLesen.size()!=0){
+			Hashtable ceP = (Hashtable)checkLesen.get(0);
+			noLesen = (String)ceP.get("NO_SIRI_LESEN");
+		}
+	    return noLesen;        	        		
+	} 
+		
+	//yati tambah
+	private static String setIdJadualKeduaLesen(String idFail) throws Exception{
+	    
+		Vector checkJadualLesen = null;
+		FrmAPBOnlineSenaraiFailData logic = new FrmAPBOnlineSenaraiFailData();
+		
+		checkJadualLesen = logic.setIdJadualKeduaLesen(idFail);
 
-					String idJadualKeduaLesen = "";
-					if(checkJadualLesen.size()!=0){
-						Hashtable ceP = (Hashtable)checkJadualLesen.get(0);
-						idJadualKeduaLesen = (String)ceP.get("idJadualKeduaLesen");//("NO_SIRI_LESEN");
+		String idJadualKeduaLesen = "";
+		if(checkJadualLesen.size()!=0){
+			Hashtable ceP = (Hashtable)checkJadualLesen.get(0);
+			idJadualKeduaLesen = (String)ceP.get("idJadualKeduaLesen");//("NO_SIRI_LESEN");
 
-					}
-				       return idJadualKeduaLesen;        	        		
-				} 
-			//yati tambah	
-				public void setupPage1(HttpSession session, String action, Vector list) {
+		}
+	    return idJadualKeduaLesen;        	        		
+	} 
+	
+	//yati tambah	
+	public void setupPage1(HttpSession session, String action, Vector list) {
 
-					try {
+		try {
 
-						this.context.put("totalRecords", list.size());
-						int page = getParam("page") == "" ? 1 : getParamAsInteger("page");
+			this.context.put("totalRecords", list.size());
+			int page = getParam("page") == "" ? 1 : getParamAsInteger("page");
 
-						int itemsPerPage;
-						if (this.context.get("itemsPerPage") == null
-								|| this.context.get("itemsPerPage") == "") {
-							itemsPerPage = getParam("itemsPerPage") == "" ? 10
-									: getParamAsInteger("itemsPerPage");
-						} else {
-							itemsPerPage = (Integer) this.context.get("itemsPerPage");
-						}
+			int itemsPerPage;
+			if (this.context.get("itemsPerPage") == null
+					|| this.context.get("itemsPerPage") == "") {
+				itemsPerPage = getParam("itemsPerPage") == "" ? 10
+						: getParamAsInteger("itemsPerPage");
+			} else {
+				itemsPerPage = (Integer) this.context.get("itemsPerPage");
+			}
 
-						if ("getNext".equals(action)) {
-							page++;
-						} else if ("getPrevious".equals(action)) {
-							page--;
-						} else if ("getPage".equals(action)) {
-							page = getParamAsInteger("value");
-						} else if ("doChangeItemPerPage".equals(action)) {
-							itemsPerPage = getParamAsInteger("itemsPerPage");
-						}
+			if ("getNext".equals(action)) {
+				page++;
+			} else if ("getPrevious".equals(action)) {
+				page--;
+			} else if ("getPage".equals(action)) {
+				page = getParamAsInteger("value");
+			} else if ("doChangeItemPerPage".equals(action)) {
+				itemsPerPage = getParamAsInteger("itemsPerPage");
+			}
 
-						Paging paging = new Paging(session, list, itemsPerPage);
+			Paging paging = new Paging(session, list, itemsPerPage);
 
-						if (page > paging.getTotalPages())
-							page = 1; // reset page number
-						this.context.put("SenaraiBorangA", paging.getPage(page));
-						this.context.put("page", new Integer(page));
-						this.context.put("itemsPerPage", new Integer(itemsPerPage));
-						this.context.put("totalPages", new Integer(paging.getTotalPages()));
-						this.context.put("startNumber", new Integer(paging.getTopNumber()));
-						this.context.put("isFirstPage", new Boolean(paging.isFirstPage()));
-						this.context.put("isLastPage", new Boolean(paging.isLastPage()));
+			if (page > paging.getTotalPages())
+				page = 1; // reset page number
+			this.context.put("SenaraiBorangA", paging.getPage(page));
+			this.context.put("page", new Integer(page));
+			this.context.put("itemsPerPage", new Integer(itemsPerPage));
+			this.context.put("totalPages", new Integer(paging.getTotalPages()));
+			this.context.put("startNumber", new Integer(paging.getTopNumber()));
+			this.context.put("isFirstPage", new Boolean(paging.isFirstPage()));
+			this.context.put("isLastPage", new Boolean(paging.isLastPage()));
 
-					} catch (Exception e) {
-						e.printStackTrace();
-						this.context.put("error", e.getMessage());
-					}
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.context.put("error", e.getMessage());
+		}
+	}
+	
+	public void setupPage2(HttpSession session, String action, Vector list) {
+
+		try {
+
+			this.context.put("totalRecords", list.size());
+			int page = getParam("page") == "" ? 1 : getParamAsInteger("page");
+
+			int itemsPerPage;
+			if (this.context.get("itemsPerPage") == null
+					|| this.context.get("itemsPerPage") == "") {
+				itemsPerPage = getParam("itemsPerPage") == "" ? 10
+						: getParamAsInteger("itemsPerPage");
+			} else {
+				itemsPerPage = (Integer) this.context.get("itemsPerPage");
+			}
+
+			if ("getNext".equals(action)) {
+				page++;
+			} else if ("getPrevious".equals(action)) {
+				page--;
+			} else if ("getPage".equals(action)) {
+				page = getParamAsInteger("value");
+			} else if ("doChangeItemPerPage".equals(action)) {
+				itemsPerPage = getParamAsInteger("itemsPerPage");
+			}
+
+			Paging paging = new Paging(session, list, itemsPerPage);
+
+			if (page > paging.getTotalPages())
+				page = 1; // reset page number
+			this.context.put("SenaraiBarge", paging.getPage(page));
+			this.context.put("page", new Integer(page));
+			this.context.put("itemsPerPage", new Integer(itemsPerPage));
+			this.context.put("totalPages", new Integer(paging.getTotalPages()));
+			this.context.put("startNumber", new Integer(paging.getTopNumber()));
+			this.context.put("isFirstPage", new Boolean(paging.isFirstPage()));
+			this.context.put("isLastPage", new Boolean(paging.isLastPage()));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.context.put("error", e.getMessage());
+		}
+	}
+				
+	// PAGING SKRIN PASIR
+    public void setupPagePasir(HttpSession session,String action,Vector listPasir) {
+
+    	try {
+    		this.context.put("totalRecords",listPasir.size());
+    		int page = getParam("page") == "" ? 1:getParamAsInteger("page");		
+			int itemsPerPage;
+			if (this.context.get("itemsPerPage") == null || this.context.get("itemsPerPage") == "") {
+				itemsPerPage = getParam("itemsPerPage") == "" ? 10:getParamAsInteger("itemsPerPage");
+			} else {
+				itemsPerPage = (Integer)this.context.get("itemsPerPage");
+			}	    
+			if ("getNext".equals(action)) {
+			    page++;
+			} else if ("getPrevious".equals(action)) {
+			   	page--;
+			} else if ("getPage".equals(action)) {
+			    page = getParamAsInteger("value");
+			} else if ("doChangeItemPerPage".equals(action)) {
+			    itemsPerPage = getParamAsInteger("itemsPerPage");
+			}	    	
+			Paging paging = new Paging(session,listPasir,itemsPerPage);		
+			if (page > paging.getTotalPages()) 
+				page = 1; //reset page number
+			this.context.put("PermohonanPasir",paging.getPage(page));
+			this.context.put("page", new Integer(page));
+			this.context.put("itemsPerPage", new Integer(itemsPerPage));
+			this.context.put("totalPages", new Integer(paging.getTotalPages()));
+			this.context.put("startNumber", new Integer(paging.getTopNumber()));
+			this.context.put("isFirstPage",new Boolean(paging.isFirstPage()));
+			this.context.put("isLastPage", new Boolean(paging.isLastPage()));	
+    		
+    	} catch (Exception e) {
+			e.printStackTrace();
+			this.context.put("error",e.getMessage());
+    	}	
+	}				
+
+	// SIMPAN LAPORAN
+    private String simpanLaporan(String id_user, String idJadualKeduaLesen) throws Exception {
+    	
+    	String txtJumKuantiti = getParam("txtJumKuantiti");
+    	String txtJumRoyalti = getParam("txtJumRoyalti");
+    	String txtTarikhOperasi = getParam("txtTarikhOperasi");
+    	//String socBulan = getParam("socBulan");
+    	//String txtTahun = getParam("txtTahun");
+    	/*String txtKontraktor = getParam("txtKontraktor");*/
+    	/*String txtPembeli = getParam("txtPembeli");*/
+    	String txtMasaOperasi  = getParam("txtMasaOperasi");
+    	String txtHariOperasi  = getParam("txtHariOperasi");
+    	String txtBulan = txtTarikhOperasi.substring(3,5);
+    	String txtTahun = txtTarikhOperasi.substring(6,10);
+    	String txtKapal = getParam("txtNamaKapal");
+    	
+    	return logic.simpanLaporan(id_user,idJadualKeduaLesen,txtJumKuantiti,txtJumRoyalti,txtTarikhOperasi,txtBulan,txtTahun,txtMasaOperasi,txtHariOperasi,txtKapal);		
+    }
+				
+	// PAGING SKRIN LAPORAN ADD14102020
+	public void setupPageLaporan(HttpSession session,String action,Vector listLaporan, String SkrinListLaporan ) {
+		
+		try {
+
+			String vm = "app/php2/online/frmAPBBorangBOnline.jsp";
+			
+			this.context.put("totalRecords",listLaporan.size());
+			int page = getParam("page") == "" ? 1:getParamAsInteger("page");		
+			int itemsPerPage;
+			if (this.context.get("itemsPerPage") == null || this.context.get("itemsPerPage") == "") {
+				itemsPerPage = getParam("itemsPerPage") == "" ? 10:getParamAsInteger("itemsPerPage");
+			} else {
+				itemsPerPage = (Integer)this.context.get("itemsPerPage");
+			}	    
+		    if ("getNext".equals(action)) {
+		    	page++;
+		    } else if ("getPrevious".equals(action)) {
+		    	page--;
+		    } else if ("getPage".equals(action)) {
+		    	page = getParamAsInteger("value");
+		    } else if ("doChangeItemPerPage".equals(action)) {
+		       itemsPerPage = getParamAsInteger("itemsPerPage");
+		    }	    	
+		    Paging paging = new Paging(session,listLaporan,itemsPerPage);		
+			if (page > paging.getTotalPages()) 
+				page = 1; //reset page number
+			this.context.put("PermohonanList",paging.getPage(page));
+		    this.context.put("page", new Integer(page));
+		    this.context.put("itemsPerPage", new Integer(itemsPerPage));
+		    this.context.put("totalPages", new Integer(paging.getTotalPages()));
+		    this.context.put("startNumber", new Integer(paging.getTopNumber()));
+		    this.context.put("isFirstPage",new Boolean(paging.isFirstPage()));
+		    this.context.put("isLastPage", new Boolean(paging.isLastPage()));	        
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.context.put("error",e.getMessage());
+		}	
+	}	
+	
+	//Add 14102020
+	public void setupPageUpload(HttpSession session,String action,Vector listDokumen) {
+		
+		try {
+			
+			this.context.put("totalRecords",listDokumen.size());
+			int page = getParam("page") == "" ? 1:getParamAsInteger("page");		
+			int itemsPerPage;
+			if (this.context.get("itemsPerPage") == null || this.context.get("itemsPerPage") == "") {
+				itemsPerPage = getParam("itemsPerPage") == "" ? 10:getParamAsInteger("itemsPerPage");
+			} else {
+				itemsPerPage = (Integer)this.context.get("itemsPerPage");
+			}	    
+		    if ("getNext".equals(action)) {
+		    	page++;
+		    } else if ("getPrevious".equals(action)) {
+		    	page--;
+		    } else if ("getPage".equals(action)) {
+		    	page = getParamAsInteger("value");
+		    } else if ("doChangeItemPerPage".equals(action)) {
+		       itemsPerPage = getParamAsInteger("itemsPerPage");
+		    }	    	
+		    Paging paging = new Paging(session,listDokumen,itemsPerPage);		
+			if (page > paging.getTotalPages()) 
+				page = 1; //reset page number
+			this.context.put("SenaraiDokumen",paging.getPage(page));
+		    this.context.put("page", new Integer(page));
+		    this.context.put("itemsPerPage", new Integer(itemsPerPage));
+		    this.context.put("totalPages", new Integer(paging.getTotalPages()));
+		    this.context.put("startNumber", new Integer(paging.getTopNumber()));
+		    this.context.put("isFirstPage",new Boolean(paging.isFirstPage()));
+		    this.context.put("isLastPage", new Boolean(paging.isLastPage()));
+		    
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.context.put("error",e.getMessage());
+		}	
+	}
+				
+	// UPDATELAPORAN
+	private void simpanEditLaporan(String id_user, String id_laporanpasir) throws Exception {
+		
+		String txtJumKuantiti = getParam("txtJumKuantiti");
+		String txtJumRoyalti = getParam("txtJumRoyalti");
+		String txtTarikhOperasi = getParam("txtTarikhOperasi");
+//		String socBulan = getParam("socBulan");
+//		String txtTahun = getParam("txtTahun");
+//		String txtKontraktor = getParam("txtKontraktor");
+//		String txtPembeli = getParam("txtPembeli");
+		String txtMasaOperasi  = getParam("txtMasaOperasi");
+		String txtHariOperasi  = getParam("txtHariOperasi");
+		String txtBulan = txtTarikhOperasi.substring(3,5);
+		String txtTahun = txtTarikhOperasi.substring(6,10);
+		String txtKapal = getParam("txtNamaKapal");
+		
+		logic.simpanEditLaporan(id_user,id_laporanpasir,txtJumKuantiti,txtJumRoyalti,txtTarikhOperasi,
+				txtBulan,txtTahun,txtMasaOperasi,txtHariOperasi,txtKapal);
+	}	
+
+	// UPLOAD FILE
+	private void uploadFiles(String id_laporanpasir, String idPermohonan, HttpSession session) throws Exception {
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+		if (isMultipart != false) {
+			List items = upload.parseRequest(request);
+			Iterator itr = items.iterator();
+			while (itr.hasNext()) {
+				FileItem item = (FileItem) itr.next();
+				if ((!(item.isFormField())) && (item.getName() != null)
+						&& (!("".equals(item.getName())))) {
+					saveData(item, id_laporanpasir, idPermohonan, session);
 				}
-				public void setupPage2(HttpSession session, String action, Vector list) {
-
-					try {
-
-						this.context.put("totalRecords", list.size());
-						int page = getParam("page") == "" ? 1 : getParamAsInteger("page");
-
-						int itemsPerPage;
-						if (this.context.get("itemsPerPage") == null
-								|| this.context.get("itemsPerPage") == "") {
-							itemsPerPage = getParam("itemsPerPage") == "" ? 10
-									: getParamAsInteger("itemsPerPage");
-						} else {
-							itemsPerPage = (Integer) this.context.get("itemsPerPage");
-						}
-
-						if ("getNext".equals(action)) {
-							page++;
-						} else if ("getPrevious".equals(action)) {
-							page--;
-						} else if ("getPage".equals(action)) {
-							page = getParamAsInteger("value");
-						} else if ("doChangeItemPerPage".equals(action)) {
-							itemsPerPage = getParamAsInteger("itemsPerPage");
-						}
-
-						Paging paging = new Paging(session, list, itemsPerPage);
-
-						if (page > paging.getTotalPages())
-							page = 1; // reset page number
-						this.context.put("SenaraiBarge", paging.getPage(page));
-						this.context.put("page", new Integer(page));
-						this.context.put("itemsPerPage", new Integer(itemsPerPage));
-						this.context.put("totalPages", new Integer(paging.getTotalPages()));
-						this.context.put("startNumber", new Integer(paging.getTopNumber()));
-						this.context.put("isFirstPage", new Boolean(paging.isFirstPage()));
-						this.context.put("isLastPage", new Boolean(paging.isLastPage()));
-
-					} catch (Exception e) {
-						e.printStackTrace();
-						this.context.put("error", e.getMessage());
-					}
+			}
+		}
+	}
+				
+	private void uploadFilesUpdate(String id_laporanpasir, String idDokumen, HttpSession session) throws Exception {
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+		if (isMultipart != false) {
+			List items = upload.parseRequest(request);
+			Iterator itr = items.iterator();
+			while (itr.hasNext()) {
+				FileItem item = (FileItem) itr.next();
+				if ((!(item.isFormField())) && (item.getName() != null)
+						&& (!("".equals(item.getName())))) {
+					saveDataUpdate(item, id_laporanpasir, idDokumen, session);
 				}
+			}
+		}
+	}
 				
-		// PAGING SKRIN PASIR
-	    public void setupPagePasir(HttpSession session,String action,Vector listPasir) {
-			try {		
-			this.context.put("totalRecords",listPasir.size());
-				int page = getParam("page") == "" ? 1:getParamAsInteger("page");		
-				int itemsPerPage;
-				if (this.context.get("itemsPerPage") == null || this.context.get("itemsPerPage") == "") {
-					itemsPerPage = getParam("itemsPerPage") == "" ? 10:getParamAsInteger("itemsPerPage");
-				} else {
-					itemsPerPage = (Integer)this.context.get("itemsPerPage");
-				}	    
-				if ("getNext".equals(action)) {
-				    page++;
-				} else if ("getPrevious".equals(action)) {
-				   	page--;
-				} else if ("getPage".equals(action)) {
-				    page = getParamAsInteger("value");
-				} else if ("doChangeItemPerPage".equals(action)) {
-				    itemsPerPage = getParamAsInteger("itemsPerPage");
-				}	    	
-				Paging paging = new Paging(session,listPasir,itemsPerPage);		
-				if (page > paging.getTotalPages()) page = 1; //reset page number
-				this.context.put("PermohonanPasir",paging.getPage(page));
-				this.context.put("page", new Integer(page));
-				this.context.put("itemsPerPage", new Integer(itemsPerPage));
-				this.context.put("totalPages", new Integer(paging.getTotalPages()));
-				this.context.put("startNumber", new Integer(paging.getTopNumber()));
-				this.context.put("isFirstPage",new Boolean(paging.isFirstPage()));
-				this.context.put("isLastPage", new Boolean(paging.isLastPage()));	        
-				} catch (Exception e) {
-					e.printStackTrace();
-				this.context.put("error",e.getMessage());
-				}	
-		}	// CLOSE PAGING SKRIN PASIR
-				
+	private void saveDataUpdate(FileItem item, String id_laporanpasir, String idDokumen, HttpSession session) throws Exception {
 
-				// SIMPAN LAPORAN
-				private String simpanLaporan(String id_user, String idJadualKeduaLesen) throws Exception {
-					
-					String txtJumKuantiti = getParam("txtJumKuantiti");
-					String txtJumRoyalti = getParam("txtJumRoyalti");
-					String txtTarikhOperasi = getParam("txtTarikhOperasi");
-					//String socBulan = getParam("socBulan");
-					//String txtTahun = getParam("txtTahun");
-					/*String txtKontraktor = getParam("txtKontraktor");*/
-					/*String txtPembeli = getParam("txtPembeli");*/
-					String txtMasaOperasi  = getParam("txtMasaOperasi");
-					String txtHariOperasi  = getParam("txtHariOperasi");
-					String txtBulan = txtTarikhOperasi.substring(3,5);
-					String txtTahun = txtTarikhOperasi.substring(6,10);
-					String txtKapal = getParam("txtNamaKapal");
-					
-					return logic.simpanLaporan(id_user,idJadualKeduaLesen,txtJumKuantiti,txtJumRoyalti,txtTarikhOperasi,txtBulan,txtTahun,txtMasaOperasi,txtHariOperasi,txtKapal);		
-					
-				}// CLOSE SIMPAN LAPORAN
-				
-				// PAGING SKRIN LAPORAN ADD14102020
-				public void setupPageLaporan(HttpSession session,String action,Vector listLaporan, String SkrinListLaporan ) {
-					try {
-					String vm = "app/php2/online/frmAPBBorangBOnline.jsp";
-					
-					this.context.put("totalRecords",listLaporan.size());
-					int page = getParam("page") == "" ? 1:getParamAsInteger("page");		
-					int itemsPerPage;
-					if (this.context.get("itemsPerPage") == null || this.context.get("itemsPerPage") == "") {
-						itemsPerPage = getParam("itemsPerPage") == "" ? 10:getParamAsInteger("itemsPerPage");
-					} else {
-						itemsPerPage = (Integer)this.context.get("itemsPerPage");
-					}	    
-				    if ("getNext".equals(action)) {
-				    	page++;
-				    } else if ("getPrevious".equals(action)) {
-				    	page--;
-				    } else if ("getPage".equals(action)) {
-				    	page = getParamAsInteger("value");
-				    } else if ("doChangeItemPerPage".equals(action)) {
-				       itemsPerPage = getParamAsInteger("itemsPerPage");
-				    }	    	
-				    Paging paging = new Paging(session,listLaporan,itemsPerPage);		
-					if (page > paging.getTotalPages()) page = 1; //reset page number
-					this.context.put("PermohonanList",paging.getPage(page));
-				    this.context.put("page", new Integer(page));
-				    this.context.put("itemsPerPage", new Integer(itemsPerPage));
-				    this.context.put("totalPages", new Integer(paging.getTotalPages()));
-				    this.context.put("startNumber", new Integer(paging.getTopNumber()));
-				    this.context.put("isFirstPage",new Boolean(paging.isFirstPage()));
-				    this.context.put("isLastPage", new Boolean(paging.isLastPage()));	        
-					} catch (Exception e) {
-						e.printStackTrace();
-						this.context.put("error",e.getMessage());
-					}	
-				}	// CLOSE PAGING SKRIN LAPORAN
-				
-				//Add 14102020
-				public void setupPageUpload(HttpSession session,String action,Vector listDokumen) {
-					try {		
-					this.context.put("totalRecords",listDokumen.size());
-					int page = getParam("page") == "" ? 1:getParamAsInteger("page");		
-					int itemsPerPage;
-					if (this.context.get("itemsPerPage") == null || this.context.get("itemsPerPage") == "") {
-						itemsPerPage = getParam("itemsPerPage") == "" ? 10:getParamAsInteger("itemsPerPage");
-					} else {
-						itemsPerPage = (Integer)this.context.get("itemsPerPage");
-					}	    
-				    if ("getNext".equals(action)) {
-				    	page++;
-				    } else if ("getPrevious".equals(action)) {
-				    	page--;
-				    } else if ("getPage".equals(action)) {
-				    	page = getParamAsInteger("value");
-				    } else if ("doChangeItemPerPage".equals(action)) {
-				       itemsPerPage = getParamAsInteger("itemsPerPage");
-				    }	    	
-				    Paging paging = new Paging(session,listDokumen,itemsPerPage);		
-					if (page > paging.getTotalPages()) page = 1; //reset page number
-					this.context.put("SenaraiDokumen",paging.getPage(page));
-				    this.context.put("page", new Integer(page));
-				    this.context.put("itemsPerPage", new Integer(itemsPerPage));
-				    this.context.put("totalPages", new Integer(paging.getTotalPages()));
-				    this.context.put("startNumber", new Integer(paging.getTopNumber()));
-				    this.context.put("isFirstPage",new Boolean(paging.isFirstPage()));
-				    this.context.put("isLastPage", new Boolean(paging.isLastPage()));	        
-					} catch (Exception e) {
-						e.printStackTrace();
-						this.context.put("error",e.getMessage());
-					}	
-				}	// CLOSE PAGING SKRIN UPLOAD
-				
-				// UPDATELAPORAN
-				private void simpanEditLaporan(String id_user, String id_laporanpasir) throws Exception {
-					
-					String txtJumKuantiti = getParam("txtJumKuantiti");
-					String txtJumRoyalti = getParam("txtJumRoyalti");
-					String txtTarikhOperasi = getParam("txtTarikhOperasi");
-//					String socBulan = getParam("socBulan");
-//					String txtTahun = getParam("txtTahun");
-//					String txtKontraktor = getParam("txtKontraktor");
-//					String txtPembeli = getParam("txtPembeli");
-					String txtMasaOperasi  = getParam("txtMasaOperasi");
-					String txtHariOperasi  = getParam("txtHariOperasi");
-					String txtBulan = txtTarikhOperasi.substring(3,5);
-					String txtTahun = txtTarikhOperasi.substring(6,10);
-					String txtKapal = getParam("txtNamaKapal");
-					
-					logic.simpanEditLaporan(id_user,id_laporanpasir,txtJumKuantiti,txtJumRoyalti,txtTarikhOperasi,
-							txtBulan,txtTahun,txtMasaOperasi,txtHariOperasi,txtKapal);
-							
-				}// CLOSE UPDATELAPORAN	
+		Db db = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		try {
+			db = new Db();
 
-				// UPLOAD FILE
-				private void uploadFiles(String id_laporanpasir, String idPermohonan,
-						HttpSession session) throws Exception {
-					DiskFileItemFactory factory = new DiskFileItemFactory();
-					ServletFileUpload upload = new ServletFileUpload(factory);
-					boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-					if (isMultipart != false) {
-						List items = upload.parseRequest(request);
-						Iterator itr = items.iterator();
-						while (itr.hasNext()) {
-							FileItem item = (FileItem) itr.next();
-							if ((!(item.isFormField())) && (item.getName() != null)
-									&& (!("".equals(item.getName())))) {
-								saveData(item, id_laporanpasir, idPermohonan, session);
-							}
-						}
-					}
-				}
-				
-				private void uploadFilesUpdate(String id_laporanpasir, String idDokumen,
-						HttpSession session) throws Exception {
-					DiskFileItemFactory factory = new DiskFileItemFactory();
-					ServletFileUpload upload = new ServletFileUpload(factory);
-					boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-					if (isMultipart != false) {
-						List items = upload.parseRequest(request);
-						Iterator itr = items.iterator();
-						while (itr.hasNext()) {
-							FileItem item = (FileItem) itr.next();
-							if ((!(item.isFormField())) && (item.getName() != null)
-									&& (!("".equals(item.getName())))) {
-								saveDataUpdate(item, id_laporanpasir, idDokumen, session);
-							}
-						}
-					}
-				}
-				
-				private void saveDataUpdate(FileItem item, String id_laporanpasir, String idDokumen, HttpSession session) throws Exception {
+			// TBLPHPDOKUMEN
+			//long idDokumen = DB.getNextID("TBLPHPDOKUMEN_SEQ");
+			Connection con = db.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement ps = con
+					.prepareStatement("UPDATE TBLPHPDOKUMEN"
+							+ "SET NAMA_DOKUMEN = ?, CATATAN = ?, ID_MASUK = ?,TARIKH_MASUK = ?, CONTENT = ?, JENIS_MIME = ?, NAMA_FAIL = ?"
+							+ "WHERE ID_DOKUMEN = ?");
+			ps.setString(1, getParam("namaLampiran"));
+			ps.setString(2, getParam("catatanLampiran"));
+			ps.setString(3, userId);
+			ps.setBinaryStream(4, item.getInputStream(), (int) item.getSize());
+			ps.setString(6, item.getContentType());
+			ps.setString(7, item.getName());
+			ps.setString(8, idDokumen);
+			ps.executeUpdate();
+			
+			Log.info("INSERT DOKUMEN1"+ps);
+			
+			con.commit();
+			this.context.put("idDokumen", idDokumen);
 
-					Db db = null;
-					String userId = (String) session.getAttribute("_ekptg_user_id");
-					try {
-						db = new Db();
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		this.context.put("completed", true);
+	}
 
-						// TBLPHPDOKUMEN
-						//long idDokumen = DB.getNextID("TBLPHPDOKUMEN_SEQ");
-						Connection con = db.getConnection();
-						con.setAutoCommit(false);
-						PreparedStatement ps = con
-								.prepareStatement("UPDATE TBLPHPDOKUMEN"
-										+ "SET NAMA_DOKUMEN = ?, CATATAN = ?, ID_MASUK = ?,TARIKH_MASUK = ?, CONTENT = ?, JENIS_MIME = ?, NAMA_FAIL = ?"
-										+ "WHERE ID_DOKUMEN = ?");
-						ps.setString(1, getParam("namaLampiran"));
-						ps.setString(2, getParam("catatanLampiran"));
-						ps.setString(3, userId);
-						ps.setBinaryStream(4, item.getInputStream(), (int) item.getSize());
-						ps.setString(6, item.getContentType());
-						ps.setString(7, item.getName());
-						ps.setString(8, idDokumen);
-						ps.executeUpdate();
-						
-						Log.info("INSERT DOKUMEN1"+ps);
-						
-						con.commit();
-						this.context.put("idDokumen", idDokumen);
+	private void saveData(FileItem item, String id_laporanpasir, String idPermohonan, HttpSession session) throws Exception {
 
-					} finally {
-						if (db != null)
-							db.close();
-					}
+		Db db = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		
+		try {
+			db = new Db();
 
-					this.context.put("completed", true);
-				}
+			// TBLPHPDOKUMEN
+			long idDokumen = DB.getNextID("TBLPHPDOKUMEN_SEQ");
+			Connection con = db.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement ps = con
+					.prepareStatement("INSERT INTO TBLPHPDOKUMEN "
+							+ "(ID_DOKUMEN,NAMA_DOKUMEN,CATATAN,ID_MASUK,TARIKH_MASUK,CONTENT,JENIS_MIME,NAMA_FAIL,ID_LAPORANPASIR,FLAG_DOKUMEN,ID_PERMOHONAN) "
+							+ "VALUES(?,?,?,?,SYSDATE,?,?,?,?,?,?)");
+			ps.setLong(1, idDokumen);
+			ps.setString(2, getParam("namaLampiran"));
+			ps.setString(3, getParam("catatanLampiran"));
+			ps.setString(4, userId);
+			ps.setBinaryStream(5, item.getInputStream(), (int) item.getSize());
+			ps.setString(6, item.getContentType());
+			ps.setString(7, item.getName());
+			ps.setString(8, id_laporanpasir);
+			ps.setString(9, "L");// laporan pasir
+			ps.setString(10, idPermohonan);
+			ps.executeUpdate();
+			
+			Log.info("INSERT DOKUMEN1"+ps);
+			
+			con.commit();
+			this.context.put("idDokumen", idDokumen);
 
-				private void saveData(FileItem item, String id_laporanpasir, String idPermohonan, HttpSession session) throws Exception {
-
-					Db db = null;
-					String userId = (String) session.getAttribute("_ekptg_user_id");
-					try {
-						db = new Db();
-
-						// TBLPHPDOKUMEN
-						long idDokumen = DB.getNextID("TBLPHPDOKUMEN_SEQ");
-						Connection con = db.getConnection();
-						con.setAutoCommit(false);
-						PreparedStatement ps = con
-								.prepareStatement("INSERT INTO TBLPHPDOKUMEN "
-										+ "(ID_DOKUMEN,NAMA_DOKUMEN,CATATAN,ID_MASUK,TARIKH_MASUK,CONTENT,JENIS_MIME,NAMA_FAIL,ID_LAPORANPASIR,FLAG_DOKUMEN,ID_PERMOHONAN) "
-										+ "VALUES(?,?,?,?,SYSDATE,?,?,?,?,?,?)");
-						ps.setLong(1, idDokumen);
-						ps.setString(2, getParam("namaLampiran"));
-						ps.setString(3, getParam("catatanLampiran"));
-						ps.setString(4, userId);
-						ps.setBinaryStream(5, item.getInputStream(), (int) item.getSize());
-						ps.setString(6, item.getContentType());
-						ps.setString(7, item.getName());
-						ps.setString(8, id_laporanpasir);
-						ps.setString(9, "L");// laporan pasir
-						ps.setString(10, idPermohonan);
-						ps.executeUpdate();
-						
-						Log.info("INSERT DOKUMEN1"+ps);
-						
-						con.commit();
-						this.context.put("idDokumen", idDokumen);
-
-					} finally {
-						if (db != null)
-							db.close();
-					}
-
-					this.context.put("completed", true);
-				}
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		this.context.put("completed", true);
+	}
 }

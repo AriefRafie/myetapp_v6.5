@@ -113,6 +113,58 @@ public class PendaftaranCheckModel {
 		}
 		return a;
 	}
+	
+	// 19112020 syafiqah ambil dari v6
+	public boolean checkKP_Baru_Simati_Online(String idp, String kpbaru,
+			String kplama, String kplain) throws Exception {
+		Db db = null;
+		boolean a = false;
+		String kp_baru = "";
+
+		String sql = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			sql = " SELECT COUNT(P.ID_PERMOHONAN) AS C_SIMATI " +
+					" FROM TBLPPKSIMATI SM, TBLPPKPERMOHONANSIMATI MS, TBLPPKPERMOHONAN P, " +
+					" TBLPFDFAIL F, TBLRUJDAERAH D, TBLRUJNEGERI N, " +
+					" (SELECT DISTINCT PU.ID_DAERAHURUS,PEJ.ID_PEJABATJKPTG,PEJ.ID_DAERAH,D.NAMA_DAERAH,PEJ.NAMA_PEJABAT " +
+					" FROM TBLRUJPEJABATJKPTG PEJ, TBLRUJPEJABATURUSAN PU, TBLRUJDAERAH D " +
+					" WHERE PU.ID_PEJABATJKPTG = PEJ.ID_PEJABATJKPTG AND PEJ.ID_JENISPEJABAT = 22 " +
+					" AND PEJ.ID_SEKSYEN = '2' AND PEJ.ID_DAERAH = D.ID_DAERAH) PEJ " +
+					" WHERE SM.ID_SIMATI = MS.ID_SIMATI AND MS.ID_PERMOHONAN = P.ID_PERMOHONAN " +
+					" AND P.ID_FAIL = F.ID_FAIL AND D.ID_NEGERI = N.ID_NEGERI(+) " +
+					" AND PEJ.ID_DAERAHURUS(+) = P.ID_DAERAHMHN AND P.ID_DAERAHMHN = D.ID_DAERAH(+) " +
+					" AND P.SEKSYEN = '8' AND P.ID_STATUS NOT IN  (999,169,50,47,70,152,171,150,160) " +
+					" AND P.ID_PERMOHONAN <> '" + idp + "' ";
+						
+			if (kpbaru != "") {
+				sql += " AND SM.NO_KP_BARU = '" + kpbaru + "'";
+			}
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+
+			//System.out.println("MATI 2:" + sql.toUpperCase());
+			while (rs.next())
+			//if (rs.next()) 
+			{
+				if (rs.getInt("C_SIMATI") > 0) {
+					//System.out.println("MATI 2xxx:"+ rs.getString("C_SIMATI"));
+					a = true;
+					//System.out.println("A = "+a);
+				}
+			}
+		} finally {
+			if (db != null)
+				db.close();
+
+		}
+		return a;
+	}
 
 	private String getParam(String string) {
 		// TODO Auto-generated method stub
@@ -200,7 +252,57 @@ public class PendaftaranCheckModel {
 		}
 		return a;
 	}
+	
+	// 19112020 syafiqah ambil dari v6
+	public boolean checkKP_Lama_Simati_Online(String idp, String kpbaru,
+			String kplama, String kplain) throws Exception {
+		Db db = null;
+		boolean a = false;
+		String jumlah = "";
 
+		String sql = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			sql = " SELECT COUNT(P.ID_PERMOHONAN)AS JUMLAH "+
+					" FROM TBLPPKSIMATI SM, TBLPPKPERMOHONANSIMATI MS, TBLPPKPERMOHONAN P, " +
+					" TBLPFDFAIL F, TBLRUJDAERAH D, TBLRUJNEGERI N, " +
+					" (SELECT DISTINCT PU.ID_DAERAHURUS,PEJ.ID_PEJABATJKPTG,PEJ.ID_DAERAH,D.NAMA_DAERAH,PEJ.NAMA_PEJABAT " +
+					" FROM TBLRUJPEJABATJKPTG PEJ, TBLRUJPEJABATURUSAN PU, TBLRUJDAERAH D " +
+					" WHERE PU.ID_PEJABATJKPTG = PEJ.ID_PEJABATJKPTG AND PEJ.ID_JENISPEJABAT = 22 " +
+					" AND PEJ.ID_SEKSYEN = '2' AND PEJ.ID_DAERAH = D.ID_DAERAH) PEJ " +
+					" WHERE SM.ID_SIMATI = MS.ID_SIMATI AND MS.ID_PERMOHONAN = P.ID_PERMOHONAN " +
+					" AND P.ID_FAIL = F.ID_FAIL AND D.ID_NEGERI = N.ID_NEGERI(+) " +
+					" AND PEJ.ID_DAERAHURUS(+) = P.ID_DAERAHMHN AND P.ID_DAERAHMHN = D.ID_DAERAH(+) " +
+					" AND P.ID_STATUS NOT IN  (999,169,50,47,70,152,171,150,160) " +
+					" AND P.ID_PERMOHONAN <> '" + idp + "' ";
+			
+			if (kplama != "") {
+				sql += " AND SM.NO_KP_LAMA = '" + kplama + "'"+
+					   " AND SM.NO_KP_LAMA <> 'TDK'";
+			}
+
+			// System.out.print("SQL CHECK MATI"+sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+
+			if (rs.next()) {
+				if (rs.getInt("JUMLAH") > 0) {
+					a = true;
+				}
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		return a;
+	}
+	
+	// 19112020 syafiqah ambil dari v6
 	public boolean checkKP_Lain_Simati(String idp, String kpbaru,
 			String kplama, String kplain) throws Exception {
 		Db db = null;
@@ -268,6 +370,52 @@ public class PendaftaranCheckModel {
 
 			}
 
+		} finally {
+			if (db != null)
+				db.close();
+
+		}
+		return a;
+	}
+	
+	public boolean checkKP_Lain_Simati_Online(String idp, String kpbaru,
+			String kplama, String kplain) throws Exception {
+		Db db = null;
+		boolean a = false;
+		String jumlah = "";
+ 
+		String sql = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			sql = " SELECT COUNT(P.ID_PERMOHONAN) AS JUMLAH "+
+					" FROM TBLPPKSIMATI SM, TBLPPKPERMOHONANSIMATI MS, TBLPPKPERMOHONAN P, " +
+					" TBLPFDFAIL F, TBLRUJDAERAH D, TBLRUJNEGERI N, " +
+					" (SELECT PU.ID_DAERAHURUS,PEJ.ID_PEJABATJKPTG,PEJ.ID_DAERAH,D.NAMA_DAERAH,PEJ.NAMA_PEJABAT " +
+					" FROM TBLRUJPEJABATJKPTG PEJ, TBLRUJPEJABATURUSAN PU, TBLRUJDAERAH D " +
+					" WHERE PU.ID_PEJABATJKPTG = PEJ.ID_PEJABATJKPTG AND PEJ.ID_JENISPEJABAT = 22 " +
+					" AND PEJ.ID_SEKSYEN = '2' AND PEJ.ID_DAERAH = D.ID_DAERAH) PEJ " +
+					" WHERE SM.ID_SIMATI = MS.ID_SIMATI AND MS.ID_PERMOHONAN = P.ID_PERMOHONAN " +
+					" AND P.ID_FAIL = F.ID_FAIL AND D.ID_NEGERI = N.ID_NEGERI(+) " +
+					" AND PEJ.ID_DAERAHURUS(+) = P.ID_DAERAHMHN AND P.ID_DAERAHMHN = D.ID_DAERAH(+) " +
+					" AND P.ID_STATUS NOT IN  (999,169,50,47,70,152) ";
+
+			if (kplain != "") {
+				sql += " AND SM.NO_KP_LAIN = '" + kplain + "'";
+			}
+
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+
+			if (rs.next()) {
+
+				if (rs.getInt("JUMLAH") > 0) {
+					a = true;
+				}
+			}
 		} finally {
 			if (db != null)
 				db.close();
@@ -363,6 +511,103 @@ public class PendaftaranCheckModel {
 		}
 		
 	}
+	
+	// 19112020 syafiqah  ambil dari v6
+	Vector l4 = null;
+
+	public Vector List_KP_Baru_Simati_Online(String idp, String kpbaru, String kplama,
+			String kplain, String id_simati) throws Exception {
+		l4 = new Vector();
+		if (kpbaru == null || "".equals(kpbaru) || kpbaru.length() < 12) {
+			return l4;
+		} else {
+			Db db = null;
+			String sql = "";
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			try {
+
+				db = new Db();
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+
+				sql = " SELECT DISTINCT F.NO_FAIL,P.ID_PERMOHONAN, SM.NAMA_SIMATI, SM.NO_KP_BARU, " +
+						" SM.NO_KP_LAMA, SM.NO_KP_LAIN, SM.JANTINA, SM.UMUR, SM.TARIKH_MATI, " +
+						" SM.JENIS_KP, P.ID_DAERAHMHN, D.NAMA_DAERAH, N.NAMA_NEGERI, " +
+						" PEJ.NAMA_PEJABAT, PEJ.ID_DAERAH, PEJ.NAMA_DAERAH AS DAERAH_PEJABAT, PEJ.NO_TEL " +
+						" FROM TBLPPKSIMATI SM, TBLPPKPERMOHONANSIMATI MS, TBLPPKPERMOHONAN P, " +
+						" TBLPFDFAIL F, TBLRUJDAERAH D, TBLRUJNEGERI N, " +
+						" (SELECT PU.ID_DAERAHURUS,PEJ.ID_PEJABATJKPTG,PEJ.ID_DAERAH,D.NAMA_DAERAH,PEJ.NAMA_PEJABAT, PEJ.NO_TEL " +
+						" FROM TBLRUJPEJABATJKPTG PEJ, TBLRUJPEJABATURUSAN PU, TBLRUJDAERAH D " +
+						" WHERE PU.ID_PEJABATJKPTG = PEJ.ID_PEJABATJKPTG " +
+						" AND pu.id_jenispejabat = pej.id_jenispejabat " +
+						" AND PEJ.ID_JENISPEJABAT = 22 " +
+						" AND PEJ.ID_SEKSYEN = '2' AND PEJ.ID_DAERAH = D.ID_DAERAH) PEJ " +
+						" WHERE SM.ID_SIMATI = MS.ID_SIMATI AND MS.ID_PERMOHONAN = P.ID_PERMOHONAN " +
+						" AND P.ID_FAIL = F.ID_FAIL AND D.ID_NEGERI = N.ID_NEGERI(+) " +
+						" AND PEJ.ID_DAERAHURUS(+) = P.ID_DAERAHMHN AND P.ID_DAERAHMHN = D.ID_DAERAH(+) " +
+						" AND P.ID_STATUS NOT IN  (999,169,50,47,70) " +
+						" AND P.ID_PERMOHONAN <> '" + idp + "' " +
+						" AND MS.ID_SIMATI <> '" + id_simati + "'";
+				
+				//if (kpbaru != "") {
+					sql += " AND SM.NO_KP_BARU = '" + kpbaru + "'";
+				//}	
+				sql += " ORDER BY P.ID_PERMOHONAN ASC";
+				
+				//System.out.println("MATI CHECK 1 : " + sql.toUpperCase());
+				ResultSet rs = stmt.executeQuery(sql);
+				Hashtable h;
+				while (rs.next()) {
+					h = new Hashtable();
+					h.put("NO_KP_BARU", rs.getString("NO_KP_BARU") == null ? ""
+							: rs.getString("NO_KP_BARU"));
+					h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA") == null ? ""
+							: rs.getString("NO_KP_LAMA"));
+					h.put("NO_KP_LAIN", rs.getString("NO_KP_LAIN") == null ? ""
+							: rs.getString("NO_KP_LAIN"));
+					h.put("JENIS_KP", rs.getString("JENIS_KP") == null ? ""
+							: rs.getString("JENIS_KP"));
+
+					h.put("NAMA_SIMATI",
+							rs.getString("NAMA_SIMATI") == null ? "" : rs
+									.getString("NAMA_SIMATI"));
+					h.put("JANTINA", rs.getString("JANTINA") == null ? "" : rs
+							.getString("JANTINA"));
+					h.put("UMUR", rs.getString("UMUR") == null ? "" : rs
+							.getString("UMUR"));
+					h.put("NO_FAIL", rs.getString("NO_FAIL") == null ? "" : rs
+							.getString("NO_FAIL"));
+					h.put("TARIKH_MATI",
+							rs.getString("TARIKH_MATI") == null ? "" : sdf
+									.format(rs.getDate("TARIKH_MATI")));
+					h.put("NAMA_DAERAH",
+							rs.getString("NAMA_DAERAH") == null ? "" : rs
+									.getString("NAMA_DAERAH"));
+					h.put("NAMA_NEGERI",
+							rs.getString("NAMA_NEGERI") == null ? "" : rs
+									.getString("NAMA_NEGERI"));
+					h.put("NAMA_PEJABAT",
+							rs.getString("NAMA_PEJABAT") == null ? "" : rs
+									.getString("NAMA_PEJABAT"));
+					h.put("DAERAH_PEJABAT",
+							rs.getString("DAERAH_PEJABAT") == null ? "" : rs
+									.getString("DAERAH_PEJABAT"));
+					h.put("NO_TEL",
+							rs.getString("NO_TEL") == null ? "" : rs
+									.getString("NO_TEL"));
+					h.put("ID_PERMOHONAN",
+							rs.getString("ID_PERMOHONAN") == null ? "" : rs
+									.getString("ID_PERMOHONAN"));
+					l4.addElement(h);
+				}
+
+			} finally {
+				if (db != null)
+					db.close();
+			}
+			return l4;
+		}
+	}
 
 	Vector<Hashtable<String,String>>  l2 = null;
 
@@ -448,6 +693,95 @@ public class PendaftaranCheckModel {
 		return l2;
 	
 	}
+	
+	// 19112020 syafiqah  ambil dari v6
+	Vector countKPlamasimati = null;
+
+	public Vector List_KP_Lama_Simati_Online(String idp, String kpbaru, String kplama,
+			String kplain, String id_simati) throws Exception {
+		Db db = null;
+
+		String sql = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			countKPlamasimati = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			sql = " SELECT DISTINCT F.NO_FAIL,P.ID_PERMOHONAN, SM.NAMA_SIMATI, SM.NO_KP_BARU, " +
+					" SM.NO_KP_LAMA, SM.NO_KP_LAIN, SM.JANTINA, SM.UMUR, SM.TARIKH_MATI, " +
+					" SM.JENIS_KP, P.ID_DAERAHMHN, D.NAMA_DAERAH, N.NAMA_NEGERI, " +
+					" PEJ.NAMA_PEJABAT, PEJ.ID_DAERAH, PEJ.NAMA_DAERAH AS DAERAH_PEJABAT, PEJ.NO_TEL  " +
+					" FROM TBLPPKSIMATI SM, TBLPPKPERMOHONANSIMATI MS, TBLPPKPERMOHONAN P, " +
+					" TBLPFDFAIL F, TBLRUJDAERAH D, TBLRUJNEGERI N, " +
+					" (SELECT PU.ID_DAERAHURUS,PEJ.ID_PEJABATJKPTG,PEJ.ID_DAERAH,D.NAMA_DAERAH,PEJ.NAMA_PEJABAT, PEJ.NO_TEL " +
+					" FROM TBLRUJPEJABATJKPTG PEJ, TBLRUJPEJABATURUSAN PU, TBLRUJDAERAH D " +
+					" WHERE PU.ID_PEJABATJKPTG = PEJ.ID_PEJABATJKPTG " +
+					" AND pu.id_jenispejabat = pej.id_jenispejabat " +
+					" AND PEJ.ID_JENISPEJABAT = 22 " +
+					" AND PEJ.ID_SEKSYEN = '2' AND PEJ.ID_DAERAH = D.ID_DAERAH) PEJ " +
+					" WHERE SM.ID_SIMATI = MS.ID_SIMATI AND MS.ID_PERMOHONAN = P.ID_PERMOHONAN " +
+					" AND P.ID_FAIL = F.ID_FAIL AND D.ID_NEGERI = N.ID_NEGERI(+) " +
+					" AND PEJ.ID_DAERAHURUS(+) = P.ID_DAERAHMHN AND P.ID_DAERAHMHN = D.ID_DAERAH(+) " +
+					" AND P.ID_STATUS NOT IN  (999,169,50,47,70) " +
+					" AND P.ID_PERMOHONAN <> '" + idp + "' "+
+					" AND MS.ID_SIMATI <> '" + id_simati + "'";
+			
+				sql += " AND SM.NO_KP_LAMA = '" + kplama + "'"+
+						   " AND SM.NO_KP_LAMA <> 'TDK'";
+
+			//sql += " ORDER BY P.ID_PERMOHONAN ASC";
+			System.out.println("MATI LAMA CHECK :" + sql.toUpperCase());
+
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("NO_KP_BARU", rs.getString("NO_KP_BARU") == null ? ""
+						: rs.getString("NO_KP_BARU"));
+				h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA") == null ? ""
+						: rs.getString("NO_KP_LAMA"));
+				h.put("NO_KP_LAIN", rs.getString("NO_KP_LAIN") == null ? ""
+						: rs.getString("NO_KP_LAIN"));
+				h.put("JENIS_KP", rs.getString("JENIS_KP") == null ? "" : rs
+						.getString("JENIS_KP"));
+
+				h.put("NAMA_SIMATI", rs.getString("NAMA_SIMATI") == null ? ""
+						: rs.getString("NAMA_SIMATI"));
+				h.put("JANTINA", rs.getString("JANTINA") == null ? "" : rs
+						.getString("JANTINA"));
+				h.put("UMUR", rs.getString("UMUR") == null ? "" : rs
+						.getString("UMUR"));
+				h.put("NO_FAIL", rs.getString("NO_FAIL") == null ? "" : rs
+						.getString("NO_FAIL"));
+				h.put("TARIKH_MATI", rs.getString("TARIKH_MATI") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_MATI")));
+				h.put("NAMA_DAERAH", rs.getString("NAMA_DAERAH") == null ? ""
+						: rs.getString("NAMA_DAERAH"));
+				h.put("NAMA_NEGERI", rs.getString("NAMA_NEGERI") == null ? ""
+						: rs.getString("NAMA_NEGERI"));
+				h.put("NAMA_PEJABAT", rs.getString("NAMA_PEJABAT") == null ? ""
+						: rs.getString("NAMA_PEJABAT"));
+				h.put("DAERAH_PEJABAT",
+						rs.getString("DAERAH_PEJABAT") == null ? "" : rs
+								.getString("DAERAH_PEJABAT"));
+				h.put("NO_TEL",
+						rs.getString("NO_TEL") == null ? "" : rs
+								.getString("NO_TEL"));
+
+				countKPlamasimati.addElement(h);
+
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+
+		}
+		return countKPlamasimati;
+	}
 
 	Vector<Hashtable<String,String>> l3 = new Vector<Hashtable<String,String>>();
 
@@ -529,6 +863,87 @@ public class PendaftaranCheckModel {
 		}
 		return l3;
 		
+	}
+	
+	// 19112020 syafiqah ambil dari v6
+	Vector l6 = new Vector();
+
+	public Vector List_KP_Lain_Simati_Online(String idp, String kpbaru, String kplama,
+			String kplain) throws Exception {
+		Db db = null;
+		l6.clear();
+
+		String sql = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			sql = " SELECT DISTINCT F.NO_FAIL,P.ID_PERMOHONAN, SM.NAMA_SIMATI, SM.NO_KP_BARU, " +
+					" SM.NO_KP_LAMA, SM.NO_KP_LAIN, SM.JANTINA, SM.UMUR, SM.TARIKH_MATI, " +
+					" SM.JENIS_KP, P.ID_DAERAHMHN, D.NAMA_DAERAH, N.NAMA_NEGERI, " +
+					" PEJ.NAMA_PEJABAT, PEJ.ID_DAERAH, PEJ.NAMA_DAERAH AS DAERAH_PEJABAT, PEJ.NO_TEL  " +
+					" FROM TBLPPKSIMATI SM, TBLPPKPERMOHONANSIMATI MS, TBLPPKPERMOHONAN P, " +
+					" TBLPFDFAIL F, TBLRUJDAERAH D, TBLRUJNEGERI N, " +
+					" (SELECT PU.ID_DAERAHURUS,PEJ.ID_PEJABATJKPTG,PEJ.ID_DAERAH,D.NAMA_DAERAH,PEJ.NAMA_PEJABAT, PEJ.NO_TEL " +
+					" FROM TBLRUJPEJABATJKPTG PEJ, TBLRUJPEJABATURUSAN PU, TBLRUJDAERAH D " +
+					" WHERE PU.ID_PEJABATJKPTG = PEJ.ID_PEJABATJKPTG AND PEJ.ID_JENISPEJABAT = 22 " +
+					" AND PEJ.ID_SEKSYEN = '2' AND PEJ.ID_DAERAH = D.ID_DAERAH) PEJ " +
+					" WHERE SM.ID_SIMATI = MS.ID_SIMATI AND MS.ID_PERMOHONAN = P.ID_PERMOHONAN " +
+					" AND P.ID_FAIL = F.ID_FAIL AND D.ID_NEGERI = N.ID_NEGERI(+) " +
+					" AND PEJ.ID_DAERAHURUS(+) = P.ID_DAERAHMHN AND P.ID_DAERAHMHN = D.ID_DAERAH(+) " +
+					" AND P.ID_STATUS NOT IN  (999,169,50,47,70) ";
+			
+				sql += " AND SM.NO_KP_LAIN = '" + kplain + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("NO_KP_BARU", rs.getString("NO_KP_BARU") == null ? ""
+						: rs.getString("NO_KP_BARU"));
+				h.put("NO_KP_LAMA", rs.getString("NO_KP_LAMA") == null ? ""
+						: rs.getString("NO_KP_LAMA"));
+				h.put("NO_KP_LAIN", rs.getString("NO_KP_LAIN") == null ? ""
+						: rs.getString("NO_KP_LAIN"));
+				h.put("JENIS_KP", rs.getString("JENIS_KP") == null ? "" : rs
+						.getString("JENIS_KP"));
+
+				h.put("NAMA_SIMATI", rs.getString("NAMA_SIMATI") == null ? ""
+						: rs.getString("NAMA_SIMATI"));
+				h.put("JANTINA", rs.getString("JANTINA") == null ? "" : rs
+						.getString("JANTINA"));
+				h.put("UMUR", rs.getString("UMUR") == null ? "" : rs
+						.getString("UMUR"));
+				h.put("NO_FAIL", rs.getString("NO_FAIL") == null ? "" : rs
+						.getString("NO_FAIL"));
+				h.put("TARIKH_MATI", rs.getString("TARIKH_MATI") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_MATI")));
+				h.put("NAMA_DAERAH", rs.getString("NAMA_DAERAH") == null ? ""
+						: rs.getString("NAMA_DAERAH"));
+				h.put("NAMA_NEGERI", rs.getString("NAMA_NEGERI") == null ? ""
+						: rs.getString("NAMA_NEGERI"));
+				h.put("NAMA_PEJABAT", rs.getString("NAMA_PEJABAT") == null ? ""
+						: rs.getString("NAMA_PEJABAT"));
+				h.put("DAERAH_PEJABAT",
+						rs.getString("DAERAH_PEJABAT") == null ? "" : rs
+								.getString("DAERAH_PEJABAT"));
+				h.put("NO_TEL",
+						rs.getString("NO_TEL") == null ? "" : rs
+								.getString("NO_TEL"));
+
+				l6.addElement(h);
+
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+
+		}
+		return l6;
 	}
 
 	Vector listNOFAIL = new Vector();

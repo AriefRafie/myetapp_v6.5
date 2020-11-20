@@ -72,10 +72,10 @@
           	<font class="blink" ><span class="style2">$!list.statusKelulusanDasar</span></font>
           </td>
           <td class="$row">$list.namaPemohon</td>
-          <td class="$row">$list.tarikhTerima</td>
-          <td class="$row">$list.kawasanDipohon</td>
-          <td class="$row">$list.jenisPermohonan</td>
-          <td class="$row">$list.jenisLesen</td>
+          <td class="$row" align="center">$list.tarikhTerima</td>
+          <td class="$row">$list.kawasanDipohon.toUpperCase()</td>
+          <td class="$row" align="center">$list.jenisPermohonan</td>
+          <td class="$row" align="center">$list.jenisLesen</td>
           ##<td class="$row">$list.status</td>
         </tr>
    		#end

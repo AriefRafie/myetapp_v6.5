@@ -51,7 +51,7 @@
 <legend><strong>Senarai Laporan</strong></legend>
 	<table width="100%" border="0" cellspacing="2" cellpadding="2">
        <tr>
-        <td><a href="#" class="style2" onClick="javascript:cetakAPBBorangA('$idBorangA')"><font color="blue"> Borang A </font></a></td>
+        <td><a href="#" class="style2" onClick="javascript:cetakAPBLaporanBorangA('$idBorangA')"><font color="blue"> Borang A </font></a></td>
       </tr>           
     </table>
 </fieldset>
@@ -92,7 +92,7 @@ function setTable(id){
 function cetakAPBLaporanBorangA(id_borangA) {
 
 	//var url = "../servlet/ekptg.report.php2.APBLaporanBorangA?idBorangA="+id_borangA;
-	var url = "../servlet/ekptg.report.php2.online.PengesahanOnline?template=APBLaporanBorangA&folder=ONLINE&idBorangA="+id_borangA;
+	var url = "../servlet/ekptg.report.php2.online.PengesahanOnline?template=APBBorangA&folder=ONLINE&idBorangA="+id_borangA;
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;

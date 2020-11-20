@@ -133,13 +133,10 @@
 	        #elseif ($idJenisPermohonan == '2') 
 	        <tr>
 	          <td width="1%">&nbsp;</td>
-	          <td valign="top">No. Fail Lama</td>
+	          <td valign="top">Senarai No. Fail Lama</td>
 	          <td>:</td>
-	          <td>$!c.get("noFailLama")
-	          	<input type="text" name="txtNoFailLama" id="txtNoFailLama" size="43" value="$beanMaklumatPermohonan.noFail" 
-	          		onblur="this.value=this.value.toUpperCase();doChangeNoFailAPB();" $readonly class="$inputTextClass"/>
-	          </td>
-	        </tr> 
+	          <td>$!selectNoFailLama</td>
+	        </tr>
         	#end
         	#end
   	  	</table>
@@ -342,7 +339,10 @@
 	          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
 	          <td width="28%">Negeri</td>
 	          <td width="1%">:</td>
-	          <td width="70%"><strong>$selectNegeri</strong></td>
+	          <td width="70%">
+	          	<strong>$selectNegeri</strong>
+	          	<input type="hidden" name="idNegeriPerairan" id="idNegeriPerairan" value="$idNegeriPerairan"/>
+	          </td>
 	        </tr>
 	        <tr>
 	          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
@@ -390,6 +390,9 @@ function doChangeJenisLesen() {
 }
 function doChangeNoFailAPB() {
 	doAjaxCall${formName}("doChangeNoFailAPB");
+}
+function doChangeNoFailLama() {
+	doAjaxCall${formName}("doChangeNoFailLama");
 }
 function daftarBaru() {
 
