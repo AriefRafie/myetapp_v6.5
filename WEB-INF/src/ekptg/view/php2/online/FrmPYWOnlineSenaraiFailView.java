@@ -512,8 +512,8 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
         	this.context.put("inputTextClass", "disabled");
         	
         	if("2".equals(idJenisPermohonan)){
-			this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(id_user, "socNoFailLama", Long.parseLong(idFailLama), "disabled", " class=\"disabled\""));  
-        	}
+    			this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(id_user, "socNoFailLama", Long.parseLong(idFailLama), "disabled", " class=\"disabled\""));  
+            }
 			
         	//MAKLUMAT PERMOHONAN
         	beanMaklumatPermohonan = new Vector();
@@ -598,14 +598,16 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 				this.context.put("idJenisPermohonan", "0"); 
         	}
         	
-        	if("2".equals(idJenisPermohonan)){
-    			this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(id_user, "socNoFailLama", Long.parseLong(idFailLama), "", " onChange=\"doChangeNoFailLama();\""));  
-        	}
+        	
         	
         	//MAKLUMAT PEMOHON
 			Vector<Hashtable<String,String>> vec = header.setMaklumatPemohon(id_user);
 			this.context.put("pemohon", vec.get(0));
         	
+			if("2".equals(idJenisPermohonan)){
+				this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(id_user, "socNoFailLama", Long.parseLong(idFailLama), "disabled", " class=\"disabled\""));  
+	        }
+			
 			//MAKLUMAT PERMOHONAN
 			if ("1".equals(idJenisPermohonan)){
         		
@@ -651,6 +653,9 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
         		idMukim = "99999";
         	}
 			
+        	myLogger.info("negeri :"+idNegeri);
+        	myLogger.info("daerah :"+idDaerah);
+        	myLogger.info("mukim :"+idMukim);
         	this.context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("socJenisHakmilik", Long.parseLong(jenisHakmilik), ""));
         	this.context.put("selectJenisLot", HTML.SelectLot("socJenisLot",Long.parseLong(jenisLot), ""));
 			this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), "", " onChange=\"doChangeNegeri();\""));
