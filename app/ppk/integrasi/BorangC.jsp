@@ -189,7 +189,7 @@ input[readonly]{
 				</fieldset>	
 			#end
 		</fieldset>
-		#set ($src1="/myetappv903/servlet/ekptg.view.ppk.DisplayBlobKeputusanBorangC?id="+$ID_KAD_BIRU)
+		#set ($src1="../../servlet/ekptg.view.ppk.DisplayBlobKeputusanBorangC?id="+$ID_KAD_BIRU)
 		 <p align="center">
 		 <iframe id="iFrameBorangC" name="iFrameBorangC" src="$src1" width="600" height="600" title="Borang C" style="display:none"></iframe>
 		 </p> 
