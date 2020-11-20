@@ -731,8 +731,8 @@ public class FrmCukaiPenyataBean implements ICukai {
 	
 	@Override
 	public Vector<Hashtable<String, String>> senaraiHakmilik(String idNegeri
-			,String idDaerah, String idMukim, String tahun
-			, String noHakmilik, String jenisHakmilik, String noLot)throws Exception {
+		,String idDaerah, String idMukim, String tahun
+		, String noHakmilik, String jenisHakmilik, String noLot)throws Exception {
 		Db db = null;
 		String sql = "";
 		try {
@@ -894,8 +894,8 @@ public class FrmCukaiPenyataBean implements ICukai {
 	}
 	
 	public Vector<Hashtable<String, String>> senaraiPenyataCukaiTemp(String idNegeri
-			,String idDaerah, String idMukim, String tahun
-			,String noHakmilik, String jenisHakmilik,String noLot )throws Exception {
+		,String idDaerah, String idMukim, String tahun
+		,String noHakmilik, String jenisHakmilik,String noLot )throws Exception {
 		Db db = null;
 		String sql = "";
 		try {
@@ -922,12 +922,12 @@ public class FrmCukaiPenyataBean implements ICukai {
 			" ,NVL((TBLTEMP.CATATAN),'') CATATAN"+
 			" ,NVL(( SELECT CTI.ID_CUKAITERPERINCI " +
 			" FROM " + 
-	        " 		TBLHTPHAKMILIK TPHI,TBLHTPHAKMILIKCUKAI TPHCI, TBLHTPCUKAITERPERINCI CTI "+
-			"     	WHERE  " +
-	        " 		(TPHI.ID_HAKMILIK = TPHCI.ID_HAKMILIK AND TPHCI.STATUS = 'S')" +      
-	        " 		AND CTI.ID_HAKMILIKCUKAI = TPHCI.ID_HAKMILIKCUKAI " +        
-	        " 		AND TPHI.ID_HAKMILIK = TBLTEMP.ID_HAKMILIK " +   
-			" 		AND CTI.TAHUN = THHCT.TAHUN AND ROWNUM<=1 " +
+	        " TBLHTPHAKMILIK TPHI,TBLHTPHAKMILIKCUKAI TPHCI, TBLHTPCUKAITERPERINCI CTI "+
+			" WHERE  " +
+	        " (TPHI.ID_HAKMILIK = TPHCI.ID_HAKMILIK AND TPHCI.STATUS = 'S')" +      
+	        " 	AND CTI.ID_HAKMILIKCUKAI = TPHCI.ID_HAKMILIKCUKAI " +        
+	        " 	AND TPHI.ID_HAKMILIK = TBLTEMP.ID_HAKMILIK " +   
+			" 	AND CTI.TAHUN = THHCT.TAHUN AND ROWNUM<=1 " +
 			"  ),0) ID_CUKAITERPERINCI " +
 			" ,NVL(( SELECT TPHCI.ID_HAKMILIKCUKAI " + 
 			"		FROM  " +

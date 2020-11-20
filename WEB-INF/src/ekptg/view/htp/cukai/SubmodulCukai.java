@@ -30,6 +30,9 @@ import ekptg.model.htp.cukai.entity.CukaiUtama;
 import ekptg.model.htp.entity.Bayaran;
 import ekptg.model.htp.entity.HakMilik;
 import ekptg.model.htp.entity.Resit;
+import ekptg.model.utils.IUtilHTMLPilihan;
+import ekptg.model.utils.rujukan.UtilHTMLPilihanBayarCukai;
+import ekptg.model.utils.rujukan.UtilHTMLPilihanUrusanLaporanRekod;
 
 public class SubmodulCukai extends AjaxBasedModule{
 	/**
@@ -49,10 +52,11 @@ public class SubmodulCukai extends AjaxBasedModule{
 	private ICukai iCukai = null;
 	private ICukaiBaucer iCukaiBaucer = null;
 	private ICukaiPenyata iCukaiPen = null;
+	private IUtilHTMLPilihan iUrusan = null;
 	private HakMilik hakmilik = null;
 	private UtilHTML utilHTML = new UtilHTML();
     private String idUser = "";
-    private Vector vector = null;
+    private Vector<CukaiPenyata> vector = null;
     private Hashtable hPeringkatBayar = null;
     private boolean statusPeringkatBayar = false;
 	//private String year = "";
@@ -79,6 +83,10 @@ public class SubmodulCukai extends AjaxBasedModule{
     	if (selectedTab == null || "".equals(selectedTab) ) {
     		selectedTab="0";
     	}
+    	
+	    this.context.put("pathjsp", PATH);
+
+	    
 	    Vector senaraiFail = null;
 		String action = getParam("action");
 	    String submit = getParam("command");
@@ -91,7 +99,7 @@ public class SubmodulCukai extends AjaxBasedModule{
 		peringkatBayar = getParam("peringkat_bayaran");
 //		myLog.info("peringkatBayar="+peringkatBayar);
 		idPermohonan = getParam("idPermohonan");
-		idPeringkatBayaran = getParam("idPeringkatbayaran");
+		idPeringkatBayaran = getParam("idperingkatbayaran").equals("")?"0":getParam("idperingkatbayaran");
 		idNegeri= getParam("idNegeri");
 		idUser = (String)session.getAttribute("_ekptg_user_id");		
 		tahunParam = (!getParam("tahun_cukai").equals("")?getParam("tahun_cukai"):lebah.util.Util.getDateTime(new Date(), "yyyy"));
@@ -104,7 +112,7 @@ public class SubmodulCukai extends AjaxBasedModule{
 //			myLog.info("baucerview:selectedTab="+selectedTab);
 			
 		    template_name = PATH+"frmCukaiPenyata.jsp";
-		    Hashtable permohonan = getICukai().getPermohonanInfo(idPermohonan);
+		    Hashtable<String,String> permohonan = getICukai().getPermohonanInfo(idPermohonan);
 		    int idNegeriInt = Integer.parseInt(getParam("idNegeri"));		
 			String negeri = getParam("negeri");
 			String Daerah = getParam("socDaerah")==""?"0":getParam("socDaerah");
@@ -112,16 +120,18 @@ public class SubmodulCukai extends AjaxBasedModule{
 			statusPeringkatBayar = false;
 
 			vector = getICukaiPenyata().getPenyata("11", "",String.valueOf(permohonan.get("fail")), String.valueOf(permohonan.get("idnegeri")),null);
-			CukaiPenyata cPenyata = null;
+//			CukaiPenyata cPenyata = null;
+//			
 			if(vector.isEmpty() == false){
-				cPenyata = (CukaiPenyata)vector.get(0);
-				idPeringkatBayaran = String.valueOf(cPenyata.getId());
-				myLog.info("idPeringkatBayaran="+idPeringkatBayaran);
+//				cPenyata = (CukaiPenyata)vector.get(0);
+//				//idPeringkatBayaran = String.valueOf(cPenyata.getId());
+//				myLog.info("idPeringkatBayaran="+idPeringkatBayaran);
 				if(!idPeringkatBayaran.equals("0")){
-					peringkatBayar = cPenyata.getNoRujukan();
+//					peringkatBayar = cPenyata.getNoRujukan();
 					statusPeringkatBayar = true;
 				}
 			}
+			
 			myLog.info("peringkatBayar="+peringkatBayar);
 			this.context.put("info", permohonan);
     		this.context.put("idbayaran", peringkatBayar);
@@ -140,6 +150,7 @@ public class SubmodulCukai extends AjaxBasedModule{
 				DataPenyata(session,idNegeriInt,disability,readability,style1,style2);
 				myLog.info("penyataview:peringkatBayar="+peringkatBayar);
 				int bilCukaiUtama=0;
+				
 				if(statusPeringkatBayar){
 					cu = getICukai().getCukaiUtama(idPeringkatBayaran);
 					if(cu!=null){
@@ -163,16 +174,19 @@ public class SubmodulCukai extends AjaxBasedModule{
 				readability = "readonly";
 				disability = "disabled";
 				style2 = "none";
-				vector = getICukaiPenyata().getSenaraiPenyata(String.valueOf(idNegeri), tahunParam);
-				simpanPenyata(session,idPermohonan,vector);
-			    DataPenyata(session,idNegeriInt,disability,readability,style1,style2);			    
+				Vector<Hashtable<String,String>> vector_ = getICukaiPenyata().getSenaraiPenyata(String.valueOf(idNegeri), tahunParam);
+				simpanPenyata(session,idPermohonan,vector_);
+			    
+				DataPenyata(session,idNegeriInt,disability,readability,style1,style2);			    
 			    this.context.put("peringkat_bayaran", peringkatBayar);
 			    this.context.put("SimpanStatus", "success");
 				this.context.put("ResultSimpan", result); 
 			
 			}
 
-    		
+    		String jenisBayar = getPilihan().Pilihan("peringkat_bayaransoc",peringkatBayar,"onchange=\"doChangeYear('"+negeri+"','"+idNegeriInt+"','"+idPermohonan+"')\"");
+			this.context.put("soCukai", jenisBayar);
+
 		}else if("baucer".equals(submit)){
     			myLog.info("cukaiperingkatbayar:"+pageMode);
     		    template_name = PATH+"frmCukaiPenyata.jsp";
@@ -449,20 +463,20 @@ public class SubmodulCukai extends AjaxBasedModule{
 		myLog.info("idPermohonan="+idPermohonan);
 		myLog.info("idPeringkatBayaran="+idPeringkatBayaran);
 		myLog.info("peringkatBayar="+peringkatBayar);
-		myLog.info("selectedTab = "+selectedTab); 		
+//		myLog.info("selectedTab = "+selectedTab); 		
 		return template_name;
 		
 	}
 	
 	private void DataPenyata(HttpSession session, int idNegeri, String disability, 
-			String readability, String style1, String style2) throws Exception{
-		vector = new Vector();
+		String readability, String style1, String style2) throws Exception{
+		Vector<Hashtable<String,String>> vector_ = new Vector<Hashtable<String,String>>();
 		try{
-			  vector = getICukaiPenyata().getSenaraiPenyata(String.valueOf(idNegeri), tahunParam);
+			vector_ = getICukaiPenyata().getSenaraiPenyata(String.valueOf(idNegeri), tahunParam);
 			  this.context.put("ResultSimpan", "");
-			  if(vector.size() != 0){			    
-				  myLog.info("CukaiProcess::DataPenyata::list::"+vector);
-				  this.context.put("Penyata", vector);
+			  if(vector_.size() != 0){			    
+				  myLog.info("CukaiProcess::DataPenyata::list::"+vector_);
+				  this.context.put("Penyata", vector_);
 				  this.context.put("Style1", "");
 				  this.context.put("Style2", style2);
 				  
@@ -486,7 +500,7 @@ public class SubmodulCukai extends AjaxBasedModule{
 	  private void SimpanPenyata(HttpSession session , int idPermohonan) throws Exception {
 		  	Vector list = new Vector();
 			list.clear();
-			int idPeringkatbayaran = Integer.parseInt(getParam("idPeringkatbayaran"));
+			//String idPeringkatbayaran = getParam("idPeringkatbayaran"));
 			int idNegeri = Integer.parseInt(getParam("idNegeri"));	
 			String negeri = getParam("negeri");
 			System.out.println("CukaiProcess::DataPenyata::negeri:::"+negeri);
@@ -496,41 +510,33 @@ public class SubmodulCukai extends AjaxBasedModule{
 	    	list = FrmCukaiPenyataData.getListPenyata(idNegeri);
 			System.out.println("CukaiProcess::SimpanPenyata::list.size()::: "+list.size());
 				
-			if(idPeringkatbayaran == 0){
+			if(idPeringkatBayaran.equals("0")){
 				Hashtable h = new Hashtable();	
-				h.put("idpermohonan", idPermohonan);
-						
+				h.put("idpermohonan", idPermohonan);						
 				h.put("idNegeri", Integer.parseInt(getParam("idNegeri")));
-				System.out.println("CukaiProcess::simpanPeringkatBayar::idNegeri::"+idNegeri);
-						
+//				System.out.println("CukaiProcess::simpanPeringkatBayar::idNegeri::"+idNegeri);						
 				h.put("tahun_cukai", Integer.parseInt(getParam("tahun_cukai")));
-				System.out.println("CukaiProcess::simpanPeringkatBayar::tahun_cukai::"+tahun_cukai);
-						
+//				System.out.println("CukaiProcess::simpanPeringkatBayar::tahun_cukai::"+tahun_cukai);						
 				h.put("peringkat_bayaran", idBayaran);						
-		    	System.out.println("CukaiProcess::simpanPeringkatBayar::peringkat_bayaran::"+idBayaran);
-						
-				System.out.println("CukaiProcess::simpanPeringkatBayar:: h = "+h);
-						
-				idPeringkatbayaran = FrmCukaiPenyataData.simpanPeringkatBayarInteger(h);
-				System.out.println("CukaiProcess::SimpanPenyata::idPeringkatbayaran::"+idPeringkatbayaran);
+//		    	System.out.println("CukaiProcess::simpanPeringkatBayar::peringkat_bayaran::"+idBayaran);						
+//				System.out.println("CukaiProcess::simpanPeringkatBayar:: h = "+h);						
+				idPeringkatBayaran = FrmCukaiPenyataData.simpanPeringkatBayarInteger(h);
+//				System.out.println("CukaiProcess::SimpanPenyata::idPeringkatbayaran::"+idPeringkatbayaran);
 						
 				list = FrmCukaiPenyataData.getListPenyata(idNegeri);
 						
-				for(int i=0; i<list.size(); i++){
-							
+				for(int i=0; i<list.size(); i++){						
 					Hashtable input = (Hashtable)list.get(i);
 					Hashtable hash = new Hashtable();
 //					Double sumCukai = Double.parseDouble(input.get("sumCukai").toString());	
 					
-					hash.put("idCukaiUtama",idPeringkatbayaran);
-					System.out.println("CukaiProcess::simpanCukaiUtama::idCukaiUtama::"+idPeringkatbayaran);
+					hash.put("idCukaiUtama",idPeringkatBayaran);
 					
 					hash.put("jum_cukai", input.get("sumCukai"));
 						
 					hash.put("jum_hakmilik",(Integer)input.get("sumIdHakmilik"));
 							
-					hash.put("idPeringkat",idPeringkatbayaran);
-					System.out.println("CukaiProcess::simpanCukaiUtama::idPeringkat::"+idPeringkatbayaran);
+					hash.put("idPeringkat",idPeringkatBayaran);
 							
 					hash.put("tahun",Integer.parseInt(getParam("tahun_cukai")));
 					System.out.println("CukaiProcess::simpanCukaiUtama::tahun::"+tahun_cukai);
@@ -549,7 +555,7 @@ public class SubmodulCukai extends AjaxBasedModule{
 				Hashtable h = new Hashtable();	
 				h.put("idpermohonan", idPermohonan);
 				
-				h.put("idPeringkatbayaran", idPeringkatbayaran);
+				h.put("idPeringkatbayaran", idPeringkatBayaran);
 						
 				h.put("idNegeri", Integer.parseInt(getParam("idNegeri")));
 				System.out.println("CukaiProcess::kemaskiniPeringkatBayar::idNegeri::"+idNegeri);
@@ -562,8 +568,8 @@ public class SubmodulCukai extends AjaxBasedModule{
 						
 				System.out.println("CukaiProcess::kemaskiniPeringkatBayar:: h = "+h);
 							
-				idPeringkatbayaran = FrmCukaiPenyataData.updatePeringkatBayarInteger(h);
-				System.out.println("CukaiProcess::KemaskiniPenyata::idPeringkatbayaran::"+idPeringkatbayaran);
+				idPeringkatBayaran = FrmCukaiPenyataData.updatePeringkatBayarInteger(h);
+//				System.out.println("CukaiProcess::KemaskiniPenyata::idPeringkatbayaran::"+idPeringkatbayaran);
 							
 				list = FrmCukaiPenyataData.getListPenyata(idNegeri);
 							
@@ -575,8 +581,8 @@ public class SubmodulCukai extends AjaxBasedModule{
 					Hashtable input = (Hashtable)list.get(0);
 					Hashtable hash = new Hashtable();
 					
-					hash.put("idCukaiUtama",idPeringkatbayaran);
-					System.out.println("CukaiProcess::simpanCukaiUtama::idCukaiUtama::"+idPeringkatbayaran);
+					hash.put("idCukaiUtama",idPeringkatBayaran);
+//					System.out.println("CukaiProcess::simpanCukaiUtama::idCukaiUtama::"+idPeringkatbayaran);
 					
 					hash.put("jum_cukai", input.get("sumCukai"));
 					System.out.println("CukaiProcess::simpanCukaiUtama::jum_cukai::"+sumCukai);
@@ -584,8 +590,8 @@ public class SubmodulCukai extends AjaxBasedModule{
 					hash.put("jum_hakmilik", Integer.parseInt(getParam("sumIdHakmilik")));
 					System.out.println("CukaiProcess::simpanCukaiUtama::jum_hakmilik::"+sumIdHakmilik);
 							
-					hash.put("idPeringkat",idPeringkatbayaran);
-					System.out.println("CukaiProcess::simpanCukaiUtama::idPeringkat::"+idPeringkatbayaran);
+					hash.put("idPeringkat",idPeringkatBayaran);
+//					System.out.println("CukaiProcess::simpanCukaiUtama::idPeringkat::"+idPeringkatbayaran);
 							
 					hash.put("tahun",Integer.parseInt(getParam("tahun_cukai")));
 					System.out.println("CukaiProcess::simpanCukaiUtama::tahun::"+tahun_cukai);
@@ -603,47 +609,45 @@ public class SubmodulCukai extends AjaxBasedModule{
 		}
 	  
 		private void simpanPenyata(HttpSession session ,String idPermohonan) throws Exception {
-		  	vector = new Vector();
 			//list.clear();
 			//int idPeringkatbayaran = Integer.parseInt(getParam("idPeringkatbayaran"));
 			//int idNegeri = Integer.parseInt(getParam("idNegeri"));	
-			int idPeringkatbayaran = idPeringkatBayaran==""?0:Integer.parseInt(idPeringkatBayaran);
+			idPeringkatBayaran = idPeringkatBayaran==""?"0":idPeringkatBayaran;
 		    int idNegeriInt = Integer.parseInt(idNegeri);		
 
 			//String negeri = getParam("negeri");
 			//this.context.put("negeri", negeri);
 	    	int tahun_cukai = Integer.parseInt(getParam("tahun_cukai"));
 	    	String idBayaran = getParam("socbayaran");
-	    	vector = FrmCukaiPenyataData.getListPenyata(idNegeriInt);
+	    	Vector<Hashtable<String,String>> vector = FrmCukaiPenyataData.getListPenyata(idNegeriInt);
 				
-			if(idPeringkatbayaran == 0){
+			if(idPeringkatBayaran.equals("0")){
 				Hashtable h = new Hashtable();	
 				h.put("idpermohonan", idPermohonan);						
 				h.put("idNegeri", idNegeriInt);
 				h.put("tahun_cukai", tahun_cukai);						
 				h.put("peringkat_bayaran", idBayaran);		    
 				h.put("idMasuk", idUser);
-				idPeringkatbayaran = FrmCukaiPenyataData.simpanPeringkatBayarInteger(h);						
+				idPeringkatBayaran = FrmCukaiPenyataData.simpanPeringkatBayarInteger(h);						
 				//list = FrmCukaiPenyataData.getListPenyata(idNegeri);
 				myLog.info("CukaiProcess::simpanPeringkatBayar::idNegeri::"+idNegeri);						
 				myLog.info("CukaiProcess::simpanPeringkatBayar::tahun_cukai::"+tahun_cukai);
 				myLog.info("CukaiProcess::simpanPeringkatBayar::peringkat_bayaran::"+idBayaran);						
 				myLog.info("CukaiProcess::simpanPeringkatBayar:: h = "+h);
-				myLog.info("CukaiProcess::SimpanPenyata::idPeringkatbayaran::"+idPeringkatbayaran);						
+//				myLog.info("CukaiProcess::SimpanPenyata::idPeringkatbayaran::"+idPeringkatbayaran);						
 						
 				for(int i=0; i<vector.size(); i++){							
 					Hashtable input = (Hashtable)vector.get(i);
 					Hashtable hash = new Hashtable();
-					hash.put("idCukaiUtama",idPeringkatbayaran);					
+					hash.put("idCukaiUtama",idPeringkatBayaran);					
 					hash.put("jum_cukai", input.get("sumCukai"));						
 					hash.put("jum_hakmilik",(Integer)input.get("sumIdHakmilik"));							
-					hash.put("idPeringkat",idPeringkatbayaran);							
+					hash.put("idPeringkat",idPeringkatBayaran);							
 					hash.put("tahun",tahun_cukai);
 					hash.put("idNegeri",idNegeri);					
 					hash.put("idDaerah",(String)input.get("idDaerah"));							
 					hash.put("idMasuk", idUser);
-					myLog.info("CukaiProcess::simpanCukaiUtama::idCukaiUtama::"+idPeringkatbayaran);
-					myLog.info("CukaiProcess::simpanCukaiUtama::idPeringkat::"+idPeringkatbayaran);
+					myLog.info("CukaiProcess:simpanCukaiUtama::idPeringkatbayaran="+idPeringkatBayaran);
 					myLog.info("CukaiProcess::simpanCukaiUtama::tahun::"+tahun_cukai);						
 					myLog.info("CukaiProcess::simpanCukaiUtama::idNegeri::"+idNegeri);
 					myLog.info("CukaiProcess::simpanCukaiUtama:: hash = "+hash);
@@ -656,12 +660,12 @@ public class SubmodulCukai extends AjaxBasedModule{
 				//	Kemaskini Peringkat Bayaran
 				Hashtable h = new Hashtable();	
 				h.put("idpermohonan", idPermohonan);			
-				h.put("idPeringkatbayaran", idPeringkatbayaran);						
+				h.put("idPeringkatbayaran", idPeringkatBayaran);						
 				h.put("idNegeri", idNegeriInt);
 				h.put("tahun_cukai", tahun_cukai);							
 				h.put("peringkat_bayaran", idBayaran);						
 				h.put("idKemaskini", idUser);
-				idPeringkatbayaran = FrmCukaiPenyataData.updatePeringkatBayarInteger(h);							
+				idPeringkatBayaran = FrmCukaiPenyataData.updatePeringkatBayarInteger(h);							
 				//list = FrmCukaiPenyataData.getListPenyata(idNegeri);						
 				String sumCukai = getParam("sumCukai");
 				int sumIdHakmilik = Integer.parseInt(getParam("sumIdHakmilik"));
@@ -669,23 +673,22 @@ public class SubmodulCukai extends AjaxBasedModule{
 				myLog.info("CukaiProcess::kemaskiniPeringkatBayar::tahun_cukai::"+tahun_cukai);
 				myLog.info("CukaiProcess::kemaskiniPeringkatBayar::peringkat_bayaran::"+idBayaran);						
 				myLog.info("CukaiProcess::kemaskiniPeringkatBayar:: h = "+h);
-				myLog.info("CukaiProcess::KemaskiniPenyata::idPeringkatbayaran::"+idPeringkatbayaran);
+//				myLog.info("CukaiProcess::KemaskiniPenyata::idPeringkatbayaran::"+idPeringkatbayaran);
 												
 				for(int i=0; i<vector.size(); i++){							
 					Hashtable input = (Hashtable)vector.get(0);
 					Hashtable hash = new Hashtable();				
-					hash.put("idCukaiUtama",idPeringkatbayaran);					
+					hash.put("idCukaiUtama",idPeringkatBayaran);					
 					hash.put("jum_cukai", input.get("sumCukai"));
 					hash.put("jum_hakmilik", Integer.parseInt(getParam("sumIdHakmilik")));						
-					hash.put("idPeringkat",idPeringkatbayaran);							
+					hash.put("idPeringkat",idPeringkatBayaran);							
 					hash.put("tahun",tahun_cukai);							
 					hash.put("idNegeri",idNegeri);				
 					hash.put("idDaerah",(String)input.get("idDaerah"));							
 					hash.put("idKemaskini", idUser);
-					myLog.info("CukaiProcess::simpanCukaiUtama::idCukaiUtama::"+idPeringkatbayaran);
+					myLog.info("CukaiProcess:simpanCukaiUtama::idPeringkatbayaran="+idPeringkatBayaran);
 					myLog.info("CukaiProcess::simpanCukaiUtama::jum_cukai::"+sumCukai);
 					myLog.info("CukaiProcess::simpanCukaiUtama::jum_hakmilik::"+sumIdHakmilik);
-					myLog.info("CukaiProcess::simpanCukaiUtama::idPeringkat::"+idPeringkatbayaran);						
 					myLog.info("CukaiProcess::simpanCukaiUtama::tahun::"+tahun_cukai);
 					myLog.info("CukaiProcess::simpanCukaiUtama::idNegeri::"+idNegeri);	
 					myLog.info("CukaiProcess::kemaskiniCukaiUtama:: hash = "+hash);
@@ -699,7 +702,7 @@ public class SubmodulCukai extends AjaxBasedModule{
 		}	 
 		
 		//27/10/2010
-		private void simpanPenyata(HttpSession session,String idPermohonan,Vector vector) throws Exception {
+		private void simpanPenyata(HttpSession session,String idPermohonan,Vector<Hashtable<String,String>> vector) throws Exception {
 			//int idPeringkatbayaran = idPeringkatBayaran==""?0:Integer.parseInt(idPeringkatBayaran);
 		    int idNegeriInt = Integer.parseInt(idNegeri);		
 	    	int tahun_cukai = Integer.parseInt(tahunParam);
@@ -707,10 +710,10 @@ public class SubmodulCukai extends AjaxBasedModule{
 	    	String idCukaiUtama = "";
 				
 			if(idPeringkatBayaran.equals("0")){
-				Hashtable h = new Hashtable();	
+				Hashtable<String,String> h = new Hashtable<String,String>();	
 				h.put("idpermohonan", idPermohonan);						
-				h.put("idNegeri", idNegeriInt);
-				h.put("tahun_cukai", tahun_cukai);						
+				h.put("idNegeri", String.valueOf(idNegeriInt));
+				h.put("tahun_cukai", String.valueOf(tahun_cukai));						
 				h.put("peringkat_bayaran", peringkatBayar);		    
 				h.put("idMasuk", idUser);
 				idPeringkatBayaran = FrmCukaiPenyataData.simpanPeringkatBayar(h);						
@@ -722,16 +725,16 @@ public class SubmodulCukai extends AjaxBasedModule{
 				//myLog.info("CukaiProcess::SimpanPenyata::idPeringkatbayaran::"+idPeringkatbayaran);						
 						
 				for(int i=0; i<vector.size(); i++){							
-					Hashtable input = (Hashtable)vector.get(i);
-					Hashtable hash = new Hashtable();
+					Hashtable<String,String> input = (Hashtable<String,String>)vector.get(i);
+					Hashtable<String,String> hash = new Hashtable<String,String>();
 //					hash.put("idCukaiUtama",idPeringkatBayaran);					
-					hash.put("jum_cukai", input.get("sumCukai"));						
-					hash.put("jum_hakmilik",(Integer)input.get("sumIdHakmilik"));							
+					hash.put("jum_cukai", String.valueOf(input.get("sumCukai")));						
+					hash.put("jum_hakmilik",String.valueOf(input.get("sumIdHakmilik")));							
 					hash.put("idPeringkat",idPeringkatBayaran);							
-					hash.put("tahun",tahun_cukai);
-					hash.put("idNegeri",idNegeriInt);					
-					hash.put("idDaerah",(String)input.get("idDaerah"));							
-					hash.put("idMasuk", idUser);
+					hash.put("tahun",String.valueOf(tahun_cukai));
+					hash.put("idNegeri",String.valueOf(idNegeriInt));					
+					hash.put("idDaerah",String.valueOf(input.get("idDaerah")));							
+					hash.put("idMasuk",idUser);
 //					myLog.info("CukaiProcess::simpanCukaiUtama::idCukaiUtama::"+idPeringkatbayaran);
 //					myLog.info("CukaiProcess::simpanCukaiUtama::idPeringkat::"+idPeringkatbayaran);
 //					myLog.info("CukaiProcess::simpanCukaiUtama::tahun::"+tahun_cukai);						
@@ -740,6 +743,7 @@ public class SubmodulCukai extends AjaxBasedModule{
 					FrmCukaiPenyataData.simpanCukaiUtama(hash);
 					
 				}
+				
 				result = "baru";
 				
 			}else{
@@ -1279,5 +1283,14 @@ public class SubmodulCukai extends AjaxBasedModule{
 		context.put("idNegeri", Integer.parseInt(idNegeri));
 		context.put("negeri", idNegeri);
 	}
+	
+	private IUtilHTMLPilihan getPilihan(){
+		if(iUrusan==null){
+			iUrusan = new UtilHTMLPilihanBayarCukai();
+		}
+		return iUrusan;
+		
+	}	
+	
 		
 }

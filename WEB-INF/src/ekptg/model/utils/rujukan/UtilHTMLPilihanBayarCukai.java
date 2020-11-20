@@ -1,10 +1,11 @@
 package ekptg.model.utils.rujukan;
 
+
 import ekptg.model.utils.IUtilHTMLPilihan;
 //import org.apache.log4j.Logger;
 
 
-public class UtilHTMLPilihanUrusanLaporanRekod implements IUtilHTMLPilihan{
+public class UtilHTMLPilihanBayarCukai implements IUtilHTMLPilihan{
 
 	//static Logger myLog = Logger.getLogger(ekptg.model.htp.utiliti.UtilHTMLPilihanMT.class);
 	
@@ -43,7 +44,7 @@ public class UtilHTMLPilihanUrusanLaporanRekod implements IUtilHTMLPilihan{
 //				#end
 //				#set ($counter = $counter+1)
 //			#end
-			sb.append("<option value=\"\">SILA PILIH</option>\n");
+			sb.append("<option value=\"-1\">SILA PILIH</option>\n");
 			//Vector<Tblsemakan> v = ekptg.model.htp.FrmSemakan.getSemakan(null,null);
 
 			String f = null;
@@ -67,23 +68,11 @@ public class UtilHTMLPilihanUrusanLaporanRekod implements IUtilHTMLPilihan{
 		return sb.toString();
 	
 	}
-	
 	private String[] getUrusan() {
-		String[] urusan = {"TANAH CEROBOH"
-						,"TANAH DILUPUS"
-						,"TANAH KOSONG"
-						,"TANAH PAJAKAN"
-						,"TANAH PELEPASAN"
-						,"TANAH SEWA"
-						,"TANAH TUKARGUNA"
-						}; 
-//		a. Tanah ceroboh  -
-//		b. Tanah yang terlibat dengan sewa  -
-//		c. Tanah yang telah dibuat tukarguna 
-//		d. Tanah yang terlibat dengan pajakan -
-//		e. Tanah yang telah dibuat pelepasan 
-//		f. Tanah kosong -
-//		g. Tanah yang telah dilupuskan
+		String[] urusan = {"Peringkat Belanjawan"
+				,"Peringkat Negeri"
+				,"Peringkat Daerah"
+				}; 
 		return urusan;
 		
 	}

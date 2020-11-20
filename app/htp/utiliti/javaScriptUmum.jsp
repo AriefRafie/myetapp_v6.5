@@ -227,6 +227,52 @@
 	
 	}
 	
+	// 2020/11/19 - Set Luas
+	function kiraLuasAsal(idLuas){
+		var intConv = 5;
+	  	var jenisLuas = idLuas;
+	  	//KE HEKTAR
+	  	if(jenisLuas == "1" 
+	  		|| (jenisLuas == "2")
+	  		|| (jenisLuas == "3")
+	  		|| (jenisLuas == "5")
+	  		|| (jenisLuas == "6")){ // KILOMETER PERSEGI
+	  		var luasK = (document.${formName}.txtluasasal1.value);
+	  		document.${formName}.txtluasasal.value = luasK;
+	  		   	   	
+		}else if(jenisLuas == "4"){ //EKAR, ROOD, POLE
+	  	  	var luasE = document.${formName}.txtluasasal2.value;
+		  	var luasR = document.${formName}.txtluasasal3.value;
+		  	var luasP = document.${formName}.txtluasasal4.value;
+		  	document.${formName}.txtluasasal.value = luasE + luasR + luasP;
+		   			   	
+	   	}else if(jenisLuas == "7"){ //EKAR,DEPA
+	  	  	var luasE = document.${formName}.txtLuas5.value;
+		  	var luasD = document.${formName}.txtLuas6.value;		  
+		  	document.${formName}.txtluasasal.value = luasE+luasD;
+		  
+	   	}else if(jenisLuas == "8"){ //RELONG,JEMBA,KAKI PERSEGI
+	  	  	var luasR = document.${formName}.txtluasasal2.value;
+		  	var luasJ = document.${formName}.txtluasasal3.value;
+		  	var luasK = document.${formName}.txtluasasal4.value;  
+		  	document.${formName}.txtluasasal.value = luasR+luasJ+luasK;
+	   
+	   	}
+	   	//by Rosli 2010/05/10
+	 	if(document.${formName}.socLuas.value == "4" || document.${formName}.socLuas.value == "7" ||document.${formName}.socLuas.value == "8"){
+			if(document.${formName}.socLuas.value == "4"){
+				document.${formName}.txtluasgabungasal.value = document.${formName}.txtluasasal2.value +"E,"+document.${formName}.txtluasasal3.value+"R,"+document.${formName}.txtluasasal4.value+"P";
+			}else if(document.${formName}.socLuas.value == "7"){
+				document.${formName}.txtluasgabungasal.value = document.${formName}.txtluasasal5.value +"E,"+document.${formName}.txtluasasal6.value+"D";
+			}else if(document.${formName}.socLuas.value == "8"){
+				document.${formName}.txtluasgabungasal.value = document.${formName}.txtluasasal2.value +"R,"+document.${formName}.txtluasasal3.value+"J,"+document.${formName}.txtluasasal4.value+"K";
+			}
+		
+	 	}else{
+			document.${formName}.txtluasgabungasal.value = document.${formName}.txtluasasal1.value;
+		}
+	
+	}
 	// 2018/02/18 - Disalin dari frmPajakanPopupMaklumatTanah.jsp/, fungsi format 5 decimal
 	function format5Decimal(elmnt,content,content2) {
 		//if it is character, then remove it..

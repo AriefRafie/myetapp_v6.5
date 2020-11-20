@@ -1969,7 +1969,7 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 		try{
 	    	Vector<Hashtable<String,String>> beanPajakan = null;
 	    	Pajakan pajakan = getIPajakanBayaran().getMaklumatCukai(idPermohonan);
-	   		myLog1.info("cukai="+pajakan.getKadarCukaiString());
+//	   		myLog1.info("cukai="+pajakan.getKadarCukaiString());
 			this.context.put("pajakanTemp",pajakan);
 
 	    	if (mode.equalsIgnoreCase("newPajakan")){
@@ -2026,7 +2026,6 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 
 	    		showNewEditDropdown("edit",Integer.parseInt(String.valueOf(hashMaklumatPajakanDB.get("notifikasiPeringatan"))));
 
-	    			//this.context.put("selectCaraBayar", HTML.selectCaraBayar("socCaraBayar", Long.parseLong(idCaraBayar), "", ""));
 	    		this.context.put("selectCaraBayar", HTML.selectCaraBayar("socCaraBayar", Long.parseLong((String) hashMaklumatPajakanDB.get("idCaraBayar")), null));
 	    		this.context.put("selectTanah", HTML.selectTanah(idPermohonan,"socTanah", Long.parseLong(idTanah), null,null));
 
@@ -2217,7 +2216,8 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 		hash.put("denda", getParam("txtdenda") == null ? "8" : getParam("txtdenda"));
 		hash.put("status", "Y");
 		hash.put("id_tanah", getParam("socTanah"));
-
+		hash.put("termaBayaran", getParam("txtermabayaran"));
+		hash.put("termaDenda", getParam("txtermadenda"));
 		logicper.savePajakan(idPermohonan, hash, session);
 
 	}
@@ -2242,6 +2242,9 @@ public class FrmPajakanSenaraiFailView extends AjaxBasedModule {
 		hash.put("denda", getParam("txtdenda") == null ? "8" : getParam("txtdenda"));
 		hash.put("status", getParam("socaktif"));
 		hash.put("id_tanah", getParam("socTanah"));
+		hash.put("termaBayaran", getParam("txtermabayaran"));
+		hash.put("termaDenda", getParam("txtermadenda"));
+
 		logicper.saveUpdatePajakan(idPajakan, hash, session);
 
 	}

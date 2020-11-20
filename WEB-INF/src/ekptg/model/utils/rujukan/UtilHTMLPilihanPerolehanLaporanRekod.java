@@ -4,7 +4,7 @@ import ekptg.model.utils.IUtilHTMLPilihan;
 //import org.apache.log4j.Logger;
 
 
-public class UtilHTMLPilihanUrusanLaporanRekod implements IUtilHTMLPilihan{
+public class UtilHTMLPilihanPerolehanLaporanRekod implements IUtilHTMLPilihan{
 
 	//static Logger myLog = Logger.getLogger(ekptg.model.htp.utiliti.UtilHTMLPilihanMT.class);
 	
@@ -31,18 +31,6 @@ public class UtilHTMLPilihanUrusanLaporanRekod implements IUtilHTMLPilihan{
 				sb.append(jsFunction);
 			sb.append(" > ");
 			String[] urusan = getUrusan(); 
-//			#set ($list = ["BELUM ADA KEPUTUSAN","DILULUSKAN","TIDAK DILULUSKAN","DIBATALKAN/DITARIKBALIK"])
-//			#set( $counter = 0 )
-//				<option $!pk_ value="-1">SILA PILIH</option>
-//				<!-- <option $!pk0 value="0">SEMUA STATUS</option> -->
-//			#foreach ($i in $list)
-//				#if ($!keputusan.status == $counter) 
-//				<option selected value="0$counter">$i</option>
-//				#else
-//				<option value="0$counter">$i</option>
-//				#end
-//				#set ($counter = $counter+1)
-//			#end
 			sb.append("<option value=\"\">SILA PILIH</option>\n");
 			//Vector<Tblsemakan> v = ekptg.model.htp.FrmSemakan.getSemakan(null,null);
 
@@ -69,21 +57,10 @@ public class UtilHTMLPilihanUrusanLaporanRekod implements IUtilHTMLPilihan{
 	}
 	
 	private String[] getUrusan() {
-		String[] urusan = {"TANAH CEROBOH"
-						,"TANAH DILUPUS"
-						,"TANAH KOSONG"
-						,"TANAH PAJAKAN"
-						,"TANAH PELEPASAN"
-						,"TANAH SEWA"
-						,"TANAH TUKARGUNA"
+		String[] urusan = {"PERMOHONAN"
+						,"PEMBELIAN"
+						,"PERLETAKHAKAN"
 						}; 
-//		a. Tanah ceroboh  -
-//		b. Tanah yang terlibat dengan sewa  -
-//		c. Tanah yang telah dibuat tukarguna 
-//		d. Tanah yang terlibat dengan pajakan -
-//		e. Tanah yang telah dibuat pelepasan 
-//		f. Tanah kosong -
-//		g. Tanah yang telah dilupuskan
 		return urusan;
 		
 	}

@@ -20,7 +20,7 @@ public class CukaiPenyataBean implements ICukaiPenyata {
 	//private CukaiPenyata cPenyata = null;
 	private Vector<Hashtable<String,String>> list = null;
 	
-	public Vector getPenyata(String idUrusan, String carian, String noFail, String idNegeri,String tahun) 
+	public Vector<CukaiPenyata> getPenyata(String idUrusan, String carian, String noFail, String idNegeri,String tahun) 
 		throws Exception {
 		Db db = null;
 		CukaiPenyata cPenyata = null;
@@ -31,24 +31,25 @@ public class CukaiPenyataBean implements ICukaiPenyata {
 			Statement stmt = db.getStatement();
 			sql = new String();
 			sql = "SELECT distinct f.id_Fail, f.no_Fail, f.tajuk_Fail, s.keterangan, n.nama_Negeri,n.kod_Mampu" +
-				",p.id_Permohonan, f.id_Negeri,NVL(pb.id_peringkatbayaran,0) id_peringkatbayaran,pb.peringkat_bayaran  " +
+				",p.id_permohonan, f.id_Negeri"+
+				",NVL(pb.id_peringkatbayaran,-1) id_peringkatbayaran,pb.peringkat_bayaran  " +
 				" " +
 				" FROM " +
 				" Tblpfdfail f, Tblpermohonan p, Tblrujsuburusanstatusfail sf, Tblrujsuburusanstatus ss, " +
 				" Tblrujstatus s, Tblrujnegeri n,tblhtpperingkatbayaran pb "+
 				" WHERE f.id_Fail = p.id_Fail AND F.ID_STATUS <> 999 AND p.id_Permohonan = sf.id_Permohonan AND n.id_Negeri = f.id_Negeri "+
 				" AND sf.id_Suburusanstatus = ss.id_Suburusanstatus AND ss.id_Status = s.id_Status "+
-				" AND pb.ID_PERMOHONAN(+) = p.ID_PERMOHONAN "+
-				" AND sf.aktif = '1' AND f.id_Urusan = " + idUrusan +
-				" AND f.tajuk_Fail LIKE '%" + carian + "%' "+
-				" AND f.no_Fail LIKE '%" + noFail + "%' " +
+				" AND pb.id_permohonan(+) = p.id_permohonan "+
+				" AND sf.aktif = '1' AND f.id_urusan = " + idUrusan +
+				" AND f.tajuk_fail LIKE '%" + carian + "%' "+
+				" AND f.no_fail LIKE '%" + noFail + "%' " +
 				"  " +
 				"";
-			if (tahun!=null)	sql += " AND PB.TAHUN_CUKAI ='"+tahun+"' ";
-			if (idNegeri != null)	sql += "AND f.id_Negeri = " + idNegeri;
-			sql += " ORDER BY n.kod_Mampu";		
+			if (tahun!=null)	sql += " AND PB.tahun_cukai ='"+tahun+"' ";
+			if (idNegeri != null)	sql += "AND f.id_negeri = " + idNegeri;
+			sql += " ORDER BY n.kod_mampu";		
 			ResultSet rs = stmt.executeQuery(sql);
-//			mylog.info("getList:sql="+sql);
+			myLog.info("getPenyata:sql="+sql);
 			Vector list = new Vector();
 			while (rs.next()) {
 				cPenyata = new CukaiPenyata();
@@ -130,10 +131,10 @@ public class CukaiPenyataBean implements ICukaiPenyata {
 		
 	}
 	
-	public Vector getSenaraiPenyata(String idNegeri,String tahun)throws Exception {
+	public Vector<Hashtable<String,String>> getSenaraiPenyata(String idNegeri,String tahun)throws Exception {
 		Db db = null;
 		String sql = "";			
-		Vector list = new Vector();
+		Vector<Hashtable<String,String>> list = new Vector<Hashtable<String,String>>();
 		try {
 			db = new Db();
 			sql ="SELECT RD.ID_DAERAH,RD.NAMA_DAERAH, COUNT(*) TOTAL_MUKIM "+
@@ -152,17 +153,17 @@ public class CukaiPenyataBean implements ICukaiPenyata {
 			      
 			 Statement stmt = db.getStatement();
 			 ResultSet rs = stmt.executeQuery(sql);
-			 Hashtable h;
+			 Hashtable<String,String> h;
 			 while (rs.next()) {
-				 h = new Hashtable();				
-				 Double d = 0.00;
-				 Double c = 0.00;
+				 h = new Hashtable<String,String>();				
+//				 Double d = 0.00;
+//				 Double c = 0.00;
 				 h.put("nama_daerah", rs.getString("NAMA_DAERAH"));
 				 h.put("idDaerah", rs.getString("ID_DAERAH"));
-				 h.put("sumDenda", rs.getDouble("DENDA"));
-				 h.put("sumIdHakmilik", rs.getInt("TOTAL_MUKIM"));
-				 h.put("sumCukai_", rs.getDouble("CUKAI_TERKINI"));
-				 h.put("sumCukai", rs.getDouble("CUKAI_KENA_BAYAR"));			    
+				 h.put("sumDenda", Utils.format2Decimal(rs.getDouble("DENDA")));
+				 h.put("sumIdHakmilik", String.valueOf(rs.getInt("TOTAL_MUKIM")));
+				 h.put("sumCukai_", Utils.format2Decimal(rs.getDouble("CUKAI_TERKINI")));
+				 h.put("sumCukai", Utils.format2Decimal(rs.getDouble("CUKAI_KENA_BAYAR")));			    
 				 h.put("sumCukaiFormat", Utils.format2Decimal(rs.getDouble("CUKAI_KENA_BAYAR")));			    
 				 list.addElement(h);
 				 
