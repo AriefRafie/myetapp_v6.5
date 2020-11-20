@@ -1,6 +1,6 @@
 package ekptg.model.utils.emel;
 
-import java.util.Hashtable;
+//import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -277,18 +277,7 @@ public class EmailConfig {
 	public void setSession(HttpSession session){
 		this.session_ = session;
 	}
-	
-	public Db getdb() throws Exception {
-		Db db = null;
-		try {
-			db = new Db();
-		} finally {
-			if (db != null)
-				db.close();
-		}
-		return db;
-		
-	}
+
 	
 }
 //2020/09/22
