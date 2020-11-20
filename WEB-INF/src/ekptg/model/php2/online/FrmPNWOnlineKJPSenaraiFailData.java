@@ -82,7 +82,7 @@ public class FrmPNWOnlineKJPSenaraiFailData {
 					+ "	WHEN B.ID_STATUS IN (148,240,245) THEN 'PRA PERMOHONAN ('||D.KETERANGAN ||')'	" //penyedia,penyemak,pelulus
 					+ "	WHEN B.ID_STATUS = 1610212 THEN 'BATAL : '||B.CATATAN_BATAL||'' "
 					+ " WHEN B.ID_STATUS IN (1610206,1610201) THEN 'MENUNGGU KEPUTUSAN' " //mesyuarat dan keputusan
-					+ "	WHEN B.ID_STATUS IN (1610198, 1610199, 1610200, 1610201) THEN 'SEDANG DIPROSES' " // pendaftaran, jabatan teknikal, lawatan tapak, tawaran
+					+ "	WHEN B.ID_STATUS IN (1610198, 1610199, 1610200, 1610210) THEN 'SEDANG DIPROSES' " // pendaftaran, jabatan teknikal, lawatan tapak, tawaran
 				 	+ "	ELSE D.KETERANGAN  "
 				 	+ " END KETERANGAN "
 					//+ ", D.KETERANGAN, "
