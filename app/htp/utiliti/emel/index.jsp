@@ -51,24 +51,20 @@ padding:0 0.25em;
    <input type="hidden" name="jawatanPegawai" id="jawatanPegawai" value="$!jawatanPegawai"/>
    <input type="hidden" name="emelPegawai" id="emelPegawai" value="$!emelPegawai"/> 
    <input type="hidden" name="userid" id="userid" value='$!{session.getAttribute("_ekptg_user_id")}'/> 
-   
-    	<fieldset><legend><strong>Maklumat Emel</strong></legend>
-        	<table width="100%" border="0" cellspacing="2" cellpadding="2">
-        	
-              <tr>
-              	<td width="1%">&nbsp;</td>
-                <td width="20%">&nbsp;</td>
-                <td width="1%">&nbsp;</td>
-                <td width="78%">&nbsp;</td>
+
+ 	<fieldset><legend><strong>Maklumat Emel</strong></legend>
+        <table width="100%" cellspacing="2" cellpadding="2">        	
+              <tr >
+              	<td colspan="4">&nbsp;</td>
               </tr>
-             <tr>
+              <tr>
               	<td width="1%">&nbsp;</td>
                 <td width="20%">Perkara</td>
                 <td width="1%">:</td>
                 <td width="78%">$!tajukEmel</td>
-              </tr>             
+              </tr> 
               <tr>
-               <td width="1%">&nbsp;</td>
+                <td width="1%">&nbsp;</td>
                 <td width="20%" valign="top">Kandungan</td>
                 <td width="1%" valign="top">:</td>
                 <td width="78%">
@@ -78,12 +74,9 @@ padding:0 0.25em;
               </tr>
               <tr> 
 		        <td colspan="4">&nbsp;</td>
-
 		      </tr> 
-        
-        <table align="center" width="70%" border="0" cellspacing="2" cellpadding="2">
-        	<tr align="center">
-                <td>
+		      <tr align="center">
+                <td colspan="4">
                 	#set ($labelCetak = 'Hantar Emel')
             		#if($report == 'emelperingatan')
                 		<input type="button" name="cmdCetak" id="cmdCetak" value="$!labelCetak" onclick="javascript:emelPeringatanBayaran()">
@@ -107,10 +100,37 @@ padding:0 0.25em;
                		<input type="button" name="cmdKeluar" id="cmdKeluar" value="Keluar" onclick="javascript:keluar()">
                 </td>
               </tr>
-        </table>
-        
-
-
+    	</table>
+    </fieldset>    
+	#if ($logs.size()>0)
+	 	<fieldset><legend><strong>Log Emel</strong></legend>
+		<table border="0" cellpadding="1" cellspacing="1" width="100%">	    						
+			<tr class="table_header">
+	    		<td width="3%" align="center"><strong>Bil.</strong></td>
+				<td width="62%" align="center"><strong>Perkara</strong></td>
+				<td width="15%" align="center"><strong>Tarikh</strong></td>
+				<td width="20%" align="center"><strong>Status</strong></td>    
+			</tr>
+		#set ($count = 0)
+		#foreach ($fail in $logs)
+		                		#set ($count = $count+1)
+		                  		#set( $i = $velocityCount )
+		                  		#if ( ($i % 2) != 1 )
+		                    		#set( $row = "row2" )
+		                  		#else
+		                       		#set( $row = "row1" )
+		                  		#end
+			<tr>
+	  			        			<td class="$row" >$count.</td>
+	  			        			<td class="$row" >$fail.tajuk</td>
+				        			<td class="$row"><div align="center">$fail.tarikhHantar</div></td>
+				      			    <td class="$row"><div align="center">$fail.status</div></td>
+	 		</tr>		                  		
+		                  		
+		#end                 		
+		</fieldset>    
+		                  		
+	#end
 <!-- Untuk borang dan surat -->
 <script>
 

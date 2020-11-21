@@ -210,7 +210,7 @@
  	  		<tr>
 			  	<td width="3%" class="row2">9.</td>
 			  	<td width="97%" class="row2">
-			  		<a href="javascript:openReport('ekptg.report.htp.permohonan.LaporanPermohonan','IDSUBURUSAN=1','ringkasanotis','HTPPermohonanRingkasanNotis5AMengikutNegeri')" class="style1" >RINGKASAN NOTIS 5A</a>
+			  		<a href="javascript:openReport('ekptg.report.htp.permohonan.LaporanPermohonan','IDSUBURUSAN=1','ringkasanotis','HTPermohonanRingkasanNotis5AMengikutNegeri')" class="style1" >RINGKASAN NOTIS 5A</a>
 			 	</td>
 		   	</tr>
 <!--		   		
@@ -720,9 +720,15 @@
 
 			}else if(laporan == "ringkasan"){
 				ptem += "ThnRange";
+			}else if(laporan == "ringkasanurus" 
+				|| laporan == "ringkasanuruskem"
+				|| laporan == "ringkasanotis"){
+				
+				if(mula_tahun != "" & akhir_tahun != "")
+					ptem += "ThnRange";
 
 			}
-
+			//alert(ptem);
 			pbulanmula = "&BULANTAHUN="+mula_bulan+"/"+mula_tahun;
 			bulan ="&bulan="+mula_bulan;
 			pbulantamat = "&BULANTAHUNTMT="+akhir_hari+"/"+akhir_bulan+"/"+akhir_tahun+"&bulantamat="+akhir_bulan;

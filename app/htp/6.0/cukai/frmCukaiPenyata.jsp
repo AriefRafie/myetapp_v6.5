@@ -17,7 +17,8 @@
 	<tr>
 		<td align="center">
 			<fieldset>
-			#parse ("app/htp/6.0/cukai/frmCukaiInfo.jsp")
+			#set ( $page = $pathjsp+"frmCukaiInfo.jsp" )			
+			#parse ($page)
 			</fieldset>		
 		</td>
 	</tr>
@@ -110,7 +111,7 @@
 				        			<td><div align="center"></div></td>
 				        			<td><div align="center"></div></td>
 				        			<td><div align="center">Jumlah = $sumIdHakmilik2</div></td>
-				        			<td colspan="1"><div align="right">Jumlah = $Util.formatDecimal($sumCukai2)</div></td>      			    
+				        			<td colspan="1"><div align="right">Jumlah = $!Util.formatDecimal($sumCukai2)</div></td>      			    
 				      			   <!--<td class="$row"><div align="center">$fail.sumAmaunBaucer</div></td>-->
 				      			</tr> 
 			      			
@@ -126,7 +127,7 @@
 				                    	<input class="stylobutton100" type="button" name="cmdKemaskiniPenyata" id="cmdKemaskiniPenyata" value="Sahkan" onclick="KemaskiniPenyata()" >
 				                    #end
 									#if($!cukaiUtama==0)
-				                    	<input class="stylobutton100" type="button" name="cmdSimpanPenyata" id="cmdSimpanPenyata" value="Simpan" onclick="SimpanPenyata()" >
+				                    	<input class="stylobutton100" type="button" name="cmdSimpanPenyata" id="cmdSimpanPenyata" value="Simpan" onclick="simpanPenyata()" >
 				                    #end
 				                    	<input class="stylobutton100" type="button" name="cmdKembaliPenyata" id="cmdKembaliPenyata" value="Kembali" onClick="KembaliPenyata()">
 									#if($!cukaiUtama!=0)
@@ -156,7 +157,8 @@
 					    		<tr>
 					    			<td colspan="8">
 									#if ( $idPeringkatbayaran == 0 )
-										<input class="stylobutton100" name="cmdTambah" value="Tambah Baucer" id="cmdTambah" type="button" disabled="disabled" >
+										<input class="stylobutton100" name="cmdTambah" value="Tambah Baucer" id="cmdTambah" type="button" onClick="javascript:TambahBaucer()">
+										<!-- <input class="stylobutton100" name="cmdTambah" value="Tambah Baucer" id="cmdTambah" type="button" disabled="disabled" > -->
 			    					#else	
 			    						<input class="stylobutton100" name="cmdTambah" value="Tambah Baucer" id="cmdTambah" type="button" onClick="javascript:TambahBaucer()">
 									#end					    				
@@ -256,6 +258,9 @@
 		</td>
 	</tr>	
 </table>
+
+	<input type="hidden" name="bilangan" value="$!bilHakmilik">
+
 	<input type="hidden" name="sumIdHakmilik" value="$!sumIdHakmilik2">
     <input type="hidden" name="sumCukai" value="$!sumCukai2" >
    	<input type="hidden" name="tabId" id="tabId" value="$selectedTab"/>
@@ -267,7 +272,7 @@
 	<input type="hidden" name="nama_daerah" >
 	<input type="hidden" name="fail" >
 	<input type="hidden" name="tahun_cukai" value="$tahun_cukai">
-	<input type="hidden" name="peringkat_bayaran" value="$statusDisplay" >
+	<input type="hidden" name="peringkat_bayaran_" value="$statusDisplay" >
 	<input type="hidden" name="socbayaran" value="$idbayaran" >
 	<input type="hidden" name="command1" value="$command1">
 	<input type="hidden" name="pagemode" value="$pagemode">
@@ -327,17 +332,27 @@
 	    document.${formName}.tabId.value = tabId;
 	}
 	
-	
 	function simpanPenyata(){
 		var mycb = new Array();
 		var mycukaijumlah = new Array();
 		var bilangan = document.${formName}.bilangan.value; 
 		var cb = "";
+		
+		//document.${formName}.peringkat_bayaran.value= document.${formName}.peringkat_bayaransoc.value;
+		if(document.${formName}.peringkat_bayaransoc.value == "-1"){
+			alert('Sila pilih " Peringkat Bayaran " terlebih dahulu.');
+			return;
+		}
+	 
+		document.${formName}.pagemode.value = "simpanpenyatacukai";
 
 		if ( !window.confirm("Anda Pasti?") ) return;
-		doAjaxCall${formName}("simpanpenyatacukai","bil="+bilangan);
+		doAjaxCall${formName}("penyata","bil="+bilangan+"&peringkat_bayaran="+document.${formName}.peringkat_bayaransoc.value);
 	
+		//doAjaxCall${formName}("simpanpenyatacukai","bil="+bilangan);
+
 	}
+	
 	function PenyataView() {
 		document.${formName}.action = "";
 		document.${formName}.pagemode.value = "penyataview";
@@ -373,6 +388,10 @@
 			
 	//21/10/2010
 	function doChangeYear(negeri,idNegeri,idPermohonan){
+				
+		document.${formName}.peringkat_bayaran.value= document.${formName}.peringkat_bayaransoc.value;
+		//alert(document.${formName}.peringkat_bayaran.value );
+		
 		document.${formName}.tahun_cukai.value = document.${formName}.Form_tahun.value;
 	
 		//document.${formName}.command.value = "cukaiperingkatbayar";

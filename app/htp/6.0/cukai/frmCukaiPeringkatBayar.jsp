@@ -22,13 +22,13 @@
   
 			  <fieldset><legend>PERINGKAT BAYARAN CUKAI</legend>
 			
-			  <table width="100%" cellspacing="1" cellpadding="2" border="0">
+			  <table width="100%" cellspacing="1" cellpadding="2" >
 			  <tr class="table_header">
-			  	<td>Bil.</td>
-			  	<td>Negeri</td>
-			  	<td>Peringkat Bayaran</td>
-			  	<td>No. Fail</td>
-			  	<td>Status Fail</td>
+			  	<td width="3%"><b>Bil.</b></td>
+			  	<td width="15%"><b>No. Fail</b></td>
+			  	<td width="47%"><b>Tajuk</b></td>
+			  	<td width="15%"><b>Negeri</b></td>
+			  	<td width="20%"><b>Status Fail</b></td>
 			  </tr>
 			  
 			  #set ( $cnt = 0 )			
@@ -41,14 +41,12 @@
 			                #else
 			                    #set( $row = "row1" )
 			                #end
-			  <tr>
-			  <td class="$row">$cnt.</td>
-			  <td class="$row">
-			  	
-				$senarai.negeri
-				
+			  <tr class="$row">
+			  <td >$cnt.</td>
+			  <td >
+			    	<a href="javascript:senaraiCukai('$senarai.negeri','$senarai.idNegeri','$senarai.idPermohonan','$senarai.idFail','$senarai.peringkatBayaran')" class="style1" name=>$senarai.noFail</a>			  
 			  </td>
-			  <td class="$row">
+			  <td > $senarai.tajuk
 			  	#set ( $statusPeringkat1 = "Peringkat Negeri" ) 
 			  	#set ( $statusPeringkat2 = "Peringkat Daerah" ) 
 			  	#set ( $statusPeringkat3 = "Peringkat Belanjawan" ) 
@@ -61,29 +59,31 @@
 			    	#set ($statusDisplay = $statusPeringkat3)
 			  	#end
 			  				
-			  		#if( $senarai.peringkatBayaran == "TIADA" )
+			  		##if( $senarai.peringkatBayaran == "TIADA" )
 			
-			    <select name="socbayaran" onchange="selectBayaran('$senarai.negeri','$senarai.idNegeri','$senarai.idPermohonan')" >
+<!-- 			    <select name="socbayaran" onchange="selectBayaran('$senarai.negeri','$senarai.idNegeri','$senarai.idPermohonan')" >
 			        <option value="0">Sila Pilih Peringkat Bayaran</option>
 			        <option value="1">$statusPeringkat1</option>
 			        <option value="2">$statusPeringkat2</option>
 			        <option value="3">$statusPeringkat3</option>
-			    </select>
+			    </select> -->
 			           
 			  </td>
-			    <td class="$row">$senarai.noFail</td>
-			    	#else
-			         	$statusDisplay
+			  <td>$senarai.negeri</td>
+			    	##else
+			         	##$statusDisplay
 			   </td>
-			    <td class="$row"><a href="javascript:senaraiCukai('$senarai.negeri','$senarai.idNegeri','$senarai.idPermohonan','$senarai.idFail','$senarai.peringkatBayaran')" class="style1" name=>$senarai.noFail</a></td>
-			        #end
-			    <td class="$row">$senarai.keterangan</td>
+			    <!-- <td>
+			    	<a href="javascript:senaraiCukai('$senarai.negeri','$senarai.idNegeri','$senarai.idPermohonan','$senarai.idFail','$senarai.peringkatBayaran')" class="style1" name=>$senarai.noFail</a>
+			    	</td> -->
+			        ##end
+			    <td>$senarai.keterangan</td>
 			  </tr>
 			  #end
 			  
 			#if ($cnt == 0)
 			  	<tr> 
-			  		<td colspan="3" scope="row"><font color="#FF0000">Tiada Rekod.</font></td>
+			  		<td colspan="5" scope="row"><font color="#FF0000">Tiada Rekod.</font></td>
 			  	</tr>
 			#end
 			  </table>

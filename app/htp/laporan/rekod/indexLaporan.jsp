@@ -29,11 +29,11 @@
 					       		<td>
 					       			<input type="radio" name="sortanah_" Onclick="doChangeTanah()" value="1" $checkMilik $sordisabledM >&nbsp;TANAH MILIK&nbsp;&nbsp;
 					       			<input type="radio" name="sortanah_" Onclick="doChangeTanah()" value="2" $checkRizab $sordisabledR >&nbsp;TANAH RIZAB&nbsp;&nbsp;
-					       			<input type="radio" name="sortanah_" Onclick="doChangeTanah()" value="3" $checkMR $sordisabledMR >&nbsp;TANAH MILIK & RIZAB
+					       			<!-- <input type="radio" name="sortanah_" Onclick="doChangeTanah()" value="3" $checkMR $sordisabledMR >&nbsp;TANAH MILIK & RIZAB -->
 					       		</td>
 					      	</tr>	
 							<tr>
-								<td scope="row" align="left">&nbsp;Jenis Urusan</td>
+								<td scope="row" align="left">&nbsp;Perolehan</td>
 								<td>:&nbsp;</td>
 								<td>$!selectSuburusan</td>
 							</tr>
@@ -167,7 +167,7 @@
 				
 				<tr> 
 			        <td align="center">	          			
-			        <input class="stylobutton100" name="cmdcetak" value="Cetak" id="cmdcetak" type="button" onClick="openLaporan('ekptg.report.htp.LaporanPermohonan','IDSUBURUSAN=0','lainpemantauan','HTPRekod');">
+			        <input class="stylobutton100" name="cmdcetak" value="Cetak" id="cmdcetak" type="button" onClick="openLaporan('ekptg.report.htp.LaporanPermohonan','IDSUBURUSAN=0','lainpemantauan','HTPRekodSenarai');">
 			      </td>
 			  	</tr>
 			</table>
@@ -267,16 +267,16 @@
 		}
 		//OKalert("1."+ptem);	
 
-		if(jenisPajakan==""){
+/* 		if(jenisPajakan==""){
 			//if(jenisPajakan=="-1"){
 			alert("Sila pilih \"Jenis Urusan\" terlebih dahulu.");
 			document.${formName}.socsuburusan.focus(); 
 			return;
 		
-		}
+		} */
 		param += "&IDSUBURUSAN1="+jenisPajakan;
-		ptem += "_"+jenisPajakan;
-		var ptempajakan = "_"+jenisPajakan
+		ptem += jenisPajakan;
+		var ptempajakan = jenisPajakan
 		//OKalert("2."+ptem);	
 
 		if(masa==""){
