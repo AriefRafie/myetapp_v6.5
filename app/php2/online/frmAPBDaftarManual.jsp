@@ -198,7 +198,7 @@
 	        </tr>
 	        <tr>
 	          <td width="1%" valign="top">#if ($mode == 'new')<span class="style1">*</span>#end</td>
-	          <td width="28%" valign="top">Tujuan</td>
+	          <td width="28%" valign="top">Tujuan Pengambilan</td>
 	          <td width="1%" valign="top">:</td>
 	          <td width="70%"><textarea name="txtTujuanPengambilan" id="txtTujuanPengambilan" cols="43" rows="5" $readonly class="$inputTextClass" onKeyUp="textCounter(this.form.txtTujuanPengambilan,this.form.remLen1,$!saizTxtTujuanPengambilan);" onKeyDown="textCounter(this.form.txtTujuanPengambilan,this.form.remLen1,$!saizTxtTujuanPengambilan);" >$beanMaklumatPermohonan.tujuanPengambilan</textarea></td>
 	        </tr>
@@ -328,7 +328,7 @@
     <td colspan="2"><fieldset>
       	<legend><strong>KAWASAN PERMOHONAN</strong></legend>
      	<table width="100%" border="0" cellspacing="2" cellpadding="2">
-        #foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
+        #foreach ($beanMaklumatKawasanMohon in $BeanMaklumatKawasanMohon)
         	<tr>
 	          <td>#if ($mode == 'new')<span class="style1">*</span>#end</td>
 	          <td width="28%" valign="top">Luar Perairan Negeri</td>
@@ -340,7 +340,7 @@
 	          <td width="28%">Negeri</td>
 	          <td width="1%">:</td>
 	          <td width="70%">
-	          	<strong>$selectNegeri</strong>
+	          	<strong>$selectNegeriPerairan</strong>
 	          	<input type="hidden" name="idNegeriPerairan" id="idNegeriPerairan" value="$idNegeriPerairan"/>
 	          </td>
 	        </tr>
@@ -349,7 +349,7 @@
 	          <td>Lokasi</td>
 	          <td width="1%">:</td>
 	          <td width="top">
-	            <input name="txtLokasi" type="text" class="$inputTextClass" id="txtLokasi"  value="$beanMaklumatPermohonan.lokasi" size="43" maxlength="250" $readonly />
+	            <input name="txtLokasi" type="text" class="$inputTextClass" id="txtLokasi"  value="$beanMaklumatKawasanMohon.lokasi" size="43" maxlength="250" $readonly />
 	          </td>
 	        </tr>
 	        <tr>
@@ -357,7 +357,7 @@
 	          <td>Luas Dipohon</td>
 	          <td width="1%">:</td>
 	          <td width="top">
-	            <input type="text" name="txtLuas" id="txtLuas" size="10" onkeyup="validateNumber(this,this.value);" maxlength="10" value="$beanMaklumatPermohonan.luas" $readonly class="$inputTextClass"/>
+	            <input type="text" name="txtLuas" id="txtLuas" size="10" onkeyup="validateNumber(this,this.value);" maxlength="10" value="$beanMaklumatKawasanMohon.luas" $readonly class="$inputTextClass"/>
 	            $selectLuas
 	          </td>
 	        </tr>
@@ -436,9 +436,9 @@ function daftarBaru() {
   		document.${formName}.socFlagLuar.focus(); 
 		return; 
 	}
-	if(document.${formName}.socNegeri.value == ""){
+	if(document.${formName}.socNegeriPerairan.value == ""){
 		alert('Sila pilih Negeri.');
-  		document.${formName}.socNegeri.focus(); 
+  		document.${formName}.socNegeriPerairan.focus(); 
 		return; 
 	}
 	if(document.${formName}.txtLokasi.value == ""){
