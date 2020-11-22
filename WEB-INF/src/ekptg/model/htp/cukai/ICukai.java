@@ -25,7 +25,7 @@ public interface ICukai {
 	public HakMilik getCukaiHakmilik(String idCukaiTemp);
 	public HakMilik getHakmilikByMukimNohakmilikNolot(String idMukim,String idHakmilik,String noHakmilik,String idLot,String noLot);
 	public Hashtable getHakmilikCukaiTerperinci(String idCukaiTemp)throws Exception ;
-	public Hashtable getPermohonanInfo(String idPermohonan)throws Exception ;
+	public Hashtable<String,String> getPermohonanInfo(String idPermohonan)throws Exception ;
 	public HakMilik simpanCukaiHakmilikTemp(HakMilik hakmilik);
 	public HakMilik salinanCukaiBaru(HakMilik hakmilik);	
 	//public String simpanBayaran(HttpSession session,String idPeringkatbayaran) throws Exception	;
@@ -48,7 +48,7 @@ public interface ICukai {
 	public Vector getSenaraiCukaiUtkKemaskini(int idHakmilikCukai, String noHakmilik
 			, Long idJenisHakmilik, Long idKementerian, Long idNegeri, Long idDaerah, Long idMukim)throws Exception;
 	public Vector<Hashtable<String, String>> senaraiHakmilik(String idNegeri
-			,String idDaerah, String idMukim,String tahun)throws Exception ;
+			,String idDaerah, String idMukim,String tahun) throws Exception ;
 	public Vector<Hashtable<String, String>> senaraiHakmilik(String idNegeri
 			,String idDaerah, String idMukim,String tahun,String noHakmilik)throws Exception ;
 	public Vector<Hashtable<String, String>> CukaiSenaraiKemaskiniFail(String idNegeri,String idDaerah, String idMukim,String tahun)throws Exception ;
@@ -64,10 +64,11 @@ public interface ICukai {
 			,String idDaerah, String idMukim,String tahun
 			,String noHakmilik, String idJenisHakmilik,String noLot)
 			throws Exception ;
-	public Vector<Hashtable<String, String>> senaraiPenyataCukaiTemp(String idNegeri,String idDaerah, String idMukim, String tahun)throws Exception;
-	public Vector<Hashtable<String, String>> senaraiPenyataTerperinci(String idNegeri,String idDaerah, String idMukim)throws Exception ;
-	public Vector<Hashtable<String, String>> senaraiPenyataTerperinciCukai(String idNegeri,String idDaerah
-			, String idMukim, String tahun)throws Exception ;
+	public Vector<Hashtable<String, String>> senaraiPenyataCukaiTemp(String idNegeri,String idDaerah, String idMukim
+		, String tahun) throws Exception;
+	public Vector<Hashtable<String, String>> senaraiPenyataTerperinci(String idNegeri,String idDaerah, String idMukim) throws Exception ;
+	public Vector<Hashtable<String, String>> senaraiPenyataTerperinciCukai(String idNegeri,String idDaerah,String idMukim
+		, String tahun) throws Exception ;
 	public Vector salinCukai(String idnegeri,String iddaerah,String idmukim,String socTahun);
 
 	public void cukaiTempHapus(String idCukaiTemp);

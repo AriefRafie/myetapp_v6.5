@@ -579,9 +579,10 @@ public class FrmOnlineMaklumatPajakanData {
 		    }
 		    return listLampiran;
 		    
-		}
+	}
 	
-	public String getIdHakmilikAgensiByPeganganHakmilik(String noLot, String noHakmilik) throws Exception {
+	public String getHakmilik(String idNegeri,String idDaerah,String idMukim, String idSeksyen
+		,String noLot, String noHakmilik) throws Exception {
 		Db db = null;
 		String sql = "";
 
@@ -589,22 +590,24 @@ public class FrmOnlineMaklumatPajakanData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			
-			/*sql = "SELECT TBLHTPHAKMILIKAGENSI.ID_HAKMILIKAGENSI FROM TBLHTPHAKMILIK, TBLHTPHAKMILIKAGENSI WHERE TBLHTPHAKMILIK.ID_HAKMILIK = TBLHTPHAKMILIKAGENSI.ID_HAKMILIK"
-				+ " AND UPPER(TBLHTPHAKMILIK.PEGANGAN_HAKMILIK) = '" + peganganHakmilik.toUpperCase() + "'";
-			*/
-			
-			/*sql= " SELECT TBLHTPHAKMILIKAGENSI.ID_HAKMILIKAGENSI FROM TBLHTPHAKMILIK, TBLHTPHAKMILIKAGENSI " +
-					" WHERE TBLHTPHAKMILIK.ID_HAKMILIK = TBLHTPHAKMILIKAGENSI.ID_HAKMILIK " +
-					" AND UPPER(TBLHTPHAKMILIK.NO_LOT) = '"+ noLot +"' AND TBLHTPHAKMILIK.NO_HAKMILIK LIKE '%"+ noHakmilik +"'";
-					*/
 			sql = "SELECT A.ID_HAKMILIK, A.PEGANGAN_HAKMILIK, B.KETERANGAN, A.NO_LOT, A.NO_HAKMILIK, A.NO_WARTA, " +
-					" E.NAMA_MUKIM, D.NAMA_DAERAH,C.NAMA_NEGERI, A.ID_JENISHAKMILIK, A.ID_LOT, A.TARIKH_WARTA, " +
-					" A.ID_MUKIM, A.ID_DAERAH, A.ID_NEGERI,HM.kod_jenis_hakmilik"+
-//				    "(SELECT RJH.KOD_JENIS_HAKMILIK FROM TBLRUJJENISHAKMILIK RJH " +
-//					" WHERE RJH.ID_JENISHAKMILIK=A.ID_JENISHAKMILIK) KOD_JENIS_HAKMILIK " +
-					" FROM TBLHTPHAKMILIK A, TBLRUJLOT B, TBLRUJNEGERI C, TBLRUJDAERAH D, TBLRUJMUKIM E, TBLRUJJENISHAKMILIK HM" +
-					" WHERE A.ID_LOT = B.ID_LOT(+) AND A.ID_NEGERI = C.ID_NEGERI(+) AND A.ID_DAERAH = D.ID_DAERAH(+) " +
-					" AND A.ID_MUKIM = E.ID_MUKIM(+) AND A.ID_JENISHAKMILIK = HM.ID_JENISHAKMILIK AND A.NO_LOT = '" + noLot + "' AND A.NO_HAKMILIK LIKE '%" + noHakmilik + "'";
+				" E.NAMA_MUKIM, D.NAMA_DAERAH,C.NAMA_NEGERI, A.ID_JENISHAKMILIK, A.ID_LOT, A.TARIKH_WARTA, " +
+				" A.ID_MUKIM, A.ID_DAERAH, A.ID_NEGERI,HM.kod_jenis_hakmilik"+
+				" FROM TBLHTPHAKMILIK A"+
+				" , TBLRUJLOT B, TBLRUJJENISHAKMILIK HM"+
+				" , TBLRUJNEGERI C, TBLRUJDAERAH D, TBLRUJMUKIM E" +
+				" WHERE A.ID_NEGERI = C.ID_NEGERI "+
+				" AND A.ID_DAERAH = D.ID_DAERAH "+
+				" AND A.ID_MUKIM = E.ID_MUKIM "+
+				" AND A.ID_LOT = B.ID_LOT " +
+				" AND A.ID_JENISHAKMILIK = HM.ID_JENISHAKMILIK "+
+				" AND A.id_negeri = '" + idNegeri + "' "+
+				" AND A.id_daerah = '" + idDaerah + "' "+
+				" AND A.id_mukim = '" + idMukim + "' "+
+				" AND A.id_seksyen= '" + idSeksyen + "' "+
+				" AND A.NO_LOT = '" + noLot + "' "+
+				" AND A.NO_HAKMILIK LIKE '" + noHakmilik + "'"+
+				"";
 			
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -617,10 +620,50 @@ public class FrmOnlineMaklumatPajakanData {
 		}  catch (Exception re) {
 			myLog.error("Error: ", re);
 			throw re;
-			}	finally {
+		}	finally {
 			if (db != null)
 				db.close();
 		}
+		
+	}
+	
+	public String getIdHakmilikAgensiByPeganganHakmilik(String noLot, String noHakmilik) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			
+			sql = "SELECT A.ID_HAKMILIK, A.PEGANGAN_HAKMILIK, B.KETERANGAN, A.NO_LOT, A.NO_HAKMILIK, A.NO_WARTA, " +
+				" E.NAMA_MUKIM, D.NAMA_DAERAH,C.NAMA_NEGERI, A.ID_JENISHAKMILIK, A.ID_LOT, A.TARIKH_WARTA, " +
+				" A.ID_MUKIM, A.ID_DAERAH, A.ID_NEGERI,HM.kod_jenis_hakmilik"+
+				" FROM TBLHTPHAKMILIK A"+
+				" , TBLRUJLOT B, TBLRUJJENISHAKMILIK HM"+
+				" , TBLRUJNEGERI C, TBLRUJDAERAH D, TBLRUJMUKIM E" +
+				" WHERE A.ID_NEGERI = C.ID_NEGERI "+
+				" AND A.ID_DAERAH = D.ID_DAERAH "+
+				" AND A.ID_MUKIM = E.ID_MUKIM "+
+				" AND A.ID_LOT = B.ID_LOT " +
+				" AND A.ID_JENISHAKMILIK = HM.ID_JENISHAKMILIK "+
+				" AND A.NO_LOT = '" + noLot + "' AND A.NO_HAKMILIK LIKE '%" + noHakmilik + "'";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()){
+				return (String)rs.getString("ID_HAKMILIK");
+			} else {
+				return "";
+			}
+			
+		}  catch (Exception re) {
+			myLog.error("Error: ", re);
+			throw re;
+		}	finally {
+			if (db != null)
+				db.close();
+		}
+		
 	}
 	
 	//Copy dari internal

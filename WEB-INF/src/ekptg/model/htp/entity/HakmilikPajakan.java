@@ -14,6 +14,7 @@ public class HakmilikPajakan extends HakMilik implements Serializable {
 	private String luasString;
 	private long idLuasBersamaan;
 	private long idLuasPajakan;
+	private double luasAsal;
 	private double luasPajakan;
 	private double luasBersamaanPajakan;
 	private String luasStringPajakan;
@@ -62,6 +63,14 @@ public class HakmilikPajakan extends HakMilik implements Serializable {
 	public void setIdLuasPajakan(long idLuasPajakan) {
 		this.idLuasPajakan = idLuasPajakan;
 	}
+	
+	public double getLuasAsal() {
+		return luasAsal;
+	}
+	public void setLuasAsal(double luasAsal) {
+		this.luasAsal = luasAsal;
+	}
+	
 	public double getLuasPajakan() {
 		return luasPajakan;
 	}

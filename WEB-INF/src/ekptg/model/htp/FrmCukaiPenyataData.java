@@ -56,21 +56,7 @@ public class FrmCukaiPenyataData {
 					
 		try {
 			db = new Db();
-			      			      
-//ori			sql = 	"SELECT trd.id_daerah, trd.nama_daerah, count(thh.id_hakmilik) as sumIdHakmilik, sum(thhc.denda) as sumDenda, " +
-//					"sum(thhc.bayaran_lain) as sumBayaran_lain, sum(thhc.cukai) as sumCukai, sum(thhc.pengurangan) as sumPengurangan, " +
-//					"sum(thhc.pengecualian) as sumPengecualian " +
-//					"FROM Tblrujdaerah trd, Tblhtphakmilik thh, Tblhtphakmilikcukai thhc " +
-//					"WHERE thh.id_daerah = trd.id_daerah  AND thh.id_hakmilik =thhc.id_hakmilik AND thh.id_negeri = "+idNegeri +
-//					" group by trd.id_daerah,trd.nama_daerah ";
-			/*	sql = " select trd.ID_DAERAH, trd.NAMA_DAERAH, count(ct.ID_DAERAH) as sumIdDaerah, sum(ct.CUKAI_KENA_BAYAR) as sumKenaBayar, "+
-					  " sum(ct.TUNGGAKAN) as sumtungakan, sum(ct.DENDA) as sumDenda, sum(ct.BAYARAN_LAIN) as sumLain2, sum(ct.CUKAI_PERLU_BAYAR) as sumPerluBayar, "+
-					  "sum(ct.PENGURANGAN) as sumPengurangan, sum(ct.PENGECUALIAN) as sumPengecualian"+
-					  " from TBLHTPCUKAITEMP ct, Tblrujdaerah trd "+
-					  " where ct.ID_DAERAH = trd.ID_DAERAH"+
-					  " and ct.ID_NEGERI = "+ idNegeri +
-					  " group by trd.ID_DAERAH, trd.NAMA_DAERAH ";*/
-				
+			      			      				
 			sql ="SELECT TPH.ID_DAERAH,SUM(b.CUKAI_TERKINI) AS CUKAITERKINI, SUM(b.DENDA) AS DENDA,c.NAMA_DAERAH,"+
 				" count(TPH.ID_DAERAH) as TOTALMUKIM,sum(TPCP.CUKAI_KENA_BAYAR) CUKAI_KENA_BAYAR "+
 				" FROM TBLHTPHAKMILIK TPH,TBLHTPHAKMILIKCUKAI b,TBLRUJDAERAH C,TBLHTPCUKAITERPERINCI TPCP "+
@@ -115,29 +101,7 @@ public class FrmCukaiPenyataData {
 			    
 				 list.addElement(h);
 			 }
-//	ori			h.put("nama_daerah", rs.getString("nama_daerah"));
-//				h.put("idDaerah", rs.getString("id_daerah"));
-//				h.put("sumDenda", rs.getString("sumDenda")==null || "0".equals(rs.getString("sumDenda").toString()) ? "0.00":Util.formatDecimal(rs.getDouble("sumDenda")));
-//			    h.put("sumBayaran_lain", rs.getString("sumBayaran_lain") == null || "0".equals(rs.getString("sumBayaran_lain").toString()) ? "0.00":Util.formatDecimal(rs.getDouble("sumBayaran_lain")));
-//			  	if((rs.getString("sumPengurangan") != null) || (rs.getString("sumPengecualian") != null)){
-//			    	Double a = Double.parseDouble(rs.getString("sumDenda"));
-//			    	Double b = Double.parseDouble(rs.getString("sumCukai"));
-//			    	Double c = Double.parseDouble(rs.getString("sumPengurangan")==""?"0":rs.getString("sumPengurangan"));
-//			    	Double d = Double.parseDouble(rs.getString("sumPengecualian")==""?"0":rs.getString("sumPengecualian"));			    		  
-//			    	Double e = a+b;
-//			    	Double f = c+d;
-//			    	Double g = e-f;
-//			    	h.put("lebihan", g);
-//			    }else{
-//			    	h.put("lebihan", "0.00");
-//			    }
-//				  	h.put("sumIdHakmilik", rs.getString("sumIdHakmilik")==null?"0":rs.getInt("sumIdHakmilik"));
-//				  	h.put("sumAllHakmilik", rs.getString("sumIdHakmilik")==null?"0":rs.getInt("sumIdHakmilik"));
-//			    	h.put("sumCukai", rs.getString("sumCukai")==null?"0":Util.formatDecimal(rs.getDouble("sumCukai")));
-//			    	h.put("sumAllCukai", rs.getString("sumCukai")==null?"0.00":rs.getDouble("sumCukai"));
-//			    
-//			    list.addElement(h);
-//			}
+
 			return list;
 			
 		}finally {
@@ -145,7 +109,7 @@ public class FrmCukaiPenyataData {
 		}
 	}
 	
-	public static Vector getList(String idUrusan, String carian, String noFail, Long idNegeri) throws Exception {
+	public static Vector<Hashtable<String,String>> getList(String idUrusan, String carian, String noFail, Long idNegeri) throws Exception {
 		Db db = null;
 		list.clear();
 		String sql = "";
@@ -154,29 +118,30 @@ public class FrmCukaiPenyataData {
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
-			sql = "SELECT distinct f.id_Fail, f.no_Fail, f.tajuk_Fail, s.keterangan, n.nama_Negeri," +
-				" n.kod_Mampu,p.id_Permohonan, f.id_Negeri,NVL(pb.id_peringkatbayaran,0) id_peringkatbayaran,pb.peringkat_bayaran " +
-				//" ,PB.JUMLAH_HAKMILIK,PB.JUMLAH_CUKAI "+
+			sql = "SELECT distinct f.id_fail, f.no_fail, f.tajuk_fail, s.keterangan, n.nama_negeri," +
+				" n.kod_mampu,p.id_permohonan, f.id_negeri"+
+				",'0' id_peringkatbayaran,'-1' peringkat_bayaran " +
+//				",NVL(pb.id_peringkatbayaran,0) id_peringkatbayaran,pb.peringkat_bayaran " +
 				" FROM " +
-				" Tblpfdfail f, Tblpermohonan p, Tblrujsuburusanstatusfail sf, Tblrujsuburusanstatus ss, " +
-				" Tblrujstatus s, Tblrujnegeri n,tblhtpperingkatbayaran pb "+
-				" WHERE f.id_Fail = p.id_Fail AND F.ID_STATUS <> 999 AND p.id_Permohonan = sf.id_Permohonan AND n.id_Negeri = f.id_Negeri "+
-				" AND sf.id_Suburusanstatus = ss.id_Suburusanstatus AND ss.id_Status = s.id_Status "+
-				" AND pb.ID_PERMOHONAN(+) = p.ID_PERMOHONAN "+
-				" AND sf.aktif = '1' AND f.id_Urusan = " + idUrusan +
-				" AND f.tajuk_Fail LIKE '%" + carian + "%' "+
-				" AND f.no_Fail LIKE '%" + noFail + "%' ";
+				" tblpfdfail f, tblpermohonan p, tblrujsuburusanstatusfail sf, tblrujsuburusanstatus ss, " +
+				" tblrujstatus s, tblrujnegeri n, tblhtpperingkatbayaran pb "+
+				" WHERE f.id_fail = p.id_fail AND f.id_status <> 999 AND p.id_permohonan = sf.id_permohonan AND n.id_negeri = f.id_negeri "+
+				" AND sf.id_suburusanstatus = ss.id_suburusanstatus AND ss.id_status = s.id_status "+
+				" AND pb.id_permohonan(+) = p.id_permohonan "+
+				" AND sf.aktif = '1' AND f.id_urusan = " + idUrusan +
+				" AND f.tajuk_fail LIKE '%" + carian + "%' "+
+				" AND f.no_fail LIKE '%" + noFail + "%' ";
 			if (idNegeri != null)
-				sql += "AND f.id_Negeri = " + idNegeri;
-			sql += " ORDER BY n.kod_Mampu";
+				sql += "AND f.id_negeri = " + idNegeri;
+			sql += " ORDER BY n.kod_mampu";
 		
 			ResultSet rs = stmt.executeQuery(sql);
 //			mylog.info("getList:sql="+sql);
-			Vector list = new Vector();
-			Hashtable h;
-			int bil = 1;
+			Vector<Hashtable<String,String>> list = new Vector<Hashtable<String,String>>();
+			Hashtable<String,String> h;
+//			int bil = 1;
 			while (rs.next()) {
-				h = new Hashtable();
+				h = new Hashtable<String,String>();
 				h.put("idPermohonan", rs.getString("id_Permohonan"));
 				h.put("idFail", rs.getString("id_Fail"));
 				h.put("idNegeri", rs.getString("id_Negeri"));
@@ -185,12 +150,12 @@ public class FrmCukaiPenyataData {
 				h.put("negeri", rs.getString("nama_Negeri"));
 				h.put("keterangan", rs.getString("keterangan"));
 				h.put("kodMampu", rs.getString("kod_Mampu"));
-				h.put("peringkatBayaran", rs.getString("peringkat_bayaran")== null? "TIADA":rs.getString("peringkat_bayaran"));
+				h.put("peringkatBayaran", rs.getString("peringkat_bayaran")== null? "-1":rs.getString("peringkat_bayaran"));
 				h.put("idPeringkatBayaran", rs.getString("id_peringkatbayaran")== null? "0":rs.getString("id_peringkatbayaran"));
 				//h.put("jumlahHakmilik", rs.getString("JUMLAH_HAKMILIK")== null? "0":rs.getString("JUMLAH_HAKMILIK"));
 				//h.put("jumlahCukai", rs.getString("JUMLAH_CUKAI")== null? "0.0":rs.getDouble("JUMLAH_CUKAI"));
 				list.addElement(h);
-				bil++;
+//				bil++;
 				
 			}
 			return list;
@@ -350,7 +315,7 @@ public class FrmCukaiPenyataData {
 	    }
 	  }
 	
-	public static int simpanPeringkatBayarInteger(Hashtable data) throws Exception {
+	public static String simpanPeringkatBayarInteger(Hashtable data) throws Exception {
 		Db db = null;
 	    String sql = "";
 	    try{
@@ -375,25 +340,26 @@ public class FrmCukaiPenyataData {
 	    	rPB.add("ID_KEMASKINI", idMasuk);
 	    	rPB.add("TARIKH_KEMASKINI", rPB.unquote("sysdate"));
 	    	
-	    	sql = rPB.getSQLInsert("Tblhtpperingkatbayaran");
-	    	System.out.println("FrmCukaiPenyataData:simpanPeringkatBayar::sql ::: "+sql);
+	    	sql = rPB.getSQLInsert("tblhtpperingkatbayaran");
+	    	myLog.info("FrmCukaiPenyataData:simpanPeringkatBayar::sql ::: "+sql);
 	    	stmtPeringkatBayar.executeUpdate(sql);	 
 
-	    	return (int)idPeringkatbayaran;
-	    }
-	    finally {
+	    	return String.valueOf(idPeringkatbayaran);
+	    
+	    }finally {
 	      if (db != null) db.close();
 	    }
-	  }
-	public static String simpanPeringkatBayar(Hashtable data) throws Exception {
+	  
+	}
+	public static String simpanPeringkatBayar(Hashtable<String,String> data) throws Exception {
 		Db db = null;
 	    String sql = "";
 	    try{
 	    	db = new Db();
 	    	long idPeringkatbayaran = DB.getNextID("TBLHTPPERINGKATBAYARAN_SEQ");	     
-	    	int idNegeri = (Integer)data.get("idNegeri");
-	    	int tahun_cukai = (Integer)data.get("tahun_cukai");
-	    	String peringkat_bayaran = (String)data.get("peringkat_bayaran");
+	    	int idNegeri = Integer.parseInt(String.valueOf(data.get("idNegeri")));
+	    	int tahun_cukai = Integer.parseInt(String.valueOf(data.get("tahun_cukai")));
+	    	String peringkat_bayaran = String.valueOf(data.get("peringkat_bayaran"));
 	    	//int idPermohonan = (Integer)data.get("idpermohonan");
 	    	String idPermohonan = String.valueOf(data.get("idpermohonan"));
 	    	String idMasuk = String.valueOf(data.get("idMasuk"));
@@ -410,8 +376,8 @@ public class FrmCukaiPenyataData {
 	    	rPB.add("ID_KEMASKINI", idMasuk);
 	    	rPB.add("TARIKH_KEMASKINI", rPB.unquote("sysdate"));
 	    	
-	    	sql = rPB.getSQLInsert("Tblhtpperingkatbayaran");
-	    	System.out.println("FrmCukaiPenyataData:simpanPeringkatBayar::sql ::: "+sql);
+	    	sql = rPB.getSQLInsert("tblhtpperingkatbayaran");
+	    	myLog.info("FrmCukaiPenyataData:simpanPeringkatBayar::sql ::: "+sql);
 	    	stmtPeringkatBayar.executeUpdate(sql);	 
 
 	    	return String.valueOf(idPeringkatbayaran);
@@ -463,19 +429,19 @@ public class FrmCukaiPenyataData {
 		}
 	}
 	
-	public static String simpanCukaiUtama(Hashtable data) throws Exception {
+	public static String simpanCukaiUtama(Hashtable<String,String> data) throws Exception {
 		Db db = null;
 		String sql = "";
 		try{
 			db = new Db();     
 			Double jum_cukai = Double.parseDouble(Utils.RemoveSymbol(data.get("jum_cukai").toString()));
-			int jum_hakmilik = (Integer)data.get("jum_hakmilik");
+			int jum_hakmilik = Integer.parseInt( String.valueOf(data.get("jum_hakmilik")));
 			String idPeringkat = String.valueOf(data.get("idPeringkat"));
 			//String idCukaiUtama = String.valueOf(data.get("idCukaiUtama"));
-			int tahun = (Integer)data.get("tahun");
-			int idNegeri = (Integer)data.get("idNegeri");
- 			String idDaerah = (String)data.get("idDaerah");
+			int tahun = Integer.parseInt( String.valueOf(data.get("tahun")));
+			int idNegeri = Integer.parseInt( String.valueOf(data.get("idNegeri")));
 	    	long id_CukaiUtama = DB.getNextID("TBLHTPCUKAIUTAMA_SEQ");	     
+ 			String idDaerah = String.valueOf(data.get("idDaerah"));
 	    	String idMasuk = String.valueOf(data.get("idMasuk"));
 
 			Statement stmtCukaiUtama = db.getStatement();
@@ -491,8 +457,8 @@ public class FrmCukaiPenyataData {
 			rCU.add("TARIKH_MASUK", rCU.unquote("sysdate"));
 			rCU.add("ID_KEMASKINI", idMasuk);
 			rCU.add("TARIKH_KEMASKINI", rCU.unquote("sysdate"));	    	
-			sql = rCU.getSQLInsert("Tblhtpcukaiutama");
-			System.out.println("FrmCukaiPenyataData::Insert::Tblhtpcukaiutama = "+sql);
+			sql = rCU.getSQLInsert("tblhtpcukaiutama");
+			myLog.info("FrmCukaiPenyataData::Insert::Tblhtpcukaiutama = "+sql);
 			stmtCukaiUtama.executeUpdate(sql);	    
 			return String.valueOf(id_CukaiUtama);
       	
@@ -502,12 +468,12 @@ public class FrmCukaiPenyataData {
 		}
 	}
 
-	public static int updatePeringkatBayarInteger(Hashtable data) throws Exception {
+	public static String updatePeringkatBayarInteger(Hashtable data) throws Exception {
 		Db db = null;
 	    String sql = "";
 	    try{
 	    	db = new Db();
-	    	int idPeringkatbayaran = (Integer)data.get("idPeringkatbayaran");
+	    	String idPeringkatbayaran = String.valueOf(data.get("idPeringkatbayaran"));
 	    	int idNegeri = (Integer)data.get("idNegeri");
 	    	int tahun_cukai = (Integer)data.get("tahun_cukai");
 	    	String peringkat_bayaran = (String)data.get("peringkat_bayaran");
@@ -528,11 +494,13 @@ public class FrmCukaiPenyataData {
 	    	System.out.println("FrmCukaiPenyataData:updatePeringkatBayar::sql="+sql);
 	    	stmtPeringkatBayar.executeUpdate(sql);	 
 
-	    	return (int)idPeringkatbayaran;
-	    }
-	    finally {
+	    	return idPeringkatbayaran;
+	    	
+	    }finally {
 	      if (db != null) db.close();
 	    }
+	    
+	    
 	  }
 	
 	public static String updatePeringkatBayar(Hashtable data) throws Exception {
