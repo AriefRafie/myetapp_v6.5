@@ -17,7 +17,6 @@ import org.apache.log4j.Logger;
 
 import ekptg.engine.StateLookup;
 import ekptg.model.entities.Tblhtphakmilikurusan;
-import ekptg.model.entities.Tblhtppajakan;
 import ekptg.model.entities.Tblpdtagendamesyuarat;
 import ekptg.model.entities.Tblpdtaktabab;
 import ekptg.model.entities.Tblpdtaktabahagian;
@@ -94,7 +93,7 @@ public class DB extends EkptgCache implements Serializable {
 		String sql = "select " + statecode + " || to_char(sysdate,'YY') || " + seqName + ".NEXTVAL  FROM DUAL ";
 		try {
 			Statement stmt = db.getStatement();
-			myLogger.info("TBLPPKPERMOHONANSIMATI_PK :"+sql);
+			myLogger.info("getNextID :"+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			rs.next();
 			return rs.getLong(1);
@@ -2449,7 +2448,8 @@ public class DB extends EkptgCache implements Serializable {
 			r.add("no_fax");
 			r.add("id_seksyen", idSeksyen);
 			r.add("id_negeri", idNegeri);
-			r.add("id_daerah", idDaerah);
+			if(!idDaerah.equals("0"))
+				r.add("id_daerah", idDaerah);
 
 			sql = r.getSQLSelect("tblrujpejabatjkptg");
 			myLogger.info("getPejabatJKPTG:sql="+sql);
