@@ -1981,7 +1981,7 @@ public class OnlineBean implements IOnline {
 		 		r.add("A.ID_DOKUMEN",r.unquote("FDD.ID_DOKUMEN"));
 		 		r.add("P.ID_FAIL",r.unquote("FDD.ID_FAIL"));
 		 		r.add("P.ID_PERMOHONAN",id);
-		        sql = r.getSQLSelect("Tblpfdrujlampiran a,Tblpfddokumen FDD,tblpermohonan p");
+		        sql = r.getSQLSelect("Tblpfdrujlampiran a,Tblpfddokumen FDD,tblpermohonan p", "a.id_Lampiran asc");
 		        myLog.info(sql);
 		        ResultSet rs = stmt.executeQuery(sql);
 		        Hashtable<String, String> h;
