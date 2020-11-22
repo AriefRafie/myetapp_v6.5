@@ -820,7 +820,7 @@ function validateTarikhSemasaIsNull(inputfield) {
 	function deleteDetailImej(id){
 		if ( !window.confirm("Adakah Anda Pasti?")) return;
 		document.${formName}.command.value = "";
-		document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranImej&nextAction=deleteDetailImej&idGambar="+id;
+		document.${formName}.action = "?_portal_module=ekptg.view.online.htp.pembelian.SenaraiFailModuleOnline&command=lampiran&nextAction=hapus&iddokumen="+id;
 		document.${formName}.submit();
 	}
 	//function paparOnline(id,idhtp){
@@ -862,7 +862,7 @@ function validateTarikhSemasaIsNull(inputfield) {
 	
 	function tambahLampiran() {
 		document.${formName}.action = "?_portal_module=ekptg.view.online.htp.pembelian.SenaraiFailModuleOnline";
-			
+		doAjaxCall${formName}("tambahlampiran");	
 	}
 	
 	// dokumenOnline.jsp

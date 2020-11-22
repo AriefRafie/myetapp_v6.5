@@ -161,9 +161,10 @@
 
 <script>
 	//index_jsp
-	function setSelected(tabId,command,mode,tabmode) {
-		doAjaxCall${formName}(command,'mode='+mode+'&tabId='+tabId+'&tabmode='+tabmode);
-	}
+function setSelected(tabId,command,mode,tabmode) {
+	doAjaxCall${formName}(command,'mode='+mode+'&tabId='+tabId+'&tabmode='+tabmode);
+	
+}
 function findFail(){
 	doAjaxCall${formName}("searchFail");
 }
@@ -362,34 +363,34 @@ function deleteTanah(idhtp,id){
 		doAjaxCall${formName}('simpan');
 	}
 
-function doChangeKementerian() {
+	function doChangeKementerian() {
 	doAjaxCall${formName}("doChangeKementerian");
-}
-function doChangeDaerah() {
+	}
+	function doChangeDaerah() {
 	doAjaxCall${formName}("doChangeDaerah");
-}
-function doChangeDaerah2() {
+	}
+	function doChangeDaerah2() {
 	doAjaxCall${formName}("doChangeDaerah2");
-}
+	}
 
 	function detailPemilik(id) {
-		doAjaxCall${formName}("detailPemilik",'Idpihakberkepentingan='+id);
+	doAjaxCall${formName}("detailPemilik",'Idpihakberkepentingan='+id);
 	}
 
 	function detailPemilikOnline(id) {
-		doAjaxCall${formName}("detailpemilikonline",'Idpihakberkepentingan='+id);
+	doAjaxCall${formName}("detailpemilikonline",'Idpihakberkepentingan='+id);
 	}
 		
-function validatePoskod(elmnt,content) {
+	function validatePoskod(elmnt,content) {
 	//if it is character, then remove it..
 	if (isNaN(content)) {
 		elmnt.value = RemoveNonNumeric(content);
 		return;
+		}
 	}
-}
 
 
-function simpanPenjual() {
+	function simpanPenjual() {
 
 	if(document.${formName}.selectDaerahP.value == ""){
 		alert('Sila pilih " Daerah " terlebih dahulu.');
@@ -402,13 +403,13 @@ function simpanPenjual() {
 		return; 
 	}
 	doAjaxCall${formName}("simpanPenjual");
-}
+	}
 
 	function kemaskiniPenjual(){
 		doAjaxCall${formName}("kemaskiniPenjual");
 	}
 
-function updatePenjual(){
+	function updatePenjual(){
 	if(document.${formName}.selectDaerahP.value == ""){
 		alert('Sila pilih " Daerah " terlebih dahulu.');
   		document.${formName}.selectDaerahP.focus(); 
@@ -420,7 +421,7 @@ function updatePenjual(){
 		return; 
 	}
 	doAjaxCall${formName}("updatePenjual");
-}
+	}
 	function penjualPembeli(){
 		if(document.${formName}.PenjualSama.value != ""){
 			doAjaxCall${formName}("assignPenjual");
@@ -542,6 +543,11 @@ function simpanPemilik(){
 		if(document.${formName}.socDaerah.value == ""){
 		alert('Sila pilih " Daerah " terlebih dahulu.');
   		document.${formName}.socDaerah.focus(); 
+		return; 
+	}
+		if(document.${formName}.txtNoTelefon.value == ""){
+		alert('Sila masukkan " No. Telefon " terlebih dahulu.');
+	  	document.${formName}.txtNoTelefon.focus(); 
 		return; 
 	}
 	doAjaxCall${formName}("simpanPemilik");
@@ -757,9 +763,9 @@ function validateTarikhSemasaIsNull(inputfield) {
 
 	
 	function Pengesahan(){
-		doAjaxCall${formName}("pengesahan");
-		
+			doAjaxCall${formName}("pengesahan");
 	}
+
 
 	
 </script>
