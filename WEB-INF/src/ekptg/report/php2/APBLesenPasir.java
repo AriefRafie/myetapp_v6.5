@@ -92,7 +92,7 @@ public class APBLesenPasir extends EkptgReportServlet {
 		System.out.println("bytesDecoded = "+valueDecoded);
 		
 		//remove encode base64
-		QRCodeAPB model1 = new QRCodeAPB(nofail, new String(bytesEncoded));
+		QRCodeAPB model1 = new QRCodeAPB(nofail, new String(bytesEncoded),context);
 		
 		//QRCode model1 = new QRCode(nofail, nofailEncode);
 		System.out.println("Return to Borang E");

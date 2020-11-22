@@ -24,6 +24,7 @@ public class FrmSuburusanStatus extends AjaxBasedModule {
 	 */
 	private static Logger myLog = Logger.getLogger(ekptg.view.utils.FrmSuburusanStatus.class);
 	private static final long serialVersionUID = -2022684756290557175L;
+
 	private String selectSuburusan = "";
 	private String selectUrusan = "";
 	Hashtable<?, ?> details = null;
@@ -44,6 +45,7 @@ public class FrmSuburusanStatus extends AjaxBasedModule {
 		this.context.remove("selectUrusan");
 		this.context.remove("selectSuburusan");
 		  
+		myLog.info("submit="+submit);
 		if ("doChanges".equals(submit)) {
 			id_Urusan = getParam("id_Urusan");
 			id_Suburusan = getParam("id_Suburusan");

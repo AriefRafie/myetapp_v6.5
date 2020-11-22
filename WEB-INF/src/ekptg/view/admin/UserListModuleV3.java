@@ -5342,25 +5342,23 @@ public class UserListModuleV3 extends AjaxBasedModule {
 			myLogger.info("V3 : SQL-CLEAR USER ROLE : "+sql);
 			stmt.executeUpdate(sql);
 
-
-
 			String[] CHECKLIST_ROLES = null;
 			for (String GROUP_KOD : TEMP_GROUP_CHECKLIST) {
-				myLogger.info(" GROUP_KOD : "+GROUP_KOD);
+//				myLogger.info(" GROUP_KOD : "+GROUP_KOD);
 				CHECKLIST_ROLES = request.getParameterValues("CHECKLIST_"+internalType+USER_ID+GROUP_KOD);
-				myLogger.info(" CHECKLIST_ROLES : "+CHECKLIST_ROLES);
-				if(CHECKLIST_ROLES!=null)
-				{
+//				myLogger.info(" CHECKLIST_ROLES : "+CHECKLIST_ROLES);
+				if(CHECKLIST_ROLES!=null){
 					for (String ROLE_ID : CHECKLIST_ROLES) {
-						myLogger.info(GROUP_KOD+" --- ROLE_ID "+ROLE_ID);
+//						myLogger.info(GROUP_KOD+" --- ROLE_ID "+ROLE_ID);
 						sql = "";
 						r.clear();
 						r.add("USER_ID", USER_LOGIN);
 						r.add("ROLE_ID", ROLE_ID);
 						sql = r.getSQLInsert("USER_ROLE");
-						myLogger.info("V3 : INSERT USER_ROLE : "+sql);
+//						myLogger.info("V3 : INSERT USER_ROLE : "+sql);
 						stmt.executeUpdate(sql);
 						total_role_update++;
+						
 					}
 				}
 				CHECKLIST_ROLES = null;

@@ -163,8 +163,8 @@ public class ChangeRole implements IServlet2 {
 				if(hariTukarPass !=null){
 					LAST_CHANGEPASSWORD = (String) hariTukarPass.get("LAST_CHANGEPASSWORD");
 					EXP_DATE = (String) hariTukarPass.get("EXP_DATE");
-					HARI = Integer.parseInt(String.valueOf(hariTukarPass.get("HARI")));
-					BAKI = Integer.parseInt(String.valueOf(hariTukarPass.get("BAKI")));
+					HARI = Integer.parseInt(String.valueOf(hariTukarPass.get("HARI") == null ?0:hariTukarPass.get("HARI")));
+					BAKI = Integer.parseInt(String.valueOf(hariTukarPass.get("BAKI")== null ?0:hariTukarPass.get("BAKI")));
 				
 				}
 				String mesej = "";

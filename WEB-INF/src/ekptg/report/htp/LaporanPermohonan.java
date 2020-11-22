@@ -15,25 +15,27 @@ public class LaporanPermohonan extends EkptgReportServlet {
 	
 	static Logger myLog = Logger.getLogger(ekptg.report.htp.LaporanPermohonan.class);
     private static String OS = System.getProperty("os.name").toLowerCase();
+    private static String tanah = "";
+    
 	public LaporanPermohonan() {
-		//super.setReportName("LaporanRekodPermohonanNegeri817");
 		super.setFolderName("htp");
 		//myLog.info("LaporanPermohonan");
 	}
 
 	public void doProcessing(HttpServletRequest request
-			,HttpServletResponse response
-			,ServletContext context
-			,Map<String, Object> parameters) throws Exception {
+		,HttpServletResponse response
+		,ServletContext context
+		,Map<String, Object> parameters) throws Exception {
+		
 		//ekptg.report.Utils utils = new ekptg.report.Utils(); 
 		String tahun =(String)parameters.get("TAHUN");
-		myLog.info("doProcessing:tahun="+tahun);
+//		myLog.info("doProcessing:tahun="+tahun);
 		String tahunTmt =(String)parameters.get("TAHUN_TAMAT");
-		myLog.info("doProcessing:tahunTmt="+tahunTmt);
+//		myLog.info("doProcessing:tahunTmt="+tahunTmt);
 		int idnegeri = Integer.parseInt((String)parameters.get("ID_NEGERI"));
-		myLog.info("doProcessing:idnegeri="+idnegeri);
+//		myLog.info("doProcessing:idnegeri="+idnegeri);
 		int idsuburusan = Integer.parseInt((String)parameters.get("IDSUBURUSAN"));
-		myLog.info("doProcessing:idsuburusan="+idsuburusan);
+//		myLog.info("doProcessing:idsuburusan="+idsuburusan);
 		String template =(String)parameters.get("template");
 		String tmula =(String)parameters.get("BULANTAHUN");
 		String ttamat =(String)parameters.get("BULANTAHUNTMT");
@@ -44,9 +46,9 @@ public class LaporanPermohonan extends EkptgReportServlet {
 		//	template += bulan;
 			//mylog.info("doProcessing:-"+template);
 		//}
-		myLog.info("doProcessing:template="+template);
+//		myLog.info("doProcessing:template="+template);
 		String bulantamat = (String)(parameters.get("bulantamat")==null?"0":parameters.get("bulantamat"));	
-		myLog.info("doProcessing:bulantamat="+bulantamat);
+//		myLog.info("doProcessing:bulantamat="+bulantamat);
 		int iddaerah = Integer.parseInt((String)parameters.get("ID"));
 		int idkementerian = Integer.parseInt((String)parameters.get("ID_KEMENTERIAN"));
 		int idagensi = Integer.parseInt((String)parameters.get("ID_AGENSI"));
@@ -76,17 +78,26 @@ public class LaporanPermohonan extends EkptgReportServlet {
 		parameters.put("STATUS",status);
 		parameters.put("IDSUBURUSAN1",(String)parameters.get("IDSUBURUSAN1"));
 		parameters.put("os",OS.indexOf("win") >= 0?"1":"0");
+		myLog.info("doProcessing:TANAH="+parameters.get("TANAH"));
 
-		//myLog.info("doProcessing::BULANSEMASA-"+utils.getBulan(Integer.parseInt(bulan)));
+		if(parameters.get("TANAH") !=null){
+		tanah = parameters.get("TANAH").equals("1")?" AND NVL(TPH.NO_HAKMILIK,' ') <> ' ' ":" AND NVL(TPH.NO_WARTA,' ') <> ' '";
+		parameters.put("JENISTANAH",Integer.parseInt(String.valueOf(parameters.get("TANAH"))));
+		parameters.put("TANAH",tanah);
+		
+		}
+		myLog.info("doProcessing::BULANSEMASA-"+Utils.getBulan(Integer.parseInt(bulan)));
 		//myLog.info("doProcessing::BULANSEBELUM-"+utils.getBulan(Integer.parseInt(bulan)));
 
-		myLog.info("Sebelum LAPORAN");
+//		myLog.info("Sebelum LAPORAN");
 		parameters.put("LAPORAN",tahun  +" ( "+Utils.getBulan(Integer.parseInt(bulan))+ " )");
 		if(!bulantamat.equals("0")){
 			parameters.put("LAPORAN"," ( "+Utils.getBulan(Integer.parseInt(bulan))+" "+tahun+ " - "+Utils.getBulan(Integer.parseInt(bulantamat))+" "+tahunTmt+" )");
 		}
 		
 	}
+	
+	
 }
 	
 	
