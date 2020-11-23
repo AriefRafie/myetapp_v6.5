@@ -96,8 +96,8 @@ public class PHPUtilHTML {
 		return sb.toString();
 	}
 	
-	public static String SelectNoFailByIdPemohon(String userId, String selectName,
-			Long selectedValue, String disability, String jsFunction, String idUrusan)
+	public static String SelectNoFailByIdPemohon(String userId, String idUrusan, String selectName,
+			Long selectedValue, String disability, String jsFunction)
 	 throws Exception {
 		StringBuffer sb = new StringBuffer("");
 		try {
