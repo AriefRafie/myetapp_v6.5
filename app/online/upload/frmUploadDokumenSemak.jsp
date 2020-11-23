@@ -94,7 +94,7 @@ padding:0 0.25em;
 				    <td valign="top">:</td>
 				    <td>
 				    #foreach( $i in [1..$num_files] )
-						<input type="file" id="dokumen" name="dokumen" size="40" class="texts" accept="application/pdf" $!readOnly /></br>
+						<input type="file" id="dokumen" name="dokumen" size="40" class="texts" $!readOnly /></br>
 					#end
 					</td/>
 				</tr>
@@ -138,8 +138,7 @@ padding:0 0.25em;
 </table>
 
 <script>
-//SAIZ FAIL
-
+	
 	//Hapus dokumen pada senarai harta
 	function deleteDetailImej(iDokumen,lampiran){
 		if ( !window.confirm("Adakah Anda Pasti?")) return;

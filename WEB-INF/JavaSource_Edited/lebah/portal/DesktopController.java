@@ -507,7 +507,6 @@ public class DesktopController extends VServlet {
 			}
 			if ("login".equals(action))
 				action = "";
-			
 			createPortalPage(req, res, out, session, action, module);
 		
 		}

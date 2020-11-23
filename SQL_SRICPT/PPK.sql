@@ -749,12 +749,3 @@ CREATE SEQUENCE TBLPPKTAC_SEQ
   NOORDER;
 
 COMMIT;
-
-
-------------- IKA ADD 19/11/2020 ---------------
-
-UPDATE TBLSEMAKAN S
-SET S.PERIHAL = 'Borang A lengkap diisi dan ditandatangani Pesuruhjaya Sumpah'
-WHERE S.ID_SEMAKAN = '1';
-
-COMMIT;

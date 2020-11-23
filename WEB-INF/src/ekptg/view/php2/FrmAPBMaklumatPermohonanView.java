@@ -200,6 +200,7 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
         	maklumatProjek(mode, idPermohonan, idProjek);
         	maklumatPengarah(mode, idPemohon, idPengarah);
         	
+
         	//SENARAI PROJEK
 			logic.setSenaraiProjek(idPermohonan);
 			senaraiProjek = logic.getListProjek();
@@ -302,7 +303,7 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
 			hashMaklumatPermohonan.put("perkara", getParam("txtPerkara"));	
 			hashMaklumatPermohonan.put("tujuanPengambilan", getParam("txtTujuanPengambilan"));	
 			hashMaklumatPermohonan.put("tempoh", getParam("txtTempoh"));
-			hashMaklumatPermohonan.put("pengalaman", getParam("txtRingkasanPengalaman"));
+			hashMaklumatPermohonan.put("pengalaman", getParam("txtPengalaman"));
 			hashMaklumatPermohonan.put("lokasi", getParam("txtLokasi"));
 			hashMaklumatPermohonan.put("luas", getParam("txtLuas"));
 			hashMaklumatPermohonan.put("modalSemasa", getParam("txtModalSemasa"));

@@ -26,16 +26,6 @@
 .style9 {font-size: 10px; color: #000000; }
 .style10 {color: #000000}
 .style11 {font-size: 10px; color: #FF0000; }
-
-.infotips {
-	border:1px solid;
-	background-repeat:no-repeat;
- 	background-position:10px center; 
- 	margin:10px 0; 
- 	padding:15px 10px 15px 10px; 
-	color:#515F2C;
-	background-color:#A6BB72;
-}
 -->
 </style>
 </head>
@@ -1718,10 +1708,9 @@
 	<fieldset><legend>SENARAI HARTA ALIH</legend>
 	#if($!skrin_online == "yes")
 			<div id="info_skrin_daftar_sek8"></div>
-<!--      		<script> -->
- 					<div class="infotips"><font color="black"><b>* Wang tunai, saham, simpanan bank, KWSP, insurans, kenderaan, senjata api, barang kemas dan barang-barang berharga.</b></font></div>
-<!--  			</script>  -->
- 			#end
+     		<script>
+ 						parent.document.getElementById("info_skrin_daftar_sek8").innerHTML="<div class=\"warning_online_ppk\"><font color=\"black\"><b>* Wang tunai, saham, simpanan bank, KWSP, insurans, kenderaan, senjata api, barang kemas dan barang-barang berharga.</b></font></div>";
+ 			</script> #end
 <!-- <table width="100%" bordercolor="#333333"> -->
 	<table width="100%" >
 		<tr>

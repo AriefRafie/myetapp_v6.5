@@ -898,8 +898,7 @@ resetOnBlur:false
                                 </label></td>
                               </tr>
                               <tr>
-<!--                                 <td valign="top" ><span class="style38">#if($readmode != "disabled") <span class="style49">*</span> #end</span></td> -->
-                                <td><span class="style38"></span></td>
+                                <td valign="top" ><span class="style38">#if($readmode != "disabled") <span class="style49">*</span> #end</span></td>
                                 <td><div align="left" class="style38">Waktu Kematian</div></td>
                                 <td class="style36">:</td>
                                 <td class="style36"><input name="socWaktuKematianSimati" type="text" id="socWaktuKematianSimati" value="$listmati.masamati"  onKeyUp="javascript:validateIC(event,this,this.value,'socWaktuKematianSimati')" size="4" maxlength="4"   $readmodeR class="$readmode" onBlur="jeniswaktu1()" /> 
@@ -972,7 +971,7 @@ resetOnBlur:false
                           </table></td>
                         <td valign="top"><table width="100%">
                             <tr valign="top">
-                              <td valign="top"><span class="style38">#if($readmode != "disabled") <span class="style49" id="mandatori">*</span> #end</span></td>
+                              <td valign="top" ><span class="style38">#if($readmode != "disabled") <span class="style49">*</span> #end</span></td>
                               <!-- <td width="1%" class="style38">&nbsp;</td> -->
                               <td width="28%" class="style38"><div align="right" class="style38">
                                 <div align="left">Tempat Mati</div>
@@ -989,7 +988,7 @@ resetOnBlur:false
                             </tr>
                             <tr>
                               <!-- <td class="style38" valign="top" > -->
-                              <td valign="top" ><span class="style38">#if($readmode != "disabled") <span class="style49" id="mandatori1">*</span> #end</span></td>
+                              <td valign="top" ><span class="style38">#if($readmode != "disabled") <span class="style49">*</span> #end</span></td>
                                  </td>
                                  
                               <td class="style38" valign="top">
@@ -1010,7 +1009,7 @@ resetOnBlur:false
                             </tr>
                             <tr>
                               <!-- <td class="style38">&nbsp;</td> -->
-                              <td valign="top" ><span class="style38">#if($readmode != "disabled") <span class="style49" id="mandatori2">*</span> #end</span></td>
+                              <td valign="top" ><span class="style38">#if($readmode != "disabled") <span class="style49">*</span> #end</span></td>
                               <td class="style38"><div align="right" class="style38">
                                 <div align="left">Alamat Terakhir</div>
                               </div></td>
@@ -1040,7 +1039,7 @@ resetOnBlur:false
                             </tr>
                             <tr>
                               <!-- <td class="style38">&nbsp;</td> -->
-                              <td valign="top" ><span class="style38">#if($readmode != "disabled") <span class="style49" id="mandatori3">*</span> #end</span></td>
+                              <td valign="top" ><span class="style38">#if($readmode != "disabled") <span class="style49">*</span> #end</span></td>
                               <td class="style38"><div align="right" class="style38">
                                 <div align="left">Poskod </div>
                               </div></td>
@@ -1051,7 +1050,7 @@ resetOnBlur:false
                             </tr>
                             <tr>
                               <!-- <td class="style38">&nbsp;</td> -->
-                              <td valign="top" ><span class="style38">#if($readmode != "disabled") <span class="style49" id="mandatori4">*</span> #end</span></td>
+                              <td valign="top" ><span class="style38">#if($readmode != "disabled") <span class="style49">*</span> #end</span></td>
                               <td class="style38"><div align="right" class="style38">
                                 <div align="left">Negeri</div>
                               </div></td>
@@ -1142,7 +1141,7 @@ resetOnBlur:false
                             
                             <tr>
                               <!-- <td class="style38">&nbsp;</td> -->
-                              <td valign="top" ><span class="style38">#if($readmode != "disabled") <span class="style49" id="mandatori5">*</span> #end</span></td>
+                              <td valign="top" ><span class="style38">#if($readmode != "disabled") <span class="style49">*</span> #end</span></td>
                                #set($bandartetap = $listmati.bandartetap)
                               <td class="style38"><div align="left">#if($readmode != "disabled" ) </div>
                               <div align="right" class="style43">
@@ -1730,9 +1729,7 @@ return;
 }
 
 
-function SimpanSimatiTest(val_bukti){
-	alert(val_bukti);
-}
+
 
 
 function SimpanSimati() {
@@ -1788,16 +1785,6 @@ function SimpanSimati() {
 		document.f1.txtNamaSimati.focus();
 		return; 
 	} 
-	else if (document.f1.socBuktiKematianSimati.value == "" || document.f1.socBuktiKematianSimati.value == "") {
-		alert("Sila pilih bukti kematian");
-		document.f1.socBuktiKematianSimati.focus();
-		return; 
-	}
-	else if (document.f1.socBuktiKematianSimati.value == "1" && document.f1.txtNoSijilMatiSimati.value=="") {
-		alert("Sila masukkan nombor sijil mati");
-		document.f1.txtNoSijilMatiSimati.focus();
-		return; 
-	}
 	else if (document.f1.txtSebabKematianSimati.value=="" && '$!skrin_online' != "yes") {
 		alert("Sila masukkan sebab kematian.");
 		document.f1.txtSebabKematianSimati.focus();
@@ -1808,49 +1795,44 @@ function SimpanSimati() {
   		document.f1.txdTarikhMatiSimati.focus(); 
 		return; 
 	}
-// 	else if(document.f1.socWaktuKematianSimati.value == ""){
-// 		alert('Sila masukkan waktu kematian terlebih dahulu.');
-//   		document.f1.socWaktuKematianSimati.focus(); 
-// 		return; 
-// 	}
-// 	else if(document.f1.jeniswaktu.value == ""){
-// 		alert('Sila pilih jenis waktu kematian terlebih dahulu.');
-//   		document.f1.jeniswaktu.focus(); 
-// 		return; 
-// 	}
-	else if(document.f1.patMatiSimati.value == "" && document.f1.socBuktiKematianSimati.value == "1"){
+	else if(document.f1.socWaktuKematianSimati.value == ""){
+		alert('Sila masukkan waktu kematian terlebih dahulu.');
+  		document.f1.socWaktuKematianSimati.focus(); 
+		return; 
+	}
+	else if(document.f1.jeniswaktu.value == ""){
+		alert('Sila pilih jenis waktu kematian terlebih dahulu.');
+  		document.f1.jeniswaktu.focus(); 
+		return; 
+	}
+	else if(document.f1.patMatiSimati.value == ""){
 		alert('Sila masukkan tempat mati terlebih dahulu.');
   		document.f1.patMatiSimati.focus(); 
 		return; 
 	}
 	
-	else if(document.f1.txtSebabKematian.value == ""  && document.f1.socBuktiKematianSimati.value == "1"){
+	else if(document.f1.txtSebabKematian.value == ""){
 		alert('Sila masukkan sebab kematian terlebih dahulu.');
   		document.f1.txtSebabKematian.focus(); 
 		return; 
 	}
-	else if(document.f1.txtAlamatTerakhir.value == "" && document.f1.socBuktiKematianSimati.value == "1"){
+	else if(document.f1.txtAlamatTerakhir.value == ""){
 		alert('Sila masukkan alamat terakhir terlebih dahulu.');
   		document.f1.txtAlamatTerakhir.focus(); 
 		return; 
 	}
-	else if(document.f1.txtPoskodSimati.value == "" && document.f1.socBuktiKematianSimati.value == "1"){
+	else if(document.f1.txtPoskodSimati.value == ""){
 		alert('Sila masukkan poskod terlebih dahulu.');
   		document.f1.txtPoskodSimati.focus(); 
 		return; 
 	}
-	else if (document.f1.txtPoskodSimati.value != "" && document.f1.txtPoskodSimati.value.length < 5) {
-		alert("Sila masukkan nombor poskod dengan lengkapnya");
-		document.f1.txtPoskodSimati.focus();
-		return; 
-	}
-	else if(document.f1.socNegeriSimati.value == "" && document.f1.socBuktiKematianSimati.value == "1"){
+	else if(document.f1.socNegeriSimati.value == ""){
 		alert('Sila masukkan negeri terlebih dahulu.');
   		document.f1.socNegeriSimati.focus(); 
 		return; 
 	}
 	
-	else if(checkBandar == true && document.f1.socBuktiKematianSimati.value == "1"){
+	else if(checkBandar == true){
 		 
 			alert('Sila masukkan bandar terlebih dahulu.');
 	  		document.f1.txtBandarSimati.focus(); 
@@ -1973,6 +1955,26 @@ function SimpanSimati() {
 		alert("Sila lengkapkan MyID Lama Simati");
 		document.f1.txtNoKPLamaSimati.focus();	
 	} */
+	
+	else if (document.f1.txtPoskodSimati.value != "" && document.f1.txtPoskodSimati.value.length < 5) {
+		alert("Sila masukkan nombor poskod dengan lengkapnya");
+		document.f1.txtPoskodSimati.focus();
+		return; 
+	}
+	
+	else if (document.f1.socBuktiKematianSimati.value == "" || document.f1.socBuktiKematianSimati.value == "") {
+		alert("Sila masukkan bukti kematian");
+		document.f1.socBuktiKematianSimati.focus();
+		return; 
+	}
+	
+	else if (document.f1.socBuktiKematianSimati.value == "1" && document.f1.txtNoSijilMatiSimati.value=="") {
+		alert("Sila masukkan nombor sijil mati");
+		document.f1.txtNoSijilMatiSimati.focus();
+		return; 
+	}
+	
+
 	else if (document.f1.socWaktuKematianSimati.value != "" && document.f1.socWaktuKematianSimati.value.length < 4) {
 		alert("Sila masukkan waktu kematian dengan format yang betul");
 		document.f1.socWaktuKematianSimati.focus();
@@ -2108,6 +2110,8 @@ document.f1.action = "";
 }
 function jenis_hutangU(val)
 {
+
+
 if(val=="1")
 {
 
@@ -2117,13 +2121,6 @@ document.f1.socBuktiKematianSimati.value="1";
 
 document.f1.txdTarikhSuratAkuan.disabled = "disabled";
 document.f1.txdTarikhSuratAkuan.value = "";
-
-document.getElementById('mandatori').style.display='';
-document.getElementById('mandatori1').style.display='';
-document.getElementById('mandatori2').style.display='';
-document.getElementById('mandatori3').style.display='';
-document.getElementById('mandatori4').style.display='';
-document.getElementById('mandatori5').style.display='';
 }
 
 else if( val=="4" )
@@ -2148,12 +2145,6 @@ document.f1.socBuktiKematianSimati.value="3";
 document.f1.txdTarikhSuratAkuan.disabled = "disabled";
 document.f1.txdTarikhSuratAkuan.value = "";
 
-document.getElementById('mandatori').style.display='none';
-document.getElementById('mandatori1').style.display='none';
-document.getElementById('mandatori2').style.display='none';
-document.getElementById('mandatori3').style.display='none';
-document.getElementById('mandatori4').style.display='none';
-document.getElementById('mandatori5').style.display='none';
 }
 else if( val=="2" )
 {	

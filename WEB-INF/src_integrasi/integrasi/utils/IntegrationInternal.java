@@ -13,7 +13,26 @@ public interface IntegrationInternal {
 		,Hashtable<String,String> permohonan
 		,Vector<Tblrujdokumen> vecDok
 		,String idPengguna, Db db);
+	
 	public void setHakmiliks(Vector<Hashtable<String,String>> vec);
+
+	void hantarBorangC(ETanahPPTManager pptManager, 
+			String noPermohonan, 
+			Vector<Tblrujdokumen> vecDok,
+			String idPengguna, Db db);
+	
+	/*public void hantarBorangB(ETanahPPTManager pptManager
+			,Hashtable<String,String> warta
+			,Vector<Tblrujdokumen> vecDok
+			,String idPengguna, Db db);
+	
+	
+	
+	/*public void hantarBorangCMMK(ETanahPPTManager pptManager
+			,String noPermohonan
+			,Vector<Tblrujdokumen> vecDok
+			,String idPengguna, Db db)*/
+		
 
 //	public boolean kemaskiniPermohonan(String idPermohonan,String transactionID,Permohonan permohonan) throws Exception;
 //	public TanahApplicationResponse semakanPermohonan(String idPermohonan,String transactionID,  Permohonan permohonan) throws Exception;

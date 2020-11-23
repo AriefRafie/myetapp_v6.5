@@ -168,7 +168,7 @@ private static final long serialVersionUID = 1L;
         		}
     		} else {
     			context.put("verify", "false");
-    			context.put("note", "Perintah telah dimuat turun! <br> &nbsp;&nbsp;Sila ke Unit Pembahagian Pusaka yang berkenaan untuk mendapatkan salinan perintah.");
+    			context.put("note", "Perintah telah dimuat turun!");
     		}
     		
     		//context.put("notac", "notac");
