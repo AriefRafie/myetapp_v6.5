@@ -101,7 +101,7 @@
     	 #end
 <tr>
             <td scope="col">$!cnt.</td>
-            <td scope="col"><a href="javascript:detailPemilik('$!pk.getIdpihakberkepentingan()')" class="r"> $!pk.getNoHakmilik()</a></td>
+            <td scope="col"><a href="javascript:detailPemilikOnline('$!pk.getIdpihakberkepentingan()')" class="r"> $!pk.getNoHakmilik()</a></td>
             <td scope="col">$!pk.getNama() </td>
             <td scope="col">
             	<input type="button" name="btnDelete" value="Hapus" onclick="doAjaxCall${formName}('deletePemilik')">
@@ -139,5 +139,4 @@
 	 </tr>
 	  
 </table>
-<input type="hidden" name="Idpihakberkepentingan" value="$!pemilik.getIdpihakberkepentingan()" />
 <input type="hidden" name="idPermohonan" value="$!htpPermohonan.permohonan.getIdPermohonan()"/>

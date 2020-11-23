@@ -754,8 +754,7 @@ public class FrmPajakanPerjanjianPajakanData {
 
 			sql = "SELECT A.NOTIFIKASI_PERINGATAN, A.ID_PAJAKAN, A.TARIKH_TANDATANGAN, A.TARIKH_MULA_PAJAKAN, A.TARIKH_TAMATPAJAKAN" +
 				", A.KADAR_PAJAKAN, A.TEMPOH_PAJAKAN, A.KADAR_CUKAI, C.KETERANGAN, A.CARA_BAYAR" +
-				", A.KATEGORI_CUKAI, A.TARIKH_PATUT_BAYAR,A.CATATAN,A.DENDA,A.FLAG_AKTIF,A.ID_HAKMILIKURUSAN "+
-				" ,A.terma_bayaran,A.terma_denda" +
+				", A.KATEGORI_CUKAI, A.TARIKH_PATUT_BAYAR,A.CATATAN,A.DENDA,A.FLAG_AKTIF,A.ID_HAKMILIKURUSAN " +
 				" FROM TBLHTPPAJAKAN A, TBLRUJCARABAYAR C " +
 				" WHERE A.CARA_BAYAR = C.ID_CARABAYAR(+) " +
 				" AND A.ID_PAJAKAN = '" + idPajakan + "'";
@@ -784,9 +783,6 @@ public class FrmPajakanPerjanjianPajakanData {
 				h.put("status", rs.getString("FLAG_AKTIF") == null ? "Y" : rs.getString("FLAG_AKTIF"));
 				h.put("denda", rs.getString("DENDA") == null ? "" : rs.getString("DENDA"));
 				h.put("idTanah", rs.getString("ID_HAKMILIKURUSAN") == null ? "" : rs.getString("ID_HAKMILIKURUSAN"));
-				h.put("termaBayaran", Utils.isNull(rs.getString("terma_bayaran")));
-				h.put("termaDenda", Utils.isNull(rs.getString("terma_denda")));
-
 				beanMaklumatPajakan.addElement(h);
 				bil++;
 			}
@@ -795,7 +791,6 @@ public class FrmPajakanPerjanjianPajakanData {
 			if (db != null)
 				db.close();
 		}
-		
 	}
 
 	public void hapusPajakan(String idPajakan) throws Exception {
@@ -867,12 +862,7 @@ public class FrmPajakanPerjanjianPajakanData {
 			r.add("CATATAN", hash.get("catatan"));
 			r.add("FLAG_AKTIF", hash.get("status"));
 			r.add("DENDA", hash.get("denda"));
-			if (!"".equals(hash.get("termaBayaran"))){
-				r.add("TERMA_BAYARAN", hash.get("termaBayaran"));
-			}
-			if (!"".equals(hash.get("termaDenda"))){
-				r.add("TERMA_DENDA", hash.get("termaDenda"));
-			}
+
 			sql = r.getSQLInsert("TBLHTPPAJAKAN");
 			//System.out.println("sql 1 "+sql);
 			stmt.executeUpdate(sql);
@@ -968,12 +958,6 @@ public class FrmPajakanPerjanjianPajakanData {
 			r.add("CATATAN", hash.get("catatan"));
 			r.add("FLAG_AKTIF", hash.get("status"));
 			r.add("DENDA", hash.get("denda"));
-			if (!"".equals(hash.get("termaBayaran"))){
-				r.add("TERMA_BAYARAN", hash.get("termaBayaran"));
-			}
-			if (!"".equals(hash.get("termaDenda"))){
-				r.add("TERMA_DENDA", hash.get("termaDenda"));
-			}
 			r.add("ID_HAKMILIKURUSAN", hash.get("id_tanah"));
 
 			sql = r.getSQLUpdate("TBLHTPPAJAKAN");

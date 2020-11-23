@@ -343,19 +343,16 @@ public class FrmPajakanPopupSenaraiTanahData {
 
 			sql = "SELECT A.ID_HAKMILIK,A.PEGANGAN_HAKMILIK,A.NO_HAKMILIK,A.NO_LOT,A.LUAS, A.ID_LUAS" +
 				" ,A.NO_WARTA,A.TARIKH_WARTA" +
-				" ,F.KOD_JENIS_HAKMILIK, F.KETERANGAN AS JENIS_HAKMILIK" +
-				" ,B.KOD_LOT, B.KETERANGAN AS JENIS_LOT"+
-				" ,E.NAMA_MUKIM, D.NAMA_DAERAH" +
-				" ,A.ID_SEKSYENUPI,F.NAMA_SEKSYENUPI" +
-				" ,C.NAMA_NEGERI, G.KETERANGAN AS SUBKATEGORI, H.KETERANGAN AS KATEGORI, A.SYARAT, A.SEKATAN, I.NAMA_KEMENTERIAN, J.NAMA_AGENSI, K.KETERANGAN AS JENIS_LUAS, K.KOD_LUAS AS KOD_LUAS"+
+				" , F.KOD_JENIS_HAKMILIK, F.KETERANGAN AS JENIS_HAKMILIK" +
+				" , B.KOD_LOT, B.KETERANGAN AS JENIS_LOT"+
+				" , E.NAMA_MUKIM, D.NAMA_DAERAH" +
+				" , A.ID_SEKSYENUPI,F.NAMA_SEKSYENUPI" +
+				" , C.NAMA_NEGERI, G.KETERANGAN AS SUBKATEGORI, H.KETERANGAN AS KATEGORI, A.SYARAT, A.SEKATAN, I.NAMA_KEMENTERIAN, J.NAMA_AGENSI, K.KETERANGAN AS JENIS_LUAS, K.KOD_LUAS AS KOD_LUAS"+
 				" FROM TBLHTPHAKMILIK A, TBLRUJSEKSYENUPI F, TBLRUJLOT B" +
-				" , TBLRUJNEGERI C, TBLRUJDAERAH D, TBLRUJMUKIM E" +
-				" , TBLRUJJENISHAKMILIK F, TBLRUJSUBKATEGORI G, TBLRUJKATEGORI H, TBLRUJKEMENTERIAN I, TBLRUJAGENSI J, TBLRUJLUAS K" +
-				" WHERE A.ID_NEGERI = C.ID_NEGERI AND A.ID_DAERAH = D.ID_DAERAH AND A.ID_MUKIM = E.ID_MUKIM "+
-				" AND A.ID_JENISHAKMILIK = F.ID_JENISHAKMILIK AND A.ID_LOT = B.ID_LOT(+) "+
-				" AND A.ID_SUBKATEGORI = G.ID_SUBKATEGORI(+) AND G.ID_KATEGORI = H.ID_KATEGORI(+) "+
-				" AND A.ID_SEKSYENUPI = F.ID_SEKSYENUPI(+) AND A.ID_KEMENTERIAN = I.ID_KEMENTERIAN(+) AND A.ID_AGENSI = J.ID_AGENSI(+) AND A.ID_LUAS = K.ID_LUAS "+
-				" AND A.ID_HAKMILIK = '" + idHakmilik + "'";
+				", TBLRUJNEGERI C, TBLRUJDAERAH D, TBLRUJMUKIM E" +
+				", TBLRUJJENISHAKMILIK F, TBLRUJSUBKATEGORI G, TBLRUJKATEGORI H, TBLRUJKEMENTERIAN I, TBLRUJAGENSI J, TBLRUJLUAS K" +
+				" WHERE A.ID_LOT = B.ID_LOT(+) AND A.ID_NEGERI = C.ID_NEGERI(+) AND A.ID_DAERAH = D.ID_DAERAH(+) AND A.ID_MUKIM = E.ID_MUKIM(+) AND A.ID_JENISHAKMILIK = F.ID_JENISHAKMILIK(+) AND A.ID_SUBKATEGORI = G.ID_SUBKATEGORI(+)"
+				+ " AND A.ID_SEKSYENUPI = F.ID_SEKSYENUPI(+) AND G.ID_KATEGORI = H.ID_KATEGORI(+) AND A.ID_KEMENTERIAN = I.ID_KEMENTERIAN(+) AND A.ID_AGENSI = J.ID_AGENSI(+) AND A.ID_LUAS = K.ID_LUAS AND A.ID_HAKMILIK = '" + idHakmilik + "'";
 
 			System.out.println("setMaklumatTanah :: sql >>>> "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
@@ -371,7 +368,6 @@ public class FrmPajakanPopupSenaraiTanahData {
 				h.put("noLot", rs.getString("NO_LOT") == null ? "" : rs.getString("NO_LOT"));
 				h.put("noWarta", rs.getString("NO_WARTA") == null ? "" : rs.getString("NO_WARTA"));
 				h.put("luasLot", rs.getString("LUAS") == null || rs.getString("JENIS_LUAS") == null ? "" : rs.getString("LUAS") + " " + rs.getString("JENIS_LUAS"));
-				h.put("luasAsal", rs.getString("LUAS") == null || rs.getString("JENIS_LUAS") == null ? "" : rs.getString("LUAS"));
 				h.put("idLuas", rs.getString("ID_LUAS") == null ? "0" : rs.getString("ID_LUAS"));
 				h.put("noWarta", rs.getString("NO_WARTA") == null ? "" : rs.getString("NO_WARTA"));
 				h.put("tarikhWarta", rs.getDate("TARIKH_WARTA") == null ? "" : sdf.format(rs.getDate("TARIKH_WARTA")));
@@ -508,7 +504,6 @@ public class FrmPajakanPopupSenaraiTanahData {
 				r.update("ID_HAKMILIKURUSAN", hu.getIdhakmilikurusan());
 				r.add("ID_LUAS", hu.getIdLuas());
 				r.add("LUAS", hu.getLuas());
-				r.add("LUAS_ASAL", hu.getLuasAsal());
 				r.add("ID_LUAS_BERSAMAAN", hu.getIdLuasBersamaan());
 				r.add("LUAS_BERSAMAAN", hu.getLuasBersamaan());
 				r.add("ID_KEMASKINI", userId);
@@ -540,7 +535,6 @@ public class FrmPajakanPopupSenaraiTanahData {
 					r.add("NO_LOT", rs.getString("NO_LOT") == null ? "" : rs.getString("NO_LOT"));
 					r.add("ID_LUAS", hu.getIdLuas());
 					r.add("LUAS", hu.getLuas());
-					r.add("LUAS_ASAl", hu.getLuasAsal());
 					r.add("ID_LUAS_BERSAMAAN", hu.getIdLuasBersamaan());
 					r.add("LUAS_BERSAMAAN", hu.getLuasBersamaan());
 					r.add("NO_SYIT", rs.getString("NO_SYIT") == null ? "" : rs.getString("NO_SYIT"));
@@ -762,7 +756,7 @@ public class FrmPajakanPopupSenaraiTanahData {
 				", J.ID_AGENSI,J.NAMA_AGENSI " +
 				", HU.LUAS LUASPAJAKAN,HU.ID_LUAS ID_LUASPAJAKAN "+
 				", HU.LUAS_BERSAMAAN LUASPAJAKANBER,HU.ID_LUAS_BERSAMAAN ID_LUASPAJAKANBER " +
-				" ,HU.ID_HAKMILIKURUSAN,HU.LUAS_ASAL "+
+				" ,HU.ID_HAKMILIKURUSAN"+
 				" FROM TBLHTPHAKMILIK A, TBLRUJLOT B, TBLRUJNEGERI C, TBLRUJDAERAH D, TBLRUJMUKIM E " +
 				" ,TBLRUJJENISHAKMILIK F, TBLRUJSUBKATEGORI G, TBLRUJKATEGORI H, TBLRUJKEMENTERIAN I " +
 				" ,TBLRUJAGENSI J, TBLRUJLUAS K,TBLHTPHAKMILIKURUSAN HU "+
@@ -803,14 +797,6 @@ public class FrmPajakanPopupSenaraiTanahData {
 				lot.setKodLot(rs.getString("KOD_LOT"));
 				hp.setRujLot(lot);
 				hp.setNoLot(Utils.isNull(rs.getString("NO_LOT")));
-				Double db_ = new Double(0.0) ;
-				try {
-					db_ = rs.getDouble("LUAS_ASAL");
-				//}(NumberFormatException e) {
-				}catch(NumberFormatException e) {
-					
-				}
-				hp.setLuasAsal(db_);
 				hp.setLuasString(rs.getString("LUAS") + " - "+rs.getString("JENIS_LUAS"));
 				hp.setIdLuas(rs.getLong("ID_LUAS"));
 				hp.setLuasBersamaan(rs.getDouble("LUAS_BERSAMAAN"));

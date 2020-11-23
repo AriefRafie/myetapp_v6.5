@@ -58,7 +58,6 @@
               <input type="hidden" name="idHakmilik" value="$beanMaklumatHakmilik.idHakmilik"/>
               <input type="hidden" name="noResit" value="$beanMaklumatHakmilik.noResit"/>
               <input type="hidden" name="idPermohonanSimati" value="$beanMaklumatHakmilik.idPermohonanSimati"/>
-              <input type="hidden" name="idPermohonan" value="$beanMaklumatHakmilik.idPermohonan"/>
               <tr>
                 <td width="37%" align="right">NO. RESIT :</td>
                 <td width="63%"><span class="style1">$beanMaklumatHakmilik.noResit</span></td>
@@ -174,15 +173,6 @@
       </table>
       </fieldset></td>
   </tr>
-  #if ($hakmilik.pihakBerkepentinganList.size() > 0)
-	  <tr>
-	    <td>&nbsp;</td>
-	  </tr>
-	  <tr>
-	    <td>#parse("app/integrasi/etanah/wpkl/frmSenaraiPemilik.jsp")</td>
-	  </tr>
-  #end
-  
   <tr>
     <td align="center"><input type="button" name="cmdDaftar" id="cmdDaftar" value="Daftar Hakmilik" onClick="daftar()">
       <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="kembali()">

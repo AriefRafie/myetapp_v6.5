@@ -38,7 +38,7 @@
       <tr>
         <td height="25"  align="right">Peringkat Bayar : &nbsp;&nbsp;</td>
         	#set ( $statusPeringkat1 = "Peringkat Negeri" ) 
-  			#set ( $statusPeringkat2 = "Peringkat Negeri" ) 
+  			#set ( $statusPeringkat2 = "Peringkat Daerah" ) 
 			#set ( $statusPeringkat3 = "Peringkat Belanjawan" ) 
   			#set ( $statusDisplay = "" ) 
   			#if( $peringkat_bayaran == "1" )
@@ -50,7 +50,7 @@
   			#else
     			#set ($statusDisplay = $statusDisplay)
             #end
-        <td>$soCukai</td>
+        <td>$statusDisplay</td>
         <input type="hidden" name="peringkat_bayaran" value="$peringkat_bayaran" >
         <input type="hidden" name="socbayaran" value="$idbayaran" >
       </tr>

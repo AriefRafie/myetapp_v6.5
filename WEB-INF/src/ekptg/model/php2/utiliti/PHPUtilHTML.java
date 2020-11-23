@@ -109,7 +109,7 @@ public class PHPUtilHTML {
 			sb.append(" > ");
 
 			sb.append("<option value=>SILA PILIH</option>\n");
-			Vector<Tblpfdfail> v = PHPUtilData.getNoFailByIdPemohon(userId, idUrusan);
+			Vector<Tblpfdfail> v = PHPUtilData.getNoFailByIdPemohon(userId,idUrusan);
 			Tblpfdfail senaraiNoFail = null;
 			String noFail = "";
 			for (int i = 0; i < v.size(); i++) {
@@ -123,6 +123,7 @@ public class PHPUtilHTML {
 						+ senaraiNoFail.getNoFail()
 						+ "</option>\n");
 			}
+			myLogger.info("senaraiNoFail.getNoFail()"+senaraiNoFail.getNoFail());
 			sb.append("</select>");
 		} catch (Exception ex) {
 			ex.printStackTrace();

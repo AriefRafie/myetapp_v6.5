@@ -2,15 +2,15 @@
 	$readonly class="$disabled" $disabled 
 	onchange="javascript:doChangeKodLuas(this.value)">
 	#set ($listUnitLuas = ["SILA PILIH",
-			       "KILOMETER PERSEGI",
-			       "HEKTAR",
-			       "METER PERSEGI",
-			       "EKAR,ROOD,POLE",
-			       "KAKI PERSEGI",
-			       "EKAR",
-			       "EKAR,DEPA",
-			       "RELONG,JEMBA,KAKI PERSEGI",
-			       "BATU NAUTIKA"]
+			       "KM - KILOMETER PERSEGI",
+			       "H - HEKTAR",
+			       "M - METER PERSEGI",
+			       "E - EKAR,ROOD,POLE",
+			       "K - KAKI PERSEGI",
+			       "P - EKAR PERPULUHAN",
+			       "D - EKAR,DEPA",
+			       "R - RELONG,JEMBA,KAKI PERSEGI",
+			       "BN - BATU NAUTIKA"]
 	      )
 	#set( $counter = 0 )
 	#foreach ($i in $listUnitLuas)

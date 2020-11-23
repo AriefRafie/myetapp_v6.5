@@ -5,9 +5,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Hashtable;
-import java.util.Vector;
 
-import javax.servlet.http.HttpSession;
 
 import lebah.db.Db;
 import lebah.portal.AjaxBasedModule;
@@ -15,10 +13,12 @@ import lebah.portal.AjaxBasedModule;
 import org.apache.log4j.Logger;
 
 import ekptg.model.htp.IUtilHTML;
+import ekptg.model.htp.UtilHTMLBean;
 import ekptg.model.htp.entity.HtpPermohonan;
 import ekptg.model.htp.pembelian.IPembelian;
 import ekptg.model.htp.pembelian.PembelianBean;
 import ekptg.model.utils.IUserPegawai;
+import ekptg.model.utils.UserPegawaiBean;
 import ekptg.model.utils.emel.EmailConfig;
 
 
@@ -38,7 +38,7 @@ public class FrmPopupEmel extends AjaxBasedModule{
 
 	@Override
 	public String doTemplate2() throws Exception {		
-		HttpSession session = request.getSession();		
+		//HttpSession session = request.getSession();		
 		String vm = "";
 		//Vector detailPegawai = new Vector();
 		//detailPegawai.clear();
@@ -85,16 +85,11 @@ public class FrmPopupEmel extends AjaxBasedModule{
 		myLog.info("submit="+submit);
     	if (submit.equals("peringatanbayaran")) {
     		//
-    		ec.setRujukan(idpermohonan);
-    		ec.setSession(session);
     		hantarEmel = ec.sendTo("roslizakaria@gmail.com", tajukEmel, txtKandungan);
 
     	}else {
     	}
-		context.put("logs", getLogs(idpermohonan));
-
-    	
-    	
+   	
 		myLog.info("txtKandungan="+txtKandungan);
 		context.put("kandungan", txtKandungan);
 		context.put("idpermohonan", idpermohonan);
@@ -162,38 +157,6 @@ public class FrmPopupEmel extends AjaxBasedModule{
 		
 	}
 	
-	public Vector<Hashtable<String,String>> getLogs(String idPermohonan) throws Exception {
-		Db db = null;
-		Hashtable<String,String> h = null;
-		Vector<Hashtable<String,String>> vec = new Vector<Hashtable<String,String>>();
-
-		try {
-			db = new Db();
-			Statement stmt = db.getStatement();
-			String sql = "SELECT A.MODULE_NAME tajuk, A.JENIS_AKTIVITI status, NVL(A.TARIKH_KEMASKINI,'')  tarikh_hantar " +
-				" FROM TBLAUDITRAILMAIL A " +
-				" WHERE " +
-				" A.id_rujukan = '" + idPermohonan + "'";
-			myLog.info("getLogs:sql="+sql);
-			ResultSet rs = stmt.executeQuery(sql);
-			int bil = 1;
-			while (rs.next()) {
-				h = new Hashtable<String,String>();
-				h.put("bil", String.valueOf(bil));
-				h.put("tajuk", rs.getString("tajuk"));
-				h.put("status", rs.getString("status"));
-				h.put("tarikhHantar", rs.getString("tarikh_hantar"));
-				vec.addElement(h);
-				bil++;
-			}
-
-		} finally {
-			if (db != null)
-				db.close();
-		}
-		return vec;
-		
-	}
 //	private IUserPegawai getIUP(){
 //		if(iUserPegawai== null)
 //			iUserPegawai = new UserPegawaiBean();

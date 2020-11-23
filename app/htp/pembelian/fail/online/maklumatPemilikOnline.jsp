@@ -94,8 +94,9 @@
             <tr style="display:$Style3">
               <td colspan="4">
                 <div align="center"><strong>
-                
+                #if (($!idjawatan.equals("20")|| $!idjawatan.equals("24")) || $!idjawatan.equals("9"))
                 <input class="stylobutton100" type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="javascript:detailPemilikOnline()">
+                #end
                 <input class="stylobutton100" type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doAjaxCall${formName}('viewpemilikonline')">
            		 </div>
            		</td>
@@ -195,7 +196,9 @@
 		<tr style="display:$Style3">
               <td colspan="4">
                 <div align="center"><strong>
+                #if (($!idjawatan.equals("20")|| $!idjawatan.equals("24")) || $!idjawatan.equals("9"))
                 <input class="stylobutton100" type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:simpanPemilik()">
+                #end
                 <input class="stylobutton100" type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doAjaxCall${formName}('viewpemilikonline')">
        			 </div>
            	</td>

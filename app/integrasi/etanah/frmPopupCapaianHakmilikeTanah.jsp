@@ -62,7 +62,7 @@ color: #0000FF
           <td width="70%"><input name="txtHakmilik" id="txtHakmilik" type="text" value="$txtHakmilik" size="30" maxlength="50"/></td>
         </tr>
         <tr>
-          <td scope="row" align="right"><span class="style2">*</span> No. Resit Carian</td>
+          <td scope="row" align="right"><span class="style2">*</span> Nombor Resit Carian</td>
           <td>:</td>
           <td><input name="txtNoResit" id="txtNoResit" type="text" value="$txtNoResit" size="30" maxlength="50"/></td>
         </tr>
@@ -80,13 +80,13 @@ color: #0000FF
   </tr>
   <tr>
     <td><fieldset>
-      <legend>SENARAI HAKMILIK<!--CARIAN--> </legend>
+      <legend>SENARAI HAKMILIK CARIAN</legend>
       #parse("app/utils/record_paging_popup.jsp")
       <table align="center" width="100%">
         <tr class="table_header">
           <td scope="row" width="3%" align="center"><strong>Bil</strong></td>
           <td width="25%"><strong>ID Hakmilik</strong></td>
-          <td width="25%"><strong>No. Resit Carian</strong></td>
+          <td width="25%"><strong>No. Resit</strong></td>
           <td width="25%"><strong>Tarikh Terima</strong></td>
           <td width="22%"><strong>Status Hakmilik</strong></td>
         </tr>
@@ -102,7 +102,7 @@ color: #0000FF
         #end
         <tr>
           <td class="$row" align="center">$senaraiCarianRasmi.bil .</td>
-          <td class="$row"><a href="javascript:papar('$!senaraiCarianRasmi.idMT')" class="style1">$senaraiCarianRasmi.idHakmilik</a></td>
+          <td class="$row"><a href="javascript:papar('$senaraiCarianRasmi.idMT')" class="style1">$senaraiCarianRasmi.idHakmilik</a></td>
           <td class="$row">$senaraiCarianRasmi.noResit</td>
           <td class="$row">$senaraiCarianRasmi.tarikhTerima</td>
           #if ($senaraiCarianRasmi.flagAktif == 'Y')
@@ -124,13 +124,7 @@ color: #0000FF
         #end
       </table>
       </fieldset></td>
-  	</tr>
-	
-	<tr> <td>&nbsp;</td> </tr>
-	#if ($BeanMaklumatHakmilik.size() > 0)	
-		#parse("app/integrasi/etanah/frmPopupMaklumaTanah.jsp")
-		
-	#end
+  </tr>
 </table>
 <script>
 	function kosongkan() {
@@ -163,6 +157,5 @@ color: #0000FF
 		document.${formName}.idPPKHTA.value = idPPKHTA;
 		document.${formName}.actionPopup.value = "papar";
 		document.${formName}.submit();
-		
 	}
 </script>

@@ -12,8 +12,6 @@ import lebah.db.SQLRenderer;
 
 import org.apache.log4j.Logger;
 
-import ekptg.helpers.Utils;
-
 public class IntegrasiManager {
 
 	static Logger myLog = Logger.getLogger(integrasi.IntegrasiManager.class);
@@ -105,14 +103,14 @@ public class IntegrasiManager {
 	      sql = r.getSQLSelect("TBLINTWSCONFIG");
 //	      if (kod != null) 
 //	    	  sql = sql + " WHERE KOD = '" + kod + "' AND FLAG_AKTIF='Y' "; 
-	      myLog.info(sql);
+//	      myLog.info(sql);
 	      ResultSet rs = stmt.executeQuery(sql);
 	      
 	      while (rs.next()) {
 	    	  h = new Hashtable<String,String>();
-	    	  setKataLaluan(Utils.isNull(rs.getString("WS_PASSWORD")));
-	    	  setIdPengguna(Utils.isNull(rs.getString("WS_USERNAME")));
-	    	  setSumber(Utils.isNull(rs.getString("WS_SOURCE")));
+	    	  setKataLaluan(rs.getString("WS_PASSWORD"));
+	    	  setIdPengguna(rs.getString("WS_USERNAME"));
+	    	  setSumber(rs.getString("WS_SOURCE"));
 	    	  seTujuan(rs.getString("KETERANGAN"));
 	    	  setURL(rs.getString("WS_URL"));
 	    	  

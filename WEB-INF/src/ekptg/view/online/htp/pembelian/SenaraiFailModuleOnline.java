@@ -355,6 +355,9 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			context.put("page","2");
 		}
 		else if(command.equals("tambahTanah")){
+			jawatan = String.valueOf(hUser.get("jawatan"));
+			idJawatan = String.valueOf(hUser.get("idjawatan"));
+			context.put("idjawatan", idJawatan);
 			myLog.info("tambahTanah ::"+vm);	
 			tambahTanahDetail();
 			context.put("button", "simpan");
@@ -1294,8 +1297,70 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 					getIHTP().getErrorHTML("[ONLINE-HTP PEMBELIAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
 				//   (HTP)HQPenggunaPembelianPerletakhakan,   (HTP)HQPenggunaPembelian, (HTP)HQPengguna
 
-				ec.hantarPermohonan(getEmelSemak().checkEmail(userID), "(HTP)HQPenggunaPembelianPerletakhakan", emelSubjek, kandungan);
+				ec.sendByRoleKJP(getEmelSemak().checkEmail(userID)
+						, "4"
+						, String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdKementerian())
+						, emelSubjek, kandungan);
 								
+			}
+			Tblrujsuburusanstatusfail rsusf = new Tblrujsuburusanstatusfail();
+			rsusf.setIdPermohonan(htpPermohonan.getPermohonan().getIdPermohonan());
+			rsusf.setIdFail(htpPermohonan.getPermohonan().getPfdFail().getIdFail());
+			rsusf.setIdSuburusanstatusfail(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan());
+			rsusf.setUrl("-");
+			simpanPengesahan(rsusf,langkah);
+			HtpPermohonan htpPermohonanNew = new HtpPermohonan();
+			Permohonan permohonanNew = new Permohonan();
+			permohonanNew.setIdMasuk(Long.parseLong(userID));
+			htpPermohonanNew.setPermohonan(permohonanNew);			
+			getIHTPPermohonan().kemaskiniPermohonanTarikh(htpPermohonanNew
+					,String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan())
+					,String.valueOf(htpPermohonan.getIdHtpPermohonan()));
+
+			if(getIOnline().isHantar(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan(),htpPermohonan.getPermohonan().getIdPermohonan()
+					,htpPermohonan.getPermohonan().getPfdFail().getIdFail(),langkah)){
+				semakMode = "xupdate";			
+			}else{
+				semakMode = "update";
+			}
+			myLog.info("selectedTab=======");
+			context.put("semakMode", semakMode);
+			context.put("selectedTab", 4);
+			vm = PATH+"perakuanPembelianOnline.jsp";	
+		
+		}else if(command.equalsIgnoreCase("simpanpengesahan2")){
+			getPermohonanInfo();
+			myLog.info("simpanpengesahan ::id_permohonan="+htpPermohonan.getPermohonan().getIdPermohonan());	
+			String semakMode="";
+			String langkah = "11";
+			/*
+			 * -4 untuk status - Pendaftaran
+			 * -3 untuk status - Tindakan Pegawai 
+			 * -2 untuk status - Tindakan Pengarah
+			 * -1 untuk status - Permohonan Online (Pengesahan)
+			 * 1  untuk status - Penerimaan Permohonan
+			 * 11 untuk status - Tindakan Penyedia
+			*/
+			
+			EmailConfig ec = new EmailConfig();
+
+			//myLog.info("from="+email.FROM);
+			String emelSubjek = ec.tajukSemakan+"Perakuan Pembelian";
+			String kandungan = "";
+			if(idJawatan.equals("4")){
+				
+				langkah = "11";
+				
+				kandungan = getEmelSemak().setKandungan(htpPermohonan.getPermohonan().getPfdFail().getTajukFail(), String.valueOf(hUser.get("nama")));
+    			
+				if(!getEmelSemak().checkEmail(userID).equals(""))
+					getIHTP().getErrorHTML("[ONLINE-HTP PEMBELIAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
+
+				ec.sendByRoleKJP(getEmelSemak().checkEmail(userID)
+						, "9"
+						, String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdKementerian())
+						, emelSubjek, kandungan);
+
 			}
 			Tblrujsuburusanstatusfail rsusf = new Tblrujsuburusanstatusfail();
 			rsusf.setIdPermohonan(htpPermohonan.getPermohonan().getIdPermohonan());

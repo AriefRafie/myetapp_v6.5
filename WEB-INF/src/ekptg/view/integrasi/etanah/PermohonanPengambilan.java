@@ -65,8 +65,11 @@ public class PermohonanPengambilan extends AjaxBasedModule {
 		String idPPTWarta = getParam("idPPTWarta");		
 		String idPPTHakmilik = getParam("idPPTHakmilik");	
 		String idPPTPenarikanBalik = getParam("idPPTPenarikanBalik");	
+		String hitButton = getParam("hitButton");
 		
 		String jenisSkrin = getParam("jenisSkrin");		
+		this.context.put("jenis_skrin", jenisSkrin);
+		this.context.put("idPermohonan", idPermohonan);
 		myLog.info("jenisSkrin="+getParam("jenisSkrin"));
 	
 		vm = "/start.jsp";
@@ -121,23 +124,18 @@ public class PermohonanPengambilan extends AjaxBasedModule {
 			myLog.info("listDokumen="+listDokumen);
 
 			ETanahPPTManager pptManager  = new ETanahPPTManager("E-TANAH");
-			if (command.equals("hantarSekyen8")) {
+		if ("hantarData".equals(hitButton)) {
+			if (jenisSkrin.equals("Seksyen8")) {
 				getISek8().setHakmiliks(listHakmilik);
 				getISek8().hantar(pptManager, maklumatPermohonan,listDokumen, userID, dbMain);
-			
-			}else if (command.equals("hantarBorangC")) {
-				getIBorangC().setHakmiliks(listHakmilik);
-				getIBorangC().hantar(pptManager, maklumatPermohonan,listDokumen, userID, dbMain);
-			
-			} else if (command.equals("hantarBorangD")) {
-				getISek8().setHakmiliks(listHakmilik);
-				getISek8().hantar(pptManager, maklumatPermohonan,listDokumen, userID, dbMain);
+			}
+		
 //				if (logic.checkSenaraiHakmilik(userID, idPermohonanIntegrasi, dbMain)) {
 //					EtanahWPKLPPTManager.hantarBorangD(idPermohonanIntegrasi, userID, dbMain);
 //				} else {
 //					context.put("errorMsg", "SILA SEMAK SEMULA SENARAI HAKMILIK YANG DIDAFTARKAN");
 //				}
-			} else if ("hantarBorangK".equals(command)) {
+			} /*else if ("hantarBorangK".equals(command)) {
 //				if (logic.checkSenaraiHakmilik(userID, idPermohonanIntegrasi, dbMain)) {
 //					EtanahWPKLPPTManager.hantarBorangK(idPermohonanIntegrasi, userID, dbMain);
 //				} else {
@@ -173,6 +171,7 @@ public class PermohonanPengambilan extends AjaxBasedModule {
 					}
 				}
 			}
+			*/
 			conn.commit();
 			
 			context.put("maklumatPermohonan", maklumatPermohonan);
@@ -193,9 +192,10 @@ public class PermohonanPengambilan extends AjaxBasedModule {
 			}
 			
 			this.context.put("listDokumen", listDokumen);
+			if (!jenisSkrin.equals("Seksyen8")) {
 			Vector listDokumenEndorsan = logic.getSenaraiDokumenEndorsan(idPermohonanIntegrasi, dbMain);
 			this.context.put("listDokumenEndorsan", listDokumenEndorsan);
-
+			}
 			context.put("idFail", idFail);
 			context.put("idPermohonan", idPermohonan);
 			context.put("idPermohonanIntegrasi", idPermohonanIntegrasi);

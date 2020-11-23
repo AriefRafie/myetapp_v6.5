@@ -577,11 +577,6 @@ function simpanKemaskiniPermohonan() {
 		alert('Sila pilih Jenis Tempoh.');
   		document.${formName}.socTempoh.focus(); 
 		return; 
-	}
-	if(document.${formName}.socTempoh.value == ""){
-		alert('Sila pilih Jenis Tempoh.');
-  		document.${formName}.socTempoh.focus(); 
-		return; 
 	}	
 	if(document.${formName}.socFlagLuar.value == ""){
 		alert('Sila pilih Luar Perairan Negeri.');
@@ -931,4 +926,4 @@ function cetakSuratAkuanTerima(idFail) {
 	hWnd.focus();
 }
 </script>
-$!javascriptLampiran
+$javascriptLampiran

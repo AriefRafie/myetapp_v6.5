@@ -16,9 +16,6 @@
 #else
 <td width="33%" valign="top">
 
-
-
-
       <table width="100%" border="0" cellspacing="2" cellpadding="2" >
       	<tr>
 		<td width="1%"></td>
@@ -64,8 +61,7 @@
 		<td width="1%">:</td>
 		<td width="18%"><b>$!count_dokumen</b>
          </td>
-		</tr>
-                        
+		</tr>  
          <tr>
           <td  valign="top"></td>
           <td  valign="top">Jumlah Dokumen Berjaya Dihantar</td>

@@ -3,10 +3,9 @@
 <table width="100%">
 	<tr>
 	  <td colspan="8">
-	  #if ($!htpPermohonan.permohonan.pfdFail.getIdNegeri() == 4 || $!htpPermohonan.permohonan.pfdFail.getIdNegeri() == 14)
-		<input type="button" name="cmdsemakanhakmilik" value="Capaian Hakmilik e-Tanah" onclick="javascript:semakanHakmilikeTanah('htp','$!htpPermohonan.permohonan.getIdPermohonan()')"/>
+		<input type="button" name="cmdsemakanhakmilik" value="Capaian Hakmilik e-Tanah(Melaka)" onclick="javascript:semakanHakmilikeTanah('htp','$!htpPermohonan.permohonan.getIdPermohonan()')"/>
 	    <input type="button" class="stylobutton100_" name="cmdSimpan" id="cmdSimpan" value="Tambah" onclick="doAjaxCall${formName}('tambahTanah')">      
-	  #end
+	  
 	  </td>
 	</tr>
 	<tr class="table_header">

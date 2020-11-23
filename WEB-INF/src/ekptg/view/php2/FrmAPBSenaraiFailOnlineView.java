@@ -145,7 +145,8 @@ public class FrmAPBSenaraiFailOnlineView extends AjaxBasedModule {
 			senaraiSemak = semak.getSenaraiSemakanAttach2("phpapb",idPermohonan);
 			this.context.put("SenaraiSemak", senaraiSemak);
 			
-        } else {
+        }
+        else {
 	     	// GO TO LIST FAIL APB
 			vm = "app/php2/frmAPBSenaraiFailOnline.jsp";
 	

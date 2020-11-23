@@ -344,7 +344,7 @@ public class FrmPajakanMemorandumJemaahMenteriData {
 
 			sql = "SELECT A.ID_PERAKUANJAWATANKUASA, A.ID_PERMOHONAN, ";
 			sql += "A.STATUS_PERAKUAN, A.ULASAN, A.TARIKH_PERAKUAN ";
-			sql += "FROM TBLHTPERAKUANJAWATANKUASA a ";
+			sql += "FROM TBLHTPPERAKUANJAWATANKUASA a ";
 			sql += "WHERE A.ID_PERMOHONAN = " + idPermohonan;
 			myLog.info("setMaklumatPerakuanJawatankuasa:sql="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
@@ -376,9 +376,9 @@ public class FrmPajakanMemorandumJemaahMenteriData {
 
 			sql = "SELECT A.ID_PERAKUANJAWATANKUASA, A.ID_PERMOHONAN, ";
 			sql += " A.STATUS_PERAKUAN, A.ULASAN, A.TARIKH_PERAKUAN, ";
-			sql += " NVL((SELECT NAMA_FAIL FROM TBLHTPERAKUANATTACH ";
+			sql += " NVL((SELECT NAMA_FAIL FROM TBLHTPPERAKUANATTACH ";
 			sql += " WHERE ID_PERAKUANJAWATANKUASA=A.ID_PERAKUANJAWATANKUASA ) ,0) LAMPIRAN";
-			sql += " FROM TBLHTPERAKUANJAWATANKUASA A ";
+			sql += " FROM TBLHTPPERAKUANJAWATANKUASA A ";
 			sql += " WHERE A.ID_PERMOHONAN = " + idPermohonan;
 			myLog.info("getMaklumatPerakuanJawatankuasa:sql="+sql);
 

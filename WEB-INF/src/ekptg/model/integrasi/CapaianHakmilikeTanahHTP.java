@@ -142,7 +142,7 @@ public class CapaianHakmilikeTanahHTP implements IIntegrasieTanahCarian {
 		
 	}
 	
-	public String daftarHakmilik(String idPPKHTA, String noResit, String idHakmilik, String idPermohonan,String userId) 
+	public void daftarHakmilik(String idPPKHTA, String noResit, String idHakmilik, String idPermohonan,String userId) 
 		throws Exception {	
 		Db db = null;
 		Connection conn = null;
@@ -159,7 +159,7 @@ public class CapaianHakmilikeTanahHTP implements IIntegrasieTanahCarian {
 				+ "NO_RESIT = '" + noResit + "' "
 				+ "AND ID_HAKMILIK = '" + idHakmilik + "' "
 				+ "AND ID_PERMOHONAN = '" + idPermohonan + "'";
-			myLog.info("daftarHakmilik:sql="+sql);
+			
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			if (rs.next()){
@@ -184,8 +184,7 @@ public class CapaianHakmilikeTanahHTP implements IIntegrasieTanahCarian {
 				
 				
 				if (hakmilikRegistered(noResit, idHakmilik, idPermohonan)){
-					myLog.info("//UPDATE:id="+idHTA);
-					idPPKHTA = this.getIdHTA();
+					myLog.info("//UPDATE");
 					r.update("ID_HAKMILIKURUSAN", this.getIdHTA());
 					r.add("NO_HAKMILIK", noHakmilik);
 					r.add("NO_LOT", noPT);
@@ -223,7 +222,6 @@ public class CapaianHakmilikeTanahHTP implements IIntegrasieTanahCarian {
 				} else {
 					myLog.info("//INSERT");
 					long idHTA = DB.getNextID("TBLHTPHAKMILIKURUSAN_SEQ");
-					idPPKHTA = String.valueOf(idHTA);
 					r.add("ID_HAKMILIKURUSAN", idHTA);
 					r.add("ID_PERMOHONAN", idPermohonan);
 					r.add("NO_HAKMILIK", noHakmilik);
@@ -276,7 +274,6 @@ public class CapaianHakmilikeTanahHTP implements IIntegrasieTanahCarian {
 			if (db != null)
 				db.close();
 		}
-		return idPPKHTA;
 	}
 
 	private String getJenisPB(String jenisPB) throws Exception {

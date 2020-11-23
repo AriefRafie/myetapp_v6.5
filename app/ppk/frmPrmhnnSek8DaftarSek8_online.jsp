@@ -1504,7 +1504,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
           <td>:</td>
           <td>
           	<span id="no_hp_1a">
-        			<input name="no_hp" type="text" id="no_hp" style="text-transform:uppercase;" onBlur="uppercase()" value="$no_hp" size="14" onKeyUp="javascript:validateIC(event,this,this.value,'txtNoTelefonPemohon')" maxlength="14" $setmodeR class="$setmode" />     
+        			<input name="no_hp" type="text" id="no_hp" style="text-transform:uppercase;" onBlur="uppercase()" value="$no_hp" size="14" onKeyUp="javascript:validateIC(event,this,this.value,'no_hp')" maxlength="14" $setmodeR class="$setmode" />     
         		</span>
         		<span id="no_hp_1b">
          			<input name="no_hp" type="text" id="no_hp" style="text-transform:uppercase;" onBlur="uppercase()" value="$no_hp" size="14" onKeyUp="javascript:validateIC(event,this,this.value,'txtNoTelefonPemohon')" maxlength="14" readonly class="disabled" />  
@@ -1514,16 +1514,16 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
        
 	      <tr>
 	      	<td class="style38" valign="top" >#if($setmode != "disabled") <span class="style1">*</span> #end</td>
-	      	<td>Emel</td>
+	      	<td>Email</td>
 	      	<td>:</td>  
 	      	<td>
-<!-- 	      		<span id="emel_1a"> -->
+	      		<span id="emel_1a">
 	      			<input name="txtEmelPemohon" id="txtEmelPemohon" type="text" style="text-transform:toLowerCase;"  onblur="toLowerCase()" value="$emel" size="50" maxlength="200" class="$setmode" $setmodeR class="$setmode"/>
-<!-- 	      		</span>  -->
+	      		</span> 
 	            
-<!-- 	      		<span id="emel_1b"> -->
-<!-- 	      			<input name="txtEmelPemohon" id="txtEmelPemohon" type="text" style="text-transform:toLowerCase;"  onblur="toLowerCase()" value="$emel" size="50" maxlength="200" /> -->
-<!-- 	      		</span> -->
+	      		<span id="emel_1b">
+	      			<input name="txtEmelPemohon" id="txtEmelPemohon" type="text" class="disabled" style="text-transform:toLowerCase;"  onblur="toLowerCase()" value="$emel" size="50" maxlength="200" readonly />
+	      		</span>
 	      	</td>
 	      </tr>
       
@@ -2335,13 +2335,13 @@ alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_nama_warga
       document.f1.txtPoskod[1].focus();
     }
     
-    else if (document.f1.no_hp[0].value == "" && (document.f1.taraf_penting.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "20")){
+    else if (document.f1.no_hp[0].value == "" && (document.f1.no_hp.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "20")){
       alert("Sila masukkan No. Tel (HP)");
       document.f1.no_hp.focus();
     }
     
-    else if (document.f1.txtEmelPemohon.value == "" && document.f1.txtEmelPemohon.value != 'null'){
-      alert("Sila masukkan Emel");
+    else if (document.f1.txtEmelPemohon[0].value == "" && (document.f1.txtEmelPemohon.value != "6" && document.f1.taraf_penting.value != "8" && document.f1.taraf_penting.value != "20")){
+      alert("Sila masukkan Email");
       document.f1.txtEmelPemohon.focus();
     }
 	else if(!em.match(emailExp) && em!=""){
@@ -3367,10 +3367,10 @@ url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
         document.getElementById('no_hp_1b').style.display="none";
       } 
       
-//       if(document.getElementById('emel_1a') != null){
-//         document.getElementById('emel_1a').style.display="";
-//         document.getElementById('emel_1b').style.display="none";
-//       } 
+      if(document.getElementById('emel_1a') != null){
+        document.getElementById('emel_1a').style.display="";
+        document.getElementById('emel_1b').style.display="none";
+      } 
       
       document.getElementById('tr_hp').style.display="";
       document.getElementById('tr_pelbagainegara').style.display="";
@@ -3507,12 +3507,12 @@ url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
       document.getElementById('no_hp_1b').style.display="none";
       } 
       
-//       if(document.getElementById('emel_1a') != null){
-//         document.getElementById('emel_1a').style.display="none";
-//         document.getElementById('emel_1b').style.display="";
-//       } 
+        if(document.getElementById('emel_1a') != null){
+          document.getElementById('emel_1a').style.display="none";
+          document.getElementById('emel_1b').style.display="none";
+        } 
 
-	}
+      }
       
       else if(document.f1.taraf_penting.value == "20"){
     	    
@@ -3642,10 +3642,10 @@ url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
           document.getElementById('no_hp_1b').style.display="none";
           } 
           
-//             if(document.getElementById('emel_1a') != null){
-//               document.getElementById('emel_1a').style.display="none";
-//               document.getElementById('emel_1b').style.display="";
-//             } 
+            if(document.getElementById('emel_1a') != null){
+              document.getElementById('emel_1a').style.display="none";
+              document.getElementById('emel_1b').style.display="";
+            } 
 
           }  
       
@@ -3787,11 +3787,11 @@ url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
     document.getElementById('no_tel_1a').style.display="";
     document.getElementById('no_tel_1b').style.display="none";
     } 
-//     if(document.getElementById('emel_1a') != null)
-//     {
-//     document.getElementById('emel_1a').style.display="";
-//     document.getElementById('emel_1b').style.display="none";
-//     } 
+    if(document.getElementById('emel_1a') != null)
+    {
+    document.getElementById('emel_1a').style.display="";
+    document.getElementById('emel_1b').style.display="none";
+    } 
   
 }
 
@@ -3939,11 +3939,11 @@ document.getElementById('majlisagama').style.display="none";
     document.getElementById('no_hp_1b').style.display="none";
     } 
     
-//     if(document.getElementById('emel_1a') != null)
-//     {
-//     document.getElementById('emel_1a').style.display="none";
-//     document.getElementById('emel_1b').style.display="";
-//     }
+    if(document.getElementById('emel_1a') != null)
+    {
+    document.getElementById('emel_1a').style.display="none";
+    document.getElementById('emel_1b').style.display="none";
+    }
     
     }else{}
       document.f1.txtNamaPemohon[0].disabled = '';              

@@ -5,8 +5,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Vector;
 
-import org.apache.log4j.Logger;
-
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 import ekptg.helpers.DB;
@@ -14,12 +12,9 @@ import ekptg.model.entities.Daerah;
 import ekptg.model.entities.Negeri;
 import ekptg.model.htp.HakmilikUrusan;
 import ekptg.model.htp.PihakBerkepentingan;
-import ekptg.model.integrasi.CapaianHakmilikeTanahHTP;
 
 public class PemilikBean implements IPemilik {
 
-	static Logger myLog = Logger.getLogger(PemilikBean.class);
-	
 	//@Override
 	public void deletePemilik(String idPihakBerkepentigan) {
 		Db db = null;
@@ -194,22 +189,22 @@ public class PemilikBean implements IPemilik {
 			
 			 long IdPihakberkepentingan = DB.getNextID("TBLHTPPIHAKBERKEPENTINGAN_SEQ");
 			 r = new SQLRenderer();
-			 r.add("id_pihakberkepentingan", IdPihakberkepentingan);
-			 r.add("id_hakmilikurusan", pemilik.getIdHakmilikUrusan());
+			 r.add("id_Pihakberkepentingan", IdPihakberkepentingan);
+			 r.add("id_Hakmilikurusan", pemilik.getIdHakmilikUrusan());
 			 r.add("nama", pemilik.getNama());
-			 r.add("id_jenisnopb", pemilik.getJenisPB());
-			 r.add("id_jenispb", pemilik.getJenisPB());
-			 r.add("no_rujukan",pemilik.getNoRujukan());		  
+			 r.add("id_Jenisnopb", pemilik.getJenisPB());
+			 r.add("id_Jenispb", pemilik.getJenisPB());
+			 r.add("no_Rujukan",pemilik.getNoRujukan());		  
 			 r.add("alamat1", pemilik.getAlamat1());
 			 r.add("alamat2", pemilik.getAlamat2());
 			 r.add("alamat3", pemilik.getAlamat3());
 			 r.add("poskod", pemilik.getPoskod());
-			 r.add("id_daerah", pemilik.getIdDaerah());
-			 r.add("id_negeri", pemilik.getIdNegeri());
-			 r.add("no_tel", pemilik.getTel());
-			 r.add("no_fax", pemilik.getFax());
-			 sql = r.getSQLInsert("tblhtppihakberkepentingan");
-			 myLog.info("savePemilik:sql="+sql);
+			 r.add("id_Daerah", pemilik.getIdDaerah());
+			 r.add("id_Negeri", pemilik.getIdNegeri());
+			 r.add("no_Tel", pemilik.getTel());
+			 r.add("no_Fax", pemilik.getFax());
+			 sql = r.getSQLInsert("Tblhtppihakberkepentingan");
+			 
 			 stmt.executeUpdate(sql);	
 			 conn.commit();
 		}

@@ -874,7 +874,7 @@ public class FrmCukai extends AjaxBasedModule{
 						
 				System.out.println("CukaiProcess::simpanPeringkatBayar:: h = "+h);
 						
-				//idPeringkatbayaran = FrmCukaiPenyataData.simpanPeringkatBayarInteger(h);
+				idPeringkatbayaran = FrmCukaiPenyataData.simpanPeringkatBayarInteger(h);
 				System.out.println("CukaiProcess::SimpanPenyata::idPeringkatbayaran::"+idPeringkatbayaran);
 						
 				list = FrmCukaiPenyataData.getListPenyata(idNegeri);
@@ -925,7 +925,7 @@ public class FrmCukai extends AjaxBasedModule{
 						
 				System.out.println("CukaiProcess::kemaskiniPeringkatBayar:: h = "+h);
 							
-				//idPeringkatbayaran = FrmCukaiPenyataData.updatePeringkatBayarInteger(h);
+				idPeringkatbayaran = FrmCukaiPenyataData.updatePeringkatBayarInteger(h);
 				System.out.println("CukaiProcess::KemaskiniPenyata::idPeringkatbayaran::"+idPeringkatbayaran);
 							
 				list = FrmCukaiPenyataData.getListPenyata(idNegeri);
@@ -986,7 +986,7 @@ public class FrmCukai extends AjaxBasedModule{
 				h.put("tahun_cukai", tahun_cukai);						
 				h.put("peringkat_bayaran", idBayaran);		    
 				h.put("idMasuk", idUser);
-				//idPeringkatbayaran = FrmCukaiPenyataData.simpanPeringkatBayarInteger(h);						
+				idPeringkatbayaran = FrmCukaiPenyataData.simpanPeringkatBayarInteger(h);						
 				//list = FrmCukaiPenyataData.getListPenyata(idNegeri);
 				myLog.info("CukaiProcess::simpanPeringkatBayar::idNegeri::"+idNegeri);						
 				myLog.info("CukaiProcess::simpanPeringkatBayar::tahun_cukai::"+tahun_cukai);
@@ -1024,7 +1024,7 @@ public class FrmCukai extends AjaxBasedModule{
 				h.put("tahun_cukai", tahun_cukai);							
 				h.put("peringkat_bayaran", idBayaran);						
 				h.put("idKemaskini", idUser);
-				//idPeringkatbayaran = FrmCukaiPenyataData.updatePeringkatBayarInteger(h);							
+				idPeringkatbayaran = FrmCukaiPenyataData.updatePeringkatBayarInteger(h);							
 				//list = FrmCukaiPenyataData.getListPenyata(idNegeri);						
 				String sumCukai = getParam("sumCukai");
 				int sumIdHakmilik = Integer.parseInt(getParam("sumIdHakmilik"));

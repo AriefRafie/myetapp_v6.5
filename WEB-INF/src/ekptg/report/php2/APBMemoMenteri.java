@@ -15,13 +15,13 @@ public class APBMemoMenteri extends EkptgReportServlet {
 
 	public APBMemoMenteri() {
 		super.setReportName("APBorang2_Perenggan4");
-		super.setFolderName("php2//APB");
+		super.setFolderName("php2\\APB");
 	}
 
 	@Override
 	public void doProcessing(HttpServletRequest request,
-		HttpServletResponse response, ServletContext context, Map parameters)
-		throws Exception {
+			HttpServletResponse response, ServletContext context, Map parameters)
+			throws Exception {
 		
 		String idfail = "";
 		if (parameters.get("ID_FAIL") != null){
@@ -68,7 +68,7 @@ public class APBMemoMenteri extends EkptgReportServlet {
 		String valueDecoded = Base64.base64Decode(new String(bytesEncoded));
 		System.out.println("bytesDecoded = "+valueDecoded);
 
-		QRCodeAPB model1 = new QRCodeAPB(nofail, new String(bytesEncoded),context);
+		QRCodeAPB model1 = new QRCodeAPB(nofail, new String(bytesEncoded));
 		String slash = "/";
 		String noFailremoveslash = nofail.replaceAll(slash,"");
 		noFailremoveslash=noFailremoveslash.replaceAll(" ","");

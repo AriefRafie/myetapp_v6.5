@@ -27,12 +27,10 @@ public class FrmRekodTransaksiCukaiData {
 			listCukai = new Vector<Hashtable<String,String>>();
 			Statement stmt = db.getStatement();
 			
-			sql = "SELECT TC.ID_HAKMILIKCUKAI,TC.ID_HAKMILIK,TC.CUKAI_TERKINI, TC.TARIKH_MASUK "+
-		       	  " ,U.USER_NAME "+
-		       	  " FROM TBLHTPHAKMILIKCUKAI TC, USERS U " +
-		       	  " WHERE TC.ID_KEMASKINI = U.ID_KEMASKINI(+) "+
-		       	  " AND TC.ID_HAKMILIK = ' "+id +"' " +
-		       	  " ORDER BY TC.TARIKH_MASUK DESC ";				  
+			sql = "SELECT TBLHTPHAKMILIKCUKAI.ID_HAKMILIKCUKAI,TBLHTPHAKMILIKCUKAI.ID_HAKMILIK,TBLHTPHAKMILIKCUKAI.CUKAI_TERKINI, TBLHTPHAKMILIKCUKAI.TARIKH_MASUK "+
+		       	  "FROM TBLHTPHAKMILIKCUKAI " +
+		       	  "WHERE TBLHTPHAKMILIKCUKAI.ID_HAKMILIK = ' "+id +"' " +
+		       	  "ORDER BY TBLHTPHAKMILIKCUKAI.TARIKH_MASUK DESC ";				  
 		       			
 			ResultSet rs = stmt.executeQuery(sql);
 			log.info("transaksi cukai :"+sql);
@@ -47,7 +45,6 @@ public class FrmRekodTransaksiCukaiData {
 				h.put("idHakmilikCukai", rs.getString("ID_HAKMILIKCUKAI")==null ? "" :rs.getString("ID_HAKMILIKCUKAI"));
 				h.put("cukaiTerkini", rs.getString("CUKAI_TERKINI")==null ? "" :Utils.format2Decimal(rs.getDouble("CUKAI_TERKINI")));
 				h.put("tarikhTransaksi", rs.getString("TARIKH_MASUK")==null ? "" :sdf.format(rs.getDate("TARIKH_MASUK")));
-				h.put("pengguna", rs.getString("USER_NAME")==null ? "" :rs.getString("USER_NAME"));
 				listCukai.addElement(h);
 				bil++;
 				count++;
