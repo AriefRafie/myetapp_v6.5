@@ -15,7 +15,7 @@
 
 <fieldset><legend>SENARAI HAKMILIK</legend>
 			<fieldset>
-			<legend>Hakmilik (Rekod)</legend>
+			<legend>Hakmilik (Rekod Keseluruhan)</legend>
 				<table width="100%" border="0">
 		<tr class="table_header">
 		    <td width="3%">Bil.</td>
@@ -93,7 +93,7 @@
 			</fieldset>
 
 			<fieldset>
-			<legend>Hakmilik (Tidak Bayar Cukai)</legend>
+			<legend>Hakmilik (Tidak Perlu Dibayar Cukai ($!tahuncukain))</legend>
 				<table width="100%" border="0">
 		<tr class="table_header">
 		    <td width="3%">Bil.</td>
@@ -167,7 +167,7 @@
 			</fieldset>
 			
 			<fieldset>
-			<legend>Hakmilik (Cukai)</legend>
+			<legend>Hakmilik (Cukai Perlu Dibayar)</legend>
 				<table width="100%" border="0">
 		<tr class="table_header">
 		    <td width="3%">Bil.</td>

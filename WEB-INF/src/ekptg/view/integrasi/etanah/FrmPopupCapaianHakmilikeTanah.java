@@ -81,6 +81,7 @@ public class FrmPopupCapaianHakmilikeTanah extends AjaxBasedModule {
 				if(modul.equals("htp")) {
 					ETanahCarianManager.getMaklumatHakmilikeTanahHTP(noResit, idHakmilik, idPermohonan, kodNegeri);
 				}else if (modul.equals("ppk")){
+					idPermohonan = idPermohonanSimati;
 					ETanahCarianManager.getMaklumatHakmilikeTanahPPK(noResit, idHakmilik, idPermohonan, kodNegeri);
 				}else if (modul.equals("ppt")) {
 					ETanahCarianManager.getMaklumatHakmilikFromEtanah(noResit, idHakmilik, idPermohonan, kodNegeri);
@@ -156,7 +157,8 @@ public class FrmPopupCapaianHakmilikeTanah extends AjaxBasedModule {
 				
 				
 			}else if (modul.equals("ppk")) { 
-				getCarianPPK().daftarHakmilik(idHarta, getParam("noResit"), getParam("idHakmilik"), idPermohonan, idPengguna);
+				myLog.info("ppk=");
+				getCarianPPK().daftarHakmilik(idHarta, getParam("noResit_"), getParam("idHakmilik_"), idPermohonan, idPengguna);
 			}else if (modul.equals("ppt")) { 
 				logic.daftarHakmilik(idHarta, getParam("noResit"), getParam("idHakmilik"), idPermohonan, idPengguna);
 			}
@@ -255,6 +257,7 @@ public class FrmPopupCapaianHakmilikeTanah extends AjaxBasedModule {
 			e.printStackTrace();
 			this.context.put("error",e.getMessage());
 		}	
+		
 	}
 	
 	public Tblrujjenisnopb getRujJenisNoPB(String kod) throws Exception {
@@ -290,13 +293,13 @@ public class FrmPopupCapaianHakmilikeTanah extends AjaxBasedModule {
 		return s;
 		
 	}
-
 		  
 	private IIntegrasieTanahCarian getCarianHTP(){
 		if(carianHTP== null)
 			carianHTP = new CapaianHakmilikeTanahHTP();
 		return carianHTP;
 	}
+	
 	private IIntegrasieTanahCarian getCarianPPK(){
 		if(carianPPK== null)
 			carianPPK = new CapaianHakmilikeTanahPPK();
