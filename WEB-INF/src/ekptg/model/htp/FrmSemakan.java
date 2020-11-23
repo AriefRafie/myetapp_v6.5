@@ -242,7 +242,7 @@ public class FrmSemakan {
 		    sql = "SELECT DISTINCT i.aturan, i.id_semakansenarai, i.kod_form, s.perihal,"
 		    		+ "NVL (sjd.id_jenisdokumen, 0) jenis_dokumen, "
 		    		+ "NVL (jd.keterangan, 'TIADA') nama_dokumen, "
-		    		+ "sh.id_permohonan,sh.id_semakanhantar, "
+		    		+ "sh.id_permohonan, "
 		    		+ "CASE "
 		    		+ "	WHEN sh.id_semakanhantar IS NULL "
 		    		+ "		THEN 'N' "
