@@ -129,8 +129,10 @@
 				  						#elseif($penjualMode == "update")
 				  							<input type="button" class="stylobutton100" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:updatePenjual()">
 				  						#else
+				  							#if (($!idjawatan.equals("20")|| $!idjawatan.equals("24")) || $!idjawatan.equals("9"))
 				  							<input type="button" class="stylobutton100" name="cmdSimpan" id="cmdSimpan" value="Kemaskini" onclick="javascript:kemaskiniPenjual()">
 				  							<input type="button" class="stylobutton100" name="cmdhapus" value="Hapus" onclick="javascript:hapusPenjual()">
+				  							#end
 				  						#end
 				  						<!-- <input type="button" class="stylobutton" name="cmdSimpan" id="cmdSimpan" value="Kembali" onclick=""> -->
                                   	</td>
