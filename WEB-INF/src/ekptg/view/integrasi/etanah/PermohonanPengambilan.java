@@ -2,6 +2,7 @@ package ekptg.view.integrasi.etanah;
 
 import integrasi.rest.etanah.wpkl.ppt.EtanahWPKLPPTManager;
 import integrasi.utils.IntegrationInternal;
+import integrasi.ws.etanah.ETanahBorangC;
 import integrasi.ws.etanah.ETanahSek8;
 import integrasi.ws.etanah.ppt.ETanahPPTManager;
 
@@ -40,7 +41,8 @@ public class PermohonanPengambilan extends AjaxBasedModule {
 	PopupeTanahData logic = new PopupeTanahData();
     ILampiran iLampiran = null;
     IntegrationInternal integration = null;
-    
+    IntegrationInternal integrationC = null;
+
 	@Override
 	public String doTemplate2() throws Exception {
 		HttpSession session = this.request.getSession();
@@ -73,7 +75,11 @@ public class PermohonanPengambilan extends AjaxBasedModule {
 		vm = "/start.jsp";
 
 		String flagUrusan = "";
-		if (jenisSkrin.equals("WartaS8")) {
+		if (jenisSkrin.equals("Sekyen8")) {
+			flagUrusan = "S8";
+		} else if (jenisSkrin.equals("BorangC")) {
+			flagUrusan = "C";
+		}else if (jenisSkrin.equals("WartaS8")) {
 			flagUrusan = "D";
 		} else if ("BorangK".equals(jenisSkrin)) {
 			flagUrusan = "K";
@@ -130,17 +136,12 @@ public class PermohonanPengambilan extends AjaxBasedModule {
 //					context.put("errorMsg", "SILA SEMAK SEMULA SENARAI HAKMILIK YANG DIDAFTARKAN");
 //				}
 			} /*else if ("hantarBorangK".equals(command)) {
-				if (logic.checkSenaraiHakmilik(userID, idPermohonanIntegrasi, dbMain)) {
-					EtanahWPKLPPTManager.hantarBorangK(idPermohonanIntegrasi, userID, dbMain);
-				} else {
-					context.put("errorMsg", "SILA SEMAK SEMULA SENARAI HAKMILIK YANG DIDAFTARKAN");
-				}
-			} else if ("hantarTarikBalik".equals(command)) {
-				if (logic.checkSenaraiHakmilik(userID, idPermohonanIntegrasi, dbMain)) {
-					EtanahWPKLPPTManager.hantarPenarikanBalik(idPermohonanIntegrasi, userID, dbMain);
-				} else {
-					context.put("errorMsg", "SILA SEMAK SEMULA SENARAI HAKMILIK YANG DIDAFTARKAN");
-				}
+//				if (logic.checkSenaraiHakmilik(userID, idPermohonanIntegrasi, dbMain)) {
+//					EtanahWPKLPPTManager.hantarBorangK(idPermohonanIntegrasi, userID, dbMain);
+//				} else {
+//					context.put("errorMsg", "SILA SEMAK SEMULA SENARAI HAKMILIK YANG DIDAFTARKAN");
+//				}
+
 			} else if ("deleteDokumen".equals(command)) {
 				String idDokumen = getParam("idDokumen");
 				logic.deleteDokumen(idDokumen, dbMain);
@@ -284,6 +285,13 @@ public class PermohonanPengambilan extends AjaxBasedModule {
 				
 	}
 	
+	private IntegrationInternal getIBorangC(){
+		if(integrationC == null){
+			integrationC = new ETanahBorangC();
+		}
+		return integrationC;
+				
+	}
 	private IntegrationInternal getISek8(){
 		if(integration == null){
 			integration = new ETanahSek8();
