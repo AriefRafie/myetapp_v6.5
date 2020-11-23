@@ -96,6 +96,12 @@ function doChangeTab(tabId) {
 function doChangeKategoriPemohon() {
 	doAjaxCall${formName}("doChangeKategoriPemohon");
 }
+function doChangeBangsa() {
+	doAjaxCall${formName}("doChangeBangsa");
+}
+function doChangeWarganegara() {
+	doAjaxCall${formName}("doChangeWarganegara");
+}
 function doChangeNegeri() {
 	doAjaxCall${formName}("doChangeNegeri");
 }
@@ -926,4 +932,4 @@ function cetakSuratAkuanTerima(idFail) {
 	hWnd.focus();
 }
 </script>
-$javascriptLampiran
+$!javascriptLampiran

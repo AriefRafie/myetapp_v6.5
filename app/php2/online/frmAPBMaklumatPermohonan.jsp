@@ -205,6 +205,9 @@ function doChangeNegeri() {
 function doChangeWarganegara() {
 	doAjaxCall${formName}("doChangeWarganegara");
 }
+function doChangeBangsa() {
+	doAjaxCall${formName}("doChangeBangsa");
+}
 function getLainlain(id) {
 	if (document.${formName}.socWarganegara.value == "13") {
 		document.getElementById(id).style.display="";
@@ -457,14 +460,6 @@ function kemaskiniPengarah(){
 }
 
 function simpanKemaskiniPengarah(){
-
-	if(document.${formName}.socWarganegara.value != "13"){
-		document.${formName}.txtWarga.value="";
-	}
-	
-	if(document.${formName}.socBangsa.value != "7"){
-		document.${formName}.txtBangsa.value="";
-	}
 
 	if(document.${formName}.socWarganegara.value == ""){
 		alert('Sila pilih Warganegara.');

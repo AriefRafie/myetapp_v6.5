@@ -65,67 +65,54 @@
           <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
           <td>Tempoh Lesen Dipohon</td>
           <td>:</td>
-          <td><select name="socTempoh" id="socTempoh" style="width:90px;" $readonly class="$disabled" $disabled >
+          <td>
+          	<select name="socTempoh" id="socTempoh" style="width:90px;" $readonly class="$disabled" $disabled >
           		$beanMaklumatPermohonan.socTempoh
-                   
             #if ($beanMaklumatPermohonan.tempoh == '1')
-                
                 <option>SILA PILIH</option>
                 <option value="1" selected="selected">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
-                  
             #elseif ($beanMaklumatPermohonan.tempoh == '2')
-                
                 <option>SILA PILIH</option>
                 <option value="1">1</option>
                 <option value="2" selected="selected">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
-                 
             #elseif ($beanMaklumatPermohonan.tempoh == '3')
-                
                 <option>SILA PILIH</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3" selected="selected">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
-                 
             #elseif ($beanMaklumatPermohonan.tempoh == '4')
-                
                 <option>SILA PILIH</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4" selected="selected">4</option>
                 <option value="5">5</option>
-                 
             #elseif ($beanMaklumatPermohonan.tempoh == '5')
-                
                 <option>SILA PILIH</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5" selected="selected">5</option>
-                               
             #else
-                 
                 <option>SILA PILIH</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
-                  
             #end
-               
-              </select>
-TAHUN </td>
+            </select>TAHUN 
+		  </td>
         </tr>
         #if ($mode == 'update')
         <tr>
@@ -386,7 +373,7 @@ TAHUN </td>
         #end
       </table></td>
   </tr>
- <tr>
+  <tr>
     <td colspan="2"><table width="100%" border="0" cellspacing="2" cellpadding="2">
         #if ($mode == 'newPengarah' || $mode == 'updatePengarah' || $mode == 'viewPengarah')
         <tr>
