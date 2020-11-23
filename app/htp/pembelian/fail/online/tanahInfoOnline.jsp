@@ -35,7 +35,7 @@
 				      <td><div align="right"><font color="#FF0000">*</font>Daerah :</div></td>
 				      <td>$socDaerah</td>
 				      <td><div align="right"><font color="#FF0000">*</font>No. Hakmilik :</div></td>
-				      <td><input type="number" name="txtNoHakmilik" id="txtNoHakmilik" maxlength="21" onkeyup="this.value=this.value.toUpperCase();" value="$!urusan.getNohakmilik()" $mode $classdis /></td>
+				      <td><input type="text" name="txtNoHakmilik" id="txtNoHakmilik" maxlength="21" onkeyup="this.value=this.value.toUpperCase();" value="$!urusan.getNohakmilik()" $mode $classdis /></td>
 			        </tr>
 		         	<tr>
 		         	  <td><div align="right"><font color="#FF0000">*</font>Bandar/Pekan/Mukim :</div></td>
@@ -58,7 +58,7 @@
 		            <td><div align="right"><font color="#FF0000">*</font>No. Lot</div>
 		          	 </td>
 		          	<td>
-                  		<input type="number" name="txtNoLot" id="txtKodLot" maxlength="20" size="20" onkeyup="this.value=this.value.toUpperCase();" value="$!urusan.getNolot()" $mode $classDis>
+                  		<input type="text" name="txtNoLot" id="txtKodLot" maxlength="20" size="20" onkeyup="this.value=this.value.toUpperCase();" value="$!urusan.getNolot()" $mode $classDis>
                 	</td>
              		          
 		          </tr>
@@ -66,7 +66,7 @@
 		          <tr>
 		            <td><div align="right"><font color="#FF0000">*</font>Unit Luas :</div></td>
 		            <td>$socLuas</td>
-		            <td><div align="right"><font color="#FF0000">*</font>Rizab :</div></td>
+		            <td><div align="right"></font>Rizab :</div></td>
 		            <td>$socRizab</td>
 		            </tr>
          	 		 <tr>
@@ -124,12 +124,16 @@
 	<tr>
 	<td align="center">
 	#if($button == "simpan")
+		#if (($!idjawatan.equals("20")|| $!idjawatan.equals("24")) || $!idjawatan.equals("9"))
     	<input class="stylobutton100" name="Simpan" value="Simpan" type="button" onclick="javascript:simpanMaklumatTanah()"/> 
+    	#end
         <input class="stylobutton100" name="Kembali" value="Kembali" type="button" onclick="doAjaxCall${formName}('maklumatanahonline','idPermohonan='+$!htpPermohonan.permohonan.getIdPermohonan())"/> 
    	#else
 		#set($portal_role = "${session.getAttribute('myrole')}")
 		#if ($portal_role!='online_kjpagensi')
+			#if (($!idjawatan.equals("20")|| $!idjawatan.equals("24")) || $!idjawatan.equals("9"))
         <input class="stylobutton100" name="Simpan" value="Kemaskini" type="button" onclick="javascript:kemaskiniMaklumatTanah()"/>
+   			#end
    		#end
         <input class="stylobutton100" name="Kembali" value="Kembali" type="button" onclick="doAjaxCall${formName}('maklumatanahonline','idPermohonan='+$!htpPermohonan.permohonan.getIdPermohonan())"/>
    	#end
