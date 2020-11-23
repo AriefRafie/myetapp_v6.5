@@ -6747,8 +6747,10 @@ public class FrmSek8SiasatanData extends EkptgCache implements
 					h.put("URUSAN", rs.getString("NAMA_SUBURUSAN") == null ? ""
 							: rs.getString("NAMA_SUBURUSAN").toUpperCase());
 					senarai_Siasatan.addElement(h);
+					
 				}
 				return senarai_Siasatan;
+				
 			} catch (Exception re) {
 				log.error("Error: ", re);
 				throw re;

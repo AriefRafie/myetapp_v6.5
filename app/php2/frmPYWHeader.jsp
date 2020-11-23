@@ -7,7 +7,7 @@
       <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         <tr>
-          <td width="36%" align="right">No Fail</td>
+          <td width="36%" align="right">No. Fail</td>
           <td width="1%">:</td>
           <td width="63%"><font color="blue">$beanHeader.noFail</font> #if ($beanHeader.noSambungan != '' && $beanHeader.noSambungan != '0')
             &nbsp;(SAMBUNGAN)
@@ -17,9 +17,14 @@
             </td>          
         </tr>
         <tr>
-          <td width="36%" align="right">No Fail Negeri</td>
+          <td width="36%" align="right">No. Fail Negeri</td>
           <td width="1%">:</td>
           <td width="63%"><font color="blue">$beanHeader.noFailNegeri</font></td>
+        </tr>
+        <tr>
+          <td width="36%" align="right">No. Rujukan <i>Online</i></td>
+          <td width="1%">:</td>
+          <td width="63%"><font color="blue">$beanHeader.noFailOnline</font></td>
         </tr>
         <tr>
           <td width="36%" align="right">Urusan</td>

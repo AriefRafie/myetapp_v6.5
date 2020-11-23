@@ -6,9 +6,9 @@
 
 <!--$listBandarTetapbyNegeri-->
 <!--  $listmukim  -->
-<!--  testt231313213 
+<!--  testt231313213
  $listHTAid  -->
-<!--  testt 
+<!--  testt
 $listnegeri -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Fail Pendaftaran</title>
@@ -63,49 +63,49 @@ $listnegeri -->
 <input name="load" id="load" type="hidden"/>
 <input type="hidden" name="paramOnline" value="$paramOnline" id="paramOnline"/>
   #if($add_new_harta == "yes")
-  
+
   #set($listBandarSuratbyNegeri="")
-  #set($idhta="")	
-  #set($noHakmilik="")		    
+  #set($idhta="")
+  #set($noHakmilik="")
   #set($idSimati="")
   #set($nopt="")
   #set($nilai_Hta_memohon="")
   #set($nilai_Hta_mati="")
   #set($kategori="")
   #set($jenishakmilik="")
-  #set($pemilikan="1")		    
+  #set($pemilikan="1")
   #set($negeri="")
-  #set($daerah="")	
-  #set($mukim="")	
+  #set($daerah="")
+  #set($mukim="")
   #set($luashmp="")
-  #set($luasasal="") 
-  #set($nocagaran="")			    
-  #set($nopajakan="")			   	
-  #set($jenistanah="")	    
+  #set($luasasal="")
+  #set($nocagaran="")
+  #set($nopajakan="")
+  #set($jenistanah="")
   #set($basimati="")
   #set($bbsimati="")
   #set($jenishta="")
   #set($tanggungan="")
-  #set($jenisluas="")		    
-  #set($catatan="")	  
-  #set($FLAG_DAFTAR="")	
-  #set($noperserahan="")    		   	 
+  #set($jenisluas="")
+  #set($catatan="")
+  #set($FLAG_DAFTAR="")
+  #set($noperserahan="")
   #set($nopt="")
   #set($nilai_Hta_memohon="")
   #set($nilai_Hta_mati="")
   #set($kategori="")
   #set($jenishakmilik="")
-  #set($pemilikan="1")	 
+  #set($pemilikan="1")
   #set($luashmp="")
-  #set($luasasal="") 				    
-  #set($nopajakan="")			   	
-  #set($jenistanah="")	    
+  #set($luasasal="")
+  #set($nopajakan="")
+  #set($jenistanah="")
   #set($basimati="")
   #set($bbsimati="")
   #set($tanggungan="")
-  #set($jenisluas="")	
-  #set($catatan="")	
-  #set($FLAG_DAFTAR="")	  	
+  #set($jenisluas="")
+  #set($catatan="")
+  #set($FLAG_DAFTAR="")
   #set($noperserahan="")
   #set($alamathta1="")
   #set($alamathta2="")
@@ -114,15 +114,15 @@ $listnegeri -->
   #set($bandar="")
   #set($id_negeri_hta="")
   #set($bandarhta="")
-  
+
   #set($sekatan="")
   #set($syaratNyata="")
   #set($namaPelan="")
-  
+
   ##else if($add_new_harta == "no")
-  
+
   #end
-  
+
   #parse("app/ppk/paging_sek8.jsp")
   <input name="eventStatus" id="eventStatus" type="hidden" />
   #parse("app/ppk/bil_fail.jsp")
@@ -137,7 +137,7 @@ $listnegeri -->
     <input name="id_Suburusanstatus" type="hidden"  value="$listFail.id_Suburusanstatus"/>
     <input name="id_Suburusanstatusfail" type="hidden"  value="$listFail.id_Suburusanstatusfail"/>
     #end
-    
+
     #foreach($list in $View)
     #set ($id = $list.idPermohonan)
     #set ($idPemohon = $list.idPemohon)
@@ -153,7 +153,7 @@ $listnegeri -->
     <input name="idtemp" type="hidden"  value="$id"/>
     <input name="id_Permohonansimati" type="hidden"  value="$list.id_Permohonansimati"/>
     <input name="id_Fail" id="id_Fail" type="hidden" value="$list.idFail" />
-    #set($id_fail = $list.idFail) 
+    #set($id_fail = $list.idFail)
     #set($listnoFail = $list.noFail)
     #set($listidnegeri = $list.idnegeri)
     #set($listnamadaerah = $list.namadaerah)
@@ -169,8 +169,8 @@ $listnegeri -->
     #end
     <tr>
       <td> #parse("app/ppk/maklumat_sek8.jsp")
-        
-        
+
+
         #set($md=$listtarikhMohon)
         <input type="hidden" name="txtSeksyen" value="$listseksyen" readonly="true"/>
         <input type="hidden" name="txdTarikhMohon" id="txdTarikhMohon" value="$listtarikhMohon" />
@@ -227,7 +227,7 @@ $listnegeri -->
                           <fieldset>
                           <legend>HARTA TAK ALIH (ADA HAKMILIK)</legend>
                           <table width="100%" border="0">
-                          #if($!skrin_online != "yes") 
+                          #if($!skrin_online != "yes")
                            <tr>
                           <td><input name="cmdIntergrasi" type="button" value="Capaian Majlis Perbandaran" onclick="javascript:doChangeMaklumat('$noPengenalan')" disabled/></td>
                     	  </tr>
@@ -242,15 +242,15 @@ $listnegeri -->
                                       </div></td>
                                     <td width="1%"><div align="right">:</div></td>
                                     <td width="70%"> #foreach($listnegpomo in $listnegeri)
-                                      
+
                                       #if($negeri==$listnegpomo.id_Negeri)
-                                      
+
                                       #set($negerikodpemoP=$listnegpomo.kod_Negeri)
                                       #set($negeriketeranganpemoP=$listnegpomo.nama_Negeri)
-                                      
-                                      
-                                      
-                                      #end 
+
+
+
+                                      #end
                                       #end
                                       #if($negeri!="")
                                       <select name="socNegeriHtaam" class="autoselect" $readmodenegeri onchange="setSelected(1,0,0,0);negerichange('socDaerahHtaam')" style="text-transform:uppercase;" onblur="uppercase()">
@@ -279,15 +279,15 @@ $listnegeri -->
                                       </div></td>
                                     <td><div align="right">:</div></td>
                                     <td>#foreach($listdaerah in $listDaerahbyNegeri)
-                                      
+
                                       #if($daerah==$listdaerah.id)
-                                      
+
                                       #set($listDaerahbyNegeriK=$listdaerah.kod)
                                       #set($listDaerahbyNegeriN=$listdaerah.nama)
-                                      
-                                      
-                                      
-                                      #end 
+
+
+
+                                      #end
                                       #end
                                       #if($daerah!="")
                                       <select name="socDaerahHtaam" id="socDaerahHtaam" class="autoselect" $readmodedaerah onchange="setSelected(1,0,0,0);daerahchange('socMukimHtaam');daerah_harta();check_harta()" style="text-transform:uppercase;" onblur="uppercase()"  onclick="CheckDaerah()" >
@@ -314,15 +314,15 @@ $listnegeri -->
                                       </div></td>
                                     <td><div align="right">:</div></td>
                                     <td>#foreach($listmukim in $listMukimbyDaerah)
-                                      
+
                                       #if($mukim==$listmukim.id)
-                                      
+
                                       #set($listMukimbyDaerahK=$listmukim.kod)
                                       #set($listMukimbyDaerahN=$listmukim.nama)
-                                      
-                                      
-                                      
-                                      #end 
+
+
+
+                                      #end
                                       #end
                                       #if($mukim!="")
                                       <select name="socMukimHtaam" class="autoselect" $readmodemukim id="socMukimHtaam" style="text-transform:uppercase;" onblur="uppercase()" onfocus="CheckMukim()" >
@@ -330,7 +330,7 @@ $listnegeri -->
                                   #foreach($listmukim in $listMukimbyDaerah)
                                   #if($mukim!=$listmukim.id)
                                         <option value="$listmukim.id">$listmukim.kod - $listmukim.nama</option>
-                                  #end    
+                                  #end
 	                              #end
                                       </select>
                                       #else
@@ -349,13 +349,13 @@ $listnegeri -->
                                       </div></td>
                                     <td><div align="right">:</div></td>
                                     <td>#foreach($listjenishakmilik in $listJenisHakMilik)
-                                      
+
                                       #if($jenishakmilik==$listjenishakmilik.id)
-                                      
+
                                       #set($listjenishakmilikK=$listjenishakmilik.kod)
                                       #set($listjenishakmilikN=$listjenishakmilik.keterangan)
-   
-                                      #end 
+
+                                      #end
                                       #end
                                       #if($jenishakmilik!="")
                                      <select name="socJenisHakmilikHtaam" class="autoselect" $readmode id="socJenisHakmilikHtaam" style="text-transform:uppercase;" onblur="uppercase()">
@@ -363,7 +363,7 @@ $listnegeri -->
                                   #foreach($listjenishakmilik in $listJenisHakMilik)
                                   #if($jenishakmilik!=$listjenishakmilik.id)
                                         <option value="$listjenishakmilik.id">$listjenishakmilik.kod - $listjenishakmilik.keterangan</option>
-                                  #end    
+                                  #end
 	                               #end
                                       </select>
                                       #else
@@ -399,7 +399,7 @@ $listnegeri -->
                                       #if($!skrin_online != "yes")
                                       <input type="button" name="checkLotWujud" id="checkLotWujud" value="Semak" onclick="setSelected(1,0,0,0);checkWujudLot('txtNoPTHtaam');"/>
                                       <font  color="blue"  onMouseOver="this.style.cursor='help'" onClick="open_new_window('1','');" ><img src="../img/info.png"  align="center" /></font> #end
-                                      
+
                                       #if($CheckWujudLot != "")
                                       #if($CheckWujudLot == "Y") <br />
                                       <span id="CheckWujudLot" style="color:blue" >Maklumat Hakmilik telah disalin</span> #end
@@ -408,9 +408,9 @@ $listnegeri -->
                                       #end <br />
                                       <span id="checklot" style="color:red" ></span> </td>
                                   </tr>
-                                  
-                                   <!--    <!-- Salnizam edit starts --> 
-                                                           
+
+                                   <!--    <!-- Salnizam edit starts -->
+
                                     <tr>
                                     <td class="style38" valign="top" ></td>
                                     <td class="style38"><div align="right" class="style44">
@@ -422,7 +422,7 @@ $listnegeri -->
                                       </label>
                                       #if($readmode != "disabled") <span id="checklot" style="color:red" ></span> #end </td>
                                   </tr>
-                                  
+
                                    <tr>
                                     <td class="style38" valign="top" >#if($readmode != "disabled")#end</td>
                                     <td class="style38"><div align="right" class="style44">
@@ -430,12 +430,12 @@ $listnegeri -->
                                       </div></td>
                                     <td></td>
                                     <td><label>
-                                    
+
                                       <input name="txtAlamat2Htaam" type="text" id="txtAlamat2Htaam" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" value="" size="50" maxlength="50"  class="$readmode"    />
                                       </label>
                                       #if($readmode != "disabled") <span id="checklot" style="color:red" ></span> #end </td>
                                   </tr>
-                                  
+
                                    <tr>
                                     <td class="style38" valign="top" >#if($readmode != "disabled")#end</td>
                                     <td class="style38"><div align="right" class="style44">
@@ -458,7 +458,7 @@ $listnegeri -->
                                       </label>
                                       #if($readmode != "disabled") <span id="checklot" style="color:red" ></span> #end </td>
                                   </tr>
-                                  <!-- 
+                                  <!--
                                     <tr>
                                     <td class="style38" valign="top" >#if($readmode != "disabled")<span class="style41">*</span>#end</td>
                                     <td class="style38"><div align="right" class="style44">
@@ -469,9 +469,9 @@ $listnegeri -->
                                       <input name="txtAlamatBandarHtaam" type="text" id="txtAlamatBandarHtaam" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" value="" size="30" maxlength="50" $readmodeR class="$readmode" onkeyup="no_lot1();checklot()"   />
                                       </label>
                                       #if($readmode != "disabled") <span id="checklot" style="color:red" ></span> #end </td>
-                                  </tr>  
-                                   --> 
-                                	<tr>                                  
+                                  </tr>
+                                   -->
+                                	<tr>
                                   		<td class="style38 style43 style45"></td>
                                     	<!-- Tambah -->
                                     	<td class="style38">
@@ -482,48 +482,48 @@ $listnegeri -->
                                     		<div align="right"><span class="style38">:</span></div>
                                     	</td>
                                     	<td><label>
-                                   		#foreach($listneg in $listBandarSuratbyNegeri)                 
+                                   		#foreach($listneg in $listBandarSuratbyNegeri)
                 								#set($kodbx="$listneg.kod - $listneg.nama")
               							#end
                                        	#if($readmode == "disabled")
                                        		#foreach($listbandar in $listdaerah)
                                 				#set($kodbandar="bandarhta")
 											#end
-                                  
+
                                      		#if($bandarhta!="" && $bandarhta!="0" )
                                      			<input name="ntbb" value="$bandarhta - $keteranganbandar" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                      		#else
                                      			<input name="ntbb" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-                                     		#end                     
-                                   		#else                             
+                                     		#end
+                                   		#else
                                   			#if($bandarhta == "" || $bandarhta=="0")
-               									#set($kodbx="")   
+               									#set($kodbx="")
              								#else
-                								#foreach($listneg in $listBandarSuratbyNegeri)      
-													#if($bandarhta==$listneg.id)                                      
+                								#foreach($listneg in $listBandarSuratbyNegeri)
+													#if($bandarhta==$listneg.id)
                											#set($kodbx="$listneg.kod - $listneg.nama")
 													#end
                									#end
-											#end   
-											
-               								#foreach($listdaerah in $listBandarSuratbyNegeri)                                
-                								#if($bandarhta==$listdaerah.id)                                
+											#end
+
+               								#foreach($listdaerah in $listBandarSuratbyNegeri)
+                								#if($bandarhta==$listdaerah.id)
                 									#set($listDaerahbyNegeriK=$listdaerah.kod)
                 									#set($listDaerahbyNegeriN=$listdaerah.nama)
-                								#end 
+                								#end
                								#end
                								#if($disabled=="disabled")
                									#set($readmodedaerah="disabled")
                								#end
-               								
+
                								#if($bandarhta!="" && $bandarhta!="0" )
                									<select name="txtBandarHartaHtaamX2" id="txtBandarHartaHtaamX2" class="autoselect" $readmode   style="text-transform:uppercase;" onblur="uppercase()" onclick="CheckBandarSurat()" >
                 									<option value="$bandarhta">$listDaerahbyNegeriK - $listDaerahbyNegeriN</option>
-                          					        #foreach($listdaerah in $listBandarSuratbyNegeri)                                 
+                          					        #foreach($listdaerah in $listBandarSuratbyNegeri)
                               							#if($bandarhta!=$listdaerah.id)
                  						 					<option value="$listdaerah.id">$listdaerah.kod - $listdaerah.nama</option>
-                                 						#end    
-	                             					#end                 
+                                 						#end
+	                             					#end
                 								</select>
 											#else
 												<select name="txtBandarHartaHtaamX2" id="txtBandarHartaHtaamX2" class="autoselect" $readmode   style="text-transform:uppercase;" onblur="uppercase()" onclick="CheckBandarSurat()" >
@@ -536,7 +536,7 @@ $listnegeri -->
 										#end
  									</label></td>
                                   	</tr>
-                                  	
+
                                   	<tr>
                                     <td valign="top" class="style45">*</td>
                                     <td class="style38"><div align="right" class="style44">
@@ -597,123 +597,45 @@ $listnegeri -->
                                       #set($meterhektar = "Hektar")
                                       #elseif($kategori == "1" || $kategori == "3" || $kategori == "4" || $kategori == "5" || $kategori == "6")
                                       #set($meterhektar = "Meter Persegi")
-                                      
+
                                       #else
                                       #set($meterhektar = "")
-                                      
+
                                       #end
-                                      
+
                                       #foreach($listkate in $listkategori)
-                                      
+
                                       #if($kategori==$listkate.id)
-                                      
+
                                       #set($listkategoriK=$listkate.kod)
                                       #set($listkategoriN=$listkate.keterangan)
-                                      
-                                      
-                                      
-                                      #end 
+
+
+
+                                      #end
                                       #end
                                       #if($kategori!="")
                                       <select name="socKategoriTanahHtaam" class="autoselect" $readmode id="socKategoriTanahHtaam" style="text-transform:uppercase;" onblur="uppercase()"  onchange="pilih_jenis_luas('socJenisLuasHtaam','tr_luasharta','tr_luasharta_b','luas1','luas2','luas3','txtLuasAsalHtaam1','txtLuasAsalHtaam2','txtLuasAsalHtaam3','txtLuasAsalHtaam','txtLuasHMpHtaam','meterhektar')" >
                                         <option value="$kategori">$listkategoriK - $listkategoriN</option>
-                                        
-                                        
-                                                  
-                                            
-                                        
-                                            
-                                              
+
                                   #foreach($listkate in $listkategori)
-                                 
+
                                   #if($kategori!=$listkate.id)
-                                    
-	                               
-                                                  
-                                          
-                                            
-                                            
-                                            
-                                            
-                                                  
-                                        
+
                                         <option value="$listkate.id">$listkate.kod - $listkate.keterangan</option>
-                                        
-                                        
-                                                  
-                                            
-                                            
-                                            
-                                            
-                                            
-                                              
-                                   
-                                  #end    
+
+                                  #end
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
-                                   
-                                                   
-                                          
-                                          
-                                          
-                                          
-                                                
-                                      
+
                                       </select>
                                       #else
                                       <select name="socKategoriTanahHtaam" class="autoselect" $readmode id="socKategoriTanahHtaam" style="text-transform:uppercase;" onblur="uppercase()" onchange="pilih_jenis_luas('socJenisLuasHtaam','tr_luasharta','tr_luasharta_b','luas1','luas2','luas3','txtLuasAsalHtaam1','txtLuasAsalHtaam2','txtLuasAsalHtaam3','txtLuasAsalHtaam','txtLuasHMpHtaam','meterhektar')" >
                                         <option value="">Sila Pilih Kategori Tanah</option>
-                                        
-                                        
-    
-  
-  
-  
-  
-  
-                                              
+
                                   #foreach($listkate in $listkategori)
-                                 
-                                
-	                               
-                                              
-  
-  
-  
-  
-  
-    
-                                        
                                         <option value="$listkate.id">$listkate.kod - $listkate.keterangan</option>
-                                        
-                                        
-    
-  
-  
-  
-  
-  
-                                              
-                                   
-                                 
 	                               #end
-                                  
-                                  
-                                  
-                                  
 
-                                            
-
-
-
-
-
-  
-                                      
                                       </select>
                                       #end </td>
                                   </tr>
@@ -721,12 +643,12 @@ $listnegeri -->
                                     <td class="style38"><div align="left">Luas Asal</div></td>
                                     <td><div align="right">:</div></td>
                                     <td> #foreach($listluashta in $listluas)
-                                      
+
                                       #if($jenisluas==$listluashta.id)
-                                      
+
                                       #set($listluasK=$listluashta.kod)
                                       #set($listluasN=$listluashta.nama)
-                                      #end 
+                                      #end
                                       #end
                                       #if($jenisluas!="")
                                       <input name="txtLuasAsalHtaam" type="text" id="txtLuasAsalHtaam" value="$luasasal" size="15" maxlength="15" onKeyUp="javascript:validateIC(event,this,this.value,'txtLuasAsalHtaam')" readonly="readonly"  class="disabled"  />
@@ -738,109 +660,33 @@ $listnegeri -->
                                     <td class="style38"><div align="left">Jenis Luas</div></td>
                                     <td><div align="right">:</div></td>
                                     <td> #foreach($listluashta in $listluas)
-                                      
+
                                       #if($jenisluas==$listluashta.id)
-                                      
+
                                       #set($listluasK=$listluashta.kod)
                                       #set($listluasN=$listluashta.nama)
-                                      #end 
+                                      #end
                                       #end
                                       #if($jenisluas!="")
                                       <select name="socJenisLuasHtaam" class="autoselect" $readmode id="socJenisLuasHtaam" style="text-transform:uppercase;" onblur="uppercase()" onchange="pilih_jenis_luas('socJenisLuasHtaam','tr_luasharta','tr_luasharta_b','luas1','luas2','luas3','txtLuasAsalHtaam1','txtLuasAsalHtaam2','txtLuasAsalHtaam3','txtLuasAsalHtaam','txtLuasHMpHtaam','meterhektar')"   >
                                         <option value="$jenisluas">$listluasK - $listluasN</option>
-                                        
-                                        
-                                                  
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                              
+
                                   #foreach($listluashta in $listluas)
-                                 
+
                                   #if($jenisluas!=$listluashta.id)
-                                    
-	                               
-                                              
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                  
-                                        
                                         <option value="$listluashta.id">$listluashta.kod - $listluashta.nama</option>
-                                        
-                                        
-                                                  
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                              
-                                   
-                                  #end    
+                                  #end
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                                
-                                      
+
                                       </select>
                                       #else
                                       <select name="socJenisLuasHtaam" class="autoselect" $readmode id="socJenisLuasHtaam" style="text-transform:uppercase;" onblur="uppercase()"  onchange="pilih_jenis_luas('socJenisLuasHtaam','tr_luasharta','tr_luasharta_b','luas1','luas2','luas3','txtLuasAsalHtaam1','txtLuasAsalHtaam2','txtLuasAsalHtaam3','txtLuasAsalHtaam','txtLuasHMpHtaam','meterhektar')"  >
                                         <option value="">Sila Pilih Jenis Luas </option>
-                                        
-                                        
-    
-  
-  
-  
-                                              
+
                                     #foreach($listluashta in $listluas)
-                                 
-                                
-	                               
-                                              
-  
-  
-  
-    
-                                        
                                         <option value="$listluashta.id">$listluashta.kod - $listluashta.nama</option>
-                                        
-                                        
-    
-  
-  
-  
-                                              
-                                   
-                                 
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
 
-
-
-  
-                                      
                                       </select>
                                       #end </td>
                                   </tr>
@@ -878,17 +724,17 @@ $listnegeri -->
                                       #elseif($nilai_Hta_memohon==0 || $nilai_Hta_memohon==0.0)
                                       #set($n4="0.00")
                                       #else
-                                      #set($n4=$nilai_Hta_memohon)                                             
+                                      #set($n4=$nilai_Hta_memohon)
                                       #end
                                       <input name="txtNilaiTarikhMohonHtaa" type="text" id="txtNilaiTarikhMohonHtaa" $readmode value="$n4"  onkeyup="javascript:validateIC(event,this,this.value,'txtNilaiTarikhMohonHtaa')"   onblur="validateModal(this,this.value,'$n4');" />
                                       <!--
                                              #if($nilai_Hta_memohon=="" || $nilai_Hta_memohon=="0")
                                              #set($nhtam="0.00")
-                                            
+
                                              #elseif($nilai_Hta_memohon!="" || $nilai_Hta_memohon!="0")
                                              #set($nhtam=$nilai_Hta_memohon)
                                              #else
-                                             
+
                                               #set($nhtam="0.00")
                                              #end
                                               <label>
@@ -900,10 +746,10 @@ $listnegeri -->
                                   <tr>
                                     <td class="style38"><div align="left">Nilai Tarikh Mati(RM) </div></td>
                                     <td><div align="right">:</div></td>
-                                    <td> #if($nilai_Hta_mati=="") 
+                                    <td> #if($nilai_Hta_mati=="")
                                       #set($n3="")
                                       #elseif($nilai_Hta_mati==0 || $nilai_Hta_mati==0.0)
-                                      #set($n3="0.00")  
+                                      #set($n3="0.00")
                                       #else
                                       #set($n3=$nilai_Hta_mati)
                                       #end
@@ -914,178 +760,103 @@ $listnegeri -->
                                     <td class="style38"><div align="left"><span class="style41">*</span>&nbsp;Status Pemilikan</div></td> <!-- arief add mandatori -->
                                     <td><div align="right">:</div></td>
                                     <td>#foreach($listpemilik in $listpemilikan)
-                                      
+
                                       #if($pemilikan==$listpemilik.id)
-                                      
+
                                       #set($listpemilikK=$listpemilik.kod)
                                       #set($listpemilikN=$listpemilik.keterangan)
-                                      
-                                      
-                                      
-                                      #end 
+
+
+
+                                      #end
                                       #end
                                       #if($pemilikan!="")
                                       <select name="socStatusPemilikanHtaam" class="autoselect" $readmode id="socStatusPemilikanHtaam" style="text-transform:uppercase;" onblur="uppercase()">
                                         <option value="$pemilikan">$listpemilikK - $listpemilikN</option>
-                                        
-                                        
-                                                  
-                                            
-                                            
-                                            
-                                            
-                                            
-                                              
+
                                   #foreach($listpemilik in $listpemilikan)
-                                 
+
                                   #if($pemilikan!=$listpemilik.id)
-                                    
-	                               
-                                              
-                                            
-                                            
-                                            
-                                            
-                                            
-                                                  
-                                        
+
                                         <option value="$listpemilik.id">$listpemilik.kod - $listpemilik.keterangan</option>
-                                        
-                                        
-                                                  
-                                            
-                                            
-                                            
-                                            
-                                            
-                                              
-                                   
-                                  #end    
+
+                                  #end
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
-                                          
-                                          
-                                          
-                                          
-                                          
-                                                
-                                      
+
                                       </select>
                                       #else
                                       <select name="socStatusPemilikanHtaam" class="autoselect" $readmode id="socStatusPemilikanHtaamUp" style="text-transform:uppercase;" onblur="uppercase()">
                                         <option value="">Sila Pilih Status Pemilikan</option>
-                                        
-                                        
-    
-    
-  
-  
-  
-  
-                                              
+
                                   #foreach($listpemilik in $listpemilikan)
-                                 
-                                
-	                               
-                                              
-  
-  
-  
-  
-    
-    
-                                        
                                         <option value="$listpemilik.id">$listpemilik.kod - $listpemilik.keterangan</option>
-                                        
-                                        
-    
-    
-  
-  
-  
-  
-                                              
-                                   
-                                 
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
 
-
-
-
-  
-  
-                                      
                                       </select>
                                       #end </td>
                                   </tr>
-                                  <tr>
+
+                                  <!-- komeng
+                                  tr>
                                     <td class="style38"><div align="left">Tanggungan</div></td>
                                     <td width="1%"><div align="right">:</div></td>
                                     <td><input name="txtTanggunganHtaam" type="text" id="txtTanggunganHtaam" value="$tanggungan" size="15" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" /></td>
-                                  </tr>
+                                  </tr -->
+
                                   <tr>
                                     <td class="style38"><div align="left"><span class="style41">*</span>&nbsp;Jenis Tanah</div></td>
                                     <td width="1%"><div align="right">:</div></td>
                                     <td><label> #if($jenistanah!="" && $jenistanah!="0")
                                       <select name="socJenisTanahHtaam" class="autoselect" $readmode id="socJenisTanahHtaam" style="text-transform:uppercase;" onblur="uppercase()">
-                                        
-                                        
-                                              
+
+
+
                                               #if($jenistanah=="3")
-                                                  
-                                        
+
+
                                         <!--<option value="1">TANAH RIZAB</option>  -->
                                         <!-- <option value="2">TANAH ADAT</option>  -->
                                         <option value="3">TANAH GSA</option>
                                         <option value="4">BUKAN TANAH GSA</option>
-                                        
-                                        
-                                                  
+
+
+
                                               #end
                                                #if($jenistanah=="4")
-                                                
-                                        <!-- 
+
+                                        <!--
                                         <option value="2">TANAH ADAT</option>
                                         <option value="1">TANAH RIZAB</option>
                                          -->
                                         <option value="4">BUKAN TANAH GSA</option>
                                         <option value="3">TANAH GSA</option>
-                                        
-                                                  
+
+
                                               #end
-                                        <!--       
+                                        <!--
                                                #if($jenistanah=="3")
-                                                 
-                                        
+
+
                                         <option value="3">TANAH GSA</option>
                                         <option value="1">TANAH RIZAB</option>
                                         <option value="2">TANAH ADAT</option>
                                         <option value="0">TIDAK DINYATAKAN</option>
-                                        
-                                        
-                                                  
+
+
+
                                               #end
                                          -->
                                       </select>
                                       #else
                                       <select name="socJenisTanahHtaam" class="autoselect" $readmode id="socJenisTanahHtaam" style="text-transform:uppercase;" onblur="uppercase()">
                                         <option value="0">Sila Pilih Jenis Tanah</option>
-                                        <!-- 
+                                        <!--
                                         <option value="1">TANAH RIZAB</option>
                                         <option value="2">TANAH ADAT</option>
                                          -->
                                          <option value="4">BUKAN TANAH GSA</option>
                                         <option value="3">TANAH GSA</option>
-                                        
+
                                       </select>
                                       #end </label></td>
                                   </tr>
@@ -1098,32 +869,32 @@ $listnegeri -->
                                     <td  valign="top">Urusan Kemasukkan Maklumat Harta </td>
                                     <td valign="top">:</td>
                                     <td valign="top"> #if($readmode != "disabled" )
-                                      
+
                                       #if($FLAG_DAFTAR == '1')
                                       #set($checked_flag_daftar1 = "checked")
-                                      #set($checked_flag_daftar2 = "")   
-                                      #elseif($FLAG_DAFTAR == '2') 
-                                      #set($checked_flag_daftar2 = "checked")    
-                                      #set($checked_flag_daftar1 = "") 
+                                      #set($checked_flag_daftar2 = "")
+                                      #elseif($FLAG_DAFTAR == '2')
+                                      #set($checked_flag_daftar2 = "checked")
+                                      #set($checked_flag_daftar1 = "")
                                       #else
                                       #set($checked_flag_daftar1 = "checked")
-                                      #set($checked_flag_daftar2 = "")                                   
+                                      #set($checked_flag_daftar2 = "")
                                       #end
-                                      <input type="radio" name="FLAG_DAFTAR"  $checked_flag_daftar1 id="FLAG_DAFTAR" 
+                                      <input type="radio" name="FLAG_DAFTAR"  $checked_flag_daftar1 id="FLAG_DAFTAR"
                                           value="1" />
                                       Pendaftaran <br />
-                                      <input type="radio" name="FLAG_DAFTAR"  $checked_flag_daftar2 id="FLAG_DAFTAR" 
+                                      <input type="radio" name="FLAG_DAFTAR"  $checked_flag_daftar2 id="FLAG_DAFTAR"
                                           value="2" />
                                       Perbicaraan
-                                      
-                                      
+
+
                                       #else
-                                      
+
                                       #set($text_daftar = "")
                                       #if($FLAG_DAFTAR == '1')
                                       #set($text_daftar = "PENDAFTARAN")
-                                      #elseif($FLAG_DAFTAR == '2') 
-                                      #set($text_daftar = "PERBICARAAN")                                         
+                                      #elseif($FLAG_DAFTAR == '2')
+                                      #set($text_daftar = "PERBICARAAN")
                                       #end
                                       <input name="FLAG_DAFTAR_TEXT" type="text" id="FLAG_DAFTAR_TEXT" style="text-transform:uppercase;"  value="$text_daftar" size="18" maxlength="40" $readmodeR class="$readmode" />
                                       <input type="hidden" name="FLAG_DAFTAR" id="FLAG_DAFTAR" value="$FLAG_DAFTAR"  />
@@ -1141,8 +912,8 @@ $listnegeri -->
 		    <!-- <fieldset>
 		      <legend>MAKLUMAT DOKUMEN (MAKLUMAT PELAN)</legend>
 		      <table width="100%" border="0" cellspacing="2" cellpadding="2">
-		       
-		        
+
+
 		        <tr>
 		          <td><span class="style1">*</span></td>
 		          <td>Nama Dokumen</td>
@@ -1150,12 +921,12 @@ $listnegeri -->
 		          <td><input name="txtNamaPelan" type="text" id="txtNamaPelan" value="$namaPelan" size="43" maxlength="100" $readonlyPopup class="$inputTextClassPopup" >
 		         	  <input id="fileupload" name="fileupload" type="file" size="40" $readonlyPopup2  class="$inputTextClassPopup" /></td>
 		        </tr>
-		       
+
 		      </table>
 		      </fieldset> -->
-		      
-		      
-		      
+
+
+
                           <table width="100%">
                             <tr>
                               <td><span class="style44 style69 style47 style5 style43"><em><span class="style41">Perhatian</span> : Sila pastikan label bertanda <span class="style41">*</span> diisi.</em></span></td>
@@ -1164,19 +935,19 @@ $listnegeri -->
                           #end</td>
                       </tr>
                       #foreach($listamid in $listHTAid)
-                      
+
                       <tr>
                         <td> #if($show_htaa_update_table=="yes")
                           <table width="100%" >
                             <tr>
-                              <td> #if($!skrin_online != "yes") 
+                              <td> #if($!skrin_online != "yes")
                                 #if($readmode == "disabled")
                                 #set($readmodeR = "readonly")
                                 #else
                                 #set($readmodeR = "")
                                 #end
                                 #else
-                                
+
                                 #if($open_button_online == "no")
                                 #set($readmodeR = "readonly")
                                 #set($readmode = "disabled")
@@ -1191,15 +962,15 @@ $listnegeri -->
                                 #set($readmodemukim = "")
                                 #end
                                 #end
-                                
-                                
-                                #if($readmode == "disabled" ) 
-                                
+
+
+                                #if($readmode == "disabled" )
+
                                 #else
                                 <fieldset>
                                 <input type="hidden" name="flag" value="$listam.flag">
                                 #if($readmode == "disabled" )
-                                
+
                                 #else
                                 <!-- penambahbaikkan skrin harta tak alih -->
                                 #if($listamid.flag=="1")
@@ -1207,20 +978,20 @@ $listnegeri -->
                                 #set($checked2="")
                                 #set($checked3="")
                                 #end
-                                
+
                                 #if($listam.flag=="2")
                                 #set($listamid="checked")
                                 #set($checked1="")
                                 #set($checked3="")
                                 #end
-                                
+
                                 #if($listamid.flag=="3")
                                 #set($checked3="checked")
                                 #set($checked2="")
                                 #set($checked1="")
                                 #end
-                                
-                                
+
+
                                 #if($listamid.jenishta=="Y")
                                 #set($radioJenisHTA_update_checked1="checked")
                                 #set($radioJenisHTA_update_checked2="")
@@ -1228,7 +999,7 @@ $listnegeri -->
                                 #set($checked2="")
                                 #set($checked1="")
                                 #end
-                                
+
                                 #if($listamid.jenishta=="T")
                                 #set($radioJenisHTA_update_checked2="checked")
                                 #set($radioJenisHTA_update_checked1="")
@@ -1290,14 +1061,14 @@ $listnegeri -->
 								 document.f1.radioJenisHTA_update[0].checked = false;
 								 }
 							 }
-							 
+
 							 function check_jenis_hta3()
 							 {
 if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHtaamViewX_update[1].checked == true || document.f1.radioHtaamViewX_update[2].checked == true)
-								 {	
-								 document.f1.radioJenisHTA_update[0].checked = false;							
+								 {
+								 document.f1.radioJenisHTA_update[0].checked = false;
 								 document.f1.radioJenisHTA_update[1].checked = true;
-								
+
 								 }
 							 }
 							 </script>
@@ -1308,7 +1079,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                           <fieldset>
                           <legend>HARTA TAK ALIH (ADA HAKMILIK) </legend>
                           <table width="100%" border="0">
-                         <!-- frmPrmhnnSek8HTAAH --> 
+                         <!-- frmPrmhnnSek8HTAAH -->
                             <tr>
                               <input type="hidden" name="id_htaam" id="id_htaam" value="$listamid.idhta" />
                               #set($idhta = $listamid.idhta)
@@ -1319,23 +1090,23 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                         <div align="left">#if($readmodenegeri != "disabled")Negeri#else Negeri#end</div>
                                       </div></td>
                                     <td width="1%">:</td>
-                                    <td width="70%"> 
+                                    <td width="70%">
                                     #foreach($listnegpomo in $listnegeri)
                                     	#if($listamid.negeri==$listnegpomo.id_Negeri)
  									   		#set($negerikodpemoP=$listnegpomo.kod_Negeri)
-                                     		#set($negeriketeranganpemoP=$listnegpomo.nama_Negeri)   
-                                      	#end 
+                                     		#set($negeriketeranganpemoP=$listnegpomo.nama_Negeri)
+                                      	#end
                         			#end
-                                      
-                                      
+
+
                                       #if($readmode == "disabled")
-                                      
+
                                       #if($listamid.negeri!="" && $listamid.negeri!="0" )
                                       <input name="n" value="$negerikodpemoP - $negeriketeranganpemoP" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #else
                                       <input name="n" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #end
-                                      
+
                                       #else
                                       #if($listamid.negeri!="")
                                       <select name="socNegeriHtaamUp" class="autoselect" $readmodenegeri  onchange="negerichangeup('socDaerahHtaamUp')"  style="text-transform:uppercase;" onblur="uppercase()">
@@ -1349,36 +1120,36 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                       #else
                                       <select name="socNegeriHtaamUp" class="autoselect" $readmodenegeri onchange="negerichangeup('socDaerahHtaamUp')" style="text-transform:uppercase;" onblur="uppercase()" >
                                         <option value="">Sila Pilih Negeri</option>
-                                        
-                                        
-    
-                                            
-                                              
+
+
+
+
+
                                   #foreach($listnegpomo in $listnegeri)
-                                 
-                                
-	                               
-                                              
-                                            
-    
-                                        
+
+
+
+
+
+
+
                                         <option value="$listnegpomo.id_Negeri">$listnegpomo.kod_Negeri - $listnegpomo.nama_Negeri</option>
-                                        
-                                        
-    
-                                            
-                                              
-                                   
-                                 
+
+
+
+
+
+
+
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
-                                          
-  
-                                      
+
+
+
+
+
+
+
+
                                       </select>
                                       #end          #end </td>
                                   </tr>
@@ -1390,107 +1161,107 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                       </div></td>
                                     <td>:</td>
                                     <td>#foreach($listdaerah in $listdaerah)
-                                      
+
                                       #if($listamid.daerah==$listdaerah.id)
-                                      
+
                                       #set($listDaerahbyNegeriK=$listdaerah.kod)
                                       #set($listDaerahbyNegeriN=$listdaerah.nama)
-                                      
-                                      
-                                      
-                                      #end 
+
+
+
                                       #end
-                                      
+                                      #end
+
                                       #if($readmode == "disabled")
-                                      
+
                                       #if($listamid.daerah!="" && $listamid.daerah!="0" )
                                       <input name="d" value="$listDaerahbyNegeriK - $listDaerahbyNegeriN" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #else
                                       <input name="d" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #end
-                                      
+
                                       #else
-                                      
-                                      
+
+
                                       #if($listamid.daerah!="")
                                       <select name="socDaerahHtaamUp" class="autoselect" $readmodedaerah onchange="setSelected(1,0,0,0);daerahchangeup('socMukimHtaamUp');daerah_harta();check_harta()" id="socDaerahHtaamUp" style="text-transform:uppercase;" onblur="uppercase()">
                                         <option value="$listamid.daerah">$listDaerahbyNegeriK - $listDaerahbyNegeriN</option>
-                                        
-                                        
-                                
-                                            
-                                            
-                                              
+
+
+
+
+
+
                                   #foreach($listdaerah in $listDaerahbyNegeri)
-                                 
+
                                   #if($listamid.daerah!=$listdaerah.id)
-                                    
-	                               
-                                              
-                                            
-                                            
-                                
-                                        
+
+
+
+
+
+
+
                                         <option value="$listdaerah.id">$listdaerah.kod - $listdaerah.nama</option>
-                                        
-                                        
-                                
-                                            
-                                            
-                                              
-                                   
-                                  #end    
+
+
+
+
+
+
+
+                                  #end
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
-                                          
-                                          
-                              
-                                      
+
+
+
+
+
+
+
+
+
                                       </select>
                                       #else
                                       <select name="socDaerahHtaamUp" id="socDaerahHtaamUp" class="autoselect" $readmodedaerah onchange="setSelected(1,0,0,0);daerahchangeup('socMukimHtaamUp');daerah_harta();check_harta()" style="text-transform:uppercase;" onblur="uppercase()">
                                         <option value="">Sila Pilih Daerah</option>
-                                        
-                                        
-    
-                                            
-  
-                                              
-                                  #foreach($listDaerah in $listDaerahbyNegeri)
-                                 
-                                
-	                               
-                                              
-  
-                                            
-    
-                                        
-                                        <option value="$listDaerah.id">$listDaerah.kod - $listDaerah.nama</option>
-                                        
-                                        
-    
-                                            
-  
-                                              
-                                   
-                                 
-	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
 
-                                          
-  
-                                      
+
+
+
+
+
+                                  #foreach($listDaerah in $listDaerahbyNegeri)
+
+
+
+
+
+
+
+
+                                        <option value="$listDaerah.id">$listDaerah.kod - $listDaerah.nama</option>
+
+
+
+
+
+
+
+
+	                               #end
+
+
+
+
+
+
+
+
+
                                       </select>
-                                      #end           #end 
-                                      
+                                      #end           #end
+
                                       #if($readmode != "disabled") <span id="check_daerah_harta" style="color:red" ></span> #end </td>
                                   </tr>
                                   <tr>
@@ -1500,107 +1271,107 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                       </div></td>
                                     <td>:</td>
                                     <td>#foreach($listmukim in $listmukim)
-                                      
-                                      
+
+
                                       #if($listamid.mukim==$listmukim.id)
-                                      
+
                                       #set($listMukimbyDaerahK=$listmukim.kod)
                                       #set($listMukimbyDaerahN=$listmukim.nama)
-                                      
-                                      
-                                      
-                                      #end 
+
+
+
                                       #end
-                                      
+                                      #end
+
                                       #if($readmode == "disabled")
-                                      
+
                                       #if($listamid.mukim!="" && $listamid.mukim!="0" )
                                       <input name="m" value="$listMukimbyDaerahK - $listMukimbyDaerahN" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #else
                                       <input name="m" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #end
-                                      
+
                                       #else
-                                      
-                                      
-                                      
+
+
+
                                       #if($listamid.mukim!="")
                                       <select name="socMukimHtaamUp" class="autoselect" $readmodemukim id="socMukimHtaamUp" style="text-transform:uppercase;" onblur="uppercase()" onfocus="CheckMukimU()" >
                                         <option value="$listamid.mukim">$listMukimbyDaerahK - $listMukimbyDaerahN</option>
-                                        
-                                        
-                                
-                                            
-                                            
-                                            
-                                            
-                                              
+
+
+
+
+
+
+
+
                                   #foreach($listmukim in $listMukimbyDaerah)
-                                 
+
                                   #if($listamid.mukim!=$listmukim.id)
-                                            
-                                
-                                        
+
+
+
                                         <option value="$listmukim.id">$listmukim.kod - $listmukim.nama</option>
-                                        
-                                        
-                                              
-                                   
-                                  #end    
+
+
+
+
+                                  #end
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
-                                          
-                                          
-                                          
-                                          
-                              
-                                      
+
+
+
+
+
+
+
+
+
+
+
                                       </select>
                                       #else
                                       <select name="socMukimHtaamUp" class="autoselect" $readmodemukim id="socMukimHtaamUp" style="text-transform:uppercase;" onblur="uppercase()" onfocus="CheckMukimU()" >
                                         <option value="">Sila Pilih Mukim</option>
-                                        
-                                        
-    
-                                            
-  
-  
-                                              
+
+
+
+
+
+
+
                                   #foreach($listmukim in $listMukimbyDaerah)
-                                 
-                                
-	                               
-                                              
-  
-  
-                                            
-    
-                                        
+
+
+
+
+
+
+
+
+
                                         <option value="$listmukim.id">$listmukim.kod - $listmukim.nama</option>
-                                        
-                                        
-    
-                                            
-  
-  
-                                              
-                                   
-                                 
+
+
+
+
+
+
+
+
+
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
 
 
-                                          
-  
-                                      
+
+
+
+
+
+
+
+
                                       </select>
                                       #end                #end </td>
                                   </tr>
@@ -1611,120 +1382,120 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                       </div></td>
                                     <td>:</td>
                                     <td>#foreach($listjenishakmilik in $listJenisHakMilik)
-                                      
+
                                       #if($listamid.jenishakmilik==$listjenishakmilik.id)
-                                      
+
                                       #set($listjenishakmilikK=$listjenishakmilik.kod)
                                       #set($listjenishakmilikN=$listjenishakmilik.keterangan)
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      #end 
+
+
+
+
+
                                       #end
-                                      
+                                      #end
+
                                       #if($readmode == "disabled")
-                                      
+
                                       #if($listamid.jenishakmilik!="")
                                       <input name="jh" value="$listjenishakmilikK - $listjenishakmilikN" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #else
                                       <input name="jh" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #end
-                                      
+
                                       #else
-                                      
-                                      
-                                      
+
+
+
                                       #if($listamid.jenishakmilik!="")
                                       <select name="socJenisHakmilikHtaamUp" class="autoselect" $readmode id="socJenisHakmilikHtaam2" style="text-transform:uppercase;" onblur="uppercase()">
                                         <option value="$listamid.jenishakmilik">$listjenishakmilikK - $listjenishakmilikN</option>
-                                        
-                                        
-                                
-                                            
-                                            
-                                            
-                                            
-                                              
+
+
+
+
+
+
+
+
                                   #foreach($listjenishakmilik in $listJenisHakMilik)
-                                  
+
                                   #if($listamid.jenishakmilik!=$listjenishakmilik.id)
-                                    
-	                               
-                                              
-                                            
-                                            
-                                            
-                                            
-                                
-                                        
+
+
+
+
+
+
+
+
+
                                         <option value="$listjenishakmilik.id">$listjenishakmilik.kod - $listjenishakmilik.keterangan</option>
-                                        
-                                        
-                                
-                                            
-                                            
-                                            
-                                            
-                                              
-                                   
-                                  #end    
+
+
+
+
+
+
+
+
+
+                                  #end
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
-                                          
-                                          
-                                          
-                                          
-                              
-                                      
+
+
+
+
+
+
+
+
+
+
+
                                       </select>
                                       #else
                                       <select name="socJenisHakmilikHtaamUp" class="autoselect" $readmode id="socJenisHakmilikHtaam2" style="text-transform:uppercase;" onblur="uppercase()">
                                         <option value="">Sila Pilih Jenis HakMilik</option>
-                                        
-                                        
-    
-                                            
-  
-  
-  
-                                              
+
+
+
+
+
+
+
+
                                   #foreach($listjenishakmilik in $listJenisHakMilik)
-                                 
-                                
-	                          
-                                            
-    
-                                        
+
+
+
+
+
+
                                         <option value="$listjenishakmilik.id">$listjenishakmilik.kod - $listjenishakmilik.keterangan</option>
-                                        
-                                        
-    
-                                            
-                                                 
-                                              
-  
-  
-                                              
-                                   
-                                 
+
+
+
+
+
+
+
+
+
+
+
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
 
 
 
-                                          
-  
-                                      
+
+
+
+
+
+
+
+
                                       </select>
                                       #end                    #end </td>
                                   </tr>
@@ -1748,9 +1519,9 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                       </label>
                                       #if($readmode != "disabled") <span id="checklot" style="color:red" ></span> #end </td>
                                   </tr>
-                                  
-                                   <!--    <!-- Salnizam edit starts --> 
-                                                           
+
+                                   <!--    <!-- Salnizam edit starts -->
+
                                     <tr>
                                     <td class="style38" valign="top" ></td>
                                     <td class="style38"><div align="right" class="style44">
@@ -1762,7 +1533,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                       </label>
                                       #if($readmode != "disabled") <span id="checklot" style="color:red" ></span> #end </td>
                                   </tr>
-                                  
+
                                    <tr>
                                     <td class="style38" valign="top" >#if($readmode != "disabled")#end</td>
                                     <td class="style38"><div align="right" class="style44">
@@ -1770,12 +1541,12 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                       </div></td>
                                     <td></td>
                                     <td><label>
-                                    
+
                                       <input name="txtAlamat2Htaam" type="text" id="txtAlamat2Htaam" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" value="$!listamid.alamat2" size="50" maxlength="50" $readmodeR class="$readmode"    />
                                       </label>
                                       #if($readmode != "disabled") <span id="checklot" style="color:red" ></span> #end </td>
                                   </tr>
-                                  
+
                                    <tr>
                                     <td class="style38" valign="top" >#if($readmode != "disabled")#end</td>
                                     <td class="style38"><div align="right" class="style44">
@@ -1798,7 +1569,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                       </label>
                                       #if($readmode != "disabled") <span id="checklot" style="color:red" ></span> #end </td>
                                   </tr>
-                                  <!-- 
+                                  <!--
                                   <tr>
                                     <td class="style38" valign="top" >#if($readmode != "disabled")<span class="style41">*</span>#end</td>
                                     <td class="style38"><div align="right" class="style44">
@@ -1810,78 +1581,78 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                       </label>
                                       #if($readmode != "disabled") <span id="checklot" style="color:red" ></span> #end </td>
                                   </tr>
-                                  
+
                                    -->
-                                                                    
-                                  
-                                  
+
+
+
                                     <tr>
-                                 
-                                 
-                                                                
+
+
+
                                     <td class="style38 style43 style45"></td>
                                    <!-- Kemaskini -->
                                     <td class="style38"><div align="right" class="style57">
                                       <div align="left">Bandar</div>
                                     </div></td>
-                                   
-                                    
+
+
                                     <td><div align="right"><span class="style38">:</span></div></td>
                                      <td><label>
                                         #set($listneg = "")
-                                        
-                                       
-                                   		#foreach($listneg in $listBandarSuratbyNegeri)  
-                                   			
-                                   				#if($listamid.bandar==$listneg.id)                                      
+
+
+                                   		#foreach($listneg in $listBandarSuratbyNegeri)
+
+                                   				#if($listamid.bandar==$listneg.id)
               										#set($kodbx="$listneg.kod - $listneg.nama")
               									#end
               							#end
-              							
+
                                        	#if($readmode == "disabled")
                                        		#foreach($listamid.listbandar in $listdaerah)
                                 				#set($kodbandar="bandarhta")
 											#end
-                                    
+
                                      		#if($listamid.bandar!="" && $listamid.bandar!="0" )
                                      			<input name="ntbb2" value="$kodbx" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                      		#else
                                      			<input name="ntbb3" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
-                                     		#end                     
-                                   		#else                             
+                                     		#end
+                                   		#else
                                   			#if($listamid.bandar == "" || $listamid.bandar=="0")
-               									#set($kodbx="")   
+               									#set($kodbx="")
                								#else
-                								#foreach($listneg in $listBandarSuratbyNegeri)      
-													#if($listamid.bandar==$listneg.id)                                      
+                								#foreach($listneg in $listBandarSuratbyNegeri)
+													#if($listamid.bandar==$listneg.id)
                											#set($kodbx="$listneg.kod - $listneg.nama")
 													#end
                									#end
-											#end   
-											
-               								#foreach($listdaerah in $listBandarSuratbyNegeri)	
-               									#if($listamid.bandar==$listdaerah.id)                       
+											#end
+
+               								#foreach($listdaerah in $listBandarSuratbyNegeri)
+               									#if($listamid.bandar==$listdaerah.id)
                 									#set($listDaerahbyNegeriK=$listdaerah.kod)
                 									#set($listDaerahbyNegeriN=$listdaerah.nama)
-                								#end 
+                								#end
                								#end
                								#if($disabled=="disabled")
                									#set($readmodedaerah="disabled")
                								#end
-               								
-               								
+
+
                								#if($listamid.bandar!="" && $listamid.bandar!="0")
-               								
+
                									<select name="txtBandarHartaHtaamX2" id="txtBandarHartaHtaamX2" class="autoselect" $readmode   style="text-transform:uppercase;" onblur="uppercase()" onclick="CheckBandarSurat()" >
                 									<option value="">Sila Pilih Bandar</option>
-                									#foreach($listdaerah in $listBandarSuratbyNegeri)                                 
-                              							
+                									#foreach($listdaerah in $listBandarSuratbyNegeri)
+
                  						 					<option #if($listamid.bandar == $listdaerah.id) selected #end value="$listdaerah.id">$listdaerah.kod - $listdaerah.nama</option>
-                                 						   
-	                             					#end                 
+
+	                             					#end
                 								</select>
 											#else
-											
+
 												<select name="txtBandarHartaHtaamX2" id="txtBandarHartaHtaamX2" class="autoselect" $readmode   style="text-transform:uppercase;" onblur="uppercase()" onclick="CheckBandarSurat()" >
   													<option value="">Sila Pilih Bandar</option>
                               						#foreach($listDaerah in $listBandarSuratbyNegeri)
@@ -1891,22 +1662,22 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
 											#end
 										#end
  </label></td>
-                                
-                                 
-                                 
-                                 
-                                 
-                                 
-                                 
+
+
+
+
+
+
+
                                   </tr>
-                                  
-                                   
-                                  
-                                  
-                                  
-                                  
-                                  
-                                 
+
+
+
+
+
+
+
+
                                   <tr>
                                     <td class="style38" valign="top" >#if($readmode != "disabled")<span class="style41">*</span>#end</td>
                                     <td class="style38"><div align="right" class="style44">
@@ -1964,149 +1735,149 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                     <td width="29%" class="style38"><div align="left">Kategori Tanah</div></td>
                                     <td width="1%">:</td>
                                     <td width="70%"> #if($listamid.kategori == "2")
-                                      
+
                                       #set($meterhektar = "Hektar")
                                       #elseif($listamid.kategori == "1" || $listamid.kategori == "3" || $listamid.kategori == "4" || $listamid.kategori == "5" || $listamid.kategori == "6")
                                       #set($meterhektar = "Meter Persegi")
                                       #else
                                       #set($meterhektar = "")
-                                      
+
                                       #end
-                                      
-                                      
-                                      
-                                      
-                                      
+
+
+
+
+
                                       #foreach($listkate in $listkategori)
-                                      
+
                                       #if($listamid.kategori==$listkate.id)
-                                      
+
                                       #set($listkategoriK=$listkate.kod)
                                       #set($listkategoriN=$listkate.keterangan)
-                                      
-                                      
-                                      
-                                      #end 
+
+
+
                                       #end
-                                      
-                                      
+                                      #end
+
+
                                       #if($readmode == "disabled")
-                                      
-                                      
+
+
                                       #if($listamid.kategori!="" && $listamid.kategori!="0" )
                                       <input name="ktt" value="$listkategoriK - $listkategoriN" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #else
                                       <input name="ktt" value="" size="34" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #end
-                                      
+
                                       #else
                                       #if($listamid.kategori!="" && $listamid.kategori!="0" )
                                       <select name="socKategoriTanahHtaamUp" class="autoselect" $readmode id="socKategoriTanahHtaamUp" style="text-transform:uppercase;" onblur=""  onchange="pilih_jenis_luas('socJenisLuasHtaamUpd','tr_luasharta','tr_luasharta_b','luas1','luas2','luas3','txtLuasAsalHtaam1','txtLuasAsalHtaam2','txtLuasAsalHtaam3','txtLuasAsalHtaamUpd','txtLuasHMpHtaamUpd','meterhektar')"  >
                                         <option value="$listamid.kategori">$listkategoriK - $listkategoriN</option>
-                                        
-                                        
-                                
-                                            
-                                            
-                                        
-                                            
-                                              
+
+
+
+
+
+
+
+
                                   #foreach($listkate in $listkategori)
-                                 
+
                                   #if($listamid.kategori!=$listkate.id)
-                                    
-	                               
-                                                  
-                                          
-                                            
-                                            
-                                            
-                                            
-                                            
-                                
-                                        
+
+
+
+
+
+
+
+
+
+
+
                                         <option value="$listkate.id">$listkate.kod - $listkate.keterangan</option>
-                                        
-                                        
-                                
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                              
-                                   
-                                  #end    
+
+
+
+
+
+
+
+
+
+
+
+                                  #end
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
-                                   
-                                                   
-                                          
-                                          
-                                          
-                                          
-                                          
-                              
-                                      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                       </select>
                                       #else
                                       <select name="socKategoriTanahHtaamUp" class="autoselect" $readmode id="socKategoriTanahHtaamUp" style="text-transform:uppercase;" onblur="uppercase()"  onchange="pilih_jenis_luas('socJenisLuasHtaamUpd','tr_luasharta','tr_luasharta_b','luas1','luas2','luas3','txtLuasAsalHtaam1','txtLuasAsalHtaam2','txtLuasAsalHtaam3','txtLuasAsalHtaamUpd','txtLuasHMpHtaamUpd','meterhektar')"   >
                                         <option value="">Sila Pilih Kategori Tanah</option>
-                                        
-                                        
-    
-  
-                                            
-  
-  
-  
-  
-                                              
+
+
+
+
+
+
+
+
+
+
                                   #foreach($listkate in $listkategori)
-                                 
-                                
-	                               
-                                              
-  
-  
-  
-  
-                                            
-  
-    
-                                        
+
+
+
+
+
+
+
+
+
+
+
+
                                         <option value="$listkate.id">$listkate.kod - $listkate.keterangan</option>
-                                        
-                                        
-    
-  
-                                            
-  
-  
-  
-  
-                                              
-                                   
-                                 
+
+
+
+
+
+
+
+
+
+
+
+
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
 
 
 
 
-                                          
 
-  
-                                      
+
+
+
+
+
+
+
+
                                       </select>
                                       #end        #end </td>
                                   </tr>
@@ -2114,22 +1885,22 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                     <td class="style38"><div align="left">Luas Asal</div></td>
                                     <td>:</td>
                                     <td>#foreach($listluashta in $listluas)
-                                      
+
                                       #if($listamid.jenisluas==$listluashta.id)
-                                      
+
                                       #set($listluasK=$listluashta.kod)
                                       #set($listluasN=$listluashta.nama)
-                                      #end 
                                       #end
-                                      
+                                      #end
+
                                       #if($readmode == "disabled")
                                       <input name="txtLuasAsalHtaamUpd" type="text" id="txtLuasAsalHtaamUpd" value="$listamid.luasasal" size="15" maxlength="15" $readmodeR class="$readmode" onblur="getConversionU()" />
                                       #if($listamid.jenisluas!="" && $listamid.jenisluas!="0")
-                                      
+
                                       #else
-                                      
-                                      #end 
-                                      
+
+                                      #end
+
                                       #else
                                       #if($listamid.jenisluas!="" && $listamid.jenisluas!="0")
                                       <input name="txtLuasAsalHtaamUpd" type="text" id="txtLuasAsalHtaamUpd" onkeyup="javascript:validateIC(event,this,this.value,'txtLuasAsalHtaamUpd')" value="$listamid.luasasal" size="15" maxlength="15" readonly  class = "disabled"  />
@@ -2141,136 +1912,136 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                     <td class="style38"><div align="left">Jenis Luas </div></td>
                                     <td>:</td>
                                     <td>#foreach($listluashta in $listluas)
-                                      
+
                                       #if($listamid.jenisluas==$listluashta.id)
-                                      
+
                                       #set($listluasK=$listluashta.kod)
                                       #set($listluasN=$listluashta.nama)
-                                      #end 
                                       #end
-                                      
+                                      #end
+
                                       #if($readmode == "disabled")
-                                      
-                                      
+
+
                                       #if($listamid.jenisluas!="" && $listamid.jenisluas!="0")
                                       <input name="txtLuas" type="text" id="txtLuas" value="$listluasK - $listluasN" size="25"  $readmodeR class="$readmode"  />
                                       #else
                                       <input name="txtLuas" type="text" id="txtLuas" value="" size="25"  $readmodeR class="$readmode"  />
-                                      #end 
-                                      
+                                      #end
+
                                       #else
                                       #if($listamid.jenisluas!="" && $listamid.jenisluas!="0")
                                       <select name="socJenisLuasHtaamUpd" id="socJenisLuasHtaamUpd" class="autoselect" $readmode style="text-transform:uppercase;" onblur="uppercase()" onchange="pilih_jenis_luas('socJenisLuasHtaamUpd','tr_luasharta','tr_luasharta_b','luas1','luas2','luas3','txtLuasAsalHtaam1','txtLuasAsalHtaam2','txtLuasAsalHtaam3','txtLuasAsalHtaamUpd','txtLuasHMpHtaamUpd','meterhektar')"  >
                                         <option value="$listamid.jenisluas">$listluasK - $listluasN</option>
-                                        
-                                        
-                                              
-                                
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                              
+
+
+
+
+
+
+
+
+
+
+
+
+
                                   #foreach($listluashta in $listluas)
-                                 
+
                                   #if($listamid.jenisluas!=$listluashta.id)
-                                    
-	                               
-                                              
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                
-                                              
-                                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                         <option value="$listluashta.id">$listluashta.kod - $listluashta.nama</option>
-                                        
-                                        
-                                              
-                                
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                              
-                                   
-                                  #end    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                  #end
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                              
-                                            
-                                      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                       </select>
                                       #else
                                       <select name="socJenisLuasHtaamUpd" class="autoselect" $readmode id="socJenisLuasHtaamUpd" style="text-transform:uppercase;" onblur="uppercase()" onchange="pilih_jenis_luas('socJenisLuasHtaamUpd','tr_luasharta','tr_luasharta_b','luas1','luas2','luas3','txtLuasAsalHtaam1','txtLuasAsalHtaam2','txtLuasAsalHtaam3','txtLuasAsalHtaamUpd','txtLuasHMpHtaamUpd','meterhektar')" >
                                         <option value="">Sila Pilih Jenis Luas</option>
-                                        
-                                        
-    
-  
-                                            
-  
-  
-                                              
+
+
+
+
+
+
+
+
                                     #foreach($listluashta in $listluas)
-                                 
-                                
-	                               
-                                              
-  
-  
-                                            
-  
-    
-                                        
+
+
+
+
+
+
+
+
+
+
                                         <option value="$listluashta.id">$listluashta.kod - $listluashta.nama</option>
-                                        
-                                        
-    
-  
-                                            
-  
-  
-                                              
-                                   
-                                 
+
+
+
+
+
+
+
+
+
+
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
 
 
-                                          
 
-  
-                                      
+
+
+
+
+
+
+
+
                                       </select>
                                       #end             #end </td>
                                   </tr>
@@ -2323,7 +2094,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                       #else
                                       <input name="txtNilaiTarikhMatiHtaamUpd" onkeyup="javascript:validateIC(event,this,this.value,'txtNilaiTarikhMatiHtaamUpd')" type="text" id="txtNilaiTarikhMatiHtaam2" value="" size="15" $readmodeR class="$readmode" />
                                       #end
-                                      
+
                                       #else
                                       #set($listamidnilai_Hta_mati=$listamid.nilai_Hta_mati)
                                       <input name="txtNilaiTarikhMatiHtaamUpd" onkeyup="javascript:validateIC(event,this,this.value,'txtNilaiTarikhMatiHtaamUpd')" type="text" id="txtNilaiTarikhMatiHtaam2" value="$listamidnilai_Hta_mati" size="15" $readmodeR class="$readmode" onblur="validateModal(this,this.value,'$listamidnilai_Hta_mati');" />
@@ -2333,139 +2104,139 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                     <td class="style38"><div align="left"><span class="style41">*</span>&nbsp;Status Pemilikan</div></td>
                                     <td>:</td>
                                     <td>#foreach($listpemilik in $listpemilikan)
-                                      
+
                                       #if($listamid.pemilikan==$listpemilik.id)
-                                      
+
                                       #set($listpemilikK=$listpemilik.kod)
                                       #set($listpemilikN=$listpemilik.keterangan)
-                                      
-                                      
-                                      
-                                      #end 
+
+
+
                                       #end
-                                      
-                                      
-                                      
+                                      #end
+
+
+
                                       #if($readmode == "disabled")
-                                      
+
                                       #if($listamid.pemilikan!="" && $listamid.pemilikan!="0" )
                                       <input name="jstm" value="$listpemilikK - $listpemilikN" size="45" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #else
                                       <input name="jstm" value="" size="15" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #end
-                                      
+
                                       #else
-                                      
-                                      
-                                      
+
+
+
                                       #if($listamid.pemilikan!="")
                                       <select name="socStatusPemilikanHtaamUpd" class="autoselect" $readmode id="socStatusPemilikanHtaam2" style="text-transform:uppercase;" onblur="uppercase()">
                                         <option value="$listamid.pemilikan">$listpemilikK - $listpemilikN</option>
-                                        
-                                        
-                                
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                              
+
+
+
+
+
+
+
+
+
+
                                   #foreach($listpemilik in $listpemilikan)
-                                 
+
                                   #if($listamid.pemilikan!=$listpemilik.id)
-                                    
-	                               
-                                              
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                
-                                        
+
+
+
+
+
+
+
+
+
+
+
                                         <option value="$listpemilik.id">$listpemilik.kod - $listpemilik.keterangan</option>
-                                        
-                                        
-                                
-                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-                                              
-                                   
-                                  #end    
+
+
+
+
+
+
+
+
+
+
+
+                                  #end
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
-                                          
-                                          
-                                          
-                                          
-                                          
-                                          
-                              
-                                      
+
+
+
+
+
+
+
+
+
+
+
+
+
                                       </select>
                                       #else
                                       <select name="socStatusPemilikanHtaamUpd" class="autoselect" $readmode id="socStatusPemilikanHtaamUpd" style="text-transform:uppercase;" onblur="uppercase()">
                                         <option value="">Sila Pilih Status Pemilikan </option>
-                                        
-                                        
-    
-                                            
-    
-  
-  
-  
-  
-                                              
+
+
+
+
+
+
+
+
+
+
                                   #foreach($listpemilik in $listpemilikan)
-                                 
-                                
-	                               
-                                              
-  
-  
-  
-  
-    
-                                            
-    
-                                        
+
+
+
+
+
+
+
+
+
+
+
+
                                         <option value="$listpemilik.id">$listpemilik.kod - $listpemilik.keterangan</option>
-                                        
-                                        
-    
-                                            
-    
-  
-  
-  
-  
-                                              
-                                   
-                                 
+
+
+
+
+
+
+
+
+
+
+
+
 	                               #end
-                                  
-                                  
-                                  
-                                  
-                                            
 
 
 
 
-  
-                                          
-  
-                                      
+
+
+
+
+
+
+
+
+
                                       </select>
                                       #end                         #end </td>
                                   </tr>
@@ -2477,85 +2248,85 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                   <tr>
                                     <td class="style38"><div align="left"><span class="style41">*</span>&nbsp;Jenis Tanah</div></td>
                                     <td>:</td>
-                                    
+
                                     <td><label>#foreach($listtan in $listtanah)
                                       <!-- listtanah = $listtanah listamid=$listamid -->
-                                  
+
                                       #if($listamid.jenistanah==$listtan.id)
-                                      
+
                                       #set($listtanK=$listtan.kod)
                                       #set($listtanN=$listtan.keterangan)
-                                      
-                                      
-                                      
-                                      #end 
+
+
+
                                       #end
-                                      
+                                      #end
+
                                       #if($readmode == "disabled")
-                                      
+
                                       #if($listamid.jenistanah!="" && $listamid.jenistanah!="0" )
                                       <input name="jt" value="$listtanK - $listtanN" size="25" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #else
                                       <input name="jt" value="" size="15" style="text-transform:uppercase;" $readmodeR class="$readmode" />
                                       #end
-                                      
+
                                       #else
-                                      
+
                                       #if($listamid.jenistanah!="" && $listamid.jenistanah!="0")
                                       <select name="socJenisTanahHtaamUpd" class="autoselect" $readmode id="socJenisTanahHtaam2" style="text-transform:uppercase;" onblur="uppercase()">
-                                        
-                                        
-                                             
-                                  
-                                  
-                                  <!-- 
+
+
+
+
+
+                                  <!--
                                              #if($listamid.jenistanah=="1")
-                                                  
-                                        
+
+
                                         <option value="1">TANAH RIZAB</option>
                                         <option value="2">TANAH ADAT</option>
                                         <option value="3">TANAH GSA</option>
                                         <option value="0">TIDAK DINYATAKAN</option>
-                                        
-                                        
-                                                  
+
+
+
                                               #end
                                                #if($listamid.jenistanah=="2")
-                                                
-                                        
+
+
                                         <option value="2">TANAH ADAT</option>
                                         <option value="1">TANAH RIZAB</option>
                                         <option value="3">TANAH GSA</option>
                                         <option value="0">TIDAK DINYATAKAN</option>
-                                        
-                                        
-                                                  
+
+
+
                                               #end
-                                        -->       
+                                        -->
                                                #if($listamid.jenistanah=="3")
-                                                 
+
                                         <!--<option value="2">TANAH ADAT</option>
                                         <option value="0">TIDAK DINYATAKAN</option>
                                         <option value="1">TANAH RIZAB</option>
                                           -->
                                         <option value="3">TANAH GSA</option>
                                          <option value="4">BUKAN TANAH GSA</option>
-                                                  
+
                                               #end
-                                              
+
                                               #if($listamid.jenistanah=="4")
-                                        
+
                                          <option value="4">BUKAN TANAH GSA</option>
-                                         <option value="3">TANAH GSA</option>         
+                                         <option value="3">TANAH GSA</option>
                                               #end
-                                              
+
                                          #if($listamid.jenistanah!="4" && $listamid.jenistanah!="3"))
-                                        
-                                         <option value="3">TANAH GSA</option> 
+
+                                         <option value="3">TANAH GSA</option>
                                          <option value="4">BUKAN TANAH GSA</option>
-                                                 
+
                                     	 #end
-                                  
+
 
                                       </select>
                                       #else
@@ -2564,8 +2335,8 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                        <!-- <option value="1">TANAH RIZAB</option> -->
                                        <!-- <option value="2">TANAH ADAT</option> -->
                                        <option value="4">BUKAN TANAH GSA</option>
-                                        <option value="3">TANAH GSA</option> 
-                                        
+                                        <option value="3">TANAH GSA</option>
+
                                       </select>
                                       #end            #end </label></td>
                                   </tr>
@@ -2579,34 +2350,34 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                     <td  valign="top">Urusan Kemasukkan Maklumat Harta </td>
                                     <td valign="top">:</td>
                                     <td valign="top"> #set($FLAG_DAFTAR = $listamid.FLAG_DAFTAR)
-                                      
+
                                       #if($readmode != "disabled" )
-                                      
+
                                       #if($FLAG_DAFTAR == '1')
                                       #set($checked_flag_daftar1 = "checked")
-                                      #set($checked_flag_daftar2 = "")   
-                                      #elseif($FLAG_DAFTAR == '2') 
-                                      #set($checked_flag_daftar2 = "checked")    
-                                      #set($checked_flag_daftar1 = "") 
+                                      #set($checked_flag_daftar2 = "")
+                                      #elseif($FLAG_DAFTAR == '2')
+                                      #set($checked_flag_daftar2 = "checked")
+                                      #set($checked_flag_daftar1 = "")
                                       #else
                                       #set($checked_flag_daftar1 = "checked")
-                                      #set($checked_flag_daftar2 = "")                                   
+                                      #set($checked_flag_daftar2 = "")
                                       #end
-                                      <input type="radio" name="FLAG_DAFTAR"  $checked_flag_daftar1 id="FLAG_DAFTAR" 
+                                      <input type="radio" name="FLAG_DAFTAR"  $checked_flag_daftar1 id="FLAG_DAFTAR"
                                           value="1" />
                                       Pendaftaran <br />
-                                      <input type="radio" name="FLAG_DAFTAR"  $checked_flag_daftar2 id="FLAG_DAFTAR" 
+                                      <input type="radio" name="FLAG_DAFTAR"  $checked_flag_daftar2 id="FLAG_DAFTAR"
                                           value="2" />
                                       Perbicaraan
-                                      
-                                      
+
+
                                       #else
-                                      
+
                                       #set($text_daftar = "")
                                       #if($FLAG_DAFTAR == '1')
                                       #set($text_daftar = "PENDAFTARAN")
-                                      #elseif($FLAG_DAFTAR == '2') 
-                                      #set($text_daftar = "PERBICARAAN")                                         
+                                      #elseif($FLAG_DAFTAR == '2')
+                                      #set($text_daftar = "PERBICARAAN")
                                       #end
                                       <input name="FLAG_DAFTAR_TEXT" type="text" id="FLAG_DAFTAR_TEXT" style="text-transform:uppercase;"  value="$text_daftar" size="18" maxlength="40" $readmodeR class="$readmode" />
                                       <input type="hidden" name="FLAG_DAFTAR" id="FLAG_DAFTAR" value="$FLAG_DAFTAR"  />
@@ -2628,11 +2399,11 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                             </tr>
                           </table>
                           #end
-                          
+
                           <!-- <fieldset>
 		      <legend>MAKLUMAT DOKUMEN (MAKLUMAT PELAN)</legend>
 		      <table width="100%" border="0" cellspacing="2" cellpadding="2">
-		        
+
 		   		<tr>
 			          <td width="1%">&nbsp;</td>
 			          <td width="28%">&nbsp;</td>
@@ -2640,29 +2411,29 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
 			          <td width="70%"><img src="../servlet/ekptg.view.ppk.FrmDisplayImage?id=$!listamid.idDokumen" alt="Imej Pelan" border="1" width="250" height="250" onclick="cetakImej($!listamid.idDokumen)"/></td>
 		        </tr>
 		        <tr>
-		        	#if ($show_kemaskini_htaam != 'yes')      
-		        	 
+		        	#if ($show_kemaskini_htaam != 'yes')
+
 			          <td width="1%"></td>
 			          <td width="28%">Nama Dokumen</td>
 			          <td width="1%">:</td>
 			          <td width="70%">
 			          	<input name="txtNamaPelanUp" type="text" id="txtNamaPelanUp" value="$!listamid.namaPelanUp" size="43" maxlength="100" $readmodeR class="$readmode" >
 			          	<input id="fileupload" name="fileupload" type="file" size="40" $readmodeR class="$readmode"/>
-			          	
+
 			          	<input type="button" name="cmdUpload" id="cmdUpload" value="Muat Naik" onclick="OpenUploadFile('$idpermohonan','$idFail')" />
 			          </td>
-			          
-			        
+
+
 		        	#end
-		        </tr>        
+		        </tr>
 		      	</table>
 		      </fieldset> -->
-		      
+
               <div id='divLampiranHTAAH'>
 		      #parse("app/ppk/frmPrmhnnSek8HTAAHLampiran.jsp")
-                
+
                 </div>
-                           
+
                           #if($readmode != "disabled")
                           <table width="100%">
                             <tr>
@@ -2670,12 +2441,12 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                             </tr>
                           </table>
                           #end
-                          
-                          
+
+
                           #end </td>
                       </tr>
                       #end
-                      
+
                       #if($show_button=="yes")
                       <tr>
                         <td><table width="100%" border="0" align="center">
@@ -2692,46 +2463,46 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                             </tr>
                             <tr>
                               <td align="center"> #if($open_button_online == "yes")
-                                
+
                                 #if($show_simpan_add_htaam=="yes")
                               <!--  <input type="button" name="tambahpenghutang2" id="tambahpenghutang2" $readmode value="Simpan " onclick="setSelected(1,0,0,0);add_Htaam()"/> -->
 				 <input type="submit" name="tambahpenghutang2" id="tambahpenghutang2" $readmode value="Simpan" onclick="setSelected(1,0,0,0);add_Htaam('$idhta','$id')"/>
                                 #end
-                                
+
                                 #if($show_batal_add_htaam=="yes")
                                 #if($!skrin_online != "yes")
                                 <input type="reset" name="cmdSimpan6" id="cmdSimpan6" value="Batal" onclick="cancelwaris()"/>
                                 #end
-                                
+
                                 #end
-                                
+
                                 #if($show_kemaskini_htaam=="yes")
-                                
+
                                 #if($id_Status != "169" && $id_Status != "21" && $id_Status != "64" && $id_Status != "163" && $id_Status != "164" && $id_Status != "165")
                                 <!--   <input type="submit" name="button8" id="button8" value="Kemaskini"  onclick="setSelected(1,0,0,0);edit_Htaam()" /> -->
                                 #end
-                                
+
                                 #if($boleh_kemaskini == "yes")
                                 #end
-                                
+
                                 #if($!skrin_online != "yes")
                                 <input type="submit" name="button8" id="button8" value="Kemaskini"  onclick="setSelected(1,0,0,0);edit_Htaam('$idhta')" />
                                 #if($flag_kemaskini_selesai != "yes")
                                 <script>
                                 document.getElementById('button8').style.display = "none";
                                 </script>
-                                #end   
+                                #end
                                 #else
                                <!-- <input type="button" name="button9" id="button9" value="Simpan"  onclick="setSelected(1,0,0,0);save_Htaam()"/> -->
-				 <input type="button" name="button9" id="button9" value="Simpan"  onclick="setSelected(1,0,0,0);save_Htaam('$idPermohonanSimati','$idhta','$idSimati','$idDokumen')"/>                                
+				 <input type="button" name="button9" id="button9" value="Simpan"  onclick="setSelected(1,0,0,0);save_Htaam('$idPermohonanSimati','$idhta','$idSimati','$idDokumen')"/>
 				#end
-                                
-                                
-                                
+
+
+
                                 #end
                                 #if($show_save_update_htaam=="yes")
                                 <!--<input type="button" name="button9" id="button9" value="Simpan"  onclick="setSelected(1,0,0,0);save_Htaam()"/>-->
-            			<input type="button" name="button9" id="button9" value="Simpan"  onclick="setSelected(1,0,0,0);save_Htaam('$idPermohonanSimati','$idhta','$idSimati','$idDokumen')"/>                    
+            			<input type="button" name="button9" id="button9" value="Simpan"  onclick="setSelected(1,0,0,0);save_Htaam('$idPermohonanSimati','$idhta','$idSimati','$idDokumen')"/>
 				#end
                                 #if($show_batal_update_htaam=="yes")
                                 #if($!skrin_online != "yes")
@@ -2741,22 +2512,22 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                 #if($show_hapus_htaam=="yes" && $show_kemaskini_htaam=="yes" )
                                 #if($id_Status != "169" && $id_Status != "21" && $id_Status != "64" && $id_Status != "163" && $id_Status != "164" && $id_Status != "165")
                                 <!--                         <input type="button" name="cmdCetak7" id="cmdCetak7" value="Hapus"  onclick="setSelected(1,0,0,0);hapus_Htaam()"/> -->
-                                <!-- 
+                                <!--
                                           <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onclick="javascript:cetak('$NO_FAIL')"/>
                                           -->
                                 #end
-                                #if($boleh_kemaskini == "yes")  
+                                #if($boleh_kemaskini == "yes")
                                 #end
                                 <input type="button" name="cmdCetak7" id="cmdCetak7" value="Hapus"  onclick="setSelected(1,0,0,0);hapus_Htaam()"/>
                                 #if($flag_kemaskini_selesai != "yes")
                                 <script>
                                 document.getElementById('cmdCetak7').style.display = "none";
                                 </script>
-                                #end                  
-                                
-                                
                                 #end
-                               
+
+
+                                #end
+
                                 <input type="button" name="cmdKembali7" id="cmdKembali7" value="Kembali" onclick="setSelected(1,0,0,0);HtaamView()" />
                                 <input type=hidden value=$NO_FAIL>
                                 #end </td>
@@ -2777,8 +2548,8 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                   <!--
                                         <input type="submit" name="button" id="button" value="Tambah" onclick="nktambah()"/>   -->
                                   #end
-                                  
-                                  #if($boleh_kemaskini == "yes") 
+
+                                  #if($boleh_kemaskini == "yes")
                                   #end
                                   #if($open_button_online == "yes")
                                   <input type="submit" name="buttonTambah1" id="buttonTambah1" value="Tambah" onclick="nktambah()"/>
@@ -2786,25 +2557,25 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                   <script>
                                 document.getElementById('buttonTambah1').style.display = "none";
                                 </script>
-                                  #end    
                                   #end
-                                  
-                                  
-                                  
-                                  
+                                  #end
+
+
+
+
                                   #end
                                   #if($kembaliharta == "yes")
                                   <!--
                                             <input type="submit" name="cmdKembali2" id="cmdKembali2" value="Kembali"  onclick="kembali_simati()" />
                                         -->
-                                  #end      
-                                  
-                                  
-                                  #if($!skrin_online != "yes")                                       
+                                  #end
+
+
+                                  #if($!skrin_online != "yes")
                                   #if($listHTA.size()>0 && $show_htaa_add_table=="" && $show_htaa_update_table=="" )
                                   #if($open_button_online == "yes")
                                   <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onclick="javascript:setTable('tableReport')"/>
-                                  #end  
+                                  #end
                                   #end
                                   #end </div></td>
                             </tr>
@@ -2820,89 +2591,90 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                             </tr>
                            <!--<tr>
                               <td ><a href="#" class="style2 style42" onClick="javascript:cetakNilaiHarta('$NO_FAIL')">Nilaian Harta oleh PPSPP</a></td>
-                            </tr>  --> 
+                            </tr>  -->
                           </table>
                           </fieldset>
                           #if($listHTA.size()!=0 )
                           <table width="100%">
                             <tr  class="table_header">
-                            
+
                              <td width="2%">
                             	<input type="checkbox" name="selectallHTA" id="selectallHTA" onClick="doCheckAll1_HTA()" />
 						      </td>
-                            
+
                               <td width="5%"><div align="center">NO</div></td>
                               <!--
                                         <td width="10%"><div align="center">ID HTA</div></td>
                                         -->
-                                       
-                              <td width="20%"><div align="left">NEGERI</div></td>
+
+                              <td width="18%"><div align="left">NEGERI</div></td>
                               <td width="20%"><div align="left">DAERAH</div></td>
                               <td width="20%"><div align="left">MUKIM</div></td>
                               <td width="10%"><div align="left">NO HAKMILIK</div></td>
                               <td width="10%"><div align="left">NO PT/NO LOT</div></td>
                               <td width="5%"><div align="center">BAHAGIAN SIMATI</div></td>
-                              <td width="5%"><strong>Dokumen</strong></td>
+                              <td width="5%"><strong>DOKUMEN</strong></td>
+							  <td width="5%"><strong>TINDAKAN</strong></td>
                             </tr>
                             #set($plko=0)
-                            
+
                             #foreach($listam in $listHTA)
-                            
-                            
+
+
                             #set($plko=$plko+1)
                             #if($plko%2!=0)
                             <tr bgcolor="white">
-                            
+
                             <td class="row1">
                             	<input type="checkbox" name="selectHTA" id="selectHTA" value="$listam.idhta" />
-                              </td> 
-                            
+                              </td>
+
                               <td class="row1"><div align="center" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()">$plko</div></td>
                               <!--
     <td class="row1"><div align="center" style="text-transform:uppercase;" onblur="uppercase()"><a href="javascript:get_htaam($listam.idhta)" class="style42">$listam.idhta </a></div></td>
     -->
                               #if($listam.negeri=="")
-                              
+
                               #set($nama_negeri="")
                               #else
-                              #foreach($ln in $listnegeri)                                                                      
+                              #foreach($ln in $listnegeri)
                               #if($ln.id_Negeri==$listam.negeri)
                               #set($nama_negeri=$ln.nama_Negeri)
-                              
+
                               #end
                               #end
-                              
+
                               #end
                            <!--    <td class="row1"><div align="left" style="text-transform:uppercase;" onblur="uppercase()"><a href="javascript:get_htaam($listam.idhta)" class="style42">$nama_negeri</a></div></td> -->
                               <td class="row1"><div align="left" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()"><a href="javascript:get_htaam('$idPermohonanSimati','$listam.idhta','$listam.idDokumen')" class="style42">$nama_negeri</a></div></td>
                               #if($listam.daerah=="")
-                              
+
                               #set($nama_daerah="")
                               #else
-                              #foreach($ld in $listdaerah)                                                                      
+                              #foreach($ld in $listdaerah)
                               #if($ld.id==$listam.daerah)
                               #set($nama_daerah=$ld.nama)
-                              
+
                               #end
                               #end
-                              
+
                               #end
                               <td class="row1"><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$nama_daerah</div></td>
                               #if($listam.mukim=="")
-                              
+
                               #set($nama_mukim="")
                               #else
-                              #foreach($lm in $listmukim)                                                                      
+                              #foreach($lm in $listmukim)
                               #if($lm.id==$listam.mukim)
                               #set($nama_mukim=$lm.nama)
-                              
+
                               #end
                               #end
-                              
+
                               #end
                               <td class="row1"><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$nama_mukim</div></td>
-                              #if($listam.noHakmilik != "" && $listam.kod_hakmilik != ""  && $listam.kod_hakmilik != "00")    
-                              #set($Z =  "$listam.kod_hakmilik${listam.noHakmilik}")    
+                              #if($listam.noHakmilik != "" && $listam.kod_hakmilik != ""  && $listam.kod_hakmilik != "00")
+                              #set($Z =  "$listam.kod_hakmilik${listam.noHakmilik}")
                               #else
                               #set($Z =  $listam.noHakmilik)
                               #end
@@ -2912,10 +2684,11 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                               <td class="row1"><div align="center" style="text-transform:uppercase;" onblur="uppercase()">$listam.basimati / $listam.bbsimati</div></td>
                               #else
                               <td class="row1"></td>
-                              #end 
+                              #end
                                #if($listam.idDokumen != "" )
                                <td class="row1"><div align="center"><a onclick="javascript:cetakImej($listam.idDokumen)" href="#" style="color: #0000FF"> lihat </a></div></td>
-                              #else
+                               <td class="row1"><div align="center"><input type="button" name="cmdJPPH" value ="Nilaian JPPH" onClick="javascript:sendNilaianJPPH('$idPermohonanSimati', '$listam.idhta')"/></div></td>
+							  #else
                               <td class="row1">  </td>
                              #end
                                </tr>
@@ -2923,53 +2696,53 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                             <tr class="table_header">
                              <td class="row2">
                             	<input type="checkbox" name="selectHTA" id="selectHTA" value="$listam.idhta" />
-                              </td> 
+                              </td>
                               <td class="row2"><div align="center">$plko</div></td>
                               <!--
     <td class="row2"><div align="center" style="text-transform:uppercase;" onblur="uppercase()"><a href="javascript:get_htaam($listam.idhta)" class="style42">$listam.idhta</a></div></td>
     -->
                               #if($listam.negeri=="")
-                              
+
                               #set($nama_negeri="")
                               #else
-                              #foreach($ln in $listnegeri)                                                                      
+                              #foreach($ln in $listnegeri)
                               #if($ln.id_Negeri==$listam.negeri)
                               #set($nama_negeri=$ln.nama_Negeri)
-                              
+
                               #end
                               #end
-                              
+
                               #end
                              <!--  <td class="row2"><div align="left" style="text-transform:uppercase;" onblur="uppercase()"><a href="javascript:get_htaam($listam.idhta)" class="style42">$nama_negeri</a></div></td> -->
                                 <td class="row2"><div align="left" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()"><a href="javascript:get_htaam('$idPermohonanSimati','$listam.idhta','$listam.idDokumen')" class="style42">$nama_negeri</a></div></td>
                               #if($listam.daerah=="")
-                              
+
                               #set($nama_daerah="")
                               #else
-                              #foreach($ld in $listdaerah)                                                                      
+                              #foreach($ld in $listdaerah)
                               #if($ld.id==$listam.daerah)
                               #set($nama_daerah=$ld.nama)
-                              
+
                               #end
                               #end
-                              
+
                               #end
                               <td class="row2"><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$nama_daerah</div></td>
                               #if($listam.mukim=="")
-                              
+
                               #set($nama_mukim="")
                               #else
-                              #foreach($lm in $listmukim)                                                                      
+                              #foreach($lm in $listmukim)
                               #if($lm.id==$listam.mukim)
                               #set($nama_mukim=$lm.nama)
-                              
+
                               #end
                               #end
-                              
+
                               #end
                               <td class="row2"><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$nama_mukim</div></td>
-                              #if($listam.noHakmilik != "" && $listam.kod_hakmilik != "")    
-                              #set($Z =  "$listam.kod_hakmilik${listam.noHakmilik}")    
+                              #if($listam.noHakmilik != "" && $listam.kod_hakmilik != "")
+                              #set($Z =  "$listam.kod_hakmilik${listam.noHakmilik}")
                               #else
                               #set($Z =  $listam.noHakmilik)
                               #end
@@ -2982,7 +2755,8 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                               #end
                                #if($listam.idDokumen != "" )
                                <td class="row2"><div align="center"><a onclick="javascript:cetakImej($listam.idDokumen)" href="#" style="color: #0000FF"> lihat </a></div></td>
-                              #else
+                               <td class="row2"><div align="center"><input type="button" name="cmdJPPH" value ="Nilaian JPPH" onClick="javascript:sendNilaianJPPH('$idPermohonanSimati', '$listam.idhta')"/></div></td>
+							  #else
                               <td class="row2">  </td>
                              #end
                               </tr>
@@ -3034,14 +2808,14 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                     <td width="20%">&nbsp;</td>
                     #if($!skrin_online != "yes")
                     <td width="5%"><input type="button" name="cmdSimpan9" id="cmdSimpan8" value="Batal" onclick="cancel()"/></td>
-                    <td width="5%"><input type="button" name="cmdJPPH" value ="Nilaian JPPH" onClick="javascript:sendNilaianHTA('$id', '$idhta')" disabled/> </td>
+                    <!--<td width="5%"><input type="button" name="cmdJPPH" value ="Nilaian JPPH" onClick="javascript:sendNilaianHTA('$id', '$idhta')" disabled/> </td>-->
                    	#end
                     <td width="20%">&nbsp;</td>
                     <td width="10%">&nbsp;</td>
                     <td width="20%">&nbsp;</td>
-                    </tr> 
-                    </table>  
-                    </fieldset>    
+                    </tr>
+                    </table>
+                    </fieldset>
                   </div>
                   <div class="TabbedPanelsContent"></div>
                 </div>
@@ -3057,19 +2831,19 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
       <input name="save_harta" id="save_harta" type="hidden" />
     </tr>
   </table>
-  #parse("app/ppk/paging_sek8.jsp") 
+  #parse("app/ppk/paging_sek8.jsp")
   #parse("app/ppk/headerppk_script.jsp")
 </form>
 <script>
 if(document.f1.selectedHartaTakAlih.value.length>0){
 	var selectHTAs = document.getElementsByName('selectHTA');
 	var arrayCarryHartaTakAlih = document.f1.selectedHartaTakAlih.value;
-	var selectedHartaTakAlihAdaHakmilik = []; 
-	
+	var selectedHartaTakAlihAdaHakmilik = [];
+
 	for (var i=0; i<arrayCarryHartaTakAlih.length; i++) {
 		var carryHartaTakAlih = '';
-		if(arrayCarryHartaTakAlih.indexOf(",")>0){ 
-			carryHartaTakAlih = arrayCarryHartaTakAlih.substring(0, arrayCarryHartaTakAlih.indexOf(",")); 		
+		if(arrayCarryHartaTakAlih.indexOf(",")>0){
+			carryHartaTakAlih = arrayCarryHartaTakAlih.substring(0, arrayCarryHartaTakAlih.indexOf(","));
 // 			selectedHartaTakAlihAdaHakmilik.push(carryHartaTakAlih);
 			arrayCarryHartaTakAlih = arrayCarryHartaTakAlih.substring(arrayCarryHartaTakAlih.indexOf(",")+1, arrayCarryHartaTakAlih.length);
 		} else {
@@ -3077,7 +2851,7 @@ if(document.f1.selectedHartaTakAlih.value.length>0){
 // 			selectedHartaTakAlihAdaHakmilik.push(carryHartaTakAlih);
 			arrayCarryHartaTakAlih = "";
 		}
-		
+
 		for(var j=0; j<selectHTAs.length; j++){
 			if(selectHTAs[j].value == carryHartaTakAlih){
 				selectHTAs[j].checked = true;
@@ -3103,16 +2877,30 @@ function cancel() {
 function sendNilaianHTA(idPermohonan,noFail) {
 	var selectHTAs = document.getElementsByName('selectHTA');
 	var selectedHartaTakAlihAdaHakmilik = setHartaTakAlih();
-     
+
 	  if (!window.confirm("Adakah anda pasti?")) return;
 		var idPermohonan = document.f1.idPermohonan.value;
 		var idSimati = document.f1.aaa.value;
-	  
+
 	  document.f1.action = "$EkptgUtil.getTabID("Utiliti",$portal_role)?_portal_module=ekptg.view.integrasi.FrmViewNilaianHartaTakAlih&selectedHartaTakAlih="+selectedHartaTakAlihAdaHakmilik+"&idSimati="+idSimati+"&idPermohonan="+idPermohonan+"&action2=viewNilaianHTA&method=post&command=nilai_harta&mode=simpan_HTAHA";
 	  document.f1.submit();
   }
   
-function doCheckAll1_HTA(){    
+function sendNilaianJPPH(idPermohonanSimati, idhta) {
+		//alert("Permohonan mati: " + idPermohonanSimati + ", id hta: " + idhta);
+		//var idhta  = $jquery('#idhta').val();
+		//var idPermohonanSimati  = $jquery('#idPermohonanSimati').val();
+		var idPermohonanSimati = idPermohonanSimati;
+		var idhta  = idhta;
+
+		var url = "../x/${securityToken}/ekptg.view.ppk.FrmNilaianJPPH?idPermohonanSimati="+idPermohonanSimati+"&idhta="+idhta+"&command=borangPermohonan&frmFrom=frmPrmhnnSek8DaftarSek8";
+		var hWnd = window.open(url,'Cetak','width=925,height=470, resizable=no,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+  }
+
+function doCheckAll1_HTA(){
     if (document.f1.selectallHTA.checked == true){
         if (document.f1.selectHTA.length == null){
             document.f1.selectHTA.checked = true;
@@ -3134,32 +2922,32 @@ function doCheckAll1_HTA(){
     }
 }
 
-function doUpdateCheckAll1_HTA(){  
+function doUpdateCheckAll1_HTA(){
 	var c = 0;
-	if(document.f1.selectHTA.length > 1) {     
+	if(document.f1.selectHTA.length > 1) {
 		  for (i = 0; i < document.f1.selectHTA.length; i++) {
 	      if (document.f1.selectHTA[i].checked == false)
-		  {	 
+		  {
 		  c++
 	      }
-		  }  
+		  }
 	}
 	else
 	{
 	if (document.f1.selectHTA.checked == false)
-	{	 
+	{
 	c++;
-	}	 	
-	}	 
+	}
+	}
 	   if(c>0)
-		  {	  
+		  {
 		  document.f1.selectallHTA.checked = false;
 		  }
 		  else
 		  {
 		  document.f1.selectallHTA.checked = true;
 		  }
-		  
+
 	}
 
 		/* END HARTA TAK ALIH   */
@@ -3180,36 +2968,36 @@ if(document.f1.upload.value=='simpanUpload' && document.f1.paramOnline.value != 
 <!-- TAB -->
 function setHartaTakAlih(){
 	var arrayCarryHartaTakAlih = document.f1.selectedHartaTakAlih.value;
-	
+
 	var selectHTAAHs = document.getElementsByName('selectHTA');
 	var selectedHartaTakAlihAdaHakmilik = [];
-	
+
 	for(var i=0; i<arrayCarryHartaTakAlih.length; i++){
 		var carryHartaTakAlih = '';
 		//untuk pisahkan data jika lebih dari 1
-		if(arrayCarryHartaTakAlih.indexOf(",")>0){ 
-			carryHartaTakAlih = arrayCarryHartaTakAlih.substring(0, arrayCarryHartaTakAlih.indexOf(",")); 		
+		if(arrayCarryHartaTakAlih.indexOf(",")>0){
+			carryHartaTakAlih = arrayCarryHartaTakAlih.substring(0, arrayCarryHartaTakAlih.indexOf(","));
 			arrayCarryHartaTakAlih = arrayCarryHartaTakAlih.substring(arrayCarryHartaTakAlih.indexOf(",")+1, arrayCarryHartaTakAlih.length);
-			selectedHartaTakAlihAdaHakmilik.push(carryHartaTakAlih);	 			
+			selectedHartaTakAlihAdaHakmilik.push(carryHartaTakAlih);
 		} else {
 			carryHartaTakAlih = arrayCarryHartaTakAlih;
 			arrayCarryHartaTakAlih = "";
 			selectedHartaTakAlihAdaHakmilik.push(carryHartaTakAlih);
 		}
 	}
-	
+
 	if(selectedHartaTakAlihAdaHakmilik.length>0){
 		for(var j=0; j<selectedHartaTakAlihAdaHakmilik.length; j++){
 			var val = selectedHartaTakAlihAdaHakmilik[j];
-			
+
 			for (var i=0; i<selectHTAAHs.length; i++) {
 				var cbx = '';
 		    	cbx = selectHTAAHs[i].value;
-		    	
+
 				if(cbx == val){
 				    if (selectHTAAHs[i].checked) {
 				    	if(selectedHartaTakAlihAdaHakmilik.indexOf(cbx)<0){
-				    		selectedHartaTakAlihAdaHakmilik.push(cbx);	
+				    		selectedHartaTakAlihAdaHakmilik.push(cbx);
 				    	}
 				    } else {
 				    	if(selectedHartaTakAlihAdaHakmilik.indexOf(val)>0)
@@ -3218,7 +3006,7 @@ function setHartaTakAlih(){
 				} else {
 				    if (selectHTAAHs[i].checked) {
 				    	if(selectedHartaTakAlihAdaHakmilik.indexOf(cbx)<0){
-				    		selectedHartaTakAlihAdaHakmilik.push(cbx);	
+				    		selectedHartaTakAlihAdaHakmilik.push(cbx);
 				    	}
 				    }
 				}
@@ -3238,7 +3026,7 @@ function setHartaTakAlih(){
 
 function HtaamViewX(paramOnline) {
 	var selectedHartaTakAlihAdaHakmilik = setHartaTakAlih();
-	
+
     document.f1.selectedHartaTakAlih.value = selectedHartaTakAlihAdaHakmilik;
 	if(paramOnline == 'seksyen8online')
 		document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon";
@@ -3327,7 +3115,7 @@ function PemohonView() {
 	document.f1.submit();
 }
 function kembali_simati(){
-	
+
 	document.f1.command.value = "kembali_simati";
 	document.f1.action = "";
 	document.f1.submit();
@@ -3337,8 +3125,8 @@ function setSelected(tabIdatas,tabIdtengah,tabIdbawah,tabIdtepi)
  {
     document.f1.tabIdatas.value = tabIdatas;
     document.f1.tabIdtengah.value = tabIdtengah;
-    document.f1.tabIdbawah.value = tabIdbawah;	
-	document.f1.tabIdtepi.value = tabIdtepi;	
+    document.f1.tabIdbawah.value = tabIdbawah;
+	document.f1.tabIdtepi.value = tabIdtepi;
 }
 
 function cancelwaris() {
@@ -3366,7 +3154,7 @@ function nktambah(paramOnline) {
 	document.f1.mode.value = "add_new";
 	var path = window.location.href;
 // 	alert(path);
-		
+
 // 	if(window.location.href == 'seksyen8online')
 // 	if(path.indexOf("FrmPrmhnnBorangAMaklumatPemohon")> -1){
 // 		document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon";
@@ -3386,7 +3174,7 @@ function get_htaam( idPermohonanSimati, idhtaam , idDokumen) {
 	document.f1.idhtaam.value = idhtaam;
 	document.f1.idDokumen.value = idDokumen;
 	document.f1.mode.value = "getHtaam";
-	
+
 // 	var path = window.location.href;
 // 	if(path.indexOf("FrmPrmhnnBorangAMaklumatPemohon")> -1){
 // 		document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon";
@@ -3441,19 +3229,19 @@ function checkWujudLot(v_t){
 	{
 		alert("Sila Masukkan No. Lot / PT");
 	}
-	
+
 	else
 	{
 		document.f1.command.value="Htaam";
-		document.f1.mode.value="checkWujudLot";		
+		document.f1.mode.value="checkWujudLot";
 		document.f1.action="";
         document.f1.v_tab.value = v_t;
 		document.f1.submit();
-		
+
 	}
 }
 
-function open_new_window(jenis_popup,nama_suburusan) 
+function open_new_window(jenis_popup,nama_suburusan)
 {
  var width  = 300;
  var height = 200;
@@ -3483,7 +3271,7 @@ new_window.document.write("<b><font color='blue'>Tujuan fungsi ini adalah member
 
 new_window.document.write("<br>");
 new_window.document.write("</body></html>");
-new_window.document.close(); 
+new_window.document.close();
 
 
 
@@ -3496,7 +3284,7 @@ new_window.document.close();
 
 function daerahchange(v_t){
 		document.f1.command.value="Htaam";
-		document.f1.mode.value="daerahchange";		
+		document.f1.mode.value="daerahchange";
 		document.f1.action="";
         document.f1.v_tab.value = v_t;
 		document.f1.submit();
@@ -3504,7 +3292,7 @@ function daerahchange(v_t){
 function daerahchangeup(v_t){
 		document.f1.command.value="Htaam";
 		document.f1.mode.value="daerahchangeup";
-		
+
 		document.f1.action="";
         document.f1.v_tab.value = v_t;
 		document.f1.submit();
@@ -3514,8 +3302,8 @@ function tambah_simpan_penting(){
 	input_box = confirm("Adakah anda pasti?");
 	if (input_box == true) {if(document.f1.txtNamaOBPenting.value == ""){
 			alert('Sila masukkan " Nama " terlebih dahulu.');
-	  		document.f1.txtNamaOBPenting.focus(); 
-			return; 
+	  		document.f1.txtNamaOBPenting.focus();
+			return;
             }
 		}
 	document.f1.mode.value = "tambah_penghutang";
@@ -3530,113 +3318,113 @@ function add_Htaam(idhta,id){
 
             if(document.f1.socNegeriHtaam.value == ""){
 			alert('Sila pilih " Negeri " terlebih dahulu.');
-	  		document.f1.socNegeriHtaam.focus(); 
-			return; 
+	  		document.f1.socNegeriHtaam.focus();
+			return;
             }
-            
+
             else if(document.f1.socDaerahHtaam.value == ""){
 			alert('Sila pilih " Daerah " terlebih dahulu.');
-	  		document.f1.socDaerahHtaam.focus(); 
-			return; 
+	  		document.f1.socDaerahHtaam.focus();
+			return;
             }
             else if(document.f1.socMukimHtaam.value == ""){
 			alert('Sila pilih " Mukim " terlebih dahulu.');
-	  		document.f1.socMukimHtaam.focus(); 
-			return; 
+	  		document.f1.socMukimHtaam.focus();
+			return;
             }
             else if(document.f1.socJenisHakmilikHtaam.value == ""){
 			alert('Sila pilih " Jenis Hakmilik " terlebih dahulu.');
-	  		document.f1.socJenisHakmilikHtaam.focus(); 
-			return; 
+	  		document.f1.socJenisHakmilikHtaam.focus();
+			return;
             }
             else if(document.f1.txtNoHakmilikHtaam.value == ""){
 			alert('Sila masukkan no hakmilik');
-	  		document.f1.txtNoHakmilikHtaam.focus(); 
-			return; 
+	  		document.f1.txtNoHakmilikHtaam.focus();
+			return;
             }
             else if(document.f1.txtNoPTHtaam.value == ""){
 			alert('Sila masukkan no PT ataupun no Lot');
-	  		document.f1.txtNoPTHtaam.focus(); 
-			return; 
+	  		document.f1.txtNoPTHtaam.focus();
+			return;
             }
-            
+
             //else if(document.f1.txtAlamat1Htaam1.value == ""){
     		//	alert('Sila masukkan " Alamat Harta " terlebih dahulu.');
-    	  	//	document.f1.txtAlamat1Htaam1.focus(); 
-    		//	return; 
+    	  	//	document.f1.txtAlamat1Htaam1.focus();
+    		//	return;
             //    }
-            
+
             else if (document.f1.txtAlamat1Htaam1.value != "" && document.f1.txtAlamatPoskodHtaam.value == ""){
     			alert('Sila masukkan " Poskod " terlebih dahulu.');
-    	  		document.f1.txtAlamatPoskodHtaam.focus(); 
-    			return; 
-                }   
-            
+    	  		document.f1.txtAlamatPoskodHtaam.focus();
+    			return;
+                }
+
             else if (document.f1.txtAlamat1Htaam1.value == "" && document.f1.txtAlamatPoskodHtaam.value != ""){
     			alert('Sila masukkan " Alamat Harta " terlebih dahulu.');
-    	  		document.f1.txtAlamatPoskodHtaam.focus(); 
-    			return; 
-                }  
-            
+    	  		document.f1.txtAlamatPoskodHtaam.focus();
+    			return;
+                }
+
             else if (document.f1.txtAlamat1Htaam1.value != "" && document.f1.txtBandarHartaHtaamX2.value == ""){
     			alert('Sila masukkan " Alamat Bandar " terlebih dahulu.');
-    	  		document.f1.txtBandarHartaHtaamX2.focus(); 
-    			return; 
-                }  
-                 
+    	  		document.f1.txtBandarHartaHtaamX2.focus();
+    			return;
+                }
+
              else if(document.f1.txtBahagianSimati1.value == "" && document.f1.txtBahagianSimati2.value == "" )
             {
             alert('Sila masukkan bahagian simati');
-	  		document.f1.txtBahagianSimati1.focus(); 
-			return; 
+	  		document.f1.txtBahagianSimati1.focus();
+			return;
             }
-            
+
             else if(document.f1.txtBahagianSimati1.value != "" && document.f1.txtBahagianSimati2.value == "" )
             {
             alert('Sila masukkan bahagian simati selengkapnya');
-	  		document.f1.txtBahagianSimati2.focus(); 
-			return; 
+	  		document.f1.txtBahagianSimati2.focus();
+			return;
             }
-            
+
             else if(document.f1.txtBahagianSimati2.value != "" && document.f1.txtBahagianSimati1.value == "" )
             {
             alert('Sila masukkan bahagian simati selengkapnya');
-	  		document.f1.txtBahagianSimati1.focus(); 
-			return; 
+	  		document.f1.txtBahagianSimati1.focus();
+			return;
             }
-            
+
             else if(document.f1.socJenisTanahHtaam.value == "0")
             {
             alert('Sila masukkan " Jenis Tanah" terlebih dahulu.');
-	  		document.f1.socJenisTanahHtaam.focus(); 
-			return; 
+	  		document.f1.socJenisTanahHtaam.focus();
+			return;
             }
-            
+
             else if(b1>b2)
             {
             alert('Sila pastikan bahagian simati pada kotak yang pertama lebih besar atau sama dengan kotak yang kedua');
-	  		document.f1.txtBahagianSimati1.focus(); 
-			return; 
+	  		document.f1.txtBahagianSimati1.focus();
+			return;
             }
-            
-          
+
+
 		  else if(document.f1.save_harta.value == "yes" )
             {
             alert('Sila masukkan maklumat hta dibawah jagaan unit terlebih dahulu!');
-	  	//	document.f1.txtBahagianSimati1.focus(); 
-			return; 
+	  	//	document.f1.txtBahagianSimati1.focus();
+			return;
             }
-    
-       
-            
+
+
+
             else
             {
             input_box = confirm("Adakah anda pasti?");
-	        if (input_box == true) 
+	        if (input_box == true)
             {
-           
+
             document.f1.command.value="Htaam";
-		    document.f1.mode.value="masukkan";		
+		    document.f1.mode.value="masukkan";
 		    document.f1.action="";
 		    document.f1.submit();
 		    }
@@ -3644,16 +3432,16 @@ function add_Htaam(idhta,id){
             {
             return;
             }
-            
+
             }
 
 
-		
+
 }
 
 function edit_Htaam(idhta){
 		document.f1.command.value="Htaam";
-		document.f1.mode.value="kemaskiniHtaam";	
+		document.f1.mode.value="kemaskiniHtaam";
 		document.f1.idhtaam.value=idhta;
 		document.f1.action="";
 		document.f1.submit();
@@ -3668,120 +3456,120 @@ function save_Htaam(idPermohonanSimati,idhta,idSimati,idDokumen){
 
 	        if(document.f1.socNegeriHtaamUp.value == ""){
 			alert('Sila pilih " Negeri " terlebih dahulu.');
-	  		
-			return; 
-            } 
-                    
+
+			return;
+            }
+
             else if(document.f1.socDaerahHtaamUp.value == ""){
 			alert('Sila pilih " Daerah " terlebih dahulu.');
-	  		document.f1.socDaerahHtaamUp.focus(); 
-			return; 
+	  		document.f1.socDaerahHtaamUp.focus();
+			return;
             }
            else if(document.f1.socMukimHtaamUp.value == ""){
 			alert('Sila pilih " Mukim " terlebih dahulu.');
-	  		document.f1.socMukimHtaamUp.focus(); 
-			return; 
+	  		document.f1.socMukimHtaamUp.focus();
+			return;
             }
-	        
+
            //else if(document.f1.txtAlamat1Htaam1.value == ""){
    			//alert('Sila masukkan " Alamat Harta " terlebih dahulu.');
-   	  		//document.f1.txtAlamat1Htaam1.focus(); 
+   	  		//document.f1.txtAlamat1Htaam1.focus();
    			//return; txtAlamat1Htaam1
               // }
-	        
+
            else if (document.f1.txtAlamat1Htaam1.value != "" && document.f1.txtAlamatPoskodHtaam.value == ""){
       			alert('Sila masukkan " Poskod " terlebih dahulu.');
-      	  		document.f1.txtAlamatPoskodHtaam.focus(); 
-      			return; 
+      	  		document.f1.txtAlamatPoskodHtaam.focus();
+      			return;
                   }
-	        
+
            else if (document.f1.txtAlamat1Htaam1.value == "" && document.f1.txtAlamatPoskodHtaam.value != ""){
      			alert('Sila masukkan " Alamat Harta " terlebih dahulu.');
-     	  		document.f1.txtAlamatPoskodHtaam.focus(); 
-     			return; 
+     	  		document.f1.txtAlamatPoskodHtaam.focus();
+     			return;
                  }
-	        
+
            else if (document.f1.txtAlamat1Htaam1.value != "" && document.f1.txtBandarHartaHtaamX2.value == ""){
       			alert('Sila masukkan " Alamat Bandar " terlebih dahulu.');
-      	  		document.f1.txtBandarHartaHtaamX2.focus(); 
-      			return; 
-                  } 
-	        
+      	  		document.f1.txtBandarHartaHtaamX2.focus();
+      			return;
+                  }
+
             else if(document.f1.socJenisHakmilikHtaamUp.value == "")
             {
 			alert('Sila pilih " Jenis hakmilik" terlebih dahulu.');
-	  		document.f1.socJenisHakmilikHtaamUp.focus(); 
-			return; 
+	  		document.f1.socJenisHakmilikHtaamUp.focus();
+			return;
             }
              else if(document.f1.txtNoHakmilikHtaamUp.value == ""){
 			alert('Sila masukkan no hakmilik');
-	  		document.f1.txtNoHakmilikHtaamUp.focus(); 
-			return; 
+	  		document.f1.txtNoHakmilikHtaamUp.focus();
+			return;
             }
             else if(document.f1.txtNoPTHtaamUp.value == ""){
 			alert('Sila masukkan no PT ataupun no Lot');
-	  		document.f1.txtNoPTHtaamUp.focus(); 
-			return; 
+	  		document.f1.txtNoPTHtaamUp.focus();
+			return;
             }
-            
+
 			  else if(document.f1.txtBahagianSimati1Up.value == "" && document.f1.txtBahagianSimati2Up.value == "" )
             {
             alert('Sila masukkan bahagian simati');
-	  		document.f1.txtBahagianSimati1Up.focus(); 
-			return; 
+	  		document.f1.txtBahagianSimati1Up.focus();
+			return;
             }
             else if(document.f1.txtBahagianSimati1Up.value != "" && document.f1.txtBahagianSimati2Up.value == "" )
             {
             alert('Sila masukkan bahagian simati selengkapnya');
-	  		document.f1.txtBahagianSimati2Up.focus(); 
-			return; 
+	  		document.f1.txtBahagianSimati2Up.focus();
+			return;
             }
-            
+
             else if(document.f1.txtBahagianSimati2Up.value != "" && document.f1.txtBahagianSimati1Up.value == "" )
             {
             alert('Sila masukkan bahagian simati selengkapnya');
-	  		document.f1.txtBahagianSimati1Up.focus(); 
-			return; 
+	  		document.f1.txtBahagianSimati1Up.focus();
+			return;
             }
-            
+
             else if(document.f1.socJenisTanahHtaamUpd.value == "0"){
          	   alert('Sila masukkan " Jenis Tanah " terlebih dahulu.');
          	   document.f1.socJenisTanahHtaam.focus();
-         	   return;   
+         	   return;
             }
-	        
+
             else if(b1>b2)
             {
             alert('Sila pastikan bahagian simati pada kotak yang pertama lebih besar atau sama dengan kotak yang kedua');
-	  		document.f1.txtBahagianSimati1Up.focus(); 
-			return; 
+	  		document.f1.txtBahagianSimati1Up.focus();
+			return;
             }
-            
+
 			  else if(document.f1.save_harta.value == "yes" )
             {
             alert('Sila masukkan maklumat hta dibawah jagaan unit terlebih dahulu!');
-	  	//	document.f1.txtBahagianSimati1.focus(); 
-			return; 
+	  	//	document.f1.txtBahagianSimati1.focus();
+			return;
             }
-           
+
            else
-           { 
-           
-        input_box = confirm("Adakah anda pasti?");   
-        if (input_box == true) 
+           {
+
+        input_box = confirm("Adakah anda pasti?");
+        if (input_box == true)
         {
         	//alert("masuk tak 1");
-          
+
         /* document.f1.command.value="Htaam";
-		document.f1.mode.value="simpanHtaam";		
+		document.f1.mode.value="simpanHtaam";
 		document.f1.action="";
 		document.f1.submit(); */
-		
+
 			/* document.f1.method="POST";
-		
+
 			var idHta = "&id_htaam="+idhta;
 			var idDokumen = "&idDokumen="+idDokumen;
-				        
+
 			var namaPelan = "&txtNamaPelanUp="+document.f1.txtNamaPelanUp.value;
 			var command = "&command=Htaam"
 			var mode = "&mode=simpanHtaam"
@@ -3790,7 +3578,7 @@ function save_Htaam(idPermohonanSimati,idhta,idSimati,idDokumen){
 		    var idSimati = "&idSimati="+document.f1.aaa.value;
 		    var flagDaftar = "&FLAG_DAFTAR="+document.f1.FLAG_DAFTAR.value;
 		    var idPermohonan = "&idPermohonan="+document.f1.ccc.value;
-		    
+
 		    var socNegeriHtaam = "&socNegeriHtaamUp="+document.f1.socNegeriHtaamUp.value;
 		    var socDaerahHtaam = "&socDaerahHtaamUp="+document.f1.socDaerahHtaamUp.value;
 		    var socMukimHtaam = "&socMukimHtaamUp="+document.f1.socMukimHtaamUp.value;
@@ -3800,8 +3588,8 @@ function save_Htaam(idPermohonanSimati,idhta,idSimati,idDokumen){
 		    var txtBahagianSimati1 = "&txtBahagianSimati1Up="+document.f1.txtBahagianSimati1Up.value;
 		    var txtBahagianSimati2 = "&txtBahagianSimati2Up="+document.f1.txtBahagianSimati2Up.value;
 		    var socJenisTanahHtaam = "&socJenisTanahHtaamUpd="+document.f1.socJenisTanahHtaamUpd.value;
-		    
-		    
+
+
  		    var txtSekatan = "&txtSekatan="+document.f1.txtSekatan.value;
 		    var txtSyaratNyata = "&txtSyaratNyata="+document.f1.txtSyaratNyata.value;
 		    var txtNoPajakan = "&txtNoPajakanUp="+document.f1.txtNoPajakanUp.value;
@@ -3812,26 +3600,26 @@ function save_Htaam(idPermohonanSimati,idhta,idSimati,idDokumen){
 		    var meterhektar = "&meterhektar="+document.f1.meterhektar.value;
 		    var txtNilaiTarikhMohonHtaa = "&txtNilaiTarikhMohonHt="+document.f1.txtNilaiTarikhMohonHt.value;
 		    var socKategoriTanahHtaam = "&socKategoriTanahHtaamUp="+document.f1.socKategoriTanahHtaamUp.value;
-		    
+
 		    var txtNilaiTarikhMatiHtaam = "&txtNilaiTarikhMatiHtaamUpd="+document.f1.txtNilaiTarikhMatiHtaamUpd.value;
 		    var socStatusPemilikanHtaam = "&socStatusPemilikanHtaamUpd="+document.f1.socStatusPemilikanHtaamUpd.value;
 		    var txtTanggunganHtaam = "&txtTanggunganHtaamUp="+document.f1.txtTanggunganHtaamUp.value;
 		    var txtCatatanHtaam = "&txtCatatanHt="+document.f1.txtCatatanHt.value;
 
-		    
+
 		    var param1 = socNegeriHtaam+socDaerahHtaam+socMukimHtaam+socJenisHakmilikHtaam+txtNoHakmilikHtaam+txtNoPTHtaam+txtBahagianSimati1+txtBahagianSimati2+socJenisTanahHtaam;
 		    var param2 =  txtSekatan+txtSyaratNyata+txtNoPajakan+txtNoPersHtaam+txtLuasAsalHtaam+socJenisLuasHtaam+txtLuasHMpHtaam+meterhektar+txtNilaiTarikhMohonHtaa+socKategoriTanahHtaam;
 		    var param3 = txtNilaiTarikhMatiHtaam +socStatusPemilikanHtaam+txtTanggunganHtaam+txtCatatanHtaam;
 		    var param = namaPelan + command + mode + upload + idSimati + flagDaftar + id_Permohonansimati + idPermohonan + param1 + param2 + param3 +idHta + idDokumen;
  	 		document.f1.enctype="multipart/form-data";
- 	  		document.f1.encoding="multipart/form-data"; 
+ 	  		document.f1.encoding="multipart/form-data";
 		    document.f1.action = "?_portal_module=FrmPrmhnnSek8Internal"+param;
-		    document.f1.submit(); 
-		    
+		    document.f1.submit();
+
 		    document.f1.method="POST"; */
 	   		//document.f1.enctype="multipart/form-data";
 		    //alert("masuk tak 2");
- 	  		//document.f1.encoding="multipart/form-data"; 
+ 	  		//document.f1.encoding="multipart/form-data";
  	  		//alert("masuk tak 3");
 			document.f1.id_Permohonansimati.value= idPermohonanSimati;
 		    document.f1.idDokumen.value=idDokumen;
@@ -3843,31 +3631,31 @@ function save_Htaam(idPermohonanSimati,idhta,idSimati,idDokumen){
 			//alert("simpanHtaam >>> "+document.f1.mode.value);
 			//document.f1.upload.value="simpanUpload";
 			//alert("simpanUpload >>> "+document.f1.upload.value);
- 		    
+
  	   		document.f1.enctype="multipart/form-data";
  	  		document.f1.encoding="multipart/form-data";
  	  		document.f1.command.value="Htaam";
  			var path = window.location.href;
- 			var x = create_request_string(document.f1);			//alert("path ::: "+path+" x ::: "+x);	
+ 			var x = create_request_string(document.f1);			//alert("path ::: "+path+" x ::: "+x);
  			if(path.indexOf("FrmPrmhnnBorangAMaklumatPemohon")> -1){
  				document.f1.action = "?_portal_module=ekptg.view.ppk.FrmPrmhnnBorangAMaklumatPemohon&"+x;
  			}else if(path.indexOf("FrmPrmhnnSek8InternalKutipan")> -1){
  				document.f1.action = "?_portal_module=FrmPrmhnnSek8InternalKutipan&"+x;
  			}else if(path.indexOf("FrmPrmhnnSek8Internal")> -1){
  				document.f1.action = "?_portal_module=FrmPrmhnnSek8Internal&"+x;
- 		
+
  			}
 
   		    //document.f1.action = "?_portal_module=FrmPrmhnnSek8Internal&"+x;
 			//document.f1.command.value="Htaam";
 			//document.f1.action="";
 		    document.f1.submit();
-		
+
 		}
-        
+
         else
         {return;}
-	
+
         }
 }
 
@@ -3875,7 +3663,7 @@ function hapus_Htaam(){
 input_box = confirm("Adakah anda pasti?");
 	if (input_box == true) {
 		document.f1.command.value="Htaam";
-		document.f1.mode.value="hapusHtaam";		
+		document.f1.mode.value="hapusHtaam";
 		document.f1.action="";
 		document.f1.submit();
         }
@@ -3883,7 +3671,7 @@ input_box = confirm("Adakah anda pasti?");
 function kembali_Htaam(){
 		document.f1.command.value="Htaam";
 		document.f1.mode.value="kembaliHtaam";
-		
+
 		document.f1.action="";
 		document.f1.submit();
 }
@@ -3892,7 +3680,7 @@ input_box = confirm("Adakah anda pasti?");
 	if (input_box == true) {
 		document.f1.command.value="Htaam";
 		document.f1.mode.value="batalHtaam";
-		
+
 		document.f1.action="";
 
 		document.f1.submit();
@@ -3907,7 +3695,7 @@ if(document.f1.socDaerahHtaamUp.value == "" || document.f1.socDaerahHtaamUp.valu
   alert("Sila pilih daerah terlebih dahulu.");
   document.f1.socDaerahHtaamUp.focus();
   return;
-	  		
+
 }
 
 
@@ -3924,7 +3712,7 @@ if(document.f1.socDaerahHtaam.value == "" || document.f1.socDaerahHtaam.value ==
   alert("Sila pilih daerah terlebih dahulu.");
   document.f1.socDaerahHtaam.focus();
   return;
-	  		
+
 }
 
 
@@ -3937,7 +3725,7 @@ if(document.f1.socNegeriHtaam.value == "" || document.f1.socNegeriHtaam.value ==
   alert("Sila pilih negeri terlebih dahulu.");
   document.f1.socNegeriHtaam.focus();
   return;
-	  	
+
 }
 
 }
@@ -3948,7 +3736,7 @@ function validateModal(elmnt,content,content2) {
 		elmnt.value = content2;
 		return;
 	}
-	
+
 	if(content != "")
 	{
 	var num = content * 1;
@@ -3960,9 +3748,9 @@ function validateModal(elmnt,content,content2) {
 	elmnt.value ="";
 	return;
 	}
-	
-	
-	
+
+
+
 }
 //txtLuasHMpHtaam
 //socKategoriTanahHtaam
@@ -3972,93 +3760,93 @@ function validateModal(elmnt,content,content2) {
 function convertTo(){
 	if (document.f1.socJenisLuasHtaam.value=="4" || document.f1.socJenisLuasHtaam.value=="7"){
         var a = document.f1.txtLuasAsalHtaam.value;
-		var num = a * 4046.8252519 ; 
+		var num = a * 4046.8252519 ;
 		var num1 = a * 0.4046863;
-                
-        if(document.f1.socKategoriTanahHtaam.value=="2") 
-        {       
+
+        if(document.f1.socKategoriTanahHtaam.value=="2")
+        {
 		document.f1.txtLuasHMpHtaam.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
         else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")
-        
+
         {
         document.f1.txtLuasHMpHtaam.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        } 
+        }
 	}
-    
+
     if (document.f1.socJenisLuasHtaam.value=="2"){
         var a = document.f1.txtLuasAsalHtaam.value;
-       	var num = a * 10000; 
-		var num1 = a * 1; 
-               
-        if(document.f1.socKategoriTanahHtaam.value=="2") 
-        {       
+       	var num = a * 10000;
+		var num1 = a * 1;
+
+        if(document.f1.socKategoriTanahHtaam.value=="2")
+        {
 		document.f1.txtLuasHMpHtaam.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")        
+        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")
         {
         document.f1.txtLuasHMpHtaam.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }       
-		
+        }
+
 	}
-    
+
      if (document.f1.socJenisLuasHtaam.value=="3"){
         var a = document.f1.txtLuasAsalHtaam.value;
-        var num = a * 1; 
+        var num = a * 1;
 		var num1 = a * 0.0001;
-               
-        if(document.f1.socKategoriTanahHtaam.value=="2") 
-        {       
+
+        if(document.f1.socKategoriTanahHtaam.value=="2")
+        {
 		document.f1.txtLuasHMpHtaam.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")        
+        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")
         {
         document.f1.txtLuasHMpHtaam.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }       
-	}	
- 
+        }
+	}
+
  if (document.f1.socJenisLuasHtaam.value=="5"){
         var a = document.f1.txtLuasAsalHtaam.value;
-        var num1 = a * 9.290304; 
+        var num1 = a * 9.290304;
 		var num = a * 0.09290304;
-               
-        if(document.f1.socKategoriTanahHtaam.value=="2") 
-        {       
+
+        if(document.f1.socKategoriTanahHtaam.value=="2")
+        {
 		document.f1.txtLuasHMpHtaam.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")        
+        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")
         {
         document.f1.txtLuasHMpHtaam.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }       
-	}	
- 
+        }
+	}
+
     if (document.f1.socJenisLuasHtaam.value=="1"){
         var a = document.f1.txtLuasAsalHtaam.value;
-        var num1 = a * 100; 
-		var num = a * 1000000;       
-               
-        if(document.f1.socKategoriTanahHtaam.value=="2") 
-        {       
+        var num1 = a * 100;
+		var num = a * 1000000;
+
+        if(document.f1.socKategoriTanahHtaam.value=="2")
+        {
 		document.f1.txtLuasHMpHtaam.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")        
+        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")
         {
         document.f1.txtLuasHMpHtaam.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }       
-	}	
- 
-	
-    
+        }
+	}
+
+
+
 }
 
 
@@ -4069,92 +3857,92 @@ if(document.f1.txtLuasAsalHtaam.value != "" )
 {
 	if (document.f1.socJenisLuasHtaam.value=="4" || document.f1.socJenisLuasHtaam.value=="7"){
         var a = document.f1.txtLuasAsalHtaam.value;
-		var num = a * 4046.8252519 ; 
+		var num = a * 4046.8252519 ;
 		var num1 = a * 0.4046863;
-                
-        if(document.f1.socKategoriTanahHtaam.value=="2") 
-        {       
+
+        if(document.f1.socKategoriTanahHtaam.value=="2")
+        {
 		document.f1.txtLuasHMpHtaam.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
         else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")
-        
+
         {
         document.f1.txtLuasHMpHtaam.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        } 
+        }
 	}
-    
+
     if (document.f1.socJenisLuasHtaam.value=="2"){
         var a = document.f1.txtLuasAsalHtaam.value;
-       	var num = a * 10000; 
-		var num1 = a * 1; 
-               
-        if(document.f1.socKategoriTanahHtaam.value=="2") 
-        {       
+       	var num = a * 10000;
+		var num1 = a * 1;
+
+        if(document.f1.socKategoriTanahHtaam.value=="2")
+        {
 		document.f1.txtLuasHMpHtaam.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")        
+        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")
         {
         document.f1.txtLuasHMpHtaam.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }       
-		
+        }
+
 	}
-    
+
      if (document.f1.socJenisLuasHtaam.value=="3"){
         var a = document.f1.txtLuasAsalHtaam.value;
-        var num = a * 1; 
+        var num = a * 1;
 		var num1 = a * 0.0001;
-               
-        if(document.f1.socKategoriTanahHtaam.value=="2") 
-        {       
+
+        if(document.f1.socKategoriTanahHtaam.value=="2")
+        {
 		document.f1.txtLuasHMpHtaam.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")        
+        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")
         {
         document.f1.txtLuasHMpHtaam.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }       
-	}	
- 
+        }
+	}
+
  if (document.f1.socJenisLuasHtaam.value=="5"){
         var a = document.f1.txtLuasAsalHtaam.value;
-        var num1 = a * 9.290304; 
+        var num1 = a * 9.290304;
 		var num = a * 0.09290304;
-               
-        if(document.f1.socKategoriTanahHtaam.value=="2") 
-        {       
+
+        if(document.f1.socKategoriTanahHtaam.value=="2")
+        {
 		document.f1.txtLuasHMpHtaam.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")        
+        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")
         {
         document.f1.txtLuasHMpHtaam.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }       
-	}	
- 
+        }
+	}
+
     if (document.f1.socJenisLuasHtaam.value=="1"){
         var a = document.f1.txtLuasAsalHtaam.value;
-        var num1 = a * 100; 
-		var num = a * 1000000;       
-               
-        if(document.f1.socKategoriTanahHtaam.value=="2") 
-        {       
+        var num1 = a * 100;
+		var num = a * 1000000;
+
+        if(document.f1.socKategoriTanahHtaam.value=="2")
+        {
 		document.f1.txtLuasHMpHtaam.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")        
+        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")
         {
         document.f1.txtLuasHMpHtaam.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }  
-             
-	}	
- } 
+        }
+
+	}
+ }
 
 }
 
@@ -4165,99 +3953,99 @@ if(document.f1.socKategoriTanahHtaam.value == 1 ||  document.f1.socKategoriTanah
 {
 	if (document.f1.socJenisLuasHtaam.value=="4" || document.f1.socJenisLuasHtaam.value=="7"){
         var a = document.f1.txtLuasAsalHtaam.value;
-		var num = a * 4046.8252519 ; 
+		var num = a * 4046.8252519 ;
 		var num1 = a * 0.4046863;
-                
-        if(document.f1.socKategoriTanahHtaam.value=="2") 
-        {       
+
+        if(document.f1.socKategoriTanahHtaam.value=="2")
+        {
 		document.f1.txtLuasHMpHtaam.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
         else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")
-        
+
         {
         document.f1.txtLuasHMpHtaam.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        } 
+        }
 	}
-    
+
     if (document.f1.socJenisLuasHtaam.value=="2"){
         var a = document.f1.txtLuasAsalHtaam.value;
-       	var num = a * 10000; 
-		var num1 = a * 1; 
-               
-        if(document.f1.socKategoriTanahHtaam.value=="2") 
-        {       
+       	var num = a * 10000;
+		var num1 = a * 1;
+
+        if(document.f1.socKategoriTanahHtaam.value=="2")
+        {
 		document.f1.txtLuasHMpHtaam.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")        
+        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")
         {
         document.f1.txtLuasHMpHtaam.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }       
-		
+        }
+
 	}
-    
+
      if (document.f1.socJenisLuasHtaam.value=="3"){
         var a = document.f1.txtLuasAsalHtaam.value;
-        var num = a * 1; 
+        var num = a * 1;
 		var num1 = a * 0.0001;
-               
-        if(document.f1.socKategoriTanahHtaam.value=="2") 
-        {       
+
+        if(document.f1.socKategoriTanahHtaam.value=="2")
+        {
 		document.f1.txtLuasHMpHtaam.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")        
+        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")
         {
         document.f1.txtLuasHMpHtaam.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }       
-	}	
- 
+        }
+	}
+
  if (document.f1.socJenisLuasHtaam.value=="5"){
         var a = document.f1.txtLuasAsalHtaam.value;
-        var num1 = a * 9.290304; 
+        var num1 = a * 9.290304;
 		var num = a * 0.09290304;
-               
-        if(document.f1.socKategoriTanahHtaam.value=="2") 
-        {       
+
+        if(document.f1.socKategoriTanahHtaam.value=="2")
+        {
 		document.f1.txtLuasHMpHtaam.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")        
+        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")
         {
         document.f1.txtLuasHMpHtaam.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }       
-	}	
- 
+        }
+	}
+
     if (document.f1.socJenisLuasHtaam.value=="1"){
         var a = document.f1.txtLuasAsalHtaam.value;
-        var num1 = a * 100; 
-		var num = a * 1000000;       
-               
-        if(document.f1.socKategoriTanahHtaam.value=="2") 
-        {       
+        var num1 = a * 100;
+		var num = a * 1000000;
+
+        if(document.f1.socKategoriTanahHtaam.value=="2")
+        {
 		document.f1.txtLuasHMpHtaam.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")        
+        else if(document.f1.socKategoriTanahHtaam.value=="1" || document.f1.socKategoriTanahHtaam.value=="3" || document.f1.socKategoriTanahHtaam.value=="4" || document.f1.socKategoriTanahHtaam.value=="5" || document.f1.socKategoriTanahHtaam.value=="6")
         {
         document.f1.txtLuasHMpHtaam.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }  
-             
-	}	
- } 
+        }
+
+	}
+ }
  else
  {
   document.f1.socJenisLuasHtaam.value = "";
   document.f1.txtLuasHMpHtaam.value = "";
   document.f1.meterhektar.value= "";
   document.f1.txtLuasAsalHtaam.value = "";
- 
+
  }
 
 }
@@ -4267,103 +4055,103 @@ if(document.f1.socKategoriTanahHtaam.value == 1 ||  document.f1.socKategoriTanah
  //txtLuasAsalHtaamUpd
  //socJenisLuasHtaamUpd
  //txtLuasHMpHtaamUpd
- 
- 
- 
- 
- 
- 
- 
+
+
+
+
+
+
+
  function convertToU(){
 	if (document.f1.socJenisLuasHtaamUpd.value=="4" || document.f1.socJenisLuasHtaamUpd.value=="7"){
         var a = document.f1.txtLuasAsalHtaamUpd.value;
-		var num = a * 4046.8252519 ; 
+		var num = a * 4046.8252519 ;
 		var num1 = a * 0.4046863;
-                
-        if(document.f1.socKategoriTanahHtaamUp.value=="2") 
-        {       
+
+        if(document.f1.socKategoriTanahHtaamUp.value=="2")
+        {
 		document.f1.txtLuasHMpHtaamUpd.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
         else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")
-        
+
         {
         document.f1.txtLuasHMpHtaamUpd.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        } 
+        }
 	}
-    
+
     if (document.f1.socJenisLuasHtaamUpd.value=="2"){
         var a = document.f1.txtLuasAsalHtaamUpd.value;
-       	var num = a * 10000; 
-		var num1 = a * 1; 
-               
-        if(document.f1.socKategoriTanahHtaamUp.value=="2") 
-        {       
+       	var num = a * 10000;
+		var num1 = a * 1;
+
+        if(document.f1.socKategoriTanahHtaamUp.value=="2")
+        {
 		document.f1.txtLuasHMpHtaamUpd.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")        
+        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")
         {
         document.f1.txtLuasHMpHtaamUpd.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }       
-		
+        }
+
 	}
-    
+
      if (document.f1.socJenisLuasHtaamUpd.value=="3"){
         var a = document.f1.txtLuasAsalHtaamUpd.value;
-        var num = a * 1; 
+        var num = a * 1;
 		var num1 = a * 0.0001;
-               
-        if(document.f1.socKategoriTanahHtaamUp.value=="2") 
-        {       
+
+        if(document.f1.socKategoriTanahHtaamUp.value=="2")
+        {
 		document.f1.txtLuasHMpHtaamUpd.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")        
+        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")
         {
         document.f1.txtLuasHMpHtaamUpd.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }       
-	}	
- 
+        }
+	}
+
  if (document.f1.socJenisLuasHtaamUpd.value=="5"){
         var a = document.f1.txtLuasAsalHtaamUpd.value;
-        var num1 = a * 9.290304; 
+        var num1 = a * 9.290304;
 		var num = a * 0.09290304;
-               
-        if(document.f1.socKategoriTanahHtaamUp.value=="2") 
-        {       
+
+        if(document.f1.socKategoriTanahHtaamUp.value=="2")
+        {
 		document.f1.txtLuasHMpHtaamUpd.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")        
+        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")
         {
         document.f1.txtLuasHMpHtaamUpd.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }       
-	}	
- 
+        }
+	}
+
     if (document.f1.socJenisLuasHtaamUpd.value=="1"){
         var a = document.f1.txtLuasAsalHtaamUpd.value;
-        var num1 = a * 100; 
-		var num = a * 1000000;       
-               
-        if(document.f1.socKategoriTanahHtaamUp.value=="2") 
-        {       
+        var num1 = a * 100;
+		var num = a * 1000000;
+
+        if(document.f1.socKategoriTanahHtaamUp.value=="2")
+        {
 		document.f1.txtLuasHMpHtaamUpd.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")        
+        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")
         {
         document.f1.txtLuasHMpHtaamUpd.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }       
-	}	
- 
-	
-    
+        }
+	}
+
+
+
 }
 
 
@@ -4374,92 +4162,92 @@ if(document.f1.txtLuasAsalHtaamUpd.value != "" )
 {
 	if (document.f1.socJenisLuasHtaamUpd.value=="4" || document.f1.socJenisLuasHtaamUpd.value=="7"){
         var a = document.f1.txtLuasAsalHtaamUpd.value;
-		var num = a * 4046.8252519 ; 
+		var num = a * 4046.8252519 ;
 		var num1 = a * 0.4046863;
-                
-        if(document.f1.socKategoriTanahHtaamUp.value=="2") 
-        {       
+
+        if(document.f1.socKategoriTanahHtaamUp.value=="2")
+        {
 		document.f1.txtLuasHMpHtaamUpd.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
         else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")
-        
+
         {
         document.f1.txtLuasHMpHtaamUpd.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        } 
+        }
 	}
-    
+
     if (document.f1.socJenisLuasHtaamUpd.value=="2"){
         var a = document.f1.txtLuasAsalHtaamUpd.value;
-       	var num = a * 10000; 
-		var num1 = a * 1; 
-               
-        if(document.f1.socKategoriTanahHtaamUp.value=="2") 
-        {       
+       	var num = a * 10000;
+		var num1 = a * 1;
+
+        if(document.f1.socKategoriTanahHtaamUp.value=="2")
+        {
 		document.f1.txtLuasHMpHtaamUpd.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")        
+        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")
         {
         document.f1.txtLuasHMpHtaamUpd.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }       
-		
+        }
+
 	}
-    
+
      if (document.f1.socJenisLuasHtaamUpd.value=="3"){
         var a = document.f1.txtLuasAsalHtaamUpd.value;
-        var num = a * 1; 
+        var num = a * 1;
 		var num1 = a * 0.0001;
-               
-        if(document.f1.socKategoriTanahHtaamUp.value=="2") 
-        {       
+
+        if(document.f1.socKategoriTanahHtaamUp.value=="2")
+        {
 		document.f1.txtLuasHMpHtaamUpd.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")        
+        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")
         {
         document.f1.txtLuasHMpHtaamUpd.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }       
-	}	
- 
+        }
+	}
+
  if (document.f1.socJenisLuasHtaamUpd.value=="5"){
         var a = document.f1.txtLuasAsalHtaamUpd.value;
-        var num1 = a * 9.290304; 
+        var num1 = a * 9.290304;
 		var num = a * 0.09290304;
-               
-        if(document.f1.socKategoriTanahHtaamUp.value=="2") 
-        {       
+
+        if(document.f1.socKategoriTanahHtaamUp.value=="2")
+        {
 		document.f1.txtLuasHMpHtaamUpd.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")        
+        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")
         {
         document.f1.txtLuasHMpHtaamUpd.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }       
-	}	
- 
+        }
+	}
+
     if (document.f1.socJenisLuasHtaamUpd.value=="1"){
         var a = document.f1.txtLuasAsalHtaamUpd.value;
-        var num1 = a * 100; 
-		var num = a * 1000000;       
-               
-        if(document.f1.socKategoriTanahHtaamUp.value=="2") 
-        {       
+        var num1 = a * 100;
+		var num = a * 1000000;
+
+        if(document.f1.socKategoriTanahHtaamUp.value=="2")
+        {
 		document.f1.txtLuasHMpHtaamUpd.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")        
+        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")
         {
         document.f1.txtLuasHMpHtaamUpd.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }  
-             
-	}	
- } 
+        }
+
+	}
+ }
 
 }
 
@@ -4470,99 +4258,99 @@ if(document.f1.socKategoriTanahHtaamUp.value == 1 ||  document.f1.socKategoriTan
 {
 	if (document.f1.socJenisLuasHtaamUpd.value=="4" || document.f1.socJenisLuasHtaamUpd.value=="7"){
         var a = document.f1.txtLuasAsalHtaamUpd.value;
-		var num = a * 4046.8252519 ; 
+		var num = a * 4046.8252519 ;
 		var num1 = a * 0.4046863;
-                
-        if(document.f1.socKategoriTanahHtaamUp.value=="2") 
-        {       
+
+        if(document.f1.socKategoriTanahHtaamUp.value=="2")
+        {
 		document.f1.txtLuasHMpHtaamUpd.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
         else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")
-        
+
         {
         document.f1.txtLuasHMpHtaamUpd.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        } 
+        }
 	}
-    
+
     if (document.f1.socJenisLuasHtaamUpd.value=="2"){
         var a = document.f1.txtLuasAsalHtaamUpd.value;
-       	var num = a * 10000; 
-		var num1 = a * 1; 
-               
-        if(document.f1.socKategoriTanahHtaamUp.value=="2") 
-        {       
+       	var num = a * 10000;
+		var num1 = a * 1;
+
+        if(document.f1.socKategoriTanahHtaamUp.value=="2")
+        {
 		document.f1.txtLuasHMpHtaamUpd.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")        
+        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")
         {
         document.f1.txtLuasHMpHtaamUpd.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }       
-		
+        }
+
 	}
-    
+
      if (document.f1.socJenisLuasHtaamUpd.value=="3"){
         var a = document.f1.txtLuasAsalHtaamUpd.value;
-        var num = a * 1; 
+        var num = a * 1;
 		var num1 = a * 0.0001;
-               
-        if(document.f1.socKategoriTanahHtaamUp.value=="2") 
-        {       
+
+        if(document.f1.socKategoriTanahHtaamUp.value=="2")
+        {
 		document.f1.txtLuasHMpHtaamUpd.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")        
+        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")
         {
         document.f1.txtLuasHMpHtaamUpd.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }       
-	}	
- 
+        }
+	}
+
  if (document.f1.socJenisLuasHtaamUpd.value=="5"){
         var a = document.f1.txtLuasAsalHtaamUpd.value;
-        var num1 = a * 9.290304; 
+        var num1 = a * 9.290304;
 		var num = a * 0.09290304;
-               
-        if(document.f1.socKategoriTanahHtaamUp.value=="2") 
-        {       
+
+        if(document.f1.socKategoriTanahHtaamUp.value=="2")
+        {
 		document.f1.txtLuasHMpHtaamUpd.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")        
+        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")
         {
         document.f1.txtLuasHMpHtaamUpd.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }       
-	}	
- 
+        }
+	}
+
     if (document.f1.socJenisLuasHtaamUpd.value=="1"){
         var a = document.f1.txtLuasAsalHtaamUpd.value;
-        var num1 = a * 100; 
-		var num = a * 1000000;       
-               
-        if(document.f1.socKategoriTanahHtaamUp.value=="2") 
-        {       
+        var num1 = a * 100;
+		var num = a * 1000000;
+
+        if(document.f1.socKategoriTanahHtaamUp.value=="2")
+        {
 		document.f1.txtLuasHMpHtaamUpd.value=num1.toFixed(4);
 	    document.f1.meterhektar.value= "Hektar";
         }
-        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")        
+        else if(document.f1.socKategoriTanahHtaamUp.value=="1" || document.f1.socKategoriTanahHtaamUp.value=="3" || document.f1.socKategoriTanahHtaamUp.value=="4" || document.f1.socKategoriTanahHtaamUp.value=="5" || document.f1.socKategoriTanahHtaamUp.value=="6")
         {
         document.f1.txtLuasHMpHtaamUpd.value=num.toFixed(4);
 	    document.f1.meterhektar.value= "Meter Persegi";
-        }  
-             
-	}	
- } 
+        }
+
+	}
+ }
  else
  {
   document.f1.socJenisLuasHtaamUpd.value = "";
   document.f1.txtLuasHMpHtaamUpd.value = "";
   document.f1.meterhektar.value= "";
   document.f1.txtLuasAsalHtaamUpd.value = "";
- 
+
  }
 
 }
@@ -4572,69 +4360,69 @@ function tukarstatus()
 {
 
 document.f1.command.value="Htaam";
-		document.f1.mode.value="getHtaamStatus";		
+		document.f1.mode.value="getHtaamStatus";
 		document.f1.action="";
 		document.f1.submit();
 }
 
 
-function cetak(noFail,idhta) 
+function cetak(noFail,idhta)
 {
 
 //alert(document.f1.jpphlepas.value)
 if(document.f1.jpphlepas.value == "no")
 {
 
- 
+
   var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&idhta="+idhta+"&report=SuratIringanJPPH_TM&flagReport=S";
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
- 
- 
+
+
 }
 
 if(document.f1.jpphlepas.value == "yes")
-{	
- 
+{
+
     var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&idhta="+idhta+"&report=SuratIringanJPPH&flagReport=S";
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
-    
-     
- }   
+
+
+ }
 }
 
-function cetakSuratPeringatan(noFail,idhta) 
+function cetakSuratPeringatan(noFail,idhta)
 {
 
 //var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&idhta="+idhta+"&report=SuratIringanJPPH_TM&flagReport=S";
- 
- 
+
+
  if(document.f1.jpphlepas.value == "no")
 {
-	var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&idhta="+idhta+"&report=SuratPeringatan_TM&flagReport=S";    
+	var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&idhta="+idhta+"&report=SuratPeringatan_TM&flagReport=S";
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
-}	
+}
 
 
 if(document.f1.jpphlepas.value == "yes")
 {
-	var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&idhta="+idhta+"&report=SuratPeringatan&flagReport=S";    
+	var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+noFail+"&idhta="+idhta+"&report=SuratPeringatan&flagReport=S";
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
-}	
-    
-      
-    
+}
+
+
+
 }
 
 function cetakNilaiHarta(noFail)  {
@@ -4665,14 +4453,14 @@ var TabbedPanels3 = new Spry.Widget.TabbedPanels("TabbedPanels3",{defaultTab:$se
 var TabbedPanels4 = new Spry.Widget.TabbedPanels("TabbedPanels4",{defaultTab:$selectedTabtepi});
 
 /*
-function submitForm() {    
+function submitForm() {
    // document.val.focus();
 	window.location.hash='$val_tab';
 goTo('$val_tab');
-} 
+}
 */
 
-function submitForm() {    
+function submitForm() {
 //alert('$val_tab')
 if('$!val_tab' != "" && '$!val_tab' != null)
 {
@@ -4689,13 +4477,13 @@ window.location.hash='maklumat_pemohon';
 var nextFieldID = 'maklumat_pemohon';
    document.getElementById(nextFieldID).focus();
 }
-	
-} 
+
+}
 
 
 
 
-function bahagiansamaUp() {  
+function bahagiansamaUp() {
 if(document.f1.txtBahagianSimati1Up.value != "" && document.f1.txtBahagianSimati2Up.value != "")
 {
 if(document.f1.txtBahagianSimati1Up.value ==document.f1.txtBahagianSimati2Up.value )
@@ -4703,10 +4491,10 @@ if(document.f1.txtBahagianSimati1Up.value ==document.f1.txtBahagianSimati2Up.val
 document.f1.txtBahagianSimati1Up.value = "1";
 document.f1.txtBahagianSimati2Up.value = "1";
 }
-}  
-} 
+}
+}
 
-function bahagiansimati() { 
+function bahagiansimati() {
 if(document.f1.txtBahagianSimati1.value != "" && document.f1.txtBahagianSimati2.value != "")
 {
 if(document.f1.txtBahagianSimati1.value == document.f1.txtBahagianSimati2.value )
@@ -4714,9 +4502,9 @@ if(document.f1.txtBahagianSimati1.value == document.f1.txtBahagianSimati2.value 
 document.f1.txtBahagianSimati1.value = "1";
 document.f1.txtBahagianSimati2.value = "1";
 }
-}     
-  
-} 
+}
+
+}
 
 
 
@@ -4752,23 +4540,23 @@ function Kembali(){
 
 function samakan1()
 {
- 
-                                            
+
+
 document.f1.txtNilaiTarikhMatiHtaam.value=document.f1.txtNilaiTarikhMohonHtaa.value
- 
-                 
+
+
 }
 
 
- 
-                            
+
+
 function samakan2()
 {
- 
-                                            
+
+
 document.f1.txtNilaiTarikhMatiHtaamUpd.value=document.f1.txtNilaiTarikhMohonHt.value
- 
-                 
+
+
 }
 
 
@@ -4813,7 +4601,7 @@ else
 url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
 }
 	actionName = "check_no_lot";
-	//actionName = "check_harta";	
+	//actionName = "check_harta";
 	target = "checklot";
 	doAjaxUpdater(document.f1, url, target, actionName);
 	}
@@ -4831,7 +4619,7 @@ else
 {
 url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
 }
-	actionName = "check_harta";	
+	actionName = "check_harta";
 	target = "check_daerah_harta";
 	doAjaxUpdater(document.f1, url, target, actionName);
 	}
@@ -4908,80 +4696,80 @@ var b1=parseInt(document.f1.txtBahagianSimati1Up.value);
 
 	        if(document.f1.socNegeriHtaamUp.value == ""){
 			alert('Sila pilih " Negeri " terlebih dahulu.');
-	  		
-			return; 
-            } 
-                    
+
+			return;
+            }
+
             else if(document.f1.socDaerahHtaamUp.value == ""){
 			alert('Sila pilih " Daerah " terlebih dahulu.');
-	  		document.f1.socDaerahHtaamUp.focus(); 
-			return; 
+	  		document.f1.socDaerahHtaamUp.focus();
+			return;
             }
            else if(document.f1.socMukimHtaamUp.value == ""){
 			alert('Sila pilih " Mukim " terlebih dahulu.');
-	  		document.f1.socMukimHtaamUp.focus(); 
-			return; 
+	  		document.f1.socMukimHtaamUp.focus();
+			return;
             }
 			/*
             else if(document.f1.socJenisHakmilikHtaamUp.value == "")
             {
 			alert('Sila pilih " Jenis hakmilik" terlebih dahulu.');
-	  		document.f1.socJenisHakmilikHtaamUp.focus(); 
-			return; 
+	  		document.f1.socJenisHakmilikHtaamUp.focus();
+			return;
             }
              else if(document.f1.txtNoHakmilikHtaamUp.value == ""){
 			alert('Sila masukkan no hakmilik');
-	  		document.f1.txtNoHakmilikHtaamUp.focus(); 
-			return; 
+	  		document.f1.txtNoHakmilikHtaamUp.focus();
+			return;
             }
             else if(document.f1.txtNoPTHtaamUp.value == ""){
 			alert('Sila masukkan no PT ataupun no Lot');
-	  		document.f1.txtNoPTHtaamUp.focus(); 
-			return; 
+	  		document.f1.txtNoPTHtaamUp.focus();
+			return;
             }
-            
+
 			  else if(document.f1.txtBahagianSimati1Up.value == "" && document.f1.txtBahagianSimati2Up.value == "" )
             {
             alert('Sila masuk bahagian simati');
-	  		document.f1.txtBahagianSimati1Up.focus(); 
-			return; 
+	  		document.f1.txtBahagianSimati1Up.focus();
+			return;
             }
             else if(document.f1.txtBahagianSimati1Up.value != "" && document.f1.txtBahagianSimati2Up.value == "" )
             {
             alert('Sila masuk bahagian simati selengkapnya');
-	  		document.f1.txtBahagianSimati2Up.focus(); 
-			return; 
+	  		document.f1.txtBahagianSimati2Up.focus();
+			return;
             }
-            
+
             else if(document.f1.txtBahagianSimati2Up.value != "" && document.f1.txtBahagianSimati1Up.value == "" )
             {
             alert('Sila masuk bahagian simati selengkapnya');
-	  		document.f1.txtBahagianSimati1Up.focus(); 
-			return; 
+	  		document.f1.txtBahagianSimati1Up.focus();
+			return;
             }
-                        
+
             else if(b1>b2)
             {
             alert('Sila pastikan bahagian simati pada kotak yang pertama lebih besar atau sama dengan kotak yang kedua');
-	  		document.f1.txtBahagianSimati1Up.focus(); 
-			return; 
+	  		document.f1.txtBahagianSimati1Up.focus();
+			return;
             }
-            
+
 			  else if(document.f1.save_harta.value == "yes" )
             {
             alert('Sila masukkan maklumat hta dibawah jagaan unit terlebih dahulu!');
-	  	//	document.f1.txtBahagianSimati1.focus(); 
-			return; 
+	  	//	document.f1.txtBahagianSimati1.focus();
+			return;
             }
     */
 	else{
-	
+
 	document.f1.flag_tukar_jenis_hta.value="TIADA";
 		document.f1.command.value="HtaamX";
-		document.f1.mode.value="kemaskiniHtaamX";		
-		document.f1.action="";	
+		document.f1.mode.value="kemaskiniHtaamX";
+		document.f1.action="";
 		document.f1.submit();
-		
+
 
 }
 
@@ -4997,80 +4785,80 @@ var b1=parseInt(document.f1.txtBahagianSimati1Up.value);
 
 	        if(document.f1.socNegeriHtaamUp.value == ""){
 			alert('Sila pilih " Negeri " terlebih dahulu.');
-	  		
-			return; 
-            } 
-                    
+
+			return;
+            }
+
             else if(document.f1.socDaerahHtaamUp.value == ""){
 			alert('Sila pilih " Daerah " terlebih dahulu.');
-	  		document.f1.socDaerahHtaamUp.focus(); 
-			return; 
+	  		document.f1.socDaerahHtaamUp.focus();
+			return;
             }
            else if(document.f1.socMukimHtaamUp.value == ""){
 			alert('Sila pilih " Mukim " terlebih dahulu.');
-	  		document.f1.socMukimHtaamUp.focus(); 
-			return; 
+	  		document.f1.socMukimHtaamUp.focus();
+			return;
             }
 			/*
             else if(document.f1.socJenisHakmilikHtaamUp.value == "")
             {
 			alert('Sila pilih " Jenis hakmilik" terlebih dahulu.');
-	  		document.f1.socJenisHakmilikHtaamUp.focus(); 
-			return; 
+	  		document.f1.socJenisHakmilikHtaamUp.focus();
+			return;
             }
              else if(document.f1.txtNoHakmilikHtaamUp.value == ""){
 			alert('Sila masukkan no hakmilik');
-	  		document.f1.txtNoHakmilikHtaamUp.focus(); 
-			return; 
+	  		document.f1.txtNoHakmilikHtaamUp.focus();
+			return;
             }
             else if(document.f1.txtNoPTHtaamUp.value == ""){
 			alert('Sila masukkan no PT ataupun no Lot');
-	  		document.f1.txtNoPTHtaamUp.focus(); 
-			return; 
+	  		document.f1.txtNoPTHtaamUp.focus();
+			return;
             }
-            
+
 			  else if(document.f1.txtBahagianSimati1Up.value == "" && document.f1.txtBahagianSimati2Up.value == "" )
             {
             alert('Sila masuk bahagian simati');
-	  		document.f1.txtBahagianSimati1Up.focus(); 
-			return; 
+	  		document.f1.txtBahagianSimati1Up.focus();
+			return;
             }
             else if(document.f1.txtBahagianSimati1Up.value != "" && document.f1.txtBahagianSimati2Up.value == "" )
             {
             alert('Sila masuk bahagian simati selengkapnya');
-	  		document.f1.txtBahagianSimati2Up.focus(); 
-			return; 
+	  		document.f1.txtBahagianSimati2Up.focus();
+			return;
             }
-            
+
             else if(document.f1.txtBahagianSimati2Up.value != "" && document.f1.txtBahagianSimati1Up.value == "" )
             {
             alert('Sila masuk bahagian simati selengkapnya');
-	  		document.f1.txtBahagianSimati1Up.focus(); 
-			return; 
+	  		document.f1.txtBahagianSimati1Up.focus();
+			return;
             }
-                        
+
             else if(b1>b2)
             {
             alert('Sila pastikan bahagian simati pada kotak yang pertama lebih besar atau sama dengan kotak yang kedua');
-	  		document.f1.txtBahagianSimati1Up.focus(); 
-			return; 
+	  		document.f1.txtBahagianSimati1Up.focus();
+			return;
             }
-            
+
 			  else if(document.f1.save_harta.value == "yes" )
             {
             alert('Sila masukkan maklumat hta dibawah jagaan unit terlebih dahulu!');
-	 		return; 
+	 		return;
             }
-			
+
 			*/
 	else{
-	
+
 	    document.f1.flag_tukar_jenis_hta.value="ADA";
 		document.f1.command.value="Htaam";
-		document.f1.mode.value="kemaskiniHtaam";	
-		document.f1.action="";	
+		document.f1.mode.value="kemaskiniHtaam";
+		document.f1.action="";
 		document.f1.submit();
-		
+
 
 }
 
@@ -5094,7 +4882,7 @@ if(document.f1.socNegeriHtaam.value == "" || document.f1.socNegeriHtaam.value ==
   alert("Sila pilih negeri terlebih dahulu.");
   document.f1.socNegeriHtaamX.focus();
   return;
-	  	
+
 }
 
 }
@@ -5109,13 +4897,13 @@ function OpenUploadFile() {
 function OpenUploadFile2(idhtaam) {
 	//alert("idhtaam > "+idhtaam);
 	$('err_dokumen').innerHTML = '';
-	
+
 	/* if(document.f1.dokumen.value == ""){
 		alert('Sila pilih Dokumen yang Ingin Dimuatnaik.');
-			document.f1.dokumen.focus(); 
-		return; 
+			document.f1.dokumen.focus();
+		return;
 	} */
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}

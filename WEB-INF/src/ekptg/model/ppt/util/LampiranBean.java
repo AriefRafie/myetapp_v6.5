@@ -84,29 +84,44 @@ public class LampiranBean implements ILampiran{
 	}
 	
 	public void simpanLampiranBayaran(FileItem item,Hashtable<String,String> data) throws Exception {
+		String dokumen = data.get("dokumen");
 		String idPermohonan = data.get("idPermohonan");
 		String idRujukan = data.get("idRujukan");
+		String idTanah = data.get("idHakmilik");
 		String idUser = data.get("idUser");
 		String jenisDok = data.get("jenisDok");
+		String keterangan = data.get("keterangan");
 		String namaTable = data.get("namaTable");
-		
+
 		Db db = null;
 		String sql="";
 		try {
-				db = new Db();
-				sql = "INSERT INTO "+namaTable
-						+ " (ID_PERMOHONAN,ID_HAKMILIK,ID_JENISDOKUMEN,NAMA_DOKUMEN,FORMAT,SAIZ,KANDUNGAN,ID_MASUK,TARIKH_MASUK) " 
-						+ "VALUES(?,?,"+jenisDok+",?,?,?,?,?,SYSDATE)";
+			db = new Db();
+        	String iDokumen = String.valueOf(DB.getNextID("TBLPPTDOKUMEN_SEQ"));
+
+			sql = "INSERT INTO "+namaTable
+				+ " (ID_DOKUMEN"
+				+ ",ID_PERMOHONAN,NO_RUJUKAN"
+				+ ",ID_HAKMILIK,ID_JENISDOKUMEN,NAMA_FAIL,JENIS_MIME,CONTENT"
+				+ ",JENIS_DOKUMEN,KETERANGAN"
+				+ ",ID_MASUK,TARIKH_MASUK) " 
+				+ "VALUES("+iDokumen+""
+				+ ",?,?"
+				+ ",?,?,?,?,?"
+				+ ",?,?"
+				+ ","+idUser+",SYSDATE)";
 				Connection con = db.getConnection();
 				con.setAutoCommit(false);
 				PreparedStatement ps = con.prepareStatement(sql);
 				ps.setString(1, idPermohonan);
 				ps.setString(2, idRujukan);
-				ps.setString(3, item.getName());
-				ps.setString(4, item.getContentType());
-				ps.setLong(5, item.getSize());
-				ps.setBinaryStream(6, item.getInputStream(), (int) item.getSize());
-				ps.setString(7, idUser);
+				ps.setString(3, idTanah);
+				ps.setString(4, jenisDok);
+				ps.setString(5, item.getName());
+				ps.setString(6, item.getContentType());
+				ps.setBinaryStream(7, item.getInputStream(), (int) item.getSize());
+				ps.setString(8, dokumen);
+				ps.setString(9, keterangan);
 				//myLog.info("saveData:sql="+ps.toString());
 				ps.executeUpdate();
 
@@ -119,15 +134,20 @@ public class LampiranBean implements ILampiran{
 				
 	}
 	public void simpan(FileItem item,HttpServletRequest request) throws Exception {
-  		Db db = null;
+		myLog.info("1."+request.getParameter("id_permohonan"));
+		myLog.info("2."+request.getParameter("nama_dokumen"));
+		myLog.info("3."+request.getParameter("keterangan"));
+		myLog.info("4."+request.getParameter("jenisDokumen"));
+		myLog.info("5."+request.getParameter("jenis_skrin"));
+		Db db = null;
         try {
         	db = new Db();
         	long id_Dokumen = DB.getNextID("TBLPPTDOKUMEN_SEQ");
         	Connection con = db.getConnection();
         	con.setAutoCommit(false);
         	PreparedStatement ps = con.prepareStatement("insert into TBLPPTDOKUMEN " +
-        			"(id_dokumen,id_permohonan,nama_fail,jenis_mime,content,tajuk,keterangan) " +
-        			"values(?,?,?,?,?,?,?)");
+        			"(id_dokumen,id_permohonan,nama_fail,jenis_mime,content,tajuk,keterangan,id_jenisdokumen,jenis_dokumen,tarikh_masuk) " +
+        			"values(?,?,?,?,?,?,?,?,?,SYSDATE)");
         	ps.setLong(1, id_Dokumen);
         	ps.setString(2, request.getParameter("id_permohonan"));
         	ps.setString(3,item.getName());
@@ -135,6 +155,8 @@ public class LampiranBean implements ILampiran{
         	ps.setBinaryStream(5,item.getInputStream(),(int)item.getSize());
         	ps.setString(6, request.getParameter("nama_dokumen"));
         	ps.setString(7, request.getParameter("keterangan"));
+        	ps.setString(8, request.getParameter("jenisDokumen"));
+        	ps.setString(9, request.getParameter("jenis_skrin"));
         	ps.executeUpdate();
             con.commit();
             
@@ -153,8 +175,8 @@ public class LampiranBean implements ILampiran{
         	Connection con = db.getConnection();
         	con.setAutoCommit(false);
         	PreparedStatement ps = con.prepareStatement("insert into TBLPPTDOKUMEN " +
-        			"(id_dokumen,id_permohonan,nama_fail,jenis_mime,content,tajuk,keterangan) " +
-        			"values(?,?,?,?,?,?,?)");
+        			"(id_dokumen,id_permohonan,nama_fail,jenis_mime,content,tajuk,keterangan,id_tanah) " +
+        			"VALUES (?,?,?,?,?,?,?,?)");
         	ps.setLong(1, id_Dokumen);
         	ps.setString(2, request.getParameter("id_permohonan"));
         	ps.setString(3,item.getName());
@@ -162,6 +184,7 @@ public class LampiranBean implements ILampiran{
         	ps.setBinaryStream(5,item.getInputStream(),(int)item.getSize());
         	ps.setString(6, request.getParameter("nama_dokumen"));
         	ps.setString(7, request.getParameter("keterangan"));
+        	ps.setString(8, request.getParameter("idTanah"));
         	ps.executeUpdate();
             con.commit();
             

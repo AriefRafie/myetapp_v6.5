@@ -509,11 +509,12 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     		
     		//dropdown
     		if(id_projekNegeri.equals("10")){
-    			context.put("selectJenisHakmilik",HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",Utils.parseLong(id_jenishakmilik),"class=disabled disabled id=socJenisHakmilik style=width:auto"));   	
+    			context.put("selectJenisHakmilik",HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",Utils.parseLong(id_jenishakmilik),"class=disabled disabled id=socJenisHakmilik style=width:auto" ));   	
     		}else{
     			context.put("selectJenisHakmilik",HTML.SelectJenisHakmilik("socJenisHakmilik",Utils.parseLong(id_jenishakmilik),"class=disabled disabled id=socJenisHakmilik style=width:auto"));   	
     		}
     		myLogger.info("masuk sini la");
+    	
     		//dropdown
     		//context.put("selectJenisHakmilik",HTML.SelectJenisHakmilik("MKJenisHakmilik",Utils.parseLong(id_jenishakmilik),"class=disabled style=width:auto disabled"));
     		//context.put("selectLuas",HTML.SelectLuas("socJenisHakmilik",Utils.parseLong(id_luaslot),"style=width:250px class=disabled disabled"));
@@ -661,9 +662,9 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     		}    		
     		//dropdown
     		if(id_projekNegeri.equals("10")){
-    			context.put("selectJenisHakmilik",HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",Utils.parseLong(id_jenishakmilik),"id=socJenisHakmilik style=width:auto"));   	
+    			context.put("selectJenisHakmilik",HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",Utils.parseLong(id_jenishakmilik),"id=socJenisHakmilik style=width:auto onchange=onchangeUnitLuasAsal()"));   	
     		}else{
-    			context.put("selectJenisHakmilik",HTML.SelectJenisHakmilik("socJenisHakmilik",Utils.parseLong(id_jenishakmilik),"id=socJenisHakmilik style=width:auto"));   	
+    			context.put("selectJenisHakmilik",HTML.SelectJenisHakmilik("socJenisHakmilik",Utils.parseLong(id_jenishakmilik),"id=socJenisHakmilik style=width:auto onchange=onchangeUnitLuasAsal()"));   	
     		}   		
     		//dropdown
     		//context.put("selectJenisHakmilik",HTML.SelectJenisHakmilik("editJenisHakmilik",Utils.parseLong(id_jenishakmilik),"style=width:auto"));
@@ -721,6 +722,8 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
         		
         		//check validation jenis hakmilik & jenis rizab
         		checkValOnChange();
+        		
+        		checkValOnChangeLotPT();
         		
         		//check validation convert
         		checkValConvert();
@@ -1318,6 +1321,9 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     		//check validation jenis hakmilik & jenis rizab
     		checkValOnChange();
     		
+    		//check hide no lot n no pt
+    		checkValOnChangeLotPT();
+    		
     		//check validation convert
     		checkValConvert();
     
@@ -1520,9 +1526,9 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     		context.put("SelectDaerahPenggawa",HTML.SelectDaerahPenggawa("daerahpenggawa",Utils.parseLong(id_daerahpenggawa),null,"style=width:274px class=disabled disabled"));   		
     		//dropdown
     		if(id_projekNegeri.equals("10")){
-    			context.put("selectJenisHakmilik",HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",Utils.parseLong(id_jenishakmilik),"class=disabled disabled id=socJenisHakmilik style=width:auto"));   	
+    			context.put("selectJenisHakmilik",HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",Utils.parseLong(id_jenishakmilik),"class=disabled disabled id=socJenisHakmilik style=width:auto onchange=doOnchange()"));   	
     		}else{
-    			context.put("selectJenisHakmilik",HTML.SelectJenisHakmilik("socJenisHakmilik",Utils.parseLong(id_jenishakmilik),"class=disabled disabled id=socJenisHakmilik style=width:auto"));   	
+    			context.put("selectJenisHakmilik",HTML.SelectJenisHakmilik("socJenisHakmilik",Utils.parseLong(id_jenishakmilik),"class=disabled disabled id=socJenisHakmilik style=width:auto onchange=doOnchange()"));   	
     		}    		
         	//dropdown
     		//context.put("selectJenisHakmilik",HTML.SelectJenisHakmilik("MKJenisHakmilik",Utils.parseLong(id_jenishakmilik),"style=width:auto class=disabled disabled"));
@@ -2647,12 +2653,12 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 		}else{
 			context.put("showJajahan","no");
 		}
-
+		myLogger.info("newssss");
 		//dropdown
 		if(id_projekNegeri.equals("10")){
-			context.put("selectJenisHakmilik",HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",null,"id=socJenisHakmilik style=width:auto"));   	
+			context.put("selectJenisHakmilik",HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",null,"id=socJenisHakmilik style=width:auto  onchange=onchangeUnitLuasAsal()" ));   	
 		}else{
-			context.put("selectJenisHakmilik",HTML.SelectJenisHakmilik("socJenisHakmilik",null,"id=socJenisHakmilik style=width:auto"));   	
+			context.put("selectJenisHakmilik",HTML.SelectJenisHakmilik("socJenisHakmilik",null,"id=socJenisHakmilik style=width:auto  onchange=onchangeUnitLuasAsal()"));   	
 		}
 		
 		//dropdown unit luas
@@ -3076,6 +3082,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 				context.put("txtNoWartaRizab", "");
 				context.put("txdTarikhWarta", "");
 				context.put("txtCatatan", "");
+				context.put("txtcatatan", "");
 				
 				context.put("txtLuasLotAsalSebelumConvert", "");
 				context.put("sorDropdownUnitAsal", "");
@@ -3131,9 +3138,9 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 				
 				//dropdown
 				if(id_negeriprojek.equals("10")){
-					context.put("selectJenisHakmilik",HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",null,"id=socJenisHakmilik style=width:auto onchange=doOnchange()"));   	
+					context.put("selectJenisHakmilik",HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",null,"id=socJenisHakmilik style=width:auto onchange=onchangeUnitLuasAsal()"));   	
 				}else{
-					context.put("selectJenisHakmilik",HTML.SelectJenisHakmilik("socJenisHakmilik",null,"id=socJenisHakmilik style=width:auto onchange=doOnchange()"));   	
+					context.put("selectJenisHakmilik",HTML.SelectJenisHakmilik("socJenisHakmilik",null,"id=socJenisHakmilik style=width:auto onchange=onchangeUnitLuasAsal()"));   	 	
 				}
 				
 				context.put("selectKategoriTanah",HTML.SelectKategoriTanah("socKategoriTanah",null,"id=socKategoriTanah style=width:auto",null));
@@ -3166,7 +3173,8 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 				if( id_jenisHakmilik.equals("2") || id_jenisHakmilik.equals("5") || id_jenisHakmilik.equals("28")
 				|| id_jenisHakmilik.equals("73") || id_jenisHakmilik.equals("74") || id_jenisHakmilik.equals("75")
 				|| id_jenisHakmilik.equals("80") || id_jenisHakmilik.equals("85") || id_jenisHakmilik.equals("113")){			
-					context.put("showLuput","yes");       			  		
+					context.put("showLuput","yes");  
+					myLogger.info("jenis hakmilik :"+id_jenisHakmilik);
 				}else{
 					context.put("showLuput","no"); 
 				}
@@ -3186,6 +3194,33 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 						context.put("showWarta","no");
 			        	context.put("showLainLain","no");
 					}
+				}
+				
+				
+			}//close checkValOnChange
+			
+			private void checkValOnChangeLotPT() throws Exception{
+		    	
+				String resetRadio = getParam("resetRadio");
+				
+				//validation jenis hakmilik & jenis rizab
+				String id_jenisHakmilik = getParam("socJenisHakmilik");
+				//String sorJenisRizab = getParam("sorJenisRizab");
+				//101,23,103,4,133,124,81,31,13,8,105,9918129,102,84,8,104,105,1,9,128,126
+				/* validation jenis hakmilik */       		
+				if( id_jenisHakmilik.equals("101") || id_jenisHakmilik.equals("23") || id_jenisHakmilik.equals("103")
+				|| id_jenisHakmilik.equals("4") || id_jenisHakmilik.equals("133") || id_jenisHakmilik.equals("124")
+				|| id_jenisHakmilik.equals("81") || id_jenisHakmilik.equals("31") || id_jenisHakmilik.equals("13")
+				|| id_jenisHakmilik.equals("8") || id_jenisHakmilik.equals("105") || id_jenisHakmilik.equals("9918129")
+				|| id_jenisHakmilik.equals("102") || id_jenisHakmilik.equals("84") || id_jenisHakmilik.equals("8")
+				|| id_jenisHakmilik.equals("84") || id_jenisHakmilik.equals("8") || id_jenisHakmilik.equals("104")
+				|| id_jenisHakmilik.equals("105") || id_jenisHakmilik.equals("1") || id_jenisHakmilik.equals("9")
+				|| id_jenisHakmilik.equals("128") || id_jenisHakmilik.equals("126") 
+				){			
+					context.put("showlotPT","lot");  
+					myLogger.info("jenis hakmilik LOT :"+id_jenisHakmilik);
+				}else{
+					context.put("showlotPT","pt"); 
 				}
 				
 				
@@ -3801,9 +3836,9 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 					
 					myLogger.info("id_projekNegeri "+id_projekNegeri);
 					if(id_projekNegeri.equals("10")){
-						context.put("selectJenisHakmilik",HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",Utils.parseLong(getParam("socJenisHakmilik")),"id=socJenisHakmilik style=width:auto onchange=doOnchange()"));   	
+						context.put("selectJenisHakmilik",HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",Utils.parseLong(getParam("socJenisHakmilik")),"id=socJenisHakmilik style=width:auto onchange=onchangeUnitLuasAsal()"));   	
 					}else{
-						context.put("selectJenisHakmilik",HTML.SelectJenisHakmilik("socJenisHakmilik",Utils.parseLong(getParam("socJenisHakmilik")),"id=socJenisHakmilik style=width:auto onchange=doOnchange()"));   	
+						context.put("selectJenisHakmilik",HTML.SelectJenisHakmilik("socJenisHakmilik",Utils.parseLong(getParam("socJenisHakmilik")),"id=socJenisHakmilik style=width:auto onchange=onchangeUnitLuasAsal()"));   	
 					}
 					
 					//dropdown unit luas
@@ -3812,9 +3847,9 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
 				}else{
 
 					if(id_projekNegeri.equals("10")){
-						context.put("selectJenisHakmilik",HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",Utils.parseLong(getParam("socJenisHakmilik")),"id=socJenisHakmilik style=width:auto onchange=doOnchangeUpdate()"));   	
+						context.put("selectJenisHakmilik",HTML.SelectJenisHakmilikSelangor("socJenisHakmilik",Utils.parseLong(getParam("socJenisHakmilik")),"id=socJenisHakmilik style=width:auto onchange=onchangeUnitLuasAsal()"));   	
 					}else{
-						context.put("selectJenisHakmilik",HTML.SelectJenisHakmilik("socJenisHakmilik",Utils.parseLong(getParam("socJenisHakmilik")),"id=socJenisHakmilik style=width:auto onchange=doOnchangeUpdate()"));   	
+						context.put("selectJenisHakmilik",HTML.SelectJenisHakmilik("socJenisHakmilik",Utils.parseLong(getParam("socJenisHakmilik")),"id=socJenisHakmilik style=width:auto onchange=onchangeUnitLuasAsal()"));   	
 					}
 					
 					//dropdown unit luas

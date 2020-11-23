@@ -288,17 +288,28 @@ public class FrmTKROnlineKJPSenaraiUlasanFailView extends AjaxBasedModule {
 
 				String flagStatus = logic.hantarUlasan(idUlasanTeknikal, txtTarikhSurat, txtNoRujukanSurat, txtUlasan, txtKeputusan,
 						txtNamaPengulas, txtNoTelPengulas, userId);
-				this.context.put("flagStatus", flagStatus);
+				//this.context.put("flagStatus", flagStatus);
 
 				logicJabatanTeknikal.setMaklumatKJP(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
 				Hashtable maklumatUlasan = (Hashtable) logicJabatanTeknikal.getBeanMaklumatKJP().get(0);
-				this.context.put("maklumatUlasan", maklumatUlasan);
-				this.context.put("idUlasanTeknikal", idUlasanTeknikal);
+				//this.context.put("maklumatUlasan", maklumatUlasan);
+				//this.context.put("idUlasanTeknikal", idUlasanTeknikal);
 
 				Hashtable lampiran = logic.getMaklumatLampiran(idUlasanTeknikal, logic.getIdPermohonanByIdUlasanTeknikal(idUlasanTeknikal));
-				this.context.put("lampiran", lampiran);
+				//this.context.put("lampiran", lampiran);
 
-				vm = "/maklumatUlasan.jsp";
+				context.remove("BeanHeader");
+				context.remove("BeanMaklumatTanah");
+				context.remove("lampiran");
+				context.remove("flagStatus");
+				this.context.put("submit", "");
+
+				Vector listFail = logic.getSenaraiFail(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, userId);
+				this.context.put("SenaraiFail", listFail);
+				setupPage(session, action, listFail);
+
+				vm = "/start.jsp";
+				//vm = "/maklumatUlasan.jsp";
 
 			} else if ("simpanUlasan".equals(submit)) {//ros guna nie
 				context.remove("flagStatus");

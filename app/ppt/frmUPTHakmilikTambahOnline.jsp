@@ -14,7 +14,10 @@ $jumlah_hakmilik
 Maklumat Hakmilik telah berjaya disimpan.
 </div>
 #end -->
-
+		#if ($simpanMD == 'true')
+<div class="success">Maklumat pembayaran telah berjaya disimpan.</div>
+		
+        #end
 
 #if($mode=="new") #if($maklumat_Hakmilik_Salin.size()>0)
 
@@ -123,14 +126,14 @@ Maklumat Hakmilik telah berjaya disimpan.
 <fieldset>
 	<table width="100%" border="0">
 		<tr>
-			<td width="1%">#if($hideFieldHakmilik=="no")<font color="red">*</font>#end
+			<td width="1%">#if($hideFieldHakmilik=="no")<font color="red"></font>#end
 			</td>
 			<td width="23%">Jenis Hakmilik</td>
 			<td width="1%">:</td>
 			<td width="75%">$!selectJenisHakmilik</td>
 		</tr>
 		<tr>
-			<td>#if($hideFieldHakmilik=="no")<font color="red">*</font>#end
+			<td>#if($hideFieldHakmilik=="no")<font color="red"></font>#end
 			</td>
 			<td>No.Hakmilik</td>
 			<td>:</td>
@@ -190,7 +193,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 		#end
 
 		<tr>
-			<td><font color="red">*</font></td>
+			<td><font color="red"></font></td>
 			<td>No.Syit</td>
 			<td>:</td>
 			<td><input type="text" name="txtNoSyit" id="txtNoSyit" value="$!txtNoSyit" size="12" maxlength="40"	onblur="javascript:updatetxtNoSyit('$!txtNoSyit')"></td>
@@ -199,7 +202,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 		#end
 
 		<tr>
-			<td><font color="red">*</font></td>
+			<td></td>
 			<td>No.PT</td>
 			<td>:</td>
 			<td>$!selectKodLot</td>
@@ -214,7 +217,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 		</tr>
 
 		<tr>
-			<td><font color="red">*</font></td>
+			<td><font color="red"></font></td>
 			<td>No.LOT</td>
 			<td>:</td>
 			<td><input type="text" name="txtNoLot" id="txtNoLot"
@@ -225,21 +228,21 @@ Maklumat Hakmilik telah berjaya disimpan.
 		
 
 		<tr>
-			<td><font color="red">*</font></td>
+			<td><font color="red"></font></td>
 			<td>Kategori Tanah</td>
 			<td>:</td>
 			<td>$!selectKategoriTanah</td>
 		</tr>
 		
 		<tr>
-			<td><font color="red">*</font></td>
+			<td><font color="red"></font></td>
 			<td>Unit Luas Asal</td>
 			<td>:</td>
 			<td>$!selectUnitLuasLot</td>
 		</tr>
 		
 		<tr>
-			<td valign="top"><font color="red">*</font></td>
+			<td valign="top"><font color="red"></font></td>
 			<td valign="top">Luas Asal</td>
 			<td valign="top">:</td>
 			<td>#if($showFieldAsalBeforeConvert=="yes") <input type="text"
@@ -291,14 +294,14 @@ Maklumat Hakmilik telah berjaya disimpan.
 		#end
 
 		<tr>
-			<td><font color="red">*</font></td>
+			<td><font color="red"></font></td>
 			<td>Unit Luas Ambil</td>
 			<td>:</td>
 			<td>$!selectUnitLuasAmbil</td>
 		</tr>
 		
 		<tr>
-			<td valign="top"><font color="red">*</font></td>
+			<td valign="top"><font color="red"></font></td>
 			<td valign="top">Luas Diambil</td>
 			<td valign="top">:</td>
 			<td>#if($showFieldAmbilBeforeConvert=="yes") <input type="text"
@@ -541,7 +544,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 <fieldset>
 	<table width="100%" border="0">
 		<tr>
-			<td width="1%">#if($hideFieldHakmilik=="no")<font color="red">$!M</font>#end
+			<td width="1%">#if($hideFieldHakmilik=="no")<font color="red"></font>#end
 			</td>
 			<td width="23%">Jenis Hakmilik</td>
 			<td width="1%">:</td>
@@ -549,7 +552,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 		</tr>
 		
 		<tr>
-			<td>#if($hideFieldHakmilik=="no")<font color="red">$!M</font>#end
+			<td>#if($hideFieldHakmilik=="no")<font color="red"></font>#end
 			</td>
 			<td>No.Hakmilik</td>
 			<td>:</td>
@@ -609,7 +612,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 		#end
 
 		<tr>
-			<td><font color="red">$!M</font></td>
+			<td><font color="red"></font></td>
 			<td>No. Syit</td>
 			<td>:</td>
 			<td><input $disability $disabilityx type="text" name="txtNoSyit"
@@ -619,7 +622,7 @@ Maklumat Hakmilik telah berjaya disimpan.
 		#end
 
 		<tr>
-			#if($hideFieldHakmilik=="no")<font color="red">$!M</font>#end
+			#if($hideFieldHakmilik=="no")<font color="red"></font>#end
 			<td>&nbsp;</td>
 			<td>No. PT</td>
 			<td>:</td>
@@ -644,21 +647,21 @@ Maklumat Hakmilik telah berjaya disimpan.
 
 		##if($hideFieldHakmilik=="no")
 		<tr>
-			<td><font color="red">$!M</font></td>
+			<td><font color="red"></font></td>
 			<td>Kategori Tanah</td>
 			<td>:</td>
 			<td>$!selectKategoriTanah</td>
 		</tr>
 		
 		<tr>
-			<td><font color="red">$!M</font></td>
+			<td><font color="red"></font></td>
 			<td>Unit Luas Asal</td>
 			<td>:</td>
 			<td>$!selectUnitLuasLot</td>
 		</tr>
 		
 		<tr>
-			<td valign="top"><font color="red">$!M</font></td>
+			<td valign="top"><font color="red"></font></td>
 			<td valign="top">Luas Asal</td>
 			<td valign="top">:</td>
 			<td>#if($showFieldAsalBeforeConvert=="yes") <input type="text"
@@ -715,14 +718,14 @@ Maklumat Hakmilik telah berjaya disimpan.
 		#end
 		
 		<tr>
-			<td><font color="red">$!M</font></td>
+			<td><font color="red"></font></td>
 			<td>Unit Luas Ambil</td>
 			<td>:</td>
 			<td>$!selectUnitLuasAmbil</td>
 		</tr>
 		
 		<tr>
-			<td valign="top"><font color="red">$!M</font></td>
+			<td valign="top"><font color="red"></font></td>
 			<td valign="top">Luas Diambil</td>
 			<td valign="top">:</td>
 			<td>#if($showFieldAmbilBeforeConvert=="yes") <input type="text"
@@ -884,42 +887,164 @@ Maklumat Hakmilik telah berjaya disimpan.
 	</table>
 </fieldset>
 
-
+<!-- ****************** START UNTUK MAKLUMAT PEMBAYARAN ************************* -->
+#if($no_fail != "")
+	##if($listDPem_size < 1)
 <fieldset>
+	<legend>Maklumat Pembayaran</legend>
 	<table width="100%" border="0">
 		<tr>
 			<td width="1%"></td>
 			<td valign="top" width="23%">Tarikh Pembayaran</td>
 			<td valign="top" width="1%">:</td>
 			<td><input name="txdTarikhPembayaran" id="txdTarikhPembayaran"
-				size="12" type="text" value="$!txdTarikhPembayaran"
+				size="11" type="text" value="$!txdTarikhPembayaran"
 				onkeyup="validateTarikh(this,this.value)"
 				onblur="check_date(this);javascript:updatetxdTarikhPembayaran()">
 				<img src="../img/calendar.gif"
-				onclick="displayDatePicker('txdTarikhPembayaran',false,'dmy');">&nbsp;$!frmtdate</td>
+				onclick="displayDatePicker('txdTarikhPembayaran',false,'dmy');">&nbsp;$!frmtdate
+			</td>
+		</tr>
+		<tr>
+			<td width="1%">&nbsp;</td>
+			<td width="23%">
+						            	<div align="right" class="labelinput">
+											<div align="left">Cara Bayaran</div>
+										</div>             
+			</td>
+			<td width="1%">:</td>
+			<td width="75%">$!socBayaran</td>
+		</tr>
+		<tr>
+			<td width="1%">&nbsp;</td>
+			<td width="23%">
+				<div align="right" class="labelinput">
+				<div align="left">Tarikh Baucer/Cek/Bank Draf/EFT</div>
+				</div>             
+			</td>
+			<td width="1%">:</td>
+			<td width="75%">
+				#if($pagemode == "view")
+					$!pembayaran.getTarikhBayaranStr()
+				#else						            	
+				<input name="txtarikh" type="text" id="txtTarikhBaucerCek" value="$!pembayaran.getTarikhBayaranStr()" size="11" maxlength="10" $style/>
+					<a href="javascript:displayDatePicker('txtarikh',false,'dmy');"><img src="../img/calendar.gif" alt="" border="0"/></a>
+				#end
+			</td>
+		</tr>
+		<tr>
+			<td width="1%">&nbsp;</td>
+			<td width="23%">
+				<div align="right" class="labelinput">
+											<div align="left">No. Baucer/Cek/Bank Draft/EFT</div>
+										</div>             
+			</td>
+			<td width="1%">:</td>
+			<td width="75%">
+				#if($pagemode == "view")
+					$!pembayaran.getNoRujukan()
+				#else	
+					<input type="text" name="txtno" id="txtNoBaucerCekDraft" size="30"  value="$!pembayaran.getNoRujukan()" onKeyUp="this.value=this.value.toUpperCase();" $style>
+				#end
+			</td>
+		</tr>
+		<tr>
+			<td width="1%">&nbsp;</td>
+			<td width="23%">
+				<div align="right" class="labelinput">
+											<div align="left">Jumlah Bayaran</div>
+										</div>             
+			</td>
+			<td width="1%">:</td>
+			<td width="75%">
+				#if($pagemode == "view")
+					$!jumlahBayaranFormat		            		
+				#else
+				<input type="text" name="txtbayaran" id="txtBayaranProses" size="11" 
+    						value="$!jumlahBayaranFormat" onBlur="validateCurrency(this,this.value,'')"  $style>
+    			#end
+    		</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><div align="left">Bukti Pembayaran (baucer)</div></td>
+			<td>:</td>
+			<td ><input class="texts" id="txtNamaDokumen2" name="txtNamaDokumen2" type="file"></td>		
+		</tr>
+		<tr>
+			<td colspan="4" align="center">	
+				<table >
+				<tr>
+					<td >
+						<input type="button" name="cmdUpdate" value="Simpan" onClick="javascript:simpanMD('$!id_permohonan', '$!mode')">
+						<!-- <input name="cmdKembali" type="button" value="Kembali" onClick="kembali('$!id_permohonan')" />-->
+					</td>
+				</tr> 
+				</table>
+			</td>
 		</tr>
 		
-		<tr>
-			<td valign="top">
-			<td valign="top" width="23%">Buku Pembayaran (baucer)</td>
-			<td valign="top">:</td>
-			<td><input id="fileupload" name="fileupload" type=file size=40 /></td>
-			<br />
-		</tr>
 	</table>
-	#if($isEdit=="yes")
-	<table width="100%" border="0">
-	
-		<tr>
-			<td>&nbsp;</td>
-		</tr>
-		
-		<tr>
-			<td>$!perhatian3</td>
-		</tr>
-	</table>
-	#end
 </fieldset>
+<input type="hidden" name="flag_subjaket" value="$!flag_subjaket">
+<input type="hidden" name="txtNamaDokumenHidden">
+<input type="hidden" name="txtKeteranganHidden" value="$!txtKeterangan">
+<input type="hidden" name="no_fail" value="$!no_fail">
+<input type="hidden" name="idbayaran" >
+
+	##else
+
+<!-- ****************** END UNTUK MAKLUMAT PEMBAYARAN *************************** -->
+
+<!-- ****************** START SENARAI MAKLUMAT PEMBAYARAN *************************** -->
+<fieldset>
+    <legend><strong>&nbsp;Senarai Maklumat Pembayaran</strong></legend>    
+	<table width="100%"  cellpadding="0" cellspacing="2" border="0">   
+        <tr class="table_header">
+         	<td width="3%" align="center"><b>Bil.</b></td>
+            <td width="15%" align="center"><b>Tarikh Pembayaran</b></td>
+            <td width="20%" align="center"><b>No. Baucer/Cek/Bank Draft/EFT</b></td>
+          	<td width="27%" align="center"><b>Nama Fail</b></td>
+          	<td width="15" align="center"><b>Jumlah</b></td>
+    		<td width="20%" align="center"><b>Tindakan</b></td>
+      	</tr>              
+         #if($listDPem_size!=0)
+          
+             #foreach($listD in $listDokumenPembayaran)  
+                   
+                    #set( $i = $velocityCount )       	
+         		#if ( ($i % 2) != 1 )
+              		#set( $row = "row2" )
+         		#else
+               		#set( $row = "row1" )
+         		#end
+         		      
+       	<tr class="$row" >
+        	<td align="center"><a href="javascript:paparBayaran('$!listD.id_Dokumen')">$listD.bil .</a></td>	
+       	    <td class="$row" align="center">$listD.txdTarikhPembayaran</td>
+         	<td class="$row" align="center"><a href="javascript:paparBayaran('$!listD.idBayaran','$!listD.txdTarikhPembayaran','$!listD.caraBayar','$!listD.txdTarikh','$!listD.rujukan','$!listD.bayaran')"><font color="blue">$listD.rujukan</font></a></td>
+         	<td class="$row" align="left"><a href="javascript:papar_Lampiran('$!listD.id_Dokumen')">$listD.nama_dokumen</a></td>
+      	    <td class="$row" align="center">$listD.bayaran</td>
+         	<td class="$row" align="center">	
+       		#if($listDPem_size!=0)
+               <input type="button" name="cmdHapusDoc" value ="Hapus" onClick="hapusDokumenPembayaran('$!listD.idBayaran','$!listD.id_Dokumen')">
+          		<input type="button" name="cmdHapusDoc" value ="Papar" onClick="papar_Lampiran('$!listD.id_Dokumen')">
+        	#end
+         	</td>	
+   		</tr>
+             #end  
+              		 
+         #else
+            <tr>
+                <td colspan="4">Tiada rekod</td>
+            </tr>
+         #end
+                    
+	</table>        	
+</fieldset>	
+<!-- ****************** END SEBARAI MAKLUMAT PEMBAYARAN *************************** -->
+		#end
+	##end
 #end
 
 
@@ -1177,6 +1302,8 @@ Maklumat Hakmilik telah berjaya disimpan.
 <input type="hidden" name="id_pihakberkepentingan">
 <input type="hidden" name="id_hakmilik" value="$!id_hakmilik">
 <input type="hidden" name="id_permohonan" value="$!id_permohonan">
+<input type="hidden" name="id_Dokumen" value="$!id_Dokumen">
+<input type="hidden" name="nama_dokumen" value="$!nama_dokumen">
 <input type="hidden" name="command2">
 <input type="hidden" name="command3">
 <input type="hidden" name="command4">
@@ -1229,6 +1356,19 @@ function submitForm(){
 		goTo('$CursorPoint');
 	}
 }
+
+	//idBayaran
+	function paparBayaran(a,b,c,d,e,f){
+		document.${formName}.idbayaran.value = a;
+		document.${formName}.txdTarikhPembayaran.value = b;
+		document.${formName}.txdTarikhPembayaranHidden.value = b;
+		document.${formName}.socBayaran.value = c;
+		document.${formName}.txtarikh.value = d;
+		document.${formName}.txtno.value = e;
+		document.${formName}.txtbayaran.value = f;
+		
+	}
+
 function popupCarianHakmilikSalin(id_permohonan,flag_skrin,id_daerah)
 {
 	var no_lot = document.${formName}.txtNoLot.value;	
@@ -1619,7 +1759,7 @@ function simpanHM(id_permohonan, id_hakmilik, flagSubjaket, hideFieldHakmilik, m
 		document.${formName}.socMukim.focus(); 
 		return;
 	}
-	else if(hideFieldHakmilik=="no" && document.${formName}.socJenisHakmilik.value == ""){
+	/* else if(hideFieldHakmilik=="no" && document.${formName}.socJenisHakmilik.value == ""){
 		alert("Sila pilih \"Jenis Hakmilik\" terlebih dahulu.");
   		document.${formName}.socJenisHakmilik.focus(); 
 		return;
@@ -1643,7 +1783,7 @@ function simpanHM(id_permohonan, id_hakmilik, flagSubjaket, hideFieldHakmilik, m
 	}
 	else if((document.${formName}.socKodLot.value != "" && document.${formName}.txtNoPT.value == "") || (document.${formName}.socKodLot.value == "" && document.${formName}.txtNoPT.value != "")){
 		alert("Sila lengkapkan maklumat \"No.PT\" terlebih dahulu.");
-  		document.${formName}.socKodLot.focus(); 
+  		document.${formName}.txtNoPT.focus(); 
 		return;
 	}
 	else if(document.${formName}.txtNoLot.value == "" && document.${formName}.txtNoPT.value == ""){
@@ -1697,7 +1837,7 @@ function simpanHM(id_permohonan, id_hakmilik, flagSubjaket, hideFieldHakmilik, m
 		alert ("Sila 'Convert' nilai luas ambil terlebih dahulu");
 		return;
 		
-	}	else	{
+	} */	else	{
 		
 		if ( !window.confirm("Adakah Anda Pasti?") ) return;
 		
@@ -2075,4 +2215,50 @@ function isDate(dtStr){
 	}
 return true
 }
+
+	//simpan maklumat dokumen
+	function simpanMD(id_permohonan, mode){
+		//var txtNamaDokumen = document.${formName}.txtNamaDokumenHidden.value;
+		
+		var txdTarikhPembayaran = document.${formName}.txdTarikhPembayaranHidden.value;
+		var command = document.${formName}.command.value;
+		var command2 = document.${formName}.command2.value;
+		( !window.confirm("Adakah Anda Pasti?") ) 
+				
+			var txdTarikhPembayaran = document.${formName}.txdTarikhPembayaranHidden.value;
+			//document.${formName}.id_permohonan.value = id_permohonan;
+			document.${formName}.enctype = "multipart/form-data";
+			document.${formName}.encoding = "multipart/form-data";
+			//nama_dokumen|keterangan|jenisDokumen
+			paramUpload = "&id_permohonan="+id_permohonan+"&txdTarikhPembayaran="+txdTarikhPembayaran
+			paramUpload += "&nama_dokumen=buktibayar&keterangan=Bukti Pembayaran&jenisDokumen=909&idTanah="+$!id_hakmilik;
+			paramUpload += "&txtarikh="+document.${formName}.txtarikh.value;
+			paramUpload += "&txtno="+document.${formName}.txtno.value;
+			paramUpload += "&socBayaran="+document.${formName}.socBayaran.value;
+			paramUpload += "&txtbayaran="+document.${formName}.txtbayaran.value;
+			paramUpload += '&iduser=$!session.getAttribute("_ekptg_user_id")';
+			paramUpload += "&idbayaran="+document.${formName}.idbayaran.value;
+			paramUpload += "&id_hakmilik="+$!id_hakmilik;
+			//alert(paramUpload);
+			document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline&command=viewHM&command2=uploadDoc"+paramUpload;
+			document.${formName}.submit();
+			
+	}
+	
+	function hapusDokumenPembayaran(idbayar,id_dokumen) {
+		
+		document.${formName}.ScreenLocation.value = "middle";
+		if ( !window.confirm("Adakah Anda Pasti?")) return;
+		document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTOnline&command=viewHM&command2=hapusDokumenPembayaran&id_dokumen="+id_dokumen+"&idbayar="+idbayar;
+		document.${formName}.submit();
+	}
+	
+	function papar_Lampiran(id_dokumen) {
+	    var url = '../servlet/ekptg.model.utils.DisplayBlob?id='+id_dokumen+'&tablename=tblpptdokumen';
+	    //var url = "../servlet/ekptg.view.ppt.DisplayBlob2?id="+id_dokumen;
+	    var hWnd = window.open(url,'displayfile','width=800,height=600, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	    hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+	}
 </script>

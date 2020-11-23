@@ -7,6 +7,7 @@
 </style>
 
 <input type="hidden" name="idPengadu" id="idPengadu">
+<br>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td><fieldset>
@@ -30,12 +31,12 @@
 	        </td>
         </tr>
         <tr class="table_header">
-          <td scope="row" width="5%" align="center"><strong>No</strong></td>
-          <td width="25%"><strong>Nama Pengadu</strong></td>
-          <td width="20%"><strong>No. Aduan</strong></td>
-          <td width="20%"><strong>Tarikh Aduan</strong></td>
-          <td width="10%"  align="center"><strong>No Hakmilik</strong></td>
-          <td width="10%"  align="center"><strong>Tindakan</strong></td>
+          <td scope="row" width="3%" align="center"><strong>No. </strong></td>
+          <td width="20%"><strong>Nama Pengadu</strong></td>
+          <td width="10%"><strong>Tarikh Aduan</strong></td>
+          <td width="47%"  align="center"><strong>Keterangan</strong></td>         
+          <td width="10%"  align="center"><strong>No. Hakmilik</strong></td>
+          <td width="10%"  align="center"><strong>Status</strong></td>
 
         </tr>
            #set ($count = 0)
@@ -50,23 +51,27 @@
         <tr>
        		<td class="$row">$!count</td>
         	<td class="$row"><a href="javascript:detail('$fail.ID','$fail.ID_PENGADU')" class="style1">$fail.FULLNAME</a></td>
-        	<td class="$row">$!fail.NO_ADUAN </td>
-        	<td class="$row">$!fail.TARIKH_ADUAN </td>
-        	<td class="$row">$!fail.NO_HAKMILIK</td>
-        	<td class="$row">
-	        	#if($fail.NO_ADUAN == "")
-	        	<a href="javascript:kemaskini('$fail.ID','$fail.ID_PENGADU')" class="style1">Kemaskini</a>
-	        	#else
-	        	#end
-        	</td>
+        	<td class="$row">$!fail.TARIKH_MASUK </td>
+        	<td class="$row">$!fail.aduan </td>
+	       	<td class="$row">$!fail.NO_HAKMILIK</td>
+        	<td class="$row">$!fail.STATUS</td>
+        </tr>
+        #end
+        #if($count == 0)
+        <tr>
+        	<td colspan="5">Tiada Maklumat</td>
         </tr>
         #end
       </table>
       </fieldset></td>
   </tr>
 </table>
-  <SCRIPT>
-
+<SCRIPT>
+	
+	function toggle_div(id) {
+	    var e = document.getElementById(id);
+	    e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+	}
 
   function doChangeNegeri() {
   	//doAjaxCall${formName}("doChangeNegeri");
@@ -110,7 +115,11 @@
 
   function hantar() {
 
-		doAjaxCall${formName}("simpanComplaint");
+		//doAjaxCall${formName}("simpanComplaint");
+		document.${formName}.enctype= "multipart/form-data";
+		document.${formName}.encoding = "multipart/form-data";
+		document.${formName}.action='?_portal_module=ekptg.view.htp.online.aduan.AduanTanah&command=simpanComplaint';
+		document.${formName}.submit();
 
 		}
 /*    		function simpan(){
@@ -171,23 +180,29 @@
 	}
 
 	function simpan() {
+ 		if(document.${formName}.ulasanBalas.value==""){
+ 	   		alert('Sila Isi Ulasan');
+ 	   	   	return;
+ 	   	 
+ 		}
+		document.${formName}.enctype= "multipart/form-data";
+		document.${formName}.encoding = "multipart/form-data";
+		document.${formName}.action='?_portal_module=ekptg.view.htp.online.aduan.AduanTanah&command=simpanDraf';
+		document.${formName}.submit();
+		//doAjaxCall${formName}("simpanDraf");
 
-// 		if(document.${formName}.ulasanBalas.value==""){
-// 	   	   alert('Sila Isi Ulasan');
-// 	   	   return;
-// 	   	 }
+	}
 
-		doAjaxCall${formName}("simpanDraf");
-
-		}
-
-
- 	 function cariRespon(){
+	function cariRespon(){
  		doAjaxCall${formName}("cariRespon");
- 	 }
+ 	}
 
-function notAllowed(){
-	alert("Proses tidak dibenarkan. Agihan telah diselesaikan");
-
-}
-   </SCRIPT>
+	function notAllowed(){
+		alert("Proses tidak dibenarkan. Agihan telah diselesaikan");
+	}
+	
+	function mainPage(){
+		doAjaxCall${formName}("");
+	}
+   
+</SCRIPT>

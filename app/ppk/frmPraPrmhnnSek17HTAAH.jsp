@@ -481,7 +481,12 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                                       
                                       
                                       </select>
-                                      #end <span id="check_daerah_harta" style="color:red" ></span> </td>
+                                      #end <span id="check_daerah_harta" style="color:red" ></span> 
+                                      #if($!skrin_online_17 == "yes")
+										<a href="javascript:info('daerah')" class="help" title="info">					
+			                          		<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+			                          	</a>
+			                          #end</td>
                                   </tr>
                                   <tr>
                                     <td valign="top" class="style47" >*</td>
@@ -589,7 +594,13 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                                       
                                       
                                       </select>
-                                      #end </td>
+                                      #end 
+                                      #if($!skrin_online_17 == "yes")
+										<a href="javascript:info('mukim')" class="help" title="info">					
+			                          		<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+			                          	</a>
+			                          #end
+			                          </td>
                                   </tr>
                                   <tr>
                                     <td valign="top" class="style47" >*</td>
@@ -1379,7 +1390,7 @@ parent.document.getElementById("info_kena_pilihan_harta").innerHTML="<div class=
                                   <tr>
                                     <td class="style38"><div align="left">Tanggungan</div></td>
                                     <td width="1%"><div align="right">:</div></td>
-                                    <td><input name="txtTanggunganHtaam" type="text" id="txtTanggunganHtaam" value="$tanggungan" size="15" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" /></td>
+                                    <td><input name="txtTanggunganHtaam" type="text" id="txtTanggunganHtaam" value="$tanggungan" size="15" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" readonly="readonly"  class="disabled"/></td>
                                   </tr>
                                   <tr>
                                     <td class="style38"><div align="left">Jenis Tanah</div></td>
@@ -2928,7 +2939,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                   <tr>
                                     <td class="style38"><div align="left">Tanggungan </div></td>
                                     <td>:</td>
-                                    <td><input name="txtTanggunganHtaamUp" type="text" id="txtTanggunganHtaam2" value="$listamid.tanggungan" size="15"$readmodeR class="$readmode" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" /></td>
+                                    <td><input name="txtTanggunganHtaamUp" type="text" id="txtTanggunganHtaam2" value="$listamid.tanggungan" size="15" $readmodeR class="$readmode disabled" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" readonly="readonly" /></td>
                                   </tr>
                                   <tr>
                                     <td class="style38"><div align="left">#if($readmode != "disabled")<span class="style41">*</span>#end Jenis Tanah</div></td>
@@ -3213,34 +3224,35 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                                   
                                   #if($boleh_kemaskini == "yes")
                                   #end
-                                  #if($ht == "Y")
-                                  #if($open_button_online == "yes")
-                                  <!--  e-Tanah Melaka-->
-                                  <input name="cmdSemakanHakmilikEtanah" type="button" value="Capaian Hakmilik e-Tanah" onclick="javascript:semakanHakmilikEtanah('$idPermohonanSimati')"/>
-                                  <input type="submit" name="buttonTambah" id="buttonTambah" value="Tambah" onclick="nktambah()"/>
-                                  #if($flag_kemaskini_selesai != "yes")
-                                  <script>
-                                document.getElementById('buttonTambah').style.display = "none";
-                                </script>
-                                  #end  
-                                  #end
-                                  #end 
+                             	
+                           	#if($ht == "Y")
+                          		#if($open_button_online == "yes")
+                             	<!--  e-Tanah Melaka-->
+                              	<input name="cmdSemakanHakmilikEtanah" type="button" value="Capaian Hakmilik e-Tanah (Melaka)" onclick="javascript:semakanHakmilikEtanah('$idPermohonanSimati')"/>
+                             	<input type="submit" name="buttonTambah" id="buttonTambah" value="Tambah" onclick="nktambah()"/>
+                               		#if($flag_kemaskini_selesai != "yes")
+                                  	<script>
+                               	 		document.getElementById('buttonTambah').style.display = "none";
+                                	</script>
+                              		#end  
                                   
+                             	#end
                                   
+                           	#end 
                                   
-                                  
-                                  #end
-                                  #if($kembaliharta == "yes")
-                                  <!--
-                                            <input type="submit" name="cmdKembali2" id="cmdKembali2" value="Kembali"  onclick="kembali_simati()" />
-                                        -->
-                                  #end                                           
+                         #end
+                       
+                       	#if($kembaliharta == "yes")
+                        	<!--	<input type="submit" name="cmdKembali2" id="cmdKembali2" value="Kembali"  onclick="kembali_simati()" />
+                          	-->
+                       	#end                                           
                                   
                                   #if(($listHTA.size()>0 || $listHTAdulu.size()>0 ) && $show_htaa_add_table=="" && $show_htaa_update_table=="" )
                                   #if($!skrin_online != "yes" && $!skrin_online_17 != "yes")
                                   <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onclick="javascript:setTable('tableReport')"/>
                                   #end
-                                  #end </div></td>
+                                  #end 
+                                  </div></td>
                             </tr>
                           </table>
                           <fieldset  id="tableReport" style="display:none;" >
@@ -6802,7 +6814,16 @@ function check_ob_flag(id_hta,id_ob,flag,status,set_tadbir,id_ob_sub)
 
 	function semakanHakmilikEtanah(idPermohonanSimati) {
 		var url = "../x/${securityToken}/FrmPopupCapaianHakmilikeTanah?modul=ppk&idPermohonan="+idPermohonanSimati;
-		//var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupCapaianHakmilikEtanahView?idPermohonanSimati="+idPermohonanSimati;
+	    var hWnd = window.open(url,'printuser','width=1000,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
+	
+	}
+	
+	function semakanHakmilikEtanahKL(idPermohonanSimati) {
+		var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupCapaianHakmilikEtanahView?idPermohonanSimati="+idPermohonanSimati;
 	    var hWnd = window.open(url,'printuser','width=1000,height=500, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 	       hWnd.opener = document.window;

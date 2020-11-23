@@ -83,7 +83,7 @@
                     <td valign="top">&nbsp;</td>
                     <td valign="top">Ulasan</td>
                     <td valign="top">:</td>
-                    <td valign="top"><textarea name="txtUlasan" id="txtUlasan" rows="5" cols="50">$!maklumatUlasan.ulasan</textarea></td>
+                    <td valign="top"><textarea name="txtUlasan" id="txtUlasan" rows="5" cols="50" onblur="this.value=this.value.toUpperCase()">$!maklumatUlasan.ulasan</textarea></td>
                   </tr>
                   <tr>
                     <td><font color="#ff0000">*</font></td>
@@ -154,10 +154,10 @@
   <tr>
     <td width="30%">&nbsp;</td>
     <td width="70%"> 
-    #if ($!command != "hantarUlasan" || ($!command == "hantarUlasan" && $!flagStatus == "T"))
-      <input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onClick="simpanUlasan()">
-      <input type="button" name="cmdHantar" id="cmdHantar" value="Hantar" onClick="hantarUlasan()">
-      #end
+    	#if ($!command != "hantarUlasan" || ($!command == "hantarUlasan" && $!flagStatus == "T"))
+      		<input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onClick="simpanUlasan()">
+      		<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar" onClick="hantarUlasan()">
+      	#end
       <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="doDivAjaxCall$formname('divMainForm','','');"/></td>
     <td width="1%"></td>
   </tr>

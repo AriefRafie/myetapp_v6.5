@@ -28,7 +28,8 @@
   <input type="hidden" name="idMesyuaratPermohonan" id="idMesyuaratPermohonan" value="$idMesyuaratPermohonan">
   <input type="hidden" name="flagResult" id="flagResult" value="$flagResult"/>
   <input type="hidden" name="catatan" id="catatan" value="$catatan"/>
-    <input name="idDokumen" type="hidden" id="idDokumen" value="$idDokumen"/>
+  <input name="idDokumen" type="hidden" id="idDokumen" value="$idDokumen"/>
+  <input type="hidden" name="refreshPaparan" id="refreshPaparan" value="$refreshPaparan"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
@@ -303,7 +304,8 @@
           	<table width="100%" border="0" cellspacing="2" cellpadding="2">
 		          	  #if ($flagPopup == 'openPopupDokumen')
 					  <tr>
-					    <td> #parse("app/php2/frmCRBMinitMesyuaratDetailSenaraiPermohonan.jsp") </td>
+					    ##<td> #parse("app/php2/frmCRBMinitMesyuaratDetailSenaraiPermohonan.jsp") </td>
+					  <td> #parse("app/php2/frmAPBMinitMesyuaratDetailSenaraiPermohonan.jsp") </td>
 					  </tr>
 					  <tr>
 					    <td>&nbsp;</td>
@@ -358,7 +360,7 @@
 	<tr>
 		<td align="right">
 		#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
-			#if ($beanMaklumatMesyuarat.statusMesyuarat == "1")
+			#if ($beanMaklumatMesyuarat.statusMesyuarat == "1" && $selectedTabUpper=="2")
 			<input id="btnSelesai" type="button" value="Selesai Mesyuarat" onClick="javascript:doSelesaiMesyuarat();">
 			#end
 	    	<input id="btnBack" type="button" value="Kembali" onClick="doKembaliSenaraiPermohonan()">
@@ -590,6 +592,17 @@ function doHapus(idMesyuaratPermohonan){
 }
 
 function doSelesaiMesyuarat(idMesyuaratPermohonan){
+	var listKeputusan=document.querySelectorAll('select[id^="idKeputusan"]');
+	for (i = 0; i < listKeputusan.length; i++) 
+	{
+		var id=listKeputusan[i].id;
+		var value = document.getElementById(id).value;
+		if(value==""){
+			alert("Sila kemaskini keputusan mesyuarat terlebih dahulu!")
+			return; 
+		}
+	}
+	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}
@@ -702,4 +715,21 @@ function hapusMesyuarat(idMesyuarat){
 	document.${formName}.submit();
 }
 
+function refreshFromPilihPermohonan() {
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmCRBSenaraiMesyuaratView";
+	document.${formName}.method="POST";
+	document.${formName}.flagPopup.value = "";
+	document.${formName}.modePopup.value = "";
+	document.${formName}.refreshPaparan.value = "true";
+	doAjaxCall${formName}("");
+}
+
+function doCetakKertasPertimbangan(idFail) {
+	var url = "../servlet/ekptg.report.php2.CRBKertasRingkasan?ID_FAIL="+idFail;
+    var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();	
+}
 </script>

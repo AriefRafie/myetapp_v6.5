@@ -71,7 +71,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
     	
     	String vm = "";
     	String noLOT = "";
-    	
+		String id_hakmilikpb = getParam("id_hakmilikpb");
 
        // Date Date5 = new Date("12/01/2017");
        // String new'Date = sdf.format(currentDate);
@@ -159,6 +159,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
     	//get user login detail
     	String id_user = (String) session.getAttribute("_ekptg_user_id");
     	String userIdNeg = (String) session.getAttribute("_ekptg_user_negeri");
+    	
     	/*
     	modelUPT.setGetUserId(id_user);
 	    listUserid = modelUPT.getUserIds();
@@ -313,6 +314,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
 		
 		
 		String idHakmilik = getParam("id_hakmilik");
+		
 		
 		//get size suburusanhakmilik
 		String id_suburusanstatushakmilik = "";
@@ -491,7 +493,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
                 	
                 	id_siasatan = getParam("id_siasatan");
                 	idHakmilik = getParam("id_hakmilik");
-                	String id_hakmilikpb = getParam("id_hakmilikpb");
+                	//String id_hakmilikpb = getParam("id_hakmilikpb");
                 	if (doPost.equals("true")) {
                     	//simpan data
                 	
@@ -569,7 +571,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
         		
         		if("kemaskiniBorangG".equals(submit2)){
         			
-        			String id_hakmilikpb = getParam("id_hakmilikpb");
+        			//String id_hakmilikpb = getParam("id_hakmilikpb");
         			id_borangh = getParam("id_borangh");
         			id_borangg = getParam("id_borangg");
         			idImejBorangG = getParam("idImejBorangG");
@@ -1149,6 +1151,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
     	    	if (doPost.equals("true")) {
                 	//simpan data
     	    		simpanMaklumatSuratAgensi(session,idHakmilik);
+    	    		//simpanPenerimaanCek(session,id_hakmilikpb); 
                 }
     	    	
     	    	//form validation
@@ -1227,6 +1230,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
     	if("hapusMaklumatSuratAgensi".equals(submit)){
     			
     		hapusMaklumatSuratAgensi();
+    		//hapusPenerimaanCek();
     		
     		//form validation
     		context.put("mode","new");
@@ -1246,7 +1250,11 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
     			
     		String id_terimabayaran = getParam("id_terimabayaran");
     		context.put("id_terimabayaran", id_terimabayaran);
+    	
+    		String id_pihakberkepentingan = getParam("id_pihakberkepentingan");
     		
+    		getAndSetPBAward(id_siasatan,idHakmilik,id_pihakberkepentingan);      
+   
     		//form validation
     		context.put("mode","new");
     		context.put("isEdit","no");
@@ -1271,13 +1279,15 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
     	    	//set data
     	    	getAndSetPenerimaan(id_siasatan,idHakmilik,"new",id_terimabayaran);
     	    	
+    	    	
+    	    	
     	    }//close onchangeSelectPB
     		   	    
     	    else if("simpanPenerimaanCek".equals(submit2)){
     	    	
     	    	if (doPost.equals("true")) {
                 	//simpan data
-    	    		simpanPenerimaanCek(session);   	    		
+    	    		simpanPenerimaanCek(session,id_hakmilikpb);   	    		
                 }
     	    	
     	    	id_terimabayaran = getParam("id_terimabayaran");
@@ -1307,7 +1317,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
     			
     		String id_terimabayaran = getParam("id_terimabayaran");
     		String id_bayaran = getParam("id_bayaran");
-    		String id_hakmilikpb = getParam("id_hakmilikpb");
+    		//String id_hakmilikpb = getParam("id_hakmilikpb");
     		String flag_cara_bayar = getParam("cara_bayar");
     		
     		//id and flag
@@ -1446,7 +1456,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
         	
     		String id_terimabayaran = getParam("id_terimabayaran");
     		String id_bayaran = getParam("id_bayaran");
-    		String id_hakmilikpb = getParam("id_hakmilikpb");
+    		//String id_hakmilikpb = getParam("id_hakmilikpb");
     		String flag_cara_bayar = getParam("cara_bayar");
     		
     		//id and flag
@@ -1588,7 +1598,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
     		
     		String id_terimabayaran = getParam("id_terimabayaran");
     		String id_bayaran = getParam("id_bayaran");
-    		String id_hakmilikpb = getParam("id_hakmilikpb");
+    		//String id_hakmilikpb = getParam("id_hakmilikpb");
     		String flag_cara_bayar = getParam("cara_bayar");
     		
     		//id and flag
@@ -1834,7 +1844,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
     		String id_bayaran = getParam("id_bayaran");
     		context.put("id_bayaran", id_bayaran);
     		
-    		String id_hakmilikpb = getParam("id_hakmilikpb");
+    		//String id_hakmilikpb = getParam("id_hakmilikpb");
     		context.put("id_hakmilikpb", id_hakmilikpb);
     		
     		//data eft
@@ -2546,6 +2556,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
 		String tawaran = "";
 		double jumlah_award = 0;
 		String id_award = "";
+		String tarikh_hantar = "";
 		
 		model.setDataPBAward(idSiasatan,id_pihakberkepentingan);
 		dataPBAward = model.getDataPBAward();
@@ -2558,6 +2569,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
 			unit_luas = (String)pba.get("unit_luas");
 			tawaran = (String)pba.get("tawaran");
 			jumlah_award = (Double)pba.get("bayar_pampasan");
+			tarikh_hantar = (String)pba.get("tarikh_hantar");
 		}
 		
 		//id
@@ -2643,6 +2655,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
 			tarikh_serah = (String)dpb.get("tarikh_serahan");
 	
 		}
+		//myLogger.info("tarikh_serah :"+tarikh_serah);
 		
 		String tarikh_bayaran = "";
 		model.setdataSuratAgensi(idTerimabayaran);
@@ -2680,6 +2693,10 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
 		    day = c.get(Calendar.DATE);
  		}
 
+		String txd3bulan = tarikh_genap;
+		context.put("txd3bulan",txd3bulan);
+		
+		myLogger.info("txd3bulan :"+txd3bulan);
 		SimpleDateFormat fmt = new SimpleDateFormat("ddMMyyyy");
 		
 		//main date
@@ -2688,6 +2705,8 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
 		if(tarikh_hantar!=""){
 			tarikhMain = fmt.parse(maindate);
 		}
+		
+		myLogger.info("tarikhMain :"+tarikhMain);
 		
 		//Syarat 1
 		String dt = "19011984";
@@ -2740,6 +2759,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
 			long diff = milis2 - milis1;
 			hariLewat = diff / (24 * 60 * 60 * 1000);
 		}
+		
 		
 		
 		
@@ -3348,7 +3368,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
 	}//close simpanMaklumatSuratAgensi
 	
 	@SuppressWarnings("unchecked")
-	private void simpanPenerimaanCek(HttpSession session) throws Exception{
+	private void simpanPenerimaanCek(HttpSession session,String id_hakmilikpb) throws Exception{
 
 		Hashtable h = new Hashtable();
 		
@@ -3356,6 +3376,7 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
 		h.put("id_hakmilikpb", getParam("id_hakmilikpb"));
 		
 		h.put("txtBilLewat", getParam("txtBilLewat"));
+		h.put("txdTarikhLewat", getParam("txdTarikhLewat"));
 		h.put("txtDendaLewat", getParam("txtDendaLewat"));
 		h.put("sorJenisAward", getParam("sorJenisAward"));
 		h.put("sorFlagSerah", getParam("sorFlagSerah"));	
@@ -3394,6 +3415,8 @@ public class FrmSek8PenyediaanPampasan extends AjaxBasedModule {
 		h.put("txtMasaAmbil", getParam("txtMasaAmbil"));
 		h.put("socJenisWaktu", getParam("socJenisWaktu"));
 		h.put("txtTempatAmbil", getParam("txtTempatAmbil"));
+		
+		h.put("txdTarikhLewat", getParam("txdTarikhLewat"));
 		
 		h.put("id_user", session.getAttribute("_ekptg_user_id"));
 		

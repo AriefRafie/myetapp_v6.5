@@ -18,6 +18,7 @@ import org.apache.commons.logging.LogFactory;
 
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
+import ekptg.engine.EmailSender;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.File;
@@ -444,7 +445,7 @@ public class FrmPLPSenaraiMesyuaratData {
 			Statement stmt = db.getStatement();
 
 
-			sql = "select a.ID_MESYUARAT_PERMOHONAN, d.no_fail,e.nama,a.flag_jenis_permohonan,a.FLAG_SYOR ,a.CATATAN, c.id_permohonan from tblphpMesyuaratPermohonan a, tblphpmesyuarat b, tblpermohonan c, tblpfdfail d, tblphppemohon e "
+			sql = "select a.ID_MESYUARAT_PERMOHONAN, d.no_fail,e.nama,a.flag_jenis_permohonan,a.FLAG_SYOR ,a.CATATAN, c.id_permohonan,c.id_fail from tblphpMesyuaratPermohonan a, tblphpmesyuarat b, tblpermohonan c, tblpfdfail d, tblphppemohon e "
 				 +"where a.flag_jenis_permohonan = 'B' and a.id_mesyuarat = b.id_mesyuarat and a.id_permohonan=c.id_permohonan and c.id_fail=d.id_fail "
 				 +"and c.id_pemohon=e.id_pemohon and a.id_mesyuarat='"+idMesyuarat+"'";	
 			sql = sql + " ORDER BY a.ID_MESYUARAT_PERMOHONAN ASC";
@@ -462,6 +463,12 @@ public class FrmPLPSenaraiMesyuaratData {
 				h.put("noFailPermohonan",
 						rs.getString("NO_FAIL") == null ? "" : rs
 								.getString("NO_FAIL"));
+				h.put("idPermohonan",
+						rs.getString("ID_PERMOHONAN") == null ? "" : rs
+								.getString("ID_PERMOHONAN"));
+				h.put("idFail",
+						rs.getString("ID_FAIL") == null ? "" : rs
+								.getString("ID_FAIL"));
 				h.put("namaPemohon",
 						rs.getString("NAMA") == null ? "" : rs
 								.getString("NAMA"));
@@ -1258,5 +1265,103 @@ public class FrmPLPSenaraiMesyuaratData {
 	
 	public Vector getBeanMaklumatImejan() {
 		return beanMaklumatImejan;
+	}
+	
+	public void sendEmailMesyuarat(String idMesyuarat,String emel, HttpSession session) throws Exception {
+		Db db = null;
+		Connection conn = null;
+		Vector beanMaklumatEmail = null;
+		EmailSender email = EmailSender.getInstance();
+		String sql = "";
+		String noFail = "";
+		String tajukMesyuarat = "";			
+		String bilMesyuarat = "";
+		String tarikhMesyuarat = "";
+		String idLokasi = "";
+		String lokasiMesyuarat = "";
+		String idJamDari = "";
+		String idMinitDari = "";
+		String idJamHingga = "";
+		String idMinitHingga = "";
+		String catatan = "";
+		String flagSyor = "";
+		String ulasanPemohon = "";
+		String flagKeputusanPemohon = "";
+		try {
+			db = new Db();
+			conn = db.getConnection();
+	    	conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			
+			//get maklumat mesyuarat APB
+			//sql = "SELECT A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.JAM_DARI, A.MINIT_DARI, A.JAM_HINGGA, A.MINIT_HINGGA, A.ID_LOKASI, C.CATATAN, C.FLAG_SYOR,"
+			//   + " A.ULASAN_PEMOHON, A.FLAG_KEPUTUSAN_PEMOHON, B.LOKASI"
+			//   + " FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B, TBLPHPMESYUARATPERMOHONAN C"
+			//   + " WHERE A.ID_LOKASI = B.ID_LOKASI AND A.ID_MESYUARAT = C.ID_MESYUARAT AND A.ID_MESYUARAT = '" + idMesyuarat + "'";
+			
+			sql = "SELECT A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.JAM_DARI, A.MINIT_DARI, A.JAM_HINGGA, A.MINIT_HINGGA, A.ID_LOKASI,"
+				+ " A.ULASAN_PEMOHON, A.FLAG_KEPUTUSAN_PEMOHON, B.LOKASI"
+				+ " FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B"
+				+ " WHERE A.ID_LOKASI = B.ID_LOKASI AND A.ID_MESYUARAT = '" + idMesyuarat + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			if (rs.next()){
+				tajukMesyuarat= rs.getString("TAJUK");			
+				bilMesyuarat=rs.getString("BIL_MESYUARAT");
+				tarikhMesyuarat=sdf.format(rs.getDate("TARIKH_MESYUARAT"));
+				idLokasi=rs.getString("ID_LOKASI");
+				lokasiMesyuarat=rs.getString("LOKASI");
+				idJamDari=rs.getString("JAM_DARI");
+				if (idJamDari.length()==1){
+					idJamDari="0"+ idJamDari;
+				}
+				idMinitDari=rs.getString("MINIT_DARI");
+				if (idMinitDari.length()==1){
+					idMinitDari="0"+ idMinitDari;
+				}
+				idJamHingga=rs.getString("JAM_HINGGA");
+				if (idJamHingga.length()==1){
+					idJamHingga="0"+ idJamHingga;
+				}
+				idMinitHingga=rs.getString("MINIT_HINGGA");
+				if (idMinitHingga.length()==1){
+					idMinitHingga="0"+ idMinitHingga;
+				}
+				//catatan=rs.getString("CATATAN");
+				//flagSyor=rs.getString("FLAG_SYOR");
+				ulasanPemohon=rs.getString("ULASAN_PEMOHON");
+				flagKeputusanPemohon=rs.getString("FLAG_KEPUTUSAN_PEMOHON");
+			}	
+			
+			String body = "<table width='100%' border='0' cellspacing='0' cellpadding='5'>"
+					+ "<tr><td>Tuan/ Puan,</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td>"+tajukMesyuarat.toUpperCase()+"</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td>2.	Dengan hormatnya saya merujuk kepada perkara diatas.</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td>3.	Dimaklumkan bahawa tuan/puan dijemput menghadiri mesyuarat seperti dibawah:-</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td>Tajuk: "+tajukMesyuarat.toUpperCase()+"</td></tr>"
+					+ "<tr><td>Tarikh: "+tarikhMesyuarat.toUpperCase()+"</td></tr>"
+					+ "<tr><td>Masa  : "+idJamDari+":"+idMinitDari+" - "+idJamHingga+":"+idMinitHingga+"</td></tr>"
+					+ "<tr><td>Lokasi: "+lokasiMesyuarat.toUpperCase()+"</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td>Sekian, terima kasih.</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td><i>Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas.</i></td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>" + "</table>";
+			
+			email.RECIEPIENT = emel;
+			email.SUBJECT = "NOTIS PANGGILAN MESYUARAT PERMOHONAN PELEPASAN";
+			email.MESSAGE = body;
+			email.sendEmail();
+			
+		} finally {
+			if (db != null)
+				db.close();
+		}
 	}
 }

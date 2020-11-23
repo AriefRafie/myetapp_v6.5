@@ -656,17 +656,30 @@ public class PPTHeader {
 	    		sql += " OR px.id_permohonan in (select distinct hx.id_permohonan from Tblppthakmilik hx, Tblpptborange bx, Tblpptborangehakmilik beh "; 
 	    		sql += " where hx.id_permohonan = p.id_permohonan and hx.id_hakmilik = beh.id_hakmilik and beh.id_borange = bx.id_borange)))as flag_open_paging13, ";
 	    		
+	    		
 	    		/**OPEN PAGING 14*/
 	    		sql += " (select count(*) from Tblpptpermohonan px ";
 	    		sql += " where px.id_permohonan = p.id_permohonan ";
-	    	  		
+	    		
+	    		
 	    		sql += " and (";
-	    		    		
+	    		
+	    		
 	    		/*"px.id_status='54' ";   
 	    		sql += " OR px.id_status='52' "; 
 	    		sql += " OR " +*/
-	    		sql += "px.id_permohonan in (select distinct hx.id_permohonan from Tblppthakmilik hx, Tblpptnotisawam nx, Tblpptnotisawamhakmilik nah "; 
-	    		sql += " where hx.id_permohonan = p.id_permohonan and hx.id_hakmilik = nah.id_hakmilik and nah.id_notisawam = nx.id_notisawam) ";
+	    		sql += "px.id_permohonan in (select distinct hx.id_permohonan from Tblppthakmilik hx,tblpptborange e," +
+	    				"tblpptborangehakmilik eb," +
+	    				//"tblpptborangfhakmilikpb a, " +
+	    				//"tblpptborangf b, " +
+	    				"tblppthakmilikpb c "; 
+	    		sql += " where hx.id_permohonan = p.id_permohonan " +
+	    				//"and a.id_borangf = b.id_borangf " +			
+	    				//"and a.id_hakmilikpb = c.id_hakmilikpb "+
+	    				"and c.id_hakmilik = hx.id_hakmilik "+
+	    				"and e.id_borange = eb.id_borange " +
+	    				//"and hx.id_hakmilik = nah.id_hakmilik and nah.id_notisawam = nx.id_notisawam" +
+	    				") ";
 	    		
 	    		//open komen temp by razman
 	    		//sql += " OR px.id_permohonan in (select distinct hx.id_permohonan from Tblppthakmilik hx, Tblpptborange bx, Tblpptborangehakmilik beh "; 
@@ -674,6 +687,10 @@ public class PPTHeader {
 	    		//close komen temp by razman
 	    		
 	    		sql += " ))as flag_open_paging14, ";
+	    		
+	    		
+	    		
+	    
 	    			    		
 	    		/**OPEN PAGING 15*/
 	    		sql += " (select count(*) from Tblpptpermohonan px ";
@@ -954,7 +971,7 @@ public class PPTHeader {
 	    				"P.CATATAN_BORANGK_PTD, P.CATATAN_ENDOSAN_PTG, P.CATATAN_ENDOSAN_PTD, P.FLAG_STATUS_ONLINE," +
 	    				"P.CATATAN_STATUS_ONLINE, P.TARIKH_SURAT,AG.NAMA_AGENSI,PNK.NAMA_NEGERI, P.FLAG_SEMAKAN_ONLINE";
 	    		*/
-//				myLogger.info(":::::::::::::::::::::::::::: NEW MAIN HEADER:::::"+sql.toUpperCase());				
+				myLogger.info("setDataHeaderBaru:sql="+sql.toUpperCase());				
 	    		ResultSet rs = stmt.executeQuery(sql);
 	     
 	    		Hashtable h;
@@ -1358,7 +1375,7 @@ public class PPTHeader {
 				sql += " AND p.id_endosan_borangk_ptd = rk2.id_pejabat(+) ";
 				sql += " AND p.id_permohonan = '"+id_permohonan+"'";
 	    	
-			myLogger.info(":::::::::::::::::::::::::::: MAIN HEADER:::::"+sql.toUpperCase());
+			myLogger.info("setDataHeaderLama:sql="+sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
 			//Hashtable<String,String> h;	
 			Hashtable h;	

@@ -45,6 +45,7 @@
           <li onClick="doChangeTabUpper(7);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT ABT</li>
           <li onClick="doChangeTabUpper(8);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT NOTIS</li>
           <li onClick="doChangeTabUpper(9);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT MEMO</li>
+          <li onClick="doChangeTabUpper(10);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TINDAKAN MAHKAMAH</li>
         </ul>
         <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent">#parse("app/php2/frmREVMaklumatDeposit.jsp")</div>
@@ -57,6 +58,7 @@
           <div class="TabbedPanelsContent">#parse("app/php2/frmREVMaklumatABT.jsp")</div>
           <div class="TabbedPanelsContent">#parse("app/php2/frmREVSenaraiNotis.jsp")</div>
           <div class="TabbedPanelsContent">#parse("app/php2/frmREVSenaraiMemo.jsp")</div>
+          <div class="TabbedPanelsContent">#parse("app/php2/frmREVMaklumatTindakanMahkamah.jsp")</div>
         </div>
       </div></td>
   </tr>
@@ -115,6 +117,24 @@ function janaPenyataAkaun(idHasil) {
 
 	var url = "../servlet/ekptg.report.php2.REVPenyataAkaun?ID_HASIL="+idHasil;
     var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function janaHapusKira(idHasil) {
+
+	var url = "../servlet/ekptg.report.php2.REVHapusKira?ID_HASIL="+idHasil;
+    var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function janaSuratKuiriCek(idHasil) {
+
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupCetakLaporanView?idHasil="+idHasil+"&report=suratKuiriCek";
+    var hWnd = window.open(url,'printuser','width=1000,height=300, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
@@ -234,6 +254,34 @@ function doSimpanKemaskiniPermohonan() {
 
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniPermohonan";
+	document.${formName}.submit();
+}
+</script>
+<!-- MAKLUMAT TINDAKAN MAHKAMAH -->
+<script>
+function doKemaskiniTindakanMahkamah(){
+	document.${formName}.mode.value = "update";
+	doAjaxCall${formName}("");
+}
+function doSimpanKemaskiniTindakanMahkamah() {
+	if(document.${formName}.tarikh_notis_tuntutan.value == ""){
+			alert('Sila masukan Tarikh Notis Tuntutan.');
+  			document.${formName}.tarikh_notis_tuntutan.focus();
+			return;
+		}
+		if(document.${formName}.tarikh_notis_rampasan.value == ""){
+			alert('Sila masukan Tarikh Notis Rampasan.');
+  			document.${formName}.tarikh_notis_rampasan.focus();
+			return;
+		}
+
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.mode.value = "update";
+		return;
+	}
+
+	document.${formName}.mode.value = "view";
+	document.${formName}.hitButton.value = "doSimpanKemaskiniTindakanMahkamah";
 	document.${formName}.submit();
 }
 </script>
@@ -771,6 +819,25 @@ function paparPerjanjian(idPerjanjian,idHasil, idFail, flagSkrin) {
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
 }
+
+function paparNotis(idNotis,idJenisNotis,idHasil) {
+	var jenisNotis="";
+	if(idJenisNotis == "1"){
+		jenisNotis = "notisTuntutanTunggakan";
+	}else if(idJenisNotis == "2"){
+		jenisNotis = "notisRampasanDeposit";
+	}else if(idJenisNotis == "3"){
+		jenisNotis = "notisTuntutan";
+	}
+
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupNotisTunggakanView?idNotis="+idNotis+"&report="+jenisNotis+"&mode=update&idHasil="+idHasil;
+    var hWnd = window.open(url,'printuser','width=1000,height=400, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+
 function doRefreshScreen() {
 	doAjaxCall${formName}("");
 }
@@ -800,6 +867,14 @@ function cetakSuratTuntutanTunggakanSewa(idNotis) {
 }
 function cetakSuratRampasanDeposit(idNotis) {
 	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupCetakLaporanView?idNotis="+idNotis+"&report=SuratRampasanDeposit";
+    var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function cetakSuratTuntutan(idNotis) {
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupCetakLaporanView?idNotis="+idNotis+"&report=SuratTuntutan";
     var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
@@ -855,5 +930,90 @@ function doRefreshScreen() {
 }
 function goUpperScreen() {
 	window.scrollTo(0, 0);
+}
+
+function janaMaklumatLot() {
+	var strTajuk = " ";
+	var milikOrRizab = " ";
+	var str1  = document.${formName}.noLotTanah.value;
+	var str2  = document.${formName}.noMilikTanah.value;
+	var str3  = document.${formName}.namaMukimTanah.value;
+	var str4  = document.${formName}.namaDerahTanah.value;
+	var str5  = document.${formName}.namaNegeriTanah.value;
+	var str6 = document.${formName}.noWartaTanah.value;
+	var statusRizabTnh = document.${formName}.status.value;
+
+	if(statusRizabTnh == 'MILIK') {
+		milikOrRizab = str2;
+	} else if(statusRizabTnh == 'RIZAB') {
+		milikOrRizab = str6;
+	}
+
+	strTajuk = str1 +", " + milikOrRizab +", " + str3 + ", "+ str4 + ", " + str5;
+	document.${formName}.txtMaklumatLot.value = strTajuk;
+	}
+
+function simpanDokumen() {
+
+	$('err_dokumen').innerHTML = '';
+	var idHasil = $('idHasil').value;
+
+	if(document.${formName}.dokumen.value == ""){
+		alert('Sila pilih Dokumen yang Ingin Dimuatnaik.');
+  		document.${formName}.dokumen.focus();
+		return;
+	}
+
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+
+	$('dokumenMuatnaik').style.display = "";
+	document.${formName}.mode.value = "view";
+	document.${formName}.enctype='multipart/form-data';
+	document.${formName}.encoding ='multipart/form-data';
+	document.${formName}.target='upload_dokumen';
+	document.${formName}.action='?command=muatNaikDokumen&idHasil='+idHasil;
+	document.${formName}.submit();
+	$('dokumen').value = "";
+}
+
+function cetakDokumen(id){
+	var url = "../servlet/ekptg.view.php2.FrmDisplayImage?id="+id;
+    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener=document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
+function printLaporan(divName,tajuk) {
+	$jquery("#"+divName+" :button").hide();
+
+	var head_style = " <head> "+
+    " <style> "+
+    " @media print { "+
+	" 	body { "+
+    "  -webkit-print-color-adjust: exact; "+  /*Chrome, Safari */
+    "  color-adjust: exact;  "+  /*Firefox*/
+    " 	} "+
+	"         table { page-break-inside:auto; } "+
+  	"		  tr    { page-break-inside:avoid; page-break-after:auto;  } "+
+    "   } "+
+	"		  td    { border:1px solid black;font-size:75%;  } "+
+    " </style> "+
+	" </head> ";
+
+	var tajuk = '<div style="width:95%;margin: auto;font-size:100%;" align="center" ><b>'+tajuk.toUpperCase()+'</b></div>'
+    var printContents = document.getElementById(divName).innerHTML;
+	printContents = printContents.replace("<table ", "<table style=\"border-collapse:collapse;\" ");
+	printContents = printContents.replace('class="table_header"',' style="background-color:#d5d1d0;" ');
+
+	var footer ="";
+    var popupWin = window.open('Cetakan', '_blank', 'width=1100,height=600');
+    popupWin.document.open();
+
+    popupWin.document.write('<html><body onload="window.print()"><div style="width:95%;margin: auto;"  >'+head_style+'<br>'+tajuk+'<br>'+printContents+'</div></html>');
+	popupWin.document.close();
+    return false;
 }
 </script>

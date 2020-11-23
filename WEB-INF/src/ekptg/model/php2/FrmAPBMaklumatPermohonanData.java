@@ -26,6 +26,7 @@ public class FrmAPBMaklumatPermohonanData {
 	private Vector beanMaklumatPembeliPasir = null;
 	private Vector listProjek = null;
 	private Vector listKoordinat = null;
+	private Vector listKoordinatHistory = null;
 	private Vector listPakar = null;
 	private Vector beanMaklumatPermohonan = null;
 	private Vector beanMaklumatProjek = null;
@@ -1088,10 +1089,10 @@ public class FrmAPBMaklumatPermohonanData {
 					+ "AND TBLPHPKOORDINATPERMOHONAN.ID_PERMOHONAN = '"
 					//roszai - edit untuk sort by history (17072020)
 					//+ idPermohonan + "'" + " ORDER BY LABEL_TITIK ASC ";
-					+ idPermohonan + "'" + " ORDER BY TARIKH_MASUK DESC ";
+					+ idPermohonan + "' AND TBLPHPKOORDINATPERMOHONAN.FLAG_HISTORY = 'N' ORDER BY TARIKH_MASUK DESC ";
 
 			ResultSet rs = stmt.executeQuery(sql);
-
+			System.out.println(sql);
 			Hashtable h;
 			Integer bil = 1;
 
@@ -1129,8 +1130,69 @@ public class FrmAPBMaklumatPermohonanData {
 				db.close();
 		}
 	}
+	
+	public void setSenaraiKoordinatHistory(String idPermohonan) throws Exception {
+		Db db = null;
+		String sql = "";
 
-	public String saveKoordinat(String idPermohonan, String labelTitik,
+		try {
+			listKoordinatHistory = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			sql = "SELECT TBLPHPKOORDINATPERMOHONAN.ID_KOORDINATPERMOHONAN, TBLPHPKOORDINATPERMOHONAN.LABEL_TITIK, "
+					+ "TBLPHPKOORDINATPERMOHONAN.DARJAH_U, TBLPHPKOORDINATPERMOHONAN.DARJAH_T, "
+					+ "TBLPHPKOORDINATPERMOHONAN.MINIT_U, TBLPHPKOORDINATPERMOHONAN.MINIT_T, " 
+					+ "TBLPHPKOORDINATPERMOHONAN.SAAT_U, TBLPHPKOORDINATPERMOHONAN.SAAT_T " 
+					+ "FROM TBLPHPKOORDINATPERMOHONAN "
+					+ "WHERE TBLPHPKOORDINATPERMOHONAN.ID_ULASANTEKNIKAL IS NULL "
+					+ "AND TBLPHPKOORDINATPERMOHONAN.ID_PERMOHONAN = '" + idPermohonan + "' "
+					//roszai - edit untuk sort by history (17072020)
+					//+ idPermohonan + "'" + " ORDER BY LABEL_TITIK ASC ";
+					+ "AND TBLPHPKOORDINATPERMOHONAN.FLAG_HISTORY = 'Y' ORDER BY TARIKH_MASUK ASC ";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			System.out.println(sql);
+			Hashtable h;
+			Integer bil = 1;
+
+			while (rs.next()) {
+				h = new Hashtable();
+
+				h.put("bil", bil);
+				h.put("idKoordinat", rs.getString("ID_KOORDINATPERMOHONAN"));
+				h.put("labelTitik", rs.getString("LABEL_TITIK") == null ? ""
+						: rs.getString("LABEL_TITIK"));
+				h.put("darjahU",
+						rs.getString("DARJAH_U") == null ? "" : rs
+								.getString("DARJAH_U"));
+				h.put("minitU",
+						rs.getString("MINIT_U") == null ? "" : rs
+								.getString("MINIT_U"));
+				h.put("saatU",
+						rs.getString("SAAT_U") == null ? "" : rs
+								.getString("SAAT_U"));
+				h.put("darjahT",
+						rs.getString("DARJAH_T") == null ? "" : rs
+								.getString("DARJAH_T"));
+				h.put("minitT",
+						rs.getString("MINIT_T") == null ? "" : rs
+								.getString("MINIT_T"));
+				h.put("saatT",
+						rs.getString("SAAT_T") == null ? "" : rs
+								.getString("SAAT_T"));
+
+				listKoordinatHistory.addElement(h);
+				bil++;
+			}
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
+	public String saveKoordinat(String idKoordinat_original, String idPermohonan, String labelTitik,
 			String darjahU, String minitU, String saatU, String darjahT,
 			String minitT, String saatT, HttpSession session) throws Exception {
 		Db db = null;
@@ -1145,8 +1207,19 @@ public class FrmAPBMaklumatPermohonanData {
 			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
+			
+			if(!idKoordinat_original.equals("$beanMaklumatKoordinat.idKoordinat_original")){
+				// KEMASKINI SET KOORDINAT LAMA KE HISTORY		
+				sql = "UPDATE TBLPHPKOORDINATPERMOHONAN SET FLAG_HISTORY='Y' WHERE ID_KOORDINATPERMOHONAN=" + idKoordinat_original;
+				//r.update("ID_KOORDINATPERMOHONAN", idKoordinat_original);
+				//r.add("FLAG_HISTORY", 'Y');
+				//sql = r.getSQLUpdate("TBLPHPKOORDINATPERMOHONAN");
+				//System.out.println(sql);
+				stmt.executeUpdate(sql);
+			}
 
 			// TBLPHPKOORDINATPERMOHONAN
+			r = new SQLRenderer();
 			long idKoordinat = DB.getNextID("TBLPHPKOORDINATPERMOHONAN_SEQ");
 			idKoordinatString = String.valueOf(idKoordinat);
 			r.add("ID_KOORDINATPERMOHONAN", idKoordinat);
@@ -1158,11 +1231,13 @@ public class FrmAPBMaklumatPermohonanData {
 			r.add("DARJAH_T", darjahT);
 			r.add("MINIT_T", minitT);
 			r.add("SAAT_T", saatT);
+			r.add("FLAG_HISTORY", "N");
 
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLPHPKOORDINATPERMOHONAN");
+			System.out.println(sql);
 			stmt.executeUpdate(sql);
 
 			conn.commit();
@@ -1290,10 +1365,12 @@ public class FrmAPBMaklumatPermohonanData {
 			r.add("DARJAH_T");
 			r.add("MINIT_T");
 			r.add("SAAT_T");
+			r.add("ID_KOORDINATPERMOHONAN");
 
 			r.add("ID_KOORDINATPERMOHONAN", idKoordinat);
 
 			sql = r.getSQLSelect("TBLPHPKOORDINATPERMOHONAN");
+			System.out.println(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -1303,6 +1380,8 @@ public class FrmAPBMaklumatPermohonanData {
 				h = new Hashtable();
 
 				h.put("bil", bil);
+				h.put("idKoordinat_original", rs.getString("ID_KOORDINATPERMOHONAN") == null ? ""
+						: rs.getString("ID_KOORDINATPERMOHONAN"));
 				h.put("labelTitik", rs.getString("LABEL_TITIK") == null ? ""
 						: rs.getString("LABEL_TITIK"));
 				h.put("darjahU",
@@ -1887,6 +1966,14 @@ public class FrmAPBMaklumatPermohonanData {
 
 	public void setListKoordinat(Vector listKoordinat) {
 		this.listKoordinat = listKoordinat;
+	}
+	
+	public Vector getListKoordinatHistory() {
+		return listKoordinatHistory;
+	}
+
+	public void setListKoordinatHistory(Vector listKoordinatHistory) {
+		this.listKoordinatHistory = listKoordinatHistory;
 	}
 
 	public Vector getListPakar() {

@@ -555,12 +555,19 @@ public class FrmPYWOnlineSenaraiFailData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			
+//			sql = " SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, B.NO_PERMOHONAN, D.KETERANGAN, B.ID_STATUS, H.USER_LOGIN, B.NO_SAMBUNGAN,"
+//			    + " A.ID_MASUK, A.TAJUK_FAIL, F.NO_WARTA, F.NO_HAKMILIK, F.NO_LOT, TO_CHAR (B.TARIKH_TERIMA, 'DD/MM/YYYY') AS TARIKH_TERIMA, INITCAP(I.NAMA_PEJABAT) AS NAMA_PEJABAT"
+//			    + " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, TBLPHPHAKMILIK F, USERS H, TBLRUJPEJABATJKPTG I"
+//			    + " WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON AND B.ID_STATUS = D.ID_STATUS(+) AND B.ID_PERMOHONAN = E.ID_PERMOHONAN"
+//			    + " AND E.ID_HAKMILIKPERMOHONAN = F.ID_HAKMILIKPERMOHONAN(+) AND A.ID_MASUK = H.USER_ID(+) AND A.ID_URUSAN IN (7, 12, 13) AND A.FLAG_JENIS_FAIL = '4'"
+//			    + " AND B.FLAG_PERJANJIAN = 'U' AND B.FLAG_AKTIF = 'Y' AND E.FLAG_HAKMILIK = 'U' AND B.ID_JKPTG = I.ID_PEJABATJKPTG(+) AND A.ID_MASUK = '"+id_user+"'";
+			
 			sql = " SELECT A.ID_FAIL, B.ID_PERMOHONAN, A.NO_FAIL, B.NO_PERMOHONAN, D.KETERANGAN, B.ID_STATUS, H.USER_LOGIN, B.NO_SAMBUNGAN,"
-			    + " A.ID_MASUK, A.TAJUK_FAIL, F.NO_WARTA, F.NO_HAKMILIK, F.NO_LOT, TO_CHAR (B.TARIKH_TERIMA, 'DD/MM/YYYY') AS TARIKH_TERIMA, INITCAP(I.NAMA_PEJABAT) AS NAMA_PEJABAT"
-			    + " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, TBLPHPHAKMILIK F, USERS H, TBLRUJPEJABATJKPTG I"
-			    + " WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON AND B.ID_STATUS = D.ID_STATUS(+) AND B.ID_PERMOHONAN = E.ID_PERMOHONAN"
-			    + " AND E.ID_HAKMILIKPERMOHONAN = F.ID_HAKMILIKPERMOHONAN(+) AND A.ID_MASUK = H.USER_ID(+) AND A.ID_URUSAN IN (7, 12, 13) AND A.FLAG_JENIS_FAIL = '4'"
-			    + " AND B.FLAG_PERJANJIAN = 'U' AND B.FLAG_AKTIF = 'Y' AND E.FLAG_HAKMILIK = 'U' AND B.ID_JKPTG = I.ID_PEJABATJKPTG(+) AND A.ID_MASUK = '"+id_user+"'";
+				    + " A.ID_MASUK, A.TAJUK_FAIL, F.NO_WARTA, F.NO_HAKMILIK, F.NO_LOT, TO_CHAR (B.TARIKH_TERIMA, 'DD/MM/YYYY') AS TARIKH_TERIMA, INITCAP(I.NAMA_PEJABAT) AS NAMA_PEJABAT"
+				    + " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, TBLPHPHAKMILIKSEMENTARA F, USERS H, TBLRUJPEJABATJKPTG I"
+				    + " WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON AND B.ID_STATUS = D.ID_STATUS(+) AND B.ID_PERMOHONAN = E.ID_PERMOHONAN"
+				    + " AND E.ID_HAKMILIKSEMENTARA = F.ID_HAKMILIKSEMENTARA(+) AND A.ID_MASUK = H.USER_ID(+) AND A.ID_URUSAN IN (7, 12, 13) AND A.FLAG_JENIS_FAIL = '4'"
+				    + " AND B.FLAG_PERJANJIAN = 'U' AND B.FLAG_AKTIF = 'Y' AND E.FLAG_HAKMILIK = 'U' AND B.ID_JKPTG = I.ID_PEJABATJKPTG(+) AND A.ID_MASUK = '"+id_user+"'"; 
 
 			if (findNoPermohonan != null) {
 				if (!findNoPermohonan.trim().equals("")) {
@@ -1001,6 +1008,130 @@ public class FrmPYWOnlineSenaraiFailData {
 				h.put("agensi", "");
 				h.put("kegunaanTanah", "");
 				h.put("statusRizab", "");
+				beanMaklumatTanah.addElement(h);
+			}
+
+		}  catch (Exception re) {
+			log.error("Error: ", re);
+			throw re;
+			}	finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public void setMaklumatTanahSewa(String idHakmilikSementara) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			beanMaklumatTanah = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = " SELECT NULL AS ID_HAKMILIKAGENSI, NULL AS ID_HAKMILIK, HMS.ID_HAKMILIKSEMENTARA, HMS.PEGANGAN_HAKMILIK,"
+					+ " HMS.ID_JENISHAKMILIK, RUJJENISHM.KOD_JENIS_HAKMILIK, HMS.NO_HAKMILIK, HMS.ID_LOT,"
+					+ " RUJLOT.KETERANGAN AS JENIS_LOT, HMS.NO_LOT, HMS.ID_LUAS AS ID_LUAS_BERSAMAAN, HMS.LUAS AS LUAS_BERSAMAAN, "
+					+ " RUJLUAS.KETERANGAN AS JENIS_LUAS, HMS.NO_WARTA, HMS.TARIKH_WARTA, HMS.ID_MUKIM, RUJMUKIM.NAMA_MUKIM,"
+					+ " HMS.ID_DAERAH, RUJDAERAH.NAMA_DAERAH, HMS.ID_NEGERI, RUJNEGERI.NAMA_NEGERI, HMS.ID_KATEGORI AS ID_KATEGORI,"
+					+ " RUJKATEGORI.KETERANGAN AS KATEGORI, HMS.ID_SUBKATEGORI, RUJSUBKATEGORI.KETERANGAN AS SUBKATEGORI, HMS.KEGUNAAN_TANAH,"
+					+ " HMS.SYARAT, HMS.SEKATAN, HMS.ID_AGENSI, RUJAGENSI.NAMA_AGENSI, RUJAGENSI.ID_KEMENTERIAN, RUJKEMENTERIAN.NAMA_KEMENTERIAN,"
+					+ " HMS.UNIT_LUAS, HMS.LUAS_1, HMS.LUAS_2, HMS.LUAS_3"
+					+ " FROM TBLPHPHAKMILIKSEMENTARA HMS, TBLRUJJENISHAKMILIK RUJJENISHM, TBLRUJLOT RUJLOT, TBLRUJLUAS RUJLUAS,"
+					+ " TBLRUJMUKIM RUJMUKIM, TBLRUJDAERAH RUJDAERAH, TBLRUJNEGERI RUJNEGERI, TBLRUJKATEGORI RUJKATEGORI, TBLRUJSUBKATEGORI RUJSUBKATEGORI,"
+					+ " TBLRUJAGENSI RUJAGENSI, TBLRUJKEMENTERIAN RUJKEMENTERIAN"
+					+ " WHERE HMS.ID_JENISHAKMILIK = RUJJENISHM.ID_JENISHAKMILIK(+) AND HMS.ID_LOT = RUJLOT.ID_LOT(+)"
+					+ " AND HMS.ID_LUAS = RUJLUAS.ID_LUAS(+) AND HMS.ID_MUKIM = RUJMUKIM.ID_MUKIM(+) AND HMS.ID_DAERAH = RUJDAERAH.ID_DAERAH(+)"
+					+ " AND HMS.ID_NEGERI = RUJNEGERI.ID_NEGERI(+) AND HMS.ID_KATEGORI = RUJKATEGORI.ID_KATEGORI(+) AND HMS.ID_SUBKATEGORI = RUJSUBKATEGORI.ID_SUBKATEGORI(+)"
+					+ " AND HMS.ID_AGENSI = RUJAGENSI.ID_AGENSI(+) AND RUJAGENSI.ID_KEMENTERIAN = RUJKEMENTERIAN.ID_KEMENTERIAN(+)"
+					+ " AND HMS.ID_HAKMILIKSEMENTARA = '" + idHakmilikSementara + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+			log.info("tanah "+sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("idHakmilikAgensi", rs.getString("ID_HAKMILIKAGENSI") == null ? "" : rs.getString("ID_HAKMILIKAGENSI"));
+				h.put("idHakmilik", rs.getString("ID_HAKMILIK") == null ? "" : rs.getString("ID_HAKMILIK"));
+				h.put("peganganHakmilik", rs.getString("PEGANGAN_HAKMILIK") == null ? "" : rs.getString("PEGANGAN_HAKMILIK").toUpperCase());
+				h.put("jenisHakmilik", rs.getString("ID_JENISHAKMILIK") == null ? "" : rs.getString("ID_JENISHAKMILIK").toUpperCase());
+				h.put("jenisLot", rs.getString("ID_LOT") == null ? "" : rs.getString("ID_LOT").toUpperCase());
+				h.put("noHakmilik", rs.getString("KOD_JENIS_HAKMILIK") == null || rs.getString("NO_HAKMILIK") == null ? 
+						"" : rs.getString("KOD_JENIS_HAKMILIK").toUpperCase() + " " + rs.getString("NO_HAKMILIK"));
+				h.put("noLot",rs.getString("NO_LOT") == null ? "" : rs.getString("NO_LOT"));
+				h.put("lot",(rs.getString("JENIS_LOT") == null ? "" : rs.getString("JENIS_LOT").toUpperCase())+ " "
+						+ (rs.getString("NO_LOT") == null ? "" : rs.getString("NO_LOT")));
+				h.put("luasLot",(rs.getString("LUAS_BERSAMAAN") == null ? "" : Utils.formatLuas(rs
+						.getDouble("LUAS_BERSAMAAN"))) + " " + (rs.getString("JENIS_LUAS") == null ? "" : 
+						rs.getString("JENIS_LUAS")));
+				h.put("luasLot_",rs.getString("LUAS_BERSAMAAN").replace(",", "") == null ? "" : Utils.formatLuas(rs
+						.getDouble("LUAS_BERSAMAAN")).replace(",", ""));
+				h.put("noWarta", rs.getString("NO_WARTA") == null ? "" : rs.getString("NO_WARTA"));
+				h.put("tarikhWarta", rs.getDate("TARIKH_WARTA") == null ? "" : sdf.format(rs.getDate("TARIKH_WARTA")));
+				h.put("mukim", rs.getString("NAMA_MUKIM") == null ? "" : rs.getString("NAMA_MUKIM").toUpperCase());
+				h.put("daerah", rs.getString("NAMA_DAERAH") == null ? "" : rs.getString("NAMA_DAERAH").toUpperCase());
+				h.put("negeri", rs.getString("NAMA_NEGERI") == null ? "" : rs.getString("NAMA_NEGERI").toUpperCase());				
+				h.put("kategoriTanah", rs.getString("KATEGORI") == null ? "" : rs.getString("KATEGORI").toUpperCase());
+				h.put("subKategoriTanah", rs.getString("SUBKATEGORI") == null ? "" : rs.getString("SUBKATEGORI").toUpperCase());
+				h.put("syarat", rs.getString("SYARAT") == null ? "" : rs.getString("SYARAT").toUpperCase());
+				h.put("sekatan", rs.getString("SEKATAN") == null ? "" : rs.getString("SEKATAN").toUpperCase());
+				h.put("kementerian", rs.getString("NAMA_KEMENTERIAN") == null ? "" : rs.getString("NAMA_KEMENTERIAN").toUpperCase());
+				h.put("agensi", rs.getString("NAMA_AGENSI") == null ? "" : rs.getString("NAMA_AGENSI").toUpperCase());
+				h.put("kegunaanTanah", rs.getString("KEGUNAAN_TANAH") == null ? "" : rs.getString("KEGUNAAN_TANAH").toUpperCase());
+				h.put("noHakmilik", rs.getString("NO_HAKMILIK") == null ? "" : rs.getString("NO_HAKMILIK"));
+				h.put("idLot", rs.getString("ID_LOT") == null ? "" : rs.getString("ID_LOT"));
+				h.put("idLuas", rs.getString("ID_LUAS_BERSAMAAN") == null ? "": rs.getString("ID_LUAS_BERSAMAAN"));
+				h.put("luas", (rs.getString("LUAS_BERSAMAAN") == null ? "" : Utils.formatLuas(rs.getDouble
+						("LUAS_BERSAMAAN"))) + " " + (rs.getString("JENIS_LUAS") == null ? "" : rs.getString("JENIS_LUAS")));
+				h.put("idMukim",rs.getString("ID_MUKIM") == null ? "" : rs.getString("ID_MUKIM"));
+				h.put("idDaerah",rs.getString("ID_DAERAH") == null ? "" : rs.getString("ID_DAERAH"));
+				h.put("idNegeri",rs.getString("ID_NEGERI") == null ? "" : rs.getString("ID_NEGERI"));
+				h.put("idKategori", rs.getString("ID_KATEGORI") == null ? "" : rs.getString("ID_KATEGORI"));
+				h.put("idSubKategori",rs.getString("ID_SUBKATEGORI") == null ? "" : rs.getString("ID_SUBKATEGORI"));
+				h.put("idKementerian", rs.getString("ID_KEMENTERIAN") == null ? "" : rs.getString("ID_KEMENTERIAN"));
+				h.put("idAgensi", rs.getString("ID_AGENSI") == null ? "" : rs.getString("ID_AGENSI"));
+				h.put("unitLuas", rs.getString("UNIT_LUAS") == null ? "" : rs.getString("UNIT_LUAS"));
+				h.put("luas_1", rs.getString("LUAS_1") == null ? "" : rs.getString("LUAS_1"));
+				h.put("luas_2", rs.getString("LUAS_2") == null ? "" : rs.getString("LUAS_2"));
+				h.put("luas_3", rs.getString("LUAS_3") == null ? "" : rs.getString("LUAS_3"));
+				
+				if (rs.getString("NO_HAKMILIK") != null && rs.getString("NO_WARTA") == null){
+					h.put("statusRizab", "MILIK");
+				} else if (rs.getString("NO_HAKMILIK") == null && rs.getString("NO_WARTA") != null){
+					h.put("statusRizab", "RIZAB");
+				} else {
+					h.put("statusRizab", "");
+				}
+				beanMaklumatTanah.addElement(h);
+				bil++;
+			}
+			
+			if (bil == 1){
+				h = new Hashtable();
+				h.put("idHakmilikAgensi", "");
+				h.put("idHakmilik", "");
+				h.put("peganganHakmilik", "");
+				h.put("noHakmilik", "");
+				h.put("noLot", "");
+				h.put("luasLot", "");
+				h.put("noWarta", "");
+				h.put("tarikhWarta", "");
+				h.put("mukim", "");
+				h.put("daerah", "");
+				h.put("negeri", "");				
+				h.put("kategoriTanah", "");
+				h.put("subKategoriTanah", "");
+				h.put("syarat", "");
+				h.put("sekatan", "");
+				h.put("kementerian", "");
+				h.put("agensi", "");
+				h.put("kegunaanTanah", "");
+				h.put("luas_1", "");
+				h.put("luas_2", "");
+				h.put("luas_3", "");
+				
 				beanMaklumatTanah.addElement(h);
 			}
 
@@ -1687,7 +1818,7 @@ public class FrmPYWOnlineSenaraiFailData {
 		}
 	}
 	
-	public String daftarBaru(String idUrusan, String idSuburusan, String idSubsuburusan, String idHakmilikAgensi,
+	public String daftarBaru(String idUrusan, String idSuburusan, String idSubsuburusan, String tujuanLain, String idHakmilikAgensi,
 			String idHakmilikSementara, String noRujukanSurat, String tarikhSurat, String idJenisTanah, String idPHPBorangK, 
 			String idPPTBorangK, String idHakmilikUrusan, String idKementerianTanah, String idNegeriTanah, String tarikhTerima, 
 			String idJenisPermohonan, HttpSession session, String idPermohonanLama) throws Exception {
@@ -1722,6 +1853,7 @@ public class FrmPYWOnlineSenaraiFailData {
 				+ " AND TBLHTPHAKMILIKAGENSI.ID_HAKMILIKAGENSI = '" + idHakmilikAgensi + "'";
 
 			ResultSet rsTanah = stmt.executeQuery(sql);
+			log.info(" SQL daftar :"+sql);
 			if (rsTanah.next()){
 				idKementerian = rsTanah.getString("ID_KEMENTERIAN");
 				idNegeriHakmilik = rsTanah.getString("ID_NEGERI");
@@ -1744,7 +1876,7 @@ public class FrmPYWOnlineSenaraiFailData {
 			r.add("ID_LOKASIFAIL", "2"); //UNIT PHP DI TINGKAT 2
 			r.add("FLAG_JENIS_FAIL", "4"); //ONLINE ETAPP
 			r.add("ID_NEGERI", idNegeriHakmilik);
-			r.add("ID_KEMENTERIAN", idKementerian);	
+			r.add("ID_KEMENTERIAN", idKementerian);
 			
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
@@ -1758,7 +1890,7 @@ public class FrmPYWOnlineSenaraiFailData {
 				+ " WHERE A.USER_ID = B.USER_ID AND A.USER_ID = '" + userId + "'";
 			
 			ResultSet rsUser = stmt.executeQuery(sql);
-
+			log.info(" SQL daftar fail :"+sql);
 			//TBLPHPPEMOHON
 			r = new SQLRenderer();
 			long idPemohon = DB.getNextID("TBLPHPPEMOHON_SEQ");
@@ -1801,6 +1933,7 @@ public class FrmPYWOnlineSenaraiFailData {
 					+ " WHERE ID_SEKSYEN = '4' AND ID_NEGERI = '" + idNegeriHakmilik + "'";
 				
 			ResultSet rsJKPTG = stmt.executeQuery(sql);
+			log.info(" SQL daftar PEMOHON :"+sql);
 			if (rsJKPTG.next()){
 				idPejabatJKPTG = rsJKPTG.getString("ID_PEJABATJKPTG");
 			}
@@ -1828,6 +1961,7 @@ public class FrmPYWOnlineSenaraiFailData {
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLPERMOHONAN");
+			log.info(" SQL daftar permohonan :"+sql);
 			stmt.executeUpdate(sql);
 				
 			//TBLPHPHAKMILIKPERMOHONAN
@@ -1844,6 +1978,7 @@ public class FrmPYWOnlineSenaraiFailData {
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLPHPHAKMILIKPERMOHONAN");
+			log.info(" SQL daftar hakmilikpermohonan :"+sql);
 			stmt.executeUpdate(sql);
 				
 			//TBLPHPPERMOHONANSEWA
@@ -1869,6 +2004,7 @@ public class FrmPYWOnlineSenaraiFailData {
 		
 			r.add("ID_PERMOHONANLAMA", idPermohonanLama);	
 			sql = r.getSQLInsert("TBLPHPPERMOHONANSEWA");
+			log.info(" SQL daftar TBLPHPPERMOHONANSEWA :"+sql);
 			stmt.executeUpdate(sql);
 			
 			//TBLPHPPERMOHONANTUJUAN
@@ -1877,11 +2013,13 @@ public class FrmPYWOnlineSenaraiFailData {
 			r.add("ID_PHPPERMOHONANTUJUAN", idTujuanPermohonan);
 			r.add("ID_PHPPERMOHONANSEWA", idPHPPermohonanSewa);	
 			r.add("ID_JENISTUJUAN", idSubsuburusan);
+			r.add("TUJUAN_LAIN", tujuanLain);
 			
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 			
 			sql = r.getSQLInsert("TBLPHPPERMOHONANTUJUAN");
+			log.info(" SQL daftar TBLPHPPERMOHONANTUJUAN :"+sql);
 			stmt.executeUpdate(sql);
 
 			// TBLPHPHAKMILIK
@@ -1986,6 +2124,248 @@ public class FrmPYWOnlineSenaraiFailData {
 					stmt.executeUpdate(sql);
 				}
 			}
+									
+			conn.commit();			
+			
+		} catch (SQLException ex) { 
+	    	try {
+	    		conn.rollback();
+	    	} catch (SQLException e) {
+	    		throw new Exception("Rollback error : " + e.getMessage());
+	    	}
+	    	
+	    } finally {
+			if (db != null)
+				db.close();
+		}
+	    session.setAttribute("ID_FAIL", idFailString);
+		return idFailString;
+	}
+	
+	public String daftarBaruSewa(String idUrusan, String idSuburusan, String idSubsuburusan, String tujuanLain, String noRujukanSurat, String tarikhSurat, 
+		   String idPHPBorangK, String idPPTBorangK, 
+		   String idJenisTanah, String idNegeri, String idDaerah, String idMukim, String jenisHakmilik, String txtNoHakmilik, String txtNoWarta, String tarikhWarta, String jenisLot, String txtNoLot, String txtLuasBersamaan,
+		   String idHakmilikUrusan, String tarikhTerima, 
+		   String idJenisPermohonan, HttpSession session, String idPermohonanLama, String idLuas, String txtLuas1, String txtLuas2, String txtLuas3) throws Exception {
+		
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+		String idFailString = "";
+		String idHakmilikHtp = "";
+		String idKementerian = "";
+		String idNegeriHakmilik = "";
+		// String idLuas = "";
+		String luas = "";
+		String namaUser = "";
+		String IdKategoriUser = "";
+		String emelUser = "";
+		String TT = "to_date('" + tarikhTerima + "','dd/MM/yyyy')";
+		String TS = "to_date('" + tarikhSurat + "','dd/MM/yyyy')";
+		String TW = "to_date('" + tarikhWarta + "','dd/MM/yyyy')";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+	    	conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();		
+		
+			//TBLPFDFAIL
+			long idFail = DB.getNextID("TBLPFDFAIL_SEQ");
+			idFailString = String.valueOf(idFail);
+			r.add("ID_FAIL", idFail);
+			r.add("ID_URUSAN", idUrusan);
+			r.add("ID_SUBURUSAN", idSuburusan);
+			r.add("ID_SUBSUBURUSAN", idSubsuburusan);
+			r.add("ID_TARAFKESELAMATAN", "1");
+			r.add("ID_SEKSYEN", "4");
+			r.add("FLAG_FAIL", "1");
+			r.add("TARIKH_DAFTAR_FAIL", r.unquote("SYSDATE"));	
+			r.add("ID_LOKASIFAIL", "2"); //UNIT PHP DI TINGKAT 2
+			r.add("FLAG_JENIS_FAIL", "4"); //ONLINE ETAPP
+			r.add("ID_NEGERI", idNegeri);
+			r.add("ID_KEMENTERIAN", idKementerian);
+			
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPFDFAIL");
+			stmt.executeUpdate(sql);
+				
+			sql = "SELECT A.USER_ID, A.USER_NAME, B.ALAMAT1, B.ALAMAT2, B.ALAMAT3, B.POSKOD, B.ID_BANDAR, B.ID_NEGERI, B.NO_FAX,"
+				+ " B.NO_HP, B.NO_KP_BARU, B.NO_TEL, B.EMEL, B.KATEGORI"
+				+ " FROM USERS A, USERS_ONLINE B"
+				+ " WHERE A.USER_ID = B.USER_ID AND A.USER_ID = '" + userId + "'";
+			
+			ResultSet rsUser = stmt.executeQuery(sql);
+			log.info(" SQL daftar fail :"+sql);
+			//TBLPHPPEMOHON
+			r = new SQLRenderer();
+			long idPemohon = DB.getNextID("TBLPHPPEMOHON_SEQ");
+			r.add("ID_PEMOHON", idPemohon);
+			
+			if (rsUser.next()){
+				IdKategoriUser = rsUser.getString("KATEGORI");
+				if (!"".equals(IdKategoriUser) && "Individu".equals(IdKategoriUser)) {
+					r.add("ID_KATEGORIPEMOHON", "1");
+				} else {
+					r.add("ID_KATEGORIPEMOHON", "2");
+				}
+				if (rsUser.getString("USER_NAME") != null){
+					namaUser = rsUser.getString("USER_NAME");
+				}
+				r.add("NAMA", namaUser);
+				r.add("NO_PENGENALAN", rsUser.getString("NO_KP_BARU") == null ? "" : rsUser.getString("NO_KP_BARU"));
+				r.add("NO_TEL", rsUser.getString("NO_TEL") == null ? "" : rsUser.getString("NO_TEL"));
+				r.add("NO_FAX", rsUser.getString("NO_FAX") == null ? "" : rsUser.getString("NO_FAX"));
+				if (rsUser.getString("EMEL") != null){
+					emelUser = rsUser.getString("EMEL");
+				}
+				r.add("EMEL", emelUser);
+				r.add("ALAMAT1_TETAP", rsUser.getString("ALAMAT1") == null ? "" : rsUser.getString("ALAMAT1"));
+				r.add("ALAMAT2_TETAP", rsUser.getString("ALAMAT2") == null ? "" : rsUser.getString("ALAMAT2"));
+				r.add("ALAMAT3_TETAP", rsUser.getString("ALAMAT3") == null ? "" : rsUser.getString("ALAMAT3"));
+				r.add("POSKOD_TETAP", rsUser.getString("POSKOD") == null ? "" : rsUser.getString("POSKOD"));
+				r.add("ID_BANDARTETAP", rsUser.getString("ID_BANDAR") == null ? "99999" : rsUser.getString("ID_BANDAR"));
+				r.add("ID_NEGERITETAP", rsUser.getString("ID_NEGERI") == null ? "99999" : rsUser.getString("ID_NEGERI"));
+			}			
+			
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPHPPEMOHON");
+			log.info(" SQL daftar PEMOHON :"+sql);
+			stmt.executeUpdate(sql);
+			
+			String idPejabatJKPTG = "";
+			sql = "SELECT ID_PEJABATJKPTG, ID_NEGERI FROM TBLRUJPEJABATJKPTG "
+					+ " WHERE ID_SEKSYEN = '4' AND ID_NEGERI = '" + idNegeri + "'";
+				
+			ResultSet rsJKPTG = stmt.executeQuery(sql);
+			if (rsJKPTG.next()){
+				idPejabatJKPTG = rsJKPTG.getString("ID_PEJABATJKPTG");
+			}
+		
+			//TBLPERMOHONAN
+			r = new SQLRenderer();
+			long idPermohonan = DB.getNextID("TBLPERMOHONAN_SEQ");
+			r.add("ID_PERMOHONAN", idPermohonan);
+			r.add("ID_PEMOHON", idPemohon);
+			r.add("ID_JKPTG", idPejabatJKPTG);
+			r.add("ID_FAIL", idFail);
+			r.add("ID_STATUS", "");
+			r.add("NO_RUJ_SURAT",noRujukanSurat);
+			r.add("TARIKH_SURAT", r.unquote(TS));
+			r.add("TARIKH_TERIMA", r.unquote(TT));
+			
+			Calendar currentDate = new GregorianCalendar();			
+			String noPermohonan = "JKPTG/BPHP/04/" + getKodUrusanByIdUrusan(idUrusan) + "/" + currentDate.get(Calendar.YEAR) + "/" + 
+								File.getSeqNo(db, 4, Integer.parseInt(idUrusan), 0, 0, 0, false, false, currentDate.get(Calendar.YEAR), 0);
+			r.add("NO_PERMOHONAN", noPermohonan);
+			r.add("FLAG_AKTIF", "Y");
+			r.add("FLAG_PERJANJIAN", "U");
+
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPERMOHONAN");
+			log.info(" SQL daftar permohonan :"+sql);
+			stmt.executeUpdate(sql);
+			
+			// TBLPHPHAKMILIKSEMENTARA
+			r = new SQLRenderer();
+			long idHakmilikSementara = DB
+					.getNextID("TBLPHPHAKMILIKSEMENTARA_SEQ");
+			// idPHPHakMilikSementaraString = String.valueOf(idHakmilikSementara);
+			r.add("ID_HAKMILIKSEMENTARA", idHakmilikSementara);
+			String peganganHakmilik = "";
+			peganganHakmilik = getKodNegeri(idNegeri) + getKodDaerah(idDaerah)
+					+ getKodMukim(idMukim) + getKodJenisHakmilik(jenisHakmilik)
+					+ Utils.digitLastFormatted(txtNoHakmilik, 8);
+			r.add("PEGANGAN_HAKMILIK", peganganHakmilik);
+			r.add("ID_NEGERI", idNegeri);
+			r.add("ID_DAERAH", idDaerah);
+			r.add("ID_MUKIM", idMukim);
+			r.add("ID_JENISHAKMILIK", jenisHakmilik);
+			r.add("NO_HAKMILIK", txtNoHakmilik);
+			r.add("NO_WARTA", txtNoWarta);
+			r.add("TARIKH_WARTA", r.unquote(TW));
+			r.add("ID_LOT", jenisLot);
+			r.add("NO_LOT", txtNoLot);
+			r.add("ID_LUAS", "2");
+			r.add("LUAS", txtLuasBersamaan);
+			r.add("UNIT_LUAS", idLuas);
+			r.add("LUAS_1", txtLuas1);
+			r.add("LUAS_2", txtLuas2);
+			r.add("LUAS_3", txtLuas3);
+			// r.add("ID_KATEGORI", idKategori);
+			// r.add("ID_SUBKATEGORI", idSubKategori);
+
+			sql = r.getSQLInsert("TBLPHPHAKMILIKSEMENTARA");
+			log.info(" SQL daftar hakmiliksementara :"+sql);
+			stmt.executeUpdate(sql);
+			
+				
+			//TBLPHPHAKMILIKPERMOHONAN
+			r = new SQLRenderer();
+			long idhakmilikPermohonan = DB.getNextID("TBLPHPHAKMILIKPERMOHONAN_SEQ");
+			r.add("ID_HAKMILIKPERMOHONAN", idhakmilikPermohonan);
+			r.add("ID_PERMOHONAN", idPermohonan);
+			r.add("ID_HAKMILIKSEMENTARA", idHakmilikSementara);
+			// r.add("ID_HAKMILIKAGENSI", idHakmilikAgensi);
+			if ("3".equals(idJenisTanah)) {
+				r.add("FLAG_BORANGK", "Y");
+			}
+
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+
+			sql = r.getSQLInsert("TBLPHPHAKMILIKPERMOHONAN");
+			log.info(" SQL daftar hakmilikpermohonan :"+sql);
+			stmt.executeUpdate(sql);
+				
+			//TBLPHPPERMOHONANSEWA
+			String namaTujuan = getNamaTujuan(idSubsuburusan);
+
+			r = new SQLRenderer();
+			long idPHPPermohonanSewa = DB.getNextID("TBLPHPPERMOHONANSEWA_SEQ");
+			r.add("ID_PHPPERMOHONANSEWA", idPHPPermohonanSewa);
+			r.add("ID_PERMOHONAN", idPermohonan);	
+			r.add("ID_LUASASAL", "2");
+			r.add("LUAS_ASAL", txtLuasBersamaan);
+			r.add("ID_JENIS_PERMOHONAN", idJenisPermohonan);
+			if ("14".equals(idNegeriHakmilik)) {
+				r.add("FLAG_PERMOHONANDARI", "0");
+			} else {
+				r.add("FLAG_PERMOHONANDARI", "1");
+			}
+			r.add("TUJUAN", namaTujuan);
+			r.add("FLAG_PROSESFAIL", "J");
+			
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+		
+			r.add("ID_PERMOHONANLAMA", idPermohonanLama);	
+			sql = r.getSQLInsert("TBLPHPPERMOHONANSEWA");
+			log.info(" SQL daftar TBLPHPPERMOHONANSEWA :"+sql);
+			stmt.executeUpdate(sql);
+			
+			//TBLPHPPERMOHONANTUJUAN
+			r = new SQLRenderer();
+			long idTujuanPermohonan = DB.getNextID("TBLPHPPERMOHONANTUJUAN_SEQ");
+			r.add("ID_PHPPERMOHONANTUJUAN", idTujuanPermohonan);
+			r.add("ID_PHPPERMOHONANSEWA", idPHPPermohonanSewa);	
+			r.add("ID_JENISTUJUAN", idSubsuburusan);
+			r.add("TUJUAN_LAIN", tujuanLain);
+			
+			r.add("ID_MASUK", userId);
+			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+			
+			sql = r.getSQLInsert("TBLPHPPERMOHONANTUJUAN");
+			log.info(" SQL daftar TBLPHPPERMOHONANTUJUAN :"+sql);
+			stmt.executeUpdate(sql);
 									
 			conn.commit();			
 			
@@ -2240,8 +2620,8 @@ public class FrmPYWOnlineSenaraiFailData {
 			Statement stmt = db.getStatement();
 
 			sql = " SELECT A.ID_URUSAN, A.ID_SUBURUSAN, A.ID_SUBSUBURUSAN, A.NO_FAIL, A.ID_FAIL, B.ID_PERMOHONAN, B.NO_PERMOHONAN, " 
-				+ " B.TARIKH_SURAT, B.TARIKH_TERIMA, B.NO_RUJ_SURAT, A.TAJUK_FAIL, B.TUJUAN AS TUJUAN_PERMOHONAN, D.ID_JENISTUJUAN,"
-				+ " B.ID_PEMOHON, A.ID_URUSAN, A.ID_SUBURUSAN, C.FLAG_PROSESFAIL, C.CATATAN, C.TUJUAN, B.ID_PERMOHONAN "
+				+ " B.TARIKH_SURAT, B.TARIKH_TERIMA, B.NO_RUJ_SURAT, A.TAJUK_FAIL, A.KETERANGAN_TUJUAN, B.TUJUAN AS TUJUAN_PERMOHONAN, D.ID_JENISTUJUAN,"
+				+ " B.ID_PEMOHON, A.ID_URUSAN, A.ID_SUBURUSAN, C.FLAG_PROSESFAIL, C.CATATAN, C.TUJUAN, B.ID_PERMOHONAN, D.TUJUAN_LAIN "
 				+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPERMOHONANSEWA C, TBLPHPPERMOHONANTUJUAN D "  
 				+ " WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PERMOHONAN = C.ID_PERMOHONAN"
 				+ " AND C.ID_PHPPERMOHONANSEWA = D.ID_PHPPERMOHONANSEWA"
@@ -2266,6 +2646,7 @@ public class FrmPYWOnlineSenaraiFailData {
 				h.put("tarikhTerima", rs.getDate("TARIKH_TERIMA") == null ? "": sdf.format(rs.getDate("TARIKH_TERIMA")));
 				h.put("tujuan", rs.getString("TUJUAN_PERMOHONAN") == null ? "" : rs.getString("TUJUAN_PERMOHONAN").toUpperCase());
 				h.put("idTujuan", rs.getString("ID_JENISTUJUAN") == null ? "" : rs.getString("ID_JENISTUJUAN"));
+				h.put("tujuanLain", rs.getString("TUJUAN_LAIN") == null ? "" : rs.getString("TUJUAN_LAIN"));
 				beanMaklumatPermohonan.addElement(h);
 				
 				bil++;
@@ -2318,7 +2699,7 @@ public class FrmPYWOnlineSenaraiFailData {
 
 			sql = "SELECT C.ID_PHPPERMOHONANSEWA, E.ID_PHPPERMOHONANTUJUAN, B.TARIKH_TERIMA, B.TARIKH_SURAT, B.NO_RUJ_SURAT, A.TAJUK_FAIL, C.TUJUAN, C.FLAG_TEMPOHSEWA, "
 				+ " D.KETERANGAN, C.FLAG_GUNA, C.ID_LUASMHN, C.LUAS_MHN1, C.LUAS_MHN2, C.LUAS_MHN3, C.ID_LUASMHNBERSAMAAN, A.ID_URUSAN, " 
-				+ " C.LUAS_MHNBERSAMAAN, C.ID_LUASBAKI, C.LUAS_BAKI, C.ID_LUASASAL, C.LUAS_ASAL, E.ID_JENISTUJUAN, A.ID_SUBURUSAN "
+				+ " C.LUAS_MHNBERSAMAAN, C.ID_LUASBAKI, C.LUAS_BAKI, C.ID_LUASASAL, C.LUAS_ASAL, E.ID_JENISTUJUAN, A.ID_SUBURUSAN, E.TUJUAN_LAIN "
 				+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPERMOHONANSEWA C, TBLRUJLUAS D, TBLPHPPERMOHONANTUJUAN E"
 				+ " WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PERMOHONAN = C.ID_PERMOHONAN AND C.ID_PHPPERMOHONANSEWA = E.ID_PHPPERMOHONANSEWA" 
 				+ " AND C.ID_LUASASAL = D.ID_LUAS(+) AND B.ID_PERMOHONAN = '" + idPermohonan + "'";
@@ -2339,17 +2720,18 @@ public class FrmPYWOnlineSenaraiFailData {
 				h.put("tujuan", rs.getString("TUJUAN") == null ? "" : rs.getString("TUJUAN"));
 				h.put("flagGuna", rs.getString("FLAG_GUNA") == null ? "" : rs.getString("FLAG_GUNA"));
 				h.put("flagTempohSewa", rs.getString("FLAG_TEMPOHSEWA") == null ? "" : rs.getString("FLAG_TEMPOHSEWA"));
-				h.put("luasAsal", rs.getString("LUAS_ASAL") == null ? "" : Utils.formatLuas(rs.getDouble("LUAS_ASAL")));
+				h.put("luasAsal", rs.getString("LUAS_ASAL").replace(",", "") == null ? "" : Utils.formatLuas(rs.getDouble("LUAS_ASAL")).replace(",", ""));
 				h.put("keteranganLuasAsal", rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN"));
 				h.put("idLuasMohon", rs.getString("ID_LUASMHN") == null ? "" : rs.getString("ID_LUASMHN"));
-				h.put("luas1", rs.getString("LUAS_MHN1") == null ? "" : Utils.formatLuas(rs.getDouble("LUAS_MHN1")));
-				h.put("luas2", rs.getString("LUAS_MHN2") == null ? "" : Utils.formatLuas(rs.getDouble("LUAS_MHN2")));
-				h.put("luas3", rs.getString("LUAS_MHN3") == null ? "" : Utils.formatLuas(rs.getDouble("LUAS_MHN3")));
-				h.put("luasBersamaan", rs.getString("LUAS_MHNBERSAMAAN") == null ? "" : Utils.formatLuas(rs.getDouble("LUAS_MHNBERSAMAAN")));
-				h.put("luasBaki", rs.getString("LUAS_BAKI") == null ? "" : Utils.formatLuas(rs.getDouble("LUAS_BAKI")));
+				h.put("luas1", rs.getString("LUAS_MHN1") == null ? "" : Utils.formatLuas(rs.getDouble("LUAS_MHN1")).replace(",", ""));
+				h.put("luas2", rs.getString("LUAS_MHN2") == null ? "" : Utils.formatLuas(rs.getDouble("LUAS_MHN2")).replace(",", ""));
+				h.put("luas3", rs.getString("LUAS_MHN3") == null ? "" : Utils.formatLuas(rs.getDouble("LUAS_MHN3")).replace(",", ""));
+				h.put("luasBersamaan", rs.getString("LUAS_MHNBERSAMAAN") == null ? "" : Utils.formatLuas(rs.getDouble("LUAS_MHNBERSAMAAN")).replace(",", ""));
+				h.put("luasBaki", rs.getString("LUAS_BAKI") == null ? "" : Utils.formatLuas(rs.getDouble("LUAS_BAKI")).replace(",", ""));
 				h.put("idUrusan", rs.getString("ID_URUSAN") == null ? "" : rs.getString("ID_URUSAN"));
 				h.put("idSuburusan", rs.getString("ID_SUBURUSAN") == null ? "" : rs.getString("ID_SUBURUSAN"));
 				h.put("idTujuan", rs.getString("ID_JENISTUJUAN") == null ? "" : rs.getString("ID_JENISTUJUAN"));
+				h.put("tujuanLain", rs.getString("TUJUAN_LAIN") == null ? "" : rs.getString("TUJUAN_LAIN"));
 				beanMaklumatSewa.addElement(h);
 				bil++;
 				
@@ -2380,27 +2762,46 @@ public class FrmPYWOnlineSenaraiFailData {
 //				idFail = (String) session.getAttribute("ID_FAIL");
 //			}
 
+//			sql = " SELECT A.ID_FAIL,F.ID_HAKMILIKPERMOHONAN, A.NO_FAIL, A.TAJUK_FAIL, B.ID_PERMOHONAN, B.TARIKH_TERIMA, "
+//				+ " CASE WHEN ID_PERMOHONANLAMA IS NULL THEN 'PERMOHONAN BARU' ELSE 'PERMOHONAN PERLANJUTAN' END AS JENISPERMOHONAN, "
+//				+ " B.TARIKH_SURAT, C.ID_PEMOHON, C.NAMA, C.ID_NEGERITETAP, C.ID_KATEGORIPEMOHON, C.ID_PEJABAT, " 
+//				+ " I.ID_NEGERI AS ID_NEGERITANAH, H.ID_KEMENTERIAN AS ID_KEMENTERIANTANAH, "
+//				+ " H.ID_AGENSI AS ID_AGENSITANAH, J.KEPUTUSAN, J.FLAG_PROSESFAIL,"
+//				+ " C.ALAMAT1_TETAP, C.ALAMAT2_TETAP, C.ALAMAT3_TETAP, C.POSKOD_TETAP, D.NAMA_NEGERI, " 
+//				+ " G.KETERANGAN AS NAMA_BANDAR, C.NO_TEL, C.NO_FAX, B.ID_STATUS, E.KETERANGAN, I.NO_HAKMILIK, I.NO_WARTA, " 
+//				+ " H.ID_HAKMILIKAGENSI, H.ID_HAKMILIK, J.FLAG_PERMOHONANDARI, K.NAMA_URUSAN, L.ID_SUBURUSAN, " 
+//				+ " L.NAMA_SUBURUSAN, K.ID_URUSAN, B.FLAG_AKTIF, B.NO_SAMBUNGAN, B.NO_PERMOHONAN"
+//				+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJNEGERI D, TBLRUJSTATUS E, " 
+//				+ " TBLPHPHAKMILIKPERMOHONAN F, TBLRUJBANDAR G, TBLHTPHAKMILIKAGENSI H, TBLHTPHAKMILIK I, " 
+//				+ " TBLPHPPERMOHONANSEWA J, TBLRUJURUSAN K, TBLRUJSUBURUSAN L"
+//				+ " WHERE A.ID_SEKSYEN = 4 AND A.ID_URUSAN IN (7,12,13) AND B.FLAG_PERJANJIAN = 'U' " 
+//				+ " AND A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON AND C.ID_NEGERITETAP = D.ID_NEGERI(+) " 
+//				+ " AND B.ID_STATUS = E.ID_STATUS(+) AND B.ID_PERMOHONAN = F.ID_PERMOHONAN AND A.ID_URUSAN = K.ID_URUSAN " 
+//				+ " AND A.ID_SUBURUSAN = L.ID_SUBURUSAN AND F.ID_HAKMILIKAGENSI = H.ID_HAKMILIKAGENSI " 
+//				+ " AND H.ID_HAKMILIK = I.ID_HAKMILIK AND C.ID_BANDARTETAP = G.ID_BANDAR(+) " 
+//				+ " AND B.ID_PERMOHONAN = J.ID_PERMOHONAN AND A.ID_FAIL = '" + idFail + "'";
+			
 			sql = " SELECT A.ID_FAIL,F.ID_HAKMILIKPERMOHONAN, A.NO_FAIL, A.TAJUK_FAIL, B.ID_PERMOHONAN, B.TARIKH_TERIMA, "
-				+ " CASE WHEN ID_PERMOHONANLAMA IS NULL THEN 'PERMOHONAN BARU' ELSE 'PERMOHONAN PERLANJUTAN' END AS JENISPERMOHONAN, "
-				+ " B.TARIKH_SURAT, C.ID_PEMOHON, C.NAMA, C.ID_NEGERITETAP, C.ID_KATEGORIPEMOHON, C.ID_PEJABAT, " 
-				+ " I.ID_NEGERI AS ID_NEGERITANAH, H.ID_KEMENTERIAN AS ID_KEMENTERIANTANAH, "
-				+ " H.ID_AGENSI AS ID_AGENSITANAH, J.KEPUTUSAN, J.FLAG_PROSESFAIL,"
-				+ " C.ALAMAT1_TETAP, C.ALAMAT2_TETAP, C.ALAMAT3_TETAP, C.POSKOD_TETAP, D.NAMA_NEGERI, " 
-				+ " G.KETERANGAN AS NAMA_BANDAR, C.NO_TEL, C.NO_FAX, B.ID_STATUS, E.KETERANGAN, I.NO_HAKMILIK, I.NO_WARTA, " 
-				+ " H.ID_HAKMILIKAGENSI, H.ID_HAKMILIK, J.FLAG_PERMOHONANDARI, K.NAMA_URUSAN, L.ID_SUBURUSAN, " 
-				+ " L.NAMA_SUBURUSAN, K.ID_URUSAN, B.FLAG_AKTIF, B.NO_SAMBUNGAN, B.NO_PERMOHONAN"
-				+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJNEGERI D, TBLRUJSTATUS E, " 
-				+ " TBLPHPHAKMILIKPERMOHONAN F, TBLRUJBANDAR G, TBLHTPHAKMILIKAGENSI H, TBLHTPHAKMILIK I, " 
-				+ " TBLPHPPERMOHONANSEWA J, TBLRUJURUSAN K, TBLRUJSUBURUSAN L"
-				+ " WHERE A.ID_SEKSYEN = 4 AND A.ID_URUSAN IN (7,12,13) AND B.FLAG_PERJANJIAN = 'U' " 
-				+ " AND A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON AND C.ID_NEGERITETAP = D.ID_NEGERI(+) " 
-				+ " AND B.ID_STATUS = E.ID_STATUS(+) AND B.ID_PERMOHONAN = F.ID_PERMOHONAN AND A.ID_URUSAN = K.ID_URUSAN " 
-				+ " AND A.ID_SUBURUSAN = L.ID_SUBURUSAN AND F.ID_HAKMILIKAGENSI = H.ID_HAKMILIKAGENSI " 
-				+ " AND H.ID_HAKMILIK = I.ID_HAKMILIK AND C.ID_BANDARTETAP = G.ID_BANDAR(+) " 
-				+ " AND B.ID_PERMOHONAN = J.ID_PERMOHONAN AND A.ID_FAIL = '" + idFail + "'";
+					+ " CASE WHEN ID_PERMOHONANLAMA IS NULL THEN 'PERMOHONAN BARU' ELSE 'PERMOHONAN PERLANJUTAN' END AS JENISPERMOHONAN, "
+					+ " B.TARIKH_SURAT, C.ID_PEMOHON, C.NAMA, C.ID_NEGERITETAP, C.ID_KATEGORIPEMOHON, C.ID_PEJABAT, " 
+					+ " S.ID_NEGERI AS ID_NEGERITANAH,"
+					+ " J.KEPUTUSAN, J.FLAG_PROSESFAIL,"
+					+ " C.ALAMAT1_TETAP, C.ALAMAT2_TETAP, C.ALAMAT3_TETAP, C.POSKOD_TETAP, D.NAMA_NEGERI, " 
+					+ " G.KETERANGAN AS NAMA_BANDAR, C.NO_TEL, C.NO_FAX, B.ID_STATUS, E.KETERANGAN, " 
+					+ " J.FLAG_PERMOHONANDARI, K.NAMA_URUSAN, L.ID_SUBURUSAN, " 
+					+ " L.NAMA_SUBURUSAN, K.ID_URUSAN, B.FLAG_AKTIF, B.NO_SAMBUNGAN, B.NO_PERMOHONAN, S.NO_HAKMILIK, S.ID_HAKMILIKSEMENTARA "
+					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLRUJNEGERI D, TBLRUJSTATUS E, " 
+					+ " TBLPHPHAKMILIKPERMOHONAN F, TBLRUJBANDAR G, " 
+					+ " TBLPHPPERMOHONANSEWA J, TBLRUJURUSAN K, TBLRUJSUBURUSAN L, TBLPHPHAKMILIKSEMENTARA S"
+					+ " WHERE A.ID_SEKSYEN = 4 AND A.ID_URUSAN IN (7,12,13) AND B.FLAG_PERJANJIAN = 'U' " 
+					+ " AND A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON AND C.ID_NEGERITETAP = D.ID_NEGERI(+) " 
+					+ " AND B.ID_STATUS = E.ID_STATUS(+) AND B.ID_PERMOHONAN = F.ID_PERMOHONAN AND A.ID_URUSAN = K.ID_URUSAN " 
+					+ " AND A.ID_SUBURUSAN = L.ID_SUBURUSAN " 
+					+ " AND C.ID_BANDARTETAP = G.ID_BANDAR(+) " 
+					+ " AND B.ID_PERMOHONAN = J.ID_PERMOHONAN AND F.ID_HAKMILIKSEMENTARA = S.ID_HAKMILIKSEMENTARA AND A.ID_FAIL = '" + idFail + "'";
 			
 			ResultSet rs = stmt.executeQuery(sql);
-			log.info("aaaaaaaaaaaaa " +sql);
+			log.info("header: " +sql);
 
 			if (rs.next()) {
 				h = new Hashtable();
@@ -2426,10 +2827,11 @@ public class FrmPYWOnlineSenaraiFailData {
 				} else {
 					h.put("status", " SEDANG DIPROSES");
 				}
-				h.put("idHakmilik", rs.getString("ID_HAKMILIK") == null ? "" : rs.getString("ID_HAKMILIK").toUpperCase());
+				//h.put("idHakmilik", rs.getString("ID_HAKMILIK") == null ? "" : rs.getString("ID_HAKMILIK").toUpperCase());
+				h.put("idHakmilikSementara", rs.getString("ID_HAKMILIKSEMENTARA") == null ? "" : rs.getString("ID_HAKMILIKSEMENTARA").toUpperCase());
 				h.put("idUrusanH", rs.getString("ID_URUSAN") == null ? "" : rs.getString("ID_URUSAN").toUpperCase());
 				h.put("idSuburusanH", rs.getString("ID_SUBURUSAN") == null ? "" : rs.getString("ID_SUBURUSAN").toUpperCase());
-				h.put("idHakmilikAgensi", rs.getString("ID_HAKMILIKAGENSI") == null ? "" : rs.getString("ID_HAKMILIKAGENSI"));
+				//h.put("idHakmilikAgensi", rs.getString("ID_HAKMILIKAGENSI") == null ? "" : rs.getString("ID_HAKMILIKAGENSI"));
 				beanMaklumatHeader.addElement(h);
 				bil++;
 				
@@ -2502,7 +2904,140 @@ public class FrmPYWOnlineSenaraiFailData {
 		}		
 	}
 	
-	public void updatePermohonanSewa(String idPermohonanSewa, String idTujuanPermohonan, String idSubsuburusan,  
+	public void updateTanahSewa(String idFail, String idPermohonan, String idHakmilikSementara, String idJenisTanah, String idNegeri, String idDaerah, String idMukim, 
+			String jenisHakmilik, String txtNoHakmilik, String txtNoWarta, String tarikhWarta, String jenisLot, String txtNoLot, String txtLuasBersamaan, HttpSession session,
+			String idLuas, String txtLuas1, String txtLuas2, String txtLuas3) throws Exception {
+
+
+		Db db = null;
+		Connection conn = null;
+		String userId = session.getAttribute("_ekptg_user_id").toString();
+		String sql = "";
+		String sql_= "";
+		String sql_b= "";
+		String sql_c= "";
+		String sql_d= "";
+		String flag_guna="";
+		String TW = "to_date('" + tarikhWarta + "','dd/MM/yyyy')";
+	
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			SQLRenderer r_ = new SQLRenderer();
+			SQLRenderer r_b = new SQLRenderer();
+			SQLRenderer r_c = new SQLRenderer();
+			SQLRenderer r_d = new SQLRenderer();
+
+			//TBLPHPHAKMILIKPERMOHONAN
+			r.update("ID_PERMOHONAN", idPermohonan);
+			// r.add("ID_HAKMILIKAGENSI", idHakmilik);
+			r.update("ID_HAKMILIKSEMENTARA", idHakmilikSementara);
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			
+			sql = r.getSQLUpdate("TBLPHPHAKMILIKPERMOHONAN");
+			log.info("TBLPHPHAKMILIKPERMOHONAN :"+ sql);
+			stmt.executeUpdate(sql);
+			
+			//TBLPHPHAKMILIKSEMENTARA
+			r_.update("ID_HAKMILIKSEMENTARA", idHakmilikSementara);
+			String peganganHakmilik = "";
+			peganganHakmilik = getKodNegeri(idNegeri) + getKodDaerah(idDaerah)
+					+ getKodMukim(idMukim) + getKodJenisHakmilik(jenisHakmilik)
+					+ Utils.digitLastFormatted(txtNoHakmilik, 8);
+			r_.add("PEGANGAN_HAKMILIK", peganganHakmilik);
+			r_.add("ID_NEGERI", idNegeri);
+			r_.add("ID_DAERAH", idDaerah);
+			r_.add("ID_MUKIM", idMukim);
+			r_.add("ID_JENISHAKMILIK", jenisHakmilik);
+			r_.add("NO_HAKMILIK", txtNoHakmilik);
+			r_.add("NO_WARTA", txtNoWarta);
+			r_.add("TARIKH_WARTA", r.unquote(TW));
+			r_.add("ID_LOT", jenisLot);
+			r_.add("NO_LOT", txtNoLot);
+			r_.add("ID_LUAS", "2");
+			r_.add("LUAS", txtLuasBersamaan);
+			r_.add("UNIT_LUAS", idLuas);
+			r_.add("LUAS_1", txtLuas1);
+			r_.add("LUAS_2", txtLuas2);
+			r_.add("LUAS_3", txtLuas3);
+			
+			sql_ = r_.getSQLUpdate("TBLPHPHAKMILIKSEMENTARA");
+			log.info("TBLPHPHAKMILIKSEMENTARA :"+ sql_);
+			stmt.executeUpdate(sql_);
+			
+			sql_b = "SELECT B.FLAG_GUNA " 
+					+ " FROM TBLPERMOHONAN A,TBLPHPPERMOHONANSEWA B "
+					+ " WHERE A.ID_PERMOHONAN = B.ID_PERMOHONAN AND A.ID_PERMOHONAN = '" + idPermohonan + "' AND FLAG_GUNA = '1' ";
+				
+				
+			ResultSet rsPermohonan = stmt.executeQuery(sql_b);
+			if (rsPermohonan.next()){
+				flag_guna = rsPermohonan.getString("FLAG_GUNA");
+				r_b.add("LUAS_MHNBERSAMAAN", txtLuasBersamaan);
+			}
+			log.info("SQL FLAG: "+ sql_b + " FLAG:" + flag_guna);
+			
+			//TBLPHPPERMOHONANSEWA
+			r_b.update("ID_PERMOHONAN", idPermohonan);
+			r_b.add("ID_LUASASAL", "2");
+			r_b.add("LUAS_ASAL", txtLuasBersamaan);
+			r_b.add("ID_KEMASKINI", userId);
+			r_b.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			
+			sql_b = r_b.getSQLUpdate("TBLPHPPERMOHONANSEWA");
+			log.info("TBLPHPPERMOHONANSEWA :"+ sql_b);
+			stmt.executeUpdate(sql_b);
+			
+			//TBLPFDFAIL
+			r_c.update("ID_FAIL", idFail);
+			r_c.add("ID_NEGERI", idNegeri);
+			r_c.add("ID_KEMASKINI", userId);
+			r_c.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			
+			sql_c = r_c.getSQLUpdate("TBLPFDFAIL");
+			log.info("TBLPFDFAIL :"+ sql_c);
+			stmt.executeUpdate(sql_c);
+			
+			String idPejabatJKPTG = "";
+			sql_d = "SELECT ID_PEJABATJKPTG, ID_NEGERI FROM TBLRUJPEJABATJKPTG "
+					+ " WHERE ID_SEKSYEN = '4' AND ID_NEGERI = '" + idNegeri + "'";
+				
+			ResultSet rsJKPTG = stmt.executeQuery(sql_d);
+			if (rsJKPTG.next()){
+				idPejabatJKPTG = rsJKPTG.getString("ID_PEJABATJKPTG");
+			}
+			
+			//TBLPERMOHONAN
+			r_d.update("ID_PERMOHONAN", idPermohonan);
+			r_d.add("ID_JKPTG", idPejabatJKPTG);
+			r_d.add("ID_KEMASKINI", userId);
+			r_d.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			
+			sql_d = r_d.getSQLUpdate("TBLPERMOHONAN");
+			log.info("TBLPERMOHONAN :"+ sql_d);
+			stmt.executeUpdate(sql_d);
+			
+			conn.commit();
+			
+		} catch (SQLException ex) { 
+	   	try {
+	   		conn.rollback();
+	   	} catch (SQLException e) {
+	   		throw new Exception("Rollback error : " + e.getMessage());
+	   	}
+	   	throw new Exception("Ralat : Masalah penyimpanan data " + ex.getMessage());
+	   	
+	   } finally {
+			if (db != null)
+				db.close();
+		}		
+	}
+	
+	public void updatePermohonanSewa(String idPermohonanSewa, String idTujuanPermohonan, String idSubsuburusan, String tujuanLain, 
 			String socTempohSewa, String idLuasKegunaan, String idLuas, String txtLuasMohon1, String txtLuasMohon2,
 			String txtLuasMohon3, String txtLuasBersamaan, String txtBakiLuas, HttpSession session) throws Exception {
 		
@@ -2535,6 +3070,7 @@ public class FrmPYWOnlineSenaraiFailData {
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 
 			sql = r.getSQLUpdate("TBLPHPPERMOHONANSEWA");
+			log.info(sql);
 			stmt.executeUpdate(sql);
 			
 			//TBLPHPPERMOHONANTUJUAN
@@ -2544,8 +3080,10 @@ public class FrmPYWOnlineSenaraiFailData {
 			
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			r.add("TUJUAN_LAIN", tujuanLain);
 			
 			sql = r.getSQLUpdate("TBLPHPPERMOHONANTUJUAN");
+			log.info(sql);
 			stmt.executeUpdate(sql);
 			
 			conn.commit();

@@ -20,6 +20,7 @@ import org.apache.velocity.Template;
 
 import ekptg.helpers.DB;
 import ekptg.helpers.HTML;
+import ekptg.helpers.Paging;
 import ekptg.model.ppk.FrmHeaderPpk;
 import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8InternalData;
 import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8OnlineData;
@@ -106,7 +107,8 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 		String mode = getParam("mode");
 		String idAlert = getParam("idAlert");
 		String action = getParam("action");
-
+		myLogger.info("action:" + action);
+		myLogger.info("submit:" + submit);
 		System.out.println("submit:" + submit);
 		System.out.println("mode:" + mode);
 
@@ -477,8 +479,8 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 
 				// System.out.print("list2:" + list2);
 				if (list2.size() > 0) {
-					Hashtable h = (Hashtable) list2.get(0);
-					if (h.get("noFail").toString() != "") {
+					Hashtable i = (Hashtable) list2.get(0);
+					if (i.get("noFail").toString() != "") {
 						this.context.put("nofail", "yes");
 					}
 
@@ -509,9 +511,12 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 			this.context.put("EventStatus", eventstatus);
 			simpanStatus = 1;
 			this.context.put("SimpanStatus", simpanStatus);
-
+			myLogger.info("idPermohonan = "+idPermohonan);
 			this.context.put("IdPermohonan", idPermohonan);
 
+			
+			//cari dokumen ic pemohon
+			//logic_C.setDataSemakanICPemohon(idPermohonan,idPemohon);
 			// listSemak2.clear();
 			// FrmPrmhnnSek8SenaraiSemakOnlineData frm = new
 			// FrmPrmhnnSek8SenaraiSemakOnlineData();
@@ -527,8 +532,8 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 			headerppk_baru(session, getParam("idtemp"), "Y", "", "T");
 
 			if (list2.size() > 0) {
-				Hashtable h = (Hashtable) list2.get(0);
-				if (h.get("noFail").toString() != "") {
+				Hashtable i = (Hashtable) list2.get(0);
+				if (i.get("noFail").toString() != "") {
 					this.context.put("nofail", "yes");
 				}
 			}
@@ -542,6 +547,12 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 
 			// System.out.print("list2:" + list2);
 			this.context.put("daftar", "yes");
+			
+			Vector ll_mati = null;
+			logic.setDataSijilMati(getParam("idpermohonan"));
+			ll_mati = logic.getDataSijilMati();
+			myLogger.info("ll_mati");
+			this.context.put("listsijilmati", ll_mati);
 
 			vm = "app/ppk/frmPraPrmhnnSek8SenaraiSemak.jsp";
 
@@ -882,10 +893,10 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 			logic.setDataPemohonOB(idpp);
 			listPemohonOB = logic.getDataPemohonOB();
 			this.context.put("listPemohonOB", listPemohonOB);
-			
+			/*
 			logic_A.setSupportingDoc(idpp, "99201");
 			listSupportingDoc = logic_A.setSupportingDoc(idpp, "99201");
-			this.context.put("ViewSupportingDoc", listSupportingDoc);
+			this.context.put("ViewSupportingDoc", listSupportingDoc);*/
 			
 			vm = "app/ppk/frmPraPrmhnnSek8DaftarSek8.jsp";
 
@@ -1133,13 +1144,14 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 			String sel_jeniskp_simati = getParam("socJenisKPLainSimati");
 			String no_kplain_simati = getParam("txtNoKPLainSimati");
 
-			if (logic_F.checkKPSimati(idppp, no_kpbaru_simati,
+			/*if (logic_F.checkKPSimati(idppp, no_kpbaru_simati,
 					no_kplama_simati, no_kplain_simati) == true) {
+				myLogger.info("checkKPSimati=true");
 
-				/*
+				
 				 * view1 = logic_A.getJenisKp(); this.context.put("listkp",
 				 * view1);
-				 */
+				 
 
 				this.context.put("tarikhmohon", currentDate);
 				int evenstatus = 0;
@@ -1233,9 +1245,12 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 				this.context.put("IdPermohonan", getParam("idPermohonan"));
 
 				this.context.put("duplicate", "yes");
-
-			} else {
+*/
+			//} else {
+				myLogger.info("else");
+				bolehsimpan = "yes";
 				if (bolehsimpan.equals("yes")) {
+					myLogger.info("bolehsimpan = yes");
 					updatePermohonan(session, userIdNeg, userIdPejabat,
 							userIdKodDaerah, userIdKodNegeri, id_Daerah);
 				}
@@ -1295,7 +1310,7 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 				this.context.put("", "");
 				this.context.put("tarikhmohon", tarikhMohonm);
 
-			}
+			//}
 			String ido = getParam("idPermohonan");
 			logic_A.setDataFail(ido);
 			listFail = logic_A.getDataFail();
@@ -6635,16 +6650,19 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 			Carix = "1";
 			this.context.put("carix", Carix);
 			if (getParam("subcommand").equals("lebih")) {
+				myLogger.info("Read here1");
 				list = logic_E.getList(usid);
 				onlineLebih = getParam("subcommand");
 
 			} else {
+				myLogger.info("Read here2");
 				list = logic_E.setList(usid);
 				onlineLebih = "";
 
 			}
 			int countList = list.size();
-			this.context.put("Senaraifail", list);
+			myLogger.info("list size***** = "+list.size());
+			this.context.put("SenaraifailOnline", list);
 			this.context.put("CountList", countList);
 			this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri"));
 			setupPage(session,action,list);
@@ -8812,5 +8830,47 @@ public class FrmPrmhnnSek8Online extends VTemplate {
 		this.context.put("flag_jenis_vm", "vtemplate");
 		this.context.put("kenegaraan", "");
 	}
+	
+public void setupPage(HttpSession session,String action,Vector list) {
+	
+		try {
+		
+			this.context.put("totalRecords",list.size());
+			int page = getParam("page") == "" ? 1:getParamAsInteger("page");
+			
+			int itemsPerPage;
+			if (this.context.get("itemsPerPage") == null || this.context.get("itemsPerPage") == "") {
+				itemsPerPage = getParam("itemsPerPage") == "" ? 10:getParamAsInteger("itemsPerPage");
+			} else {
+				itemsPerPage = (Integer)this.context.get("itemsPerPage");
+			}
+		    
+		    if ("getNext".equals(action)) {
+		    	page++;
+		    } else if ("getPrevious".equals(action)) {
+		    	page--;
+		    } else if ("getPage".equals(action)) {
+		    	page = getParamAsInteger("value");
+		    } else if ("doChangeItemPerPage".equals(action)) {
+		       itemsPerPage = getParamAsInteger("itemsPerPage");
+		    }
+		    
+		    Paging paging = new Paging(session,list,itemsPerPage);
+			
+			if (page > paging.getTotalPages()) page = 1; //reset page number
+				this.context.put("SenaraifailOnline",paging.getPage(page));
+			    this.context.put("page", new Integer(page));
+			    this.context.put("itemsPerPage", new Integer(itemsPerPage));
+			    this.context.put("totalPages", new Integer(paging.getTotalPages()));
+			    this.context.put("startNumber", new Integer(paging.getTopNumber()));
+			    this.context.put("isFirstPage",new Boolean(paging.isFirstPage()));
+			    this.context.put("isLastPage", new Boolean(paging.isLastPage()));
+			   
+	        
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.context.put("error",e.getMessage());
+		}	
+	}	
 
 }

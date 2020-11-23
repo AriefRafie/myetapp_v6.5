@@ -406,7 +406,7 @@ SELECT * FROM TBLRUJSTATUS WHERE ID_STATUS IN ('47','70','169','50','21','999')
           <td  valign="top" >
           <font style="text-transform:uppercase;" color="blue">$!headerppk.NAMA_PEMOHON</font>
            <br />
-           #if (($hurufH != "H") && ($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N") && ($!headerppk.ID_STATUS != "152")&& ($!headerppk.ID_STATUS != "21")&& ($!headerppk.ID_STATUS != "175")&& ($!headerppk.ID_STATUS != "177"))
+           #if (($hurufH != "H") && ($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N") && ($!headerppk.ID_STATUS != "152")&& ($!headerppk.ID_STATUS != "21")&& ($!headerppk.ID_STATUS != "175")&& ($!headerppk.ID_STATUS != "177") && ($!headerppk.SEKSYEN != "17"))
           	
           
            Penggantian pemohon boleh dibuat  
@@ -1256,7 +1256,7 @@ function arkibWindow(noFail){
 <script>
 function viewLogTugasanFail()
 {
-	var url = "../x/ekptg.view.ppk.FrmPopupLogTugasanView?idFail=$idFail"; //&command=LogTugasanView";
+	var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupLogTugasanView?idFail=$idFail"; //&command=LogTugasanView";
 	var hWnd = window.open(url,'Cetak','width=625,height=500, resizable=yes,scrollbars=no');
 	if ((document.window != null) && (!hWnd.opener))
 	       hWnd.opener = document.window;

@@ -392,7 +392,7 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
   <tr class="table_header">
     <td width="5%">Bil</td>
     <td width="30%">Nama Dokumen</td>
-    <td width="30%">Keterangan</td>
+    <td width="30%">Keteranganx</td>
     <td width="30%">Dokumen Sokongan (Papar)</td>
      #if($listDokumen_size > 0)
       <td width="5%">

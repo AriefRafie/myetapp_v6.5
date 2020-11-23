@@ -177,7 +177,8 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 				                            	<td align="center" ><b><font color="white">NO. SUBJAKET</font></b></td> 
 				                            #end 
 				                            <td align="center"><b><font color="white">TARIKH SIASATAN</font></b></td>
-					                  		<td align="center"><b><font color="white">MASA SIASATAN</font></b></td>    
+					                  		<td align="center"><b><font color="white">MASA SIASATAN</font></b></td> 
+					                  			<td align="center"><b><font color="white">CATATAN</font></b></td>    
 				           		 		</tr>
 						
 							         	#if($SenaraiRingkasan.size()>0)
@@ -205,6 +206,7 @@ id_permohonan : <input type="text" id="id_permohonan" name="id_permohonan" value
 														#if($!listR.jenis_waktu== '2') TENGAH HARI  #end
 														#if($!listR.jenis_waktu== '3') PETANG  #end
 													</td>
+														<td class="$row">$!listR.catatan</td>
 												</tr>
 								           	#end
 										#else

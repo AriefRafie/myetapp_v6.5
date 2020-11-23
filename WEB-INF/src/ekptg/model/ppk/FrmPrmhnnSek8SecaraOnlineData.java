@@ -2936,7 +2936,7 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			String id_fail = (String) data.get("id_fail");
 			String no_fail = (String) data.get("no_fail");
 			String no_kp_baru = (String) data.get("no_kp_baru");
-			String tarikh_hantar = (String) data.get("tarikh_hantar");
+			// String tarikh_hantar = (String) data.get("tarikh_hantar");
 			String id_perbicaraan = (String) data.get("id_perbicaraan");
 			
 			db = new Db();
@@ -3004,7 +3004,11 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 		Db db2 = null;
 		Db db3 = null;
 		
+		Connection conn = null;
+		
 		String sql = "";
+		String sql2 = "";
+		String sql3 = "";
 		try {
 			String id_permohonan = (String) data.get("id_permohonan");
 			String no_fail = (String) data.get("no_fail");
@@ -3014,15 +3018,19 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			String sebab_tukar = (String) data.get("sebab_tukar");
 			String id_permohonansimati = (String) data.get("id_permohonansimati");
 			String tarikhmati_pemohon = (String) data.get("tarikhmati_pemohon");
-			String tarikh_hantar = (String) data.get("tarikh_hantar");
+			String tarikh_mati = "to_date('" + tarikhmati_pemohon + "','dd/MM/yyyy')";
+			// String tarikh_hantar = (String) data.get("tarikh_hantar");
 			String id_masuk = (String) data.get("id_masuk");
 			
 			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
+			SQLRenderer r2 = new SQLRenderer();
+			SQLRenderer r3 = new SQLRenderer();
 			
-			//r.add("ID_PERMOHONAN", id_permohonan);
-			//r.add("NO_FAIL", no_fail);
+			//TBLPPKTUKARPEMOHON
 			r.add("ID_SIMATI", id_simati);
 			r.add("ID_PEMOHONLAMA", id_pemohonlama);
 			r.add("ID_PEMOHONBARU", id_pemohonbaru);
@@ -3032,43 +3040,65 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 			r.add("TARIKH_MASUK", r.unquote("sysdate"));
 			r.add("ID_MASUK", id_masuk);
 			
-			
-			myLogger.info("Step 3 SYAFIQAH");
 			sql = r.getSQLInsert("TBLPPKTUKARPEMOHON");
-			System.out.println("TBLPPKTUKARPEMOHONLINE-->>"+sql);
+			myLogger.info("Step 3 TBLPPKTUKARPEMOHON : "+sql);
 			stmt.executeUpdate(sql);
+
+			//TBLPPKOB
+			r2.update("ID_PEMOHON",id_pemohonlama);
+			r2.update("ID_SIMATI",id_simati);
+			r2.add("TARIKH_MATI", r2.unquote(tarikh_mati));
 			
-				
-			String sql2 = "";
-			sql2 ="UPDATE TBLPPKOB SET TARIKH_MATI = '"+ tarikhmati_pemohon +"'"
-					+ "WHERE ID_PEMOHON = '"+ id_pemohonlama +"' AND ID_SIMATI = '"+id_simati+"'";
+			sql2 = r2.getSQLUpdate("TBLPPKOB");
+			myLogger.info("Step 4 TBLPPKOB : "+ sql2);
+			stmt.executeUpdate(sql2);
 			
-			try {
-				db2 = new Db();
-				Statement stmt2  = db.getStatement();
-				ResultSet rs2 = stmt2.executeQuery(sql2);
-				myLogger.info("Step 4 syafiqah:" + sql2);
-				
-			} finally {
-				if (db2 != null)
-					db2.close();
-			}
+//			sql2 ="UPDATE TBLPPKOB SET TARIKH_MATI = '"+ tarikhmati_pemohon +"'"
+//					+ "WHERE ID_PEMOHON = '"+ id_pemohonlama +"' AND ID_SIMATI = '"+id_simati+"'";
+//			myLogger.info("Step 4 syafiqah:" + sql2);
 			
-			String sql3 = "";
-			sql3 ="UPDATE TBLPPKOBPERMOHONAN SET TARIKH_MATI = '"+ tarikhmati_pemohon +"'"
-					+ "WHERE ID_PEMOHON = '"+ id_pemohonlama +"' AND ID_SIMATI = '"+id_simati+"'";
+//			try {
+//				db2 = new Db();
+//				Statement stmt2  = db.getStatement();
+//				ResultSet rs2 = stmt2.executeQuery(sql2);
+//				
+//			} finally {
+//				if (db2 != null)
+//					db2.close();
+//			}
 			
-			try {
-				db2 = new Db();
-				Statement stmt3  = db.getStatement();
-				ResultSet rs3 = stmt3.executeQuery(sql3);
-				myLogger.info("Step 5 syafiqah:" + sql3);
-				
-			} finally {
-				if (db3 != null)
-					db3.close();
-			}
+			//TBLPPKOBPERMOHONAN
+			r3.update("ID_PEMOHON",id_pemohonlama);
+			r3.update("ID_SIMATI",id_simati);
+			r3.add("TARIKH_MATI", r3.unquote(tarikh_mati));
 			
+			sql3 = r3.getSQLUpdate("TBLPPKOBPERMOHONAN");
+			myLogger.info("Step 5 TBLPPKOBPERMOHONAN : "+ sql3);
+			stmt.executeUpdate(sql3);
+			
+			conn.commit();
+			
+//			sql3 ="UPDATE TBLPPKOBPERMOHONAN SET TARIKH_MATI = '"+ tarikhmati_pemohon +"'"
+//					+ "WHERE ID_PEMOHON = '"+ id_pemohonlama +"' AND ID_SIMATI = '"+id_simati+"'";
+//			myLogger.info("Step 5 syafiqah:" + sql3);
+			
+//			try {
+//				db2 = new Db();
+//				Statement stmt3  = db.getStatement();
+//				ResultSet rs3 = stmt3.executeQuery(sql3);
+//				
+//			} finally {
+//				if (db3 != null)
+//					db3.close();
+//			}
+//			
+		} catch (SQLException ex) { 
+		   	try {
+		   		conn.rollback();
+		   	} catch (SQLException e) {
+		   		throw new Exception("Rollback error : " + e.getMessage());
+		   	}
+		   	throw new Exception("Ralat : Masalah penyimpanan data " + ex.getMessage());
 			
 		} finally {
 			if (db != null)
@@ -4534,11 +4564,13 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 					+ "NO_PERMOHONAN_ONLINE = '"+ no_fail_online+"'"
 					+ ", TARIKH_MOHON_ONLINE = sysdate, id_status = 171, id_negerimhn = "
 					+ idnegeri + ",id_daerahmhn = " + iddaerah
-					+ ",ID_MASUK = '" + userid
+					+ ", FLAG_PERMOHONANDIKEMBALIKAN = ''"
+					+ ", ID_MASUK = '" + userid
 					+ "', TARIKH_MASUK = sysdate,  ID_KEMASKINI = '" + userid
 					+ "', TARIKH_KEMASKINI = sysdate where id_permohonan = '"
 					+ idpermohonan + "'";
 			// System.out.println("sql-->>"+sql);
+			myLogger.info("UPDATE FLAG KEMBALI 13112020 : "+sql);
 			stmtT.executeUpdate(sql);
 			
 			// auto generate no fail
@@ -5372,6 +5404,160 @@ public class FrmPrmhnnSek8SecaraOnlineData {
 		
 	}
 	
+	
+	// syafiqah add 14/10/2020
+	
+	// QUERY BIL DOKUMEN HTA
+	public static Vector getDokumenHTA(String id) throws Exception {
+		Db db = null;
+		String sql = "";
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			sql = "SELECT D.ID_DOKUMEN FROM TBLPPKHTA H, TBLPPKDOKUMENHTA D WHERE H.ID_HTA = D.ID_HTA AND H.ID_PERMOHONANSIMATI = "+id;
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector v = new Vector();
+			while (rs.next()) {
+				Hashtable h = new Hashtable();
+				//h.put("ID_DOKUMEN", rs.getString("ID_DOKUMEN") == null ? "" : rs
+						//.getString("ID_DOKUMEN"));
+				
+				v.addElement(h);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	// QUERY BIL HARTA TAK ALIH
+	public static Vector getBilanganHTA(String id) throws Exception {
+		Db db = null;
+		String sql = "";
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			sql = "SELECT H.ID_HTA FROM TBLPPKHTA H WHERE H.ID_PERMOHONANSIMATI = "+id;
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector v = new Vector();
+			while (rs.next()) {
+				Hashtable h = new Hashtable();
+				//h.put("ID_DOKUMEN", rs.getString("ID_DOKUMEN") == null ? "" : rs
+						//.getString("ID_DOKUMEN"));
+				
+				v.addElement(h);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	// QUERY BIL DOKUMEN HA
+	public static Vector getDokumenHA(String id) throws Exception {
+		Db db = null;
+		String sql = "";
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			sql = "SELECT D.ID_DOKUMEN FROM TBLPPKHA H, TBLPPKDOKUMENHA D WHERE H.ID_HA = D.ID_HA AND H.ID_PERMOHONANSIMATI = "+id;
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector v = new Vector();
+			while (rs.next()) {
+				Hashtable h = new Hashtable();
+				//h.put("ID_DOKUMEN", rs.getString("ID_DOKUMEN") == null ? "" : rs
+						//.getString("ID_DOKUMEN"));
+				
+				v.addElement(h);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	// QUERY BIL HARTA ALIH
+	public static Vector getBilanganHA(String id) throws Exception {
+		Db db = null;
+		String sql = "";
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			sql = "SELECT H.ID_HA FROM TBLPPKHA H WHERE H.ID_PERMOHONANSIMATI = "+id;
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector v = new Vector();
+			while (rs.next()) {
+				Hashtable h = new Hashtable();
+				//h.put("ID_DOKUMEN", rs.getString("ID_DOKUMEN") == null ? "" : rs
+						//.getString("ID_DOKUMEN"));
+				
+				v.addElement(h);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	// QUERY BIL DOKUMEN IC WARIS
+	public static Vector getDokumenIC(String id) throws Exception {
+		Db db = null;
+		String sql = "";
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			sql = "SELECT D.ID_DOKUMEN FROM TBLPPKOB O, TBLPPKDOKUMENSIMATI D WHERE D.ID_JENISDOKUMEN = '99212' AND O.ID_OB = D.NO_RUJUKAN AND O.ID_PERMOHONANSIMATI = "+id;
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector v = new Vector();
+			while (rs.next()) {
+				Hashtable h = new Hashtable();
+				//h.put("ID_DOKUMEN", rs.getString("ID_DOKUMEN") == null ? "" : rs
+						//.getString("ID_DOKUMEN"));
+				
+				v.addElement(h);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	// QUERY BIL WARIS
+	public static Vector getBilanganWaris(String id) throws Exception {
+		Db db = null;
+		String sql = "";
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			sql = "SELECT O.ID_OB FROM TBLPPKOB O WHERE O.ID_PERMOHONANSIMATI = "+id;
+			ResultSet rs = stmt.executeQuery(sql);
+			Vector v = new Vector();
+			while (rs.next()) {
+				Hashtable h = new Hashtable();
+				//h.put("ID_DOKUMEN", rs.getString("ID_DOKUMEN") == null ? "" : rs
+						//.getString("ID_DOKUMEN"));
+				
+				v.addElement(h);
+			}
+			return v;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	// syafiqah add ends
 	
 }
 //20200824 20:36

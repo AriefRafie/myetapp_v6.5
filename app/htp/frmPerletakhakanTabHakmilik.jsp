@@ -19,7 +19,9 @@
 <fieldset>
 <legend>SENARAI HAKMILIK</legend>
 #if ($mode == "")
-<input name="cmdTambahHakmilik" type="button" value="Tambah" onclick="tambahHakmilik()"/>
+	<input type="button" name="cmdsemakanhakmilik" value="Capaian Hakmilik e-Tanah(Melaka)" onclick="javascript:semakanHakmilikeTanah('htp','$!idPermohonan')"/>
+	<input name="cmdTambahHakmilik" type="button" value="Tambah" onclick="tambahHakmilik()"/>
+
 #end
 
 <table width="100%" border="0">
@@ -371,4 +373,15 @@ function pemilik(){
 	document.${formName}.mode.value ="";
 	document.${formName}.submit();
 }
+
+	//Skrin Maklumat Tanah
+	function semakanHakmilikeTanah(modul,idPermohonan) {
+		var url = "../x/${securityToken}/FrmPopupCapaianHakmilikeTanah?modul="+modul+"&idPermohonan="+idPermohonan;
+	    var hWnd = window.open(url,'printuser','width=1000,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
+	
+	}
 </script>

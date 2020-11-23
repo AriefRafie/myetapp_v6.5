@@ -301,11 +301,6 @@
 	#end 
 
 			<fieldset><legend>MAKLUMAT HARTA ALIH</legend>
-			#if($!skrin_online == "yes")
-			<div id="info_skrin_daftar_sek8"></div>
-      <script>
- 						parent.document.getElementById("info_skrin_daftar_sek8").innerHTML="<div class=\"warning_online_ppk\"><b><blink>*</blink>Wang tunai,saham, simpanan bank, KWSP, insurans, kenderaan, senjata api, barang kemas dan barang-barang berharga.</b></div>";
- 			</script> #end
       		<table width="100%" border="0">
         		<tr>
           			<td>
@@ -1711,6 +1706,11 @@
 	#end
 
 	<fieldset><legend>SENARAI HARTA ALIH</legend>
+	#if($!skrin_online == "yes")
+			<div id="info_skrin_daftar_sek8"></div>
+     		<script>
+ 						parent.document.getElementById("info_skrin_daftar_sek8").innerHTML="<div class=\"warning_online_ppk\"><font color=\"black\"><b>* Wang tunai, saham, simpanan bank, KWSP, insurans, kenderaan, senjata api, barang kemas dan barang-barang berharga.</b></font></div>";
+ 			</script> #end
 <!-- <table width="100%" bordercolor="#333333"> -->
 	<table width="100%" >
 		<tr>
@@ -1885,7 +1885,7 @@
 				                          					&& $id_Status != "164" 
 				                          					&& $id_Status != "165")	
 				                          					#if($open_button_online == "yes")  
-										                   		<a href = "javascript:lampiranHartaHA('$list.idha','$!paramOnline');">
+										                   		<a href = "javascript:lampiranHartaHA('$list.idha','$!paramOnline','$!id');">
 																	<img border="0" src="../img/plus.gif" width="20" height="15"/>
 																</a><br>
 															#end
@@ -1906,7 +1906,7 @@
 				                          					&& $id_Status != "164" 
 				                          					&& $id_Status != "165")	  
 				                          					#if($open_button_online == "yes")   
-										                   		<a href = "javascript:lampiranHartaHA('$list.idha','$!paramOnline');">
+										                   		<a href = "javascript:lampiranHartaHA('$list.idha','$!paramOnline','$!id');">
 																	<img border="0" src="../img/plus.gif" width="20" height="15"/>
 																</a><br>
 															#end
@@ -2988,8 +2988,10 @@ document.f1.txtNilaiTarikhMati.value=document.f1.txtNilaiTarikhMohon.value
                  
 }
 
-	function lampiranHartaHA(idHarta) {
-		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=paparHA&actionPopup=paparHA&idHarta="+idHarta+"&flagOnline=$!flagOnline";
+	function lampiranHartaHA(idHarta,paramOnline, idPermohonan) {
+		// alert(idPermohonan);
+		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=paparHA&actionPopup=paparHA&idHarta="+idHarta+"&flagOnline=$!flagOnline&idPermohonan="+idPermohonan;
+		url +="&jenisdokumen=1107";
 	    //
 	    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))

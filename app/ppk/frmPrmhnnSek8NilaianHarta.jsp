@@ -118,6 +118,9 @@
     	#set ($strErrorMaklumatPemohon = $strErrorMaklumatPemohon + "Maklumat Emel Pemohon tidak diisi. ")
     #end
     
+   <input type="hidden" name="txtbilhta" id="txtbilhta" value="$bil_hta"></input>
+   <input type="hidden" name="txtbilha" id="txtbilha" value="$bil_ha"></input>
+   <input type="hidden" name="txtbilic" id="txtbilic" value="$bil_ic"></input>
     
     #foreach($list in $View)
     #set ($id = $list.idPermohonan)
@@ -959,9 +962,11 @@ kod :: $listhath.kod_hakmilik
                                             #end
                                         #end    
                                       <!-- Kena check sama ada Maklumat Simati dan Pemohon lengkap diisi -->
-                                      	#if ($strErrorMaklumatSimati == "" && $strErrorMaklumatPemohon == "")
+                                      	#if (($strErrorMaklumatSimati == "") && ($strErrorMaklumatPemohon == "") && ($pilihpegawai != "") && ($flag_pengesahanPegawai == "") && ($USER_ROLE != "user_ppk") && (($daftarHTA == "1") || ($daftarHA == "1") ))
                  							<input type="button" name="button" id="button" value="Seterusnya" onClick="hantar_terus('$listseksyen','$id','$permohonan_mati','$listtarikhMohon','$listidSimati')" />
-                 						#else
+                 						#end
+                 						
+                 						#if (($strErrorMaklumatSimati != "") && ($strErrorMaklumatPemohon != ""))
                  						<p align="center"><font color="red">Tidak dapat meneruskan ke proses seterusnya kerana terdapat maklumat berkenaan Simati/Pemohon yang tidak lengkap diisi: $strErrorMaklumatSimati $strErrorMaklumatPemohon</font> </p>
                  						
                  						#end	
@@ -1002,7 +1007,7 @@ kod :: $listhath.kod_hakmilik
                       <td   valign="top">:</td>
                       <td  valign="top">
                      
-                      #if(($buttonSimpanDisable=="disabled") || ($pilihpegawai != ""))
+                      #if(($buttonSimpanDisable=="disabled") && ($pilihpegawai != ""))
                     	#set($disability1 = "disabled")
                       #end
                         <select  class="autoselect" name="pilihpegawai" id="pilihpegawai" $disability1>
@@ -1046,7 +1051,8 @@ kod :: $listhath.kod_hakmilik
                      -->
                     <tr>
                     	<td valign="top" colspan=3> &nbsp;</td>
-                    	#if(($buttonSimpanDisable=="disabled") || ($pilihpegawai != ""))
+                    	
+                    	#if(($buttonSimpanDisable=="disabled") && ($pilihpegawai != ""))
                     	<td ><input disabled name="cmdSimpanPeg" id="cmdSimpanPeg" value="Simpan" type="button" onClick="javascript:cmdSimpan_Pegawai()"></td>
                     	#else
                     	<td ><input name="cmdSimpanPeg" id="cmdSimpanPeg" value="Simpan" type="button" onClick="javascript:simpanPengesahan()"></td>
@@ -1244,7 +1250,7 @@ kod :: $listhath.kod_hakmilik
 	<tr class="row2">
 		<td width="3%"></td>
 		<td width="92%">Keterangan</td>
-		<td width="5%">#</td>
+		<td width="5%">Dokumen</td>
 	</tr>  
           		#set ( $checked = "" )
             	#foreach ( $semak in $senaraiSemakan )
@@ -1269,6 +1275,8 @@ kod :: $listhath.kod_hakmilik
 				    #else
 				        <input class="cb" type="checkbox" name="cbsemaks" value="$semak.id" $checked disabled/>
 				    #end
+				    
+<!-- 				    $semak.id -->
 				    
 	</td>
 	<td width="92%">$i. $semak.keterangan</td>
@@ -1554,7 +1562,7 @@ kod :: $listhath.kod_hakmilik
 	<td>:</td>
 	<td>#if($!skrin_deraf == "yes" || $!skrin_kembali == "yes")
 			#if ($idStatus == "150")
-			<input type="button" name="boranga" id="boranga" size="40" value="Muatnaik Borang A" size="40" onClick="lampiran('$!idSimati','dokumenA')"/>
+			<input type="button" name="boranga" id="boranga" size="40" value="Muatnaik Borang A" size="40" onClick="lampiran('$!idSimati','dokumenA','$!id')"/>
 			#end
 		#end
 		<br>
@@ -2059,42 +2067,41 @@ function hantar_terus(seksyen,idPermohonan,idPermohonanSimati,tarikhMohon,idSima
 }
 
 function getUnitPPK(idpermohonan,nopermohonanonline) {
-
-    if (document.f1.socNegeriPengesahan.value=="0")
-		{
-			alert("Sila pilih Negeri");
-			socNegeriPengesahan.focus();
-		}
-		else if (document.f1.socDaerahPengesahan.value=="0")
-		{
-			alert("Sila pilih Daerah");
-			socDaerahPengesahan.focus();
-		}
-// 		else if (document.f1.boranga.value=="")
-// 		{
-// 			alert("Sila cetak dan muatnaik semula Borang A untuk meneruskan permohonan");
-// 			boranga.focus();
-// 		}
-		 else if(document.f1.namaDoc1.value == "0"){
-	    	alert('Sila muatnaik Borang A untuk meneruskan permohonan.');
-	     	document.f1.uploadmyid.focus(); 
-	    }
-		else if(namecb1.checked == false)
- 		{
+	if (document.f1.socNegeriPengesahan.value=="0"){
+		alert("Sila pilih Negeri");
+		socNegeriPengesahan.focus();
+	}
+	else if (document.f1.socDaerahPengesahan.value=="0"){
+		alert("Sila pilih Daerah");
+		socDaerahPengesahan.focus();
+	}
+	else if (document.f1.txtbilhta.value=="0"){
+		alert("Sila muatnaik dokumen bagi setiap Harta Tak Alih.");
+	}
+	else if (document.f1.txtbilha.value=="0"){
+		alert("Sila muatnaik dokumen bagi setiap Harta Alih.");
+	}
+	else if (document.f1.txtbilic.value=="0"){
+		alert("Sila muatnaik dokumen bagi setiap waris.");
+	}
+	else if(document.f1.namaDoc1.value == "0"){
+	    alert('Sila muatnaik Borang A untuk meneruskan permohonan.');
+	    document.f1.uploadmyid.focus(); 
+	}
+	else if(namecb1.checked == false){
     	alert('Sila tanda pada checkbox untuk teruskan permohonan.');
     	return;
- 		}
-		else
+ 	}
+	else{
+		input_box=confirm("Adakah anda pasti?");
+		if (input_box == true) 
 		{
-			input_box=confirm("Adakah anda pasti?");
-			if (input_box == true) 
-			{
-				document.f1.method="post";
-				document.f1.command.value="nilai_harta";
-				document.f1.mode.value="cetak_surat";
-				//doAjaxCall${formName}("cetak_surat");
-	    	document.f1.submit();
-			}
+			document.f1.method="post";
+			document.f1.command.value="nilai_harta";
+			document.f1.mode.value="cetak_surat";
+			//doAjaxCall${formName}("cetak_surat");
+    	document.f1.submit();
+		}
 	}
 }
 
@@ -2429,10 +2436,10 @@ document.f1.txtHaNilaiTarikhMati.value = document.f1.txtHaNilaiTarikhMohon.value
 
 }
 
-function lampiran(idSimati,jenisUpload) {	
+function lampiran(idSimati,jenisUpload, idPermohonan) {	
 	// console.log("syafiqah :"+idPermohonan);
 	jenisUpload = "paparboranga";
-	var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=dokumenA&actionPopup="+jenisUpload+"&rujukan="+idSimati+"&flagOnline=$!flagOnline";
+	var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumen?actionrefresh=dokumenA&actionPopup="+jenisUpload+"&rujukan="+idSimati+"&flagOnline=$!flagOnline&idPermohonan="+idPermohonan;
     url +="&jenisdokumen=99211";
 		
 	//

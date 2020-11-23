@@ -2,8 +2,22 @@
 #set ( $idFail = $data.get("id_fail") )
 #set($perhatian="<i><font color=red >Perhatian</font><font >: Sila pastikan label bertanda</font>&nbsp;<font color=red >*</font>&nbsp;<font >diisi.</font></i>")
 
+#set ($namaMahkamahTinggi = "")
+#foreach ($namaMahkamah in $dataListMahkamah )
+	#set($namaMahkamahTinggi = $namaMahkamah.NAMA_PEJABAT)
+#end
+
+#if($namaMahkamahTinggi != '')
+	#set($namaMahkamah = $namaMahkamahTinggi)
+	
+#end
+
 #foreach ($Listflag5juta in $flag5juta)
 	#set($check5juta = $Listflag5juta.flag_5juta )
+#end
+
+#foreach ($ListaksesSkrinKepBicara in $aksesSkrinKepBicara)
+	#set($checkaksesSkrinKepBicara = $ListaksesSkrinKepBicara.AKSES_SKRIN_KEPBICARA )
 #end
 
 #if($size_M!=0)
@@ -628,7 +642,7 @@ document.getElementById("header_lama").style.display="block";
         <tr>
       <td colspan="3" width="100%" ><div align="center">
       
-      #if ($userRole != "user_ppk")
+      #if (($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N") && ($!DoNotSave != "1") && ($userRole != "user_ppk"))
           <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript:Simpan_Selesai('$idpermohonan','$id_perbicaraan');" />
       #end
           <input name="cmdKembali" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
@@ -734,7 +748,7 @@ document.getElementById("header_lama").style.display="block";
     </tr>
         <tr>
       <td colspan="2" width="100%" ><div align="center">
-       #if($userRole != "user_ppk")
+        #if($!DoNotSave != "1" && $userRole != "user_ppk")
           <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript:Simpan_Tangguh('$idpermohonan','$id_perbicaraan');" />
        #end
           <input name="cmdKembali" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');"/>
@@ -979,28 +993,27 @@ document.getElementById("header_lama").style.display="block";
     <legend>Dokumen Sokongan</legend>
     <table width="60%" border="0">
     <tr>
-     <td width="25%" align ="right" scope="col">Dokumen Sokongan</td>
+     <td width="25%" align ="right" scope="col">Dokumen Sokongan </td>
         <td width="1%" scope="col">:</td>
         <td width="74%" colspan="2" scope="col">
          <input type="text" disabled value=$!namaDoC>&nbsp;
-         #if ($namaDoC != '')
-         <input type="button" name="cmdUpload" disabled id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
-         #else
-         <input type="button" name="cmdUpload" id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
+         #if ($namaDoC != '' && $mode == "view")
+         	<input type="button" name="cmdUpload" disabled id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
+         #end
+         #if ($namaDoC != '' && $mode != "view")
+         	<input type="button" name="cmdUpload" id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
          #end
          #if ($namaDoC != '')
-         <input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;
+         	<input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;
          #end
          
-         <!-- <input name="cetak" disabled type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;  -->
-         
-        
-   		 
-   		 #if ($namaDoC != '')
-   		 <input name="deleteSuppDoc1" type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
+         #if ($namaDoC != '' && $mode == "view")
+   		 	<input name="deleteSuppDoc1"  disabled type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
    		 #end
    		 
-   		 <!-- <input name="deleteSuppDoc1" disabled type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />  -->
+   		 #if ($namaDoC != '' && $mode != "view")
+   		 	<input name="deleteSuppDoc1"   type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
+   		 #end
    		 
    		 
        
@@ -1022,14 +1035,15 @@ document.getElementById("header_lama").style.display="block";
     
     <tr>
       <td colspan="2" width="100%" ><div align="center">
-      #if($userRole != "user_ppk")
+      
+      #if($!DoNotSave != "1" && $userRole != "user_ppk")
           <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript:Simpan_Batal('$idpermohonan','$id_perbicaraan');" />
       #end
       	  <input type="button" name="cmdKembali"  value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
         </div></td>
     </tr>
   </table>
-    </fieldset>
+    </fieldset> 
     
  
 
@@ -1579,7 +1593,7 @@ document.getElementById("header_lama").style.display="block";
           #if($idstatus == "41" || $idstatus == "25" )
             
             
-            #if ($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N" && $userRole != "user_ppk")
+            #if ($!headerppk.CAPAIAN_FAIL_UNIT_LUAR == "N" && $userRole != "user_ppk") 
             <input type="button" name="Kemaskini" id="Kemaskini" value="Kemaskini" onclick="javascript:Skrin_Kemaskini('$idpermohonan','$id_perbicaraan','$id_bayaran_perintah');" />
           	#end
           
@@ -1788,7 +1802,7 @@ document.getElementById("header_lama").style.display="block";
     <tr align="center">
       <td >&nbsp;</td>
       <td align="left"><input name="flag_batal" id="flag_batal" $ type="radio" value="1" $TEMPcheckedMahkamahTinggiWasiat  disabled>
-        Pindah ke Mahkamah Tinggi kerana ada wasiat  #if($batalWasiat == '1')($namaMahkamah)#end </td>
+        Pindah ke Mahkamah Tinggi kerana ada wasiat #if($batalWasiat == '1' || $TEMPcheckedMahkamahTinggiWasiat == 'checked' )($namaMahkamah)#end </td>
     
     					
     <tr align="center">
@@ -1804,7 +1818,7 @@ document.getElementById("header_lama").style.display="block";
     <tr align="center">
       <td >&nbsp;</td>
       <td align="left"><input name="flag_batal" id="flag_batal" type="radio"  value="4" $TEMPcheckedMahkamahTinggi2Juta disabled>
-        Pindah ke Mahkamah Tinggi kerana harta melebihi #if($check5juta=='T')RM5 juta #else RM2 juta #end #if($batal2juta == '1')($namaMahkamah)#end</td>
+        Pindah ke Mahkamah Tinggi kerana harta melebihi #if($check5juta=='T')RM5 juta #else RM2 juta #end #if($batal2juta == '1' || $TEMPcheckedMahkamahTinggi2Juta == 'checked' )($namaMahkamah)#end</td>
     </tr>
     <tr align="center">
       <td >&nbsp;</td>
@@ -1893,24 +1907,25 @@ document.getElementById("header_lama").style.display="block";
         <td width="1%" scope="col">:</td>
         <td width="74%" colspan="2" scope="col">
          <input type="text" disabled value=$!namaDoC>&nbsp;
-         #if ($namaDoC != '')
-         <input type="button" name="cmdUpload" disabled id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
-         #else
-         <input type="button" name="cmdUpload" id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
+         #if ($namaDoC != '' && $mode == "view")
+         	<input type="button" name="cmdUpload" disabled id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
+         #end
+         #if ($namaDoC != '' && $mode != "view")
+         	<input type="button" name="cmdUpload" id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
          #end
          #if ($namaDoC != '')
-         <input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;
+         	<input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;
          #end
          
-         <!-- <input name="cetak" disabled type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;  -->
-         
-        
-   		 
-   		 #if ($namaDoC != '')
-   		 <input name="deleteSuppDoc1" type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
+         #if ($namaDoC != '' && $mode == "view")
+   		 	<input name="deleteSuppDoc1"  disabled type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
    		 #end
    		 
-   		 <!-- <input name="deleteSuppDoc1" disabled type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />  -->
+   		 #if ($namaDoC != '' && $mode != "view")
+   		 	<input name="deleteSuppDoc1"   type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
+   		 #end
+   		 
+   		 
    		 
    		 
        
@@ -1921,11 +1936,12 @@ document.getElementById("header_lama").style.display="block";
     </table>
     
     </fieldset>  
-    
+    <br>
+
      #if($namaMahkamah != '') 
     <table width="100%" border="0">
     <tr>
-      <td colspan="2" width="100%" ><div align="center"> #if ( $flagFromSenaraiFailSek8 == '' && $flagFromSenaraiPermohonanSek8 == '' && $flagForView == '' )
+      <td colspan="2" width="100%" ><div align="center"> #if ( $flagFromSenaraiFailSek8 == '' || $flagFromSenaraiPermohonanSek8 == '' || $flagForView == '' )
           <input type="button" name="Kemaskini" id="Kemaskini" value="Kemaskini" onclick="javascript:Skrin_KemaskiniBatal('$idpermohonan','$id_perbicaraan');" />
            #if($flag_kemaskini_selesai != "yes")
 			<script>
@@ -2231,17 +2247,17 @@ document.getElementById("header_lama").style.display="block";
         	<td width="79%">
         	#if($!check_pengecualian == "1")
         		#set($check_pengecualian_mode = "checked")
-				<input type="radio" name="check_pengecualian" id="check_pengecualian" value="1" onclick="putValue(this.value)"checked/>Sebahagian
-				<input type="radio" name="check_pengecualian" id="check_pengecualian" value="2" onclick="putValue(this.value)"/>Keseluruhan
+				<input type="radio" name="check_pengecualianEDIT" id="check_pengecualianEDIT" value="1" onclick="putValue(this.value)"checked/>Sebahagian
+				<input type="radio" name="check_pengecualianEDIT" id="check_pengecualianEDIT" value="2" onclick="putValue(this.value)"/>Keseluruhan
         	#elseif ($!check_pengecualian == "2")
         		#set($check_pengecualian_mode = "checked")
         		
-				<input type="radio" name="check_pengecualian" id="check_pengecualian" value="1" onclick="putValue(this.value)"/>Sebahagian
-				<input type="radio" name="check_pengecualian" id="check_pengecualian" value="2" onclick="putValue(this.value)"checked/>Keseluruhan
+				<input type="radio" name="check_pengecualianEDIT" id="check_pengecualianEDIT" value="1" onclick="putValue(this.value)"/>Sebahagian
+				<input type="radio" name="check_pengecualianEDIT" id="check_pengecualianEDIT" value="2" onclick="putValue(this.value)"checked/>Keseluruhan
         	#else
         		#set($check_pengecualian_mode = "")
-         		<input type="radio" name="check_pengecualian" id="check_pengecualian" value="1" onclick="putValue(this.value)"/>Sebahagian
-				<input type="radio" name="check_pengecualian" id="check_pengecualian" value="2" onclick="putValue(this.value)"/>Keseluruhan
+         		<input type="radio" name="check_pengecualianEDIT" id="check_pengecualianEDIT" value="1" onclick="putValue(this.value)"/>Sebahagian
+				<input type="radio" name="check_pengecualianEDIT" id="check_pengecualianEDIT" value="2" onclick="putValue(this.value)"/>Keseluruhan
         	#end
 			</td>
           </tr>
@@ -2251,7 +2267,7 @@ document.getElementById("header_lama").style.display="block";
         	<td width="47%" ><div align="left">Catatan Pengecualian</div></td>
         	<td width="1%"><div align="right">:</div></td>
         	<td width="79%">
-        	<textarea name="catatan_pengecualian" cols="35" rows="3" id="catatan_pengecualian"  >$!catatan_pengecualian</textarea>
+        	<textarea name="catatan_pengecualianEDIT" cols="35" rows="3" id="catatan_pengecualianEDIT"  >$!catatan_pengecualian</textarea>
         	</td>
         </tr>
         <!-- arief add textbox Pengecualian Bayaran CLOSE-->
@@ -2438,7 +2454,7 @@ document.getElementById("header_lama").style.display="block";
       </tr>
       <tr>
         <td colspan="3" width="100%" ><div align="center">
-        #if($userRole != "user_ppk")
+       #if($userRole != "user_ppk")
             <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript: kemaskini_selesai('$idpermohonan','$id_perbicaraan','$id_perintah');" />
         #end 
             <input name="cmdKembali" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
@@ -2639,7 +2655,7 @@ document.getElementById("header_lama").style.display="block";
       </tr>
       <tr>
         <td colspan="2" width="100%" ><div align="center">
-        #if($userRole != "user_ppk")
+      #if($userRole != "user_ppk")
             <input type="button" name="Simpan" id="Simpan" value="Simpan" onclick="javascript: Simpan_Edit_Batal('$idpermohonan','$id_perbicaraan');" />
         #end
             <input name="cmdKembali" type="button" value="Kembali" onclick="javascript: kembali_list('$idpermohonan','$id_perbicaraan');" />
@@ -2659,24 +2675,23 @@ document.getElementById("header_lama").style.display="block";
         <td width="1%" scope="col">:</td>
         <td width="74%" colspan="2" scope="col">
          <input type="text" disabled value=$!namaDoC>&nbsp;
-         #if ($namaDoC != '')
-         <input type="button" name="cmdUpload" disabled id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
-         #else
-         <input type="button" name="cmdUpload" id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
+         #if ($namaDoC != '' && $mode == "view")
+         	<input type="button" name="cmdUpload" disabled id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
+         #end
+         #if ($namaDoC != '' && $mode != "view")
+         	<input type="button" name="cmdUpload" id="cmdUpload" value="Muat naik Dokumen" onclick="uploadSuppDoc('$id_permohonan','$idSimati')"/>&nbsp;
          #end
          #if ($namaDoC != '')
-         <input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;
+         	<input name="cetak" type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;
          #end
          
-         <!-- <input name="cetak" disabled type="button" value="Muat turun Dokumen" onclick="doOpen($idSimati)" />&nbsp;  -->
-         
-        
-   		 
-   		 #if ($namaDoC != '')
-   		 <input name="deleteSuppDoc1" type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
+         #if ($namaDoC != '' && $mode == "view")
+   		 	<input name="deleteSuppDoc1"  disabled type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
    		 #end
    		 
-   		 <!-- <input name="deleteSuppDoc1" disabled type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />  -->
+   		 #if ($namaDoC != '' && $mode != "view")
+   		 	<input name="deleteSuppDoc1"   type="button" value="Padam Dokumen" onclick="deleteSuppDoc()" />
+   		 #end
    		 
    		 
        

@@ -174,8 +174,8 @@
 
 
     <fieldset>
-    <legend>SENARAI PERMOHONAN  #if($jenis_permohonan == '4'  || $jenis_permohonan == '3')
-    PEMBAYARAN ONLINE
+    <legend>SENARAI  #if($jenis_permohonan == '4'  || $jenis_permohonan == '3')
+    PEMBAYARAN
     #else
     PEMBATALAN
     #end</legend> 
@@ -230,22 +230,22 @@
          		#else
                		 #set( $row = "row1" )
          		#end
-         		
+   
   <tr>
     <td class="$row" align="center">
     $list.BIL          
     </td>
-    <td class="$row" ><!-- a href="javascript:papar('$list.ID_PERMOHONAN','')" -->
-    <div>$!list.NO_FAIL</div>                                    
+    <td class="$row" ><a href="javascript:papar('$list.ID_PERMOHONAN','')">
+    <div  class="style1" >$list.NO_FAIL</div>                                    
     </a>       </td>
-    <td class="$row" ><!-- a href="javascript:papar('$list.ID_PERMOHONAN','')" -->
-    <div>$!list.NO_RUJUKAN_PTG</div>                                    
+    <td class="$row" ><a href="javascript:papar('$list.ID_PERMOHONAN','')">
+    <div class="style1" >$!list.NO_RUJUKAN_PTG</div>                                    
     </a>       </td>
-    <td class="$row" ><!-- a href="javascript:papar('$list.ID_PERMOHONAN','')" -->
-    <div>$!list.NO_RUJUKAN_PTD</div>                                    
+    <td class="$row" ><a href="javascript:papar('$list.ID_PERMOHONAN','')">
+    <div class="style1" >$!list.NO_RUJUKAN_PTD</div>                                    
     </a>       </td>
-    <td class="$row" ><!-- a href="javascript:papar('$list.ID_PERMOHONAN','')" -->
-    <div>$!list.NO_RUJUKAN_UPT</div>                                    
+    <td class="$row" ><a href="javascript:papar('$list.ID_PERMOHONAN','')">
+    <div class="style1" >$!list.NO_RUJUKAN_UPT</div>                                    
     </a>       </td>
     <!--
     <td class="$row" >$list.NO_PEMBATALAN</td>

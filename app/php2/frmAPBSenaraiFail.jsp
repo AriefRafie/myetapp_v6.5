@@ -50,7 +50,7 @@
           <td><input type="text" name="txtNoLesen" id="txtNoLesen" value="$noLesen" size="30"/></td>
         </tr>
         <tr>
-          <td scope="row" align="right">Status :</td>
+          <td scope="row" align="right">Status : </td>
           <td>$selectStatus</td>
         </tr>
         <tr>
@@ -70,14 +70,14 @@
       <legend><b>SENARAI PERMOHONAN</b></legend>
       #parse("app/utils/record_paging.jsp")
       <table align="center" width="100%">
-        <tr class="table_header">
+        <tr class="table_header" align="center">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
           <td width="20%"><strong>No Fail</strong></td>
-          <td width="30%"><strong>Nama Pemohon/Syarikat</strong></td>
+          <td width="28%"><strong>Nama Pemohon/Syarikat</strong></td>
           <td width="8%" align="center"><strong>Tarikh Terima</strong></td>
           <td width="10%"><strong>Kawasan Dipohon</strong></td>
           <td width="10%"><strong>Jenis Permohonan</strong></td>
-          <td width="8%"><strong>Jenis Lesen</strong></td>
+          <td width="10%"><strong>Jenis Lesen</strong></td>
           <td width="10%"><strong>Status</strong></td>
         </tr>
         #set ($list = "")

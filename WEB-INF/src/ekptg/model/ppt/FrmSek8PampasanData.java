@@ -2019,6 +2019,7 @@ public int setListMaklumatTanahWithSiasatan_count(String idPermohonan,String lot
 					sql += " AND C.ID_BAHAGIANPB = I.ID_BAHAGIANPB(+) ";
 					sql += " AND H.ID_BORANGG = G.ID_BORANGG";
 					sql += " AND A.ID_AWARD = J.ID_AWARD ";
+					sql += " AND H.TARIKH_HANTAR IS NOT NULL ";
 					//sql += " AND J.FLAG_JENIS_AWARD = 'BAYAR_PENILAI' ";
 					sql += " AND B.ID_PIHAKBERKEPENTINGAN = '"+idpb+"'";
 					sql += " AND E.ID_SIASATAN = '"+idSiasatan+"'";
@@ -2359,7 +2360,7 @@ public int setListMaklumatTanahWithSiasatan_count(String idPermohonan,String lot
 	    		r.add("tarikh_masuk",r.unquote("sysdate"));
 	    		r.add("id_masuk",id_user);    		
 	    		sql = r.getSQLInsert("Tblpptterimabayaran");
-	    		
+	    	
 	    		stmt.executeUpdate(sql);
 	    		
 	    		
@@ -3047,6 +3048,7 @@ public int setListMaklumatTanahWithSiasatan_count(String idPermohonan,String lot
 				sql += " AND B.ID_HAKMILIK = '"+idHakmilik+"'";
 				
 				ResultSet rs = stmt.executeQuery(sql);
+				myLogger.info("sql bayaran :"+sql);
 	
 				Hashtable h;
 		
@@ -3075,7 +3077,7 @@ public int setListMaklumatTanahWithSiasatan_count(String idPermohonan,String lot
 	@SuppressWarnings("unchecked")
 	public static void simpanPenerimaanCek(Hashtable data) throws Exception
 	  {
-		
+		myLogger.info("data penerimaan check :"+data);
 	    Db db = null;
 	    String sql = "";
 	    
@@ -3100,9 +3102,11 @@ public int setListMaklumatTanahWithSiasatan_count(String idPermohonan,String lot
 	    		String txtMasaAmbil = (String)data.get("txtMasaAmbil");
 	    		String socJenisWaktu = (String)data.get("socJenisWaktu");
 	    		String txtTempatAmbil = (String)data.get("txtTempatAmbil");
+	    		String txdTarikhLewat = (String)data.get("txdTarikhLewat");
 	    		
 	    		String TAC = "to_date('" + txdTarikhAmbilCek + "','dd/MM/yyyy')";
 	    		String TC = "to_date('" + txdTarikhCek + "','dd/MM/yyyy')";
+	    		String TCL = "to_date('" + txdTarikhLewat + "','dd/MM/yyyy')";
 	    		
 	    		SQLRenderer r = new SQLRenderer();	    		
 	    		r.add("id_hakmilikpb", id_hakmilikpb);
@@ -3110,7 +3114,9 @@ public int setListMaklumatTanahWithSiasatan_count(String idPermohonan,String lot
 	    		r.add("tarikh_ambil_cek",r.unquote(TAC));	   
 	    		r.add("tarikh_cek",r.unquote(TC));	    		
 	    		r.add("bil_hari_lewat", txtBilLewat);
+	    		r.add("cara_bayar","1");
 	    		r.add("denda_lewat", txtDendaLewat);
+	    		r.add("tarikh_cajlewat",r.unquote(TCL));	
 	    		r.add("jenis_award", sorJenisAward);    
 	    		r.add("flag_serah_cek", sorFlagSerah);
 	    		r.add("penerima_cek", txtPenerimaCek);
@@ -3122,6 +3128,7 @@ public int setListMaklumatTanahWithSiasatan_count(String idPermohonan,String lot
 	    		r.add("tarikh_masuk",r.unquote("sysdate"));
 	    		r.add("id_masuk",id_user);    		
 	    		sql = r.getSQLInsert("Tblpptbayaran");
+	    		myLogger.info("SQL PPT BAYARAN :"+sql);
 	    		stmt.executeUpdate(sql);
 	    		
 	    } catch (Exception re) {
@@ -3152,7 +3159,7 @@ public int setListMaklumatTanahWithSiasatan_count(String idPermohonan,String lot
 			    		sql += " E.NAMA_PB, E.NO_PB, E.ID_JENISNOPB, D.TARIKH_CEK, D.PENERIMA_CEK, D.NAMA_WAKIL, D.NO_WAKIL, D.TARIKH_SERAH_CEK, ";
 			    		sql += " D.TARIKH_AMBIL_CEK, D.BIL_HARI_LEWAT, D.DENDA_LEWAT, D.JENIS_AWARD, D.FLAG_SERAH_CEK, D.NO_BAYARAN, D.ID_JENISNOPB AS ID_JENISNOWAKIL, ";
 			    		sql += " D.AMAUN_BAYARAN, D.MASA_AMBIL_CEK, D.JENIS_WAKTU_AMBIL_CEK, D.TEMPAT_AMBIL, F.TARIKH_AKHIR_BAYARAGENSI, ";
-			    		sql += " D.NO_RUJUKAN_SURATEFT, D.NO_EFT, D.TARIKH_TERIMA_EFT, D.TARIKH_SURAT_EFT, D.NO_BAUCER, D.PERIHAL, ";
+			    		sql += " D.NO_RUJUKAN_SURATEFT, D.NO_EFT, D.TARIKH_TERIMA_EFT, D.TARIKH_SURAT_EFT, D.NO_BAUCER, D.PERIHAL, D.TARIKH_CAJLEWAT, ";
 			    		sql += " D.AMAUN_EFT "; 
 			    		sql += " FROM TBLPPTHAKMILIK A, TBLPPTHAKMILIKPB B, TBLPPTTERIMABAYARAN C, TBLPPTBAYARAN D, TBLPPTPIHAKBERKEPENTINGAN E, ";
 			    		sql += " TBLPPTBORANGH F ";
@@ -3184,6 +3191,7 @@ public int setListMaklumatTanahWithSiasatan_count(String idPermohonan,String lot
 			    			h.put("penerima_cek", rs.getString("PENERIMA_CEK")== null?"":rs.getString("PENERIMA_CEK"));
 			    			h.put("tarikh_cek", rs.getDate("TARIKH_CEK")==null?"":Format.format(rs.getDate("TARIKH_CEK")));	    
 			    			h.put("tarikh_ambil_cek", rs.getDate("TARIKH_AMBIL_CEK")==null?"":Format.format(rs.getDate("TARIKH_AMBIL_CEK")));
+			    			h.put("tarikh_cajlewat", rs.getDate("TARIKH_CAJLEWAT")==null?"":Format.format(rs.getDate("TARIKH_CAJLEWAT")));
 			    			h.put("bil_hari_lewat", rs.getString("BIL_HARI_LEWAT")== null?"":rs.getString("BIL_HARI_LEWAT"));
 			    			h.put("jenis_award", rs.getString("JENIS_AWARD")== null?"":rs.getString("JENIS_AWARD"));
 			    			h.put("denda_lewat", rs.getString("DENDA_LEWAT")== null?0:rs.getDouble("DENDA_LEWAT"));			    			
@@ -3238,7 +3246,7 @@ public int setListMaklumatTanahWithSiasatan_count(String idPermohonan,String lot
 			    		sql += " E.NAMA_PB, E.NO_PB, E.ID_JENISNOPB, D.TARIKH_CEK, D.PENERIMA_CEK, D.NAMA_WAKIL, D.NO_WAKIL, D.TARIKH_SERAH_CEK, ";
 			    		sql += " D.TARIKH_AMBIL_CEK, D.BIL_HARI_LEWAT, D.DENDA_LEWAT, D.JENIS_AWARD, D.FLAG_SERAH_CEK, D.NO_BAYARAN, D.ID_JENISNOPB AS ID_JENISNOWAKIL, ";
 			    		sql += " D.AMAUN_BAYARAN, D.MASA_AMBIL_CEK, D.JENIS_WAKTU_AMBIL_CEK, D.TEMPAT_AMBIL, F.TARIKH_AKHIR_BAYARAGENSI, ";
-			    		sql += " D.NO_RUJUKAN_SURATEFT, D.NO_EFT, D.TARIKH_TERIMA_EFT, D.TARIKH_SURAT_EFT, D.NO_BAUCER, D.PERIHAL, ";
+			    		sql += " D.NO_RUJUKAN_SURATEFT, D.NO_EFT, D.TARIKH_TERIMA_EFT, D.TARIKH_SURAT_EFT, D.NO_BAUCER, D.PERIHAL, D.TARIKH_CAJ_LEWAT, ";
 			    		sql += " D.AMAUN_EFT "; 
 			    		sql += " FROM TBLPPTHAKMILIK A, TBLPPTHAKMILIKPB B, TBLPPTTERIMABAYARAN C, TBLPPTBAYARAN D, TBLPPTPIHAKBERKEPENTINGAN E, ";
 			    		sql += " TBLPPTBORANGH F ";
@@ -3272,6 +3280,7 @@ public int setListMaklumatTanahWithSiasatan_count(String idPermohonan,String lot
 			    			h.put("penerima_cek", rs.getString("PENERIMA_CEK")== null?"":rs.getString("PENERIMA_CEK"));
 			    			h.put("tarikh_cek", rs.getDate("TARIKH_CEK")==null?"":Format.format(rs.getDate("TARIKH_CEK")));	    
 			    			h.put("tarikh_ambil_cek", rs.getDate("TARIKH_AMBIL_CEK")==null?"":Format.format(rs.getDate("TARIKH_AMBIL_CEK")));
+			    			h.put("tarikh_caj_lewat", rs.getDate("TARIKH_CAJ_LEWAT")==null?"":Format.format(rs.getDate("TARIKH_CAJ_LEWAT")));
 			    			h.put("bil_hari_lewat", rs.getString("BIL_HARI_LEWAT")== null?"":rs.getString("BIL_HARI_LEWAT"));
 			    			h.put("jenis_award", rs.getString("JENIS_AWARD")== null?"":rs.getString("JENIS_AWARD"));
 			    			h.put("denda_lewat", rs.getString("DENDA_LEWAT")== null?0:rs.getDouble("DENDA_LEWAT"));			    			
@@ -3355,12 +3364,14 @@ public int setListMaklumatTanahWithSiasatan_count(String idPermohonan,String lot
 	    		String txtAmaunCek = (String)data.get("txtAmaunCek");
 	    		String txdTarikhCek = (String)data.get("txdTarikhCek");
 	    		String txdTarikhAmbilCek = (String)data.get("txdTarikhAmbilCek");
+	    		String txdTarikhLewat = (String)data.get("txdTarikhLewat");
 	    		String txtMasaAmbil = (String)data.get("txtMasaAmbil");
 	    		String socJenisWaktu = (String)data.get("socJenisWaktu");
 	    		String txtTempatAmbil = (String)data.get("txtTempatAmbil");
 	    		
 	    		String TAC = "to_date('" + txdTarikhAmbilCek + "','dd/MM/yyyy')";
 	    		String TC = "to_date('" + txdTarikhCek + "','dd/MM/yyyy')";
+	    		String TL = "to_date('" + txdTarikhLewat + "','dd/MM/yyyy')";
 	    		
 	    		SQLRenderer r = new SQLRenderer();	  
 	    		r.update("id_bayaran", id_bayaran);
@@ -3377,9 +3388,12 @@ public int setListMaklumatTanahWithSiasatan_count(String idPermohonan,String lot
 	    		r.add("masa_ambil_cek", txtMasaAmbil);
 	    		r.add("jenis_waktu_ambil_cek", socJenisWaktu); 
 	    		r.add("tempat_ambil", txtTempatAmbil);
+	    		r.add("tarikh_caj_lewat",r.unquote(TL));	
 	    		r.add("tarikh_kemaskini",r.unquote("sysdate"));
-	    		r.add("id_kemaskini",id_user);    		
+	    		r.add("id_kemaskini",id_user); 
+	    		
 	    		sql = r.getSQLUpdate("Tblpptbayaran");
+	    		myLogger.info(" sql bayaran sini : "+sql);
 	    		stmt.executeUpdate(sql);
 	    		
 	    } catch (Exception re) {

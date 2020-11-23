@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package ekptg.model.php2;
 
@@ -18,7 +18,7 @@ import org.apache.commons.logging.LogFactory;
 import ekptg.helpers.Utils;
 
 /**
- * 
+ *
  *
  */
 public class FrmREVHeaderData {
@@ -28,7 +28,7 @@ public class FrmREVHeaderData {
 	private static final Log log = LogFactory.getLog(FrmREVHeaderData.class);
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-	
+
 	public void setMaklumatPemohon(String idFail) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -175,7 +175,7 @@ public class FrmREVHeaderData {
 			Hashtable h;
 
 			sql = "SELECT TBLPFDFAIL.ID_FAIL, TBLPHPHASIL.ID_HASIL, TBLPHPPEMOHON.NAMA, TBLPHPPEMOHON.ALAMAT1_TETAP, TBLPHPPEMOHON.ALAMAT2_TETAP, TBLPHPPEMOHON.ALAMAT3_TETAP, TBLPHPPEMOHON.POSKOD_TETAP,"
-					+ " TBLPHPPEMOHON.NO_RUJUKAN AS NO_RUJUKAN_PENYEWA, TBLRUJBANDAR.KETERANGAN, TBLRUJNEGERI.NAMA_NEGERI, TBLPHPPEMOHON.NO_TEL, TBLPHPPEMOHON.NO_FAX, TBLPHPPEMOHON.NO_PENGENALAN,"
+					+ " TBLPHPPEMOHON.NO_RUJUKAN AS NO_RUJUKAN_PENYEWA, TBLRUJBANDAR.KETERANGAN, TBLRUJNEGERI.NAMA_NEGERI, TBLPHPPEMOHON.EMEL, TBLPHPPEMOHON.NO_TEL, TBLPHPPEMOHON.NO_FAX, TBLPHPPEMOHON.NO_PENGENALAN,"
 					+ " TBLRUJURUSAN.NAMA_URUSAN, TBLRUJSUBURUSAN.NAMA_SUBURUSAN, TBLPFDFAIL.NO_FAIL, TBLPFDFAIL.TAJUK_FAIL, TBLPHPHASIL.TUJUAN AS TUJUAN_SEWA,"
 					+ " TBLPHPBAYARANPERLUDIBAYAR.NO_RUJUKAN, TBLPHPBAYARANPERLUDIBAYAR.TARIKH_MULA, TBLPHPBAYARANPERLUDIBAYAR.TARIKH_TAMAT, TBLPHPBAYARANPERLUDIBAYAR.DEPOSIT, TBLPHPBAYARANPERLUDIBAYAR.BAYARAN"
 
@@ -247,6 +247,8 @@ public class FrmREVHeaderData {
 				h.put("sewa",
 						rs.getString("BAYARAN") == null ? "" : Utils
 								.format2Decimal(rs.getDouble("BAYARAN")));
+				h.put("emel", rs.getString("EMEL") == null ? ""
+						: rs.getString("EMEL"));
 
 				beanMaklumatPermohonan.addElement(h);
 				bil++;
@@ -273,6 +275,7 @@ public class FrmREVHeaderData {
 				h.put("tarikhMula", "");
 				h.put("tarikhTamat", "");
 				h.put("deposit", "");
+				h.put("emel", "");
 
 				beanMaklumatPermohonan.addElement(h);
 			}

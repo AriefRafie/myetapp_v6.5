@@ -461,7 +461,8 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdDaerah() + ">"
-						+ f.getKodDaerah() + " - " + f.getNamaDaerah()
+//						+ f.getKodDaerah() + " - " + f.getNamaDaerah() 20201028
+						+ f.getNamaDaerah()
 						+ "</option>\n");
 			}
 			sb.append("</select>");
@@ -854,7 +855,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdSeksyen() + ">"
-						+ f.getKodSeksyen() + " - " + f.getNamaSeksyen()
+						+ f.getNamaSeksyen()
 						+ "</option>\n");
 			}
 			sb.append("</select>");
@@ -1813,6 +1814,42 @@ public class HTML {
 
 		return sb.toString();
 	}
+	
+	// Kegunaan modul PHP 
+	public static String SelectPHPJenisHakmilik(String selectName,
+			Long selectedValue, String disability, String jsFunction)
+			throws Exception {
+		StringBuffer sb = new StringBuffer("");
+		try {
+			sb.append("<select name='" + selectName + "'");
+			if (disability != null)
+				sb.append(disability);
+			if (jsFunction != null)
+				sb.append(jsFunction);
+			sb.append(" > ");
+			sb.append("<option value=>SILA PILIH</option>\n");
+
+			Vector v = DB.getJenisHakmilikPHP();
+			Tblrujjenishakmilik f = null;
+			String s = "";
+			for (int i = 0; i < v.size(); i++) {
+				f = (Tblrujjenishakmilik) v.get(i);
+				if (f.getIdJenishakmilik().equals(selectedValue)) {
+					s = "selected";
+				} else {
+					s = "";
+				}
+				sb.append("<option " + s + " value=" + f.getIdJenishakmilik()
+						+ ">" + f.getKeterangan().toUpperCase() + "</option>\n");
+			}
+			sb.append("</select>");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw ex;
+		}
+
+		return sb.toString();
+	}
 
 	// *** SelectStatusPelepasan - HILDA
 	public static String SelectStatusPelepasan(String selectName,
@@ -2055,7 +2092,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdLot() + ">"
-						+ f.getKeterangan()
+						+ f.getKeterangan().toUpperCase()
 //						+ f.getKodLot() + " - " + f.getKeterangan()
 						+ "</option>\n");
 			}
@@ -2757,6 +2794,40 @@ public class HTML {
 				}
 				sb.append("<option " + s + " value=" + f.getIdPejabat() + ">"
 						+ f.getNamaPejabat() + "</option>\n");
+			}
+			sb.append("</select>");
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw ex;
+		}
+
+		return sb.toString();
+	}
+
+	public static String SelectPejabatJKPTGN(String selectName,
+			Long selectedValue, String disability, String jsFunction)
+			throws Exception {
+		StringBuffer sb = new StringBuffer("");
+		try {
+			sb.append("<select name='" + selectName + "'");
+			if (disability != null)
+				sb.append(disability);
+			if (jsFunction != null)
+				sb.append(jsFunction);
+			sb.append(" > ");
+			sb.append("<option value=>SILA PILIH</option>\n");
+			Vector v = DB.getPejabatJKPTGN();
+			Tblrujpejabatjkptg f = null;
+			String s = "";
+			for (int i = 0; i < v.size(); i++) {
+				f = (Tblrujpejabatjkptg) v.get(i);
+				if (f.getIdPejabatjkptg().equals(selectedValue)) {
+					s = "selected";
+				} else {
+					s = "";
+				}
+				sb.append("<option " + s + " value=" + f.getIdPejabatjkptg()
+						+ ">" + f.getNamaPejabat() + "</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {
@@ -3670,7 +3741,8 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdMukim() + ">"
-						+ f.getKodMukim() + " - " + f.getNamaMukim()
+//						+ f.getKodMukim() + " - " + f.getNamaMukim() 20201028
+						+ f.getNamaMukim()
 						+ "</option>\n");
 			}
 			sb.append("</select>");
@@ -4210,17 +4282,17 @@ public class HTML {
 			sb.append(" > ");
 			sb.append("<option value=>SILA PILIH</option>\n");
 			if (selectedValue.intValue() == 2) {
-				sb.append("<option selected value = 2> BORANG 2</option>\n");
+				sb.append("<option selected value = 2> BORANG 2(LESEN PASIR)</option>\n");
 			} else {
 				sb.append("<option value = 2> BORANG 2(LESEN PASIR)</option>\n");
 			}
 			if (selectedValue.intValue() == 3) {
-				sb.append("<option selected value = 3> BORANG 3</option>\n");
+				sb.append("<option selected value = 3> BORANG 3(LESEN MENJELAJAH/MENCARIGALI/MENGGEREK SELAIN PASIR)</option>\n");
 			} else {
 				sb.append("<option value = 3> BORANG 3(LESEN MENJELAJAH/MENCARIGALI/MENGGEREK SELAIN PASIR)</option>\n");
 			}
 			if (selectedValue.intValue() == 4) {
-				sb.append("<option selected value = 4> BORANG 4</option>\n");
+				sb.append("<option selected value = 4> BORANG 4(LESEN GALIAN SELAIN PASIR)</option>\n");
 			} else {
 				sb.append("<option value = 4> BORANG 4(LESEN GALIAN SELAIN PASIR)</option>\n");
 			}
@@ -4320,7 +4392,7 @@ public class HTML {
 			if (selectedValue.intValue() == 3) {
 				sb.append("<option selected value=3>SURAT PERJANJIAN</option>\n");
 			} else {
-				sb.append("<option value=3>SURAT PERJANJIAN</option>\n");
+				sb.append("<option value=3>PERJANJIAN JUAL BELI</option>\n");
 			}
 			if (selectedValue.intValue() == 4) {
 				sb.append("<option selected value=4>SURAT TAWARAN PEMBELIAN</option>\n");
@@ -7622,7 +7694,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdPejabat() + ">"
-						+ f.getKodPejabat() + " - " + f.getNamaPejabat()
+						+ f.getNamaPejabat()
 						+ "</option>\n");
 			}
 			sb.append("</select>");
@@ -9027,8 +9099,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdDaerah() + ">"
-						+ f.getKodDaerah() + " - " + f.getNamaDaerah()
-						+ "</option>\n");
+						+ f.getNamaDaerah() + "</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {
@@ -10975,8 +11046,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + h.get("id") + ">"
-						+ h.get("kod") + " - " + h.get("keterangan")
-						+ "</option>\n");
+						+ h.get("keterangan") + "</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {

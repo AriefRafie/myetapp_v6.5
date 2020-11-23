@@ -1,3 +1,6 @@
+#if ($errMsg != "")
+	<div class="info"><strong>$errMsg</strong></div>
+#end
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td colspan="2"><fieldset>
@@ -174,7 +177,7 @@
       <input name="cmdKemaskini" type="button" onClick="doKemaskiniMaklumatKJT()" value="Kemaskini">
       <input name="cmdHapus" type="button" onClick="doHapusMaklumatKJT()" value="Hapus">
       #if ($flagStatus == '1')
-      <input name="cmdTerima" type="button" onClick="doTerimaKJT()" value="Terima">
+      <!-- <input name="cmdTerima" type="button" onClick="doTerimaKJT()" value="Terima"> -->
       <input name="cmdUlangan" type="button" onClick="doUlanganKJT()" value="Ulangan">
       #end
       #end

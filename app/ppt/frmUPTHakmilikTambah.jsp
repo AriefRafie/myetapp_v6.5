@@ -32,7 +32,7 @@
 <input type="hidden" name="showBoxAsal2" value="$!showBoxAsal2">
 <input type="hidden" name="showBoxAsal3" value="$!showBoxAsal3">
 <input type="hidden" name="resetRadio">
-
+<input type="hidden"   name="showlotPT" id="showlotPT" value="$!showlotPT">
 </p>
 
 
@@ -49,7 +49,7 @@
 	#set($luas=$data.luas_lot)
 	#set($luasAmbil=$data.luas_ambil)
 	#set($seksyen=$data.seksyen)
-	#set($txtcatatan=$data.catatan)
+	#set($txtCatatan=$data.catatan)
     #set($id_fail=$data.id_fail)
     #set($txtNoBangunan=$data.no_bangunan)
     #set($txtNoPetak=$data.no_petak)
@@ -165,20 +165,13 @@
   				</td>
         </tr>
 			
-        <tr>
-            	<td>No.PT <font color="red">*</font></td>
-            	<td>:</td>
-            	<td>$!selectLot</td>
-       </tr>
-            
+   
+       ##yati
+       ##101,23,103,4,133,124,81,31,13,8,105,9918129,102,84,8,104,105,1,9,128,126
+       ##document.${formName}.editJenisHakmilik.value == ""
+             #if($showlotPT == "lot")
        <tr>
-            	<td>&nbsp;</td>
-            	<td>&nbsp;</td>
-                <td><input type="text" name="txtnopt" size="22" value="$txtnopt" maxlength="20" id="txtnopt"  ></td>
-       </tr>
-             
-       <tr>
-            	<td>No.LOT <font color="red">*</font></td>
+            	<td>No.LOT</td>
             	<td>:</td>
                 <td>
                 <!-- defaultLOT() -->
@@ -189,20 +182,33 @@
               
                 </td>
        </tr>
+       #else
+         <tr>
+            	<td>No.PT</td>
+            	<td>:</td>
+            	<td>$!selectLot</td>
+       </tr>
+       
+          <tr>
+            	<td>&nbsp;</td>
+            	<td>&nbsp;</td>
+                <td><input type="text" name="txtnopt" size="22" value="$txtnopt" maxlength="20" id="txtnopt"  ></td>
+       </tr>
+       #end
             <!-- PENAMBAHBAIKAN V7 yati -->
        <tr>
-				<td>Kategori Tanah<font color="red">*</font></td>
+				<td>Kategori Tanah</td>
 				<td>:</td>
 				<td>$!selectKategoriTanah</td>
 	   </tr>
        <tr>
-			<td>Unit Luas Asal<font color="red">*</font></td>
+			<td>Unit Luas Asal</td>
 			<td>:</td>
 			<td>$!selectUnitLuasLot</td>
 	   </tr>
 		
 		<tr>
-			<td valign="top">Luas Asal<font color="red">*</font></td>
+			<td valign="top">Luas Asal</td>
 			<td valign="top">:</td>
 			<td>
 			
@@ -250,7 +256,7 @@
 		#end
 
 		<tr>
-			<td>Unit Luas Ambil<font color="red">*</font></td>
+			<td>Unit Luas Ambil</td>
 			<td>:</td>
 			<td>$!selectUnitLuasAmbil</td>
 		</tr>
@@ -537,7 +543,7 @@
             <tr>
             	<td valign="top">Catatan</td>
             	<td valign="top">:</td>
-            	<td><textarea name="txtCatatan" id="txtCatatan" cols="90%" rows="15" readonly class="disabled">$!txtcatatan</textarea></td>
+            	<td><textarea name="txtCatatan" id="txtCatatan" cols="90%" rows="15" readonly class="disabled">$!txtCatatan</textarea></td>
             </tr>
             
         #end    
@@ -545,7 +551,7 @@
         #if($wantedit=="yes")
         	
              <tr>
-            	<td width="20%">Negerix</td>
+            	<td width="20%">Negeri</td>
             	<td width="1%">:</td>
                 <td width="79%"><input type="text" name="existNegeri" value="$existNegeri" size="42" class="disabled" readonly>
                 	<input type="hidden" name="id_existNegeri" value="$id_existNegeri"></td>
@@ -755,7 +761,7 @@
            	<tr>
             	<td valign="top">Catatan</td>
             	<td valign="top">:</td>
-            	<td><textarea name="txtCatatan" id="txtCatatan" cols="90%" rows="15" onKeyUp="textCounter(this.form.txtCatatan,this.form.remLen1,4000);" onKeyDown="textCounter(this.form.txtCatatan,this.form.remLen1,4000);" >$!txtcatatan</textarea></td>
+            	<td><textarea name="txtCatatan" id="txtCatatan" cols="90%" rows="15" onKeyUp="textCounter(this.form.txtCatatan,this.form.remLen1,4000);" onKeyDown="textCounter(this.form.txtCatatan,this.form.remLen1,4000);" >$!txtCatatan</textarea></td>
             </tr>
             <tr>
         		<td>&nbsp;</td>
@@ -935,7 +941,7 @@ function defaultLOT(){
 
 
 function add_maklumat_tanah(id_permohonan,id_hakmilik,flagSubjaket,mode){   
-	
+
 	if(document.${formName}.socMukim.value == ""){
 		alert("Sila pilih \"Bandar/Pekan/Mukim\" terlebih dahulu.");
   		document.${formName}.socMukim.focus(); 
@@ -944,7 +950,6 @@ function add_maklumat_tanah(id_permohonan,id_hakmilik,flagSubjaket,mode){
 	else 
 	{
 	if ( !window.confirm("Adakah Anda Pasti?") ) return;
-	
 	document.${formName}.ScreenLocation.value = "TabbedPanels1";
 	document.${formName}.command.value = "addMaklumatTanah";
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTSek4&id_permohonan="+id_permohonan;
@@ -1004,12 +1009,16 @@ function update_maklumat(id_hakmilik) {
 	{	
 	alert_lot = "N";	
 	}else
-	{
+	{	
 	alert_lot =	document.${formName}.check_lot.value;
 	}
-
-	document.${formName}.ScreenLocation.value = "changeTanah";
+	if(alert_lot=="Y")
+	{
+	alert("No. Lot telah wujud di dalam permohonan ini!");
+	return;
+	}
 	
+	document.${formName}.ScreenLocation.value = "changeTanah";
 /*	Editluas = parseInt(document.${formName}.edit_luas_lot.value);
 	EditluasAmbil = parseInt(document.${formName}.edit_anggaran_luas.value);
 
@@ -1033,9 +1042,9 @@ function update_maklumat(id_hakmilik) {
   		document.${formName}.edit_no_lot.focus(); 
 		return;
 	} */
-	if(document.${formName}.editMukim.value == ""){
+	if(document.${formName}.socMukim.value == ""){
 		alert("Sila pilih \"Bandar/Pekan/Mukim\" terlebih dahulu.");
-  		document.${formName}.editMukim.focus(); 
+  		document.${formName}.socMukim.focus(); 
 		return;
 	}
 /*	if(document.${formName}.editLuas.value == ""){
@@ -1043,27 +1052,24 @@ function update_maklumat(id_hakmilik) {
   		document.${formName}.editLuas.focus(); 
 		return;
 	}*/
-	else if((document.${formName}.editLot.value != "" && document.${formName}.txtnopt.value == "") || (document.${formName}.editLot.value == "" && document.${formName}.txtnopt.value != "")){
+	/*if((document.${formName}.txtnolot.value != ""  document.${formName}.txtnopt.value == "") 
+		|| (document.${formName}.txtnolot.value == "" && document.${formName}.txtnopt.value != "")){
 		alert("Sila lengkapkan maklumat \"No.PT\" terlebih dahulu.");
-  		document.${formName}.editLot.focus(); 
+  		document.${formName}.txtnolot.focus(); 
 		return;
-	}
-	else if(document.${formName}.txtnolot.value == "" && document.${formName}.txtnopt.value == ""){
+	}*/
+/*	if(document.${formName}.txtnolot.value == "" || document.${formName}.txtnopt.value == ""){
 		alert("Sila masukkan salah satu \"No.PT atau No.LOT\" terlebih dahulu.");
   		document.${formName}.txtnolot.focus(); 
 		return;
-	}
+	}*/
 /*	else if(document.${formName}.txtCatatan.value == ""){
 		alert("Sila masukkan \"Catatan\" terlebih dahulu.");
   		document.${formName}.txtCatatan.focus(); 
 		return;
 	} */
 	
-	else if(alert_lot=="Y")
-	{
-	alert("No. Lot telah wujud di dalam permohonan ini!");
-	return;
-	}
+
 	else
 	{
 	if ( !window.confirm("Adakah Anda Pasti?") ) return;
@@ -1292,10 +1298,10 @@ function convertNilaiAmbilUpdate(){
 }
 function onchangeUnitLuasAmbilUpdate(){
 	document.${formName}.ScreenLocation.value = "top";
-	document.${formName}.command.value = "viewHM";
-	document.${formName}.command2.value = "kemaskiniHM";
-	document.${formName}.command3.value = "doOnchangeUpdate";
-	document.${formName}.command4.value = "onchangeUnitLuasAmbilUpdate";
+	document.${formName}.command.value = "kemaskiniTanah";
+	document.${formName}.command2.value = "doOnchangeUpdate";
+	document.${formName}.command3.value = "onchangeUnitLuasAsalUpdate";
+	document.${formName}.command4.value = "onchangeUnitAsalUpdate";
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTSek4";
 	document.${formName}.submit();
 }

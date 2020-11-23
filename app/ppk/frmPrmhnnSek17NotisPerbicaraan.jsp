@@ -2557,6 +2557,9 @@ document.getElementById("header_lama").style.display="block";
         <tr>
       <td ><a href="#" class="style2" onClick="javascript:cetakBuktiPenyampaian('$NO_FAIL','$!tarikhNotis','$id_fail','$id_perbicaraan')"><font color="blue">Bukti Penyampaian</font></a></td>
     </tr>
+    	<tr>
+      <td ><a href="#" class="style2" onClick="javascript:cetakBorangKehadiran('$NO_FAIL','$id_perbicaraan','$id_fail','$id_simati')"><font color="blue">Borang Kehadiran</font></a></td>
+    </tr>
         <tr>
       <td ><a href="#" class="style2" onClick="javascript:cetakNotaPerbicaraan('$NO_FAIL','$id_perbicaraan','$id_fail','$id_simati')"><font color="blue">Nota Perbicaraan</font></a></td>
     </tr>
@@ -4829,6 +4832,37 @@ function cetakSlipPendengaran(idfail,NO_FAIL) {
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
+
+function cetakBorangKehadiran(NO_FAIL,id_perbicaraan,idfail,idsimati) {
+
+	var tarikhmohon = document.getElementById("tarikhMohon").value; 
+
+	var dt1   = parseInt(tarikhmohon.substring(0,2),10);
+   	var mon1  = parseInt(tarikhmohon.substring(3,5),10);
+   	var yr1   = parseInt(tarikhmohon.substring(6,10),10);
+   
+	var dt2 = parseInt("01",10);
+	var mon2 = parseInt("09",10);
+	var yr2 = parseInt("2009",10);
+	 	
+   	var date1 = new Date(yr1, mon1, dt1);
+    var tarikhsmbln = new Date(yr2, mon2, dt2);
+
+    var flag = "";
+	if(date1<tarikhsmbln){
+		flag = 0;
+	}else{
+		flag = 1;
+	}
+	
+	var tajuk = "PERMOHONAN DI BAWAH SEKSYEN 17 (APPK(1998))";
+    var url = "../servlet/ekptg.report.ppk.BorangKehadiran17?nofail="+NO_FAIL+"&flag="+flag+"&idfail="+idfail+"&idsimati="+idsimati+"&idperbicaraan="+id_perbicaraan+"&tajuk="+tajuk;
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+
 function cetakNotaPerbicaraan(NO_FAIL,id_perbicaraan,idfail,idsimati) {
 
 	var tarikhmohon = document.getElementById("tarikhMohon").value; 

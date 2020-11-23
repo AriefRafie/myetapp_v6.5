@@ -120,7 +120,7 @@ public abstract class EkptgReportServlet implements IServlet2 {
 			user_id = (String)request.getAttribute("user_id");
 		}
 		
-		myLogger.info("check user_id = "+user_id);
+//		myLogger.info("check user_id = "+user_id);
 		this.idmasuk = user_id;
 		if (user_id == null) {
 			usernotvalid(response);
@@ -133,20 +133,16 @@ public abstract class EkptgReportServlet implements IServlet2 {
 			if (this.parameters != null)
 				parameters = this.parameters;
 
-//			myLogger.info("contextPath 2="+context.getRealPath("reports"));
-//			String contextRealPath = context.getRealPath("");
-			
+			String realPathReport = getReportPath(context,getReports());
 //			String realPathReport = context.getRealPath("reports");
-//			String realPathReport = contextRealPath.replaceAll(getAppContext(),"reports");			
-			
-			String realPathReport = getReportPath(context,"reports");
 //			myLogger.info("contextPath 3="+realPathReport);
 
 			parameters.put("BaseDir", context.getRealPath("/img/"));
 			// parameters.put("BaseDir",new File(context.getRealPath("/img/")));
 			// Report folder
 			// parameters.put("ReportDir",context.getRealPath("/reports/"));
-//			myLogger.info("146 :realPathReport="+realPathReport);
+//			myLogger.info("149 :realPathReport="+context.getRealPath("/img/"));
+//			myLogger.info("150 :realPathReport="+realPathReport);
 			
 			parameters.put("ReportDir", realPathReport);
 			// Get all parameters from query String
@@ -311,10 +307,10 @@ public abstract class EkptgReportServlet implements IServlet2 {
 				} else if ("EXCEL".equals(reportType)) {
 					// rtfConverter(response);
 					createExcelReport(response, parameters, jasperReport, conn);
-				}
+
 				// Assume it is a PDF report
+				}else {
 				// else if ("PDF".equals(reportType) || "".equals(reportType))
-				else {
 					if (resultSetDataSource != null) {
 						myLogger.info("resultSetDataSource != null");
 						createPDFReport(response, parameters, jasperReport, resultSetDataSource);
@@ -468,7 +464,6 @@ public abstract class EkptgReportServlet implements IServlet2 {
 	
 	}
 	//	******** End Create New by zulfazdliabuas@gmail.com *********
-
 	private void createTEXTReport(HttpServletRequest request, HttpServletResponse response, Map parameters, JasperReport jasperReport,
 		Connection conn, String title) throws JRException, SQLException, IOException {
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, conn);
@@ -660,9 +655,9 @@ public abstract class EkptgReportServlet implements IServlet2 {
 		// performance
 		// JasperCompileManager.compileReportToFile(context.getRealPath(path+
 		// ".jrxml"));
-		myLogger.info("realPathJrxml:" + realPathJrxml);
-		myLogger.info("realPathJasper:" + realPathJasper);
-		myLogger.info("context.getContextPath():" + context.getContextPath());
+//		myLogger.info("realPathJrxml:" + realPathJrxml);
+//		myLogger.info("realPathJasper:" + realPathJasper);
+//		myLogger.info("context.getContextPath():" + context.getContextPath());
 
 		JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(reportFile.getPath());
 		return jasperReport;
@@ -674,7 +669,7 @@ public abstract class EkptgReportServlet implements IServlet2 {
 		String sql = "";
 		try {
 			db = new Db();
-			sql = "Select id_permohonan from tblppkpermohonan where id_fail='" + idfail + "'";
+			sql = "select id_permohonan from tblppkpermohonan where id_fail='" + idfail + "'";
 			Statement stmt = db.getStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			if (rs.next()) {
@@ -1474,7 +1469,6 @@ public abstract class EkptgReportServlet implements IServlet2 {
 	
 	}
 	
-	
 	public void libPNB(HttpServletRequest request, HttpServletResponse response) throws IOException, Exception {
 	response.setContentType("text/html");
 	PrintWriter out = response.getWriter();
@@ -1961,9 +1955,6 @@ public abstract class EkptgReportServlet implements IServlet2 {
 
 		}
 	
-	
-	
-	
 	//open razman add new feature : attachment in bytes
 	//kena convert dlu fail jesper kedalam byte
 	public byte[] attachmentInbytes(String folderName, String reportFileName, ServletContext context, Map parameters) throws IOException {
@@ -1986,19 +1977,6 @@ public abstract class EkptgReportServlet implements IServlet2 {
 		}
 	//close razman add new feature : attachment in bytes
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public synchronized void doPindaanSaveVersioning(HttpServletRequest request, HttpServletResponse response, ServletContext context,
 			String queryString) throws IOException {
 			// Save to BLOB
@@ -2013,8 +1991,7 @@ public abstract class EkptgReportServlet implements IServlet2 {
 			byte[] bytes = null;
 			try {
 				conn = new Db().getConnection();
-				//System.out.println("::::::::11::::::::::"+parameters);
-				
+				//System.out.println("::::::::11::::::::::"+parameters)		
 				
 				long idBorang = DB.getNextID("TBLPPKBORANG_HISTORY_SEQ");
 				insertTBLPPKBORANG_HISTORY(idBorang,this.idfail, this.borang, this.idmasuk,request);
@@ -2161,8 +2138,7 @@ public abstract class EkptgReportServlet implements IServlet2 {
 		Db db = null;
 		String namaBorang = "";
 		try {
-			
-			
+					
 			Hashtable infoPerbicaraan = infoPerbicaraan(idfail, idperbicaraan);
 			String NO_FAIL = (String)infoPerbicaraan.get("NO_FAIL");
 			String TARIKH_BICARA = (String)infoPerbicaraan.get("TARIKH_BICARA");
@@ -2273,20 +2249,16 @@ public abstract class EkptgReportServlet implements IServlet2 {
 					
 			pstmt = conn.prepareStatement(sqlQuery);
 			pstmt.setBytes(1, pdf);
-			pstmt.setLong(2, idBorang);
-			
-			
-			
+			pstmt.setLong(2, idBorang);	
 			pstmt.executeUpdate(); 	
 			
-
 			con.commit();
 			HttpSession session = request.getSession();
 
 			AuditTrail.logActivity(null,session,"UPD","TBLPPKPINDAAN [ID_BORANGPINDAAN : "+idBorang+"] Updated");
 			
-
 			conn.commit();
+			
 		} catch (SQLException se) {
 			try {
 				conn.rollback();
@@ -2304,14 +2276,10 @@ public abstract class EkptgReportServlet implements IServlet2 {
 
 	}
 
-
-	
 	public synchronized void insertTBLPPKBORANG_HISTORY(long idBorang, String idfail, String borang, String idmasuk,HttpServletRequest request) {
 		Db db = null;
 		String NO_PINDAAN = "";
 		try {
-			
-	
 		
 			Date now = new Date();
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy");
@@ -2446,6 +2414,22 @@ public abstract class EkptgReportServlet implements IServlet2 {
 
 	}// end very code post
 	
+	/**
+	 * Fungsi konfigurasi folder laporan default reports
+	 * Dibuat Oleh	: Mohamad Rosli
+	 * Dibuat Pada	: 11/11/2020
+	 * Dikemaskini Oleh	: 
+	 * Dikemaskini Pada :
+	 * @return
+	 */
+	private String getReports(){
+		String appContext ="/reports";
+		ResourceBundle rb = ResourceBundle.getBundle("file");
+		appContext = rb.getString("laporanpath") == null?appContext:rb.getString("laporanpath");
+//		myLogger.info("getAppContext="+appContext);
+		return appContext;
+		
+	}
 	
 	/**
 	 * Fungsi mendapatkan nama context (folder fizikal applikasi)
@@ -2455,12 +2439,20 @@ public abstract class EkptgReportServlet implements IServlet2 {
 	 * Dikemaskini Pada :
 	 * @return
 	 */
-	private String getAppContext(){
+	private int getAppContext(){
+		int bil = 0;
 		String appContext ="myetapp";
 		ResourceBundle rb = ResourceBundle.getBundle("file");
 		appContext = rb.getString("context_name");
-		myLogger.info("getAppContext="+appContext);
-		return appContext;
+		myLogger.info("SystemUtils="+SystemUtils.OS_NAME);
+
+		if (SystemUtils.IS_OS_LINUX || SystemUtils.IS_OS_MAC_OSX) {
+			bil = appContext.length();
+		} else if (SystemUtils.IS_OS_WINDOWS) {
+			bil = appContext.length()+1;
+		}
+		myLogger.info("getAppContext="+appContext+"|"+bil);
+		return bil;
 		
 	}
 	/**
@@ -2472,8 +2464,13 @@ public abstract class EkptgReportServlet implements IServlet2 {
 	 * Dikemaskini Pada :
 	 * @return
 	 */
-	private String getReportPath(ServletContext context,String rtype){
-		String realPathReport = context.getRealPath(File.separator + rtype + File.separator)
+	private String getReportPath(ServletContext context,String rtype){		
+//		myLogger.info("getReportPath length="+getAppContext().length());
+//		myLogger.info("getReportPath length="+rtype);
+//		myLogger.info("contextPath ="+context.getRealPath("").substring(0,context.getRealPath("").length()- getAppContext().length()));
+//		myLogger.info("contextPath 2 ="+context.getRealPath(rtype));
+
+//		String realPathReport = context.getRealPath(File.separator + rtype + File.separator)
 //			.replace("johor" + File.separator, "")
 //			.replace("kedah" + File.separator, "")
 //			.replace("ekptgv3" + File.separator, "")
@@ -2489,13 +2486,13 @@ public abstract class EkptgReportServlet implements IServlet2 {
 //			.replace("hq" + File.separator, "")
 //			.replace("ekptgv2" + File.separator, "")
 //			.replace("wp" + File.separator, "")
-			.replace(getAppContext() + File.separator, "");
+//			.replace(getAppContext() + File.separator, "");
+		String realPathReport = context.getRealPath("").substring(0,context.getRealPath("").length() - getAppContext()) + rtype;
+		//myLogger.info("realPathReport() 0="+context.getRealPath("").substring(0,context.getRealPath("").length() - getAppContext().length()));
 		myLogger.info("realPathReport()="+realPathReport);
 		return realPathReport;
 	
 	}
-	
-	
 	
 	public Hashtable<String,String> infoPerbicaraan(String ID_FAIL, String ID_PERBICARAAN) throws Exception {
 		Db db = null;
@@ -3155,8 +3152,7 @@ public abstract class EkptgReportServlet implements IServlet2 {
 						db.close();
 				}
 			}
-
-		 
+	 
 		 public List listPNBOB(String ID_BORANGPNB)throws Exception {
 				Db db = null;
 				ResultSet rs = null;

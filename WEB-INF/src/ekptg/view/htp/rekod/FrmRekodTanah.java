@@ -62,7 +62,9 @@ import ekptg.model.htp.rekod.ITanahDaftar;
 import ekptg.model.htp.rekod.ITanahKementerian;
 import ekptg.model.htp.utiliti.HTPSusulanBean;
 import ekptg.model.htp.utiliti.IHTPSusulan;
+import ekptg.model.utils.IUtilHTMLPilihan;
 import ekptg.model.utils.emel.EmailConfig;
+import ekptg.model.utils.rujukan.UtilHTMLPilihanSeksyenUPI;
 
 public class FrmRekodTanah extends AjaxBasedModule {
 
@@ -77,7 +79,8 @@ public class FrmRekodTanah extends AjaxBasedModule {
 	private ITanahUrusan iHakmilikStatusP = null;
 	private ITanahUrusan iHakmilikStatusS = null;
 	private ITanahCarian iHakmilikRizab = null;
-	private IHtp iHTP = null;
+ 	private IUtilHTMLPilihan iPilihan = null;
+ 	private IHtp iHTP = null;
 	private IHTPSusulan iSusulan = null;
 	private IHTPSusulan iSusulanPembangunan = null;
 	private IHTPStatus iStatus = null;
@@ -518,110 +521,142 @@ public class FrmRekodTanah extends AjaxBasedModule {
 				socStatusTemp = getParam("socStatusDaftar");
 
 				Hashtable<String, String> hHakmilikUpdate = new Hashtable<String, String>();
+				//Default
+				hHakmilikUpdate.put("socIdAgensi", "");
+				hHakmilikUpdate.put("socIdKementerian", "");
+				
 				hHakmilikUpdate.put("idHakmilik", getParam("idHakmilik"));
 				
 				hHakmilikUpdate.put("socNegeriHR", getParam("socNegeriHR"));
 				hHakmilikUpdate.put("socDaerahHR", getParam("socDaerahHR"));
 				hHakmilikUpdate.put("socMukimHR", getParam("socMukimHR"));
 				
-				hHakmilikUpdate.put("socLotHR", getParam("socLotHR"));
+				//20200930, Tukar socLotHR kepada socLot
+				hHakmilikUpdate.put("socLot", getParam("socLotHR"));
 				hHakmilikUpdate.put("txtNoLot", getParam("txtNoLot"));
-				hHakmilikUpdate.put("txdTarikhTerima",getParam("txdTarikhTerima"));
+				//20200930, Tukar txdTarikhTerima kepada tarikhTerima
+				hHakmilikUpdate.put("tarikhTerima",getParam("txdTarikhTerima"));
+				//hHakmilikUpdate.put("txdTarikhTerima",getParam("txdTarikhTerima"));
+				myLog.info("kemaskini:88");
+				//  
+				//20200930, Tukar socJenisHakmilikHR kepada tarikhTerima
+				hHakmilikUpdate.put("socJenisHakmilik",getParam("socJenisHakmilikHR"));
+//				hHakmilikUpdate.put("socJenisHakmilikHR",getParam("socJenisHakmilikHR"));
+				//20200930, Tukar .. kepada ..
+				hHakmilikUpdate.put("noHakmilik", getParam("txtNoHakmilik"));
+				hHakmilikUpdate.put("noBangunan", getParam("txtNoBangunan"));
+				hHakmilikUpdate.put("noTingkat", getParam("txtNoTingkat"));
+				hHakmilikUpdate.put("noPetak", getParam("txtNoPetak"));
+//				hHakmilikUpdate.put("txtNoHakmilik", getParam("txtNoHakmilik"));
+//				hHakmilikUpdate.put("txtNoBangunan", getParam("txtNoBangunan"));
+//				hHakmilikUpdate.put("txtNoTingkat", getParam("txtNoTingkat"));
+//				hHakmilikUpdate.put("txtNoPetak", getParam("txtNoPetak"));
 				
-				hHakmilikUpdate.put("socJenisHakmilikHR",getParam("socJenisHakmilikHR"));
-				hHakmilikUpdate.put("txtNoHakmilik", getParam("txtNoHakmilik"));
-				hHakmilikUpdate.put("txtNoBangunan", getParam("txtNoBangunan"));
-				hHakmilikUpdate.put("txtNoTingkat", getParam("txtNoTingkat"));
-				hHakmilikUpdate.put("txtNoPetak", getParam("txtNoPetak"));
-				
-				hHakmilikUpdate.put("txdTarikhDaftar",getParam("txdTarikhDaftar"));
+				//20200930, Tukar .. kepada ..
+				hHakmilikUpdate.put("tarikhDaftar",getParam("txdTarikhDaftar"));
+//				hHakmilikUpdate.put("txdTarikhDaftar",getParam("txdTarikhDaftar"));
 				hHakmilikUpdate.put("txtCukaiTahun",Utils.RemoveComma(getParam("txtCukaiTahun")));
-				hHakmilikUpdate.put("txtLokasi", getParam("txtLokasi"));
-				hHakmilikUpdate.put("socLuas", getParam("socLuas"));
-				myLog.info("soc luas= " + getParam("socLuas"));
+				//20200930, Tukar txtLokasi kepada lokasi
+				hHakmilikUpdate.put("lokasi", getParam("txtLokasi"));
+//				hHakmilikUpdate.put("txtLokasi", getParam("txtLokasi"));
 				// LUAS LAMA
-//				2018/01/
-//				if (getParam("socLuas").equals("1")) {
-//					hHakmilikUpdate.put("txtLuasLama"
-//						,(getParam("txtLuas1") + "KM"));
-//				} else if (getParam("socLuas").equals("2")) {
-//					hHakmilikUpdate.put("txtLuasLama"
-//						,(getParam("txtLuas1") + "H"));
-//				} else if (getParam("socLuas").equals("3")) {
-//					hHakmilikUpdate.put("txtLuasLama"
-//						,(getParam("txtLuas1") + "M"));
-//				} else if (getParam("socLuas").equals("4")) {
-//					hHakmilikUpdate.put("txtLuasLama"
-//						, (getParam("txtLuas2")+ "E" + getParam("txtLuas3") + "R"+ getParam("txtLuas4") + "P"));
-//				} else if (getParam("socLuas").equals("5")) {
-//					hHakmilikUpdate.put("txtLuasLama"
-//						,(getParam("txtLuas1") + "K"));
-//				// FIX BUG. 21112014. syaz
-//				}else if (getParam("socLuas").equals("6")) {
-//					hHakmilikUpdate.put("txtLuasLama"
-//						,(getParam("txtLuas1") + "P"));
-//				}else if (getParam("socLuas").equals("7")) {
-//					hHakmilikUpdate.put("txtLuasLama"
-//						, (getParam("txtLuas5")+ "E" + getParam("txtLuas6") + "D"));
-//				} else if (getParam("socLuas").equals("8")) {
-//					hHakmilikUpdate.put("txtLuasLama"
-//						, (getParam("txtLuas2")+ "R" + getParam("txtLuas3") + "J"+ getParam("txtLuas4") + "K"));
-//				}
+				//20200930, Tukar socLuas kepada idLuas
+				hHakmilikUpdate.put("idLuas", getParam("socLuas"));
+//				hHakmilikUpdate.put("socLuas", getParam("socLuas"));
 				luasAsal = getTanah().getLuas(getParam("socLuas")
 						, getParam("txtLuas")
 						, getParam("txtLuas2"), getParam("txtLuas3"), getParam("txtLuas4")
 						, getParam("txtLuas5"), getParam("txtLuas6"));
-				hHakmilikUpdate.put("txtLuasLama",luasAsal);
+				//20200930, Tukar txtLuasLama kepada luas
+				hHakmilikUpdate.put("luas",luasAsal);
+//				hHakmilikUpdate.put("txtLuasLama",luasAsal);
 				// LUAS BARU
-				hHakmilikUpdate.put("txtLuas", getParam("txtLuas"));
-				hHakmilikUpdate.put("socTaraf", getParam("socTaraf"));
-				hHakmilikUpdate.put("txtTempoh", getParam("txtTempoh"));
+				//20200930, Tukar txtLuas kepada luasBersamaan
+				hHakmilikUpdate.put("luasBersamaan", getParam("txtLuas"));
+//				hHakmilikUpdate.put("txtLuas", getParam("txtLuas"));
+				//20200930, Tukar txtLuas kepada tarafHakmilik
+				hHakmilikUpdate.put("tarafHakmilik", getParam("socTaraf"));
+//				hHakmilikUpdate.put("socTaraf", getParam("socTaraf"));
+				//20200930, Tukar txtTempoh kepada tempoh
+				hHakmilikUpdate.put("tempoh", getParam("txtTempoh"));
+//				hHakmilikUpdate.put("txtTempoh", getParam("txtTempoh"));
 				hHakmilikUpdate.put("txtTarafHakmilik",getParam("txtTarafHakmilik"));
-				hHakmilikUpdate.put("txdTarikhLuput",getParam("txdTarikhLuput"));
+				//20200930, Tukar txtTempoh kepada tarikhLuput
+				hHakmilikUpdate.put("tarikhLuput",getParam("txdTarikhLuput"));
+//				hHakmilikUpdate.put("txdTarikhLuput",getParam("txdTarikhLuput"));
 			
 				hHakmilikUpdate.put("socKategori", getParam("socKategori"));
 				
-				hHakmilikUpdate.put("txtNoPelan", getParam("txtNoPelan"));
+				//20200930, Tukar txtNoPelan kepada noPelan
+				hHakmilikUpdate.put("noPelan", getParam("txtNoPelan"));
+//				hHakmilikUpdate.put("txtNoPelan", getParam("txtNoPelan"));
 				hHakmilikUpdate.put("txtSyarat", getParam("txtSyarat"));
 				hHakmilikUpdate.put("txtNoFailJopa", getParam("txtNoFailJopa"));
 				hHakmilikUpdate.put("txtHakmilikAsal",getParam("txtHakmilikAsal"));
 				hHakmilikUpdate.put("txtCukaiTerkini",Utils.RemoveComma(getParam("txtCukaiTerkini")));
-				hHakmilikUpdate.put("txtKegunaanTanah",getParam("txtKegunaanTanah"));
-				hHakmilikUpdate.put("txtNoPu", getParam("txtNoPu"));
+				//20200930, Tukar txtKegunaanTanah kepada kegunaanTanah
+				hHakmilikUpdate.put("kegunaanTanah",getParam("txtKegunaanTanah"));
+//				hHakmilikUpdate.put("txtKegunaanTanah",getParam("txtKegunaanTanah"));
+				//20200930, Tukar txtNoPu kepada noPu
+				hHakmilikUpdate.put("noPU", getParam("txtNoPu"));
+//				hHakmilikUpdate.put("txtNoPu", getParam("txtNoPu"));
 				hHakmilikUpdate.put("txdTarikhWarta",getParam("txdTarikhWarta"));
 				hHakmilikUpdate.put("txtKawasanRizab",getParam("txtKawasanRizab"));
-				hHakmilikUpdate.put("txtNoSyit", getParam("txtNoSyit"));
+				//20200930, Tukar txtNoSyit kepada noSyit
+				hHakmilikUpdate.put("noSyit", getParam("txtNoSyit"));
+//				hHakmilikUpdate.put("txtNoSyit", getParam("txtNoSyit"));
 				// hHakmilikUpdate.put("txtNoWarta", getParam("txtNoWarta"));
-				hHakmilikUpdate.put("txtNoWarta", getParam("txtNoRizab"));
+				//20200930, Tukar txtNoWarta kepada noRizab
+				hHakmilikUpdate.put("noRizab", getParam("txtNoRizab"));
+//				hHakmilikUpdate.put("txtNoWarta", getParam("txtNoRizab"));
 				// myLog.info(getParam("txtNoWarta"));
-				myLog.info(getParam("txtNoRizab"));
-				hHakmilikUpdate.put("txtSekatan", getParam("txtSekatan"));
-				hHakmilikUpdate.put("txtSyarat", getParam("txtSyarat"));
-				hHakmilikUpdate.put("txtKawasanRizab",getParam("txtKawasanRizab"));
+//				myLog.info(getParam("txtNoRizab"));
+				//20200930, Tukar txtSekatan kepada sekatan
+				hHakmilikUpdate.put("sekatan", getParam("txtSekatan"));
+//				hHakmilikUpdate.put("txtSekatan", getParam("txtSekatan"));
+				//20200930, Tukar txtSyarat kepada syarat
+				hHakmilikUpdate.put("syarat", getParam("txtSyarat"));
+//				hHakmilikUpdate.put("txtSyarat", getParam("txtSyarat"));
 				hHakmilikUpdate.put("txtHakmilikBerikut",getParam("txtHakmilikBerikut"));
 				
 				hHakmilikUpdate.put("socStatus", socStatusTemp);
 				hHakmilikUpdate.put("socJenisRizab", getParam("socJenisRizab"));
-				hHakmilikUpdate.put("socRizab", getParam("socRizab"));
+				//20200930, Tukar socRizab kepada idRizab
+				hHakmilikUpdate.put("idRizab", getParam("socRizab"));
+//				hHakmilikUpdate.put("socRizab", getParam("socRizab"));
+				//20200930, Tukar socJenisHakmilikBaru kepada tarikhRizab
+				hHakmilikUpdate.put("tarikhRizab",getParam("txdTarikhRizab"));
+//				hHakmilikUpdate.put("txdTarikhRizab",getParam("txdTarikhRizab"));
+				//20200930, Tukar txtKawasanRizab kepada kawasanRizab
+				hHakmilikUpdate.put("kawasanRizab",getParam("txtKawasanRizab"));
+//				hHakmilikUpdate.put("txtKawasanRizab",getParam("txtKawasanRizab"));
 				hHakmilikUpdate.put("catatan", getParam("txtKemAgenTerkini"));
 				hHakmilikUpdate.put("txdTarikhKemaskini",getParam("txdTarikhKemaskini"));
-				hHakmilikUpdate.put("idKemaskini",session.getAttribute("_ekptg_user_id").toString());
 				
 				String socJenisHakmilikBaru = getParam("socJenisHakmilikBaru");
+				//20200930, Tukar socJenisHakmilikBaru kepada socJenisHakmilik
+//				hHakmilikUpdate.put("socJenisHakmilik",socJenisHakmilikBaru);
 				hHakmilikUpdate.put("socJenisHakmilikBaru",socJenisHakmilikBaru);
 				
 				String idHakmilikCukai = getParam("txtIdHakmilikCukai");
 				hHakmilikUpdate.put("idHakmilikCukai", idHakmilikCukai);
-				hHakmilikUpdate.put("txtCukaiSemasa",Utils.RemoveComma(getParam("txtCukaiSemasa")));
-				hHakmilikUpdate.put("idKemaskini", userId);
+				//20200930, Tukar txtCukaiSemasa kepada cukai
+				hHakmilikUpdate.put("cukai",Utils.RemoveComma(getParam("txtCukaiSemasa")));
+//				hHakmilikUpdate.put("txtCukaiSemasa",Utils.RemoveComma(getParam("txtCukaiSemasa")));
+				//20200930, Tukar idKemaskini kepada idMasuk
+				hHakmilikUpdate.put("idMasuk", userId);
+//				hHakmilikUpdate.put("idKemaskini", userId);
 				hHakmilikUpdate.put("txtKodSocJenisHakmilikBaru",frmRekodUtilData.getKodJenisHakmilik(socJenisHakmilikBaru));
-				hHakmilikUpdate.put("txdTarikhRizab",getParam("txdTarikhRizab"));
+				hHakmilikUpdate.put("seksyenUPI",getParam("idSeksyenUPI"));
+				hHakmilikUpdate.put("txtPelepasan",getParam("txtpelepasan"));
+				
 				/** 15/10/2010
 				 FrmRekodPendaftaranHakmilikRizabData.updateHakmilikById(hHakmilikUpdate); */
 				this.context.put("readonly", "readonly");
 				this.context.put("disabled", "disabled");
 				this.context.put("mode", "view");
-
+				//20200930, Tukar .... diguna untuk kemaskini hakmilik
+				
 				// VIEW SEMULA HAKMILIK YANG DIUPDATE
 				if (socStatusTemp.equals("S")) {
 					getTanah().kemaskiniHakmilikTambahSambungan(hHakmilikUpdate);
@@ -1926,8 +1961,7 @@ public class FrmRekodTanah extends AjaxBasedModule {
 			String idJenisHakmilikBaru) throws Exception {
 		String idHakmilik = getParam("idHakmilik");
 		Vector<Hashtable<String,String>> list = null;
-		list = FrmRekodPendaftaranHakmilikRizabData
-				.getPaparHakmilikRizabById(idHakmilik);
+		list = FrmRekodPendaftaranHakmilikRizabData.getPaparHakmilikRizabById(idHakmilik);
 		Hashtable<String,String> hHakmilik = null;
 		if (list.size() > 0) {
 			hHakmilik = (Hashtable<String,String>) list.get(0);
@@ -1938,7 +1972,9 @@ public class FrmRekodTanah extends AjaxBasedModule {
 		this.context.put("idHakmilik", (String) hHakmilik.get("idHakmilik"));
 		this.context.put("statusBatal", (String) hHakmilik.get("socStatus"));
 		this.context.put("txtKodSocJenisHakmilik",(String) hHakmilik.get("kodJenisHakmilik"));
-
+		myLog.info("view_modeHakmilikRizab:lepas="+hHakmilik.get("txtPelepasan"));
+		this.context.put("txtPelepasan",(String) hHakmilik.get("txtPelepasan"));
+		
 		if (hHakmilik.get("socStatus").equals("S")
 				|| hHakmilik.get("socStatus").equals("B")) {
 			isSambungan = true;
@@ -2213,6 +2249,7 @@ public class FrmRekodTanah extends AjaxBasedModule {
 				getParam("socStatus") == "" ? (String) hHakmilik
 						.get("socStatus") : getParam("socStatus"));
 
+	
 	}
 
 	// 30/06/2010 Add by rosli - VIEW MAKLUMAT RIZAB
@@ -2264,6 +2301,8 @@ public class FrmRekodTanah extends AjaxBasedModule {
 				"txtLuasLama",
 				getParam("txtLuasLama") == "" ? (String) hHakmilik
 						.get("luasLama") : getParam("txtLuasLama"));
+		
+		this.context.put("namaSeksyenUPI",getParam("txtLuasLama") == "" ? (String) hHakmilik.get("namaSeksyenUPI") : getParam("txtLuasLama"));
 
 		if (nextAction.equals("kemaskiniDetailHakmilik")
 				|| nextAction.equals("kemaskiniDetailRizab")) {
@@ -2637,6 +2676,8 @@ public class FrmRekodTanah extends AjaxBasedModule {
 		this.context.put("idHakmilik",String.valueOf(hHakmilik.get("idHakmilik")));
 		this.context.put("statusBatal",String.valueOf(hHakmilik.get("socStatus")));
 		this.context.put("txtKodSocJenisHakmilik",String.valueOf(hHakmilik.get("kodJenisHakmilik")));
+		this.context.put("txtPelepasan",String.valueOf(hHakmilik.get("txtPelepasan")));
+
 		// myLog.info("socStatusTemp:"+hHakmilik.get("socStatus"));
 		if (socStatusTemp.equals("S") || socStatusTemp.equals("B")) {
 			isSambungan = true;
@@ -2709,6 +2750,8 @@ public class FrmRekodTanah extends AjaxBasedModule {
 			this.context.put("selectNegeriHR", hHakmilik.get("namaNegeriHR"));
 			this.context.put("selectDaerahHR", hHakmilik.get("namaDaerahHR"));
 			this.context.put("selectMukimHR", hHakmilik.get("namaMukimHR"));
+			this.context.put("selectSekyenUPI", hHakmilik.get("namaSeksyen"));
+
 			this.context.put("selectJenisLotHR", hHakmilik.get("namaLot"));
 			this.context.put("selectJenisHakmilikHR",String.valueOf(hHakmilik.get("kodJenisHakmilikHR")));
 			this.context.put("selectLuasLama", HTML.SelectLuas("socLuas"
@@ -2924,6 +2967,9 @@ public class FrmRekodTanah extends AjaxBasedModule {
 					(String) makTanah.get("idDaerahHR"), "socMukimHR",
 					Utils.parseLong((String) makTanah.get("idMukimHR")),
 					" style=\"width:200px\""));
+			context.put("selectSekyenUPI", getPilihan().Pilihan(
+					"idSeksyenUPI", String.valueOf(makTanah.get("idSeksyenUPI")),String.valueOf(makTanah.get("idMukimHR"))));
+			
 			// this.context.put("selectJenisHakmilikHR",
 			// HTML.SelectJenisHakmilik("socJenisHakmilikHR",Utils.parseLong((String)hHakmilik.get("idJenisHakmilikHR")),
 			// " style=\"width:200px\""));
@@ -4900,5 +4946,13 @@ public class FrmRekodTanah extends AjaxBasedModule {
 		return iTanahKem;
 	}	
 	
-
+	private IUtilHTMLPilihan getPilihan(){
+		if(iPilihan==null){
+			iPilihan = new UtilHTMLPilihanSeksyenUPI();
+		}
+		return iPilihan;
+	
+	}
+	
+	
 }

@@ -10,7 +10,8 @@
 <input name="report" type="hidden" id="report" value="$report"/>
 <fieldset>
 <legend> #if ($!report == 'notisTuntutanTunggakan') <strong>NOTIS TUNTUTAN TUNGGAKAN SEWA</strong> #end
-#if ($!report == 'notisRampasanDeposit') <strong>NOTIS RAMPASAN DEPOSIT</strong> #end </legend>
+#if ($!report == 'notisRampasanDeposit') <strong>NOTIS RAMPASAN DEPOSIT</strong> #end
+#if ($!report == 'notisTuntutan') <strong>NOTIS TUNTUTAN</strong> #end </legend>
 <table align="center" width="100%">
   <tr>
     <td width="1%">&nbsp;</td>
@@ -32,7 +33,7 @@
   #end
   <tr>
     <td ><span class="style1">*</span></td>
-    <td >Tarikh  Notis</td>
+    <td >Tarikh Mula Notis</td>
     <td >:</td>
     <td ><input type="text" name="tarikhNotis" id="tarikhNotis" onblur="check_date(this)" size="9"/>
       <a href="javascript:displayDatePicker('tarikhNotis',false,'dmy');"><img border="0" src="../../img/calendar.gif"/></a></td>
@@ -52,6 +53,9 @@
       #end
       #if ($!report == 'notisRampasanDeposit')
       <input type="button" name="cmdCetak" id="cmdCetak" value="Simpan" onClick="janaNotisRampasanDeposit()"/>
+      #end
+      #if($report=="notisTuntutan")
+      <input type="button" name="cmdCetak" id="cmdCetak" value="Simpan" onClick="janaNotisTuntutan()"/>
       #end </td>
   </tr>
 </table>
@@ -60,32 +64,45 @@
 function janaNotisTuntutanTunggakan(){
 	if(document.${formName}.bilPeringatan.value == ""){
 		alert('Sila pilih bilangan Peringatan.');
-  		document.${formName}.bilPeringatan.focus(); 
-		return; 
+  		document.${formName}.bilPeringatan.focus();
+		return;
 	}
 	if(document.${formName}.tarikhNotis.value == ""){
 		alert('Sila masukan Tarikh Notis.');
-  		document.${formName}.tarikhNotis.focus(); 
-		return; 
+  		document.${formName}.tarikhNotis.focus();
+		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
-	}	
+	}
 	doAjaxCall${formName}("janaNotisTuntutanTunggakan");
 }
 
 function janaNotisRampasanDeposit(){
 	if(document.${formName}.tarikhNotis.value == ""){
 		alert('Sila masukan Tarikh Notis.');
-  		document.${formName}.tarikhNotis.focus(); 
-		return; 
+  		document.${formName}.tarikhNotis.focus();
+		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
-	}	
+	}
 	doAjaxCall${formName}("janaNotisRampasanDeposit");
+}
+
+function janaNotisTuntutan(){
+	if(document.${formName}.tarikhNotis.value == ""){
+		alert('Sila masukan Tarikh Notis.');
+  		document.${formName}.tarikhNotis.focus();
+		return;
+	}
+
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+	doAjaxCall${formName}("janaNotisTuntutan");
 }
 </script>
 #if ($!successSave == 'Y')
@@ -93,4 +110,4 @@ function janaNotisRampasanDeposit(){
 window.opener.doRefreshScreen();
 window.close();
 </script>
-#end 
+#end

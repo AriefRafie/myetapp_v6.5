@@ -25,14 +25,14 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
   #end
   <tr>
     <td colspan="2"><fieldset>
-      <legend><strong>SENARAI IMEJ</strong></legend>
+      <legend><strong>SENARAI IMEJAN</strong></legend>
       <table align="center" width="100%">
         <tr>
           <td colspan="4" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:daftarDokumen()"/></td>
         </tr>
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-          <td width="20%"><strong>Nama Imej</strong></td>
+          <td width="20%"><strong>Nama Imejan</strong></td>
           <td width="40%"><strong>Keterangan</strong></td>
           <td width="35%"><strong>Muat Turun</strong></td>
         </tr>
@@ -66,7 +66,9 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
   </tr>
   <tr>
     <td width="30%">&nbsp;</td>
-    <td width="70%"><input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembali()"/></td>
+    <td width="70%">
+    	<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembali()"/>
+    	<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar" onclick="hantar()"/>
     </td>
   </tr>
 </table>
@@ -101,7 +103,7 @@ function simpanDokumen(idLaporan,idPermohonan) {
 	var dp = document.${formName}.form_token.value ;
 	var dopost = "&form_token="+dp;
 
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmSenaraiLaporanTanahView&hitButton=simpanDokumen&namaImej="+namaImej+"&idPermohonan="+idPermohonan+"&catatanImej="+catatanImej+"&idLaporan="+idLaporan+"&selectedTab=2"+dopost+"&step=kemaskini&flagPopup=openPopupDokumen&modePopup=new";
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmSenaraiLaporanTanahView&hitButton=simpanDokumen&namaImej="+namaImej+"&idPermohonan="+idPermohonan+"&catatanImej="+catatanImej+"&idLaporan="+idLaporan+"&selectedTab=4"+dopost+"&step=kemaskini&flagPopup=openPopupDokumen&modePopup=new";
 	
 	document.${formName}.method="post";
 	document.${formName}.enctype="multipart/form-data";

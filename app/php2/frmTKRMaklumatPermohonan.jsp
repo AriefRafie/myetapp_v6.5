@@ -59,16 +59,16 @@
           <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PEMOHON</li>
           <li onClick="doChangeTabUpper(4);" class="TabbedPanelsTab" tabindex="0">TANAH GANTI</li>
           <li onClick="doChangeTabUpper(5);" class="TabbedPanelsTab" tabindex="0">SENARAI SEMAK</li>
-          <li onClick="doChangeTabUpper(6);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT LAMPIRAN</li>
+          <!-- <li onClick="doChangeTabUpper(6);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT LAMPIRAN</li> -->
         </ul>
         <div class="TabbedPanelsContentGroup">
-          <div class="TabbedPanelsContent"> #if ($flagBorangK == 'Y') 
-            #parse("app/php2/frmPLPMaklumatBorangK.jsp") 
-            #else 
+          <div class="TabbedPanelsContent"> #if ($flagBorangK == 'Y')
+            #parse("app/php2/frmPLPMaklumatBorangK.jsp")
+            #else
             #parse("app/php2/frmPLPMaklumatTanah.jsp")
-            #parse("app/php2/frmTKRTindakan.jsp") 
+            #parse("app/php2/frmTKRTindakan.jsp")
             #end </div>
-          
+
           <!-- START MAKLUMAT TANAH BERKAITAN -->
           <div class="TabbedPanelsContent">
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -79,7 +79,8 @@
                       <tr>
                         <td colspan="8" scope="row">
                           <input name="cmdDaftar" type="button" value="Pilih Hakmilik" onClick="javascript:doDaftarHakmilik('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/>
-                          <input name="cmdDaftar" type="button" value="Pilih Borang K" onClick="javascript:doDaftarBorangK('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/></td>
+                          <!-- <input name="cmdDaftar" type="button" value="Pilih Borang K" onClick="javascript:doDaftarBorangK('$idPermohonan','$idKategoriPemohon','$idNegeriPemohon','$idKementerianPemohon')"/> -->
+                        </td>
                       </tr>
                       <tr class="table_header">
                         <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
@@ -99,7 +100,7 @@
                       #set( $row = "row1" )
                       #elseif (($senaraiTanahBerkaitan.bil % 2) != 0)
                       #set( $row = "row1" )
-                      #else 
+                      #else
                       #set( $row = "row2" )
                       #end
                       <tr>
@@ -136,10 +137,10 @@
             </table>
           </div>
           <!-- END MAKLUMAT TANAH BERKAITAN -->
-          
+
           <div class="TabbedPanelsContent">
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
-             
+
               #foreach ($beanMaklumatTukarguna in $BeanMaklumatTukarguna)
               <tr>
                 <td width="1%">#if ($mode == 'update')<span class="style1">*</span>#end</td>
@@ -201,7 +202,7 @@
                   <input type="hidden" name="txtLuasAsal" id="txtLuasAsal" value="$beanMaklumatTukarguna.luasAsal"/></td>
               </tr>
               #if ($idLuasKegunaan == '2')
-              
+
               #if ($mode == 'update')
               <tr>
                 <td><span class="style1">*</span></td>
@@ -222,7 +223,7 @@
                   </select></td>
               </tr>
               #end
-              
+
               #if ($idLuas != '99999' && $idLuas != '')
               <tr>
                 <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
@@ -308,7 +309,7 @@
                         #set( $row = "row1" )
                         #elseif (($senaraiTanahSemua.bil % 2) != 0)
                         #set( $row = "row1" )
-                        #else 
+                        #else
                         #set( $row = "row2" )
                         #end
                         <tr>
@@ -344,13 +345,102 @@
               </table>
             </div>
           </div>
-          
-          <div class="TabbedPanelsContent"> 
-          	#if($selectedTabUpper==3)
-            	#parse("app/php2/frmTKRMaklumatPemohon.jsp")
-            #end 
+
+          <div class="TabbedPanelsContent">
+          	##if($selectedTabUpper==3)
+            ##	#parse("app/php2/frmTKRMaklumatPemohon.jsp")
+            ##end
+            <table width="100%" border="0" cellspacing="2" cellpadding="2">
+            	<tr>
+            		<td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
+		    		<td width="28%">Kategori Pemohon</td>
+		    		<td>:</td>
+		    		<td width="70%">$selectKategoriPemohon</td>
+            	</tr>
+            	<tr>
+			    	<td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
+			    	<td>Kementerian</td>
+			    	<td>:</td>
+			    	<td>$selectKementerian</td>
+			  	</tr>
+			  	<tr>
+		    		<td>#if ($mode != 'view')<span class="style1">*</span>#end</td>
+		    		<td>Agensi</td>
+		    		<td>:</td>
+		    		<td>$selectAgensi</td>
+		  		</tr>
+		  		#foreach ($beanMaklumatAgensi in $BeanMaklumatAgensi)
+		  		<tr>
+		    		<td>&nbsp;</td>
+		    		<td>Nama</td>
+		    		<td>:</td>
+		    		<td>$beanMaklumatAgensi.namaAgensi</td>
+		  		</tr>
+		  		<tr>
+		    		<td>&nbsp;</td>
+		    		<td>Alamat</td>
+		    		<td>:</td>
+		    		<td>$beanMaklumatAgensi.alamat1</td>
+			  	</tr>
+			  	<tr>
+			    	<td>&nbsp;</td>
+			    	<td>&nbsp;</td>
+			    	<td>:</td>
+			    	<td>$beanMaklumatAgensi.alamat2</td>
+			  	</tr>
+			  	<tr>
+			    	<td>&nbsp;</td>
+			    	<td>&nbsp;</td>
+			    	<td>:</td>
+			    	<td>$beanMaklumatAgensi.alamat3</td>
+			  	</tr>
+			  	<tr>
+			    	<td>&nbsp;</td>
+			    	<td>Poskod</td>
+			    	<td>:</td>
+			    	<td>$beanMaklumatAgensi.poskod</td>
+			  	</tr>
+			  	<tr>
+		    		<td>&nbsp;</td>
+		    		<td>Negeri</td>
+		    		<td>:</td>
+		    		<td>$beanMaklumatAgensi.negeri</td>
+		  		</tr>
+		  		<tr>
+				    <td>&nbsp;</td>
+				    <td>&nbsp;</td>
+				    <td>&nbsp;</td>
+				    <td>&nbsp;</td>
+				</tr>
+		  		#end
+		  		#if ($mode == 'update')
+			  	<tr>
+			    	<td colspan="4" valign="bottom"><i><font color="#ff0000">Perhatian</font> : Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i></td>
+			  	</tr>
+			  	#end
+			  	<tr>
+				    <td>&nbsp;</td>
+				    <td>&nbsp;</td>
+				    <td>&nbsp;</td>
+				    <td> 
+				      #if ($mode == 'addNewPemohon')
+							<input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="doSimpanMaklumatPemohon()"/>
+							<input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onClick="doBatalMaklumatPemohon()"/>      
+				      #end     
+				      #if ($mode == 'updatePemohon')
+					      <input type="button" name="cmdSimpanKemaskini2" id="cmdSimpanKemaskini2" value="Simpan" onclick="doSimpanKemaskiniMaklumatPemohon()"/>
+					      <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskiniMaklumatPemohon()"/>
+				      #end
+				      #if ($mode == 'view')
+					      <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskiniMaklumatPemohon()"/>
+					      ##<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapusMaklumatPemohon()"/>	      
+					      ##<input type="button" name="cmdBatal" id="cmdBatal" value="Kembali" onClick="doBatalMaklumatPemohon()"/>    
+					  #end 
+				    </td>
+				 </tr>
+            </table>
           </div>
-          
+
           #if($selectedTabUpper!=3)
           <div class="TabbedPanelsContent">
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -390,7 +480,7 @@
                       #set( $row = "row1" )
                       #elseif (($senaraiTanahGanti.bil % 2) != 0)
                       #set( $row = "row1" )
-                      #else 
+                      #else
                       #set( $row = "row2" )
                       #end
                       <tr>
@@ -423,7 +513,7 @@
                       </tr>
                       #if ($flagPopup == '')
                       <tr>
-                        <td colspan="7" align="center"> 
+                        <td colspan="7" align="center">
                           #if($idStatus == '1610198')
                           <input type="button" name="cmdHantar" id="cmdHantar" value="Seterusnya" onClick="doSeterusnya()"/>
                           <input type="button" name="cmdBatalPermohonan2" id="cmdBatalPermohonan2" value="Batal Permohonan" onClick="doBatalPermohonan()"/>
@@ -438,19 +528,19 @@
             </table>
           </div>
           #end
-          
+
           <div class="TabbedPanelsContent"> <br>
             #if($selectedTabUpper==5)
             	#parse("app/php2/frmTKRSenaraiSemak.jsp")
-            #end 
+            #end
           </div>
-          
-          <div class="TabbedPanelsContent"> <br>
+
+          <!-- <div class="TabbedPanelsContent"> <br>
             #if($selectedTabUpper==6)
             	#parse("app/php2/frmTKRPelan.jsp")
-            #end 
-          </div>
-          
+            #end
+          </div> -->
+
         </div>
       </div></td>
   </tr>
@@ -515,7 +605,7 @@ function papar(idHakmilikPermohonan, flagHakmilik){
 #if ($idFail != '')
 	var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedTabUpper});
 #end
-</script> 
+</script>
 <script>
 function doDaftarHakmilik(idPermohonan,idKategoriPemohon,idNegeriPemohon,idKementerianPemohon) {
 	var url = "../x/${securityToken}/ekptg.view.php2.FrmPLPPopupSenaraiTanahBerkaitanView?idPermohonan="+idPermohonan+"&idKategoriPemohon="+idKategoriPemohon+"&idNegeriPemohon="+idNegeriPemohon+"&idKementerianPemohon="+idKementerianPemohon;
@@ -534,7 +624,7 @@ function doDaftarBorangK(idPermohonan,idKategoriPemohon,idNegeriPemohon,idKement
 		hWnd.focus();
 }
 
-</script> 
+</script>
 <script>
 
 function cetakMaklumatTanah(idhakmilik){
@@ -572,7 +662,7 @@ function gotoBatal(){
 }
 function goToKemaskini(idKategoriPemohon,idAgensiPemohon,idNegeriJKPTG){
 	document.${formName}.hitButton.value = "kemaskiniMaklumatTanah";
-	
+
 	var url = "../x/${securityToken}/ekptg.view.php2.FrmTKRPopupSenaraiTanahView?idKategoriPemohon="+idKategoriPemohon+"&idAgensiPemohon="+idAgensiPemohon+"&idNegeriJKPTG="+idNegeriJKPTG;
     var hWnd = window.open(url,'printuser','width=900,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
@@ -598,7 +688,7 @@ function validateLuas(elmnt,content,content2) {
 		elmnt.value = content2;
 		return;
 	}
-	
+
 	if(content != ""){
 		var num = content * 1;
 		elmnt.value = num.toFixed(5);
@@ -674,144 +764,144 @@ function doBatalKemaskini() {
 	doAjaxCall${formName}("");
 }
 function doSimpanKemaskiniMaklumatTukarguna(idLuas) {
-	//CHECK DATE   
-	var str1  = document.${formName}.tarikhTerima.value;		   
+	//CHECK DATE
+	var str1  = document.${formName}.tarikhTerima.value;
 	var dt1   = parseInt(str1.substring(0,2),10);
 	var mon1  = parseInt(str1.substring(3,5),10)-1;
 	var yr1   = parseInt(str1.substring(6,10),10);
 	var tarikhTerima = new Date(yr1, mon1, dt1);
-	
-	var str2  =  document.${formName}.tarikhSurat.value;		   
+
+	var str2  =  document.${formName}.tarikhSurat.value;
 	var dt2   = parseInt(str2.substring(0,2),10);
 	var mon2  = parseInt(str2.substring(3,5),10)-1;
 	var yr2   = parseInt(str2.substring(6,10),10);
 	var tarikhSurat = new Date(yr2, mon2, dt2);
-	
+
 	var currentDate = new Date();
-	
+
 	if (tarikhTerima > currentDate){
 		alert('Tarikh Terima tidak boleh melebihi dari tarikh hari ini.');
-  		document.${formName}.tarikhTerima.focus(); 
+  		document.${formName}.tarikhTerima.focus();
 		return;
 	}
 	if (tarikhSurat > currentDate){
 		alert('Tarikh Surat tidak boleh melebihi dari tarikh hari ini.');
-  		document.${formName}.tarikhSurat.focus(); 
+  		document.${formName}.tarikhSurat.focus();
 		return;
 	}
 	if (tarikhSurat > tarikhTerima){
 		alert('Tarikh Surat tidak boleh melebihi dari Tarikh Terima.');
-  		document.${formName}.tarikhSurat.focus(); 
+  		document.${formName}.tarikhSurat.focus();
 		return;
 	}
 	if(document.${formName}.tarikhTerima.value == ""){
 		alert('Sila masukkan Tarikh Terima.');
-  		document.${formName}.tarikhTerima.focus(); 
-		return; 
+  		document.${formName}.tarikhTerima.focus();
+		return;
 	}
 	if(document.${formName}.tarikhSurat.value == ""){
 		alert('Sila masukkan Tarikh Surat.');
-  		document.${formName}.tarikhSurat.focus(); 
-		return; 
+  		document.${formName}.tarikhSurat.focus();
+		return;
 	}
 	if(document.${formName}.txtPerkara.value == ""){
 		alert('Sila masukkan Perkara.');
-  		document.${formName}.txtPerkara.focus(); 
-		return; 
-	}	
+  		document.${formName}.txtPerkara.focus();
+		return;
+	}
 	if(document.${formName}.socLuasKegunaan.value == ""){
 		alert('Sila masukkan Luas Kegunaan.');
-  		document.${formName}.socLuasKegunaan.focus(); 
-		return; 
+  		document.${formName}.socLuasKegunaan.focus();
+		return;
 	}
 	if(document.${formName}.socLuasKegunaan.value == "2"){
 		if(document.${formName}.socLuas.value == "0"){
 			alert('Sila pilih Unit Luas.');
-			document.${formName}.socLuas.focus(); 
-			return; 
+			document.${formName}.socLuas.focus();
+			return;
 		}
-	
+
 		if(idLuas == '1' || idLuas == '2' || idLuas == '3' || idLuas == '5' || idLuas == '6' || idLuas == '9'){
 			if(document.${formName}.txtLuasMohon1.value == ""){
 				alert('Sila masukkan Luas Tukarguna .');
-				document.${formName}.txtLuasMohon1.focus(); 
-				return; 
+				document.${formName}.txtLuasMohon1.focus();
+				return;
 			}
 		}
 		else
 		if(idLuas == '4' || idLuas == '8'){
 			if(document.${formName}.txtLuasMohon1.value == ""){
 				alert('Sila masukkan Luas Tukarguna.');
-				document.${formName}.txtLuasMohon1.focus(); 
-				return; 
+				document.${formName}.txtLuasMohon1.focus();
+				return;
 			}
 			if(document.${formName}.txtLuasMohon2.value == ""){
 				alert('Sila masukkan Luas Tukarguna.');
-				document.${formName}.txtLuasMohon2.focus(); 
-				return; 
+				document.${formName}.txtLuasMohon2.focus();
+				return;
 			}
 			if(document.${formName}.txtLuasMohon3.value == ""){
 				alert('Sila masukkan Luas Tukarguna.');
-				document.${formName}.txtLuasMohon3.focus(); 
-				return; 
+				document.${formName}.txtLuasMohon3.focus();
+				return;
 			}
-		} 
+		}
 		else
 		if(idLuas == '7'){
 			if(document.${formName}.txtLuasMohon1.value == ""){
 				alert('Sila masukkan Luas Tukarguna.');
-				document.${formName}.txtLuasMohon1.focus(); 
-				return; 
+				document.${formName}.txtLuasMohon1.focus();
+				return;
 			}
 			if(document.${formName}.txtLuasMohon2.value == ""){
 				alert('Sila masukkan Luas Tukarguna.');
-				document.${formName}.txtLuasMohon2.focus(); 
-				return; 
+				document.${formName}.txtLuasMohon2.focus();
+				return;
 			}
-		} 
+		}
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "update";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.flagPopup.value = "openPopupMaklumatPermohonan";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniMaklumatTukarguna";
 	document.${formName}.submit();
 }
 function cekTarikhTerima(elmnt) {
-//CHECK DATE   
-	var str1  = document.${formName}.tarikhTerima.value;		   
+//CHECK DATE
+	var str1  = document.${formName}.tarikhTerima.value;
 	var dt1   = parseInt(str1.substring(0,2),10);
 	var mon1  = parseInt(str1.substring(3,5),10)-1;
 	var yr1   = parseInt(str1.substring(6,10),10);
 	var tarikhTerima = new Date(yr1, mon1, dt1);
-	
+
 	var currentDate = new Date();
-	
+
 	if (tarikhTerima > currentDate){
 		alert('Tarikh Terima tidak boleh melebihi dari tarikh hari ini.');
 		return;
 	}
 }
-function cekTarikhSurat(elmnt) { 
-	//CHECK DATE   
-	var str1  = document.${formName}.tarikhTerima.value;		   
+function cekTarikhSurat(elmnt) {
+	//CHECK DATE
+	var str1  = document.${formName}.tarikhTerima.value;
 	var dt1   = parseInt(str1.substring(0,2),10);
 	var mon1  = parseInt(str1.substring(3,5),10)-1;
 	var yr1   = parseInt(str1.substring(6,10),10);
 	var tarikhTerima = new Date(yr1, mon1, dt1);
-	
-	var str2  =  document.${formName}.tarikhSurat.value;		   
+
+	var str2  =  document.${formName}.tarikhSurat.value;
 	var dt2   = parseInt(str2.substring(0,2),10);
 	var mon2  = parseInt(str2.substring(3,5),10)-1;
 	var yr2   = parseInt(str2.substring(6,10),10);
 	var tarikhSurat = new Date(yr2, mon2, dt2);
-	
+
 	var currentDate = new Date();
-	
+
 	if (tarikhSurat > currentDate){
 		alert('Tarikh Surat tidak boleh melebihi dari tarikh hari ini.');
 		return;
@@ -835,93 +925,93 @@ function doBatalTanahGanti(){
 function doSimpanTanahGanti(){
 	if(document.${formName}.socJenisHakmilikTG.value == ""){
 		alert('Sila pilih Jenis Hakmilik.');
-  		document.${formName}.socJenisHakmilikTG.focus(); 
-		return; 
+  		document.${formName}.socJenisHakmilikTG.focus();
+		return;
 	}
 	if(document.${formName}.txtNoHakmilikTG.value == ""){
 		alert('Sila masukkan No. Hakmilik.');
-  		document.${formName}.txtNoHakmilikTG.focus(); 
-		return; 
+  		document.${formName}.txtNoHakmilikTG.focus();
+		return;
 	}
 	if(document.${formName}.socLotTG.value == ""){
 		alert('Sila pilih Lot.');
-  		document.${formName}.socLotTG.focus(); 
-		return; 
+  		document.${formName}.socLotTG.focus();
+		return;
 	}
 	if(document.${formName}.txtNoLotTG.value == ""){
 		alert('Sila masukkan No. Lot.');
-  		document.${formName}.txtNoLotTG.focus(); 
-		return; 
+  		document.${formName}.txtNoLotTG.focus();
+		return;
 	}
 	if(document.${formName}.socLuasTG.value == "0"){
 		alert('Sila pilih Unit Luas.');
-		document.${formName}.socLuasTG.focus(); 
-		return; 
+		document.${formName}.socLuasTG.focus();
+		return;
 	}
-		
+
 	var idLuas = document.${formName}.socLuasTG.value;
-	
+
 	if(idLuas == '1' || idLuas == '2' || idLuas == '3' || idLuas == '5' || idLuas == '6' || idLuas == '9'){
 		if(document.${formName}.txtLuas1TG.value == ""){
 			alert('Sila masukkan Luas .');
-			document.${formName}.txtLuas1TG.focus(); 
-			return; 
+			document.${formName}.txtLuas1TG.focus();
+			return;
 		}
 	}
 	else
 	if(idLuas == '4' || idLuas == '8'){
 		if(document.${formName}.txtLuas1TG.value == ""){
 			alert('Sila masukkan Luas.');
-			document.${formName}.txtLuas1TG.focus(); 
-			return; 
+			document.${formName}.txtLuas1TG.focus();
+			return;
 		}
 		if(document.${formName}.txtLuas2TG.value == ""){
 			alert('Sila masukkan Luas.');
-			document.${formName}.txtLuas2TG.focus(); 
-			return; 
+			document.${formName}.txtLuas2TG.focus();
+			return;
 		}
 		if(document.${formName}.txtLuas3TG.value == ""){
 			alert('Sila masukkan Luas.');
-			document.${formName}.txtLuas3TG.focus(); 
-			return; 
+			document.${formName}.txtLuas3TG.focus();
+			return;
 		}
-	} 
+	}
 	else
 	if(idLuas == '7'){
 		if(document.${formName}.txtLuas1TG.value == ""){
 			alert('Sila masukkan Luas.');
-			document.${formName}.txtLuas1TG.focus(); 
-			return; 
+			document.${formName}.txtLuas1TG.focus();
+			return;
 		}
 		if(document.${formName}.txtLuas2TG.value == ""){
 			alert('Sila masukkan Luas.');
-			document.${formName}.txtLuas2TG.focus(); 
-			return; 
+			document.${formName}.txtLuas2TG.focus();
+			return;
 		}
 	}
 	if(document.${formName}.socNegeriTG.value == ""){
 		alert('Sila pilih Negeri.');
-  		document.${formName}.socNegeriTG.focus(); 
-		return; 
+  		document.${formName}.socNegeriTG.focus();
+		return;
 	}
 	if(document.${formName}.socDaerahTG.value == ""){
 		alert('Sila pilih Daerah.');
-  		document.${formName}.socDaerahTG.focus(); 
-		return; 
+  		document.${formName}.socDaerahTG.focus();
+		return;
 	}
 	if(document.${formName}.socMukimTG.value == ""){
 		alert('Sila pilih Mukim.');
-  		document.${formName}.socMukimTG.focus(); 
-		return; 
+  		document.${formName}.socMukimTG.focus();
+		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.flagPopup.value = "openPopupTanahGanti";
 		document.${formName}.modePopup.value = "new";
 		document.${formName}.mode.value = "view";
 		return;
 	}
-	
+
 	document.${formName}.flagPopup.value = "openPopupTanahGanti";
 	document.${formName}.modePopup.value = "new";
 	document.${formName}.hitButton.value = "doSimpanTanahGanti";
@@ -952,84 +1042,84 @@ function doBatalKemaskiniTanahGanti(){
 function doSimpanKemaskiniTanahGanti(){
 	if(document.${formName}.socJenisHakmilikTG.value == ""){
 		alert('Sila pilih Jenis Hakmilik.');
-  		document.${formName}.socJenisHakmilikTG.focus(); 
-		return; 
+  		document.${formName}.socJenisHakmilikTG.focus();
+		return;
 	}
 	if(document.${formName}.txtNoHakmilikTG.value == ""){
 		alert('Sila masukkan No. Hakmilik.');
-  		document.${formName}.txtNoHakmilikTG.focus(); 
-		return; 
+  		document.${formName}.txtNoHakmilikTG.focus();
+		return;
 	}
 	if(document.${formName}.socLotTG.value == ""){
 		alert('Sila pilih Lot.');
-  		document.${formName}.socLotTG.focus(); 
-		return; 
+  		document.${formName}.socLotTG.focus();
+		return;
 	}
 	if(document.${formName}.txtNoLotTG.value == ""){
 		alert('Sila masukkan No. Lot.');
-  		document.${formName}.txtNoLotTG.focus(); 
-		return; 
+  		document.${formName}.txtNoLotTG.focus();
+		return;
 	}
 	if(document.${formName}.socLuasTG.value == "0"){
 		alert('Sila pilih Unit Luas.');
-		document.${formName}.socLuasTG.focus(); 
-		return; 
+		document.${formName}.socLuasTG.focus();
+		return;
 	}
-		
+
 	var idLuas = document.${formName}.socLuasTG.value;
-	
+
 	if(idLuas == '1' || idLuas == '2' || idLuas == '3' || idLuas == '5' || idLuas == '6' || idLuas == '9'){
 		if(document.${formName}.txtLuas1TG.value == ""){
 			alert('Sila masukkan Luas .');
-			document.${formName}.txtLuas1TG.focus(); 
-			return; 
+			document.${formName}.txtLuas1TG.focus();
+			return;
 		}
 	}
 	else
 	if(idLuas == '4' || idLuas == '8'){
 		if(document.${formName}.txtLuas1TG.value == ""){
 			alert('Sila masukkan Luas.');
-			document.${formName}.txtLuas1TG.focus(); 
-			return; 
+			document.${formName}.txtLuas1TG.focus();
+			return;
 		}
 		if(document.${formName}.txtLuas2TG.value == ""){
 			alert('Sila masukkan Luas.');
-			document.${formName}.txtLuas2TG.focus(); 
-			return; 
+			document.${formName}.txtLuas2TG.focus();
+			return;
 		}
 		if(document.${formName}.txtLuas3TG.value == ""){
 			alert('Sila masukkan Luas.');
-			document.${formName}.txtLuas3TG.focus(); 
-			return; 
+			document.${formName}.txtLuas3TG.focus();
+			return;
 		}
-	} 
+	}
 	else
 	if(idLuas == '7'){
 		if(document.${formName}.txtLuas1TG.value == ""){
 			alert('Sila masukkan Luas.');
-			document.${formName}.txtLuas1TG.focus(); 
-			return; 
+			document.${formName}.txtLuas1TG.focus();
+			return;
 		}
 		if(document.${formName}.txtLuas2TG.value == ""){
 			alert('Sila masukkan Luas.');
-			document.${formName}.txtLuas2TG.focus(); 
-			return; 
+			document.${formName}.txtLuas2TG.focus();
+			return;
 		}
 	}
 	if(document.${formName}.socNegeriTG.value == ""){
 		alert('Sila pilih Negeri.');
-  		document.${formName}.socNegeriTG.focus(); 
-		return; 
+  		document.${formName}.socNegeriTG.focus();
+		return;
 	}
 	if(document.${formName}.socDaerahTG.value == ""){
 		alert('Sila pilih Daerah.');
-  		document.${formName}.socDaerahTG.focus(); 
-		return; 
+  		document.${formName}.socDaerahTG.focus();
+		return;
 	}
 	if(document.${formName}.socMukimTG.value == ""){
 		alert('Sila pilih Mukim.');
-  		document.${formName}.socMukimTG.focus(); 
-		return; 
+  		document.${formName}.socMukimTG.focus();
+		return;
 	}
 
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
@@ -1050,7 +1140,7 @@ function doHapusTanahGanti(idTanahGanti){
 		document.${formName}.modePopup.value = "view";
 		return;
 	}
-	
+
 	document.${formName}.modePopup.value = "";
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.mode.value = "view";
@@ -1061,12 +1151,12 @@ function doSeterusnya(){
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doSeterusnya";
 	document.${formName}.submit();
 }
-function gotoBatalPermohonan(){	
+function gotoBatalPermohonan(){
 	document.${formName}.step.value = "batalPermohonan";
 	document.${formName}.submit();
 }
@@ -1081,7 +1171,7 @@ function textCounter(field, countfield, maxlimit) {
 function kiraLuas(idLuas){
 
   var jenisLuas = idLuas;
-  
+
   // KILOMETER PERSEGI
   if(jenisLuas == "6"){
 
@@ -1090,7 +1180,7 @@ function kiraLuas(idLuas){
 			luasK = document.${formName}.txtLuasMohon1.value*1;
 		}
 		var luasH = luasK*100;
-		
+
 		if (luasH > (document.${formName}.txtLuasAsal.value)*1){
 			alert('Luas dipohon telah melebihi luas asal.')
 			document.${formName}.txtLuasMohon1.value = "";
@@ -1103,12 +1193,12 @@ function kiraLuas(idLuas){
 		}
 
    } else if(jenisLuas == "1"){ //HEKTER
-  	
+
 		var luasH = 0;
 		if (document.${formName}.txtLuasMohon1.value != ''){
 			luasH = document.${formName}.txtLuasMohon1.value*1;
 		}
-  		
+
 		if (luasH > (document.${formName}.txtLuasAsal.value)*1){
 			alert('Luas dipohon telah melebihi luas asal.')
 			document.${formName}.txtLuasMohon1.value = "";
@@ -1121,13 +1211,13 @@ function kiraLuas(idLuas){
 		}
 
    } else if(jenisLuas == "2"){ // METER PERSEGI
-    	
+
 		var luasM = 0;
 		if (document.${formName}.txtLuasMohon1.value != ''){
 			luasM = document.${formName}.txtLuasMohon1.value*1;
 		}
   	  	var luasH = (luasM*0.0001);
-	  	
+
 		if (luasH > (document.${formName}.txtLuasAsal.value)*1){
 			alert('Luas dipohon telah melebihi luas asal.')
 			document.${formName}.txtLuasMohon1.value = "";
@@ -1154,7 +1244,7 @@ function kiraLuas(idLuas){
 			luasP = document.${formName}.txtLuasMohon3.value*1;
 		}
 	  	var luasH = (luasE*0.4046864)+(luasR*0.1011716)+(luasP*0.00252929);
-  	  	
+
 		if (luasH > (document.${formName}.txtLuasAsal.value)*1){
 			alert('Luas dipohon telah melebihi luas asal.')
 			document.${formName}.txtLuasMohon1.value = "";
@@ -1169,13 +1259,13 @@ function kiraLuas(idLuas){
 		}
 
    } else if(jenisLuas == "5"){ //KAKI PERSEGI
-  	  
+
 	  var luasAsal = 0;
 	  if (document.${formName}.txtLuasMohon1.value != ''){
 	  	  luasAsal = document.${formName}.txtLuasMohon1.value*1;
 	  }
 	  var luasH = luasAsal*0.0000092;
-  	  
+
 	  if (luasH > (document.${formName}.txtLuasAsal.value)*1){
 			alert('Luas dipohon telah melebihi luas asal.')
 			document.${formName}.txtLuasMohon1.value = "";
@@ -1188,13 +1278,13 @@ function kiraLuas(idLuas){
 		}
 
    } else if(jenisLuas == "3"){	//EKAR PERPULUHAN
-  	  
+
 	  var luasAsal = 0;
 	  if (document.${formName}.txtLuasMohon1.value != ''){
 	  	  luasAsal = document.${formName}.txtLuasMohon1.value*1;
 	  }
 	  var luasH = luasAsal*0.405;
-	  
+
 	  if (luasH > (document.${formName}.txtLuasAsal.value)*1){
 			alert('Luas dipohon telah melebihi luas asal.')
 			document.${formName}.txtLuasMohon1.value = "";
@@ -1205,9 +1295,9 @@ function kiraLuas(idLuas){
 			var bakiLuas = (document.${formName}.txtLuasAsal.value - luasH).toFixed(5);
 			document.${formName}.txtBakiLuas.value = bakiLuas;
 		}
-  	  
+
    } else if(jenisLuas == "7"){ //EKAR,DEPA
-  	  
+
 	  	var luasE = 0;
 		if (document.${formName}.txtLuasMohon1.value != ''){
 			luasE = document.${formName}.txtLuasMohon1.value*1;
@@ -1216,9 +1306,9 @@ function kiraLuas(idLuas){
 		if (document.${formName}.txtLuasMohon2.value != ''){
 			luasD = document.${formName}.txtLuasMohon2.value*1;
 		}
-	  
+
 	  var luasH = (luasE*0.4046864)+(luasD*0.00040469);
-	  
+
 	  if (luasH > (document.${formName}.txtLuasAsal.value)*1){
 			alert('Luas dipohon telah melebihi luas asal.')
 			document.${formName}.txtLuasMohon1.value = "";
@@ -1232,7 +1322,7 @@ function kiraLuas(idLuas){
 		}
 
    } else if(jenisLuas == "8"){ //RELONG,JEMBA,KAKI PERSEGI
-  	  
+
 	 	var luasR = 0;
 		if (document.${formName}.txtLuasMohon1.value != ''){
 			luasR = document.${formName}.txtLuasMohon1.value*1;
@@ -1245,9 +1335,9 @@ function kiraLuas(idLuas){
 		if (document.${formName}.txtLuasMohon3.value != ''){
 			luasK = document.${formName}.txtLuasMohon3.value*1;
 		}
-	  
+
 	  var luasH = (luasR*0.2877764)+(luasJ*0.0005945)+(luasK*0.0000092);
-	  
+
 	  if (luasH > (document.${formName}.txtLuasAsal.value)*1){
 			alert('Luas dipohon telah melebihi luas asal.')
 			document.${formName}.txtLuasMohon1.value = "";
@@ -1265,7 +1355,7 @@ function kiraLuas(idLuas){
 function kiraLuasTG(idLuas){
 
   var jenisLuas = idLuas;
-  
+
   // KILOMETER PERSEGI
   if(jenisLuas == "1"){
 
@@ -1273,11 +1363,11 @@ function kiraLuasTG(idLuas){
 		if (document.${formName}.txtLuas1TG.value != ''){
 			luasK = document.${formName}.txtLuas1TG.value*1;
 		}
-		var luasH = luasK*100;		
+		var luasH = luasK*100;
 		document.${formName}.txtLuasBersamaanTG.value = luasH.toFixed(5);
 
    } else if(jenisLuas == "2"){ //HEKTER
-  		
+
 		var luasH = 0;
 		if (document.${formName}.txtLuas1TG.value != ''){
 			luasH = document.${formName}.txtLuas1TG.value*1;
@@ -1285,7 +1375,7 @@ function kiraLuasTG(idLuas){
 		document.${formName}.txtLuasBersamaanTG.value = luasH.toFixed(5);
 
    } else if(jenisLuas == "3"){ // METER PERSEGI
-    	
+
 		var luasM = 0;
 		if (document.${formName}.txtLuas1TG.value != ''){
 			luasM = document.${formName}.txtLuas1TG.value*1;
@@ -1311,7 +1401,7 @@ function kiraLuasTG(idLuas){
   	  	document.${formName}.txtLuasBersamaanTG.value = luasH.toFixed(5);
 
    } else if(jenisLuas == "5"){ //KAKI PERSEGI
-  	  
+
 	  var luasAsal = 0;
 	  if (document.${formName}.txtLuas1TG.value != ''){
 		  luasAsal = document.${formName}.txtLuas1TG.value*1;
@@ -1320,16 +1410,16 @@ function kiraLuasTG(idLuas){
   	  document.${formName}.txtLuasBersamaanTG.value = luasH.toFixed(5);
 
    } else if(jenisLuas == "6"){	//EKAR PERPULUHAN
-  	  
+
 	  var luasAsal = 0;
 	  if (document.${formName}.txtLuas1TG.value != ''){
 		  luasAsal = document.${formName}.txtLuas1TG.value*1;
 	  }
 	  var luasH = luasAsal*0.405;
 	  document.${formName}.txtLuasBersamaanTG.value = luasH.toFixed(5);
-  	  
+
    } else if(jenisLuas == "7"){ //EKAR,DEPA
-  	  
+
 	  var luasE = 0;
 	  if (document.${formName}.txtLuas1TG.value != ''){
 		  luasE = document.${formName}.txtLuas1TG.value*1;
@@ -1338,12 +1428,12 @@ function kiraLuasTG(idLuas){
 	  if (document.${formName}.txtLuas2TG.value != ''){
 		  luasD = document.${formName}.txtLuas2TG.value*1;
 	  }
-	  
+
 	  var luasH = (luasE*0.4046864)+(luasD*0.00040469);
 	  document.${formName}.txtLuasBersamaanTG.value = luasH.toFixed(5);
 
    } else if(jenisLuas == "8"){ //RELONG,JEMBA,KAKI PERSEGI
-  	  
+
 	  var luasR = 0;
 	  if (document.${formName}.txtLuas1TG.value != ''){
 		  luasR = document.${formName}.txtLuas1TG.value*1;
@@ -1356,13 +1446,13 @@ function kiraLuasTG(idLuas){
 	  if (document.${formName}.txtLuas3TG.value != ''){
 		  luasK = document.${formName}.txtLuas3TG.value*1;
 	  }
-	  
+
 	  var luasH = (luasR*0.2877764)+(luasJ*0.0005945)+(luasK*0.0000092);
 	  document.${formName}.txtLuasBersamaanTG.value = luasH.toFixed(5);
 	}
 }
 
-</script> 
+</script>
 <script>
 function setTable(id){
 	if(document.getElementById(id).style.display=="none"){
@@ -1413,55 +1503,55 @@ function doDaftarBaruPemohon(){
 function doSimpanMaklumatPemohon() {
 	if(document.${formName}.socKategoriPemohon.value == ""){
 		alert('Sila pilih Jenis Kategori Pemohon.');
-  		document.${formName}.socKategoriPemohon.focus(); 
-		return; 
+  		document.${formName}.socKategoriPemohon.focus();
+		return;
 	}
 	if(document.${formName}.socKategoriPemohon.value == "3"){
 		if(document.${formName}.socKementerian.value == ""){
 			alert('Sila pilih Kementerian.');
-  			document.${formName}.socKementerian.focus(); 
-			return; 
+  			document.${formName}.socKementerian.focus();
+			return;
 		}
 		if(document.${formName}.socAgensi.value == ""){
 			alert('Sila pilih Agensi.');
-  			document.${formName}.socAgensi.focus(); 
-			return; 
-		}		
+  			document.${formName}.socAgensi.focus();
+			return;
+		}
 	} else if(document.${formName}.socKategoriPemohon.value == "8") {
 		if(document.${formName}.socNegeri.value == ""){
 			alert('Sila pilih Negeri.');
-			document.${formName}.socNegeri.focus(); 
-			return; 
+			document.${formName}.socNegeri.focus();
+			return;
 		}
 		if(document.${formName}.socPejabat.value == ""){
 			alert('Sila pilih Pejabat.');
-			document.${formName}.socPejabat.focus(); 
-			return; 
+			document.${formName}.socPejabat.focus();
+			return;
 		}
 // 		if(document.${formName}.socKementerian.value == ""){
 // 			alert('Sila pilih Kementerian.');
-// 			document.${formName}.socKementerian.focus(); 
-// 			return; 
-// 		}	
+// 			document.${formName}.socKementerian.focus();
+// 			return;
+// 		}
 // 		if(document.${formName}.socAgensi.value == ""){
 // 			alert('Sila pilih Agensi.');
-// 			document.${formName}.socAgensi.focus(); 
-// 			return; 
+// 			document.${formName}.socAgensi.focus();
+// 			return;
 // 		}
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 // 		document.${formName}.mode.value = "update";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
-	document.${formName}.flagPopup.value = "closePopupPemohon";
+	//document.${formName}.flagPopup.value = "closePopupPemohon";
 	document.${formName}.hitButton.value = "doSimpanMaklumatPemohon";
 	document.${formName}.submit();
 }
 function doBatalMaklumatPemohon() {
-	document.${formName}.flagPopup.value = "closePopupPemohon";
+	//document.${formName}.flagPopup.value = "closePopupPemohon";
 	document.${formName}.mode.value = "view";
 	doAjaxCall${formName}("");
 }
@@ -1473,67 +1563,67 @@ function doPaparPemohon(idPemohon){
 	doAjaxCall${formName}("");
 }
 function doKemaskiniMaklumatPemohon(){
-	document.${formName}.flagPopup.value = "openPopupPemohon";
+	//document.${formName}.flagPopup.value = "openPopupPemohon";
 	document.${formName}.hitButton.value = "updatePemohon";
 	document.${formName}.mode.value = "updatePemohon";
 	doAjaxCall${formName}("");
 }
 function doHapusMaklumatPemohon(){
-	document.${formName}.flagPopup.value = "closePopupPemohon";
+	//document.${formName}.flagPopup.value = "closePopupPemohon";
 	document.${formName}.hitButton.value = "doHapusMaklumatPemohon";
 	document.${formName}.mode.value = "view";
 	doAjaxCall${formName}("");
 }
 function doBatalKemaskiniMaklumatPemohon() {
-	document.${formName}.mode.value = "viewPemohon";
+	document.${formName}.mode.value = "view";
 	doAjaxCall${formName}("");
 }
 function doSimpanKemaskiniMaklumatPemohon() {
 	if(document.${formName}.socKategoriPemohon.value == ""){
 		alert('Sila pilih Jenis Kategori Pemohon.');
-  		document.${formName}.socKategoriPemohon.focus(); 
-		return; 
+  		document.${formName}.socKategoriPemohon.focus();
+		return;
 	}
 	if(document.${formName}.socKategoriPemohon.value == "3"){
 		if(document.${formName}.socKementerian.value == ""){
 			alert('Sila pilih Kementerian.');
-  			document.${formName}.socKementerian.focus(); 
-			return; 
+  			document.${formName}.socKementerian.focus();
+			return;
 		}
 		if(document.${formName}.socAgensi.value == ""){
 			alert('Sila pilih Agensi.');
-  			document.${formName}.socAgensi.focus(); 
-			return; 
-		}		
+  			document.${formName}.socAgensi.focus();
+			return;
+		}
 	} else if(document.${formName}.socKategoriPemohon.value == "8") {
 		if(document.${formName}.socNegeri.value == ""){
 			alert('Sila pilih Negeri.');
-			document.${formName}.socNegeri.focus(); 
-			return; 
+			document.${formName}.socNegeri.focus();
+			return;
 		}
 		if(document.${formName}.socPejabat.value == ""){
 			alert('Sila pilih Pejabat.');
-			document.${formName}.socPejabat.focus(); 
-			return; 
+			document.${formName}.socPejabat.focus();
+			return;
 		}
 		if(document.${formName}.socKementerian.value == ""){
 			alert('Sila pilih Kementerian.');
-			document.${formName}.socKementerian.focus(); 
-			return; 
-		}	
+			document.${formName}.socKementerian.focus();
+			return;
+		}
 		if(document.${formName}.socAgensi.value == ""){
 			alert('Sila pilih Agensi.');
-			document.${formName}.socAgensi.focus(); 
-			return; 
+			document.${formName}.socAgensi.focus();
+			return;
 		}
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "update";
 		return;
 	}
 
-	document.${formName}.flagPopup.value = "closePopupPemohon";
+	//document.${formName}.flagPopup.value = "closePopupPemohon";
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniMaklumatPemohon";
 	document.${formName}.submit();
@@ -1546,37 +1636,37 @@ function cetakPelan(id){
 	hWnd.opener=document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
-  
+
   function daftarDokumenP() {
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmTKRMaklumatPermohonanView";
 	document.${formName}.method="POST";
-	document.${formName}.mode.value = "view";	
+	document.${formName}.mode.value = "view";
 	document.${formName}.flagPopup.value = "openPopupDokumen";
 	document.${formName}.modePopup.value = "new";
 	document.${formName}.submit();
 }
-  
+
 
 function simpanDokumenP(idPermohonan) {
 	if(document.${formName}.txtNamaPelan.value == ""){
 		alert('Sila masukkan Nama Pelan.');
-  		document.${formName}.txtNamaPelan.focus(); 
-		return; 
+  		document.${formName}.txtNamaPelan.focus();
+		return;
 	}
 	if(document.${formName}.fileupload.value == ""){
 		alert('Sila pilih Pelan yang Ingin Dimuatnaik.');
-  		document.${formName}.fileupload.focus(); 
-		return; 
+  		document.${formName}.fileupload.focus();
+		return;
 	}
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}
-	
+
 	var namaPelan = document.${formName}.txtNamaPelan.value;
  	var catatanPelan = document.${formName}.txtCatatanPelan.value ;
 	var dp = document.${formName}.form_token.value ;
 	var dopost = "&form_token="+dp;
-	
+
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmTKRMaklumatPermohonanView&hitButton=simpanDokumen&namaPelan="+namaPelan+"&catatanPelan="+catatanPelan+"&selectedTabUpper=6"+dopost+"&mode=view&flagPopup=openPopupDokumen&modePopup=new&idPermohonan="+idPermohonan;
 	document.${formName}.method="post";
 	document.${formName}.enctype="multipart/form-data";
@@ -1597,10 +1687,10 @@ function simpanKemaskiniDokumenP() {
 
 	if(document.${formName}.txtNamaPelan.value == ""){
 		alert('Sila masukkan Nama Pelan.');
-  		document.${formName}.txtNamaPelan.focus(); 
-		return; 
+  		document.${formName}.txtNamaPelan.focus();
+		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}
@@ -1618,10 +1708,10 @@ function paparDokumenP(idDokumen){
 	document.${formName}.modePopup.value = "view";
 	document.${formName}.submit();
 }
-function hapusDokumenP(idDokumen){	
+function hapusDokumenP(idDokumen){
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
-	}	
+	}
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
 	document.${formName}.idDokumen.value = idDokumen;
@@ -1633,7 +1723,7 @@ function doHapus(idHakmilikPermohonan) {
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}
-	
+
 	document.${formName}.idHakmilikPermohonan.value = idHakmilikPermohonan;
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doHapus";
@@ -1644,23 +1734,24 @@ function doHapus2(idHakmilikPermohonan) {
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}
-	
+
 	document.${formName}.idHakmilikPermohonan.value = idHakmilikPermohonan;
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doHapus";
 	doAjaxCall${formName}("");
 }
-</script> 
+</script>
 <script>
 function doSimpanKemaskiniSenaraiSemak() {
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "update";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniSenaraiSemak";
 	document.${formName}.submit();
 }
 </script>
+$javascriptLampiran

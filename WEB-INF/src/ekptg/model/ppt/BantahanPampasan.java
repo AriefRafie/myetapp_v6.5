@@ -28,6 +28,7 @@ public class BantahanPampasan {
 	 private Vector getSenaraiAP = null;
 	 private Vector listCarianAP = null;
 	 private Vector getMaklumatAP = null;
+	 private Vector getMaklumatTkhH = null;
 	 
 	 public Vector getListCarian(String userIdNegeri){
 			return listCarian;
@@ -352,12 +353,13 @@ public class BantahanPampasan {
 					db = new Db();
 					Statement stmt = db.getStatement();
 					SQLRenderer r = new SQLRenderer();				
-					sql =  " SELECT B.ID_PERMOHONAN,C.ID_HAKMILIKPB,B.ID_HAKMILIK,A.ID_PIHAKBERKEPENTINGAN,A.NAMA_PB,A.NO_PB,B.NO_LOT, "; 
-					sql += " B.NO_PT,B.ID_MUKIM,C.SYER_ATAS,C.SYER_BAWAH,H.BAYAR_PAMPASAN,E.NAMA_MUKIM,F.STATUS_BANTAHAN,G.KETERANGAN,F.ID_BANTAHAN,C.FLAG_BAYAR_BANTAHAN,F.AMAUN_AWARD ";
-					sql += " FROM TBLPPTPIHAKBERKEPENTINGAN A, TBLPPTHAKMILIK B, TBLPPTHAKMILIKPB C, TBLRUJMUKIM E, TBLPPTBANTAHAN F, TBLRUJSTATUS G, TBLPPTAWARD H ";
+					sql =  " SELECT DISTINCT B.ID_PERMOHONAN,C.ID_HAKMILIKPB,B.ID_HAKMILIK,A.ID_PIHAKBERKEPENTINGAN,A.NAMA_PB,A.NO_PB,B.NO_LOT, "; 
+					sql += " B.NO_PT,B.ID_MUKIM,C.SYER_ATAS,C.SYER_BAWAH,H.BAYAR_PAMPASAN,E.NAMA_MUKIM,F.STATUS_BANTAHAN,G.KETERANGAN,F.ID_BANTAHAN,C.FLAG_BAYAR_BANTAHAN,F.AMAUN_AWARD , "; 
+					sql += " I.TARIKH_BORANGH ";
+					sql += " FROM TBLPPTPIHAKBERKEPENTINGAN A, TBLPPTHAKMILIK B, TBLPPTHAKMILIKPB C, TBLRUJMUKIM E, TBLPPTBANTAHAN F, TBLRUJSTATUS G, TBLPPTAWARD H, TBLPPTBORANGG I ";
 					sql += " WHERE C.ID_HAKMILIK = B.ID_HAKMILIK AND A.ID_PIHAKBERKEPENTINGAN = C.ID_PIHAKBERKEPENTINGAN ";				
 					sql += " AND C.ID_HAKMILIKPB = F.ID_HAKMILIKPB(+) AND F.STATUS_BANTAHAN = G.ID_STATUS(+) AND ";
-					sql += " B.ID_MUKIM = E.ID_MUKIM AND C.ID_HAKMILIKPB = H.ID_HAKMILIKPB AND C.FLAG_BANTAHAN = '1' AND ( F.STATUS_BANTAHAN='184' OR F.STATUS_BANTAHAN = '186' OR F.STATUS_BANTAHAN = '187' ) AND B.ID_PERMOHONAN = '"+ id_permohonan +"' ";
+					sql += " B.ID_MUKIM = E.ID_MUKIM AND C.ID_HAKMILIKPB = H.ID_HAKMILIKPB AND H.ID_SIASATAN = I.ID_SIASATAN AND C.FLAG_BANTAHAN = '1' AND ( F.STATUS_BANTAHAN='184' OR F.STATUS_BANTAHAN = '186' OR F.STATUS_BANTAHAN = '187' ) AND B.ID_PERMOHONAN = '"+ id_permohonan +"' ";
 					 
 					ResultSet rs = stmt.executeQuery(sql);
 					myLogger.info("SQL getSenaraiPB PAMPASAN :: "+sql);
@@ -384,6 +386,7 @@ public class BantahanPampasan {
 			    	h.put("id_bantahan", rs.getString("ID_BANTAHAN")==null?"":rs.getString("ID_BANTAHAN"));
 			    	h.put("flag_bayar_bantahan", rs.getString("FLAG_BAYAR_BANTAHAN")==null?"":rs.getString("FLAG_BAYAR_BANTAHAN"));
 			    	h.put("amaun_award", rs.getString("AMAUN_AWARD")==null?"":Double.parseDouble(rs.getString("AMAUN_AWARD")));
+			    	h.put("tarikh_borangh", rs.getString("TARIKH_BORANGH")==null?"":sdf.format(rs.getDate("TARIKH_BORANGH")));
 			    	getSenaraiPB.addElement(h);
 			    	bil++;
 			      	}      
@@ -499,6 +502,7 @@ public class BantahanPampasan {
 				Statement stmt = db.getStatement();
 				SQLRenderer r = new SQLRenderer();				
 				sql =  " SELECT A.ID_BAYARAN,A.NO_BAYARAN,A.AMAUN_BAYARAN,A.TARIKH_TERIMA,A.TARIKH_CEK,A.JENIS_AWARD, "; 
+				sql += "A.AMAUN_BANTAH, A.HARI_LEWAT, A.PERATUS_BANTAH, A.TARIKH_CAJLEWAT, A.TARIKH_BANTAH " ; 
 				sql += " A.NO_PB,A.ID_PIHAKBERKEPENTINGAN,A.FLAG_SERAH_CEK,A.TARIKH_AKHIR_CEK,A.CARA_BAYAR,A.TARIKH_AMBIL_CEK,A.MASA_AMBIL_CEK ";
 				sql += " FROM TBLPPTBAYARAN A WHERE A.ID_BAYARAN = "+ id_bayaran +" ";				
 											
@@ -521,6 +525,11 @@ public class BantahanPampasan {
 		    	h.put("cara_bayar", rs.getString("CARA_BAYAR")==null?"":rs.getString("CARA_BAYAR"));
 		    	h.put("tarikh_ambil_cek", rs.getString("TARIKH_AMBIL_CEK")==null?"":sdf.format(rs.getDate("TARIKH_AMBIL_CEK")));
 		    	h.put("masa_ambil_cek", rs.getString("MASA_AMBIL_CEK")==null?"":rs.getString("MASA_AMBIL_CEK"));
+		    	h.put("tarikh_lewat", rs.getString("TARIKH_CAJLEWAT")==null?"":sdf.format(rs.getDate("TARIKH_CAJLEWAT")));
+		    	h.put("tarikh_bantah", rs.getString("TARIKH_BANTAH")==null?"":sdf.format(rs.getDate("TARIKH_BANTAH")));
+		    	h.put("amaun_bantah", rs.getString("AMAUN_BANTAH")==null?"":Double.parseDouble(rs.getString("AMAUN_BANTAH")));
+		    	h.put("hari_lewat", rs.getString("HARI_LEWAT")==null?"":rs.getString("HARI_LEWAT"));
+		    	h.put("peratus_bantah", rs.getString("PERATUS_BANTAH")==null?"":rs.getString("PERATUS_BANTAH"));
 		    	getMaklumatTerimaCek.addElement(h);
 		      	}      
 			}
@@ -876,5 +885,36 @@ public class BantahanPampasan {
 				}	
 			return getMaklumatAP;
 	}	
+	
+	//PENAMBAHAN YATI 24/9/2020
+	public Vector getMaklumatTkhH(String id_hakmilikpb)throws Exception {
+		Db db = null;
+		String sql = "";
+		try{
+				getMaklumatTkhH = new Vector();
+				db = new Db();
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();				
+				sql =  " SELECT G.TARIKH_BORANGH FROM TBLPPTBORANGG G, TBLPPTSIASATAN S, TBLPPTHAKMILIK HM, TBLPPTHAKMILIKPB HPB " + 
+						"	WHERE S.ID_HAKMILIK = HM.ID_HAKMILIK " + 
+						"	AND HPB.ID_HAKMILIK = HM.ID_HAKMILIK " + 
+						"	AND S.ID_SIASATAN = G.ID_SIASATAN " + 
+						"	AND HPB.ID_HAKMILIKPB = '"+ id_hakmilikpb +"' ";
+				
+				ResultSet rs = stmt.executeQuery(sql);
+				myLogger.info("SQL getMaklumat tkh :: "+sql);
+				Hashtable h;
+				
+		     while (rs.next()) {
+		    	h = new Hashtable();
+		    	h.put("tarikh_borangh", rs.getDate("TARIKH_BORANGH")==null?"":sdf.format(rs.getDate("TARIKH_BORANGH")));
+		    	getMaklumatTkhH.addElement(h);
+		      	}      
+			}
+				finally{
+					if(db != null)db.close();
+				}	
+			return getMaklumatTkhH;
+	}
 	
 }

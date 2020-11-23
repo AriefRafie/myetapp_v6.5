@@ -8,17 +8,22 @@
     #set($alamat1 = $beanHeader.alamat1)             
     #set($alamat2 = $beanHeader.alamat2)
     #set($alamat3 = $beanHeader.alamat3)
-    #set($noTel = $beanHeader.noTel)  
+    #set($noTel = $beanHeader.noTel) 
+    #set($noLesen = $beanHeader.noLesen) 
     #set($idBorangA = $beanHeader.idBorangA)  
     #end
+    <input name="namaPelesen" type="hidden" id="namaPelesen" value="$namaPelesen"/>
+    
 	<td width="50%" valign="top"><fieldset>
-      <legend><strong>MAKLUMAT PELESEN</strong></legend>
+      <legend><strong>Maklumat Perlesenan</strong></legend>
 	<table width="100%" border="0" cellspacing="2" cellpadding="2">
 	<tr>
 	<td> <input name="idBorangA" type="hidden" id="idBorangA" value="$idBorangA"/>
 	</td>
 	</tr>
 	<tr>
+	<td> <input name="idJadualKeduaLesen" type="hidden" id="idJadualKeduaLesen" value="$idJadualKeduaLesen"/>
+	</td>
 	<td> <input name="idJadualKedua" type="hidden" id="idJadualKedua" value="$idJadualKedua"/>
 	</td>
 	</tr>

@@ -9,12 +9,12 @@
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td ><fieldset>
-      <legend>MAKLUMAT DOKUMEN</legend>
+      <legend>MAKLUMAT IMEJAN</legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         #foreach ($beanMaklumatImejan in $BeanMaklumatImejan)
         <tr>
           <td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
-          <td width="28%">Nama Dokumen</td>
+          <td width="28%">Nama Imejan</td>
           <td width="1%">:</td>
           <td width="70%"><input name="txtNamaImej" type="text" id="txtNamaImej" value="$beanMaklumatImejan.namaImej" size="43" maxlength="100" $readonlyPopup class="$inputTextClassPopup" onblur="this.value=this.value.toUpperCase();"></td>
         </tr>
@@ -27,7 +27,7 @@
         #if ($modePopup != 'new')
         <tr>
           <td width="1%">&nbsp;</td>
-          <td width="28%">Muat Turun</td>
+          <td width="28%">Muat Turun Imej</td>
           <td width="1%">:</td>
           <td width="70%"><a href="javascript:javascript:cetakImej($idDokumen)" class="style2" >$beanMaklumatImejan.namaFail</a></td>
         </tr>
@@ -42,7 +42,7 @@
         #if ($modePopup == 'new')
         <tr>
           <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
-          <td>Lampiran Dokumen</td>
+          <td>Muat Naik Imej</td>
           <td>:</td>
           <td><input id="fileupload" name="fileupload" type="file" size="40" $readonlyPopup2  class="$inputTextClassPopup" /></td>
         </tr>
@@ -69,6 +69,7 @@
             #if ($modePopup == 'update')
             <input name="cmdSimpanKemaskini" type="button" value="Kemaskini" onClick="simpanKemaskiniDokumen()" />
             <input name="cmdBatal" type="button" value="Kembali" onClick="batalKemaskiniDokumen()" />
+            <input name="cmdHapus" type="button" value="Hapus" onClick="hapusDokumen()" >
             #end </td>
         </tr>
       </table>

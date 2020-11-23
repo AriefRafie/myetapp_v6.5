@@ -1,3 +1,4 @@
+
 <style type="text/css">
 
 
@@ -862,6 +863,9 @@ alert("Sila Klik 'Paging' No.2 Untuk Penambahan Hakmilik dan Pihak Berkepentinga
         <div class="TabbedPanelsContent">
         	<fieldset>
         	<legend><strong>Maklumat Tanah Terlibat</strong>
+        	  #if($!negeriIntegrasi == "4")
+       		<input type="button" name="cmdsemakanhakmilik" value="Capaian Hakmilik e-Tanah" onclick="javascript:semakanHakmilikeTanah('ppt','$id_permohonan')">
+      	#end 
            
             #if($ModuleName=="ekptg.view.ppt.FrmPermohonanUPTSek8" || $ModuleName=="ekptg.view.ppt.FrmUPTSek8Hakmilik")
             #end
@@ -1145,10 +1149,12 @@ alert("Sila Klik 'Paging' No.2 Untuk Penambahan Hakmilik dan Pihak Berkepentinga
 					||($portal_role == "(PPT)KetuaPenolongPengarahUnit" || $portal_role == "(PPT)PengarahUnit" || $portal_role == "adminppt"))
                     
                     
-                    
-                    
 					<input type="button" name="cmdKemaskini" value="Kemaskini" onClick="javascript:kemaskiniPendaftaran('$!id_permohonan')">
-                    
+                 		##if(($ID_NEGERIPROJEK == "4")   || $!negeriIntegrasi == "4"))
+                 		## 2020/10/23 tukar "WartaS8" kepada "Sekyen8"
+                 <!--  	<input type="button" name="cmdpopupetanah" value="Integrasi e-Tanah Melaka(Hantar Permohonan)" onClick="eTanahPermohonan('$id_fail','$id_permohonan','Seksyen8','')">  
+                    	 <input type="button" name="cmdPopupeTanah" value="Integrasi e-Tanah (Daftar Permohonan)" onClick="popupEtanah('$!id_fail','$!id_permohonan','$!id_mmk','Seksyen8')">-->
+                    	##end
                     <!--
                     <input type="button" name="cmdPopupeTanah" value="Integrasi eTanah (Hantar Pelan untuk Charting)" onClick="popupEtanah('$id_fail','$id_permohonan','hantarPelanChartingS8','')">
                     -->
@@ -1157,6 +1163,11 @@ alert("Sila Klik 'Paging' No.2 Untuk Penambahan Hakmilik dan Pihak Berkepentinga
 					
 					#if($id_status!="11" && $id_status!="113" && $id_status!="138")
           				<input type="button" name="button" id="button" value="Cetak" onClick="javascript:setTable('tableReport1')" />
+          				#if($ID_NEGERIPROJEK == "4"   || $!negeriIntegrasi == "4")
+                 		## 2020/10/23 tukar "WartaS8" kepada "Sekyen8"
+                 <!--  	<input type="button" name="cmdpopupetanah" value="Integrasi e-Tanah Melaka(Hantar Permohonan)" onClick="eTanahPermohonan('$id_fail','$id_permohonan','Seksyen8','')">  -->
+                    	 <input type="button" name="cmdPopupeTanah" value="Integrasi e-Tanah (Daftar Permohonan)" onClick="popupEtanah('$!id_fail','$!id_permohonan','$!id_mmk','Seksyen8')">
+                    	#end
           			#end
 				#else
 					<input type="button" name="cmdUpdate" value ="Simpan" onClick="javascript:simpanPendaftaran('$!id_permohonan','$!mode','$!userIdNeg')">
@@ -1217,8 +1228,6 @@ alert("Telah wujud no. fail "+'$!showNoRujukan'+" di dalam rekod");
 	
 <script>
 
-
-
 function HandlePopup_from_copy_hakmilik(id_permohonan) {
 	//document.${formName}.ScreenLocation.value = "top";
 	//document.${formName}.CursorPoint.value = "";
@@ -1270,6 +1279,16 @@ function popupCarianDokumen(id_permohonan,flag_skrin)
 }
 
 
+	function eTanahPermohonan(id_fail,id_permohonan,jenis_skrin,command) {	
+		var url = "../x/${securityToken}/ekptg.view.integrasi.etanah.PermohonanPengambilan?idFail="+id_fail+"&idPermohonan="+id_permohonan+"&jenisSkrin="+jenis_skrin+"&command="+command;	
+	    var hWnd = window.open(url,'printuser','width=1200,height=1000, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
+		
+	}
+
 function popupEtanah(id_fail,id_permohonan,jenis_skrin,command) {
 
 	var url = "../x/${securityToken}/ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah?id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&jenis_skrin="+jenis_skrin+"&command="+command;	
@@ -1280,7 +1299,6 @@ function popupEtanah(id_fail,id_permohonan,jenis_skrin,command) {
 	hWnd.focus();
 	
 }
-
 
 function onchangeJenisKodDaerah(mode,isEdit) {
 
@@ -1416,6 +1434,18 @@ function cetakSuratKPTG(idpermohonan) {
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
+
+//yati tambah
+	//Skrin Maklumat Tanah
+	function semakanHakmilikeTanah(modul,idPermohonan) {
+		var url = "../x/${securityToken}/FrmPopupCapaianHakmilikeTanah?modul="+modul+"&idPermohonan="+idPermohonan;
+	    var hWnd = window.open(url,'printuser','width=1000,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
+	
+	}
 function cetakLampiranA(idpermohonan,namaMukim) {
 	/*var url = "../x/${securityToken}/ekptg.report.ppk.FrmPopupPilihPegawaiReportView?noFail="+NO_FAIL+"&idpermohonansimati="+idpermohonansimati+"&report=BorangDD&flagReport=B";
     var url = "../servlet/ekptg.report.ppt.LampiranASek8?idfail="+idfail+"&nama_mukim="+namaMukim;
@@ -1829,6 +1859,19 @@ function isDate(dtStr){
 	}
 return true
 }
+
+function popupEtanah(id_fail,id_permohonan,idMMK,jenis_skrin,command) {	
+	
+	//alert("id MMK :"+idMMK);
+		//var url = "../x/${securityToken}/etanah.ppt.sek4?id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&jenis_skrin="+jenis_skrin+"&command="+command;	
+		var url = "../x/${securityToken}/ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah?id_fail="+id_fail+"&id_permohonan="+id_permohonan+"&jenis_skrin="+jenis_skrin+"&command="+command+"&idMMK="+idMMK;	
+	    var hWnd = window.open(url,'printuser','width=1200,height=1000, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
+		
+	}                                                
 </script>
 
 <script type="text/javascript">

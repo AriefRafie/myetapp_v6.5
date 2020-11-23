@@ -43,10 +43,12 @@ private static final long serialVersionUID = 1L;
         String idFail = getParam("idFail");
         String idPermohonan = getParam("idPermohonan");
         String idStatus = getParam("idStatus");
+        String idKertaskerja = getParam("idKertaskerja");
         
         //VECTOR
 		Vector beanHeader= null;
 		Vector beanMaklumatKewangan = null;
+		Vector beanMaklumatLampiran = null;
 		
 		String step = getParam("step");
 		
@@ -56,7 +58,8 @@ private static final long serialVersionUID = 1L;
         if (postDB) {
         	if ("simpanKemaskiniMinitKewangan".equals(hitButton)){
 				logic.simpanKemaskiniMinitKewangan(idPermohonan, getParam("txtTarikhTerima"), getParam("socKeputusan"),
-						getParam("txtUlasan"), getParam("socKeputusanPemohon"), getParam("txtUlasanPemohon"), session);
+						getParam("txtUlasan"), getParam("socKeputusanPemohon"), getParam("txtUlasanPemohon"), 
+						getParam("txtNamaPengulas"), getParam("txtNoTelPengulas"), session);
 			}
         	if ("doSeterusnya".equals(hitButton)){
         		logic.updateStatus(idFail, idPermohonan, session);
@@ -92,11 +95,19 @@ private static final long serialVersionUID = 1L;
 			beanMaklumatKewangan = logic.getBeanMaklumatKewangan();
 	       	this.context.put("BeanMaklumatKewangan", beanMaklumatKewangan);
 	       	
+	       	String a = getParam("idKertaskerja");
+	       	
 	       	if (beanMaklumatKewangan.size() != 0){
 				Hashtable hashMaklumatKewangan = (Hashtable) logic.getBeanMaklumatKewangan().get(0);
 				hashMaklumatKewangan.put("ulasanPemohon", getParam("txtUlasanPemohon"));
 				hashMaklumatKewangan.put("flagKeputusanPemohon", getParam("socKeputusanPemohon"));
+				idKertaskerja = (String) hashMaklumatKewangan.get("idKertaskerja");
 	       	}
+	       	
+	       	//LAMPIRAN ULASAN
+	       	beanMaklumatLampiran = new Vector();
+			beanMaklumatLampiran = logic.getBeanMaklumatLampiran(idKertaskerja);
+			this.context.put("BeanMaklumatLampiran",beanMaklumatLampiran);
 	       	
 		} else if("update".equals(mode)){
 				
@@ -110,14 +121,14 @@ private static final long serialVersionUID = 1L;
 			//beanMaklumatKewangan = logic.getBeanMaklumatKewangan();
 			Hashtable HashMaklumatKewangan = (Hashtable) logic.getBeanMaklumatKewangan().get(0);
 			Hashtable hashMaklumatKewangan = new Hashtable();
-			
 			hashMaklumatKewangan.put("tarikhTerima", getParam("txtTarikhTerima"));
 			hashMaklumatKewangan.put("keputusan", getParam("socKeputusan"));
 			if ("doChangeKeputusanKewangan".equals(submit)){
 				hashMaklumatKewangan.put("flagKeputusanPemohon", getParam("socKeputusanPemohon"));
-				
 			}
 			hashMaklumatKewangan.put("ulasan", getParam("txtUlasan"));
+			hashMaklumatKewangan.put("namaPengulas", getParam("txtNamaPengulas"));
+			hashMaklumatKewangan.put("noTelPengulas", getParam("txtNoTelPengulas"));
 			hashMaklumatKewangan.put("ulasanPemohon", getParam("txtUlasanPemohon"));
 			
 			beanMaklumatKewangan.addElement(hashMaklumatKewangan);
@@ -136,6 +147,7 @@ private static final long serialVersionUID = 1L;
 		this.context.put("idFail", idFail);
 	    this.context.put("idPermohonan", idPermohonan);
 	    this.context.put("idStatus", idStatus);
+	    this.context.put("idKertaskerja", idKertaskerja);
 		
 	    this.context.put("step",step);
 	    
@@ -146,4 +158,3 @@ private static final long serialVersionUID = 1L;
 		return vm;
 	}	
 }
-

@@ -45,15 +45,15 @@
       <legend><b>SENARAI PERMOHONAN ONLINE</b></legend>
       #parse("app/utils/record_paging.jsp")
       <table align="center" width="100%">
-        <tr class="table_header">
+        <tr class="table_header" align="center">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
           <td width="20%"><strong>No. Rujukan <i>Online</i></strong></td>
           <td width="30%"><strong>Nama Pemohon/Syarikat</strong></td>
-          <td width="8%" align="center"><strong>Tarikh Terima</strong></td>
+          <td width="8%"><strong>Tarikh Terima</strong></td>
           <td width="10%"><strong>Kawasan Dipohon</strong></td>
           <td width="10%"><strong>Jenis Permohonan</strong></td>
           <td width="8%"><strong>Jenis Lesen</strong></td>
-          <td width="10%"><strong>Status</strong></td>
+          ##<td width="10%"><strong>Status</strong></td>
         </tr>
         #set ($list = "")
    		#if ($SenaraiFail.size() > 0)
@@ -76,7 +76,7 @@
           <td class="$row">$list.kawasanDipohon</td>
           <td class="$row">$list.jenisPermohonan</td>
           <td class="$row">$list.jenisLesen</td>
-          <td class="$row">$list.status</td>
+          ##<td class="$row">$list.status</td>
         </tr>
    		#end
  	

@@ -54,9 +54,9 @@
       <legend><strong>SENARAI MESYUARAT</strong></legend>
       <table align="center" width="100%">
         #if ($!{session.getAttribute("FLAG_FROM")} == 'failTugasan' || $!{session.getAttribute("FLAG_FROM")} == 'failHQ')
-        <tr>
-          <td colspan="5" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:daftarMesyuarat()"/></td>
-        </tr>
+        ##<tr>
+        ##  <td colspan="5" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:daftarMesyuarat()"/></td>
+        ##</tr>
         #end
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>

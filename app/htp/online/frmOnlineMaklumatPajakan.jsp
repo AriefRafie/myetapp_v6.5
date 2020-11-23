@@ -116,7 +116,7 @@
             					<input type="hidden" name="namaNegeriTanah" id="namaNegeriTanah" value="$beanMaklumatTanah.negeri">
           					</td>
         				</tr>
-        				<tr>
+        				<!--<tr>
           					<td>&nbsp;</td>
           					<td>Kementerian</td>
           					<td>:</td>
@@ -131,19 +131,70 @@
           					<td>:</td>
           					<td>$beanMaklumatTanah.agensi
           						<input type="hidden" name="idAgensiTanah" id="idAgensiTanah" value="$beanMaklumatTanah.idAgensi">
-        				</tr>
-              			             
+        				</tr>-->
+              			<tr>
+			                <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
+			                <td>Luas Kegunaan</td>
+			                <td>:</td>
+			                <td >$selectLuasKegunaan</td>
+			              </tr>
+			              <tr>
+			                <td>&nbsp;</td>
+			                <td>Keluasan Asal</td>
+			                <td>:</td>
+			                <td>$beanMaklumatSewa.luasAsal $beanMaklumatSewa.keteranganLuasAsal
+			                  <input type="hidden" name="txtLuasAsal" id="txtLuasAsal" value="$beanMaklumatSewa.luasAsal"/></td>
+			              </tr>
+			              #if ($idLuasKegunaan == '2')
+			              <tr>
+			                <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
+			                <td>Unit Luas</td>
+			                <td>:</td>
+			                <td>#parse("app/php2/unit_luas.jsp") </td>
+			              </tr>
+			              #if ($idLuas != '99999' && $idLuas != '')
+			              <tr>
+			                <td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
+			                <td>Luas Mohon</td>
+			                <td>:</td>
+			                <td> #if ($idLuas == '0' || $idLuas == '1' || $idLuas == '2' || $idLuas == '3' || $idLuas == '5' || $idLuas == '6' || $idLuas == '9')
+			                  <input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$beanMaklumatSewa.luas1" style="text-align:right" onKeyUp="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6" $readonly class="$inputTextClass"/ >
+			                  #elseif ($idLuas == '7')
+			                  <input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$beanMaklumatSewa.luas1" style="text-align:right" onKeyUp="validateNumber(this,this.value);" size="6" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
+			                  <input type="text" name="txtLuasMohon2" id="txtLuasMohon2" value="$beanMaklumatSewa.luas2" style="text-align:right" onKeyUp="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6"/ $readonly class="$inputTextClass">
+			                  #elseif ($idLuas == '8' || $idLuas == '4')
+			                  <input type="text" name="txtLuasMohon1" id="txtLuasMohon1" value="$beanMaklumatSewa.luas1" style="text-align:right" onKeyUp="validateNumber(this,this.value);" size="6" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
+			                  <input type="text" name="txtLuasMohon2" id="txtLuasMohon2" value="$beanMaklumatSewa.luas2" style="text-align:right" onKeyUp="validateNumber(this,this.value);" size="6" $readonly class="$inputTextClass" onBlur="kiraLuas('$idLuas')"/>
+			                  <input type="text" name="txtLuasMohon3" id="txtLuasMohon3" value="$beanMaklumatSewa.luas3" style="text-align:right" onKeyUp="validateNumber(this,this.value);" onBlur="this.value=this.value.replace(/,/g,'');kiraLuas('$idLuas')" size="6" $readonly class="$inputTextClass"/>
+			                  #end </td>
+			              </tr>
+			              #end
+			              #end
+			              <tr>
+			                <td>&nbsp;</td>
+			                <td>Luas Bersamaan</td>
+			                <td>:</td>
+			                <td><input type="text" name="txtLuasBersamaan" id="txtLuasBersamaan" value="$beanMaklumatSewa.luasBersamaan"  style="text-align:right" readonly="readonly" class="disabled"/>
+			                  HEKTAR</td>
+			              </tr>
+			              <tr>
+			                <td>&nbsp;</td>
+			                <td>Baki Luas</td>
+			                <td>:</td>
+			                <td><input type="text" name="txtBakiLuas" id="txtBakiLuas" value="$beanMaklumatSewa.luasBaki" readonly="readonly" class="disabled" style="text-align:right"/>
+			                  HEKTAR</td>
+			              </tr>             
               			<tr>
                           	<td>&nbsp;</td>
 			                <td>&nbsp;</td>
 			                <td>&nbsp;</td> 
 			                <td>
                        		#if ($mode == 'view')
-                			<!--<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="javascript:KemaskiniFail()"/>-->
+                			<input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="javascript:KemaskiniFail()"/>
                 			<input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="javascript:doBackList()"/>
                				#elseif ($mode == 'update')
-                			<!--<input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:SimpanKemaskiniFail()"/>
-                			<input type="reset" name="cmdBatal" id="cmdBatal" value="Kosongkan" $hide/>-->
+                			<input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:SimpanKemaskiniFail()"/>
+                			<!--<input type="reset" name="cmdBatal" id="cmdBatal" value="Kosongkan" $hide/>-->
            					<input type="button" name="cmdBatal" id="cmdBatal" value="Batal" onclick="javascript:batalKemaskiniFail()"/>
        					 	#end</td>
                        	</tr>
@@ -258,11 +309,11 @@
                            		<td>
                            		#if ($mode == 'update')
                            		<input type="text" size="11" maxlength="10" name="tarikhSuratPemohon" id="tarikhSuratPemohon" onblur="check_date(this)" value="$beanMaklumatPermohonan.tarikhSuratPemohon"/>
-															<a href="javascript:displayDatePicker('tarikhSuratPemohon',false,'dmy');"><img src="../img/calendar.gif" alt="Calendar" border="0"/>
-															#else
-															<input type="text" size="11" maxlength="10" name="tarikhSuratPemohon" class="$classDis" id="tarikhSuratPemohon" onblur="check_date(this)" value="$beanMaklumatPermohonan.tarikhSuratPemohon" readonly="readonly" $readOnly/>
-															</td>
-															#end
+									<a href="javascript:displayDatePicker('tarikhSuratPemohon',false,'dmy');"><img src="../img/calendar.gif" alt="Calendar" border="0"/>
+									#else
+									<input type="text" size="11" maxlength="10" name="tarikhSuratPemohon" class="$classDis" id="tarikhSuratPemohon" onblur="check_date(this)" value="$beanMaklumatPermohonan.tarikhSuratPemohon" readonly="readonly" $readOnly/>
+									</td>
+								#end
                          	</tr>
                          	<tr>
                             	<td valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
@@ -323,14 +374,8 @@
 	        <input type="checkbox" name="pengesahan" id="pengesahan" checked disabled></td>
 	        #end
       		
-      		#if ($!namaPemohon.get("kategoriPemohon") == "INDIVIDU")
-      		<td width="89%">Saya, <b>$!namaPemohon.get("namaPemohon")</b>, MyID <b>$!namaPemohon.get("noPengenalan")</b> dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.
-      		</td>
-			
-			#elseif ($!namaPemohon.get("kategoriPemohon") == "SYARIKAT")
            	<td>Kami, <b>$!namaPemohon.get("namaPemohon")</b>, MyCoID <b>$!namaPemohon.get("noPengenalan")</b> dengan ini mengakui bahawa maklumat yang diberikan dalam borang ini adalah benar, betul dan lengkap.
            	</td>
-           	#end
            	           	
            	<tr>
            	<td colspan=2 align="center">
@@ -338,7 +383,7 @@
             	<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar" onClick="doHantar()"/>
             	<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
             	
-            #elseif ($idStatus != '1610197')
+            #elseif ($idStatus != '16103949')
             	<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar" onClick="doHantar()"/>
             	<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
             #end</td>

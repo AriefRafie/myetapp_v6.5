@@ -58,6 +58,40 @@
           <td>:</td>
           <td><input name="txtTarikhJangkaTerima" type="text" readonly="readonly" class="disabled" id="txtTarikhJangkaTerima" value="$beanMaklumatJUPEM.tarikhJangkaTerima" size="9" maxlength="10"></td>
         </tr>
+        #if ($modePopup == 'view')
+        #set($idDokumen = '')
+        #set($namaFail = '')
+        #set($jenisDokumen = '1')
+        #foreach ($beanMaklumatDokumenJUPEM in $BeanMaklumatDokumenJUPEM)
+        	#set($idDokumen = $beanMaklumatDokumenJUPEM.idDokumen)
+    		#set($namaFail = $beanMaklumatDokumenJUPEM.namaFail)
+    		#set($jenisDokumen = $beanMaklumatDokumenJUPEM.jenisDokumen)
+        #end
+        <tr>
+          <td>&nbsp;&nbsp;&nbsp;</td>
+          <td>Lampiran</td>
+          <td>:</td>
+          <td>
+          #if ($idDokumen != '') 
+          	<a href="#" onclick="cetakDokumen($idDokumen)" class="style2">$namaFail</a> &nbsp;&nbsp; 
+          #end
+          </td>
+        </tr>
+        <tr>
+		  <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>
+         	<input id="fileuploadMohonJUPEM" name="fileuploadMohonJUPEM" type="file" size="40" />
+            <input name="cmdSimpan4" type="button" value="Simpan Dokumen" onclick="simpanDokumenMohonJUPEM('$idUlasanTeknikal','$idPermohonan')" /></td>
+        </tr>                
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td><span class="style4"><i><font color="#ff0000">Perhatian</font> : </i><span class="style5">Saiz muat naik fail adalah tidak melebihi 2MB. Jika muat naik anda tidak berjaya sila cuba dengan saiz fail yang lebih kecil.</span></span></td>
+        </tr>
+        #end
         #end
         <tr>
           <td>&nbsp;</td>
@@ -153,7 +187,6 @@
         #end
         #end
         #end
-        
       </table>
       </fieldset></td>
   </tr>
@@ -186,63 +219,5 @@
       <input name="cmdSimpan2" type="button" onclick="doSimpanKemaskiniMaklumatJUPEM()" value="Simpan" />
       <input name="cmdBatal" type="button" onClick="doBatalKemaskiniMaklumatJUPEM()" value="Batal">
       #end </td>
-  </tr>
-</table>
-<table width="100%" border="0" cellspacing="2" cellpadding="2">
-  <tr>
-    <td><fieldset>
-      <legend><b>SENARAI NOTIFIKASI EMAIL</b></legend>
-      <table align="center" width="100%">
-              #if ($flagNotifikasi == 'openNotifikasi')
-		  <tr>
-		    <td> #parse("app/php2/frmAPBNotifikasiEmailDetail.jsp") </td>
-		  </tr>
-		  <tr>
-		    <td>&nbsp;</td>
-		  </tr>
-  		#end
-        <tr>
-          <td colspan="9" scope="row"><input name="cmdTambah" type="button" value="Tambah" onClick="javascript:doDaftarNotifikasi()"/></td>
-        </tr>
-        <tr class="table_header">
-          <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-          <td width="25%"><strong>Nama Pegawai</strong></td>
-          ##<td width="35%"><strong>PTD / PTG / KJP / JKPTG</strong></td>
-          <td width="15%" align="center"><strong>Emel</strong></td>
-          <td width="15%" align="center"><strong>Jawatan</strong></td>
-          <td width="10%"><strong>Status</strong></td>
-          ##<td width="5%"><strong></strong></td>
-        </tr>
-        #set ($list = "")
-        #if ($SenaraiNotifikasiEmel.size() > 0)
-        #foreach ($list in $SenaraiNotifikasiEmel)
-        #if ($list.bil == '')
-        #set( $row = "row1" )
-        #elseif (($list.bil % 2) != 0)
-        #set( $row = "row1" )
-        #else 
-        #set( $row = "row2" )
-        #end
-        <tr>
-          <td class="$row" align="center">$list.bil</td>
-          ##<td class="$row"><a href="javascript:paparMaklumatSuratPenghargaan('$list.idUlasanTeknikal')" class="style2">$list.namaPegawai</a></td>
-          <td class="$row">$list.namaPegawai</td>
-          ##<td class="$row">$list.namaPejabatPTGPTD</td>
-          <td class="$row" align="center">$list.emel</td>
-          <td class="$row" align="center">$list.jawatan</td>
-          <td class="$row">$list.status</td>
-        </tr>
-        #end
-        #else
-        <tr>
-          <td class="row1" align="center">&nbsp;</td>
-          <td class="row1" >Tiada Rekod</td>
-          ##<td class="row1">&nbsp;</td>
-          <td class="row1">&nbsp;</td>
-          <td class="row1">&nbsp;</td>
-        </tr>
-        #end
-      </table>
-      </fieldset></td>
   </tr>
 </table>

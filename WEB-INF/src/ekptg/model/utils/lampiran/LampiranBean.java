@@ -33,7 +33,6 @@ import ekptg.model.utils.Fungsi;
 
 public class LampiranBean implements ILampiran{
 	private static Logger myLog = Logger.getLogger(ekptg.model.utils.lampiran.LampiranBean.class);
-//	private Connection conn = null;
 	private Db db = null;
 	private String sql = "";
 	private Vector<Tblrujdokumen> lampiran = null;
@@ -67,8 +66,8 @@ public class LampiranBean implements ILampiran{
 	public void uploadFiles(Hashtable<String,String> hash,HttpServletRequest request) throws Exception {		
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 	    ServletFileUpload upload = new ServletFileUpload(factory);
-	    List items = upload.parseRequest(request);
-	    Iterator itr = items.iterator();
+	    List<?> items = upload.parseRequest(request);
+	    Iterator<?> itr = items.iterator();
 		String jenis = hash.get("jenisLampiran");
 
 	    while (itr.hasNext()) {
@@ -337,9 +336,9 @@ public class LampiranBean implements ILampiran{
 		    	  
 		      }		      
 		      
-		    } finally {
-		      if (db != null) db.close();
-		    }
+	    } finally {
+	    	if (db != null) db.close();
+	    }
 	    return listDokumen;
 	    
 	}
@@ -492,7 +491,6 @@ public class LampiranBean implements ILampiran{
 		
 	}
 
-	
 	public void saveData(String idHarta,String idUser,FileItem item,boolean isHA) throws Exception {
 		Db db = null;
 		String sql="";
@@ -669,22 +667,23 @@ public class LampiranBean implements ILampiran{
 		 
 	}
 	public String javascriptUpload(String jsUpload,String jsPapar
-			,String idDokumen,HttpSession session) throws Exception {
-			Fungsi.setWin800600();
+		,String idDokumen,HttpSession session) throws Exception {
+		Fungsi.setWin800600();
 			
-			sb = new StringBuffer("");
-			sb.append("<script>");
-			sb.append("function "+jsPapar+"(idDokumen){");
+		sb = new StringBuffer("");
+		sb.append("<script>");
+		sb.append("function "+jsPapar+"(idDokumen){");
 //			sb.append("function "+jsPapar+"(){");
-			sb.append("var url = '../servlet/ekptg.model.utils.DisplayBlob?id='+idDokumen+'&tablename=tblphpdokumen';");
-			sb.append("var hWnd=window.open(url,'Cetak','width="+Fungsi.lebar+",height="+Fungsi.tinggi+", resizable=yes,scrollbars=yes,menubar=1');");
-			sb.append("if ((document.window != null) && (!hWnd.opener))");
-			sb.append("hWnd.opener=document.window;");
-			sb.append("if (hWnd.focus != null) hWnd.focus();");
-			sb.append("}");
-			sb.append("</script>");
-			return sb.toString();
+		sb.append("var url = '../servlet/ekptg.model.utils.DisplayBlob?id='+idDokumen+'&tablename=tblphpdokumen';");
+		sb.append("var hWnd=window.open(url,'Cetak','width="+Fungsi.lebar+",height="+Fungsi.tinggi+", resizable=yes,scrollbars=yes,menubar=1');");
+		sb.append("if ((document.window != null) && (!hWnd.opener))");
+		sb.append("hWnd.opener=document.window;");
+		sb.append("if (hWnd.focus != null) hWnd.focus();");
+		sb.append("}");
+		sb.append("</script>");
+		return sb.toString();
 		 
-		}
+	}
+	
 	
 }

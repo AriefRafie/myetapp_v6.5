@@ -60,8 +60,9 @@ public class FrmPNWTawaranView extends AjaxBasedModule {
 		String idStatus = getParam("idStatus");
 		String idPenawaranKJP = getParam("idPenawaranKJP");
 		String idDokumen = getParam("idDokumen");
-		String noRujukan = getParam("txtNoRujukan");
+		String noRujukan = getParam("txtNoRujukanJKPTG");
 		String txtTarikhTerima = getParam("txtTarikhTerima");
+		String txtNoRujukanKJP = getParam("txtNoRujukanKJP");
 
 		// VECTOR
 		Vector beanHeader = null;
@@ -91,14 +92,16 @@ public class FrmPNWTawaranView extends AjaxBasedModule {
 		//SUBMIT TO NEXT PROCESS
 		if (postDB) {
 			if ("simpanAgensi".equals(hitButton)) {
-				idPenawaranKJP = logic.simpanAgensi(idPermohonan, getParam("txtNoRujukan"), getParam("txtTarikhTerima"), idKementerian, idAgensi, getParam("txtTujuanKegunaan"), session);
+				idPenawaranKJP = logic.simpanAgensi(idPermohonan, getParam("txtNoRujukanJKPTG"), getParam("txtNoRujukanKJP"), getParam("txtTarikhTerima"), 
+						idKementerian, idAgensi, getParam("txtTujuanKegunaan"), session);
 				flagReKeyin = "Y";
 				idKementerian = "99999";
 				idAgensi = "99999";
     			uploadFiles(idPenawaranKJP, idPermohonan, session);
 			}
 			if ("simpanKemaskiniAgensi".equals(hitButton)) {
-				logic.simpanKemaskiniAgensi(idPenawaranKJP, getParam("txtNoRujukan"), getParam("txtTarikhTerima"), idKementerian, idAgensi, getParam("txtTujuanKegunaan"), session);
+				logic.simpanKemaskiniAgensi(idPenawaranKJP, getParam("txtNoRujukanJKPTG"),  getParam("txtNoRujukanKJP"), getParam("txtTarikhTerima"), 
+						idKementerian, idAgensi, getParam("txtTujuanKegunaan"), session);
 			}
 			if ("hapusAgensi".equals(hitButton)) {
 				logic.hapusAgensi(idPenawaranKJP,idDokumen, session);
@@ -110,7 +113,6 @@ public class FrmPNWTawaranView extends AjaxBasedModule {
     			logic.doBatalPermohonan(idFail, idPermohonan, getParam("tarikhBatal"), getParam("txtSebab"), session);
     			step = "";
     		}
-			
 			if ("simpanKemaskiniDokumen".equals(hitButton)) {
 				updateUploadFile(idDokumen, session);
 			}
@@ -134,7 +136,6 @@ public class FrmPNWTawaranView extends AjaxBasedModule {
 			idFail = (String)hashHeader.get("idFail");
 			idPermohonan = (String)hashHeader.get("idPermohonan");
 			idStatus = (String)hashHeader.get("idStatus");
-			
 			idAgensiDef = (String)hashHeader.get("idAgensi");
 			cadanganKegunaan =  (String)hashHeader.get("cadanganKegunaan");
 			noRujukanSurat = (String)hashHeader.get("noRujukanSurat");
@@ -159,13 +160,13 @@ public class FrmPNWTawaranView extends AjaxBasedModule {
 	    			Hashtable hashMaklumatAgensi = new Hashtable();
 	    			hashMaklumatAgensi.put("tarikhTerima", getParam("txtTarikhTerima"));
 	    			hashMaklumatAgensi.put("noRujukan", noFail);
-	    			hashMaklumatAgensi.put("tujuanKegunaan", cadanganKegunaan);
+	    			hashMaklumatAgensi.put("noRujukan", noRujukanSurat);
+	    			hashMaklumatAgensi.put("tujuanKegunaan", getParam("txtNoRujukanKJP"));
 	    			beanMaklumatAgensi.addElement(hashMaklumatAgensi);
 					this.context.put("BeanMaklumatAgensi", beanMaklumatAgensi);
 					this.context.put("noRujukan", noFail);
 					
 //					idAgensi = idAgensiDef;
-					
 					this.context.put("selectAgensi", HTML.SelectAgensi("socAgensi", Long.parseLong(idAgensi), "",""));
 					
     			} 
@@ -176,6 +177,7 @@ public class FrmPNWTawaranView extends AjaxBasedModule {
 	    			Hashtable hashMaklumatAgensi = new Hashtable();
 	    			hashMaklumatAgensi.put("tarikhTerima", txtTarikhTerima);
 	    			hashMaklumatAgensi.put("noRujukan", noRujukan);
+	    			hashMaklumatAgensi.put("tujuanKegunaan", txtNoRujukanKJP);
 	    			hashMaklumatAgensi.put("tujuanKegunaan", "");
 	    			beanMaklumatAgensi.addElement(hashMaklumatAgensi);
 					this.context.put("BeanMaklumatAgensi", beanMaklumatAgensi);	
@@ -187,9 +189,6 @@ public class FrmPNWTawaranView extends AjaxBasedModule {
     			
     			setMaklumatPelan(beanMaklumatImejan, "");
     			this.context.put("modeDokumenItem", "addNewDokumen");
-				
-
-
     			
     		} else if ("update".equals(modePopup)){
     			
@@ -211,7 +210,7 @@ public class FrmPNWTawaranView extends AjaxBasedModule {
     			this.context.put("readonlyPopupMinit", "readonly");
     			this.context.put("inputTextClassPopupMinit", "disabled");
     			
-    			//MAKLUMAT LAPORAN TANAH
+    			//MAKLUMAT PENERIMA TAWARAN
 				beanMaklumatAgensi = new Vector();
 				logic.setMaklumatAgensi(idPenawaranKJP);
 				beanMaklumatAgensi = logic.getBeanMaklumatAgensi();

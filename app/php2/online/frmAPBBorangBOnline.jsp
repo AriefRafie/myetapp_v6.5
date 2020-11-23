@@ -130,7 +130,9 @@
       </fieldset></td>
   </tr>
 <br/>
-<fieldset>
+<table width="100%" border="0" cellspacing="2" cellpadding="2">
+  <tr>
+    <td><fieldset>
 	<legend>Senarai Maklumat Laporan</legend>
     
      #parse("app/utils/record_paging.jsp")
@@ -144,12 +146,14 @@
       <table width="100%"  cellpadding="1" cellspacing="2" border="0">
         <tr class="table_header">
             <td width="5%" align="center" style="text-transform:uppercase" scope="row">Bil</td>
-            <td width="25%" style="text-transform:uppercase">Bulan</td>
-            <td width="25%" style="text-transform:uppercase">Tahun</td>
+            <td width="25%" style="text-transform:uppercase">Tarikh Operasi</td>
+            <!--<td width="25%" style="text-transform:uppercase">Bulan</td>
+            <td width="25%" style="text-transform:uppercase">Tahun</td>-->
             <td width="25%" style="text-transform:uppercase">Kuantiti Isipadu (meter padu)</td>
             <td width="25%" style="text-transform:uppercase">Jumlah Anggaran Royalti (RM)</td>
         </tr>
   #if($list_size!=0)     
+  
        #foreach($senarai in $SenaraiFailBorangB)
                    	 #set( $i = $velocityCount )
          		#if ( ($i % 2) != 1 )
@@ -159,9 +163,10 @@
          		#end
           	
           <tr valign="top">
-              <td class="$row" align="center">$senarai.bil</td>            
-              <td class="$row"><a href="javascript:papar_laporan('$senarai.id_laporanpasir','$senarai.bulan_pengambilan')"><font color="blue">$senarai.nama_bulan</font></a></td>  
-              <td class="$row">$senarai.tahun_pengambilan</td>
+              <td class="$row" align="center">$senarai.bil</td>
+              <td class="$row"><a href="javascript:papar_laporan('$senarai.id_laporanpasir','$senarai.tarikhPengeluaran')"><font color="blue">$senarai.tarikhPengeluaran</font></a></td>             
+              <!--<td class="$row"><a href="javascript:papar_laporan('$senarai.id_laporanpasir','$senarai.bulan_pengambilan')"><font color="blue">$senarai.nama_bulan</font></a></td>-->  
+              <!--<td class="$row">$senarai.tahun_pengambilan</td>-->
               <td class="$row">$!senarai.jumlah_kuantiti</td>
               <td class="$row">$!senarai.jumlah_royalti</td>
           </tr>          
@@ -174,17 +179,21 @@
    #end
       </table>
 </fieldset>
+</tr>
+</td>
+</table>
 
 <script>
 function doChanges() {
 	doAjaxCall${formName}("doChanges");
 }
 
-function papar_laporan(id_laporanpasir,bulan_pengambilan) {
+function papar_laporan(id_laporanpasir,tarikhPengeluaran) {
 
-	document.${formName}.id_laporanpasir.value = id_laporanpasir;
-	document.${formName}.bulan_pengambilan.value = bulan_pengambilan;
 	document.${formName}.actionOnline.value = "papar_laporan";
+	document.${formName}.mode.value = "view";
+	document.${formName}.id_laporanpasir.value = id_laporanpasir;
+	//document.${formName}.tarikhPengeluaran.value = tarikhPengeluaran;	
 	document.${formName}.submit();
 }
 
@@ -197,13 +206,13 @@ function kosongkan_skrinLaporan() {
 
 function search_laporan(){
 	document.${formName}.actionOnline.value = "search_laporan";
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmAPBLaporanPasir";
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView";
 	document.${formName}.submit();
 }
 
 function kembali_skrindepan(){
 	document.${formName}.actionOnline.value = "";
-	//document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmAPBLaporanPasir";
+	//document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView";
 	document.${formName}.submit();
 }
 

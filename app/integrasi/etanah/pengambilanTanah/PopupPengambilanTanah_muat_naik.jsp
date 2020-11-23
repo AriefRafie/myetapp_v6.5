@@ -1,5 +1,6 @@
 #set($tajuk_upload = "")
 #set($tajuk_upload = "Muat Naik Dokumen")  
+#set($tajuk_lampiran = "")
 
 
 <table border="0" width="100%"  > 
@@ -29,7 +30,7 @@
 			              <td width="1%" valign="top">:</td>
 			              <td width="62%" valign="top">                        
                           #set($tajuk_lampiran = "")                                                                          
-                          <input type="text" name="tajuk" id="tajuk" maxlength="200" size="50" value="$tajuk_lampiran"  /></td>
+                          <input type="text" name="nama_dokumen" id="nama_dokumen" maxlength="200" size="50" value="$nama_dokumen"  /></td>
 			 	</tr>
                	
                	<tr>
@@ -38,10 +39,10 @@
 		          <td   valign="top">:</td>
 		          <td  valign="top">
 		          
-		            <select  class="autoselect" name="kategori_lampiran" id="kategori_lampiran" >
+		               <select  class="autoselect" name=jenisDokumen id="jenisDokumen" >
 		            <option value=""  >SILA PILIH KATEGORI</option>
 		            #foreach($!ja in $!listSenaraiKategoriLampiran) 
-		            <option value="$!ja.ID_LAMPIRANETANAH"  >$!ja.KETERANGAN_LAMPIRANETANAH</option>
+		            <option value="$!ja.ID_JENISDOKUMEN"  >$!ja.KOD_DOKUMENETANAH</option>
 		            #end 
 		            </select>
 		          

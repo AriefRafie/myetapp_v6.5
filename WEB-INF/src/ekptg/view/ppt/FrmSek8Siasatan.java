@@ -448,6 +448,7 @@ public class FrmSek8Siasatan extends AjaxBasedModule{
         		String socBangunan = getParam("socBangunan");   //penambahan yati
         		context.put("id_bangunan", socBangunan);
 
+        		myLogger.info("socJenisBangunan"+socJenisBangunan);
         		// Checkbox PPT-25 (ii) Jenis Pemilikan
         		Vector semakanList = FrmSemakan.getSenaraiSemakan("pptjenispemilikan");  //, "pptjenistanaman"
         		context.put("senaraiSemakan", semakanList); 
@@ -501,7 +502,7 @@ public class FrmSek8Siasatan extends AjaxBasedModule{
    				{  
         		//String socJenisBangunan = getParam("socJenisBangunan");
         		this.context.put("readmode", "edit"); 
-        		context.put("selectBangunan",HTMLPPT.SelectBangunan("socBangunan",Utils.parseLong(socJenisBangunan),null,"style=width:auto"));
+        		context.put("selectBangunan",HTMLPPT.SelectBangunan("socBangunan",Utils.parseLong(null),null,"style=width:auto"));
    				}	    
         		else if ("Batal".equals(subminor_command))
    				{   

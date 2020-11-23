@@ -59,10 +59,10 @@
         		<td class="$row"> $list.NAMA_SIMATI</td>
         		<td class="$row"> $list.NAMA_PEMOHON</td>			 
 			 	<td class="$row" > 
-			 	#if ($EkptgUtil.isSimatiNonMuslim($list.ID_SIMATI))
-			 		<input type="button" name="button2" id="button2" value="Akta" onClick = "janaAkta('$list.ID_PERMOHONAN','$list.ID_SIMATI')" /> 
+			 	#if ($isMuslim == false)
+			 		<input type="button" name="button2" id="button2" value="Akta" onClick = "janaAkta('$list.ID_PERMOHONANSIMATI','$list.ID_SIMATI')" /> 
 			 	#end
-			 	#if ($EkptgUtil.isSimatiNonMuslim($list.ID_SIMATI)==false)
+			 	#if ($isMuslim == true)
 				 	<input type="button" name="button2" id="button2" value="Faraid" onClick = "janaFaraid('$list.ID_SIMATI','$list.ID_PERMOHONAN')" /> 
 			 	#end
 			 	</td>

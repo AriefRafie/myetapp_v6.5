@@ -24,11 +24,11 @@ public class DisplayBlob implements IServlet2{
 	
 	static Logger myLogger = Logger.getLogger(ekptg.model.utils.DisplayBlob.class);
 	String sql ="";
-	public void doService(HttpServletRequest request, HttpServletResponse response,
-			ServletContext context) throws IOException, ServletException {
-			//Security checking should be added later
-			Db db = null;
-			 try {
+	public void doService(HttpServletRequest request, HttpServletResponse response,ServletContext context) 
+		throws IOException, ServletException {
+		//Security checking should be added later
+		Db db = null;
+		try {
 		            db = new Db();
 		            Connection con = db.getConnection();
 		            
@@ -69,14 +69,14 @@ public class DisplayBlob implements IServlet2{
 		                out.println("</div>");
 		                out.close();
 		            }
-		        }
-		        catch(Exception ex) {
-		        	myLogger.info(ex.getMessage());
-		        }
-		        finally {
-				      if (db != null) db.close();
-			    }
-
-			
+		        
+		}catch(Exception ex) {
+	       	myLogger.info(ex.getMessage());
+		}finally {
+			if (db != null) db.close();
 		}
+			
+	}
+	
+	
 }

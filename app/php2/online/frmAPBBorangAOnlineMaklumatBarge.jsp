@@ -12,7 +12,7 @@
   <tr>
     <td><fieldset>
       <legend><strong>MAKLUMAT BARGE</strong></legend>
-      #parse("app/php2/frmAPBBorangAMaklumatBargeDetail.jsp")
+      #parse("app/php2/online/frmAPBBorangAOnlineMaklumatBargeDetail.jsp")
       </fieldset></td>
   </tr>
   #end
@@ -101,6 +101,26 @@ function simpanKemaskiniMaklumatBarge(){
   		document.${formName}.txtNamaDaftar.focus(); 
 		return; 
 	}
+	if(document.${formName}.txtJenis.value == ""){
+		alert('Sila masukkan Jenis Kapal.');
+  		document.${formName}.txtJenis.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtNoPendaftaran.value == ""){
+		alert('Sila masukkan No. Pendaftaran.');
+  		document.${formName}.txtNoPendaftaran.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtNoTel.value == ""){
+		alert('Sila masukkan No. Tel.');
+  		document.${formName}.txtNoTel.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtKapasiti.value == ""){
+		alert('Sila masukkan Kapasiti.');
+  		document.${formName}.txtKapasiti.focus(); 
+		return; 
+	}
 	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
@@ -117,7 +137,8 @@ function kemaskiniMaklumatBarge(){
 	doAjaxCall${formName}("");
 }
 function doBatalMaklumatBarge(){
-	
+	document.${formName}.actionOnline.value = "doMaklumatPasir";
+	document.${formName}.hitButton.value = "";
 	document.${formName}.mode.value = "view";
 	doAjaxCall${formName}("");
 }
@@ -129,4 +150,15 @@ function validateNumber(elmnt,content) {
 	}
 }
 
+function doHapusBarge(){
+
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.mode.value = "viewBarge";
+		return;
+	}
+	
+	document.${formName}.mode.value = "view";
+	document.${formName}.hitButton.value = "doHapusBarge";
+	document.${formName}.submit();
+}
 </script>

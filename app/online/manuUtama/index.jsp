@@ -146,13 +146,6 @@
 					<tr>
 						<td><b>Penguatkuasaan dan Hasil Persekutuan</b></td>
 					</tr>
-					<tr>
-						<td>
-						<a href="javascript:goTo('PHPAPB')" class="help" title="Permohonan Urusan Akta Pelantar Benua">
-							<font color="blue"><li>Permohonan Urusan Akta Pelantar Benua</li></font>
-						</a>
-						</td>
-					</tr>
 <!-- 					<tr> -->
 <!-- 						<td> -->
 <!-- 						<a href="javascript:goTo('')" class="help" title="Pengaduan Aktiviti Pencerobohan"> -->
@@ -171,6 +164,13 @@
 						<td>
 						<a href="javascript:goTo('PembayaranSewa')" class="help" title="Penyemakan Status Pembayaran Sewa Tanah dan Ruang Bangunan">
 							<font color="blue"><li>Status Pembayaran Sewa</li></font>
+						</a>
+						</td>
+					</tr>
+					<tr>
+						<td>
+						<a href="javascript:goTo('PHPAPB')" class="help" title="Permohonan Urusan Akta Pelantar Benua">
+							<font color="blue"><li>Permohonan Urusan Akta Pelantar Benua</li></font>
 						</a>
 						</td>
 					</tr>

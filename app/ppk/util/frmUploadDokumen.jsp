@@ -52,7 +52,7 @@ padding:0 0.25em;
 <link rel="stylesheet" type="text/css" href="../../css/online.css" />
 #end
   	<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-  	<input type="hidden" name="idPermohonan" id="idPermohonan" value="$idPermohonan"/>
+  	<input type="hidden" name="idPermohonan" id="idPermohonan" value="$!idPermohonan"/>
 	<input type="hidden" name="idHarta" value="$!idHarta"/>
 
 	<input type="hidden" name="actionPopup" value="$!actionPopup"/>
@@ -109,8 +109,8 @@ padding:0 0.25em;
 				#foreach($mo in $senaraidokumen)
 					#set ( $cnt = $cnt + 1 )
 					$!mo.namaFail
-						<a class="opener" href="javascript:deleteDetailImej('$!mo.idDokumen','$!mo.idLampiran')" 
-							onclick="deleteDetailImej('$!mo.idDokumen','$!mo.idLampiran'); return false;">
+						<a class="opener" href="javascript:deleteDetailImej('$!mo.idDokumen','$!mo.idLampiran','$!idPermohonan')" 
+							onclick="deleteDetailImej('$!mo.idDokumen','$!mo.idLampiran','$!idPermohonan'); return false;">
 							<img src="../../img/online/x.gif" alt="hapus" width="20" height="15"/>
 						</a>
 					<br>
@@ -137,7 +137,7 @@ padding:0 0.25em;
 
 <script>
 	//Hapus dokumen pada senarai harta
-	function deleteDetailImej(iDokumen,lampiran){	
+	function deleteDetailImej(iDokumen,lampiran,idPermohonan){	
 		if ( !window.confirm("Adakah Anda Pasti?")) return;
 	/* 	document.${formName}.actionPopup.value = "papar";
 		document.${formName}.hitButton.value = "hapus"; */
@@ -151,9 +151,9 @@ padding:0 0.25em;
 		}else if('$!jenisdokumen' == '99210'){
 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen&actionPopup=paparHA&hitButton=hapusmyid&iDokumen="+iDokumen;  
 		}else if('$!jenisdokumen' == '99211'){
-			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen&actionPopup=paparHA&hitButton=hapusmyid&iDokumen="+iDokumen;  
+			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen&actionPopup=paparHA&hitButton=hapusmyid&iDokumen="+iDokumen+"&idPermohonan="+idPermohonan+"&jenisdokumen=99211";  
 		}else if('$!jenisdokumen' == '99212'){
-			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen&actionPopup=paparHA&hitButton=hapusmyid&iDokumen="+iDokumen;  
+			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen&actionPopup=paparHA&hitButton=hapusmyid&iDokumen="+iDokumen+"&idPermohonan="+idPermohonan+"&jenisdokumen=99212";  
 		}
 		
 		else{
@@ -180,16 +180,28 @@ padding:0 0.25em;
 			document.${formName}.actionPopup.value = "papar";
 		}
 		//alert('simpanLampiran:$!jenisdokumen');
-		if('myid'=='$!jenisdokumen'||'cod'=='$!jenisdokumen'){
-			if('myid'=='$!jenisdokumen')
-				actExt ="&actionPopup=MyID"+"&hitButton=simpanMyID";
-			else if ('cod'=='$!jenisdokumen')
-				actExt ="&actionPopup=cod"+"&hitButton=simpancod";
+// 		if('myid'=='$!jenisdokumen'||'cod'=='$!jenisdokumen'){
+// 			if('myid'=='$!jenisdokumen')
+// 				actExt ="&actionPopup=MyID"+"&hitButton=simpanMyID";
+// 			else if ('cod'=='$!jenisdokumen')
+// 				actExt ="&actionPopup=cod"+"&hitButton=simpancod";
 			
-			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"
-									+"&rujukan=$!idRujukan"
-									+"&actionrefresh=$!actionRefresh"+actExt;
-		}else if('$!jenisdokumen' == '99203'){
+// 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"
+// 									+"&rujukan=$!idRujukan"
+// 									+"&actionrefresh=$!actionRefresh"+actExt;
+// 		}
+		if('$!jenisdokumen' == 'myid'){	
+			actExt ="&jenisdokumen=$!jenisdokumen";
+			actExt +="&actionPopup=$!actionPopup&hitButton=simpanMyID&rujukan=$!idRujukan&actionrefresh=$!actionRefresh";
+			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"+actExt;
+			
+		}else if('$!jenisdokumen' == 'cod'){
+			actExt ="&jenisdokumen=$!jenisdokumen";
+			actExt +="&actionPopup=$!actionPopup&hitButton=simpancod&rujukan=$!idRujukan&actionrefresh=$!actionRefresh";
+			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"+actExt;
+			
+		}
+		else if('$!jenisdokumen' == '99203'){
 			actExt ="&jenisdokumen=$!jenisdokumen";
 			actExt +="&actionPopup=$!actionPopup&hitButton=simpanlampiran&rujukan=$!idRujukan&actionrefresh=$!actionRefresh";
 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"+actExt;
@@ -208,20 +220,20 @@ padding:0 0.25em;
 		}
 		else if('$!jenisdokumen' == '99211'){
 			actExt ="&jenisdokumen=$!jenisdokumen";
-			actExt +="&actionPopup=$!actionPopup&hitButton=simpanboranga&rujukan=$!idRujukan&actionrefresh=$!actionRefresh";
+			actExt +="&actionPopup=$!actionPopup&hitButton=simpanboranga&rujukan=$!idRujukan&actionrefresh=$!actionRefresh&idPermohonan=$!idPermohonan";
 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"+actExt;
 
 		}
 		else if('$!jenisdokumen' == '99212'){
 			actExt ="&jenisdokumen=$!jenisdokumen";
-			actExt +="&actionPopup=$!actionPopup&hitButton=simpanicwaris&rujukan=$!idRujukan&idSimati=$!idSimati&actionrefresh=$!actionRefresh";
+			actExt +="&actionPopup=$!actionPopup&hitButton=simpanicwaris&rujukan=$!idRujukan&idSimati=$!idSimati&actionrefresh=$!actionRefresh&idPermohonan=$!idPermohonan";
 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumen"+actExt;
 
 		}
 		else{
 			document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup="+document.${formName}.actionPopup.value
 									+"&hitButton="+document.${formName}.hitButton.value
-									+"&idHarta=$!idHarta"
+									+"&idHarta=$!idHarta&jenisdokumen=$!jenisdokumen&idPermohonan=$!idPermohonan"
 									+"&actionrefresh=$!actionRefresh";
 		
 		}
@@ -309,6 +321,10 @@ padding:0 0.25em;
 		}else if('dokumenIC' == '$!actionRefresh'){
 			window.opener.setSelected(0,2,0,0);
 			window.opener.WarisView(flagOnline);
+			
+		}else if('dokumenS' == '$!actionRefresh'){
+			window.opener.semakLampiran();
+		
 		}
 		
 		

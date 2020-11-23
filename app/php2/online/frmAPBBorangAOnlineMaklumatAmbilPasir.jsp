@@ -14,6 +14,8 @@
   <input name="actionOnline" type="hidden" id="actionOnline" value="$actionOnline"/>
   <input name="mode" type="hidden" id="mode" value="$mode"/>
   <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
+   <input name="idfail" type="hidden" id="idfail" value="$idFail"/>
+  
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   
@@ -28,7 +30,7 @@
   <tr>
     <td><fieldset>
       <legend><strong>MAKLUMAT PENGAMBILAN PASIR</strong></legend>
-      #parse("app/php2/frmAPBBorangAAmbilPasirDetail.jsp")
+      #parse("app/php2/online/frmAPBBorangAOnlineAmbilPasirDetail.jsp")
       </fieldset></td>
   </tr>
   #end
@@ -49,7 +51,7 @@
 <legend><strong>Senarai Laporan</strong></legend>
 	<table width="100%" border="0" cellspacing="2" cellpadding="2">
        <tr>
-        <td><a href="#" class="style2" onClick="javascript:cetakAPBLaporanBorangA('$idBorangA')"><font color="blue"> Laporan Borang A </font></a></td>
+        <td><a href="#" class="style2" onClick="javascript:cetakAPBLaporanBorangA('$idBorangA')"><font color="blue"> Borang A </font></a></td>
       </tr>           
     </table>
 </fieldset>
@@ -89,15 +91,14 @@ function setTable(id){
 }
 function cetakAPBLaporanBorangA(id_borangA) {
 
-	var url = "../servlet/ekptg.report.php2.APBLaporanBorangA?idBorangA="+id_borangA;
-	
+	//var url = "../servlet/ekptg.report.php2.APBLaporanBorangA?idBorangA="+id_borangA;
+	var url = "../servlet/ekptg.report.php2.online.PengesahanOnline?template=APBLaporanBorangA&folder=ONLINE&idBorangA="+id_borangA;
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
 function doSimpanMaklumatPasir(){
-
 	if(document.${formName}.socBulan.value == ""){
 		alert('Sila pilih bulan.');
   		document.${formName}.socBulan.focus(); 
@@ -108,6 +109,56 @@ function doSimpanMaklumatPasir(){
   		document.${formName}.txtTahun.focus(); 
 		return; 
 	}
+	if(document.${formName}.txtAnggaranPasir.value == ""){
+		alert('Sila masukkan Anggaran Pasir.');
+  		document.${formName}.txtAnggaranPasir.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtKontraktor.value == ""){
+		alert('Sila masukkan maklumat Kontraktor.');
+  		document.${formName}.txtKontraktor.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtTujuanAmbil.value == ""){
+		alert('Sila masukkan Tujuan Pengambilan.');
+  		document.${formName}.txtTujuanAmbil.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtDestinasiDihantar.value == ""){
+		alert('Sila masukkan Destinasi Pasir Dihantar.');
+  		document.${formName}.txtDestinasiDihantar.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtPembeli.value == ""){
+		alert('Sila masukkan Nama Syarikat Pembeli.');
+  		document.${formName}.txtPembeli.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtTarikhMula.value == ""){
+		alert('Sila masukkan Tarikh Mula Operasi.');
+  		document.${formName}.txtTarikhMula.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtTarikhTamat.value == ""){
+		alert('Sila masukkan Tarikh Tamat Operasi.');
+  		document.${formName}.txtTarikhTamat.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtLaluan.value == ""){
+		alert('Sila masukkan Laluan.');
+  		document.${formName}.txtLaluan.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtKaedah.value == ""){
+		alert('Sila masukkan Kaedah Pengambilan Pasir.');
+  		document.${formName}.txtKaedah.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtKawasan.value == ""){
+		alert('Sila masukkan Kawasan Pelepusan.');
+  		document.${formName}.txtKawasan.focus(); 
+		return; 
+	}
 	
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
@@ -116,7 +167,8 @@ function doSimpanMaklumatPasir(){
 	document.${formName}.actionOnline.value = "doMaklumatPasir";
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "simpanMaklumatAmbilPasir";
-	document.${formName}.submit();
+	//document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function doSimpanKemasMaklumatPasir(){
 	
@@ -138,7 +190,8 @@ function doSimpanKemasMaklumatPasir(){
 	document.${formName}.actionOnline.value = "doMaklumatPasir";
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "simpanKemaskiniMaklumatPasir";
-	document.${formName}.submit();
+	//document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 function doKemaskiniMaklumatPasir(){
 
@@ -148,12 +201,12 @@ function doKemaskiniMaklumatPasir(){
 }
 function doBatalKemaskiniMaklumatPasir(){
 	
-	document.${formName}.mode.value = "view";
+	document.${formName}.mode.value = "new";
 	doAjaxCall${formName}("");
 }
 function doKembali(){
 	
-	document.${formName}.actionOnline.value = "papar";
+	document.${formName}.actionOnline.value = "";
 	document.${formName}.submit();
 }
 function validateCurrency(elmnt,content,content2) {
@@ -185,6 +238,26 @@ function doSimpanMaklumatBarge(){
 	if(document.${formName}.txtNamaDaftar.value == ""){
 		alert('Sila masukkan Nama Didaftarkan.');
   		document.${formName}.txtNamaDaftar.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtJenis.value == ""){
+		alert('Sila masukkan Jenis Kapal.');
+  		document.${formName}.txtJenis.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtNoPendaftaran.value == ""){
+		alert('Sila masukkan No. Pendaftaran.');
+  		document.${formName}.txtNoPendaftaran.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtNoTel.value == ""){
+		alert('Sila masukkan No. Tel.');
+  		document.${formName}.txtNoTel.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtKapasiti.value == ""){
+		alert('Sila masukkan Kapasiti.');
+  		document.${formName}.txtKapasiti.focus(); 
 		return; 
 	}
 	

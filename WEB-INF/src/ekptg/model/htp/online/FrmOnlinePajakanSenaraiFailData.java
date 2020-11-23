@@ -614,8 +614,7 @@ public class FrmOnlinePajakanSenaraiFailData {
 		return idFailString;
 	}
 	
-	public String simpanOnline(String idNegeri, String idKementerian, String idAgensi, String idSuburusan, 
-			String idStatusTanah, String idJenisFail, String noFailKJP, String tarikhSuratKJP, String noFailLain, 
+	public String simpanOnline(String idNegeri, String idSuburusan, String idStatusTanah, String idJenisFail, String noFailKJP, String tarikhSuratKJP, String noFailLain, 
 			String tarikhAgihan, String tajuk, String tarikhSuratPemohon, String idHakmilik, HttpSession session) throws Exception {
 
 		Db db = null;
@@ -656,7 +655,7 @@ public class FrmOnlinePajakanSenaraiFailData {
 			
 			//r.add("NO_FAIL", " ");
 			r.add("ID_NEGERI", idNegeri);
-			r.add("ID_KEMENTERIAN", idKementerian);	
+//			r.add("ID_KEMENTERIAN", idKementerian);	
 			
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
@@ -670,11 +669,11 @@ public class FrmOnlinePajakanSenaraiFailData {
 			long idPermohonan = DB.getNextID(db, "TBLPERMOHONAN_SEQ");
 			Long setIdStatus = 0L;
 			setIdStatus = FrmUtilData.getIdStatusByLangkah("-2",idSuburusan,"=");
-			kodKementerianMampu = getKementerianByMampu(Integer.parseInt(idKementerian));
+//			kodKementerianMampu = getKementerianByMampu(Integer.parseInt(idKementerian));
 			kodNegeriMampu = getNegeriByMampu(Integer.parseInt(idNegeri));
 
 			r.add("ID_PERMOHONAN", idPermohonan);
-			r.add("NO_PERMOHONAN", FrmUtilData.generateNoOnline(3,kodKementerianMampu, String.valueOf(idKementerian), kodNegeriMampu, idNegeri));
+//			r.add("NO_PERMOHONAN", FrmUtilData.generateNoOnline(3,kodKementerianMampu, String.valueOf(idKementerian), kodNegeriMampu, idNegeri));
 			
 			r.add("ID_JKPTG", "1");
 			r.add("ID_FAIL", idFail);
@@ -699,7 +698,7 @@ public class FrmOnlinePajakanSenaraiFailData {
 			long idHTPPermohonan = DB.getNextID(db, "TBLHTPPERMOHONAN_SEQ");
 			r.add("ID_HTPPERMOHONAN", idHTPPermohonan);
 			r.add("ID_PERMOHONAN", idPermohonan);
-			r.add("ID_AGENSI", idAgensi);
+//			r.add("ID_AGENSI", idAgensi);
 			r.add("ID_JENISTANAH", idStatusTanah);
 			r.add("NO_RUJUKAN_KJP", noFailKJP);
 			r.add("NO_RUJUKAN_LAIN", noFailLain);
@@ -921,13 +920,16 @@ public class FrmOnlinePajakanSenaraiFailData {
 //		
 //	}
 	
-	public static String generateNoOnline(int idUrusan, String kodKementerian, String idKementerian, String kodNegeri, String idNegeri) throws Exception{
+//	public static String generateNoOnline(int idUrusan, String kodKementerian, String idKementerian, String kodNegeri, String idNegeri) throws Exception{
+	public static String generateNoOnline(int idUrusan, String kodNegeri, String idNegeri) throws Exception{
 		java.util.Calendar calendar = java.util.Calendar.getInstance();
 		int getYear = calendar.get(java.util.Calendar.YEAR);
 		String noFail = "";
-		String X = String.format("%04d",File.getSeqNo(3, idUrusan,Integer.parseInt(idKementerian), Integer.parseInt(idNegeri),getYear));
+//		String X = String.format("%04d",File.getSeqNo(3, idUrusan,Integer.parseInt(idKementerian), Integer.parseInt(idNegeri),getYear));
+		String X = String.format("%04d",File.getSeqNo(3, idUrusan, Integer.parseInt(idNegeri),getYear));
 
-		noFail += "JKPTG/SHTP/"+ kodKementerian + "/"+ kodNegeri + "/"+X+"/"+getYear;				
+//		noFail += "JKPTG/SHTP/"+ kodKementerian + "/"+ kodNegeri + "/"+X+"/"+getYear;
+		noFail += "JKPTG/SHTP/14" + "/"+ kodNegeri + "/"+X+"/"+getYear;
 		log.info("generateNoOnline:"+noFail);
 		return noFail;
 		
@@ -1347,11 +1349,11 @@ public class FrmOnlinePajakanSenaraiFailData {
 		String userId = (String) session.getAttribute("_ekptg_user_id");
 		String sql = "";
 		String namaUser = "";
-		String emelUser = "";
+		String emelUser = "afifah@si-protech.com.my"; //untuk testing
 		String idhakmilikUrusan = "";
 		String noPermohonan = "";
 		String idSuburusan = "";
-		
+	
 		try {
 			db = new Db();
 			conn = db.getConnection();
@@ -1381,7 +1383,9 @@ public class FrmOnlinePajakanSenaraiFailData {
 		r.update("ID_PERMOHONAN", idPermohonan);			
 		r.add("ID_JKPTG", "1");
 		r.add("ID_FAIL", idFail);
-		r.add("ID_STATUS", "1610197");
+
+		r.add("ID_STATUS", setIdStatus);
+		//r.add("ID_STATUS", "1610197"); Daftar
 						
 		r.add("ID_KEMASKINI", userId);
 		r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));

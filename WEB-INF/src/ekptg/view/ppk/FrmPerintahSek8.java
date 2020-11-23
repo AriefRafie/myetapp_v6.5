@@ -116,6 +116,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		String flagAdaHAPKT = "0";
 		String flagAdaHTAPL = "0";
 		String flagAdaHAPL = "0";
+		String flagAdaHADIKEMBALIKAN = "0";
 		String flagAdaHTAPF = "0";
 		String flagAdaHAPF = "0";
 		
@@ -586,7 +587,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 			if (noFail1 != "")
 				{
 				noFail2 = noFail1;
-				}
+				}  
 			paparLaporanSerahan(noFail2);
 			//<-------------------- SELESAI PERMOHONAN --------------------------->
 			if (logic.checkPerintahKIV(idPerintah)){
@@ -1853,6 +1854,10 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 				if (logic.checkExistHAPF(idPerintah)){
 					flagAdaHAPF = "1";
 				}
+				
+				if (logic.checkExistHADIKEMBALIKAN(idPerintah)){
+					flagAdaHADIKEMBALIKAN = "1";
+				}
 			}
 			
 			if (flagAdaHTAPT.equals("1")){
@@ -1864,6 +1869,11 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 				logic.setDataSenaraiHAPT(idPerintah,idPermohonanSimati);
 				listHAPT = logic.getSenaraiHAPT();
 				this.context.put("SenaraiHAPT", listHAPT);
+			}
+			if (flagAdaHADIKEMBALIKAN.equals("1")){
+				logic.setDataSenaraiHAPT(idPerintah,idPermohonanSimati);
+				listHAPT = logic.getSenaraiHAPT();
+				this.context.put("SenaraiHADIKEMBALIKAN", listHAPT);
 			}
 			if (flagAdaHTAPKT.equals("1")){
 				logic.setDataSenaraiHTAPKT(idPerintah,idPermohonanSimati);
@@ -1948,6 +1958,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		//SET DEFAULT PARAM
 		this.context.put("actionPerintah", actionPerintah);
         this.context.put("mode", mode);
+        myLogger.info("flagPopup = "+flagPopup);
         this.context.put("flagPopup", flagPopup);
 		this.context.put("modePopup", modePopup);
         this.context.put("selectedTabUpper", selectedTabUpper);
@@ -2093,7 +2104,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 	    	db = new Db();
 	    	Connection con = db.getConnection();
 	    	Statement stmt = db.getStatement();
-	    	String noFail1 = noFail;
+	    	String noFail1 = noFail;	
 	    	sqlPaparTblLaporanHantarPerintah = "SELECT NO_FAIL,JENIS_PENGHANTARAN, TARIKH_SERAHAN, NAMA_PENYERAH, NAMA_PENERIMA, NO_KP_BARU, NO_KP_LAMA, NO_KP_LAIN, CATATAN, ID_PERINTAH, ID_PENGHANTARAN FROM TBLPPKHANTARPERINTAH WHERE NO_FAIL='" + noFail1 + "' AND ID_PENGHANTARAN=(SELECT MAX(ID_PENGHANTARAN) FROM TBLPPKHANTARPERINTAH WHERE NO_FAIL = '" + noFail1 + "')";
 	    
 	    	System.out.println("sqlPaparTblLaporanHantarPerintah = " + sqlPaparTblLaporanHantarPerintah);
@@ -2395,10 +2406,8 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 	public void setupPage(HttpSession session,String action,Vector list) {
 		
 		try {
-		
 			this.context.put("totalRecords",list.size());
 			int page = getParam("page") == "" ? 1:getParamAsInteger("page");
-			
 			int itemsPerPage;
 			if (this.context.get("itemsPerPage") == null || this.context.get("itemsPerPage") == "") {
 				itemsPerPage = getParam("itemsPerPage") == "" ? 10:getParamAsInteger("itemsPerPage");
@@ -2415,7 +2424,7 @@ public class FrmPerintahSek8 extends AjaxBasedModule {
 		    } else if ("doChangeItemPerPage".equals(action)) {
 		       itemsPerPage = getParamAsInteger("itemsPerPage");
 		    }
-		    	
+		    
 		    Paging paging = new Paging(session,list,itemsPerPage);
 			
 			if (page > paging.getTotalPages()) page = 1; //reset page number

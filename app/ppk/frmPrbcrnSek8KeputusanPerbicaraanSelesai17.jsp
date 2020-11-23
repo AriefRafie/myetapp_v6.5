@@ -346,22 +346,22 @@ document.getElementById("header_lama").style.display="block";
                               </label></td>
                          </tr>
                          <!-- arief add Jumlah Harta yang Dikenakan Bayaran Perintah (atas permintaan Pn.Syaida: 16/6/2020) OPEN -->
-          				<tr>
+          				<!--  <tr>
             				<td width="47%" ><div align="left">Jumlah Harta yang Dikenakan Bayaran Perintah &nbsp;(RM)</div></td>
             				<td width="2%"><div align="right">:</div></td>
             				<td width="51%"><label>
               				<input type="text" size="15" name="txtJumHartaDikenakanBayaranPerintah" onblur="this.value=this.value.toUpperCase();" id="txtJumHartaDikenakanBayaranPerintah" style="text-transform:uppercase;" readonly class="disabled" value="$Util.formatDecimal($!txtJumHartaDikenakanBayaranPerintah)" />
               				</label></td>
-          				</tr>
+          				</tr>-->
           				<!-- arief add Jumlah Harta yang Dikenakan Bayaran Perintah (atas permintaan Pn.Syaida: 16/6/2020) CLOSE -->
           				<!-- arief add Bayaran Denda Lewat Pendaftaran Open -->
-           				<tr>
+           				<!--  <tr>
             				<td width="47%" ><div align="left">Bayaran Denda Lewat Pendaftaran&nbsp;&nbsp;&nbsp;(RM)</div></td>
             				<td width="2%"><div align="right">:</div></td>
             				<td width="51%"><label>
               				<input type="text" size="15" name="txtJumDendaLewat" onblur="this.value=this.value.toUpperCase();" id="jumDendaLewat" style="text-transform:uppercase;" readonly class="disabled" value="$!Util.formatDecimal($!txtJumDendaLewat)" />
               				</label></td>
-          				</tr>
+          				</tr>-->
           				<!-- arief add Bayaran Denda Lewat Pendaftaran Close -->
                          <tr>
                           	<td><div align="left"><font color="red">*</font>&nbsp;Jumlah &nbsp;&nbsp;&nbsp;Bayaran(RM)</div></td>
@@ -1189,29 +1189,30 @@ Sebab-sebab Lain</td>
                           <td width="46%"><label><input type="text" size="12" name="txtJumHarta" onblur="this.value=this.value.toUpperCase();" id="txtJumHarta" style="text-transform:uppercase;" readonly class="disabled" value="$!Util.formatDecimal($txtJumHarta)" /></label></td>
                         </tr>
                         <!-- arief add Jumlah Harta yang Dikenakan Bayaran Perintah (atas permintaan Pn.Syaida: 16/6/2020) OPEN -->
-          				<tr>
+          				<!--  <tr>
             				<td width="47%" ><div align="left">Jumlah Harta yang Dikenakan Bayaran Perintah &nbsp;(RM)</div></td>
             				<td width="2%"><div align="right">:</div></td>
             				<td width="51%"><label>
               				<input type="text" size="15" name="txtJumHartaDikenakanBayaranPerintah" onblur="this.value=this.value.toUpperCase();" id="txtJumHartaDikenakanBayaranPerintah" style="text-transform:uppercase;" readonly class="disabled" value="$!Util.formatDecimal($txtJumHartaDikenakanBayaranPerintah)" />
               				</label></td>
-          				</tr>
+          				</tr>-->
           				<!-- arief add Jumlah Harta yang Dikenakan Bayaran Perintah (atas permintaan Pn.Syaida: 16/6/2020) CLOSE -->
           				<!-- arief add Bayaran Denda Lewat Pendaftaran Open -->
-          				<tr>
+          				<!--  <tr>
             				<td width="47%" ><div align="left">Bayaran Denda Lewat Pendaftaran&nbsp;&nbsp;&nbsp;(RM)</div></td>
             				<td width="2%"><div align="right">:</div></td>
             				<td width="51%"><label>
               				<input type="text" size="15" name="txtJumDendaLewat" onblur="this.value=this.value.toUpperCase();" id="jumDendaLewat" style="text-transform:uppercase;" readonly class="disabled" value="$!Util.formatDecimal($txtJumDendaLewat)" />
               				</label></td>
-          				</tr>
+          				</tr>-->
           				<!-- arief add Bayaran Denda Lewat Pendaftaran Close -->
                          <tr>
                           	<td><div align="left">Jumlah Bayaran (RM)</div></td>
                           	<td><div align="right">:</div></td>
                           	<td><label><span style="text-transform:uppercase;">
-                            <input type="text" size="12" name="txtJumBayaran1" onblur="this.value=this.value.toUpperCase();" id="txtJumBayaran1" style="text-transform:uppercase;" readonly class="disabled" value="$!Util.formatDecimal($bayaran_perintah)" /></span></label><input type="hidden" name="txtJumBayaran" id="txtJumBayaran" value="$bayaran_perintah" />
-             				<input type="hidden" name="txtJumBayaranTerkini" id="txtJumBayaranTerkini" value="$Util.formatDecimal($txtJumBayaranTerkini)" />             
+                            <input type="text" size="12" name="txtJumBayaran1" onblur="this.value=this.value.toUpperCase();" id="txtJumBayaran1" style="text-transform:uppercase;" readonly class="disabled" value="$!Util.formatDecimal($bayaran_perintah)" /></span></label>
+                            <input type="hidden" name="txtJumBayaran" id="txtJumBayaran" value="$bayaran_perintah" />
+             				<input type="hidden" name="txtJumBayaranTerkini" id="txtJumBayaranTerkini" value="$txtJumBayaranTerkini"/>             
                         	</td>
                         </tr>
                         <!-- arief add Jumlah Bayaran Sebenar (atas permintaan Pn.Syaida: 16/6/2020) OPEN -->
@@ -1860,22 +1861,22 @@ Sebab-sebab Lain                      &nbsp;&nbsp;&nbsp;&nbsp;                  
                           <td width="44%"><label><input type="text" size="12" name="txtJumHartaEDIT" onblur="this.value=this.value.toUpperCase();" id="txtJumHartaEDIT" style="text-transform:uppercase;" readonly class="disabled" value="$!Util.formatDecimal($txtJumHarta)" /></label></td>
                         </tr>
                         <!-- arief add Jumlah Harta yang Dikenakan Bayaran Perintah (atas permintaan Pn.Syaida: 16/6/2020) OPEN -->
-          				<tr>
+          				<!--  <tr>
             				<td width="47%" ><div align="left">Jumlah Harta yang Dikenakan Bayaran Perintah &nbsp;(RM)</div></td>
             				<td width="2%"><div align="right">:</div></td>
             				<td width="51%"><label>
               				<input type="text" size="15" name="txtJumHartaDikenakanBayaranPerintah" onblur="this.value=this.value.toUpperCase();" id="txtJumHartaDikenakanBayaranPerintah" style="text-transform:uppercase;" readonly class="disabled" value="$!Util.formatDecimal($txtJumHartaDikenakanBayaranPerintah)" />
               				</label></td>
-          				</tr>
+          				</tr>-->
           				<!-- arief add Jumlah Harta yang Dikenakan Bayaran Perintah (atas permintaan Pn.Syaida: 16/6/2020) CLOSE -->
           				<!-- arief add Bayaran Denda Lewat Pendaftaran Open -->
-          				<tr>
+          				<!--  <tr>
             				<td width="47%" ><div align="left">Bayaran Denda Lewat Pendaftaran&nbsp;&nbsp;&nbsp;(RM)</div></td>
             				<td width="2%"><div align="right">:</div></td>
             				<td width="51%"><label>
               				<input type="text" size="15" name="txtJumDendaLewat" onblur="this.value=this.value.toUpperCase();" id="jumDendaLewat" style="text-transform:uppercase;" readonly class="disabled" value="$!Util.formatDecimal($txtJumDendaLewat)" />
               				</label></td>
-          				</tr>
+          				</tr>-->
           				<!-- arief add Bayaran Denda Lewat Pendaftaran Close -->
                          <tr>
                           	<td><div align="left"><font color="red">*</font>&nbsp;Jumlah Bayaran (RM)</div></td>

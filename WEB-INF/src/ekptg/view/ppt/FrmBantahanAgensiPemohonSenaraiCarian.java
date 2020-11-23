@@ -435,14 +435,14 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
           		          		
 		}else if("add_bantahanAP".equals(submit)){	
 			// Checkbox PPT-35 (i) Jenis Bantahan Pampasan frmBantahanDaftar (PB) (SIMPAN KE DB)
-			String idPermohonan = getParam("id_permohonan"); // ASAL: getParam("id_permohonan" + 1)
+			String idHakmilik = getParam("id_hakmilik"); // ASAL: getParam("id_permohonan" + 1)
 			String[] bantahanpampasan = this.request.getParameterValues("jenisbantahanpampasan"); // Nama checkbox dalam .jsp
 			FrmSemakan frmSemak = new FrmSemakan();
-			frmSemak.semakanHapusByPermohonan(idPermohonan);
+			frmSemak.semakanHapusByPermohonan(idHakmilik);
 			if (bantahanpampasan != null) {
 				for (int i = 0; i < bantahanpampasan.length; i++) {
 //					frmSemak = new FrmSemakan();
-					FrmSemakan.semakanTambah(bantahanpampasan[i], idPermohonan);
+					FrmSemakan.semakanTambah(bantahanpampasan[i], idHakmilik);
 				}
 			}
     			
@@ -799,19 +799,19 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
 				String AMAUN_TUNTUTAN_temp = "";
 
 				// Checkbox PPT-35 (i) Jenis Bantahan Pampasan MasterBantahan (SIMPAN KE DB)
-				String idPermohonan = getParam("id_permohonan"); // asal: getParam("id_permohonan" + 1)
+				String idHakmilik = getParam("id_hakmilik"); // asal: getParam("id_permohonan" + 1)
 				String[] bantahanpampasan = this.request.getParameterValues("jenisbantahanpampasan"); // Nama checkbox dalam jsp
 				// context.put("idPermohonan1", id_permohonan + "1");
 				
 				
-				myLogger.info("Simpan pushdb, idPermohonan= " +idPermohonan); // debugger at log copy
+				myLogger.info("Simpan pushdb, idPermohonan= " +idHakmilik); // debugger at log copy
 				FrmSemakan frmSemak = new FrmSemakan();
-				frmSemak.semakanHapusByPermohonan(idPermohonan); // Kalau dalam satu page ada dua checkbox letak satu sahaja
+				frmSemak.semakanHapusByPermohonan(idHakmilik); // Kalau dalam satu page ada dua checkbox letak satu sahaja
 				if (bantahanpampasan != null) {
 					for (int i = 0; i < bantahanpampasan.length; i++) {
 						myLogger.info("simpan pilihan Jumlah Pampasan frmBantahanMasterAP ke tblsenaraihantar");
 						frmSemak = new FrmSemakan();
-						frmSemak.semakanTambah(bantahanpampasan[i], idPermohonan);
+						frmSemak.semakanTambah(bantahanpampasan[i], idHakmilik);
 					}
 				}
 				
@@ -2821,7 +2821,7 @@ public class FrmBantahanAgensiPemohonSenaraiCarian  extends AjaxBasedModule {
 			context.put("idBorangO_check", idBorangO_check);
 			
 	
-			
+			myLogger.info("Vm :"+vm);
         	return vm;
     }
 	

@@ -55,7 +55,7 @@ public class FrmPLPMesyuaratData {
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 
-			sql = "SELECT A.ID_MESYUARAT, A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.STATUS_MESYUARAT "
+			sql = "SELECT A.ID_MESYUARAT, A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, B.FLAG_SYOR"
 					+ " FROM TBLPHPMESYUARAT A, TBLPHPMESYUARATPERMOHONAN B WHERE A.ID_MESYUARAT = B.ID_MESYUARAT"
 					+ " AND B.ID_PERMOHONAN = '"
 					+ idPermohonan + "'";
@@ -79,12 +79,12 @@ public class FrmPLPMesyuaratData {
 						rs.getDate("TARIKH_MESYUARAT") == null ? "" : sdf
 								.format(rs.getDate("TARIKH_MESYUARAT")));
 				if (rs.getString("BIL_MESYUARAT") != null) {
-					if ("L".equals(rs.getString("STATUS_MESYUARAT"))) {
+					if ("L".equals(rs.getString("FLAG_SYOR"))) {
 						h.put("syor", "LULUS");
-					} else if ("T".equals(rs.getString("STATUS_MESYUARAT"))) {
+					} else if ("T".equals(rs.getString("FLAG_SYOR"))) {
 						h.put("syor", "TOLAK");
-					} else if ("G".equals(rs.getString("STATUS_MESYUARAT"))) {
-						h.put("syor", "LULUS BERSYARAT");
+					} else if ("G".equals(rs.getString("FLAG_SYOR"))) {
+						h.put("syor", "TANGGUH");
 					} else {
 						h.put("syor", "");
 					}
@@ -107,7 +107,7 @@ public class FrmPLPMesyuaratData {
 			String txtTarikhMesyuarat, String idJamDari, String idMinitDari,
 			String idJamHingga, String idMinitHingga, String idLokasi,
 			String socSyor, String txtCatatan, HttpSession session)
-			throws Exception {
+			throws Exception {    
 
 		Db db = null;
 		Connection conn = null;
@@ -662,10 +662,10 @@ public class FrmPLPMesyuaratData {
 			//		+ " ULASAN_PEMOHON, FLAG_KEPUTUSAN_PEMOHON"
 			//		+ " FROM TBLPHPMESYUARAT WHERE ID_MESYUARAT = '" + idMesyuarat + "'";
 
-			sql = "SELECT A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.JAM_DARI, A.MINIT_DARI, A.JAM_HINGGA, A.MINIT_HINGGA, A.ID_LOKASI, A.CATATAN, A.STATUS_MESYUARAT,"
+			sql = "SELECT A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.JAM_DARI, A.MINIT_DARI, A.JAM_HINGGA, A.MINIT_HINGGA, A.ID_LOKASI, C.CATATAN, C.FLAG_SYOR,"
 				   + " A.ULASAN_PEMOHON, A.FLAG_KEPUTUSAN_PEMOHON, B.LOKASI"
-				   + " FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B"
-				   + " WHERE A.ID_LOKASI = B.ID_LOKASI AND ID_MESYUARAT = '" + idMesyuarat + "'";
+				   + " FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B, TBLPHPMESYUARATPERMOHONAN C"
+				   + " WHERE A.ID_LOKASI = B.ID_LOKASI AND A.ID_MESYUARAT = C.ID_MESYUARAT AND A.ID_MESYUARAT = '" + idMesyuarat + "'";
 			
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -701,8 +701,8 @@ public class FrmPLPMesyuaratData {
 						rs.getString("CATATAN") == null ? "" : rs
 								.getString("CATATAN"));
 				h.put("flagSyor",
-						rs.getString("STATUS_MESYUARAT") == null ? "" : rs
-								.getString("STATUS_MESYUARAT"));
+						rs.getString("FLAG_SYOR") == null ? "" : rs
+								.getString("FLAG_SYOR"));
 				h.put("ulasanPemohon",
 						rs.getString("ULASAN_PEMOHON") == null ? "" : rs
 								.getString("ULASAN_PEMOHON"));

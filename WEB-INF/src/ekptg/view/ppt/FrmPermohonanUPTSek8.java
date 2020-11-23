@@ -50,12 +50,11 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
 	FrmPermohonanUPTData model = new FrmPermohonanUPTData();
 	PPTHeader header = new PPTHeader();
 	MyInfoPPTData myInfo = new MyInfoPPTData();
+	String negeriIntegrasi = "";
 	
 	@SuppressWarnings({ "unchecked", "static-access" })
 	@Override
 	public String doTemplate2() throws Exception{
-		
-		
 		
 		HttpSession session = request.getSession();
 		PrintWriter out = response.getWriter();
@@ -113,13 +112,10 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
     	String screenUtama = "app/ppt/DaftarS8/frmUPTDaftarSek8.jsp";
     	String screenTanah = "app/ppt/DaftarS8/frmUPTHakmilikTambahSek8.jsp";
     	String screenDokumen = "app/ppt/DaftarS8/frmUPTDocTambahSek8.jsp";
-    	
-    	
+    		
     	//prevent duplicate when refresh page
     	String doPost = (String) session.getAttribute("doPost");
-    	
-		
-		
+    			
     	//anchor
     	anchor();
     	
@@ -141,7 +137,8 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
     	context.put("userIdNeg",userIdNeg);
     	
     	//default list
-    	listPageDepan = model.getListPemohonSeksyen8(userIdNeg);
+    	//listPageDepan = model.getListPemohonSeksyen8(userIdNeg);
+    	setupPage(session,action,listPageDepan);
     	
 		//header
     	//String id_masukPermohonan = "";
@@ -277,20 +274,17 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
     			context.put("selectDaerah",HTML.SelectDaerahKOD(sorJenisKodDaerah,"socDaerah",null,null,"id=socDaerah style=width:300px"));
     		}
     		
-   
     		//validation jajahan
     		if(userIdNeg.equals("3")){
     			context.put("showJajahan","yes");
     		}else{
     			context.put("showJajahan","no");
     		}
-    		
-    		
+    		    		
     		String submit2 = getParam("command2");
         	myLogger.info("submit[2] : " + submit2);
         	
-        	if("doCheckExistNoFail".equals(submit2)){
-        		
+        	if("doCheckExistNoFail".equals(submit2)){       		
         		//get and set data
         		getAndSetData(getParam("jenisNofail"),"new",idpermohonan,userIdNeg);
         		
@@ -387,6 +381,7 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
             		//list depan
             		listPageDepan = model.getListPemohonSeksyen8(userIdNeg);
             		
+            		myLogger.info("masuk sini");
             		context.put("nofail", "");
         			context.put("carianTarikh", "");
         			context.put("carianStatus", "");
@@ -401,17 +396,12 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
         	
     		//screen
 	        vm = screenUtama;
-    		
-    	}//close pendaftaran
-    	
-    	else 
-    	if("semakPendaftaran".equals(submit)){
-    			
+    	//close pendaftaran	
+    	}else if("semakPendaftaran".equals(submit)){   			
     		String submit2 = getParam("command2");
         	myLogger.info("submit[2] : " + submit2);
     		
-        	//get current date
-        	
+        	//get current date  	
     		if(id_status.equals("127") && "".equals(submit2)){
     			context.put("showAlertPaging","yes");
     		//	JOptionPane.showMessageDialog (null, "Sila Klik 'Paging' No.2 Untuk Penambahan Hakmilik dan Pihak Berkepentingan", "Langkah Seterusnya", JOptionPane.INFORMATION_MESSAGE);
@@ -1141,7 +1131,9 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
     		vm = listdepan;
     		
 		}//close else
-   	
+    	//Kegunaan Integrasi
+    	context.put("ID_NEGERIPROJEK", negeriIntegrasi);
+
     		//list permohonan
 	    	context.put("listPermohonan", listPageDepan);
 	    	context.put("list_size", listPageDepan.size());
@@ -1169,11 +1161,7 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
     		setupPage(session,action,listPageDepan);
     		return vm;
     		
-		
-    		
-	    }//close public template
-	
-	
+	}//close public template
 	
 	public void insertPopupReg(String nama_class,String tajuk_class, String group,Db db) throws Exception {
 	//Db db = null;
@@ -1198,12 +1186,7 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
 		}
 	}
 	
-	
-	
-	
-	
-	
-	  public void checkFieldWujud(String table_name,String column_name,String data_type,Db db)  throws Exception {
+	public void checkFieldWujud(String table_name,String column_name,String data_type,Db db)  throws Exception {
 		  
 		  	int total = 0;
 		  	String sql="";
@@ -3102,6 +3085,7 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
 			id_daerah = dp.get("idDaerah").toString();
 			id_negeriprojek = dp.get("idProjekNegeri").toString();
 			flag_jenis_kod_daerah = (String)dp.get("flag_jenis_kod_daerah");
+			negeriIntegrasi = dp.get("idProjekNegeri").toString();
 		}
 		
 		String mode = "";
@@ -3572,8 +3556,8 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
 	}//close selectedTab
 	
 	private void paging() throws Exception{
-		/*
-		String flagPaging = getParam("paging");
+		
+	/*	String flagPaging = getParam("paging");
     	if(flagPaging!=""){
     		context.put("paging", getParam("paging"));
     	}else{
@@ -3610,7 +3594,8 @@ public class FrmPermohonanUPTSek8 extends AjaxBasedModule {
 
 	}//close listcarian
 	
-	@SuppressWarnings("unchecked")
+
+@SuppressWarnings("unchecked")
 	public void setupPage(HttpSession session,String action,Vector list) {
 		
 			try {

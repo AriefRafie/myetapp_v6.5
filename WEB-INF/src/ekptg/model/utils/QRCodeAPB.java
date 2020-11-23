@@ -25,14 +25,13 @@ import com.google.zxing.Result;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-
 import ekptg.report.EkptgReportServlet;
  
 public class QRCodeAPB {
 	
 	static Logger myLog = Logger.getLogger(ekptg.model.utils.QRCodeAPB.class);
 	String returnVal = "";
-	String path = "code.png";
+	//String path = "code.png";
 	String charset = "UTF-8";
 
 	public static void main(String args[]) throws Exception {
@@ -46,41 +45,54 @@ public class QRCodeAPB {
 		String noFailremoveslash = noFail.replaceAll(slash,"");
 		noFailremoveslash = noFailremoveslash.replaceAll("\\s+","");
 		myLog.info("noFail = "+noFail+",noFailremoveslash = "+noFailremoveslash);
-	
-		String path =  getAppContext()+"/reports/php2/qrcode/"+noFailremoveslash+".png";
-		String charset = "UTF-8";
 		
-		Map<EncodeHintType, ErrorCorrectionLevel> map = new HashMap<EncodeHintType, ErrorCorrectionLevel>();		
-		map.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
+		//String path =  getAppContext()+"/reports/php2/qrcode/"+noFailremoveslash+".png";
+		
+		ResourceBundle rb = ResourceBundle.getBundle("file");
+		String path = rb.getString("qrcodepath")+noFailremoveslash+".png";
+		
+		//---untuk local dev----
+		//String path =  "C:/eclipse/workspace/reports/php2/qrcode/"+noFailremoveslash+".png";
+		
+		String charset = "UTF-8";
+		Map<EncodeHintType, ErrorCorrectionLevel> hashMap
+        = new HashMap<EncodeHintType,
+                      ErrorCorrectionLevel>();
+
+		hashMap.put(EncodeHintType.ERROR_CORRECTION,
+                ErrorCorrectionLevel.L);
+
+		// Create the QR code and save
+		// in the specified folder
+    	// as a jpg file
 		try {
-			encript(noFailEncode, path, charset, map, 600, 600);
-			myLog.info("Read here QRCode");
-			
+			createQR(noFailEncode, path, charset, hashMap, 200, 200);
 		} catch (WriterException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    	System.out.println("QR Code Generated!!! ");
+	}
 		
-	} 
-	
-	@SuppressWarnings("deprecation")
-	public void encript(String output, String file, String charset, Map<EncodeHintType, ErrorCorrectionLevel> hintMap, int width, int height) 
-		throws WriterException, IOException{
-		myLog.info("encript:file"+file);
-		BitMatrix mat = new MultiFormatWriter().encode(new String(output.getBytes(charset), charset), BarcodeFormat.QR_CODE, width, height);
-		//file = "JKPTGPK100609172017.png";
-		MatrixToImageWriter.writeToFile(mat, file.substring(file.lastIndexOf('.') + 1), new File(file));
-	
-	}
-	
-	public String decript(String file, String charset, Map<DecodeHintType, ?> map) throws IOException, NotFoundException{
-		myLog.info("decript:file"+file);
-		BinaryBitmap binBit = new BinaryBitmap(new HybridBinarizer(new BufferedImageLuminanceSource(ImageIO.read(new File(file)))));
-		Result result = new MultiFormatReader().decode(binBit, map);
-		return result.getText();
-	
-	}
+		// Function to create the QR code
+	    public static void createQR(String data, String path,
+	                                String charset, Map hashMap,
+	                                int height, int width)
+	        throws WriterException, IOException
+	    {
+	 
+	        BitMatrix matrix = new MultiFormatWriter().encode(
+	            new String(data.getBytes(charset), charset),
+	            BarcodeFormat.QR_CODE, width, height);
+	 
+	        MatrixToImageWriter.writeToFile(
+	                matrix,
+	                path.substring(path.lastIndexOf('.') + 1),
+	                new File(path));
+	    }
 	/**
 	 * Fungsi mendapatkan nama context (folder fizikal applikasi)
 	 * Dibuat Oleh	: Mohamad Rosli
@@ -97,9 +109,6 @@ public class QRCodeAPB {
 		
 		myLog.info("getAppContext="+appContext);
 		return appContext;
-		
 	}
-
-
 }
 

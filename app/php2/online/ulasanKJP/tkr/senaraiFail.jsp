@@ -16,9 +16,13 @@
     <td><fieldset>
         <legend><b>CARIAN</b></legend>
         <table width="100%" align="center" border="0">
+        <tr>
+            <td width="30%" height="24" scope="row" align="right">No. Fail : </td>
+            <td width="70%"><input name="findNoFail" id="findNoFail" type="text" value="$!findNoFail" size="50" maxlength="50" style="text-transform:uppercase;" ></td>
+          </tr>
           <tr>
             <td width="30%" height="24" scope="row" align="right">No. Rujukan <i>Online</i> : </td>
-            <td width="70%"><input name="findNoFail" id="findNoFail" type="text" value="$!findNoFail" size="50" maxlength="50" style="text-transform:uppercase;" ></td>
+            <td width="70%"><input name="findNoRujukanOnline" id="findNoRujukanOnline" type="text" value="$!findNoRujukanOnline" size="50" maxlength="50" style="text-transform:uppercase;" ></td>
           </tr>
           <tr>
             <td width="30%" height="24" scope="row" align="right">Tajuk Fail : </td>
@@ -86,7 +90,7 @@
         <legend><b>SENARAI PERMOHONAN</b></legend>
         #parse("app/utils/record_paging.jsp")
         <table align="center" width="100%">
-         <td><input name="cmdDaftarBaru" id="cmdDaftarBaru" value="Daftar Permohonan Baru" type="button" onclick="doDivAjaxCall$formname('divMainForm','daftarBaru','');">
+         <td><input name="cmdDaftarBaru" id="cmdDaftarBaru" value="Daftar Permohonan" type="button" onclick="doDivAjaxCall$formname('divMainForm','daftarBaru','');">
           <tr class="table_header">
             <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
            	<td width="19%"><strong>No. Rujukan <i>Online</i></strong></td>
@@ -114,7 +118,8 @@
             <td class="$row">$list.NO_FAIL</td>
             <td class="$row">$list.TAJUK_FAIL</td>
             <td class="$row" align="center">$list.TARIKH_TERIMA</td>
-            <td class="$row" align="center">$list.STATUS</td>
+            <td class="$row" align="center">$list.KETERANGAN</td>
+            <!-- <td class="$row" align="center">$list.STATUS</td> -->
           </tr>
           #end
           #else

@@ -8,6 +8,9 @@
   <!--
   .stylefont {font-size:10px}
   -->
+  <!--
+  .style2 {color: #FF0000}
+  -->
  </style>
 <table style="width:99%;">
 <!-- 	<tr>
@@ -24,31 +27,37 @@
 						<table border="0" align="center" width="60%">
 							<!-- Kemaskini by Mohamad Rosli 22/16/2020 -->
 							<tr>
-								<td scope="row" align="left">&nbsp;Status Penyewaan</td>
+								<td><span class="style2">*</span></td>
+								<td scope="row" align="left">Status Penyewaan</td>
 								<td>:&nbsp;</td>
 								<td>$!selectStatus</td>
 							</tr>
 							<tr>
-								<td scope="row" align="left">&nbsp;Negeri</td>
+								<td><span class="style2">*</span></td>
+								<td scope="row" align="left">Negeri</td>
 								<td>:&nbsp;</td>
 								<td>$selectNegeri</td>
 							</tr>
 							<tr>
-								<td scope="row" align="left">&nbsp;Daerah</td>
+								<td>&nbsp;</td>
+								<td scope="row" align="left">Daerah</td>
 								<td>:&nbsp;</td>
 								<td>$selectDaerahBaru</td>
 							</tr>
 							<tr>
-								<td scope="row" align="left">&nbsp;Kementerian</td>
+								<td>&nbsp;</td>
+								<td scope="row" align="left">Kementerian</td>
 								<td>:&nbsp;</td>
 								<td>$selectKementerian</td>
 							</tr>
 							<tr>
-								<td scope="row" align="left">&nbsp;Agensi</td>
+								<td>&nbsp;</td>
+								<td scope="row" align="left">Agensi</td>
 								<td>:&nbsp;</td>
 								<td>$selectAgensi</td>
 							</tr>
 							<tr>
+					        	<td>&nbsp;</td>
 					        	<td scope="row" align="left">Bulan/Tahun/Tempoh</td>
 					        	<td>:&nbsp;</td>
 					       		<td>
@@ -60,6 +69,7 @@
 
 					    	#if($!checkBulan != "")
 							<tr>
+								<td>&nbsp;</td>
 								<td scope="row" align="left">&nbsp;Bulan</td>
 								<td>:&nbsp;</td>
 								<td>$!socTarikhMula</td>
@@ -68,6 +78,7 @@
 
 							#if($!checkBulan != "" || $!checkTahun != "")
 							<tr>
+								<td>&nbsp;</td>
 								<td scope="row" align="left">&nbsp;Tahun</td>
 								<td>:&nbsp;</td>
 								<td>$!socTahunMula</td>
@@ -76,6 +87,7 @@
 
 					    	#if($!checkTempoh != "")
 					    	<tr>
+						        <td>&nbsp;</td>
 						        <td scope="row" align="left">&nbsp;Bulan</td>
 						        <td>:&nbsp;</td>
 						        <td>
@@ -87,6 +99,7 @@
 			      			</tr>
 
 			      			<tr>
+						        <td>&nbsp;</td>
 						        <td scope="row" align="left">&nbsp;Tahun</td>
 						        <td>:&nbsp;</td>
 						        <td>
@@ -97,7 +110,6 @@
 					 			</td>
 			      			</tr>
 							#end
-
 						</table>
 						</fieldset>
 					</td>
@@ -109,8 +121,8 @@
 
 				<tr>
 			        <td align="center">
-			        <input class="stylobutton100" name="cmdcetak" value="Cetak" id="cmdcetak" type="button" onClick="openLaporan('ekptg.report.LaporanPermohonan','IDSTATUS=0','lainpemantauan','PYWLaporanPemantauan');">
-			      </td>
+			        	<input class="stylobutton100" name="cmdcetak" value="Cetak" id="cmdcetak" type="button" onClick="openLaporan('ekptg.report.LaporanPermohonan','lainpemantauan','PYWLaporanPemantauan');">
+			        </td>
 			  	</tr>
 			</table>
 			</fieldset>
@@ -171,7 +183,7 @@
 		var ptem = "&template="+tem;
 		var pbulanmula = "&BULANTAHUN=0";
 		var pbulantamat = "&BULANTAHUNTMT=0";
-		var pdaerah = "&ID=0";
+		var pdaerah = "&ID_DAERAH=0";
 		var punit = "&ID_KEMENTERIAN="+unit;
 		var pagensi = "&ID_AGENSI=0";
 		var masa = document.${formName}.sorTempoh.value;
@@ -179,7 +191,6 @@
 		var pmasa = "&TYPE="+masa;
 		var pbulantahun = "&BULANTAHUN=0";
 		var psuburusan = "&IDSUBURUSAN=0";
-
 		var	pstatus = "&ID_STATUS="+status;
 
 		if(masa==""){
@@ -194,20 +205,24 @@
 				document.${formName}.socNegeri.focus();
 				return;
 			}else if(negeri=="0"){
+			
 			}else{
 				ptem = '&template=PYWLaporanPemantauanNegeri';
 				pnegeri = "&ID_NEGERI="+negeri;
 			}
-		}else if(negeri && unit =="-1" && daerahbaru && daerah == "-1" ){
+		}else if(negeri && unit == "-1" && daerahbaru && daerah == "-1"){
 			if(daerahbaru=="-1"){
 				alert("Sila pilih \"Daerah\" terlebih dahulu");
 				document.${formName}.socDaerahBaru.focus();
 				return;
 			}else if(daerahbaru=="0"){
+			
 			}else if(daerahbaru==""){
+			
 			}else{
 				ptem = '&template=PYWLaporanPemantauanDaerah';
-				pdaerah = "&ID="+daerahbaru;
+				pdaerah = "&ID_DAERAH="+daerahbaru;
+				pnegeri = "&ID_NEGERI="+negeri;
 			}
 		}else if(negeri && unit !="0" && daerahbaru =="0" && daerah == "0" ){
 			if(unit=="-1"){

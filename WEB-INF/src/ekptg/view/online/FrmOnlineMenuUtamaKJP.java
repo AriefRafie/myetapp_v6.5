@@ -2,7 +2,9 @@ package ekptg.view.online;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.Hashtable;
+import java.util.ResourceBundle;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
@@ -24,8 +26,10 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 	 */
 	static Logger myLog = Logger.getLogger(FrmOnlineMenuUtamaKJP.class);
 	private static final long serialVersionUID = -4427185828234591107L;
+	private final String PATHVER = ResourceBundle.getBundle("file").getString("ver_htp")+"/";
 	private static final String PATH = "app/online/manuUtama/";
 	private String vm = PATH + "frmMenuUtamaKJP.jsp";
+
 	private IHtp iErr = null;
 	//return Permohonan 1
 	private IStatus iStatus = null;
@@ -44,9 +48,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 
 		}
 
-		this.context.put("idKementerian", idKementerian);
-		
-		
+		this.context.put("idKementerian", idKementerian);	
 		
 		Pengumuman logic = new Pengumuman();
 		// String portal_role = (String) session.getAttribute("_portal_role");
@@ -68,12 +70,19 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 
 		Hashtable get_notifikasi_permohonan = null;
 		get_notifikasi_permohonan = (Hashtable) notifikasi_permohonan(user_id, Long.parseLong(jawatan));
-		String jumlah_notifikasi = (String) get_notifikasi_permohonan.get("jumlah_Permohonan");
-		context.put("jumlah_notifikasi", Long.parseLong(jumlah_notifikasi));
+		String jumlah_notifikasi_permohonan = (String) get_notifikasi_permohonan.get("jumlah_Permohonan");
+		context.put("jumlah_notifikasi_permohonan", Long.parseLong(jumlah_notifikasi_permohonan));
 		context.put("jawatan", jawatan);
 		context.put("portalRole", portal_role);
 		//System.out.println("*** jumlah_notifikasi --- "+jumlah_notifikasi);
-
+		
+		Hashtable get_notifikasi_bayarpampasan = null;
+		get_notifikasi_bayarpampasan = (Hashtable) notifikasi_bayarpampasan(idKementerian);
+		String jumlah_bayarpampasan = (String) get_notifikasi_bayarpampasan.get("jumlahnotifikasi");
+		context.put("jumlah_notifikasi_bayarpampasan", Long.parseLong(jumlah_bayarpampasan));
+		
+		myLog.info("notifikasi pampasan : "+jumlah_bayarpampasan);
+		
 		 Hashtable get_notifikasi_pelepasan = null;
 		 get_notifikasi_pelepasan = (Hashtable) notifikasi_pelepasan(user_id);
 		 String jumlah_notifikasi_pelepasan = (String)get_notifikasi_pelepasan.get("JUMLAHPERMOHONAN");
@@ -103,9 +112,15 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 		 String jumlah_notifikasi_penawaran = (String)get_notifikasi_penawaran.get("JUMLAHPERMOHONAN");
 		 context.put("jumlah_notifikasi_penawaran", Long.parseLong(jumlah_notifikasi_penawaran));
 		 context.put("jawatan", jawatan); context.put("portalRole", portal_role);
+		 
+		 Hashtable get_notifikasi_penerimaTawaran = null;
+		 get_notifikasi_penerimaTawaran = (Hashtable) notifikasi_penerimaTawaran(idKementerian, user_id);
+		 String jumlah_notifikasi_penerimaTawaran = (String)get_notifikasi_penerimaTawaran.get("JUMLAHPERMOHONAN");
+		 context.put("jumlah_notifikasi_penerimaTawaran", Long.parseLong(jumlah_notifikasi_penerimaTawaran));
+		 context.put("jawatan", jawatan); context.put("portalRole", portal_role);
 
 		 Hashtable get_notifikasi_MOF = null;
-		 get_notifikasi_MOF = (Hashtable) notifikasi_MOF(user_id);
+		 get_notifikasi_MOF = (Hashtable) notifikasi_MOF( user_id);
 		 String jumlah_notifikasi_MOF = (String)get_notifikasi_MOF.get("JUMLAHPERMOHONAN");
 		 context.put("jumlah_notifikasi_MOF", Long.parseLong(jumlah_notifikasi_MOF));
 		 context.put("jawatan", jawatan); context.put("portalRole", portal_role);
@@ -120,11 +135,26 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 		 context.put("bilPPTDikembali", dikembalikan("51").size() + dikembalikan("52").size());
 //		 context.put("vecPPT4", dikembalikan("51"));
 //		 context.put("vecPPT8", dikembalikan("52"));
+		 
+		String command = getParam("command");
+
+		if(command.equals("getdikembalikanHTP")) {
+				
+//				String id_cukaitemp = getParam("id_cukaitemp");				
+//				if(id_cukaitemp!=""){
+//					updateRead(session,id_cukaitemp);
+//				}
+				
+				this.context.put("div_senaraidikembalikan", "Y");
+				//Vector senaraiDikembalikan = DBListKemaskiniCukai(session);
+				//this.context.put("senaraiDikembalikan", senaraiDikembalikan);
+				vm = "app/htp/"+PATHVER+"/dashboard/div_SenaraiFailDikembalikan.jsp";
+			
+		}
 
 		return vm;
 
 	}
-	
 	
 	
 	public Vector getIdNegeriKJPByUserId(String userId) throws Exception {
@@ -258,7 +288,7 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 				        +" AND p.flag_semakan_online = 2) AS jumlahpermohonan FROM DUAL ";
 			}
 
-			///myLogger.info("JUMLAH DOKUMEN :"+sql.toUpperCase());
+			myLog.info("JUMLAH DOKUMEN PERMOHONAN:"+sql.toUpperCase());
 			System.out.println("**** sql PPT --- "+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -271,6 +301,50 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 				h.put("jumlah_Permohonan",
 						rs.getString("jumlahPermohonan") == null ? "0" : rs
 								.getString("jumlahPermohonan"));
+			}
+			return h;
+
+			/*
+			 * } else { Hashtable h; h = new Hashtable();
+			 * h.put("jumlah_Permohonan", "0"); return h; }
+			 */
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	
+	// yati	
+	public Hashtable notifikasi_bayarpampasan(String idKementerian)
+			throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+		
+				sql = " SELECT (SELECT COUNT(HM.ID_HAKMILIK) ";
+				sql += " FROM TBLPFDFAIL F, TBLPPTPERMOHONAN P, TBLPPTHAKMILIK HM ";
+				sql += " WHERE F.ID_FAIL = P.ID_FAIL ";
+				sql += " AND P.ID_PERMOHONAN = HM.ID_PERMOHONAN ";
+				sql += " AND HM.FLAG_HANTAR_KJP = 'BARU' "; 
+				sql += " AND F.ID_KEMENTERIAN = '" +idKementerian+"' ) AS jumlahnotifikasi FROM DUAL ";
+			
+
+			myLog.info("JUMLAH noti pampasan :"+sql.toUpperCase());
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			h = new Hashtable();
+			// h.put("jumlah_Permohonan", "0");
+			while (rs.next()) {
+				h.put("jumlahnotifikasi",
+						rs.getString("jumlahnotifikasi") == null ? "0" : rs
+								.getString("jumlahnotifikasi"));
 			}
 			return h;
 
@@ -313,6 +387,55 @@ public class FrmOnlineMenuUtamaKJP extends AjaxBasedModule {
 
 			myLog.info("JUMLAH DOKUMEN PENAWARAN:"+sql.toUpperCase());
 			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			h = new Hashtable();
+			while (rs.next()) {
+				h.put("JUMLAHPERMOHONAN",
+						rs.getString("JUMLAHPERMOHONAN"));
+			}
+			return h;
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public Hashtable notifikasi_penerimaTawaran(String idKementerian, String userID) throws Exception {
+
+		Db db = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		String sql = "";
+
+		try {
+			
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT (SELECT COUNT (*) "
+					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, "
+					+ " TBLRUJSTATUS D, TBLPHPHAKMILIKPERMOHONAN E, "
+					+ " TBLPHPHAKMILIK F, USERS H, TBLRUJNEGERI RUJNEGERI "
+					+ " WHERE A.ID_SEKSYEN = 4 "
+					+ " AND A.ID_URUSAN = '6' "
+					+ " AND A.ID_SUBURUSAN = '32' "
+					+ " AND A.ID_FAIL = B.ID_FAIL "
+					+ " AND B.ID_STATUS = D.ID_STATUS"
+					+ " AND E.ID_HAKMILIKPERMOHONAN = F.ID_HAKMILIKPERMOHONAN(+)"
+					+ " AND F.ID_NEGERI = RUJNEGERI.ID_NEGERI(+) "
+					+ " AND B.ID_PEMOHON = C.ID_PEMOHON "
+					+ " AND B.ID_PERMOHONAN = E.ID_PERMOHONAN "
+					+ " AND A.NO_FAIL IS NOT NULL"
+					+ " AND A.ID_MASUK = H.USER_ID(+)"
+					+ " AND D.ID_STATUS = '1610210' " //TAWARAN
+					+ " AND C.ID_KEMENTERIAN != '"+idKementerian +"') "
+					+ " AS JUMLAHPERMOHONAN FROM DUAL "
+					; 
+
+			ResultSet rs = stmt.executeQuery(sql);
+			myLog.info("JUMLAH DOKUMEN PENAWARAN:"+sql.toUpperCase());
+			
 
 			Hashtable h;
 			h = new Hashtable();

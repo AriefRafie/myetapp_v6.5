@@ -39,20 +39,19 @@ public class BorangD extends EkptgReportServlet {
 		
 		System.out.println("id_negeri report :"+id_negeri);
 		
-		if(id_negeri.equals("10"))
-		{
+//		if(id_negeri.equals("10"))
+//		{
 			super.setReportName("Borang D");
-		}
-		else if(id_negeri.equals("11"))
-		{
-			super.setReportName("Borang D_PTG_TGANU");
-		}
-		else
-		{
-			 super.setReportName("Borang D_PTG");
-		}
+//		}
+//		else if(id_negeri.equals("11"))
+//		{
+//			super.setReportName("Borang D_PTG_TGANU");
+//		}
+//		else
+//		{
+//			 super.setReportName("Borang D_PTG");
+//		}
 		
-        
 		super.setFolderName("ppt");
 		
 	

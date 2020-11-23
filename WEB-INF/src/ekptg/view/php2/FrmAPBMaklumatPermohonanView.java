@@ -10,8 +10,11 @@ import javax.servlet.http.HttpSession;
 
 import lebah.portal.AjaxBasedModule;
 import ekptg.helpers.HTML;
+import ekptg.model.htp.FrmSemakan;
 import ekptg.model.php2.FrmAPBHeaderData;
 import ekptg.model.php2.FrmAPBMaklumatPermohonanData;
+import ekptg.model.php2.utiliti.LampiranBean;
+import ekptg.model.utils.lampiran.ILampiran;
 
 /**
  * 
@@ -23,6 +26,8 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
 	
 	FrmAPBHeaderData logicHeader = new FrmAPBHeaderData();
 	FrmAPBMaklumatPermohonanData logic = new FrmAPBMaklumatPermohonanData();
+	private ILampiran iLampiran = null;
+	FrmSemakan semak = null;  
 
 	@Override
 	public String doTemplate2() throws Exception {
@@ -59,6 +64,7 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
         String idKoordinat = getParam("idKoordinat");
         String idKategoriPemohon = getParam("idKategoriPemohon");
         String noPermohonan = getParam("noPermohonan");
+        String idKoordinat_original = getParam("idKoordinat_original");
         
         //VECTOR
         Vector beanHeader = null;
@@ -66,7 +72,9 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
         Vector senaraiPembeliPasir = null;
         Vector senaraiProjek = null;
         Vector senaraiKoordinat = null;
+        Vector senaraiKoordinatHistory = null;
         Vector senaraiPakar = null;
+        Vector senaraiSemak = null;
         
 		String step = getParam("step");
         
@@ -124,7 +132,7 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
         		logic.removePakar(idPakar, session);
         	}        	
         	if ("doSimpanKoordinat".equals(hitButton)){
-        		idKoordinat = logic.saveKoordinat(idPermohonan, getParam("txtLabelTitik"), getParam("txtDarjahU"), 
+        		idKoordinat = logic.saveKoordinat(idKoordinat_original, idPermohonan, getParam("txtLabelTitik"), getParam("txtDarjahU"), 
         				getParam("txtMinitU"), getParam("txtSaatU"), getParam("txtDarjahT"), getParam("txtMinitT"), getParam("txtSaatT"), session);
         	}
         	if ("doSimpanKemaskiniKoordinat".equals(hitButton)){
@@ -159,7 +167,6 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
 			idKategoriPemohon =(String)hashHeader.get("idKategoriPemohon");	
 			String status = (String) hashHeader.get("status");
 			this.context.put("status", status.toUpperCase());
-			
 		}
 		
 		// GET FLAG OPEN DETAIL
@@ -172,10 +179,15 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
 			maklumatPakar(mode, idPermohonan, idPakar);
 			maklumatKoordinat(mode, idPermohonan, idKoordinat);
 			
-    		//SENARAI TITIK KOORDINAT
+    		//SENARAI TITIK KOORDINAT BARU
 			logic.setSenaraiKoordinat(idPermohonan);
 			senaraiKoordinat = logic.getListKoordinat();
 			this.context.put("SenaraiKoordinat", senaraiKoordinat);
+			
+			//SENARAI TITIK KOORDINAT LAMA
+			logic.setSenaraiKoordinatHistory(idPermohonan);
+			senaraiKoordinatHistory = logic.getListKoordinatHistory();
+			this.context.put("SenaraiKoordinatHistory", senaraiKoordinatHistory);
     		
     		//SENARAI PAKAR
 			logic.setSenaraiPakar(idPermohonan);
@@ -203,11 +215,19 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
         	
         	maklumatPembeliPasir(mode, idPembeliPasir, idPermohonan);
         	
-    		
         	//SENARAI PEMBELI PASIR
     		logic.setSenaraiPembeliPasir(idPermohonan);
     		senaraiPembeliPasir = logic.getListPembeliPasir();
     		this.context.put("SenaraiPembeliPasir", senaraiPembeliPasir);
+    		
+        } else if ("3".equals(selectedTabUpper)){
+        	
+        	//SENARAI SEMAK
+        	this.context.put("javascriptLampiran", getDocPHP().javascriptUpload("", "paparLampiran", "idDokumen",session, "phpapb"));
+        	
+        	semak = new FrmSemakan();
+			senaraiSemak = semak.getSenaraiSemakanAttach2("phpapb",idPermohonan);
+			this.context.put("SenaraiSemak", senaraiSemak);
         }
 		
 		if ("selesaiPermohonan".equals(step)){
@@ -234,6 +254,7 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
         this.context.put("idKategoriPemohon", idKategoriPemohon);
 
 		return vm;
+		
 	}
 
 	private void maklumatPermohonan(String mode, String idPermohonan) throws Exception, Exception {
@@ -768,4 +789,14 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
 		
 		logic.updatePemohon(idPemohon, hash, session);
 	}
+	
+	private ILampiran getDocPHP(){
+		if(iLampiran == null){
+			iLampiran = new LampiranBean();
+		}
+		return iLampiran;
+				
+	}
+	
+	
 }

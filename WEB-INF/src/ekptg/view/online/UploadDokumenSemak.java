@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 import ekptg.model.entities.Tblrujdokumen;
 import ekptg.model.htp.FrmSemakan;
 import ekptg.model.utils.lampiran.ILampiran;
+import ekptg.model.php2.utiliti.LampiranBean;
 
 public class UploadDokumenSemak extends AjaxBasedModule {
 
@@ -58,7 +59,6 @@ public class UploadDokumenSemak extends AjaxBasedModule {
 		ekptg.model.ppk.util.LampiranBean l = new ekptg.model.ppk.util.LampiranBean();
 
 		modul = getParam("actionrefresh").substring(0,3);
-		this.context.put("modul",modul);
 		myLog.info("uploadFiles:actionrefresh="+getParam("actionrefresh").substring(0,3));
 
 		myLog.info("actionPopup="+actionPopup);
@@ -82,6 +82,15 @@ public class UploadDokumenSemak extends AjaxBasedModule {
 		}else if(hitButton.equals("hapus")){
 			String iDokumen = getParam("idokumen");
 			getDoc().hapus(iDokumen);
+			
+			//HAPUS SENARAI SEMAK
+			String idPermohonan = getParam("idRujukan"); //idRujukan adalah wakil bagi idPermohonan
+			String idSemakanSenarai = getParam("idSenarai"); //idSenarai adalah wakil bagi idSemakanSenarai
+			uploadFiles();
+			FrmSemakan fs = new FrmSemakan();
+			fs.semakanHapusByPermohonan(idPermohonan,idSemakanSenarai);
+			hitButton = "";
+			
 //			uploadFiles(idRujukan,false);
 			hitButton = "";
 		
@@ -242,8 +251,7 @@ public class UploadDokumenSemak extends AjaxBasedModule {
 		while (itr.hasNext()) {
 			FileItem item = (FileItem) itr.next();
 			if ((!(item.isFormField())) && (item.getName() != null)
-					&& (!("".equals(item.getName())))) {
-//				ekptg.model.php2.utiliti.LampiranBean l = new ekptg.model.php2.utiliti.LampiranBean();
+				&& (!("".equals(item.getName())))) {
 				if(modul.equals("php"))
 					getDoc().simpan(item,request);
 				else if(modul.equals("htp"))
@@ -294,5 +302,6 @@ public class UploadDokumenSemak extends AjaxBasedModule {
 		return iLampiranHTP;
 			
 	}
+
 	
 }

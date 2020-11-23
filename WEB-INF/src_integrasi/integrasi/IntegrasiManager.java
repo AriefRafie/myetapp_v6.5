@@ -103,8 +103,7 @@ public class IntegrasiManager {
 	      sql = r.getSQLSelect("TBLINTWSCONFIG");
 //	      if (kod != null) 
 //	    	  sql = sql + " WHERE KOD = '" + kod + "' AND FLAG_AKTIF='Y' "; 
-//	      
-	      myLog.info(sql);
+//	      myLog.info(sql);
 	      ResultSet rs = stmt.executeQuery(sql);
 	      
 	      while (rs.next()) {

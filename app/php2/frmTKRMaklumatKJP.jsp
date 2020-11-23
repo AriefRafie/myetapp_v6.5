@@ -1,7 +1,7 @@
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td colspan="2"><fieldset>
-     
+
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         <tr>
           <td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
@@ -164,7 +164,7 @@
               </tr>
               <tr>
                 <td>&nbsp;</td>
-                <td>No Rujukan Surat</td>
+                <td>No. Rujukan Surat</td>
                 <td>:</td>
                 <td><input type="text" name="txtNoRujukan" id="txtNoRujukan" $readonlyPopup class="$inputTextClassPopup" size="50" value="$beanMaklumatKJP.noRujukan" onblur="this.value=this.value.toUpperCase();"/></td>
               </tr>
@@ -178,7 +178,7 @@
                     <option value="L" selected="selected">LULUS</option>
                     <option value="T">TOLAK</option>
                     <option value="G">LULUS BERSYARAT</option>
-                    #elseif ($beanMaklumatKJP.flagKeputusan == 'T') 
+                    #elseif ($beanMaklumatKJP.flagKeputusan == 'T')
           			<option>SILA PILIH</option>
                     <option value="L">LULUS</option>
                     <option value="T" selected="selected">TOLAK</option>
@@ -203,6 +203,16 @@
                 <td valign="top"><textarea name="txtUlasan" id="txtUlasan" rows="5" cols="50" $readonlyPopup class="$inputTextClassPopup">$beanMaklumatKJP.ulasan</textarea></td>
               </tr>
               #if ($modePopup == 'view')
+	          	#set($idLampiran = "")
+    			#set($namaLampiran = "")
+			    #set($catatanLampiran = "")
+			    #set($namaFailLampiran = "")
+			  	#foreach($beanMaklumatLampiran in $BeanMaklumatLampiran)
+					#set($idLampiran = $beanMaklumatLampiran.idDokumen)
+				    #set($namaLampiran = $beanMaklumatLampiran.namaDokumen)
+				    #set($catatanLampiran = $beanMaklumatLampiran.catatan)
+				    #set($namaFailLampiran = $beanMaklumatLampiran.namaLampiran)
+			  	#end
               <tr>
                 <td>&nbsp;</td>
                 <td valign="top">&nbsp;</td>
@@ -213,9 +223,13 @@
                 <td>&nbsp;</td>
                 <td valign="top">Lampiran</td>
                 <td valign="top">:</td>
-                <td valign="top"> #if ($idLampiran != '')<a href="javascript:cetakLampiran($idLampiran)" class="style2">$namaFailLampiran</a> #end
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input name="cmdUpload" type="button" onclick="uploadDoc($idUlasanTeknikal)" value="Muat Naik Lampiran" /></td>
+                <td valign="top">
+                	#if ($idLampiran != '')
+                		<a href="javascript:cetakLampiran($idLampiran)" class="style2">$namaFailLampiran</a>
+                	#end
+                	&nbsp;&nbsp;&nbsp;&nbsp;
+                	<input name="cmdUpload" type="button" onclick="uploadDoc($idUlasanTeknikal)" value="Muat Naik Lampiran" />
+                </td>
               </tr>
               #end
             </table>
@@ -233,7 +247,7 @@
   #end
   <tr>
     <td width="30%">&nbsp;</td>
-    <td width="70%"> 
+    <td width="70%">
       #if ($modePopup == 'new')
       <input name="cmdSimpan" type="button" onClick="doSimpanMaklumatKJP()" value="Hantar">
       <input name="cmdBatal" type="button" onClick="doBatalMaklumatKJP()" value="Batal">
@@ -254,7 +268,7 @@
       #end
       #end
       #if ($flagStatus == '1')
-      <input name="cmdTerima" type="button" onClick="doTerimaKJP()" value="Terima">
+      <!-- <input name="cmdTerima" type="button" onClick="doTerimaKJP()" value="Terima"> -->
       <input name="cmdUlangan" type="button" onClick="doUlanganKJP()" value="Ulangan">
       #end
       #if ($modePopup == 'update')

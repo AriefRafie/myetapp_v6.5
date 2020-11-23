@@ -21,17 +21,18 @@ public class Akta1958 {
 	private static boolean debugmode = true;
 	
 	private GenderEnum gender = GenderEnum.Unknown;
+	private boolean paramExist[]={false,false,false,false,false,false,};
 	private boolean inProgress = false;
+	private Hashtable firstLayer_IDOB2 = new Hashtable();
 	//Jumlah
 	private int totalWaris=0;
-	private boolean paramExist[]={false,false,false,false,false,false,};
 	private int relation_count[]={0,0,0,0,0,0};
 	private int baseResult[][] = {{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};
 	private int tashiehResult[][] = {{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};
     long lBase[] = {0,0};
     long lTashieh[] = {0,0};
     public String firstLayer_IDOB="";
-    
+
 	public Akta1958() {
 		//Initialize();
 	}
@@ -135,8 +136,7 @@ public class Akta1958 {
 		return hasilFaraid;
 	}
 	
-	///
-	
+	//	
 	public String getFirstLayer_IDOB2() {
 		
 		String txt="";String name="";String value="";
@@ -149,8 +149,7 @@ public class Akta1958 {
 		return txt;
 	}
 	
-	//
-	
+	//	
 	public Vector doMultiLayer(EkptgEngine ekptgEngine,Akta1958 akta1958,
 			String id_ob,String id_ob_from_first_layer,
 			String list_of_ids,
@@ -728,33 +727,40 @@ public class Akta1958 {
 		tashiehResult[x][0] = f.getNumerator();
 		tashiehResult[x][1] = f.getDenominator();
 	}
-	
-	//////////////
-	private Hashtable firstLayer_IDOB2 = new Hashtable();
-	
-	public Vector getFirstLayerData(String id_simati,String id_permohonan) 
-	throws Exception {
+		
+	public Vector<Waris> getFirstLayerData(String id_simati,String id_permohonan) 
+			throws Exception {
 		Db db = null;
-		Vector lists = null;
+		Vector<Waris> lists = null;
 		Waris ob;
 		String sql;
 		try {
 			db = new Db(); 
-			lists = new Vector();
-			//Add Distinct - on 19/10/2009
-			sql ="SELECT B.LAPIS,B.ID_OB,B.NAMA_OB,B.JANTINA,NVL(A.KETERANGAN,'Tiada Hubungan') KETERANGAN," +
+			lists = new Vector<Waris>();
+			sql ="SELECT B.LAPIS,B.ID_OB,B.NAMA_OB,B.JANTINA," +
 			"B.STATUS_HIDUP,TO_CHAR(B.TARIKH_MATI,'DD/MM/YYYY') as TARIKH_MATI," +
-			"1 as Jumlah_Hubungan "+
-			"FROM TBLPPKOB B LEFT OUTER JOIN TBLPPKPERMOHONANSIMATI C "+
-			//"ON B.ID_PERMOHONANSIMATI = C.ID_PERMOHONANSIMATI "+
-			"ON B.ID_SIMATI = C.ID_SIMATI "+
+			"NVL(A.KETERANGAN,'Tiada Hubungan') KETERANGAN,1 as Jumlah_Hubungan "+
+			"FROM TBLPPKOB B "+
 			"LEFT OUTER JOIN TBLPPKRUJSAUDARA A ON B.ID_SAUDARA = A.ID_SAUDARA "+
 			"WHERE "+
 			"B.LAPIS = 1  and b.id_tarafkptg in (1,8) " +
-			"AND C.ID_SIMATI='"+id_simati+"' "+
-			"AND C.ID_PERMOHONANSIMATI NOT IN (SELECT ID_PERMOHONANSIMATI FROM tblppkfailpindah)"+
-			"AND C.ID_PERMOHONAN = '"+id_permohonan+"' "+
-			"Order by KETERANGAN,LAPIS,B.tarikh_mati  ";
+			"AND B.ID_PERMOHONANSIMATI='"+id_permohonan+"' "+
+			"Order by KETERANGAN,LAPIS,B.TARIKH_MATI  ";
+			
+			//Add Distinct - on 19/10/2009
+//			sql ="SELECT B.LAPIS,B.ID_OB,B.NAMA_OB,B.JANTINA,NVL(A.KETERANGAN,'Tiada Hubungan') KETERANGAN," +
+//			"B.STATUS_HIDUP,TO_CHAR(B.TARIKH_MATI,'DD/MM/YYYY') as TARIKH_MATI," +
+//			"1 as Jumlah_Hubungan "+
+//			"FROM TBLPPKOB B LEFT OUTER JOIN TBLPPKPERMOHONANSIMATI C "+
+//			//"ON B.ID_PERMOHONANSIMATI = C.ID_PERMOHONANSIMATI "+
+//			"ON B.ID_SIMATI = C.ID_SIMATI "+
+//			"LEFT OUTER JOIN TBLPPKRUJSAUDARA A ON B.ID_SAUDARA = A.ID_SAUDARA "+
+//			"WHERE "+
+//			"B.LAPIS = 1  and b.id_tarafkptg in (1,8) " +
+//			"AND C.ID_SIMATI='"+id_simati+"' "+
+//			"AND C.ID_PERMOHONANSIMATI NOT IN (SELECT ID_PERMOHONANSIMATI FROM tblppkfailpindah)"+
+//			"AND C.ID_PERMOHONAN = '"+id_permohonan+"' "+
+//			"Order by KETERANGAN,LAPIS,B.tarikh_mati  ";
 			
 			if (debugmode) myLogger.info("FIRST LAYER DATA:"+sql);
 			//get some data 
@@ -785,10 +791,11 @@ public class Akta1958 {
 		} finally {
 			if ( db != null ) db.close(); 
 		}
-	return lists;
-	}
-	//	
+		return lists;
 	
+	}
+	
+	//	
 	public Vector getMultiLayerData(String id_ob,String id_ob_from_first_layer,
 			String list_of_ids,
 			String JantinaSimati,String HubunganWarisMati) 
@@ -879,23 +886,30 @@ public class Akta1958 {
 	}
 	//	
 	
-	public Vector senaraiSemuaWaris(String id_simati,String id_permohonan) 
-	throws Exception{
-
+	public Vector<Waris> senaraiSemuaWaris(String id_simati,String id_permohonan) 
+			throws Exception{
 		Db db = new Db();
-		Vector v = null;
+		Vector<Waris> v = null;
 		Waris ob;
 		String sql="";
 		try{
-		v=new Vector();	
+		v=new Vector<Waris>();	
 		sql = "SELECT B.LAPIS,B.ID_OB,B.NAMA_OB" +
-			  " FROM TBLPPKRUJSAUDARA A , TBLPPKOB B, TBLPPKPERMOHONANSIMATI C" +
-			  " WHERE B.ID_SAUDARA = A.ID_SAUDARA" +
-			  " AND B.ID_SIMATI = C.ID_SIMATI" +
-			  " AND B.ID_PERMOHONANSIMATI = C.ID_PERMOHONANSIMATI" +
-			  //" AND C.ID_PERMOHONAN = '" + id_permohonan + "'"+
-			  " AND B.ID_SIMATI = '" + id_simati + "'"+
-			  " AND C.ID_PERMOHONANSIMATI NOT IN (select id_permohonansimati from tblppkfailpindah)"; //Exclude from fail pindah cases
+			" FROM TBLPPKRUJSAUDARA A , TBLPPKOB B, TBLPPKPERMOHONANSIMATI C" +
+			" WHERE B.ID_SAUDARA = A.ID_SAUDARA" +
+			" AND B.ID_SIMATI = C.ID_SIMATI" +
+			" AND B.ID_PERMOHONANSIMATI = C.ID_PERMOHONANSIMATI" +
+			" AND B.ID_PERMOHONANSIMATI = '" + id_permohonan + "'"+
+			""; //Exclude from fail pindah cases
+
+//		sql = "SELECT B.LAPIS,B.ID_OB,B.NAMA_OB" +
+//			  " FROM TBLPPKRUJSAUDARA A , TBLPPKOB B, TBLPPKPERMOHONANSIMATI C" +
+//			  " WHERE B.ID_SAUDARA = A.ID_SAUDARA" +
+//			  " AND B.ID_SIMATI = C.ID_SIMATI" +
+//			  " AND B.ID_PERMOHONANSIMATI = C.ID_PERMOHONANSIMATI" +
+//			  //" AND C.ID_PERMOHONAN = '" + id_permohonan + "'"+
+//			  " AND B.ID_SIMATI = '" + id_simati + "'"+
+//			  " AND C.ID_PERMOHONANSIMATI NOT IN (select id_permohonansimati from tblppkfailpindah)"; //Exclude from fail pindah cases
 			
 		
 		ResultSet rs = db.getStatement().executeQuery(sql);

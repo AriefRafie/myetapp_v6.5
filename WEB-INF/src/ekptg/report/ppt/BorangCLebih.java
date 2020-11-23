@@ -45,6 +45,7 @@ public class BorangCLebih extends EkptgReportServlet {
 			super.setReportName("BorangCLebihDrpdSatuHakmilik(PENANG)");
 		}else{*/
 			super.setReportName("Borang C_lebihDrpdSatuHakmilik");
+			
 	//}      	   
 		super.setFolderName("ppt");
 	

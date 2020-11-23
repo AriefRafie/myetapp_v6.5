@@ -46,11 +46,11 @@ public class FrmPajakanPendaftaranData {
 					"C.NAMA_NEGERI, A.ID_JENISHAKMILIK, A.ID_LOT, A.TARIKH_WARTA, A.ID_MUKIM, A.ID_DAERAH, A.ID_NEGERI,A.LUAS,A.LUAS_BERSAMAAN," +
 					"REPLACE(RJH.KOD_JENIS_HAKMILIK,'00','') KOD_JENIS_HAKMILIK, RL.KOD_LUAS KOD_LUAS, " +
 					"RLB.KOD_LUAS KOD_LUASBERSAMAAN, NVL(GIS.UPI,'N') GIS_HANTAR, NVL(GIS.LATITUDE,'N') GIS_CHARTING," +
-					"L.NAMA_KEMENTERIAN, K.NAMA_AGENSI, RLB.KETERANGAN AS JENIS_LUAS, F.ID_KEMENTERIAN, F.ID_AGENSI " +
+					"L.NAMA_KEMENTERIAN, K.NAMA_AGENSI, RLB.KETERANGAN AS JENIS_LUAS, F.ID_KEMENTERIAN, F.ID_AGENSI, S.NAMA_SEKSYENUPI " +
 
 					"FROM TBLHTPHAKMILIKURUSAN A, TBLRUJLOT B, TBLRUJNEGERI C, TBLRUJDAERAH D,TBLRUJMUKIM E, " +
 					"TBLRUJJENISHAKMILIK RJH, TBLRUJLUAS RL,TBLRUJLUAS RLB,TBLINTGIS GIS, " +
-					"TBLHTPHAKMILIK F, TBLRUJAGENSI K, TBLRUJKEMENTERIAN L, " +
+					"TBLHTPHAKMILIK F, TBLRUJAGENSI K, TBLRUJKEMENTERIAN L, TBLRUJSEKSYENUPI S, " +
 
 					"(SELECT MT.ID_HAKMILIKURUSAN, " +
 					"GETUPI(RN.KOD_NEGERI,RD.KOD_DAERAH_UPI, RM.KOD_MUKIM_UPI,'000', RJH.STATUS_HAKMILIK, MT.NO_LOT, MT.NO_HAKMILIK,RJH.KOD_JENIS_HAKMILIK ) UPI " +
@@ -72,11 +72,12 @@ public class FrmPajakanPendaftaranData {
 					"AND A.PEGANGAN_HAKMILIK = F.PEGANGAN_HAKMILIK " +
 					"AND F.ID_KEMENTERIAN = L.ID_KEMENTERIAN(+) " +
 					"AND F.ID_AGENSI = K.ID_AGENSI(+) " +
+					"AND A.ID_SEKSYEN = S.ID_SEKSYENUPI(+)"+
 					"AND UP.UPI = GIS.UPI(+) AND GIS.STATUS_TANAH(+) = 7 " +
 					"AND A.ID_PERMOHONAN = '" + idPermohonan + "'"
 							+ " ORDER BY A.ID_HAKMILIKURUSAN ASC";
 
-			myLog.info(sql);
+			myLog.info("setListHakmilik ::sql >>> "+sql);
 
 //			sql = "SELECT A.ID_HAKMILIKURUSAN, A.PEGANGAN_HAKMILIK, B.KETERANGAN, A.NO_LOT" +
 //				" ,A.NO_HAKMILIK, A.NO_WARTA, E.NAMA_MUKIM, D.NAMA_DAERAH" +
@@ -139,7 +140,7 @@ public class FrmPajakanPendaftaranData {
 				h.put("kodLuasBersamaan", rs.getString("KOD_LUASBERSAMAAN") == null ? "" : rs.getString("KOD_LUASBERSAMAAN"));
 				h.put("gisHantar", rs.getString("GIS_HANTAR"));
 				h.put("gisCharting", rs.getString("GIS_CHARTING"));
-				//h.put("namaSeksyen", rs.getString("NAMA_SEKSYENUPI") == null ? "" : rs.getString("NAMA_SEKSYENUPI"));
+				h.put("namaSeksyen", rs.getString("NAMA_SEKSYENUPI") == null ? "TIADA SEKSYEN" : rs.getString("NAMA_SEKSYENUPI"));
 				senaraiHakmilik.addElement(h);
 				bil++;
 
@@ -490,6 +491,29 @@ public class FrmPajakanPendaftaranData {
 			sql = r.getSQLInsert("TBLRUJSUBURUSANSTATUSFAIL");
 			stmt.executeUpdate(sql);
 			conn.commit();
+
+			String sql2 = "";
+			String sql3 = "";
+			sql2 = "SELECT * FROM TBLHTPHAKMILIKURUSAN WHERE ID_PERMOHONAN = '" + idPermohonan + "'";
+			myLog.info("sql2 maklumat tanah : " + sql2);
+			ResultSet rs2 = stmt.executeQuery(sql2);
+			if (rs2.next()){
+				r = new SQLRenderer();
+				long idUlasanKjp = DB.getNextID("TBLHTPULASANKJP_SEQ");
+				r.add("ID_ULASANKJP", idUlasanKjp);
+				r.add("ID_PERMOHONAN", idPermohonan);
+				r.add("NO_HAKMILIK", rs2.getString("NO_HAKMILIK") == null ? "" : rs2.getString("NO_HAKMILIK"));
+				r.add("TARIKH_TERIMA", r.unquote("SYSDATE"));
+				r.add("ID_AGENSI", rs2.getString("ID_AGENSI") == null ? "" : rs2.getString("ID_AGENSI"));
+
+				r.add("ID_MASUK", userId);
+				r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+
+				sql3 = r.getSQLInsert("TBLHTPULASANKJP");
+				myLog.info("insert sql TBLHTPULASANKJP : " + sql3);
+				stmt.executeUpdate(sql3);
+			}
+
 
 		} catch (SQLException ex) {
 	    	try {

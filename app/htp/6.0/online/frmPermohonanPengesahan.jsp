@@ -166,6 +166,64 @@
 		
     	</td>
 	</tr>
+	
+	<tr>
+		<td>
+			<fieldset><legend>SENARAI DOKUMEN YANG DISERTAKAN</legend>
+			<table style="width:100%">
+		    	<tr class="row2">
+					<td width="3%"><b>Bil.</b></td>
+					<td width="82%"><b>Keterangan</b></td>
+					<td width="15%"><b>Dokumen</b></td>
+				</tr> 
+	#if ($senaraiSemak.size() > 0)
+        #set ($list = "")
+        #foreach ($list in $senaraiSemak)
+          	#set( $i = $velocityCount )
+       		#if ( ($i % 2) == 0 )
+   	        	#set( $row = "row2" )
+            #else
+               	#set( $row = "row1" )
+          	#end
+                	
+        #if($list.flag == 'Y')
+        	#set($checked_ = 'checked')
+        	#set($disabled = 'disabled')
+        #else
+        	#set($checked_ = '')
+        #end
+        
+        #if ($mode == 'update')
+	        <tr class="$row">
+	          <td class="$row" width="3%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" $checked_ /></td>
+	          <td class="$row" width="82%">$i. $list.keterangan</td>
+	          	<td class="$row" width="15%">
+	          	$!list.lampirans
+	        	</td>
+	        </tr>
+	      #end
+	      #if ($mode == 'view')
+	      	<tr class="$row">
+	          <td class="$row" width="3%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" $checked_ $disabled /></td>
+	          <td class="$row" width="82%">$i. $list.keterangan</td>
+	          <td class="$row" width="15%">
+	          $!list.lampirans
+	          </td>
+	        </tr>
+	      #end      
+        #end
+        
+   	#else
+        <tr>
+          <td class="$row" width="3%">&nbsp;</td>
+          <td class="$row" colspan="2" width="95%">Tiada Rekod</td>
+        </tr>
+  	#end        
+			</table>
+			</fieldset>
+		</td>
+	</tr>
+	
 	 						
 #if($!readOnly == "")
 	<!-- <tr>
@@ -187,15 +245,15 @@
 	</tr> -->
 	<td align="center">
 			<!-- <input class="stylobutton" type="button" onclick="javascript:permohonanTerima($!idfail);" value="Terima" /> -->
-			<input class="stylobutton100" type="button" onclick="javascript:viewMaklumatPermohonan($!idfail);" value="Seterusnya" />
+			<input class="stylobutton100" type="button" onclick="javascript:viewMaklumatPermohonan($!idFail);" value="Seterusnya" />
 		</td>
 	</tr>
 #else
 	<tr>
 		<td align="center">
 			<input type="button" name="cmdTolakPermohonan" value="Kembalikan Permohonan" onClick="javascript:tolakPermohonanOnline('$!idPermohonan','yes')">
-		
-			<input class="stylobutton100" type="button" onclick="javascript:permohonanTerima($!idfail);" value="Simpan & Email" />
+			<input type="button" name="cmdkemaskini" value="Kemaskini" onClick="javascript:permohonanKemaskini('$!idFail')">		
+			<input type="button" class="stylobutton100_" onclick="javascript:permohonanTerima($!idFail);" value="Simpan & Email" />
 			<!-- <input class="stylobutton" type="button" onclick="javascript:permohonanTolak($!idfail);" value="Tolak" /> -->
 			
 			<!-- <input class="stylobutton" type="button" onclick="javascript:cetakKulitFail('$idPermohonan');" value="Cetak Kulit Fail" />
@@ -214,8 +272,14 @@
 //PEMBELIAN
 
 //PERMOHONAN
+	function permohonanKemaskini(idFail){	
+		var mode = 'update';
+		document.${formName}.command.value = 'viewMaklumatPermohonan';
+		document.${formName}.action = "$EkptgUtil.getTabID('Permohonan',$portal_role)?_portal_module=ekptg.view.online.htp.FrmPermohonanPengesahan&idfail="+idFail+"&mode="+mode;
+		document.${formName}.submit();
+	}
 
-	function permohonanTerima(idPermohonan){
+	function permohonanTerimaNew(idPermohonan){
 		param = "idpermohonan=$idPermohonan&modul=htp&kandungan=&perkara=";
 		alert(param);
 		var url = "../x/${securityToken}/ekptg.view.utils.emel.FrmPopupEmel?"+param;	
@@ -226,13 +290,14 @@
 	    if (hWnd.focus != null) hWnd.focus();
 	
 	}
-	function permohonanTerima_(id){
-		//var mode = 'viewMaklumatPermohonan';
+	function permohonanTerima(idFail){
+		var mode = 'viewMaklumatPermohonan';
 		//doAjaxCall${formName}("permohonanditerima","mode="+mode+"&idfail="+id+"&pagemode=0");
 
-		//document.${formName}.command.value = 'permohonanviewmaklumat';
-		//document.${formName}.action = "$EkptgUtil.getTabID('Permohonan',$portal_role)?_portal_module=ekptg.view.online.htp.FrmPermohonanPengesahan&idfail="+idFail;
-		//document.${formName}.submit();
+		document.${formName}.command.value = 'permohonanditerima';
+		document.${formName}.action = "$EkptgUtil.getTabID('Permohonan',$portal_role)?_portal_module=ekptg.view.online.htp.FrmPermohonanPengesahan&idfail="+idFail;
+		document.${formName}.submit(); 
+	
 	}
 	//guna
 	function tolakPermohonanOnline(id_permohonan,formnew) {	
@@ -250,4 +315,5 @@
 		
 	}
 </script>
+	$!javaScriptLampiran
 	

@@ -42,7 +42,7 @@
 
 	}
 	function cetakSuratSetujuTerima(idpermohonan) {
-	    var url = "../servlet/ekptg.report.htp.NoFailTajukFail?template=HTPajakanJawapanPermohonan&idpermohonan="+idpermohonan;
+	    var url = "../servlet/ekptg.report.htp.NoFailTajukFail?template=HTPajakanSuratTawaran&idpermohonan="+idpermohonan;
 	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -50,7 +50,7 @@
 
 	}
 	function cetakSuratTawaran(idpermohonan) {
-	    var url = "../servlet/ekptg.report.htp.NoFailTajukFail?template=HTPajakanJawapanPermohonan&idpermohonan="+idpermohonan;
+	    var url = "../servlet/ekptg.report.htp.NoFailTajukFail?template=HTPajakanSuratTawaran&idpermohonan="+idpermohonan;
 	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -207,7 +207,7 @@
 			//document.${formName}.method="post";
 			//document.${formName}.action = "?_portal_module=ekptg.view.htp.pajakan.FrmPajakanMJMView&actionPajakan=papar&selectedTab=3&mode=view&hitButton=saveMemo&"+x;
 		var params = "&actionPajakan=paparmjm";
-		params += "&selectedTab=3";
+		params += "&selectedTab=1";
 		params += "&mode=view";
 		params += "&hitButton=saveMemo";
 			//document.${formName}.action = "?_portal_module=ekptg.view.htp.pajakan.FrmPajakanMJMView"+params+crs;
@@ -229,6 +229,63 @@
 
 	}
 
+	function SimpanPerakuan(){
+
+		if(document.${formName}.txtKeputusan.value == ""){
+			alert('Sila masukkan Keputusan.');
+	  		document.${formName}.txtKeputusan.focus();
+			return;
+		}
+		if(document.${formName}.txtKeterangan.value == ""){
+			alert('Sila masukkan Keterangan Kelulusan.');
+	  		document.${formName}.txtKeterangan.focus();
+			return;
+		}
+
+		var StarikhTerimaKeputusan = document.getElementById("txdTPerakuan").value;
+
+		var today = new Date();
+		//for StarikhTerimaKeputusan
+		var STTKDate  = parseInt(StarikhTerimaKeputusan.substring(0,2),10);
+	    var STTKmon = parseInt(StarikhTerimaKeputusan.substring(3,5),10)-1;
+	    var STTKyr  = parseInt(StarikhTerimaKeputusan.substring(6,10),10);
+
+		var tarikhTerimaKeputusan = new Date(STTKyr,STTKmon,STTKDate);
+
+		if(tarikhTerimaKeputusan > today){
+			alert('Tarikh Terima Keputusan mestilah tidak melebihi dari Hari ini.');
+	  		document.${formName}.txdTTK.focus();
+			return;
+		}
+
+		if ( !window.confirm("Adakah Anda Pasti ?") ){
+			document.${formName}.actionPajakan.value = "paparmjm";
+			return;
+		}
+
+		var crs = create_request_string(document.${formName});
+			//document.${formName}.method="post";
+			//document.${formName}.action = "?_portal_module=ekptg.view.htp.pajakan.FrmPajakanMJMView&actionPajakan=papar&selectedTab=3&mode=view&hitButton=saveMemo&"+x;
+		var params = "&actionPajakan=paparmjm";
+		params += "&selectedTab=0";
+		params += "&mode=view";
+		params += "&hitButton=saveMaklumatJawatankuasa";
+		document.${formName}.enctype="multipart/form-data";
+		document.${formName}.encoding="multipart/form-data";
+		document.${formName}.action = "?_portal_module=${modul}"+params+"&"+crs;
+		document.${formName}.submit();
+
+
+	}
+
+	function batalPerakuan(){
+		document.${formName}.actionPajakan.value = "paparmjm";
+		document.${formName}.mode.value = "view";
+		document.${formName}.selectedTab.value = "0";
+		//document.${formName}.submit();
+		doAjaxCall${formName}("");
+	}
+
 	//javaScriptPajakanMJM.jsp
 	function doChangeJumlahLampiran(tabId,j,a) {
 		if (j.value < 1) {
@@ -247,6 +304,18 @@
 	}
 
 	function kemaskiniMJM(){
+		//
+		document.${formName}.actionPajakan.value = "paparmjm";
+		document.${formName}.mode.value = "update";
+		//document.${formName}.submit();
+		//
+		doAjaxCall${formName}("");
+
+	}
+
+
+
+	function KemaskiniPerakuan(){
 		//
 		document.${formName}.actionPajakan.value = "paparmjm";
 		document.${formName}.mode.value = "update";
@@ -346,6 +415,15 @@
 
 	function downloadPerjanjian(idPermohonan,idDeraf){
 		var url = "../servlet/ekptg.view.htp.pajakan.PajakanDisplayBlob?id="+idPermohonan+"&idderaf="+idDeraf;
+	    var hWnd = window.open(url,'displayfile','width=800,height=600, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	    hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+
+	}
+
+	function downloadPerakuan(idPermohonan,idDeraf){
+		var url = "../servlet/ekptg.view.htp.pajakan.PerakuanDisplayBlob?id="+idPermohonan+"&idderaf="+idDeraf;
 	    var hWnd = window.open(url,'displayfile','width=800,height=600, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 	    hWnd.opener = document.window;
@@ -887,6 +965,15 @@
 	doAjaxCall${formName}("");
 	}
 
+	function batalUlasanKJP2(){
+		//
+		document.${formName}.actionPajakan.value = "";
+		document.${formName}.mode.value = "view";
+		//document.${formName}.submit();
+	//
+	doAjaxCall${formName}("");
+	}
+
 	//javaScriptPajakanMJM.jsp
 	function SimpanUlasanKJP(){
 		/*
@@ -949,6 +1036,22 @@
 		//
 		document.${formName}.actionPajakan.value = "paparulasan";
 		document.${formName}.hitButton.value = "saveUlasanKJP";
+		document.${formName}.mode.value = "view";
+		//document.${formName}.submit();
+		//
+		doAjaxCall${formName}("");
+
+	}
+
+	function SimpanUlasanKJP(){
+
+		if ( !window.confirm("Adakah Anda Pasti ?") ){
+			return;
+		}
+
+		//
+		document.${formName}.actionPajakan.value = "paparulasan";
+		document.${formName}.hitButton.value = "saveUlasanKJP2";
 		document.${formName}.mode.value = "view";
 		//document.${formName}.submit();
 		//
@@ -1021,6 +1124,21 @@
 		//
 		document.${formName}.actionPajakan.value = "paparulasan";
 		document.${formName}.hitButton.value = "saveUpdateKJP";
+		document.${formName}.mode.value = "viewKJP";
+		//document.${formName}.submit();
+	//
+		doAjaxCall${formName}("");
+
+	}
+
+	function SimpanUpdateKJP2(){
+		if ( !window.confirm("Adakah Anda Pasti ?") ){
+			return;
+		}
+
+		//
+		document.${formName}.actionPajakan.value = "paparulasan";
+		document.${formName}.hitButton.value = "saveUpdateKJP2";
 		document.${formName}.mode.value = "viewKJP";
 		//document.${formName}.submit();
 	//

@@ -21,16 +21,19 @@
             <tr>
               <td width="10%" valign="top" colspan=4>&nbsp;</td>
             </tr>
-            
+             #if ($idStatus != "21")
              <tr>
              <td width="10%" valign="top">&nbsp;</td>
              <td colspan=3 align=justify>
              #if($!id_perintah!="")
              	#if($!enabledPegawai=="yes" && $statusPNB!="yes")
-              		<input type="button" name="cmdHPNB1" id="cmdHPNB1" value="Pengesahan Tandatangan" onClick="sendDGcertPerintah('$!NO_FAIL','$!id_perintah','$!id_fail','$id_permohonan','$idpermohonansimati')" />
+             		#if ($idStatus != "21")
+              			<input type="button" name="cmdHPNB1" id="cmdHPNB1" value="Pengesahan Tandatangan" onClick="sendDGcertPerintah('$!NO_FAIL','$!id_perintah','$!id_fail','$id_permohonan','$idpermohonansimati','$idperintah')" />
+              		#end
               	#end
               #end
               </td></tr>
+              #end
               <tr>
               <td width="10%" valign="top" colspan=4>&nbsp;</td>
             </tr>

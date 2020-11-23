@@ -6120,7 +6120,7 @@ function pilih_amanah()
 
 
 
-if((document.f1.socTarafKepentinganPenting.value == "6" || document.f1.socTarafKepentinganPenting.value == "16" || document.f1.socTarafKepentinganPenting.value == "8" || document.f1.socTarafKepentinganPenting.value == "17" || document.f1.socTarafKepentinganPenting.value == "21") || document.f1.socTarafKepentinganPenting.value == "20" && document.f1.txtNamaOBPenting!= null){
+if((document.f1.socTarafKepentinganPenting.value == "6" || document.f1.socTarafKepentinganPenting.value == "16" || document.f1.socTarafKepentinganPenting.value == "8" || document.f1.socTarafKepentinganPenting.value == "17" || document.f1.socTarafKepentinganPenting.value == "21" || document.f1.socTarafKepentinganPenting.value == "20" ) && document.f1.txtNamaOBPenting!= null){
 	
 							document.f1.socNegeriPenting.value = '';
 					 		document.f1.socNegeriPenting_D.value = '';

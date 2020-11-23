@@ -10,6 +10,8 @@ import ekptg.helpers.HTML;
 import ekptg.helpers.Utils;
 import ekptg.model.php2.FrmPNWHeaderData;
 import ekptg.model.php2.FrmPNWJabatanTeknikalData;
+import ekptg.model.php2.FrmPhpNotifikasiEmel;
+import ekptg.model.php2.FrmTKRJabatanTeknikalData;
 
 public class FrmPNWJabatanTeknikalView extends AjaxBasedModule{
 
@@ -17,6 +19,7 @@ private static final long serialVersionUID = 1L;
 	
 	FrmPNWHeaderData logicHeader = new FrmPNWHeaderData();
 	FrmPNWJabatanTeknikalData logic = new FrmPNWJabatanTeknikalData();
+	FrmPhpNotifikasiEmel logicEmel = new FrmPhpNotifikasiEmel();
 
 	@Override
 	public String doTemplate2() throws Exception {
@@ -88,10 +91,14 @@ private static final long serialVersionUID = 1L;
         	if ("simpanMaklumatKJT".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatKJT(idPermohonan, "4", idKementerian, idAgensi, idPejabat, idNegeri, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
+        		logicEmel.sendEmailtoPejabatJKPTG(idUlasanTeknikal, session);
+        		session.setAttribute("MSG", "Emel telah dihantar kepada JKPTG berkaitan");
     		}
         	if ("simpanMaklumatUlanganKJT".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatUlanganKJT(idUlasanTeknikal, idPermohonan, "4", idKementerian, idAgensi, idPejabat, idNegeri, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
+        		logicEmel.sendEmailtoPejabatJKPTG(idUlasanTeknikal, session);
+        		session.setAttribute("MSG", "Emel ulangan telah dihantar kepada JKPTG berkaitan");
     		}
         	if ("simpanKemaskiniMaklumatKJT".equals(hitButton)){
         		logic.simpanKemaskiniMaklumatKJT(idUlasanTeknikal, "4", idKementerian, idAgensi, idPejabat, idNegeri, getParam("txtTarikhHantar"), 
@@ -326,12 +333,16 @@ private static final long serialVersionUID = 1L;
         this.context.put("idUlasanTeknikal", idUlasanTeknikal);
         this.context.put("idKertasKerja", idKertasKerja);
         this.context.put("idDokumen", idDokumen);
-        
         this.context.put("flagStatus", flagStatus);
         this.context.put("flagAktif", flagAktif);
-	    
-
         this.context.put("step",step);
+        
+        if (session.getAttribute("MSG") != null){
+			this.context.put("errMsg", session.getAttribute("MSG"));
+			session.removeAttribute("MSG");
+		} else {
+			this.context.put("errMsg", "");
+		}
         
 		return vm;
 	}

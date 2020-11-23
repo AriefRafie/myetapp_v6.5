@@ -15,6 +15,7 @@ import ekptg.helpers.HTML;
 import ekptg.helpers.Utils;
 import ekptg.model.php2.FrmPLPHeaderData;
 import ekptg.model.php2.FrmPLPJabatanTeknikalData;
+import ekptg.model.php2.FrmPhpNotifikasiEmel;
 import ekptg.model.php2.online.FrmPLPOnlineKJPSenaraiFailData;
 import ekptg.model.utils.emel.EmailConfig;
 
@@ -25,8 +26,8 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
 	
 	FrmPLPHeaderData logicHeader = new FrmPLPHeaderData();
 	FrmPLPJabatanTeknikalData logic = new FrmPLPJabatanTeknikalData();
+	FrmPhpNotifikasiEmel logicEmel = new FrmPhpNotifikasiEmel();
 	FrmPLPOnlineKJPSenaraiFailData logicKJP = new FrmPLPOnlineKJPSenaraiFailData();
-	EmailConfig email = new EmailConfig();
 	
 	String userId = null;
 	String userRole = null;
@@ -151,12 +152,14 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
         	if ("simpanMaklumatKJP".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatKJP(idPermohonan, idKementerianTanah, idAgensiTanah, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
-        		logic.sendEmailtoKJP(idPermohonan, idKementerianTanah, session);
+        		logicEmel.sendEmailtoKJP(idPermohonan, idUlasanTeknikal, idKementerianTanah, session);
+        		session.setAttribute("MSG", "EMEL TELAH DIHANTAR KEPADA KEMENTERIAN BERKENAAN");
     		}
         	if ("simpanMaklumatUlanganKJP".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatUlanganKJP(idUlasanTeknikal, idPermohonan, idKementerianTanah, idAgensiTanah, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
-        		logic.sendEmailtoKJP(idPermohonan, idKementerianTanah, session);
+        		logicEmel.sendEmailtoKJP(idPermohonan, idUlasanTeknikal, idKementerianTanah, session);
+        		session.setAttribute("MSG", "EMEL ULANGAN TELAH DIHANTAR KEPADA KEMENTERIAN BERKENAAN");
     		}
         	if ("simpanKemaskiniMaklumatKJP".equals(hitButton)){
         		logic.simpanKemaskiniMaklumatKJP(idUlasanTeknikal, idKementerianTanah, idAgensiTanah, getParam("txtTarikhHantar"), 
@@ -176,17 +179,19 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
 			}
         	if ("doSimpanKemaskiniMaklumatNilaian".equals(hitButton)){
         		simpanKemaskiniMaklumatNilaian(idPermohonan, session);
-          		logic.sendEmailtoUserJKPTGN(idPermohonan, idNegeriUser, session);
 			}
         	if ("simpanMaklumatJPPH".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatJPPH(idPermohonan, idPejabatJPPH, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
         		logic.sendEmailtoJPPH(idPermohonan, idPejabatJPPH, session);
+        		session.setAttribute("MSG", "EMEL TELAH DIHANTAR KEPADA JABATAN PENILAIAN & PERKHIDMATAN HARTA BERKENAAN");
         		
     		}
         	if ("simpanMaklumatUlanganJPPH".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatUlanganJPPH(idUlasanTeknikal, idPermohonan, idPejabatJPPH, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
+        		logic.sendEmailtoJPPH(idPermohonan, idPejabatJPPH, session);
+        		session.setAttribute("MSG", "EMEL ULANGAN TELAH DIHANTAR KEPADA JABATAN PENILAIAN & PERKHIDMATAN HARTA BERKENAAN");
     		}
         	if ("simpanKemaskiniMaklumatJPPH".equals(hitButton)){
         		logic.simpanKemaskiniMaklumatJPPH(idUlasanTeknikal, idPejabatJPPH, getParam("txtTarikhHantar"), 
@@ -741,10 +746,16 @@ public class FrmPLPJabatanTeknikalView extends AjaxBasedModule {
         this.context.put("idUlasanTeknikal", idUlasanTeknikal);
         this.context.put("idKertasKerja", idKertasKerja);
         this.context.put("idDokumen", idDokumen);
-        
         this.context.put("flagStatus", flagStatus);
         this.context.put("flagAktif", flagAktif);
         this.context.put("step",step);
+        
+        if (session.getAttribute("MSG") != null){
+			this.context.put("errMsg", session.getAttribute("MSG"));
+			session.removeAttribute("MSG");
+		} else {
+			this.context.put("errMsg", "");
+		}
   	  	
   	  	if (!"".equals(getParam("flagFrom"))){
         	session.setAttribute("FLAG_FROM", getParam("flagFrom"));

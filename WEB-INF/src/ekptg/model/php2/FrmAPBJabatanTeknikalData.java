@@ -460,7 +460,7 @@ public class FrmAPBJabatanTeknikalData {
 		}
 	}
 
-	public void hapusDokumen(String idUlasanTeknikal, HttpSession session)
+	public void hapusDokumen(String idDokumen, HttpSession session)
 			throws Exception {
 		Db db = null;
 		Connection conn = null;
@@ -474,7 +474,7 @@ public class FrmAPBJabatanTeknikalData {
 
 			// TBLPHPDOKUMEN
 			SQLRenderer r = new SQLRenderer();
-			r.add("ID_ULASANTEKNIKAL", idUlasanTeknikal);
+			r.add("ID_DOKUMEN", idDokumen);
 
 			sql = r.getSQLDelete("TBLPHPDOKUMEN");
 			stmt.executeUpdate(sql);
@@ -482,7 +482,7 @@ public class FrmAPBJabatanTeknikalData {
 			conn.commit();
 
 			AuditTrail.logActivity("1610199", "4", null, session, "DEL",
-					"FAIL [" + idUlasanTeknikal + "] DIHAPUSKAN");
+					"FAIL [" + idDokumen + "] DIHAPUSKAN");
 
 		} catch (SQLException ex) {
 			try {
@@ -499,7 +499,7 @@ public class FrmAPBJabatanTeknikalData {
 		}
 	}
 
-	public void setMaklumatDokumen(String idUlasanTeknikal) throws Exception {
+	public void setMaklumatDokumen(String idUlasanTeknikal, String flagStatus) throws Exception {
 		Db db = null;
 		String sql = "";
 
@@ -508,8 +508,8 @@ public class FrmAPBJabatanTeknikalData {
 			beanMaklumatDokumen = new Vector();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN, NAMA_FAIL FROM TBLPHPDOKUMEN WHERE ID_ULASANTEKNIKAL = '"
-					+ idUlasanTeknikal + "'";
+			sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN, NAMA_FAIL, JENIS_IMEJ FROM TBLPHPDOKUMEN WHERE ID_ULASANTEKNIKAL = '"
+				+ idUlasanTeknikal + "' AND JENIS_IMEJ = '"+ flagStatus +"'";
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -524,6 +524,9 @@ public class FrmAPBJabatanTeknikalData {
 				h.put("catatanImej",
 						rs.getString("CATATAN") == null ? "" : rs
 								.getString("CATATAN"));
+				h.put("jenisDokumen",
+						rs.getString("JENIS_IMEJ") == null ? "" : rs
+								.getString("JENIS_IMEJ"));
 				beanMaklumatDokumen.addElement(h);
 			}
 		} finally {

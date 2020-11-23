@@ -26,8 +26,10 @@ import ekptg.model.php2.FrmSenaraiLaporanTanahData;
 public class FrmSenaraiLaporanTanahView extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
-
 	FrmSenaraiLaporanTanahData logic = new FrmSenaraiLaporanTanahData();
+	String userId = null;
+	String userRole = null;
+	String idNegeriUser = null;
 	
 	public String doTemplate2() throws Exception {
 
@@ -38,6 +40,14 @@ public class FrmSenaraiLaporanTanahView extends AjaxBasedModule {
 		if (doPost.equals("true")) {
 			postDB = true;
 		}
+		
+		userId = (String)session.getAttribute("_ekptg_user_id");
+		userRole = (String)session.getAttribute("myrole");
+		idNegeriUser = (String)session.getAttribute("_ekptg_user_negeri");
+		
+		this.context.put("userId", userId);
+		this.context.put("userRole", userRole);
+		this.context.put("idNegeriUser", idNegeriUser);
 		
 		// GET DEFAULT PARAM
 		String action = getParam("action"); // * ACTION NI HANYA UTK SETUP PAGING SHJ
@@ -53,9 +63,16 @@ public class FrmSenaraiLaporanTanahView extends AjaxBasedModule {
 		}
 		
 		// GET ID PARAM
+		String idUlasanTeknikal = getParam("idUlasanTeknikal");
 		String idLaporan = getParam("idLaporan");
+		String idPermohonan = getParam("idPermohonan");
 		String idHakmilikAgensi = getParam("idHakmilikAgensi");
+		String idPegawaiLaporanTanah = getParam("idPegawaiLaporanTanah");
+		String idPenceroboh = getParam("idPenceroboh");
 		String idDokumen = getParam("idDokumen");
+		String idFail = getParam("idFail");
+		String flagReKeyin = "";
+		String flagReKeyinPenceroboh = "";
 		
 		// VECTOR
 		Vector list = null;
@@ -63,11 +80,39 @@ public class FrmSenaraiLaporanTanahView extends AjaxBasedModule {
 		Vector beanMaklumatLaporan = null;
 		Vector senaraiImejan = null;
 		Vector beanMaklumatImejan = null;
+		Vector beanMaklumatKehadiran = null;
+		Vector senaraiKehadiran = null;
+		Vector beanMaklumatPenceroboh = null;
+		Vector senaraiPenceroboh = null;
 		
 		// GET DROPDOWN PARAM
 		String idNegeri = getParam("socNegeri");
 		if (idNegeri == null || idNegeri.trim().length() == 0) {
 			idNegeri = "99999";
+		}
+		String idJawatanPelapor = getParam("socJawatanPelapor");
+		if (idJawatanPelapor == null || idJawatanPelapor.trim().length() == 0){
+			idJawatanPelapor = "99999";
+		}
+		String idNegeriKehadiran = getParam("socNegeriKehadiran");
+		if (idNegeriKehadiran == null || idNegeriKehadiran.trim().length() == 0) {
+			idNegeriKehadiran = "99999";
+		}
+		String idJawatan = getParam("socJawatan");
+		if (idJawatan == null || idJawatan.trim().length() == 0){
+			idJawatan = "99999";
+		}
+		String idBangsa = getParam("socBangsa");
+		if (idBangsa == null || idBangsa.trim().length() == 0) {
+			idBangsa = "99999";
+		}
+		String idNegeriPenceroboh = getParam("socNegeriPenceroboh");
+		if (idNegeriPenceroboh == null || idNegeriPenceroboh.trim().length() == 0) {
+			idNegeriPenceroboh = "99999";
+		}
+		String idBandarPenceroboh = getParam("socBandarPenceroboh");
+		if (idBandarPenceroboh == null || idBandarPenceroboh.trim().length() == 0) {
+			idBandarPenceroboh = "99999";
 		}
 		
 		//DATE
@@ -85,12 +130,26 @@ public class FrmSenaraiLaporanTanahView extends AjaxBasedModule {
 						getParam("txtPelapor"), getParam("txtJawatan"), idNegeri, session);
 			}
 			if ("kemaskini".equals(hitButton)) {
-				logic.kemaskiniLaporan(idLaporan, getParam("txdTarikhLawatan"), getParam("txtTujuanLaporan"), getParam("txtCatatan"), 
-						getParam("txtPelapor"), getParam("txtJawatan"), idNegeri, getParam("txtJalanHubungan"),
+				logic.kemaskiniLaporan(idLaporan, getParam("txtTarikhTerimaFail"), getParam("txdTarikhLawatan"), 
+						getParam("txtTarikhLaporan"), "2", getParam("txtTujuanLaporan"), getParam("txtLokasi"), 
+						getParam("txtLaporanAtasTanah"), getParam("txtIsuUlasan"), getParam("txtCatatan"), 
+						getParam("txtPelapor"), idJawatanPelapor, idNegeri, getParam("txtJalanHubungan"),
 						getParam("txtKawasanBerhampiran"), getParam("txtJarakDariBandar"), getParam("kemudahanAsasA"), 
 						getParam("kemudahanAsasL"), getParam("kemudahanAsasT"), getParam("txtKemudahanAsasLain"), 
 						getParam("txtKeadaanTanah"), getParam("txtKeadaanRupabumi"), getParam("txtUtara"), 
 						getParam("txtSelatan"), getParam("txtTimur"), getParam("txtBarat"), session);
+			}
+			if ("simpanKehadiran".equals(hitButton)) {
+				logic.simpanKehadiran(idLaporan, getParam("txtNamaPegawai"), idNegeriKehadiran, idJawatan, session);
+				flagReKeyin = "Y";
+				idNegeri = "99999";
+				idJawatan = "99999";
+			}
+			if ("simpanKemaskiniKehadiran".equals(hitButton)) {
+				logic.simpanKemaskiniKehadiran(idPegawaiLaporanTanah, getParam("txtNamaPegawai"), idNegeriKehadiran, idJawatan, session);
+			}
+			if("hapusKehadiran".equals(hitButton)) {
+				logic.hapusKehadiran(idPegawaiLaporanTanah, session);
 			}
 			if ("simpanDokumen".equals(hitButton)) {
 				uploadFiles(idLaporan, session);
@@ -100,6 +159,42 @@ public class FrmSenaraiLaporanTanahView extends AjaxBasedModule {
 			}
 			if ("hapusDokumen".equals(hitButton)) {
 				logic.hapusDokumen(idDokumen);
+			}
+			if ("doSimpanPenceroboh".equals(hitButton)) {
+				idPenceroboh = logic.savePenceroboh(idPermohonan,
+						idLaporan, getParam("txtNamaPenceroboh"),
+						getParam("txtNoTelefon"), getParam("txtNoTelefonBimbit"), idBangsa,
+						getParam("txtAlamat1"), getParam("txtAlamat2"), getParam("txtAlamat3"), getParam("txtPoskod"),
+						idNegeriPenceroboh, idBandarPenceroboh, getParam("txtEmel"), getParam("txtJenisPencerobohan"),session);
+				flagReKeyinPenceroboh = "Y";
+				idBangsa = "99999";
+				idNegeriPenceroboh = "99999";
+				idBandarPenceroboh = "99999";
+			}
+			if ("doSimpanKemaskiniPenceroboh".equals(hitButton)) {
+				logic.updatePenceroboh(idPenceroboh,
+						getParam("txtNamaPenceroboh"),
+						getParam("txtNoTelefon"),
+						getParam("txtNoTelefonBimbit"), idBangsa,
+						getParam("txtAlamat1"), getParam("txtAlamat2"),
+						getParam("txtAlamat3"), getParam("txtPoskod"),
+						idNegeriPenceroboh, idBandarPenceroboh,
+						getParam("txtEmel"), getParam("txtJenisPencerobohan"),session);
+			}
+			if ("doHapusMaklumatPenceroboh".equals(hitButton)) {
+				logic.hapusMaklumatPenceroboh(idPenceroboh, session);
+			}
+			if ("sendNotification".equals(hitButton)) {
+				
+				if("".equals(idUlasanTeknikal)) {
+					idUlasanTeknikal = logic.getIdUlasanByIdPermohonan(idPermohonan);
+				} else {
+					idUlasanTeknikal = getParam("idUlasanTeknikal");
+				}
+				
+				logic.goToHantarNotifikasi(idLaporan, idUlasanTeknikal, session);
+				logic.updateMaklumBalas(idUlasanTeknikal, idNegeri, session);
+				session.setAttribute("MSG", "NOTIFIKASI PEMBERITAHUAN TELAH DIHANTAR KE IBU PEJABAT");
 			}
 		}
 		
@@ -127,27 +222,197 @@ public class FrmSenaraiLaporanTanahView extends AjaxBasedModule {
 			this.context.put("txtJawatan", getParam("txtJawatan"));
 			this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), "",""));
 			
+		} else if ("view".equals(step)) {
+			
+			vm = "app/php2/frmMaklumatLaporanTanah.jsp";
+			
 		} else if ("kemaskini".equals(step)) {
 			
 			// GO TO MAKLUMAT LAPORAN TANAH
 			vm = "app/php2/frmMaklumatLaporanTanah.jsp";
+			
+			if("".equals(idLaporan)) {
+				idLaporan = logic.getidLaporanTanahByidUlasan(idUlasanTeknikal);
+				this.context.put("idLaporan", idLaporan);
+			} else {
+				idLaporan = getParam("idLaporan");
+				this.context.put("idLaporan", idLaporan);
+			}
 			
 			beanMaklumatLaporan = new Vector();
 			beanMaklumatLaporan = logic.getMaklumatLaporan(idLaporan);
 			this.context.put("BeanMaklumatLaporan", beanMaklumatLaporan);
 			if (beanMaklumatLaporan.size() != 0){
 				Hashtable hashLaporan = (Hashtable) beanMaklumatLaporan.get(0);
-				idHakmilikAgensi = (String) hashLaporan.get("idHakmilikAgensi");
+				idPermohonan = (String) hashLaporan.get("idPermohonan");
+				idJawatanPelapor = (String) hashLaporan.get("idJawatan");
 				idNegeri = (String) hashLaporan.get("idNegeri");
+				
 			}
+			
+			idHakmilikAgensi = logic.getIdHakmilikByIdPermohonan(idPermohonan);
 			
 			beanMaklumatTanah = new Vector();
 			beanMaklumatTanah = logic.getMaklumatTanah(idHakmilikAgensi);
 			this.context.put("BeanMaklumatTanah", beanMaklumatTanah);
 			
 			this.context.put("selectNegeri", HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri), "",""));
+			this.context.put("selectJawatanPelapor", HTML.SelectJawatan("socJawatanPelapor",Long.parseLong(idJawatanPelapor), "", ""));
 			
 			if ("2".equals(selectedTab)){
+				//OPEN POPUP PENCEROBOHAN
+				if ("openPopupPenceroboh".equals(flagPopup)) {
+					
+					if ("new".equals(modePopup)){
+		        		
+		        		this.context.put("readonlyPopup", "");
+			    		this.context.put("inputTextClassPopup", "");
+			    		
+			    		if ("".equals(submit)) {
+
+							beanMaklumatPenceroboh = new Vector();
+							Hashtable hashMaklumatPenceroboh = new Hashtable();
+							hashMaklumatPenceroboh.put("namaPenceroboh", "");
+							hashMaklumatPenceroboh.put("noTelefon", "");
+							hashMaklumatPenceroboh.put("noTelefonBimbit","");
+							hashMaklumatPenceroboh.put("alamat1", "");
+							hashMaklumatPenceroboh.put("alamat2", "");
+							hashMaklumatPenceroboh.put("alamat3", "");
+							hashMaklumatPenceroboh.put("poskod", "");
+							hashMaklumatPenceroboh.put("emel", "");
+							hashMaklumatPenceroboh.put("jenisPencerobohan", getParam("txtJenisPencerobohan"));
+							beanMaklumatPenceroboh.addElement(hashMaklumatPenceroboh);
+							this.context.put("BeanMaklumatPenceroboh", beanMaklumatPenceroboh);
+							idBangsa = "99999";
+							idNegeriPenceroboh = "99999";
+							idBandarPenceroboh = "99999";
+					
+						} else {
+							
+							beanMaklumatPenceroboh = new Vector();
+							Hashtable hashMaklumatPenceroboh = new Hashtable();
+							hashMaklumatPenceroboh.put("namaPenceroboh", getParam("txtNamaPenceroboh"));
+							hashMaklumatPenceroboh.put("noTelefon", getParam("txtNoTelefon"));
+							hashMaklumatPenceroboh.put("noTelefonBimbit", getParam("txtNoTelefonBimbit"));
+							hashMaklumatPenceroboh.put("alamat1", getParam("txtAlamat1"));
+							hashMaklumatPenceroboh.put("alamat2", getParam("txtAlamat2"));
+							hashMaklumatPenceroboh.put("alamat3", getParam("txtAlamat3"));
+							hashMaklumatPenceroboh.put("poskod", getParam("txtPoskod"));
+							hashMaklumatPenceroboh.put("emel", getParam("txtEmel"));
+							hashMaklumatPenceroboh.put("jenisPencerobohan", getParam("txtJenisPencerobohan"));
+							beanMaklumatPenceroboh.addElement(hashMaklumatPenceroboh);
+							this.context.put("BeanMaklumatPenceroboh", beanMaklumatPenceroboh);
+						}
+			    		
+			    		this.context.put("selectBangsa", HTML.SelectBangsa("socBangsa", Long.parseLong(idBangsa), ""));
+						this.context.put("selectNegeriPenceroboh",HTML.SelectNegeri("socNegeriPenceroboh",Long.parseLong(idNegeriPenceroboh),""," onChange=\"doChangeNegeriPenceroboh();\""));
+						this.context.put("selectBandarPenceroboh", HTML.SelectBandarByNegeri(idNegeriPenceroboh,"socBandarPenceroboh",Long.parseLong(idBandarPenceroboh),""));
+					
+					} else if ("update".equals(modePopup)) {
+						
+						this.context.put("readonlyPopup", "");
+			    		this.context.put("inputTextClassPopup", "");
+
+						beanMaklumatPenceroboh = new Vector();
+						beanMaklumatPenceroboh = logic.getMaklumatPenceroboh(idPenceroboh);
+						this.context.put("BeanMaklumatPenceroboh",beanMaklumatPenceroboh);
+						if (beanMaklumatPenceroboh.size() != 0) {
+							Hashtable hashPenceroboh = (Hashtable) beanMaklumatPenceroboh.get(0);
+							if (idBangsa == "99999") {
+								idBangsa = (String) hashPenceroboh.get("idBangsa");
+							}
+							if (idNegeriPenceroboh == "99999") {
+								idNegeriPenceroboh = (String) hashPenceroboh.get("idNegeriPenceroboh");
+							}
+							if (idBandarPenceroboh == "99999") {
+								idBandarPenceroboh = (String) hashPenceroboh.get("idBandarPenceroboh");
+							}
+						}
+						
+						this.context.put("selectBangsa", HTML.SelectBangsa("socBangsa", Long.parseLong(idBangsa), ""));
+						this.context.put("selectNegeriPenceroboh",HTML.SelectNegeri("socNegeriPenceroboh",Long.parseLong(idNegeriPenceroboh),""," onChange=\"doChangeNegeriPenceroboh();\""));
+						this.context.put("selectBandarPenceroboh", HTML.SelectBandarByNegeri(idNegeriPenceroboh,"socBandarPenceroboh",Long.parseLong(idBandarPenceroboh),""));
+						
+					} 
+				}
+				
+				//SENARAI PENCEROBOHAN
+				senaraiPenceroboh = new Vector();
+				senaraiPenceroboh = logic.setSenaraiPenceroboh(idPermohonan, idLaporan);
+				this.context.put("SenaraiPenceroboh", senaraiPenceroboh);
+				
+			}
+			
+			if ("3".equals(selectedTab)){
+				//OPEN POPUP KEHADIRAN
+				if ("openPopupKehadiran".equals(flagPopup)){
+					
+					String flagLawatan = logic.getFlagLawatanByIdLaporanTanah(idLaporan);
+	        		String idNegeriTanah = "99999";
+	        		
+	        		if ("new".equals(modePopup)){
+	        			
+	        			this.context.put("readonlyPopup", "");
+		    			this.context.put("inputTextClassPopup", "");
+		    			
+		    			if ("".equals(flagReKeyin)){
+		    				
+		    				beanMaklumatKehadiran = new Vector();    			
+			    			Hashtable hashMaklumatKehadiran = new Hashtable();
+			    			hashMaklumatKehadiran.put("namaPegawai", getParam("txtNamaPegawai"));
+			    			beanMaklumatKehadiran.addElement(hashMaklumatKehadiran);
+							this.context.put("BeanMaklumatKehadiran", beanMaklumatKehadiran);
+							
+		    			} else {
+		    				
+		    				beanMaklumatKehadiran = new Vector();    			
+			    			Hashtable hashMaklumatKehadiran = new Hashtable();
+			    			hashMaklumatKehadiran.put("namaPegawai", "");
+			    			beanMaklumatKehadiran.addElement(hashMaklumatKehadiran);
+							this.context.put("BeanMaklumatKehadiran", beanMaklumatKehadiran);
+		    			}
+		    			
+		    			if ("1".equals(flagLawatan)){
+		    				idNegeri = "16"; //PUTRAJAYA
+		    			} else {
+		    				idNegeriTanah = logic.getIdNegeriTanahPohon(idLaporan);
+		    				if ("99999".equals(idNegeriKehadiran) && !"".equals(idNegeriTanah)){
+		    					idNegeriKehadiran = idNegeriTanah;
+			    			}
+		    			}		    			
+						
+						this.context.put("selectNegeri", HTML.SelectNegeri("socNegeriKehadiran",Long.parseLong(idNegeriKehadiran), "",""));
+						this.context.put("selectJawatan", HTML.SelectJawatan("socJawatan",Long.parseLong(idJawatan), "",""));
+						
+	        		} else if ("update".equals(modePopup)){
+	        			
+	        			this.context.put("readonlyPopup", "");
+		    			this.context.put("inputTextClassPopup", "");
+		    			
+		    			//MAKLUMAT LAPORAN TANAH
+						beanMaklumatKehadiran = new Vector();
+						beanMaklumatKehadiran = logic.getMaklumatKehadiran(idPegawaiLaporanTanah);
+						this.context.put("BeanMaklumatKehadiran", beanMaklumatKehadiran);
+						if (beanMaklumatKehadiran.size() != 0){
+							Hashtable hashKehadiran = (Hashtable) beanMaklumatKehadiran.get(0);
+							idNegeriKehadiran = (String) hashKehadiran.get("idNegeri");
+							idJawatan = (String) hashKehadiran.get("idJawatan");
+						}
+		    			
+		    			this.context.put("selectNegeri", HTML.SelectNegeri("socNegeriKehadiran",Long.parseLong(idNegeriKehadiran), "",""));
+						this.context.put("selectJawatan", HTML.SelectJawatan("socJawatan",Long.parseLong(idJawatan), "",""));
+	        			
+	        		}
+				}
+				
+				//SENARAI KEHADIRAN
+				senaraiKehadiran = new Vector();
+				senaraiKehadiran = logic.getSenaraiKehadiran(idLaporan);
+				this.context.put("SenaraiKehadiran", senaraiKehadiran);
+
+			}
+			
+			if ("4".equals(selectedTab)){
 				//OPEN POPUP DOKUMEN
 		        if ("openPopupDokumen".equals(flagPopup)){
 		        	
@@ -185,7 +450,7 @@ public class FrmSenaraiLaporanTanahView extends AjaxBasedModule {
 		} else {
 			
 			// GO TO SENARAI LAPORAN TANAH
-			vm = "app/php2/frmSenaraiLaporanTanah.jsp";
+			vm = "app/php2/frmSenaraiLaporanTapak.jsp";
 			
 			//GET DROP DOWN PARAM
 			String idKementerianC = getParam("socKementerianC");
@@ -217,15 +482,20 @@ public class FrmSenaraiLaporanTanahView extends AjaxBasedModule {
 				idLotC = "99999";
 			}
 			
+			//FILTER BY NEGERI
+			if (idNegeriUser != null && idNegeriUser.length() > 0){
+					idNegeriC = idNegeriUser;
+			}
+			
 			list = new Vector();
-			list = logic.getSenaraiLaporan(getParam("txdTarikhLawatanC"), getParam("txtPelaporC"),idNegeriC, idDaerahC,
+			list =  logic.getSenaraiLaporanTapak(getParam("txtNoFail"), getParam("txtPelaporC"),idNegeriC, idDaerahC,
 					idMukimC, getParam("txtNoPeganganC"), idJenisHakmilikC, getParam("txtNoHakmilikC"),
 					getParam("txtNoWartaC"), idLotC, getParam("txtNoLotC"));
 			this.context.put("SenaraiLaporan", list);
 			
 			this.context.put("txdTarikhLawatanC", getParam("txdTarikhLawatanC"));
-			this.context.put("txtPelaporC", getParam("txtPelaporC"));			
-			
+			this.context.put("txtPelaporC", getParam("txtPelaporC"));
+			this.context.put("txtNoFail", getParam("txtNoFail"));
 			this.context.put("txtNoPeganganC", getParam("txtNoPeganganC"));
 			this.context.put("selectJenisHakmilik", HTML.SelectJenisHakmilik("socJenisHakmilikC", Long.parseLong(idJenisHakmilikC), ""));
 			this.context.put("txtNoHakmilikC", getParam("txtNoHakmilikC"));
@@ -247,8 +517,20 @@ public class FrmSenaraiLaporanTanahView extends AjaxBasedModule {
 		
 		// SET DEFAULT ID PARAM
 		this.context.put("idLaporan", idLaporan);
+		this.context.put("idPermohonan", idPermohonan);
 		this.context.put("idHakmilikAgensi", idHakmilikAgensi);
+		this.context.put("idPenceroboh", idPenceroboh);
+		this.context.put("idPegawaiLaporanTanah", idPegawaiLaporanTanah);
 		this.context.put("idDokumen", idDokumen);
+		this.context.put("idFail", idFail);
+		this.context.put("idNegeriKehadiran", idNegeriKehadiran);
+		
+		if (session.getAttribute("MSG") != null){
+			this.context.put("errMsg", session.getAttribute("MSG"));
+			session.removeAttribute("MSG");
+		} else {
+			this.context.put("errMsg", "");
+		}
 		
 		return vm;
 	}
@@ -322,11 +604,11 @@ public class FrmSenaraiLaporanTanahView extends AjaxBasedModule {
 			db = new Db();
 
 			// TBLPHPDOKUMENLAPORANTANAH
-			long idDokumen = DB.getNextID("TBLPHPDOKUMENLAPORANTANAH_SEQ");
+			long idDokumen = DB.getNextID("TBLPHPDOKUMEN_SEQ");
 			Connection con = db.getConnection();
 			con.setAutoCommit(false);
 			PreparedStatement ps = con
-					.prepareStatement("INSERT INTO TBLPHPDOKUMENLAPORANTANAH "
+					.prepareStatement("INSERT INTO TBLPHPDOKUMEN "
 							+ "(ID_DOKUMEN,NAMA_DOKUMEN,CATATAN,ID_MASUK,TARIKH_MASUK,CONTENT,JENIS_MIME,NAMA_FAIL,ID_LAPORANTANAH) "
 							+ "VALUES(?,?,?,?,SYSDATE,?,?,?,?)");
 			ps.setLong(1, idDokumen);

@@ -23,6 +23,7 @@
   <input name="selectedTabUpper" type="hidden" id="selectedTabUpper" value="$selectedTabUpper"/>
   <input name="hitButton" type="hidden" id="hitButton"/>
 </p>
+
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   #if ($idFail != '')
   <tr>
@@ -39,20 +40,30 @@
         <ul class="TabbedPanelsTabGroup">
           <li onClick="doChangeTab(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PERMOHONAN</li>
           <li onClick="doChangeTab(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PEMOHON</li>
-         <!-- <li onClick="doChangeTab(2);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PEMBELI PASIR</li>-->
+          <!-- <li onClick="doChangeTab(2);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PEMBELI PASIR</li>-->
+          <li onClick="doChangeTab(3);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT SENARAI SEMAK</li>
         </ul>
         <div class="TabbedPanelsContentGroup">
-          <div class="TabbedPanelsContent"> #if ($selectedTabUpper == '0')
-            #parse("app/php2/frmAPBMaklumatPermohonanPermohonan.jsp")
-            #end </div>
-          <div class="TabbedPanelsContent"> #if ($selectedTabUpper == '1')
-            #parse("app/php2/frmAPBMaklumatPermohonanPemohon.jsp")
-            #end </div>
-         <!-- <div class="TabbedPanelsContent"> #if ($selectedTabUpper == '2')
+          <div class="TabbedPanelsContent"> 
+          	#if ($selectedTabUpper == '0')
+            	#parse("app/php2/frmAPBMaklumatPermohonanPermohonan.jsp")
+            #end 
+          </div>
+          <div class="TabbedPanelsContent"> 
+          	#if ($selectedTabUpper == '1')
+            	#parse("app/php2/frmAPBMaklumatPermohonanPemohon.jsp")
+            #end 
+          </div>
+          <!-- <div class="TabbedPanelsContent"> #if ($selectedTabUpper == '2')
             #parse("app/php2/frmAPBMaklumatPermohonanPembeliPasir.jsp")
             #end </div>-->
+          <div class="TabbedPanelsContent"> 
+          	#if ($selectedTabUpper == '3')
+            	#parse("app/php2/frmAPBSenaraiSemak.jsp")
+            #end 
+          </div>
         </div>
-      </div></td>
+    </div></td>
   </tr>
   #end
   <tr>
@@ -60,16 +71,16 @@
   </tr>
 </table>
 <fieldset id="tableReport" style="display:none;"-->
-<legend><strong>SENARAI DOKUMEN</strong></legend>
-<table width="100%" border="0" cellspacing="2" cellpadding="2">
-  <tr>
-    <td ><a href="#" class="style2" onClick="javascript:cetakKulitFail('$idFail')"> Kulit Fail </a></td>
-  </tr>
-  <tr>
-    <td ><a href="#" class="style2" onClick="javascript:cetakSuratAkuanTerima('$idFail')"> Akuan Penerimaan Permohonan </a></td>
-  </tr>
-</table>
-<div id="calculateTotalPercentPengarah_result"></div>
+	<legend><strong>SENARAI DOKUMEN</strong></legend>
+	<table width="100%" border="0" cellspacing="2" cellpadding="2">
+	  <tr>
+	    <td ><a href="#" class="style2" onClick="javascript:cetakKulitFail('$idFail')"> Kulit Fail </a></td>
+	  </tr>
+	  <tr>
+	    <td ><a href="#" class="style2" onClick="javascript:cetakSuratAkuanTerima('$idFail')"> Akuan Penerimaan Permohonan </a></td>
+	  </tr>
+	</table>
+	<div id="calculateTotalPercentPengarah_result"></div>
 </fieldset>
 <script type="text/javascript">
 #if ($idFail != '')
@@ -915,3 +926,4 @@ function cetakSuratAkuanTerima(idFail) {
 	hWnd.focus();
 }
 </script>
+$javascriptLampiran

@@ -30,11 +30,11 @@
         <tr>
           <td width="30%" height="24" scope="row" align="right">No Fail : </td>
           <td width="70%"><input name="txtNoFail" id="txtNoFail" type="text" value="$txtNoFail" size="50" maxlength="50" style="text-transform:uppercase;">
-            #if($flagDetail == '') 
-            <a href="javascript:bukaCarian();" class="style1">Buka Carian Terperinci </a> 
-            #else 
-            <a href="javascript:tutupCarian();" class="style1">Tutup Carian Terperinci </a> 
-            #end 
+            #if($flagDetail == '')
+            <a href="javascript:bukaCarian();" class="style1">Buka Carian Terperinci </a>
+            #else
+            <a href="javascript:tutupCarian();" class="style1">Tutup Carian Terperinci </a>
+            #end
           </td>
         </tr>
         <tr>
@@ -43,7 +43,7 @@
           </td>
         </tr>
         <tr>
-          <td width="30%" height="24" scope="row" align="right">No Siri Perjanjian : </td>
+          <td width="30%" height="24" scope="row" align="right">No. Siri Perjanjian : </td>
           <td width="70%"><input name="txtNoRujukan" id="txtNoRujukan" type="text" value="$txtNoRujukan" size="50" maxlength="50" style="text-transform:uppercase;">
           </td>
         </tr>
@@ -52,7 +52,7 @@
           <td>$selectBankC</td>
         </tr>
         <tr>
-          <td width="30%" height="24" scope="row" align="right">No Cek : </td>
+          <td width="30%" height="24" scope="row" align="right">No. Cek : </td>
           <td width="70%"><input name="txtNoCek" id="txtNoCek" type="text" value="$txtNoCek" size="50" maxlength="50" style="text-transform:uppercase;">
           </td>
         </tr>
@@ -75,14 +75,14 @@
         <tr>
           <td scope="row" align="right" valign="top"> Tujuan Penyewaan :</td>
           <td>
-		  	<textarea name="txtTujuan" id="txtTujuan" rows="5" cols="50" onBlur="this.value=this.value.toUpperCase();" 
-		  		onKeyUp="textCounter(this.form.txtTujuan,this.form.remLen,$!saizTxtTujuan);" 
+		  	<textarea name="txtTujuan" id="txtTujuan" rows="5" cols="50" onBlur="this.value=this.value.toUpperCase();"
+		  		onKeyUp="textCounter(this.form.txtTujuan,this.form.remLen,$!saizTxtTujuan);"
 		  		onKeyDown="textCounter(this.form.txtTujuan,this.form.remLen,$!saizTxtTujuan);" >$!txtTujuan</textarea>
 		  </td>
         </tr>
         #if($flagDetail == 'buka')
         <tr>
-          <td scope="row" align="right">No Pegangan Hakmilik :</td>
+          <td scope="row" align="right">No. Pegangan Hakmilik :</td>
           <td><input name="txtNoPegangan" id="txtNoPegangan" type="text" value="$txtNoPegangan" size="30" maxlength="50"/></td>
         </tr>
         <tr>
@@ -90,11 +90,11 @@
           <td>$selectJenisHakmilik</td>
         </tr>
         <tr>
-          <td scope="row" align="right"> No Hakmilik :</td>
+          <td scope="row" align="right"> No. Hakmilik :</td>
           <td><input name="txtNoHakmilik" id="txtNoHakmilik" type="text" value="$txtNoHakmilik" size="30" maxlength="50" /></td>
         </tr>
         <tr>
-          <td scope="row" align="right"> No Warta :</td>
+          <td scope="row" align="right"> No. Warta :</td>
           <td><input name="txtNoWarta" id="txtNoWarta" type="text" value="$txtNoWarta" size="30" maxlength="50"/></td>
         </tr>
         <tr>
@@ -149,14 +149,16 @@
         <tr>
           <td colspan="8" scope="row"><input name="cmdJanaPenerimaan" type="button" value="Jana Borang Penerimaan Bayaran" onclick="javascript:janaBorangDaftarMelSewa()"/>
             <input name="cmdJana" type="button" value="Jana Borang Penyerahan" onclick="javascript:janaBorangPenyerahan()"/>
-            <input name="cmdCetak" type="button" value="Cetak Senarai Fail" onclick="javascript:cetakSenaraiFail('$flagDetail')"/></td>
+            <!-- <input name="cmdCetak" type="button" value="Cetak Senarai Fail" onclick="javascript:cetakSenaraiFail('$flagDetail')"/> -->
+            <input name="cmdCetak" type="button" value="Cetak Akaun Kawalan" onclick="javascript:cetakAkaunKawalan('$flagDetail')"/>
+            </td>
         </tr>
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
           <td width="20%" align="center"><strong>No Fail</strong></td>
           <td width="6%" align="center"><strong>Jenis Penyewaan</strong></td>
           <td width="20%" align="center"><strong>Nama Penyewa</strong></td>
-          <td width="18%" align="center"><strong>Maklumat Lot</strong></td>         
+          <td width="18%" align="center"><strong>Maklumat Lot</strong></td>
           <td width="5%" align="center"><strong>Tarikh Mula</strong></td>
           <td width="5%" align="center"><strong>Tarikh Tamat</strong></td>
           <td width="7%" align="center"><strong>Kadar Sewa (RM)</strong></td>
@@ -170,7 +172,7 @@
         #set( $row = "row1" )
         #elseif (($list.bil % 2) != 0)
         #set( $row = "row1" )
-        #else 
+        #else
         #set( $row = "row2" )
         #end
         <tr>
@@ -184,11 +186,11 @@
             #end </td>
           <td class="$row" align="center">$list.jenisPenyewaan</td>
           <td class="$row">$list.namaPemohon</td>
-          <td class="$row">$list.maklumatLot</td>           
+          <td class="$row">$list.maklumatLot</td>
           <td class="$row" align="center">$list.tarikhMula</td>
           <td class="$row" align="center">$list.tarikhTamat</td>
           <td class="$row" align="right">$!list.kadarSewa</td>
-          <td class="$row" align="right">$!list.tunggakan</td>          
+          <td class="$row" align="right">$!list.tunggakan</td>
           #if ($!list.flagStatusPerjanjian == '1')
           <td align="center" class="$row"><strong><span class="style1">$list.statusPerjanjian</span></strong></td>
           #else
@@ -227,22 +229,22 @@ function kosongkan(flagDetail) {
 	document.${formName}.txtNoRujukan.value = "";
 	document.${formName}.socBankC.value = "";
 	document.${formName}.txtNoCek.value = "";
-	document.${formName}.txtNoResit.value = "";	
-	document.${formName}.socJenisFailC.value = "";	
-	document.${formName}.socStatusPerjanjianC.value = "";	
-	document.${formName}.txtTujuan.value = "";	
+	document.${formName}.txtNoResit.value = "";
+	document.${formName}.socJenisFailC.value = "";
+	document.${formName}.socStatusPerjanjianC.value = "";
+	document.${formName}.txtTujuan.value = "";
 	if (flagDetail == 'buka'){
 		document.${formName}.txtNoPegangan.value = "";
 		document.${formName}.socJenisHakmilik.value = "";
-		document.${formName}.txtNoHakmilik.value = "";	
+		document.${formName}.txtNoHakmilik.value = "";
 		document.${formName}.txtNoWarta.value = "";
 		document.${formName}.socJenisLot.value = "";
-		document.${formName}.txtNoLot.value = "";		
+		document.${formName}.txtNoLot.value = "";
 		document.${formName}.socNegeriC.value = "";
 		document.${formName}.socDaerahC.value = "";
-		document.${formName}.socMukimC.value = "";	
+		document.${formName}.socMukimC.value = "";
 		document.${formName}.socKementerianC.value = "";
-		document.${formName}.socAgensiC.value = "";	
+		document.${formName}.socAgensiC.value = "";
 	}
 	doAjaxCall${formName}("");
 }
@@ -265,21 +267,21 @@ function tutupCarian(){
 	document.${formName}.txtNoRujukan.value = "";
 	document.${formName}.socBankC.value = "";
 	document.${formName}.txtNoCek.value = "";
-	document.${formName}.txtNoResit.value = "";	
-	document.${formName}.socJenisFailC.value = "";	
-	document.${formName}.socStatusPerjanjianC.value = "";	
-	document.${formName}.txtTujuan.value = "";	
+	document.${formName}.txtNoResit.value = "";
+	document.${formName}.socJenisFailC.value = "";
+	document.${formName}.socStatusPerjanjianC.value = "";
+	document.${formName}.txtTujuan.value = "";
 	document.${formName}.txtNoPegangan.value = "";
 	document.${formName}.socJenisHakmilik.value = "";
-	document.${formName}.txtNoHakmilik.value = "";	
+	document.${formName}.txtNoHakmilik.value = "";
 	document.${formName}.txtNoWarta.value = "";
 	document.${formName}.socJenisLot.value = "";
-	document.${formName}.txtNoLot.value = "";		
+	document.${formName}.txtNoLot.value = "";
 	document.${formName}.socNegeriC.value = "";
 	document.${formName}.socDaerahC.value = "";
-	document.${formName}.socMukimC.value = "";	
+	document.${formName}.socMukimC.value = "";
 	document.${formName}.socKementerianC.value = "";
-	document.${formName}.socAgensiC.value = "";	
+	document.${formName}.socAgensiC.value = "";
 	doAjaxCall${formName}("");
 }
 
@@ -301,10 +303,21 @@ function janaBorangDaftarMelSewa() {
 	hWnd.focus();
 }
 
-function cetakSenaraiFail(flagDetail){	
-	
+function cetakSenaraiFail(flagDetail){
+
 var url = "../servlet/ekptg.report.php2.REVSenaraiFail?noFail="+document.${formName}.txtNoFail.value+"&namaPemohon="+document.${formName}.txtNamaPemohon.value+"&noRujukan="+document.${formName}.txtNoRujukan.value+"&idBank="+document.${formName}.socBankC.value+"&noCek="+document.${formName}.txtNoCek.value+"&jenisFail="+document.${formName}.socJenisFailC.value+"&statusPerjanjian="+document.${formName}.socStatusPerjanjianC.value+"&noResit="+document.${formName}.txtNoResit.value;
-	
+
+    var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+
+function cetakAkaunKawalan(flagDetail){
+
+var url = "../servlet/ekptg.report.php2.REVAkaunKawalan?noFail="+document.${formName}.txtNoFail.value+"&namaPemohon="+document.${formName}.txtNamaPemohon.value+"&noRujukan="+document.${formName}.txtNoRujukan.value+"&idBank="+document.${formName}.socBankC.value+"&noCek="+document.${formName}.txtNoCek.value+"&jenisFail="+document.${formName}.socJenisFailC.value+"&statusPerjanjian="+document.${formName}.socStatusPerjanjianC.value+"&noResit="+document.${formName}.txtNoResit.value;
+
     var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;

@@ -46,6 +46,7 @@ padding:0 0.25em;
 }
 -->
 </style>
+
 ##if(!$!modul.equals(''))
 #if($!modul.equals('php'))
 <!-- <link rel="stylesheet" type="text/css" href="../../css/eTapp_PPK.css" /> -->
@@ -55,7 +56,6 @@ padding:0 0.25em;
 <link rel="stylesheet" type="text/css" href="../../css/online.css" />
 #end
   	<input type="hidden" name="form_token" value='$!{session.getAttribute("form_token")}'>
-  	<input type="text" name="idpermohonan" id="idpermohonan" value="$idPermohonan"/>
 
 	<input type="hidden" name="actionPopup" value="$!actionPopup"/>
   	<input type="hidden" name="hitButton" id="hitButton" value="$!hitButton"/>
@@ -113,7 +113,7 @@ padding:0 0.25em;
 				#foreach($mo in $senaraidokumen)
 					#set ( $cnt = $cnt + 1 )
 					$!mo.getNamaDokumen()
-						<a class="opener" href="javascript:deleteDetailImej('$!mo.getIdDokumen()','$!mo.idLampiran')">
+						<a class="opener" href="javascript:deleteDetailImej('$!mo.getIdDokumen()','$!mo.idLampiran','$!idRujukan','$!idSenarai')">
 							<img src="../../img/online/x.gif" alt="hapus" width="20" height="15"/>
 						</a>
 					<br>
@@ -137,7 +137,6 @@ padding:0 0.25em;
   </tr>
 </table>
 
-
 <script>
 	
 	//Hapus dokumen pada senarai harta
@@ -152,7 +151,30 @@ padding:0 0.25em;
 			if('paparHA'=='$!actionRefresh'){
 				document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup=paparHA&hitButton=hapusHA&iDokumen="+iDokumen;
 			}else{
-				document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.UploadDokumenSemak&actionPopup=papar&hitButton=hapus&idokumen="+iDokumen;
+				document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.UploadDokumenSemak&actionPopup=papar&hitButton=hapus&idokumen="+iDokumen+"&actionrefresh=$actionRefresh";
+			}
+		}
+		document.${formName}.enctype="multipart/form-data";
+	    document.${formName}.encoding="multipart/form-data";
+		document.${formName}.submit();
+		//refresh('$!flagOnline');
+
+	}
+	
+	//ADD NEW DELETE FUNCTION 13112020
+	function deleteDetailImej(iDokumen,lampiran,idRujukan,idSenarai){
+		if ( !window.confirm("Adakah Anda Pasti?")) return;
+		
+		if('myid'=='$!jenisdokumen'||'cod'=='$!jenisdokumen'){
+				document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup=paparHA&hitButton=hapusmyid&iDokumen="+iDokumen;
+		}else{
+			if('paparHA'=='$!actionRefresh'){
+				document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup=paparHA&hitButton=hapusHA&iDokumen="+iDokumen;
+			}else if('phpapb'=='$!actionRefresh') {
+				document.${formName}.action = "?_portal_module=ekptg.view.online.UploadDokumenSemak&actionPopup=papar&hitButton=hapus&idokumen="+iDokumen+"&idRujukan="+idRujukan+"&idSenarai="+idSenarai+"&actionrefresh=$actionRefresh";
+			}
+			else{
+				document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.UploadDokumenSemak&actionPopup=papar&hitButton=hapus&idokumen="+iDokumen+"&actionrefresh=$actionRefresh";
 			}
 		}
 		document.${formName}.enctype="multipart/form-data";
@@ -194,8 +216,8 @@ padding:0 0.25em;
 		//alert(document.${formName}.action.value);
 		document.${formName}.enctype="multipart/form-data";
 	    document.${formName}.encoding="multipart/form-data";
-		document.${formName}.submit();
-
+	    document.${formName}.submit();
+		
 			//window.opener.refreshFromPilihTanah();
 			//window.close();
 
@@ -261,26 +283,26 @@ padding:0 0.25em;
 
 		}else if('lampiransimati'=='$!actionRefresh'){
 			window.opener.semakLampiran('socBandar');
-
 		}else if('$!actionRefresh'=='phpapb'){
+			window.opener.doChangeTab('2');					
+		}else if('$!actionRefresh'=='phpphppywindividu'){
+			window.opener.doChangeTabUpper('2');			
+		}else if('$!actionRefresh'=='phpphppnw'){
+			window.opener.doChangeTabUpper('2');
+		}else if('$!actionRefresh'=='phpphptkr'){
+			window.opener.doChangeTabUpper('2');
+		}else if('$!actionRefresh'=='phpphppelepasan'){
+			window.opener.doChangeTabUpper('5');
+		}else if('$!actionRefresh'=='htppajakanmycoid'){
+			window.opener.doChangeTab('1');		
+		}else if('$!actionRefresh'=='1'){
 			window.opener.doChangeTab('2');			
 		}
-		else if('$!actionRefresh'=='phppnw'){
-		//	alert("masuk actionRefresh phppnw");
-			window.opener.doChangeTabUpper('2');
-		}
-		else if('$!actionRefresh'=='phpphptkr'){
-			window.opener.doChangeTabUpper('2');
-		}
-		else if('$!actionRefresh'=='phpphppelepasan'){
-			window.opener.doChangeTabUpper('5');
-		}
-		else if('$!actionRefresh'=='htppajakanmycoid'){
-				window.opener.doChangeTab('1');			
-			}
+	
 	}
 	//setSelected(1,0,0,1);HtaamViewX('$paramOnline')
 
 </script>
+
 #parse("app/htp/utiliti/javaScriptUmum.jsp")
 

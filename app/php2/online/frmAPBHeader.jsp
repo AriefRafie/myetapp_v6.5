@@ -11,6 +11,7 @@
     #set($noFailLama = $beanHeader.noFailLama)
     #set($tujuanPengambilan = $beanHeader.tujuanPengambilan)
     #set($noLesen = $beanHeader.noLesen)
+    #set($undangUndang = $beanHeader.undangUndang)
     #end
         
     <td width="50%" valign="top" ><fieldset>
@@ -95,7 +96,12 @@
       <tr>
       <td width="30%">Emel</td>
       <td width="1%">:</td>
-      <td >$!pemohon.get("emel")</td>
+      <td >$!pemohon.get("emel")</td>  
+      </tr>
+      <tr>
+      <td width="30%">Undang-Undang Diperbadankan</td>
+      <td width="1%">:</td>
+      <td >$undangUndang</td>
       </tr>
       </table>
       </fieldset>

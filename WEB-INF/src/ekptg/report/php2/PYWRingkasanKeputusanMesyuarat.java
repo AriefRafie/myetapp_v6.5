@@ -23,12 +23,10 @@ public class PYWRingkasanKeputusanMesyuarat extends EkptgReportServlet {
 	}
 
 	@Override
-	public void doProcessing(HttpServletRequest request,
-			HttpServletResponse response, ServletContext context, Map parameters)
-			throws Exception {
+	public void doProcessing(HttpServletRequest request, HttpServletResponse response, ServletContext context,
+			Map parameters) throws Exception {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
-

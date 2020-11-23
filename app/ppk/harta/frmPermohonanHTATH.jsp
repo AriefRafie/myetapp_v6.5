@@ -373,11 +373,6 @@
 						                       		<tr>
 						                            	<td>
 						                              	<fieldset><legend>HARTA TAK ALIH(TIADA HAKMILIK)</legend>
-						                              	#if($!skrin_online == "yes")
-					                          					<div id="info_skrin_daftar_sek8"></div>
-																				      <script>
-																				 						parent.document.getElementById("info_skrin_daftar_sek8").innerHTML="<div class=\"warning_online_ppk\"><table><tr><b><blink>*</blink> Harta Tak Alih : Tanah, rumah dan kepentingan-kepentingan, hak atau faedah yang terdapat atau yang akan didapati daripada tanah.</b><br><b><blink>*</blink> Harta Tak Alih (Tiada Hakmilik) : Harta tak alih yang tidak mempunyai hakmilik/geran yang berdaftar nama si mati dan kepentingan si mati berdasarkan surat perjanjian jual beli.</br></b></div>";
-																				 			</script> #end
 						                                	<input name="noradio" type="hidden" />
 						                                   	<table width="70%" align="center">
 										                        <tr>
@@ -447,7 +442,7 @@
                                    	<tr>
                            				<td>&nbsp;</td>
                                        	<td><div align="right" class="style43">
-                                              <div align="left">Alamat Harta 1</div>
+                                              <div align="left">Alamat Harta</div>
                                      	</div></td>
                                     	<td><div align="right">:</div></td>
                                    		<td><input name="txtAlamatHarta1HtaamX" type="text" id="textfield57" value="$alamathta1" size="34" $readmode style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()"/></td>
@@ -645,7 +640,7 @@
                       			<tr>
                                               <td><span class="style56"></span></td>
                                               <td><div align="right" class="style57">
-                                                <div align="left">Kategori Tanah 1</div>
+                                                <div align="left">Kategori Tanah</div>
                                               </div></td>
                                               <td><div align="right">:</div></td>
                                               <td>
@@ -796,7 +791,7 @@
                                                 <div align="left">Tanggungan</div>
                                               </div></td>
                                               <td><div align="right">:</div></td>
-                                              <td><input name="txtTanggunganHtaamX" type="text" id="txtTanggunganHtaam4" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" value="$tanggungan" size="15" maxlength="15"/></td>
+                                              <td><input name="txtTanggunganHtaamX" type="text" id="txtTanggunganHtaam4" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" value="$tanggungan" size="15" maxlength="15" readonly="readonly" class="disabled"/></td>
                              	</tr>
                                             
                            		<tr>
@@ -860,7 +855,7 @@
                                                 <div align="left">Catatan</div>
                                               </div></td>
                                               <td valign="top"><div align="right">:</div></td>
-                                              <td><textarea name="txtCatatanHtaamX" id="txtCatatanHtaamX" cols="31" rows="5"  >$catatan</textarea></td>
+                                              <td><textarea name="txtCatatanHtaamX" id="txtCatatanHtaamX" cols="31" rows="5"  >$!catatan</textarea></td>
                             	</tr>
                                             
                         		<tr id="tr_flag_daftar"  style="display:none">
@@ -1004,12 +999,15 @@
 						     	#if($listam.jenishta=="Y")
 						        	#set($radioJenisHTA_update_checked1="checked")
 						          	#set($radioJenisHTA_update_checked2="")
+						          	#set($textJenisHTA="Y")
 						      	#end
 						                                    
 						      	#if($listam.jenishta=="T")
 						        	#set($radioJenisHTA_update_checked2="checked")
 						        	#set($radioJenisHTA_update_checked1="")
+						        	#set($textJenisHTA="T")
 						      	#end
+						      	<input type="hidden" name="new_jenishta" id="new_jenishta" value="$textJenisHTA" />
                                    
       									<input type="hidden" name="nama_skrin" id="nama_skrin" value="tiadahakmilik"  />
 						       				<table width="85%" align="center">
@@ -1413,6 +1411,7 @@
 							                                        	<div align="left">Jenis Kepentingan</div>
 							                                      	</div></td>
 							                                      	<td valign="top"><div align="right">:</div></td>
+							                                      	<td><textarea name="txtJenisKepentinganX" id="txtJenisKepentinganX" cols="31" rows="5" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()">$listam.jeniskepentingan</textarea></td>
 							                             	</tr>
 				                  		#end
                          								</table>
@@ -1679,7 +1678,7 @@
 							                                                  <div align="left">Tanggungan</div>
 							                                                </div></td>
 							                                                 <td width="1%"><div align="right" class="style43">:</div></td>
-							                                                <td><input name="txtTanggunganHtaamX" type="text" id="txtTanggunganHtaam3" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" value="$!listam.tanggungan" size="15" maxlength="15" $readmodeR class="$readmode" /></td>
+							                                                <td><input name="txtTanggunganHtaamX" type="text" id="txtTanggunganHtaam3" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()" value="$!listam.tanggungan" size="15" maxlength="15" $readmodeR class="disabled" readonly/></td>
 							                      			</tr>
 				     										
 				     										<tr>
@@ -1736,7 +1735,7 @@
 				                                                </div></td>
 				                                             	<td width="1%" valign="top"><div align="right" class="style43">:</div></td>
 				                            					<td>
-				                            						<textarea name="txtCatatanHtaamX" id="txtCatatanHtaam2" cols="31" rows="5" $readmodeR class="$readmode" >$listam.catatan</textarea>
+				                            						<textarea name="txtCatatanHtaamX" id="txtCatatanHtaam2" cols="31" rows="5" $readmodeR class="$readmode" >$!listam.catatan</textarea>
 				                            					</td>
 				                            				</tr>
                                               
@@ -1892,7 +1891,12 @@
        			#end	
    				   						<tr>
        										<td>
-           										<fieldset><legend>SENARAI HARTA TAK ALIH (TIADA HAKMILK)</legend>				
+           										<fieldset><legend>SENARAI HARTA TAK ALIH (TIADA HAKMILK)</legend>
+           										#if($!skrin_online == "yes")
+					                          	<div id="info_skrin_daftar_sek8"></div>
+												<script>
+													parent.document.getElementById("info_skrin_daftar_sek8").innerHTML="<div class=\"warning_online_ppk\"><font color=\"black\"><b>* Harta Tak Alih : Tanah, rumah dan kepentingan-kepentingan, hak atau faedah yang terdapat atau yang akan didapati daripada tanah.</b><br><b><blink>*</blink> Harta Tak Alih (Tiada Hakmilik) : Harta tak alih yang tidak mempunyai hakmilik/geran yang berdaftar nama si mati dan kepentingan si mati berdasarkan surat perjanjian jual beli.</br></b></font></div>";
+												</script> #end			
 												<table width="100%">
                     								<tr>
                         								<td align="left">
@@ -1960,9 +1964,9 @@
 						                	#end
               								#if($xjumpa_beli =="no")
 								           				<tr class="table_header">
-								                       		<td width="2%">
-										                 		<input type="checkbox" name="selectallHTATH" id="selectallHTATH" onClick="doCheckAll1_HTATH()" />
-															</td>
+<!-- 								                       		<td width="2%"> -->
+<!-- 										                 		<input type="checkbox" name="selectallHTATH" id="selectallHTATH" onClick="doCheckAll1_HTATH()" /> -->
+<!-- 															</td> -->
 								                    		<td width="3%"><div align="center">NO</div></td>
 								                           	<td width="15%"><div align="left">NEGERI</div></td>
 								                          	<td width="15%"><div align="left">DAERAH</div></td>
@@ -1985,7 +1989,7 @@
 														#set( $row = "row1" )
 													#end                       		
 									                  	<tr bgcolor="white" class="$row">
-													 		<td><input type="checkbox" name="selectHTATH" id="selectHTATH" value="$listam.idhta" /></td>
+<!-- 													 		<td><input type="checkbox" name="selectHTATH" id="selectHTATH" value="$listam.idhta" /></td> -->
 									                   		<td><div align="center" style="text-transform:uppercase;" onBlur="this.value=this.value.toUpperCase()">$plko</div></td>
 									                      	<td><div align="left" style="text-transform:uppercase;" onblur="this.value=this.value.toUpperCase()"><a href="javascript:get_htaam('$!idPermohonanSimati','$!listam.idhta','$!listam.idDokumen')" class="style42">$!listam.namaNegeri</a></div></td>
 									                      	<td><div align="left" style="text-transform:uppercase;" onblur="uppercase()">$!listam.namaDaerah</div></td>
@@ -2008,7 +2012,7 @@
 									                      	&& $id_Status != "164" 
 									                      	&& $id_Status != "165")	 									                 		
 									                 	#if($open_button_online == "yes")
-										                   		<a href = "javascript:lampiranHarta('$listam.idhta','$!paramOnline');">
+										                   		<a href = "javascript:lampiranHarta('$listam.idhta','$!paramOnline','$!id');">
 																	<img border="0" src="../img/plus.gif" width="20" height="15"/>
 																</a><br>
 														#end
@@ -2081,7 +2085,7 @@
 									                      	&& $id_Status != "164" 
 									                      	&& $id_Status != "165")	 									              			  
 									              		##if($open_button_online == "yes")
-										                      	<a href = "javascript:lampiranHarta('$listam.idhta','$!paramOnline');">
+										                      	<a href = "javascript:lampiranHarta('$listam.idhta','$!paramOnline','$!id');">
 																	<img border="0" src="../img/plus.gif" width="20" height="15"/>
 																</a><br>
 														##end
@@ -2152,7 +2156,7 @@
 									                      	&& $id_Status != "164" 
 									                      	&& $id_Status != "165")	 									              			 
 									              			##if($open_button_online == "yes")
-									                      	<a href = "javascript:lampiranHarta('$listam.idhta','$!paramOnline');">
+									                      	<a href = "javascript:lampiranHarta('$listam.idhta','$!paramOnline','$!id');">
 																<img border="0" src="../img/plus.gif" width="20" height="15"/>
 															</a><br>
 															##end
@@ -4297,9 +4301,10 @@ var dt=document.f1.txtTarikhPerjanjianHtaamX
 
 }
 	//Mula Lampiran
-	function lampiranHarta(idHarta) {
-		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumenHarta?actionrefresh=paparHTATH&actionPopup=papar&idHarta="+idHarta+"&flagOnline=$!flagOnline";
-	    //
+	function lampiranHarta(idHarta,paramOnline,idPermohonan) {
+		// alert(idPermohonan);
+		var url = "../x/${securityToken}/ekptg.view.ppk.util.FrmUploadDokumenHarta?actionrefresh=paparHTATH&actionPopup=papar&idHarta="+idHarta+"&flagOnline=$!flagOnline&idPermohonan="+idPermohonan;
+		url +="&jenisdokumen=1108";
 	    var hWnd = window.open(url,'printuser','width=400,height=200, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 	       hWnd.opener = document.window;

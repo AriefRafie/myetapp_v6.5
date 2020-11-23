@@ -35,6 +35,7 @@
   <input name="idLuasKegunaan" type="hidden" id="idLuasKegunaan" value="$idLuasKegunaan"/>
   <input name="idKementerian" type="hidden" id="idKementerian" value="$idKementerian"/>
   <input name="idAgensi" type="hidden" id="idAgensi" value="$idAgensi"/>
+  <input name="flagDetail" type="hidden" id="flagDetail" value="$flagDetail"/>
   
   
  
@@ -67,6 +68,9 @@
           <div class="TabbedPanelsContent">
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
               #foreach ($beanMaklumatTanah in $BeanMaklumatTanah)
+              <tr>
+				<td width="50%" valign="top">
+              <table width="100%"  cellpadding="2" cellspacing="2" border="0">
               <tr>
                 <td width="1%">#if ($mode != 'view')<span class="style1">*</span>#end</td>
                 <td width="28%">Pegangan Hakmilik</td>
@@ -156,6 +160,89 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
               </tr>
+              </table>
+              </td>
+            <td width="50%" valign="top">
+			<table width="100%"  cellpadding="2" cellspacing="2" border="0">
+				<tr>
+					<td>&nbsp;</td>
+					<td>Syarat Nyata</td>
+					<td>:</td>
+					<td>
+						$beanMaklumatTanah.syarat
+					</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>Sekatan Kepentingan</td>
+					<td>:</td>
+					<td>
+						$beanMaklumatTanah.sekatan
+					</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>Kegunaan Tanah</td>
+					<td>:</td>
+					<td>
+						$beanMaklumatTanah.kegunaanTanah
+					</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+		        </tr>
+				<!-- <tr>
+					<td>&nbsp;</td>
+					<td>Kementerian</td>
+					<td>:</td>
+					<td>
+						$beanMaklumatTanah.kementerian
+					</td>
+		        </tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>Agensi</td>
+					<td>:</td>
+					<td>
+						$beanMaklumatTanah.agensi
+					</td>
+		        </tr> -->
+			</table>
+			</td>
+			</tr>
               #if ($mode == 'update')
               <tr>
                 <td colspan="4" valign="bottom"><i><font color="#ff0000">Perhatian</font> : Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i></td>
@@ -165,7 +252,10 @@
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td> 
+              </tr>
+              <tr>
+              <td>&nbsp;</td>
+              <td>
                  ##if ($idStatus == '')
                  #if ($mode == 'view')
                   #if ($!statussemasa.equals("1") || $!statussemasa.equals("2"))
@@ -203,7 +293,7 @@
                 <td>&nbsp;</td>
                 <td>Keluasan Asal</td>
                 <td>:</td>
-                <td>$beanMaklumatPenawaran.luasAsal $beanMaklumatPenawaran.keteranganLuasAsal
+                <td>$beanMaklumatPenawaran.luasAsal $beanMaklumatPenawaran.keteranganLuasAsal HEKTAR
                   <input type="hidden" name="txtLuasAsal" id="txtLuasAsal" value="$beanMaklumatPenawaran.luasAsal"/></td>
               </tr>
               #if ($idLuasKegunaan == '2')
@@ -263,18 +353,18 @@
                 <td> 
                 ##if ($idStatus == '')
                 #if ($mode == 'view')
-                  <!-- #if ($!statussemasa.equals("1") || $!statussemasa.equals("2"))
-                  <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/>
+                  #if ($!statussemasa.equals("1") || $!statussemasa.equals("2"))
+                  <!-- <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="doKemaskini()"/> -->
                   <input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
-                  #end -->
+                  #end
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
                   ##end
                   #if ($mode == 'update')
-                  <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniMaklumatPelepasan('$idLuas')"/>
+                  <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniMaklumatPenawaran('$idLuas')"/>
                   <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="doBatalKemaskini()"/>
                   #end
                    #else
-                   <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniMaklumatPelepasan('$idLuas')"/>
+                   <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniMaklumatPenawaran('$idLuas')"/>
                   <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
                   <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
                  #end </td>
@@ -284,7 +374,84 @@
           </div>
           <!-- END TAB MAKLUMAT PENAWARAN  -->
 		  <!-- START TAB SENARAI SEMAK  -->
-				<div class="TabbedPanelsContent">#if ($selectedTabUpper == '2') #parse("app/php2/online/ulasanKJP/pnw/frmPNWSenaraiSemakOnline.jsp") #end</div>
+				
+<fieldset>
+<legend>SENARAI SEMAK</legend>
+<table width="100%" border="0" cellspacing="2" cellpadding="2">
+  <tr>
+    <td colspan="2">
+    <table width="100%" border="0" cellspacing="2" cellpadding="2">
+    	<tr class="row2">
+		<td width="3%"></td>
+		<td width="82%"><b>Keterangan</b></td>
+		<td width="15%"><b>Dokumen</b></td>
+	</tr>  
+	
+	#if ($SenaraiSemak.size() > 0)
+        #set ($list = "")
+        #foreach ($list in $SenaraiSemak)
+          	#set( $i = $velocityCount )
+       		#if ( ($i % 2) == 0 )
+   	        	#set( $row = "row2" )
+            #else
+               	#set( $row = "row1" )
+          	#end
+                	
+        #if($list.flag == 'Y')
+        	#set($checked = 'checked')
+        	#set($disabled = 'disabled')
+        #else
+        	#set($checked = '')
+        #end
+        
+        #if ($mode == 'update')
+	        <tr class="$row">
+	          <td class="$row" width="3%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" $checked /></td>
+	          <td class="$row" width="82%">$i. $list.keterangan</td>
+	          	<td class="$row" width="15%">
+	          	$!list.lampirans
+	        	</td>
+	        </tr>
+	      #end
+	      #if ($mode == 'view')
+	      	<tr class="$row">
+	          <td class="$row" width="3%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" id="idsSenaraiSemak"$list.idSenaraiSemak $checked $disabled /></td>
+	          <td class="$row" width="82%">$i. $list.keterangan</td>
+	          <td class="$row" width="15%">
+	          $!list.lampirans
+	          </td>
+	        </tr>
+	      #end      
+        #end
+        #else
+        <tr>
+          <td class="$row" width="3%">&nbsp;</td>
+          <td class="$row" colspan="2" width="95%">Tiada Rekod</td>
+        </tr>
+        #end
+      </table></td>
+  </tr>
+  <tr>
+    <td colspan="3">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="30%">&nbsp;</td>
+    <td width="70%">#if ($mode == 'update')
+      <input type="button" name="cmdSimpanKemaskini" id="cmdSimpanKemaskini" value="Simpan" onClick="doSimpanKemaskiniSenaraiSemak()"/>
+      <input type="button" name="cmdBatalKemaskini" id="cmdBatalKemaskini" value="Batal" onClick="batalProjek()"/>
+      #end
+      #if ($mode == 'view')
+      #if ($!statussemasa.equals("1") || $!statussemasa.equals("2"))
+      <input type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onClick="kemaskiniPermohonan()"/>
+      <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
+      #end
+      #end
+      #if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
+      <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
+      #end
+</table>
+</fieldset>
+
 
 		  <!-- END TAB SENARAI SEMAK  -->
 		  <!-- START KEPUTUSAN -->
@@ -294,6 +461,7 @@
           	<table width="100%" border="0" cellspacing="2" cellpadding="2">
            				<td  colspan="4">
 						#if($semakMode == "update")
+						
 		    			#if(($!idjawatan.equals("20")||$!idjawatan.equals("24"))&& $!statussemasa.equals("1")) 
 		    				<p><input type="checkbox" id="checkme"/><a>&nbsp;Saya, <b>$namaPemohon</b> dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
    							<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tanpa sebarang keraguan dan paksaan dari mana-mana pihak.</a></p>
@@ -307,18 +475,31 @@
 						#elseif ($!idjawatan.equals("4")&& $!statussemasa.equals("3"))
 							<p><input type="checkbox" id="checkme"/><a>&nbsp;Saya, <b>$namaPemohon</b> dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
    							<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tanpa sebarang keraguan dan paksaan dari mana-mana pihak.</a></p>
+		    				<p><b><font color="blue" size="2"><span class="blink">
+   							&nbsp&nbsp&nbsp&nbsp Ambil Perhatian: Sila pastikan maklumat diisi pada permohonan adalah TEPAT dan MUKTAMAD.
+   							<br/>&nbsp&nbsp&nbsp&nbsp Permohonan yang telah dihantar TIDAK DIBENARKAN untuk dipinda/dikemaskini.
+   							</p></b></span>
 		    				<p align="center"><input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Permohonan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
-                			<input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
-                		#end
+		    				<input type="button" name="cmdPindaan" id="cmdPindaan" value="Kembalikan kepada penyedia" onclick="doAjaxCall${formName}('simpanpengesahan3')" />
+                			<input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/></p>
+                		
                 		
                  	<!-- <td align="center"><input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/></td> -->
                  	                	
 		    		#else
-		    		<!-- <p align="center"><input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/> -->
-		    		
-           			<p align="center"><input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
-           			
+
+           			<td>
+                	<input type="checkbox" name="pengesahan" id="pengesahan" checked disabled>&nbsp&nbsp
+
+        			Saya, <b>$!namaPemohon</b>, $!kadPengenalanPemohon dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
+   					<br/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp tanpa sebarang keraguan dan paksaan dari mana-mana pihak.
+   					
+      				<p align="center">
+           			<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
+            		<input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
+            		</p>
                		<!-- <p align="center"><input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/> -->
+		    		#end
 		    		#end
 		    </td>
            	</tr>
@@ -546,16 +727,39 @@
 #end
 </script>
 <script>
+
 var checker = document.getElementById('checkme');
 var sendbtn = document.getElementById('cmdSimpan');
+var pindaanbtn = document.getElementById('cmdPindaan',true);
 // when unchecked or checked, run the function
 checker.onchange = function(){
+	
+	var listcheckbox=document.getElementsByName('idsSenaraiSemak');
+	for (i = 0; i < listcheckbox.length; i++) 
+	{
+		if(listcheckbox[i].checked==false){
+			alert('Sila Lengkapkan Senarai Semak.');
+			sendbtn.disabled = true;
+			checker.checked=false;
+			return;
+		}
+	}
+	
 sendbtn.disabled = true;
+if(pindaanbtn !=null){
+pindaanbtn.disabled = true;
+}
 
 if(this.checked){
    sendbtn.disabled = false;
+   if(pindaanbtn !=null){
+   	pindaanbtn.disabled = false;
+   }
 } else {
    sendbtn.disabled = true;
+   if(pindaanbtn !=null){
+   	pindaanbtn.disabled = true;
+   }
 }
 
 }
@@ -619,7 +823,7 @@ function doBatalKemaskini() {
 	document.${formName}.mode.value = "view";
 	document.${formName}.submit();
 }
-function doSimpanKemaskiniMaklumatPelepasan(idLuas) {
+function doSimpanKemaskiniMaklumatPenawaran(idLuas) {
 	
 	/* if(document.${formName}.socLuasKegunaan.value == ""){
 		alert('Sila masukkan Luas Kegunaan.');
@@ -679,7 +883,7 @@ function doSimpanKemaskiniMaklumatPelepasan(idLuas) {
 	}
 	
 	document.${formName}.mode.value = "view";
-	document.${formName}.hitButton.value = "doSimpanKemaskiniMaklumatPelepasan";
+	document.${formName}.hitButton.value = "doSimpanKemaskiniMaklumatPenawaran";
 	document.${formName}.submit();
 }
 function doHantar(){
@@ -934,6 +1138,46 @@ function doHantarKelulusan(){
 	document.${formName}.modePopup.value = "";
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWOnlineSenaraiFailView";
 	document.${formName}.method="POST";
+	document.${formName}.submit();
+}
+
+function papar(idFail,idStatus) {
+	//alert('baca papar');
+		document.${formName}.idFail.value = idFail;
+		document.${formName}.idStatus.value = idStatus;
+		document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmPNWOnlineKJPSenaraiFailView";
+		document.${formName}.actionOnline.value = "seterusnya";
+		document.${formName}.method="POST";
+		document.${formName}.submit();
+	}
+function bukaCarian(){
+	document.${formName}.flagDetail.value = "buka";
+	document.${formName}.actionOnline.value = "";
+	doAjaxCall${formName}("");
+}
+function tutupCarian(){
+	document.${formName}.flagDetail.value = "";
+	document.${formName}.actionOnline.value = "";
+	document.${formName}.txtNoFail.value = "";
+	document.${formName}.txtNoPermohonan.value = "";
+	document.${formName}.txdTarikhTerima.value = "";
+	document.${formName}.txtNoPegangan.value = "";
+	document.${formName}.socJenisHakmilik.value = "";
+	document.${formName}.txtNoHakmilik.value = "";
+	document.${formName}.txtNoWarta.value = "";
+	document.${formName}.socJenisLot.value = "";
+	document.${formName}.txtNoLot.value = "";
+	document.${formName}.socNegeriC.value = "";
+	document.${formName}.socDaerahC.value = "";
+	document.${formName}.socMukimC.value = "";
+	doAjaxCall${formName}("");
+}
+function carian(){
+	document.${formName}.actionOnline.value = "";
+	doAjaxCall${formName}("");
+}
+function daftarBaru(){
+	document.${formName}.actionOnline.value = "daftarBaru";
 	document.${formName}.submit();
 }
 function doHantarEmel(){

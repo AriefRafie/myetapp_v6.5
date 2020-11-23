@@ -167,6 +167,16 @@
 	          </tr>
 	          #end
 	          #if ($modePopup == 'view')
+	          	#set($idLampiran = "")
+    			#set($namaLampiran = "")
+			    #set($catatanLampiran = "")
+			    #set($namaFailLampiran = "")
+			  	#foreach($beanMaklumatLampiran in $BeanMaklumatLampiran)
+					#set($idLampiran = $beanMaklumatLampiran.idDokumen)
+				    #set($namaLampiran = $beanMaklumatLampiran.namaDokumen)
+				    #set($catatanLampiran = $beanMaklumatLampiran.catatan)
+				    #set($namaFailLampiran = $beanMaklumatLampiran.namaFail)
+			  	#end
               <tr>
                 <td>&nbsp;</td>
                 <td valign="top">&nbsp;</td>
@@ -177,9 +187,13 @@
                 <td>&nbsp;</td>
                 <td valign="top">Lampiran</td>
                 <td valign="top">:</td>
-                <td valign="top"> #if ($idLampiran != '')<a href="javascript:cetakLampiran($idLampiran)" class="style2">$!namaFailLampiran</a> #end
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input name="cmdUpload" type="button" onclick="uploadDoc($idUlasanTeknikal)" value="Muat Naik Lampiran" /></td>
+                <td valign="top">
+                	#if ($idLampiran != '')
+                		<a href="javascript:cetakLampiran($idLampiran)" class="style2">$!namaFailLampiran</a>
+                	#end
+                	&nbsp;&nbsp;&nbsp;&nbsp;
+                	<input name="cmdUpload" type="button" onclick="uploadDoc($idUlasanTeknikal)" value="Muat Naik Lampiran" />
+                </td>
               </tr>
               #end
 	         </table>
@@ -198,7 +212,7 @@
   #end
   <tr>
     <td width="30%">&nbsp;</td>
-    <td width="70%"> 
+    <td width="70%">
     	#if ($modePopup == 'new')
 	      <input name="cmdSimpan" type="button" onClick="doSimpanMaklumatKJP()" value="Hantar">
 	      <input name="cmdBatal" type="button" onClick="doBatalMaklumatKJP()" value="Batal">
@@ -213,7 +227,7 @@
 			      <input name="cmdKemaskini" type="button" onClick="doKemaskiniMaklumatKJP()" value="Kemaskini">
 			      <input name="cmdHapus" type="button" onClick="doHapusMaklumatKJP()" value="Hapus">
       				#if ($flagStatus == '1')
-				      <input name="cmdTerima" type="button" onClick="doTerimaKJP()" value="Terima">
+				      <!-- <input name="cmdTerima" type="button" onClick="doTerimaKJP()" value="Terima"> -->
 				      <input name="cmdUlangan" type="button" onClick="doUlanganKJP()" value="Ulangan">
       				#end
       				#if ($flagKeputusanKJP == 'G')
@@ -227,7 +241,7 @@
       	#if ($modePopup == 'update')
 	      <input name="cmdSimpan2" type="button" onclick="doSimpanKemaskiniMaklumatKJP()" value="Hantar" />
 	      <input name="cmdBatal" type="button" onClick="doBatalKemaskiniMaklumatKJP()" value="Batal">
-      	#end 
+      	#end
     </td>
   </tr>
 </table>

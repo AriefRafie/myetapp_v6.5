@@ -1,0 +1,52 @@
+<fieldset>
+<table width="100%" border="0" cellspacing="2" cellpadding="2">
+  <tr>
+    <td colspan="2">
+    <table width="100%" border="0" cellspacing="2" cellpadding="2">
+    	<tr class="row2">
+			<td width="3%"></td>
+			<td width="82%"><b>Keterangan</b></td>
+			<td width="15%"><b>Dokumen</b></td>
+		</tr>  
+		#if ($SenaraiSemak.size() > 0)
+	        #set ($list = "")
+	        #foreach ($list in $SenaraiSemak)
+	          	#set( $i = $velocityCount )
+	       		#if ( ($i % 2) == 0 )
+	   	        	#set( $row = "row2" )
+	            #else
+	               	#set( $row = "row1" )
+	          	#end
+	        #if($list.flag == 'Y')
+	        	#set($checked = 'checked')
+	        	#set($disabled = 'disabled')
+	        #else
+	        	#set($checked = '')
+	        #end
+		    <tr class="$row">
+		         <td class="$row" width="3%"></td>
+		         <td class="$row" width="82%">$i. $list.keterangan</td>
+		         <td class="$row" width="15%">$!list.lampirans</td>
+		    </tr>   
+	    	#end
+	    	#else
+	    	<tr>
+	        	<td class="$row" width="3%">&nbsp;</td>
+	         	<td class="$row" colspan="2" width="95%">Tiada Rekod</td>
+	        </tr>
+	     #end
+    </table>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="30%">&nbsp;</td>
+    <td width="70%">
+      <input type="button" name="cmdSeterusnya" id="cmdSeterusnya" value="Seterusnya" onclick="seterusnya()"/>
+      <input type="button" name="cdmCetak" id="cdmCetak" value="Cetak" onClick="javascript:setTable('tableReport')"/>
+    </td>
+  </tr>
+</table>
+</fieldset>

@@ -646,7 +646,7 @@
 #if($list_siasatan.size() == 0 && $record_siasatan != "yes")
   <input type="button" value="Daftar Rundingan" onClick="tambah('$id_hakmilik','$!id_pembatalan')">
 #end
-<input type="button" value="Cetak Borang Q" onClick="javascript:cetakBorangQ('$id_hakmilik')">
+<!-- <input type="button" value="Cetak Borang Q" onClick="javascript:cetakBorangQ('$id_permohonan','$id_hakmilik')"> -->
 
 #if($list_siasatan.size() > 0)
 <input name="" type="button" value="Hapus" onClick="hapus_beramai()">
@@ -984,8 +984,12 @@ var readmode = '$readmode';
 var jenis_permohonan = '$jenis_permohonan';
 window.onload = submitForm;
 
-function cetakBorangQ(id_hakmilik) {
-	var url = "../servlet/ekptg.report.ppt.BorangQ?idhakmilik="+id_hakmilik;
+function cetakBorangQ(idpermohonan,idhakmilik) {
+	
+	//var url = "../servlet/ekptg.report.ppt.BorangQ?idhakmilik="+id_hakmilik;
+	//var url = "../servlet/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?idhakmilik="+id_hakmilik;
+	var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&id_hakmilik="+idhakmilik+"&report=BorangQ&selectNoFail=yes";
+	//var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?idhakmilik="+idhakmilik";	
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;

@@ -123,9 +123,8 @@
           <td width="18%"><strong>No Fail Negeri</strong></td>
           <td width="20%"><strong>Nama Pemohon</strong></td>
           <td width="7%"><strong>Tarikh Terima</strong></td>
-          <td width="10%"><strong>Status</strong></td>
-          <td width="8%"><strong>Tindakan Daripada</strong></td>
-          <td width="18%"><strong>Daftar Oleh</strong></td>
+          <td width="16%"><strong>Status</strong></td>
+          <td width="20%"><strong>Daftar Oleh</strong></td>
         </tr>
         #set ($list = "")
         #if ($SenaraiFail.size() > 0)
@@ -174,12 +173,11 @@
           <td class="$row">$list.namaPemohon</td>
           <td class="$row" align="center">$list.tarikhTerima</td>
           <td class="$row">$list.status</td>
-          #if($list.idStatus == '1610213' || $list.idStatus == '1610201' || $list.idStatus == '1610206' || $list.idStatus == '1610214')
-          <td class="$row" align="center">HQ</td>
-          #else
-          <td class="$row" align="center">Negeri</td>
-          #end
+          #if($list.flagJenisFail != '4')
           <td class="$row">$list.userLogin</td>
+          #else
+          <td class="$row">$list.userDaftar</td>
+          #end
         </tr>
         #end
         #else

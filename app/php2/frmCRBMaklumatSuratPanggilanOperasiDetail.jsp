@@ -61,6 +61,32 @@
           <td><input name="txtTarikhHantar" type="text" $readonlyPopup class="$inputTextClassPopup" id="txtTarikhHantar" onBlur="check_date(this);" value="$beanMaklumatSuratPanggilanOperasi.tarikhHantar" size="9" maxlength="10">
             #if ($modePopup != 'view') <a href="javascript:displayDatePicker('txtTarikhHantar',false,'dmy');"><img border="0" src="../img/calendar.gif"/>#end</td>
         </tr>
+        <tr>
+          <td>#if ($mode != 'view')<span class="style2">*</span>#end</td>
+          <td>Tarikh Operasi</td>
+          <td>:</td>
+          <td><input name="txtTarikhOperasi" type="text" $readonlyPopup class="$inputTextClassPopup" id="txtTarikhOperasi" onBlur="check_date(this);" value="$beanMaklumatSuratPanggilanOperasi.tarikhOperasi" size="9" maxlength="10">
+            #if ($modePopup != 'view') <a href="javascript:displayDatePicker('txtTarikhOperasi',false,'dmy');"><img border="0" src="../img/calendar.gif"/>#end</td>
+        </tr>
+        <tr>
+          <td>#if ($mode != 'view')<span class="style2">*</span>#end</td>
+          <td>Masa Operasi</td>
+          <td>:</td>
+          <td>
+          	<input type="text" name="txtMasaOperasi" id="txtMasaOperasi" size="12" class="$inputTextClassPopup" $readonlyPopup value="$beanMaklumatSuratPanggilanOperasi.masaOperasi" onblur="this.value=this.value.toUpperCase();"/>          
+          	 #if ($modePopup != 'view')
+          	 	<i><font color="#ff0000"> Contoh : 08:00 AM</font></i>
+          	 #end
+          </td>
+        </tr>
+        <tr>
+          <td>#if ($mode != 'view')<span class="style2">*</span>#end</td>
+          <td>Lokasi Operasi</td>
+          <td>:</td>
+          <td>
+          	<input type="text" name="txtLokasiOperasi" id="txtLokasiOperasi" class="$inputTextClassPopup" size="50" $readonlyPopup value="$beanMaklumatSuratPanggilanOperasi.lokasiOperasi"/>
+          </td>         
+        </tr>
         #end
       </table>
       </fieldset></td>

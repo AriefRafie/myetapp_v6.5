@@ -118,13 +118,38 @@
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
               <tr>
                 <td width="20%">Tarikh Hantar</td>
-                <td width="80%">: <input name="txtTarikhHantar" type="text" $readonly class="$inputTextClass" id="txtTarikhHantar" onBlur="check_date(this)" value="$beanKertasKewangan.txtTarikhHantar" size="9" maxlength="10">
-      #if ($mode != 'view') <a href="javascript:displayDatePicker('txtTarikhHantar',false,'dmy');"><img border="0" src="../img/calendar.gif"/>#end</td>
+                <td width="80%">: 
+                	<input name="txtTarikhHantar" type="text" $readonly class="$inputTextClass" id="txtTarikhHantar" onBlur="check_date(this);calcDate()" value="$beanKertasKewangan.txtTarikhHantar" size="9" maxlength="10">
+      				#if ($mode != 'view') 
+      					<a href="javascript:displayDatePicker('txtTarikhHantar',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
+      				#end
+      			</td>
               </tr>
+              <tr>
+	          	<td width="20%">Jangkamasa</td>
+	          	<td width="80%">:
+	          		<input type="text" name="txtJangkaMasa" id="txtJangkaMasa" size="1" maxlength="2" value="$beanKertasKewangan.txtJangkaMasa" 
+	          		onBlur="validateNumber(this,this.value,'$beanKertasKewangan.txtJangkaMasa');calcDate()" $readonly class="$inputTextClass">
+	            	Hari
+	            </td>
+	          </tr>
+	          <tr>
+	          	<td width="20%">Tarikh Dijangka Terima</td>
+	          	<td width="80%">:
+	          		<input name="txtTarikhJangkaTerima" type="text" $readonly class="$inputTextClass" id="txtTarikhJangkaTerima" 
+	          		onBlur="check_date(this)" value="$beanKertasKewangan.txtTarikhJangkaTerima" size="9" maxlength="10">
+	            	#if ($modePopup != 'view') 
+	            		<a href="javascript:displayDatePicker('txtTarikhJangkaTerima',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
+	            	#end
+	          	</td>
+	          </tr>
             </table>
             </fieldset></td>
         </tr>
         #end
+        #if ($errMsg != "")
+			<div class="info"><strong>$errMsg</strong></div>
+		#end
         <tr>
           <td colspan="2">&nbsp;</td>
           <td colspan="2">&nbsp;</td>
@@ -206,6 +231,42 @@ function doSeterusnya(){
 function gotoBatalPermohonan(){	
 	document.${formName}.step.value = "batalPermohonan";
 	document.${formName}.submit();
+}
+function calcDate(){
+	if (document.${formName}.txtTarikhHantar.value != "" && document.${formName}.txtJangkaMasa.value != ""){
+		
+		var tarikhHantar  = document.${formName}.txtTarikhHantar.value;
+		var days  = parseInt(document.${formName}.txtJangkaMasa.value);
+		
+		var dt1   = parseInt(tarikhHantar.substring(0,2),10) + days;
+		var mon1  = parseInt(tarikhHantar.substring(3,5),10)-1;
+		var yr1   = parseInt(tarikhHantar.substring(6,10),10);
+	 
+		var myDate = new Date(yr1, mon1, dt1);
+		
+		var day = myDate.getDate();
+		var month = myDate.getMonth()+1;
+		var year = myDate.getFullYear();
+		
+		var tarikhJangkaTerima = "";
+		if(month>=10){
+			if(day>=10){
+				tarikhJangkaTerima = day + "/" + month + "/" + year;	
+			} else {
+				tarikhJangkaTerima = "0"+ day + "/" + month + "/" + year;	
+			}				
+		} else {
+			if(day>=10){
+				tarikhJangkaTerima = day + "/0" + month + "/" + year;	
+			} else {
+				tarikhJangkaTerima = "0"+ day + "/0" + month + "/" + year;	
+			}
+		}
+		document.${formName}.txtTarikhJangkaTerima.value = tarikhJangkaTerima;
+	
+	} else {
+		document.${formName}.txtTarikhJangkaTerima.value = "";
+	}
 }
 function cetakKertasKewangan(idFail) {
 	var url = "../servlet/ekptg.report.php2.PLPKertasKewangan?ID_FAIL="+idFail;

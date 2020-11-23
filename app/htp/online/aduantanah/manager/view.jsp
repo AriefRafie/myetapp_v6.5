@@ -10,7 +10,7 @@
 </style>
 <p>
   <input type="hidden" name="idComplaint" value="$!complaint.id">
-  <input name="selectedTabUpper" type="hidden" id="selectedTabUpper" value="$selectedTabUpper"/>
+  <input type="hidden" name="selectedTabUpper" id="selectedTabUpper" value="$selectedTabUpper"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
@@ -23,9 +23,9 @@
             <table width="100%" border="0" cellspacing="2" cellpadding="2">
                    <tr>
                       <td width="1%">&nbsp;</td>
-                      <td width="28%">No Aduan</td>
+                      <td width="28%">No. Aduan</td>
                       <td width="1%">:</td>
-                      <td width="70%">$!complaint.noAduan </td>
+                      <td width="70%">$!complaint.id </td>
                     </tr>
                     <tr>
                       <td>&nbsp;</td>
@@ -39,21 +39,63 @@
                       <td>:</td>
                       <td>$!complaint.namaPengadu </td>
                     </tr>
-                    <tr>
-                      <td >&nbsp;</td>
-                      <td >Emel</td>
-                      <td>:</td>
-                      <td>$!complaint.emailPengadu</td>
-                    </tr>
-                    <tr>
-                      <td >&nbsp;</td>
-                      <td>No Telefon</td>
-                      <td>:</td>
-                      <td>$!complaint.phonePengadu</td>
-                    </tr>
+			        <tr>
+			          <td>&nbsp;</td>
+			          <td>Jawatan</td>
+			          <td>:</td>
+			          <td>$!complaint.jawatanPengadu</td>
+			        </tr>
+			        <tr>
+			          <td>&nbsp;</td>
+			          <td>Emel</td>
+			          <td>:</td>
+			          <td>$!complaint.emailPengadu </td>
+			        </tr>
+			        <tr>
+			          <td>&nbsp;</td>
+			          <td>No Telefon</td>
+			          <td>:</td>
+			          <td>$!complaint.phonePengadu </td>
+			        </tr>
+			        <tr>
+			          <td>&nbsp;</td>
+			          <td>Seksyen</td>
+			          <td>:</td>
+			          <td>$!complaint.seksyenPengadu</td>
+			        </tr>
+			        <tr>
+			          <td>&nbsp;</td>
+			          <td>Pejabat</td>
+			          <td>:</td>
+			          <td>$!complaint.pejabatPengadu</td>
+			        </tr>
+			        <tr>
+			          <td>&nbsp;</td>
+			          <td>Negeri</td>
+			          <td>:</td>
+			          <td>$!complaint.negeriPengadu</td>
+			        </tr>
+			        <tr>
+			          <td>&nbsp;</td>
+			          <td>Daerah</td>
+			          <td>:</td>
+			          <td>$!complaint.daerahPengadu</td>
+			        </tr>
+			        <tr>
+			          <td>&nbsp;</td>
+			          <td>No. Fail</td>
+			          <td>:</td>
+			          <td>$!complaint.noFail</td>
+			        </tr>
+			        <tr>
+			          <td>&nbsp;</td>
+			          <td>Jenis Aduan</td>
+			          <td>:</td>
+			          <td>$!complaint.type.code -  $!complaint.type.description </td>
+			        </tr>
                     <tr>
                       <td>&nbsp;</td>
-                      <td>Kandungan</td>
+                      <td>Keterangan Aduan</td>
                       <td>:</td>
                       <td>$!complaint.catatan </td>
                     </tr>
@@ -64,7 +106,7 @@
                       <td colspan="4"><table>
                           #foreach($lampiran in $complaint.lampiran)
                           <tr>
-                            <td><a href="javascript:papar_Lampiran('$lampiran.id')" class="style1">$lampiran.fileName</a> </td>
+                            <td><a href="javascript:papar_Lampiran('$lampiran.id')" class="style2">$lampiran.fileName</a> </td>
                           </tr>
                           #end
                         </table></td>
@@ -76,6 +118,7 @@
 
 
                     </tr>
+                    #foreach ( $tanahs in $tanah )
                     <tr>
 		    <td colspan="4" align="left">
 				<fieldset>
@@ -85,54 +128,55 @@
 							  <td width="1%">&nbsp;</td>
 							  <td width="28%">Negeri</td>
 							  <td width="1%">:</td>
-							  <td width="70%">$!complaint.namaNegeriTanah</td>
+							  <td width="70%">$!tanahs.nama_negeritanah</td>
 							</tr>
 							<tr>
 							  <td>&nbsp;</td>
 							  <td>Daerah</td>
 							  <td>:</td>
-							  <td>$!complaint.namaDaerahTanah</td>
+							  <td>$!tanahs.nama_daerahtanah</td>
 							</tr>
 							<tr>
 							  <td>&nbsp;</td>
 							  <td>Mukim</td>
 							  <td>:</td>
-							  <td>$!complaint.namaMukimTanah</td>
+							  <td>$!tanahs.nama_mukimtanah</td>
+							</tr>
+							<tr>
+							  <td>&nbsp;</td>
+							  <td>Seksyen</td>
+							  <td>:</td>
+							  <td>$!tanahs.nama_seksyentanah</td>
+							</tr>
+							<tr>
+							  <td>&nbsp;</td>
+							  <td>Janis Hakmilik</td>
+							  <td>:</td>
+							  <td>$!tanahs.nama_hakmilik</td>
 							</tr>
 							<tr>
 							  <td>&nbsp;</td>
 							  <td>No. Hakmilik</td>
 							  <td>:</td>
-							  <td>$!complaint.noHakmilik</td>
+							  <td>$!tanahs.NO_HAKMILIK</td>
 							</tr>
 							<tr>
 							  <td>&nbsp;</td>
-							  <td>No. Warta</td>
+							  <td>Jenis PT/ LOT</td>
 							  <td>:</td>
-							  <td>$!complaint.noWarta</td>
+							  <td>$!tanahs.nama_lot</td>
 							</tr>
 							<tr>
 							  <td>&nbsp;</td>
-							  <td>Tarikh Warta</td>
+							  <td>No. PT/ LOT</td>
 							  <td>:</td>
-							  <td>$!complaint.tarikhWarta</td>
-							</tr>
-							<tr>
-							  <td>&nbsp;</td>
-							  <td>No. Lot</td>
-							  <td>:</td>
-							  <td>$!complaint.noLot</td>
-							</tr>
-							<tr>
-							  <td>&nbsp;</td>
-							  <td>Luas Lot</td>
-							  <td>:</td>
-							  <td>$!complaint.luas</td>
+							  <td>$!tanahs.NO_LOT</td>
 							</tr>
 					</table>
 				</fieldset>
 			</td>
 		</tr>
+		#end
 
                 </table>
 
@@ -153,7 +197,7 @@
 					                    <tr class="table_header">
 					                      <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
 					                      <td width="15%" align="center"><strong>Tarikh</strong></td>
-					                      <td width="15%" align="center"><strong>No Agihan</strong></td>
+					                      <td width="15%" align="center"><strong>No. Agihan</strong></td>
 					                      <td width="10%"><strong>Status</strong></td>
 					                       <td width="30%"><strong>Seksyen/Bahagian Bertanggungjawab</strong></td>
 					                      <td width="40%"><strong>Arahan</strong></td>
@@ -169,11 +213,11 @@
 					                    #end
 					                    <tr>
 					                      <td class="$row" align="center">$!count</td>
-					                       <td class="$row" align="center">$!vectorResponse.tarikhMasuk</td>
-					                      <td class="$row" align="center"><a href="javascript:detailAgihan('$vectorResponse.id')" class="style1 style2">$vectorResponse.id</a></td>
-					                      <td class="$row">$!vectorResponse.responseStatus.desc</td>
-					                      <td class="$row">$!vectorResponse.tindakan.name</td>
-					                      <td class="$row">$!vectorResponse.arahan</td>
+					                       <td class="$row" align="center">$!vectorResponse.TARIKH_MASUK</td>
+					                      <td class="$row" align="center">$vectorResponse.ID<!-- <a href="javascript:detailAgihan('$vectorResponse.ID')" class="style1 style2">$vectorResponse.ID</a> --></td>
+					                      <td class="$row">$!vectorResponse.STATUS</td>
+					                      <td class="$row">$!vectorResponse.NAMA_PEGAWAI</td>
+					                      <td class="$row">$!vectorResponse.ARAHAN</td>
 					                    </tr>
 					                    #end
 					                    #if($count == 0)
@@ -242,10 +286,11 @@
 									#end
 									<TR>
 										<TD valign="top" align="center" colspan="5">
-											<input type="button" value="KEMBALI" onclick="mainPage()">
-											<input type="button" value="HANTAR JAWAPAN & TUTUP ADUAN" #if($complaint.statusPenyelesaian =="SELESAI") onclick="notAllowed()" #else onclick="tutupAduan()" #end>
-											<input type="button" value="ADUAN PALSU & TUTUP ADUAN" #if($complaint.statusPenyelesaian =="SELESAI") onclick="notAllowed()" #else onclick="aduanPalsu()" #end>
-											<input type="button" value="HANTAR E-MEL" onclick="parent.location='mailto:$!complaint.emailPengadu?subject=ADUAN ONLINE NO $complaint.id'"/>
+											<input type="button" value="Kembali" onclick="mainPage()">
+											<input type="button" value="Hantar Jawapan & Tutup Aduan" #if($complaint.statusPenyelesaian =="SELESAI") onclick="notAllowed()" #else onclick="tutupAduan()" #end>
+											<input type="button" value="Aduan Palsu & Tutup Aduan" #if($complaint.statusPenyelesaian =="SELESAI") onclick="notAllowed()" #else onclick="aduanPalsu()" #end>
+											<input type="button" value="Hantar Emel (Aduan Telah Dibaca)" onclick="aduanDibaca()"/>
+											<!-- <input type="button" value="HANTAR E-MEL" onclick="parent.location='mailto:$!complaint.emailPengadu?subject=ADUAN ONLINE NO $complaint.id'"/> -->
 										</TD>
 									</TR>
 								</TABLE>
@@ -263,7 +308,7 @@
 
 <iframe id="upload_dokumen" name="upload_dokumen" width="0px" height="0px" style="visibility:hidden"></iframe>
 <script type="text/javascript">
-alert('$!upload_file');
+//alert('$!upload_file');
 if('$!upload_file' == "yes"){
 	window.location.hash='top_upload';
 }

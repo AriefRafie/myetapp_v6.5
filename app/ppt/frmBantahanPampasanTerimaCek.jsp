@@ -32,6 +32,11 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
     #set ($jumlah_award_bantahan=$senarai.jumlah_award_bantahan)
 #end
 
+#foreach ($senarai in $getMaklumatTkhH)
+#set ($tarikhBorangH=$senarai.tarikh_borangh)
+#end
+
+
 #if ($flag=="semak")
 	#foreach ($senarai in $getMaklumatTerimaCek)
     	#set ($txdTkhTerima = $senarai.tarikh_terima)
@@ -39,6 +44,11 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
         #set ($txdTkhCek = $senarai.tarikh_cek)
         #set ($txtAmaunCek = $senarai.amaun_bayaran)
         #set ($txdTkhAkhirCek = $senarai.tarikh_akhir_cek)
+        #set ($txtAmaunLewatBantahan = $senarai.amaun_bantah)
+        #set ($txdTkhCajLewatBantahan = $senarai.tarikh_cajlewat)
+        #set ($txdTkhBayarBantah = $senarai.tarikh_bantah)
+        #set ($txtBilLewatBantahan = $senarai.hari_lewat)
+        #set ($txtPeratusCaj = $senarai.peratus_bantah)
         #set ($id_bayaran = $senarai.id_bayaran)
         <input type="hidden" name="id_bayaran" id="id_bayaran" value="$id_bayaran" />
     #end
@@ -136,9 +146,9 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
            	  	<td width="41%">
                 
                 #if ($mode=="disabled")
-                <input type="text" name="txdTkhCajLewatBantahan" id="txdTkhCajLewatBantahan" value="$!txdTkhCajLewatBantahan" size="10" class="disabled" readonly  />          
+                <input type="text" name="txdTkhCajLewatBantahan" id="txdTkhCajLewatBantahan" value="$!txdTkhCajLewatBantahan" size="10" class="disabled" readonly />          
             	#else
-                <input type="text" name="txdTkhCajLewatBantahan" id="txdTkhCajLewatBantahan" value="$!txdTkhCajLewatBantahan" size="10" onblur="check_date(this);" onkeyup="validateNumber(this,this.value);" tabindex="1" />
+                <input type="text" name="txdTkhCajLewatBantahan" id="txdTkhCajLewatBantahan" value="$!txdTkhCajLewatBantahan" size="10"  tabindex="1" />
             <img src="../img/calendar.gif" alt="" onclick="displayDatePicker('txdTkhCajLewatBantahan',false,'dmy');" />&nbsp;<i><font color='blue' style='font-size:10px'>dd/mm/yyyy</font></i>
                 #end            
               </td>
@@ -155,20 +165,49 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
                            
               </td>          
           	</tr>
+          	<tr>
+            	<td width="18%">&nbsp;(mengikut perintah mahkamah)</td>
+            	</tr>
         	<tr>
+            	  <td>&nbsp;Peratus Caj Lewat</td>
+                <td width="1%">:</td>
+           	  	<td>
+                
+              	#if ($mode=="disabled")
+              	<input type="text" name="txtPeratusCaj" id="txtPeratusCaj" value="$!txtPeratusCaj" size="3" class="disabled" readonly />
+              	#else
+              	<input type="text" name="txtPeratusCaj" id="txtPeratusCaj" value="$!txtPeratusCaj" size="3" />              
+         	  	<input type="hidden" name="txtPeratusCaj" id="txtPeratusCaj" value="$!txtPeratusCaj" />  
+         	  	#end 
+                %          
+       		  </td>
+            	
             	
                 <td>&nbsp;Caj Bayaran Lewat&nbsp;(RM)</td>
                 <td width="1%">:</td>
            	  	<td>
                 
               	#if ($mode=="disabled")
-              	<input type="text" name="txtAmaunLewatBantahan" id="txtAmaunLewatBantahan" value="$!Util.formatDecimal($!jumlah_award_bantahan)" maxlength="12" class="disabled" readonly />
-              	#else
-              	<input type="text" name="txtAmaunLewatBantahan" id="txtAmaunLewatBantahan" value="$!Util.formatDecimal($!jumlah_award_bantahan)" maxlength="12" class="disabled" readonly tabindex="5" />              
-         	  	<input type="hidden" name="txtAmaunLewatBantahan" id="txtAmaunLewatBantahan" value="$!jumlah_award_bantahan" />  
-         	  	#end 
+  				<input type="text" name="txtAmaunLewatBantahan" id="txtAmaunLewatBantahan" value="$!txtAmaunLewatBantahan" size="10" class="disabled" readonly />
+                #else
+                    <input type="text" name="txtAmaunLewatBantahan" id="txtAmaunLewatBantahan" value="$!txtAmaunLewatBantahan" size="10" class="disabled" readonly tabindex="2" />
+                #end 
                            
        		  </td>
+            </tr>
+            <tr>
+             <td width="18%">&nbsp;Tarikh Bayaran Pampasan</td>
+           	  	<td width="1%">:</td>
+           	  	<td width="41%">
+                
+                #if ($mode=="disabled")
+                <input type="text" name="txdTkhBayarBantah" id="txdTkhBayarBantah" value="$!txdTkhBayarBantah" size="10" class="disabled" readonly />          
+            	#else
+                <input type="text" name="txdTkhBayarBantah" id="txdTkhBayarBantah" value="$!txdTkhBayarBantah" size="10" onblur="dateBantah(this);" tabindex="1" />
+            	<img src="../img/calendar.gif" alt="" onclick="displayDatePicker('txdTkhBayarBantah',false,'dmy');" />&nbsp;<i><font color='blue' style='font-size:10px'>dd/mm/yyyy</font></i>
+                #end            
+              	</td>
+              
             </tr>
            
         </table>   
@@ -320,6 +359,11 @@ parent.document.getElementById("checking_progress").innerHTML="<div class=\"stat
 <input type="hidden" name="id_hakmilikpb" id="id_hakmilikpb" value="$id_hakmilikpb" />
 <input type="hidden" name="status_bantahan" id="status_bantahan" value="$status_bantahan" />
 <input type="hidden" name="id_bantahan" id="id_bantahan" value="$id_bantahan" />
+<input type="hidden" name="tarikhBorangH" id="tarikhBorangH" value="$tarikhBorangH" />
+<input type="hidden" name="Date5" id="Date5" value="$Date5" />
+<input type="hidden" name="Date8" id="Date8" value="$Date8" />
+<input type="hidden" name="Date3bln" id="Date3bln" value="$Date3bln" />
+<input type="hidden" name="jumlah_award_bantahan" id="jumlah_award_bantahan" value="$jumlah_award_bantahan" />
 
 <script type="text/javascript">
 
@@ -501,49 +545,450 @@ function RemoveNonNumeric( strString )
       return strReturn;
 }
 
-function checkDate() {
+function dateBantah(){
+	//alert("masuk");
+	
+	var Mula  = document.getElementById("txdTkhCajLewatBantahan").value;
+	var dt1   = parseInt(Mula.substring(0,2),10);
+	var mon1  = parseInt(Mula.substring(3,5),10)-1;
+	var yr1   = parseInt(Mula.substring(6,10),10);
+	var date1 = new Date(yr1, mon1, dt1);
+	//alert("date 1 :"+date1);
+	
+	var Akhir  = document.getElementById("txdTkhBayarBantah").value;
+	var dt2   = parseInt(Akhir.substring(0,2),10);
+	var mon2  = parseInt(Akhir.substring(3,5),10)-1;
+	var yr2   = parseInt(Akhir.substring(6,10),10);
+	var date2 = new Date(yr2, mon2, dt2);
+	//alert("date 2 :"+date2);
+	
+	// get total seconds between two dates
+	var res = Math.abs(date2 - date1) / 1000;
+	var days = Math.floor(res / 86400)  ;
+	//alert(days);
+
+	document.${formName}.txtBilLewatBantahan.value = days;
+	var award_bantah = document.getElementById("jumlah_award_bantahan").value;
+	var percent = document.getElementById("txtPeratusCaj").value;
+	var percentcaj = percent/100;
+	var yrLeap1 = yr1%4;
+	var yrLeap2 = yr2%4;
+	//alert("percentcaj :"+percentcaj);
+	
+	var diffyear = yr2 - yr1 ;
+	//alert("diffyear :"+diffyear);
+	
+	if(diffyear == "0"){
+		//alert("tahun sama");
+			if(yrLeap1=="0"){
+				var dayYr = 366;
+				var result = (award_bantah * percentcaj * days) / dayYr;
+			}
+			else{
+				var dayYr = 365;
+				var result = (award_bantah * percentcaj * days) / dayYr;
+			}
+			//alert("dayYr :"+dayYr);
+			//alert("ressult :"+result);
+			var resultyr1 =  result.toFixed(2) ;
+			//alert("resultyr1 :"+resultyr1);
+		}
+	else if(diffyear == "1"){
+		//alert("beza setahun");
+		
+		var dta   = 31;
+		var mona  = 12-1;
+		var yra   = yr1;
+		var datea = new Date(yra, mona, dta);
+		
+		var dtb   = 01;
+		var monb  = 01-1;
+		var yrb   = yr2;
+		var dateb = new Date(yrb, monb, dtb);
+		
+
+		var diffDateA = Math.abs(datea - date1) / 1000;
+		var daysDateA = Math.floor(diffDateA / 86400)  ;
+		//alert("days date A :"+daysDateA);
+		
+		var diffDateB = Math.abs(dateb - date2) / 1000;
+		var daysDateB = Math.floor(diffDateB / 86400)  ;
+		//alert("days date B  :"+daysDateB);
+		
+		
+		
+		if(yrLeap1=="0"){
+			var dayYr = 366;	
+			var resultYr1 = (award_bantah * percentcaj * daysDateA) / dayYr;
+		}
+		else{
+			var dayYr = 365;
+			var resultYr1 = (award_bantah * percentcaj * daysDateA) / dayYr;
+		}
+		
+		if(yrLeap2=="0"){
+			var dayYr2 = 366;	
+			var resultYr2 = (award_bantah * percentcaj * daysDateB) / dayYr2;
+		}
+		else{
+			var dayYr2 = 365;	
+			var resultYr2 = (award_bantah * percentcaj * daysDateB) / dayYr2;
+		}
+		
+		//alert("result 1 year : " +resultYr1);
+		//alert("result 2 year : " +resultYr2);
+		//var resultyr = result.toFixed(2) ;
+		//var resultyr1 =  result1.toFixed(2) ;
+		//alert(resultyr1);
+		var finalyr = Math.abs(resultYr1 + resultYr2) ;
+		var resultyr1 =  finalyr.toFixed(2) ;
+		//alert("final : "+resultyr1);
+	}
+	
+	else if(diffyear == "2"){
+		//alert("beza 2tahun");
+		
+		var dta   = 31;
+		var mona  = 12-1;
+		var yra   = yr1;
+		var datea = new Date(yra, mona, dta);
+		
+		var dtb   = 01;
+		var monb  = 01-1;
+		var yrb   = yr2;
+		var dateb = new Date(yrb, monb, dtb);
+		
+		var dtc	  = 01;
+		var monc  = 03-1;
+		var yrc	  = yr2;
+		var datec = new Date(yrc, monc, dtc);
+		
+		diffYear2 = yr2 - 1;
+		var leapyrDiff2 = diffYear2%4;
+		
+		if(leapyrDiff2 =="0"){
+			var dayYrDiff = 366;
+		}
+		else{
+			var dayYrDiff = 365;
+		}
+
+		var diffDateA = Math.abs(datea - date1) / 1000;
+		var daysDateA = Math.floor(diffDateA / 86400)  ;
+		//alert("days date A :"+daysDateA);
+		
+		var diffDateB = Math.abs(dateb - date2) / 1000;
+		var daysDateB = Math.floor(diffDateB / 86400)  ;
+		//alert("days date B  :"+daysDateB);
+
+		if(yrLeap1=="0"){
+			var dayYr = 366;	
+			var resultYr1 = (award_bantah * percentcaj * daysDateA) / dayYr;
+		}
+		else{
+			var dayYr = 365;
+			var resultYr1 = (award_bantah * percentcaj * daysDateA) / dayYr;
+		}
+		
+		if(yrLeap2=="0"){
+			//alert("masuk sini la ye")
+			var dayYr2 = 366;	
+			//alert("mon2"+mon2);
+			//alert("monc"+monc);
+			if(mon2 > monc){
+				//alert("masuk mac");
+				var daysNew =  daysDateB + 1;
+				//alert("daysNew :"+daysNew);
+				var resultYr2 = (award_bantah * percentcaj * daysNew) / dayYr2;
+				//alert("resultYr2" +resultYr2);
+			}else{
+				//alert("masuk else");
+				var resultYr2 = (award_bantah * percentcaj * daysDateB) / dayYr2;
+			}
+		}
+		else{
+			var dayYr2 = 365;	
+			var resultYr2 = (award_bantah * percentcaj * daysDateB) / dayYr2;
+		}
+		
+		var resultYr3 = (award_bantah * percentcaj * dayYrDiff) / dayYrDiff;
+		
+		//alert("result 2018 year : " +resultYr1);
+		//alert("result 2020 year : " +resultYr2);
+		//alert("result 2019 year : " +resultYr3);
+		//var resultyr = result.toFixed(2) ;
+		//var resultyr1 =  result1.toFixed(2) ;
+		//alert(resultyr1);
+		var finalyr = Math.abs(resultYr1 + resultYr2 + resultYr3) ;
+		var resultyr1 =  finalyr.toFixed(2) ;
+		//alert("final 2 : "+resultyr1);
+		}
+	else if(diffyear =="3")
+		{
+		//alert("masuk sini 3");
+		var dta   = 31;
+		var mona  = 12-1;
+		var yra   = yr1;
+		var datea = new Date(yra, mona, dta);
+		
+		var dtb   = 01;
+		var monb  = 01-1;
+		var yrb   = yr2;
+		var dateb = new Date(yrb, monb, dtb);
+		
+		var dtc	  = 01;
+		var monc  = 03-1;
+		var yrc	  = yr2;
+		var datec = new Date(yrc, monc, dtc);
+		
+		diffYear2 = yr2 - 1;
+		var leapyrDiff2 = diffYear2%4;
+		
+		diffYear3 = yr2 - 2;
+		var leapyrDiff3 = diffYear3%4;
+		
+		if(leapyrDiff2 =="0"){
+			var dayYrDiff = 366;
+		}
+		else{
+			var dayYrDiff = 365;
+		}
+		if(leapyrDiff3 =="0"){
+			var dayYrDiff3 = 366;
+		}
+		else{
+			var dayYrDiff3 = 365;
+		}
+
+		var diffDateA = Math.abs(datea - date1) / 1000;
+		var daysDateA = Math.floor(diffDateA / 86400)  ;
+		//alert("days date A :"+daysDateA);
+		
+		var diffDateB = Math.abs(dateb - date2) / 1000;
+		var daysDateB = Math.floor(diffDateB / 86400)  ;
+		//alert("days date B  :"+daysDateB);
+
+		if(yrLeap1=="0"){
+			var dayYr = 366;	
+			var resultYr1 = (award_bantah * percentcaj * daysDateA) / dayYr;
+		}
+		else{
+			var dayYr = 365;
+			var resultYr1 = (award_bantah * percentcaj * daysDateA) / dayYr;
+		}
+		
+		if(yrLeap2=="0"){
+			//alert("masuk sini la ye")
+			var dayYr2 = 366;	
+			//alert("mon2"+mon2);
+			//alert("monc"+monc);
+			if(mon2 > monc){
+				//alert("masuk mac");
+				var daysNew =  daysDateB + 1;
+				//alert("daysNew :"+daysNew);
+				var resultYr2 = (award_bantah * percentcaj * daysNew) / dayYr2;
+				//alert("resultYr2" +resultYr2);
+			}else{
+				//alert("masuk else");
+				var resultYr2 = (award_bantah * percentcaj * daysDateB) / dayYr2;
+			}
+		}
+		else{
+			var dayYr2 = 365;	
+			var resultYr2 = (award_bantah * percentcaj * daysDateB) / dayYr2;
+		}
+		
+		var resultYr3 = (award_bantah * percentcaj * dayYrDiff) / dayYrDiff;
+		var resultYr4 = (award_bantah * percentcaj * dayYrDiff3) / dayYrDiff3;
+		//alert("result 2018 year : " +resultYr1);
+		//alert("result 2020 year : " +resultYr2);
+		//alert("result 2019 year : " +resultYr3);
+		//var resultyr = result.toFixed(2) ;
+		//var resultyr1 =  result1.toFixed(2) ;
+		//alert(resultyr1);
+		var finalyr = Math.abs(resultYr1 + resultYr2 + resultYr3 + resultYr4) ;
+		var resultyr1 =  finalyr.toFixed(2) ;
+		//alert("final 2 : "+resultyr1);
+		}
+	
+	
+	//alert(resultyr1);
+		document.${formName}.txtAmaunLewatBantahan.value = resultyr1;
+		
+}
+/*
+function check_date() {
 	
 	var Mula  = document.getElementById("txdTkhCajLewatBantahan").value;
 	var dt1   = parseInt(Mula.substring(0,2),10);
 	var mon1  = parseInt(Mula.substring(3,5),10)-1;
 	var yr1   = parseInt(Mula.substring(6,10),10);
 	var dateLewat = new Date(yr1, mon1, dt1);
-	//alert(dateLewat);
+	//alert("dateLewat "+dateLewat);
+	//alert("year "+yr1);
+	var leapyr1 = yr1%4;
+	//alert(varleapyr1);
 	
-	var TarikhH  = document.getElementById("txdTarikhBorangH").value;
+	var TarikhH  = document.getElementById("tarikhBorangH").value;
 	var dtH   = parseInt(TarikhH.substring(0,2),10);
 	var monH  = parseInt(TarikhH.substring(3,5),10)-1;
 	var yrH   = parseInt(TarikhH.substring(6,10),10);
 	var dateH = new Date(yrH, monH, dtH);
-	//alert(dateH);
+	var leapyrH = yrH%4;
+	//alert("date borang h"+dateH);
+
+	
+	var Date3bln = new Date(dateH);
+	//alert(Date3bln);
+	Date3bln.setDate(Date3bln.getDate() + 90);
+	document.${formName}.Date3bln.value = Date3bln;
+	var Date3blnyear = Date3bln.getFullYear();
+	var leapyr3bln = Date3blnyear%4;
+	//alert(leapyr3bln);
+	//document.getElementById("demo").innerHTML = d;
+	
+	//var Tarikh3bln  = document.getElementById("Date3bln").value;
+	//var dt3bln   = parseInt(Tarikh3bln.substring(0,2),10);
+	//var mon3bln  = parseInt(Tarikh3bln.substring(3,5),10)-1;
+	//var yr3bln   = parseInt(Tarikh3bln.substring(6,10),10);
+	//var date3bln = new Date(yr3bln, mon3bln, dt3bln);
+	//alert("date date3bln"+date3bln);
 	
 	var Tarikh5  = document.getElementById("Date5").value;
 	var dt5   = parseInt(Tarikh5.substring(0,2),10);
 	var mon5  = parseInt(Tarikh5.substring(3,5),10)-1;
 	var yr5   = parseInt(Tarikh5.substring(6,10),10);
 	var date5 = new Date(yr5, mon5, dt5);
-	//alert(date5);
+	//alert("date 5"+date5);
 	
 	var Tarikh8  = document.getElementById("Date8").value;
 	var dt8   = parseInt(Tarikh8.substring(0,2),10);
 	var mon8  = parseInt(Tarikh8.substring(3,5),10)-1;
 	var yr8   = parseInt(Tarikh8.substring(6,10),10);
 	var date8 = new Date(yr8, mon8, dt8);
-	
+	//alert(""+date8);
+
 	// get total seconds between two dates
 	var res = Math.abs(dateLewat - dateH) / 1000;
-	var days = Math.floor(res / 86400);
+	var days = Math.floor(res / 86400)  ;
 	//alert(days);
+
+	if(yr1 == yrH)
+	{
+		var dta   = 31;
+		var mona  = 12-1;
+		var yra   = yrH;
+		var datea = new Date(yra, mona, dta);
+		//alert("date a"+datea);
+		//alert("date after 3 bln "+Date3bln);
+		var resa = Math.abs(datea - dateH) / 1000;
+		var daysa = Math.floor(resa / 86400) 
+		//alert("gap day in 2008 "+daysa);
+		var leap3blnyr = yra%4;
 	
-	var res2 = Math.abs(date8-date5) / 1000;
-	var days2 = Math.floor(res2 / 86400);
-	//alert(days2);
+		
+		if(leapyrH == "0"){
+			var dayYr = 366;
+		}
+		else{
+			var dayYr = 365;
+		}
+		
+		var award = document.getElementById("jumlah_award_pu").value;
+		
+		if(dateLewat>date5){
+			
+			var result = (award * 0.05 * daysa) / dayYr;
+		}
+		if(dateLewat<date8){
+			var result = (award * 0.08 * daysa) / dayYr;
+		}
+			//alert(result);
+			var finalrs = result.toFixed(2);
+			//alert("final sini" +finalrs);
+	}
+
+	if(yr1 != yrH){
+		//alert("masuk x sama");
+		var newyr1 = yr1;
+		var newyrH = yrH;
+		var diffyear = newyr1 - newyrH;
+		alert(diffyear);
+		if(diffyear == "1")
+			{
+			//alert("masuk here");
+			//var a = 31/12/Date3blnyear;
+			
+			var dta   = 31;
+			var mona  = 12-1;
+			var yra   = newyrH;
+			var datea = new Date(yra, mona, dta);
+			
+			var dtb   = 01;
+			var monb  = 01-1;
+			var yrb   = yr1;
+			var dateb = new Date(yrb, monb, dtb);
+			
+			alert("date a"+datea);
+			alert("date b"+dateb);
+			//alert("date after 3 bln "+Date3bln);
+			
+			var resa = Math.abs(datea - dateH) / 1000;
+			var daysa = Math.floor(resa / 86400) 
+			alert("gap day in 1 "+daysa);
+			
+			alert("date b val :"+dateb);
+			alert("dateLewat val :"+dateLewat);
+			
+			var resb = Math.abs(dateb + dateLewat) / 1000;
+			var daysb = Math.floor(resb / 86400) 
+			alert("gap day in 2 "+daysb);
+			
+			var leap3blnyr = yra%4;
+			var leapyr1 = yrb%4;
+			
+			if(leapyr1 == "0"){
+				var dayYr = 366;
+			}
+			else{
+				var dayYr = 365;
+			}
+			
+			if(leapyr1 == "0"){
+				var dayYr1 = 366;
+			}
+			else{
+				var dayYr1 = 365;
+			}
+			//alert(dayYr1);
+			var award = document.getElementById("jumlah_award_pu").value;
+			
+			if(dateLewat>date5){
+				
+				var result = (award * 0.05 * daysa) / dayYr;
+				var result1 = (award * 0.05 * daysb) / dayYr1;
+			}
+			if(dateLewat<date8){
+				var result = (award * 0.08 * daysa) / dayYr;
+				var result1 = (award * 0.08 * daysb) / dayYr1;
+				
+			}
+				alert("result : " +result);
+				alert("result1 : " +result1);
+				//var resultyr = result.toFixed(2) ;
+				//var resultyr1 =  result1.toFixed(2) ;
+				//alert(resultyr1);
+				var finalyr = Math.abs(result + result1) ;
+				var finalrs =  finalyr.toFixed(2) ;
+				alert("final : "+finalrs);
+			}
 	
-	var res3 = Math.abs(dateLewat-date8) / 1000;
-	var days3 = Math.floor(res3 / 86400);
-	//alert(days3);
+			
+	}
+			
 	
-	var award = document.getElementById("jumlahAward").value;
+	//var award = document.getElementById("jumlah_award_pu").value;
+	//alert(award);
 	
 	if(dateLewat>date5){
 		//alert(5);
@@ -557,13 +1002,15 @@ function checkDate() {
 		//alert(c);
 		
 	}
+//alert(c);
 	
-	
-	document.${formName}.txtCekLewat.value = c;
+	//document.${formName}.txtAmaunLewatBantahan.value = c;
+	document.${formName}.txtBilLewatBantahan.value = days;
+	document.${formName}.txtAmaunLewatBantahan.value = finalrs;
 	
 }
 
-
+*/
 
 <!--
 var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:$selectedtab});

@@ -17,7 +17,8 @@ public class BantahanPampasanOperations {
 	
 	public void add_terimaCek(String usid, String no_pb, String id_hakmilik, String id_pihakberkepentingan, String txdTkhTerima, String txtPenamaCek, String txtNoCek,
 			String txdTkhCek, String txtAmaunCek, String txdTkhAkhirCek, String id_hakmilikpb, 
-			String id_bantahan, String txdTkhAmbilCek, String txtMasaAmbilCek) throws Exception {
+			String id_bantahan, String txdTkhAmbilCek, String txtMasaAmbilCek, String txdTkhCajLewatBantahan,
+			String txdTkhBayarBantah, String txtPeratusCaj, String txtAmaunLewatBantahan, String txtBilLewatBantahan) throws Exception {
 		
 	    Db db = null;
 	    String sql = "";	    
@@ -28,6 +29,8 @@ public class BantahanPampasanOperations {
 	    	String TC = "to_date('" + txdTkhCek + "','dd/MM/yyyy')";
 	    	String TAC = "to_date('" + txdTkhAkhirCek + "','dd/MM/yyyy')";
 	    	String TAMC = "to_date('" + txdTkhAmbilCek + "','dd/MM/yyyy')";
+	    	String TCL = "to_date('" + txdTkhCajLewatBantahan + "','dd/MM/yyyy')";
+	    	String TB = "to_date('" + txdTkhBayarBantah + "','dd/MM/yyyy')";
 	    		    	
 		    db = new Db();
 		    Statement stmt = db.getStatement();
@@ -50,7 +53,14 @@ public class BantahanPampasanOperations {
 		    r.add("id_masuk",usid);
 			r.add("tarikh_masuk",r.unquote("sysdate"));		
 		    r.add("id_kemaskini",usid);
-			r.add("tarikh_kemaskini",r.unquote("sysdate"));				
+			r.add("tarikh_kemaskini",r.unquote("sysdate"));	
+			//yati
+			r.add("tarikh_cajlewat",r.unquote(TCL));
+			r.add("tarikh_bantah",r.unquote(TB));
+			r.add("peratus_bantah",txtPeratusCaj);
+			r.add("hari_lewat",txtBilLewatBantahan);
+			r.add("amaun_bantah",txtAmaunLewatBantahan);
+			
 		    sql = r.getSQLInsert("Tblpptbayaran");	
 		    myLogger.info("add_terimaCek = "+sql);
 		    stmt.executeUpdate(sql);	
@@ -169,7 +179,9 @@ public class BantahanPampasanOperations {
 //	}
 
 	public void update_terimaCek(String usid, String id_bayaran, String txdTkhTerima, String txtNoCek, 
-			String txdTkhCek, String txdTkhAkhirCek, String txdTkhAmbilCek, String txtMasaAmbilCek) throws Exception {
+			String txdTkhCek, String txdTkhAkhirCek, String txdTkhAmbilCek, String txtMasaAmbilCek,
+			String txdTkhCajLewatBantahan,String txdTkhBayarBantah, String txtPeratusCaj, String txtAmaunLewatBantahan, 
+			String txtBilLewatBantahan) throws Exception {
 		
 	    Db db = null;
 	    String sql = "";	    
@@ -179,6 +191,8 @@ public class BantahanPampasanOperations {
 	    	String TC = "to_date('" + txdTkhCek + "','dd/MM/yyyy')";
 	    	String TAC = "to_date('" + txdTkhAkhirCek + "','dd/MM/yyyy')";
 	    	String TAMC = "to_date('" + txdTkhAmbilCek + "','dd/MM/yyyy')";
+	    	String TCL = "to_date('" + txdTkhCajLewatBantahan + "','dd/MM/yyyy')";
+	    	String TB = "to_date('" + txdTkhBayarBantah + "','dd/MM/yyyy')";
 	    	
 		    db = new Db();
 		    Statement stmt = db.getStatement();
@@ -192,6 +206,13 @@ public class BantahanPampasanOperations {
 		    r.add("masa_ambil_cek",txtMasaAmbilCek);
 		    r.add("id_kemaskini",usid);
 			r.add("tarikh_kemaskini",r.unquote("sysdate"));
+			//yati
+			r.add("tarikh_cajlewat",r.unquote(TCL));
+			r.add("tarikh_bantah",r.unquote(TB));
+			r.add("peratus_bantah",txtPeratusCaj);
+			r.add("hari_lewat",txtBilLewatBantahan);
+			r.add("amaun_bantah",txtAmaunLewatBantahan);
+			
 		    sql = r.getSQLUpdate("Tblpptbayaran");	
 		    myLogger.info("EDIT TBLPPTBAYARAN = "+sql);
 		    stmt.executeUpdate(sql);		    
@@ -1153,6 +1174,62 @@ public class BantahanPampasanOperations {
 					      if (db != null) db.close();
 					    }//close finally
 					   
-					  }//close updateSuburusanStatusFailPPT_selesaiBantahanAgensi						
+					  }//close updateSuburusanStatusFailPPT_selesaiBantahanAgensi	
+
+	public String setBayaran(Hashtable<String,String> hash) throws Exception {
+    	String idBayaran = "";
+			
+		Db db = null;
+		String sql = "";	    
+		try{
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			Hashtable<String,String> bayaran = hash;
+			String TS = "to_date('" + bayaran.get("tarikhSerah") + "','dd/MM/yyyy')";	    	
+			String tarikh = "to_date('" + bayaran.get("tarikh") + "','dd/MM/yyyy')";	    	
+			//r.add("TARIKH_HANTAR_DERAF", r.unquote("to_date('" + hash.get("tarikhHantar") + "','dd/MM/yyyy')"));
+
+			if(bayaran.get("idBayaran").equals("")) {
+				idBayaran = String.valueOf(DB.getNextID("TBLPPTBAYARAN_SEQ"));
+
+				r.add("id_bayaran",idBayaran);
+				r.add("id_hakmilik",bayaran.get("idHakmilik"));
+				r.add("tarikh_kemasukan", r.unquote(TS));
+			    r.add("cara_bayar",bayaran.get("jenisBayar"));
+			    //cek -5 6 11 
+			    r.add("tarikh_cek", r.unquote(tarikh));
+			    r.add("no_bayaran",bayaran.get("no"));
+			    r.add("amaun_bayaran",bayaran.get("bayaran"));
+			    r.add("id_masuk",bayaran.get("idUser"));
+				r.add("tarikh_masuk",r.unquote("sysdate"));
+			    sql = r.getSQLInsert("tblpptbayaran");	
+			    myLogger.info("EDIT TBLPPTBAYARAN = "+sql);
+			    stmt.executeUpdate(sql);	
+			    
+			}else {
+				idBayaran = bayaran.get("idBayaran");
+			    r.update("id_bayaran", idBayaran);	
+			    r.add("tarikh_kemasukan",r.unquote(TS));
+			    r.add("cara_bayar",bayaran.get("jenisBayar"));
+			    //cek -5 6 11 
+			    r.add("tarikh_cek",r.unquote(tarikh));
+			    r.add("no_bayaran",bayaran.get("no"));
+			    r.add("amaun_bayaran",bayaran.get("bayaran"));
+			    r.add("id_kemaskini",bayaran.get("idUser"));
+				r.add("tarikh_kemaskini",r.unquote("sysdate"));
+			    sql = r.getSQLUpdate("tblpptbayaran");	
+			    myLogger.info("EDIT TBLPPTBAYARAN = "+sql);
+			    stmt.executeUpdate(sql);	
+			    
+			}
+			    		    
+		}finally {
+			if (db != null) db.close();
+		}									
+		return idBayaran;
+				
+	}				
+					
 				
 }

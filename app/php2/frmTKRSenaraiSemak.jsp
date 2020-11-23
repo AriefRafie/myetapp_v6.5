@@ -10,10 +10,10 @@
         #set( $row = "row1" )
         #elseif (($list.bil % 2) != 0)
         #set( $row = "row1" )
-        #else 
+        #else
         #set( $row = "row2" )
         #end
-        
+
         #if($list.flag == 'Y')
         #set($checked = 'checked')
         #else
@@ -21,7 +21,8 @@
         #end
         <tr>
           <td class="$row" width="5%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" $checked $disabled /></td>
-          <td class="$row" width="95%">$list.keterangan</td>
+          <td class="$row" width="45%">$!list.keterangan</td>
+          <td class="$row" width="50%">$!list.lampirans</td>
         </tr>
         #end
         #else
@@ -35,7 +36,7 @@
   <tr>
     <td colspan="2">&nbsp;</td>
   </tr>
-  <tr>
+  <!-- <tr>
     <td width="30%">&nbsp;</td>
     <td width="70%">
       #if ($mode == 'update')
@@ -48,6 +49,6 @@
       #if ($!{session.getAttribute("FLAG_FROM")} == 'failKeseluruhan')
       <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="gotoSenaraiFailKeseluruhan()"/>
       #end </td>
-  </tr>
+  </tr> -->
 </table>
 </fieldset>

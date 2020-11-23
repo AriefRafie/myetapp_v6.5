@@ -47,14 +47,25 @@
     	<td>
        		<div id="TabbedPanels1" class="TabbedPanels">
 
-           		<ul class="TabbedPanelsTabGroup">
-                	<li class="TabbedPanelsTab" title="Draf">DRAF PERJANJIAN</li>
+              	<ul class="TabbedPanelsTabGroup">
+           			<li class="TabbedPanelsTab" title="Draf" onclick="doChangeTab(0)" tabindex="0">DRAF PERJANJIAN</li>
+                	<li class="TabbedPanelsTab" title="Perjanjian" onclick="doChangeTab(1)" tabindex="1">PERJANJIAN</li>
               	</ul>
 
               	<div class="TabbedPanelsContentGroup">
                 	<div class="TabbedPanelsContent">
                 	<!-- content Draf -->
-	                	#parse ("app/htp/pajakan/deraf/frmPajakanTabDrafMJM.jsp")
+                		#if ($selectedTab == '0')
+	                		#parse ("app/htp/pajakan/deraf/frmPajakanTabDrafMJM.jsp")
+	                	#end
+              		<!-- close content Draf -->
+              		</div>
+
+              		<div class="TabbedPanelsContent">
+                	<!-- content Draf -->
+                		#if ($selectedTab == '1')
+              				#parse ("app/htp/pajakan/deraf/frmPajakanTabDrafPerjanjianSenarai.jsp")
+              			#end
               		<!-- close content Draf -->
               		</div>
          		</div>

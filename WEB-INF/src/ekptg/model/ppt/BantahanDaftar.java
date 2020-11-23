@@ -25,6 +25,7 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 	 public Vector listPageDepanRayuanOnline = null;
 	 private Vector header = null;
 	 public Vector listCarian = null;
+	 public Vector listBantahan = null; //yati tambah
 	 public Vector listCarianPBOnline = null;	
 	 public Vector listCarianAPOnline = null;		 
 	 public Vector getHakmilik = null;
@@ -57,6 +58,10 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 	 public Vector getListCarian(){
 			return listCarian;
 	 }
+	 
+	 public Vector getListBantahan(String userIdNegeri){
+			return listBantahan;
+	 } //yati tambah
 	 
 	 public Vector getListCarianPBOnline(String userIdNegeri){
 			return listCarianPBOnline;
@@ -346,6 +351,69 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 			    }
 		 }	
 		 
+		 //YATI ADD 10112020
+		 @SuppressWarnings("unchecked")
+			public Vector getListPemohonAPOnline(String idkementerian)throws Exception {		 
+				    
+				 Db db = null;
+				 String sql = "";		    
+				    
+				 try{
+					 	listPageDepan = new Vector();
+					 	db = new Db();
+				     	Statement stmt = db.getStatement();		     
+				   
+		      
+				      sql = " SELECT DISTINCT P.ID_STATUS, P.ID_PERMOHONAN, P.NO_PERMOHONAN, F.ID_FAIL,NVL(F.NO_FAIL,'Belum Diluluskan') AS NO_FAIL, P.TARIKH_PERMOHONAN, "+
+				    		  " SU.NAMA_SUBURUSAN,K.NAMA_KEMENTERIAN, S.KETERANGAN, P.NO_RUJUKAN_UPT,P.TARIKH_KEMASKINI, P.NO_RUJUKAN_PTG "+
+				    		  " FROM TBLPPTPERMOHONAN P,TBLPFDFAIL F,TBLRUJSUBURUSAN SU,TBLRUJSTATUS S,TBLRUJKEMENTERIAN K, "+
+				    		  " (SELECT DISTINCT P1.ID_PERMOHONAN FROM TBLPPTBORANGH H, TBLPPTPERMOHONAN P1,TBLPPTHAKMILIK HM,TBLPPTHAKMILIKPB HPB, "+
+				    		  " TBLPPTPIHAKBERKEPENTINGAN PB WHERE PB.ID_PIHAKBERKEPENTINGAN = HPB.ID_PIHAKBERKEPENTINGAN "+
+				    		  " AND HM.ID_HAKMILIK = HPB.ID_HAKMILIK AND HM.ID_PERMOHONAN = P1.ID_PERMOHONAN "+
+				    		  " AND H.ID_HAKMILIKPB = HPB.ID_HAKMILIKPB AND NVL (HM.FLAG_PENARIKAN_KESELURUHAN, ' ') <> 'Y' "+
+				    		  " AND NVL (HM.FLAG_PEMBATALAN_KESELURUHAN, ' ') <> 'Y' ) CHECK_H  "+               
+				    		  " WHERE F.ID_FAIL = P.ID_FAIL AND F.ID_SUBURUSAN = SU.ID_SUBURUSAN "+
+				    		  " AND F.ID_KEMENTERIAN = K.ID_KEMENTERIAN AND SU.ID_SUBURUSAN = '52'  AND CHECK_H.ID_PERMOHONAN = P.ID_PERMOHONAN "+
+				    		  " AND P.ID_STATUS = S.ID_STATUS  ";
+		                  
+			    				sql += "AND f.id_kementerian ='"+idkementerian+"'";
+			    		
+				      sql +=" ORDER BY P.TARIKH_KEMASKINI DESC ";
+				      
+				      myLogger.info("sql list bantahan KEMENTERIAN : "+sql);
+	      
+				      ResultSet rs = stmt.executeQuery(sql);		      		      
+				      Hashtable h = null;
+				      int bil = 1;
+				      while (rs.next()) {
+				    	  h = new Hashtable();
+				    	  h.put("bil", bil);
+				    	  h.put("id_fail", rs.getString("id_fail")==null?"":rs.getString("id_fail"));		
+				    	  h.put("id_status", rs.getString("id_status")==null?"":rs.getString("id_status"));		
+				    	  h.put("id_permohonan", rs.getString("id_permohonan")==null?"":rs.getString("id_permohonan"));		
+				    	  h.put("no_permohonan", rs.getString("no_permohonan")==null?"":rs.getString("no_permohonan"));		
+				    	  h.put("tarikh_permohonan", rs.getString("tarikh_permohonan")==null?"":sdf.format(rs.getDate("tarikh_permohonan")));
+				    	  h.put("nama_suburusan", rs.getString("nama_suburusan")==null?"":rs.getString("nama_suburusan"));		    	  
+				    	  h.put("nama_kementerian", rs.getString("nama_kementerian")==null?"":rs.getString("nama_kementerian"));
+				    	  h.put("keterangan", rs.getString("keterangan")==null?"":rs.getString("keterangan"));
+				    	  h.put("no_rujukan_upt", rs.getString("no_rujukan_upt")==null?"":rs.getString("no_rujukan_upt"));
+				    	  h.put("no_rujukan_ptg", rs.getString("no_rujukan_ptg")==null?"":rs.getString("no_rujukan_ptg"));
+				    	  if(rs.getString("no_fail") == null){
+					    		h.put("no_fail","Belum Diluluskan");
+					    	}else{
+					    		h.put("no_fail",rs.getString("no_fail"));
+					    	}
+				    	  h.put("tarikh_kemaskini", rs.getString("tarikh_kemaskini")==null?"":sdf.format(rs.getDate("tarikh_kemaskini")));		    	  
+				    	  listPageDepan.addElement(h);
+				    	  bil++;		    	  
+				      }
+						return listPageDepan;
+				    }
+				    finally{
+				      if (db != null) db.close();
+				    }
+			 }	
+			 
 		 //shiqa 09092020 papar list rayuan KJP by kementerian
 		 @SuppressWarnings("unchecked")
 			public Vector getListRayuanOnline(String userIdNegeri, String id_Kementerian)throws Exception {		 
@@ -2379,4 +2447,89 @@ public class BantahanDaftar extends EkptgCache implements Serializable  {
 			} 
 			return total;
 	  }
+	  
+	  //yati requirement baru
+	  @SuppressWarnings("unchecked")
+		public Vector setCarianFailBantahan(String usid, String txtNoFail, String socKementerian, String userIdNegeri)throws Exception {
+		    Db db = null;
+		    String sql = "";
+		    String nofail = "";
+		    
+		    try {
+		      listBantahan = new Vector();
+		      db = new Db();
+		      Statement stmt = db.getStatement();
+		      nofail = txtNoFail.trim();      
+		  		     
+		     sql = "SELECT DISTINCT b.id_bantahan, b.no_bantahan, f.no_fail, b.jenis_pembantah, pb.nama_pb, "+
+		     		"p.no_rujukan_ptg,p.no_rujukan_upt,p.no_rujukan_ptd, f.ID_KEMENTERIAN, mt.no_kes " + 
+		     		"FROM tblpptbantahan b, tblppthakmilikpb hpb, tblpptpihakberkepentingan pb," + 
+		     		"tblppthakmilik h, tblpptpermohonan p, tblpfdfail f ," + 
+		     		"ekptghquat.tblintmtpendaftaran mt " + 
+		     		"WHERE b.id_hakmilikpb = hpb.ID_HAKMILIKPB " + 
+		     		"AND hpb.id_hakmilik = h.ID_HAKMILIK " + 
+		     		"AND hpb.ID_PIHAKBERKEPENTINGAN = PB.ID_PIHAKBERKEPENTINGAN " + 
+		     		"AND h.id_permohonan = p.ID_PERMOHONAN " + 
+		     		"AND mt.ID_RUJUKAN = b.ID_BANTAHAN " + 
+		     		"AND p.id_fail = f.ID_FAIL " +
+		     		"AND mt.no_kes is not null ";
+		      
+	    		// ADDED BY ELLY 14 JUNE 2010
+	    		if(!userIdNegeri.equals("16") && !userIdNegeri.isEmpty()){
+	    			sql += "AND f.id_negeri ='"+userIdNegeri+"'";
+	    		}
+		      
+				//NO FAIL
+				if (txtNoFail != "" && txtNoFail != null) {
+					if (!nofail.equals("")) {
+						//sql = sql + " AND UPPER(f.no_fail) LIKE '%" + nofail.toUpperCase() + "%'";
+						sql += " AND (UPPER(f.no_fail) LIKE '%" + nofail.toUpperCase() + "%' " +
+							" OR UPPER(p.no_rujukan_ptg) LIKE '%" + nofail.toUpperCase() + "%' " +
+							" OR UPPER(p.no_rujukan_upt) LIKE '%" + nofail.toUpperCase() + "%' " +
+							" OR UPPER(p.no_rujukan_ptd) LIKE '%" + nofail.toUpperCase() + "%')";
+					}
+				}//close carian by nofail
+				
+				
+				//SOCKEMENTERIAN
+				if (socKementerian != null) {
+					if (!socKementerian.trim().equals("") && !socKementerian.trim().equals("0")) {
+						sql = sql + " AND f.ID_KEMENTERIAN = " + socKementerian + "  ";
+					}
+				}
+	  
+				//sorting
+				//sql +=" ORDER BY P.ID_STATUS ASC ";
+				myLogger.info("SQL CARIAN BANTAHAN :: "+sql);
+				ResultSet rs = stmt.executeQuery(sql);
+	  
+				Hashtable h;
+				int bil = 1;
+				while (rs.next()) {					
+				  h = new Hashtable();		  
+		    	  h.put("bil", bil);
+		    	  //h.put("id_fail", rs.getString("id_fail")==null?"":rs.getString("id_fail"));		
+		    	  //h.put("id_status", rs.getString("id_status")==null?"":rs.getString("id_status"));		
+		    	  //h.put("id_permohonan", rs.getString("id_permohonan")==null?"":rs.getString("id_permohonan"));		
+		    	  h.put("no_kes", rs.getString("no_kes")==null?"":rs.getString("no_kes"));		
+		    	 // h.put("tarikh_permohonan", rs.getString("tarikh_permohonan")==null?"":sdf.format(rs.getDate("tarikh_permohonan")));
+		    	  //h.put("nama_suburusan", rs.getString("nama_suburusan")==null?"":rs.getString("nama_suburusan"));		    	  
+		    	  //h.put("nama_kementerian", rs.getString("nama_kementerian")==null?"":rs.getString("nama_kementerian"));
+		    	  h.put("nama_pb", rs.getString("nama_pb")==null?"":rs.getString("nama_pb"));
+		    	  h.put("no_rujukan_upt", rs.getString("no_rujukan_upt")==null?"":rs.getString("no_rujukan_upt"));
+		    	  h.put("no_rujukan_ptg", rs.getString("no_rujukan_ptg")==null?"":rs.getString("no_rujukan_ptg"));
+		    	  if(rs.getString("no_fail") == null){
+			    		h.put("no_fail","Belum Diluluskan");
+			    	}else{
+			    		h.put("no_fail",rs.getString("no_fail"));
+			    	}
+		    	  listBantahan.addElement(h);
+					bil++;
+				}
+				return listBantahan;
+		} finally {
+			if (db != null) db.close();
+		}
+
+	}
 }

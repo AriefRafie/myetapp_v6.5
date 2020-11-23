@@ -1,4 +1,14 @@
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
+ <tr>
+    <td><fieldset>
+      <legend><strong>SENARAI CETAKAN</strong></legend>
+      <table align="center" width="100%">
+        <tr>
+          <td><a href="#" class="style2" onclick="javascript:janaPenyataAkaun('$idHasil')"> Akaun  Subsidari</a></td>
+        </tr>
+      </table>
+      </fieldset></td>
+  </tr>
   #if ($mode == 'newBayaranLL' || $mode == 'viewBayaranLL' || $mode == 'updateBayaranLL')
   <tr>
     <td>#parse("app/php2/frmREVBayaranLL.jsp")</td>
@@ -33,7 +43,7 @@
         #set( $row = "row1" )
         #elseif (($list.bil % 2) != 0)
         #set( $row = "row1" )
-        #else 
+        #else
         #set( $row = "row2" )
         #end
         <tr>

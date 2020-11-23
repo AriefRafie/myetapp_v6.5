@@ -134,7 +134,7 @@ a.nav:visited {
                               <li> #if($!check_notifikasi_inbox > 0)
                                 <label style="background-color:blue"  align="center" valign="top" > <b><font color="WHITE"><blink>$!check_notifikasi_inbox</blink></font></b> </label>
                                 &nbsp;
-                                #end                                
+                                #end
                                 Ruangan Perbincangan Formal</li>
                               </font> </a> </td>
                           </tr>
@@ -180,9 +180,30 @@ a.nav:visited {
                             <td><b>Tugasan <i>Online</i></b></td>
                           </tr>
                           <tr>
-                            <td><a href="javascript:gotoOnline()" class="help" title="Fail Tugasan Online"> <font color="blue">
-                              <li>&nbsp;Semakan Permohonan <i>Online</i>
-                              </font> </a> </td>
+                            <td>
+	                           <a href="javascript:gotoOnlinePenawaran()" class="help" title="Fail Tugasan Online">
+									<font color="blue"><li>
+									#if($jumlahNotifikasiOnlinePenawaran > 0)
+									<label style="background-color:blue" align="center" valign="top" >
+										<b><font color="WHITE"><blink>$jumlahNotifikasiOnlinePenawaran</blink></font></b>
+									</label>&nbsp;
+									#end
+									Semakan Permohonan <i>Online</i> Penawaran</li></font>
+								</a>
+							</td>
+                          </tr>
+                          <tr>
+                            <td>
+	                           <a href="javascript:gotoOnlineTukarguna()" class="help" title="Fail Tugasan Online">
+									<font color="blue"><li>
+									#if($jumlahNotifikasiOnlineTukarguna > 0)
+									<label style="background-color:blue" align="center" valign="top" >
+										<b><font color="WHITE"><blink>$jumlahNotifikasiOnlineTukarguna</blink></font></b>
+									</label>&nbsp;
+									#end
+									Semakan Permohonan <i>Online</i> Tukarguna</li></font>
+								</a>
+							</td>
                           </tr>
                         </table></td>
                     </tr>
@@ -206,7 +227,7 @@ a.nav:visited {
                               <li>&nbsp;Pelepasan</li>
                               </font> </a> </td>
                           </tr>
-     
+
                         </table></td>
                     </tr>
                   </table></td>
@@ -318,11 +339,11 @@ a.nav:visited {
                           <tr>
                             <td><b>Utiliti</b> </td>
                           </tr>
-                          <tr>
+                          <!-- <tr>
                             <td><a href="javascript:gotoKutipanPLP()" class="help" title="Kutipan Data Pelepasan"> <font color="blue">
                               <li>&nbsp;Kutipan Data Pelepasan</li>
                               </font> </a> </td>
-                          </tr>
+                          </tr> -->
                           <tr>
                             <td><a href="javascript:gotoKutipanPNW()" class="help" title="Kutipan Data Penawaran"> <font color="blue">
                               <li>&nbsp;Kutipan Data Penawaran</li>
@@ -340,7 +361,7 @@ a.nav:visited {
             </table></td>
         </tr>
         #end
-        <tr>
+        <!-- <tr>
           <td valign="top" align="left"><table cellpadding="2" cellspacing="1" border="0" width="100%" class="dashboard_sub" align="left">
               <tr>
                 <td width="50%" valign="top"><table width="100%" >
@@ -362,7 +383,7 @@ a.nav:visited {
                   </table></td>
               </tr>
             </table></td>
-        </tr>
+        </tr> -->
          <tr>
           <td valign="top" align="left"><table cellpadding="2" cellspacing="1" border="0" width="100%" class="dashboard_sub" align="left">
               <tr>
@@ -443,8 +464,10 @@ a.nav:visited {
                       <li class="TabbedPanelsTab" tabindex="0" id="Pengumuman_Head" >Pengumuman</li>
                       #end
                       <li class="TabbedPanelsTab" tabindex="0"  id="Carta_Head"  >Carta</li>
+                      <li class="TabbedPanelsTab" tabindex="0" id="Peringatan_Head"><span class="blink">PERINGATAN !</span></li>
                     </ul>
-                    <div class="TabbedPanelsContentGroup"> #if($list_memo_aktif.size()>0)
+                    <div class="TabbedPanelsContentGroup"> 
+                      #if($list_memo_aktif.size()>0)
                       <div class="TabbedPanelsContent"  id="Peringatan_Main" style="height:250" >
                         <table width="100%" >
                           <tr>
@@ -518,6 +541,47 @@ a.nav:visited {
                           </table>
                         </div>
                       </div>
+                      <div class="TabbedPanelsContent" >
+	                  	<table width="90%" align="center" border="0"  class="alert">
+	                  		<tr>
+							   <td>
+							   </td>
+						   </tr>
+						   <tr>
+							   <td width="2%" valign="top" align="right">
+							   </td>
+						   	   <td width="98%">
+						   			<div id="tamatTempohKJP">
+					   					<a href="javascript:gotoKJPTamatTempoh('K')" class="help" title="Senarai Ulasan KJP Tamat Tempoh">
+											<label style="background-color:red"  align="center" valign="top" >
+			                            		<b><font color="WHITE"><span class="blink">&nbsp;$bilTamatTempohUlasanKJP</span></font></b>
+		                             		</label>&nbsp;
+									 		Bil. Fail Tamat Tempoh Ulasan KJP
+										</a>
+									</div>
+								</td>
+						   </tr>
+	                  	</table>
+	                  	<table width="90%" align="center" border="0"  class="alert">
+						   <tr>
+							   <td>
+							   </td>
+						   </tr>
+						   <tr>
+							   <td width="2%" valign="top" align="right">
+							   </td>
+						   <td width="98%">
+						  	<div id="tamatTempohJKPTG">
+	                             <a href="javascript:gotoJKPTGTamatTempoh('G')" class="help" title="Senarai Ulasan JKPTG Tamat Tempoh">
+									<label style="background-color:red"  align="center" valign="top" >
+			                            <b><font color="WHITE"><span class="blink">&nbsp;$bilTamatTempohUlasanJKPTG</span></font></b>
+		                             </label>&nbsp;
+								 	Bil. Fail Tamat Tempoh Ulasan JKPTG
+								 </a>
+							</div>
+						   </tr>
+						  </table>
+                      </div>
                     </div>
                   </div></td>
               </tr>
@@ -538,6 +602,14 @@ function gotoSenaraiTugasan() {
 }
 function gotoOnline() {
 	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPSenaraiFailOnlineView";
+	document.${formName}.submit();
+}
+function gotoOnlinePenawaran() {
+	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmPNWSenaraiFailOnlineView";
+	document.${formName}.submit();
+}
+function gotoOnlineTukarguna() {
+	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmTKRSenaraiFailOnlineView";
 	document.${formName}.submit();
 }
 function gotoPelepasan() {
@@ -580,6 +652,16 @@ function gotoInbox() {
 	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.utils.FrmInboxUsers";
 	document.${formName}.submit();
 }
+function gotoKJPTamatTempoh(K) {
+	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmSenaraiTugasanPLPView&socJenisFailC=K";
+	//document.${formName}.socJenisFailC.value = S;
+	//document.Fekptg_view_php2_FrmREVMemantauBayaranSewaView.socJenisFailC.value = "S";
+	document.${formName}.submit();
+} 
+function gotoJKPTGTamatTempoh(G) {
+	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmSenaraiTugasanPLPView&socJenisFailC=G";
+	document.${formName}.submit();
+}
 </script>
 <script type="text/javascript" charset="utf-8">
 		$$("a.help").each( function(input) {
@@ -596,17 +678,17 @@ function gotoInbox() {
 <script src="../RGraph/libraries/RGraph.hbar.js" ></script>
 <script src="../RGraph/libraries/RGraph.pie.js" ></script>
 <script>
-	
-	var failBelumSelesai = '$!failBelumSelesai';	
-	var failSelesai = '$!failSelesai';	
-	
-	var failBelumSelesaiPLP = '$!failBelumSelesaiPLP';	
+
+	var failBelumSelesai = '$!failBelumSelesai';
+	var failSelesai = '$!failSelesai';
+
+	var failBelumSelesaiPLP = '$!failBelumSelesaiPLP';
 	var failSelesaiPLP = '$!failSelesaiPLP';
-	var failBelumSelesaiPNW = '$!failBelumSelesaiPNW';	
+	var failBelumSelesaiPNW = '$!failBelumSelesaiPNW';
 	var failSelesaiPNW = '$!failSelesaiPNW';
-	var failBelumSelesaiTKR = '$!failBelumSelesaiTKR';	
+	var failBelumSelesaiTKR = '$!failBelumSelesaiTKR';
 	var failSelesaiTKR = '$!failSelesaiTKR';
-		
+
         window.onload = function (e)
         {
             var hbar = new RGraph.HBar('cvs', [parseInt(failBelumSelesai),parseInt(failSelesai)]);
@@ -614,114 +696,114 @@ function gotoInbox() {
             hbar.Set('chart.units.post','');
             hbar.Set('chart.colors', ['blue','red','blue','blue']);
             hbar.Set('chart.strokestyle', 'rgba(0,0,0,0)');
-            hbar.Set('chart.labels.above', true);			
+            hbar.Set('chart.labels.above', true);
             hbar.Set('chart.background.grid', true);
-            hbar.Set('chart.labels', ['Belum Selesai','Selesai']);            
+            hbar.Set('chart.labels', ['Belum Selesai','Selesai']);
             if (!RGraph.isOld()) {
                 hbar.Set('chart.tooltips', ['Belum Selesai','Selesai']);
-            }            
+            }
             hbar.Set('chart.labels.above.decimals',0);
             hbar.Set('chart.xlabels', false);
             hbar.Set('chart.gutter.left', 90);
             hbar.Set('chart.gutter.right', 60);
             hbar.Set('chart.gutter.top',10);
-    
+
             hbar.Set('chart.noxaxis', true);
             hbar.Set('chart.noxtickmarks', true);
             hbar.Set('chart.noytickmarks', true);
-            RGraph.isOld() ? hbar.Draw() : RGraph.Effects.HBar.Grow(hbar);	
-			
+            RGraph.isOld() ? hbar.Draw() : RGraph.Effects.HBar.Grow(hbar);
+
 			var hbar = new RGraph.HBar('cvsPelepasan', [parseInt(failBelumSelesaiPLP),parseInt(failSelesaiPLP)]);
             hbar.Set('chart.units.pre','');
             hbar.Set('chart.units.post','');
             hbar.Set('chart.colors', ['blue','red','blue','blue']);
             hbar.Set('chart.strokestyle', 'rgba(0,0,0,0)');
-            hbar.Set('chart.labels.above', true);			
+            hbar.Set('chart.labels.above', true);
             hbar.Set('chart.background.grid', true);
-            hbar.Set('chart.labels', ['Belum Selesai','Selesai']);            
+            hbar.Set('chart.labels', ['Belum Selesai','Selesai']);
             if (!RGraph.isOld()) {
                 hbar.Set('chart.tooltips', ['Belum Selesai','Selesai']);
-            }            
+            }
             hbar.Set('chart.labels.above.decimals',0);
             hbar.Set('chart.xlabels', false);
             hbar.Set('chart.gutter.left', 90);
             hbar.Set('chart.gutter.right', 60);
             hbar.Set('chart.gutter.top',10);
-    
+
             hbar.Set('chart.noxaxis', true);
             hbar.Set('chart.noxtickmarks', true);
             hbar.Set('chart.noytickmarks', true);
-            RGraph.isOld() ? hbar.Draw() : RGraph.Effects.HBar.Grow(hbar);	
-			
+            RGraph.isOld() ? hbar.Draw() : RGraph.Effects.HBar.Grow(hbar);
+
 			var hbar = new RGraph.HBar('cvsPenawaran', [parseInt(failBelumSelesaiPNW),parseInt(failSelesaiPNW)]);
             hbar.Set('chart.units.pre','');
             hbar.Set('chart.units.post','');
             hbar.Set('chart.colors', ['blue','red','blue','blue']);
             hbar.Set('chart.strokestyle', 'rgba(0,0,0,0)');
-            hbar.Set('chart.labels.above', true);			
+            hbar.Set('chart.labels.above', true);
             hbar.Set('chart.background.grid', true);
-            hbar.Set('chart.labels', ['Belum Selesai','Selesai']);            
+            hbar.Set('chart.labels', ['Belum Selesai','Selesai']);
             if (!RGraph.isOld()) {
                 hbar.Set('chart.tooltips', ['Belum Selesai','Selesai']);
-            }            
+            }
             hbar.Set('chart.labels.above.decimals',0);
             hbar.Set('chart.xlabels', false);
             hbar.Set('chart.gutter.left', 90);
             hbar.Set('chart.gutter.right', 60);
             hbar.Set('chart.gutter.top',10);
-    
+
             hbar.Set('chart.noxaxis', true);
             hbar.Set('chart.noxtickmarks', true);
             hbar.Set('chart.noytickmarks', true);
-            RGraph.isOld() ? hbar.Draw() : RGraph.Effects.HBar.Grow(hbar);	
-			
+            RGraph.isOld() ? hbar.Draw() : RGraph.Effects.HBar.Grow(hbar);
+
 			var hbar = new RGraph.HBar('cvsTukarguna', [parseInt(failBelumSelesaiTKR),parseInt(failSelesaiTKR)]);
             hbar.Set('chart.units.pre','');
             hbar.Set('chart.units.post','');
             hbar.Set('chart.colors', ['blue','red','blue','blue']);
             hbar.Set('chart.strokestyle', 'rgba(0,0,0,0)');
-            hbar.Set('chart.labels.above', true);			
+            hbar.Set('chart.labels.above', true);
             hbar.Set('chart.background.grid', true);
-            hbar.Set('chart.labels', ['Belum Selesai','Selesai']);            
+            hbar.Set('chart.labels', ['Belum Selesai','Selesai']);
             if (!RGraph.isOld()) {
                 hbar.Set('chart.tooltips', ['Belum Selesai','Selesai']);
-            }            
+            }
             hbar.Set('chart.labels.above.decimals',0);
             hbar.Set('chart.xlabels', false);
             hbar.Set('chart.gutter.left', 90);
             hbar.Set('chart.gutter.right', 60);
             hbar.Set('chart.gutter.top',10);
-    
+
             hbar.Set('chart.noxaxis', true);
             hbar.Set('chart.noxtickmarks', true);
             hbar.Set('chart.noytickmarks', true);
-            RGraph.isOld() ? hbar.Draw() : RGraph.Effects.HBar.Grow(hbar);			       
+            RGraph.isOld() ? hbar.Draw() : RGraph.Effects.HBar.Grow(hbar);
         }
-		
+
 </script>
 <script>
 	var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1",{defaultTab:0});
 </script>
 <script>
 function arkibWindow(){
-	
+
 	var noFail = document.${formName}.txtNoFail.value;
 		var url = "../x/${securityToken}/ekptg.view.integrasi.sid.FrmPopupPaparArkibDokumen?kodModul=PHP&noFail="+noFail;
-		
+
 		var hWnd = window.open(url,"printuser","scrollbars=1,width=800,height=700");
 		 if ((document.window != null) && (!hWnd.opener))
 		       hWnd.opener = document.window;
 		    if (hWnd.focus != null) hWnd.focus();
 			hWnd.focus();
-			
+
 	}
-	
+
 function open_infoSID() {
 	var width  = 550;
 	var height = 300;
 	var left   = (screen.width  - width)/2;
 	var top    = (screen.height - height)/2;
- 
+
 	var params = 'width='+width+', height='+height;
  	params += ', top='+top+', left='+left;
 	params += ', directories=no';
@@ -737,14 +819,14 @@ function open_infoSID() {
 	new_window.document.write("<html><title>Info Maklumat Carian</title>");
 	new_window.document.write("<body bgcolor=\"#FFFFFF\">");
 	new_window.document.write("<table><tr><td><b><u>Jenis-Jenis Carian</u></b></td></tr></table>");
-	
+
 	new_window.document.write("<table width='100%'><tr><td width='50%' valign='top'>");
-	
+
 	new_window.document.write("<table><tr><td><b>Fail</b></td></tr>");
 	new_window.document.write("<tr><td><font color='blue'><li>&nbsp;No. Fail Seksyen </li></font>");
-	
+
 	new_window.document.write("</td></tr></table>");
-	
+
 	new_window.document.write("<table><tr><td align='justify'>Sistem akan memaparkan senarai dokumen berkaitan dengan no fail yang di masukkan.</td></tr></table>");
 	new_window.document.write("</body></html>");
 	new_window.document.close();

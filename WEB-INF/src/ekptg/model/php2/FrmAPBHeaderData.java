@@ -170,8 +170,8 @@ public class FrmAPBHeaderData {
 			SQLRenderer r = new SQLRenderer();
 			
 			sql = " SELECT U.USER_ID, U.USER_NAME, UPPER(UO.KATEGORI) AS KATEGORI, UO.NO_KP_BARU, UO.ALAMAT1, UO.ALAMAT2, UO.ALAMAT3, " +
-					  " UO.POSKOD, UO.NO_FAX, UO.NO_HP, UO.EMEL, RB.KETERANGAN AS NAMA_BANDAR, RN.NAMA_NEGERI FROM USERS U, " +
-					  " USERS_ONLINE UO, TBLRUJNEGERI RN, TBLRUJBANDAR RB " +
+					  " UO.POSKOD, UO.NO_FAX, UO.NO_HP, UO.EMEL, RB.KETERANGAN AS NAMA_BANDAR, RN.NAMA_NEGERI FROM USERS U," +
+					  " USERS_ONLINE UO, TBLRUJNEGERI RN, TBLRUJBANDAR RB" +
 					  " WHERE U.USER_ID = UO.USER_ID AND UO.ID_BANDAR = RB.ID_BANDAR(+) AND UO.ID_NEGERI = RN.ID_NEGERI" +
 					  " AND U.USER_ID = '" + idUser + "'";
 			log.info("header:sql="+sql);
@@ -192,9 +192,7 @@ public class FrmAPBHeaderData {
 				h.put("noTel", rs.getString("NO_HP") == null ? "" : rs.getString("NO_HP").toUpperCase());
 				h.put("noFax", rs.getString("NO_FAX") == null ? "" : rs.getString("NO_FAX").toUpperCase());
 				h.put("emel", rs.getString("EMEL") == null ? "" : rs.getString("EMEL"));
-				//h.put("idStatus", rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS").toUpperCase());
 	
-				
 				beanMaklumatPemohon.addElement(h);
 				bil++;
 			}

@@ -67,23 +67,11 @@ alert("Sila Kembali Pada Skrin Pemilihan Hakmilik dan Klik 'Paging' No.19/No.20/
   						<td>:</td>
   						<td><input readonly class="disabled" type="text" name="txtNoPB" id="txtNoPB" value="$!txtNoPB" size="20" maxlength="20"   ></td>
   					</tr>
-  					<tr>
+  						<tr>
   						<td>&nbsp;</td>
   						<td>Tarikh Akhir Bayar Pampasan</td>
   						<td>:</td>
   						<td><input readonly class="disabled" name="txdTarikhAkhirBayar" id="txdTarikhAkhirBayar" size="11" type="text" value="$!txdTarikhAkhirBayar"></td>
-  					</tr>
-  					<tr>
-  						<td>&nbsp;</td>
-  						<td>Bil. Hari Lewat</td>
-  						<td>:</td>
-  						<td><input type="text" name="txtBilLewat" id="txtBilLewat" value="$!txtBilLewat" size="3" maxlength="4" onkeyup="validateNumber(this,this.value);" ></td>
-  					</tr>
-  					<tr>
-  						<td>&nbsp;</td>
-  						<td>Caj Bayaran Lewat</td>
-  						<td>:</td>
-  						<td>&nbsp;RM&nbsp;<input type="text" name="txtDendaLewat" id="txtDendaLewat" value="$!Utils.RemoveSymbol($!txtDendaLewat)" size="10" maxlength="8" style="text-align:right" onkeyup="validateNilai(this,this.value)" onblur="validateModal(this,this.value,'$!txtDendaLewat')" >	<span id = "lblCajLewat" ></span></td>
   					</tr>
   					<tr>
   						<td>&nbsp;</td>
@@ -214,7 +202,8 @@ alert("Sila Kembali Pada Skrin Pemilihan Hakmilik dan Klik 'Paging' No.19/No.20/
   				
   				#if($onchangeCEK == "no")
   				#foreach($dataPN in $dataPenerimaanCek)
-  					#set($txtNoPB=$dataPN.no_pb)
+  					##set($txtNoPB=$dataPN.no_pb)
+  					#set($txdTarikhSerahPb=$dataPN.tarikh_serahan)
   					#set($txtPenerimaCek=$dataPN.penerima_cek)
   					#set($txdTarikhCek=$dataPN.tarikh_cek)
   					#set($txdTarikhAmbilCek=$dataPN.tarikh_ambil_cek)
@@ -227,6 +216,7 @@ alert("Sila Kembali Pada Skrin Pemilihan Hakmilik dan Klik 'Paging' No.19/No.20/
   					#set($txtTempatAmbil=$dataPN.tempat_ambil)
   					#set($txtAmaunCek=$dataPN.amaun_bayaran)
   					#set($txtDendaLewat=$dataPN.denda_lewat)
+  					#set($txdTarikhLewat=$dataPN.tarikh_cajlewat)
   					#set($txdTarikhAkhirBayar=$dataPN.tarikh_akhir_bayar)
   			
   				#end
@@ -247,7 +237,6 @@ alert("Sila Kembali Pada Skrin Pemilihan Hakmilik dan Klik 'Paging' No.19/No.20/
 				#foreach($dataPbH in $BorangH)					
 				#set($txdTarikhSerah=$dataPbH.tarikh_hantar)
 				#end
-  				
   				
   				<table width="100%" border="0">
   					<tr>
@@ -273,26 +262,6 @@ alert("Sila Kembali Pada Skrin Pemilihan Hakmilik dan Klik 'Paging' No.19/No.20/
   						<td>Tarikh Akhir Bayar Pampasan</td>
   						<td>:</td>
   						<td><input readonly class="disabled" name="txdTarikhAkhirBayar" id="txdTarikhAkhirBayar" size="11" type="text" value="$!txdTarikhAkhirBayar"></td>
-  					</tr>
-  					<tr>
-  						<td>&nbsp;</td>
-  						<td>Bil. Hari Lewat</td>
-  						<td>:</td>
-  						<td><input $disability $disabilityx type="text" name="txtBilLewat" id="txtBilLewat" value="$!txtBilLewat" size="3" maxlength="4" onkeyup="validateNumber(this,this.value);" ></td>
-  					</tr>
-  					<tr>
-  						<td>&nbsp;</td>
-  						<td>Caj Bayaran Lewat</td>
-  						<td>:</td>
-                        <td>
-  						#if($isEdit=="no")
-  						&nbsp;RM&nbsp;<input $disability $disabilityx type="text" name="txtDendaLewat" id="txtDendaLewat" value="$!Utils.format2Decimal($txtDendaLewat)" size="10" maxlength="8" style="text-align:right">
-  						#else
-  						&nbsp;RM&nbsp;<input $disability $disabilityx type="text" name="txtDendaLewat" id="txtDendaLewat" value="$!txtDendaLewat" size="10" maxlength="8" style="text-align:right" onkeyup="validateNilai(this,this.value)" onblur="validateModal(this,this.value,'$!txtDendaLewat')" >
-  						#end
-  						
-  						<span id = "lblCajLewat" ></span>
-                        </td>
   					</tr>
   					<tr>
   						<td>&nbsp;</td>
@@ -421,9 +390,75 @@ alert("Sila Kembali Pada Skrin Pemilihan Hakmilik dan Klik 'Paging' No.19/No.20/
   						<td><input $disability $disabilityx type="text" name="txtTempatAmbil" id="txtTempatAmbil" value="$!txtTempatAmbil" size="50" maxlength="100"   ></td>
   					</tr>
   				</table>
-  				#end
-  				
+  				#end				
   			</fieldset>
+  			
+  			<fieldset>
+  			<legend><strong>Maklumat Caj Bayaran Lewat</strong></legend>
+  			
+  				#if($mode=="new") <!-- yati -->
+
+  				<table width="100%" border="0">
+  					<tr>
+  						<td width="1%"></td>
+  						<td width="25%">Tarikh Bukti Penyampaian Borang H</td>
+  						<td width="1%">:</td>
+  						<td width="73%"><input readonly class="disabled" type="text" name="txdTarikhSerah" id="txdTarikhSerah" value="$!txdTarikhSerah" size="10" maxlength="4"   ></td>
+  					</tr>
+  					<tr>
+						<td>&nbsp;</td>
+			            <td>Tarikh Kuatkuasa Caj Lewat</td>
+			            <td>:</td>
+			            <td><input name="txdTarikhLewat" id="txdTarikhLewat" size="11" type="text" value="$!txdTarikhLewat" onkeyup="validateTarikh(this,this.value)" onblur="checkDate(); check_date(this);" >
+			            <img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhLewat',false,'dmy');">&nbsp;$!frmtdate</td>
+					</tr>
+  					<tr>
+  						<td>&nbsp;</td>
+  						<td>Bil. Hari Lewat</td>
+  						<td>:</td>
+  						<td><input readonly class="disabled"  type="text" name="txtBilLewat" id="txtBilLewat" value="$!txtBilLewat" size="3" maxlength="4" onkeyup="validateNumber(this,this.value);" ></td>
+  					</tr>
+  					<tr>
+  						<td>&nbsp;</td>
+  						<td>Caj Bayaran Lewat(RM)</td>
+  						<td>:</td>
+  						<td><input type="text" name="txtDendaLewat" id="txtDendaLewat" value="$!Utils.RemoveSymbol($!txtDendaLewat)" size="10" maxlength="8" style="text-align:right" onkeyup="validateNilai(this,this.value)" onblur="validateModal(this,this.value,'$!txtDendaLewat')" >	<span id = "lblCajLewat" ></span></td>
+  					</tr>
+  					</table>
+  					#else
+  					<table width="100%" border="0">
+  					<tr>
+  						<td width="1%"></td>
+  						<td width="25%">Tarikh Bukti Penyampaian Borang H</td>
+  						<td width="1%">:</td>
+  						<td width="73%"><input readonly class="disabled" type="text" name="txdTarikhSerah" id="txdTarikhSerah" value="$!txdTarikhSerah" size="10" maxlength="4"   ></td>
+  					</tr>
+  					<tr>
+						<td>&nbsp;</td>
+			            <td>Tarikh Kuatkuasa Caj Lewat</td>
+			            <td>:</td>
+			            	<td><input $disability $disabilityx name="txdTarikhLewat" id="txdTarikhLewat" size="11" type="text" value="$!txdTarikhLewat" onkeyup="validateTarikh(this,this.value)" onblur="checkDate(this)" >
+          				#if($isEdit=="yes")<img src="../img/calendar.gif" onclick="displayDatePicker('txdTarikhLewat',false,'dmy');">&nbsp;$!frmtdate#end</td>
+  						</tr>
+  					<tr>
+  						<td>&nbsp;</td>
+  						<td>Bil. Hari Lewat</td>
+  						<td>:</td>
+  						<td><input readonly class="disabled"  type="text" name="txtBilLewat" id="txtBilLewat" value="$!txtBilLewat" size="3" maxlength="4" onkeyup="validateNumber(this,this.value);" ></td>
+  					</tr>
+  					<tr>
+  						<td>&nbsp;</td>
+  						<td>Caj Bayaran Lewat(RM)</td>
+  						<td>:</td>
+  						<td><input readonly class="disabled"type="text" name="txtDendaLewat" id="txtDendaLewat" value="$!txtDendaLewat" size="10" maxlength="8" style="text-align:right" onkeyup="validateNilai(this,this.value)" onblur="validateModal(this,this.value,'$!txtDendaLewat')" >	<span id = "lblCajLewat" ></span></td>
+  					</tr>
+  					</table>
+  					
+  					#end
+  					
+  					
+  					</fieldset>
+  					
   				
   				<table width="100%" border="0">
 					<tr align="center">
@@ -1023,6 +1058,11 @@ alert("Sila Kembali Pada Skrin Pemilihan Hakmilik dan Klik 'Paging' No.19/No.20/
 <input type="hidden" name="id_permohonan" value="$!id_permohonan">
 <input type="hidden" name="txdTarikhSerah" value="$!txdTarikhSerah" >
 <input type="hidden" name="txdTarikhSedia" value="$!txdTarikhSedia" >
+
+<input type="hidden" name="txd3bulan" id="txd3bulan" value="$!txd3bulan" >
+<input type="hidden" name="txt5Percent" id="txt5Percent" value="01/12/2017" >
+<input type="hidden" name="txt8Percent" id="txt8Percent" value="30/11/2017" >
+
 <input type="hidden" name="id_status" value="$!id_status">
 <input type="hidden" name="id_hakmilik" value="$!id_hakmilik">
 <input type="hidden" name="id_hakmilikpb" value="$!id_hakmilikpb">
@@ -1717,6 +1757,95 @@ function DaysArray(n) {
 		if (i==2) {this[i] = 29}
    } 
    return this
+}
+
+//YATI
+function checkDate(){
+	//alert("masuk");
+	
+	var Mula  = document.getElementById("txdTarikhLewat").value;
+	var dt1   = parseInt(Mula.substring(0,2),10);
+	var mon1  = parseInt(Mula.substring(3,5),10)-1;
+	var yr1   = parseInt(Mula.substring(6,10),10);
+	var date1 = new Date(yr1, mon1, dt1);
+	//alert("date 1 :"+date1);
+	
+	var Mula2  = document.getElementById("txd3bulan").value;
+	var dt2   = parseInt(Mula2.substring(0,2),10);
+	var mon2  = parseInt(Mula2.substring(3,5),10)-1;
+	var yr2   = parseInt(Mula2.substring(6,10),10);
+	var date2 = new Date(yr2, mon2, dt2);
+	//alert("date 2 :"+date2);
+	
+	var Mula5  = document.getElementById("txt5Percent").value;
+	var dt5   = parseInt(Mula5.substring(0,2),10);
+	var mon5  = parseInt(Mula5.substring(3,5),10)-1;
+	var yr5   = parseInt(Mula5.substring(6,10),10);
+	var date5 = new Date(yr5, mon5, dt5);
+	//alert("date 5 :"+date5);
+	
+	var Mula8  = document.getElementById("txt8Percent").value;
+	var dt8   = parseInt(Mula8.substring(0,2),10);
+	var mon8  = parseInt(Mula8.substring(3,5),10)-1;
+	var yr8   = parseInt(Mula8.substring(6,10),10);
+	var date8 = new Date(yr8, mon8, dt8);
+	//alert("date 8 :"+date8);
+	
+	var amaun_cek = document.getElementById("txtAmaunCek").value;
+	
+	//&& (date1 > date5)
+	
+	if((date1 > date2) && (date1 > date5))
+		{
+	
+		var diffDateA = Math.abs(date1 - date2) / 1000;
+		var daysDateA = Math.floor(diffDateA / 86400)  ;
+		
+		//alert("days :"+daysDateA);
+		//alert("yr"+yr1);
+		var leapyr1 = yr1%4;
+		//alert(leapyr1);
+		var leapyr2 = yr2%4;
+		//alert("leap year x :"+leapyr1);
+				//alert("leap year 2 :"+leapyr2);
+				if(leapyr1=="0"){
+					var yrDiff = "366";
+				}
+				else{
+					var yrDiff = "365";
+				}
+		
+		var percent = "0.05";
+		//alert(percent);
+		//alert(amaun_cek);
+		
+			var resultYr3 = (amaun_cek * percent * daysDateA) / yrDiff;
+			//alert(resultYr3);
+			var resultfinal = resultYr3.toFixed(2) ;
+		}
+	else{
+		var leapyr1 = yr1%4;
+		//alert(leapyr1);
+		var leapyr2 = yr2%4;
+		//alert("leap year x :"+leapyr1);
+				//alert("leap year 2 :"+leapyr2);
+				if(leapyr1=="0"){
+					var yrDiff = "366";
+				}
+				else{
+					var yrDiff = "365";
+				}
+		
+		var percent = "0.08";
+		//alert(percent);
+		//alert(amaun_cek);
+		
+			var resultYr3 = (amaun_cek * percent * daysDateA) / yrDiff;
+			//alert(resultYr3);
+			var resultfinal = resultYr3.toFixed(2) ;
+	}
+	document.${formName}.txtBilLewat.value = daysDateA;
+	document.${formName}.txtDendaLewat.value = resultfinal;
 }
 
 function isDate(dtStr){

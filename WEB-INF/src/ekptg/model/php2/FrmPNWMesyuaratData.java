@@ -33,16 +33,7 @@ public class FrmPNWMesyuaratData {
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 
-//			r.add("ID_MESYUARAT");
-//			r.add("TAJUK");
-//			r.add("BIL_MESYUARAT");
-//			r.add("TARIKH_MESYUARAT");
-//			r.add("FLAG_SYOR");
-//			r.add("ID_PERMOHONAN", idPermohonan);
-//
-//			sql = r.getSQLSelect("TBLPHPMESYUARAT", "ID_MESYUARAT ASC");
-			
-			sql = "SELECT A.ID_MESYUARAT, A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.STATUS_MESYUARAT "
+			sql = "SELECT A.ID_MESYUARAT, A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, B.FLAG_SYOR"
 					+ " FROM TBLPHPMESYUARAT A, TBLPHPMESYUARATPERMOHONAN B WHERE A.ID_MESYUARAT = B.ID_MESYUARAT"
 					+ " AND B.ID_PERMOHONAN = '"
 					+ idPermohonan + "'";
@@ -480,9 +471,10 @@ public class FrmPNWMesyuaratData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT TAJUK, BIL_MESYUARAT, TARIKH_MESYUARAT, JAM_DARI, MINIT_DARI, JAM_HINGGA, MINIT_HINGGA, ID_LOKASI, CATATAN, FLAG_SYOR"
-					+ " FROM TBLPHPMESYUARAT WHERE ID_MESYUARAT = '"
-					+ idMesyuarat + "'";
+			sql = "SELECT A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.JAM_DARI, A.MINIT_DARI, A.JAM_HINGGA, A.MINIT_HINGGA, A.ID_LOKASI,"
+					   + " C.CATATAN, C.FLAG_SYOR, A.ULASAN_PEMOHON, A.FLAG_KEPUTUSAN_PEMOHON, B.LOKASI"
+					   + " FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B, TBLPHPMESYUARATPERMOHONAN C"
+					   + " WHERE A.ID_LOKASI = B.ID_LOKASI AND A.ID_MESYUARAT = C.ID_MESYUARAT AND A.ID_MESYUARAT = '" + idMesyuarat + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;

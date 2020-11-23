@@ -3,6 +3,9 @@
 .style1 {
 	color: #FF0000
 }
+.style2 {
+	color: #0000FF
+}
 -->
 </style>
 <p>
@@ -10,7 +13,7 @@
   <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
   <input name="idPermohonan" type="hidden" id="idPermohonan" value="$idPermohonan"/>
   <input name="idStatus" type="hidden" id="idStatus" value="$idStatus"/>
-  
+  <input name="idKertaskerja" type="hidden" id="idKertaskerja" value="$idKertaskerja"/>
   <input name="mode" type="hidden" id="mode" value="$mode"/>
   <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>  
   <input name="step" type="hidden" id="step" value="$step"/>
@@ -45,7 +48,6 @@
           <td>:</td>
           <td>
           <select name="socKeputusan" id="socKeputusan" style="width:120px;" $readonly class="$disabled" onchange="javascript:doChangeKeputusanKewangan(this.value)" $disabled> 
-
      		#if ($beanMaklumatKewangan.keputusan == 'L')
                 <option>SILA PILIH</option>
                 <option value="L" selected="selected">LULUS</option>
@@ -75,6 +77,48 @@
           <td valign="top">:</td>
           <td valign="top"><textarea name="txtUlasan" id="txtUlasan" cols="50" rows="5" $readonly class="$inputTextClass" >$beanMaklumatKewangan.ulasan</textarea></td>
         </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>Nama Pengulas</td>
+          <td>:</td>
+          <td><input type="text" name="txtNamaPengulas" id="txtNamaPengulas" size="50" $readonly class="$inputTextClass" value="$beanMaklumatKewangan.namaPengulas" onblur="this.value=this.value.toUpperCase();"/></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td>No. Telefon Pengulas</td>
+          <td>:</td>
+          <td><input type="text" name="txtNoTelPengulas" id="txtNoTelPengulas" size="50" $readonly class="$inputTextClass" value="$beanMaklumatKewangan.noTelPengulas" onblur="this.value=this.value.toUpperCase();"/></td>
+        </tr>
+        #if ($mode == 'view')
+	          	#set($idLampiran = "")
+    			#set($namaLampiran = "")
+			    #set($catatanLampiran = "")
+			    #set($namaFailLampiran = "")
+			  	#foreach($beanMaklumatLampiran in $BeanMaklumatLampiran)
+					#set($idLampiran = $beanMaklumatLampiran.idDokumen)
+				    #set($namaLampiran = $beanMaklumatLampiran.namaDokumen)
+				    #set($catatanLampiran = $beanMaklumatLampiran.catatan)
+				    #set($namaFailLampiran = $beanMaklumatLampiran.namaFail)
+			  	#end
+			  	<tr>
+                <td>&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+                <td valign="top">&nbsp;</td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td valign="top">Lampiran</td>
+                <td valign="top">:</td>
+                <td valign="top"> 
+                	#if ($idLampiran != '')
+                		<a href="javascript:cetakLampiran($idLampiran)" class="style2">$!namaFailLampiran</a> 
+                	#end
+                	&nbsp;&nbsp;&nbsp;&nbsp;
+                	<input name="cmdUpload" type="button" onclick="uploadDoc($idKertaskerja)" value="Muat Naik Lampiran" />
+                </td>
+              </tr>
+        #end
         #if ($keputusan == 'B')
 	    <tr>
 	      <td colspan="4"><fieldset>
@@ -220,5 +264,23 @@ function cetakPLPSuratTolak(idFail) {
 function gotoSenaraiFailKeseluruhan() {
 	document.${formName}.action = "$EkptgUtil.getTabID("My Info",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPSenaraiFailKeseluruhanView";
 	document.${formName}.submit();
+}
+function refreshFromMuatNaikLampiran() {
+	document.${formName}.submit();
+}
+function cetakLampiran(id){
+	var url = "../servlet/ekptg.view.php2.FrmDisplayImage?id="+id;
+    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener=document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+function uploadDoc(idUlasanTeknikal){
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmPopupMuatNaikLampiranTeknikalView?idUlasanTeknikal="+idUlasanTeknikal;
+    var hWnd = window.open(url,'printuser','width=1000,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
 }
 </script>
