@@ -43,16 +43,17 @@
           <td class="$row" align="center">$list.bulanTunggakan</td>
           <td class="$row" align="right">$list.jumlahTunggakan</td>
           <td class="$row" align="center">
-	          #if ($list.idJenisNotis == '1')
+          $list.bilPeringatan
+	          #if ($list.bilPeringatan == '1')
 	          	<a href="#" class="style2" onClick="javascript:cetakMemoTuntutanDeposit('$list.idNotis')"><img border="0" src="../img/print.gif"/></a>
 	          #end
-	          #if ($list.idJenisNotis == '2')
+	          #if ($list.bilPeringatan == '3')
 	          	<a href="#" class="style2" onClick="javascript:cetakMemoTuntutanHasil('$list.idNotis')"><img border="0" src="../img/print.gif"/></a>
 	          #end
-	          #if ($list.idJenisNotis == '3')
+	          #if ($list.bilPeringatan == '2')
 	          	<a href="#" class="style2" onClick="javascript:cetakMemoPelarasanDeposit('$list.idNotis')"><img border="0" src="../img/print.gif"/></a>
 	          #end
-	          #if ($list.idJenisNotis == '4')
+	          #if ($list.bilPeringatan == '4')
 	          	<a href="#" class="style2" onClick="javascript:cetakMemoRampasanDeposit'$list.idNotis')"><img border="0" src="../img/print.gif"/></a>
 	          #end
           </td>

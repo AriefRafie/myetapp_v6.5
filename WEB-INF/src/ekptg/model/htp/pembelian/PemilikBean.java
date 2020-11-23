@@ -14,12 +14,11 @@ import ekptg.model.entities.Daerah;
 import ekptg.model.entities.Negeri;
 import ekptg.model.htp.HakmilikUrusan;
 import ekptg.model.htp.PihakBerkepentingan;
-import ekptg.model.integrasi.CapaianHakmilikeTanahHTP;
 
 public class PemilikBean implements IPemilik {
-
-	static Logger myLog = Logger.getLogger(PemilikBean.class);
 	
+	static Logger myLog = Logger.getLogger(ekptg.model.htp.pembelian.PemilikBean.class);
+
 	//@Override
 	public void deletePemilik(String idPihakBerkepentigan) {
 		Db db = null;
@@ -71,9 +70,10 @@ public class PemilikBean implements IPemilik {
 			r.add("A.id_Negeri");
 			r.add("A.no_Tel");
 			r.add("A.no_Fax");
+			r.add("A.emel");
 			r.set("A.id_Pihakberkepentingan", idPihakBerkepentigan);
 			sql = r.getSQLSelect("Tblhtppihakberkepentingan A");
-			
+			myLog.info("findPemilik==="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			if(rs.next()){
 				pihak = new PihakBerkepentingan();
@@ -89,6 +89,7 @@ public class PemilikBean implements IPemilik {
             	pihak.setPoskod(rs.getString("poskod"));
             	pihak.setTel(rs.getString("no_Tel"));
             	pihak.setFax(rs.getString("no_Fax"));
+            	pihak.setEmel(rs.getString("emel"));
             	pihak.setIdNegeri(rs.getString("id_negeri"));
             	pihak.setIdDaerah(rs.getString("id_daerah"));
 			}
@@ -132,6 +133,7 @@ public class PemilikBean implements IPemilik {
 			r.add("A.id_Negeri");
 			r.add("A.no_Tel");
 			r.add("A.no_Fax");
+			r.add("A.emel");
 		    r.add("RN.NAMA_NEGERI");
 		    r.add("RD.NAMA_DAERAH");
 		    r.add("(SELECT KOD_JENIS_HAKMILIK FROM tblrujjenishakmilik WHERE ID_JENISHAKMILIK=B.ID_JENISHAKMILIK) jenis_hakmilik");
@@ -157,6 +159,7 @@ public class PemilikBean implements IPemilik {
             	pihak.setPoskod(rs.getString("poskod"));
             	pihak.setTel(rs.getString("no_Tel"));
             	pihak.setFax(rs.getString("no_Fax"));
+            	pihak.setEmel(rs.getString("emel"));
 		    	negeri.setNamaNegeri(rs.getString("NAMA_NEGERI"));
 		    	daerah.setNamaDaerah(rs.getString("NAMA_DAERAH"));
 		    	pihak.setNegeri(negeri);
@@ -194,22 +197,24 @@ public class PemilikBean implements IPemilik {
 			
 			 long IdPihakberkepentingan = DB.getNextID("TBLHTPPIHAKBERKEPENTINGAN_SEQ");
 			 r = new SQLRenderer();
-			 r.add("id_pihakberkepentingan", IdPihakberkepentingan);
-			 r.add("id_hakmilikurusan", pemilik.getIdHakmilikUrusan());
+			 r.add("id_Pihakberkepentingan", IdPihakberkepentingan);
+			 r.add("id_Hakmilikurusan", pemilik.getIdHakmilikUrusan());
 			 r.add("nama", pemilik.getNama());
-			 r.add("id_jenisnopb", pemilik.getJenisPB());
-			 r.add("id_jenispb", pemilik.getJenisPB());
-			 r.add("no_rujukan",pemilik.getNoRujukan());		  
+			 r.add("id_Jenisnopb", pemilik.getJenisPB());
+			 r.add("id_Jenispb", pemilik.getJenisPB());
+			 r.add("no_Rujukan",pemilik.getNoRujukan());		  
 			 r.add("alamat1", pemilik.getAlamat1());
 			 r.add("alamat2", pemilik.getAlamat2());
 			 r.add("alamat3", pemilik.getAlamat3());
 			 r.add("poskod", pemilik.getPoskod());
-			 r.add("id_daerah", pemilik.getIdDaerah());
-			 r.add("id_negeri", pemilik.getIdNegeri());
-			 r.add("no_tel", pemilik.getTel());
-			 r.add("no_fax", pemilik.getFax());
-			 sql = r.getSQLInsert("tblhtppihakberkepentingan");
-			 myLog.info("savePemilik:sql="+sql);
+			 r.add("id_Daerah", pemilik.getIdDaerah());
+			 r.add("id_Negeri", pemilik.getIdNegeri());
+			 r.add("no_Tel", pemilik.getTel());
+			 r.add("no_Fax", pemilik.getFax());
+			 r.add("emel", pemilik.getEmel());
+			 sql = r.getSQLInsert("Tblhtppihakberkepentingan");
+			 myLog.info("savePemilik===="+sql);
+			 
 			 stmt.executeUpdate(sql);	
 			 conn.commit();
 		}
@@ -248,6 +253,7 @@ public class PemilikBean implements IPemilik {
 			r.add("id_Negeri", pemilik.getIdNegeri());
 			r.add("no_Tel", pemilik.getTel());
 			r.add("no_Fax", pemilik.getFax());
+			r.add("emel", pemilik.getEmel());
 			sql = r.getSQLUpdate("Tblhtppihakberkepentingan");
 			
 			stmt.executeUpdate(sql);	

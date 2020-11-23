@@ -342,7 +342,9 @@ public class FrmAPBMaklumatPermohonanData {
 			r.add("ID_JENISPENGENALAN");
 			r.add("NO_PENGENALAN");
 			r.add("ID_WARGANEGARA");
+			r.add("WARGANEGARA_LAIN");
 			r.add("ID_BANGSA");
+			r.add("BANGSA_LAIN");
 			r.add("PEGANGAN_SAHAM");
 
 			r.add("ID_PENGARAH", idPengarah);
@@ -369,8 +371,14 @@ public class FrmAPBMaklumatPermohonanData {
 				h.put("idWarganegara",
 						rs.getString("ID_WARGANEGARA") == null ? "99999" : rs
 								.getString("ID_WARGANEGARA"));
+				h.put("warganegaraLain",
+						rs.getString("WARGANEGARA_LAIN") == null ? "" : rs
+								.getString("WARGANEGARA_LAIN"));
 				h.put("idBangsa", rs.getString("ID_BANGSA") == null ? "99999"
 						: rs.getString("ID_BANGSA"));
+				h.put("bangsaLain",
+						rs.getString("BANGSA_LAIN") == null ? "" : rs
+								.getString("BANGSA_LAIN"));
 				h.put("saham",
 						rs.getString("PEGANGAN_SAHAM") == null ? "" : Util
 								.formatDecimal(Double.valueOf(rs
@@ -387,8 +395,8 @@ public class FrmAPBMaklumatPermohonanData {
 
 	public String savePengarah(String idPemohon, String idWarganegara,
 			String nama, String idJenisPengenalan, String idBangsa,
-			String noPengenalan, String saham, HttpSession session)
-			throws Exception {
+			String noPengenalan, String saham, String bangsaLain, String warganegaraLain, 
+			HttpSession session) throws Exception {
 		Db db = null;
 		Connection conn = null;
 		String userId = session.getAttribute("_ekptg_user_id").toString();
@@ -413,6 +421,8 @@ public class FrmAPBMaklumatPermohonanData {
 			r.add("ID_WARGANEGARA", idWarganegara);
 			r.add("ID_BANGSA", idBangsa);
 			r.add("PEGANGAN_SAHAM", saham);
+			r.add("WARGANEGARA_LAIN", warganegaraLain);
+			r.add("BANGSA_LAIN", bangsaLain);
 
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
@@ -443,8 +453,8 @@ public class FrmAPBMaklumatPermohonanData {
 
 	public void updatePengarah(String idPengarah, String idWarganegara,
 			String nama, String idJenisPengenalan, String idBangsa,
-			String noPengenalan, String saham, HttpSession session)
-			throws Exception {
+			String noPengenalan, String saham, String bangsaLain, String warganegaraLain, 
+			HttpSession session) throws Exception {
 		Db db = null;
 		Connection conn = null;
 		String userId = session.getAttribute("_ekptg_user_id").toString();
@@ -465,6 +475,8 @@ public class FrmAPBMaklumatPermohonanData {
 			r.add("ID_WARGANEGARA", idWarganegara);
 			r.add("ID_BANGSA", idBangsa);
 			r.add("PEGANGAN_SAHAM", Utils.RemoveSymbol((String) saham));
+			r.add("WARGANEGARA_LAIN", warganegaraLain);
+			r.add("BANGSA_LAIN", bangsaLain);
 
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));

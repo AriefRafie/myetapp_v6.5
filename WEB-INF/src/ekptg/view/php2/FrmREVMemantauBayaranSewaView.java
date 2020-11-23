@@ -79,7 +79,6 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 	    String hitButton = getParam("hitButton");
         String submit = getParam("command");
         String mode = getParam("mode");
-        System.out.println("mode >>>>"+mode);
         String selectedTabUpper = (String) getParam("selectedTabUpper");
 		if (selectedTabUpper == null || "".equals(selectedTabUpper) ) {
 			selectedTabUpper = "0";
@@ -97,7 +96,6 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         String idNotis = getParam("idNotis");
         String noLotTanah = getParam("noLotTanah");
         String idCatatan = getParam("idCatatan");
-        System.out.println("idCatatan >>> "+idCatatan);
 
         String idLuasKegunaan = getParam("idLuasKegunaan");
 		if (idLuasKegunaan == null || idLuasKegunaan.trim().length() == 0){

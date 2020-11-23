@@ -108,7 +108,6 @@ public class FrmPajakanPopupSenaraiTanahView extends AjaxBasedModule {
 			getHakmilikUrusanValues();
 			logic.saveHakmilikUrusan(idHakmilik, idPermohonan, hUrusan, session);
 			idHakmilikUrusan = logic.getIdHakmilikUrusan();
-			
 		}else{
 
 		}
@@ -126,17 +125,15 @@ public class FrmPajakanPopupSenaraiTanahView extends AjaxBasedModule {
 			logic.setMaklumatTanah(idHakmilik);
 			beanMaklumatTanah = logic.getBeanMaklumatTanah();
 			Hashtable<String,String> mt = (Hashtable<String,String>)beanMaklumatTanah.get(0);
+			//myLog.info("luas hash="+mt);
 			myLog.info("mt.get(luas) >>> "+mt.get("luas"));
 			String luas = mt.get("luas");
-			String luasAsal = "";
 			if(luas == null){
 				luas ="";
 			}else{
 				luas = mt.get("luas").trim();
-				luasAsal = mt.get("luasAsal");
 			}
 			this.context.put("txtLuasLama",luas);
-			this.context.put("txtLuasLamaAsal",luasAsal);
 
 			hakmilik = new HakMilik();
 			hakmilikTemp = getIHakmilik().getHakmilik(idHakmilik);
@@ -205,10 +202,7 @@ public class FrmPajakanPopupSenaraiTanahView extends AjaxBasedModule {
 //			this.context.put("socLuas",String.valueOf(hp.getIdLuasPajakan()));
 			idHakmilik = String .valueOf(hp.getIdHakmilik());
 			idLuasAsal = String.valueOf(hp.getIdLuasPajakan());
-			
-			String luasLama = hp.getLuasStringPajakan();
-			String luasLamaAsal = String.valueOf(hp.getLuasAsal());
-			
+			this.context.put("txtLuasLama",hp.getLuasStringPajakan());
 			if (mode.equals("doChangeKodLuas")) {
 //				RESET LUAS
 				idLuasAsal = getParam("socLuas");
@@ -292,8 +286,6 @@ public class FrmPajakanPopupSenaraiTanahView extends AjaxBasedModule {
 				this.context.put("socLuas",getParam("socLuas"));
 
 		    }
-			this.context.put("txtLuasLama",luasLama);
-			this.context.put("txtLuasLamaAsal",luasLamaAsal);
 
 			Vector<Hashtable<String, String>> senaraiUrusan = getHakmilikUrusan().getMaklumat(idHakmilik);
 			myLog.info("senaraiUrusan size="+senaraiUrusan.size());
@@ -422,14 +414,12 @@ public class FrmPajakanPopupSenaraiTanahView extends AjaxBasedModule {
 	private void getHakmilikUrusanValues(){
 		String idLuas = getParam("socLuas");
 		String luas = getParam("txtLuasGabung");
-		String luasAsal = getParam("txtluasgabungasal");
 		//String idLuasBersamaan= getParam("socluasbersamaan");
 		String luasBersamaan = getParam("txtLuas");
 		idHakmilikUrusan = getParam("idhakmilikurusan");
 		hUrusan = new HakmilikUrusan();
 		hUrusan.setIdLuas(idLuas);
 		hUrusan.setLuas(luas);
-		hUrusan.setLuasAsal(luasAsal);
 		hUrusan.setIdLuasBersamaan("2");
 		hUrusan.setLuasBersamaan(luasBersamaan);
 		hUrusan.setIdhakmilikurusan(idHakmilikUrusan);

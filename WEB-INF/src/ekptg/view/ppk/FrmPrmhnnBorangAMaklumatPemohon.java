@@ -248,6 +248,7 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 		Vector listxxx = null;
 		Vector v = null;
 		Vector View_pengesahan_pemohonan = null;
+		Vector listUbah = null;
 
 		String hideTabPengesahan_pemohon = "";
 		String hideTabPengesahan_simati = "";
@@ -1459,6 +1460,11 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			if ("Pemohonview".equals(mode)) {
 				String id = getParam("idPermohonan");
 				String id2 = getParam("idPemohon");
+				
+				logic_A.setPerubahanAkta();
+				listUbah = logic_A.getPerubahanAkta();
+				this.context.put("listUbah", listUbah);
+				
 				logic.setDataPemohon(id);
 				listPemohon = logic.getDataPemohon();
 				this.context.put("listPemohon", listPemohon);
@@ -1877,6 +1883,9 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 				this.context.put("show_tambah_waris1", "yes");
 				this.context.put("button_Kembali1", "yes");
 			} else if ("Newwaris".equals(mode)) {
+				logic_A.setPerubahanAkta();
+				listUbah = logic_A.getPerubahanAkta();
+				this.context.put("listUbah", listUbah);
 				String id = getParam("idPermohonan");
 				String id2 = getParam("idPemohon");
 				String mati = getParam("idSimati");
@@ -2342,6 +2351,10 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 						getParam("id_Permohonansimati"));
 				listWarisUpdate = logic.getDataWarisUpdate();
 				this.context.put("listWarisUpdate", listWarisUpdate);
+				
+				logic_A.setPerubahanAkta();
+				listUbah = logic_A.getPerubahanAkta();
+				this.context.put("listUbah", listUbah);
 
 				Hashtable h = (Hashtable) listWarisUpdate.get(0);
 				if (h.get("idnegeriSurat").toString() != ""
@@ -4050,28 +4063,39 @@ public class FrmPrmhnnBorangAMaklumatPemohon extends VTemplate {
 			dataParam.put("idPermohonan",idPermohonan);
 			dataParam.put("idSimati",getParam("idSimati"));			
 			dataParam.put("id_Permohonansimati",mati);
+			dataParam.put("idhtaamid", getParam("idhtaamid"));
 			
 			//SOC
 			dataParam.put("socNegeriHtaamUp", getParam("socNegeriHtaamUp"));
 			dataParam.put("socDaerahHtaamUp", getParam("socDaerahHtaamUp"));
 			dataParam.put("socMukimHtaamUp", getParam("socMukimHtaamUp"));
-			dataParam.put("txtBandarHartaHtaamX2", getParam("txtBandarHartaHtaamX2"));
+			dataParam.put("txtBandarHartaHtaamX2", getParam("txtBandarHartaHtaamX2")); 
 			dataParam.put("socKategoriTanahHtaamUp", getParam("socKategoriTanahHtaamUp"));
+			dataParam.put("socJenisHakmilikHtaamUp", getParam("socJenisHakmilikHtaamUp"));
+			dataParam.put("socStatusPemilikanHtaamUp", getParam("socStatusPemilikanHtaamUp"));
+			dataParam.put("socJenisTanahHtaamUp", getParam("socJenisTanahHtaamUpd"));
 			dataParam.put("socJenisLuasHtaamUp", getParam("socJenisLuasHtaamUp").equals("")?"0":getParam("socJenisLuasHtaamUp"));
 			
 			dataParam.put("txtBahagianSimati1Up", getParam("txtBahagianSimati1Up"));
 			dataParam.put("txtBahagianSimati2Up", getParam("txtBahagianSimati2Up"));
 			dataParam.put("txtSekatan", getParam("txtSekatan"));
 			dataParam.put("txtSyaratNyata", getParam("txtSyaratNyata"));
-			
 			dataParam.put("txtAlamat1Htaam1", getParam("txtAlamat1Htaam1"));
 			dataParam.put("txtAlamat2Htaam", getParam("txtAlamat2Htaam"));
 			dataParam.put("txtAlamat3Htaam", getParam("txtAlamat3Htaam"));
 			dataParam.put("txtAlamatPoskodHtaam", getParam("txtAlamatPoskodHtaam"));
-			
-			
+			dataParam.put("txtNilaiTarikhMohonHt",getParam("txtNilaiTarikhMohonHt"));
+			dataParam.put("txtNilaiTarikhMatiHtaamUpd",getParam("txtNilaiTarikhMatiHtaamUpd"));
 			
 			dataParam.put("idhtaamid", getParam("idhtaamid"));
+			dataParam.put("txtNoHakmilikHtaamUp",getParam("txtNoHakmilikHtaamUp"));
+			dataParam.put("txtNoPTHtaamUp",getParam("txtNoPTHtaamUp"));
+			dataParam.put("txtCatatanHt",getParam("txtCatatanHt"));
+			dataParam.put("txtLuasHMpHtaamUpd",getParam("txtLuasHMpHtaamUpd"));
+			dataParam.put("txtLuasAsalHtaamUpd",getParam("txtLuasAsalHtaamUpd"));
+			dataParam.put("txtNoPajakanUp",getParam("txtNoPajakanUp"));
+			dataParam.put("txtNoPersHtaamUp",getParam("txtNoPersHtaamUp"));
+			
 			
 			getHTA().getHarta(mode, dataParam, logic, request, session, context);
 			

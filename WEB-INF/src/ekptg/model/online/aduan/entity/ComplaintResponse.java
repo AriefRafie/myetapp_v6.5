@@ -6,18 +6,17 @@ import ekptg.model.online.aduan.Complaint;
 import ekptg.model.online.aduan.ResponseStatus;
 
 public class ComplaintResponse implements Serializable {
-	private Complaint complaint;
-	private ComplaintTindakan tindakan;
 	private long id;
-	private ResponseStatus responseStatus;
-	private String arahan;
-	private String idKemaskini;
-	private String idMasuk;
 	private String jawapan;
-	private String status;
+	private Complaint complaint;
+	private String idMasuk;
+	private String idKemaskini;
 	private String tarikhMasuk;
 	private String tarikhKemaskini;
-	
+	private ResponseStatus responseStatus;
+	private String arahan;
+	private String status;
+	private ComplaintTindakan tindakan;
 	public String getIdMasuk() {
 		return idMasuk;
 	}

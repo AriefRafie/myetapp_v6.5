@@ -8730,6 +8730,9 @@ var tt = dob_code.charAt(4)+""+dob_code.charAt(5)+"/"+dob_code.charAt(2)+""+dob_
    
     var date1 = new Date(yr1, mon1, dt1);
     var date2 = new Date(yr2, mon2, dt2);
+    
+    var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+    var em = document.f1.txtEmel.value;
 	
 	
 
@@ -8828,6 +8831,12 @@ if(document.f1.txtNamaOBWaris.value == ""){
 		alert("Sila masukkan emel waris");
 		document.f1.txtEmel.focus();
 		return; 
+	}
+	else if(!em.match(emailExp) && em!=""){
+		
+		alert("Alamat emel tidak sah!");		
+		document.f1.txtEmel.focus();
+		return;
 	}
 	/*
 	else if (document.f1.checkHidupWaris.checked && document.f1.txtWaktuKematianWaris.value == "") {
@@ -9199,7 +9208,8 @@ var tt = dob_code.charAt(4)+""+dob_code.charAt(5)+"/"+dob_code.charAt(2)+""+dob_
     var date2 = new Date(yr2, mon2, dt2);
 	
 	 
-	
+    var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+    var em = document.f1.txtEmel.value;
 	
 	
 	
@@ -9341,6 +9351,12 @@ var tt = dob_code.charAt(4)+""+dob_code.charAt(5)+"/"+dob_code.charAt(2)+""+dob_
 		alert("Sila masukkan emel waris");
 		document.f1.txtEmel.focus();
 		return; 
+	}
+	else if(!em.match(emailExp) && em!=""){
+		
+		alert("Alamat emel tidak sah!");		
+		document.f1.txtEmel.focus();
+		return;
 	}
 	
 else if (document.f1.txtNoKPBaru1Waris.value != "" && isIc(tt)==false){
@@ -10781,6 +10797,21 @@ function defineStatusWarisByUmur(){
 	    if (hWnd.focus != null) hWnd.focus();
 	
 	}
+	
+	function emailValidator(elem, helperMsg){
+		var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+		
+		if(elem.value!=""){
+			if(elem.value.match(emailExp)){
+				return true;
+			}else{
+				alert(helperMsg);		
+				elem.focus();
+				return false;
+			}
+		}
+	}
+	
 // function semakanJPN(myIdBaru){
 // 	//	var noResit = document.${formName}.txtNomborResitPerintahEDIT.value;
 // 	//	document.${formName}.action="?_portal_module=ekptg.view.ppk.FrmSenaraiFailKeputusanPerbicaraan";

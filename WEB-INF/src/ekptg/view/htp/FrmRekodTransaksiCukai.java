@@ -1,6 +1,5 @@
 package ekptg.view.htp;
 
-import java.util.Hashtable;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
@@ -29,7 +28,7 @@ public class FrmRekodTransaksiCukai extends AjaxBasedModule {
 	// VIEW TRANSAKSI CUKAI BY ID
 	private void view_modeTransaksiCukai(HttpSession session) throws Exception {
 		String idString = getParam("idHakmilik");
-		Vector<Hashtable<String,String>> list =null;
+		Vector list =null;
 		list = FrmRekodTransaksiCukaiData.getTransaksiCukaiById(idString);
 		this.context.put("SenaraiTransaksi",list);
 		

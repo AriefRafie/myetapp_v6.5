@@ -22,16 +22,13 @@
   <input name="anchor" type="hidden" id="anchor"/>
   <input type="hidden" name="txtNamaPemohon" id="txtNamaPemohon" value="$txtNamaPemohon"/>
   <input type="hidden" name="txtNoFail" id="txtNoFail" value="$txtNoFail"/>
-  <input type="text" name="idCatatan" id="idCatatan" value="$idCatatan"/>
+  <input type="hidden" name="idCatatan" id="idCatatan" value="$idCatatan"/>
 
 </p>
 
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
     <td>#parse("app/php2/frmREVHeader.jsp") </td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
   </tr>
   <tr>
     <td><div id="TabbedPanels1" class="TabbedPanels">
@@ -128,6 +125,24 @@ function janaPenyataAkaun(idHasil) {
 function janaHapusKira(idHasil) {
 
 	var url = "../servlet/ekptg.report.php2.REVHapusKira?ID_HASIL="+idHasil;
+    var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function janaKronologi(idHasil) {
+
+	var url = "../servlet/ekptg.report.php2.REVKronologi?ID_HASIL="+idHasil;
+    var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function janaMaklumatPermohonan(idHasil) {
+
+	var url = "../servlet/ekptg.report.php2.REVMaklumatPermohonan?ID_HASIL="+idHasil;
     var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;

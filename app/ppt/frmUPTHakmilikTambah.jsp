@@ -188,6 +188,12 @@
             	<td>:</td>
             	<td>$!selectLot</td>
        </tr>
+       
+          <tr>
+            	<td>&nbsp;</td>
+            	<td>&nbsp;</td>
+                <td><input type="text" name="txtnopt" size="22" value="$txtnopt" maxlength="20" id="txtnopt"  ></td>
+       </tr>
        #end
             <!-- PENAMBAHBAIKAN V7 yati -->
        <tr>
@@ -935,7 +941,7 @@ function defaultLOT(){
 
 
 function add_maklumat_tanah(id_permohonan,id_hakmilik,flagSubjaket,mode){   
-	
+
 	if(document.${formName}.socMukim.value == ""){
 		alert("Sila pilih \"Bandar/Pekan/Mukim\" terlebih dahulu.");
   		document.${formName}.socMukim.focus(); 
@@ -944,7 +950,6 @@ function add_maklumat_tanah(id_permohonan,id_hakmilik,flagSubjaket,mode){
 	else 
 	{
 	if ( !window.confirm("Adakah Anda Pasti?") ) return;
-	
 	document.${formName}.ScreenLocation.value = "TabbedPanels1";
 	document.${formName}.command.value = "addMaklumatTanah";
 	document.${formName}.action = "?_portal_module=ekptg.view.ppt.FrmPermohonanUPTSek4&id_permohonan="+id_permohonan;

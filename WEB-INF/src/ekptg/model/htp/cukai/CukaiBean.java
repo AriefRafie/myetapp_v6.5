@@ -39,7 +39,7 @@ import ekptg.model.htp.entity.Resit;
 public class CukaiBean implements ICukai {
 	
 	static Logger myLog = Logger.getLogger(ekptg.model.htp.cukai.CukaiBean.class);
-	private static SimpleDateFormat sdf =  new SimpleDateFormat("dd/MM/yyyy");
+	private static SimpleDateFormat format =  new SimpleDateFormat("dd/MM/yyyy");
 	private String sql = "";
 	private Db db = null;
  	private IHtp iHTP = null;  
@@ -302,7 +302,7 @@ public class CukaiBean implements ICukai {
 		    		  h.put("peringkat_bayaran",idPeringkatBayaran);
     	  
 			    	  if(rs.getString("tarikh_baucer") != null){
-			    		  h.put("tkh_baucer", sdf.format(rs.getDate("tarikh_baucer")));
+			    		  h.put("tkh_baucer", format.format(rs.getDate("tarikh_baucer")));
 			    	  }else{
 			    		  h.put("tkh_baucer", "");
 			    	  }
@@ -312,14 +312,14 @@ public class CukaiBean implements ICukai {
 			    		  h.put("no_resit", "");
 			    	  }
 			    	  if(rs.getString("tarikh_resit") != null){
-			    		  h.put("tkh_resit", sdf.format(rs.getDate("tarikh_resit")));
+			    		  h.put("tkh_resit", format.format(rs.getDate("tarikh_resit")));
 			    	  }else{
 			    		  h.put("tkh_resit", "");
 			    	  }
 			    	  h.put("amaun_baucer", rs.getString("amaun_baucer") == null || "0".equals(rs.getString("amaun_baucer").toString()) ? "0.00":Util.formatDecimal(rs.getDouble("amaun_baucer")));
 			    	  
 			    	  if(rs.getString("tarikh_terima") != null){
-			    		  h.put("tkh_terima", sdf.format(rs.getDate("tarikh_terima")));
+			    		  h.put("tkh_terima", format.format(rs.getDate("tarikh_terima")));
 			    	  }else{
 			    		  h.put("tkh_terima", "");
 			    	  }
@@ -401,7 +401,7 @@ public class CukaiBean implements ICukai {
 		    		  h.put("peringkat_bayaran",idPeringkatBayaran);
 		  
 			    	  if(rs.getString("tarikh_baucer") != null){
-			    		  h.put("tkh_baucer", sdf.format(rs.getDate("tarikh_baucer")));
+			    		  h.put("tkh_baucer", format.format(rs.getDate("tarikh_baucer")));
 			    	  }else{
 			    		  h.put("tkh_baucer", "");
 			    	  }
@@ -411,14 +411,14 @@ public class CukaiBean implements ICukai {
 			    		  h.put("no_resit", "");
 			    	  }
 			    	  if(rs.getString("tarikh_resit") != null){
-			    		  h.put("tkh_resit", sdf.format(rs.getDate("tarikh_resit")));
+			    		  h.put("tkh_resit", format.format(rs.getDate("tarikh_resit")));
 			    	  }else{
 			    		  h.put("tkh_resit", "");
 			    	  }
 			    	  h.put("amaun_baucer", rs.getString("amaun_baucer") == null || "0".equals(rs.getString("amaun_baucer").toString()) ? "0.00":Util.formatDecimal(rs.getDouble("amaun_baucer")));
 			    	  
 			    	  if(rs.getString("tarikh_terima") != null){
-			    		  h.put("tkh_terima", sdf.format(rs.getDate("tarikh_terima")));
+			    		  h.put("tkh_terima", format.format(rs.getDate("tarikh_terima")));
 			    	  }else{
 			    		  h.put("tkh_terima", "");
 			    	  }
@@ -436,12 +436,12 @@ public class CukaiBean implements ICukai {
 	public Vector<Hashtable<String, String>> getListDaerah(String idPeringkatBayaran) throws Exception {
 		Db db = null;
 		String sql = "SELECT a.id_daerah, a.kod_Daerah, a.nama_Daerah, c.jumlah_cukai " +
-				" ,C.ID_CUKAIUTAMA " +
-				" FROM tblrujdaerah a, tblhtpperingkatbayaran b, tblhtpcukaiutama c " +
-				" WHERE b.id_negeri = c.id_negeri " +
-				" and c.id_daerah = a.id_daerah " +
-		       	" and b.id_peringkatbayaran = c.id_peringkatbayaran " +
-		       	" and b.id_peringkatbayaran ='"+idPeringkatBayaran +"'";
+		    			 " ,C.ID_CUKAIUTAMA " +
+		    			 " FROM tblrujdaerah a, tblhtpperingkatbayaran b, tblhtpcukaiutama c " +
+		       			 " WHERE b.id_negeri = c.id_negeri " +
+		       			 " and c.id_daerah = a.id_daerah " +
+		       			 " and b.id_peringkatbayaran = c.id_peringkatbayaran " +
+		       			 " and b.id_peringkatbayaran ='"+idPeringkatBayaran +"'";
 		//mylog.info("getListDaerah:"+sql);
 		try {
 			db = new Db();
@@ -500,7 +500,7 @@ public class CukaiBean implements ICukai {
 		      if (db != null) db.close();
 		    }
 	  }
-	public Hashtable<String,String> getPermohonanInfo(String idPermohonan)throws Exception {
+	public Hashtable getPermohonanInfo(String idPermohonan)throws Exception {
 	    Db db = null;
 	    String sql = "";
 	    try {
@@ -519,7 +519,7 @@ public class CukaiBean implements ICukai {
 	      " and p.id_permohonan = '"+idPermohonan+"'";
 	      //mylog.info("getPermohonanInfo:sql="+sql);
 	      ResultSet rs = stmt.executeQuery(sql);
-	      Hashtable<String,String> h = new Hashtable<String,String>();
+	      Hashtable h = new Hashtable();
 
 	      while (rs.next()) {
 	    	  if(rs.getString("nama_negeri")==null){
@@ -546,9 +546,9 @@ public class CukaiBean implements ICukai {
 	    		  h.put("fail", rs.getString("no_fail"));
 	    	  }
 	    	  if(rs.getDate("tarikh_daftar_fail")==null){
-	    		  h.put("tdaftar",sdf.format(new Date()));
+	    		  h.put("tdaftar",new Date());
 	    	  }else{
-	    		  h.put("tdaftar", sdf.format(rs.getDate("tarikh_daftar_fail")));
+	    		  h.put("tdaftar", rs.getDate("tarikh_daftar_fail"));
 	    	  }
 	    	  if(rs.getString("no_rujukan_kjp")==null){
 	    		  h.put("rujukankjp", "");
@@ -561,14 +561,14 @@ public class CukaiBean implements ICukai {
 	    		  h.put("rujukanlain", rs.getString("no_rujukan_lain"));
 	    	  }
 	    	  if(rs.getDate("tarikh_surat")==null){
-	    		  h.put("tsurat",sdf.format(new Date()));
+	    		  h.put("tsurat",new Date());
 	    	  }else{
-	    		  h.put("tsurat", sdf.format(rs.getDate("tarikh_surat")));
+	    		  h.put("tsurat", rs.getDate("tarikh_surat"));
 	    	  }
 	    	  if(rs.getDate("tarikh_terima")==null){
-	    		  h.put("rtterima",sdf.format(new Date()));
+	    		  h.put("rtterima",new Date());
 	    	  }else{
-	    		  h.put("rtterima", sdf.format(rs.getDate("tarikh_terima")));
+	    		  h.put("rtterima", rs.getDate("tarikh_terima"));
 	    	  }
 	    	  if(rs.getString("tujuan")==null){
 	    		  h.put("tujuan", "");
@@ -728,7 +728,8 @@ public class CukaiBean implements ICukai {
 //		}
 //		
 //	}
-		
+	
+	
 	@Override
 	public Vector<Hashtable<String, String>> senaraiPenyataCukaiTemp(String idNegeri,String idDaerah, String idMukim, String tahun)throws Exception {
 		Db db = null;
@@ -809,92 +810,15 @@ public class CukaiBean implements ICukai {
 				sql += " AND RM.ID_MUKIM = "+idMukim;
 			}
 			sql +=" ORDER BY RN.KOD_MAMPU,TPCT.ID_DAERAH,TPCT.ID_MUKIM,TPCT.NO_HAKMILIK,TPCT.NO_LOT";
-			
-			
-			sql = "" +
-					"SELECT DISTINCT HTPHC.ID_HAKMILIKCUKAI" +
-					" ,HTPHC.CUKAI,NVL(HTPHC.CUKAI_TERKINI,0) CUKAI_TERKINI" +
-					" ,HTPHC.CUKAI_TALIAIR,HTPHC.CUKAI_PARIT " +
-					" ,HTPHC.BAYARAN_LAIN,HTPHC.DENDA" +
-					" ,HTPHC.PENGURANGAN,HTPHC.PENGECUALIAN  "+
-					" ,U.ID_JENISHAKMILIK,H.KOD_JENIS_HAKMILIK,LTRIM(U.NO_HAKMILIK,0) NO_HAKMILIK " +
-					" ,LOT.KETERANGAN KETERANGAN_LOT,U.NO_LOT " +
-					" ,U.TARIKH_LUPUT" +
-					//",U.CUKAI_TERKINI
-					" ,U.LOKASI,LUAS.ID_LUAS,LUAS.KOD_LUAS,U.LUAS " +
-					" ,U.TARIKH_WARTA,U.NO_WARTA,U.NO_PELAN,U.NO_SYIT,U.SYARAT,U.SEKATAN,U.KEGUNAAN_TANAH " +
-					" ,NVL(U.NO_FAIL,'TIADA') NO_FAIL,NVL(U.NO_FAIL_PTG,'TIADA') NO_FAIL_PTG " +
-					" ,TO_CHAR(U.TARIKH_DAFTAR,'dd/mm/yyyy') TARIKH_DAFTAR" +
-					" ,RN.KOD_MAMPU, RN.ID_NEGERI,RN.NAMA_NEGERI" +
-					" ,RD.ID_DAERAH,RD.NAMA_DAERAH,RM.ID_MUKIM,RM.NAMA_MUKIM "+
-					" ,RK.ID_KATEGORI,RK.KOD_KATEGORI,RK.KETERANGAN" +
-					" ,TO_CHAR(sysdate,'yyyy') TAHUN "+
-					" , 0 ID_CUKAITERPERINCI,0 ID_CUKAITEMP "+
-					" , 0 TUNGGAKAN,0 PENGURANGAN "+
-					" , 0 PENGECUALIAN,0 PENGURANGAN "+
 
-					" FROM TBLHTPHAKMILIK U, TBLRUJJENISHAKMILIK H, TBLRUJLOT LOT, TBLRUJLUAS LUAS" +
-					" ,TBLRUJNEGERI RN,TBLRUJDAERAH RD ,TBLRUJMUKIM RM "+
-					" ,TBLRUJKATEGORI RK,TBLHTPHAKMILIKCUKAI HTPHC "+
-					" WHERE NVL(U.NO_HAKMILIK,' ') <> ' ' AND U.ID_JENISHAKMILIK = H.ID_JENISHAKMILIK "+
-					" AND U.Id_Lot=lot.Id_Lot "+
-					" AND U.Id_Luas=luas.Id_Luas "+
-					" AND U.ID_KATEGORI=RK.ID_KATEGORI "+
-					" AND U.ID_MUKIM=RM.ID_MUKIM "+
-					" AND RM.ID_DAERAH=RD.ID_DAERAH "+
-					" AND RD.ID_NEGERI=RN.ID_NEGERI "+
-					" AND U.ID_HAKMILIK=HTPHC.ID_HAKMILIK " +
-					" AND HTPHC.STATUS = 'S' "+
-//					" AND HTPHC.ID_HAKMILIKCUKAI not in" +
-//					" ((" +
-//					"	select TPCTI.ID_HAKMILIKCUKAI from tblhtpcukaiterperinci TPCTI,TBLHTPHAKMILIKCUKAI TPHCI "+
-//					" 	where TPCTI.ID_HAKMILIKCUKAI=TPHCI.ID_HAKMILIKCUKAI " +
-//					" 	AND TPCTI.TAHUN="+ tahun +" "+
-//					" )) "+
-
-//					" AND LTRIM(U.NO_HAKMILIK,0)||LTRIM(U.NO_BANGUNAN,0)||LTRIM(U.NO_TINGKAT,0)||LTRIM(U.NO_PETAK,0) NOT IN " +
-//					" (	" +
-//					" 	SELECT LTRIM(TPHI.NO_HAKMILIK,0)||LTRIM(TPHI.NO_BANGUNAN,0)||LTRIM(TPHI.NO_TINGKAT,0)||LTRIM(TPHI.NO_PETAK,0)" +
-//					" 	FROM TBLHTPCUKAITEMP TPCTI,TBLHTPHAKMILIK TPHI " +
-//					" 	WHERE " +
-//					" 	LTRIM(TPHI.NO_HAKMILIK,0)||LTRIM(TPHI.NO_BANGUNAN,0)||LTRIM(TPHI.NO_TINGKAT,0)||LTRIM(TPHI.NO_PETAK,0) "+  
-//	 	    		" 	= LTRIM(TPCTI.NO_HAKMILIK,0)||LTRIM(TPCTI.NO_BANGUNAN,0)||LTRIM(TPCTI.NO_TINGKAT,0)||LTRIM(TPCTI.NO_PETAK,0) "+   
-//					" 	AND TPHI.ID_NEGERI=TPCTI.ID_NEGERI AND TPHI.ID_DAERAH=TPCTI.ID_DAERAH AND TPHI.ID_MUKIM=TPCTI.ID_MUKIM "+
-//					" 	AND TPCTI.TAHUN="+ tahun +" "+
-//					" ) "+
-					"AND (U.STATUS_SAH IS NULL OR U.STATUS_SAH IN " +
-					"(" +
-					" 		SELECT STATUS_SAH FROM TBLHTPRUJSTATUSAH WHERE AKTIF=1" +
-					" )" +
-					") " +
-					" AND U.PEGANGAN_HAKMILIK NOT IN " +
-					" (	SELECT TPU.PEGANGAN_HAKMILIK " +
-					" 	FROM TBLHTPPAJAKAN TPP,TBLHTPHAKMILIKURUSAN TPU,TBLPERMOHONAN P, TBLPFDFAIL F " +
-					" 	WHERE TPU.ID_PERMOHONAN=P.ID_PERMOHONAN " +
-					" 	AND P.ID_FAIL=F.ID_FAIL " +
-					" 	AND F.ID_URUSAN=3 " +
-					" 	AND TPP.ID_PERMOHONAN=P.ID_PERMOHONAN " +
-					" 	AND TPP.KATEGORI_CUKAI = 'P' AND TPU.PEGANGAN_HAKMILIK IS NOT NULL  " +
-					" ) ";
-		 	if(idNegeri != ""){
-		 		sql += " AND RN.ID_NEGERI = "+idNegeri;
-		 	}
-		  	if(idDaerah != ""){
-		  		sql += " AND RD.ID_DAERAH = "+idDaerah;
-		  	}
-		  	if(idMukim != ""){
-		  		sql += " AND U.ID_MUKIM = "+idMukim;
-		  	}
-			sql +=" order by RN.KOD_MAMPU,RD.ID_DAERAH,RM.ID_MUKIM";
-
-			myLog.info("senaraiPenyataCukaiTemp:sql="+ sql);		
+//			myLog.info("senaraiPenyataCukaiTemp:sql="+ sql);		
 			ResultSet rs = stmt.executeQuery(sql);
 			Vector list = new Vector();
 			Hashtable h;
 			// 38E94-1ND38-UTHTZ-7323Y
 			while (rs.next()) {
 				h = new Hashtable();		
-				h.put("idCukaiTerperinci", Utils.isNull(rs.getString("ID_CUKAITERPERINCI")));
+				h.put("idCukaiTerperinci", rs.getString("ID_CUKAITERPERINCI"));
 				h.put("idCukaiTemp", rs.getString("ID_CUKAITEMP"));
 				h.put("NAMA_NEGERI", rs.getString("NAMA_NEGERI"));
 				h.put("NAMA_DAERAH", rs.getString("NAMA_DAERAH"));
@@ -3144,7 +3068,7 @@ public class CukaiBean implements ICukai {
 	    	r.add("ID_KEMASKINI", idkemaskini);
 	     	r.add("NO_RESIT", data.getNoResit());
 	     	if(!data.getTarikhResit().equals("")){
-	     		String tarikhResit = "to_date('" + sdf.format(data.getTarikhResitDate()) + "','dd/MM/yyyy')";
+	     		String tarikhResit = "to_date('" + format.format(data.getTarikhResitDate()) + "','dd/MM/yyyy')";
 	     		r.add("TARIKH_RESIT",r.unquote(tarikhResit));		
 	     	}
 	    	
@@ -3715,7 +3639,7 @@ public class CukaiBean implements ICukai {
 				bCukai.setBaucer(baucer);
 				bCukai.setIdPeringkat(rs.getLong("id_peringkatbayaran"));
 				bayaran.setTarikhBayaran(rs.getDate("tarikh_bayaran"));
-				bayaran.setTarikhBayaranStr(sdf.format(rs.getDate("tarikh_bayaran")));
+				bayaran.setTarikhBayaranStr(format.format(rs.getDate("tarikh_bayaran")));
 				bayaran.setBank(rs.getString("nama_bank"));
 				bayaran.setJumlah(rs.getDouble("amaun"));
 				bayaran.setNoRujukan(rs.getString("no_rujbayaran"));

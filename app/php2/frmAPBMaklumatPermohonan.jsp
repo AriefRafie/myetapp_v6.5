@@ -96,6 +96,12 @@ function doChangeTab(tabId) {
 function doChangeKategoriPemohon() {
 	doAjaxCall${formName}("doChangeKategoriPemohon");
 }
+function doChangeBangsa() {
+	doAjaxCall${formName}("doChangeBangsa");
+}
+function doChangeWarganegara() {
+	doAjaxCall${formName}("doChangeWarganegara");
+}
 function doChangeNegeri() {
 	doAjaxCall${formName}("doChangeNegeri");
 }
@@ -573,11 +579,6 @@ function simpanKemaskiniPermohonan() {
   		document.${formName}.txtTempoh.focus(); 
 		return; 
 	}	
-	if(document.${formName}.socTempoh.value == ""){
-		alert('Sila pilih Jenis Tempoh.');
-  		document.${formName}.socTempoh.focus(); 
-		return; 
-	}
 	if(document.${formName}.socTempoh.value == ""){
 		alert('Sila pilih Jenis Tempoh.');
   		document.${formName}.socTempoh.focus(); 

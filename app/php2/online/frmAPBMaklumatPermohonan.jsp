@@ -30,6 +30,7 @@
   <input name="namaPemohon" type="hidden" id="namaPemohon" value="$namaPemohon"/>
   <input name="noLesen" type="hidden" id="noLesen" value="$noLesen"/>
   <input name="idJadualKeduaLesen" type="hidden" id="idJadualKeduaLesen" value="$idJadualKeduaLesen"/>
+  <input name="idJenisPermohonan" type="hidden" id="idJenisPermohonan" value="$idJenisPermohonan"/>
 </p>
 
 <body onLoad = $onload >
@@ -38,8 +39,7 @@
   <tr>
     <td> #parse("app/php2/online/frmAPBHeader.jsp") </td>
   </tr>
-  #end
-  #if ($idFail != '')
+
   <tr>
   	<td>
   		<div id="TabbedPanels1" class="TabbedPanels">
@@ -204,6 +204,9 @@ function doChangeNegeri() {
 }
 function doChangeWarganegara() {
 	doAjaxCall${formName}("doChangeWarganegara");
+}
+function doChangeBangsa() {
+	doAjaxCall${formName}("doChangeBangsa");
 }
 function getLainlain(id) {
 	if (document.${formName}.socWarganegara.value == "13") {
@@ -457,14 +460,6 @@ function kemaskiniPengarah(){
 }
 
 function simpanKemaskiniPengarah(){
-
-	if(document.${formName}.socWarganegara.value != "13"){
-		document.${formName}.txtWarga.value="";
-	}
-	
-	if(document.${formName}.socBangsa.value != "7"){
-		document.${formName}.txtBangsa.value="";
-	}
 
 	if(document.${formName}.socWarganegara.value == ""){
 		alert('Sila pilih Warganegara.');

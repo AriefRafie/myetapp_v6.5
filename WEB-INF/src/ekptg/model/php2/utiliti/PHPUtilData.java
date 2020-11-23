@@ -56,20 +56,21 @@ public class PHPUtilData {
 		Vector<Tblpfdfail> v = null;
 		Db db = null;
 		String sql = " SELECT A.ID_FAIL, A.NO_FAIL, A.ID_MASUK "
-			   	+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B "
-			   	+ " WHERE A.ID_FAIL = B.ID_FAIL AND A.NO_FAIL IS NOT NULL "
-			   	+ " AND A.ID_SEKSYEN = 4 AND A.ID_URUSAN = '" + idUrusan + "' "
-			   	+ " AND A.FLAG_FAIL = 1 AND A.ID_MASUK = '" + userId + "'";
+				   	+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C "
+				   	+ " WHERE A.ID_FAIL = B.ID_FAIL AND A.NO_FAIL IS NOT NULL "
+				   	+ " AND B.ID_PEMOHON = C.ID_PEMOHON "
+				   	+ " AND A.ID_SEKSYEN = 4 AND A.ID_URUSAN = '" + idUrusan + "'"
+				   	+ " AND A.FLAG_FAIL = 1 AND C.NO_PENGENALAN = '" + userId + "'";
 		
 		myLogger.info("Tblpfdfail :" +sql);
 		try {
 
 			db = new Db();
 			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
-			r.add("id_fail");
-			r.add("no_fail");
-			r.add("id_masuk",userId);
+//			SQLRenderer r = new SQLRenderer();
+//			r.add("id_fail");
+//			r.add("no_fail");
+//			r.add("id_masuk",userId);
 			v = new Vector<Tblpfdfail>();
 			ResultSet rs = stmt.executeQuery(sql);
 			

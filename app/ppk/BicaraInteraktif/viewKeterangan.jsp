@@ -34,7 +34,7 @@
   <input name="flagSelesaiHTA" type="hidden" id="flagSelesaiHTA" value="$flagSelesaiHTA"/>
   <input name="flagSelesaiHA" type="hidden" id="flagSelesaiHA" value="$flagSelesaiHA"/>
   <input name="flagSelesaiHAARB" type="hidden" id="flagSelesaiHAARB" value="$flagSelesaiHAARB"/>
-  
+
   <input name="idHTA" type="hidden" id="idHTA" value="$idHTA"/>
   <input name="idHA" type="hidden" id="idHA" value="$idHA"/>
   <input name="idJenisHA" type="hidden" id="idJenisHA" value="$idJenisHA"/>
@@ -42,68 +42,84 @@
   <input name="flagFromSenaraiFailSek8" type="hidden" id="flagFromSenaraiFailSek8" value="$flagFromSenaraiFailSek8"/>
   <input name="flagFromSenaraiPermohonanSek8" type="hidden" id="flagFromSenaraiPermohonanSek8" value="$flagFromSenaraiPermohonanSek8"/>
    <input name="usid" type="hidden" id="usid" value="$usid"/>
-   
+
 </p>
 
-      
-        <h4>Keterangan Oleh : 
-        
+
+        <h4>Keterangan Oleh :
+
        			<!--
-        
+
         	   #if($pr.UMUR_INT != 0 && $pr.UMUR_INT < 18)
-               
-               
-               #if($pr.PENJAGA != "") 
-               $pr.PENJAGA 
+
+
+               #if($pr.PENJAGA != "")
+               $pr.PENJAGA
                <br />
                adalah <b>PENJAGA</b> kepada
-               <br />               
+               <br />
                #else
-               <i><span class="red">Perhatian </span>: Sila lantik penjaga pada skrin 
+               <i><span class="red">Perhatian </span>: Sila lantik penjaga pada skrin
                 <a href="javascript:papar_header('$mainID.ID_PERMOHONAN','18','','$mainID.ID_PERMOHONANSIMATI','$mainID.TARIKH_MOHON','','$mainID.SEKSYEN','$mainID.ID_SIMATI')" > <span class="blue"><u>'Notis Perbicaraan'</u></span></a>
-               </i> 
+               </i>
                <br />
                #end
-               
-               <span class="blue">$pr.NAMA</span> 
-               
+
+               <span class="blue">$pr.NAMA</span>
+
                #else
-               $pr.NAMA 
+               $pr.NAMA
                #end
                -->
-              
+
                #if($ID_OBPERMOHONANMINOR != "")
                	#if($LISTPENJAGA != "")
                  <span class="blue">
-                	$LISTPENJAGA 
+                	$LISTPENJAGA
                     </span>
-                    
+
                     sebagai <b>PENJAGA</b> kepada  <span class="blue">
-               $NAMA   
+               $NAMA
         	   </span>
                 #else
-                	<i><span class="red">Perhatian </span>: Sila lantik penjaga pada skrin 
+                	<i><span class="red">Perhatian </span>: Sila lantik penjaga pada skrin
                         <a href="javascript:papar_header('$mainID.ID_PERMOHONAN','18','','$mainID.ID_PERMOHONANSIMATI','$mainID.TARIKH_MOHON','','$mainID.SEKSYEN','$mainID.ID_SIMATI')" > <span class="blue"><u>'Notis Perbicaraan'</u></span></a>
-                       </i> 
+                       </i>
                        <br />
-                #end    
-                          
+                #end
+
                #else
                <span class="blue">
-               $NAMA        
+               $NAMA
         	   </span>
                #end
                </h4>
  <form autocomplete="on" action="/app/ppk/BicaraInteraktif/viewKeterangan.jsp"> <!-- arief add bagi tujuan autocomplete bila Pegawai masukkan nama Waris / OB di Keterangan diambil-->
 <div class="viewKeterangan" class="autocomplete" > <!-- arief add class="autocomplete"  -->
-<textarea id="KETERANGAN_$ID_OBPERMOHONAN" name="KETERANGAN_$ID_OBPERMOHONAN"  placeholder="Masukkan Keterangan..." style="width:100%;" spellcheck="false" >$KETERANGAN</textarea>	
-<div id="dummyDivResetupKETERANGAN_$ID_OBPERMOHONAN" style="display:none;" >$KETERANGAN</div>     
+
+## <!--  delang -->
+<ul class="wysihtml5-toolbar">
+	<li class="dropdown">
+		<a class="btn dropdown-toggle btn-small" data-toggle="dropdown"><i class="icon-list"></i> Waris &nbsp; <b class="caret"></b></a>
+		<ul class="dropdown-menu">
+			#if($listKehadiran.size() > 0)
+			#foreach($hadir in $listKehadiran)
+				<li><a href="javascript:void(0)" class="add-name-to-editor">$hadir.NAMA</a>
+				</li>
+			#end
+			#end
+		</ul>
+	</li>
+</ul>
+
+<textarea id="KETERANGAN_$ID_OBPERMOHONAN" name="KETERANGAN_$ID_OBPERMOHONAN"  placeholder="Masukkan Keterangan..." style="width:100%;" spellcheck="false" >$KETERANGAN</textarea>
+<div id="dummyDivResetupKETERANGAN_$ID_OBPERMOHONAN" style="display:none;" >$KETERANGAN</div>
 <div id="timer_KETERANGAN_$ID_OBPERMOHONAN" align="right" ></div>
 		<script type="text/javascript">
-		
-		
+
+
 		$jquery(document).ready(function () {
-			$jquery('#KETERANGAN_$ID_OBPERMOHONAN').wysihtml5({ 
+			$jquery('#KETERANGAN_$ID_OBPERMOHONAN').wysihtml5({
 				"font-styles": true, // Font styling, e.g. h1, h2, etc.
 				"emphasis": true, // Italics, bold, etc.
 				"lists": true, // (Un)ordered lists, e.g. Bullets, Numbers.
@@ -111,13 +127,22 @@
 				"link": false, // Button to insert a link.
 				"image": false, // Button to insert an image.
 				"color": true, // Button to change color of font
-				"blockquote": true, // Blockquote	
-				"size": "small"	
-				
-				
+				"blockquote": true, // Blockquote
+				"size": "small"
 			});
-			
-		});	
+
+			$jquery('.add-name-to-editor').click(function (e) {
+				e.preventDefault();
+
+				console.log('val -- ' + $(this).text);
+
+				//var editor = $jquery('.wysihtml5-sandbox').data("wysihtml5").editor;
+				var editor = $jquery('#KETERANGAN_$ID_OBPERMOHONAN').data('wysihtml5').editor;
+				editor.composer.commands.exec("insertHTML", $(this).text);
+			});
+
+
+		});
 		//arief add untuk autocomplete nama waris dan nama OB
 		function autocomplete(inp, arr) {
 		/*the autocomplete function takes two arguments,
@@ -189,9 +214,9 @@
 				return false;
 			/*start by removing the "active" class on all items:*/
 			removeActive(x);
-			if (currentFocus >= x.length) 
+			if (currentFocus >= x.length)
 				currentFocus = 0;
-			if (currentFocus < 0) 
+			if (currentFocus < 0)
 				currentFocus = (x.length - 1);
 			/*add class "autocomplete-active":*/
 			 x[currentFocus].classList.add("autocomplete-active");
@@ -215,57 +240,57 @@
 		document.addEventListener("click", function (e) {
 			closeAllLists(e.target);
 		});
-		} 
+		}
 		//var namaWaris = new Array ("SELECT NAMA_OB FROM TBLPPKOB WHERE ID_PERMOHONANSIMATI ="+ ID_PERMOHONANSIMATI); //arief add 26/6/2020
 		//ArrayList<HashMap<String, String>> assArray= new ArrayList<HashMap<String, String>>(); //arief add 29/6/2020
-		
-		
-		
+
+
+
 		var resizeIframe = function() {
-			fckeditor_word_count(document.getElementById("KETERANGAN_$ID_OBPERMOHONAN"),"wordKETERANGAN_$ID_OBPERMOHONAN");	
+			fckeditor_word_count(document.getElementById("KETERANGAN_$ID_OBPERMOHONAN"),"wordKETERANGAN_$ID_OBPERMOHONAN");
 			getTimeAutoSave("timer_KETERANGAN_$ID_OBPERMOHONAN","$ID_OBPERMOHONAN","FOCUS","$ID_BIKEHADIRAN");
 			document.getElementById('buttonKeterangan$ID_OBPERMOHONAN').style.display = "none";
 			document.getElementById('infobuttonKeterangan$ID_OBPERMOHONAN').style.display = "";
-			$jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.iframe.style.height = $jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.scrollHeight + "px";			
+			$jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.iframe.style.height = $jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.scrollHeight + "px";
 		}
-		
+
 		var resizeIframeBlur = function() {
-			fckeditor_word_count(document.getElementById("KETERANGAN_$ID_OBPERMOHONAN"),"wordKETERANGAN_$ID_OBPERMOHONAN");	
+			fckeditor_word_count(document.getElementById("KETERANGAN_$ID_OBPERMOHONAN"),"wordKETERANGAN_$ID_OBPERMOHONAN");
 			getTimeAutoSave("timer_KETERANGAN_$ID_OBPERMOHONAN","$ID_OBPERMOHONAN","BLUR","$ID_BIKEHADIRAN");
 			document.getElementById('buttonKeterangan$ID_OBPERMOHONAN').style.display = "";
 			document.getElementById('infobuttonKeterangan$ID_OBPERMOHONAN').style.display = "none";
-			$jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.iframe.style.height = $jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.scrollHeight + "px";										
-		}		
-		
+			$jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.iframe.style.height = $jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.scrollHeight + "px";
+		}
+
 		var resizeIframeKeyUp = function() {
-			fckeditor_word_count(document.getElementById("KETERANGAN_$ID_OBPERMOHONAN"),"wordKETERANGAN_$ID_OBPERMOHONAN");	
+			fckeditor_word_count(document.getElementById("KETERANGAN_$ID_OBPERMOHONAN"),"wordKETERANGAN_$ID_OBPERMOHONAN");
 			getTimeAutoSave("timer_KETERANGAN_$ID_OBPERMOHONAN","$ID_OBPERMOHONAN","KEYUP","$ID_BIKEHADIRAN");
-			document.getElementById('buttonKeterangan$ID_OBPERMOHONAN').style.display = "none";			
+			document.getElementById('buttonKeterangan$ID_OBPERMOHONAN').style.display = "none";
 			document.getElementById('infobuttonKeterangan$ID_OBPERMOHONAN').style.display = "";
 			var iframeheight = $jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.iframe.style.height;
 			var scrollheight = $jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.scrollHeight - 1;
 			if(parseInt(scrollheight) > parseInt(iframeheight))
 			{
 				$jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.iframe.style.height = $jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.scrollHeight + "px";
-			}								
+			}
 		}
-		
+
 		var wordCount = function() {
-			fckeditor_word_count(document.getElementById("KETERANGAN_$ID_OBPERMOHONAN"),"wordKETERANGAN_$ID_OBPERMOHONAN");			
+			fckeditor_word_count(document.getElementById("KETERANGAN_$ID_OBPERMOHONAN"),"wordKETERANGAN_$ID_OBPERMOHONAN");
 		}
-		
+
 		$jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.on("load", function() {
 		  fckeditor_word_count(document.getElementById("KETERANGAN_$ID_OBPERMOHONAN"),"wordKETERANGAN_$ID_OBPERMOHONAN");
-		  $jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.iframe.style.height = $jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.scrollHeight + "px";	
+		  $jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.iframe.style.height = $jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.scrollHeight + "px";
 		  $jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.addEventListener("keyup", resizeIframeKeyUp , false);
 		  $jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.addEventListener("keydown", resizeIframeKeyUp , false);
 		  $jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.addEventListener("blur", resizeIframeBlur, false);
-		  $jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.addEventListener("focus", resizeIframe, false);		  	 
-		});	
-		
-		reAssignFieldEditorContent('KETERANGAN_$ID_OBPERMOHONAN'); 
-		
-		</script>	
+		  $jquery("#KETERANGAN_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.addEventListener("focus", resizeIframe, false);
+		});
+
+		reAssignFieldEditorContent('KETERANGAN_$ID_OBPERMOHONAN');
+
+		</script>
 		<!-- arief add autocomplete OPEN-->
 		<script>
 		autocomplete(document.getElementById("KETERANGAN_$ID_OBPERMOHONAN"), namaWaris, namaOB);
@@ -293,10 +318,10 @@
 		}
 		</script>
 		<!-- arief try add Nama OB di Keterangan CLOSE -->
-		
+
           <div id="infobuttonKeterangan$ID_OBPERMOHONAN" style="display:none"><i><font color='blue'>Info</font> : Sila tekan butang <font color='blue'>'Tab'</font> selepas selesai mengisi keterangan. Butang <font color='blue'>'Simpan Keterangan'</font> akan dipaparkan.</i></div>
 </td>
-</tr>  
+</tr>
 <tr >
 <td align="left"  >
 </td>
@@ -309,18 +334,18 @@
 <td align="right" colspan="2" style="border-bottom: 1px  dotted #000;" >
 
 </td>
-</tr> 
+</tr>
 
-<tr><td colspan="2">        
+<tr><td colspan="2">
         <h4>Nota Pegawai : </h4>
 <textarea id="NOTA_PEGAWAI_$ID_OBPERMOHONAN" name="NOTA_PEGAWAI_$ID_OBPERMOHONAN"  placeholder="Masukkan Keterangan..." style="width:100%;" spellcheck="false" >$NOTA_PEGAWAI</textarea>
-<div id="dummyDivResetupNOTA_PEGAWAI_$ID_OBPERMOHONAN" style="display:none;" >$NOTA_PEGAWAI</div>    
+<div id="dummyDivResetupNOTA_PEGAWAI_$ID_OBPERMOHONAN" style="display:none;" >$NOTA_PEGAWAI</div>
 <div id="timer_NOTA_PEGAWAI_$ID_OBPERMOHONAN" align="right" ></div>
-        
+
 		<script type="text/javascript">
-		
+
 		$jquery(document).ready(function () {
-			$jquery('#NOTA_PEGAWAI_$ID_OBPERMOHONAN').wysihtml5({ 
+			$jquery('#NOTA_PEGAWAI_$ID_OBPERMOHONAN').wysihtml5({
 				"font-styles": true, // Font styling, e.g. h1, h2, etc.
 				"emphasis": true, // Italics, bold, etc.
 				"lists": true, // (Un)ordered lists, e.g. Bullets, Numbers.
@@ -328,60 +353,60 @@
 				"link": false, // Button to insert a link.
 				"image": false, // Button to insert an image.
 				"color": true, // Button to change color of font
-				"blockquote": true, // Blockquote	
-				"size": "small"				  
+				"blockquote": true, // Blockquote
+				"size": "small"
 			});
-			
-		});	
-		
+
+		});
+
 		var resizeIframe = function() {
-			fckeditor_word_count(document.getElementById("NOTA_PEGAWAI_$ID_OBPERMOHONAN"),"wordNOTA_PEGAWAI_$ID_OBPERMOHONAN");								
+			fckeditor_word_count(document.getElementById("NOTA_PEGAWAI_$ID_OBPERMOHONAN"),"wordNOTA_PEGAWAI_$ID_OBPERMOHONAN");
 			document.getElementById('buttonKeterangan$ID_OBPERMOHONAN').style.display = "none";
 			document.getElementById('infobuttonNotaPegawai$ID_OBPERMOHONAN').style.display = "";
-			$jquery("#NOTA_PEGAWAI_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.iframe.style.height = $jquery("#NOTA_PEGAWAI_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.scrollHeight + "px";			
+			$jquery("#NOTA_PEGAWAI_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.iframe.style.height = $jquery("#NOTA_PEGAWAI_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.scrollHeight + "px";
 		}
-		
+
 		var resizeIframeBlur = function() {
-			fckeditor_word_count(document.getElementById("NOTA_PEGAWAI_$ID_OBPERMOHONAN"),"wordNOTA_PEGAWAI_$ID_OBPERMOHONAN");	
+			fckeditor_word_count(document.getElementById("NOTA_PEGAWAI_$ID_OBPERMOHONAN"),"wordNOTA_PEGAWAI_$ID_OBPERMOHONAN");
 			getTimeAutoSave("timer_NOTA_PEGAWAI_$ID_OBPERMOHONAN","$ID_OBPERMOHONAN","BLUR","$ID_BIKEHADIRAN");
 			document.getElementById('buttonKeterangan$ID_OBPERMOHONAN').style.display = "";
 			document.getElementById('infobuttonNotaPegawai$ID_OBPERMOHONAN').style.display = "none";
-			$jquery("#NOTA_PEGAWAI_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.iframe.style.height = $jquery("#NOTA_PEGAWAI_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.scrollHeight + "px";										
-		}		
-		
+			$jquery("#NOTA_PEGAWAI_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.iframe.style.height = $jquery("#NOTA_PEGAWAI_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.scrollHeight + "px";
+		}
+
 		var resizeIframeKeyUp = function() {
-			fckeditor_word_count(document.getElementById("NOTA_PEGAWAI_$ID_OBPERMOHONAN"),"wordNOTA_PEGAWAI_$ID_OBPERMOHONAN");	
+			fckeditor_word_count(document.getElementById("NOTA_PEGAWAI_$ID_OBPERMOHONAN"),"wordNOTA_PEGAWAI_$ID_OBPERMOHONAN");
 			getTimeAutoSave("timer_NOTA_PEGAWAI_$ID_OBPERMOHONAN","$ID_OBPERMOHONAN","KEYUP","$ID_BIKEHADIRAN");
 			document.getElementById('buttonKeterangan$ID_OBPERMOHONAN').style.display = "none";
-			document.getElementById('infobuttonNotaPegawai$ID_OBPERMOHONAN').style.display = "";			
+			document.getElementById('infobuttonNotaPegawai$ID_OBPERMOHONAN').style.display = "";
 			var iframeheight = $jquery("#NOTA_PEGAWAI_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.iframe.style.height;
 			var scrollheight = $jquery("#NOTA_PEGAWAI_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.scrollHeight - 1;
 			if(parseInt(scrollheight) > parseInt(iframeheight))
 			{
 				$jquery("#NOTA_PEGAWAI_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.iframe.style.height = $jquery("#NOTA_PEGAWAI_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.scrollHeight + "px";
-			}								
+			}
 		}
-		
+
 		var wordCount = function() {
-			fckeditor_word_count(document.getElementById("NOTA_PEGAWAI_$ID_OBPERMOHONAN"),"wordNOTA_PEGAWAI_$ID_OBPERMOHONAN");			
+			fckeditor_word_count(document.getElementById("NOTA_PEGAWAI_$ID_OBPERMOHONAN"),"wordNOTA_PEGAWAI_$ID_OBPERMOHONAN");
 		}
-		
+
 		$jquery("#NOTA_PEGAWAI_$ID_OBPERMOHONAN").data("wysihtml5").editor.on("load", function() {
-		  	
+
 		  fckeditor_word_count(document.getElementById("NOTA_PEGAWAI_$ID_OBPERMOHONAN"),"wordNOTA_PEGAWAI_$ID_OBPERMOHONAN");
-		  $jquery("#NOTA_PEGAWAI_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.iframe.style.height = $jquery("#NOTA_PEGAWAI_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.scrollHeight + "px";	
+		  $jquery("#NOTA_PEGAWAI_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.iframe.style.height = $jquery("#NOTA_PEGAWAI_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.scrollHeight + "px";
 		  $jquery("#NOTA_PEGAWAI_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.addEventListener("keyup", resizeIframeKeyUp , false);
 		  $jquery("#NOTA_PEGAWAI_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.addEventListener("keydown", resizeIframeKeyUp , false);
 		  $jquery("#NOTA_PEGAWAI_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.addEventListener("blur", resizeIframeBlur, false);
-		  $jquery("#NOTA_PEGAWAI_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.addEventListener("focus", resizeIframe, false);		  	 
-		});	
-		
-		reAssignFieldEditorContent('NOTA_PEGAWAI_$ID_OBPERMOHONAN'); 
-		
+		  $jquery("#NOTA_PEGAWAI_$ID_OBPERMOHONAN").data("wysihtml5").editor.composer.element.addEventListener("focus", resizeIframe, false);
+		});
+
+		reAssignFieldEditorContent('NOTA_PEGAWAI_$ID_OBPERMOHONAN');
+
 		</script>
-        
-        
-        
+
+
+
         <div id="infobuttonNotaPegawai$ID_OBPERMOHONAN" style="display:none"><i><font color='blue'>Info</font> : Sila tekan butang <font color='blue'>'Tab'</font> selepas selesai mengisi keterangan. Butang <font color='blue'>'Simpan Keterangan'</font> akan dipaparkan.</i></div>
 </td></tr>
 
@@ -415,8 +440,8 @@
      //divToTop("view_keputusan");
      $jquery('#'+'$div').scrollView();
      //alert('x2');
- });	 
- </script>    
+ });
+ </script>
 #end
 
 <script>
@@ -428,11 +453,11 @@ if(flagDisable == "Y")
 	disableByClass("wysihtml5-sandbox");
 	disableInput("buttonKeterangan$ID_OBPERMOHONAN");
 	*/
-	
-	
+
+
 	hideByClass("wysihtml5-toolbar");
 	disableByClass("wysihtml5-sandbox");
-	disableInput("buttonKeterangan$ID_OBPERMOHONAN");	
+	disableInput("buttonKeterangan$ID_OBPERMOHONAN");
 }
 </script>
 

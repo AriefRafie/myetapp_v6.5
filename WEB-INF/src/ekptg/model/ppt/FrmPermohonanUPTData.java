@@ -4325,8 +4325,8 @@ public boolean cekStatusFailDahWujud(String idPermohonan,String id_status,String
 				 	" FROM TBLPPTDOKUMEN A"+
 				 	", TBLPPTBAYARAN B "+
 				    " WHERE "+
-				    " B.ID_BAYARAN = A.NO_RUJUKAN(+) "+
-				    " AND A.jenis_dokumen='buktibayar' "+
+				    " B.ID_HAKMILIK = A.ID_HAKMILIK(+) "+
+//				    + "A.jenis_dokumen='buktibayar' "
 //				    + "a.id_permohonan = b.id_permohonan AND"
 				    " AND B.ID_HAKMILIK = '"+id+"'  ";      			     
 			      ResultSet rs = stmt.executeQuery(sql);

@@ -758,8 +758,8 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 			  db = new Db();
 			  Statement stmt = db.getStatement();
 			  SQLRenderer r = new SQLRenderer();
-			  r.update("id_permohonan",r.unquote(String.valueOf(s.getIdPermohonan())));
-			  r.update("id_fail",r.unquote(String.valueOf(s.getIdFail())));
+			  r.update("id_permohonan",r.unquote(""+s.getIdPermohonan()));
+			  r.update("id_fail",r.unquote(""+s.getIdFail()));
 			  r.update("aktif", "1");
 			  //r.add("Id_Suburusanstatusfail", IdSuburusanstatusfail);
 			  //r.add("id_Permohonan", idPermohonan);
@@ -768,10 +768,10 @@ public class FrmUtilData extends EkptgCache implements Serializable {
 			  r.add("id_kemaskini", s.getIdKemaskini());
 			  r.add("tarikh_kemaskini", r.unquote("sysdate"));
  
-			  sql = r.getSQLUpdate("tblrujsuburusanstatusfail");
+			  sql = r.getSQLUpdate("Tblrujsuburusanstatusfail");
 		      myLog.info("kemaskiniStatusPermohonanAktif:sql-TBLRUJSUBURUSANSTATUSFAIL::"+sql);
 		      int flag = stmt.executeUpdate(sql);
-
+		      System.out.println("flag "+flag);
 		  }catch(Exception ex){
 			  ex.printStackTrace();
 		  }finally{

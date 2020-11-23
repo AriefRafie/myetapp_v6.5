@@ -117,6 +117,7 @@ public class PendaftaranCheckModel {
 	// 19112020 syafiqah ambil dari v6
 	public boolean checkKP_Baru_Simati_Online(String idp, String kpbaru,
 			String kplama, String kplain) throws Exception {
+		myLogger.info("LALU SINI SYAFIQAH");
 		Db db = null;
 		boolean a = false;
 		String kp_baru = "";
@@ -148,7 +149,7 @@ public class PendaftaranCheckModel {
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
 
-			//System.out.println("MATI 2:" + sql.toUpperCase());
+			System.out.println("MATI 2:" + sql.toUpperCase());
 			while (rs.next())
 			//if (rs.next()) 
 			{

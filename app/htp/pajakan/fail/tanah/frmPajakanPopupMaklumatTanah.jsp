@@ -387,35 +387,14 @@ padding:0 0.25em;
                                         <td width="57%"><font color="blue">$agensi</font></td>
                                   </tr>
                                   <tr>
-                                  		<td width="42%" align="right">UNIT LUAS PAJAKAN</td>
+                                  		<td width="42%" align="right">LUAS PAJAKAN (UNIT LUAS ASAL)</td>
                                         <td width="1%">:</td>
                                         <td width="57%">
 											#parse("app/htp/unit_luas.jsp")
                                        	</td>
-                            	</tr>
-                           		<tr>
-                                  		<td width="42%" align="right">LUAS ASAL</td>
-                                        <td width="1%">:</td>
-                                        <td width="57%">
-											#if($socLuas == '1' || $socLuas == '2' || $socLuas == '3' || $socLuas == '5' || $socLuas == '6' || $socLuas == '9')
-												<input type="text" name="txtluasasal1" class="$disabled" id="txtluasasal1" value="$!txtLuasAsal"  size="20" maxlength="8" onkeyup="validateNumber(this,this.value);" $disability onblur="format5Decimal(this,this.value,'');kiraLuasAsal('$socLuas');"/>
-											#elseif($socLuas == '8' || $socLuas == '4')
-												<input type="text" name="txtluasasal2" class="$disabled" id="txtluasasal2" size="8" maxlength="8" $disability onkeyup="validateNumber(this,this.value);" />
-												<input type="text" name="txtluasasal3" class="$disabled" id="txtluasasal3" size="8" maxlength="8" $disability onkeyup="validateNumber(this,this.value);" />
-												<input type="text" name="txtLuasasal4" class="$disabled" id="txtluasasal4" size="8" maxlength="8" $disability onkeyup="validateNumber(this,this.value);" onblur="kiraLuasAsal('$socLuas');"/>
-											#elseif($socLuas == '7')
-												<input type="text" name="txtluasasal5" class="$disabled" id="txtluasasal5" size="8" maxlength="8" $disability onkeyup="validateNumber(this,this.value);" />
-												<input type="text" name="txtluasasal6" class="$disabled" id="txtluasasal6" size="8" maxlength="8" $disability onkeyup="validateNumber(this,this.value);" onblur="kiraLuasAsal('$socLuas');"/>
-											#else
-												<input type="text" name="txtluasasal1" value="$!txtLuasLama" id="txtluasasal1" size="20" maxlength="8" $disability $readability onkeyup="validateNumber(this,this.value);" onblur="kiraLuasAsal('$socLuas');"/>
-											#end
-												<input type="hidden" name=txtluasasal value=$!Luas>
-												<input type="hidden" name="txtluaslamasal" id="txtluaslamasal" value="$!Luas" />
-												<input type="hidden" name="txtluasgabungasal" id="txtluasgabungasal" value="$!txtLuasLama" />
-                                        </td>
                             </tr>
                             <tr>
-                                  		<td width="42%" align="right">LUAS PAJAKAN</td>
+                                  		<td width="42%" align="right">LUAS PAJAKAN (LUAS ASAL)</td>
                                         <td width="1%">:</td>
                                         <td width="57%">
 											#if($socLuas == '1' || $socLuas == '2' || $socLuas == '3' || $socLuas == '5' || $socLuas == '6' || $socLuas == '9')

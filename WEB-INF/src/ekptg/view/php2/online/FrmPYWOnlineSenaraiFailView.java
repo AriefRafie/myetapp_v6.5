@@ -512,7 +512,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
         	this.context.put("inputTextClass", "disabled");
         	
         	if("2".equals(idJenisPermohonan)){
-    			this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(id_user, "socNoFailLama", Long.parseLong(idFailLama), "disabled", " class=\"disabled\""));  
+    			this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(id_user, "7", "socNoFailLama", Long.parseLong(idFailLama), "disabled", " class=\"disabled\""));  
             }
 
         	//MAKLUMAT PERMOHONAN
@@ -603,7 +603,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 			this.context.put("pemohon", vec.get(0));
         	
 			if("2".equals(idJenisPermohonan)){
-				this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(id_user, "socNoFailLama", Long.parseLong(idFailLama), "disabled", " class=\"disabled\""));  
+				this.context.put("selectNoFailLama", PHPUtilHTML.SelectNoFailByIdPemohon(id_user, "7", "socNoFailLama", Long.parseLong(idFailLama), "disabled", " class=\"disabled\""));  
 	        }
 			
 			//MAKLUMAT PERMOHONAN

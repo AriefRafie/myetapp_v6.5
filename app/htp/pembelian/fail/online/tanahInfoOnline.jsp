@@ -124,12 +124,16 @@
 	<tr>
 	<td align="center">
 	#if($button == "simpan")
+		#if (($!idjawatan.equals("20")|| $!idjawatan.equals("24")) || $!idjawatan.equals("9"))
     	<input class="stylobutton100" name="Simpan" value="Simpan" type="button" onclick="javascript:simpanMaklumatTanah()"/> 
+    	#end
         <input class="stylobutton100" name="Kembali" value="Kembali" type="button" onclick="doAjaxCall${formName}('maklumatanahonline','idPermohonan='+$!htpPermohonan.permohonan.getIdPermohonan())"/> 
    	#else
 		#set($portal_role = "${session.getAttribute('myrole')}")
 		#if ($portal_role!='online_kjpagensi')
+			#if (($!idjawatan.equals("20")|| $!idjawatan.equals("24")) || $!idjawatan.equals("9"))
         <input class="stylobutton100" name="Simpan" value="Kemaskini" type="button" onclick="javascript:kemaskiniMaklumatTanah()"/>
+   			#end
    		#end
         <input class="stylobutton100" name="Kembali" value="Kembali" type="button" onclick="doAjaxCall${formName}('maklumatanahonline','idPermohonan='+$!htpPermohonan.permohonan.getIdPermohonan())"/>
    	#end

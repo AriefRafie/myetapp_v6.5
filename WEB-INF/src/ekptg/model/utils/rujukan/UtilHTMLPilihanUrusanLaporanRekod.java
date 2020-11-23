@@ -1,5 +1,8 @@
 package ekptg.model.utils.rujukan;
 
+import java.util.Vector;
+
+import ekptg.model.entities.Tblsemakan;
 import ekptg.model.utils.IUtilHTMLPilihan;
 //import org.apache.log4j.Logger;
 

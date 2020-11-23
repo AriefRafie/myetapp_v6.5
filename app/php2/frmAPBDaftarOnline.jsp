@@ -21,7 +21,6 @@
   <input name="noPermohonanLama" type="hidden" id="noPermohonanLama" value="$noPermohonanLama"/>
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
-  
   <tr>
     <td colspan="2"><fieldset>
       <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
@@ -30,6 +29,7 @@
         <input name="noFailLama" type="hidden" id="noFailLama" value="$beanMaklumatPermohonan.noFailLama"/>
         <input name="idPermohonanLama" type="hidden" id="idPermohonanLama" value="$beanMaklumatPermohonan.idPermohonanLama"/>
         <input name="noPermohonanLama" type="hidden" id="noPermohonanLama" value="$beanMaklumatPermohonan.noPermohonanLama"/>
+        
         <tr>
           <td width="1%">&nbsp;</td>
           <td width="28%" valign="top">No. Fail</td>
@@ -57,7 +57,6 @@
           #elseif ($beanMaklumatPermohonan.idJenisLesen == '4')
           <td width="70%"><strong>BORANG 4(LESEN GALIAN SELAIN PASIR)</strong></td>
           #end
-          <input type="hidden" name="idJenisLesen" id="idJenisLesen" value="$beanMaklumatPermohonan.idJenisLesen" />
         </tr>
         <tr>
           <td width="1%">&nbsp;</td>
@@ -111,7 +110,6 @@
       </table>
       </fieldset></td>
   </tr>
-  
   <tr>
     <td colspan="2"><fieldset>
       <legend><strong>MAKLUMAT PEMOHON</strong></legend>
@@ -128,8 +126,7 @@
           <td>Nama</td>
           <td>:</td>
           <td>$beanMaklumatPemohon.nama
-            <input type="hidden" name="namaPemohon" id="namaPemohon" value="$beanMaklumatPemohon.nama " />
-          </td>
+            <input type="hidden" name="namaPemohon" id="namaPemohon" value="$beanMaklumatPemohon.nama " /></td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -162,6 +159,12 @@
           <td>$beanMaklumatPemohon.poskod </td>
         </tr>
         <tr>
+          <td>&nbsp;</td>
+          <td>Negeri</td>
+          <td>:</td>
+          <td>$selectNegeri</td>
+        </tr>
+        <tr>
           <td></td>
           <td>Bandar</td>
           <td>:</td>
@@ -169,9 +172,9 @@
         </tr>
         <tr>
           <td>&nbsp;</td>
-          <td>Negeri</td>
+          <td>E-mel</td>
           <td>:</td>
-          <td>$selectNegeri</td>
+          <td>$beanMaklumatPemohon.emel </td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -185,54 +188,14 @@
           <td>:</td>
           <td>$beanMaklumatPemohon.noFax </td>
         </tr>
-        <tr>
-          <td>&nbsp;</td>
-          <td>E-mel</td>
-          <td>:</td>
-          <td>$beanMaklumatPemohon.emel </td>
-        </tr>
         #end
       </table>
       </fieldset></td>
   </tr>
-  
   <tr>
-    <td colspan="2"><fieldset>
-      <legend><strong>KAWASAN PERMOHONAN</strong></legend>
-      <table width="100%" border="0" cellspacing="2" cellpadding="2">
-      	#foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
-        <tr>
-          <td width="1%">&nbsp;</td>
-          <td width="28%">Luar Perairan Negeri</td>
-          <td width="1%" >:</td>
-          <td width="70%">$beanMaklumatPermohonan.idFlagLuar
-          	<input name="flagLuar" type="hidden" id="flagLuar" value="$beanMaklumatPermohonan.idFlagLuar"/>
-          </td>
-        </tr>
-        <tr>
-          <td width="1%">&nbsp;</td>
-          <td width="28%">Negeri</td>
-          <td width="1%" >:</td>
-          <td width="70%">$beanMaklumatPermohonan.namaNegeriPerairan
-          	<input name="namaNegeriPerairan" type="hidden" id="namaNegeriPerairan" value="$beanMaklumatPermohonan.namaNegeriPerairan"/>
-          </td>
-        </tr>
-        #end
-      </table></fieldset>
-    </td>
-  </tr>
-  
-  <tr>
-    <td colspan="2"><fieldset>
-      <legend><strong>SENARAI SEMAK</strong></legend>
-      <table width="100%" border="0" cellspacing="2" cellpadding="2">
-	      <tr>
-			<td colspan="2">
-				#parse("app/php2/frmAPBSenaraiSemak.jsp")
-			</td>
-		  </tr>
-      </table>
-  	</fieldset></td>
+	<td colspan="2">
+		#parse("app/php2/frmAPBSenaraiSemak.jsp")
+	</td>
   </tr>
   <tr>
     <td colspan="2"></td>
@@ -299,29 +262,9 @@ function kembali() {
 	document.${formName}.actionOnline.value = "";
 	document.${formName}.submit();
 }
-function janaTajuk(){
-
-	var strTajuk = "";
-	
-	if (document.${formName}.idJenisLesen.value == '2') {
-		strTajuk = "Permohonan Lesen Untuk Mendapatkan Pasir Dasar Laut Di Bawah Seksyen 4, Akta Pelantar Benua 1966 di Kawasan";
-				 
-	} else if (document.${formName}.idJenisLesen.value == '3') {
-		strTajuk = "Permohonan Lesen Untuk Menjelajah/ Mencari Gali/ Menggerek berkaitan dengan mencari gali "
-				 + "Di Bawah Seksyen 4, Akta Pelantar Benua 1966 di Kawasan";
-				 
-	} else if (document.${formName}.idJenisLesen.value == '4') {
-		strTajuk = "Permohonan Lesen Untuk Melombong atau Menjalankan apa-apa operasi bagi mendapatkan ...... "
-				 + "Di Bawah Seksyen 4, Akta Pelantar Benua 1966 di Kawasan";
-	}
-	
-	if (document.${formName}.flagLuar.value == 'YA') {
-		strTajuk = strTajuk + " Luar"
-	}
-	strTajuk = strTajuk + " Perairan Negeri " + document.${formName}.namaNegeriPerairan.value + " Oleh "
-			 + document.${formName}.namaPemohon.value;
-	
-	document.${formName}.txtPerkara.value = strTajuk.toUpperCase();
+function janaTajuk(){	
+	var strTajuk = "Permohonan Lesen Untuk Mendapatkan Pasir Dasar Laut Di Bawah Seksyen 4, Akta Pelantar Benua 1966 di Kawasan";
+	document.${formName}.txtPerkara.value = strTajuk;
 }
 
 function generateNoFailAPB(){	

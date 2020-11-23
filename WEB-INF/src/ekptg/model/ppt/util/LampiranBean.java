@@ -134,21 +134,20 @@ public class LampiranBean implements ILampiran{
 				
 	}
 	public void simpan(FileItem item,HttpServletRequest request) throws Exception {
-//		myLog.info("1."+request.getParameter("id_permohonan"));
-//		myLog.info("2."+request.getParameter("nama_dokumen"));
-//		myLog.info("3."+request.getParameter("keterangan"));
+		myLog.info("1."+request.getParameter("id_permohonan"));
+		myLog.info("2."+request.getParameter("nama_dokumen"));
+		myLog.info("3."+request.getParameter("keterangan"));
+		myLog.info("4."+request.getParameter("jenisDokumen"));
+		myLog.info("5."+request.getParameter("jenis_skrin"));
 		Db db = null;
         try {
         	db = new Db();
         	long id_Dokumen = DB.getNextID("TBLPPTDOKUMEN_SEQ");
         	Connection con = db.getConnection();
         	con.setAutoCommit(false);
-        	// 2020/10/23 tukar tajuk kepada jenis_dokumen
         	PreparedStatement ps = con.prepareStatement("insert into TBLPPTDOKUMEN " +
-        			" (id_dokumen,id_permohonan,nama_fail,jenis_mime,content,jenis_dokumen,keterangan,id_jenisdokumen"+
-        			",id_masuk,tarikh_masuk) " +
-        			" VALUES (?,?,?,?,?,?,?,?"+
-        			","+request.getParameter("iduser")+",SYSDATE)");
+        			"(id_dokumen,id_permohonan,nama_fail,jenis_mime,content,tajuk,keterangan,id_jenisdokumen,jenis_dokumen,tarikh_masuk) " +
+        			"values(?,?,?,?,?,?,?,?,?,SYSDATE)");
         	ps.setLong(1, id_Dokumen);
         	ps.setString(2, request.getParameter("id_permohonan"));
         	ps.setString(3,item.getName());
@@ -157,6 +156,7 @@ public class LampiranBean implements ILampiran{
         	ps.setString(6, request.getParameter("nama_dokumen"));
         	ps.setString(7, request.getParameter("keterangan"));
         	ps.setString(8, request.getParameter("jenisDokumen"));
+        	ps.setString(9, request.getParameter("jenis_skrin"));
         	ps.executeUpdate();
             con.commit();
             

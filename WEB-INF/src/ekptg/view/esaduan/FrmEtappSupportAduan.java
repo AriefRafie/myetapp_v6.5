@@ -66,43 +66,15 @@ public class FrmEtappSupportAduan extends AjaxBasedModule {
 		// myLogger.info("id_seksyen_user :"+id_seksyen_user);
 		role = (String) session.getAttribute("myrole");
 		String command = getParam("command");
-		this.context.put("command", command);
-		
-		myLogger.info(">>>>>>>>>> user name :: "+getParam("user_name"));
-		if(!command.equals(""))
-		{
-			context.put("log_aduan_cari", getParam("log_aduan_cari"));
-			context.put("user_name", getParam("user_name"));
-			context.put("no_fail_cari", getParam("no_fail_cari"));
-			context.put("tarikh_aduan_hantar_date_cari",
-					getParam("tarikh_aduan_hantar_date_cari"));
-			context.put("tarikh_aduan_hantar_date_akhir",
-					getParam("tarikh_aduan_hantar_date_akhir"));
-			context.put("id_statusesaduan_cari",
-					getParam("id_statusesaduan_cari"));
-			context.put("id_jenismodulesaduan_cari",
-					getParam("id_jenismodulesaduan_cari"));
-		}
-		else
-		{
-			context.put("log_aduan_cari", "");
-			context.put("user_name", "");
-			context.put("no_fail_cari", "");
-			context.put("tarikh_aduan_hantar_date_cari","");
-			context.put("tarikh_aduan_hantar_date_akhir","");
-			context.put("id_statusesaduan_cari","");
-			context.put("id_jenismodulesaduan_cari","");
-		}
-		
 		String mode = getParam("mode");
 		action = getParam("action");
 		String flag_daftar = "";
 		
 		user_login = (String) session.getAttribute("_portal_login");
 		context.put("user_login", user_login);
-		//System.out.println(" user_login ::::::: " + user_login);
+		System.out.println(" user_login ::::::: " + user_login);
 
-		//System.out.println(" role ::::::: " + role);
+		System.out.println(" role ::::::: " + role);
 
 		String bolehsimpan = "";
 		String readmode = "";
@@ -1176,7 +1148,7 @@ public class FrmEtappSupportAduan extends AjaxBasedModule {
 		}*/
 		
 		else 
-			if (command.equals("cariAduan") || command.equals("nextPapar")) 
+			//if (command.equals("cariAduan")) 
 			{
 			Db db = null;
 			try {
@@ -1191,10 +1163,8 @@ public class FrmEtappSupportAduan extends AjaxBasedModule {
 				String id_statusesaduan_cari = getParam("id_statusesaduan_cari");
 				String id_jenismodulesaduan_cari = getParam("id_jenismodulesaduan_cari");
 
-				context.put("user_id_cari", getParam("user_id_cari"));
-			
 				context.put("log_aduan_cari", getParam("log_aduan_cari"));
-				
+				context.put("user_id_cari", getParam("user_id_cari"));
 				context.put("user_name", getParam("user_name"));
 
 				context.put("no_fail_cari", getParam("no_fail_cari"));
@@ -1271,105 +1241,6 @@ public class FrmEtappSupportAduan extends AjaxBasedModule {
 					db.close();
 			}
 
-		}
-		else
-		{
-			//diba tambah
-			//this.context.put("command", "");
-			
-			Db db = null;
-			try {
-				db = new Db();
-
-				String log_aduan_cari = getParam("log_aduan_cari");
-				String user_id_cari = getParam("user_id_cari");
-				String user_name = getParam("user_name");
-				String no_fail_cari = getParam("no_fail_cari");
-				String tarikh_aduan_hantar_date_cari = getParam("tarikh_aduan_hantar_date_cari");
-				String tarikh_aduan_hantar_date_akhir = getParam("tarikh_aduan_hantar_date_akhir");
-				String id_statusesaduan_cari = getParam("id_statusesaduan_cari");
-				String id_jenismodulesaduan_cari = getParam("id_jenismodulesaduan_cari");
-
-				context.put("user_id_cari", getParam("user_id_cari"));
-			
-				context.put("log_aduan_cari", getParam("log_aduan_cari"));
-				
-				context.put("user_name", getParam("user_name"));
-
-				context.put("no_fail_cari", getParam("no_fail_cari"));
-				context.put("tarikh_aduan_hantar_date_cari",
-						getParam("tarikh_aduan_hantar_date_cari"));
-				context.put("tarikh_aduan_hantar_date_akhir",
-						getParam("tarikh_aduan_hantar_date_akhir"));
-				context.put("id_statusesaduan_cari",
-						getParam("id_statusesaduan_cari"));
-				context.put("id_jenismodulesaduan_cari",
-						getParam("id_jenismodulesaduan_cari"));
-
-				Vector list_aduan_cari = null;
-				context.put("open_aduanlist", "yes");
-				list_module = logic.getListModule("", db);
-				context.put("list_module", list_module);
-				list_users = logic.getListUsers("", "", user_negeri_login, "",
-						"", "", db);
-				context.put("list_users", list_users);
-				list_statusaduan = logic.getListStatusAduan(db);
-				context.put("list_statusaduan", list_statusaduan);
-
-				check_notifikasi_index_maklumbalas_aduan = logic
-						.getListNotifikasi_main_list(role, user_negeri_login,
-								"", "1", userId, "NO", db);
-				context.put("check_notifikasi_index_maklumbalas_aduan",
-						check_notifikasi_index_maklumbalas_aduan);
-
-				if (role.equals("adminsuper_es")) {
-					list_aduan_cari = logic.getAduan(userId, "", "", role, "",
-							"", "", "", no_fail_cari, "",
-							id_jenismodulesaduan_cari, log_aduan_cari,
-							id_statusesaduan_cari,
-							tarikh_aduan_hantar_date_cari,tarikh_aduan_hantar_date_akhir, user_name, db);
-
-				} else if (role.equals("admin_es")
-						|| role.equals("developer_es")) {
-
-					list_aduan_cari = logic.getAduan(userId, "", "", role, "",
-							user_negeri_login, "", "", no_fail_cari, "",
-							id_jenismodulesaduan_cari, log_aduan_cari,
-							id_statusesaduan_cari,
-							tarikh_aduan_hantar_date_cari,tarikh_aduan_hantar_date_akhir, user_name, db);
-
-				} else {
-
-					list_aduan_cari = logic.getAduan(userId, "", userId, role,
-							"", "", "", "", no_fail_cari, "",
-							id_jenismodulesaduan_cari, log_aduan_cari,
-							id_statusesaduan_cari,
-							tarikh_aduan_hantar_date_cari,tarikh_aduan_hantar_date_akhir, user_name, db);
-
-				}
-
-				//context.put("SenaraiFail", list_aduan_cari);
-				
-				check_notifikasi_index_maklumbalas_aduan = logic
-						.getListNotifikasi_main_list(role, user_negeri_login,
-								"", "1", userId, "NO", db);
-				context.put("check_notifikasi_index_maklumbalas_aduan",
-						check_notifikasi_index_maklumbalas_aduan);
-
-				check_notifikasi_index_maklumbalas_teknikal = logic
-						.getListNotifikasi_main_list(role, user_negeri_login,
-								"", "2", userId, "NO", db);
-				context.put("check_notifikasi_index_maklumbalas_teknikal",
-						check_notifikasi_index_maklumbalas_teknikal);
-				
-				
-				setupPageCari(session, action, list_aduan_cari);
-
-			} finally {
-				if (db != null)
-					db.close();
-			}
-			
 		}
 
 		myLogger.info("vm=" + vm + "\ncommand=" + command);
@@ -1618,7 +1489,7 @@ public class FrmEtappSupportAduan extends AjaxBasedModule {
 			if (list_aduan.size() != 0) {
 				get_aduan = (Hashtable) list_aduan.get(0);
 				context.put("user_id", (String) get_aduan.get("user_id"));
-				//context.put("user_name", (String) get_aduan.get("user_name"));
+				context.put("user_name", (String) get_aduan.get("user_name"));
 				context.put("id_esaduan", (String) get_aduan.get("id_esaduan"));
 				context.put("id_jenisaduan",
 						(String) get_aduan.get("id_jenisaduan"));
@@ -4344,10 +4215,25 @@ public class FrmEtappSupportAduan extends AjaxBasedModule {
 
 			}
 		}
-				
+		
+		
 		email.sendEmail();
 
+		/*
+		 * email.RECIEPIENT = pengadu; //Hashtable hUser =
+		 * getIUser().getPengguna(userId); Hashtable hUser =
+		 * logic.get_user_emel(userId,db); email.TO_CC = new String[1];
+		 * //email.TO_CC[0] = pro.getAduanCc(); email.TO_CC[0] =
+		 * !String.valueOf(hUser.get("emel")).equals("") ?
+		 * String.valueOf(hUser.get("emel")) :get_aduan.get("emel").toString();
+		 * email.sendEmail();
+		 */
 	}
 
+	// @Override
+	// public String doAction() throws Exception {
+	// // TODO Auto-generated method stub
+	// return null;
+	// }
 
 }

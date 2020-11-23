@@ -26,6 +26,7 @@ import ekptg.model.integrasi.CapaianHakmilikeTanahHTP;
 import ekptg.model.integrasi.CapaianHakmilikeTanahPPK;
 import ekptg.model.integrasi.FrmPopupCapaianHakmilikeTanahData;
 import ekptg.model.integrasi.IIntegrasieTanahCarian;
+import ekptg.model.integrasi.PemilikPPTBean;
 
 /**
  * @author mohamad Rosli
@@ -161,6 +162,39 @@ public class FrmPopupCapaianHakmilikeTanah extends AjaxBasedModule {
 				getCarianPPK().daftarHakmilik(idHarta, getParam("noResit_"), getParam("idHakmilik_"), idPermohonan, idPengguna);
 			}else if (modul.equals("ppt")) { 
 				logic.daftarHakmilik(idHarta, getParam("noResit"), getParam("idHakmilik"), idPermohonan, idPengguna);
+				myLog.info("id harta ppt :"+idHarta);
+				if (idsPemilik != null) {
+					PihakBerkepentingan pemilik = null;
+					for (int i = 0; i < idsPemilik.length; i++) {
+						pemilik = new PihakBerkepentingan();						
+						String[] parts = idsPemilik[i].split("\\|");					
+						//String nama = parts[0];
+						String noPengenalan = parts[1].replace("-", "");
+//						String ba = parts[2];
+//						String bb = parts[3];
+						
+						//String Idpihakberkepentingan = 
+						//pemilik.setIdpihakberkepentingan();
+						pemilik.setIdHakmilikUrusan(idHarta);
+						pemilik.setNama(parts[0]);
+						getRujJenisNoPB(parts[4]);
+						pemilik.setJenisPB(jenisPB);
+						pemilik.setNoRujukan(noPengenalan);
+						pemilik.setIdNegeri("0");
+						pemilik.setIdDaerah("0");
+						pemilik.setAlamat1("-");
+						pemilik.setAlamat2("-");
+						pemilik.setAlamat3("-");
+						pemilik.setPoskod("00000");
+						pemilik.setTel("0");
+						pemilik.setFax("0");
+		
+						//pemilik = 
+						getIPemilikPPT().savePemilik(pemilik);
+						//manager.insertMaklumatHakmilik(idPermohonanSimati, hakmilik, nama, noPengenalan, ba, bb, idHakmilik, noResit, session);
+					
+					}
+				}
 			}
 			
 		}
@@ -214,6 +248,7 @@ public class FrmPopupCapaianHakmilikeTanah extends AjaxBasedModule {
 		this.context.put("txtHakmilik", idHakmilik);
 		this.context.put("idPermohonan", idPermohonan);			
 		
+		System.out.println("vm : "+vm);
 		return vm;
 		
 	}
@@ -309,6 +344,14 @@ public class FrmPopupCapaianHakmilikeTanah extends AjaxBasedModule {
 	private IPemilik getIPemilik(){
 		if(iPemilik==null){
 			iPemilik = new PemilikBean();
+		}
+		return iPemilik;
+		
+	}
+	
+	private IPemilik getIPemilikPPT(){
+		if(iPemilik==null){
+			iPemilik = new PemilikPPTBean();
 		}
 		return iPemilik;
 		

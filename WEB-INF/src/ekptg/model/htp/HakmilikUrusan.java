@@ -35,7 +35,6 @@ public class HakmilikUrusan implements Serializable {
 	private String idKategoriTanah;
 	private String idSubKetegoriTanah;
 	private String luas;
-	private String luasAsal;
 	private String idLuas;
 	private String idLuasBersamaan;
 	private String luasBersamaan;
@@ -74,17 +73,13 @@ public class HakmilikUrusan implements Serializable {
 	public String getLuas() {
 		return luas;
 	}
+
+
 	public void setLuas(String luas) {
 		this.luas = luas;
 	}
 
-	public String getLuasAsal() {
-		return luasAsal;
-	}
-	public void setLuasAsal(String luasAsal) {
-		this.luasAsal = luasAsal;
-	}
-	
+
 	public String getLuasBersamaan() {
 		return luasBersamaan;
 	}

@@ -274,7 +274,6 @@ public class SubmodulCukaiKemaskiniExcel extends AjaxBasedModule{
 							,iddaerah,idmukim,socTahun,noHakmilik,"",noLot);				
 				}else{
 					SenaraiFailOrig = getICukai().senaraiHakmilik(idnegeri,iddaerah,idmukim,socTahun);
-					//SenaraiFailOrig = getICukai().senaraiHakmilik(idnegeri,iddaerah,idmukim,socTahun);
 					
 				}
 		    	this.context.put("carianNoLot", noLot);
@@ -824,9 +823,8 @@ public class SubmodulCukaiKemaskiniExcel extends AjaxBasedModule{
 			r1 = new SQLRenderer();
 			r1.update("ID_HAKMILIK",hakmilik.getIdHakmilik()); 
 	    	r1.add("CUKAI_TERKINI",Utils.RemoveComma(String.valueOf(data.getCukaiPerluBayar())));
-			//HTP-24 Perlu masukkan pegawai kemaskini di maklumat cukai sahaja bukan di maklumat rekod (Komen baris 827,828).
-	    	//r1.add("ID_KEMASKINI",userId);
-	    	//r1.add("TARIKH_KEMASKINI",r1.unquote("SYSDATE"));
+	    	r1.add("ID_KEMASKINI",userId);
+	    	r1.add("TARIKH_KEMASKINI",r1.unquote("SYSDATE"));
 	    	sqlHakmilik = r1.getSQLUpdate("TBLHTPHAKMILIK");
 	    	stmt.executeUpdate(sqlHakmilik);
 	    	

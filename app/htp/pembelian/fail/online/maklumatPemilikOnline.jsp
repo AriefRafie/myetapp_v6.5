@@ -84,6 +84,12 @@
               <td>:</td>
               <td><input type="text" name="txtNoFax" size="20" maxlength="14"  value="$!pemilik.getFax()"  onblur="validateNumber(this,this.value)" $inputstyleread/></td>
             </tr>
+            <tr>
+             <td><div align="right"><strong></strong></div></td>
+              <td><div align="left">Emel</div></td>
+              <td>:</td>
+              <td><input type="text" name="txtEmel" size="20" maxlength="65"  value="$!pemilik.getEmel()"  $inputstyleread/></td>
+            </tr>
 
             <tr>
               <td><div align="right"><strong></strong></div></td>
@@ -94,8 +100,9 @@
             <tr style="display:$Style3">
               <td colspan="4">
                 <div align="center"><strong>
-                
+                #if (($!idjawatan.equals("20")|| $!idjawatan.equals("24")) || $!idjawatan.equals("9"))
                 <input class="stylobutton100" type="button" name="cmdKemaskini" id="cmdKemaskini" value="Kemaskini" onclick="javascript:detailPemilikOnline()">
+                #end
                 <input class="stylobutton100" type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doAjaxCall${formName}('viewpemilikonline')">
            		 </div>
            		</td>
@@ -185,6 +192,12 @@
               <td>:</td>
               <td><input type="text" name="txtNoFax" size="20" maxlength="14"  value="$!pemilik.getFax()"  onblur="validateNumber(this,this.value)" /></td>
             </tr>
+            <tr>
+              <td><div align="right"><strong></strong></div></td>
+              <td><div align="left">Emel</div></td>
+              <td>:</td>
+              <td><input type="text" name="txtEmel" size="20" maxlength="65"  value="$!pemilik.getEmel()"  /></td>
+            </tr>
 
             <tr>
               <td><div align="right"><strong></strong></div></td>
@@ -195,7 +208,9 @@
 		<tr style="display:$Style3">
               <td colspan="4">
                 <div align="center"><strong>
+                #if (($!idjawatan.equals("20")|| $!idjawatan.equals("24")) || $!idjawatan.equals("9"))
                 <input class="stylobutton100" type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:simpanPemilik()">
+                #end
                 <input class="stylobutton100" type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="doAjaxCall${formName}('viewpemilikonline')">
        			 </div>
            	</td>
@@ -284,6 +299,12 @@
               <td><div align="left">No. Fax</div></td>
               <td>:</td>
               <td><input type="text" name="txtNoFax" size="20" maxlength="14"  value="$!pemilik.getFax()"  onblur="validateNumber(this,this.value)" /></td>
+            </tr>
+            <tr>
+              <td><div align="right"><strong></strong></div></td>
+              <td><div align="left">Emel</div></td>
+              <td>:</td>
+              <td><input type="text" name="txtEmel" size="20" maxlength="65"  value="$!pemilik.getEmel()"  /></td>
             </tr>
 
             <tr>

@@ -1,4 +1,6 @@
-
+/**
+ * 
+ */
 package integrasi.rest.etanah.wpkl.ppk;
 
 import integrasi.rest.etanah.wpkl.RESTInvoker;
@@ -36,6 +38,7 @@ import ekptg.helpers.Utils;
  *
  */
 public class EtanahWPKLPPKManager {
+	
 	
 	private static String flagMsg = "";
 	private static String outputMsg = "";
@@ -88,7 +91,6 @@ public class EtanahWPKLPPKManager {
 							if (namaSimati.toUpperCase().contains(pb.getNamaPB().toUpperCase()) || pb.getNamaPB().toUpperCase().contains(namaSimati.toUpperCase())) {
 								//SIMATI ADALAH PEMILIK MELALUI NAMA
 								simatiIsPemilik = true;
-								
 							}
 						}
 					}

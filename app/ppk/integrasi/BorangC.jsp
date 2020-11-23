@@ -108,9 +108,6 @@ input[readonly]{
 						<td class="borderTopBottom">:</td>
 						<td class="borderTopRightBottom">$!catatan</td>
 					</tr>
-					<tr>
-						<td colspan='3' align="center"><input type="button" class="stylobutton100" name="cmdtutup" value="Tutup" onClick="tutup()"></td>
-					</tr>
 					
 				</table>
 			#else
@@ -152,9 +149,6 @@ input[readonly]{
 							<td class="borderBottom">:</td>
 							<td class="borderRightBottom">$!f.catatan</td>
 						</tr>
-						<tr>
-							<td colspan='3' align="center"><input type="button" class="stylobutton100" name="cmdtutup" value="Tutup" onClick="tutup()"></td>
-						</tr>
 						
 					</table>
 				</fieldset>	
@@ -189,10 +183,6 @@ input[readonly]{
 				</fieldset>	
 			#end
 		</fieldset>
-		#set ($src1="../../servlet/ekptg.view.ppk.DisplayBlobKeputusanBorangC?id="+$ID_KAD_BIRU)
-		 <p align="center">
-		 <iframe id="iFrameBorangC" name="iFrameBorangC" src="$src1" width="600" height="600" title="Borang C" style="display:none"></iframe>
-		 </p> 
 	<!-- 
 		<fieldset><legend><font style="font-family:Verdana; font-size:8pt;	font-weight:bold;">BUTIRAN TERPERINCI BORANG C</font></legend>
 			#foreach ($k in $keputusan)
@@ -284,16 +274,10 @@ input[readonly]{
 	
 	function checkLampiran(extrctKod,ID_KAD_BIRU){
 		
-		
 		if(extrctKod==''){
 			
 			//open new PDF
-			
-			  //doOpen(ID_KAD_BIRU) ;
-		
-					document.getElementById('iFrameBorangC').style.display="block";
-							
-			  
+			  doOpen(ID_KAD_BIRU) ;
 			    
 		}else{
 			
@@ -307,24 +291,6 @@ input[readonly]{
 			  
 		}
 	}
-	
-	
-	
-	 function refreshParent() {
-	
-				window.opener.location.reload(true);
-			
-				
-			}
-	 
-	 function tutup() {
-			
-		 window.close();
-		 refreshParent();
-		
-			
-		}
-			    
 
 	function doOpen(id) {
 		
@@ -332,12 +298,10 @@ input[readonly]{
 		
 		
 	    var url = "../../servlet/ekptg.view.ppk.DisplayBlobKeputusanBorangC?id="+id;
-	    var hWnd = window.open(url,'iFrameBorangC','width=800,height=500, resizable=yes,scrollbars=yes');
+	    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 	    hWnd.opener = document.window;
 	    if (hWnd.focus != null) hWnd.focus();
-	    
-	   // refreshParent();
 	}
 	
 	</script>
