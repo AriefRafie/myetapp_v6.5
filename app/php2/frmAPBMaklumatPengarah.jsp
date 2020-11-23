@@ -4,12 +4,22 @@
       <legend>MAKLUMAT PENGARAH</legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         #foreach ($beanMaklumatPengarah in $BeanMaklumatPengarah)
+        <input name="idWarganegara" type="hidden" id="idWarganegara" value="$idWarganegara"/>
+        <input name="idBangsa" type="hidden" id="idBangsa" value="$idBangsa"/>
         <tr>
           <td width="1%">#if ($mode == 'newPengarah' ||  $mode == 'updatePengarah')<span class="style1">*</span>#end</td>
           <td width="28%">Warganegara</td>
           <td width="1%">:</td>
           <td width="70%">$selectWarganegara</td>
         </tr>
+        #if($idWarganegara == '13')
+        <tr>
+          <td>&nbsp;</td>
+          <td></td>
+          <td>:</td>
+          <td><input name="txtLLWarganegara" type="text" class="$inputTextClass" id=""txtLLWarganegara"" value="$beanMaklumatPengarah.warganegaraLain" size="43" maxlength="50" $readonly /></td>
+        </tr>
+        #end
         <tr>
           <td>#if ($mode == 'newPengarah' ||  $mode == 'updatePengarah')<span class="style1">*</span>#end</td>
           <td>Nama</td>
@@ -35,6 +45,14 @@
           <td>:</td>
           <td>$selectBangsa</td>
         </tr>
+        #if($idBangsa == '7')
+        <tr>
+          <td>&nbsp;</td>
+          <td></td>
+          <td>:</td>
+          <td><input name="txtLLBangsa" type="text" class="$inputTextClass" id="txtLLBangsa" value="$beanMaklumatPengarah.bangsaLain" size="43" maxlength="50" $readonly /></td>
+        </tr>
+        #end
         <tr>
           <td>&nbsp;</td>
           <td>Pegangan Saham</td>

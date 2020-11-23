@@ -1756,8 +1756,7 @@ parent.document.getElementById("info_alert").innerHTML="<div class=\"warning_onl
   
                 #else
                 
-                <input name="txtNoKPBaruSimati1" id="txtNoKPBaruSimati1" style="width: 50px;" type="text" value="$noKpBaru1" size="7" maxlength="6" $setmodeR class="$setmode" onKeyUp="javascript:validateIC(event,this,this.value,'txtNoKPBaruSimati2')" onBlur="qryHowOld();check_kp();
-                )"  />               
+                <input name="txtNoKPBaruSimati1" id="txtNoKPBaruSimati1" style="width: 50px;" type="text" value="$noKpBaru1" size="7" maxlength="6" $setmodeR class="$setmode" onKeyUp="javascript:validateIC(event,this,this.value,'txtNoKPBaruSimati2')" onBlur="qryHowOld();check_kp();check_pengenalan_simati_1()"  />               
                 -
   <input name="txtNoKPBaruSimati2" id="txtNoKPBaruSimati2" style="width: 20px;" type="text" value="$noKpBaru2" size="3" maxlength="2" $setmodeR class="$setmode" onKeyUp="javascript:validateIC(event,this,this.value,'txtNoKPBaruSimati3')"  onBlur="check_kp();check_pengenalan_simati_1()"  />
                 -
@@ -2254,6 +2253,16 @@ alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_nama_warga
   	}
 
   }
+  
+  function simpanTest(){
+// 	  if ( exist_simati_1() == "true"){
+// 	  	alert("WUJUD");
+// 	  }
+// 	  else{
+// 		  alert("TAK WUJUD");
+// 	  }
+	  alert (exist_simati_1());
+  }
 
 //Simpan
  function Simpan(){
@@ -2335,22 +2344,12 @@ alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_nama_warga
       alert("Sila masukkan Email");
       document.f1.txtEmelPemohon.focus();
     }
-    
-    
-    else if(document.f1.no_kp1.value == 'yes')
-    {
-      alert("No KP Baru simati telah wujud!");   
-    } 
-     else if(document.f1.no_kp2.value == 'yes')
-    {
-      alert("No KP Lama simati telah wujud!");   
-    }
-     else if(document.f1.no_kp3.value == 'yes')
-    {
-      alert("No KP Lain simati telah wujud!");   
-    }
-      
-    
+	else if(!em.match(emailExp) && em!=""){
+		
+		alert("Alamat emel tidak sah!");		
+		document.f1.txtEmelPemohon.focus();
+		return;
+	}
     else if (isNaN(document.f1.txtNoKPBaruSimati1.value)) {
       alert("Sila masukkan nombor sahaja");
       document.f1.txtNoKPBaruSimati1.focus();
@@ -2442,6 +2441,18 @@ alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_nama_warga
     	alert('Sila muatnaik Sijil Mati / Perintah Mahkamah (Kematian)');
     	document.f1.fileupload.focus(); 
    	}
+    else if(document.f1.no_kp1.value == 'yes')
+    {
+      alert("No KP Baru simati telah wujud!");   
+    } 
+     else if(document.f1.no_kp2.value == 'yes')
+    {
+      alert("No KP Lama simati telah wujud!");   
+    }
+     else if(document.f1.no_kp3.value == 'yes')
+    {
+      alert("No KP Lain simati telah wujud!");   
+    }
     else{
       input_box = confirm("Adakah anda pasti?");
       if (input_box == true) {
@@ -2450,6 +2461,7 @@ alamatwarga(document.f1.socWarganegaraPemohon.value,'alamatwarga','tr_nama_warga
         document.f1.eventStatus.value="1";
         document.f1.action = "";
         document.f1.submit();
+		// alert("SILA CUBA LAGI!");
     
       }
       
@@ -2919,32 +2931,91 @@ var dtCh= "/";
 
   }
 
-  function check_pengenalan_simati_1(){
-    //alert(document.f1.txtNoKPBaruSimati1.value+"-"+document.f1.txtNoKPBaruSimati2.value+"-"+document.f1.txtNoKPBaruSimati3.value);
-    url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
-    actionName = "check_simati_kp_baru";
-    target = "check_kp_1";
-    doAjaxUpdater(document.f1, url, target, actionName);
+//   function check_pengenalan_simati_1(){
+//     //alert(document.f1.txtNoKPBaruSimati1.value+"-"+document.f1.txtNoKPBaruSimati2.value+"-"+document.f1.txtNoKPBaruSimati3.value);
+//     url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
+//     actionName = "check_simati_kp_baru";
+//     target = "check_kp_1";
+//     doAjaxUpdater(document.f1, url, target, actionName);
 
-  }
+//   }
 
-    function check_pengenalan_simati_2(){
-    //alert(document.f1.txtNoKPLamaSimati.value);
-    url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
-    actionName = "check_simati_kp_lama";
-    target = "check_kp_2";
-    doAjaxUpdater(document.f1, url, target, actionName);
+
+// 19112020 syafiqah ambil dari v6
+function check_pengenalan_simati_1()
+{
+	//alert(document.f1.txtNoKPBaruSimati1.value+"-"+document.f1.txtNoKPBaruSimati2.value+"-"+document.f1.txtNoKPBaruSimati3.value);
+	url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
+	if('$skrin_online' == "yes")
+		{
+			actionName = "check_simati_kp_baru_online";
+		}
+	else
+		{
+			actionName = "check_simati_kp_baru";
+		}
+	target = "check_kp_1";
+	doAjaxUpdater(document.f1, url, target, actionName);
+}
+
+function check_pengenalan_simati_2()
+{
+	//alert(document.f1.txtNoKPLamaSimati.value);
+	url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
+	if('$skrin_online' == "yes")
+		{
+			actionName = "check_simati_kp_lama_online";
+		}
+	else
+		{
+			actionName = "check_simati_kp_lama";
+		}
+	target = "check_kp_2";
+	doAjaxUpdater(document.f1, url, target, actionName);
+}
+
+function check_pengenalan_simati_3()
+{
+	//alert("MyID Lain = "+document.f1.txtNoKPLainSimati.value)
+	url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
+	if('$skrin_online' == "yes")
+		{
+			actionName = "check_simati_kp_lain_online";
+		}
+	else
+		{
+			actionName = "check_simati_kp_lain";
+		}
+	target = "check_kp_3";
+	doAjaxUpdater(document.f1, url, target, actionName);
+}
+
+function exist_simati_1(){
+	url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
+	actionName = "check_exist_simati_1";
+	doAjaxUpdater(document.f1, url, target, actionName);
+}
+
+
+
+
+//     function check_pengenalan_simati_2(){
+//     //alert(document.f1.txtNoKPLamaSimati.value);
+//     url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
+//     actionName = "check_simati_kp_lama";
+//     target = "check_kp_2";
+//     doAjaxUpdater(document.f1, url, target, actionName);
   
-  }
+//   }
 
-  function check_pengenalan_simati_3(){
-    //alert("MyID Lain = "+document.f1.txtNoKPLainSimati.value)
-    url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
-    actionName = "check_simati_kp_lain";
-    target = "check_kp_3";
-    doAjaxUpdater(document.f1, url, target, actionName);
+//   function check_pengenalan_simati_3(){
+//     //alert("MyID Lain = "+document.f1.txtNoKPLainSimati.value)
+//     url = "../servlet/ekptg.view.ppk.PendaftaranCheck";
+//     actionName = "check_simati_kp_lain";
+//     target = "check_kp_3";
+//     doAjaxUpdater(document.f1, url, target, actionName);
   
-  }
+//   }
 
   function check_pengenalan_simati_1_onload(){
   /*
@@ -3955,6 +4026,20 @@ document.getElementById('majlisagama').style.display="none";
 	
 	function check(){
 	//alert("masuk!");
+	}
+	
+	function emailValidator(elem, helperMsg){
+		var emailExp = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+		
+		if(elem.value!=""){
+			if(elem.value.match(emailExp)){
+				return true;
+			}else{
+				alert(helperMsg);		
+				elem.focus();
+				return false;
+			}
+		}
 	}
 	
 	function open_info() {

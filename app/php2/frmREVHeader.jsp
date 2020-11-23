@@ -142,8 +142,8 @@
     </fieldset></td>
   </tr>
 </table>
-
-<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak Permohonan" onclick="printLaporan('laporan','$!tajukLaporan')"/>
+<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak Permohonan" onclick="janaMaklumatPermohonan('$idHasil')"/>
+<!-- <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak Permohonan" onclick="printLaporan('laporan','$!tajukLaporan')"/> -->
 </div>
 <script type="text/javascript">
 function printLaporan(divName,tajuk) {
