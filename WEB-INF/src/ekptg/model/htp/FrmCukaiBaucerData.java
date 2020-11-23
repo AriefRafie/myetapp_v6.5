@@ -114,7 +114,7 @@ public class FrmCukaiBaucerData {
 	}
 	
 	//Tambah Baucer
-	public static int simpanTBaucer(Hashtable data) throws Exception {
+	public static String simpanTBaucer(Hashtable data) throws Exception {
 	    Db db = null;
 	    String sql = "";
 	    try {      
@@ -123,8 +123,8 @@ public class FrmCukaiBaucerData {
 	      String tkh_resit;
 	      String TR = "";
 	      long id_baucer = DB.getNextID("TBLHTPBAUCER_SEQ");
-	      int idPeringkatbayaran = (Integer)data.get("idPeringkatbayaran");
-	      myLog.info("FrmCukaiBaucerData::simpanTBaucer:::socDaerah = "+data.get("socDaerah"));
+	      String idPeringkatbayaran = String.valueOf(data.get("idPeringkatbayaran"));
+	      myLog.info("FrmCukaiBaucerData:simpanTBaucer::socDaerah = "+data.get("socDaerah"));
 	      int socDaerah = Integer.parseInt(data.get("socDaerah").toString());
 	      String tkh_baucer = (String)data.get("tkh_baucer");
 	      String TB = "to_date('" + tkh_baucer + "','dd/MM/yyyy')";
@@ -172,7 +172,7 @@ public class FrmCukaiBaucerData {
 	      stmtBaucer.executeUpdate(sql);
 	      
 	      //conn.commit();
-	      return (int)id_baucer;
+	      return String.valueOf(id_baucer);
 	      
 	    } 
 	    finally {
@@ -195,7 +195,8 @@ public class FrmCukaiBaucerData {
 //	      conn = db.getConnection();
 //		  conn.setAutoCommit(false);
 		    
-	      int idBaucer = (Integer)data.get("idBaucer");
+	      String idBaucer = String.valueOf(data.get("idBaucer"));
+	      //int idBaucer = (Integer)data.get("idBaucer");
 	      int idPeringkatbayaran = (Integer)data.get("idPeringkatbayaran");
 	      String tkh_baucer = (String)data.get("tkh_baucer");
 	      String TB = "to_date('" + tkh_baucer + "','dd/MM/yyyy')";
@@ -256,7 +257,7 @@ public class FrmCukaiBaucerData {
 	    }
 	}
 	
-	public static Vector getListTBaucer(int idNegeri,int idBaucer,int idPeringkatbayaran)throws Exception {		
+	public static Vector getListTBaucer(int idNegeri,String idBaucer,int idPeringkatbayaran)throws Exception {		
 		Db db = null;
 		String sql = "SELECT DISTINCT trd.id_daerah,trd.nama_daerah, thb.id_baucer, thb.no_baucer, thb.tarikh_baucer, " +
 						"thb.no_resit, thb.tarikh_resit, thb.tarikh_terima, thb.amaun_baucer, thb.id_peringkatbayaran " +
