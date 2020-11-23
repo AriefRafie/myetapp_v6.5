@@ -868,7 +868,7 @@ public class CRUDN extends AjaxBasedModule{
 						
 				System.out.println("CukaiProcess::simpanPeringkatBayar:: h = "+h);
 						
-				idPeringkatbayaran = FrmCukaiPenyataData.simpanPeringkatBayarInteger(h);
+				idPeringkatbayaran = FrmCukaiPenyataData.simpanPeringkatBayar(h);
 				System.out.println("CukaiProcess::SimpanPenyata::idPeringkatbayaran::"+idPeringkatbayaran);
 						
 				list = FrmCukaiPenyataData.getListPenyata(idNegeri);
@@ -919,7 +919,7 @@ public class CRUDN extends AjaxBasedModule{
 						
 				System.out.println("CukaiProcess::kemaskiniPeringkatBayar:: h = "+h);
 							
-				idPeringkatbayaran = FrmCukaiPenyataData.updatePeringkatBayarInteger(h);
+				idPeringkatbayaran = FrmCukaiPenyataData.updatePeringkatBayar(h);
 				System.out.println("CukaiProcess::KemaskiniPenyata::idPeringkatbayaran::"+idPeringkatbayaran);
 							
 				list = FrmCukaiPenyataData.getListPenyata(idNegeri);
@@ -980,7 +980,7 @@ public class CRUDN extends AjaxBasedModule{
 				h.put("tahun_cukai", tahun_cukai);						
 				h.put("peringkat_bayaran", idBayaran);		    
 				h.put("idMasuk", idUser);
-				idPeringkatbayaran = FrmCukaiPenyataData.simpanPeringkatBayarInteger(h);						
+				idPeringkatbayaran = FrmCukaiPenyataData.simpanPeringkatBayar(h);						
 				//list = FrmCukaiPenyataData.getListPenyata(idNegeri);
 				myLog.info("CukaiProcess::simpanPeringkatBayar::idNegeri::"+idNegeri);						
 				myLog.info("CukaiProcess::simpanPeringkatBayar::tahun_cukai::"+tahun_cukai);
@@ -1018,7 +1018,7 @@ public class CRUDN extends AjaxBasedModule{
 				h.put("tahun_cukai", tahun_cukai);							
 				h.put("peringkat_bayaran", idBayaran);						
 				h.put("idKemaskini", idUser);
-				idPeringkatbayaran = FrmCukaiPenyataData.updatePeringkatBayarInteger(h);							
+				idPeringkatbayaran = FrmCukaiPenyataData.updatePeringkatBayar(h);							
 				//list = FrmCukaiPenyataData.getListPenyata(idNegeri);						
 				String sumCukai = getParam("sumCukai");
 				int sumIdHakmilik = Integer.parseInt(getParam("sumIdHakmilik"));
@@ -1234,7 +1234,7 @@ public class CRUDN extends AjaxBasedModule{
 			  h.put("tkh_terima", getParam("txdTarikhTerima"));
 			  h.put("idNegeri", Integer.parseInt(getParam("idNegeri")));
 			  h.put("tahun", tahunParam);
-			  idBaucer = FrmCukaiBaucerData.simpanTBaucer(h);
+			  idBaucer = FrmCukaiBaucerData.simpanTBaucerStr(h);
 			  //result = "baru";
 			  return idBaucer;
 			  
@@ -1257,7 +1257,7 @@ public class CRUDN extends AjaxBasedModule{
 				FrmCukaiBaucerData.updateTBaucer(h);
 				//result = "kemaskini";
 			} else{
-				idBaucer = FrmCukaiBaucerData.simpanTBaucer(h);
+				idBaucer = FrmCukaiBaucerData.simpanTBaucerStr(h);
 				//result = "baru";
 			}
 			//System.out.println("CukaiTambahBaucer::KemaskiniBaucer:: h = "+h);
@@ -1269,7 +1269,7 @@ public class CRUDN extends AjaxBasedModule{
 	  	Vector list = new Vector();
 		list.clear();					    
 		try{
-			list = FrmCukaiBaucerData.getListTBaucer(idNegeri,String.valueOf(idBaucer),idPeringkatbayaran);
+			list = FrmCukaiBaucerData.getListTBaucer(idNegeri,idBaucer,idPeringkatbayaran);
 			this.context.put("ResultSimpan", "");
 			
 			if(list.size() != 0){			    
