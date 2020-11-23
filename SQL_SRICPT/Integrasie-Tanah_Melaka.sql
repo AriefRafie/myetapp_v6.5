@@ -1,3 +1,8 @@
+---19112020
+CREATE OR REPLACE TRIGGER "TBLINTANAHPERMOHONAN_BI" 
+before insert on     TBLINTANAHPERMOHONAN   for each row
+begin    if :new.ID_ETANAHPPT   is null    then SELECT (SELECT kod_negeri FROM tbllookupstate) || TO_CHAR (SYSDATE, 'YY') || INTETANAHPPT_SEQ.NEXTVAL into :new.ID_ETANAHPPT  
+from dual;    end if;    end;
 
 
 --2020/04/27 - uat

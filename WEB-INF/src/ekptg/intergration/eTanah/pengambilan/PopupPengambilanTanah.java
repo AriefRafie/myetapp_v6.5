@@ -5,11 +5,15 @@ package ekptg.intergration.eTanah.pengambilan;
 
 import integrasi.IntegrasiManager;
 import integrasi.utils.IntegrationInternal;
+import integrasi.utils.IntegrationInternalSek8;
+import integrasi.utils.IntegrationInternalSek8a;
 
 import org.apache.axis2.addressing.EndpointReference;
 
 import integrasi.ws.etanah.ETanahSek4;
 import integrasi.ws.etanah.ETanahSek8;
+import integrasi.ws.etanah.ETanahSek8BorangC;
+import integrasi.ws.etanah.ETanahSek8a;
 //import org.apache.axis2.client.Options;
 import integrasi.ws.etanah.melaka_ns.ppt.CustomDataSource;
 //import integrasi.ws.etanah.ppt.ETanahCarianManager;
@@ -106,7 +110,10 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 	PopupeTanahData logic_ = new PopupeTanahData();
     ILampiran iLampiran = null;
     IntegrationInternal integration4 = null;
-
+    IntegrationInternalSek8 integration8 = null;
+    IntegrationInternalSek8a integration8a = null;
+    
+	@SuppressWarnings("unused")
 	@Override
 	public String doTemplate2() throws Exception {
 		HttpSession session = this.request.getSession();
@@ -153,7 +160,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		String hitButton = getParam("hitButton");
 		String action = getParam("action");
 		String id_dokumen = getParam("id_dokumen");
-		String nama_dokumen = getParam("nama_dokumen");
+		String tajuk = getParam("tajuk");
 		String kategori_lampiran = getParam("kategori_lampiran");
 		String id_hakmilik = getParam("id_hakmilik");
 		String id_penarikan = getParam("id_penarikan");
@@ -165,7 +172,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		this.context.put("no_fail", no_fail);
 		this.context.put("jenis_skrin", jenis_skrin);
 		this.context.put("hitButton", hitButton);
-		this.context.put("nama_dokumen", nama_dokumen);
+		this.context.put("tajuk", tajuk);
 		this.context.put("id_hakmilik", id_hakmilik);
 		this.context.put("id_penarikan", id_penarikan);
 		context.put("statusSend", "");
@@ -199,7 +206,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 					conn = db.getConnection();
 					conn.setAutoCommit(false);					
 						uploadFiles(id_permohonan, id_fail, id_hakmilik, jenis_skrin,
-								nama_dokumen, session, db, conn, id_penarikan,kategori_lampiran,return_new_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
+								tajuk, session, db, conn, id_penarikan,kategori_lampiran,return_new_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
 						context.put("flag_submit", "yes");
 						conn.commit();					
 				} catch (Exception e) {
@@ -253,128 +260,56 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 					//this.context.put("listHakmilik", listHakmilik);
 					//Vector listHakmilikEndorsan = getSenaraiHakmilik(id_permohonan, db);	
 					
-					MaklumatPermohonanSek4Form reqformSek4 = new MaklumatPermohonanSek4Form();
+					//MaklumatPermohonanSek4Form reqformSek4 = new MaklumatPermohonanSek4Form();
 					DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 					Calendar cal = Calendar.getInstance();
 					String dateNow = dateFormat.format(cal.getTime());
 					myLogger.info("dateNow :" + dateNow);
-					
-					reqformSek4.setTarikh_permohonan("16/10/2020");
-					//myLogger.info("setTarikh_permohonan :"+dateNow);
-					reqformSek4.setNama_kementerian("KEMENTERIAN AIR, TANAH DAN SUMBER ASLI");
-					reqformSek4.setTujuan_dalam_english("");
-					reqformSek4.setTujuan("Pembersihan dan Pengindahan Sg. Melaka, Melaka Parcel 2.");
-					reqformSek4.setNo_fail_jkptg("JKPTG(S).MLK/03/881/18/2020/3");
-					reqformSek4.setKod_negeri_pengambilan("04");
-					reqformSek4.setNama_negeri_pengambilan("MELAKA");
-					reqformSek4.setKod_daerah_pengambilan("03");
-					reqformSek4.setNama_daerah_pengambilan("ALOR GAJAH");
-					reqformSek4.setJenis_pengambilan("SEKSYEN4");
-					reqformSek4.setJenis_projek_pengambilan("");
-					reqformSek4.setNo_rujukan_surat_kjp("KATS/BPN 608-8/5 Jld.5 (33)");
-					reqformSek4.setTarikh_surat_kjp("09/08/2012");
-					reqformSek4.setId_kementerian_myetapp("18");
-					reqformSek4.setNama_agensi("BAHAGIAN PEMBANGUNAN");
-					reqformSek4.setId_agensi_myetapp("445");
-					reqformSek4.setKodAgensi("25");
-					reqformSek4.setKodKementerian("18");
-					reqformSek4.setAlamat1("Aras 15, Wisma Sumber Asli");
-					reqformSek4.setAlamat2("No.25 Persiaran Perdana, Presint 4");
-					reqformSek4.setAlamat3("");
-					reqformSek4.setAlamat4("");
-					reqformSek4.setPoskod("62574");
-					reqformSek4.setKodNegeri("16");			
-					
-					
-					myLogger.info("SSSSSSSSSSSSSSSSWWW");
-					
-					//MaklumatHakmilikForm reqformHakmilik = new MaklumatHakmilikForm();
-					//Vector<Hashtable<String,String>> listHakmilik = getSenaraiHakmilik(id_permohonan, db);
-//					reqformHakmilik.setId_hakmilik("040108PN00019187");
-//					reqformHakmilik.setKod_luas_ambil("M");
-//					reqformHakmilik.setKod_luas_asal("M");
-//					reqformHakmilik.setKod_unit_hakmilik("PN");
-//					reqformHakmilik.setLuas_ambil("143.0000");
-//					reqformHakmilik.setLuas_asal("143.0000");
-//					reqformHakmilik.setNo_fail_jkptg("JKPTG(S).MLK/03/881/18/2020/3"); 
-//					reqformHakmilik.setNo_hakmilik("00019187");
-//					reqformHakmilik.setNo_lot("0003346");
-//					reqformHakmilik.setNo_warta("");
-//					reqformHakmilik.setStatus_borangk("");
-//					reqformHakmilik.setTarikh_borangk("");
-//					reqformHakmilik.setTarikh_warta("");
-					
-					
-					String nowarta = "1234";
-					//myLogger.info("SSSSSSSSSSSSSSSSWWW1");
-					
-					MaklumatHakmilikForm[] hakmiliks = new MaklumatHakmilikForm[12] ;
-					//hakmiliks[0].
-//					hakmiliks[0] = new MaklumatHakmilikForm();
-//					hakmiliks[1] = new MaklumatHakmilikForm();
-//					hakmiliks[2] = new MaklumatHakmilikForm();
-//					hakmiliks[10] = new MaklumatHakmilikForm();
-					
-					try {
-				    hakmiliks[0].setId_hakmilik("1");
-					hakmiliks[1].setNo_warta("12345");
-					hakmiliks[2].setTarikh_warta("12/12/2020");
-					hakmiliks[10].setLuas_ambil("0.4");
-					
-					myLogger.info("idhkmilik "+hakmiliks[0].getId_hakmilik());
-					myLogger.info("luasambil "+hakmiliks[10].getLuas_ambil());
-					
-					}catch(Exception f) {
-						//myLogger.info("SSSSSSSSSSSSSSSSWWW20");
-						//f.printStackTrace();
-					}
-//					hakmiliks[1].setNo_warta(nowarta);
-					
-					//myLogger.info("SSSSSSSSSSSSSSSSWWW2");
-					
-					
-					LampiranForm lampiranMMK = null;
-					//lampiranMMK.setFilename("test");
-					
-					//myLogger.info("SSSSSSSSSSSSSSSSWWW3");
-					
-					LampiranForm[] lampiran = new LampiranForm[3];
-//					lampiran[0] = new LampiranForm();
-//					lampiran[1] = new LampiranForm();
-//					try {
-//					lampiran[0].setFilename("test");
-//					lampiran[1].setKodDokumen("2");
-//					}catch(Exception g) {
-//						myLogger.info("SSSSSSSSSSSSSSSSWWW4");
-//						g.printStackTrace();
-//					}
-					
-					
-					/*MaklumatPermohonanSek4Form form
-					,MaklumatHakmilikForm[] hakmiliks
-					,LampiranForm lampiranMMK
-					,LampiranForm[] lampiran*/
-					
-					//myLogger.info("mKMMLMLML");
-					
-					
-					
+			
 					//hantarData(jenis_skrin, id_fail, id_hakmilik, session,id_permohonan, id_penarikan,db,return_new_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
 					try {
-//					String test = daftarPermohonanBorangAMMk(reqformSek4
-//							,hakmiliks
-//							,lampiranMMK
-//							,lampiran
-//							);
+				
 					//myLogger.info("masuk sini tak zzzzzz--- "+test);
 					String jeniSkrin=jenis_skrin;
+					
+					if ("BorangA".equals(jeniSkrin) || "Seksyen8".equals(jeniSkrin) || "BorangC".equals(jeniSkrin)) {
+											
 					Hashtable<String,String> maklumatPermohonan = logic_.getMaklumatPermohonan(idPermohonan, db);
 					Vector<Hashtable<String,String>> listHakmilik = logic_.getSenaraiHakmilik(idPermohonan, db);
-					Vector<Tblrujdokumen> listDokumen = logic_.getSenaraiDokumen(idPermohonan,jeniSkrin,db);
-
-					getISek4().setHakmiliks(listHakmilik);
-					getISek4().hantar(cm, maklumatPermohonan,listDokumen, userID, db);
-
+					Vector<Tblrujdokumen> listDokumen = logic_.getSenaraiDokumen(idPermohonan,jeniSkrin,db);					
+					
+					if ("BorangA".equals(jeniSkrin)){
+						getISek4().setHakmiliks(listHakmilik);
+						getISek4().hantar(cm, maklumatPermohonan,listDokumen, userID, db);
+						String maklumatInt = logic_.getMaklumatInt(idPermohonan, db);
+						context.put("maklumatInt", maklumatInt);
+						myLogger.info("maklumat no Permohonan : "+maklumatInt);
+					}
+					else if ("Seksyen8".equals(jeniSkrin)){
+						getISek8().setHakmiliks(listHakmilik);
+						getISek8().hantar(cm, maklumatPermohonan,listDokumen, userID, db);
+					}
+					else if ("BorangC".equals(jeniSkrin)){
+						myLogger.info("masuk c :");
+						String maklumatInt = logic_.getMaklumatInt(idPermohonan, db);
+						myLogger.info("maklumat no Permohonan : "+maklumatInt);
+						String id_permohonanC = getParam(idPermohonan);
+						context.put("id_permohonan",id_permohonanC);
+						getISek8BorangC().hantarBorangC(cm, maklumatInt,listDokumen, userID, db);
+						//String noPermohonan = logic_.getMaklumatInt(idPermohonan, db);
+					}
+					}
+					
+					else if ("WartaS4".equals(jeniSkrin)) {
+						myLogger.info("aaa warta s4");
+						myLogger.info("masuk sini takkk borang b");
+						Hashtable<String,String> maklumatWarta = logic_.getMaklumatWarta(idPermohonan, db);
+						Vector<Tblrujdokumen> listDokumen = logic_.getSenaraiDokumen(idPermohonan,jeniSkrin,db);
+						//getISek4B().hantarBorangB(cm,maklumatWarta,listDokumen,userID,db);
+					}
+					else {
+						myLogger.info("elseeeeeeeeeeeeee");
+					}
 					myLogger.info("masuk sini tak");
 					
 					}catch(Exception e) {
@@ -396,65 +331,25 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 				
 			}
 		}
-			/*if ("hantarData".equals(hitButton)) {
-			if(doPostPop.equals("true"))
-			{
-				context.put("statusSend", "yes");
-				context.put("statusMesej",
-						"<font color='blue'><b><blink>Berjaya!</blink></b></font>");
-				Db db = null;
-				try {
-					db = new Db();
-					/*tring test = daftarPermohonanBorangAMMk(reqformSek4
-							,hakmiliks
-							,lampiranMMK
-							,lampiran
-							);
-					myLogger.info("masuk sini tak zzzzzz--- "+test);
-					myLogger.info("masuk sini tak");
-					
-					hantarData(jenis_skrin, id_fail, id_hakmilik, session,id_permohonan, id_penarikan,db,return_new_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
-				myLogger.info(" hantarData :");
-				} 
-				catch (Exception e) {
-					context.put("statusSend", "no");
-				context.put("statusMesej",
-						"<font color='red'><b><blink>Tidak Berjaya!</blink></b></font>");
-				context.put("errorMesej",
-						"<font color='red'><b>" + e.toString() + "</b></font>");
-			}
-				finally {
-					if (db != null)
-						db.close();
-				}
-				
-			}
-		}*/
-		if (jenis_skrin.equals("BorangC")) {
+		
+		/*if (jenis_skrin.equals("BorangC")) {
 			Db db = null;
 			try {
 				db = new Db();				
 				context.put("turutan",return_new_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
 				List<Hashtable> listSenaraiLotBorangC = new ArrayList();
-				listSenaraiLotBorangC = logic
-						.listSenaraiLotBorangC(id_fail, db);
+				listSenaraiLotBorangC = logic.listSenaraiLotBorangC(id_fail, db);
 				setupPage(session, action, listSenaraiLotBorangC);
-				listSenaraiDokumenUpload(id_permohonan, id_hakmilik,
-						jenis_skrin, id_penarikan, db);
+				//listSenaraiDokumenUpload(id_permohonan, id_hakmilik,jenis_skrin, id_penarikan, db);
 				maklumatProjek(id_fail, db);
-				maklumatWarta(id_fail, db);
-				listSenaraiDokumenUpload_fromEtanah(id_fail, id_permohonan,
-						id_hakmilik, jenis_skrin, db);
-				count_hakmilik(id_penarikan, id_fail, id_hakmilik, jenis_skrin,
-						db);
-				countLog_hakmilik(id_fail, id_hakmilik, jenis_skrin, db,
-						id_penarikan,return_new_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
-				countLog_dokumen(id_fail, id_hakmilik, jenis_skrin, db,
-						id_penarikan);
-				count_dokumen(id_permohonan, id_hakmilik, jenis_skrin, db,
-						id_penarikan);/*
+				//maklumatWarta(id_fail, db);
+				//listSenaraiDokumenUpload_fromEtanah(id_fail, id_permohonan,id_hakmilik, jenis_skrin, db);
+				count_hakmilik(id_penarikan, id_fail, id_hakmilik, jenis_skrin,db);
+				countLog_hakmilik(id_fail, id_hakmilik, jenis_skrin, db,id_penarikan,return_new_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
+				countLog_dokumen(id_fail, id_hakmilik, jenis_skrin, db,id_penarikan);
+				count_dokumen(id_permohonan, id_hakmilik, jenis_skrin, db,id_penarikan);/*
 				hashMaklumatWarta_fromEtanah(id_fail, id_permohonan,
-						id_hakmilik, jenis_skrin, db,id_penarikan);*/
+						id_hakmilik, jenis_skrin, db,id_penarikan);
 				//hashMaklumatEndorsan_fromEtanah(id_fail, id_permohonan,id_hakmilik, jenis_skrin, db,return_current_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
 				maklumatMMK("",id_fail, jenis_skrin, db, "");
 				count_logDerafMMK(id_fail, jenis_skrin, db,return_new_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
@@ -467,7 +362,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			}
 		} 
 		
-		else if (jenis_skrin.equals("WartaS8")) {
+		else*/ if (jenis_skrin.equals("WartaS8")) {
 			Db db = null;
 			try {
 				db = new Db();
@@ -501,10 +396,11 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		}
 		
 		else if (jenis_skrin.equals("WartaS4")) {
+			myLogger.info("masuk sini tak ye? hahahha");
 			Db db = null;
 			try {
 				db = new Db();
-				context.put("turutan",return_new_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
+				//context.put("turutan",return_new_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
 				listSenaraiDokumenUpload(id_permohonan, id_hakmilik,
 						jenis_skrin, id_penarikan, db);
 				maklumatProjek(id_fail, db);
@@ -550,29 +446,35 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 				if (db != null)
 					db.close();
 			}
-		} else if (jenis_skrin.equals("BorangA")) {
+		} else if (jenis_skrin.equals("BorangA") || jenis_skrin.equals("Seksyen8") || jenis_skrin.equals("BorangC")) {
+			myLogger.info("masuk sini BorangA");
 			Db db = null;
 			try {
 				db = new Db();
 				context.put("turutan",return_new_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
 				List<Hashtable> listSenaraiLotBorangA = new ArrayList();
-				listSenaraiLotBorangA = logic
-						.listSenaraiLotBorangA(id_fail, db);
-				setupPage(session, action, listSenaraiLotBorangA);
-				listSenaraiDokumenUpload(id_permohonan, id_hakmilik,
-						jenis_skrin, id_penarikan, db);
-				maklumatProjek(id_fail, db);
+				if (jenis_skrin.equals("BorangA")){
+			
+				listSenaraiDokumenUpload(id_permohonan, id_hakmilik,jenis_skrin, id_penarikan, db);
 				maklumatWarta(id_fail, db);
-				listSenaraiDokumenUpload_fromEtanah(id_fail, id_permohonan,
-						id_hakmilik, jenis_skrin, db);
-				count_hakmilik(id_penarikan, id_fail, id_hakmilik, jenis_skrin,
-						db);
-				countLog_hakmilik(id_fail, id_hakmilik, jenis_skrin, db,
-						id_penarikan,return_new_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
-				countLog_dokumen(id_fail, id_hakmilik, jenis_skrin, db,
-						id_penarikan);
-				count_dokumen(id_permohonan, id_hakmilik, jenis_skrin, db,
-						id_penarikan);/*
+				}
+				listSenaraiLotBorangA = logic.listSenaraiLotBorangA(id_fail, db);
+				setupPage(session, action, listSenaraiLotBorangA);
+				listSenaraiDokumenUpload(id_permohonan, id_hakmilik,jenis_skrin, id_penarikan, db);
+				String maklumatInt = logic_.getMaklumatInt(idPermohonan, db);
+				context.put("maklumatInt", maklumatInt);
+				myLogger.info("maklumat no Permohonan view : "+maklumatInt);
+				
+
+				maklumatProjek(id_fail, db);
+
+				
+				//listSenaraiDokumenUpload_fromEtanah(id_fail, id_permohonan,id_hakmilik, jenis_skrin, db);
+				
+				count_hakmilik(id_penarikan, id_fail, id_hakmilik, jenis_skrin,db);
+				countLog_hakmilik(id_fail, id_hakmilik, jenis_skrin, db,id_penarikan,return_new_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db)); //YG DH HANTAR
+				countLog_dokumen(id_fail, id_hakmilik, jenis_skrin, db,id_penarikan); // YG DAH HANTAR
+				count_dokumen(id_permohonan, id_hakmilik, jenis_skrin, db,id_penarikan);/*
 				hashMaklumatWarta_fromEtanah(id_fail, id_permohonan,
 						id_hakmilik, jenis_skrin, db,id_penarikan);*/
 				//hashMaklumatEndorsan_fromEtanah(id_fail, id_permohonan,	id_hakmilik, jenis_skrin, db,return_current_turutan (id_fail,id_permohonan, id_hakmilik, jenis_skrin,db));
@@ -725,19 +627,15 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			Hashtable hash_maklumatWarta = null;
 			Hashtable hash_maklumatProjek = null;
 			Hashtable hash_maklumatTarikBalik = null;
+			
 			//YATI
-			Hashtable hash_maklumatintPermohonan = null;
+			String hash_maklumatInt = null;
 			
 			
-			hash_maklumatProjek = logic.getMaklumatProjek(id_fail_etapp, db);
-			NO_FAIL_DERAF = (hash_maklumatProjek.get("NO_FAIL").toString());
+			//hash_maklumatProjek = logic.getMaklumatProjek(id_fail_etapp, db);
+			//NO_FAIL_DERAF = (hash_maklumatProjek.get("NO_FAIL").toString());
 			ID_NEGERI = (hash_maklumatProjek.get("ID_NEGERI").toString());
 			
-			//YATI
-			hash_maklumatintPermohonan = logic_.getMaklumatInt(id_permohonan, db);
-			//String NO_PERMOHONAN = "";
-			NO_PERMOHONAN = (hash_maklumatintPermohonan.get("NO_PERMOHONAN").toString());
-					//logic.getMaklumatIntPermohonan(id_fail_etapp, db);
 			
 			//open maklumat pengambilan tanah				
 			 String tarikh_permohonan_mp = "";
@@ -780,7 +678,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			nama_kementerian_mp = (hash_maklumatProjek.get("NAMA_KEMENTERIAN").toString());
 			tujuan_dalam_english_mp = (hash_maklumatProjek.get("TUJUAN_DALAM_ENGLISH").toString());
 			tujuan_mp = (hash_maklumatProjek.get("TUJUAN").toString());
-			no_fail_jkptg_mp = (hash_maklumatProjek.get("NO_FAIL_JKPTG").toString());
+		//	no_fail_jkptg_mp = (hash_maklumatProjek.get("NO_FAIL_JKPTG").toString());
 			kod_negeri_pengambilan_mp = (hash_maklumatProjek.get("KOD_NEGERI_PENGAMBILAN").toString());
 			nama_negeri_pengambilan_mp = (hash_maklumatProjek.get("NAMA_NEGERI_PENGAMBILAN").toString());
 			kod_daerah_pengambilan_mp = (hash_maklumatProjek.get("KOD_DAERAH_PENGAMBILAN").toString());
@@ -815,7 +713,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 						turutan_mp, flag_proses_mp, session,kod_agensi,kod_kementerian,alamat1_kjp,alamat2_kjp,alamat3_kjp,poskod_kjp,kod_negeri_kjp);
 				
 				
-				addDerafMaklumatPengambilan_List(tblintpptmaklumatpengambilan,id_fail_etapp, session, db);
+				//addDerafMaklumatPengambilan_List(tblintpptmaklumatpengambilan,id_fail_etapp, session, db);
 			
 				saveLogMaklumatPengambilan(id_fail_etapp, jenis_skrin_etapp,
 						session, db,turutan);
@@ -825,58 +723,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			}		
 			
 			//close maklumat pengambilan tanah
-			
-			
-			/*
-			//open hantar data deraf MMK
-			if (jenis_skrin_etapp.equals("TarikBalik"))
-			{
-				hash_maklumatTarikBalik = logic.getMaklumatTarikBalik(id_penarikan,db);
-				hash_maklumatProjek = logic.getMaklumatProjek(id_fail_etapp, db);
-				NO_FAIL_DERAF = (hash_maklumatProjek.get("NO_FAIL").toString());
-				ID_NEGERI = (hash_maklumatProjek.get("ID_NEGERI").toString());
-				NO_RUJUKAN_TARIKBALIK = (hash_maklumatTarikBalik.get("NO_PENARIKANBALIK").toString());
 				
-					Integer checkMMKPBdihantar = logic.derafMmkPBLog_COUNT(id_penarikan, jenis_skrin_etapp, db);
-					if (checkMMKPBdi == 0) {
-						
-						Hashtable hash_maklumatMMK = null;
-						hash_maklumatMMK = logic.getMaklumatMMK(id_penarikan,id_fail_etapp,jenis_skrin_etapp,db);
-						if(hash_maklumatMMK.size()>0)
-						{
-						String KETERANGAN_SIDANG = hash_maklumatMMK.get("KETERANGAN_SIDANG").toString();
-						String WAKTU_SIDANG = hash_maklumatMMK.get("WAKTU_SIDANG").toString();
-						String JENIS_WAKTU_SIDANG = hash_maklumatMMK.get("JENIS_WAKTU_SIDANG").toString();
-						String WAKTU_SIDANG_KETERANGAN = hash_maklumatMMK.get("WAKTU_SIDANG_KETERANGAN").toString();
-						String TARIKH_SIDANG = hash_maklumatMMK.get("TARIKH_SIDANG").toString();
-						String TEMPAT_SIDANG = hash_maklumatMMK.get("TEMPAT_SIDANG").toString();
-						String TAJUK = hash_maklumatMMK.get("TAJUK").toString();
-						
-						addDerafMMKTAJUK(id_fail_etapp,jenis_skrin_etapp,NO_RUJUKAN_TARIKBALIK,NO_FAIL_DERAF, dateNow,
-								KETERANGAN_SIDANG, WAKTU_SIDANG, JENIS_WAKTU_SIDANG, WAKTU_SIDANG_KETERANGAN, TARIKH_SIDANG, TEMPAT_SIDANG, TAJUK, 
-								session, db);
-						
-						}
-						
-						if (ID_NEGERI.equals("5")) {
-							saveFormatMMKN9_PB(id_fail_etapp,id_penarikan,
-									jenis_skrin_etapp,NO_RUJUKAN_TARIKBALIK,NO_FAIL_DERAF, dateNow,
-									db, "", session);
-						}
-						else if (ID_NEGERI.equals("4")) {
-							saveFormatMMKMelaka_PB(id_fail_etapp,id_penarikan,
-									jenis_skrin_etapp,NO_RUJUKAN_TARIKBALIK,NO_FAIL_DERAF, dateNow,
-									db, "", session);
-						}						
-						saveLogDerafMMKPB(id_penarikan, jenis_skrin_etapp,session, db);
-					}					
-				
-							
-			}	
-			else 
-			*/
-			
-			
 			if (jenis_skrin_etapp.equals("WartaS4") || jenis_skrin_etapp.equals("WartaS8")) {
 				hash_maklumatProjek = logic.getMaklumatProjek(id_fail_etapp, db);
 				NO_FAIL_DERAF = (hash_maklumatProjek.get("NO_FAIL").toString());
@@ -897,10 +744,18 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 				
 				
 			}
-			else if (jenis_skrin_etapp.equals("BorangC") || jenis_skrin_etapp.equals("BorangA")) {
+			else if (jenis_skrin_etapp.equals("BorangC")) //|| jenis_skrin_etapp.equals("BorangA")) {
+					{
+				myLogger.info("masukk sini skrin ni:");
 				hash_maklumatProjek = logic.getMaklumatProjek(id_fail_etapp, db);
 				NO_FAIL_DERAF = (hash_maklumatProjek.get("NO_FAIL").toString());
 				ID_NEGERI = (hash_maklumatProjek.get("ID_NEGERI").toString());
+				
+				NO_PERMOHONAN = logic_.getMaklumatInt(id_fail_etapp, db);
+				//NO_PERMOHONAN= (hash_maklumatInt.get("NO_PERMOHONAN").toString());
+				
+				myLogger.info("NO PERMOHONAN : "+NO_PERMOHONAN);
+				//ID_NEGERI = (hash_maklumatProjek.get("ID_NEGERI").toString());
 				
 				if (ID_NEGERI.equals("5")) {
 					Integer checkMMKdihantar = logic.derafMmkLog_COUNT(
@@ -1045,9 +900,8 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			String kod_mukim_doc = "";
 			
 			if (jenis_skrin_etapp.equals("BorangC")
-					|| jenis_skrin_etapp.equals("BorangA") || jenis_skrin_etapp.equals("WartaS8")) {
-				List listSenaraiLotBorangC_PULL = logic
-						.listSenaraiLotBorangC_PULL(id_fail_etapp, db);
+					|| jenis_skrin_etapp.equals("BorangA") || jenis_skrin_etapp.equals("WartaS8") || jenis_skrin_etapp.equals("Seksyen8")) {
+				List listSenaraiLotBorangC_PULL = logic.listSenaraiLotBorangC_PULL(id_fail_etapp, db);
 				
 				MaklumatHakmilikForm tblintppthakmilik_arr[] = new MaklumatHakmilikForm[listSenaraiLotBorangC_PULL.size()];				
 				for (int i = 0; i < listSenaraiLotBorangC_PULL.size(); i++) {
@@ -2826,7 +2680,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 	}
 
 	
-	public void addDerafMaklumatPengambilan_List(MaklumatPermohonanSek4Form tblintpptmaklumatpengambilan[],String id_fail_etapp, HttpSession session, Db db) throws Exception {		
+	/*public void addDerafMaklumatPengambilan_List(MaklumatPermohonanSek4Form tblintpptmaklumatpengambilan[],String id_fail_etapp, HttpSession session, Db db) throws Exception {		
 		//point to server etanah
 		
 		Hashtable hash_maklumatprojek = logic.getMaklumatProjek(id_fail_etapp, db);
@@ -2891,8 +2745,8 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 					.println("*******************************************finally");
 		}
 		
-	}
-		public String daftarPermohonanBorangAMMk( MaklumatPermohonanSek4Form form
+	}*/
+		/*public String daftarPermohonanBorangAMMk( MaklumatPermohonanSek4Form form
 				,MaklumatHakmilikForm[] hakmiliks
 				,LampiranForm lampiranMMK
 				,LampiranForm[] lampiran
@@ -2927,7 +2781,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			}
 		
 		//point to local server
-		/*
+		
 		IntegrationHakmilikPengambilanStub stub = new IntegrationHakmilikPengambilanStub();
 		InsertMaklumatPengambilan_byObject c2 = new InsertMaklumatPengambilan_byObject();
 		try {
@@ -3707,6 +3561,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		countlog_hakmilik = logic.hakmilikLog_COUNT(id_fail, id_hakmilik,
 				jenis_skrin, db, id_penarikan, turutan);
 		context.put("countlog_hakmilik", countlog_hakmilik);
+		//myLogger.info("countlog_hakmilik : "+countlog_hakmilik);
 	}
 
 	private void countLog_dokumen(String id_fail, String id_hakmilik,
@@ -3723,6 +3578,11 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		context.put("hash_maklumatprojek", hash_maklumatprojek);
 	}
 	
+	private void maklumatInt(String id_permohonan, Db db) throws Exception {
+		String hash_maklumatInt = null;
+		hash_maklumatInt = logic_.getMaklumatInt(id_permohonan, db);
+		context.put("hash_maklumatInt", hash_maklumatInt);
+	}
 	
 
 	private void maklumatWarta(String id_fail, Db db) throws Exception {
@@ -3747,7 +3607,8 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		
 		
 		
-		if (jenis_skrin.equals("BorangC") || jenis_skrin.equals("BorangA"))
+		if (jenis_skrin.equals("BorangC") || 
+				jenis_skrin.equals("BorangA"))
 		{
 				List<Hashtable> listMMK = new ArrayList();
 				listMMK = logic.listSenaraiItemMMK_PULL(id_fail, "", db,jenis_skrin);
@@ -5134,7 +4995,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		no_fail_jkptg = (hash_maklumatprojek.get("NO_FAIL").toString() == null ? ""	: hash_maklumatprojek.get("NO_FAIL").toString());		
 		hash_maklumatKeputusanMmk = getMaklumatKeputusanMmk_fromEtanah(jenis_skrin, no_fail_jkptg, db,return_current_turutan (id_fail,id_permohonan, id_hakmilik_etapp, jenis_skrin,db));	
 		
-		myLogger.info("************ hash_maklumatKeputusanMmk :"+hash_maklumatKeputusanMmk);
+		//myLogger.info("************ hash_maklumatKeputusanMmk :"+hash_maklumatKeputusanMmk);
 		if(hash_maklumatKeputusanMmk != null && hash_maklumatKeputusanMmk.size()>0)
 		{
 			flag_keputusan_mmk = (hash_maklumatKeputusanMmk.get("FLAG_KEPUTUSAN_MMK").toString() == null ? ""	: hash_maklumatKeputusanMmk.get("FLAG_KEPUTUSAN_MMK").toString());		
@@ -5150,7 +5011,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 				turutan = turutan_frmetanah;
 			}
 		}
-		myLogger.info("************ hash_maklumatKeputusanMmk turutan :"+turutan);
+		//myLogger.info("************ hash_maklumatKeputusanMmk turutan :"+turutan);
 		
 		return turutan;
 	}
@@ -5174,7 +5035,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		no_fail_jkptg = (hash_maklumatprojek.get("NO_FAIL").toString() == null ? ""	: hash_maklumatprojek.get("NO_FAIL").toString());		
 		hash_current_turutan_maklumatKeputusanMmk = current_turutan_getMaklumatKeputusanMmk_fromEtanah(jenis_skrin, no_fail_jkptg, db);	
 		
-		myLogger.info("************ hash_current_turutan_maklumatKeputusanMmk :"+hash_current_turutan_maklumatKeputusanMmk);
+		//myLogger.info("************ hash_current_turutan_maklumatKeputusanMmk :"+hash_current_turutan_maklumatKeputusanMmk);
 		if(hash_current_turutan_maklumatKeputusanMmk != null && hash_current_turutan_maklumatKeputusanMmk.size()>0)
 		{
 			if(jenis_skrin.equals("BorangA") || jenis_skrin.equals("BorangC"))
@@ -5182,7 +5043,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 				current_turutan = (Integer) hash_current_turutan_maklumatKeputusanMmk.get("CURRENT_TURUTAN");
 			}
 		}
-		myLogger.info("************ hash_current_turutan_maklumatKeputusanMmk turutan :"+current_turutan);
+		//myLogger.info("************ hash_current_turutan_maklumatKeputusanMmk turutan :"+current_turutan);
 		
 		return current_turutan;
 	}
@@ -5239,8 +5100,8 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 				: hash_maklumatprojek.get("NO_FAIL").toString());		
 		
 		
-		myLogger.info("@@@@@@@@@@@@@ count_hakmilik :"+count_hakmilik);
-		myLogger.info("@@@@@@@@@@@@@ countlog_hakmilik :"+countlog_hakmilik);
+		//myLogger.info("@@@@@@@@@@@@@ count_hakmilik :"+count_hakmilik);
+		//myLogger.info("@@@@@@@@@@@@@ countlog_hakmilik :"+countlog_hakmilik);
 		
 		String display_maklumbalas = "N";
 		if(count_hakmilik == countlog_hakmilik && count_hakmilik > 0)
@@ -5276,11 +5137,11 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
         }
 		
 		
-		myLogger.info("@@@@@@@@@@@@@ CURRENT TURUTAN :"+(return_current_turutan (id_fail,id_permohonan, id_hakmilik_etapp, jenis_skrin,db)));
-		myLogger.info("@@@@@@@@@@@@@ NEW TURUTAN :"+(return_new_turutan (id_fail,id_permohonan, id_hakmilik_etapp, jenis_skrin,db)));
+		//myLogger.info("@@@@@@@@@@@@@ CURRENT TURUTAN :"+(return_current_turutan (id_fail,id_permohonan, id_hakmilik_etapp, jenis_skrin,db)));
+		//myLogger.info("@@@@@@@@@@@@@ NEW TURUTAN :"+(return_new_turutan (id_fail,id_permohonan, id_hakmilik_etapp, jenis_skrin,db)));
 		
 		
-		myLogger.info("::::::::: display_maklumbalas ::::::"+display_maklumbalas);
+		//myLogger.info("::::::::: display_maklumbalas ::::::"+display_maklumbalas);
 		
 		if(display_maklumbalas.equals("Y"))
 		{
@@ -5374,7 +5235,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 
 	// UPLOAD FILE
 	private void uploadFiles(String id_permohonan, String id_fail,
-			String id_hakmilik, String jenis_skrin, String nama_dokumen,
+			String id_hakmilik, String jenis_skrin, String tajuk,
 			HttpSession session, Db db, Connection conn, String id_penarikan,String kategori_lampiran,Integer turutan)
 			throws Exception {
 		DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -5412,7 +5273,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 					getDoc().simpan(item,request);
 
 					saveData(item, id_fail, id_permohonan, id_hakmilik,
-							jenis_skrin, nama_dokumen, session, db, conn,
+							jenis_skrin, tajuk, session, db, conn,
 							id_penarikan,kategori_lampiran,turutan);
 				}
 			}
@@ -5503,8 +5364,8 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 
 			if (jenis_skrin.equals("hantarPelanChartingS8")
 					|| jenis_skrin.equals("hantarPelanChartingS4")
-					|| jenis_skrin.equals("BorangC")
-					|| jenis_skrin.equals("BorangA")
+					//|| jenis_skrin.equals("BorangC")
+					//|| jenis_skrin.equals("BorangA")
 					|| jenis_skrin.equals("BorangI")
 					|| jenis_skrin.equals("MMK_S8")
 					|| jenis_skrin.equals("MMK_S4")
@@ -5875,7 +5736,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			if (jenis_skrin.equals("hantarPelanChartingS8")
 					|| jenis_skrin.equals("hantarPelanChartingS4")
 					|| jenis_skrin.equals("BorangC")
-					|| jenis_skrin.equals("BorangA")
+					//|| jenis_skrin.equals("BorangA")
 					|| jenis_skrin.equals("WartaS8")) {
 				sql += " AND T.FLAG_PROSES = '" + jenis_skrin + "' ";
 				sql += " AND T.NO_FAIL_JKPTG = '" + no_fail_jkptg + "' AND T.TURUTAN = '"+turutan+"' ";
@@ -5943,7 +5804,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			sql += " AND T.FLAG_PROSES = '" + jenis_skrin + "' ";
 			sql += " AND T.NO_FAIL_JKPTG = '" + no_fail_jkptg + "' ";
 			
-			if(jenis_skrin.equals("BorangC") || jenis_skrin.equals("BorangA"))
+			if(jenis_skrin.equals("BorangC")) //|| jenis_skrin.equals("BorangA"))
 			{
 				sql += " AND T.NO_RUJUKAN_TARIKBALIK = '' ";
 			}
@@ -6094,7 +5955,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 			sql += " AND T.FLAG_PROSES = '" + jenis_skrin + "' ";
 			sql += " AND T.NO_FAIL_JKPTG = '" + no_fail_jkptg + "'  ";
 
-			myLogger.info(" current_turutan_getMaklumatKeputusanMmk_fromEtanah ::::::::::::" + sql);
+			//myLogger.info(" current_turutan_getMaklumatKeputusanMmk_fromEtanah ::::::::::::" + sql);
 
 			ResultSet rs = stmt.executeQuery(sql);
 
@@ -6246,7 +6107,10 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 					+ " T.JENIS_FAIL,  T.TARIKH_TERIMA_DATA, T.KOD_UNIT_HAKMILIK, T.NO_HAKMILIK, T.KOD_NEGERI, T.KOD_DAERAH, T.KOD_MUKIM, "
 					+ " T.ID_HAKMILIK AS ID_HAKMILIK_ETANAH FROM TBLPPTDOKUMENFRMETANAH T WHERE T.NO_FAIL_JKPTG IS NOT NULL ";
 
-			if (jenis_skrin.equals("BorangC") || jenis_skrin.equals("BorangI")  || jenis_skrin.equals("BorangA") || jenis_skrin.equals("WartaS4") || jenis_skrin.equals("WartaS8")
+			if (jenis_skrin.equals("BorangC") || jenis_skrin.equals("BorangI")  
+					//|| jenis_skrin.equals("BorangA") 
+					|| jenis_skrin.equals("WartaS4") 
+					|| jenis_skrin.equals("WartaS8")
 					|| jenis_skrin.equals("TarikBalik")) {
 				sql += " AND T.FLAG_PROSES = '" + jenis_skrin + "' ";
 				sql += " AND T.NO_FAIL_JKPTG = '" + no_fail_jkptg + "' ";
@@ -6387,11 +6251,46 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		String sql = "";
 		try { // db = new Db();
 			Statement stmt = db.getStatement();
+			if(jenis_skrin.equals("BorangA") || jenis_skrin.equals("Seksyen8") || jenis_skrin.equals("BorangC")) {
+				
+			/*	sql = " SELECT DISTINCT K.KETERANGAN_LAMPIRANETANAH, F.NO_FAIL AS NO_FAIL_JKPTG,D.ID_DOKUMENINT,D.NAMA_FAIL,D.JENIS_MIME,D.TAJUK,D.KETERANGAN,"
+						+ " D.JENIS_DOKUMENINT_INTEGRASI,D.ID_HAKMILIK,D.KATEGORI  ";
+				sql += " FROM TBLPPTDOKUMENINT D,TBLPPTPERMOHONAN P, TBLPFDFAIL F, TBLPPTKATEGORILAMPIRANETANAH K ";
+				sql += " WHERE D.ID_PERMOHONAN = '"
+						+ id_permohonan
+						+ "' AND D.ID_PERMOHONAN = P.ID_PERMOHONAN AND D.KATEGORI = K.ID_LAMPIRANETANAH(+)   AND P.ID_FAIL = F.ID_FAIL   "
+						+ " AND D.JENIS_DOKUMENINT_INTEGRASI  = '"
+						+ jenis_skrin + "' AND D.ID_PENARIKANBALIK IS NULL ";*/
+				sql = " SELECT P.ID_DOKUMEN, P.TAJUK,P.NAMA_FAIL,P.JENIS_MIME,M.KOD_DOKUMENETANAH " +
+					  " FROM TBLPPTDOKUMEN P, TBLINTRUJMAPPING M "+
+					  " WHERE P.ID_PERMOHONAN = '"+id_permohonan+"' " +
+					  " AND P.ID_JENISDOKUMEN = M.ID_JENISDOKUMEN ";
+				
+				sql += " AND P.JENIS_DOKUMEN =  '"+jenis_skrin+"' ";
+				
+				myLogger.info(" SENARAI DOKUMENINT INTEGRATION ETAPP BARU:" + sql);
+				ResultSet rs = stmt.executeQuery(sql);
+				listSenaraiDokumen = Collections.synchronizedList(new ArrayList());
+				Map h = null;
+				int bil = 1;
+				while (rs.next()) {
 
-			if (jenis_skrin.equals("hantarPelanChartingS8")
+					h = new Hashtable();
+					h.put("BIL", bil);
+					h.put("ID_DOKUMEN", rs.getString("ID_DOKUMEN") == null ? "": rs.getString("ID_DOKUMEN"));
+					h.put("KOD_DOKUMENETANAH", rs.getString("KOD_DOKUMENETANAH") == null ? "": rs.getString("KOD_DOKUMENETANAH"));
+					h.put("NAMA_FAIL",rs.getString("NAMA_FAIL") == null ? "" : rs.getString("NAMA_FAIL"));
+					h.put("JENIS_MIME", rs.getString("JENIS_MIME") == null ? "": rs.getString("JENIS_MIME"));
+					h.put("TAJUK",rs.getString("TAJUK") == null ? "" : rs.getString("TAJUK"));
+
+					listSenaraiDokumen.add(h);
+					bil++;
+				}
+			}
+
+		/*	else if (jenis_skrin.equals("hantarPelanChartingS8")
 					|| jenis_skrin.equals("hantarPelanChartingS4")
 					|| jenis_skrin.equals("BorangC")
-					|| jenis_skrin.equals("BorangA")
 					|| jenis_skrin.equals("MMK_S8")
 					|| jenis_skrin.equals("MMK_S4")
 					|| jenis_skrin.equals("BorangK")
@@ -6473,7 +6372,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 				listSenaraiDokumen.add(h);
 				bil++;
 			}
-
+*/
 		} finally {
 			// if (db != null) db.close();
 		}
@@ -6567,6 +6466,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 				sql = " SELECT DISTINCT "+
 				" RN.KOD_NEGERI,RD.KOD_DAERAH,RM.KOD_MUKIM,'OO' NO_SEKSYEN "+
 				" ,RJ.KOD_JENIS_HAKMILIK KOD_HAKMILIK,H.NO_HAKMILIK" +
+				" ,GETUPI(RN.KOD_NEGERI,RD.KOD_DAERAH,RM.KOD_MUKIM,'','N',H.NO_LOT,H.NO_HAKMILIK,RJ.KOD_JENIS_HAKMILIK) PEGANGAN_HAKMILIK "+
 				" ,RL.KOD_LOT,NVL(H.NO_LOT,H.NO_PT) NO_LOT "+
 				" ,LO.KOD_LUAS KOD_LUAS_ASAL,H.LUAS_LOT LUAS_ASAL,LT.KOD_LUAS KOD_LUAS_AMBIL,H.LUAS_AMBIL "+
 				" ,H.CATATAN CATATAN_HAKMILIK "+
@@ -6601,8 +6501,10 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 
 				while (rs.next()) {
 					h = new Hashtable<String,String>();
-					h.put("idHakmilikPermohonan", rs.getString("ID_HAKMILIKPERMOHONAN") == null ? "" : rs.getString("ID_HAKMILIKPERMOHONAN"));
-					h.put("idHakmilik", rs.getString("ID_HAKMILIK") == null ? "" : rs.getString("ID_HAKMILIK"));
+					//h.put("idHakmilikPermohonan", rs.getString("ID_HAKMILIKPERMOHONAN") == null ? "" : rs.getString("ID_HAKMILIKPERMOHONAN"));
+					//h.put("idHakmilik", rs.getString("ID_HAKMILIK") == null ? "" : rs.getString("ID_HAKMILIK"));
+					h.put("idHakmilikPermohonan", rs.getString("ID_HAKMILIK") == null ? "" : rs.getString("ID_HAKMILIK"));
+					h.put("idHakmilik", rs.getString("PEGANGAN_HAKMILIK") == null ? "" : rs.getString("PEGANGAN_HAKMILIK"));
 					h.put("kodNegeri", rs.getString("KOD_NEGERI") == null ? "" : rs.getString("KOD_NEGERI"));
 					h.put("kodDaerah", rs.getString("KOD_DAERAH") == null ? "" : rs.getString("KOD_DAERAH"));
 					h.put("kodMukim", rs.getString("KOD_MUKIM") == null ? "" : rs.getString("KOD_MUKIM"));
@@ -6691,6 +6593,30 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		return integration4;
 					
 	}	
+	/*private IntegrationInternal getISek4B(){
+		if(integration4 == null){
+			integration4 = new ETanahSek4();
+		}
+		return integration4;
+					
+	}	*/
+	private IntegrationInternalSek8a getISek8(){
+		if(integration8a == null){
+			integration8a = new ETanahSek8a();
+		}
+		return integration8a;
+					
+	}	
+	
+	private IntegrationInternal getISek8BorangC(){
+		if(integration4 == null){
+			integration4 = new ETanahSek8BorangC();
+		}
+		return integration4;
+					
+	}	
+
+	
 	private ILampiran getDoc(){
 		if(iLampiran == null){
 			iLampiran = new ekptg.model.ppt.util.LampiranBean();
