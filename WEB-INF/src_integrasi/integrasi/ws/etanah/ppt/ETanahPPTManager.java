@@ -33,6 +33,10 @@ import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumanPenghantara
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumatHakmilikForm;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumatPermohonanSek4Form;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumatPermohonanSek8Form;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumatWartaborangB;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumatWartaborangBE;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumatWartaborangBResponse;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumatWartaborangBResponseE;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.SijilPembebasanUkur;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.SijilPembebasanUkurE;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.SijilPembebasanUkurResponse;
@@ -141,10 +145,33 @@ public class ETanahPPTManager {
 		
 	}
 	
+	//yati
+	public String wartaSek4BorangB( MaklumatWartaborangB form
+			,LampiranForm[] lampiran
+			) throws Exception{
+			//MaklumatPermohonanSek8Form permohonan = null;
+			stub = getStub();
+			//DaftarPermohonanSek8 requestSek8 = new DaftarPermohonanSek8();
+			MaklumatWartaborangB wartaSek4 = new MaklumatWartaborangB();
+			
+			//wartaSek4.setIdPermohonan(form);
+			//wartaSek4.setNoWarta(form);
+			//wartaSek4.setTarikhWarta(form);
+			wartaSek4.setAttachment(lampiran);
+			
+			MaklumatWartaborangBE temp = new MaklumatWartaborangBE();
+			temp.setMaklumatWartaborangB(wartaSek4);
+			
+			MaklumatWartaborangBResponse responseBorangB = stub.maklumatWartaborangB(temp).getMaklumatWartaborangBResponse();
+			return responseBorangB.get_return();
+			
+		}
+		
+	
 	//public DaftarPermohonanSek8 hantar() {
 	public String permohonanSek8( MaklumatPermohonanSek8Form form
 		,MaklumatHakmilikForm[] hakmiliks
-		,LampiranForm[] lampiran
+		,LampiranForm lampirans
 		) throws Exception{
 		//MaklumatPermohonanSek8Form permohonan = null;
 		stub = getStub();
@@ -152,7 +179,10 @@ public class ETanahPPTManager {
 		
 		requestSek8.setMaklumatPermohonan(form);
 		requestSek8.setMaklumatHakmilik(hakmiliks);
-		requestSek8.setAttachment(lampiran);
+		//requestSek8.setAttachment(lampiran);
+		//requestSek8.setDigitalcharting(lampirans);
+		requestSek8.setDigitalcharting(lampirans);
+		//requestSek8.setDigitalcharting(param);
 		
 		DaftarPermohonanSek8E temp = new DaftarPermohonanSek8E();
 		temp.setDaftarPermohonanSek8(requestSek8);

@@ -33,6 +33,7 @@ import java.util.Vector;
 import org.apache.log4j.Logger;
 
 import ekptg.helpers.DB;
+import ekptg.intergration.eTanah.pengambilan.PopupeTanahData;
 import ekptg.model.entities.Tblrujdokumen;
 import ekptg.view.integrasi.etanah.PermohonanPengambilan;
 import lebah.db.Db;
@@ -47,7 +48,9 @@ public class ETanahSek8 implements IntegrationInternal{
 	MaklumatPermohonanSek8Form form = null;
 	MaklumatHakmilikForm[] hakmiliks = null;
 	LampiranForm[] lampirans = null;
-	private String URUSAN = "C";
+	LampiranForm lampiran = null;
+	private String URUSAN = null;
+	private String JenisSkrin = null;
 	private Calendar cal = new GregorianCalendar();
 
 	
@@ -56,6 +59,9 @@ public class ETanahSek8 implements IntegrationInternal{
 		,Vector<Tblrujdokumen> vecDok
 		,String idPengguna, Db db) {
 		//DEFAULT MSG
+		
+		URUSAN = "S8";
+		JenisSkrin = "Seksyen8";
 		flagMsg = "Y";
 		outputMsg = "MAKLUMAT PERMOHONAN BERJAYA DIHANTAR";
 		
@@ -63,14 +69,18 @@ public class ETanahSek8 implements IntegrationInternal{
 		//PermohonanDForm permohonan = null;
 		
 		try {
-			form = getPermohonan(permohonan_);
+			//form = getPermohonan(permohonan_);
 			hakmiliks = getHakmilik();
-			lampirans = getLampiran(vecDok);
+			//lampiran = getLampiran(vecDok);
 			
 			setPermohonan(permohonan_,idPengguna,db);
 			
+			PopupeTanahData logic = new PopupeTanahData();
+			lampiran = getLampiran1(logic.getSenaraiDokumen(permohonan_.get("idPermohonan"),JenisSkrin,db)); //LAMPIRAN LAIN
+			myLog.info("lampirans : "+lampirans);
+			
 			String response = "";
-			response = pptManager.permohonanSek8(form, hakmiliks, lampirans);
+			response = pptManager.permohonanSek8(form, hakmiliks, lampiran);
 			myLog.info("response="+response);
 			
 			if (!response.equals("")) {
@@ -105,6 +115,28 @@ public class ETanahSek8 implements IntegrationInternal{
 			lf[i] = lampiran;
 		}
 		return lf;
+		
+	}
+	
+	private LampiranForm getLampiran1(Vector<Tblrujdokumen> vecDok) {
+		//LampiranForm[] lf = new LampiranForm[vecDok.size()];
+		LampiranForm lampiran = null;
+		Tblrujdokumen dokumen =null;
+		for (int i = 0; i < vecDok.size(); i++) {
+			dokumen = (Tblrujdokumen)vecDok.get(i);
+			lampiran = new LampiranForm();
+			lampiran.setBytes(dokumen.getKandungan());
+			//lampiran.setDocType(dokumen.getIdJenis());
+			lampiran.setDocType(dokumen.getDokumen());
+			lampiran.setFilename(dokumen.getNamaDokumen());
+			lampiran.setKodDokumen(dokumen.getIdDokumen()); //rujukan
+			//myLog.info(i+"."+cbsemaks[i]);
+			myLog.info("dokumen jenis 1:"+dokumen.getIdDokumen());
+			myLog.info("dokumen type 1:"+dokumen.getDokumen());
+			
+			//lf[i] = lampiran;
+		}
+		return lampiran;
 		
 	}
 
@@ -775,6 +807,13 @@ public class ETanahSek8 implements IntegrationInternal{
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+		
+	}
+
+	@Override
+	public void hantarBorangC(ETanahPPTManager pptManager, String noPermohonan, Vector<Tblrujdokumen> vecDok,
+			String idPengguna, Db db) {
+		// TODO Auto-generated method stub
 		
 	}
 	

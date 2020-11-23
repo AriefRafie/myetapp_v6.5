@@ -96,11 +96,10 @@ function sebelumnya(){
 }
 function semakBorangC(x) {
     var url = "../x/${securityToken}/ekptg.view.ppk.FrmMTBorangC?noFail="+x+"&command=borangPermohonan";
-	var hWnd = window.open(url,'Cetak','width=625,height=700, resizable=no,scrollbars=yes');
+	var hWnd = window.open(url,'Cetak','width=625,height=400, resizable=no,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
-   
 }
 
 

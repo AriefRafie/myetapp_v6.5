@@ -38,15 +38,6 @@
 	font-size: 10px;
 	color: #FF0000;
 }
-.infotips {
-	border:1px solid;
-	background-repeat:no-repeat;
- 	background-position:10px center; 
- 	margin:10px 0; 
- 	padding:15px 10px 15px 10px; 
-	color:#515F2C;
-	background-color:#A6BB72;
-}
 -->
 </style>
 </head>
@@ -1466,9 +1457,9 @@
                         	<fieldset><legend>SENARAI HARTA TAK ALIH (ADA HAKMILIK) </legend>
                         	#if($!skrin_online == "yes")
                           		<div id="info_skrin_daftar_sek8"></div>
-<!-- 								<script> -->
-									<div class="infotips"><font color="black"><b>* Harta Tak Alih : Tanah, rumah dan kepentingan-kepentingan, hak atau faedah yang terdapat atau yang akan didapati daripada tanah.</b><br><b><blink>*</blink> Harta Tak Alih (Ada Hakmilik): Harta tak alih yang mempunyai hakmilik/geran yang berdaftar nama si mati sebagai pemilik.</br></b></font></div>
-<!-- 								</script>  -->
+								<script>
+									parent.document.getElementById("info_skrin_daftar_sek8").innerHTML="<div class=\"warning_online_ppk\"><font color=\"black\"><b>* Harta Tak Alih : Tanah, rumah dan kepentingan-kepentingan, hak atau faedah yang terdapat atau yang akan didapati daripada tanah.</b><br><b><blink>*</blink> Harta Tak Alih (Ada Hakmilik): Harta tak alih yang mempunyai hakmilik/geran yang berdaftar nama si mati sebagai pemilik.</br></b></font></div>";
+								</script> 
 							#end
                           	<table width="100%">
                             	<tr>
@@ -2239,7 +2230,8 @@ function edit_Htaam(idhta){
 
 	//function save_Htaam(idPermohonanSimati,idhta,idSimati,idDokumen){
 	function save_Htaam(idPermohonanSimati,idhta){
-		//alert('save_Htaam');
+	
+		alert('save_Htaam');
 		var b1=parseInt(document.f1.txtBahagianSimati1Up.value);
       	var b2=parseInt(document.f1.txtBahagianSimati2Up.value);
 		
@@ -2341,11 +2333,11 @@ function edit_Htaam(idhta){
 			document.f1.action="";
 		   	document.f1.submit();
 		
-			 else {	
-        		return;
+			//}else{	return;	
 			}
 	
-        }	      	
+        }
+      	      	
 	}
 
 function hapus_Htaam(){

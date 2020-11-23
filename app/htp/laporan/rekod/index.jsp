@@ -267,8 +267,7 @@
 		}
 		//OKalert("1."+ptem);	
 
-		if(jenisPajakan==""){
-			//if(jenisPajakan=="-1"){
+		if(jenisPajakan=="-1"){
 			alert("Sila pilih \"Jenis Urusan\" terlebih dahulu.");
 			document.${formName}.socsuburusan.focus(); 
 			return;

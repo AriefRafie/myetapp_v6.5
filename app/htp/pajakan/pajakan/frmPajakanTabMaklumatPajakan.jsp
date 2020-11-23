@@ -160,50 +160,7 @@
                   #end
 
                 </select></td>
-              </tr>              
-        	<tr>
-	            <td>&nbsp;</td>
-	            <td valign="top">Terma Bayaran</td>
-	            <td valign="top">:</td>
-	            <td>
-					<textarea name="txtermabayaran" id="txtermabayaran" cols="50" rows="5"
-            				onBlur=""
-            				onkeyup="textCounter(this.form.txtermabayaran,this.form.remtxtermapajakan,1500);"
-            				onkeydown="textCounter(this.form.txtermabayaran,this.form.remtxtermapajakan,1500);"
-            				class="$classDis" $readOnly>$!beanPajakan.termaBayaran</textarea>
-	            </td>
-	            <td>&nbsp;</td>
-            </tr>
-      	#if ($mode != 'viewPajakan')
-			<tr>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td valign="top">&nbsp;</td>
-				<td><input type="text" readonly class="disabled" name="remtxtermapajakan" size="3" maxlength="4" value="1500"> Baki Aksara </td>
-			</tr>
-		#end
-           	<tr>
-	            <td>&nbsp;</td>
-	            <td valign="top">Terma Denda</td>
-	            <td valign="top">:</td>
-	            <td>
-					<textarea name="txtermadenda" id="txtermadenda" cols="50" rows="5"
-            				onBlur=""
-            				onkeyup="textCounter(this.form.txtermadenda,this.form.remtxtermadenda,1500);"
-            				onkeydown="textCounter(this.form.txtermadenda,this.form.remtxtermadenda,1500);"
-            				class="$classDis" $readOnly>$!beanPajakan.termaDenda</textarea>
-	            </td>
-	            <td>&nbsp;</td>
-            </tr>
-      	#if ($mode != 'viewPajakan')
-			<tr>
-				<td>&nbsp;</td>
-				<td>&nbsp;</td>
-				<td valign="top">&nbsp;</td>
-				<td><input type="text" readonly class="disabled" name="remtxtermadenda" size="3" maxlength="4" value="1500"> Baki Aksara </td>
-			</tr>
-		#end
-		
+              </tr>
 			#end
 			##set($txtCatatan_=$beanPajakan.kadarPajakan)
           	<tr>
@@ -215,7 +172,7 @@
             				onBlur=""
             				onkeyup="textCounter(this.form.txtcatatan,this.form.remtxtcatatan,1500);"
             				onkeydown="textCounter(this.form.txtcatatan,this.form.remtxtcatatan,1500);"
-            				class="$classDis" $readOnly>$!catatan</textarea>
+            				class="$classDis" $readOnly>$catatan</textarea>
 	            </td>
 	            <td>&nbsp;</td>
             </tr>

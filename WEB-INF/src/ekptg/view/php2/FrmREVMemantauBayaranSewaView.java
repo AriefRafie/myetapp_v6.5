@@ -79,7 +79,6 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 	    String hitButton = getParam("hitButton");
         String submit = getParam("command");
         String mode = getParam("mode");
-        System.out.println("mode >>>>"+mode);
         String selectedTabUpper = (String) getParam("selectedTabUpper");
 		if (selectedTabUpper == null || "".equals(selectedTabUpper) ) {
 			selectedTabUpper = "0";
@@ -96,8 +95,6 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         String idAkaun = getParam("idAkaun");
         String idNotis = getParam("idNotis");
         String noLotTanah = getParam("noLotTanah");
-        String idCatatan = getParam("idCatatan");
-        System.out.println("idCatatan >>> "+idCatatan);
 
         String idLuasKegunaan = getParam("idLuasKegunaan");
 		if (idLuasKegunaan == null || idLuasKegunaan.trim().length() == 0){
@@ -169,7 +166,6 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         Vector beanMaklumatBayaranLL = null;
         Vector beanMaklumatPelarasanD = null;
         Vector beanMaklumatPelarasan = null;
-        Vector beanMaklumatCatatan = null;
 
         String idStatusDeposit = getParam("socStatusDeposit");
 		if (idStatusDeposit == null || idStatusDeposit.trim().length() == 0){
@@ -265,15 +261,6 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
     			//ada attachment dlm emel
     			hantarInvoisByEmel(session, idAkaun, idFail, servletContext, request, response);
     		}
-    		if ("simpanCatatan".equals(hitButton)){
-         		idCatatan = logic.simpanCatatan(idHasil, getParam("txtCatatan"), session);
-        	}
-    		if ("simpanKemaskiniCatatan".equals(hitButton)){
-    			logic.simpanKemaskiniCatatan(idHasil, idCatatan, getParam("txtCatatan"), session);
-    		}
-    		if ("hapusCatatan".equals(hitButton)){
-         		logic.hapusCatatan(idHasil, idCatatan, session);
-        	}
     	}
 
         if ("papar".equals(actionHasil)){
@@ -896,49 +883,8 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         		senaraiAkaun(idHasil, action, session);
         	}
 
-        	//MAKLUMAT CATATAN
-        	if ("2".equals(selectedTabUpper)){
-
-        		if ("newCatatan".equals(mode)){
-
-                	this.context.put("readonly", "");
-                	this.context.put("inputTextClass", "");
-
-                	//MAKLUMAT BAYARAN
-                	beanMaklumatCatatan = new Vector();
-        			Hashtable hashCatatan = new Hashtable();
-        			hashCatatan.put("catatan", getParam("txtCatatan"));
-        			beanMaklumatCatatan.addElement(hashCatatan);
-        			this.context.put("BeanMaklumatCatatan", beanMaklumatCatatan);
-
-        		} else if ("viewCatatan".equals(mode)){
-
-                	this.context.put("readonly", "readonly");
-                	this.context.put("inputTextClass", "disabled");
-
-                	//MAKLUMAT CATATAN
-                	beanMaklumatCatatan = new Vector();
-                    logic.setMaklumatCatatan(idCatatan);
-                    beanMaklumatCatatan = logic.getBeanMaklumatCatatan();
-            		this.context.put("BeanMaklumatCatatan", beanMaklumatCatatan);
-
-        		} else if ("updateCatatan".equals(mode)){
-
-                	this.context.put("readonly", "");
-                	this.context.put("inputTextClass", "");
-
-                	//MAKLUMAT BAYARAN
-                	beanMaklumatCatatan = new Vector();
-        			Hashtable hashCatatan = new Hashtable();
-        			hashCatatan.put("catatan", getParam("txtCatatan"));
-        			beanMaklumatCatatan.addElement(hashCatatan);
-        			this.context.put("BeanMaklumatCatatan", beanMaklumatCatatan);
-        		}
-        		senaraiCatatan(idHasil, action, session);
-        	}
-
         	//MAKLUMAT AKAUN
-        	if ("3".equals(selectedTabUpper)){
+        	if ("2".equals(selectedTabUpper)){
 
         		if ("newBayaranLL".equals(mode)){
 
@@ -964,7 +910,31 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
                 	this.context.put("selectModBayaran",HTML.SelectModBayaran("socModBayaran", idModBayaran, "", "onChange=\"doChangeModBayaran();\""));
                 	this.context.put("selectKategoriBayaran",HTML.SelectSuburusanByIdUrusan("12", "socKategoriBayaran", Long.parseLong(idKategoriBayaran), "", "onChange=\"doChangeModBayaran();\""));
 
-        		} else if ("viewBayaranLL".equals(mode)){
+        		} else if ("capaianGfmasBayaran".equals(mode)) {
+
+        			this.context.put("readonly", "");
+                	this.context.put("inputTextClass", "");
+
+        			String noResit = getParam("txtNoResit");
+
+    				Hashtable<String, String> data = gfmas.getMaklumat(noResit);
+
+    				beanMaklumatBayaranLL = new Vector();
+        			Hashtable hashBayaran = new Hashtable();
+        			hashBayaran.put("tarikh", data.get("tarikhTransaksi"));
+        			this.context.put("selectCaraBayaran", HTML.selectCaraBayar("socCaraBayaran", Long.parseLong(data.get("caraBayar")), ""));
+        			this.context.put("selectBank",HTML.selectBank("socBank", Long.parseLong(idBank), "", ""));
+        			hashBayaran.put("tarikhCek", data.get("tarikhCek"));
+        			hashBayaran.put("noRujukan", data.get("noCekRujukan"));
+        			hashBayaran.put("amaun", data.get("amaunRM"));
+        			hashBayaran.put("noResit", noResit);
+        			hashBayaran.put("tarikhResit", data.get("tarikhResit"));
+        			beanMaklumatBayaranLL.addElement(hashBayaran);
+        			this.context.put("BeanMaklumatBayaranLL", beanMaklumatBayaranLL);
+
+        			mode = "newBayaranLL";
+
+    			} else if ("viewBayaranLL".equals(mode)){
 
                 	this.context.put("readonly", "readonly");
                 	this.context.put("inputTextClass", "disabled");
@@ -1016,7 +986,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         	}
 
         	//MAKLUMAT PERJANJIAN
-        	if ("4".equals(selectedTabUpper)){
+        	if ("3".equals(selectedTabUpper)){
 
         		//PERJANJIAN UTAMA
         		Vector senaraiPerjanjian = new Vector();
@@ -1031,7 +1001,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         		this.context.put("SenaraiPerjanjianTambahan", senaraiPerjanjianTambahan);
         	}
         	//MAKLUMAT PEMOHON
-        	if ("5".equals(selectedTabUpper)){
+        	if ("4".equals(selectedTabUpper)){
 
         		if ("view".equals(mode)){
 
@@ -1083,7 +1053,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         	}
 
         	//MAKLUMAT PERMOHONAN
-        	if ("6".equals(selectedTabUpper)){
+        	if ("5".equals(selectedTabUpper)){
 
         		if ("view".equals(mode)){
 
@@ -1135,7 +1105,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         	}
 
         	//MAKLUMAT TANAH
-        	if ("7".equals(selectedTabUpper)){
+        	if ("6".equals(selectedTabUpper)){
 
         		if ("view".equals(mode)){
 
@@ -1208,13 +1178,13 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
         	}
 
         	//MAKLUMAT ABT
-        	if ("8".equals(selectedTabUpper)){
+        	if ("7".equals(selectedTabUpper)){
         		Hashtable abt = logic.getMaklumatABT(idHasil);
         		context.put("abt", abt);
         	}
 
         	//MAKLUMAT NOTIS
-        	if ("9".equals(selectedTabUpper)){
+        	if ("8".equals(selectedTabUpper)){
         		//MAKLUMAT ABT
         		Hashtable abt = logic.getMaklumatABT(idHasil);
         		context.put("abt", abt);
@@ -1224,7 +1194,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 				this.context.put("listNotis", listNotis);
         	}
         	//MAKLUMAT MEMO
-        	if ("10".equals(selectedTabUpper)){
+        	if ("9".equals(selectedTabUpper)){
         		//MAKLUMAT ABT
         		Hashtable abt = logic.getMaklumatABT(idHasil);
         		context.put("abt", abt);
@@ -1234,7 +1204,7 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 				this.context.put("listMemo", listMemo);
         	}
         	//MAKLUMAT TINDAKAN MAHKAMAH
-        	if ("11".equals(selectedTabUpper)){
+        	if ("10".equals(selectedTabUpper)){
 
         		this.context.put("readonly", "readonly");
     			this.context.put("inputTextClass", "disabled");
@@ -1400,7 +1370,6 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 		this.context.put("idNegeri", idNegeri);
 		this.context.put("idBandar", idBandar);
 		this.context.put("idLuas", idLuas);
-		this.context.put("idCatatan", idCatatan);
 
 		return vm;
 	}
@@ -1448,13 +1417,6 @@ public class FrmREVMemantauBayaranSewaView extends AjaxBasedModule {
 			this.context.put("total", "0.00");
 			this.context.put("flag_tunggakan", "T");
 		}
-	}
-
-	private void senaraiCatatan(String idHasil, String action, HttpSession session) throws Exception {
-		Vector senaraiCatatan = new Vector();
-        logic.setListCatatan(idHasil);
-        senaraiCatatan = logic.getSenaraiCatatan();
-		this.context.put("SenaraiCatatan", senaraiCatatan);
 	}
 
 	private void senaraiAkaunLL(String idHasil) throws Exception {

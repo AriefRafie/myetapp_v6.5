@@ -113,7 +113,7 @@
 		    <td width="3%">Bil.</td>
 		    <td width="36%">Jenis dan No.Hakmilik / No. Lot</td>
 		    <td width="5%">T/Daftar</td>
-		    <td width="7%">Hakmilik Dari</td>
+		    <td width="7%">Fail Dari</td>
 		    <td width="6%" align="center" >Cukai<br>(RM)</td>
 		    <td width="6%" align="center" >Tali Air<br>(RM)</td>
 		    <td width="6%" align="center" >Parit<br>(RM)</td>
@@ -169,7 +169,7 @@
                       	$!senarai.kegunaan
                     </td>
                    	<td rowspan="2" class="$row">$!senarai.tarikhDaftar</td>
-                    <td class="$row">REKOD</td>
+                    <td class="$row">PTG/PTD</td>
                     <td class="$row">
                       	<input size="10" name="cukaikenabayarlama${cnt}" value="$!UTIL.format2Decimal($senarai.cukaiTerkini)" disabled class="inputnumberdisabled" >
                     </td>                    
@@ -202,14 +202,14 @@
                       	 <input type="button" name="btncukaikemaskini" id="btncukaikemaskini" value="Kemaskini" 
                       	onclick="cukaikemaskini(${cnt})"> -->
                     <td class="$row">
-                    	<!-- <input size="10" value="$!UTIL.format2Decimal($senarai.cukaiJumlah)" disabled class="inputnumberdisabled" > -->
+                    	<input size="10" value="$!UTIL.format2Decimal($senarai.cukaiJumlah)" disabled class="inputnumberdisabled" >
                   	</td>
                     <td rowspan="2" class="$row">
                     	<input class="cb" type="checkbox" name="cb" value="$!cnt">
                   	</td>
 				</tr>   
 		    	<tr>
-		    		<td class="$row">CUKAI</td>
+		    		<td class="$row">JKPTG</td>
 					<td class="$row">
 						<!-- <input type="text" size="10" name="cukaiperlubayar${cnt}" id="cukaiperlubayar${cnt}" value="$!UTIL.format2Decimal($senarai.cukaiTerkini)" $inputstyle onblur="kirakira(${cnt});"> -->
 						<input type="text" size="10" name="cukaiperlubayar" value="$!UTIL.format2Decimal($senarai.cukaiTerkini)" onblur="checkNumeric(this.value);kirakira(${cnt},${cntTotal});" class="inputnumber" >

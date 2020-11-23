@@ -5,13 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
@@ -70,16 +66,13 @@ public class FrmNotaBicara extends AjaxBasedModule{
 		context.put("ScrollX",getParam("ScrollX"));
 		context.put("ScrollY",getParam("ScrollY")); 
 		
-		context.put("listHistoryJana",""); 
-		
-		
 		Vector list_tukar_pemohon = null;
 		Vector listNotaBicara = new Vector();
 		//Vector listNotaBicara = new Vector();
 		Vector dataNotaBicara = new Vector();
 		Vector senaraiNotabicara = null;
 		Vector beanMaklumatNota = null;
-		List listHistoryjana = null;
+		
 		dataNotaBicara.clear();
 		listNotaBicara.clear();
 		   	
@@ -110,14 +103,13 @@ public class FrmNotaBicara extends AjaxBasedModule{
 			String txtNoFailSub = getParam("txtNoFailSub");    		
 			context.put("txtNoFailSub", txtNoFailSub.trim());     		
 			context.put("list_fail",model.search_nofail(txtNoFailSub.trim(),usid,"","","")); 
-			context.put("view_list_fail","yes");			
-		} 	
-		else if ("paparSub".equals(command)){
+			context.put("view_list_fail","yes");
+			
+		} else if ("paparSub".equals(command)){
 				
 			String txtNoFailSub = getParam("txtNoFailSub");    		
 			context.put("txtNoFailSub", txtNoFailSub.trim()); 
-			listHistoryjana = listHistoryjana(session, getParam("id_fail_carian"), null);
-			context.put("listHistoryJana",listHistoryjana);
+			
 			model.setListNota(getParam("id_fail_carian"),usid);
 			listNotaBicara = model.getListNotaBicara();
     		String id_perbicaraan = "";
@@ -340,85 +332,6 @@ public class FrmNotaBicara extends AjaxBasedModule{
 		this.context.put("modePopup", modePopup);
 		
 	return vm;
-	}
-	
-	public List listHistoryjana(HttpSession session, String ID_FAIL,Db db)throws Exception {
-		Db db1 = null;
-		ResultSet rs = null;
-		Statement stmt = null;
-		List listHistoryjana = null;
-		String sql = "";	
-		
-		try{
-			
-		if(db != null)
-		{
-			db1 = db;
-		}
-		else
-		{
-			db1 = new Db();
-		}
-		
-		stmt = db1.getStatement();	
-		
-		/*
-		sql += " SELECT J.*,  TO_CHAR(J.TARIKH_MASUK,'DD/MM/YYYY HH24:MI:SS') AS TARIKH_TRANSAKSI_FULL, U.USER_NAME AS PENJANA FROM TBLPPKHISTORYJANANOTA J, USERS U "+
-				" WHERE J.ID_MASUK = U.USER_ID(+) AND ID_FAIL IN (SELECT DISTINCT P.ID_FAIL FROM TBLPPKPERMOHONANSIMATI PSM, TBLPPKPERMOHONAN P " +
-				" WHERE P.ID_PERMOHONAN = PSM.ID_PERMOHONAN  AND P.ID_FAIL = '"+ID_FAIL+"') ORDER BY J.TARIKH_MASUK DESC ";
-		*/
-		
-		sql += " SELECT J.*,  TO_CHAR(J.TARIKH_MASUK,'DD/MM/YYYY HH24:MI:SS') AS TARIKH_TRANSAKSI_FULL, U.USER_NAME AS PENJANA FROM  "+
-				" TBLPPKHISTORYJANANOTA J, USERS U, "+
-				" (SELECT MAX(N.TARIKH_MASUK) AS MAX_CETAK, N.ID_PERBICARAAN  FROM TBLPPKHISTORYJANANOTA N GROUP BY N.ID_PERBICARAAN) GETDATE "+
-				" WHERE GETDATE.MAX_CETAK = J.TARIKH_MASUK AND  J.ID_MASUK = U.USER_ID(+) AND ID_FAIL = "+ID_FAIL+" ORDER BY J.TARIKH_MASUK DESC ";
-		
-		myLogger.info(" NOTA BICARA : SQL listHistoryjana :"+ sql);
-		
-		rs = stmt.executeQuery(sql);
-		listHistoryjana = Collections.synchronizedList(new ArrayList());
-		
-		Map h = null;
-		int bil = 0;
-		while (rs.next()) {
-			h = Collections.synchronizedMap(new HashMap());
-			bil++;
-			String rowCss = "";
-			
-			if ( (bil % 2) == 0 )
-			{
-				rowCss = "row2";
-			}
-	        else
-	        {
-	        	rowCss = "row1";
-	        }			
-			h.put("rowCss",rowCss);
-			h.put("BIL",bil);
-			h.put("ID_HISTORYJANANOTA",rs == null ? "" :rs.getString("ID_HISTORYJANANOTA") == null ? "" : rs.getString("ID_HISTORYJANANOTA"));
-			h.put("ID_PERBICARAAN",rs == null ? "" :rs.getString("ID_PERBICARAAN") == null ? "" : rs.getString("ID_PERBICARAAN"));
-			h.put("ID_PERINTAH",rs == null ? "" :rs.getString("ID_PERINTAH") == null ? "" : rs.getString("ID_PERINTAH"));
-			h.put("NOTA",rs == null ? "" :rs.getString("NOTA") == null ? "" : rs.getString("NOTA"));
-			h.put("ID_FAIL",rs == null ? "" :rs.getString("ID_FAIL") == null ? "" : rs.getString("ID_FAIL"));
-			h.put("NO_FAIL",rs == null ? "" :rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL"));
-			h.put("WAKTU_BICARA",rs == null ? "" :rs.getString("WAKTU_BICARA") == null ? "" : rs.getString("WAKTU_BICARA"));
-			h.put("NAMA_PEGAWAI",rs == null ? "" :rs.getString("NAMA_PEGAWAI") == null ? "" : rs.getString("NAMA_PEGAWAI"));
-			h.put("BIL_BICARA",rs == null ? "" :rs.getString("BIL_BICARA") == null ? "" : rs.getString("BIL_BICARA"));
-			h.put("TARIKH_TRANSAKSI_FULL",rs == null ? "" :rs.getString("TARIKH_TRANSAKSI_FULL") == null ? "" : rs.getString("TARIKH_TRANSAKSI_FULL"));		
-			h.put("PENJANA",rs == null ? "" :rs.getString("PENJANA") == null ? "" : rs.getString("PENJANA"));		
-			h.put("NO_PINDAAN",rs == null ? "" :rs.getString("NO_PINDAAN") == null ? "" : rs.getString("NO_PINDAAN"));		
-			listHistoryjana.add(h);
-		}
-
-		} finally {
-			if (db == null)
-			{
-				db1.close();
-			}
-		}
-		
-		
-		return listHistoryjana;
 	}
 	
 private void muatnaik(String hitButton, String id_notabicara, String idDokumen, String flagPopup, String modePopup,

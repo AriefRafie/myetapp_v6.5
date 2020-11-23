@@ -275,7 +275,7 @@
                             <tr>
                               <td colspan="8" scope="row">
                               ##if($idStatus == '6' || $idStatus == '1' || $idStatus == '12' || $SenaraiHakmilik.size() == 0)
-									<input type="button" name="cmdsemakanhakmilik" value="Capaian Hakmilik e-Tanah" onclick="javascript:semakanHakmilikeTanah('htp','$!idPermohonan')"/>
+									<input type="button" name="cmdsemakanhakmilik" value="Capaian Hakmilik e-Tanah(Melaka)" onclick="javascript:semakanHakmilikeTanah('htp','$!idPermohonan')"/>
                               <input class="stylobutton100" name="cmdDaftar" type="button" value="Pilih Tanah" onClick="pilihTanah('$idPermohonan')">
                               ##end
                               </td>
@@ -291,17 +291,17 @@
                              	<td width="10%"><strong>No Lot/PT</strong></td>
                              	<td width="8%"><strong>Luas Dipohon</strong></td>
                               	<td width="7%"><strong>Hapus</strong></td> -->
-                              	<td scope="row" width="3%" align="center"><strong>Bil.</strong></td>
-                              	<td width="14%"><strong>Negeri</strong></td>
-                              	<td width="14%"><strong>Daerah</strong></td>
-                              	<td width="10%"><strong>Bandar/Pekan/Mukim</strong></td>
-                              	<td width="15%"><strong>Seksyen</strong></td>
+                              	<td scope="row" width="3%" align="center">Bil.</td>
+                              	<td width="14%">Negeri</td>
+                              	<td width="14%">Daerah</td>
+                              	<td width="10%">Bandar/Pekan/Mukim</td>
+                              	<td width="5%">Seksyen</td>
 
-                              	<td width="17%"><strong>No. Hakmilik/Warta</strong></td>
-                              	<!-- <td width="13%">No. Warta</td> -->
-                             	<td width="10%"><strong>No. Lot/PT</strong></td>
-                             	<td width="10%"><strong>Luas Pohon</strong></td>
-				  	  			<td width="7%"><strong><div align="center">Tindakan</div></strong></td>
+                              	<td width="14%">No. Hakmilik</td>
+                              	<td width="13%">No. Warta</td>
+                             	<td width="10%">No. Lot/PT</td>
+                             	<td width="10%">Luas Pohon</td>
+				  	  			<td width="7%"><div align="center">Tindakan</div></td>
                             </tr>
                           #set ($list = "")
                           #if ($SenaraiHakmilik.size() > 0)
@@ -321,10 +321,10 @@
                             <td class="$row">$!list.mukim</td>
                            <td class="$row">$!list.namaSeksyen</td>
 
-                           	<td class="$row">$!list.kodJenisHakmilik $!list.noHakmilik $!list.noWarta</td>
-                            <!-- <td class="$row">$!list.noWarta</td> -->
+                           	<td class="$row">$!list.kodJenisHakmilik $!list.noHakmilik</td>
+                            <td class="$row">$!list.noWarta</td>
                             <td class="$row">$!list.lot</td>
-                            <td class="$row">$!list.luas </td>
+                            <td class="$row">$!list.luasBersamaan $!list.kodLuasBersamaan</td>
                             <td>
                             	<div align="center">
     							    #if (!$!list.gisCharting.equals('N') )
@@ -342,7 +342,7 @@
                           #else
                           <tr>
                             <td class="row1" align="center">&nbsp;</td>
-                            <td class="row1" align="left" colspan="7">Tiada Rekod</td>
+                            <td class="row1" align="left" colspan="8">Tiada Rekod</td>
                           </tr>
                           #end
                         </table>

@@ -47,8 +47,6 @@ public class FrmREVMemantauBayaranSewaData {
 	private Vector beanMaklumatPermohonan = null;
 	private Vector beanMaklumatTanah = null;
 	private Vector beanMaklumatBayaranLL = null;
-	private Vector beanMaklumatCatatan = null;
-	private Vector senaraiCatatan = null;
 	private static final Log log = LogFactory
 			.getLog(FrmREVMemantauBayaranSewaData.class);
 
@@ -1774,42 +1772,6 @@ public class FrmREVMemantauBayaranSewaData {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void setMaklumatCatatan(String idCatatan) throws Exception {
-
-		Db db = null;
-		String sql = "";
-
-		try {
-			beanMaklumatCatatan = new Vector();
-			db = new Db();
-			Statement stmt = db.getStatement();
-
-			sql = "SELECT CATATAN"
-					+ " FROM TBLPHPCATATAN WHERE ID_CATATAN = '" + idCatatan + "'";
-			ResultSet rs = stmt.executeQuery(sql);
-
-			Hashtable h;
-			int bil = 1;
-			while (rs.next()) {
-				h = new Hashtable();
-				h.put("bil", bil);
-				h.put("catatan",
-						rs.getString("CATATAN") == null ? "" : rs
-								.getString("CATATAN"));
-				beanMaklumatCatatan.addElement(h);
-				bil++;
-			}
-
-		} catch (Exception re) {
-			log.error("Error: ", re);
-			throw re;
-		} finally {
-			if (db != null)
-				db.close();
-		}
-	}
-
-	@SuppressWarnings("unchecked")
 	public void setMaklumatPelarasan(String idAkaun) throws Exception {
 
 		Db db = null;
@@ -2890,13 +2852,9 @@ public class FrmREVMemantauBayaranSewaData {
 				h.put("idNotis", rs.getString("ID_NOTIS") == null ? "" : rs.getString("ID_NOTIS"));
 				h.put("idJenisNotis", rs.getString("ID_JENIS_NOTIS") == null ? "" : rs.getString("ID_JENIS_NOTIS"));
 				if ("1".equals(rs.getString("ID_JENIS_NOTIS"))) {
-					h.put("jenisNotis", "MEMO TUNTUTAN DEPOSIT");
+					h.put("jenisNotis", "NOTIS TUNTUTAN TUNGGAKAN");
 				} else if ("2".equals(rs.getString("ID_JENIS_NOTIS"))) {
-					h.put("jenisNotis", "MEMO PELARASAN DEPOSIT");
-				} else if ("3".equals(rs.getString("ID_JENIS_NOTIS"))) {
-					h.put("jenisNotis", "MEMO TUNTUTAN HASIL");
-				} else if ("4".equals(rs.getString("ID_JENIS_NOTIS"))) {
-					h.put("jenisNotis", "MEMO RAMPASAN DEPOSIT");
+					h.put("jenisNotis", "NOTIS RAMPASAN DEPOSIT");
 				} else {
 					h.put("jenisNotis", "");
 				}
@@ -3095,182 +3053,6 @@ public class FrmREVMemantauBayaranSewaData {
 		}
 	}
 
-	public String simpanCatatan(String idHasil, String txtCatatan, HttpSession session)
-			throws Exception {
-
-		Db db = null;
-		Connection conn = null;
-		String userId = session.getAttribute("_ekptg_user_id").toString();
-		String sql = "";
-		String idCatatanString = "";
-
-		try {
-			db = new Db();
-			conn = db.getConnection();
-			conn.setAutoCommit(false);
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
-
-			// TBLPHPAKAUN
-			long idCatatan = DB.getNextID("TBLPHPCATATAN_SEQ");
-			System.out.println("idCatatan >>>> "+idCatatan);
-			idCatatanString = String.valueOf(idCatatan);
-			r.add("ID_CATATAN", idCatatan);
-			r.add("ID_HASIL", idHasil);
-			if (!"".equals(txtCatatan)) {
-				r.add("CATATAN", txtCatatan);
-			}
-			r.add("ID_MASUK", userId);
-			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
-
-			sql = r.getSQLInsert("TBLPHPCATATAN");
-			System.out.println("sql >>>> "+sql);
-			stmt.executeUpdate(sql);
-
-			conn.commit();
-
-			AuditTrail.logActivity("", "4", null, session, "INS",
-					"FAIL [" + idCatatan
-							+ "] DIDAFTARKAN");
-
-		} catch (SQLException ex) {
-			try {
-				conn.rollback();
-			} catch (SQLException e) {
-				throw new Exception("Rollback error : " + e.getMessage());
-			}
-			throw new Exception("Ralat : Masalah penyimpanan data "
-					+ ex.getMessage());
-
-		} finally {
-			if (db != null)
-				db.close();
-		}
-		return idCatatanString;
-	}
-
-	public void simpanKemaskiniCatatan(String idHasil, String idCatatan, String txtCatatan, HttpSession session) throws Exception {
-
-		Db db = null;
-		Connection conn = null;
-		String userId = session.getAttribute("_ekptg_user_id").toString();
-		String sql = "";
-
-		try {
-			db = new Db();
-			conn = db.getConnection();
-			conn.setAutoCommit(false);
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
-
-			// TBLPHPAKAUN
-			r.update("ID_CATATAN", idCatatan);
-			if (!"".equals(txtCatatan)) {
-				r.add("CATATAN", txtCatatan);
-			}
-			r.add("ID_KEMASKINI", userId);
-			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
-
-			sql = r.getSQLUpdate("TBLPHPCATATAN");
-			stmt.executeUpdate(sql);
-
-			conn.commit();
-
-			AuditTrail.logActivity("", "4", null, session, "UPD",
-					"FAIL [" + idCatatan
-							+ "] DIKEMASKINI");
-
-		} catch (SQLException ex) {
-			try {
-				conn.rollback();
-			} catch (SQLException e) {
-				throw new Exception("Rollback error : " + e.getMessage());
-			}
-			throw new Exception("Ralat : Masalah penyimpanan data "
-					+ ex.getMessage());
-
-		} finally {
-			if (db != null)
-				db.close();
-		}
-	}
-
-	public void hapusCatatan(String idHasil, String idCatatan,
-			HttpSession session) throws Exception {
-		Db db = null;
-		Connection conn = null;
-		String userId = session.getAttribute("_ekptg_user_id").toString();
-		String sql = "";
-
-		try {
-			db = new Db();
-			conn = db.getConnection();
-			conn.setAutoCommit(false);
-			Statement stmt = db.getStatement();
-			SQLRenderer r = new SQLRenderer();
-
-			// TBLPHPAKAUN
-			sql = "DELETE FROM TBLPHPCATATAN WHERE ID_CATATAN = '" + idCatatan + "'";
-			stmt.executeUpdate(sql);
-
-			conn.commit();
-
-			AuditTrail.logActivity("", "4", null, session, "DEL",
-					"FAIL [" + idCatatan
-							+ "] DIHAPUSKAN");
-
-		} catch (SQLException ex) {
-			try {
-				conn.rollback();
-			} catch (SQLException e) {
-				throw new Exception("Rollback error : " + e.getMessage());
-			}
-			throw new Exception("Ralat : Masalah penyimpanan data "
-					+ ex.getMessage());
-
-		} finally {
-			if (db != null)
-				db.close();
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	public void setListCatatan(String idHasil) throws Exception {
-
-		Db db = null;
-		String sql = "";
-
-		try {
-			senaraiCatatan = new Vector();
-			db = new Db();
-			Statement stmt = db.getStatement();
-
-			sql = "SELECT * FROM TBLPHPCATATAN WHERE ID_HASIL = '"
-					+ idHasil
-					+ "'";
-			ResultSet rs = stmt.executeQuery(sql);
-			Hashtable h;
-			int bil = 1;
-			while (rs.next()) {
-				h = new Hashtable();
-				h.put("bil", bil);
-				h.put("idCatatan", rs.getString("ID_CATATAN") == null ? "" : rs.getString("ID_CATATAN"));
-				h.put("catatan",
-						rs.getString("CATATAN") == null ? "" : rs
-								.getString("CATATAN"));
-				senaraiCatatan.addElement(h);
-				bil++;
-			}
-
-		} catch (Exception re) {
-			log.error("Error: ", re);
-			throw re;
-		} finally {
-			if (db != null)
-				db.close();
-		}
-	}
-
 	public Vector getSenaraiFail() {
 		return senaraiFail;
 	}
@@ -3365,21 +3147,5 @@ public class FrmREVMemantauBayaranSewaData {
 
 	public void setBeanMaklumatBayaranLL(Vector beanMaklumatBayaranLL) {
 		this.beanMaklumatBayaranLL = beanMaklumatBayaranLL;
-	}
-
-	public Vector getBeanMaklumatCatatan() {
-		return beanMaklumatCatatan;
-	}
-
-	public void setBeanMaklumatCatatan(Vector beanMaklumatCatatan) {
-		this.beanMaklumatCatatan = beanMaklumatCatatan;
-	}
-
-	public Vector getSenaraiCatatan() {
-		return senaraiCatatan;
-	}
-
-	public void setSenaraiCatatan(Vector senaraiCatatan) {
-		this.senaraiCatatan = senaraiCatatan;
 	}
 }
