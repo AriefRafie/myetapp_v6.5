@@ -2600,6 +2600,25 @@ public class PendaftaranCheck implements IServlet2 {
 				e.printStackTrace();
 			}
 			
+		}else if ("check_exist_simati_1".equals(submit)) {
+			PendaftaranCheckModel userdata = PendaftaranCheckModel.getInstance();
+			myLogger.info("LALU SINI A");
+			
+			try {
+				
+				if (userdata.checkKP_Baru_Simati_Online(id_permohonan,no_kp_baru_simati, no_kp_lama_simati,no_kp_lain_simati) == true) {
+					myLogger.info("LALU SINI B");
+					returnCheckingIC("true");
+					myLogger.info("test 1: "+returnCheckingIC("true"));
+				} else {
+					myLogger.info("LALU SINI C");
+					returnCheckingIC("false");
+					myLogger.info("test 2: "+returnCheckingIC("false"));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 		}
 
 	}
@@ -2761,6 +2780,23 @@ public class PendaftaranCheck implements IServlet2 {
 		op += " <input id='"+jenisFieldKP+"' name='"+jenisFieldKP+"' type='hidden' value='yes' /> " +" ";
 		out.print(op);
 	
+	}
+	
+	public static String returnCheckingIC(String boolVal) throws Exception {
+		myLogger.info("LALU SINI D");
+		String a = boolVal;
+		String b;
+		if (a == "true") {
+			myLogger.info("LALU SINI E");
+			b = "true";
+			// return true;
+		}else {
+			myLogger.info("LALU SINI F");
+			b = "false";
+			// return false;
+		}
+		// myLogger.info("return value: "+b);
+		return b;
 	}
 	
 	// 19112020 syafiqah ambil dari v6
