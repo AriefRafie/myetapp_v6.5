@@ -145,6 +145,7 @@ public class FrmCukaiPelarasanHapus extends AjaxBasedModule{
 		this.context.put("iscarian", isCarian);
 		year = lebah.util.Util.getDateTime(new Date(), "yyyy");
 		this.context.put("tahuncukai", Integer.parseInt(year));
+		this.context.put("tahuncukain", Integer.parseInt(year)+1);
 		this.context.put("tahunparam", Integer.parseInt(socTahun));
 		this.context.put("carianNoHakmilik", noHakmilik);
 

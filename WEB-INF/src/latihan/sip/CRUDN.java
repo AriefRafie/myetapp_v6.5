@@ -843,7 +843,7 @@ public class CRUDN extends AjaxBasedModule{
 	  private void SimpanPenyata(HttpSession session , int idPermohonan) throws Exception {
 		  	Vector list = new Vector();
 			list.clear();
-			int idPeringkatbayaran = Integer.parseInt(getParam("idPeringkatbayaran"));
+			String idPeringkatbayaran = getParam("idPeringkatbayaran");
 			int idNegeri = Integer.parseInt(getParam("idNegeri"));	
 			String negeri = getParam("negeri");
 			System.out.println("CukaiProcess::DataPenyata::negeri:::"+negeri);
@@ -853,7 +853,7 @@ public class CRUDN extends AjaxBasedModule{
 	    	list = FrmCukaiPenyataData.getListPenyata(idNegeri);
 			System.out.println("CukaiProcess::SimpanPenyata::list.size()::: "+list.size());
 				
-			if(idPeringkatbayaran == 0){
+			if(idPeringkatbayaran == "0"){
 				Hashtable h = new Hashtable();	
 				h.put("idpermohonan", idPermohonan);
 						
@@ -964,7 +964,7 @@ public class CRUDN extends AjaxBasedModule{
 			//list.clear();
 			//int idPeringkatbayaran = Integer.parseInt(getParam("idPeringkatbayaran"));
 			//int idNegeri = Integer.parseInt(getParam("idNegeri"));	
-			int idPeringkatbayaran = idPeringkatBayaran==""?0:Integer.parseInt(idPeringkatBayaran);
+			String idPeringkatbayaran = idPeringkatBayaran==""?"0":idPeringkatBayaran;
 		    int idNegeriInt = Integer.parseInt(idNegeri);		
 
 			//String negeri = getParam("negeri");
@@ -973,7 +973,7 @@ public class CRUDN extends AjaxBasedModule{
 	    	String idBayaran = getParam("socbayaran");
 	    	vector = FrmCukaiPenyataData.getListPenyata(idNegeriInt);
 				
-			if(idPeringkatbayaran == 0){
+			if(idPeringkatbayaran == "0"){
 				Hashtable h = new Hashtable();	
 				h.put("idpermohonan", idPermohonan);						
 				h.put("idNegeri", idNegeriInt);
