@@ -84,6 +84,12 @@
               <td>:</td>
               <td><input type="text" name="txtNoFax" size="20" maxlength="14"  value="$!pemilik.getFax()"  onblur="validateNumber(this,this.value)" $inputstyleread/></td>
             </tr>
+            <tr>
+             <td><div align="right"><strong></strong></div></td>
+              <td><div align="left">Emel</div></td>
+              <td>:</td>
+              <td><input type="text" name="txtEmel" size="20" maxlength="65"  value="$!pemilik.getEmel()"  $inputstyleread/></td>
+            </tr>
 
             <tr>
               <td><div align="right"><strong></strong></div></td>
@@ -186,6 +192,12 @@
               <td>:</td>
               <td><input type="text" name="txtNoFax" size="20" maxlength="14"  value="$!pemilik.getFax()"  onblur="validateNumber(this,this.value)" /></td>
             </tr>
+            <tr>
+              <td><div align="right"><strong></strong></div></td>
+              <td><div align="left">Emel</div></td>
+              <td>:</td>
+              <td><input type="text" name="txtEmel" size="20" maxlength="65"  value="$!pemilik.getEmel()"  /></td>
+            </tr>
 
             <tr>
               <td><div align="right"><strong></strong></div></td>
@@ -287,6 +299,12 @@
               <td><div align="left">No. Fax</div></td>
               <td>:</td>
               <td><input type="text" name="txtNoFax" size="20" maxlength="14"  value="$!pemilik.getFax()"  onblur="validateNumber(this,this.value)" /></td>
+            </tr>
+            <tr>
+              <td><div align="right"><strong></strong></div></td>
+              <td><div align="left">Emel</div></td>
+              <td>:</td>
+              <td><input type="text" name="txtEmel" size="20" maxlength="65"  value="$!pemilik.getEmel()"  /></td>
             </tr>
 
             <tr>
