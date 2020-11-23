@@ -1,52 +1,4 @@
-<style type="text/css">
 
-#if ($!modul == 'htp')
-	<!--
-	#parse("css/eTapp_HTP.css") .style1 {
-	color: #0000FF
-	}
-	.style2 {
-		color: #FF0000
-	}
-	-->
-#elseif($!modul == 'ppt')
-	<!--
-	#parse("css/eTapp_PPT.css") .style1 {
-	color: #0000FF
-	}
-	.style2 {
-		color: #FF0000
-	}
-	-->
-#elseif($!modul == 'ppk')
-	<!--
-	#parse("css/eTapp_PPK.css") .style1 {
-	color: #0000FF
-	}
-	.style2 {
-		color: #FF0000
-	}
-	-->
-#else       
-#end
-</style>
-<input type="hidden" name="actionPopup"/>
-<input type="hidden" name="hitButt"/>
-<input type="hidden" name="modul" value="$!modul"/>
-
-<table width="100%" border="0" cellspacing="2" cellpadding="2">
-  #if ($flagMsg == 'Y')
-  <tr>
-    <td colspan="3">&nbsp;
-      <div class="success">HAKMILIK BERJAYA DIDAFTARKAN</div></td>
-  </tr>
-  #end
-  #if ($flagMsg == 'N')
-  <tr>
-    <td colspan="3">&nbsp;
-      <div class="error">HAKMILIK TIDAK BERJAYA DIDAFTARKAN : $outputMsg</div></td>
-  </tr>
-  #end
   <tr>
     <td><fieldset>
       <legend><strong>MAKLUMAT HAKMILIK</strong></legend>
@@ -54,19 +6,19 @@
         <tr>
           <td width="50%" valign="top"><table width="100%"  cellpadding="2" cellspacing="2" border="0">
               #foreach ($beanMaklumatHakmilik in $BeanMaklumatHakmilik)
-              <input type="hidden" name="idPPKHTA" value="$beanMaklumatHakmilik.idMT"/>
-              <input type="hidden" name="idHakmilik" value="$beanMaklumatHakmilik.idHakmilik"/>
-              <input type="hidden" name="noResit" value="$beanMaklumatHakmilik.noResit"/>
+              <input type="hidden" name="idPPKHTA_" value="$beanMaklumatHakmilik.idMT"/>
+              <input type="hidden" name="idHakmilik_" value="$beanMaklumatHakmilik.idHakmilik"/>
+              <input type="hidden" name="noResit_" value="$beanMaklumatHakmilik.noResit"/>
               <input type="hidden" name="idPermohonanSimati" value="$beanMaklumatHakmilik.idPermohonanSimati"/>
               <input type="hidden" name="idPermohonan" value="$beanMaklumatHakmilik.idPermohonan"/>
-              <tr>
+         <!--      <tr>
                 <td width="37%" align="right">NO. RESIT :</td>
                 <td width="63%"><span class="style1">$beanMaklumatHakmilik.noResit</span></td>
               </tr>
               <tr>
                 <td align="right">ID HAKMILIK :</td>
                 <td><span class="style1">$beanMaklumatHakmilik.idHakmilik</span></td>
-              </tr>
+              </tr> -->
               <tr>
                 <td align="right">NO. HAKMILIK :</td>
                 <td><span class="style1">$beanMaklumatHakmilik.hakmilik</span></td>
@@ -120,16 +72,17 @@
                 <td align="right">NO. PERSERAHAN GADAIAN:</td>
                 <td><span class="style1">$beanMaklumatHakmilik.noPerserahanGadaian</span></td>
               </tr>
-            </table></td>
-          <td width="50%" valign="top"><table width="100%"  cellpadding="2" cellspacing="2" border="0">
-              <tr>
+               <tr>
                 <td width="37%" align="right" valign="top">KAVEAT :</td>
                 <td width="63%" valign="top"><span class="style1">$beanMaklumatHakmilik.kaveat</span></td>
               </tr>
               <tr>
                 <td align="right" valign="top">NO. PERSERAHAN KAVEAT:</td>
                 <td><span class="style1">$beanMaklumatHakmilik.noPerserahanKaveat</span></td>
-              </tr>
+              </tr>             
+            </table></td>
+          <td width="50%" valign="top"><table width="100%"  cellpadding="2" cellspacing="2" border="0">
+
               <tr>
                 <td width="37%" align="right" valign="top">KATEGORI TANAH :</td>
                 <td width="63%" valign="top"><span class="style1">$beanMaklumatHakmilik.kategoriTanah</span></td>
@@ -173,22 +126,21 @@
         </tr>
       </table>
       </fieldset></td>
-  </tr>
+  </tr> 
   #if ($hakmilik.pihakBerkepentinganList.size() > 0)
 	  <tr>
 	    <td>&nbsp;</td>
 	  </tr>
 	  <tr>
-	    <td>#parse("app/integrasi/etanah/wpkl/frmSenaraiPemilik.jsp")</td>
+	    <td>#parse("app/integrasi/etanah/pemilik.jsp")</td>
 	  </tr>
   #end
-  
-  <tr>
-    <td align="center"><input type="button" name="cmdDaftar" id="cmdDaftar" value="Daftar Hakmilik" onClick="daftar()">
-      <input type="button" name="cmdKembali" id="cmdKembali" value="Kembali" onClick="kembali()">
-    </td>
+    <tr>
+    	<td align="center"> 
+    		<input id="cmdSimpan" name="cmdSimpan" type="button" value="Simpan" onclick="javascript:simpanPemilik()"/> 
+    	</td>
   </tr>
-</table>
+  
 <script>
 	function kembali() {	
 		document.${formName}.actionPopup.value = "";
