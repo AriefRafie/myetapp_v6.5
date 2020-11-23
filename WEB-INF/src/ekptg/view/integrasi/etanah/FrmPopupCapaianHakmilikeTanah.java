@@ -1,9 +1,12 @@
 
 package ekptg.view.integrasi.etanah;
 
+import integrasi.rest.etanah.wpkl.entities.Hakmilik;
 import integrasi.rest.etanah.wpkl.ppk.EtanahWPKLPPKManager;
 import integrasi.ws.etanah.ppt.ETanahCarianManager;
 
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -11,12 +14,19 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import lebah.db.Db;
+import lebah.db.SQLRenderer;
 import lebah.portal.AjaxBasedModule;
 import ekptg.helpers.Paging;
+import ekptg.model.entities.Tblrujjenisnopb;
+import ekptg.model.htp.PihakBerkepentingan;
+import ekptg.model.htp.pembelian.IPemilik;
+import ekptg.model.htp.pembelian.PemilikBean;
 import ekptg.model.integrasi.CapaianHakmilikeTanahHTP;
 import ekptg.model.integrasi.CapaianHakmilikeTanahPPK;
 import ekptg.model.integrasi.FrmPopupCapaianHakmilikeTanahData;
 import ekptg.model.integrasi.IIntegrasieTanahCarian;
+import ekptg.model.integrasi.PemilikPPTBean;
 
 /**
  * @author mohamad Rosli
@@ -28,21 +38,24 @@ public class FrmPopupCapaianHakmilikeTanah extends AjaxBasedModule {
 	
  	private IIntegrasieTanahCarian carianHTP = null;  
  	private IIntegrasieTanahCarian carianPPK = null;  
-// 	private String idHarta = "";
  	FrmPopupCapaianHakmilikeTanahData logic = new FrmPopupCapaianHakmilikeTanahData();	
+	Hakmilik hakmilik = null;
+	private IPemilik iPemilik = null;
+	private String jenisPB = "0";
 
 	@Override
 	public String doTemplate2() throws Exception {
 		
 		HttpSession session = this.request.getSession();
 		String idPengguna = (String)session.getAttribute("_ekptg_user_id");
+		String namaPengguna = (String)session.getAttribute("_portal_username");
 
 		// GET DEFAULT PARAM
 		String action = getParam("action"); // * ACTION NI HANYA UTK SETUP PAGING SHJ
-		String vm = "";
+		String vm = "app/integrasi/etanah/frmPopupCapaianHakmilikeTanah.jsp";
 		String actionPopup = getParam("actionPopup");
 		String hitButt = getParam("hitButt");
-		String submit = getParam("command");
+//		String submit = getParam("command");
 		String idPermohonan = getParam("idPermohonan");
 		
 		String noResit = getParam("txtNoResit").trim();
@@ -50,7 +63,9 @@ public class FrmPopupCapaianHakmilikeTanah extends AjaxBasedModule {
 		// akses css
 		String modul = getParam("modul");
 		this.context.put("modul", modul);
-
+		//Modul PPK
+		String idPermohonanSimati = getParam("idPermohonanSimati");
+		context.put("idPermohonanSimati", idPermohonanSimati);
 		//VECTOR
         Vector<Hashtable<String,String>> list = null;
         Vector beanMaklumatHakmilik = null;
@@ -72,6 +87,12 @@ public class FrmPopupCapaianHakmilikeTanah extends AjaxBasedModule {
 					ETanahCarianManager.getMaklumatHakmilikFromEtanah(noResit, idHakmilik, idPermohonan, kodNegeri);
 				}
 				
+//				Hakmilik hakmilik = ETanahCarianManager.getTanah();
+//				myLog.info("hakmilik="+hakmilik);
+//				myLog.info("hakmilik="+hakmilik.getPihakBerkepentinganList().size());
+
+				this.context.put("hakmilik", hakmilik);
+
 				this.context.put("flagMsg", ETanahCarianManager.getFlagMsg());
 				this.context.put("outputMsg", ETanahCarianManager.getOutputMsg());
 				
@@ -79,47 +100,133 @@ public class FrmPopupCapaianHakmilikeTanah extends AjaxBasedModule {
 //				manager.getMaklumatHakmilikFromEtanah(idPermohonanSimati, noResit, idHakmilik, kodNegeri);
 //				this.context.put("flagMsg", manager.getFlagMsg());
 //				this.context.put("outputMsg", manager.getOutputMsg());
-			}
-			if ("14".equals(kodNegeri)){
+			}else if (kodNegeri.equals("14")){
 				EtanahWPKLPPKManager manager = new EtanahWPKLPPKManager();
-				manager.getMaklumatHakmilikFromEtanah(idPermohonan, noResit, idHakmilik, idPengguna);
+				hakmilik = manager.getMaklumatHakmilikFromEtanah(idHakmilik, noResit, namaPengguna, idPermohonanSimati);
+//				if (hakmilik != null) {
+//					listPemilik = hakmilik.getPihakBerkepentinganList();
+//					getMaklumatUrusan(hakmilik);
+//				}
+				//hakmilik = manager.getMaklumatHakmilikFromEtanah(idHakmilik, noResit, namaPengguna, idPermohonanSimati);
+//				manager.getMaklumatHakmilikFromEtanah(idPermohonan, noResit, idHakmilik, idPengguna);
 				this.context.put("flagMsg", manager.getFlagMsg());
 				this.context.put("outputMsg", manager.getOutputMsg());
-			}			
-		
-		}else if (hitButt.equals("daftar")){
+				
+			}		
+			
+			
+		}else if (hitButt.equals("daftar") || hitButt.equals("simpanPemilik")){
 			String idHarta = getParam("idPPKHTA");
+			String idsPemilik[] = request.getParameterValues("idsPemilik");
+			
 			if(modul.equals("htp")) {
-				getCarianHTP().daftarHakmilik(idHarta, getParam("noResit"), getParam("idHakmilik"), idPermohonan, idPengguna);
+				idHarta = getCarianHTP().daftarHakmilik(idHarta, getParam("noResit_"), getParam("idHakmilik_"), idPermohonan, idPengguna);
+				myLog.info("idHarta="+idHarta);
+				if (idsPemilik != null) {
+					PihakBerkepentingan pemilik = null;
+					for (int i = 0; i < idsPemilik.length; i++) {
+						pemilik = new PihakBerkepentingan();						
+						String[] parts = idsPemilik[i].split("\\|");					
+						//String nama = parts[0];
+						String noPengenalan = parts[1].replace("-", "");
+//						String ba = parts[2];
+//						String bb = parts[3];
+						
+						//String Idpihakberkepentingan = 
+						//pemilik.setIdpihakberkepentingan();
+						pemilik.setIdHakmilikUrusan(idHarta);
+						pemilik.setNama(parts[0]);
+						getRujJenisNoPB(parts[4]);
+						pemilik.setJenisPB(jenisPB);
+						pemilik.setNoRujukan(noPengenalan);
+						pemilik.setIdNegeri("0");
+						pemilik.setIdDaerah("0");
+						pemilik.setAlamat1("-");
+						pemilik.setAlamat2("-");
+						pemilik.setAlamat3("-");
+						pemilik.setPoskod("00000");
+						pemilik.setTel("0");
+						pemilik.setFax("0");
+		
+						//pemilik = 
+						getIPemilik().savePemilik(pemilik);
+						//manager.insertMaklumatHakmilik(idPermohonanSimati, hakmilik, nama, noPengenalan, ba, bb, idHakmilik, noResit, session);
+					
+					}
+				}
+				
+				
 			}else if (modul.equals("ppk")) { 
 				getCarianPPK().daftarHakmilik(idHarta, getParam("noResit"), getParam("idHakmilik"), idPermohonan, idPengguna);
 			}else if (modul.equals("ppt")) { 
 				logic.daftarHakmilik(idHarta, getParam("noResit"), getParam("idHakmilik"), idPermohonan, idPengguna);
+				myLog.info("id harta ppt :"+idHarta);
+				if (idsPemilik != null) {
+					PihakBerkepentingan pemilik = null;
+					for (int i = 0; i < idsPemilik.length; i++) {
+						pemilik = new PihakBerkepentingan();						
+						String[] parts = idsPemilik[i].split("\\|");					
+						//String nama = parts[0];
+						String noPengenalan = parts[1].replace("-", "");
+//						String ba = parts[2];
+//						String bb = parts[3];
+						
+						//String Idpihakberkepentingan = 
+						//pemilik.setIdpihakberkepentingan();
+						pemilik.setIdHakmilikUrusan(idHarta);
+						pemilik.setNama(parts[0]);
+						getRujJenisNoPB(parts[4]);
+						pemilik.setJenisPB(jenisPB);
+						pemilik.setNoRujukan(noPengenalan);
+						pemilik.setIdNegeri("0");
+						pemilik.setIdDaerah("0");
+						pemilik.setAlamat1("-");
+						pemilik.setAlamat2("-");
+						pemilik.setAlamat3("-");
+						pemilik.setPoskod("00000");
+						pemilik.setTel("0");
+						pemilik.setFax("0");
+		
+						//pemilik = 
+						getIPemilikPPT().savePemilik(pemilik);
+						//manager.insertMaklumatHakmilik(idPermohonanSimati, hakmilik, nama, noPengenalan, ba, bb, idHakmilik, noResit, session);
+					
+					}
+				}
 			}
 			
 		}
 		
 		if (actionPopup.equals("papar")){			
-			vm = "app/integrasi/etanah/frmPopupMaklumatHakmilikeTanah.jsp";
-			idHakmilik = getParam("idPPKHTA");
+			//vm = "app/integrasi/etanah/frmPopupMaklumatHakmilikeTanah.jsp";
+			String idTanah = getParam("idPPKHTA");
 			
 			Hashtable<String,String> mt = null;
 			if(modul.equals("htp")) {
-				mt = getCarianHTP().setMaklumatHakmilik(idHakmilik);
+				mt = getCarianHTP().setMaklumatHakmilik(idTanah);
 				beanMaklumatHakmilik = getCarianHTP().getBeanMaklumatHakmilik();
 			
 			}else if (modul.equals("ppk")) { 
-				mt = getCarianPPK().setMaklumatHakmilik(idHakmilik);
+				mt = getCarianPPK().setMaklumatHakmilik(idTanah);
 				beanMaklumatHakmilik = getCarianPPK().getBeanMaklumatHakmilik();
 			
 			}else if (modul.equals("ppt")) { 
 //				mt = getCarianPPK().setMaklumatHakmilik(getParam("idPPKHTA"));
 //				beanMaklumatHakmilik = getCarianPPK().getBeanMaklumatHakmilik();
 //				beanMaklumatHakmilik = new Vector();
-				mt = logic.setMaklumatHakmilik(idHakmilik);
+				mt = logic.setMaklumatHakmilik(idTanah);
 				beanMaklumatHakmilik = logic.getBeanMaklumatHakmilik();			
 			
 			}
+			idHakmilik = mt.get("idHakmilik");
+			noResit= mt.get("noResit");
+			
+			Hakmilik hakmilik = ETanahCarianManager.getTanah(idTanah);
+			myLog.info("hakmilik="+hakmilik);
+			myLog.info("hakmilik="+hakmilik.getPihakBerkepentinganList().size());
+
+			this.context.put("hakmilik", hakmilik);
+			this.context.put("listPemilik", hakmilik.getPihakBerkepentinganList());		
 
 			this.context.put("BeanMaklumatHakmilik", beanMaklumatHakmilik);
 			
@@ -139,6 +246,7 @@ public class FrmPopupCapaianHakmilikeTanah extends AjaxBasedModule {
 		this.context.put("txtHakmilik", idHakmilik);
 		this.context.put("idPermohonan", idPermohonan);			
 		
+		System.out.println("vm : "+vm);
 		return vm;
 		
 	}
@@ -183,6 +291,41 @@ public class FrmPopupCapaianHakmilikeTanah extends AjaxBasedModule {
 			this.context.put("error",e.getMessage());
 		}	
 	}
+	
+	public Tblrujjenisnopb getRujJenisNoPB(String kod) throws Exception {
+		Db db = null;
+		String sql = " ";
+		Tblrujjenisnopb s = null;
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			r.add("id_jenisnopb");
+			r.add("kod_jenis_nopb");
+			r.add("keterangan");
+
+			if (kod != null)
+				r.add("kod_jenis_nopb", kod);
+
+			sql = r.getSQLSelect("tblrujjenisnopb");
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				s = new Tblrujjenisnopb();
+				s.setIdJenisnopb(rs.getLong("id_jenisnopb"));
+				s.setKodJenisNopb(rs.getString("kod_jenis_nopb"));
+				s.setKeterangan(rs.getString("keterangan"));
+				jenisPB = String.valueOf(s.getIdJenisnopb());
+				
+			}
+		} finally {
+			if (db != null)
+				db.close();
+		}
+		return s;
+		
+	}
+
 		  
 	private IIntegrasieTanahCarian getCarianHTP(){
 		if(carianHTP== null)
@@ -195,5 +338,21 @@ public class FrmPopupCapaianHakmilikeTanah extends AjaxBasedModule {
 		return carianPPK;
 	}
 
-
+	private IPemilik getIPemilik(){
+		if(iPemilik==null){
+			iPemilik = new PemilikBean();
+		}
+		return iPemilik;
+		
+	}
+	
+	private IPemilik getIPemilikPPT(){
+		if(iPemilik==null){
+			iPemilik = new PemilikPPTBean();
+		}
+		return iPemilik;
+		
+	}
+	
+	
 }
