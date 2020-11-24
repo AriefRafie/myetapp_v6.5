@@ -87,6 +87,7 @@ public class SenaraiFailModule extends AjaxModule {
 		String idPermohonan = getParam("idPermohonan");
 		String idHtpPermohonan = getParam("idHtpPermohonan");
 		String idHakmilikUrusan =  getParam("idHakmilikUrusan");
+		String catatan = getParam("catatan");
 		
 		boolean isTanah = false;
 
@@ -799,12 +800,13 @@ public class SenaraiFailModule extends AjaxModule {
 		}
 		else if(command.equalsIgnoreCase("simpanPerakuan")){
 			getPermohonanInfo();
-			simpanSenaraiSemakAkuanPembelian(String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan()));
+			simpanSenaraiSemakAkuanPembelian(String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan()), catatan);
 			getSemakanPerakuanPembelian();
 			vm = PATH+"perakuanPembelian.jsp";
 			context.put("page","3");
 			context.put("semakMode", "");
 			context.put("mode", " disabled");
+			getPermohonanInfo();
 		}
 		else{
 			String noFail = getParam("noFail");
@@ -1100,6 +1102,8 @@ private void getValuesPemilik(){
 	private void getPermohonanInfo()throws Exception{
 		String idPermohonan = getParam("txtidPermohonan");
 		String idHtpPermohonan = getParam("txtidHtpPermohonan");
+		htpPermohonan = null;
+		
 		htpPermohonan = getIPembelian().findPermohonan(idPermohonan,idHtpPermohonan);
 		context.put("htpPermohonan", htpPermohonan);
 	}
@@ -1190,7 +1194,7 @@ private void getValuesPemilik(){
 		
 	}
 	
-	private void simpanSenaraiSemakAkuanPembelian(String idPermohonan)throws Exception{
+	private void simpanSenaraiSemakAkuanPembelian(String idPermohonan, String catatan)throws Exception{
 		String[] cbsemaks = this.request.getParameterValues("akuans");
 		FrmSemakan frmSemak = new FrmSemakan();
 		frmSemak.semakanHapusByPermohonan(String.valueOf(idPermohonan));
@@ -1198,6 +1202,9 @@ private void getValuesPemilik(){
 			for (int i = 0; i < cbsemaks.length; i++) {
 				frmSemak = new FrmSemakan();
 				frmSemak.semakanTambah(cbsemaks[i], String.valueOf(idPermohonan));
+				if (catatan != null) {
+					frmSemak.kemaskiniCatatan(idPermohonan, catatan);
+				}
 			}
 		}
 		
