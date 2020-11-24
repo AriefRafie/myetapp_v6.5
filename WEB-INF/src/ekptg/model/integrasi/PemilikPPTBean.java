@@ -101,7 +101,7 @@ public class PemilikPPTBean implements IPemilik {
 
 	//@Override
 	public Vector<PihakBerkepentingan> findPemilikByPermohonan(String idPermohonan) {
-		System.out.println("======findPemilikByPermohonan==========" + idPermohonan);
+		System.out.println("======findPemilikByPermohonan ppt==========" + idPermohonan);
 		Db db = null;
 		Connection conn = null;
 		SQLRenderer r = null;
@@ -205,7 +205,7 @@ public class PemilikPPTBean implements IPemilik {
 			 r.add("no_hp", pemilik.getTel());
 			 r.add("no_Fax", pemilik.getFax());
 			 sql = r.getSQLInsert("Tblpptpihakberkepentingan");
-			 System.out.println("sql insert tblpptpb : "+sql);
+			 System.out.println("sql insert 2 tblpptpb : "+sql);
 			 stmt.executeUpdate(sql);	
 			 conn.commit();
 		}
