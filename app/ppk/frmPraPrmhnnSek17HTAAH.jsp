@@ -115,6 +115,7 @@
  </p>
 -->
   <table width="100%" border="0">
+  <!-- e-Tanah $headerppk.get("ID_PERMOHONANSIMATI")-->
     <input type="hidden" name="command" value="">
     <input type="hidden" name="mode" value="">
     <input name="tabIdatas" type="hidden" id="tabIdatas" value="$selectedTabatas"/>
@@ -3228,7 +3229,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                            	#if($ht == "Y")
                           		#if($open_button_online == "yes")
                              	<!--  e-Tanah Melaka-->
-                              	<input name="cmdSemakanHakmilikEtanah" type="button" value="Capaian Hakmilik e-Tanah (Melaka)" onclick="javascript:semakanHakmilikEtanah('$idPermohonanSimati')"/>
+                              	<input name="cmdSemakanHakmilikEtanah" type="button" value="Capaian Hakmilik e-Tanah" onclick="javascript:semakanHakmilikEtanah('$idPermohonanSimati')"/>
                              	<input type="submit" name="buttonTambah" id="buttonTambah" value="Tambah" onclick="nktambah()"/>
                                		#if($flag_kemaskini_selesai != "yes")
                                   	<script>
