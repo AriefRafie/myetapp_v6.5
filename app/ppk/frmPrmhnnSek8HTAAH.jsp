@@ -2453,7 +2453,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                             <tr>
                               <td align="center"> #if($!skrin_online != "yes")
                                 #if($show_kemaskini_htaam == "yes")
-                                <input type="button" name="cmdJPPH" value ="Nilaian JPPH" onClick="javascript:intNilaianJPPH('$id', '$idhta')" disabled>
+                                <input type="button" name="cmdJPPH" value ="Nilaian JPPH" onClick="javascript:intNilaianJPPH('$id', '$idhta')" > <!-- arief buang tag disabled (sama mcm live v6)-->
                                 &nbsp;
                                 <input type="button" name="cmdETanahHM" value="Semakan Status Hakmilik" onclick="checkWSHM('$idhtaam');" />
                                 &nbsp;

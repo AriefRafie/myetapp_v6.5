@@ -3,12 +3,16 @@ package ekptg.model.utils.emel;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 
 import ekptg.engine.EmailSender;
+import ekptg.helpers.AudiTrailMail;
 import ekptg.model.utils.IUserPegawai;
 import ekptg.model.utils.UserBean;
 import ekptg.model.utils.UserKJPBean;
+import lebah.db.Db;
 
 public class EmailConfig {
 	
@@ -24,6 +28,8 @@ public class EmailConfig {
 	public IUserPegawai userKJP = null;
 	public IUserPegawai iUser = null;
 	public List<Map<String,String>> senaraiPengguna = null;
+	public String emelRujukan = null;
+	public HttpSession session_ = null;
 
 	public EmailConfig() {
 		mail = EmailSender.getInstance();
@@ -32,13 +38,23 @@ public class EmailConfig {
 	public boolean sendTo(String userMail
 		,String tajuk
 		,String kandungan) throws Exception {
+		
+		Db db = null;
 		boolean returnVal = false; 
 		mail.SUBJECT = tajuk;
 		mail.MESSAGE = kandungan + getFooter();		
 		mail.RECIEPIENT = userMail;
-//		mail.TO_CC = new String[1];		
+//		mail.TO_CC = new String[1];	
+		
 		try {
+			db = new Db();
+
+			AudiTrailMail.logActivity(emelRujukan, tajuk, "", null, session_, "", mail.MESSAGE, db);
+			
 			mail.sendEmail();
+		
+			AudiTrailMail.logActivityUpdate(AudiTrailMail.getRujukan(), session_, db);
+
 			returnVal = true;
 			
 		} catch (Exception e) {
@@ -248,6 +264,17 @@ public class EmailConfig {
 
 	}
 	
+	public String getRujukan(){
+		return emelRujukan;
+	}
+	
+	public void setRujukan(String emelRujukan){
+		this.emelRujukan = emelRujukan;
+	}
+	
+	public void setSession(HttpSession session){
+		this.session_ = session;
+	}
 	
 }
 //2020/09/22
