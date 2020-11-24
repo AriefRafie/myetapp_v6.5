@@ -1698,7 +1698,7 @@
 #end
     #if ($socJenisHa == "3")
         #if($!skrin_online != "yes")
-        <input type="button" name="cmdINTJPPH" id="cmdINTJPPH" value="Nilaian JPPH" onclick="javascript:intNilaianJPPH('$id','$idha')" disabled/>
+        <input type="button" name="cmdINTJPPH" id="cmdINTJPPH" value="Nilaian JPPH" onclick="javascript:intNilaianJPPH('$id','$idha')" /><!-- arief buang tag disabled (sama mcm live v6) -->
         #end
     #end
 

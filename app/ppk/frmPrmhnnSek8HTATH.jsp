@@ -3277,7 +3277,7 @@
                                          #if($!skrin_online != "yes")
                                         #if($show_kemaskini_htaam == "yes")
                                        <!-- button integrasi -->                                        
-                                          <input type="button" name="cmdJPPH" value ="Nilaian JPPH" onClick="javascript:intNilaianJPPH('$id', '$idhta')" disabled>&nbsp;                                          <input type="button" name="cmdETanahHM" value="Semakan Status Hakmilik" onclick="checkWSHM('$idhta');" />&nbsp;
+                                          <input type="button" name="cmdJPPH" value ="Nilaian JPPH" onClick="javascript:intNilaianJPPH('$id', '$idhta')" > <!-- arief buang tag disabled (sama mcm live v6) -->&nbsp;                                          <input type="button" name="cmdETanahHM" value="Semakan Status Hakmilik" onclick="checkWSHM('$idhta');" />&nbsp;
                                           <input type="button" name="cmdSPTB" value ="Semakan Maklumat Geran" onClick="javascript:viewSPTB('$!id_fail','$!idhta',2)">
 <!-- end button integrasi -->                                        #end
                                           #end
