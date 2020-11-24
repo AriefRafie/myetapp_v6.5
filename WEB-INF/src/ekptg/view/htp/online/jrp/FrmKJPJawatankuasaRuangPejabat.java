@@ -1619,11 +1619,124 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					context.put("semakMode", semakMode);
 					skrin = "4";
 					//context.put("selectedTab", 4);
-					template_name = PATH+"frmJRPSemakanPKP.jsp";	
+					//template_name = PATH+"frmJRPSemakanPKP.jsp";
+					template_name = PATH+"frmJRPSenaraiFail.jsp";
+				    senaraiFail = getIHTPFail().getSenaraiFail(null
+		    			, null, null
+		    			, id_kementerian, null
+		    			, null, null, null
+		    			, idUrusan
+		    			,null);
+//				    senaraiFail =  getIHTPPKFail().getSenaraiFail(
+//				    		null, noFail.trim(), txtTajukCarian
+//				    		, idKementerian, idAgensi
+//				    		, idNegeri, idDaerah, idMukim
+//				    		, idUrusan, "", ""
+//				    		, "", "", false );
+		    	//senaraiFail = FrmSenaraiFailPajakanKecilData.getList("",userId,"");
+				this.context.put("SenaraiFail", senaraiFail);
+				socKementerian = HTML.SelectKementerian("socKementerian", Utils.parseLong(id_kementerian),"disabled class=disabled","onChange=\"doChangeKementerianCarian()\" style=\"width:400\"");
+				this.context.put("socKementerian",socKementerian);
+				setupPage(session,action,senaraiFail);
 					//return String.valueOf(getStatus().kemaskiniSimpanStatusAktif(subUrusanStatusFail, subUrusanStatusFailN,getParam("txtarikhkeputusan")));
 									
 				
-				}else if(submit.equals("pksemakanpkpseterus")) {
+					//shiqa - simpanpengesahan pindaan pelulus ke penyemak
+				} else if(submit.equalsIgnoreCase("simpanpengesahan3")){
+					String id = getParam("idpermohonan");
+			    	Hashtable<?, ?> permohonan2 = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);
+					myLog.info("simpanpengesahan1 ::id_permohonan="+permohonan2);	
+			    	myLog.info("simpanpengesahan2 ::idpermohonan="+FrmJRPSenaraiPermohonanData.getPermohonanInfo(id));	
+			    	myLog.info("id_kementerian="+uk.getAgensi().getKementerian().getIdKementerian());
+					String semakMode="";
+					String langkah2 = "6";
+					/*
+					 * 1 untuk status - Pra-daftar
+					 * 2 untuk status - Tindakan Penyemak 
+					 * 3 untuk status - Tindakan Pelulus
+					 * 4 untuk status - Permohonan Online (Pengesahan) 
+					 * 5 untuk status - Penerimaan Permohonan
+					 * 6 untuk status - Tindakan Penyedia
+					*/
+					
+					EmailConfig ec = new EmailConfig();
+
+					//myLog.info("from="+email.FROM);
+					String emelSubjek = ec.tajukSemakan+"Jawatankuasa Ruang Pejabat";
+					String kandungan = "";
+					if(idJawatan.equals("4")){
+						myLog.info("BACA PINDAAN============"+uk.getAgensi().getKementerian().getIdKementerian());
+						
+						langkah2 = "6";
+						
+						kandungan = getEmelSemak().setKandungan(String.valueOf(permohonan2.get("tajukfail")), String.valueOf(hUser.get("nama")));
+		    			
+						if(!getEmelSemak().checkEmail(userId).equals(""))
+							getIHTP().getErrorHTML("[ONLINE-HTP JRP] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
+
+						ec.sendByRoleKJP(getEmelSemak().checkEmail(userId)
+								, "24"
+								, String.valueOf(String.valueOf(permohonan2.get("idkementerian")))
+								, emelSubjek, kandungan);
+
+					}
+					Hashtable<?, ?> permohonan3 = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);
+					String idPermohonan = String.valueOf(permohonan3.get("idpermohonan"));
+
+				
+					Tblrujsuburusanstatusfail rsusf = new Tblrujsuburusanstatusfail();
+					myLog.info("Langkah=="+langkah2);
+					long setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah(langkah2,idSubUrusan,"=");
+					rsusf.setIdPermohonan(Long.parseLong(idPermohonan));
+//					myLog.info("idFail="+idFail+",idPermohonan="+idPermohonan);
+					rsusf.setIdFail(Long.parseLong(idFail));
+					rsusf.setIdSuburusanstatusfail(Long.parseLong(idSubUrusan));
+					rsusf.setIdSuburusanstatus(setIdSuburusanstatus);
+					rsusf.setUrl("-");
+					simpanPengesahan(rsusf,langkah2);
+//					myLog.info("userId=="+userId);
+					rsusf.setIdMasuk(Long.parseLong(userId));
+
+					
+					if(getIOnline().isHantar(Long.parseLong(String.valueOf(permohonan3.get("idsuburusan"))),
+							Long.parseLong(String.valueOf(permohonan3.get("idpermohonan"))),
+							Long.parseLong(String.valueOf(permohonan3.get("idfail"))),langkah)){
+						semakMode = "xupdate";			
+					}else{
+						semakMode = "update";
+					}
+//					myLog.info("selectedTab=======");
+					context.put("semakMode", semakMode);
+					skrin = "4";
+					//context.put("selectedTab", 4);
+					//template_name = PATH+"frmJRPSemakanPKP.jsp";
+
+					
+					template_name = PATH+"frmJRPSenaraiFail.jsp";
+				    senaraiFail = getIHTPFail().getSenaraiFail(null
+		    			, null, null
+		    			, id_kementerian, null
+		    			, null, null, null
+		    			, idUrusan
+		    			,null);
+//				    senaraiFail =  getIHTPPKFail().getSenaraiFail(
+//				    		null, noFail.trim(), txtTajukCarian
+//				    		, idKementerian, idAgensi
+//				    		, idNegeri, idDaerah, idMukim
+//				    		, idUrusan, "", ""
+//				    		, "", "", false );
+		    	//senaraiFail = FrmSenaraiFailPajakanKecilData.getList("",userId,"");
+				this.context.put("SenaraiFail", senaraiFail);
+				socKementerian = HTML.SelectKementerian("socKementerian", Utils.parseLong(id_kementerian),"disabled class=disabled","onChange=\"doChangeKementerianCarian()\" style=\"width:400\"");
+				this.context.put("socKementerian",socKementerian);
+				setupPage(session,action,senaraiFail);
+					
+					
+					
+					//return String.valueOf(getStatus().kemaskiniSimpanStatusAktif(subUrusanStatusFail, subUrusanStatusFailN,getParam("txtarikhkeputusan")));
+									
+				
+				} else if(submit.equals("pksemakanpkpseterus")) {
 			    	template_name = PATH+"frmJRPDeraf.jsp";	
 			    	myLog.info("pksemakanpkpseterus ::"+template_name);
 			    	//skrin = "4";		    	
