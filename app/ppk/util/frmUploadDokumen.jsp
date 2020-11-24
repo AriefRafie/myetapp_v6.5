@@ -98,7 +98,7 @@ padding:0 0.25em;
 		          <td>&nbsp;</td>
 		          <td>&nbsp;</td>
 		          <td>&nbsp;</td>
-		          <td><span class="style4"><i><font color="#ff0000">Perhatian</font> : </i><span class="style5">Sila muatnaik fail dalam format PDF sahaja. #if($jenisdokumen == '99212') Salinan kad pengenalan perlu dimuatnaik depan dan belakang. #end</span></span></td> <!-- dan saiz fail tidak melebihi 2MB -->
+		          <td><span class="style4"><i><font color="#ff0000">Perhatian</font> : </i><span class="style5">Sila muatnaik dokumen dalam format PDF sahaja. #if($jenisdokumen == '99212')<br>i. Salinan kad pengenalan pemohon dan waris (salinan muka hadapan dan belakang) dan salinan kad pengenalan/sijil kelahiran bagi waris yang berumur kurang dari 18 tahun. <br>ii. Salinan passport bagi bukan warganegara.  #end</span></span></td> <!-- dan saiz fail tidak melebihi 2MB -->
 		        </tr>
 				<tr>
 			   		<td valign="top"></td>
