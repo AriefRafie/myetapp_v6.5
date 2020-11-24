@@ -19,6 +19,7 @@
   <input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
   <input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
   <input name="hitButton" type="hidden" id="hitButton"/>  
+  <input name="idUrusan" type="hidden" id="idUrusan" value="$!idUrusan"/>
 </p>
 
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -60,6 +61,17 @@
           <td>:</td>
           <td>$selectLokasi</td>
         </tr>
+        #if($!idUrusan == '9')
+        <tr>
+          <td valign="top"><span class="style4">*</span></td>
+          <td valign="top">Tajuk Mesyuarat</td>
+          <td valign="top">:</td>
+          <td valign="top">
+          	<textarea name="txtTujuanMesyuarat" id="txtTujuanMesyuarat" rows="5" cols="50" 
+          		class="$inputTextClass">Mesyuarat Jawatankuasa One Stop Centre (OSC) Permohonan Lesen Bagi Aktiviti Di kawasan Pelantar Benua Di bawah Akta Pelantar Benua 1966 Bil.</textarea>
+          </td>          
+        </tr>
+        #else
         <tr>
           <td valign="top"><span class="style4">*</span></td>
           <td valign="top">Tajuk Mesyuarat</td>
@@ -67,6 +79,7 @@
           <td valign="top"><textarea name="txtTujuanMesyuarat" id="txtTujuanMesyuarat" rows="5" cols="50" class="$inputTextClass" onBlur="this.value=this.value.toUpperCase();"></textarea>
           </td>
         </tr>
+        #end
         <tr>
           <td valign="top">&nbsp;</td>
           <td valign="top">Catatan</td>
