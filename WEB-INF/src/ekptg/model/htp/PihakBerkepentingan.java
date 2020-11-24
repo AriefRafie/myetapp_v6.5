@@ -24,6 +24,7 @@ public class PihakBerkepentingan implements Serializable {
 	private String idNegeri;
 	private String tel;
 	private String fax;
+	private String emel;
 	private String ddownHakmilik;
 	private String jenisPB;
 	private String idHakmilikUrusan;
@@ -134,6 +135,12 @@ public class PihakBerkepentingan implements Serializable {
 	}
 	public void setFax(String fax) {
 		this.fax = fax;
+	}
+	public String getEmel() {
+		return emel;
+	}
+	public void setEmel(String emel) {
+		this.emel = emel;
 	}
 
 	public Negeri getNegeri() {

@@ -119,6 +119,11 @@
                                     <td><strong>:</strong></td>
                                     <td><input name="txtNoPA" type="text" id="txtNoPA"  value="$!pemohon.noPA" size="14" maxlength="14" onblur="validateNumber(this,this.value)" $mode $classDis /></td>
                                   </tr>
+                                  <td><div align="right"></div></td>
+                                    <td>Emel</td>
+                                    <td><strong>:</strong></td>
+                                    <td><input name="txtEmel" type="text" id="txtEmel"  value="$!pemohon.emel" size="20" maxlength="65" $mode $classDis /></td>
+                                  </tr>
                           			#if ($portal_role!='online_kjpagensi')
                                   
                                   <tr>

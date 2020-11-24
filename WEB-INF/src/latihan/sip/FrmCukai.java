@@ -1240,7 +1240,7 @@ public class FrmCukai extends AjaxBasedModule{
 			  h.put("tkh_terima", getParam("txdTarikhTerima"));
 			  h.put("idNegeri", Integer.parseInt(getParam("idNegeri")));
 			  h.put("tahun", tahunParam);
-			  idBaucer = FrmCukaiBaucerData.simpanTBaucer(h);
+			  idBaucer = FrmCukaiBaucerData.simpanTBaucerStr(h);
 			  //result = "baru";
 			  return idBaucer;
 			  
@@ -1263,7 +1263,7 @@ public class FrmCukai extends AjaxBasedModule{
 				FrmCukaiBaucerData.updateTBaucer(h);
 				//result = "kemaskini";
 			} else{
-				idBaucer = FrmCukaiBaucerData.simpanTBaucer(h);
+				idBaucer = FrmCukaiBaucerData.simpanTBaucerStr(h);
 				//result = "baru";
 			}
 			//System.out.println("CukaiTambahBaucer::KemaskiniBaucer:: h = "+h);
@@ -1271,7 +1271,7 @@ public class FrmCukai extends AjaxBasedModule{
 		}
 	}
 		
-	private void DataTBaucer(HttpSession session,int idNegeri, String idBaucer, int idPeringkatbayaran, String disability, String readability, String style1, String style2) throws Exception {
+	private void DataTBaucer(HttpSession session,int idNegeri, int idBaucer, int idPeringkatbayaran, String disability, String readability, String style1, String style2) throws Exception {
 	  	Vector list = new Vector();
 		list.clear();					    
 		try{

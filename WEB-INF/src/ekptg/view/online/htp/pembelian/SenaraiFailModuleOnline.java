@@ -959,6 +959,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 				pemohon.setPoskod(pemilik.getPoskod());
 				pemohon.setTel(pemilik.getTel());
 				pemohon.setFax(pemilik.getFax());
+				pemohon.setEmel(pemilik.getEmel());
 				pemohon.setNoPemohon(pemilik.getNoRujukan());
 				pemohon.setIdNegeri(pemilik.getIdNegeri());
 				pemohon.setIdDaerah(pemilik.getIdDaerah());
@@ -1636,6 +1637,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 		String Poskod = getParam("txtPoskod");
 		String NoTelefon = getParam("txtNoTelefon");
 		String NoFax = getParam("txtNoFax");
+		String emel = getParam("txtEmel");
 
 		urusan = new HakmilikUrusan();
 		permohonan = new Permohonan();
@@ -1691,6 +1693,7 @@ private void getValuesPemilik(){
 		String poskod = getParam("txtPoskod");
 		String noTelefon = getParam("txtNoTelefon");
 		String noFax = getParam("txtNoFax");
+		String emel = getParam("txtEmel");
 		String Idpihakberkepentingan =getParam("Idpihakberkepentingan");
 	
 		pemilik = new PihakBerkepentingan();
@@ -1710,6 +1713,7 @@ private void getValuesPemilik(){
 		pemilik.setPoskod(poskod);
 		pemilik.setTel(noTelefon);
 		pemilik.setFax(noFax);
+		pemilik.setEmel(emel);
 
 		context.put("pemilik", pemilik);
 		
@@ -1957,6 +1961,7 @@ private void getValuesPemilik(){
 		String idDaerah = getParam("selectDaerahP");
 		String tel = getParam("txtNoTelefon");
 		String fax = getParam("txtNoFax");
+		String emel = getParam("txtEmel");
 		String noPA = getParam("txtNoPA");
 		
 		permohonan = new Permohonan();
@@ -1975,6 +1980,7 @@ private void getValuesPemilik(){
 		pemohon.setIdDaerah(idDaerah);
 		pemohon.setTel(tel);
 		pemohon.setFax(fax);
+		pemohon.setEmel(emel);
 		pemohon.setNoPA(noPA);
 		
 		context.put("pemohon", pemohon);
