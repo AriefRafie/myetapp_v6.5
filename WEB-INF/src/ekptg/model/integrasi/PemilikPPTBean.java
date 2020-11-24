@@ -101,7 +101,7 @@ public class PemilikPPTBean implements IPemilik {
 
 	//@Override
 	public Vector<PihakBerkepentingan> findPemilikByPermohonan(String idPermohonan) {
-		System.out.println("======findPemilikByPermohonan ppt==========" + idPermohonan);
+		System.out.println("======findPemilikByPermohonan ppt 24112020==========" + idPermohonan);
 		Db db = null;
 		Connection conn = null;
 		SQLRenderer r = null;
