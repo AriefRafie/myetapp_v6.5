@@ -8,11 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import ekptg.report.EkptgReportServlet;
 
-public class REVAkaunKawalan extends EkptgReportServlet {
+public class REVLaporanHutangLapuk extends EkptgReportServlet {
 
-	public REVAkaunKawalan() {
-		//super.setReportName("REVSenaraiFail");
-		super.setReportName("REVLaporanAkaunKawalanLatest");
+	public REVLaporanHutangLapuk() {
+		super.setReportName("REVLaporanHutangLapuk");
 		super.setFolderName("php2\\REV\\LAPORAN");
 	}
 
@@ -20,6 +19,7 @@ public class REVAkaunKawalan extends EkptgReportServlet {
 	public void doProcessing(HttpServletRequest request,
 			HttpServletResponse response, ServletContext context, Map parameters)
 			throws Exception {
+
 
 	}
 }

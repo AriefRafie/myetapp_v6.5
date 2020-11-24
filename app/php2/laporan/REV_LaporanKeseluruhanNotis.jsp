@@ -34,7 +34,7 @@ function janaLaporan() {
 		return;
 	}
 
-	var url = "../servlet/ekptg.report.php2.REVLaporanHutangLapuk?TAHUN="+document.${formName}.txtTahun.value;
+	var url = "../servlet/ekptg.report.php2.REVLaporanKeseluruhanNotis?TAHUN="+document.${formName}.txtTahun.value;
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;

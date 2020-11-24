@@ -93,7 +93,7 @@ function validateCurrency(elmnt,content,content2) {
 
 function janaPenyataAkaun(idHasil) {
 
-	var url = "../servlet/ekptg.report.php2.REVPenyataAkaun?ID_JADUAL_PERTAMA="+idHasil;
+	var url = "../servlet/ekptg.report.php2.REVPenyataAkaun?ID_HASIL="+idHasil;
     var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
