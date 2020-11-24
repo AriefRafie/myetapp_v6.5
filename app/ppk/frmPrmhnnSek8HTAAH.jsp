@@ -2542,7 +2542,7 @@ if(document.f1.radioHtaamViewX_update[0].checked == true || document.f1.radioHta
                             <tr>
                               <td align="left"><div align="left"> #if($tambahharta == "yes")
                               	  #if($!skrin_online != "yes")
-                                  <input name="cmdSemakanHakmilikEtanah" type="button" value="Capaian Hakmilik dari eTanah" onclick="javascript:semakanHakmilikEtanah('$idPermohonanSimati')"/>
+                                  <input name="cmdSemakanHakmilikEtanah" type="button" value="Capaian Hakmilik e-Tanah" onclick="javascript:semakanHakmilikEtanah('$idPermohonanSimati')"/>
                                   #end
                                   #if($id_Status != "169" && $id_Status != "21" && $id_Status != "64" && $id_Status != "163" && $id_Status != "164" && $id_Status != "165")
                                   <!--
@@ -4864,16 +4864,25 @@ var b1=parseInt(document.f1.txtBahagianSimati1Up.value);
 
 }
 
-function semakanHakmilikEtanah(idPermohonanSimati) {
+	function semakanHakmilikEtanah(idPermohonanSimati) {
+		var url = "../x/${securityToken}/FrmPopupCapaianHakmilikeTanah?modul=ppk&idPermohonan="+idPermohonanSimati;
+	    var hWnd = window.open(url,'printuser','width=1000,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
+	
+	}
 
-	var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupCapaianHakmilikEtanahView?idPermohonanSimati="+idPermohonanSimati;
-    var hWnd = window.open(url,'printuser','width=1000,height=500, resizable=yes,scrollbars=yes');
-    if ((document.window != null) && (!hWnd.opener))
-       hWnd.opener = document.window;
-    if (hWnd.focus != null) hWnd.focus();
-	hWnd.focus();
-
-}
+	function semakanHakmilikEtanahKL(idPermohonanSimati) {
+		var url = "../x/${securityToken}/ekptg.view.ppk.FrmPopupCapaianHakmilikEtanahView?idPermohonanSimati="+idPermohonanSimati;
+	    var hWnd = window.open(url,'printuser','width=1000,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
+	
+	}
 
 function CheckBandarSurat()
 {
