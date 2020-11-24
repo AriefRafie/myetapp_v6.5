@@ -207,14 +207,14 @@
 					<tr>
 						<td>
 						<a href="javascript:goTo('PPK')" class="help" title="Daftar Permohonan Awal Pusaka Kecil Seksyen 8 (Borang A)">
-							<font color="blue"><li>Permohonan Seksyen 8</li></font>
+							<font color="blue"><li>Permohonan Baru (Seksyen 8)</li></font>
 						</a>
 						</td>
 					</tr>
 					<tr>
 						<td>
 						<a href="javascript:goTo('PPKSEK17')" class="help" title="Permohonan Berikutnya Pembahagian Pusaka Kecil, Harta Ketinggalan / Lantik Kuasa Tadbir / Batal Kuasa Tadbir / Lantik Pemegang Amanah / Batal Pemegang Amanah (Borang P)">
-							<font color="blue"><li>Permohonan Seksyen 17</li></font>
+							<font color="blue"><li>Permohonan Berikutnya (Seksyen 17)</li></font>
 						</a>
 						</td>
 					</tr>

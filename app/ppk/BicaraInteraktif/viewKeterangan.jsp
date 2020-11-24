@@ -296,7 +296,7 @@
 		autocomplete(document.getElementById("KETERANGAN_$ID_OBPERMOHONAN"), namaWaris, namaOB);
 		</script>
 		<!-- arief add autocomplete CLOSE-->
-		<!-- arief try add Nama OB di Keterangan OPEN -->
+		<!-- arief try add Nama OB di Keterangan OPEN 
 		<ul style="" class="wysihtml5-toolbar">
 		<li><div class="btn-group_OB">
 		<a class="btn btn-small" data-wysihtml5-command="function()" title="CTRL+B" tabindex="-1" href="javascript:;" unselectable="on">Khadijah Binti Yeop</a>
@@ -316,7 +316,7 @@
        			$('iframe[name=wysihtml5-sandbox]').contents().find('#KETERANGAN_$ID_OBPERMOHONAN').val(getInpVal);
     		});
 		}
-		</script>
+		</script>-->
 		<!-- arief try add Nama OB di Keterangan CLOSE -->
 
           <div id="infobuttonKeterangan$ID_OBPERMOHONAN" style="display:none"><i><font color='blue'>Info</font> : Sila tekan butang <font color='blue'>'Tab'</font> selepas selesai mengisi keterangan. Butang <font color='blue'>'Simpan Keterangan'</font> akan dipaparkan.</i></div>

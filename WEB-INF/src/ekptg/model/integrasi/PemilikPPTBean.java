@@ -205,7 +205,7 @@ public class PemilikPPTBean implements IPemilik {
 			 r.add("no_hp", pemilik.getTel());
 			 r.add("no_Fax", pemilik.getFax());
 			 sql = r.getSQLInsert("Tblpptpihakberkepentingan");
-			 
+			 System.out.println("sql insert tblpptpb : "+sql);
 			 stmt.executeUpdate(sql);	
 			 conn.commit();
 		}
