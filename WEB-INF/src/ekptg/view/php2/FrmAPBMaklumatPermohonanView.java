@@ -66,6 +66,16 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
         String noPermohonan = getParam("noPermohonan");
         String idKoordinat_original = getParam("idKoordinat_original");
         
+        //GET DROPDOWN PARAM
+        String idWarganegara = getParam("socWarganegara");
+  		if (idWarganegara == null || idWarganegara.trim().length() == 0){
+  			idWarganegara = "99999";
+  		}
+        String idBangsa = getParam("socBangsa");
+		if (idBangsa == null || idBangsa.trim().length() == 0){
+			idBangsa = "99999";
+		}
+        
         //VECTOR
         Vector beanHeader = null;
         Vector senaraiPengarah = null;
@@ -91,11 +101,11 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
         	}
         	if ("doSimpanPengarah".equals(hitButton)){
         		idPengarah = logic.savePengarah(idPemohon, getParam("socWarganegara"), getParam("txtNamaPengarah"), getParam("socJenisPengenalan"),
-        				getParam("socBangsa"), getParam("txtNoPengenalan"), getParam("txtSaham"), session);
+        				getParam("socBangsa"), getParam("txtNoPengenalan"), getParam("txtSaham"), getParam("txtLLBangsa"), getParam("txtLLWarganegara"), session);
         	}
         	if ("doSimpanKemaskiniPengarah".equals(hitButton)){
         		logic.updatePengarah(idPengarah, getParam("socWarganegara"), getParam("txtNamaPengarah"), getParam("socJenisPengenalan"),
-        				getParam("socBangsa"), getParam("txtNoPengenalan"), getParam("txtSaham"), session);
+        				getParam("socBangsa"), getParam("txtNoPengenalan"), getParam("txtSaham"), getParam("txtLLBangsa"), getParam("txtLLWarganegara"), session);
         	}
         	if ("doHapusPengarah".equals(hitButton)){
         		logic.removePengarah(idPengarah, session);
@@ -251,6 +261,8 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
         this.context.put("idPakar", idPakar);
         this.context.put("idKoordinat", idKoordinat);
         this.context.put("idKategoriPemohon", idKategoriPemohon);
+        this.context.put("idBangsa", idBangsa);
+        this.context.put("idWarganegara", idWarganegara);
 
 		return vm;
 		
@@ -302,7 +314,7 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
 			hashMaklumatPermohonan.put("perkara", getParam("txtPerkara"));	
 			hashMaklumatPermohonan.put("tujuanPengambilan", getParam("txtTujuanPengambilan"));	
 			hashMaklumatPermohonan.put("tempoh", getParam("txtTempoh"));
-			hashMaklumatPermohonan.put("pengalaman", getParam("txtRingkasanPengalaman"));
+			hashMaklumatPermohonan.put("pengalaman", getParam("txtPengalaman"));
 			hashMaklumatPermohonan.put("lokasi", getParam("txtLokasi"));
 			hashMaklumatPermohonan.put("luas", getParam("txtLuas"));
 			hashMaklumatPermohonan.put("modalSemasa", getParam("txtModalSemasa"));
@@ -403,7 +415,6 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
 		} else if ("newPembeliPasir".equals(mode)){
 			
 			String submit = getParam("command");   
-			
         	this.context.put("readonly", "");
         	this.context.put("inputTextClass", "");
         	
@@ -559,7 +570,7 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
 			//INDIVIDU
 			this.context.put("selectJenisPengenalanIndividu",HTML.SelectJenisNoPbIndividu("socJenisPengenalanIndividu", Long.parseLong(idJenisPengenalanIndividu), ""));
 			this.context.put("selectJantina",HTML.SelectJantina("socJantina", Long.parseLong(idJantina), ""));
-			this.context.put("selectBangsa",HTML.SelectBangsa("socBangsa", Long.parseLong(idBangsa), ""));
+			this.context.put("selectBangsa",HTML.SelectBangsa("socBangsa", Long.parseLong(idBangsa), "", "onChange=\"doChangeBangsa();\""));
 			this.context.put("selectNegeri",HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri),"","onChange=\"doChangeNegeri();\""));
 			this.context.put("selectBandar",HTML.SelectBandarByNegeri(idNegeri, "socBandar", Long.parseLong(idBandar), ""));
 			
@@ -573,7 +584,7 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
 	
 	private void maklumatPengarah(String mode, String idPemohon, String idPengarah) throws Exception {
 
-		Vector beanMaklumatPengarah = null;
+		Vector beanMaklumatPengarah = null; 
         
         //GET DROPDOWN PARAM
 		String idWarganegara = getParam("socWarganegara");
@@ -595,9 +606,9 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
         	this.context.put("inputTextClass", "");
         	
         	//MAKLUMAT PENGARAH
-			this.context.put("selectWarganegara",HTML.SelectWarganegara("socWarganegara", Long.parseLong(idWarganegara), "", ""));
+			this.context.put("selectWarganegara",HTML.SelectWarganegara("socWarganegara", Long.parseLong(idWarganegara), "", "onChange=\"doChangeWarganegara();\""));
 			this.context.put("selectJenisPengenalan",HTML.SelectJenisNoPbIndividu("socJenisPengenalan", Long.parseLong(idJenisPengenalan), "", ""));
-			this.context.put("selectBangsa",HTML.SelectBangsa("socBangsa", Long.parseLong(idBangsa), "", ""));
+			this.context.put("selectBangsa",HTML.SelectBangsa("socBangsa", Long.parseLong(idBangsa), "", "onChange=\"doChangeBangsa();\""));
 		
 		} else if ("viewPengarah".equals(mode)){
 			
@@ -608,10 +619,8 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
 			logic.setMaklumatPengarah(idPengarah);
 			beanMaklumatPengarah = logic.getBeanMaklumatPengarah();
 			this.context.put("BeanMaklumatPengarah", beanMaklumatPengarah);
-			
 			if (logic.getBeanMaklumatPengarah().size() != 0){
 				Hashtable hashPengarah = (Hashtable) logic.getBeanMaklumatPengarah().get(0);
-				
 				idJenisPengenalan = (String) hashPengarah.get("idJenisPengenalan");
 				idWarganegara = (String) hashPengarah.get("idWarganegara");
 				idBangsa = (String) hashPengarah.get("idBangsa");
@@ -623,21 +632,56 @@ public class FrmAPBMaklumatPermohonanView extends AjaxBasedModule {
 			
 		} else if ("newPengarah".equals(mode)){
 			
-        	this.context.put("readonly", "");
+			String submit = getParam("command"); 
+			this.context.put("readonly", "");
         	this.context.put("inputTextClass", "");
         	
         	//MAKLUMAT PENGARAH
-			this.context.put("selectWarganegara",HTML.SelectWarganegara("socWarganegara", Long.parseLong("99999"), "", ""));
+			this.context.put("selectWarganegara",HTML.SelectWarganegara("socWarganegara", Long.parseLong(idWarganegara), "", "onChange=\"doChangeWarganegara();\""));
 			this.context.put("selectJenisPengenalan",HTML.SelectJenisNoPbIndividu("socJenisPengenalan", Long.parseLong("99999"), "", ""));
-			this.context.put("selectBangsa",HTML.SelectBangsa("socBangsa", Long.parseLong("99999"), "", ""));
-			
+			this.context.put("selectBangsa",HTML.SelectBangsa("socBangsa", Long.parseLong(idBangsa), "", "onChange=\"doChangeBangsa();\""));
+						
 			beanMaklumatPengarah = new Vector();
 			Hashtable hashPengarah = new Hashtable();
 			hashPengarah.put("nama", "");
 			hashPengarah.put("noPengenalan","");
-			hashPengarah.put("saham","");					
+			hashPengarah.put("saham","");
+			hashPengarah.put("warganegaraLain", "");
+			hashPengarah.put("bangsaLain", "");
 			beanMaklumatPengarah.addElement(hashPengarah);
 			this.context.put("BeanMaklumatPengarah", beanMaklumatPengarah);	
+			
+			if ("doChangeWarganegara".equals(submit)) {
+				
+				beanMaklumatPengarah = new Vector();
+				Hashtable hashPengarahL = new Hashtable();
+				hashPengarahL.put("warganegaraLain",getParam("txtLLWarganegara")== null ? "": getParam("txtLLWarganegara"));
+				hashPengarahL.put("nama",getParam("txtNamaPengarah") == null ? "": getParam("txtNamaPengarah"));
+				hashPengarahL.put("noPengenalan",getParam("txtNoPengenalan") == null ? "": getParam("txtNoPengenalan"));
+				hashPengarahL.put("saham",getParam("txtSaham") == null ? "": getParam("txtSaham"));
+				hashPengarahL.put("bangsaLain", getParam("txtLLBangsa") == null ? "": getParam("txtLLBangsa"));
+				beanMaklumatPengarah.addElement(hashPengarahL);
+				this.context.put("BeanMaklumatPengarah", beanMaklumatPengarah);	
+				this.context.put("selectJenisPengenalan",HTML.SelectJenisNoPbIndividu("socJenisPengenalan", Long.parseLong(idJenisPengenalan), "", ""));
+				this.context.put("selectBangsa",HTML.SelectBangsa("socBangsa", Long.parseLong(idBangsa), "", "onChange=\"doChangeBangsa();\""));
+
+			}
+			
+			if ("doChangeBangsa".equals(submit)) {
+				
+				beanMaklumatPengarah = new Vector();
+				Hashtable hashPengarahL = new Hashtable();
+				hashPengarahL.put("warganegaraLain",getParam("txtLLWarganegara")== null ? "": getParam("txtLLWarganegara"));
+				hashPengarahL.put("nama",getParam("txtNamaPengarah") == null ? "": getParam("txtNamaPengarah"));
+				hashPengarahL.put("noPengenalan",getParam("txtNoPengenalan") == null ? "": getParam("txtNoPengenalan"));
+				hashPengarahL.put("saham",getParam("txtSaham") == null ? "": getParam("txtSaham"));
+				hashPengarahL.put("bangsaLain", getParam("txtLLBangsa") == null ? "": getParam("txtLLBangsa"));
+				beanMaklumatPengarah.addElement(hashPengarahL);
+				this.context.put("BeanMaklumatPengarah", beanMaklumatPengarah);	
+				this.context.put("selectWarganegara",HTML.SelectWarganegara("socWarganegara", Long.parseLong(idWarganegara), "", ""));
+				this.context.put("selectJenisPengenalan",HTML.SelectJenisNoPbIndividu("socJenisPengenalan", Long.parseLong(idJenisPengenalan), "", ""));
+
+			}
 		}
 	}
 	

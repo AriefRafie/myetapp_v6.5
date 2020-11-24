@@ -97,7 +97,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		String hitButton = getParam("hitButton");
 		String action = getParam("action");
 		String id_dokumen = getParam("id_dokumen");
-		String tajuk = getParam("tajuk");
+		String tajuk = getParam("nama_dokumen");
 		String kategori_lampiran = getParam("kategori_lampiran");
 		String id_hakmilik = getParam("id_hakmilik");
 		String id_penarikan = getParam("id_penarikan");
@@ -109,7 +109,7 @@ public class PopupPengambilanTanah extends AjaxBasedModule {
 		this.context.put("no_fail", no_fail);
 		this.context.put("jenis_skrin", jenis_skrin);
 		this.context.put("hitButton", hitButton);
-		this.context.put("tajuk", tajuk);
+		this.context.put("nama_dokumen", tajuk);
 		this.context.put("id_hakmilik", id_hakmilik);
 		this.context.put("id_penarikan", id_penarikan);
 		context.put("statusSend", "");

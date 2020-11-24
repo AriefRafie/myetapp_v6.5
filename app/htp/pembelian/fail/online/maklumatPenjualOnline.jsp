@@ -119,6 +119,11 @@
                                     <td><strong>:</strong></td>
                                     <td><input name="txtNoPA" type="text" id="txtNoPA"  value="$!pemohon.noPA" size="14" maxlength="14" onblur="validateNumber(this,this.value)" $mode $classDis /></td>
                                   </tr>
+                                  <td><div align="right"></div></td>
+                                    <td>Emel</td>
+                                    <td><strong>:</strong></td>
+                                    <td><input name="txtEmel" type="text" id="txtEmel"  value="$!pemohon.emel" size="20" maxlength="65" $mode $classDis /></td>
+                                  </tr>
                           			#if ($portal_role!='online_kjpagensi')
                                   
                                   <tr>
@@ -129,8 +134,10 @@
 				  						#elseif($penjualMode == "update")
 				  							<input type="button" class="stylobutton100" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="javascript:updatePenjual()">
 				  						#else
+				  							#if (($!idjawatan.equals("20")|| $!idjawatan.equals("24")) || $!idjawatan.equals("9"))
 				  							<input type="button" class="stylobutton100" name="cmdSimpan" id="cmdSimpan" value="Kemaskini" onclick="javascript:kemaskiniPenjual()">
 				  							<input type="button" class="stylobutton100" name="cmdhapus" value="Hapus" onclick="javascript:hapusPenjual()">
+				  							#end
 				  						#end
 				  						<!-- <input type="button" class="stylobutton" name="cmdSimpan" id="cmdSimpan" value="Kembali" onclick=""> -->
                                   	</td>

@@ -1,4 +1,3 @@
-
 <table class="tableEditor classFade" width="100%"  >
 <tr><td colspan="2">
 
@@ -98,7 +97,6 @@
 <div class="viewKeterangan" class="autocomplete" > <!-- arief add class="autocomplete"  -->
 
 ## <!--  delang -->
-
 <ul class="wysihtml5-toolbar">
 	<li class="dropdown">
 		<a class="btn dropdown-toggle btn-small" data-toggle="dropdown"><i class="icon-list"></i> Waris &nbsp; <b class="caret"></b></a>
@@ -141,8 +139,9 @@
 				var editor = $jquery('#KETERANGAN_$ID_OBPERMOHONAN').data('wysihtml5').editor;
 				editor.composer.commands.exec("insertHTML", $(this).text);
 			});
-		});
 
+
+		});
 		//arief add untuk autocomplete nama waris dan nama OB
 		function autocomplete(inp, arr) {
 		/*the autocomplete function takes two arguments,
@@ -296,8 +295,7 @@
 		autocomplete(document.getElementById("KETERANGAN_$ID_OBPERMOHONAN"), namaWaris, namaOB);
 		</script>
 		<!-- arief add autocomplete CLOSE-->
-		<!-- arief try add Nama OB di Keterangan OPEN -->
-
+		<!-- arief try add Nama OB di Keterangan OPEN
 		<ul style="" class="wysihtml5-toolbar">
 		<li><div class="btn-group_OB">
 		<a class="btn btn-small" data-wysihtml5-command="function()" title="CTRL+B" tabindex="-1" href="javascript:;" unselectable="on">Khadijah Binti Yeop</a>
@@ -317,7 +315,7 @@
        			$('iframe[name=wysihtml5-sandbox]').contents().find('#KETERANGAN_$ID_OBPERMOHONAN').val(getInpVal);
     		});
 		}
-		</script>
+		</script>-->
 		<!-- arief try add Nama OB di Keterangan CLOSE -->
 
           <div id="infobuttonKeterangan$ID_OBPERMOHONAN" style="display:none"><i><font color='blue'>Info</font> : Sila tekan butang <font color='blue'>'Tab'</font> selepas selesai mengisi keterangan. Butang <font color='blue'>'Simpan Keterangan'</font> akan dipaparkan.</i></div>
@@ -461,10 +459,4 @@ if(flagDisable == "Y")
 	disableInput("buttonKeterangan$ID_OBPERMOHONAN");
 }
 </script>
-<style type="text/css">
-.dropdown-menu span {
-	display:block;
- 	padding: 3px 15px;
-}
-</style>
 

@@ -722,5 +722,12 @@ public class ETanahSek4BorangB implements IntegrationInternal{
 		}
 		
 	}
+
+	@Override
+	public void hantarBorangC(ETanahPPTManager pptManager, String noPermohonan, Vector<Tblrujdokumen> vecDok,
+			String idPengguna, Db db) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

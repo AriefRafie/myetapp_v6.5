@@ -17,7 +17,7 @@
         #if($list.flag == 'Y')
         #set($checked = 'checked')
         #else
-        #set($checked = 'checked')
+        #set($checked = '')
         #end
         <tr>
           <td class="$row" width="5%"><input type="checkbox" value="$list.idSenaraiSemak" name="idsSenaraiSemak" $checked $disabled /></td>

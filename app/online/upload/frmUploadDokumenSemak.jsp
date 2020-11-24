@@ -46,6 +46,7 @@ padding:0 0.25em;
 }
 -->
 </style>
+
 ##if(!$!modul.equals(''))
 #if($!modul.equals('php'))
 <!-- <link rel="stylesheet" type="text/css" href="../../css/eTapp_PPK.css" /> -->
@@ -137,8 +138,7 @@ padding:0 0.25em;
 </table>
 
 <script>
-//SAIZ FAIL
-
+	
 	//Hapus dokumen pada senarai harta
 	function deleteDetailImej(iDokumen,lampiran){
 		if ( !window.confirm("Adakah Anda Pasti?")) return;
@@ -164,9 +164,7 @@ padding:0 0.25em;
 	//ADD NEW DELETE FUNCTION 13112020
 	function deleteDetailImej(iDokumen,lampiran,idRujukan,idSenarai){
 		if ( !window.confirm("Adakah Anda Pasti?")) return;
-	/* 	document.${formName}.actionPopup.value = "papar";
-		document.${formName}.hitButton.value = "hapus"; */
-		//document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup=papar&hitButton=hapus&iDokumen="+iDokumen;
+		
 		if('myid'=='$!jenisdokumen'||'cod'=='$!jenisdokumen'){
 				document.${formName}.action = "?_portal_module=ekptg.view.ppk.util.FrmUploadDokumenHarta&actionPopup=paparHA&hitButton=hapusmyid&iDokumen="+iDokumen;
 		}else{
@@ -218,8 +216,8 @@ padding:0 0.25em;
 		//alert(document.${formName}.action.value);
 		document.${formName}.enctype="multipart/form-data";
 	    document.${formName}.encoding="multipart/form-data";
-		document.${formName}.submit();
-
+	    document.${formName}.submit();
+		
 			//window.opener.refreshFromPilihTanah();
 			//window.close();
 

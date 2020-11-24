@@ -879,18 +879,19 @@ public class SkrinPopupCarianHakmilik extends AjaxBasedModule {
 			if (flag_skrin.equals("hakmilik_borangk") || flag_skrin.equals("hakmilik_borangL")
 					|| flag_skrin.equals("daftar_sek8_online")) {
 				sql += " AND M.id_hakmilik = LL.id_hakmilik(+) ";
-				sql += " AND (P.flag_segera = '3' AND M.id_hakmilik in (select distinct hx.id_hakmilik from Tblppthakmilik hx, Tblppthakmilikpb hpbx, Tblpptbayaran bx ";
-				sql += " where hx.id_permohonan = p.id_permohonan and hpbx.id_hakmilik = hx.id_hakmilik and bx.id_hakmilikpb = hpbx.id_hakmilikpb ";
-				sql += " and bx.cara_bayar in ('1','2') AND hx.flag_segera_sebahagian = 'N' ) ";
-				sql += " OR P.flag_segera = '3' AND M.id_hakmilik in (select distinct hx.id_hakmilik from Tblppthakmilik hx ";
-				sql += " where hx.id_permohonan = p.id_permohonan and hx.flag_segera_sebahagian = 'Y') ";
-				sql += " and (select count(*) from Tblpptborangi bix ";
-				sql += " where bix.id_permohonan = p.id_permohonan) > 0 ";
-				sql += " OR flag_segera = '2' AND (select count(*) from tblpptbayaran a, tblppthakmilikpb b ";
-				sql += " where a.id_hakmilikpb = b.id_hakmilikpb and b.id_hakmilik(+) = m.id_hakmilik) > 0 ";
-				sql += " OR flag_segera = '1' " +
-						//" AND (select count(*) from Tblpptborangi bix where bix.id_permohonan = p.id_permohonan) > 0" +
-						" ) ";
+//				sql += " AND (P.flag_segera = '3' AND M.id_hakmilik in (select distinct hx.id_hakmilik from Tblppthakmilik hx, Tblppthakmilikpb hpbx, Tblpptbayaran bx ";
+//				sql += " where hx.id_permohonan = p.id_permohonan and hpbx.id_hakmilik = hx.id_hakmilik and bx.id_hakmilikpb = hpbx.id_hakmilikpb ";
+//				sql += " and bx.cara_bayar in ('1','2') AND hx.flag_segera_sebahagian = 'N' ) ";
+//				sql += " OR P.flag_segera = '3' AND M.id_hakmilik in (select distinct hx.id_hakmilik from Tblppthakmilik hx ";
+//				sql += " where hx.id_permohonan = p.id_permohonan and hx.flag_segera_sebahagian = 'Y') ";
+//				sql += " and (select count(*) from Tblpptborangi bix ";
+//				sql += " where bix.id_permohonan = p.id_permohonan) > 0 ";
+//				sql += " OR flag_segera = '2' AND (select count(*) from tblpptbayaran a, tblppthakmilikpb b ";
+//				sql += " where a.id_hakmilikpb = b.id_hakmilikpb and b.id_hakmilik(+) = m.id_hakmilik) > 0 ";
+//				sql += " OR flag_segera = '1' " +
+//						//" AND (select count(*) from Tblpptborangi bix where bix.id_permohonan = p.id_permohonan) > 0" +
+//						" ) "
+				sql +="";
 
 			}
 

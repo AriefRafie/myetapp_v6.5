@@ -218,9 +218,6 @@ public class FrmSemakan {
 //		      r.add("i.id_semakansenarai");
 //	    	  r.add("i.kod_form");
 //	    	  r.add("s.perihal");
-//		      if(!idPermohonan.equals(null))
-//		    	  r.add("sh.id_permohonan",idPermohonan);
-		  
 //		      r.add("NVL(SJD.ID_JENISDOKUMEN,0) jenis_dokumen");
 //		      r.add("NVL(JD.KETERANGAN,'TIADA') nama_dokumen");
 //		      r.add("CASE "+
@@ -242,7 +239,7 @@ public class FrmSemakan {
 		    sql = "SELECT DISTINCT i.aturan, i.id_semakansenarai, i.kod_form, s.perihal,"
 		    		+ "NVL (sjd.id_jenisdokumen, 0) jenis_dokumen, "
 		    		+ "NVL (jd.keterangan, 'TIADA') nama_dokumen, "
-		    		+ "sh.id_permohonan,sh.id_semakanhantar, "
+		    		+ "sh.id_permohonan, "
 		    		+ "CASE "
 		    		+ "	WHEN sh.id_semakanhantar IS NULL "
 		    		+ "		THEN 'N' "
@@ -255,7 +252,7 @@ public class FrmSemakan {
               + " WHERE i.kod_form = '" + kodForm + "'"
               + " ORDER BY i.kod_form, i.aturan ";
 	          
-//	          myLog.info("getSenaraiSemakanAttach :sql= " + sql);
+	          myLog.info("getSenaraiSemakanAttach :sql= " + sql);
 		      ResultSet rs = stmt.executeQuery(sql);
 		      Hashtable<String,String> h;
 		      String lampiran = "-";

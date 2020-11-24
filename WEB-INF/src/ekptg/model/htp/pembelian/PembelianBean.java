@@ -994,7 +994,7 @@ public class PembelianBean implements IPembelian {
 			r.add("C.KETERANGAN as luas_keterangan");
 			r.add("D.keterangan as jenis_keterangan");
 			r.add("D.KOD_JENIS_HAKMILIK as jenis_hakmilik");
-			r.add("(SELECT NAMA FROM TBLHTPPIHAKBERKEPENTINGAN WHERE ID_HAKMILIKURUSAN=A.id_Hakmilikurusan) NAMA");
+			//r.add("(SELECT NAMA FROM TBLHTPPIHAKBERKEPENTINGAN WHERE ID_HAKMILIKURUSAN=A.id_Hakmilikurusan) NAMA");
 //			r.add("A.id_Lot",r.unquote("B.ID_LOT"));
 			r.add("A.id_Lot",r.unquote("B.ID_LOT(+)"));
 			r.add("A.id_luas",r.unquote("C.id_luas"));
@@ -1036,7 +1036,7 @@ public class PembelianBean implements IPembelian {
 				urusan.setKodjenishakmilik(rs.getString("jenis_hakmilik"));
 				urusan.setPermohonan(permohonan);
 				PihakBerkepentingan pb = new PihakBerkepentingan();
-				pb.setNama(rs.getString("nama"));
+				//pb.setNama(rs.getString("nama"));
 				urusan.addPihakBerkepentingan(pb);
 				v.addElement(urusan);
 			}
@@ -1163,6 +1163,7 @@ public class PembelianBean implements IPembelian {
             r.add("id_negeri");
             r.add("no_tel");
             r.add("no_fax");
+            r.add("emel");
             r.add("flag_penjualpemilik");
             r.set("id_permohonan",idPermohonan);
             sql = r.getSQLSelect("TBLHTPPEMOHON");
@@ -1183,6 +1184,7 @@ public class PembelianBean implements IPembelian {
 				pemohon.setFlagPemilik(rs.getString("flag_penjualpemilik"));
 				pemohon.setTel(rs.getString("no_tel"));
 				pemohon.setFax(rs.getString("no_fax"));
+				pemohon.setEmel(rs.getString("emel"));
 			}
 		}
 		catch(Exception e){
@@ -1226,6 +1228,7 @@ public class PembelianBean implements IPembelian {
             r.add("id_negeri", pemohon.getIdNegeri());
             r.add("no_tel", pemohon.getTel());
             r.add("no_fax", pemohon.getFax());
+            r.add("emel", pemohon.getEmel());
             r.add("flag_penjualpemilik", pemohon.getFlagPemilik());
             //r.add("id_masuk", (String)h.get("userID"));
             r.add("tarikh_masuk", r.unquote(today));
@@ -1278,6 +1281,7 @@ public class PembelianBean implements IPembelian {
             r.add("id_negeri", pemohon.getIdNegeri());
             r.add("no_tel", pemohon.getTel());
             r.add("no_fax", pemohon.getFax());
+            r.add("emel", pemohon.getEmel());
             r.add("flag_penjualpemilik", pemohon.getFlagPemilik());
             //r.add("id_masuk", (String)h.get("userID"));
             //r.add("tarikh_masuk", r.unquote(today));

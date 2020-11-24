@@ -544,6 +544,11 @@ function simpanPemilik(){
   		document.${formName}.socDaerah.focus(); 
 		return; 
 	}
+		if(document.${formName}.txtNoTelefon.value == ""){
+		alert('Sila masukkan " No. Telefon " terlebih dahulu.');
+	  	document.${formName}.txtNoTelefon.focus(); 
+		return; 
+	}
 	doAjaxCall${formName}("simpanPemilik");
 }
 

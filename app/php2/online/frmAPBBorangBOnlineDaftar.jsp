@@ -287,7 +287,7 @@
 
 #if ($button!="add")
 <fieldset>
-	<legend>Senarai Dokumen Pengeluaran Pasir Laut</legend>
+	<legend>Senarai Laporan Pengeluaran Pasir Laut</legend>
 	<!-- #parse("app/utils/record_paging.jsp") -->
 	<table width="100%"  cellpadding="1" cellspacing="2" border="0">
 		<tr>
@@ -611,7 +611,6 @@ function validateNumber(elmnt,content) {
 	//if it is character, then remove it..
 	if (isNaN(content)) {
 		elmnt.value = RemoveNonNumeric(content);
-		//document.write("getDay() : " + dt.getDay() );
 		return;
 	}
 	//BARU ADD

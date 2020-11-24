@@ -1074,16 +1074,14 @@ public class BicaraInteraktif extends AjaxBasedModule {
 
 			// delang
 			this.context.put("listKehadiran", modelBI.listKehadiran(session, ID_PERMOHONANSIMATI, ID_PERMOHONAN, ID_PERBICARAAN,
-				ID_PEMOHON, null));
+					ID_PEMOHON, null));
 
 			if (command.equals("tutupKeterangan")) {
 				skrin_name = "app/ppk/BicaraInteraktif/viewKeteranganTutup.jsp";
-			}
-			else {
+			} else {
 				skrin_name = "app/ppk/BicaraInteraktif/viewKeterangan.jsp";
 			}
-		}
-		else if (command.equals("show_kehadiran") || command.equals("refresh_kehadiran")) {
+		} else if (command.equals("show_kehadiran") || command.equals("refresh_kehadiran")) {
 			this.context.put("div", "view_kehadiran");
 			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
 			this.context.put("ID_PERBICARAAN", ID_PERBICARAAN);
@@ -1556,8 +1554,8 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				}
 				listKehadiran = modelBI.listKehadiran(session, ID_PERMOHONANSIMATI, ID_PERMOHONAN, ID_PERBICARAAN,
 						ID_PEMOHON, db);
-				// listTidakHadir = modelBI.listTidakHadir(session, ID_PERMOHONANSIMATI, ID_PERMOHONAN, ID_PERBICARAAN,
-				//		ID_PEMOHON, db);// arief add
+				listTidakHadir = modelBI.listTidakHadir(session, ID_PERMOHONANSIMATI, ID_PERMOHONAN, ID_PERBICARAAN,
+						ID_PEMOHON, db);// arief add
 			} finally {
 				if (db != null)
 					db.close();
@@ -5871,11 +5869,13 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			String BATAL_KUASA_PENTADBIR = "";
 			String BATAL_P_AMANAH = "";
 			String HARTA_TINGGAL = "";
+			String LAIN_LAIN_TUJUAN = "";//arief add
 			if (mainInfo != null) {
 				SEKSYEN = (String) mainInfo.get("SEKSYEN");
 				BATAL_KUASA_PENTADBIR = (String) mainInfo.get("BATAL_KUASA_PENTADBIR");
 				BATAL_P_AMANAH = (String) mainInfo.get("BATAL_P_AMANAH");
 				HARTA_TINGGAL = (String) mainInfo.get("HARTA_TINGGAL");
+				LAIN_LAIN_TUJUAN = (String) mainInfo.get("LAIN_LAIN_TUJUAN");//arief add
 				ID_PEMOHON = (String) mainInfo.get("ID_PEMOHON");
 			}
 			String styleKP = "";
@@ -5963,6 +5963,10 @@ public class BicaraInteraktif extends AjaxBasedModule {
 						extraBayaranPerintah += 30.00;
 					}
 					if (BATAL_P_AMANAH.equals("Y")) {
+						extraBayaranPerintah += 30.00;
+					}
+					//arief add
+					if (LAIN_LAIN_TUJUAN.equals("Y")) {
 						extraBayaranPerintah += 30.00;
 					}
 				}
@@ -9059,3 +9063,4 @@ public class BicaraInteraktif extends AjaxBasedModule {
 //////591106046099 - SEH
 ////P
 //////581119085004 - HASIAH
+>>>>>>> 260d2a9279c01eaaeab7d28d7e78a323240e157a
