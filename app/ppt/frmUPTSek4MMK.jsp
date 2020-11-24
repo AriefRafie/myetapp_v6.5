@@ -684,7 +684,7 @@ function cetakMMK(idpermohonan,idfail,negeriMMK,nofail,namaPentadbir,id_mmk) {
 		var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&report=MMKSek4Perlis&flagReport=S";
 		//var url = "../servlet/ekptg.report.ppt.MMKSek4Perlis?idFail="+idfail+"&no_fail="+nofail+"&namaPentadbir="+namaPentadbir;
 	}else if(negeriMMK=="10"){
-		var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&report=MMKSek4Selangor&flagReport=S";
+		var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&report=MMKSek4Selangor&selectNoFail=yes";
 	}else if(negeriMMK=="11"){
 		var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&report=MMKSek4Terengganu&flagReport=S";
 		//var url = "../servlet/ekptg.report.ppt.MMKSek4Terengganu?idFail="+idfail+"&no_fail="+nofail+"&namaPentadbir="+namaPentadbir;
@@ -694,7 +694,7 @@ function cetakMMK(idpermohonan,idfail,negeriMMK,nofail,namaPentadbir,id_mmk) {
 		//var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&report=MMKSek4WPKL&flagReport=S";
 		var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&report=MMKSek4WPKL&flagReport=S&selectNoFail=yes&flagShowTarikhCetak=yes&id_mmk="+id_mmk;
 	}else{
-		var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&report=MMKSek4Selangor&flagReport=S";
+		var url = "../x/${securityToken}/ekptg.report.ppt.FrmPopupPilihPegawaiReportView?id_permohonan="+idpermohonan+"&report=MMKSek4Selangor&flagReport=S&selectNoFail=yes";
 	}
 	
     var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');

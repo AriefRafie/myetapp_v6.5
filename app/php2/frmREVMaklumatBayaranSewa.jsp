@@ -22,6 +22,7 @@
   <input name="anchor" type="hidden" id="anchor"/>
   <input type="hidden" name="txtNamaPemohon" id="txtNamaPemohon" value="$txtNamaPemohon"/>
   <input type="hidden" name="txtNoFail" id="txtNoFail" value="$txtNoFail"/>
+  <input type="hidden" name="idCatatan" id="idCatatan" value="$idCatatan"/>
 
 </p>
 
@@ -30,26 +31,25 @@
     <td>#parse("app/php2/frmREVHeader.jsp") </td>
   </tr>
   <tr>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
     <td><div id="TabbedPanels1" class="TabbedPanels">
         <ul class="TabbedPanelsTabGroup">
           <li onClick="doChangeTabUpper(0);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT DEPOSIT</li>
           <li onClick="doChangeTabUpper(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT SEWA</li>
-          <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT BAYARAN LAIN LAIN</li>
-          <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PERJANJIAN</li>
-          <li onClick="doChangeTabUpper(4);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PEMOHON</li>
-          <li onClick="doChangeTabUpper(5);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PERMOHONAN</li>
-          <li onClick="doChangeTabUpper(6);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TANAH</li>
-          <li onClick="doChangeTabUpper(7);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT ABT</li>
-          <li onClick="doChangeTabUpper(8);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT NOTIS</li>
-          <li onClick="doChangeTabUpper(9);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT MEMO</li>
-          <li onClick="doChangeTabUpper(10);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TINDAKAN MAHKAMAH</li>
+          <li onClick="doChangeTabUpper(2);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT CATATAN</li>
+          <li onClick="doChangeTabUpper(3);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT BAYARAN LAIN LAIN</li>
+          <li onClick="doChangeTabUpper(4);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PERJANJIAN</li>
+          <li onClick="doChangeTabUpper(5);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PEMOHON</li>
+          <li onClick="doChangeTabUpper(6);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PERMOHONAN</li>
+          <li onClick="doChangeTabUpper(7);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TANAH</li>
+          <li onClick="doChangeTabUpper(8);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT ABT</li>
+          <li onClick="doChangeTabUpper(9);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT NOTIS</li>
+          <li onClick="doChangeTabUpper(10);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT MEMO</li>
+          <li onClick="doChangeTabUpper(11);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT TINDAKAN MAHKAMAH</li>
         </ul>
         <div class="TabbedPanelsContentGroup">
           <div class="TabbedPanelsContent">#parse("app/php2/frmREVMaklumatDeposit.jsp")</div>
           <div class="TabbedPanelsContent">#parse("app/php2/frmREVMaklumatSewa.jsp")</div>
+          <div class="TabbedPanelsContent">#parse("app/php2/frmREVMaklumatCatatan.jsp")</div>
           <div class="TabbedPanelsContent">#parse("app/php2/frmREVMaklumatBayaranLain.jsp")</div>
           <div class="TabbedPanelsContent">#parse("app/php2/frmREVMaklumatPerjanjian.jsp")</div>
           <div class="TabbedPanelsContent">#parse("app/php2/frmREVMaklumatPemohon.jsp")</div>
@@ -125,6 +125,24 @@ function janaPenyataAkaun(idHasil) {
 function janaHapusKira(idHasil) {
 
 	var url = "../servlet/ekptg.report.php2.REVHapusKira?ID_HASIL="+idHasil;
+    var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function janaKronologi(idHasil) {
+
+	var url = "../servlet/ekptg.report.php2.REVKronologi?ID_HASIL="+idHasil;
+    var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function janaMaklumatPermohonan(idHasil) {
+
+	var url = "../servlet/ekptg.report.php2.REVMaklumatPermohonan?ID_HASIL="+idHasil;
     var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
@@ -617,6 +635,66 @@ function batalKemaskiniBayaranLL(){
 
 
 </script>
+<!-- CATATAN -->
+<script>
+function paparCatatan(idCatatan){
+	document.${formName}.mode.value = "viewCatatan";
+	document.${formName}.idCatatan.value = idCatatan;
+	doAjaxCall${formName}("");
+}
+function tambahCatatan(){
+	document.${formName}.mode.value = "newCatatan";
+	doAjaxCall${formName}("");
+}
+function simpanCatatan(){
+
+	if(document.${formName}.txtCatatan.value == ""){
+		alert('Sila masukkan Catatan.');
+  		document.${formName}.txtCatatan.focus();
+		return;
+	}
+
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.mode.value = "newCatatan";
+		return;
+	}
+
+	document.${formName}.mode.value = "viewCatatan";
+	document.${formName}.hitButton.value = "simpanCatatan";
+	doAjaxCall${formName}("");
+}
+function kemaskiniCatatan(){
+	document.${formName}.mode.value = "updateCatatan";
+	doAjaxCall${formName}("");
+}
+function hapusCatatan(){
+
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		document.${formName}.mode.value = "viewCatatan";
+		return;
+	}
+
+	document.${formName}.mode.value = "view";
+	document.${formName}.hitButton.value = "hapusCatatan";
+	doAjaxCall${formName}("");
+}
+function simpanKemaskiniCatatan(){
+	if(document.${formName}.txtCatatan.value == ""){
+		alert('Sila masukkan Catatan.');
+  		document.${formName}.txtCatatan.focus();
+		return;
+	}
+	document.${formName}.mode.value = "viewCatatan";
+	document.${formName}.hitButton.value = "simpanKemaskiniCatatan";
+	doAjaxCall${formName}("");
+}
+function batalKemaskiniCatatan(){
+	document.${formName}.mode.value = "viewCatatan";
+	doAjaxCall${formName}("");
+}
+
+
+</script>
 <!-- PELARASAN DEPOSIT -->
 <script>
 function onChangeCek(str) {
@@ -867,6 +945,38 @@ function cetakSuratTuntutanTunggakanSewa(idNotis) {
 }
 function cetakSuratRampasanDeposit(idNotis) {
 	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupCetakLaporanView?idNotis="+idNotis+"&report=SuratRampasanDeposit";
+    var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function cetakMemoTuntutanDeposit(idNotis) {
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupCetakLaporanView?idNotis="+idNotis+"&report=SuratMemoTuntutanDeposit";
+    var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function cetakMemoTuntutanHasil(idNotis) {
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupCetakLaporanView?idNotis="+idNotis+"&report=SuratMemoTuntutanHasil";
+    var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function cetakMemoPelarasanDeposit(idNotis) {
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupCetakLaporanView?idNotis="+idNotis+"&report=SuratMemoPelarasanDeposit";
+    var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function cetakMemoRampasanDeposit(idNotis) {
+	var url = "../x/${securityToken}/ekptg.view.php2.FrmREVPopupCetakLaporanView?idNotis="+idNotis+"&report=SuratMemoRampasanDeposit";
     var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;

@@ -501,7 +501,7 @@ public class FrmCukaiPeringkatBayaranNegeri extends AjaxBasedModule{
 	  private void SimpanPenyata(HttpSession session , int idPermohonan) throws Exception {
 		  	Vector list = new Vector();
 			list.clear();
-			int idPeringkatbayaran = Integer.parseInt(getParam("idPeringkatbayaran"));
+			String idPeringkatbayaran = getParam("idPeringkatbayaran");
 			int idNegeri = Integer.parseInt(getParam("idNegeri"));	
 			String negeri = getParam("negeri");
 			System.out.println("CukaiProcess::DataPenyata::negeri:::"+negeri);
@@ -511,7 +511,7 @@ public class FrmCukaiPeringkatBayaranNegeri extends AjaxBasedModule{
 	    	list = FrmCukaiPenyataData.getListPenyata(idNegeri);
 			System.out.println("CukaiProcess::SimpanPenyata::list.size()::: "+list.size());
 				
-			if(idPeringkatbayaran == 0){
+			if(idPeringkatbayaran == "0"){
 				Hashtable h = new Hashtable();	
 				h.put("idpermohonan", idPermohonan);
 						
@@ -526,7 +526,7 @@ public class FrmCukaiPeringkatBayaranNegeri extends AjaxBasedModule{
 						
 				System.out.println("CukaiProcess::simpanPeringkatBayar:: h = "+h);
 						
-				idPeringkatbayaran = FrmCukaiPenyataData.simpanPeringkatBayarInteger(h);
+				idPeringkatbayaran = FrmCukaiPenyataData.simpanPeringkatBayar(h);
 				System.out.println("CukaiProcess::SimpanPenyata::idPeringkatbayaran::"+idPeringkatbayaran);
 						
 				list = FrmCukaiPenyataData.getListPenyata(idNegeri);
@@ -577,7 +577,7 @@ public class FrmCukaiPeringkatBayaranNegeri extends AjaxBasedModule{
 						
 				System.out.println("CukaiProcess::kemaskiniPeringkatBayar:: h = "+h);
 							
-				idPeringkatbayaran = FrmCukaiPenyataData.updatePeringkatBayarInteger(h);
+				idPeringkatbayaran = FrmCukaiPenyataData.updatePeringkatBayar(h);
 				System.out.println("CukaiProcess::KemaskiniPenyata::idPeringkatbayaran::"+idPeringkatbayaran);
 							
 				list = FrmCukaiPenyataData.getListPenyata(idNegeri);
@@ -622,7 +622,7 @@ public class FrmCukaiPeringkatBayaranNegeri extends AjaxBasedModule{
 			//list.clear();
 			//int idPeringkatbayaran = Integer.parseInt(getParam("idPeringkatbayaran"));
 			//int idNegeri = Integer.parseInt(getParam("idNegeri"));	
-			int idPeringkatbayaran = idPeringkatBayaran==""?0:Integer.parseInt(idPeringkatBayaran);
+			String idPeringkatbayaran = idPeringkatBayaran==""?"0":idPeringkatBayaran;
 		    int idNegeriInt = Integer.parseInt(idNegeri);		
 
 			//String negeri = getParam("negeri");
@@ -631,14 +631,14 @@ public class FrmCukaiPeringkatBayaranNegeri extends AjaxBasedModule{
 	    	String idBayaran = getParam("socbayaran");
 	    	vector = FrmCukaiPenyataData.getListPenyata(idNegeriInt);
 				
-			if(idPeringkatbayaran == 0){
+			if(idPeringkatbayaran == "0"){
 				Hashtable h = new Hashtable();	
 				h.put("idpermohonan", idPermohonan);						
 				h.put("idNegeri", idNegeriInt);
 				h.put("tahun_cukai", tahun_cukai);						
 				h.put("peringkat_bayaran", idBayaran);		    
 				h.put("idMasuk", idUser);
-				idPeringkatbayaran = FrmCukaiPenyataData.simpanPeringkatBayarInteger(h);						
+				idPeringkatbayaran = FrmCukaiPenyataData.simpanPeringkatBayar(h);						
 				//list = FrmCukaiPenyataData.getListPenyata(idNegeri);
 				mylog.info("CukaiProcess::simpanPeringkatBayar::idNegeri::"+idNegeri);						
 				mylog.info("CukaiProcess::simpanPeringkatBayar::tahun_cukai::"+tahun_cukai);
@@ -676,7 +676,7 @@ public class FrmCukaiPeringkatBayaranNegeri extends AjaxBasedModule{
 				h.put("tahun_cukai", tahun_cukai);							
 				h.put("peringkat_bayaran", idBayaran);						
 				h.put("idKemaskini", idUser);
-				idPeringkatbayaran = FrmCukaiPenyataData.updatePeringkatBayarInteger(h);							
+				idPeringkatbayaran = FrmCukaiPenyataData.updatePeringkatBayar(h);							
 				//list = FrmCukaiPenyataData.getListPenyata(idNegeri);						
 				String sumCukai = getParam("sumCukai");
 				int sumIdHakmilik = Integer.parseInt(getParam("sumIdHakmilik"));
@@ -719,7 +719,7 @@ public class FrmCukaiPeringkatBayaranNegeri extends AjaxBasedModule{
 			//list.clear();
 			//int idPeringkatbayaran = Integer.parseInt(getParam("idPeringkatbayaran"));
 			//int idNegeri = Integer.parseInt(getParam("idNegeri"));	
-			int idPeringkatbayaran = idPeringkatBayaran==""?0:Integer.parseInt(idPeringkatBayaran);
+			String idPeringkatbayaran = idPeringkatBayaran==""?"0":idPeringkatBayaran;
 		    int idNegeriInt = Integer.parseInt(idNegeri);		
 
 			//String negeri = getParam("negeri");
@@ -728,14 +728,14 @@ public class FrmCukaiPeringkatBayaranNegeri extends AjaxBasedModule{
 	    	String idBayaran = getParam("socbayaran");
 	    	//vector = FrmCukaiPenyataData.getListPenyata(idNegeriInt);
 				
-			if(idPeringkatbayaran == 0){
+			if(idPeringkatbayaran == "0"){
 				Hashtable h = new Hashtable();	
 				h.put("idpermohonan", idPermohonan);						
 				h.put("idNegeri", idNegeriInt);
 				h.put("tahun_cukai", tahun_cukai);						
 				h.put("peringkat_bayaran", idBayaran);		    
 				h.put("idMasuk", idUser);
-				idPeringkatbayaran = FrmCukaiPenyataData.simpanPeringkatBayarInteger(h);						
+				idPeringkatbayaran = FrmCukaiPenyataData.simpanPeringkatBayar(h);						
 				//list = FrmCukaiPenyataData.getListPenyata(idNegeri);
 				mylog.info("CukaiProcess::simpanPeringkatBayar::idNegeri::"+idNegeri);						
 				mylog.info("CukaiProcess::simpanPeringkatBayar::tahun_cukai::"+tahun_cukai);
@@ -773,7 +773,7 @@ public class FrmCukaiPeringkatBayaranNegeri extends AjaxBasedModule{
 				h.put("tahun_cukai", tahun_cukai);							
 				h.put("peringkat_bayaran", idBayaran);						
 				h.put("idKemaskini", idUser);
-				idPeringkatbayaran = FrmCukaiPenyataData.updatePeringkatBayarInteger(h);							
+				idPeringkatbayaran = FrmCukaiPenyataData.updatePeringkatBayar(h);							
 				//list = FrmCukaiPenyataData.getListPenyata(idNegeri);						
 				String sumCukai = getParam("sumCukai");
 				int sumIdHakmilik = Integer.parseInt(getParam("sumIdHakmilik"));

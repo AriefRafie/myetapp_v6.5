@@ -6,19 +6,19 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Hashtable;
 
+import javax.servlet.http.HttpSession;
 
 import lebah.db.Db;
 import lebah.portal.AjaxBasedModule;
 
 import org.apache.log4j.Logger;
 
-import ekptg.model.htp.IUtilHTML;
-import ekptg.model.htp.UtilHTMLBean;
 import ekptg.model.htp.entity.HtpPermohonan;
+
+//import ekptg.model.htp.IUtilHTML;
 import ekptg.model.htp.pembelian.IPembelian;
 import ekptg.model.htp.pembelian.PembelianBean;
-import ekptg.model.utils.IUserPegawai;
-import ekptg.model.utils.UserPegawaiBean;
+//import ekptg.model.utils.IUserPegawai;
 import ekptg.model.utils.emel.EmailConfig;
 
 
@@ -27,8 +27,8 @@ public class FrmPopupEmel extends AjaxBasedModule{
 	 * 
 	 */
 	private static final long serialVersionUID = -5137632472454498354L;
-	private IUserPegawai iUserPegawai = null;  
-	private IUtilHTML iUtil = null;
+//	private IUserPegawai iUserPegawai = null;  
+//	private IUtilHTML iUtil = null;
 	private IPembelian iPembelian = null;
 	static Logger myLog = Logger.getLogger(ekptg.report.htp.utiliti.FrmPopupEmel.class);
 //	FrmPopupPilihPegawaiReportData dbReportHtp = new FrmPopupPilihPegawaiReportData();
@@ -38,7 +38,7 @@ public class FrmPopupEmel extends AjaxBasedModule{
 
 	@Override
 	public String doTemplate2() throws Exception {		
-		//HttpSession session = request.getSession();		
+		HttpSession session = request.getSession();		
 		String vm = "";
 		//Vector detailPegawai = new Vector();
 		//detailPegawai.clear();
@@ -50,9 +50,9 @@ public class FrmPopupEmel extends AjaxBasedModule{
 		Date date = new Date();
 		
 		String idpermohonan = getParam("idpermohonan");
-		myLog.info("idpermohonan="+idpermohonan);
+//		myLog.info("idpermohonan="+idpermohonan);
 		String report = getParam("report");	//emelperingatan
-		String flagReport = getParam("flagReport");
+//		String flagReport = getParam("flagReport");
 		String txtKandungan = getParam("txtKandungan");	
 //		String nama_pegawai = "";
 //		String id_jawatan = "";
@@ -61,12 +61,12 @@ public class FrmPopupEmel extends AjaxBasedModule{
 		//package helper
 		context.put("Utils", new ekptg.helpers.Utils());
 		HtpPermohonan permohonan = getIPermohonan().findPermohonan(idpermohonan,"");
-		myLog.info("submit -1="+submit);
+//		myLog.info("submit -1="+submit);
 
 		EmailConfig ec = new EmailConfig();
 		String tajukEmel = "Peringatan Bayaran "+"("+permohonan.getPermohonan().getPfdFail().getNoFail()+")";
 		context.put("tajukEmel", tajukEmel);
-		myLog.info("submit 0="+submit);
+//		myLog.info("submit 0="+submit);
 
 		Hashtable<String,String> paj = getMaklumatPajakan(idpermohonan);
 
@@ -84,7 +84,8 @@ public class FrmPopupEmel extends AjaxBasedModule{
 		
 		myLog.info("submit="+submit);
     	if (submit.equals("peringatanbayaran")) {
-    		//
+    		ec.setRujukan(idpermohonan);
+    		ec.setSession(session);
     		hantarEmel = ec.sendTo("roslizakaria@gmail.com", tajukEmel, txtKandungan);
 
     	}else {

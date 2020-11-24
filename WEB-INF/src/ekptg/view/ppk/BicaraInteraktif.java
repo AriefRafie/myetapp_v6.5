@@ -59,7 +59,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 	String checkedSelesai = "";// arief add
 	String checkedTangguh = "";// arief add
 	String checkedBatal = "";// arief add
-	
+
 
 	// List listPerbicaraan = null;
 	@SuppressWarnings("unused")
@@ -356,7 +356,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				String ID_NEGERIPEGAWAIASAL = "";
 				String ID_TUKARPEGAWAI = "";
 				String NAMA_PEGAWAI_BARU = "";
-				
+
 				String NO_FAIL = "";
 				String TARIKH_BICARA = "";
 				String MASA_BICARA = "";
@@ -485,7 +485,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 								TARIKH_MOHON = getParam(skrinName + "TARIKH_MOHON");
 								TARIKH_KEPUTUSAN = getParam(skrinName + "TARIKH_KEPUTUSAN");
 								FLAG_DAFTAR_TERUS = getParam(skrinName + "FLAG_DAFTAR_TERUS");
-								
+
 								NO_FAIL = getParam("listkNO_FAIL" + ID_TUKARPEGAWAI);
 								TARIKH_BICARA = getParam("listkTARIKH_BICARA" + ID_TUKARPEGAWAI);
 								MASA_BICARA = getParam("listkMASA_BICARA" + ID_TUKARPEGAWAI);
@@ -661,7 +661,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				if (!openFormTukarPegawai.equals("N")) {
 					int check_TP_baru = 0;
 					String NO_TUKARPEGAWAI_CHECK = "";
-					
+
 					if (listPermohonanTukarPegawaiSejarah.size() != 0) {
 						for (int i = 0; i < listPermohonanTukarPegawaiSejarah.size(); i++) {
 							Map map_column_name = (Map) listPermohonanTukarPegawaiSejarah.get(i);
@@ -1071,6 +1071,10 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			this.context.put("KETERANGAN", KETERANGAN);
 			this.context.put("NOTA_PEGAWAI", NOTA_PEGAWAI);
 			this.context.put("scrolPosition", getParam("scrolPosition"));
+
+			// delang
+			this.context.put("listKehadiran", modelBI.listKehadiran(session, ID_PERMOHONANSIMATI, ID_PERMOHONAN, ID_PERBICARAAN,
+					ID_PEMOHON, null));
 
 			if (command.equals("tutupKeterangan")) {
 				skrin_name = "app/ppk/BicaraInteraktif/viewKeteranganTutup.jsp";
@@ -1563,8 +1567,8 @@ public class BicaraInteraktif extends AjaxBasedModule {
 
 		// arief add OPEN
 		/**
-		 * 
-		 * 
+		 *
+		 *
 		 * else if(command.equals("simpan_tidakHadir")) { String ID_PERMOHONANSIMATI =
 		 * getParam("ID_PERMOHONANSIMATI"); this.context.put("ID_PERMOHONANSIMATI",
 		 * ID_PERMOHONANSIMATI); this.context.put("div", "view_kehadiran"); String
@@ -1641,7 +1645,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				 * ID_PENGHUTANG; } else if(skrinName.equals("peguam")) { id = ID_PEGUAM; } else
 				 * if(skrinName.equals("htaah") || skrinName.equals("htaahx")) { id =
 				 * ID_HTAPERMOHONAN; } else if(skrinName.equals("ha")) { id = ID_HAPERMOHONAN; }
-				 * 
+				 *
 				 * Map mapDataAsal =
 				 * modelBI.getValueColumn(session,ID_PEMOHON,ID_PERBICARAAN,skrinName,
 				 * ID_PERMOHONANSIMATI, FIELD_PK, id, NAMA_TABLE, db);
@@ -1772,9 +1776,9 @@ public class BicaraInteraktif extends AjaxBasedModule {
 		 * myLogger.info("action : "+action+" get_co_listPerbicaraan : "
 		 * +get_co_listPermohonanTukarPegawai); String htmlSkrin = ""; String flagCari =
 		 * ""; String paramsButton = "";
-		 * 
+		 *
 		 * if(command.equals("cariPermohonanTukarPegawai")) { flagCari = "Y"; }
-		 * 
+		 *
 		 * Db db = null; try { db = new Db(); if( action.equals("") //||
 		 * command.equals("cariListPerbicaraan") || //comment dlu sementara
 		 * get_co_listPermohonanTukarPegawai == null) { listPermohonanTukarPegawai =
@@ -1788,7 +1792,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 		 * CacheManager.removeCache(cacheID); } htmlSkrin =
 		 * setupSkrinCarianTukarPegawai(session,"carianTukarPegawai",command,formName,
 		 * "edit",paramsButton,db); } finally { if (db != null) db.close(); }
-		 * 
+		 *
 		 * myLogger.info("SIZE : "+listPermohonanTukarPegawai.size());
 		 * this.context.put("div", "listPermohonanTukarPegawai");
 		 * this.context.put("htmlCarianTukarPegawai", htmlSkrin);
@@ -1796,8 +1800,8 @@ public class BicaraInteraktif extends AjaxBasedModule {
 		 * setupPageMainList(session, action,
 		 * listPermohonanTukarPegawai,"listPermohonanTukarPegawai",command); skrin_name
 		 * = "app/ppk/BicaraInteraktif/listPermohonanTukarPegawai.jsp";
-		 * 
-		 * 
+		 *
+		 *
 		 */
 		else if (command.equals("showMaklumatHistoryJana")) {
 			String ID_PERBICARAAN = getParam("ID_PERBICARAAN");
@@ -2852,7 +2856,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			/*
 			 * String NamaTable = "TBLPPKPEMOHON"; if(command.equals("showNegeriSurat") ||
 			 * command.equals("showNegeri") || command.equals("showNegeriMahkamah")) {
-			 * 
+			 *
 			 * }
 			 */
 
@@ -5618,7 +5622,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				 * //htmlPageSetup +=
 				 * setupSenaraiWarisBorangJKolateral(session,ID_PERMOHONANSIMATI,ID_PERMOHONAN,
 				 * ID_PERBICARAAN,ID_PEMOHON,FLAG_TANGGUH,mode,db1);
-				 * 
+				 *
 				 * Map setupBayaranKoleteral =
 				 * modelBI.getValueColumn(session,ID_PEMOHON,ID_PERBICARAAN,skrinName,
 				 * ID_PERMOHONANSIMATI,"",ID_PERMOHONAN, "TBLPPKBAYARAN", "17", db1);
@@ -5640,10 +5644,10 @@ public class BicaraInteraktif extends AjaxBasedModule {
 				 * "ID_BAYARAN",value_main_PK,ID_PERBICARAAN,"TARIKH_BAYARAN17","","text","Y",
 				 * "10","Y","",0,db1); //htmlPageSetup +=
 				 * "<tr><td colspan=\"4\" class=\"table_header\">Catatan Keputusan</td></tr>";
-				 * 
-				 * 
+				 *
+				 *
 				 * htmlPageSetup += modelBI.closeHTMLTable(); htmlPageSetup += "</div></div>";
-				 * 
+				 *
 				 * }
 				 */
 
@@ -5865,11 +5869,13 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			String BATAL_KUASA_PENTADBIR = "";
 			String BATAL_P_AMANAH = "";
 			String HARTA_TINGGAL = "";
+			String LAIN_LAIN_TUJUAN = "";//arief add
 			if (mainInfo != null) {
 				SEKSYEN = (String) mainInfo.get("SEKSYEN");
 				BATAL_KUASA_PENTADBIR = (String) mainInfo.get("BATAL_KUASA_PENTADBIR");
 				BATAL_P_AMANAH = (String) mainInfo.get("BATAL_P_AMANAH");
 				HARTA_TINGGAL = (String) mainInfo.get("HARTA_TINGGAL");
+				LAIN_LAIN_TUJUAN = (String) mainInfo.get("LAIN_LAIN_TUJUAN");//arief add
 				ID_PEMOHON = (String) mainInfo.get("ID_PEMOHON");
 			}
 			String styleKP = "";
@@ -5957,6 +5963,10 @@ public class BicaraInteraktif extends AjaxBasedModule {
 						extraBayaranPerintah += 30.00;
 					}
 					if (BATAL_P_AMANAH.equals("Y")) {
+						extraBayaranPerintah += 30.00;
+					}
+					//arief add
+					if (LAIN_LAIN_TUJUAN.equals("Y")) {
 						extraBayaranPerintah += 30.00;
 					}
 				}
@@ -6241,7 +6251,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			 * ; htmlPageSetup += "</a> "; } else { htmlPageSetup +=
 			 * " <div style=\"margin:5px\"><i><font color='blue'>Info</font> : Sila simpan keputusan perbicaraan dahulu sebelum menjana keterangan perintah secara auto.</i></div>"
 			 * ;
-			 * 
+			 *
 			 * } htmlPageSetup += " <span id=\"locationJanaCatatan\" ></span>";
 			 * htmlPageSetup += "</td>"; htmlPageSetup += "</tr>"; }
 			 */
@@ -6285,7 +6295,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 					+ "CATATAN_PERINTAH_BI\"><td></td><td></td><td></td><td align=\"right\">";
 			htmlPageSetup += "<div id=\"word" + skrinName + "CATATAN_PERINTAH_BI\"></div>";
 			htmlPageSetup += "</td></tr>";
-			
+
 			htmlPageSetup += modelBI.closeHTMLTable();
 			//arief add
 			htmlPageSetup += modelBI.openHTMLTable();
@@ -6562,7 +6572,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 
 		return htmlPageSetup;
 	}
-	
+
 	//arief add skrin tukar pegawai 2
 	public String setupPegawaiMultiple2(HttpSession session, String mode, String skrinName, Map setupSkrin,
 			String table_name, String field_main_PK, String command, String id_jawatan_login, String id_negeri_login,
@@ -6673,8 +6683,8 @@ public class BicaraInteraktif extends AjaxBasedModule {
 					+ "<td valign = \"top\" align = \"left\" >No.Fail </td>"
 					+ "<td valign = \"top\" align = \"center\" >:</td>"
 					+ "<td width=\"70%\"><input name=\"txtNoFailSub\" id=\"txtNoFailSub\" type=\"text\" value=\"$txtNoFailSub\" size=\"30\" maxlength=\"50\" style=\"text-transform:uppercase;\" onBlur=\"this.value=this.value.toUpperCase();\" />";
-			
-			
+
+
 
 			htmlPageSetup += modelBI.closeHTMLTable();
 			htmlPageSetup += "</fieldset>";
@@ -7220,7 +7230,7 @@ public class BicaraInteraktif extends AjaxBasedModule {
 		return htmlPageSetup;
 
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public String setupSkrinKeputusan(HttpSession session, String jenis_transaction, String current_previous,
 			String aktiviti, String ID_SIMATI, String ID_SEJARAHBIMAIN, Map setupSkrinHistory, Map setupSkrin,
@@ -9001,29 +9011,29 @@ public class BicaraInteraktif extends AjaxBasedModule {
  * NotaPerbicaraan.jrxml NotaPerbicaraan.jasper NotaPerbicaraan17.jrxml
  * NotaPerbicaraan17.jasper NotaPerbicaraan_OBBicaraOnline.jrxml
  * NotaPerbicaraan_OBBicaraOnline.jasper
- * 
- * 
+ *
+ *
  * BorangJ.jrxml BorangJ.jasper BorangL.jrxml BorangL.jasper BorangM.jrxml
  * BorangM.jasper BorangN.jrxml BorangN.jasper BorangIWasiatPerbicaraan.jrxml
  * BorangIWasiatPerbicaraan.jasper NotaPerbicaraan_THBicaraOnline.jrxml
  * NotaPerbicaraan_THBicaraOnline.jasper
- * 
+ *
  * ekptg.view.ppk.FrmDashboard.class ekptg.view.ppk.BicaraInteraktif.class
  * ekptg.view.ppk.BicaraInteraktifPrint.class
- * 
- * 
+ *
+ *
  * ekptg.engine.CacheManager.class ekptg.engine.CachedObject.class
- * 
+ *
  * ekptg.model.ppk.BicaraInteraktifData.class
- * 
+ *
  * app/ppk/dashboard_showCountTukarPegawai.jsp
  * app/ppk/dashboard_showCountBicaraOnline.jsp app/ppk/dashboard.jsp
  * app/ppk/dashboard_showBorangB_stats.jsp app/ppk/frmPopupCetakLaporan.jsp
  * app/ppk/headerppk.jsp app/ppk/headerppk_script.jsp
- * 
- * 
+ *
+ *
  * //jquery baru library/js/jquery-1.7.2.min.js bootstrap-wysihtml5-master
- * 
+ *
  * JavaSource_Edited/lebah/portal/DesktopController.class
  */
 

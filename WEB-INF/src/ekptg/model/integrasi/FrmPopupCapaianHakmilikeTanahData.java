@@ -155,6 +155,8 @@ public class FrmPopupCapaianHakmilikeTanahData {
 		Connection conn = null;
 		//String userId = (String) session.getAttribute("_ekptg_user_id");
 		String sql = "";
+		myLog.info("noResit :"+noResit);
+		myLog.info("idHakmilik :"+idHakmilik);
 
 		try {
 			db = new Db();
@@ -218,6 +220,7 @@ public class FrmPopupCapaianHakmilikeTanahData {
 
 					sql = r.getSQLUpdate("TBLPPTHAKMILIK");
 					stmt.executeUpdate(sql);
+					myLog.info("INSERT TBLPPTHAKMILIK : "+sql);
 						
 					conn.commit();
 					

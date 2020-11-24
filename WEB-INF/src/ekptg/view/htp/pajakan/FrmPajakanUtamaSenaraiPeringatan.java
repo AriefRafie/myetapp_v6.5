@@ -57,6 +57,7 @@ public class FrmPajakanUtamaSenaraiPeringatan extends AjaxBasedModule{
 		   	    	//htpEmailService.setEmail(emUrusan,emEmailto,emMaincontent,emNofail,emTitle,emTarikhMohon,emAgensi);
   
 			}
+	    	
 	    	if (sdfBulan.format(new Date()).equals("12")){
 		    	//myLog.info("Bulan:"+sdfBulan.format(new Date()));
 	    		senaraiFail = getIHTPP().getSenaraiPeringatanBayaran("", "3",String.valueOf(tahunHadapan));
@@ -67,8 +68,7 @@ public class FrmPajakanUtamaSenaraiPeringatan extends AjaxBasedModule{
 	    	}
 
 	    }else{
-//	    	myLog.info("Tahun:"+sdfTahun.format(new Date()));
-//	    	myLog.info("Bulan:"+sdfBulan.format(new Date()));
+//	    	myLog.info("Tahun:"+sdfTahun.format(new Date())+"Bulan:"+sdfBulan.format(new Date()));
 	    	if (sdfBulan.format(new Date()).equals("12")){
 		    	//myLog.info("Bulan:"+sdfBulan.format(new Date()));
 	    		senaraiFail = getIHTPP().getSenaraiPeringatanBayaran("", "3",String.valueOf(tahunHadapan));
