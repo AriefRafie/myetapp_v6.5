@@ -3339,9 +3339,10 @@ public class FrmAPBOnlineSenaraiFailData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT ID_BORANGA, ID_JADUALKEDUALESENAPB, TUJUAN, DESTINASI, ISIPADU, ANGGARAN_ROYALTI, BULAN, TAHUN, KONTRAKTOR,"
-					+ " PEMBELI_PASIR, TARIKH_MULA_OPERASI, TARIKH_TAMAT_OPERASI, LALUAN_VESSEL, KAEDAH_PASIR, KAWASAN_PELUPUSAN"
-					+ " FROM TBLPHPBORANGA WHERE ID_BORANGA = '" + idBorangA + "'";
+			sql = "SELECT A.ID_BORANGA, A.ID_JADUALKEDUALESENAPB, A.TUJUAN, A.DESTINASI, A.ISIPADU, A.ANGGARAN_ROYALTI, A.BULAN, A.TAHUN, A.KONTRAKTOR,"
+					+ " A.PEMBELI_PASIR, A.TARIKH_MULA_OPERASI, A.TARIKH_TAMAT_OPERASI, A.LALUAN_VESSEL, A.KAEDAH_PASIR, A.KAWASAN_PELUPUSAN,"
+					+ " K.LABEL_TITIK, K.DARJAH_U, K.DARJAH_T, K.MINIT_U, K.MINIT_T, K.SAAT_U, K.SAAT_T"
+					+ " FROM TBLPHPBORANGA A, TBLPHPKOORDINATPERMOHONAN K WHERE A.ID_BORANGA = K.ID_BORANGA AND A.ID_BORANGA = '" + idBorangA + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
 			myLog.info("sql ambil pasir: " + sql);
@@ -3369,6 +3370,14 @@ public class FrmAPBOnlineSenaraiFailData {
 				h.put("laluan", rs.getString("LALUAN_VESSEL") == null ? "" : rs.getString("LALUAN_VESSEL"));
 				h.put("kaedah", rs.getString("KAEDAH_PASIR") == null ? "" : rs.getString("KAEDAH_PASIR"));
 				h.put("kawasan", rs.getString("KAWASAN_PELUPUSAN") == null ? "" : rs.getString("KAWASAN_PELUPUSAN"));
+				
+				h.put("labelTitik", rs.getString("LABEL_TITIK") == null ? "" : rs.getString("LABEL_TITIK"));
+				h.put("darjahU", rs.getString("DARJAH_U") == null ? "" : rs.getString("DARJAH_U"));
+				h.put("darjahT", rs.getString("DARJAH_T") == null ? "" : rs.getString("DARJAH_T"));
+				h.put("minitU", rs.getString("MINIT_U") == null ? "" : rs.getString("MINIT_U"));
+				h.put("minitT", rs.getString("MINIT_T") == null ? "" : rs.getString("MINIT_T"));
+				h.put("saatU", rs.getString("SAAT_U") == null ? "" : rs.getString("SAAT_U"));
+				h.put("saatT", rs.getString("SAAT_T") == null ? "" : rs.getString("SAAT_T"));
 
 				beanMaklumatAmbilPasir.addElement(h);
 				bil++;
@@ -3383,7 +3392,8 @@ public class FrmAPBOnlineSenaraiFailData {
 	// YATI TAMBAH
 	public String simpanMaklumatAmbilPasir(String idJadualKedua, String idBulan, String tahun, String tujuanAmbil,
 			String destinasiHantar, String jumlahPasir, String jumlahRoyalti, String kontraktor, String pembeli,
-			String tarikhMula, String tarikhTamat, String laluan, String kaedah, String kawasan, HttpSession session)
+			String tarikhMula, String tarikhTamat, String laluan, String kaedah, String kawasan, 
+			String txtLabelTitik, String txtDarjahT, String txtDarjahU, String txtMinitT, String txtMinitU, String txtSaatT, String txtSaatU, HttpSession session)
 			throws Exception {
 
 		Db db = null;
@@ -3433,6 +3443,24 @@ public class FrmAPBOnlineSenaraiFailData {
 			sql = r.getSQLInsert("TBLPHPBORANGA");
 			myLog.info("sql simpan ambil pasir : " + sql);
 			stmt.executeUpdate(sql);
+			
+			// TBLPHPKOORDINATPERMOHONAN
+			r2.add("ID_BORANGA", idBorangA);
+			
+			r2.add("LABEL_TITIK", txtLabelTitik);
+			r2.add("DARJAH_T", txtDarjahT);
+			r2.add("DARJAH_U", txtDarjahU);
+			r2.add("MINIT_T", txtMinitT);
+			r2.add("MINIT_U", txtMinitU);
+			r2.add("SAAT_T", txtSaatT);
+			r2.add("SAAT_U", txtSaatU);
+			
+			r2.add("ID_MASUK", userId);
+			r2.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+			
+			sql2 = r2.getSQLInsert("TBLPHPKOORDINATPERMOHONAN");
+			myLog.info("sql simpan koordinat borang a : " + sql2);
+			stmt.executeUpdate(sql2);
 
 			conn.commit();
 
@@ -3454,13 +3482,15 @@ public class FrmAPBOnlineSenaraiFailData {
 	// yati tambah
 	public void simpanKemaskiniMaklumatPasir(String idBorangA, String idBulan, String tahun, String tujuanAmbil,
 			String destinasiHantar, String jumlahPasir, String jumlahRoyalti, String kontraktor, String pembeli,
-			String tarikhMula, String tarikhTamat, String laluan, String kaedah, String kawasan, HttpSession session)
+			String tarikhMula, String tarikhTamat, String laluan, String kaedah, String kawasan, 
+			String txtLabelTitik, String txtDarjahT, String txtDarjahU, String txtMinitT, String txtMinitU, String txtSaatT, String txtSaatU, HttpSession session)
 			throws Exception {
 
 		Db db = null;
 		Connection conn = null;
 		String userId = (String) session.getAttribute("_ekptg_user_id");
 		String sql = "";
+		String sql2 = "";
 		String idKoordinatString = "";
 
 		try {
@@ -3469,6 +3499,7 @@ public class FrmAPBOnlineSenaraiFailData {
 			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
+			SQLRenderer r2 = new SQLRenderer();
 
 			// TBLPHPBORANGA
 			r.update("ID_BORANGA", idBorangA);
@@ -3497,6 +3528,24 @@ public class FrmAPBOnlineSenaraiFailData {
 			sql = r.getSQLUpdate("TBLPHPBORANGA");
 			myLog.info("sql borang A : " + sql);
 			stmt.executeUpdate(sql);
+			
+			// TBLPHPKOORDINATPERMOHONAN
+			r2.update("ID_BORANGA", idBorangA);
+			
+			r2.add("LABEL_TITIK", txtLabelTitik);
+			r2.add("DARJAH_T", txtDarjahT);
+			r2.add("DARJAH_U", txtDarjahU);
+			r2.add("MINIT_T", txtMinitT);
+			r2.add("MINIT_U", txtMinitU);
+			r2.add("SAAT_T", txtSaatT);
+			r2.add("SAAT_U", txtSaatU);
+			
+			r2.add("ID_KEMASKINI", userId);
+			r2.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+			
+			sql2 = r2.getSQLUpdate("TBLPHPKOORDINATPERMOHONAN");
+			myLog.info("sql update koordinat borang a : " + sql2);
+			stmt.executeUpdate(sql2);
 
 			conn.commit();
 

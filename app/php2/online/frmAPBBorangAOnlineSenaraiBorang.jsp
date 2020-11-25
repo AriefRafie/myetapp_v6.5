@@ -66,7 +66,7 @@
       #parse("app/utils/record_paging.jsp")
       <table align="center" width="100%">
         <tr>
-          <td colspan="5" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:daftarMaklumatPasir('$idJadualKeduaLesen')"/></td>
+          <td colspan="5" scope="row"><input name="cmdDaftar" type="button" value="Tambah" onClick="javascript:daftarMaklumatPasir('$idFail','$idJadualKeduaLesen')"/></td>
         </tr>
         <tr class="table_header">
           <td scope="row" width="9%" align="center"><strong>Bil</strong></td>
@@ -118,9 +118,10 @@ function paparMaklumatPasir(idBorangA,idJadualKeduaLesen) {
 	document.${formName}.idBorangA.value = idBorangA;
 	document.${formName}.submit();
 }
-function daftarMaklumatPasir(idJadualKeduaLesen){
+function daftarMaklumatPasir(idFail,idJadualKeduaLesen){
 	
 	document.${formName}.actionOnline.value = "doMaklumatPasir";
+	document.${formName}.idfail.value = idFail;	
 	document.${formName}.idJadualKeduaLesen.value = idJadualKeduaLesen;	
 	document.${formName}.mode.value = "new";
 	document.${formName}.submit();
