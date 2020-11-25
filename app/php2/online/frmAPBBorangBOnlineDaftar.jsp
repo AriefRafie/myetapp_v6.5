@@ -14,7 +14,8 @@
 	<input type="hidden" name="id_laporanpasir" id="id_laporanpasir" value="$id_laporanpasir" />
 	<input type="hidden" name="idDokumen" id="idDokumen" value="$idDokumen" />
 	<input name="mode" type="hidden" id="mode" value="$mode"/>
-  <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
+    <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
+    <input type="hidden" name="idFail" id="idFail" value="$idFail"/>
 </p>
 
 <!--  #if ($returnChecking == "true")

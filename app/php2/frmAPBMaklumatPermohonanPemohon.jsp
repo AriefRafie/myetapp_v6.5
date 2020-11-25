@@ -319,7 +319,7 @@
                 <td class="$row"><a href="javascript:paparPengarah('$listPengarah.idPengarah')" class="style2">$listPengarah.nama</a></td>
                 <td class="$row">$listPengarah.noPengenalan</td>
                 <td class="$row">$listPengarah.warganegara</td>
-                <td class="$row" align="center">$listPengarah.saham%</td>
+                <td class="$row" align="center">RM$listPengarah.peganganSaham</td>
               </tr>
               #end
               #else

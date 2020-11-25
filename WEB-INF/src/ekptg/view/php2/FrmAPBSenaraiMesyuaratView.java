@@ -246,7 +246,7 @@ public class FrmAPBSenaraiMesyuaratView extends AjaxBasedModule {
 			this.context.put("selectMinitDari", HTML.SelectMinit("socMinitDari", Long.parseLong(idMinitDari), "", ""));
 			this.context.put("selectJamHingga", HTML.SelectJam("socJamHingga", Long.parseLong(idJamDari), "", ""));
 			this.context.put("selectMinitHingga", HTML.SelectMinit("socMinitHingga", Long.parseLong(idMinitDari), "", ""));
-			this.context.put("selectLokasi", HTML.SelectLokasiMesyuarat("socLokasi", Long.parseLong(idLokasi), "", ""));
+			this.context.put("selectLokasi", HTML.SelectLokasiMesyuaratNegeri("socLokasi", Long.parseLong(idLokasi), "", "", "16"));
 			
 		} else if ("papar".equals(actionMesyuarat)) {
 			
