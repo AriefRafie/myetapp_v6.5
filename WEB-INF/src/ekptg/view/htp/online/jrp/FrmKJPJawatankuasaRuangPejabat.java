@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import lebah.portal.AjaxBasedModule;
 
 import org.apache.log4j.Logger;
+import org.jfree.util.Log;
 
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.File;
@@ -1131,6 +1132,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					}else if(hakmilikbangunan.equals(id)){
 						
 					}else{
+						
 						template_name = PATH+"frmJRPMaklumat.jsp";
 						myLog.info("Else ::"+template_name);
 						disability = "disabled class=disabled";
@@ -1242,7 +1244,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    
 			    }else if(submit.equals("pkmaklumat")){			    	
 					template_name = PATH+"frmJRPMaklumatBaru.jsp";
-					skrin = "2";		    	
+					skrin = "3";		    	
 			    	myLog.info("pkmaklumat:submit="+submit);
 					String id = getParam("id_kemaskini");
 				    //readability = "readonly";
@@ -1619,11 +1621,34 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					context.put("semakMode", semakMode);
 					skrin = "4";
 					//context.put("selectedTab", 4);
-					template_name = PATH+"frmJRPSemakanPKP.jsp";	
+					//template_name = PATH+"frmJRPSemakanPKP.jsp";	
 					//return String.valueOf(getStatus().kemaskiniSimpanStatusAktif(subUrusanStatusFail, subUrusanStatusFailN,getParam("txtarikhkeputusan")));
-									
+					
+					//kembali ke senarai fail
+					template_name = PATH+"frmJRPSenaraiFail.jsp";
+		    		myLog.info("doChanges ::"+template_name);
+		    		String nofail = getParam("nofail");
+				 	idDaerah = getParam("socDaerah");
+				 	idMukim = getParam("socMukim");
+				 	maklumatCarian();
+		    		socKementerian = HTML.SelectKementerian("socKementerian", Utils.parseLong(idKementerian),"onChange=\"doChangeKementerianCarian()\" style=\"width:400\"");
+				    this.context.put("socKementerian",socKementerian);		    		
+		    		
+				    senaraiFail = getIHTPFail().getSenaraiFail(null
+			    			, null, null
+			    			, id_kementerian, null
+			    			, null, null, null
+			    			, idUrusan
+			    			,null);
+		    		this.context.put("SenaraiFail", senaraiFail);  
+		    		this.context.put("txtNoFail", nofail);  
+		    		this.context.put("txtTajukCarian", txtTajukCarian);	    		
+		    		isCarian = "ya";		
+		    		setupPage(session,action,senaraiFail);
+					
+					
 				
-					//shiqa - simpanpengesahan pindaan pelulus ke penyemak
+					//shiqa - simpanpengesahan pindaan pelulus ke penyemak 25112020
 				} else if(submit.equalsIgnoreCase("simpanpengesahan3")){
 					String id = getParam("idpermohonan");
 			    	Hashtable<?, ?> permohonan2 = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);
@@ -1691,9 +1716,31 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					context.put("semakMode", semakMode);
 					skrin = "4";
 					//context.put("selectedTab", 4);
-					template_name = PATH+"frmJRPSemakanPKP.jsp";	
+					//template_name = PATH+"frmJRPSemakanPKP.jsp";	
 					//return String.valueOf(getStatus().kemaskiniSimpanStatusAktif(subUrusanStatusFail, subUrusanStatusFailN,getParam("txtarikhkeputusan")));
-									
+						
+					//kembali ke senarai fail
+					template_name = PATH+"frmJRPSenaraiFail.jsp";
+		    		myLog.info("doChanges ::"+template_name);
+		    		String nofail = getParam("nofail");
+				 	idDaerah = getParam("socDaerah");
+				 	idMukim = getParam("socMukim");
+				 	maklumatCarian();
+		    		socKementerian = HTML.SelectKementerian("socKementerian", Utils.parseLong(idKementerian),"onChange=\"doChangeKementerianCarian()\" style=\"width:400\"");
+				    this.context.put("socKementerian",socKementerian);		    		
+				    senaraiFail = getIHTPFail().getSenaraiFail(null
+			    			, null, null
+			    			, id_kementerian, null
+			    			, null, null, null
+			    			, idUrusan
+			    			,null);
+		    		this.context.put("SenaraiFail", senaraiFail);  
+		    		this.context.put("txtNoFail", nofail);  
+		    		this.context.put("txtTajukCarian", txtTajukCarian);	    		
+		    		isCarian = "ya";		
+		    		setupPage(session,action,senaraiFail);
+					
+					
 				
 				} else if(submit.equals("pksemakanpkpseterus")) {
 			    	template_name = PATH+"frmJRPDeraf.jsp";	
@@ -1804,9 +1851,15 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				 	maklumatCarian();
 		    		socKementerian = HTML.SelectKementerian("socKementerian", Utils.parseLong(idKementerian),"onChange=\"doChangeKementerianCarian()\" style=\"width:400\"");
 				    this.context.put("socKementerian",socKementerian);		    		
-		    		//senaraiFail = FrmSenaraiFailPajakanKecilData.getList(nofail.trim());    		
-		    		//this.context.put("SenaraiFail", senaraiFail);  
-		    		senaraiFail = FrmSenaraiFailPajakanKecilData.getList(nofail.trim(),txtTajukCarian,idNegeri,idKementerian,idAgensi,"");      			    		
+		    		//senaraiFail = FrmSenaraiFailPajakanKecilData.getList(nofail.trim()); 
+				    senaraiFail = getIHTPFail().getSenaraiFail(null
+			    			, null, null
+			    			, id_kementerian, null
+			    			, null, null, null
+			    			, idUrusan
+			    			,null);
+		    		this.context.put("SenaraiFail", senaraiFail);  
+		    		//senaraiFail = FrmSenaraiFailPajakanKecilData.getList(nofail.trim(),txtTajukCarian,idNegeri,idKementerian,idAgensi,"");      			    		
 		    		this.context.put("txtNoFail", nofail);  
 		    		this.context.put("txtTajukCarian", txtTajukCarian);	    		
 		    		isCarian = "ya";		

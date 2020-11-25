@@ -122,7 +122,7 @@ public class FrmKJPJawatankuasaRuangPejabatData {
 		     TARIKH_MASUK, ID_KEMASKINI,TARIKH_KEMASKINI, ID_DB 
 		     */
 		     //System.out.println("FrmPajakanKecilMaklumatData:sql::"+sql);
-		     
+		      log.info("getHakmilikBangunanInfo====="+sql);
 		      ResultSet rs = stmt.executeQuery(sql);
 		      Hashtable h = null;
 

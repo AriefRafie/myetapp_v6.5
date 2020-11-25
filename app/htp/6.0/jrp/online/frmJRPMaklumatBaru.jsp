@@ -117,6 +117,16 @@
 			<td width="1%">&nbsp;</td>
             <td width="40%">
             	<div align="right" class="labelinput">
+					<div align="left">Hari</div>
+				</div>             
+            </td>
+            <td width="1%">:</td>
+            <td width="58%"><input type="text" name="txthari" size="5" value="" maxlength="3" onkeyup="validateNumber(this,this.value);" /></td>
+          </tr>
+          <tr>
+			<td width="1%">&nbsp;</td>
+            <td width="40%">
+            	<div align="right" class="labelinput">
 					<div align="left">Keluasan</div>
 				</div>             
             </td>
