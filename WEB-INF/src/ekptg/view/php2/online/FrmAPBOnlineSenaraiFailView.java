@@ -508,8 +508,8 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 			this.context.put("SenaraiFailBorangB", list);
 
 			log.info("SenaraiFailBorangB : "+list);
-			this.context.put("txtnamaPemohon", namaPemohon);
-			this.context.put("txtNoLesen", noLesen);
+			this.context.put("namaPemohon", namaPemohon);
+			this.context.put("noLesen", noLesen);
 				
 			setupPage(session, action, list);
 
