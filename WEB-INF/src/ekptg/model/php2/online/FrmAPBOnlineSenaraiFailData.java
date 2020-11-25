@@ -1012,6 +1012,8 @@ public class FrmAPBOnlineSenaraiFailData {
 						rs.getString("ID_WARGANEGARA") == null ? "99999" : rs.getString("ID_WARGANEGARA"));
 				h.put("idBangsa", rs.getString("ID_BANGSA") == null ? "99999" : rs.getString("ID_BANGSA"));
 				h.put("saham", rs.getString("PERCENTAGE") == null ? "" : rs.getString("PERCENTAGE"));
+				h.put("peganganSaham", rs.getString("SAHAM") == null ? "" : Util
+								.formatDecimal(Double.valueOf(rs.getString("SAHAM"))));
 				h.put("warganegara",
 						rs.getString("KETERANGAN") == null ? "" : rs.getString("KETERANGAN").toUpperCase());
 				h.put("warga",

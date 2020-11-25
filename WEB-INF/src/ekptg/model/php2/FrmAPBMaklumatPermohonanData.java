@@ -315,6 +315,13 @@ public class FrmAPBMaklumatPermohonanData {
 				h.put("saham",
 						rs.getString("PERCENTAGE") == null ? "" : rs
 								.getString("PERCENTAGE"));
+				h.put("peganganSaham",
+						rs.getString("SAHAM") == null ? "" : rs
+								.getString("SAHAM"));
+				h.put("peganganSaham",
+						rs.getString("SAHAM") == null ? "" : Util
+								.formatDecimal(Double.valueOf(rs
+										.getString("SAHAM"))));
 				h.put("warganegara", rs.getString("KETERANGAN") == null ? ""
 						: rs.getString("KETERANGAN").toUpperCase());
 
@@ -1104,7 +1111,6 @@ public class FrmAPBMaklumatPermohonanData {
 					+ idPermohonan + "' AND TBLPHPKOORDINATPERMOHONAN.FLAG_HISTORY = 'N' ORDER BY TARIKH_MASUK DESC ";
 
 			ResultSet rs = stmt.executeQuery(sql);
-			System.out.println(sql);
 			Hashtable h;
 			Integer bil = 1;
 
@@ -1165,7 +1171,6 @@ public class FrmAPBMaklumatPermohonanData {
 					+ "AND TBLPHPKOORDINATPERMOHONAN.FLAG_HISTORY = 'Y' ORDER BY TARIKH_MASUK ASC ";
 
 			ResultSet rs = stmt.executeQuery(sql);
-			System.out.println(sql);
 			Hashtable h;
 			Integer bil = 1;
 
@@ -1249,7 +1254,6 @@ public class FrmAPBMaklumatPermohonanData {
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 			sql = r.getSQLInsert("TBLPHPKOORDINATPERMOHONAN");
-			System.out.println(sql);
 			stmt.executeUpdate(sql);
 
 			conn.commit();
@@ -1382,7 +1386,6 @@ public class FrmAPBMaklumatPermohonanData {
 			r.add("ID_KOORDINATPERMOHONAN", idKoordinat);
 
 			sql = r.getSQLSelect("TBLPHPKOORDINATPERMOHONAN");
-			System.out.println(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;

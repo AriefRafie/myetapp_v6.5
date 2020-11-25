@@ -175,8 +175,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdNegeri() + ">"
-						+ f.getKodNegeri() + " - " + f.getNamaNegeri()
-						+ "</option>\n");
+						+ f.getNamaNegeri() + "</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {
@@ -4118,8 +4117,7 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdTujuankaitan()
-						+ ">" + f.getKodTujuankaitan() + " - "
-						+ f.getKeterangan() + "</option>\n");
+						+ ">" + f.getKeterangan() + "</option>\n");
 			}
 			sb.append("</select>");
 		} catch (Exception ex) {
