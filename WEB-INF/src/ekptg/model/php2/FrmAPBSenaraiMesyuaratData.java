@@ -734,6 +734,7 @@ public class FrmAPBSenaraiMesyuaratData {
 				db.close();
 		}
 	}
+	
 	private void resetFlagPengerusi(String idMesyuarat, Db db, String userId)
 			throws Exception {
 		String sql = "";
@@ -1473,6 +1474,9 @@ public class FrmAPBSenaraiMesyuaratData {
 		String flagSyor = "";
 		String ulasanPemohon = "";
 		String flagKeputusanPemohon = "";
+		String namaPengerusi = "";
+		String lokasiPengerusi = "";
+		String jawatanPengerusi = "";
 		try {
 			db = new Db();
 			conn = db.getConnection();
@@ -1480,16 +1484,12 @@ public class FrmAPBSenaraiMesyuaratData {
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 			
-			//get maklumat mesyuarat APB
-			//sql = "SELECT A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.JAM_DARI, A.MINIT_DARI, A.JAM_HINGGA, A.MINIT_HINGGA, A.ID_LOKASI, C.CATATAN, C.FLAG_SYOR,"
-			//   + " A.ULASAN_PEMOHON, A.FLAG_KEPUTUSAN_PEMOHON, B.LOKASI"
-			//   + " FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B, TBLPHPMESYUARATPERMOHONAN C"
-			//   + " WHERE A.ID_LOKASI = B.ID_LOKASI AND A.ID_MESYUARAT = C.ID_MESYUARAT AND A.ID_MESYUARAT = '" + idMesyuarat + "'";
-			
 			sql = "SELECT A.TAJUK, A.BIL_MESYUARAT, A.TARIKH_MESYUARAT, A.JAM_DARI, A.MINIT_DARI, A.JAM_HINGGA, A.MINIT_HINGGA, A.ID_LOKASI,"
-				+ " A.ULASAN_PEMOHON, A.FLAG_KEPUTUSAN_PEMOHON, B.LOKASI"
-				+ " FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B"
-				+ " WHERE A.ID_LOKASI = B.ID_LOKASI AND A.ID_MESYUARAT = '" + idMesyuarat + "'";
+				+ " A.ULASAN_PEMOHON, A.FLAG_KEPUTUSAN_PEMOHON, INITCAP(B.LOKASI) AS LOKASI, INITCAP(C.NAMA_PEGAWAI) AS NAMA_PEGAWAI,"
+				+ " INITCAP(C.NAMA_JAWATAN) AS NAMA_JAWATAN, INITCAP(C.NAMA_AGENSI) AS NAMA_AGENSI"
+				+ " FROM TBLPHPMESYUARAT A, TBLPFDRUJLOKASIMESYUARAT B, TBLPHPKEHADIRANMESY C"
+				+ " WHERE A.ID_LOKASI = B.ID_LOKASI AND A.ID_MESYUARAT = C.ID_MESYUARAT"
+				+ " AND C.FLAG_PENGERUSI = 'Y' AND A.ID_MESYUARAT = '" + idMesyuarat + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
 			
@@ -1519,23 +1519,37 @@ public class FrmAPBSenaraiMesyuaratData {
 				//flagSyor=rs.getString("FLAG_SYOR");
 				ulasanPemohon=rs.getString("ULASAN_PEMOHON");
 				flagKeputusanPemohon=rs.getString("FLAG_KEPUTUSAN_PEMOHON");
+				namaPengerusi=rs.getString("NAMA_PEGAWAI");
+				jawatanPengerusi=rs.getString("NAMA_JAWATAN");
+				lokasiPengerusi=rs.getString("NAMA_AGENSI");
 			}	
 			
 			String body = "<table width='100%' border='0' cellspacing='0' cellpadding='5'>"
-					+ "<tr><td>Tuan/ Puan,</td></tr>"
+					+ "<tr><td>Assalamualaikum WBT dan Salam Sejahtera,</td></tr>"
+					+ "<tr><td>YBhg. Datuk/Dato’/Tuan/Puan,</td></tr>"
 					+ "<tr><td>&nbsp;</td></tr>"
-					+ "<tr><td>"+tajukMesyuarat.toUpperCase()+"</td></tr>"
+					+ "<tr><td><strong>"+tajukMesyuarat.toUpperCase()+"</strong></td></tr>"
 					+ "<tr><td>&nbsp;</td></tr>"
-					+ "<tr><td>2.	Dengan hormatnya saya merujuk kepada perkara diatas.</td></tr>"
+					+ "<tr><td>Dengan hormatnya saya diarah merujuk berhubung perkara di atas.</td></tr>"
 					+ "<tr><td>&nbsp;</td></tr>"
-					+ "<tr><td>3.	Dimaklumkan bahawa tuan/puan dijemput menghadiri mesyuarat seperti dibawah:-</td></tr>"
+					+ "<tr><td>2.	Dimaklumkan bahawa Jabatan ini bercadang untuk mengadakan mesyuarat pada ketetapan berikut:</td></tr>"
+					+ "<tr><td>Tarikh: <strong>"+tarikhMesyuarat.toUpperCase()+"</strong></td></tr>"
+					+ "<tr><td>Masa  : <strong>"+idJamDari+":"+idMinitDari+" - "+idJamHingga+":"+idMinitHingga+"</strong></td></tr>"
+					+ "<tr><td>Lokasi: <strong>"+lokasiMesyuarat+"</strong></td></tr>"
+					+ "<tr><td>Pengerusi: <strong>"+namaPengerusi+"</strong></td></tr>"
+					+ "<tr><td>"+jawatanPengerusi+"</strong></td></tr>"
+					+ "<tr><td>"+lokasiPengerusi+"</strong></td></tr>"
 					+ "<tr><td>&nbsp;</td></tr>"
-					+ "<tr><td>Tajuk: "+tajukMesyuarat.toUpperCase()+"</td></tr>"
-					+ "<tr><td>Tarikh: "+tarikhMesyuarat.toUpperCase()+"</td></tr>"
-					+ "<tr><td>Masa  : "+idJamDari+":"+idMinitDari+" - "+idJamHingga+":"+idMinitHingga+"</td></tr>"
-					+ "<tr><td>Lokasi: "+lokasiMesyuarat.toUpperCase()+"</td></tr>"
+					+ "<tr><td>3.	Bersama-sama ini dikemukakan salinan surat jemputan seperti di <strong>Lampiran</strong> untuk makluman awal dan tindakan pihak YBhg. Datuk/Dato’/Tuan/Puan.</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td>4.	Kerjasama serta perhatian pihak YBhg. Datuk/Dato’/Tuan/Puan berhubung perkara ini amat dihargai.</td></tr>"
 					+ "<tr><td>&nbsp;</td></tr>"
 					+ "<tr><td>Sekian, terima kasih.</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td>&nbsp;</td></tr>"
+					+ "<tr><td>Unit Maritim</td></tr>"
+					+ "<tr><td>Bahagian Penguatkuasa dan Hasil Persekutuan</td></tr>"
+					+ "<tr><td>Jabatan Ketua Pengarah Tanah dan Galian Persekutuan</td></tr>"
 					+ "<tr><td>&nbsp;</td></tr>"
 					+ "<tr><td><i>Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas.</i></td></tr>"
 					+ "<tr><td>&nbsp;</td></tr>" + "</table>";
