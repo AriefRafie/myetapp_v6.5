@@ -1,5 +1,6 @@
 package integrasi.rest.etanah.wpkl;
 
+import integrasi.IntegrasiManager;
 import integrasi.rest.etanah.wpkl.entities.Hakmilik;
 import integrasi.rest.etanah.wpkl.entities.ParamForm;
 import integrasi.rest.etanah.wpkl.entities.Perintah;
@@ -41,7 +42,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class RESTInvoker {
 	//url sit
-	private final static String urlMaklumatHakmilik = "http://komkl1.ptgwp.gov.my/etanah-integration/mvc/myetapp/maklumat-hakmilik";
+	private static String urlMaklumatHakmilik = "http://komkl1.ptgwp.gov.my/etanah-integration/mvc/myetapp/maklumat-hakmilik";
 	private final static String urlMaklumatPerintah = "http://komkl1.ptgwp.gov.my/etanah-integration/mvc/myetapp/maklumat-perintah";
 	private final static String urlUploadFile = "http://komkl1.ptgwp.gov.my/etanah-integration/mvc/myetapp/upload-file";
 	private final static String urlMaklumatBorang = "http://komkl1.ptgwp.gov.my/etanah-integration/mvc/myetapp/maklumat-borang";
@@ -61,7 +62,7 @@ public class RESTInvoker {
 //sit 	
 	private final static String kodAgensi = "AGENSI0003";
 	private final static String kodCawangan = "JKPTG-MyeTaPP";
-	private final static String token = "4ec3aa1a6efe4208b2defd86c261b761";
+	private static String token = "4ec3aa1a6efe4208b2defd86c261b761";
 	
 	//live
 //	private final static String kodAgensi = "AGENSI0003";
@@ -70,6 +71,15 @@ public class RESTInvoker {
 
 	public static Hakmilik getMaklumatHakmilik(String idPengguna, String idHakmilik, String noResit) throws JsonParseException, JsonMappingException, IOException {
 		Hakmilik hakmilik = null;
+		IntegrasiManager im = null;
+		try{
+			im = new IntegrasiManager("E-TANAHKLC");
+		} catch (Exception ex) {
+	        ex.printStackTrace();
+	    }
+		urlMaklumatHakmilik = im.getURL();
+		token = im.geTujuan();
+		 
 		Calendar cal = new GregorianCalendar();
 		cal.setTime(new Date());
 		String tarikhMasaMohon = String.valueOf(cal.get(Calendar.YEAR)) + "-" + new DecimalFormat("00").format(cal.get(Calendar.MONTH) + 1) + "-" + new DecimalFormat("00").format(cal.get(Calendar.DATE))
@@ -100,7 +110,7 @@ public class RESTInvoker {
         	hakmilik = mapper.readValue(instream, Hakmilik.class);
         	instream.close();
         }
-		
+		System.out.println("hakmilik="+hakmilik);
 		return hakmilik;
 	}
 
