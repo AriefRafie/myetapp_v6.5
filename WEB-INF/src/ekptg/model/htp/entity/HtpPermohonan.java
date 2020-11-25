@@ -17,6 +17,7 @@ public class HtpPermohonan implements Serializable {
 	private String noRujukanPTD;
 	private String tarikhAkhir;
 	private String namaAgensi;
+	private String catatan;
 	private String statusPermohonan;
 	public long getIdHtpPermohonan() {
 		return idHtpPermohonan;
@@ -125,6 +126,12 @@ public class HtpPermohonan implements Serializable {
 	}
 	public void setBil(int bil) {
 		this.bil = bil;
+	}
+	public String getCatatan() {
+		return catatan;
+	}
+	public void setCatatan(String catatan) {
+		this.catatan = catatan;
 	}	
 	 
 	

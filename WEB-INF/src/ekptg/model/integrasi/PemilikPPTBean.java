@@ -56,14 +56,12 @@ public class PemilikPPTBean implements IPemilik {
 			r = new SQLRenderer();
 			r.add("A.id_Pihakberkepentingan");
 			r.add("A.id_Hakmilik");
-			r.add("A.nama_PB");
-			//r.add("A.no_Rujukan");		  
+			r.add("A.nama_PB");		  
 			r.add("A.alamat1");
 			r.add("A.alamat2");
 			r.add("A.alamat3");
 			r.add("A.poskod");
 			r.add("A.ID_JENISPB");
-			//r.add("A.id_Daerah");
 			r.add("A.id_Negeri");
 			r.add("A.no_HP");
 			r.add("A.no_Fax");
@@ -77,7 +75,6 @@ public class PemilikPPTBean implements IPemilik {
             	pihak.setIdpihakberkepentingan(idPihakBerkepentigan);
             	pihak.setIdHakmilikurusanPB(rs.getString("id_Hakmilik"));
             	pihak.setNama(rs.getString("nama"));
-            	//pihak.setNoRujukan(rs.getString("no_Rujukan"));
             	pihak.setAlamat1(rs.getString("alamat1"));
             	pihak.setAlamat2(rs.getString("alamat2"));
             	pihak.setAlamat3(rs.getString("alamat3"));
@@ -86,7 +83,7 @@ public class PemilikPPTBean implements IPemilik {
             	pihak.setTel(rs.getString("no_hp"));
             	pihak.setFax(rs.getString("no_Fax"));
             	pihak.setIdNegeri(rs.getString("id_negeri"));
-            	//pihak.setIdDaerah(rs.getString("id_daerah"));
+            	
 			}
 		}
 		catch(Exception e){
@@ -101,7 +98,7 @@ public class PemilikPPTBean implements IPemilik {
 
 	//@Override
 	public Vector<PihakBerkepentingan> findPemilikByPermohonan(String idPermohonan) {
-		System.out.println("======findPemilikByPermohonan==========" + idPermohonan);
+		System.out.println("======findPemilikByPermohonan ppt 24112020==========" + idPermohonan);
 		Db db = null;
 		Connection conn = null;
 		SQLRenderer r = null;
@@ -205,7 +202,7 @@ public class PemilikPPTBean implements IPemilik {
 			 r.add("no_hp", pemilik.getTel());
 			 r.add("no_Fax", pemilik.getFax());
 			 sql = r.getSQLInsert("Tblpptpihakberkepentingan");
-			 System.out.println("sql insert tblpptpb : "+sql);
+			 System.out.println("sql insert 2 tblpptpb : "+sql);
 			 stmt.executeUpdate(sql);	
 			 conn.commit();
 		}

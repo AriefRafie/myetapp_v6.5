@@ -125,6 +125,20 @@
 
 						</td>
 					</tr>
+					<tr>
+						<td width="1%">
+							<span class="labelmandatory">#if($pageMode == "new" || $pageMode == "kemaskini")* #end</span>
+						</td>				        
+						<td width="30%">
+							<div align="right" class="labelinput">
+						    	<div align="left">No. Telefon</div>
+						    </div>
+						</td>				      	
+						<td width="1%">:</td>				        
+						<td width="68%">
+							<input type="text" name="txtnotelefon" size="50" maxlength="80" value="$!pihak.tel" onkeyup="this.value=this.value.toUpperCase();" $classDis>
+						</td>
+					</tr>
 
 					<tr>
 						<td colspan=4 align="center"></td>

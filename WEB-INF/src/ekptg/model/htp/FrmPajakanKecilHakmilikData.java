@@ -226,6 +226,7 @@ public class FrmPajakanKecilHakmilikData {
 		    	  h.setAlamat3(rs.getString("alamat3")== null?"":rs.getString("alamat3"));
 		    	  h.setPoskod(rs.getString("poskod"));
 		    	  h.setIdDaerah(rs.getLong("id_daerah"));
+		    	  h.setNoTel(rs.getString("no_tel"));
 		    	  //list.addElement(h);
 		      }
 		      return h;
@@ -271,6 +272,7 @@ public class FrmPajakanKecilHakmilikData {
 		    	  h.setPoskod(rs.getString("poskod"));
 		    	  h.setIdNegeri(rs.getLong("id_negeri"));
 		    	  h.setIdDaerah(rs.getLong("id_daerah"));
+		    	  h.setNoTel(rs.getString("no_tel"));
 		    	  //list.addElement(h);
 		      }
 		      return h;

@@ -1298,10 +1298,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 					getIHTP().getErrorHTML("[ONLINE-HTP PEMBELIAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
 				//   (HTP)HQPenggunaPembelianPerletakhakan,   (HTP)HQPenggunaPembelian, (HTP)HQPengguna
 
-				ec.sendByRoleKJP(getEmelSemak().checkEmail(userID)
-						, "4"
-						, String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdKementerian())
-						, emelSubjek, kandungan);
+				ec.hantarPermohonan(getEmelSemak().checkEmail(userID), "(HTP)HQPenggunaPembelianPerletakhakan", emelSubjek, kandungan);
 								
 			}
 			Tblrujsuburusanstatusfail rsusf = new Tblrujsuburusanstatusfail();

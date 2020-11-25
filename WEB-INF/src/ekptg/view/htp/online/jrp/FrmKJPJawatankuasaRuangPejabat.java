@@ -23,9 +23,9 @@ import ekptg.model.entities.UserKementerian;
 import ekptg.model.htp.FrmGadaianHakmilikData;
 import ekptg.model.htp.FrmGadaianPenHamilikData;
 import ekptg.model.htp.FrmPajakanKecilHakmilikData;
-import ekptg.model.htp.FrmPajakanKecilMaklumatData;
 import ekptg.model.htp.FrmPajakanKecilPendaftaranData;
 import ekptg.model.htp.FrmJRPSenaraiPermohonanData;
+import ekptg.model.htp.FrmKJPJawatankuasaRuangPejabatData;
 import ekptg.model.htp.FrmSemakan;
 import ekptg.model.htp.FrmSenaraiFailPajakanKecilData;
 import ekptg.model.htp.FrmSewaanDerafData;
@@ -439,7 +439,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	socKementerian = HTML.SelectKementerian("socKementerian",Long.parseLong(permohonan.get("idkementerian").toString()),"disabled");
 			    	socAgensi = HTML.SelectAgensi("socAgensi",Long.parseLong(permohonan.get("idagensi").toString()),"disabled");
 			    	
-					hakmilikbangunan = FrmPajakanKecilMaklumatData.getHakmilikBangunanInfo(id);
+					hakmilikbangunan = FrmKJPJawatankuasaRuangPejabatData.getHakmilikBangunanInfo(id);
 					this.context.put("hakmilikbangunaninfo", hakmilikbangunan);
 					Vector senaraiHakmilik = null;
 					senaraiHakmilik = FrmPajakanKecilHakmilikData.getSenaraiHakmilik(Long.parseLong(id));
@@ -1114,7 +1114,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				    String socLuas = "";				    
 					String id = getParam("id_kemaskini");
 					Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);		    	
-					hakmilikbangunan = FrmPajakanKecilMaklumatData.getHakmilikBangunanInfo(id);
+					hakmilikbangunan = FrmKJPJawatankuasaRuangPejabatData.getHakmilikBangunanInfo(id);
 					this.context.put("hakmilikbangunaninfo", hakmilikbangunan);
 					socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(permohonan.get("idnegeri").toString()),disability);
 			    	socKementerian = HTML.SelectKementerian("socKementerian",Long.parseLong(permohonan.get("idkementerian").toString()),disability);
@@ -1154,7 +1154,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	String permohonanId = getParam("id_kemaskini");
 			    	String hakMilikBangunanId = getParam("idHakmilikBangunan");
 			    	Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(permohonanId);
-			    	Hashtable hakmilikbangunan = FrmPajakanKecilMaklumatData.getHakmilikBangunanInfo(permohonanId);
+			    	Hashtable hakmilikbangunan = FrmKJPJawatankuasaRuangPejabatData.getHakmilikBangunanInfo(permohonanId);
 			    	disability = "";
 					String socLuas = HTML.SelectLuas("socLuas",Long.parseLong(hakmilikbangunan.get("idluas").toString()),disability);
 					String socDaerah = HTML.SelectDaerahByNegeri((String)permohonan.get("idnegeri"),"socDaerah",Long.parseLong(hakmilikbangunan.get("iddaerah").toString()),disability);
@@ -1174,7 +1174,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	String permohonanId = getParam("id_kemaskini");
 			    	String hakMilikBangunanId = getParam("idHakmilikBangunan");
 			    	Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(permohonanId);
-			    	Hashtable hakmilikbangunan = FrmPajakanKecilMaklumatData.getHakmilikBangunanInfo(permohonanId);
+			    	Hashtable hakmilikbangunan = FrmKJPJawatankuasaRuangPejabatData.getHakmilikBangunanInfo(permohonanId);
 			    	disability = "";
 					String socLuas = HTML.SelectLuas("socLuas",Long.parseLong(hakmilikbangunan.get("idluas").toString()),disability);
 					String socDaerah = HTML.SelectDaerahByNegeri((String)permohonan.get("idnegeri"),"socDaerah",Long.parseLong(hakmilikbangunan.get("iddaerah").toString()),disability);
@@ -1187,7 +1187,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					this.context.put("pageMode",pageMode);
 			    	
 			    }else if(submit.equals("updateSewaanSewaan")){
-					template_name = "app/htp/pajakankecil/online/frmJRPMaklumat.jsp";
+					template_name = "app/htp/6.0/jrp/online/frmJRPMaklumat.jsp";
 			    	myLog.info("updateSewaanSewaan ::"+template_name);
 			    	skrin = "3";	
 			    	String permohonanId = getParam("id_kemaskini");
@@ -1195,12 +1195,16 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	Hashtable<?, ?> permohonan = FrmJRPSenaraiPermohonanData.getPermohonanInfo(permohonanId);
 			    	int month = 0;
 					int year = 0;
+					int day = 0;
 					String  strmonth  = getParam("txtbulan");
 					String stryear = getParam("txttahun");
+					String strday = getParam("txthari");
 					if(!strmonth.equals(""))
 						month = Integer.parseInt(strmonth);
 					if(!stryear.equals(""))
 						year = Integer.parseInt(stryear);
+					if(!strday.equals(""))
+						day = Integer.parseInt(strday);
 			    			    	
 			    	Tblhtphakmilikbangunan s = new Tblhtphakmilikbangunan();
 			    	s.setIdHakmilikbangunan(Long.parseLong(hakMilikBangunanId));
@@ -1216,13 +1220,14 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				    s.setSewaBulanan(Utils.RemoveSymbol(getParam("txtsewa")));
 				    s.setBulan(month);
 				    s.setTahun(year);
+				    s.setHari(day);
 				    s.setIdMasuk(Long.parseLong((String)session.getAttribute("_ekptg_user_id")));
 				    s.setTarikhMasuk(new Date());
-				    FrmPajakanKecilMaklumatData.kemaskini(s,getParam("txddari"),getParam("txdhingga"));
+				    FrmKJPJawatankuasaRuangPejabatData.kemaskini(s,getParam("txddari"),getParam("txdhingga"));
 			    	
 			    	disability = "disabled class=disabled";
 			    	
-			    	Hashtable hakmilikbangunan = FrmPajakanKecilMaklumatData.getHakmilikBangunanInfo(permohonanId);
+			    	Hashtable hakmilikbangunan = FrmKJPJawatankuasaRuangPejabatData.getHakmilikBangunanInfo(permohonanId);
 			    	disability = "disabled class=disabled";
 					String socLuas = HTML.SelectLuas("socLuas",Long.parseLong(hakmilikbangunan.get("idluas").toString()),disability);
 					String socDaerah = HTML.SelectDaerahByNegeri((String)permohonan.get("idnegeri"),"socDaerah",Long.parseLong(hakmilikbangunan.get("iddaerah").toString()),disability);
@@ -1253,12 +1258,16 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 						//template_name = "app/htp/pajakankecil/online/frmPajakanKecilMaklumat.jsp";
 						int month = 0;
 						int year = 0;
+						int day = 0;
 						String  strmonth  = getParam("txtbulan");
 						String stryear = getParam("txttahun");
+						String strday = getParam("txthari");
 						if(!strmonth.equals(""))
 							month = Integer.parseInt(strmonth);
 						if(!stryear.equals(""))
 							year = Integer.parseInt(stryear);
+						if(!strday.equals(""))
+							day = Integer.parseInt(strday);
 						
 			    	    myLog.info("pkmaklumat:0::"+pageMode);
 			    	    
@@ -1275,9 +1284,10 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 						s.setSewaBulanan(getParam("txtsewa"));
 						s.setBulan(month);
 						s.setTahun(year);
+						s.setHari(day);
 						s.setIdMasuk(Long.parseLong((String)session.getAttribute("_ekptg_user_id")));
 						s.setTarikhMasuk(new Date());
-					    FrmPajakanKecilMaklumatData.add(s,getParam("txddari"),getParam("txdhingga"));	
+						FrmKJPJawatankuasaRuangPejabatData.add(s,getParam("txddari"),getParam("txdhingga"));	
 					    
 					    Hashtable data = null;
 					    data = new Hashtable();			
@@ -1293,7 +1303,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					    data.put("tarikh_Minit_Arahan", (String)getParam("txdhingga"));
 					    data.put("tempoh", "150");
 						FrmUtilData.tambahPeringatan(data);					
-				    	hakmilikbangunan = FrmPajakanKecilMaklumatData.getHakmilikBangunanInfo(id);
+				    	hakmilikbangunan = FrmKJPJawatankuasaRuangPejabatData.getHakmilikBangunanInfo(id);
 				    	//String socLuas = HTML.SelectLuas("socLuas",Long.parseLong(hakmilikbangunan.get("idluas").toString()),disability);
 				    	String socPegawai = HTML.SelectPegawai("socPegawai",Long.parseLong(hakmilikbangunan.get("idpegawai").toString()) ,disability);
 				    	//socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(hakmilikbangunan.get("idnegeri").toString()),disability);
@@ -1310,7 +1320,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			    	    
 					}else if(pageMode.equals("3")){
 			    	    myLog.info("pkmaklumat:3::"+pageMode);
-						hakmilikbangunan = FrmPajakanKecilMaklumatData.getHakmilikBangunanInfo(id);
+						hakmilikbangunan = FrmKJPJawatankuasaRuangPejabatData.getHakmilikBangunanInfo(id);
 						this.context.put("hakmilikbangunaninfo", hakmilikbangunan);
 						
 						socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(permohonan.get("idnegeri").toString()),disability);
@@ -1328,7 +1338,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 						myLog.info("pkmaklumat:4::"+pageMode);
 			    	    Hashtable<String, Comparable> s = new Hashtable<String, Comparable>();
 			    	    
-						hakmilikbangunan = FrmPajakanKecilMaklumatData.getHakmilikBangunanInfo(id);
+						hakmilikbangunan = FrmKJPJawatankuasaRuangPejabatData.getHakmilikBangunanInfo(id);
 						s.put("idhakmilikbangunan",Long.parseLong((String)hakmilikbangunan.get("idhakmilikbangunan")));
 					    s.put("idpermohonan",Long.parseLong(getParam("id_kemaskini")));
 						s.put("alamat1",getParam("txtalamat1"));
@@ -1609,11 +1619,124 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 					context.put("semakMode", semakMode);
 					skrin = "4";
 					//context.put("selectedTab", 4);
-					template_name = PATH+"frmJRPSemakanPKP.jsp";	
+					//template_name = PATH+"frmJRPSemakanPKP.jsp";
+					template_name = PATH+"frmJRPSenaraiFail.jsp";
+				    senaraiFail = getIHTPFail().getSenaraiFail(null
+		    			, null, null
+		    			, id_kementerian, null
+		    			, null, null, null
+		    			, idUrusan
+		    			,null);
+//				    senaraiFail =  getIHTPPKFail().getSenaraiFail(
+//				    		null, noFail.trim(), txtTajukCarian
+//				    		, idKementerian, idAgensi
+//				    		, idNegeri, idDaerah, idMukim
+//				    		, idUrusan, "", ""
+//				    		, "", "", false );
+		    	//senaraiFail = FrmSenaraiFailPajakanKecilData.getList("",userId,"");
+				this.context.put("SenaraiFail", senaraiFail);
+				socKementerian = HTML.SelectKementerian("socKementerian", Utils.parseLong(id_kementerian),"disabled class=disabled","onChange=\"doChangeKementerianCarian()\" style=\"width:400\"");
+				this.context.put("socKementerian",socKementerian);
+				setupPage(session,action,senaraiFail);
 					//return String.valueOf(getStatus().kemaskiniSimpanStatusAktif(subUrusanStatusFail, subUrusanStatusFailN,getParam("txtarikhkeputusan")));
 									
 				
-				}else if(submit.equals("pksemakanpkpseterus")) {
+					//shiqa - simpanpengesahan pindaan pelulus ke penyemak
+				} else if(submit.equalsIgnoreCase("simpanpengesahan3")){
+					String id = getParam("idpermohonan");
+			    	Hashtable<?, ?> permohonan2 = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);
+					myLog.info("simpanpengesahan1 ::id_permohonan="+permohonan2);	
+			    	myLog.info("simpanpengesahan2 ::idpermohonan="+FrmJRPSenaraiPermohonanData.getPermohonanInfo(id));	
+			    	myLog.info("id_kementerian="+uk.getAgensi().getKementerian().getIdKementerian());
+					String semakMode="";
+					String langkah2 = "6";
+					/*
+					 * 1 untuk status - Pra-daftar
+					 * 2 untuk status - Tindakan Penyemak 
+					 * 3 untuk status - Tindakan Pelulus
+					 * 4 untuk status - Permohonan Online (Pengesahan) 
+					 * 5 untuk status - Penerimaan Permohonan
+					 * 6 untuk status - Tindakan Penyedia
+					*/
+					
+					EmailConfig ec = new EmailConfig();
+
+					//myLog.info("from="+email.FROM);
+					String emelSubjek = ec.tajukSemakan+"Jawatankuasa Ruang Pejabat";
+					String kandungan = "";
+					if(idJawatan.equals("4")){
+						myLog.info("BACA PINDAAN============"+uk.getAgensi().getKementerian().getIdKementerian());
+						
+						langkah2 = "6";
+						
+						kandungan = getEmelSemak().setKandungan(String.valueOf(permohonan2.get("tajukfail")), String.valueOf(hUser.get("nama")));
+		    			
+						if(!getEmelSemak().checkEmail(userId).equals(""))
+							getIHTP().getErrorHTML("[ONLINE-HTP JRP] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
+
+						ec.sendByRoleKJP(getEmelSemak().checkEmail(userId)
+								, "24"
+								, String.valueOf(String.valueOf(permohonan2.get("idkementerian")))
+								, emelSubjek, kandungan);
+
+					}
+					Hashtable<?, ?> permohonan3 = FrmJRPSenaraiPermohonanData.getPermohonanInfo(id);
+					String idPermohonan = String.valueOf(permohonan3.get("idpermohonan"));
+
+				
+					Tblrujsuburusanstatusfail rsusf = new Tblrujsuburusanstatusfail();
+					myLog.info("Langkah=="+langkah2);
+					long setIdSuburusanstatus = FrmUtilData.getIdSuburusanStatusByLangkah(langkah2,idSubUrusan,"=");
+					rsusf.setIdPermohonan(Long.parseLong(idPermohonan));
+//					myLog.info("idFail="+idFail+",idPermohonan="+idPermohonan);
+					rsusf.setIdFail(Long.parseLong(idFail));
+					rsusf.setIdSuburusanstatusfail(Long.parseLong(idSubUrusan));
+					rsusf.setIdSuburusanstatus(setIdSuburusanstatus);
+					rsusf.setUrl("-");
+					simpanPengesahan(rsusf,langkah2);
+//					myLog.info("userId=="+userId);
+					rsusf.setIdMasuk(Long.parseLong(userId));
+
+					
+					if(getIOnline().isHantar(Long.parseLong(String.valueOf(permohonan3.get("idsuburusan"))),
+							Long.parseLong(String.valueOf(permohonan3.get("idpermohonan"))),
+							Long.parseLong(String.valueOf(permohonan3.get("idfail"))),langkah)){
+						semakMode = "xupdate";			
+					}else{
+						semakMode = "update";
+					}
+//					myLog.info("selectedTab=======");
+					context.put("semakMode", semakMode);
+					skrin = "4";
+					//context.put("selectedTab", 4);
+					//template_name = PATH+"frmJRPSemakanPKP.jsp";
+
+					
+					template_name = PATH+"frmJRPSenaraiFail.jsp";
+				    senaraiFail = getIHTPFail().getSenaraiFail(null
+		    			, null, null
+		    			, id_kementerian, null
+		    			, null, null, null
+		    			, idUrusan
+		    			,null);
+//				    senaraiFail =  getIHTPPKFail().getSenaraiFail(
+//				    		null, noFail.trim(), txtTajukCarian
+//				    		, idKementerian, idAgensi
+//				    		, idNegeri, idDaerah, idMukim
+//				    		, idUrusan, "", ""
+//				    		, "", "", false );
+		    	//senaraiFail = FrmSenaraiFailPajakanKecilData.getList("",userId,"");
+				this.context.put("SenaraiFail", senaraiFail);
+				socKementerian = HTML.SelectKementerian("socKementerian", Utils.parseLong(id_kementerian),"disabled class=disabled","onChange=\"doChangeKementerianCarian()\" style=\"width:400\"");
+				this.context.put("socKementerian",socKementerian);
+				setupPage(session,action,senaraiFail);
+					
+					
+					
+					//return String.valueOf(getStatus().kemaskiniSimpanStatusAktif(subUrusanStatusFail, subUrusanStatusFailN,getParam("txtarikhkeputusan")));
+									
+				
+				} else if(submit.equals("pksemakanpkpseterus")) {
 			    	template_name = PATH+"frmJRPDeraf.jsp";	
 			    	myLog.info("pksemakanpkpseterus ::"+template_name);
 			    	//skrin = "4";		    	
@@ -2052,6 +2175,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
         this.context.put("poskod", getParam("txtposkod"));
         this.context.put("nolot", getParam("txtnolot"));
         this.context.put("nohakmilik", getParam("txtnohakmilik"));
+        this.context.put("noTelefon", getParam("txtnotelefon"));
 		
 	}
 
@@ -2066,6 +2190,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 		String socDaerah= getParam("socDaerah");
 		String socNegeri = getParam("socNegeri");
 		String norujukan = getParam("txtnorujukan");
+		String noTelefon = getParam("txtnotelefon");
 		
 		PihakBerkepentingan pihak = new PihakBerkepentingan();
 		pihak.setIdpihakberkepentingan(idpihakberkepentingan);
@@ -2077,6 +2202,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 		pihak.setIdDaerah(socDaerah);
 		pihak.setIdNegeri(socNegeri);
 		pihak.setNoRujukan(norujukan);
+		pihak.setTel(noTelefon);
 		FrmSenaraiFailPajakanKecilData.updatePemilik(pihak);
 	}
 
@@ -2324,7 +2450,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				h.put("poskod", getParam("txtposkod"));
 				h.put("idDaerah", Integer.parseInt(getParam("socDaerah")));
 				h.put("idNegeri", Integer.parseInt(getParam("idnegeri")));
-				h.put("noTelefon", "TIADA");
+				h.put("noTelefon", getParam("txtnotelefon"));
 				h.put("noFax", "TIADA");
 				h.put("noPerserahan","TIADA");
 				h.put("userID",userID);
@@ -2340,7 +2466,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 				h.put("alamat3", getParam("txtAlamat3"));
 				h.put("poskod", getParam("txtPoskod"));
 				h.put("idDaerah", Integer.parseInt(getParam("socDaerah")));
-				h.put("noTelefon", getParam("txtNoTelefon"));
+				h.put("noTelefon", getParam("txtnotelefon"));
 				h.put("noFax", getParam("txtNoFax"));
 				h.put("idBebanan", Integer.parseInt(getParam("idBebanan")));
 				h.put("noPerserahan", getParam("txtNoPerserahan"));
@@ -2370,7 +2496,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
               //h.put("idDaerah", Integer.parseInt(getParam("socDaerahalamat")));
               h.put("idDaerah", Integer.parseInt(getParam("socDaerah")));
               h.put("idNegeri", Integer.parseInt(getParam("socNegeri1")));
-              h.put("noTelefon", "TIADA");
+              h.put("noTelefon", getParam("txtnotelefon"));
               h.put("noFax", "TIADA");
               h.put("noPerserahan","TIADA");
               return FrmUtilData.simpanPB(h);
@@ -2385,7 +2511,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
     		  h.put("alamat3", getParam("txtAlamat3"));
     		  h.put("poskod", getParam("txtPoskod"));
     		  h.put("idDaerah", Integer.parseInt(getParam("socADaerah")));
-    		  h.put("noTelefon", getParam("txtNoTelefon"));
+    		  h.put("noTelefon", getParam("txtnotelefon"));
     		  h.put("noFax", getParam("txtNoFax"));
     		  h.put("idBebanan", Integer.parseInt(getParam("idBebanan")));
               h.put("noPerserahan", getParam("txtNoPerserahan"));
@@ -2491,6 +2617,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 		  	String postcode = getParam("txtposkod");
 		  	String district =getParam("socDaerah");
 		  	String state = getParam("socNegeri");
+		  	String noTelefon = getParam("txtnotelefon");
 		  
 		  	Hashtable h= new Hashtable();
 		  	h.put("idHakmilikurusan", idHakmilik);
@@ -2502,7 +2629,7 @@ public class FrmKJPJawatankuasaRuangPejabat extends AjaxBasedModule{
 			h.put("poskod", postcode);
 			h.put("idDaerah", Integer.parseInt(district));
 			h.put("idNegeri", Integer.parseInt(state));
-			h.put("noTelefon", "TIADA");
+			h.put("noTelefon", noTelefon);
 			h.put("noFax", "TIADA");
 			h.put("noPerserahan","TIADA");
 			h.put("userID",userId);
