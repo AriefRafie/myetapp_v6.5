@@ -35,7 +35,12 @@
 					</tr>
 					<tr>	
 						<td>&nbsp;</td>
-						<td> <a href="javascript:openManualPHP('UserManualJKPTGOnlinePHP')" class=style1><b>Panduan Permohonan Secara Online - PHP</b></a>	
+						<td> <a href="javascript:openManualPHP('UserManualJKPTGOnlinePHP')" class=style1><b>Panduan Permohonan Secara Online - PHP(Penyewaan)</b></a>	
+						</td>
+					</tr>
+					<tr>	
+						<td>&nbsp;</td>
+						<td> <a href="javascript:openManualPHPAPB('UserManualJKPTGOnlinePHPAPB')" class=style1><b>Panduan Permohonan Secara Online - PHP(Urusan Akta Pelantar Benua)</b></a>	
 						</td>
 					</tr>
 					<!-- <tr>	
@@ -100,7 +105,15 @@
 	    if (hWnd.focus != null) hWnd.focus();
 		hWnd.focus();
     }
-	
+	function openManualPHPAPB(pautan){
+    	var url = "../borang/"+pautan+".pdf";
+	    
+	    var hWnd = window.open(url,'printuser','width=800,height=500, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	       hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+		hWnd.focus();
+    }
 	function menuUtama(){
 		document.${formName}.action = "$EkptgUtil.getTabID('Menu',$myrole)?_portal_module=ekptg.view.online.FrmOnlineMenuUtama";
 		document.${formName}.submit();
