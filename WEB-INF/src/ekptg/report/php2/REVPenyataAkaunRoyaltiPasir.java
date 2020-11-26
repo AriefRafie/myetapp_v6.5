@@ -8,18 +8,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import ekptg.report.EkptgReportServlet;
 
-public class REVAkaunKawalan extends EkptgReportServlet {
+public class REVPenyataAkaunRoyaltiPasir extends EkptgReportServlet {
 
-	public REVAkaunKawalan() {
-		//super.setReportName("REVSenaraiFail");
-		super.setReportName("REVLaporanAkaunKawalanLatest");
-		super.setFolderName("php2\\REV\\LAPORAN");
+	public REVPenyataAkaunRoyaltiPasir() {
+		super.setReportName("REVPenyataAkaunRoyaltiPasir");
+		super.setFolderName("php2\\REV");
 	}
 
 	@Override
 	public void doProcessing(HttpServletRequest request,
 			HttpServletResponse response, ServletContext context, Map parameters)
 			throws Exception {
+
 
 	}
 }
