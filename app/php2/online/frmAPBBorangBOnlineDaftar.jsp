@@ -123,9 +123,9 @@
 	    <td width="1%">:</td>
 	    <td width="49%">
 	    	#if ($button=="view")
-		    <input type="text" name="txtNamaKapal" id="txtNamaKapal" value="$!txtNamaKapal" size="10" class="disabled" readonly />
+		    <input type="text" name="txtNamaKapal" id="txtNamaKapal" value="$!txtNamaKapal" size="25" class="disabled" readonly />
 		    #else
-		    <input type="text" name="txtNamaKapal" id="txtNamaKapal" value="$!txtNamaKapal" size="10" />
+		    <input type="text" name="txtNamaKapal" id="txtNamaKapal" value="$!txtNamaKapal" size="25" />
 		    #end
 		</td>
    </tr>
