@@ -668,7 +668,7 @@ public class FrmKJPGadaianA extends AjaxBasedModule {
 				
 				
 			//shiqa - simpanpengesahan 29062020	
-			}else if(submit.equalsIgnoreCase("simpanpengesahan")){
+			} else if(submit.equalsIgnoreCase("simpanpengesahan")){
 				getPermohonanInfo();
 				myLog.info("simpanpengesahan ::id_permohonan="+htpPermohonan.getPermohonan().getIdPermohonan());	
 				String semakMode="";
@@ -753,7 +753,68 @@ public class FrmKJPGadaianA extends AjaxBasedModule {
 				//context.put("selectedTab", 4);
 				vm = PATH+"frmKJPGadaianHantar.jsp";	
 			
-			}else{	
+			} 
+			//shiqa - pindaan pelulus ke penyedia 26112020
+			else if(submit.equalsIgnoreCase("simpanpengesahan2")){
+				getPermohonanInfo();
+				myLog.info("simpanpengesahan ::id_permohonan="+htpPermohonan.getPermohonan().getIdPermohonan());	
+				String semakMode="";
+				/*
+				 * 1 untuk status - Pendaftaran
+				 * 2 untuk status - Tindakan Pegawai 
+				 * 3 untuk status - Tindakan Pengarah
+				 * 4 untuk status - Permohonan Online (Pengesahan)
+				 * 5 untuk status - Penerimaan Permohonan
+				 * 6 untuk status - Tindakan Penyedia
+				*/
+				String langkah = "6";
+				EmailConfig ec = new EmailConfig();
+
+				//myLog.info("from="+email.FROM);
+				String emelSubjek = ec.tajukSemakan+"Gadaian";
+				String kandungan = "";
+				if(idJawatan.equals("4")){
+					myLog.info("BACA simpanpengesahan2============");
+					
+					langkah = "6";
+					
+					kandungan = getEmelSemak().setKandungan(htpPermohonan.getPermohonan().getPfdFail().getTajukFail(), String.valueOf(hUser.get("nama")));
+	    			
+					if(!getEmelSemak().checkEmail(idUser).equals(""))
+						getIHTP().getErrorHTML("[ONLINE-HTP GADAIAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
+
+					ec.sendByRoleKJP(getEmelSemak().checkEmail(idUser)
+							, "24"
+							, String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdKementerian())
+							, emelSubjek, kandungan);
+
+				}
+				Tblrujsuburusanstatusfail rsusf = new Tblrujsuburusanstatusfail();
+				rsusf.setIdPermohonan(htpPermohonan.getPermohonan().getIdPermohonan());
+				rsusf.setIdFail(htpPermohonan.getPermohonan().getPfdFail().getIdFail());
+				rsusf.setIdSuburusanstatusfail(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan());
+				rsusf.setUrl("-");
+				simpanPengesahan(rsusf,langkah);
+				HtpPermohonan htpPermohonanNew = new HtpPermohonan();
+				Permohonan permohonanNew = new Permohonan();
+				permohonanNew.setIdMasuk(Long.parseLong(idUser));
+				htpPermohonanNew.setPermohonan(permohonanNew);			
+				getIHTPPermohonan().kemaskiniPermohonanTarikh(htpPermohonanNew
+						,String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan())
+						,String.valueOf(htpPermohonan.getIdHtpPermohonan()));
+
+				if(getIOnline().isHantar(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan(),htpPermohonan.getPermohonan().getIdPermohonan()
+						,htpPermohonan.getPermohonan().getPfdFail().getIdFail(),langkah)){
+					semakMode = "xupdate";			
+				}else{
+					semakMode = "update";
+				}
+				myLog.info("selectedTab=======");
+				context.put("semakMode", semakMode);
+				//context.put("selectedTab", 4);
+				vm = PATH+"frmKJPGadaianHantar.jsp";	
+			
+			} else{	
 		    	myLog.info("page senarai fail");
 			    this.context.remove("lists");
 				String page = getParam("namaskrin");

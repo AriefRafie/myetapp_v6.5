@@ -238,6 +238,7 @@ public class FrmPYWSenaraiMesyuaratView extends AjaxBasedModule {
 			this.context.put("readonly", "");
 			this.context.put("inputTextClass", "");
 			this.context.put("disabled", "");
+			this.context.put("idUrusan", "");
 			this.context.put("selectJamDari", HTML.SelectJam("socJamDari", Long.parseLong(idJamDari), "", ""));
 			this.context.put("selectMinitDari", HTML.SelectMinit("socMinitDari", Long.parseLong(idMinitDari), "", ""));
 			this.context.put("selectJamHingga", HTML.SelectJam("socJamHingga", Long.parseLong(idJamDari), "", ""));

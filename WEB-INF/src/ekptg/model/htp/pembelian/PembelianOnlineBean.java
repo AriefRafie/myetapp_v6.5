@@ -29,7 +29,7 @@ public class PembelianOnlineBean implements IPembelianOnline {
 
 
 	@Override
-	public Vector findFailKJP(String carian, String noFail, String idNegeri
+	public Vector findFailKJP(String carian, String noFail, String noFailOnline, String idNegeri
 			,String idKementerian,String idAgensi, String idSuburusan, String idStatus) {
 		Db db = null;
 		Vector<HtpPermohonan> v = new Vector();
@@ -52,7 +52,8 @@ public class PembelianOnlineBean implements IPembelianOnline {
 				" AND N.id_Negeri = F.id_Negeri AND sf.aktif = '1' AND f.id_Urusan = 2 " +
 				" AND sf.id_Suburusanstatus = ss.id_Suburusanstatus AND ss.id_Status = s.id_Status " +
 				" AND f.ID_STATUS <> 999 " +
-				" AND f.no_Fail LIKE '%"+noFail+"%' " +
+				" AND p.no_permohonan LIKE '%"+noFailOnline.trim()+"%' " +
+				" AND f.no_Fail LIKE '%"+noFail.trim()+"%' " +
 				" AND f.tajuk_Fail LIKE '%"+carian+"%' "+
 				"";
 			if(idKementerian != null && !idKementerian.equals("") && !idKementerian.equals("0"))

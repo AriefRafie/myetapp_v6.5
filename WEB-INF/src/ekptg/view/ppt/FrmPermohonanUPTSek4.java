@@ -1867,6 +1867,7 @@ public class FrmPermohonanUPTSek4 extends AjaxBasedModule {
     		
     		setupPage(session,action,listPageDepan);
     		this.context.put("selectedTab",selectedTab);
+    		myLogger.info("vm : "+vm);
     		return vm;
     		
 	    }//close public template

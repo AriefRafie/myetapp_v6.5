@@ -10,6 +10,7 @@
 <input type="hidden" name="id_laporanpasir" id="id_laporanpasir" />
 <input type="hidden" name="bulan_pengambilan" id="bulan_pengambilan" />
 <input type="hidden" name="mode" id="mode" value="$mode"/>
+<input type="hidden" name="idFail" id="idFail" value="$idFail"/>
 </p>     
 
 #foreach ( $dataPelesen in $dataPelesen )
