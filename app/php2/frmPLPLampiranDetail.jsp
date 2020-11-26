@@ -14,9 +14,9 @@
         #if ($modePopup != 'new')
         <tr>
           <td width="1%">&nbsp;</td>
-          <td width="28%">&nbsp;</td>
-          <td width="1%">&nbsp;</td>
-          <td width="70%"><img src="../servlet/ekptg.view.php2.FrmDisplayImage?id=$idDokumen" alt="Imej Pelan" border="1" width="250" height="250" onclick="cetakImej($idDokumen)"/></td>
+          <td width="28%">Lampiran</td>
+          <td width="1%">:</td>
+          <td width="70%"><a href="javascript:papar_dokumen('$BeanMaklumatLampiran.idDokumen')" class="style1">Lampiran</a></td>
         </tr>
         <tr>
           <td width="1%">&nbsp;</td>
@@ -27,21 +27,21 @@
         #end
         <tr>
           <td width="1%">#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
-          <td width="28%">Nama Imej</td>
+          <td width="28%">Nama Lampiran</td>
           <td width="1%">:</td>
-          <td width="70%"><input name="txtNamaImej" type="text" id="txtNamaImej" value="$beanMaklumatLampiran.namaImej" size="43" maxlength="100" $readonlyPopup class="$inputTextClassPopup" onblur="this.value=this.value.toUpperCase();"></td>
+          <td width="70%"><input name="txtNamaLampiran" type="text" id="txtNamaLampiran" value="$beanMaklumatLampiran.namaImej" size="43" maxlength="100" $readonlyPopup class="$inputTextClassPopup" onblur="this.value=this.value.toUpperCase();"></td>
         </tr>
         <tr>
           <td>&nbsp;</td>
           <td valign="top">Catatan</td>
           <td valign="top">:</td>
-          <td valign="top"><textarea name="txtCatatanImej" cols="50" rows="5" class="$inputTextClassPopup" id="txtCatatanImej" $readonlyPopup>$beanMaklumatLampiran.catatanImej</textarea></td>
+          <td valign="top"><textarea name="txtCatatanLampiran" cols="50" rows="5" class="$inputTextClassPopup" id="txtCatatanLampiran" $readonlyPopup>$beanMaklumatLampiran.catatanImej</textarea></td>
         </tr>
         #end
         #if ($modePopup == 'new')
         <tr>
           <td>#if ($modePopup != 'view')<span class="style1">*</span>#end</td>
-          <td>Direktori Imej</td>
+          <td>Direktori Lampiran</td>
           <td>:</td>
           <td><input id="fileupload2" name="fileupload2" type="file" size="40" $readonlyPopup2  class="$inputTextClassPopup" /></td>
         </tr>
@@ -66,12 +66,12 @@
             <input name="cmdBatal" type="button" value="Batal" onClick="batalDokumen()" />
             #end
             #if ($modePopup == 'view')
-            <input name="cmdKemaskini" type="button" value="Kemaskini" onClick="kemaskiniDokumen()" />
-            <input name="cmdHapus" type="button" value="Hapus" onClick="hapusDokumen()" >
+            <input name="cmdKemaskini" type="button" value="Kemaskini" onClick="kemaskiniDokumen2()" />
+            <input name="cmdHapus" type="button" value="Hapus" onClick="hapusDokumen2()" >
             #end
             #if ($modePopup == 'update')
-            <input name="cmdSimpanKemaskini" type="button" value="Simpan" onClick="simpanKemaskiniDokumen()" />
-            <input name="cmdBatal" type="button" value="Batal" onClick="batalKemaskiniDokumen()" />
+            <input name="cmdSimpanKemaskini" type="button" value="Simpan" onClick="simpanKemaskiniDokumen2()" />
+            <input name="cmdBatal" type="button" value="Batal" onClick="batalKemaskiniDokumen2()" />
             #end </td>
         </tr>
       </table>
@@ -81,3 +81,12 @@
     <td>&nbsp;</td>
   </tr>
 </table>
+<script>
+function papar_dokumen(id){
+	var url = "../servlet/ekptg.view.php2.FrmDisplayImage?id="+id;
+    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener=document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+</script>

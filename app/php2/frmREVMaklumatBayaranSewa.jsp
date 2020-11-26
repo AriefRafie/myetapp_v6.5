@@ -569,12 +569,7 @@ function pemBayaranLL(){
 	doAjaxCall${formName}("");
 }
 function simpanBayaranLL(){
-
-	if(document.${formName}.txtTarikh.value == ""){
-		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus();
-		return;
-	}
+	alert("masuk x sini");
 	if(document.${formName}.socModBayaran.value == ""){
 		alert('Sila pilih Mod Bayaran.');
   		document.${formName}.socModBayaran.focus();
@@ -621,11 +616,6 @@ function hapusBayaranLL(){
 	doAjaxCall${formName}("");
 }
 function simpanKemaskiniBayaranLL(){
-	if(document.${formName}.txtTarikh.value == ""){
-		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus();
-		return;
-	}
 	if(document.${formName}.socCaraBayaran.value == ""){
 		alert('Sila pilih Cara Bayar.');
   		document.${formName}.socCaraBayaran.focus();

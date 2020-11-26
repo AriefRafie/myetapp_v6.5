@@ -38,6 +38,13 @@ public class REVMemoRampasanDeposit extends EkptgReportServlet {
 			parameters.put("EMAIL",(String)pegawai.get("emel"));
 		}
 
+		String noRujukan = "";
+		if (parameters.get("NO_RUJUKAN") != null){
+			noRujukan = (String)parameters.get("NO_RUJUKAN");
+		}
+
+		parameters.put("TARIKH_RUJUKAN",(String)parameters.get("TARIKH_RUJUKAN"));
+
 		super.setReportName("REVMemoRampasanDeposit");
 		super.setFolderName("php2\\REV");
 	}

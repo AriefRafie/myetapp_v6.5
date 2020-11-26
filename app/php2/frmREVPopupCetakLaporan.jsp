@@ -149,6 +149,46 @@
           <td ><input type="text" name="bakiLebihan" id="bakiLebihan" onblur="this.value=this.value.toUpperCase();" style="width:300px"/></td>
         </tr>
         #end
+        #if( $!report == 'SuratMemoPelarasanDeposit')
+        <tr>
+          <td >&nbsp;</td>
+          <td >Baki Deposit</td>
+          <td >:</td>
+          <td ><input type="text" name="bakiDeposit" id="bakiDeposit" onblur="this.value=this.value.toUpperCase();" style="width:300px"/></td>
+        </tr>
+        #end
+        #if( $!report == 'SuratMemoTuntutanHasil')
+        <tr>
+          <td ><span class="style1">*</span></td>
+          <td >Jumlah Hasil</td>
+          <td >:</td>
+          <td ><input type="text" name="jumHasil" id="jumHasil" onblur="this.value=this.value.toUpperCase();" style="width:300px"/></td>
+        </tr>
+        <tr>
+          <td ><span class="style1">*</span></td>
+          <td >Tarikh Hasil</td>
+          <td >:</td>
+          <td ><input type="text" name="txdTarikhHasil" id="txdTarikhHasil" value="$!txdTarikhHasil" onblur="check_date(this)" size="9"/>
+            <a href="javascript:displayDatePicker('txdTarikhHasil',false,'dmy');"><img border="0" src="../../img/calendar.gif"/></a>
+           </td>
+        </tr>
+        #end
+        #if( $!report == 'SuratMemoRampasanDeposit')
+        <tr>
+          <td ><span class="style1">*</span></td>
+          <td >No. Rujukan</td>
+          <td >:</td>
+          <td ><input type="text" name="noRujukan" id="noRujukan" onblur="this.value=this.value.toUpperCase();" style="width:300px"/></td>
+        </tr>
+        <tr>
+          <td ><span class="style1">*</span></td>
+          <td >Tarikh No. Rujukan</td>
+          <td >:</td>
+          <td ><input type="text" name="txdTarikhRujukan" id="txdTarikhRujukan" value="$!txdTarikhRujukan" onblur="check_date(this)" size="9"/>
+            <a href="javascript:displayDatePicker('txdTarikhRujukan',false,'dmy');"><img border="0" src="../../img/calendar.gif"/></a>
+           </td>
+        </tr>
+        #end
         #if( $report == 'suratKuiriCek')
         <tr>
           <td >&nbsp;</td>
@@ -610,7 +650,19 @@ function cetakSuratMemoTuntutanHasil() {
   		document.${formName}.socPegawai.focus();
 		return;
 	}
-	var url = "../../servlet/ekptg.report.php2.REVMemoTuntutanHasil?ID_PEGAWAI="+document.${formName}.socPegawai.value+"&ID_NOTIS="+document.${formName}.idNotis.value;
+
+	if(document.${formName}.txdTarikhHasil.value == ""){
+		alert('Sila masukkan Tarikh Hasil.');
+  		document.${formName}.txdTarikhHasil.focus();
+		return;
+	}
+
+	if(document.${formName}.jumHasil.value == ""){
+		alert('Sila masukkan Jumlah Hasil.');
+  		document.${formName}.jumHasil.focus();
+		return;
+	}
+	var url = "../../servlet/ekptg.report.php2.REVMemoTuntutanHasil?ID_PEGAWAI="+document.${formName}.socPegawai.value+"&ID_NOTIS="+document.${formName}.idNotis.value+"&JUMLAH_HASIL="+document.${formName}.jumHasil.value+"&TARIKH_HASIL="+document.${formName}.txdTarikhHasil.value;
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
@@ -624,7 +676,7 @@ function cetakSuratMemoPelarasanDeposit() {
   		document.${formName}.socPegawai.focus();
 		return;
 	}
-	var url = "../../servlet/ekptg.report.php2.REVMemoPelarasanDeposit?ID_PEGAWAI="+document.${formName}.socPegawai.value+"&ID_NOTIS="+document.${formName}.idNotis.value;
+	var url = "../../servlet/ekptg.report.php2.REVMemoPelarasanDeposit?ID_PEGAWAI="+document.${formName}.socPegawai.value+"&ID_NOTIS="+document.${formName}.idNotis.value+"&BAKI_DEPOSIT="+document.${formName}.bakiDeposit.value;
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
@@ -638,7 +690,20 @@ function cetakSuratMemoRampasanDeposit() {
   		document.${formName}.socPegawai.focus();
 		return;
 	}
-	var url = "../../servlet/ekptg.report.php2.REVMemoRampasanDeposit?ID_PEGAWAI="+document.${formName}.socPegawai.value+"&ID_NOTIS="+document.${formName}.idNotis.value;
+
+	if(document.${formName}.txdTarikhRujukan.value == ""){
+		alert('Sila masukkan Tarikh Rujukan.');
+  		document.${formName}.txdTarikhRujukan.focus();
+		return;
+	}
+
+	if(document.${formName}.noRujukan.value == ""){
+		alert('Sila masukkan No. Rujukan.');
+  		document.${formName}.noRujukan.focus();
+		return;
+	}
+
+	var url = "../../servlet/ekptg.report.php2.REVMemoRampasanDeposit?ID_PEGAWAI="+document.${formName}.socPegawai.value+"&ID_NOTIS="+document.${formName}.idNotis.value+"&NO_RUJUKAN="+document.${formName}.noRujukan.value+"&TARIKH_RUJUKAN="+document.${formName}.txdTarikhRujukan.value;
     var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;

@@ -38,6 +38,13 @@ public class REVMemoTuntutanHasil extends EkptgReportServlet {
 			parameters.put("EMAIL",(String)pegawai.get("emel"));
 		}
 
+		String jumahHasil = "";
+		if (parameters.get("JUMLAH_HASIL") != null){
+			jumahHasil = (String)parameters.get("JUMLAH_HASIL");
+		}
+
+		parameters.put("TARIKH_HASIL",(String)parameters.get("TARIKH_HASIL"));
+
 		super.setReportName("REVMemoTuntutanHasil");
 		super.setFolderName("php2\\REV");
 	}

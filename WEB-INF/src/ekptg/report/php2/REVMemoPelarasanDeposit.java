@@ -38,6 +38,11 @@ public class REVMemoPelarasanDeposit extends EkptgReportServlet {
 			parameters.put("EMAIL",(String)pegawai.get("emel"));
 		}
 
+		String bakiDeposit = "";
+		if (parameters.get("BAKI_DEPOSIT") != null){
+			bakiDeposit = (String)parameters.get("BAKI_DEPOSIT");
+		}
+
 		super.setReportName("REVMemoPelarasanDeposit");
 		super.setFolderName("php2\\REV");
 	}
