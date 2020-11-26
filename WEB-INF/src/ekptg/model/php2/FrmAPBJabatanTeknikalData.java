@@ -55,6 +55,7 @@ public class FrmAPBJabatanTeknikalData {
 	private Vector listNotifikasi = null;
 	private Vector beanMaklumatKJP = null;
 	private Vector beanMaklumatLampiranKJP = null;
+	FrmPhpNotifikasiEmel logicEmel = new FrmPhpNotifikasiEmel();
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -499,7 +500,7 @@ public class FrmAPBJabatanTeknikalData {
 		}
 	}
 
-	public void setMaklumatDokumen(String idUlasanTeknikal, String flagStatus) throws Exception {
+	public void setMaklumatDokumen(String idUlasanTeknikal) throws Exception {
 		Db db = null;
 		String sql = "";
 
@@ -509,7 +510,7 @@ public class FrmAPBJabatanTeknikalData {
 			Statement stmt = db.getStatement();
 
 			sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN, NAMA_FAIL, JENIS_IMEJ FROM TBLPHPDOKUMEN WHERE ID_ULASANTEKNIKAL = '"
-				+ idUlasanTeknikal + "' AND JENIS_IMEJ = '"+ flagStatus +"'";
+				+ idUlasanTeknikal + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -654,6 +655,32 @@ public class FrmAPBJabatanTeknikalData {
 
 			if (rs.next()) {
 				return (String) rs.getString("NAMA_KEMENTERIAN");
+			} else {
+				return "";
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public String getIdKementerianByKodKementerian(String kodKementerian)
+			throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT ID_KEMENTERIAN FROM TBLRUJKEMENTERIAN WHERE KOD_KEMENTERIAN = '"
+					+ kodKementerian + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				return (String) rs.getString("ID_KEMENTERIAN");
 			} else {
 				return "";
 			}
@@ -879,6 +906,7 @@ public class FrmAPBJabatanTeknikalData {
 			r.add("ID_PERMOHONAN", idPermohonan);
 			r.add("ID_MENTERI", idKementerian);
 			r.add("ID_PEJABAT", idPejabat);
+			r.add("ID_AGENSI", "437");
 			r.add("ID_NEGERI", getIdNegeriPerairan(idPermohonan));
 			r.add("FLAG_KJP", "JAS");
 			r.add("ID_DOKUMEN", "1");
@@ -1161,6 +1189,10 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
+			
+			if(!"".equals(idUlasanTeknikalString)) {
+    			logicEmel.sendEmailtoKJPAPB(idUlasanTeknikalString, session);
+    		}
 
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + idPermohonan + "] DIDAFTARKAN");
@@ -1415,6 +1447,10 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
+			
+			if(!"".equals(idUlasanTeknikalString)) {
+    			logicEmel.sendEmailtoKJPAPB(idUlasanTeknikalString, session);
+    		}
 
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + idPermohonan + "] DIDAFTARKAN");
@@ -1669,6 +1705,10 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
+			
+			if(!"".equals(idUlasanTeknikalString)) {
+    			logicEmel.sendEmailtoKJPAPB(idUlasanTeknikalString, session);
+    		}
 
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + idPermohonan + "] DIDAFTARKAN");
@@ -1923,6 +1963,10 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
+			
+			if(!"".equals(idUlasanTeknikalString)) {
+    			logicEmel.sendEmailtoKJPAPB(idUlasanTeknikalString, session);
+    		}
 
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + idPermohonan + "] DIDAFTARKAN");
@@ -2177,6 +2221,10 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
+			
+			if(!"".equals(idUlasanTeknikalString)) {
+    			logicEmel.sendEmailtoKJPAPB(idUlasanTeknikalString, session);
+    		}
 
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + idPermohonan + "] DIDAFTARKAN");
@@ -3100,6 +3148,10 @@ public class FrmAPBJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
+			
+			if(!"".equals(idUlasanTeknikalString)) {
+    			logicEmel.sendEmailtoKJPAPB(idUlasanTeknikalString, session);
+    		}
 
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL [" + idPermohonan + "] DIDAFTARKAN");

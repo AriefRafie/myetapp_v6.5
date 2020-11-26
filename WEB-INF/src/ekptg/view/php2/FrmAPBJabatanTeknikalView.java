@@ -57,7 +57,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 	String idAgensiJPS = "747";	
 
 	//BASED ON NEGERI PERAIRAN
-	String idKementerianJAS = "18";
+	String idKementerianJAS = "36";
 	String idKementerianPTG = "18";
 	
 	@Override
@@ -145,6 +145,8 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 			idSuratKe = "99999";
 		}
 		
+		idKementerianJAS = logic.getIdKementerianByKodKementerian("36");
+		
 		String step = getParam("step");	
 
 		vm = "app/php2/frmAPBJabatanTeknikal.jsp";
@@ -154,6 +156,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
         		idUlasanTeknikal = logic.simpanMaklumatJUPEM(idPermohonan, idKementerianJUPEM, idAgensiJUPEM, getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
     			logicEmel.sendEmailtoKJPAPB(idUlasanTeknikal, session);
+    			session.setAttribute("MSG", "EMEL PEMBERITAHUAN TELAH DIHANTAR KEPADA JUPEM UNTUK MEMBUAT ULASAN");
     		}
         	if ("simpanMaklumatUlanganJUPEM".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatUlanganJUPEM(idUlasanTeknikal, idPermohonan, idKementerianJUPEM, idAgensiJUPEM, getParam("txtTarikhHantar"), 
@@ -169,6 +172,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
         	if ("simpanMaklumatJAS".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatJAS(idPermohonan, idKementerianJAS, logic.getIdPejabatJASByNegeri(logic.getIdNegeriPerairan(idPermohonan)), getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
+        		logicEmel.sendEmailtoKJPAPB(idUlasanTeknikal, session);
         		
         		//GENERATE UTK JABATAN TEKNIKAL YG LAIN
         		logic.simpanMaklumatJMG(idPermohonan, idKementerianJMG, idAgensiJMG, getParam("txtTarikhHantar"), 
@@ -183,6 +187,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
         		logic.simpanMaklumatPTG(idPermohonan, idKementerianPTG, logic.getIdPejabatPTGByNegeri(logic.getIdNegeriPerairan(idPermohonan)), getParam("txtTarikhHantar"), 
         				getParam("txtJangkaMasa"), getParam("txtTarikhJangkaTerima"), session);
+    			session.setAttribute("MSG", "EMEL PEMBERITAHUAN TELAH DIHANTAR KEPADA JABATAN UNTUK MEMBUAT ULASAN");
     		}
         	if ("simpanMaklumatUlanganJAS".equals(hitButton)){
         		idUlasanTeknikal = logic.simpanMaklumatUlanganJAS(idUlasanTeknikal, idPermohonan, idKementerianJAS, logic.getIdPejabatJASByNegeri(logic.getIdNegeriPerairan(idPermohonan)), getParam("txtTarikhHantar"), 
@@ -523,19 +528,11 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 						flagStatus = (String) hashMaklumatJUPEM.get("flagStatus");
 						flagAktif = (String) hashMaklumatJUPEM.get("flagAktif");
 					}
-					
-					if ("1".equals(flagStatus)){
-						// MAKLUMAT DOKUMEN JUPEM
-						beanMaklumatDokumenJUPEM = new Vector();
-						logic.setMaklumatDokumen(idUlasanTeknikal, flagStatus);
-						beanMaklumatDokumenJUPEM = logic.getBeanMaklumatDokumen();
-						this.context.put("BeanMaklumatDokumenJUPEM",beanMaklumatDokumenJUPEM);
-					}
-					
+
 					if ("2".equals(flagStatus)){
 						// MAKLUMAT DOKUMEN JUPEM
 						beanMaklumatDokumenJUPEM = new Vector();
-						logic.setMaklumatDokumen(idUlasanTeknikal, flagStatus);
+						logic.setMaklumatDokumen(idUlasanTeknikal);
 						beanMaklumatDokumenJUPEM = logic.getBeanMaklumatDokumen();
 						this.context.put("BeanMaklumatDokumenJUPEM",beanMaklumatDokumenJUPEM);
 					}
@@ -652,7 +649,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 					if ("2".equals(flagStatus)){
 						// MAKLUMAT DOKUMEN JAS
 						beanMaklumatDokumenJAS = new Vector();
-						logic.setMaklumatDokumen(idUlasanTeknikal, flagStatus);
+						logic.setMaklumatDokumen(idUlasanTeknikal);
 						beanMaklumatDokumenJAS = logic.getBeanMaklumatDokumen();
 						this.context.put("BeanMaklumatDokumenJAS",beanMaklumatDokumenJAS);
 					}
@@ -774,7 +771,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 					if ("2".equals(flagStatus)){
 						// MAKLUMAT DOKUMEN JMG
 						beanMaklumatDokumenJMG = new Vector();
-						logic.setMaklumatDokumen(idUlasanTeknikal, flagStatus);
+						logic.setMaklumatDokumen(idUlasanTeknikal);
 						beanMaklumatDokumenJMG = logic.getBeanMaklumatDokumen();
 						this.context.put("BeanMaklumatDokumenJMG",beanMaklumatDokumenJMG);
 					}
@@ -896,7 +893,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 					if ("2".equals(flagStatus)){
 						// MAKLUMAT DOKUMEN JP
 						beanMaklumatDokumenJP = new Vector();
-						logic.setMaklumatDokumen(idUlasanTeknikal, flagStatus);
+						logic.setMaklumatDokumen(idUlasanTeknikal);
 						beanMaklumatDokumenJP = logic.getBeanMaklumatDokumen();
 						this.context.put("BeanMaklumatDokumenJP",beanMaklumatDokumenJP);
 					}
@@ -1018,7 +1015,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 					if ("2".equals(flagStatus)){
 						// MAKLUMAT DOKUMEN JLM
 						beanMaklumatDokumenJLM = new Vector();
-						logic.setMaklumatDokumen(idUlasanTeknikal, flagStatus);
+						logic.setMaklumatDokumen(idUlasanTeknikal);
 						beanMaklumatDokumenJLM = logic.getBeanMaklumatDokumen();
 						this.context.put("BeanMaklumatDokumenJLM",beanMaklumatDokumenJLM);
 					}
@@ -1140,7 +1137,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 					if ("2".equals(flagStatus)){
 						// MAKLUMAT DOKUMEN PHM
 						beanMaklumatDokumenPHM = new Vector();
-						logic.setMaklumatDokumen(idUlasanTeknikal, flagStatus);
+						logic.setMaklumatDokumen(idUlasanTeknikal);
 						beanMaklumatDokumenPHM = logic.getBeanMaklumatDokumen();
 						this.context.put("BeanMaklumatDokumenPHM",beanMaklumatDokumenPHM);
 					}
@@ -1262,7 +1259,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 					if ("2".equals(flagStatus)){
 						// MAKLUMAT DOKUMEN JPS
 						beanMaklumatDokumenJPS = new Vector();
-						logic.setMaklumatDokumen(idUlasanTeknikal, flagStatus);
+						logic.setMaklumatDokumen(idUlasanTeknikal);
 						beanMaklumatDokumenJPS = logic.getBeanMaklumatDokumen();
 						this.context.put("BeanMaklumatDokumenJPS",beanMaklumatDokumenJPS);
 					}
@@ -1385,7 +1382,7 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 					if ("2".equals(flagStatus)){
 						// MAKLUMAT DOKUMEN PTG
 						beanMaklumatDokumenPTG = new Vector();
-						logic.setMaklumatDokumen(idUlasanTeknikal, flagStatus);
+						logic.setMaklumatDokumen(idUlasanTeknikal);
 						beanMaklumatDokumenPTG = logic.getBeanMaklumatDokumen();
 						this.context.put("BeanMaklumatDokumenPTG",beanMaklumatDokumenPTG);
 					}
@@ -1547,6 +1544,14 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 		this.context.put("flagStatus", flagStatus);
         this.context.put("flagAktif", flagAktif);
         this.context.put("flagNotifikasi", flagNotifikasi);
+        
+        if (session.getAttribute("MSG") != null){
+			this.context.put("errMsg", session.getAttribute("MSG"));
+			session.removeAttribute("MSG");
+		} else {
+			this.context.put("errMsg", "");
+		}
+        
 		return vm;
 	}
 
@@ -1685,8 +1690,8 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 			con.setAutoCommit(false);
 			PreparedStatement ps = con
 					.prepareStatement("insert into TBLPHPDOKUMEN "
-							+ "(ID_DOKUMEN,NAMA_DOKUMEN,CATATAN,ID_MASUK,TARIKH_MASUK,CONTENT,JENIS_MIME,NAMA_FAIL,ID_ULASANTEKNIKAL,FLAG_DOKUMEN,ID_PERMOHONAN,JENIS_IMEJ) "
-							+ "values(?,?,?,?,SYSDATE,?,?,?,?,?,?,?)");
+							+ "(ID_DOKUMEN,NAMA_DOKUMEN,CATATAN,ID_MASUK,TARIKH_MASUK,CONTENT,JENIS_MIME,NAMA_FAIL,ID_ULASANTEKNIKAL,FLAG_DOKUMEN,ID_PERMOHONAN) "
+							+ "values(?,?,?,?,SYSDATE,?,?,?,?,?,?)");
 			ps.setLong(1, idDokumenUpload);
 			ps.setString(2, getParam("txtNamaImej"));
 			ps.setString(3, getParam("txtCatatan"));
@@ -1697,7 +1702,6 @@ public class FrmAPBJabatanTeknikalView extends AjaxBasedModule {
 			ps.setString(8, idUlasanTeknikal);
 			ps.setString(9, "L");
 			ps.setString(10, idPermohonan);
-			ps.setString(11, "2");
 			
 			ps.executeUpdate();
 
