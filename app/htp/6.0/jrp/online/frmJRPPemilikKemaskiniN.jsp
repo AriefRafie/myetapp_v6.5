@@ -12,45 +12,46 @@
     	<td>
 			<fieldset><legend><strong>MAKLUMAT HAKMILIK/PEMILIK</strong></legend>
 				<table width="100%" border="0">
-			  		<tr>
-			    		<td width="50%" valign="top" >
-			    				<table width="100%" border="0">
-			      				<tr>
-			        				<td valign="top">
-				        				<fieldset>
-				          				<legend>HAKMILIK</legend>
-				          				<table width="100%" border="0">
-				            			<tr>
-								              <td width="2%">&nbsp;</td>
-									            <td width="32%">
-													<div align="right" class="labelinput">
-												    	<div align="left">Negeri</div>
-												    </div>
-												</td>
-								              <td width="2%">:</td>
-				              				  <td width="64%">$socNegeri </td>
-				            			</tr>
-				            			
-				            			<tr>
-								              <td width="2%"><span class="labelmandatory">*</span></td>
-									              <td width="32%">
-													<div align="right" class="labelinput">
-												    	<div align="left">Daerah</div>
-												    </div>
-												  </td>
-								              <td width="2%">:</td>
-				              				  <td width="64%">$socDaerah1</tr>
-				            			<tr>
-								              <td width="2%"><span class="labelmandatory">*</span></td>
-									            <td width="32%">
-													<div align="right" class="labelinput">
-														<div align="left">Mukim</div>
-													</div>
-												</td>
-								              <td width="2%">:</td>
-				              				  <td width="64%">$socMukim</td>
-				            			</tr>	            			
-				            			<!-- <tr>
+					<tr>
+						<td width="50%" valign="top">
+							<table width="100%" border="0">
+								<tr>
+									<td valign="top">
+										<fieldset>
+											<legend>HAKMILIK</legend>
+											<table width="100%" border="0">
+												<tr>
+													<td width="2%">&nbsp;</td>
+													<td width="32%">
+														<div align="right" class="labelinput">
+															<div align="left">Negeri</div>
+														</div>
+													</td>
+													<td width="2%">:</td>
+													<td width="64%">$socNegeri</td>
+												</tr>
+
+												<tr>
+													<td width="2%"><span class="labelmandatory">*</span></td>
+													<td width="32%">
+														<div align="right" class="labelinput">
+															<div align="left">Daerah</div>
+														</div>
+													</td>
+													<td width="2%">:</td>
+													<td width="64%">$socDaerah1
+												</tr>
+												<tr>
+													<td width="2%"><span class="labelmandatory">*</span></td>
+													<td width="32%">
+														<div align="right" class="labelinput">
+															<div align="left">Mukim</div>
+														</div>
+													</td>
+													<td width="2%">:</td>
+													<td width="64%">$socMukim</td>
+												</tr>
+												<!-- <tr>
 								              <td width="1%">&nbsp;</td>
 								              <td width="40%">No Hakmilik</td>
 								              <td width="1%">:</td>
@@ -64,187 +65,208 @@
 	                     						</select>			              				  
 	                     					</td>
 				            			</tr>	-->
-				            			<tr>
-								              <td width="2%"><span class="labelmandatory">*</span></td>
-									            <td width="32%">
-													<div align="right" class="labelinput">
-												    	<div align="left">Jenis Hakmilik</div>
-												    </div>
-												</td>
-								              <td width="2%">:</td>
-				              				  <td width="64%">
-												$socHakmilik
-				              				  </td>
-				            			</tr>
-				            			<tr>
+												<tr>
+													<td width="2%"><span class="labelmandatory">*</span></td>
+													<td width="32%">
+														<div align="right" class="labelinput">
+															<div align="left">Jenis Hakmilik</div>
+														</div>
+													</td>
+													<td width="2%">:</td>
+													<td width="64%">$socHakmilik</td>
+												</tr>
+												<tr>
 
-								              <td width="2%"></td>
-								              <td width="32%">
-													<div align="right" class="labelinput">
-												    	<div align="left">No. Hakmilik</div>
-												    </div>								              	
-								              	</td>
-								              <td width="2%"></td>
-				              				  <td width="64%">
-
-												<input type="text" name="txtnohakmilik" size="30" value="$!nohakmilik" onkeyup="this.value=this.value.toUpperCase();"/>
-				              				  </td>
-				            			</tr>
-				            			<tr>
-								        	<td width="2%"><span class="labelmandatory"><!--*--></span></td>
-									    	<td width="32%">
-												<div align="right" class="labelinput">
-													<div align="left">No. Strata</div>
-												</div>
-											</td>
-								            <td width="2%">:</td>
-				              				<td width="64%"><span class="labeldisplay"><span class="labelinput">No.Bang</span>&nbsp;
-				              				    <input name="noBangunan" type="text" class="$disabled" id="noBangunan"  value="" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
-                                                <span class="labelinput">No.Ting</span>&nbsp;
-                                                <input name="noTingkat" type="text" class="$disabled" id="noTingkat"  value="" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
-                                                <span class="labelinput">No.Petak</span>&nbsp;
-                                                <input name="noPetak" type="text" class="$disabled" id="noPetak"  value="" size="3" maxlength="3" $readonly onkeyup="this.value=this.value.toUpperCase();"/>
-				              				</span></td>
-				            			</tr>
-				            			<tr>
-				            			  <td><span class="labelmandatory">*</span></td>
-				            			  <td><div align="right" class="labelinput">
-				            			    <div align="left">No Lot</div>
-				            			    </div></td>
-				            			  <td>:</td>
-				            			  <td> $noLot </td>
-				            			  </tr>
-				            			<tr>
-				            			  <td></td>
-				            			  <td></td>
-				            			  <td></td>
-				            			  <td><input type="text" name="txtnolot" size="15" value="$!nolot" onkeyup="this.value=this.value.toUpperCase();" /></td>
-				            			  </tr>
-				            			</table>
-				            			</fieldset>
-				   					</td>	
+													<td width="2%"></td>
+													<td width="32%">
+														<div align="right" class="labelinput">
+															<div align="left">No. Hakmilik</div>
+														</div>
+													</td>
+													<td width="2%"></td>
+													<td width="64%"><input type="text"
+														name="txtnohakmilik" size="30" value="$!nohakmilik"
+														onkeyup="this.value=this.value.toUpperCase();" /></td>
+												</tr>
+												<tr>
+													<td width="2%"><span class="labelmandatory">
+															<!--*-->
+													</span></td>
+													<td width="32%">
+														<div align="right" class="labelinput">
+															<div align="left">No. Strata</div>
+														</div>
+													</td>
+													<td width="2%">:</td>
+													<td width="64%"><span class="labeldisplay"><span
+															class="labelinput">No.Bang</span>&nbsp; <input
+															name="noBangunan" type="text" class="$disabled"
+															id="noBangunan" value="" size="3" maxlength="3" $readonly
+															onkeyup="this.value=this.value.toUpperCase();" /> <span
+															class="labelinput">No.Ting</span>&nbsp; <input
+															name="noTingkat" type="text" class="$disabled"
+															id="noTingkat" value="" size="3" maxlength="3" $readonly
+															onkeyup="this.value=this.value.toUpperCase();" /> <span
+															class="labelinput">No.Petak</span>&nbsp; <input
+															name="noPetak" type="text" class="$disabled" id="noPetak"
+															value="" size="3" maxlength="3" $readonly
+															onkeyup="this.value=this.value.toUpperCase();" /> </span></td>
+												</tr>
+												<tr>
+													<td><span class="labelmandatory">*</span></td>
+													<td><div align="right" class="labelinput">
+															<div align="left">No Lot</div>
+														</div></td>
+													<td>:</td>
+													<td>$noLot</td>
+												</tr>
+												<tr>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td><input type="text" name="txtnolot" size="15"
+														value="$!nolot"
+														onkeyup="this.value=this.value.toUpperCase();" /></td>
+												</tr>
+											</table>
+										</fieldset>
+									</td>
 								</tr>
-								</table>
-							</td><!--Right side-->			
-							<td width="50%" valign="top" >
-			    				<table width="100%" border="0">
-				      				<tr>
-				        				<td valign="top">
-					        				<fieldset>
-					          				<legend>PEMILIK</legend>
-					          				<table width="100%" border="0">
-					          				<tr>
-									              <td width="1%">&nbsp;</td>
-									        	<td width="40%">
-													<div align="right" class="labelinput">
-									    				<div align="left">
-									    					</div>
-									    			</div>
-									    		</td>
-									              <td width="1%">:</td>
-					              				  <td width="58%"><input type="checkbox" name="copy" onclick="copyAlamat('maklumat_pemohon')"  />
-									    					Alamat surat menyurat adalah sama
-					              				  </td>
-					            			</tr>
-					            			<tr>
-									              <td width="1%">&nbsp;</td>
-									        	<td width="40%">
-													<div align="right" class="labelinput">
-									    				<div align="left">
-															#parse ("app/htp/pajakankecil/utiliti/frmPBLabelScript.jsp")									    					</div>
-									    				</div>
-									    		</td>
-									              <td width="1%">:</td>
-					              				  <td width="63%">
-					              				  	<input type="text" name="txtnorujukan" size="30" value="$!norujukan" onblur="this.value=this.value.toUpperCase()" >
-					              				  </td>
-					            			</tr>
-					            			<tr>
-									              <td width="1%"><span class="labelmandatory">*</span></td>
-									              <td width="40%">
-													<div align="right" class="labelinput">
-									    				<div align="left">Nama</div>
-									    			</div>									    
-												  </td>
-									              <td width="1%">:</td>
-					              				  <td width="63%">
-					              				  	<input type="text" name="txtnama" size="30"  value="$!nama" onkeyup="this.value=this.value.toUpperCase();" >
-					              				  </td>
-					            			</tr>
-					            			<tr>
-									        	<td width="1%"><span class="labelmandatory">*</span></td>
-									        	<td width="40%">
-													<div align="right" class="labelinput">
-									    				<div align="left">Alamat Pemilik</div>
-									    			</div>									    
-											    </td>
-									            <td width="1%">:</td>
-					              				<td width="63%">
-					              					<input type="text" name="txtalamat1" size="30" value="$!alamat1"  onblur="this.value=this.value.toUpperCase()" >
-					              				</td>
-					            			</tr>
-					            			<tr>
-									              <td width="1%">&nbsp;</td>
-									              <td width="40%">&nbsp;</td>
-									              <td width="1%">&nbsp;</td>
-					              				  <td width="63%">
-					              				  	<input type="text" name="txtalamat2" size="30" value="$!alamat1" onblur="this.value=this.value.toUpperCase()" >
-					              				  </td>
-					            			</tr>
-					            			<tr>
-									              <td width="1%">&nbsp;</td>
-									              <td width="40%">&nbsp;</td>
-									              <td width="1%">&nbsp;</td>
-					              				  <td width="63%">
-					              				  	<input type="text" name="txtalamat3" size="30" value="$!alamat1" onblur="this.value=this.value.toUpperCase()" >
-					              				  </td>
-					            			</tr>
-					            			<tr>
-									              <td width="1%">&nbsp;</td>
-									        	<td width="40%">
-													<div align="right" class="labelinput">
-									    				<div align="left">Poskod</div>
-									    			</div>									    
-												</td>
-									              <td width="1%">:</td>
-					              				  <td width="63%">
-													<input type="text" name="txtposkod" maxlength="5" size="5" value="$!poskod" onkeyup="validatePoskod(this,this.value);" >
-					                	        	</td>
-					            			</tr>	            			
-					            			<tr>
-									        	<td width="1%"><span class="labelmandatory">*</span></td>
-									       		<td width="35%">
-													<div align="right" class="labelinput">
-									    				<div align="left">Negeri</div>
-									    			</div>									    
-											    </td>
-									            <td width="1%">:</td>
-					              				<td width="63%">$socNegeri1</td>
-					            			</tr>	
+							</table>
+						</td>
+						<!--Right side-->
+						<td width="50%" valign="top">
+							<table width="100%" border="0">
+								<tr>
+									<td valign="top">
+										<fieldset>
+											<legend>PEMILIK</legend>
+											<table width="100%" border="0">
+												<tr>
+													<td width="1%">&nbsp;</td>
+													<td width="40%">
+														<div align="right" class="labelinput">
+															<div align="left"></div>
+														</div>
+													</td>
+													<td width="1%">:</td>
+													<td width="58%"><input type="checkbox" name="copy"
+														onclick="copyAlamat('maklumat_pemohon')" /> Alamat surat
+														menyurat adalah sama</td>
+												</tr>
+												<tr>
+													<td width="1%">&nbsp;</td>
+													<td width="40%">
+														<div align="right" class="labelinput">
+															<div align="left">#parse
+																("app/htp/pajakankecil/utiliti/frmPBLabelScript.jsp")</div>
+														</div>
+													</td>
+													<td width="1%">:</td>
+													<td width="63%"><input type="text" name="txtnorujukan"
+														size="30" value="$!norujukan"
+														onblur="this.value=this.value.toUpperCase()"></td>
+												</tr>
+												<tr>
+													<td width="1%"><span class="labelmandatory">*</span></td>
+													<td width="40%">
+														<div align="right" class="labelinput">
+															<div align="left">Nama</div>
+														</div>
+													</td>
+													<td width="1%">:</td>
+													<td width="63%"><input type="text" name="txtnama"
+														size="30" value="$!nama"
+														onkeyup="this.value=this.value.toUpperCase();"></td>
+												</tr>
+												<tr>
+													<td width="1%"><span class="labelmandatory">*</span></td>
+													<td width="40%">
+														<div align="right" class="labelinput">
+															<div align="left">Alamat Pemilik</div>
+														</div>
+													</td>
+													<td width="1%">:</td>
+													<td width="63%"><input type="text" name="txtalamat1"
+														size="30" value="$!alamat1"
+														onblur="this.value=this.value.toUpperCase()"></td>
+												</tr>
+												<tr>
+													<td width="1%">&nbsp;</td>
+													<td width="40%">&nbsp;</td>
+													<td width="1%">&nbsp;</td>
+													<td width="63%"><input type="text" name="txtalamat2"
+														size="30" value="$!alamat1"
+														onblur="this.value=this.value.toUpperCase()"></td>
+												</tr>
+												<tr>
+													<td width="1%">&nbsp;</td>
+													<td width="40%">&nbsp;</td>
+													<td width="1%">&nbsp;</td>
+													<td width="63%"><input type="text" name="txtalamat3"
+														size="30" value="$!alamat1"
+														onblur="this.value=this.value.toUpperCase()"></td>
+												</tr>
+												<tr>
+													<td width="1%">&nbsp;</td>
+													<td width="40%">
+														<div align="right" class="labelinput">
+															<div align="left">Poskod</div>
+														</div>
+													</td>
+													<td width="1%">:</td>
+													<td width="63%"><input type="text" name="txtposkod"
+														maxlength="5" size="5" value="$!poskod"
+														onkeyup="validatePoskod(this,this.value);"></td>
+												</tr>
+												<tr>
+													<td width="1%"><span class="labelmandatory">*</span></td>
+													<td width="35%">
+														<div align="right" class="labelinput">
+															<div align="left">Negeri</div>
+														</div>
+													</td>
+													<td width="1%">:</td>
+													<td width="63%">$socNegeri1</td>
+												</tr>
 
-					            			<tr>
-					            			  <td><span class="labelmandatory">*</span></td>
-					            			  <td><div align="right" class="labelinput">
-					            			    <div align="left">Daerah</div>
-					            			    </div></td>
-					            			  <td>:</td>
-					            			  <td>$socDaerah</td>
-					            			  </tr>	            			
+												<tr>
+													<td><span class="labelmandatory">*</span></td>
+													<td><div align="right" class="labelinput">
+															<div align="left">Daerah</div>
+														</div></td>
+													<td>:</td>
+													<td>$socDaerah</td>
+												</tr>
+												<tr>
+													<td width="1%"><span class="labelmandatory">*</span></td>
+													<td width="40%">
+														<div align="right" class="labelinput">
+															<div align="left">No. Telefon</div>
+														</div>
+													</td>
+													<td width="1%">:</td>
+													<td width="63%"><input type="text" name="txtnotelefon"
+														size="30" value="$!tel"
+														onkeyup="this.value=this.value.toUpperCase();"></td>
+												</tr>
 
-					            			<!--<tr>
+
+												<!--<tr>
 									              <td width="1%">&nbsp;</td>
 									              <td width="35%">Nama Pegawai</td>
 									              <td width="1%">:</td>
 					              				  <td width="63%">$socPegawai</td>
-					            			</tr>-->	            				            			
+					            			</tr>-->
 											</table>
 										</fieldset>
-					   					</td>	
-									</tr>
-								</table>
-							</td> <!--end right (pemilik)-->
+									</td>
+								</tr>
+							</table>
+						</td>
+						<!--end right (pemilik)-->
 					</tr>
-				</table> 
+				</table>
 				<table width="100%">
 					<tr>
 		        		<td>
@@ -356,6 +378,11 @@
    	if ( document.${formName}.socDaerah.value == "" ) { 
     	alert('Sila pilih maklumat daerah terlebih dahulu.');
     	document.${formName}.socDaerah.focus(); 
+    	return; 
+    }
+   	if ( document.${formName}.txtnotelefon.value == "" ) { 
+    	alert('Sila masukkan No. Telefon terlebih dahulu.');
+    	document.${formName}.txtnotelefon.focus(); 
     	return; 
     }
 	document.${formName}.id_kemaskini.value = id;

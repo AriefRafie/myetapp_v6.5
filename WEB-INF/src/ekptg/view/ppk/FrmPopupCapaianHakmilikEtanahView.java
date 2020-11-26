@@ -93,6 +93,7 @@ public class FrmPopupCapaianHakmilikEtanahView extends AjaxBasedModule {
 		this.context.put("idPermohonanSimati", idPermohonanSimati);			
 		
 		return vm;
+		
 	}
 	
 	public void setupPage(HttpSession session,String action,Vector list) {

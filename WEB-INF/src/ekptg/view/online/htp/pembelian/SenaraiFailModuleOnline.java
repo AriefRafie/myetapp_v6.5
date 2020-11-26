@@ -19,6 +19,8 @@ import lebah.portal.action.AjaxModule;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
 
 import ekptg.helpers.DB;
@@ -61,6 +63,7 @@ import ekptg.model.htp.pembelian.PembelianOnlineBean;
 import ekptg.model.htp.pembelian.PemilikBean;
 import ekptg.model.htp.utiliti.HTPEmelPermohonanBean;
 import ekptg.model.htp.utiliti.HTPEmelSemakanBean;
+import ekptg.model.ppt.FrmPermohonanUPTData;
 import ekptg.model.utils.IUserPegawai;
 import ekptg.model.utils.UserBean;
 import ekptg.model.utils.emel.EmailConfig;
@@ -74,6 +77,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 	private static final long serialVersionUID = 6717995094916712274L;
 	private static final String PATH="app/htp/pembelian/fail/online/";
 	static Logger myLog = Logger.getLogger(ekptg.view.online.htp.pembelian.SenaraiFailModuleOnline.class);
+	private static final Log log = LogFactory.getLog(SenaraiFailModuleOnline.class);
 	private Bangunan bangunan = null;
 	private final String IDJENISTANAH = "4"; //TANAH MILIK - TM
 	private final String URUSAN_TANAH = "01";
@@ -332,9 +336,12 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			context.put("mt", m);
 			context.put("selectedTab", 0);
 			vm = PATH+"tanahOnline.jsp";
-			myLog.info("===Maklumat Tanah Online===" +vm);
+			myLog.info("===Maklumat Tanah Online===" +vm+" "+idPermohonan);
 			context.put("page","2");
-
+			context.put("saiz_listTanah", getHakmilikList(idPermohonan));
+			context.put("saiz_listPB", getHakmilikPB(idPermohonan));
+			context.put("saiz_listPenjual", getListPenjual(idPermohonan));
+			context.put("saiz_listLampiran", getListLampiran(idPermohonan));
 		}else if(command.equals("maklumatTanah")){
 			getValues();
 			getPermohonanInfo();
@@ -342,15 +349,19 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			Vector<HakmilikUrusan> m = getIPembelian().getHakmilikList(getParam("txtidPermohonan"));
 			context.put("mt", m);
 			context.put("selectedTab", 0);
+			
 			vm = PATH+"tanah2.jsp";
 			myLog.info("maklumatTanah ::"+vm);	
 			context.put("page","2");
 		}
 		else if(command.equals("tambahTanah")){
+			jawatan = String.valueOf(hUser.get("jawatan"));
+			idJawatan = String.valueOf(hUser.get("idjawatan"));
+			context.put("idjawatan", idJawatan);
 			myLog.info("tambahTanah ::"+vm);	
 			tambahTanahDetail();
 			context.put("button", "simpan");
-			context.remove("urusan");
+			context.put("urusan", urusan);
 			vm = PATH+"tanahInfoOnline.jsp";
 			
 		}else if(command.equalsIgnoreCase("doChangeDaerah")){
@@ -372,6 +383,10 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			context.put("urusan", urusan);
 			context.put("mt", m);
 			context.put("selectedTab", 0);
+			context.put("saiz_listTanah", getHakmilikList(idPermohonan));
+			context.put("saiz_listPB", getHakmilikPB(idPermohonan));
+			context.put("saiz_listPenjual", getListPenjual(idPermohonan));
+			context.put("saiz_listLampiran", getListLampiran(idPermohonan));
 			vm = PATH+"tanahOnline.jsp";
 		
 		}else if(command.equalsIgnoreCase("detailTanah")){			
@@ -389,6 +404,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			tambahTanahDetail2();
 			context.put("urusan", urusan);
 			context.put("button", "kemaskini");
+			
 			vm = PATH+"tanahInfoOnline.jsp";
 			myLog.info("detailTanah Online::"+vm);	
 			
@@ -407,6 +423,10 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			context.put("buttonMode", 2);
 			context.put("mode", 0);
 			context.put("pemilik", pemilik);
+			context.put("saiz_listTanah", getHakmilikList(idPermohonan));
+			context.put("saiz_listPB", getHakmilikPB(idPermohonan));
+			context.put("saiz_listPenjual", getListPenjual(idPermohonan));
+			context.put("saiz_listLampiran", getListLampiran(idPermohonan));
 			//context.put("mt", m);
 			//context.put("pp", p);
 			
@@ -417,6 +437,10 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			Vector<HakmilikUrusan> m = getIPembelian().getHakmilikList(idPermohonan);
 			context.put("mt", m);
 			context.put("selectedTab", 0);
+			context.put("saiz_listTanah", getHakmilikList(idPermohonan));
+			context.put("saiz_listPB", getHakmilikPB(idPermohonan));
+			context.put("saiz_listPenjual", getListPenjual(idPermohonan));
+			context.put("saiz_listLampiran", getListLampiran(idPermohonan));
 			vm = PATH+"tanahOnline.jsp";
 		
 		}
@@ -542,6 +566,10 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			context.put("bil", 100);
 			//context.put("selectedTab", 2);
 			context.put("selectedTab", 1);
+			context.put("saiz_listTanah", getHakmilikList(idPermohonan));
+			context.put("saiz_listPB", getHakmilikPB(idPermohonan));
+			context.put("saiz_listPenjual", getListPenjual(idPermohonan));
+			context.put("saiz_listLampiran", getListLampiran(idPermohonan));
 //			if(ID_URUSANTANAH.equals(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan())) ||
 //					ID_URUSANTANAH1.equals(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan()))	){
 //				context.put("selectedTab", 1);
@@ -582,13 +610,18 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			context.put("pp", p);
 			//context.put("selectedTab", 2);
 			context.put("selectedTab", 1);
+			context.put("saiz_listTanah", getHakmilikList(idPermohonan));
+			context.put("saiz_listPB", getHakmilikPB(idPermohonan));
+			context.put("saiz_listPenjual", getListPenjual(idPermohonan));
+			context.put("saiz_listLampiran", getListLampiran(idPermohonan));
 //			if(ID_URUSANTANAH.equals(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan())) ||
 //					ID_URUSANTANAH1.equals(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan()))	){
 //				context.put("selectedTab", 1);
 //			}
 			vm = PATH+"tanahOnline.jsp";
 			
-		}else if(command.equalsIgnoreCase("detailPemilik")){			
+		}else if(command.equalsIgnoreCase("detailPemilik")){
+			
 			getValuesPemilik();
 			tambahTanahDetail3();
 			pemilik = getIPemilik().findPemilik(pemilik.getIdpihakberkepentingan());
@@ -597,17 +630,22 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			context.put("socNegeri",HTML.SelectNegeri("socNegeri", Long.parseLong(pemilik.getIdNegeri()),"disabled"));
 			context.put("socDaerah", HTML.SelectDaerahByNegeri(pemilik.getIdNegeri(), "socDaerah", Long.parseLong(pemilik.getIdDaerah()), "disabled"));
 			context.put("selectJenisNoPB", HTML.SelectJenisNoPb("selectJenisNoPB", Long.parseLong(pemilik.getJenisPB()), "disabled"));
-			context.put("buttonMode", 2);
+			context.put("buttonMode", 0);
 			context.put("mode", 1);
 			context.put("pemilik", pemilik);
 			context.put("mt", m);
 			context.put("pp", p);
 			context.put("selectedTab", 2);
+			context.put("inputstyleread", readonly);
+			context.put("saiz_listTanah", getHakmilikList(idPermohonan));
+			context.put("saiz_listPB", getHakmilikPB(idPermohonan));
+			context.put("saiz_listPenjual", getListPenjual(idPermohonan));
+			context.put("saiz_listLampiran", getListLampiran(idPermohonan));
 			if(ID_URUSANTANAH.equals(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan())) ||
 					ID_URUSANTANAH1.equals(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan()))	){
 				context.put("selectedTab", 1);
 			}
-			vm = PATH+"tanah2.jsp";
+			vm = PATH+"tanahOnline.jsp";
 			myLog.info("detailPemilik ::"+vm);
 			
 		}else if(command.equalsIgnoreCase("detailpemilikonline")){			
@@ -616,9 +654,9 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			pemilik = getIPemilik().findPemilik(pemilik.getIdpihakberkepentingan());
 			Vector<HakmilikUrusan> m = getIPembelian().getHakmilikList(getParam("txtidPermohonan"));
 			Vector<PihakBerkepentingan> p = getIPemilik().findPemilikByPermohonan(getParam("txtidPermohonan"));
-			context.put("socNegeri",HTML.SelectNegeri("socNegeri", Long.parseLong(pemilik.getIdNegeri()),"disabled"));
-			context.put("socDaerah", HTML.SelectDaerahByNegeri(pemilik.getIdNegeri(), "socDaerah", Long.parseLong(pemilik.getIdDaerah()), "disabled"));
-			context.put("selectJenisNoPB", HTML.SelectJenisNoPb("selectJenisNoPB", Long.parseLong(pemilik.getJenisPB()), "disabled"));
+			context.put("socNegeri",HTML.SelectNegeri("socNegeri", Long.parseLong(pemilik.getIdNegeri()),""));
+			context.put("socDaerah", HTML.SelectDaerahByNegeri(pemilik.getIdNegeri(), "socDaerah", Long.parseLong(pemilik.getIdDaerah()), ""));
+			context.put("selectJenisNoPB", HTML.SelectJenisNoPb("selectJenisNoPB", Long.parseLong(pemilik.getJenisPB()), ""));
 			context.put("buttonMode", 2);
 			context.put("mode", 1);
 			context.put("pemilik", pemilik);
@@ -626,6 +664,10 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			context.put("pp", p);
 			//context.put("selectedTab", 2);
 			context.put("selectedTab", 1);
+			context.put("saiz_listTanah", getHakmilikList(idPermohonan));
+			context.put("saiz_listPB", getHakmilikPB(idPermohonan));
+			context.put("saiz_listPenjual", getListPenjual(idPermohonan));
+			context.put("saiz_listLampiran", getListLampiran(idPermohonan));
 //			if(ID_URUSANTANAH.equals(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan())) ||
 //					ID_URUSANTANAH1.equals(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan()))	){
 //				context.put("selectedTab", 1);
@@ -651,6 +693,10 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			context.put("pp", p);
 			//context.put("selectedTab", 2);
 			context.put("selectedTab", 1);
+			context.put("saiz_listTanah", getHakmilikList(idPermohonan));
+			context.put("saiz_listPB", getHakmilikPB(idPermohonan));
+			context.put("saiz_listPenjual", getListPenjual(idPermohonan));
+			context.put("saiz_listLampiran", getListLampiran(idPermohonan));
 //			if(ID_URUSANTANAH.equals(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan())) ||
 //					ID_URUSANTANAH1.equals(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan()))	){
 //				context.put("selectedTab", 1);
@@ -668,6 +714,10 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			context.put("pemilik", pemilik);
 			context.put("mt", m);
 			context.put("pp", p);
+			context.put("saiz_listTanah", getHakmilikList(idPermohonan));
+			context.put("saiz_listPB", getHakmilikPB(idPermohonan));
+			context.put("saiz_listPenjual", getListPenjual(idPermohonan));
+			context.put("saiz_listLampiran", getListLampiran(idPermohonan));
 			//context.put("selectedTab", 2);
 			context.put("selectedTab", 1);
 //			if(ID_URUSANTANAH.equals(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan())) ||
@@ -700,6 +750,11 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			context.put("mode", mode);
 			context.put("penjualMode", penjualMode);
 			context.put("selectedTab", 3);
+			this.context.put("saiz_listTanah", getHakmilikList(idPermohonan));
+			this.context.put("saiz_listPB", getHakmilikPB(idPermohonan));
+			this.context.put("saiz_listPenjual", getListPenjual(idPermohonan));
+			context.put("saiz_listLampiran", getListLampiran(idPermohonan));
+
 			if(ID_URUSANTANAH.equals(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan())) ||
 					ID_URUSANTANAH1.equals(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan()))	){
 				context.put("selectedTab", 2);
@@ -776,6 +831,10 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			context.put("penjualMode", "");
 			context.put("enable", " disabled");
 			context.put("pemohon", pemohon);
+			context.put("saiz_listTanah", getHakmilikList(idPermohonan));
+			context.put("saiz_listPB", getHakmilikPB(idPermohonan));
+			context.put("saiz_listPenjual", getListPenjual(idPermohonan));
+			context.put("saiz_listLampiran", getListLampiran(idPermohonan));
 			vm = PATH+"tanahOnline.jsp";
 		
 		}else if(command.equalsIgnoreCase("kemaskiniPenjual")){
@@ -796,6 +855,10 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			context.put("enable", " ");
 //			context.put("selectedTab", 3);
 			context.put("selectedTab", 2);
+			context.put("saiz_listTanah", getHakmilikList(idPermohonan));
+			context.put("saiz_listPB", getHakmilikPB(idPermohonan));
+			context.put("saiz_listPenjual", getListPenjual(idPermohonan));
+			context.put("saiz_listLampiran", getListLampiran(idPermohonan));
 //			if(ID_URUSANTANAH.equals(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan())) ||
 //					ID_URUSANTANAH1.equals(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan()))	){
 //				context.put("selectedTab", 2);
@@ -824,7 +887,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			vm = PATH+"tanahOnline.jsp";
 		
 		}else if(command.equalsIgnoreCase("hapuspenjual")){
-				myLog.info("updatePenjual ::"+vm);
+				myLog.info("hapuspenjual ::"+vm);
 				getPermohonanInfo();
 				getPenjualDetails();
 				getIPembelian().hapusPenjual(pemohon);
@@ -842,27 +905,29 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 //					context.put("selectedTab", 2);
 //				}
 				
-				String penjualMode = "edit";
-				String mode =" readonly";
-				String enable =" disabled";
+				String penjualMode = "new";
+				//String mode =" readonly";
+				//String enable =" disabled";
 				pemohon = getIPembelian().findByPermohonan(String.valueOf(permohonan.getIdPermohonan()));
 				if(pemohon == null){
+					myLog.info("pemohon == null ::"+vm);
 					penjualMode = "new";
-					mode ="";
-					enable ="";
+					//mode ="";
+					//enable ="";
 					context.put("selectNegeriP", HTML.SelectNegeri("selectNegeriP",null,""," onChange=\"doChangePenjualNegeri()\" "));
 					context.put("selectDaerahP", HTML.SelectDaerah("selectDaerahP",null,""));
 					context.put("pemohon", null);
 					
 				}else{
+					myLog.info("pemohonon == else ::"+vm);
 					context.put("selectNegeriP", HTML.SelectNegeri("selectNegeriP",Long.parseLong(pemohon.getIdNegeri()) ,"disabled", " onChange=\"doChangePenjualNegeri()\" "));
 					context.put("selectDaerahP", HTML.SelectDaerahByNegeri(pemohon.getIdNegeri(), "selectDaerahP", Long.parseLong(pemohon.getIdDaerah()), "disabled"));
 				
 				}
 				Vector<PihakBerkepentingan> p = getIPemilik().findPemilikByPermohonan(getParam("txtidPermohonan"));
 				context.put("pemiliks", p);
-				context.put("enable", enable);
-				context.put("mode", mode);
+				//ontext.put("enable", enable);
+				//context.put("mode", mode);
 				context.put("penjualMode", penjualMode);
 //				context.put("selectedTab", 3);
 				context.put("selectedTab", 2);
@@ -871,6 +936,10 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 //					context.put("selectedTab", 2);
 //				}
 				context.put("pemohon", pemohon);
+				context.put("saiz_listTanah", getHakmilikList(idPermohonan));
+				context.put("saiz_listPB", getHakmilikPB(idPermohonan));
+				context.put("saiz_listPenjual", getListPenjual(idPermohonan));
+				context.put("saiz_listLampiran", getListLampiran(idPermohonan));
 				vm = PATH+"tanahOnline.jsp";
 				
 		}else if(command.equalsIgnoreCase("assignPenjual")){
@@ -890,6 +959,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 				pemohon.setPoskod(pemilik.getPoskod());
 				pemohon.setTel(pemilik.getTel());
 				pemohon.setFax(pemilik.getFax());
+				pemohon.setEmel(pemilik.getEmel());
 				pemohon.setNoPemohon(pemilik.getNoRujukan());
 				pemohon.setIdNegeri(pemilik.getIdNegeri());
 				pemohon.setIdDaerah(pemilik.getIdDaerah());
@@ -921,6 +991,10 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			context.put("enable", enable);
 //			context.put("selectedTab", 3);
 			context.put("selectedTab", 2);
+			context.put("saiz_listTanah", getHakmilikList(idPermohonan));
+			context.put("saiz_listPB", getHakmilikPB(idPermohonan));
+			context.put("saiz_listPenjual", getListPenjual(idPermohonan));
+			context.put("saiz_listLampiran", getListLampiran(idPermohonan));
 //			if(ID_URUSANTANAH.equals(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan())) ||
 //					ID_URUSANTANAH1.equals(String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan()))	){
 //				context.put("selectedTab", 2);
@@ -1004,6 +1078,10 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			getSemakanPerakuanPembelian();
 
 			context.put("selectedTab", 4);
+			context.put("saiz_listTanah", getHakmilikList(idPermohonan));
+			context.put("saiz_listPB", getHakmilikPB(idPermohonan));
+			context.put("saiz_listPenjual", getListPenjual(idPermohonan));
+			context.put("saiz_listLampiran", getListLampiran(idPermohonan));
 			vm = PATH+"tanahOnline.jsp";
 			
 		}else if(command.equalsIgnoreCase("tambahlampiran")){
@@ -1045,8 +1123,9 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			myLog.info("simpanlampiran ::"+htpPermohonan.getPermohonan().getIdPermohonan());
 			myLog.info("simpanlampiran:id_fail="+htpPermohonan.getPermohonan().getPfdFail().getIdFail());
 			uploadFiles(ses,String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdFail()));
+			context.put("selectedTab", 4);
+			
 			vm = PATH+"maklumatDokumen.jsp";
-			//myLog.info("simpanlampiran ::"+vm);	
 
 		}else if(command.equalsIgnoreCase("lampiran")){
 			vm = PATH+"maklumatDokumen.jsp";
@@ -1064,6 +1143,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 				    viewModeLampiran(ses,idGambar);
 				    
 			 }else if("hapus".equals(nextAction)){
+				 	myLog.info("hapus ::"+nextAction);
 //					this.context.put("readOnly", "readOnly");
 //				    this.context.put("disabled", "disabled");
 //				    this.context.put("mode","view");					    
@@ -1072,7 +1152,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 				    getIOnline().hapusLampiran(idDokumen,idGambar);
 					Vector dokumens = getIOnline().getLampiranByPermohonan(String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan()));
 					context.put("senaraidokumen", dokumens);
-					context.put("selectedTab", 3);
+					context.put("selectedTab", 4);
 					vm = PATH+"tanahOnline.jsp";
 					
 			 }else if("kemaskiniDetail".equals(nextAction)){
@@ -1095,6 +1175,10 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 				 viewModeLampiran(ses,idGambar);	
 				 
 			 }
+			 	context.put("saiz_listTanah", getHakmilikList(idPermohonan));
+				context.put("saiz_listPB", getHakmilikPB(idPermohonan));
+				context.put("saiz_listPenjual", getListPenjual(idPermohonan));
+				context.put("saiz_listLampiran", getListLampiran(idPermohonan));
 		}else if(command.equalsIgnoreCase("viewsemakan")){
 			getPermohonanInfo();
 			myLog.info("viewsemakan ::id_permohonan="+htpPermohonan.getPermohonan().getIdPermohonan());	
@@ -1205,6 +1289,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			}else if (idJawatan.equals("4")){
 				langkah = "-1";
 				emelSubjek = ec.tajukHantarPermohonan + "Perakuan Pembelian";
+				String userEmelInternal = "shiqaosman@gmail.com";
 						
 				kandungan = getEmelSemak().setKandungan(htpPermohonan.getPermohonan().getPfdFail().getTajukFail()
 							,htpPermohonan.getPermohonan().getPfdFail().getNamaKementerian()
@@ -1214,8 +1299,69 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 					getIHTP().getErrorHTML("[ONLINE-HTP PEMBELIAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
 				//   (HTP)HQPenggunaPembelianPerletakhakan,   (HTP)HQPenggunaPembelian, (HTP)HQPengguna
 
-				ec.hantarPermohonan(getEmelSemak().checkEmail(userID), "(HTP)HQPenggunaPembelianPerletakhakan", emelSubjek, kandungan);
+				//tutup untuk pengujian
+				//ec.hantarPermohonan(getEmelSemak().checkEmail(userID), "(HTP)HQPenggunaPembelianPerletakhakan", emelSubjek, kandungan);
+				ec.hantarPermohonan(userEmelInternal, userEmelInternal, emelSubjek, kandungan);
 								
+			}
+			Tblrujsuburusanstatusfail rsusf = new Tblrujsuburusanstatusfail();
+			rsusf.setIdPermohonan(htpPermohonan.getPermohonan().getIdPermohonan());
+			rsusf.setIdFail(htpPermohonan.getPermohonan().getPfdFail().getIdFail());
+			rsusf.setIdSuburusanstatusfail(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan());
+			rsusf.setUrl("-");
+			simpanPengesahan(rsusf,langkah);
+			HtpPermohonan htpPermohonanNew = new HtpPermohonan();
+			Permohonan permohonanNew = new Permohonan();
+			permohonanNew.setIdMasuk(Long.parseLong(userID));
+			htpPermohonanNew.setPermohonan(permohonanNew);			
+			getIHTPPermohonan().kemaskiniPermohonanTarikh(htpPermohonanNew
+					,String.valueOf(htpPermohonan.getPermohonan().getIdPermohonan())
+					,String.valueOf(htpPermohonan.getIdHtpPermohonan()));
+
+			if(getIOnline().isHantar(htpPermohonan.getPermohonan().getPfdFail().getIdSubUrusan(),htpPermohonan.getPermohonan().getIdPermohonan()
+					,htpPermohonan.getPermohonan().getPfdFail().getIdFail(),langkah)){
+				semakMode = "xupdate";			
+			}else{
+				semakMode = "update";
+			}
+			myLog.info("selectedTab=======");
+			context.put("semakMode", semakMode);
+			context.put("selectedTab", 4);
+			vm = PATH+"perakuanPembelianOnline.jsp";	
+		
+		}else if(command.equalsIgnoreCase("simpanpengesahan2")){
+			getPermohonanInfo();
+			myLog.info("simpanpengesahan ::id_permohonan="+htpPermohonan.getPermohonan().getIdPermohonan());	
+			String semakMode="";
+			String langkah = "11";
+			/*
+			 * -4 untuk status - Pendaftaran
+			 * -3 untuk status - Tindakan Pegawai 
+			 * -2 untuk status - Tindakan Pengarah
+			 * -1 untuk status - Permohonan Online (Pengesahan)
+			 * 1  untuk status - Penerimaan Permohonan
+			 * 11 untuk status - Tindakan Penyedia
+			*/
+			
+			EmailConfig ec = new EmailConfig();
+
+			//myLog.info("from="+email.FROM);
+			String emelSubjek = ec.tajukSemakan+"Perakuan Pembelian";
+			String kandungan = "";
+			if(idJawatan.equals("4")){
+				
+				langkah = "11";
+				
+				kandungan = getEmelSemak().setKandungan(htpPermohonan.getPermohonan().getPfdFail().getTajukFail(), String.valueOf(hUser.get("nama")));
+    			
+				if(!getEmelSemak().checkEmail(userID).equals(""))
+					getIHTP().getErrorHTML("[ONLINE-HTP PEMBELIAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
+
+				ec.sendByRoleKJP(getEmelSemak().checkEmail(userID)
+						, "9"
+						, String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getIdKementerian())
+						, emelSubjek, kandungan);
+
 			}
 			Tblrujsuburusanstatusfail rsusf = new Tblrujsuburusanstatusfail();
 			rsusf.setIdPermohonan(htpPermohonan.getPermohonan().getIdPermohonan());
@@ -1244,6 +1390,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 		
 		}else if(command.equals("searchFail")){
 			myLog.info("searchFail ::"+vm);	
+			String noFailOnline = getParam("noFailOnline");
 			String noFail = getParam("noFail");
 			String namaFail = getParam("namaFail");
 			String idStatuss = "";
@@ -1253,7 +1400,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			idStatus = getParam("socStatus") == "" ? "0" : getParam("socStatus");
 			myLog.info("idStatus="+idStatus);
 			//Vector<?> v = getIPembelian().findFailKJP(carian, noFail, idNegeri,id_kementerian);
-			Vector<?> v = getIPembelianOnline().findFailKJP(namaFail, noFail, idNegeri,id_kementerian,idAgensi,idSuburusan,idStatus);
+			Vector<?> v = getIPembelianOnline().findFailKJP(namaFail, noFail, noFailOnline, idNegeri,id_kementerian,idAgensi,idSuburusan,idStatus);
 			context.put("lists", v);
 			
 			socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri));
@@ -1273,6 +1420,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			vm = PATH+"index_.jsp";
 			
 		}else if(command.equals("kosong")) {
+			String noFailOnline = "";
 			String noFail = "";
 			String namaFail = "";
 			
@@ -1292,12 +1440,13 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			idStatus = getParam("socStatus") == "" ? "0" : getParam("socStatus");
 			idSuburusan = getParam("socSubUrusan") == "" ? "0" : getParam("socSubUrusan");
 			
-			Vector<?> v = getIPembelianOnline().findFailKJP(namaFail, noFail, "",id_kementerian,"","","");
+			Vector<?> v = getIPembelianOnline().findFailKJP(namaFail, noFail, noFailOnline, "",id_kementerian,"","","");
 			//this.context.put("lists", v);
 			setupPage(ses,action, v);
 			
 			vm = PATH+"index_.jsp";
 		}else{
+			String noFailOnline = getParam("noFailOnline");
 			String noFail = getParam("noFail");
 			String carian = getParam("namaFail");
 			idNegeri = getParam("socNegeri") == "" ? "0" : getParam("socNegeri");
@@ -1305,7 +1454,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			idStatus = getParam("socStatus") == "" ? "0" : getParam("socStatus");
 			
 			//Vector<?> v = getIPembelian().findFailKJP(carian, noFail, idNegeri,id_kementerian);
-			Vector<?> v = getIPembelianOnline().findFailKJP(carian, noFail, idNegeri,id_kementerian,idAgensi,idSuburusan,idStatus);
+			Vector<?> v = getIPembelianOnline().findFailKJP(carian, noFail, noFailOnline, idNegeri,id_kementerian,idAgensi,idSuburusan,idStatus);
 			
 			context.put("lists", v);
 			socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri));
@@ -1318,7 +1467,10 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			this.context.put("socNegeri", socNegeri);
 			this.context.put("socsuburusan", socSubUrusan);
 			this.context.put("socstatus", socStatus);
-
+			context.put("saiz_listTanah", getHakmilikList(idPermohonan));
+			context.put("saiz_listPB", getHakmilikPB(idPermohonan));
+			context.put("saiz_listPenjual", getListPenjual(idPermohonan));
+			context.put("saiz_listLampiran", getListLampiran(idPermohonan));
 			setupPage(ses,action, v);
 			
 			vm = PATH+"index_.jsp";
@@ -1488,6 +1640,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 		String Poskod = getParam("txtPoskod");
 		String NoTelefon = getParam("txtNoTelefon");
 		String NoFax = getParam("txtNoFax");
+		String emel = getParam("txtEmel");
 
 		urusan = new HakmilikUrusan();
 		permohonan = new Permohonan();
@@ -1525,6 +1678,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 		
 		urusan.setPermohonan(permohonan);
 		context.put("urusan", urusan);
+
 		
 	}
 	
@@ -1542,6 +1696,7 @@ private void getValuesPemilik(){
 		String poskod = getParam("txtPoskod");
 		String noTelefon = getParam("txtNoTelefon");
 		String noFax = getParam("txtNoFax");
+		String emel = getParam("txtEmel");
 		String Idpihakberkepentingan =getParam("Idpihakberkepentingan");
 	
 		pemilik = new PihakBerkepentingan();
@@ -1561,6 +1716,7 @@ private void getValuesPemilik(){
 		pemilik.setPoskod(poskod);
 		pemilik.setTel(noTelefon);
 		pemilik.setFax(noFax);
+		pemilik.setEmel(emel);
 
 		context.put("pemilik", pemilik);
 		
@@ -1636,12 +1792,149 @@ private void getValuesPemilik(){
 		context.put("htpPermohonan", htpPermohonan);
 	}
 	
-	private IPembelian getIPembelian(){
-		if (iPembelian==null){
-			iPembelian=new PembelianBean();
+	public int getHakmilikList(String idPermohonan) throws Exception {
+		idPermohonan = getParam("txtidPermohonan")==""?"0":getParam("txtidPermohonan");
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql += " SELECT COUNT(*) AS TOTAL_TANAH ";
+			sql += " FROM TBLHTPHAKMILIKURUSAN A, TBLRUJLOT B,TBLRUJLUAS C,TBLRUJJENISHAKMILIK D ";
+
+			sql += " WHERE A.ID_PERMOHONAN = '" + idPermohonan + "' ";
+			sql += " AND A.ID_LOT = B.ID_LOT(+) ";
+			sql += " AND A.ID_LUAS = C.ID_LUAS ";
+			sql += " AND A.ID_JENISHAKMILIK = D.ID_JENISHAKMILIK ";
+
+			myLog.info(" getHakmilikList : " + sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+			int total_tanah = 0;
+			while (rs.next()) {
+				total_tanah = rs.getString("total_tanah") == null ? 0 : rs.getInt("total_tanah");
+
+			}
+			return total_tanah;
+		} catch (Exception re) {
+			log.error("Error: ", re);
+			throw re;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}// close count hakmilik tanah
+
+	public int getHakmilikPB(String idPermohonan) throws Exception {
+		idPermohonan = getParam("txtidPermohonan")==""?"0":getParam("txtidPermohonan");
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql += " SELECT COUNT(*) AS TOTALPB ";
+			sql += " FROM TBLHTPPIHAKBERKEPENTINGAN A, TBLHTPHAKMILIKURUSAN B, TBLRUJNEGERI C, TBLRUJDAERAH D ";
+
+			sql += " WHERE B.ID_PERMOHONAN = '" + idPermohonan + "' ";
+			sql += " AND A.ID_HAKMILIKURUSAN = B.ID_HAKMILIKURUSAN ";
+			sql += " AND A.ID_DAERAH = D.ID_DAERAH(+) ";
+			sql += " AND A.ID_NEGERI = C.ID_NEGERI ";
+
+			myLog.info(" getHakmiliKPB : " + sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+			int totalPB = 0;
+			while (rs.next()) {
+				totalPB = rs.getString("totalPB") == null ? 0 : rs.getInt("totalPB");
+
+			}
+			return totalPB;
+		} catch (Exception re) {
+			log.error("Error: ", re);
+			throw re;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}// close count pihak berkepentingan
+	
+	public int getListPenjual(String idPermohonan) throws Exception {
+		idPermohonan = getParam("txtidPermohonan")==""?"0":getParam("txtidPermohonan");
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql += " SELECT COUNT(*) AS TOTALPENJUAL ";
+			sql += " FROM TBLHTPPEMOHON ";
+
+			sql += " WHERE ID_PERMOHONAN = '" + idPermohonan + "' ";
+
+			myLog.info(" getListPenjual : " + sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+			int totalPenjual = 0;
+			while (rs.next()) {
+				totalPenjual = rs.getString("totalPenjual") == null ? 0 : rs.getInt("totalPenjual");
+
+			}
+			return totalPenjual;
+		} catch (Exception re) {
+			log.error("Error: ", re);
+			throw re;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}// close count penjual
+	
+	public int getListLampiran(String idPermohonan) throws Exception {
+		idPermohonan = getParam("txtidPermohonan")==""?"0":getParam("txtidPermohonan");
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql += " SELECT COUNT(*) AS TOTALLAMPIRAN ";
+			sql += " FROM TBLPFDRUJLAMPIRAN A, TBLPFDDOKUMEN FDD, TBLPERMOHONAN P ";
+
+			sql += " WHERE P.ID_PERMOHONAN = '" + idPermohonan + "' "
+					+ " AND A.ID_DOKUMEN = FDD.ID_DOKUMEN "
+					+ " AND P.ID_FAIL = FDD.ID_FAIL "
+					+ " ORDER BY A.ID_LAMPIRAN ASC ";
+
+			myLog.info(" getListLampiran : " + sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			Hashtable h;
+			int totalLampiran = 0;
+			while (rs.next()) {
+				totalLampiran = rs.getString("totalLampiran") == null ? 0 : rs.getInt("totalLampiran");
+
+			}
+			return totalLampiran;
+		} catch (Exception re) {
+			log.error("Error: ", re);
+			throw re;
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}// close count Lampiran
+
+	private IPembelian getIPembelian() {
+		if (iPembelian == null) {
+			iPembelian = new PembelianBean();
 		}
 		return iPembelian;
-	} 
+	}
 	
 	private IPemilik getIPemilik(){
 		if(iPemilik==null){
@@ -1671,6 +1964,7 @@ private void getValuesPemilik(){
 		String idDaerah = getParam("selectDaerahP");
 		String tel = getParam("txtNoTelefon");
 		String fax = getParam("txtNoFax");
+		String emel = getParam("txtEmel");
 		String noPA = getParam("txtNoPA");
 		
 		permohonan = new Permohonan();
@@ -1689,6 +1983,7 @@ private void getValuesPemilik(){
 		pemohon.setIdDaerah(idDaerah);
 		pemohon.setTel(tel);
 		pemohon.setFax(fax);
+		pemohon.setEmel(emel);
 		pemohon.setNoPA(noPA);
 		
 		context.put("pemohon", pemohon);

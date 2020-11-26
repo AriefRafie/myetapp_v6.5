@@ -96,7 +96,7 @@ public class PHPUtilHTML {
 		return sb.toString();
 	}
 	
-	public static String SelectNoFailByIdPemohon(String userId, String selectName,
+	public static String SelectNoFailByIdPemohon(String userId, String idUrusan, String selectName,
 			Long selectedValue, String disability, String jsFunction)
 	 throws Exception {
 		StringBuffer sb = new StringBuffer("");
@@ -109,7 +109,7 @@ public class PHPUtilHTML {
 			sb.append(" > ");
 
 			sb.append("<option value=>SILA PILIH</option>\n");
-			Vector<Tblpfdfail> v = PHPUtilData.getNoFailByIdPemohon(userId);
+			Vector<Tblpfdfail> v = PHPUtilData.getNoFailByIdPemohon(userId,idUrusan);
 			Tblpfdfail senaraiNoFail = null;
 			String noFail = "";
 			for (int i = 0; i < v.size(); i++) {
@@ -123,6 +123,7 @@ public class PHPUtilHTML {
 						+ senaraiNoFail.getNoFail()
 						+ "</option>\n");
 			}
+			myLogger.info("senaraiNoFail.getNoFail()"+senaraiNoFail.getNoFail());
 			sb.append("</select>");
 		} catch (Exception ex) {
 			ex.printStackTrace();

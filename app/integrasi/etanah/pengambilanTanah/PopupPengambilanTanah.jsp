@@ -1,4 +1,4 @@
-xxx
+
 <script type="text/javascript" src="../../library/js/jquery-1.3.2.min.js" ></script>
 <script>var $jquery = jQuery.noConflict();</script>
 
@@ -77,6 +77,8 @@ JKPTG(S).MLK/02/881/04/2010/9-->
   	#set($tajuk_popup = "Skrin Integrasi Borang C")
   #elseif($!jenis_skrin == "BorangA")         
   	#set($tajuk_popup = "Skrin Integrasi Borang A")
+  	 #elseif($!jenis_skrin == "Seksyen8")         
+  	#set($tajuk_popup = "Skrin Integrasi Permohonan Seksyen 8")
   #elseif($!jenis_skrin == "MMK_S8")         
   	#set($tajuk_popup = "Skrin Integrasi Deraf MMK (Syor Pentadbir Tanah)")
   #elseif($!jenis_skrin == "MMK_S4")         
@@ -108,8 +110,9 @@ JKPTG(S).MLK/02/881/04/2010/9-->
  <fieldset>
       <legend><strong><font color="white">$tajuk_popup</font></strong></legend>
 <div id="mainContainer">
+#parse("app/integrasi/etanah/pengambilanTanah/PopupPengambilanTanah_status_log.jsp")    
 #parse("app/integrasi/etanah/pengambilanTanah/PopupPengambilanTanah_maklumbalas.jsp") 
-#parse("app/integrasi/etanah/pengambilanTanah/PopupPengambilanTanah_status_log.jsp")      
+  
 
 
 
@@ -141,12 +144,14 @@ JKPTG(S).MLK/02/881/04/2010/9-->
 <td  valign="top">$!hash_maklumatprojek.NAMA_PROJEK</td>
 </tr>
 </tr>
+#if($hash_maklumatInt.NO_PERMOHONAN != "")
 <tr>
 <td  valign="top"></td>
 <td  valign="top">No Permohonan E-TANAH</td>
 <td   valign="top">:</td>
-<td  valign="top">$!hash_maklumatintPermohonan.NO_PERMOHONAN</td>
+<td  valign="top">$!maklumatInt</td>
 </tr>
+#end
 #if($!jenis_skrin == "BorangC" || $!jenis_skrin == "BorangK" || $!jenis_skrin == "PU" || $!jenis_skrin == "SijilUkur")   
 #if($!hash_maklumatWarta.size() >0)           
 <tr>
@@ -528,13 +533,13 @@ JKPTG(S).MLK/02/881/04/2010/9-->
 
 #end
 
-#if($!jenis_skrin == "BorangC" || $!jenis_skrin == "BorangA"  || $!jenis_skrin == "TarikBalik"  )
+#if($!jenis_skrin == "BorangC" || $!jenis_skrin == "BorangA" || $!jenis_skrin == "Seksyen8"  || $!jenis_skrin == "TarikBalik"  )
 $!maklumat_mmk
 #end
  
 
 
-#if($!jenis_skrin == "TarikBalik" || $!jenis_skrin == "BorangI" || $!jenis_skrin == "BorangC" || $!jenis_skrin == "BorangA" || $!jenis_skrin == "hantarPelanChartingS8" || $!jenis_skrin == "hantarPelanChartingS4" || $!jenis_skrin == "WartaS8" )
+#if($!jenis_skrin == "TarikBalik" || $!jenis_skrin == "BorangI" || $!jenis_skrin == "BorangC" || $!jenis_skrin == "BorangA" || $!jenis_skrin == "Seksyen8" || $!jenis_skrin == "hantarPelanChartingS8" || $!jenis_skrin == "hantarPelanChartingS4" || $!jenis_skrin == "WartaS8" )
 		<table border="0" width="100%"  class="nav"> 
 <tr  >
 <td valign="top" >
@@ -573,6 +578,7 @@ $!maklumat_mmk
                             <td align="center" ><b><font color="white">Jenis Pengambilan</font></b></td>
                 #end
   	</tr>
+ 
           #set ($list = "")
           #set ($counter = 0)
           #foreach ($list in $SenaraiFail)
@@ -669,7 +675,7 @@ $!maklumat_mmk
 			                <td class="$row" valign="top">$listDokumen.TAJUK</td>
 			                <td class="$row" valign="top"><a href="javascript:paparLampiran('$!listDokumen.ID_DOKUMEN')"><font color="blue">$listDokumen.NAMA_FAIL</font></a></td>
                             <td class="$row" valign="top">$listDokumen.JENIS_MIME</td>
-                            <td class="$row" valign="top">$listDokumen.KETERANGAN_LAMPIRANETANAH</td>
+                            <td class="$row" valign="top">$listDokumen.KOD_DOKUMENETANAH</td>
                             
                             
                             #set($buttonHapusDoc = "cmdHapusDoc"+$listDokumen.BIL)
@@ -741,16 +747,16 @@ $!maklumat_mmk
 <script>
 	 
     function simpan(id_penarikan,id_permohonan,jenis_skrin) {
-	
+	//alert("a");
 		if(document.${formName}.nama_dokumen.value == ""){
 			alert('Sila pastikan tajuk dokumen diisi.');
 	  		document.${formName}.nama_dokumen.focus(); 
 			return; 
 		}
 		
-		if(document.${formName}.kategori_lampiran.value == ""){
+		if(document.${formName}.jenisDokumen.value == ""){
 			alert('Sila pastikan kategori lampiran diisi.');
-	  		document.${formName}.kategori_lampiran.focus(); 
+	  		document.${formName}.jenisDokumen.focus(); 
 			return; 
 		}
 		
@@ -767,9 +773,9 @@ $!maklumat_mmk
 		var jenis_skrin_set =  document.${formName}.jenis_skrin.value;
 		var tajuk_set =  document.${formName}.nama_dokumen.value;
 		var id_hakmilik_set =  document.${formName}.id_hakmilik.value;
-		var kategori_lampiran_set =  document.${formName}.kategori_lampiran.value;
+		var kategori_lampiran_set =  document.${formName}.jenisDokumen.value;
 		
-		document.${formName}.action = "?_portal_module=etanah.ppt.sek4&hitButton=simpanDokumen&id_permohonan="+id_permohonan_set+"&id_penarikan="+id_penarikan+"&jenis_skrin="+jenis_skrin_set+""+dopost+"&id_fail="+id_fail_set+"&nama_dokumen="+tajuk_set+"&id_hakmilik="+id_hakmilik_set+"&kategori_lampiran="+kategori_lampiran_set;
+		document.${formName}.action = "?_portal_module=etanah.ppt.sek4&hitButton=simpanDokumen&id_permohonan="+id_permohonan_set+"&id_penarikan="+id_penarikan+"&jenis_skrin="+jenis_skrin_set+""+dopost+"&id_fail="+id_fail_set+"&nama_dokumen="+tajuk_set+"&id_hakmilik="+id_hakmilik_set+"&jenisDokumen="+kategori_lampiran_set;
 		//document.${formName}.action = "?_portal_module=ekptg.intergration.eTanah.pengambilan.PopupPengambilanTanah&hitButton=simpanDokumen&id_permohonan="+id_permohonan_set+"&id_penarikan="+id_penarikan+"&jenis_skrin="+jenis_skrin_set+""+dopost+"&id_fail="+id_fail_set+"&tajuk="+tajuk_set+"&id_hakmilik="+id_hakmilik_set+"&kategori_lampiran="+kategori_lampiran_set;
 		
 		document.${formName}.method="post";

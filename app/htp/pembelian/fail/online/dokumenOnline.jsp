@@ -48,7 +48,7 @@
 		  <td class="$row">$!mo.keterangan</td>
 		  <td class="$row"><a href="javascript:cetakImej($mo.idLampiran)" class="stylelabel">$!mo.namaFail</a></td>
  		  <td class="$row">
- 		  	<input type="button" name="cmdHapusDoc" value ="Hapus" onClick="deleteDetailImej($mo.idDokumen,$mo.idLampiran)"></
+ 		  	<input type="button" name="cmdHapusDoc" value ="Hapus" onClick="deleteDetailImej($mo.idDokumen,$mo.idLampiran)">
  		  </td>
     </tr>
      #end

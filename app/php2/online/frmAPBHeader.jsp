@@ -11,13 +11,14 @@
     #set($noFailLama = $beanHeader.noFailLama)
     #set($tujuanPengambilan = $beanHeader.tujuanPengambilan)
     #set($noLesen = $beanHeader.noLesen)
+    #set($undangUndang = $beanHeader.undangUndang)
     #end
         
     <td width="50%" valign="top" ><fieldset>
       <legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
       <table width="100%" border="0" cellspacing="2" cellpadding="2">
         <tr>
-          <td width="30%">No Rujukan Online </td>
+          <td width="30%">No Permohonan </td>
           <td width="1%">:</td>
           <td ><font color="blue">$noPermohonan</font></td>
         </tr>
@@ -26,8 +27,7 @@
           <td width="30%">No Fail Lama </td>
           <td width="1%">:</td>
           <td ><font color="blue">$noFailLama</font></td>
-        </tr>
-        #end
+        </tr>#end
         <tr>
           <td width="30%">No Fail </td>
           <td width="1%">:</td>
@@ -97,6 +97,11 @@
       <td width="30%">Emel</td>
       <td width="1%">:</td>
       <td >$!pemohon.get("emel")</td>  
+      </tr>
+      <tr>
+      <td width="30%">Undang-Undang Diperbadankan</td>
+      <td width="1%">:</td>
+      <td >$undangUndang</td>
       </tr>
       </table>
       </fieldset>

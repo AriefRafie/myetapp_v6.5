@@ -63,11 +63,11 @@
     <td>&nbsp;</td>
     <td> #if ($mode == 'newBarge')
       <input name="cmdSimpan1" type="button" value="Simpan" onClick="doSimpanMaklumatBarge()" />
-      <input name="cmdBatal" type="button" value="Batal" onClick="doBatalMaklumatBarge()" />
+      <input name="cmdBatal" type="button" value="Batal" onClick="doKembaliMaklumatBarge()" />
       #end
       #if ($mode == 'viewBarge')
       <input name="cmdKemaskini1" type="button" value="Kemaskini" onClick="kemaskiniMaklumatBarge()" >
-      <input name="cmdBatal" type="button" value="Kembali" onClick="doBatalMaklumatBarge()" />
+      <input name="cmdBatal" type="button" value="Kembali" onClick="doKembaliMaklumatBarge()" />
       <input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onclick="doHapusBarge()"/>
       #end      
       #if ($mode == 'updateBarge')

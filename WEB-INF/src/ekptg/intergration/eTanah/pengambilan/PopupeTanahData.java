@@ -1,5 +1,9 @@
 package ekptg.intergration.eTanah.pengambilan;
 
+import integrasi.rest.etanah.wpkl.RESTInvoker;
+import integrasi.rest.etanah.wpkl.entities.Hakmilik;
+import integrasi.ws.etanah.melaka_ns.ppt.CustomDataSource;
+
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Connection;
@@ -13,6 +17,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+
+import javax.activation.DataHandler;
 
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
@@ -388,9 +394,9 @@ public class PopupeTanahData {
 			r.add("STATUS_AMBIL", (String) mapHakmilik.get("STATUS_AMBIL") != null ? (String) mapHakmilik.get("STATUS_AMBIL") : "");
 			r.add("NO_SUBJAKET", (String) mapHakmilik.get("NO_SUBJAKET") != null ? (String) mapHakmilik.get("NO_SUBJAKET") : "");
 			r.add("SEBAB_PENARIKANBALIK", "");
-//			
-//			String catatanHakmilik = getCatatanHakmilik(idPengguna, idHakmilik);
-//			r.add("CATATAN_HAKMILIK", catatanHakmilik);
+			
+			String catatanHakmilik = getCatatanHakmilik(idPengguna, idHakmilik);
+			r.add("CATATAN_HAKMILIK", catatanHakmilik);
 			r.add("ID_PPTHAKMILIK", (String) mapHakmilik.get("ID_PPTHAKMILIK") != null ? (String) mapHakmilik.get("ID_PPTHAKMILIK") : "");
 			
 			sql = r.getSQLInsert("INT_PPTHAKMILIKPERMOHONAN");
@@ -401,24 +407,96 @@ public class PopupeTanahData {
 		}
 	}
 
-//	private String getCatatanHakmilik(String idPengguna, String idHakmilik) {
-//		String catatan = "";
-//		Hakmilik hakmilik = null;
-//		try {
-//			hakmilik = RESTInvoker.getMaklumatHakmilik(idPengguna, idHakmilik, "");
-//			if (hakmilik == null) {
-//				catatan = "HAKMILIK TIDAK WUJUD DI SISTEM E-TANAH";
-//			} else {
-//				if ("BATAL".equalsIgnoreCase(hakmilik.getStatusHakmilik())) {
-//					catatan = "STATUS HAKMILIK ADALAH BATAL DI SISTEM E-TANAH";
-//				}
-//			}
-//		} catch (Exception ex) {
-//			ex.printStackTrace();
-//		}
-//		return catatan;
-//	}
+	private String getCatatanHakmilik(String idPengguna, String idHakmilik) {
+		String catatan = "";
+		Hakmilik hakmilik = null;
+		try {
+			hakmilik = RESTInvoker.getMaklumatHakmilik(idPengguna, idHakmilik, "");
+			if (hakmilik == null) {
+				catatan = "HAKMILIK TIDAK WUJUD DI SISTEM E-TANAH";
+			} else {
+				if ("BATAL".equalsIgnoreCase(hakmilik.getStatusHakmilik())) {
+					catatan = "STATUS HAKMILIK ADALAH BATAL DI SISTEM E-TANAH";
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return catatan;
+	}
 
+//YATI 05112020
+	public String getMaklumatInt(String idPermohonanIntegrasi, Db db) throws Exception {
+		db = null;
+		String sql = "";
+		ResultSet rs = null;
+		Statement stmt = null;
+		try {
+			db = new Db();
+			stmt = db.getStatement();
+			String maklumatInt="";
+			sql = "SELECT NO_PERMOHONAN FROM TBLINTANAHPERMOHONAN WHERE ID_PERMOHONAN = '" + idPermohonanIntegrasi + "'";
+			myLog.info("no permohonan : "+sql);
+			rs = stmt.executeQuery(sql);					
+				
+				while (rs.next()) {				
+
+					maklumatInt = (rs.getString("NO_PERMOHONAN") == null ? "" : rs.getString("NO_PERMOHONAN"));
+					
+				}
+			
+			return maklumatInt;
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (stmt != null)
+				stmt.close();
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	//yati 05112020
+	//yati 05112020
+			public Hashtable<String,String> getMaklumatWarta(String idPermohonanIntegrasi, Db db) {
+				String sql = "";
+				Hashtable<String,String> maklumatWarta = null;
+
+				try {
+					Statement stmt = db.getStatement();
+
+					sql = " SELECT DISTINCT A.ID_FAIL, TP.NO_PERMOHONAN, B.ID_PERMOHONAN, A.NO_FAIL, B.TARIKH_PERMOHONAN,  W.NO_WARTA,UPPER(B.TUJUAN) AS NAMA_PROJEK,UPPER(M.NAMA_KEMENTERIAN) AS NAMA_KEMENTERIAN, "
+							+ " TO_CHAR (W.TARIKH_WARTA, 'DD/MM/YYYY') AS TARIKH_WARTA  "
+							+ " FROM TBLPFDFAIL A, TBLPPTPERMOHONAN B, TBLPPTWARTA W,TBLRUJKEMENTERIAN M, TBLINTANAHPERMOHONAN TP "
+							+ " WHERE A.ID_FAIL = B.ID_FAIL   "
+							+ " AND B.ID_PERMOHONAN = W.ID_PERMOHONAN(+)  "
+							+ " AND W.TARIKH_WARTA = (SELECT MAX (TARIKH_WARTA) FROM TBLPPTWARTA WW, TBLPPTPERMOHONAN P, TBLPFDFAIL F  "
+							+ " WHERE WW.ID_PERMOHONAN = P.ID_PERMOHONAN AND P.ID_FAIL = F.ID_FAIL AND F.ID_FAIL = '"
+							+ idPermohonanIntegrasi
+							+ "' AND ROWNUM < 2)  "
+							+ " AND A.ID_KEMENTERIAN = M.ID_KEMENTERIAN  "
+							+ " AND B.ID_PERMOHONAN = TP.ID_PERMOHONAN "
+							+ " AND P.ID_PERMOHONAN = '" + idPermohonanIntegrasi + "' ";
+
+					myLog.info("##################### PAPAR MAKLUMAT WARTA SEK4:" + sql);
+					ResultSet rs = stmt.executeQuery(sql);
+
+					if (rs.next()) {
+						maklumatWarta = new Hashtable<String,String>();
+						maklumatWarta.put("TARIKH_WARTA", rs.getString("TARIKH_WARTA") == null ? "" : sdf.format(rs.getDate("TARIKH_WARTA")));
+						maklumatWarta.put("NO_WARTA", rs.getString("NO_WARTA") == null ? "" : rs.getString("NO_WARTA"));
+					
+					}
+
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+
+				return maklumatWarta;
+				
+			}
+		
+	
 	public Hashtable<String,String> getMaklumatPermohonan(String idPermohonanIntegrasi, Db db) {
 		String sql = "";
 		Hashtable<String,String> maklumatPermohonan = null;
@@ -495,7 +573,7 @@ public class PopupeTanahData {
 				maklumatPermohonan.put("kodKementerian", rs.getString("KOD_KEMENTERIAN") == null ? "" : rs.getString("KOD_KEMENTERIAN"));
 				maklumatPermohonan.put("namaKementerian", rs.getString("NAMA_KEMENTERIAN") == null ? "" : rs.getString("NAMA_KEMENTERIAN"));
 				maklumatPermohonan.put("noRujukanSurat", rs.getString("NO_RUJUKAN_SURAT") == null ? "" : rs.getString("NO_RUJUKAN_SURAT"));
-				maklumatPermohonan.put("tarikhRujukanSurat", rs.getString("TARIKH_SURATKJP") == null ? "" : sdf.format(rs.getDate("TARIKH_SURATKJP")));
+				maklumatPermohonan.put("tarikhRujukanSurat", rs.getDate("TARIKH_SURATKJP") == null ? "" : sdf.format(rs.getDate("TARIKH_SURATKJP")));
 
 				maklumatPermohonan.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL"));
 				maklumatPermohonan.put("noJilid", rs.getString("NO_JILID") == null ? "" : rs.getString("NO_JILID"));
@@ -528,32 +606,6 @@ public class PopupeTanahData {
 		return maklumatPermohonan;
 		
 	}
-	
-	public Hashtable<String,String> getMaklumatInt(String idPermohonanIntegrasi, Db db) {
-		String sql = "";
-		Hashtable<String,String> maklumatInt = null;
-
-		try {
-			Statement stmt = db.getStatement();
-			sql = "SELECT P.NO_PERMOHONAN FROM TBLINTANAHPERMOHONAN P WHERE " +			
-			"  P.ID_PERMOHONAN ='" + idPermohonanIntegrasi + "'"+
-			"";
-//			sql = "SELECT * FROM TBLINTANAHPERMOHONAN WHERE ID_PERMOHONAN = '" + idPermohonanIntegrasi + "'";
-			myLog.info("sql INTEGRASI:"+sql);
-			ResultSet rs = stmt.executeQuery(sql);
-
-			if (rs.next()) {
-				maklumatInt = new Hashtable<String,String>();
-				maklumatInt.put("NO_PERMOHONAN", rs.getString("NO_PERMOHONAN") == null ? "" : rs.getString("NO_PERMOHONAN"));
-			}
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-		return maklumatInt;
-		
-	}
 
 	public Vector<Hashtable<String,String>> getSenaraiHakmilik(String idPermohonanIntegrasi, Db db) {
 		String sql = "";
@@ -565,18 +617,14 @@ public class PopupeTanahData {
 
 			Statement stmt = db.getStatement();
 			sql = " SELECT DISTINCT "+
-			" RN.KOD_NEGERI,RD.KOD_DAERAH,RM.KOD_MUKIM,'000' NO_SEKSYEN "+
+			" RN.KOD_NEGERI,RD.KOD_DAERAH,RM.KOD_MUKIM,'OO' NO_SEKSYEN "+
 			" ,RJ.KOD_JENIS_HAKMILIK KOD_HAKMILIK,H.NO_HAKMILIK" +
 			" ,RL.KOD_LOT,NVL(H.NO_LOT,H.NO_PT) NO_LOT "+
-			" ,NVL(LO.ID_LUAS,0) ID_LUAS_ASAL,NVL(LO.KETERANGAN,0) KOD_LUAS_ASAL,H.LUAS_LOT LUAS_ASAL"+
-			" ,NVL(LT.ID_LUAS,0) ID_LUAS_AMBIL,NVL(LT.KETERANGAN,0) KOD_LUAS_AMBIL,H.LUAS_AMBIL "+
+			" ,LO.KOD_LUAS KOD_LUAS_ASAL,H.LUAS_LOT LUAS_ASAL,LT.KOD_LUAS KOD_LUAS_AMBIL,H.LUAS_AMBIL "+
 			" ,H.CATATAN CATATAN_HAKMILIK "+
+			" ,GETUPI(RN.KOD_NEGERI,RD.KOD_DAERAH,RM.KOD_MUKIM,'','N',H.NO_LOT,H.NO_HAKMILIK,RJ.KOD_JENIS_HAKMILIK) PEGANGAN_HAKMILIK "+
 			//--H.*
-			" ,HI.ID_PERMOHONANMILIK ID_HAKMILIKPERMOHONAN"+
-			", GETUPI(RN.KOD_NEGERI,RD.KOD_DAERAH,RM.KOD_MUKIM,'','N',H.NO_LOT,H.NO_HAKMILIK,RJ.KOD_JENIS_HAKMILIK) PEGANGAN_HAKMILIK "+
-//			", GETUPI(RN.KOD_NEGERI,RD.KOD_DAERAH,RM.KOD_MUKIM,'000','N',H.NO_LOT,H.NO_HAKMILIK,RJ.KOD_JENIS_HAKMILIK) PEGANGAN_HAKMILIK "+
-			//KOD_NEGERI VARCHAR2,KOD_DAERAH VARCHAR2,KOD_MUKIM VARCHAR2,SEKSYEN VARCHAR2,STATUS VARCHAR2,NO_LOT VARCHAR2,NO_HAKMILIK VARCHAR2,JENIS VARCHAR2)
-			",H.ID_HAKMILIK,F.NO_FAIL"+
+			" ,HI.ID_PERMOHONANMILIK ID_HAKMILIKPERMOHONAN,H.ID_HAKMILIK,F.NO_FAIL"+
 			" FROM TBLPPTHAKMILIK H,TBLINTANAHPERMOHONANMILIK HI "+
 			" ,TBLRUJNEGERI RN,TBLRUJDAERAH RD,TBLRUJMUKIM RM "+
 			" ,TBLRUJLUAS LO,TBLRUJLUAS LT "+
@@ -584,9 +632,9 @@ public class PopupeTanahData {
 			" ,TBLRUJLOT RL,TBLPFDFAIL F,TBLPPTPERMOHONAN P "+
 			" WHERE H.ID_NEGERI = RN.ID_NEGERI "+
 			" AND H.ID_DAERAH = RD.ID_DAERAH "+
-			" AND H.ID_DAERAH = RM.ID_MUKIM "+
-			" AND F.ID_FAIL = P.ID_FAIL "+
-			" AND P.ID_PERMOHONAN = H.ID_PERMOHONAN "+
+			" AND H.ID_DAERAH = RM.ID_MUKIM "
+			+ " AND F.ID_FAIL = P.ID_FAIL "
+			+ " AND P.ID_PERMOHONAN = H.ID_PERMOHONAN "+
 			" AND H.ID_HAKMILIK = HI.ID_HAKMILIK(+) "+
 			" AND H.ID_UNITLUASLOT = LO.ID_LUAS(+) "+
 			" AND H.ID_UNITLUASAMBIL = LT.ID_LUAS(+) "+
@@ -600,31 +648,31 @@ public class PopupeTanahData {
 //				" AND H.ID_PERMOHONAN =  '" + idPermohonanIntegrasi + "'"+
 //				"";
 			//sql = "SELECT * FROM TBLINTANAHPERMOHONANMILIK WHERE ID_PERMOHONAN = '" + idPermohonanIntegrasi + "'";
-			//sql = sql + " ORDER BY H.ID_HAKMILIK ASC";
 			myLog.info("getSenaraiHakmilik:sql="+sql);
+			sql = sql + " ORDER BY H.ID_HAKMILIK ASC";
 			ResultSet rs = stmt.executeQuery(sql);
 
 			while (rs.next()) {
 				h = new Hashtable<String,String>();
-				h.put("idHakmilikPermohonan", rs.getString("ID_HAKMILIKPERMOHONAN") == null ? "" : rs.getString("ID_HAKMILIKPERMOHONAN"));
+				//h.put("idHakmilikPermohonan", rs.getString("ID_HAKMILIKPERMOHONAN") == null ? "" : rs.getString("ID_HAKMILIKPERMOHONAN"));
+				//h.put("idHakmilik", rs.getString("ID_HAKMILIK") == null ? "" : rs.getString("ID_HAKMILIK"));
+				h.put("idHakmilikPermohonan", rs.getString("ID_HAKMILIK") == null ? "" : rs.getString("ID_HAKMILIK"));
 				h.put("idHakmilik", rs.getString("PEGANGAN_HAKMILIK") == null ? "" : rs.getString("PEGANGAN_HAKMILIK"));
-				
+				myLog.info("ID HAKMILIK BERAPA : "+h.put("idHakmilik", rs.getString("PEGANGAN_HAKMILIK") == null ? "" : rs.getString("PEGANGAN_HAKMILIK")));
+				//h.put("idHakmilik", rs.getString("PEGANGAN_HAKMILIK") == null ? "" : rs.getString("PEGANGAN_HAKMILIK"));
 				h.put("kodNegeri", rs.getString("KOD_NEGERI") == null ? "" : rs.getString("KOD_NEGERI"));
 				h.put("kodDaerah", rs.getString("KOD_DAERAH") == null ? "" : rs.getString("KOD_DAERAH"));
 				h.put("kodMukim", rs.getString("KOD_MUKIM") == null ? "" : rs.getString("KOD_MUKIM"));
-				h.put("noSeksyen", rs.getString("NO_SEKSYEN") == null ? "" : rs.getString("NO_SEKSYEN"));
-				
 				h.put("kodHakmilik", rs.getString("KOD_HAKMILIK") == null ? "" : rs.getString("KOD_HAKMILIK"));
 				h.put("noHakmilik", rs.getString("NO_HAKMILIK") == null ? "" : rs.getString("NO_HAKMILIK"));
 				h.put("kodLot", rs.getString("KOD_LOT") == null ? "" : rs.getString("KOD_LOT"));
 				h.put("noLot", rs.getString("NO_LOT") == null ? "" : rs.getString("NO_LOT"));
-				h.put("idLuasAsal", rs.getString("ID_LUAS_ASAL") == null ? "" : rs.getString("ID_LUAS_ASAL"));
+				h.put("noSeksyen", rs.getString("NO_SEKSYEN") == null ? "" : rs.getString("NO_SEKSYEN"));
 				h.put("kodLuasAsal", rs.getString("KOD_LUAS_ASAL") == null ? "" : rs.getString("KOD_LUAS_ASAL"));
 				h.put("luasAsal", rs.getString("LUAS_ASAL") == null ? "" : rs.getString("LUAS_ASAL"));
-				h.put("idLuasAmbil", rs.getString("ID_LUAS_AMBIL") == null ? "" : rs.getString("ID_LUAS_AMBIL"));
 				h.put("kodLuasAmbil", rs.getString("KOD_LUAS_AMBIL") == null ? "" : rs.getString("KOD_LUAS_AMBIL"));
 				h.put("luasAmbil", rs.getString("LUAS_AMBIL") == null ? "" : rs.getString("LUAS_AMBIL"));
-	
+				
 				h.put("noFail", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL"));
 				//h.put("noWarta", rs.getString("NO_WARTA") == null ? "" : rs.getString("NO_WARTA"));
 				//h.put("tarikhWarta", rs.getString("TARIKH_WARTA") == null ? "" : sdf.format(rs.getDate("TARIKH_WARTA")));
@@ -765,12 +813,12 @@ public class PopupeTanahData {
 						listHakmilik.add(hHakmilik);
 					}
 
-//					for (int x = 0; x < listHakmilik.size(); x++) {
-//						Map mapHakmilik = (Map) listHakmilik.get(x);
-//						if (mapHakmilik != null) {
-//							insertHakmilikPermohonanTarikBalik(idPermohonan, idPengguna, mapHakmilik, db);
-//						}
-//					}
+					for (int x = 0; x < listHakmilik.size(); x++) {
+						Map mapHakmilik = (Map) listHakmilik.get(x);
+						if (mapHakmilik != null) {
+							insertHakmilikPermohonanTarikBalik(idPermohonan, idPengguna, mapHakmilik, db);
+						}
+					}
 				}
 			}
 
@@ -778,6 +826,46 @@ public class PopupeTanahData {
 			ex.printStackTrace();
 		}
 		return idPermohonanIntegrasiString;
+	}
+
+	private void insertHakmilikPermohonanTarikBalik(long idPermohonan, String idPengguna, Map mapHakmilik, Db db) {
+		String sql = "";
+
+		try {
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			long idHakmilikPermohonan = DB.getNextID(db, "INT_PPTHAKMILIKPERMOHONAN_SEQ");
+			r.add("ID_PERMOHONAN", idPermohonan);
+			String idHakmilik = (String) mapHakmilik.get("ID_HAKMILIK") != null ? (String) mapHakmilik.get("ID_HAKMILIK") : "";
+			r.add("ID_HAKMILIK", idHakmilik);
+			r.add("KOD_NEGERI", (String) mapHakmilik.get("KOD_NEGERI") != null ? (String) mapHakmilik.get("KOD_NEGERI") : "");
+			r.add("KOD_DAERAH", (String) mapHakmilik.get("KOD_DAERAH") != null ? (String) mapHakmilik.get("KOD_DAERAH") : "");
+			r.add("KOD_MUKIM", (String) mapHakmilik.get("KOD_MUKIM") != null ? (String) mapHakmilik.get("KOD_MUKIM") : "");
+			r.add("KOD_HAKMILIK", (String) mapHakmilik.get("KOD_JENIS_HAKMILIK") != null ? (String) mapHakmilik.get("KOD_JENIS_HAKMILIK") : "");
+			r.add("NO_HAKMILIK", (String) mapHakmilik.get("NO_HAKMILIK") != null ? (String) mapHakmilik.get("NO_HAKMILIK") : "");
+			r.add("KOD_LOT", (String) mapHakmilik.get("KOD_LOT") != null ? (String) mapHakmilik.get("KOD_LOT") : "");
+			r.add("NO_LOT", (String) mapHakmilik.get("NO_LOT") != null ? (String) mapHakmilik.get("NO_LOT") : "");
+			r.add("NO_SEKSYEN", "");
+			r.add("KOD_LUAS_ASAL", (String) mapHakmilik.get("KOD_LUAS_ASAL") != null ? (String) mapHakmilik.get("KOD_LUAS_ASAL") : "");
+			r.add("LUAS_ASAL", (String) mapHakmilik.get("LUAS_ASAL") != null ? (String) mapHakmilik.get("LUAS_ASAL") : "");
+			r.add("KOD_LUAS_AMBIL", (String) mapHakmilik.get("KOD_LUAS_AMBIL") != null ? (String) mapHakmilik.get("KOD_LUAS_AMBIL") : "");
+			r.add("LUAS_AMBIL", (String) mapHakmilik.get("LUAS_AMBIL") != null ? (String) mapHakmilik.get("LUAS_AMBIL") : "");
+			r.add("NO_WARTA", (String) mapHakmilik.get("NO_WARTA") != null ? (String) mapHakmilik.get("NO_WARTA") : "");
+			if ((String) mapHakmilik.get("TARIKH_WARTA") != null)
+				r.add("TARIKH_WARTA", r.unquote("to_date('" + (String) mapHakmilik.get("TARIKH_WARTA") + "','dd/MM/yyyy')"));
+			r.add("STATUS_AMBIL", (String) mapHakmilik.get("STATUS_AMBIL") != null ? (String) mapHakmilik.get("STATUS_AMBIL") : "");
+			r.add("NO_SUBJAKET", (String) mapHakmilik.get("NO_SUBJAKET") != null ? (String) mapHakmilik.get("NO_SUBJAKET") : "");
+			r.add("SEBAB_PENARIKANBALIK", (String) mapHakmilik.get("SEBAB_PENARIKANBALIK") != null ? (String) mapHakmilik.get("SEBAB_PENARIKANBALIK") : "");
+				
+			String catatanHakmilik = getCatatanHakmilik(idPengguna, idHakmilik);
+			r.add("CATATAN_HAKMILIK", catatanHakmilik);
+			r.add("ID_PPTHAKMILIK", (String) mapHakmilik.get("ID_PPTHAKMILIK") != null ? (String) mapHakmilik.get("ID_PPTHAKMILIK") : "");
+			sql = r.getSQLInsert("INT_PPTHAKMILIKPERMOHONAN");
+			stmt.executeUpdate(sql);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	public Vector<Tblrujdokumen> getSenaraiDokumen(String idPermohonanIntegrasi,String tapisan, Db db) {
@@ -798,17 +886,30 @@ public class PopupeTanahData {
 				+ " AND D.ID_JENISDOKUMEN = DIM.ID_JENISDOKUMEN (+)"
 				+ " AND D.ID_PERMOHONAN = '" + idPermohonanIntegrasi + "'";
 			if(!tapisan.equals(""))
+				//sql +=" AND D.JENIS_DOKUMEN='"+tapisan+"'";
 				sql +=" AND D.JENIS_DOKUMEN='"+tapisan+"'";
-//				+ " AND DI.ID_RUJUKAN = '" + idPermohonanIntegrasi + "'";
-			//sql = sql + " ORDER BY ID_TANAHDOKUMEN ASC";
-			myLog.info("getSenaraiDokumen:sql="+sql);
+			
+			if(!tapisan.equals("BorangA")) {
+				sql +=" AND D.ID_JENISDOKUMEN NOT IN (8) ";
+			}
+			
+				sql = sql + " ORDER BY ID_TANAHDOKUMEN ASC";
+			myLog.info("getSenaraiDokumen:sql2="+sql);
 			ResultSet rs = stmt.executeQuery(sql);
-
+			
 			while (rs.next()) {
 				dokumen = new Tblrujdokumen();
-				dokumen.setIdDokumen(rs.getString("ID_TANAHDOKUMEN") == null ? rs.getString("ID_DOKUMEN") : rs.getString("ID_TANAHDOKUMEN"));
+				//dokumen.setIdDokumen(rs.getString("ID_TANAHDOKUMEN") == null ? rs.getString("ID_DOKUMEN") : rs.getString("ID_TANAHDOKUMEN"));
+				dokumen.setIdDokumen(rs.getString("ID_DOKUMEN") == null ? rs.getString("KOD_JENISDOKUMEN") : rs.getString("KOD_JENISDOKUMEN"));
+				//dokumen.setKodDokumen(rs.getString("ID_DOKUMEN") == null ? rs.getString("KOD_MAPETANAH") : rs.getString("KOD_MAPETANAH"));
+				
+				myLog.info("id dokumen : "+rs.getString("ID_DOKUMEN") == null ? rs.getString("KOD_JENISDOKUMEN") : rs.getString("KOD_JENISDOKUMEN"));
 				dokumen.setNamaDokumen(rs.getString("NAMA_FAIL"));
 				//dokumen.setKodDokumen(rs.getString("JENIS_MIME"));
+				dokumen.setDokumen(rs.getString("JENIS_MIME"));
+				myLog.info("jenis dokumen type : "+rs.getString("JENIS_MIME") == null ? rs.getString("JENIS_MIME") : rs.getString("JENIS_MIME"));
+				
+	
 
 				Blob b = rs.getBlob("CONTENT");
 				InputStream is = b.getBinaryStream();
@@ -823,7 +924,6 @@ public class PopupeTanahData {
 //				h.put("namaDokumen", rs.getString("NAMA_FAIL") == null ? "" : rs.getString("NAMA_FAIL"));
 //				h.put("jenisMime", rs.getString("JENIS_MIME") == null ? "" : rs.getString("JENIS_MIME"));
 				//h.put("kodDokumen", rs.getString("KOD_DOKUMEN") == null ? "" : rs.getString("KOD_DOKUMEN"));
-//				listDokumen.add(index, element);
 				listDokumen.addElement(dokumen);
 				
 			}
@@ -833,8 +933,76 @@ public class PopupeTanahData {
 		}
 
 		return listDokumen;
-		
 	}
+	//UTK BORANGC
+	public Vector<Tblrujdokumen> getSenaraiDokumenC(String noPermohonan,String tapisan, Db db) {
+		String sql = "";
+		Vector<Tblrujdokumen> listDokumenC = null;
+		Hashtable h;
+		Tblrujdokumen dokumen = null;
+
+		try {
+			listDokumenC = new Vector();
+
+			Statement stmt = db.getStatement();
+			sql = "SELECT D.ID_DOKUMEN, DI.ID_TANAHDOKUMEN,D.ID_JENISDOKUMEN,D.NAMA_FAIL,D.JENIS_MIME,D.CONTENT "
+				+ ",NVL(DIM.KOD_DOKUMENETANAH,'TIADA') KOD_JENISDOKUMEN "
+				+ " FROM TBLINTANAHDOKUMEN DI,TBLPPTDOKUMEN D,TBLINTRUJMAPPING DIM, TBLINTANAHPERMOHONAN TP "
+				+ " WHERE "
+				+ " D.ID_DOKUMEN = DI.ID_DOKUMEN(+)"
+				+ " AND TP.ID_PERMOHONAN = D.ID_PERMOHONAN "
+				+ " AND D.ID_JENISDOKUMEN = DIM.ID_JENISDOKUMEN (+)"
+				+ " AND TP.NO_PERMOHONAN = '" + noPermohonan + "'";
+			if(!tapisan.equals(""))
+				//sql +=" AND D.JENIS_DOKUMEN='"+tapisan+"'";
+				sql +=" AND D.JENIS_DOKUMEN='"+tapisan+"'";
+			
+			if(!tapisan.equals("BorangA")) {
+				sql +=" AND D.ID_JENISDOKUMEN NOT IN (8) ";
+			}
+			
+				sql = sql + " ORDER BY ID_TANAHDOKUMEN ASC";
+			myLog.info("getSenaraiDokumen:sql2="+sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while (rs.next()) {
+				dokumen = new Tblrujdokumen();
+				//dokumen.setIdDokumen(rs.getString("ID_TANAHDOKUMEN") == null ? rs.getString("ID_DOKUMEN") : rs.getString("ID_TANAHDOKUMEN"));
+				dokumen.setIdDokumen(rs.getString("ID_DOKUMEN") == null ? rs.getString("KOD_JENISDOKUMEN") : rs.getString("KOD_JENISDOKUMEN"));
+				//dokumen.setKodDokumen(rs.getString("ID_DOKUMEN") == null ? rs.getString("KOD_MAPETANAH") : rs.getString("KOD_MAPETANAH"));
+				
+				myLog.info("id dokumen : "+rs.getString("ID_DOKUMEN") == null ? rs.getString("KOD_JENISDOKUMEN") : rs.getString("KOD_JENISDOKUMEN"));
+				dokumen.setNamaDokumen(rs.getString("NAMA_FAIL"));
+				//dokumen.setKodDokumen(rs.getString("JENIS_MIME"));
+				dokumen.setDokumen(rs.getString("JENIS_MIME"));
+				myLog.info("jenis dokumen type : "+rs.getString("JENIS_MIME") == null ? rs.getString("JENIS_MIME") : rs.getString("JENIS_MIME"));
+				
+	
+
+				Blob b = rs.getBlob("CONTENT");
+				InputStream is = b.getBinaryStream();
+				byte [] b2 = IOUtils.toByteArray(is);
+				dokumen.setKandungan(Base64.encodeToString(b2));
+				dokumen.setIdJenis(getJenisDokumen(rs.getString("KOD_JENISDOKUMEN")));	
+//				h = new Hashtable();
+//				h.put("idDokumenPermohonan", rs.getString("ID_TANAHDOKUMEN") == null ? "" : rs.getString("ID_TANAHDOKUMEN"));
+//				//h.put("flagDokumen", rs.getString("FLAG_DOKUMEN") == null ? "" : rs.getString("FLAG_DOKUMEN"));
+//				String jenisDokumen = getJenisDokumen(rs.getString("ID_JENISDOKUMEN"));
+//				h.put("jenisDokumen", jenisDokumen);
+//				h.put("namaDokumen", rs.getString("NAMA_FAIL") == null ? "" : rs.getString("NAMA_FAIL"));
+//				h.put("jenisMime", rs.getString("JENIS_MIME") == null ? "" : rs.getString("JENIS_MIME"));
+				//h.put("kodDokumen", rs.getString("KOD_DOKUMEN") == null ? "" : rs.getString("KOD_DOKUMEN"));
+				listDokumenC.addElement(dokumen);
+				
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return listDokumenC;
+	}
+	
 	
 	public Vector getSenaraiDokumenEndorsan(String idPermohonanIntegrasi, Db db) {
 		String sql = "";
@@ -915,6 +1083,42 @@ public class PopupeTanahData {
 		}
 	}
 	
+	public boolean checkSenaraiHakmilik(String idPengguna, String idPermohonanIntegrasi, Db db) {
+		boolean bool = true;
+		String sql = "";
+
+		try {
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+			sql = "SELECT ID_HAKMILIKPERMOHONAN, ID_HAKMILIK FROM INT_PPTHAKMILIKPERMOHONAN WHERE ID_PERMOHONAN = '" + idPermohonanIntegrasi + "' ORDER BY ID_HAKMILIK ASC";
+			ResultSet rsHakmilik = stmt.executeQuery(sql);
+			List listHakmilik = Collections.synchronizedList(new ArrayList());
+			Map hHakmilik = null;
+			while (rsHakmilik.next()) {
+				hHakmilik = Collections.synchronizedMap(new HashMap());
+
+				hHakmilik.put("ID_HAKMILIKPERMOHONAN", rsHakmilik.getString("ID_HAKMILIKPERMOHONAN") != null ? rsHakmilik.getString("ID_HAKMILIKPERMOHONAN") : "");
+				hHakmilik.put("ID_HAKMILIK", rsHakmilik.getString("ID_HAKMILIK") != null ? rsHakmilik.getString("ID_HAKMILIK") : "");
+				
+				listHakmilik.add(hHakmilik);
+			}
+
+			for (int x = 0; x < listHakmilik.size(); x++) {
+				Map mapHakmilik = (Map) listHakmilik.get(x);
+				if (mapHakmilik != null) {
+					String catatanHakmilik = getCatatanHakmilik(idPengguna, (String) mapHakmilik.get("ID_HAKMILIK"));
+					if (catatanHakmilik != null && !"".equals(catatanHakmilik)) {
+						bool = false;
+					}
+					updateCatatanHakmilik((String) mapHakmilik.get("ID_HAKMILIKPERMOHONAN"), catatanHakmilik, db);
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return bool;
+	}
+	
 	private void updateCatatanHakmilik(String idHakmilikPermohonan, String catatanHakmilik, Db db) {
 		String sql = "";
 
@@ -931,6 +1135,4 @@ public class PopupeTanahData {
 			ex.printStackTrace();
 		}
 	}
-	
-	
 }

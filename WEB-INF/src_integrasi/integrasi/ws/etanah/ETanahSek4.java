@@ -15,6 +15,7 @@ import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.LampiranForm;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumatHakmilikForm;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumatPermohonanSek4Form;
 import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumatPermohonanSek8Form;
+import integrasi.ws.etanah.ppt.MyEtappPengambilanServiceStub.MaklumatWartaborangB;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -49,17 +50,22 @@ public class ETanahSek4 implements IntegrationInternal{
 	private Vector vecHakmilik = null;
 	MaklumatPermohonanSek4Form form = null;
 	MaklumatHakmilikForm[] hakmiliks = null;
+	//YATI 05112020
+	MaklumatWartaborangB wartaSek4 = null;
 	LampiranForm[] lampirans = null;
 	LampiranForm lampiran = null;
 	private static Logger myLog = Logger.getLogger(ETanahSek4.class);
 	Calendar cal = new GregorianCalendar();
-	private String URUSAN = "A4";
+	private String URUSAN = null;
+	private String JenisSkrin = null;
 	
 	public void hantar(ETanahPPTManager pptManager
 		,Hashtable<String,String> permohonan_
 		,Vector<Tblrujdokumen> vecDok
 		,String idPengguna, Db db) {
 		//DEFAULT MSG
+		URUSAN = "A4";
+		JenisSkrin = "BorangA";
 		flagMsg = "Y";
 		outputMsg = "MAKLUMAT PERMOHONAN BERJAYA DIHANTAR";
 		
@@ -70,12 +76,13 @@ public class ETanahSek4 implements IntegrationInternal{
 			
 			form = getPermohonan(permohonan_);
 			hakmiliks = getHakmilik();
-			lampirans = getLampiran(vecDok);
+			lampirans = getLampiran(vecDok); // MMK
 			
 			setPermohonan(permohonan_,idPengguna,db);
 			
 			PopupeTanahData logic = new PopupeTanahData();
-			lampiran = getLampiran1(logic.getSenaraiDokumen(permohonan_.get("idPermohonan"),URUSAN,db));
+			lampiran = getLampiran1(logic.getSenaraiDokumen(permohonan_.get("idPermohonan"),JenisSkrin,db)); //LAMPIRAN LAIN
+			myLog.info("lampirans : "+lampirans);
 			
 			String response = "";
 			response = pptManager.permohonanSek4(form,hakmiliks,lampiran,lampirans);
@@ -111,6 +118,8 @@ public class ETanahSek4 implements IntegrationInternal{
 			lampiran.setFilename(dokumen.getNamaDokumen());
 			lampiran.setKodDokumen(dokumen.getIdDokumen()); //rujukan
 			//myLog.info(i+"."+cbsemaks[i]);
+			myLog.info("dokumen jenis :"+dokumen.getIdJenis());
+			myLog.info("dokumen jenis :"+dokumen.getIdDokumen());
 			
 			lf[i] = lampiran;
 		}
@@ -126,10 +135,13 @@ public class ETanahSek4 implements IntegrationInternal{
 			dokumen = (Tblrujdokumen)vecDok.get(i);
 			lampiran = new LampiranForm();
 			lampiran.setBytes(dokumen.getKandungan());
-			lampiran.setDocType(dokumen.getIdJenis());
+			//lampiran.setDocType(dokumen.getIdJenis());
+			lampiran.setDocType(dokumen.getDokumen());
 			lampiran.setFilename(dokumen.getNamaDokumen());
 			lampiran.setKodDokumen(dokumen.getIdDokumen()); //rujukan
 			//myLog.info(i+"."+cbsemaks[i]);
+			myLog.info("dokumen jenis 1:"+dokumen.getIdDokumen());
+			myLog.info("dokumen type 1:"+dokumen.getDokumen());
 			
 			//lf[i] = lampiran;
 		}
@@ -162,6 +174,8 @@ public class ETanahSek4 implements IntegrationInternal{
 //			hakmilik.setKod_luas_asal(tanah.get("kodLuasAsal"));
 //			hakmilik.setKod_luas_asal(tanah.get("kodLuasAsal"));
 //			hakmilik.setKod_luas_asal(tanah.get("kodLuasAsal"));
+			myLog.info("id hakmilik hantar :"+tanah.get("idHakmilik"));
+			myLog.info("pegangan id hakmilik hantar :"+tanah.get("idHakmilik"));
 
 			mhf[i] = hakmilik;
 			
@@ -204,7 +218,7 @@ public class ETanahSek4 implements IntegrationInternal{
 		form.setTujuan(permohonan.get("namaProjek"));
 		form.setTujuan_dalam_english(permohonan.get("namaProjekBI"));
 		//form.set
-		myLog.info("Maklumat Sek 4 Daerah="+permohonan.get("kodDaerah"));
+		myLog.info("Maklumat Sek 4 NO FAIL="+permohonan.get("noFail"));
 		myLog.info("Maklumat Sek 4 Negeri="+form.getKod_negeri_pengambilan());
 		return form;
 		
@@ -632,6 +646,7 @@ public class ETanahSek4 implements IntegrationInternal{
 			Statement stmt = db.getStatement();
 
 			sql = "SELECT * FROM INT_PPTHAKMILIKPERMOHONAN WHERE ID_HAKMILIKPERMOHONAN = '" + idHakmilikPermohonan + "'";
+		
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			if (rs.next()){
@@ -739,6 +754,7 @@ public class ETanahSek4 implements IntegrationInternal{
 				r.add("ID_PERMOHONAN", permohonan.get("idPermohonan"));
 				r.add("NAMA_KEMENTERIAN", permohonan.get("namaKementerian"));
 				r.add("NAMA_PROJEK", permohonan.get("namaProjek"));
+				r.add("NO_FAIL", permohonan.get("noFail"));
 				r.add("TARIKH_HANTAR", r.unquote("sysdate"));
 				r.add("ID_MASUK", idPengguna);	
 				r.add("TARIKH_MASUK", r.unquote("sysdate"));	
@@ -753,5 +769,100 @@ public class ETanahSek4 implements IntegrationInternal{
 		}
 		
 	}
+	
+	//yati
+		public void hantarBorangB(ETanahPPTManager pptManager
+				,Hashtable<String,String> wartaSek4_
+				,Vector<Tblrujdokumen> vecDok
+				,String idPengguna, Db db) {
+				//DEFAULT MSG
+				URUSAN = "B4";
+				flagMsg = "Y";
+				outputMsg = "MAKLUMAT PERMOHONAN BERJAYA DIHANTAR";
+				
+				cal.setTime(new Date());
+				//PermohonanDForm permohonan = null;
+				
+				try {
+					
+					wartaSek4 = getWarta(wartaSek4_);
+					//hakmiliks = getHakmilik();
+					lampirans = getLampiran(vecDok);
+					
+					setWarta(wartaSek4_,idPengguna,db);
+					
+					PopupeTanahData logic = new PopupeTanahData();
+					lampiran = getLampiran1(logic.getSenaraiDokumen(wartaSek4_.get("idPermohonan"),URUSAN,db));
+					
+					String response = "";
+					response = pptManager.wartaSek4BorangB(wartaSek4,lampirans);
+					myLog.info("response="+response);
+					
+//					permohonan = preparePermohonanD(idPermohonan, db);	
+//					ResponseForm response = RESTInvoker.hantarBorangD(idPermohonan, permohonan, cal, idPengguna);
+					if (!response.equals("")) {
+						updateFlagHantar(wartaSek4_.get("idPermohonan"), cal.getTime(), response,db, idPengguna);
+					}
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+					flagMsg = "N";
+					outputMsg = e.toString();
+				}	
+				
+			}
+		
+		//yati
+		private MaklumatWartaborangB getWarta(Hashtable<String,String> wartaSek4) {
+			MaklumatWartaborangB form = null;
+			form = new MaklumatWartaborangB();		
+			form.setIdPermohonan(wartaSek4.get("alamat1"));
+			form.setNoWarta(wartaSek4.get("alamat1"));
+			form.setTarikhWarta(wartaSek4.get("alamat1"));
+			return form;
+			
+		}
+		
+		//yati
+		private void setWarta(Hashtable<String,String> permohonan,String idPengguna, Db db) {
+			String sql = "";
+			String idPermohonan = permohonan.get("idPermohonan");
+			
+			try {
+				Statement stmt = db.getStatement();
+				SQLRenderer r = new SQLRenderer();
+				
+				sql = "SELECT * FROM TBLINTANAHPERMOHONAN WHERE ID_PERMOHONAN = '" + idPermohonan + "'";
+				ResultSet rs = stmt.executeQuery(sql);
+				
+				if (rs.next() == false) {
+					r = new SQLRenderer();
+					String idRujukan = String.valueOf(DB.getNextID(db, "INTANAHPERMOHONAN_SEQ"));
+					r.add("ID_PERMOHONANINT", idRujukan);
+					r.add("FLAG_URUSAN", URUSAN);
+					r.add("ID_PERMOHONAN", permohonan.get("idPermohonan"));
+					r.add("NAMA_KEMENTERIAN", permohonan.get("namaKementerian"));
+					r.add("NAMA_PROJEK", permohonan.get("namaProjek"));
+					r.add("TARIKH_HANTAR", r.unquote("sysdate"));
+					r.add("ID_MASUK", idPengguna);	
+					r.add("TARIKH_MASUK", r.unquote("sysdate"));	
+					sql = r.getSQLInsert("TBLINTANAHPERMOHONAN");
+					myLog.info("setPermohonan:"+sql);
+					stmt.executeUpdate(sql);
+									
+				}
+				
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			
+		}
+
+		@Override
+		public void hantarBorangC(ETanahPPTManager pptManager, String noPermohonan, Vector<Tblrujdokumen> vecDok,
+				String idPengguna, Db db) {
+			// TODO Auto-generated method stub
+			
+		}
 	
 }

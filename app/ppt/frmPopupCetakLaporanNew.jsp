@@ -1129,7 +1129,7 @@ background: #f4eff4 !important;
                 	#end
                 	
                 	#if($report == 'NotaSiasatanSek8')
-                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakNotaSiasatan('$!id_siasatan','$!nama_pengarah','$!nama_pegawai','$!id_hakmilik','$!ic_login')">
+                	<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak" onclick="javascript:cetakNotaSiasatan('$!id_siasatan','$!nama_pengarah','$!username','$!id_hakmilik','$!ic_login')">
                 	#end
                 	
                 	#if($report == 'IringanARB')
@@ -3653,7 +3653,7 @@ function cetakNotaSiasatan(id_siasatan,nama_pengarah,nama_pegawai,id_hakmilik,ic
 			nofail = document.${formName}.no_fail.value;
 		}
 		
-    	var url = "../../servlet/ekptg.report.ppt.NotaSiasatanSek8?id_siasatan="+id_siasatan+"&namaPegawai=''&namaPengarah=''&no_fail="+nofail+"&id_hakmilik="+id_hakmilik+"&userlogin="+ic_login;
+    	var url = "../../servlet/ekptg.report.ppt.NotaSiasatanSek8?id_siasatan="+id_siasatan+"&namaPegawai="+nama_pegawai+"&namaPengarah=&no_fail="+nofail+"&id_hakmilik="+id_hakmilik+"&userlogin="+ic_login;
     	var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
     	if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;
@@ -3930,18 +3930,18 @@ function cetakSuratEndorsanBorangK(idhakmilik, idfail)	{  //(idhakmilik, idfail,
 }
 
 
-function cetakSuratEndorsanBorangK1(idhakmilik, idfail, namaPegawai, idjawatan, ic_login)	{  //(idhakmilik, idfail, idpermohonan, nofail, ic_login) {
+/*function cetakSuratEndorsanBorangK1(idhakmilik, idfail, namaPegawai, idjawatan, ic_login)	{  //(idhakmilik, idfail, idpermohonan, nofail, ic_login) {
 
 	//var id_pegawai = document.${formName}.socPegawai.value;
 	nofail = document.${formName}.no_fail.value;
 	
-	/*
+	
 	if (document.${formName}.socPegawai.value == "")	{
 	alert("Sila pilih \"Nama Pegawai\" terlebih dahulu.");
 	document.${formName}.socPegawai.focus();
 	return;
 	
-	}else{*/
+	}else{
 	var valType = document.${formName}.sorSelectNoFail.value;
 	var nofail = "";
 	
@@ -3963,6 +3963,27 @@ function cetakSuratEndorsanBorangK1(idhakmilik, idfail, namaPegawai, idjawatan, 
 	if ((document.window != null) && (!hWnd.opener))
 	hWnd.opener = document.window;
 	if (hWnd.focus != null) hWnd.focus();
+		
+	//}
+}*/
+
+function cetakSuratEndorsanBorangK1(idhakmilik, idfail, namaPegawai, idjawatan, ic_login) {
+
+	//var id_pegawai = document.${formName}.socPegawai.value;
+	nofail = document.${formName}.no_fail.value;
+	
+	/*if (document.${formName}.socPegawai.value == "")	{
+	alert("Sila pilih \"Nama Pegawai\" terlebih dahulu.");
+	document.${formName}.socPegawai.focus();
+	return;
+	
+	}else{*/
+		
+		var url = "../../servlet/ekptg.report.ppt.SuratEndorsanBorangK?id_hakmilik="+idhakmilik+"&id_fail="+idfail+"&nama_pegawai="+namaPegawai+"&id_jawatan="+idjawatan+"&userlogin="+ic_login;
+		var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+		if ((document.window != null) && (!hWnd.opener))
+		hWnd.opener = document.window;
+		if (hWnd.focus != null) hWnd.focus();
 		
 	//}
 }

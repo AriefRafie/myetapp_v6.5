@@ -14,7 +14,8 @@
 	<input type="hidden" name="id_laporanpasir" id="id_laporanpasir" value="$id_laporanpasir" />
 	<input type="hidden" name="idDokumen" id="idDokumen" value="$idDokumen" />
 	<input name="mode" type="hidden" id="mode" value="$mode"/>
-  <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
+    <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
+    <input type="hidden" name="idFail" id="idFail" value="$idFail"/>
 </p>
 
 <!--  #if ($returnChecking == "true")
@@ -287,7 +288,7 @@
 
 #if ($button!="add")
 <fieldset>
-	<legend>Senarai Dokumen Pengeluaran Pasir Laut</legend>
+	<legend>Senarai Laporan Pengeluaran Pasir Laut</legend>
 	<!-- #parse("app/utils/record_paging.jsp") -->
 	<table width="100%"  cellpadding="1" cellspacing="2" border="0">
 		<tr>
@@ -611,7 +612,6 @@ function validateNumber(elmnt,content) {
 	//if it is character, then remove it..
 	if (isNaN(content)) {
 		elmnt.value = RemoveNonNumeric(content);
-		//document.write("getDay() : " + dt.getDay() );
 		return;
 	}
 	//BARU ADD

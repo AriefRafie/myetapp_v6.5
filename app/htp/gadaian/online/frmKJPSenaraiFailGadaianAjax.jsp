@@ -509,6 +509,11 @@ function fGHA_BatalHakmilik() {
 	  		document.${formName}.socANegeri.focus(); 
 			return; 
 		}
+		if(document.${formName}.txtNoTelefon.value == ""){
+			alert('Sila masukkan " No.Telefon " terlebih dahulu.');
+	  		document.${formName}.txtNoTelefon.focus(); 
+			return; 
+		}
 		if(document.${formName}.txtNoPerserahan.value == ""){
 			alert('Sila masukkan " Gadaian Pendua No. Perserahan " terlebih dahulu.');
 	  		document.${formName}.txtNoPerserahan.focus(); 
@@ -573,6 +578,11 @@ function fGHA_SimpanPeguam() {
 	if(document.${formName}.socBNegeri.value == ""){
 		alert('Sila pilih Negeri terlebih dahulu.');
   		document.${formName}.socBNegeri.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtNoTelefonPeguam.value == ""){
+		alert('Sila masukkan No. Telefon Peguam terlebih dahulu.');
+  		document.${formName}.txtNoTelefonPeguam.focus(); 
 		return; 
 	}
 	if ( !window.confirm("Anda Pasti?") ) return;
@@ -903,6 +913,17 @@ function checkDate(inputfield) {
   		inputfield.focus();
  		return;
  	}
+
+}
+function cetakPengesahan(idpermohonan) {
+	
+    //var url = "../servlet/ekptg.report.htp.NoFailTajukFail?template=PengesahanPembelianOnline&idpermohonan="+idpermohonan;
+    var url = "../servlet/ekptg.report.htp.NoFailTajukFail?template=PengesahanPermohonanOnline&idpermohonan="+idpermohonan;
+    var hWnd = window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+
 
 }
 

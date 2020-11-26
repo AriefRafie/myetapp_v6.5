@@ -631,12 +631,12 @@ function tambahMaklumatsewaan(id) {
 
 function tambahMaklumatsewaansimpan() {
 
-	var dari_bulan;
+	/* var dari_bulan;
 	var dari_hari;
 	var dari_tahun;
 	var hingga_bulan;
 	var hingga_hari;
-	var hingga_tahun;
+	var hingga_tahun; */
   	if ( document.${formName}.txtsewa.value == "" ) { 
   		alert('Sila masukkan maklumat sewa terlebih dahulu.');
   		document.${formName}.txtsewa.focus(); return; 
@@ -691,7 +691,7 @@ function tambahMaklumatsewaansimpan() {
     
       
     
-	hingga_bulan = document.${formName}.txdhingga.value.substring(3,5);
+	/* hingga_bulan = document.${formName}.txdhingga.value.substring(3,5);
 	hingga_hari = document.${formName}.txdhingga.value.substring(0,2);
 	hingga_tahun = document.${formName}.txdhingga.value.substring(6,10);
 	var hinggatemp = hingga_bulan+"/"+hingga_hari+"/"+hingga_tahun;
@@ -729,7 +729,8 @@ function tambahMaklumatsewaansimpan() {
 	//document.${formName}.command.value = "pkmaklumat";
 	//document.${formName}.action = "";
 	//document.${formName}.submit();
-	//alert(newMode);
+	//alert(newMode); */
+	
 	doAjaxCall${formName}("pkmaklumat");
 }
 
@@ -1101,12 +1102,12 @@ function checkDate() {
 	var myDate = Date.parse(daritemp);
 	
 
-	if (myDate>today) {
+	/* if (myDate>today) {
   		alert("Tarikh yang dimasukkan tidak boleh melebihi Tarikh semasa");
   		document.${formName}.txdTarikhSuratKJP.value = "";
   		document.${formName}.txdTarikhSuratKJP.focus();
  		return;
- 	}
+ 	} */
 
 }
 

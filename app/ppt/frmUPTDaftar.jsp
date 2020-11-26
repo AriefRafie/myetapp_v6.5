@@ -176,6 +176,7 @@ background: #E0F2F7;
    		#set($no_rujukan_ptd=$data.no_rujukan_ptd)
    		#set($no_rujukan_upt=$data.no_rujukan_upt)
    		#set($flagSahkan=$data.flag_semak)
+   		#set($idNegeriPengambilan=$data.idProjekNegeri)
    		
    		#set($sorJenisKodDaerah=$data.flag_jenis_kod_daerah)
    		
@@ -722,7 +723,7 @@ background: #E0F2F7;
         <div class="TabbedPanelsContent">
         	<fieldset>
         	<legend><strong>Maklumat Tanah Terlibat</strong>
-        	#if($!negeriIntegrasi == "4")
+        	#if($!negeriIntegrasi == "4" || $!idNegeriPengambilan == "4")
         		<input type="button" name="cmdsemakanhakmilik" value="Capaian Hakmilik e-Tanah" onclick="javascript:semakanHakmilikeTanah('ppt','$id_permohonan')">
           	#end        	
         		<input type="button" name="cmdTambah" value ="Tambah Hakmilik" onClick="javascript:tambah();"> 

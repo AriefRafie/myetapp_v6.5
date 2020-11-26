@@ -250,14 +250,18 @@
 		  <tr>
 		    <td colspan="4"  ><div >
 		    #if($pageMode=="edit")
+		    	#if (($!idjawatan.equals("20")|| $!idjawatan.equals("24")) || $!idjawatan.equals("9"))
 				<input class="stylobutton100" type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="simpanLampiran($!idHakmilik)">
+		    	#end
 		    #end
 
 		    #if($mode=="kemaskini")
 		      	<input class="stylobutton100" type="button" name="btnUpdate" id="btnUpdate" value="Simpan"  onclick="kemaskiniSimpan($!idDokumen,$!idGambar)" />
 		    #end 
 		    #if($mode=="view")
+		    	#if (($!idjawatan.equals("20")|| $!idjawatan.equals("24")) || $!idjawatan.equals("9"))
 		      	<input class="stylobutton100" type="button" name="btnKemaskini" id="btnKemaskini" value="Kemaskini" onclick="kemaskiniDetailImej($idGambar)"/>
+		      	#end
 		      <!--<input class="stylobutton100" type="button" name="btnReset" id="btnReset" value="Batal" onclick="baru($idHakmilik)"/> -->
 		    #end
 		      <!-- <input class="stylobutton100" type="button" name="btnBack" id="btnBack" value="Kembali" onclick="kembali($idHakmilik)" />
@@ -820,7 +824,7 @@ function validateTarikhSemasaIsNull(inputfield) {
 	function deleteDetailImej(id){
 		if ( !window.confirm("Adakah Anda Pasti?")) return;
 		document.${formName}.command.value = "";
-		document.${formName}.action = "?_portal_module=ekptg.view.htp.FrmRekodPendaftaranTanah&firstAction=PendaftaranImej&nextAction=deleteDetailImej&idGambar="+id;
+		document.${formName}.action = "?_portal_module=ekptg.view.online.htp.pembelian.SenaraiFailModuleOnline&command=lampiran&nextAction=hapus&iddokumen="+id;
 		document.${formName}.submit();
 	}
 	//function paparOnline(id,idhtp){
@@ -862,7 +866,7 @@ function validateTarikhSemasaIsNull(inputfield) {
 	
 	function tambahLampiran() {
 		document.${formName}.action = "?_portal_module=ekptg.view.online.htp.pembelian.SenaraiFailModuleOnline";
-			
+		doAjaxCall${formName}("tambahlampiran");	
 	}
 	
 	// dokumenOnline.jsp

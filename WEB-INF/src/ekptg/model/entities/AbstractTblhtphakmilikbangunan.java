@@ -37,6 +37,7 @@ public abstract class AbstractTblhtphakmilikbangunan implements
 	private Long idDb;
 	private int bulan;
 	private int tahun;
+	private int hari;
 	private Double sewaBulananDouble;
 
 	// Constructors
@@ -308,6 +309,13 @@ public abstract class AbstractTblhtphakmilikbangunan implements
 
 	public void setTahun(int tahun) {
 		this.tahun = tahun;
+	}
+	public int getHari() {
+		return hari;
+	}
+
+	public void setHari(int hari) {
+		this.hari = hari;
 	}
 	
 }

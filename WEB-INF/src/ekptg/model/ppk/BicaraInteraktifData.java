@@ -1626,15 +1626,15 @@ public class BicaraInteraktifData {
 				" ORDER BY STATUS_HIDUP,UMUR DESC,NAMA ASC " +
 				" ) A, TBLPPKBIKEHADIRAN B , " +
 				" (SELECT PJ.ID_OBMINOR, " +
-				" REGEXP_REPLACE(RTRIM (XMLAGG (XMLELEMENT (E, TRIM(UPPER(OB.NAMA_OB)) || ', ')).EXTRACT ('//text()'), ', '),'(,)([^,]*$)',' DAN\\2') AS LISTPENJAGA " +
-				
+				//" REGEXP_REPLACE(RTRIM (XMLAGG (XMLELEMENT (E, TRIM(UPPER(OB.NAMA_OB)) || ', ')).EXTRACT ('//text()'), ', '),'(,)([^,]*$)',' DAN\\2') AS LISTPENJAGA " +
+				" TRIM(UPPER(OB.NAMA_OB)) AS LISTPENJAGA " +
 				//" REGEXP_REPLACE(RTRIM (XMLAGG (XMLELEMENT (E, TRIM(UPPER(OB.NAMA_OB)) || ', ')).EXTRACT ('//text()'), ', '),'(,)([^,]*$)',' DAN\2')" +
 				//" || REGEXP_SUBSTR(RTRIM (XMLAGG (XMLELEMENT (E, RTRIM(UPPER(OB.NAMA_OB)) || ', ')).EXTRACT ('//text()'), ', '),'([^,]*$)') AS LISTPENJAGA   "+
 				
 				
 				" FROM TBLPPKPENJAGA PJ, TBLPPKOB OB " +
 				" WHERE PJ.ID_OB = OB.ID_OB " +
-				" GROUP BY PJ.ID_OBMINOR ) PENJAGA WHERE A.ID_BIKEHADIRAN = B.ID_BIKEHADIRAN(+) AND A.ID_OB = PENJAGA.ID_OBMINOR(+)  " +
+				" GROUP BY PJ.ID_OBMINOR, OB.NAMA_OB ) PENJAGA WHERE A.ID_BIKEHADIRAN = B.ID_BIKEHADIRAN(+) AND A.ID_OB = PENJAGA.ID_OBMINOR(+)  " +
 				" ORDER BY A.ID_PEMOHON";
 		return sql;
 	}
@@ -5820,6 +5820,7 @@ public class BicaraInteraktifData {
 					" CASE WHEN COUNT(DISTINCT OB.ID_OB) > 1 THEN "+
 					" REGEXP_REPLACE(RTRIM (XMLAGG (XMLELEMENT (E, TRIM(UPPER(OB.NAMA_OB)) || ', ')).EXTRACT ('//text()'), ', '),'(,)([^,]*$)',' DAN\2')" +
 					" || REGEXP_SUBSTR(RTRIM (XMLAGG (XMLELEMENT (E, RTRIM(UPPER(OB.NAMA_OB)) || ', ')).EXTRACT ('//text()'), ', '),'([^,]*$)') " +
+					//" TRIM(UPPER(OB.NAMA_OB)) "+
 					" WHEN COUNT(DISTINCT OB.ID_OB) = 1 THEN MAX(OB.NAMA_OB) END "+
 					" AS LISTPENJAGA   "+
 					" FROM   " +

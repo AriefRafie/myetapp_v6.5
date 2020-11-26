@@ -120,7 +120,7 @@
 					</tr>
                		<tr>
 						<td valign="top" width="1%">
-				        <span class="labelmandatory"></span></td>				        
+				        <span class="labelmandatory">#if ($mode != 'readonly') * #end</span></td>					        
 				        <td width="30%">
 				        	<div align="right" class="labelinput">
 				        	<div align="left"> No. Telefon  </div>

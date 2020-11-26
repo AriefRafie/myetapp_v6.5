@@ -358,8 +358,8 @@ public class PembelianBean implements IPembelian {
 				sql += " TO_CHAR(A.TARIKH_SURAT,'DD/MM/YYYY') TARIKH_SURAT,TO_CHAR(A.TARIKH_TERIMA,'DD/MM/YYYY') AS TARIKH_TERIMA,A.TUJUAN, ";
 					sql += " NVL(B.ID_JENISTANAH,0) ID_JENISTANAH,B.ID_PEGAWAI,B.NO_RUJUKAN_KJP,B.NO_RUJUKAN_LAIN,B.TARIKH_AGIHAN,B.ID_DAERAH,";
 						sql += " C.ID_NEGERI,C.ID_STATUS, D.TARAF_KESELAMATAN,D.ID_TARAFKESELAMATAN,F.NAMA_NEGERI,TO_CHAR(C.TARIKH_DAFTAR_FAIL,'DD/MM/YYYY') AS OPEN_FILE_DATE, ";
-						sql +=" G.NAMA_KEMENTERIAN, H.NAMA_AGENSI,E.NAMA_SUBURUSAN,E.KOD_SUBURUSAN,A.NO_PERMOHONAN,C.ID_MASUK";
-							sql += " from TBLPERMOHONAN A, TBLHTPPERMOHONAN B , TBLPFDFAIL C , TBLpfdrujtarafkeselamatan D, tblrujsuburusan E,TBLRUJNEGERI F,TBLRUJKEMENTERIAN G,TBLRUJAGENSI H ";
+						sql +=" G.NAMA_KEMENTERIAN, H.NAMA_AGENSI,E.NAMA_SUBURUSAN,E.KOD_SUBURUSAN,A.NO_PERMOHONAN,C.ID_MASUK, I.CATATAN";
+							sql += " from TBLPERMOHONAN A, TBLHTPPERMOHONAN B , TBLPFDFAIL C , TBLpfdrujtarafkeselamatan D, tblrujsuburusan E,TBLRUJNEGERI F,TBLRUJKEMENTERIAN G,TBLRUJAGENSI H, TBLSEMAKANHANTAR I ";
 								sql += " where A.ID_PERMOHONAN=B.ID_PERMOHONAN ";
 									sql += " And C.ID_SUBURUSAN = E.ID_SUBURUSAN ";
 										sql += " AND D.ID_TARAFKESELAMATAN(+) = C.ID_TARAFKESELAMATAN ";
@@ -368,6 +368,7 @@ public class PembelianBean implements IPembelian {
 												sql += " AND F.ID_NEGERI = C.ID_NEGERI";
 												sql += " AND G.ID_KEMENTERIAN = C.ID_KEMENTERIAN";
 												sql += " AND B.ID_AGENSI = H.ID_AGENSI";
+												sql += " AND I.ID_PERMOHONAN = A.ID_PERMOHONAN";
 											if(!idHtpPermohonan.equals("")){
 												sql += " AND B.ID_HTPPERMOHONAN = '"+ idHtpPermohonan +"'";
 											}
@@ -413,6 +414,7 @@ public class PembelianBean implements IPembelian {
 										 			fail.setKodSuburusan(rs.getString("KOD_SUBURUSAN"));
 										 			fail.setTajukFail(rs.getString("TAJUK_FAIL"));
 										 			fail.setIdMasuk(rs.getLong("ID_MASUK"));
+										 			htpPermohonan.setCatatan(rs.getString("CATATAN"));
 										 			permohonan.setPfdFail(fail);
 										 			htpPermohonan.setPermohonan(permohonan);
 										 			
@@ -994,7 +996,7 @@ public class PembelianBean implements IPembelian {
 			r.add("C.KETERANGAN as luas_keterangan");
 			r.add("D.keterangan as jenis_keterangan");
 			r.add("D.KOD_JENIS_HAKMILIK as jenis_hakmilik");
-			r.add("(SELECT NAMA FROM TBLHTPPIHAKBERKEPENTINGAN WHERE ID_HAKMILIKURUSAN=A.id_Hakmilikurusan) NAMA");
+			//r.add("(SELECT NAMA FROM TBLHTPPIHAKBERKEPENTINGAN WHERE ID_HAKMILIKURUSAN=A.id_Hakmilikurusan) NAMA");
 //			r.add("A.id_Lot",r.unquote("B.ID_LOT"));
 			r.add("A.id_Lot",r.unquote("B.ID_LOT(+)"));
 			r.add("A.id_luas",r.unquote("C.id_luas"));
@@ -1036,7 +1038,7 @@ public class PembelianBean implements IPembelian {
 				urusan.setKodjenishakmilik(rs.getString("jenis_hakmilik"));
 				urusan.setPermohonan(permohonan);
 				PihakBerkepentingan pb = new PihakBerkepentingan();
-				pb.setNama(rs.getString("nama"));
+				//pb.setNama(rs.getString("nama"));
 				urusan.addPihakBerkepentingan(pb);
 				v.addElement(urusan);
 			}
@@ -1163,6 +1165,7 @@ public class PembelianBean implements IPembelian {
             r.add("id_negeri");
             r.add("no_tel");
             r.add("no_fax");
+            r.add("emel");
             r.add("flag_penjualpemilik");
             r.set("id_permohonan",idPermohonan);
             sql = r.getSQLSelect("TBLHTPPEMOHON");
@@ -1183,6 +1186,7 @@ public class PembelianBean implements IPembelian {
 				pemohon.setFlagPemilik(rs.getString("flag_penjualpemilik"));
 				pemohon.setTel(rs.getString("no_tel"));
 				pemohon.setFax(rs.getString("no_fax"));
+				pemohon.setEmel(rs.getString("emel"));
 			}
 		}
 		catch(Exception e){
@@ -1226,6 +1230,7 @@ public class PembelianBean implements IPembelian {
             r.add("id_negeri", pemohon.getIdNegeri());
             r.add("no_tel", pemohon.getTel());
             r.add("no_fax", pemohon.getFax());
+            r.add("emel", pemohon.getEmel());
             r.add("flag_penjualpemilik", pemohon.getFlagPemilik());
             //r.add("id_masuk", (String)h.get("userID"));
             r.add("tarikh_masuk", r.unquote(today));
@@ -1278,6 +1283,7 @@ public class PembelianBean implements IPembelian {
             r.add("id_negeri", pemohon.getIdNegeri());
             r.add("no_tel", pemohon.getTel());
             r.add("no_fax", pemohon.getFax());
+            r.add("emel", pemohon.getEmel());
             r.add("flag_penjualpemilik", pemohon.getFlagPemilik());
             //r.add("id_masuk", (String)h.get("userID"));
             //r.add("tarikh_masuk", r.unquote(today));
