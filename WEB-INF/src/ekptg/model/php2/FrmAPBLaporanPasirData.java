@@ -275,13 +275,14 @@ public class FrmAPBLaporanPasirData extends EkptgCache implements Serializable {
 			throws Exception {
 		Db db = null;
 		String sql = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			getListLaporan = new Vector();
 			db = new Db();
 			Statement stmt = db.getStatement();
 
 			sql = " SELECT A.ID_LAPORANPASIR,B.NAMA_BULAN,A.TAHUN_PENGAMBILAN,A.BULAN_PENGAMBILAN, A.ID_JADUALKEDUALESENAPB, ";
-			sql += " A.JUMLAH_KUANTITI, A.JUMLAH_ROYALTI ";
+			sql += " A.JUMLAH_KUANTITI, A.JUMLAH_ROYALTI, A.TARIKH_PENGELUARAN ";
 			sql += " FROM TBLPHPLAPORANPASIR A, TBLRUJBULAN B ";
 			sql += " WHERE A.BULAN_PENGAMBILAN = B.ID_BULAN ";
 			sql += " AND A.ID_JADUALKEDUALESENAPB = '" + id_jadualkedualesenAPB
@@ -316,6 +317,8 @@ public class FrmAPBLaporanPasirData extends EkptgCache implements Serializable {
 				h.put("jumlah_royalti",
 						rs.getString("JUMLAH_ROYALTI") == null ? "" : rs
 								.getString("JUMLAH_ROYALTI"));
+				h.put("tarikh_pengeluaran",
+						rs.getString("TARIKH_PENGELUARAN") == null ? "" : sdf.format(rs.getDate("TARIKH_PENGELUARAN")));
 				getListLaporan.addElement(h);
 				bil++;
 			}
@@ -443,13 +446,15 @@ public class FrmAPBLaporanPasirData extends EkptgCache implements Serializable {
 			throws Exception {
 		Db db = null;
 		String sql = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		
 		try {
 			MaklumatLaporan = new Vector();
 			db = new Db();
 			Statement stmt = db.getStatement();
 
 			sql = " SELECT A.ID_LAPORANPASIR,A.BULAN_PENGAMBILAN,A.TAHUN_PENGAMBILAN,A.JUMLAH_KUANTITI, A.KONTRAKTOR, A.PEMBELI_PASIR,";
-			sql += " A.JUMLAH_ROYALTI,A.ID_UNITISIPADU ";
+			sql += " A.JUMLAH_ROYALTI,A.ID_UNITISIPADU, A.TARIKH_PENGELUARAN, A.HARI_OPERASI, A.MASA_OPERASI, A.NAMA_KAPAL ";
 			sql += " FROM TBLPHPLAPORANPASIR A ";
 			sql += " WHERE A.ID_LAPORANPASIR = '" + id_laporanpasir + "' ";
 
@@ -468,6 +473,12 @@ public class FrmAPBLaporanPasirData extends EkptgCache implements Serializable {
 				h.put("pembeli", rs.getString("PEMBELI_PASIR") == null ? "" : rs.getString("PEMBELI_PASIR"));
 				h.put("jumlah_royalti", rs.getString("jumlah_royalti") == null ? "" : Double.parseDouble(rs.getString("jumlah_royalti")));
 				h.put("id_unitisipadu", rs.getString("id_unitisipadu") == null ? "" : rs.getString("id_unitisipadu"));
+				
+				h.put("tarikh_pengeluaran",
+						rs.getString("tarikh_pengeluaran") == null ? "" : sdf.format(rs.getDate("tarikh_pengeluaran")));
+				h.put("nama_kapal", rs.getString("nama_kapal") == null ? "" : rs.getString("nama_kapal"));
+				h.put("hari_operasi", rs.getString("hari_operasi") == null ? "" : rs.getString("hari_operasi"));
+				h.put("masa_operasi", rs.getString("masa_operasi") == null ? "" : rs.getString("masa_operasi"));
 				MaklumatLaporan.addElement(h);
 			}
 		} finally {
@@ -665,7 +676,7 @@ public class FrmAPBLaporanPasirData extends EkptgCache implements Serializable {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_DOKUMEN, A.NAMA_DOKUMEN, A.CATATAN, B.ID_LAPORANPASIR "
+			sql = "SELECT A.ID_DOKUMEN, A.NAMA_DOKUMEN, A.CATATAN, B.ID_LAPORANPASIR, A.NAMA_FAIL "
 				+	" FROM TBLPHPDOKUMEN A, TBLPHPLAPORANPASIR B"
 				+	" WHERE B.ID_LAPORANPASIR = A.ID_LAPORANPASIR"
 				+	" AND A.ID_DOKUMEN = '"+ id_dokumen + "'"; 
@@ -680,6 +691,7 @@ public class FrmAPBLaporanPasirData extends EkptgCache implements Serializable {
 				h.put("id_laporanpasir", rs.getString("ID_LAPORANPASIR") == null ? "" : rs.getString("ID_LAPORANPASIR"));
 				h.put("nama_dokumen", rs.getString("NAMA_DOKUMEN") == null ? "" : rs.getString("NAMA_DOKUMEN"));
 				h.put("catatan", rs.getString("CATATAN") == null ? "" : rs.getString("CATATAN"));
+				h.put("nama_fail", rs.getString("NAMA_FAIL") == null ? "" : rs.getString("NAMA_FAIL"));
 				MaklumatDokumen.addElement(h);
 			}
 		} finally {

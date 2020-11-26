@@ -1390,7 +1390,7 @@ public class FrmAPBSenaraiMesyuaratData {
 			Statement stmt = db.getStatement();
 
 			sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN FROM TBLPHPDOKUMEN"
-					+ " WHERE ID_MESYUARAT = '" + idMesyuarat + "'";
+					+ " WHERE FLAG_DOKUMEN = 'MM' AND ID_MESYUARAT = '" + idMesyuarat + "'";
 
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
@@ -1424,8 +1424,8 @@ public class FrmAPBSenaraiMesyuaratData {
 			beanMaklumatImejan = new Vector();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN, NAMA_FAIL FROM TBLPHPDOKUMEN WHERE ID_DOKUMEN = '"
-					+ idDokumen + "'";
+			sql = "SELECT ID_DOKUMEN, NAMA_DOKUMEN, CATATAN, NAMA_FAIL FROM TBLPHPDOKUMEN "
+				+ "WHERE FLAG_DOKUMEN = 'MM' AND ID_DOKUMEN = '" + idDokumen + "'";
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -1446,12 +1446,49 @@ public class FrmAPBSenaraiMesyuaratData {
 				db.close();
 		}
 	}
-	public Vector getListImejan() {
-		return listImejan;
-	}
 	
-	public Vector getBeanMaklumatImejan() {
-		return beanMaklumatImejan;
+	public Vector getBeanMaklumatLampiran(String idMesyuarat)
+			throws Exception {
+		Db db = null;
+		String sql = "";
+		Vector beanMaklumatLampiran = null;
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT * FROM TBLPHPDOKUMEN WHERE FLAG_DOKUMEN = 'L' AND ID_MESYUARAT = '"
+					+ idMesyuarat + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			while (rs.next()) {
+				beanMaklumatLampiran = new Vector();
+				h = new Hashtable();
+				h.put("idDokumen",
+						rs.getString("ID_DOKUMEN") == null ? "" : rs
+								.getString("ID_DOKUMEN"));
+				h.put("namaDokumen", rs.getString("NAMA_DOKUMEN") == null ? ""
+						: rs.getString("NAMA_DOKUMEN"));
+				h.put("catatan",
+						rs.getString("CATATAN") == null ? "" : rs
+								.getString("CATATAN"));
+				h.put("namaLampiran",
+						rs.getString("NAMA_FAIL") == null ? "" : rs
+								.getString("NAMA_FAIL"));
+				h.put("idMesyuarat",
+						rs.getString("ID_MESYUARAT") == null ? "" : rs
+								.getString("ID_MESYUARAT"));
+				beanMaklumatLampiran.addElement(h);
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+
+		return beanMaklumatLampiran;
 	}
 	
 	public void sendEmailMesyuarat(String idMesyuarat,String emel, HttpSession session) throws Exception {
@@ -1563,5 +1600,13 @@ public class FrmAPBSenaraiMesyuaratData {
 			if (db != null)
 				db.close();
 		}
+	}
+	
+	public Vector getListImejan() {
+		return listImejan;
+	}
+	
+	public Vector getBeanMaklumatImejan() {
+		return beanMaklumatImejan;
 	}
 }

@@ -1487,6 +1487,52 @@ System.out.println("setSenaraiTanahPohon :: sql >>> "+sql);
 		}
 	}
 
+	public void simpanKemaskiniLampiran(String idDokumen, String txtNamaImej,
+			String txtCatatan, HttpSession session) throws Exception {
+		Db db = null;
+		Connection conn = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		String sql = "";
+
+		try {
+			db = new Db();
+			conn = db.getConnection();
+			conn.setAutoCommit(false);
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			// TBLPHPDOKUMEN
+			r.update("ID_DOKUMEN", idDokumen);
+			r.add("NAMA_DOKUMEN", txtNamaImej);
+			r.add("CATATAN", txtCatatan);
+
+			r.add("ID_KEMASKINI", userId);
+			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
+
+			sql = r.getSQLUpdate("TBLPHPDOKUMEN");
+			stmt.executeUpdate(sql);
+
+			conn.commit();
+
+			AuditTrail.logActivity("1610200", "4", null, session, "UPD",
+					"FAIL PELEPASAN [" + idDokumen
+					+ "] DIKEMASKINI");
+
+		} catch (SQLException ex) {
+			try {
+				conn.rollback();
+			} catch (SQLException e) {
+				throw new Exception("Rollback error : " + e.getMessage());
+			}
+			throw new Exception("Ralat : Masalah penyimpanan data "
+					+ ex.getMessage());
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+
 	public void hapusDokumen(String idDokumen) throws Exception {
 		Db db = null;
 		Connection conn = null;

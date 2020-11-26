@@ -143,6 +143,7 @@
   </tr>
 </table>
 <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak Permohonan" onclick="janaMaklumatPermohonan('$idHasil')"/>
+<input type="button" name="cmdCetak" id="cmdCetak" value="Cetak Sampul Surat" onclick="janaSampulSurat('$idHasil')"/>
 <!-- <input type="button" name="cmdCetak" id="cmdCetak" value="Cetak Permohonan" onclick="printLaporan('laporan','$!tajukLaporan')"/> -->
 </div>
 <script type="text/javascript">

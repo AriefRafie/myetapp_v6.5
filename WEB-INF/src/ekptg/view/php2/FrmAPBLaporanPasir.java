@@ -177,9 +177,14 @@ public class FrmAPBLaporanPasir extends AjaxBasedModule {
         	
         	String socBulan = getParam("socBulan");
         	String txtTahun = getParam("txtTahun");
+        	String txtTarikh = getParam("txtTarikhOperasi");
+	        String txtBulan = txtTarikh.substring(3,5);
+			String txtTahunOps = txtTarikh.substring(6,10);
+        
         	boolean returnChecking = false;
         	
-        	returnChecking = FrmAPBLaporanPasirData.isBulanExist(id_jadualkedualesenAPB,socBulan,txtTahun);
+        	// returnChecking = FrmAPBLaporanPasirData.isBulanExist(id_jadualkedualesenAPB,socBulan,txtTahun);
+        	returnChecking = FrmAPBLaporanPasirData.isBulanExist(id_jadualkedualesenAPB,txtBulan,txtTahunOps);
         	if(returnChecking == false){
         		
             	// INSERT TBLPHPLAPORANPASIR        	
@@ -948,13 +953,18 @@ public class FrmAPBLaporanPasir extends AjaxBasedModule {
 		
 		String txtJumKuantiti = getParam("txtJumKuantiti");
 		String txtJumRoyalti = getParam("txtJumRoyalti");
-		String socBulan = getParam("socBulan");
-		String txtTahun = getParam("txtTahun");
+//		String socBulan = getParam("socBulan");
+//		String txtTahun = getParam("txtTahun");
 		/*String txtKontraktor = getParam("txtKontraktor");*/
 		/*String txtPembeli = getParam("txtPembeli");*/
+		String txtTarikhOperasi = getParam("txtTarikhOperasi");
+		String txtMasaOperasi  = getParam("txtMasaOperasi");
+    	String txtHariOperasi  = getParam("txtHariOperasi");
+    	String txtBulan = txtTarikhOperasi.substring(3,5);
+    	String txtTahun = txtTarikhOperasi.substring(6,10);
+    	String txtKapal = getParam("txtNamaKapal");
 		
-		return modelTrasaction.simpanLaporan(usid,id_jadualkedualesenAPB,txtJumKuantiti,txtJumRoyalti,
-				socBulan,txtTahun);		
+		return modelTrasaction.simpanLaporan(usid,id_jadualkedualesenAPB,txtJumKuantiti,txtJumRoyalti,txtTarikhOperasi,txtBulan,txtTahun,txtMasaOperasi,txtHariOperasi,txtKapal);	
 		
 	}// CLOSE SIMPAN LAPORAN
 	
@@ -1009,13 +1019,19 @@ public class FrmAPBLaporanPasir extends AjaxBasedModule {
 		
 		String txtJumKuantiti = getParam("txtJumKuantiti");
 		String txtJumRoyalti = getParam("txtJumRoyalti");
-		String socBulan = getParam("socBulan");
-		String txtTahun = getParam("txtTahun");
-		String txtKontraktor = getParam("txtKontraktor");
-		String txtPembeli = getParam("txtPembeli");
+//		String socBulan = getParam("socBulan");
+//		String txtTahun = getParam("txtTahun");
+//		String txtKontraktor = getParam("txtKontraktor");
+//		String txtPembeli = getParam("txtPembeli");
+		String txtTarikhOperasi = getParam("txtTarikhOperasi");
+		String txtMasaOperasi  = getParam("txtMasaOperasi");
+		String txtHariOperasi  = getParam("txtHariOperasi");
+		String txtBulan = txtTarikhOperasi.substring(3,5);
+		String txtTahun = txtTarikhOperasi.substring(6,10);
+		String txtKapal = getParam("txtNamaKapal");
 		
 		modelTrasaction.simpanEditLaporan(usid,id_laporanpasir,txtJumKuantiti,txtJumRoyalti,
-				socBulan,txtTahun, txtKontraktor, txtPembeli);
+				txtTarikhOperasi,txtBulan,txtTahun,txtMasaOperasi,txtHariOperasi,txtKapal);
 				
 	}// CLOSE UPDATELAPORAN	
 	

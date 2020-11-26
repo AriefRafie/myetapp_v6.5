@@ -58,40 +58,6 @@
           <td>:</td>
           <td><input name="txtTarikhJangkaTerima" type="text" readonly="readonly" class="disabled" id="txtTarikhJangkaTerima" value="$beanMaklumatJUPEM.tarikhJangkaTerima" size="9" maxlength="10"></td>
         </tr>
-        #if ($modePopup == 'view')
-        #set($idDokumen = '')
-        #set($namaFail = '')
-        #set($jenisDokumen = '1')
-        #foreach ($beanMaklumatDokumenJUPEM in $BeanMaklumatDokumenJUPEM)
-        	#set($idDokumen = $beanMaklumatDokumenJUPEM.idDokumen)
-    		#set($namaFail = $beanMaklumatDokumenJUPEM.namaFail)
-    		#set($jenisDokumen = $beanMaklumatDokumenJUPEM.jenisDokumen)
-        #end
-        <tr>
-          <td>&nbsp;&nbsp;&nbsp;</td>
-          <td>Lampiran</td>
-          <td>:</td>
-          <td>
-          #if ($idDokumen != '') 
-          	<a href="#" onclick="cetakDokumen($idDokumen)" class="style2">$namaFail</a> &nbsp;&nbsp; 
-          #end
-          </td>
-        </tr>
-        <tr>
-		  <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>
-         	<input id="fileuploadMohonJUPEM" name="fileuploadMohonJUPEM" type="file" size="40" />
-            <input name="cmdSimpan4" type="button" value="Simpan Dokumen" onclick="simpanDokumenMohonJUPEM('$idUlasanTeknikal','$idPermohonan')" /></td>
-        </tr>                
-        <tr>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td><span class="style4"><i><font color="#ff0000">Perhatian</font> : </i><span class="style5">Saiz muat naik fail adalah tidak melebihi 2MB. Jika muat naik anda tidak berjaya sila cuba dengan saiz fail yang lebih kecil.</span></span></td>
-        </tr>
-        #end
         #end
         <tr>
           <td>&nbsp;</td>

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package ekptg.model.php2;
 
@@ -60,13 +60,13 @@ public class FrmPLPHeaderData {
 						.getString("NO_FAIL").toUpperCase());
 				h.put("noFailNegeri", rs.getString("NO_FAIL_NEGERI") == null ? "" : rs
 						.getString("NO_FAIL_NEGERI").toUpperCase());
-				
+
 				if(rs.getString("TAJUK_FAIL").contains("TANAH MILIK")) {
 					h.put("subUrusan", "PENYERAHAN BALIK");
-					
+
 				} else if(rs.getString("TAJUK_FAIL").contains("TANAH RIZAB")) {
 					h.put("subUrusan", "PELEPASAN");
-					
+
 				}
 				h.put("idPermohonan",
 						rs.getString("ID_PERMOHONAN") == null ? "" : rs
@@ -722,7 +722,7 @@ public class FrmPLPHeaderData {
 				db.close();
 		}
 	}
-	
+
 	public String getIdHTPHakmilikByIdHakmilikPermohonan(
 			String idHakmilikPermohonan) throws Exception {
 		Db db = null;

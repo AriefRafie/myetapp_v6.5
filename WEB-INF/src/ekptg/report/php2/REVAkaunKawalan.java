@@ -8,10 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import ekptg.report.EkptgReportServlet;
 
-public class REVSenaraiFail extends EkptgReportServlet {
+public class REVAkaunKawalan extends EkptgReportServlet {
 
-	public REVSenaraiFail() {
-		super.setReportName("REVSenaraiFail");
+	public REVAkaunKawalan() {
+		//super.setReportName("REVSenaraiFail");
+		super.setReportName("REVLaporanAkaunKawalanLatest");
 		super.setFolderName("php2\\REV\\LAPORAN");
 	}
 

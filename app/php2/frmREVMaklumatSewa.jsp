@@ -26,7 +26,7 @@
       <legend><strong>SENARAI CETAKAN</strong></legend>
       <table align="center" width="100%">
         <tr>
-          <td><a href="#" class="style2" onclick="javascript:janaPenyataAkaun('$idHasil')"> Akaun Subsidari</a></td>
+          <td><a href="#" class="style2" onclick="javascript:janaPenyataAkaun2('$idHasil')"> Akaun Subsidari</a></td>
         </tr>
         <tr>
           <td><a href="#" class="style2" onclick="javascript:janaSuratKuiriCek('$idHasil')"> Surat Kuiri Cek </a></td>

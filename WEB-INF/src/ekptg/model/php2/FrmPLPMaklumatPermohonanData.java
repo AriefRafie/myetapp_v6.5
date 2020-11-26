@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package ekptg.model.php2;
 
@@ -26,7 +26,7 @@ import ekptg.helpers.Utils;
 
 /**
  * modified by hilda
- * 
+ *
  */
 public class FrmPLPMaklumatPermohonanData {
 
@@ -46,7 +46,7 @@ public class FrmPLPMaklumatPermohonanData {
 	FrmPNWPopupSenaraiTanahData logicTanah = new FrmPNWPopupSenaraiTanahData();
 
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-	
+
 	public void setMaklumatLampiran(String idDokumen) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -78,7 +78,7 @@ public class FrmPLPMaklumatPermohonanData {
 				db.close();
 		}
 	}
-	
+
 	public void setSenaraiLampiran(String idPermohonan) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -115,7 +115,7 @@ public class FrmPLPMaklumatPermohonanData {
 				db.close();
 		}
 	}
-	
+
 	public void simpanKemaskiniLampiran(String idDokumen, String txtNamaLampiran,
 			String txtCatatan, HttpSession session) throws Exception {
 		Db db = null;
@@ -142,7 +142,7 @@ public class FrmPLPMaklumatPermohonanData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610198", "4", null, session, "UPD",
 					"FAIL [" + idDokumen + "] DIKEMASKINI");
 
@@ -160,7 +160,7 @@ public class FrmPLPMaklumatPermohonanData {
 				db.close();
 		}
 	}
-	
+
 	public void hapusLampiran(String idDokumen, HttpSession session) throws Exception {
 		Db db = null;
 		Connection conn = null;
@@ -180,7 +180,7 @@ public class FrmPLPMaklumatPermohonanData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610198", "4", null, session, "DEL",
 					"FAIL [" + idDokumen + "] DIHAPUSKAN");
 
@@ -198,7 +198,7 @@ public class FrmPLPMaklumatPermohonanData {
 				db.close();
 		}
 	}
-	
+
 	public void setMaklumatPelan(String idDokumen) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -228,7 +228,7 @@ public class FrmPLPMaklumatPermohonanData {
 				db.close();
 		}
 	}
-	
+
 	public void setSenaraiPelan(String idPermohonan) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -265,7 +265,7 @@ public class FrmPLPMaklumatPermohonanData {
 				db.close();
 		}
 	}
-	
+
 	public void simpanKemaskiniPelan(String idDokumen, String txtNamaPelan,
 			String txtCatatan, HttpSession session) throws Exception {
 		Db db = null;
@@ -292,7 +292,7 @@ public class FrmPLPMaklumatPermohonanData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610198", "4", null, session, "UPD",
 					"FAIL PELEPASAN [" + idDokumen + "] DIKEMASKINI");
 
@@ -330,7 +330,7 @@ public class FrmPLPMaklumatPermohonanData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610198", "4", null, session, "DEL",
 					"PELAN PELEPASAN [" + idDokumen + "] DIHAPUSKAN");
 
@@ -435,7 +435,7 @@ public class FrmPLPMaklumatPermohonanData {
 	}
 
 	public void updatePermohonanPelepasan(String idFail, String idPermohonan,
-			String tarikhTerima, String tarikhSurat, String noRujukanSurat, String noFailNegeri, 
+			String tarikhTerima, String tarikhSurat, String noRujukanSurat, String noFailNegeri,
 			String txtPerkara, String idPermohonanPelepasan, String idJenisProjek,
 			String txtNamaProjek, String idLuasKegunaan, String idLuas,
 			String txtLuasMohon1, String txtLuasMohon2, String txtLuasMohon3,
@@ -501,7 +501,7 @@ public class FrmPLPMaklumatPermohonanData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610198", "4", null, session, "UPD",
 					"FAIL PELEPASAN [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] DIKEMASKINI");
@@ -548,7 +548,7 @@ public class FrmPLPMaklumatPermohonanData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610198", "4", null, session, "UPD",
 					"FAIL PELEPASAN [" + idPermohonanPelepasan + "] DIKEMASKINI");
 
@@ -991,7 +991,7 @@ public class FrmPLPMaklumatPermohonanData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610198", "4", null, session, "UPD",
 					"FAIL PELEPASAN [" + idPemohon
 							+ "] DIKEMASKINI");
@@ -1020,7 +1020,7 @@ public class FrmPLPMaklumatPermohonanData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT A.ID_TANAHGANTI, A.PEGANGAN_HAKMILIK, F.KETERANGAN, A.NO_LOT, E.KOD_JENIS_HAKMILIK, A.NO_HAKMILIK, D.NAMA_MUKIM, C.NAMA_DAERAH, B.NAMA_NEGERI"
+			sql = "SELECT A.ID_TANAHGANTI, A.PEGANGAN_HAKMILIK, F.KETERANGAN, A.NO_LOT, E.KOD_JENIS_HAKMILIK, A.NO_HAKMILIK, A.NO_WARTA, D.NAMA_MUKIM, C.NAMA_DAERAH, B.NAMA_NEGERI"
 					+ " FROM TBLPHPTANAHGANTIPLPSN A, TBLRUJNEGERI B, TBLRUJDAERAH C, TBLRUJMUKIM D, TBLRUJJENISHAKMILIK E, TBLRUJLOT F"
 					+ " WHERE A.ID_NEGERI = B.ID_NEGERI(+) AND A.ID_DAERAH = C.ID_DAERAH(+) AND A.ID_MUKIM = D.ID_MUKIM(+) AND A.ID_JENISHAKMILIK = E.ID_JENISHAKMILIK(+) "
 					+ " AND A.ID_LOT = F.ID_LOT(+) AND A.ID_PERMOHONAN = '"
@@ -1039,17 +1039,20 @@ public class FrmPLPMaklumatPermohonanData {
 				h.put("peganganHakmilik",
 						rs.getString("PEGANGAN_HAKMILIK") == null ? "" : rs
 								.getString("PEGANGAN_HAKMILIK").toUpperCase());
-				h.put("noLot",
+				/*h.put("noLot",
 						rs.getString("KETERANGAN") == null
 								|| rs.getString("NO_LOT") == null ? "" : rs
 								.getString("KETERANGAN").toUpperCase()
 								+ " "
-								+ rs.getString("NO_LOT").toUpperCase());
-				h.put("noHakmilik", rs.getString("KOD_JENIS_HAKMILIK") == null
-						|| rs.getString("NO_HAKMILIK") == null ? "" : rs
-						.getString("KOD_JENIS_HAKMILIK").toUpperCase()
-						+ " "
-						+ rs.getString("NO_HAKMILIK").toUpperCase());
+								+ rs.getString("NO_LOT").toUpperCase());*/
+				h.put("noLot",
+						rs.getString("NO_LOT") == null ? "" :
+							rs.getString("NO_LOT").toUpperCase());
+				h.put("noHakmilik", rs.getString("NO_HAKMILIK") == null ? "" :
+					rs.getString("NO_HAKMILIK").toUpperCase());
+				h.put("noWarta",
+						rs.getString("NO_WARTA") == null ? "" :
+							rs.getString("NO_WARTA").toUpperCase());
 				h.put("mukim", rs.getString("NAMA_MUKIM") == null ? "" : rs
 						.getString("NAMA_MUKIM").toUpperCase());
 				h.put("daerah", rs.getString("NAMA_DAERAH") == null ? "" : rs
@@ -1069,15 +1072,11 @@ public class FrmPLPMaklumatPermohonanData {
 		}
 	}
 
-	public void saveTanahGanti(String idPermohonan,
-			String txtPeganganHakmilikTG, String txtNoHakmilikTG,
-			String txtNoLotTG, String txtLuas1TG, String txtLuas2TG,
-			String txtLuas3TG, String txtLuasBersamaanTG, String txtNoSyitTG,
-			String txtNoPelanTG, String txtSyaratTG, String txtSekatanTG,
-			String txtKegunaanTanahTG, String idJenisHakmilikTG,
-			String idLotTG, String idLuasTG, String idNegeriTG,
-			String idDaerahTG, String idMukimTG, String idKategoriTG,
-			String idSubKategoriTG, HttpSession session) throws Exception {
+	public void saveTanahGanti(String idPermohonan,String idJenisTanah,
+			String txtNamaPemilikTG, String txtNoHakmilikTG,
+			String txtNoLotTG, String txtLuas1TG, String txtNoWartaTG,
+			String txtPegawaiPengawalTG,String idDaerahTG, String idMukimTG,
+			String txtNilaiPasaranTG,HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -1097,36 +1096,16 @@ public class FrmPLPMaklumatPermohonanData {
 			r.add("ID_TANAHGANTI", idTanahGanti);
 			r.add("ID_PERMOHONAN", idPermohonan);
 
-			if (txtPeganganHakmilikTG.trim().length() > 0) {
-				r.add("PEGANGAN_HAKMILIK", txtPeganganHakmilikTG);
-			} else {
-				peganganHakmilik = getKodNegeri(idNegeriTG)
-						+ getKodDaerah(idDaerahTG) + getKodMukim(idMukimTG)
-						+ getKodJenisHakmilik(idJenisHakmilikTG)
-						+ Utils.digitLastFormatted(txtNoHakmilikTG, 8);
-				r.add("PEGANGAN_HAKMILIK", peganganHakmilik);
-			}
-
-			r.add("ID_JENISHAKMILIK", idJenisHakmilikTG);
 			r.add("NO_HAKMILIK", txtNoHakmilikTG);
-			r.add("ID_LOT", idLotTG);
+			r.add("NAMA_PEMILIK", txtNamaPemilikTG);
+			r.add("NO_WARTA", txtNoWartaTG);
+			r.add("PEGAWAI_PENGAWAL", txtPegawaiPengawalTG);
 			r.add("NO_LOT", txtNoLotTG);
-			r.add("ID_LUAS", idLuasTG);
 			r.add("LUAS1", txtLuas1TG);
-			r.add("LUAS2", txtLuas2TG);
-			r.add("LUAS3", txtLuas3TG);
-			r.add("ID_LUAS_BERSAMAAN", "2");
-			r.add("LUAS_BERSAMAAN", txtLuasBersamaanTG);
-			r.add("NO_SYIT", txtNoSyitTG);
-			r.add("NO_PELAN", txtNoPelanTG);
-			r.add("SYARAT", txtSyaratTG);
-			r.add("SEKATAN", txtSekatanTG);
-			r.add("KEGUNAAN_TANAH", txtKegunaanTanahTG);
-			r.add("ID_KATEGORI", idKategoriTG);
-			r.add("ID_SUBKATEGORI", idSubKategoriTG);
-			r.add("ID_NEGERI", idNegeriTG);
 			r.add("ID_DAERAH", idDaerahTG);
 			r.add("ID_MUKIM", idMukimTG);
+			r.add("NILAI_PASARAN", txtNilaiPasaranTG);
+			r.add("ID_JENISTANAH", idJenisTanah);
 
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
@@ -1150,7 +1129,7 @@ public class FrmPLPMaklumatPermohonanData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610198", "4", null, session, "INS",
 					"FAIL PELEPASAN [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] DIDAFTARKAN");
@@ -1284,15 +1263,11 @@ public class FrmPLPMaklumatPermohonanData {
 		}
 	}
 
-	public void updateTanahGanti(String idTanahGanti,
-			String txtPeganganHakmilikTG, String txtNoHakmilikTG,
-			String txtNoLotTG, String txtLuas1TG, String txtLuas2TG,
-			String txtLuas3TG, String txtLuasBersamaanTG, String txtNoSyitTG,
-			String txtNoPelanTG, String txtSyaratTG, String txtSekatanTG,
-			String txtKegunaanTanahTG, String idJenisHakmilikTG,
-			String idLotTG, String idLuasTG, String idNegeriTG,
-			String idDaerahTG, String idMukimTG, String idKategoriTG,
-			String idSubKategoriTG, HttpSession session) throws Exception {
+	public void updateTanahGanti(String idTanahGanti,String idJenisTanah,
+			String txtNamaPemilikTG, String txtNoHakmilikTG,
+			String txtNoLotTG, String txtLuas1TG, String txtNoWartaTG,
+			String txtPegawaiPengawalTG,String idDaerahTG, String idMukimTG,
+			String txtNilaiPasaranTG, HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -1309,36 +1284,22 @@ public class FrmPLPMaklumatPermohonanData {
 			// TBLPHPTANAHGANTIPLPSN
 			r.update("ID_TANAHGANTI", idTanahGanti);
 
-			r.add("PEGANGAN_HAKMILIK", txtPeganganHakmilikTG);
-			r.add("ID_JENISHAKMILIK", idJenisHakmilikTG);
 			r.add("NO_HAKMILIK", txtNoHakmilikTG);
-			r.add("ID_LOT", idLotTG);
+			r.add("NAMA_PEMILIK", txtNamaPemilikTG);
+			r.add("NO_WARTA", txtNoWartaTG);
+			r.add("PEGAWAI_PENGAWAL", txtPegawaiPengawalTG);
 			r.add("NO_LOT", txtNoLotTG);
-			r.add("ID_LUAS", idLuasTG);
 			r.add("LUAS1", txtLuas1TG);
-			r.add("LUAS2", txtLuas2TG);
-			r.add("LUAS3", txtLuas3TG);
-			r.add("ID_LUAS_BERSAMAAN", "2");
-			r.add("LUAS_BERSAMAAN", txtLuasBersamaanTG);
-			r.add("NO_SYIT", txtNoSyitTG);
-			r.add("NO_PELAN", txtNoPelanTG);
-			r.add("SYARAT", txtSyaratTG);
-			r.add("SEKATAN", txtSekatanTG);
-			r.add("KEGUNAAN_TANAH", txtKegunaanTanahTG);
-			r.add("ID_KATEGORI", idKategoriTG);
-			r.add("ID_SUBKATEGORI", idSubKategoriTG);
-			r.add("ID_NEGERI", idNegeriTG);
 			r.add("ID_DAERAH", idDaerahTG);
 			r.add("ID_MUKIM", idMukimTG);
-
-			r.add("ID_MASUK", userId);
-			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
+			r.add("NILAI_PASARAN", txtNilaiPasaranTG);
+			r.add("ID_JENISTANAH", idJenisTanah);
 
 			sql = r.getSQLUpdate("TBLPHPTANAHGANTIPLPSN");
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610198", "4", null, session, "UPD",
 					"FAIL PELEPASAN [" + idTanahGanti + "] DIKEMASKINI");
 
@@ -1366,8 +1327,8 @@ public class FrmPLPMaklumatPermohonanData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			sql = "SELECT PEGANGAN_HAKMILIK, ID_JENISHAKMILIK, NO_HAKMILIK, ID_LOT, NO_LOT, ID_LUAS, LUAS1, LUAS2, LUAS3, ID_LUAS_BERSAMAAN, LUAS_BERSAMAAN,"
-					+ " NO_SYIT, NO_PELAN, SYARAT, SEKATAN, KEGUNAAN_TANAH, ID_KATEGORI, ID_SUBKATEGORI, ID_NEGERI, ID_DAERAH, ID_MUKIM"
+			sql = "SELECT NO_HAKMILIK, NAMA_PEMILIK, NO_WARTA, PEGAWAI_PENGAWAL, NO_LOT, LUAS1,"
+					+ " NILAI_PASARAN, ID_DAERAH, ID_MUKIM, ID_JENISTANAH"
 					+ " FROM TBLPHPTANAHGANTIPLPSN WHERE ID_TANAHGANTI = '"
 					+ idTanahGanti + "'";
 
@@ -1377,66 +1338,31 @@ public class FrmPLPMaklumatPermohonanData {
 			int bil = 1;
 			while (rs.next()) {
 				h = new Hashtable();
-				h.put("peganganHakmilik",
-						rs.getString("PEGANGAN_HAKMILIK") == null ? "" : rs
-								.getString("PEGANGAN_HAKMILIK"));
-				h.put("idJenisHakmilik",
-						rs.getString("ID_JENISHAKMILIK") == null ? "99999" : rs
-								.getString("ID_JENISHAKMILIK").toUpperCase());
 				h.put("noHakmilik", rs.getString("NO_HAKMILIK") == null ? ""
 						: rs.getString("NO_HAKMILIK"));
-				h.put("idLot",
-						rs.getString("ID_LOT") == null ? "99999" : rs
-								.getString("ID_LOT"));
+				h.put("namaPemilik", rs.getString("NAMA_PEMILIK") == null ? ""
+						: rs.getString("NAMA_PEMILIK"));
 				h.put("noLot",
 						rs.getString("NO_LOT") == null ? "" : rs
 								.getString("NO_LOT"));
-				h.put("idLuas",
-						rs.getString("ID_LUAS") == null ? "99999" : rs
-								.getString("ID_LUAS"));
 				h.put("luas1",
 						rs.getString("LUAS1") == null ? "" : rs
 								.getString("LUAS1"));
-				h.put("luas2",
-						rs.getString("LUAS2") == null ? "" : rs
-								.getString("LUAS2"));
-				h.put("luas3",
-						rs.getString("LUAS3") == null ? "" : rs
-								.getString("LUAS3"));
-				h.put("idLuas",
-						rs.getString("ID_LUAS_BERSAMAAN") == null ? "99999"
-								: rs.getString("ID_LUAS_BERSAMAAN"));
-				h.put("luasBersamaan",
-						rs.getString("LUAS_BERSAMAAN") == null ? "" : rs
-								.getString("LUAS_BERSAMAAN"));
-				h.put("noSyit",
-						rs.getString("NO_SYIT") == null ? "" : rs
-								.getString("NO_SYIT"));
-				h.put("noPelan",
-						rs.getString("NO_PELAN") == null ? "" : rs
-								.getString("NO_PELAN"));
-				h.put("syarat",
-						rs.getString("SYARAT") == null ? "" : rs
-								.getString("SYARAT"));
-				h.put("sekatan",
-						rs.getString("SEKATAN") == null ? "" : rs
-								.getString("SEKATAN"));
-				h.put("kegunaanTanah",
-						rs.getString("KEGUNAAN_TANAH") == null ? "" : rs
-								.getString("KEGUNAAN_TANAH"));
-				h.put("idNegeri", rs.getString("ID_NEGERI") == null ? "99999"
-						: rs.getString("ID_NEGERI"));
+				h.put("noWarta",
+						rs.getString("NO_WARTA") == null ? "" : rs
+								.getString("NO_WARTA"));
+				h.put("pegawaiPengawal",
+						rs.getString("PEGAWAI_PENGAWAL") == null ? "" : rs
+								.getString("PEGAWAI_PENGAWAL"));
+				h.put("nilaiPasaran",
+						rs.getString("NILAI_PASARAN") == null ? "" : rs
+								.getString("NILAI_PASARAN"));
 				h.put("idDaerah", rs.getString("ID_DAERAH") == null ? "99999"
 						: rs.getString("ID_DAERAH"));
 				h.put("idMukim", rs.getString("ID_MUKIM") == null ? "99999"
 						: rs.getString("ID_MUKIM"));
-				h.put("idKategori",
-						rs.getString("ID_KATEGORI") == null ? "99999" : rs
-								.getString("ID_KATEGORI"));
-				h.put("idSubKategori",
-						rs.getString("ID_SUBKATEGORI") == null ? "99999" : rs
-								.getString("ID_SUBKATEGORI"));
-
+				h.put("idJenisTanah", rs.getString("ID_JENISTANAH") == null ? "99999"
+						: rs.getString("ID_JENISTANAH"));
 				beanMaklumatTanahGanti.addElement(h);
 				bil++;
 			}
@@ -1477,10 +1403,10 @@ public class FrmPLPMaklumatPermohonanData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610198", "4", null, session, "DEL",
 					"FAIL PELEPASAN [" + idTanahGanti + "] DIHAPUSKAN");
-			
+
 		} catch (SQLException ex) {
 			try {
 				conn.rollback();
@@ -1519,9 +1445,9 @@ public class FrmPLPMaklumatPermohonanData {
 
 			sql = r.getSQLUpdate("TBLPERMOHONAN");
 			stmt.executeUpdate(sql);
-			
+
 			// PREPARE DATA FOR LAPORAN TANAH ASAL
-			
+
 			String flagGuna = "";
 			String lot = "";
 			String noHak = "";
@@ -1869,7 +1795,7 @@ public class FrmPLPMaklumatPermohonanData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610200", "4", null, session, "UPD",
 					"FAIL PELEPASAN [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] PROSES SETERUSNYA");
@@ -2047,8 +1973,8 @@ public class FrmPLPMaklumatPermohonanData {
 				db.close();
 		}
 	}
-	
-	
+
+
 	public String getNoFailByIdPermohonan(String idPermohonan) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -2259,13 +2185,13 @@ public class FrmPLPMaklumatPermohonanData {
 				db.close();
 		}
 	}
-	
+
 	public Vector getSenaraiSemak(String idPermohonan) throws Exception {
 
 		Db db = null;
 		String sql = "";
 		Vector senaraiSemak = new Vector();
-		
+
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
@@ -2293,27 +2219,27 @@ public class FrmPLPMaklumatPermohonanData {
 			if (db != null)
 				db.close();
 		}
-	
+
 		return senaraiSemak;
 	}
-	
+
 	public void updateSenaraiSemak(String idPermohonan, String[] semaks, HttpSession session) throws Exception {
-		
+
 		String userId = (String) session.getAttribute("_ekptg_user_id");
 		Db db = new Db();
-		String sql = "";		
-		
+		String sql = "";
+
 		try {
 			Connection conn = db.getConnection();
 			conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 			r = new SQLRenderer();
-			
+
 			r.add("ID_PERMOHONAN", idPermohonan);
 			sql = r.getSQLDelete("TBLPHPSENARAISEMAK");
 			stmt.executeUpdate(sql);
-			
+
 			for (int i = 0; i < semaks.length; i++) {
 			 	r = new SQLRenderer();
 				long ID_SENARAISEMAK = DB.getNextID("TBLPHPSENARAISEMAK_SEQ");
@@ -2326,10 +2252,10 @@ public class FrmPLPMaklumatPermohonanData {
 				stmt.executeUpdate(sql);
 			}
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610198", "4", null, session, "UPD",
 					"FAIL PELEPASAN [" + idPermohonan + "] DIKEMASKINI");
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -2377,7 +2303,7 @@ public class FrmPLPMaklumatPermohonanData {
 				db.close();
 		}
 	}
-	
+
 	public void simpanDaftarHakmilikBaru(String idPermohonan,
 			String idHakmilikAgensi, String idHakmilikSementara,
 			HttpSession session) throws Exception {
@@ -2444,7 +2370,7 @@ public class FrmPLPMaklumatPermohonanData {
 
 				sql = r.getSQLInsert("TBLPHPHAKMILIK");
 				stmt.executeUpdate(sql);
-				
+
 				// TBLPHPLAPORANTANAH
 				r = new SQLRenderer();
 				long idLaporanTanah = DB.getNextID("TBLPHPLAPORANTANAH_SEQ");
@@ -2458,12 +2384,12 @@ public class FrmPLPMaklumatPermohonanData {
 				r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
 				sql = r.getSQLInsert("TBLPHPLAPORANTANAH");
-				stmt.executeUpdate(sql);	
+				stmt.executeUpdate(sql);
 
 			}
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610198", "4", null, session, "INS",
 					"FAIL PELEPASAN [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] DIDAFTARKAN");
@@ -2550,7 +2476,7 @@ public class FrmPLPMaklumatPermohonanData {
 	public void setListPelan(Vector listPelan) {
 		this.listPelan = listPelan;
 	}
-	
+
 	public Vector getListLampiran() {
 		return listLampiran;
 	}
