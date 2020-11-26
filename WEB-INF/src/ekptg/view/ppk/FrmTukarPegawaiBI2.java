@@ -41,15 +41,37 @@ import ekptg.model.ppk.FrmPrmhnnSek8DaftarSek8InternalData;
 import ekptg.model.ppk.FrmPrmhnnSek8KptsanBicaraData;
 import ekptg.model.ppk.FrmTukarPegawaiBI2Data;
 
-public class FrmTukarPegawaiBI2 {
-
+public class FrmTukarPegawaiBI2 extends AjaxBasedModule {
+	
+	static Logger myLogger = Logger.getLogger(FrmTukarPegawaiBI2.class);
+	FrmHeaderPpk mainheader = new FrmHeaderPpk();
+	FrmTukarPegawaiBI2Data modelTukarPegawai = new FrmTukarPegawaiBI2Data();
+	BicaraInteraktifData modelBI = new BicaraInteraktifData();
+	FrmPrmhnnSek8BicaraData modelBicaraData = new FrmPrmhnnSek8BicaraData();
+	FrmPrmhnnSek8KptsanBicaraData modelKeputusanPerbicaraan = new FrmPrmhnnSek8KptsanBicaraData();
+	
+	@SuppressWarnings("unused")
+	public String doTemplate2() throws Exception{
+		HttpSession session = this.request.getSession();
+		String vm = "";
+		String doPost = (String)session.getAttribute("doPost");
+		String userRole = String.valueOf(session.getAttribute("myrole"));
+		
+		vm = "app/ppk/TukarPegawai2/FrmPrmhnnTukarPegawai2.jsp";
+		
+		vm = "app/ppk/TukarPegawai2/historyTukarPegawai2.jsp";
+		
+		vm = "app/ppk/TukarPegawai2/listTukarPegawai2.jsp";
+		
+		return vm;
+	}
 }
 
 /*
  * List fail tukar pegawai 2:
- * 1. ekptg.view.ppk.FrmTukarPegawaiBI2
+ * 1. ekptg.view.ppk.FrmTukarPegawaiBI2.java
  * 2. app/ppk/TukarPegawai2/FrmPrmhnnTukarPegawai2.jsp
  * 3. app/ppk/TukarPegawai2/historyTukarPegawai2.jsp
  * 4. app/ppk/TukarPegawai2/listTukarPegawai2.jsp
- * 5. ekptg.model.ppk.FrmTukarPegawaiBI2Data
+ * 5. ekptg.model.ppk.FrmTukarPegawaiBI2Data.java
  * */
