@@ -24,6 +24,7 @@
 		#set ( $tarikhtamat = $hakmilikbangunaninfo.ttamat )
         #set ( $bulan = $hakmilikbangunaninfo.bulan )
         #set ( $tahun = $hakmilikbangunaninfo.tahun )
+        #set ( $hari = $hakmilikbangunaninfo.hari )
 	#elseif( $pagemode == "4"  )
     	#set ($inputstylerep = "readonly class=disabled" )
 		#set ( $sewa = $hakmilikbangunaninfo.sewabulanan)
@@ -36,6 +37,7 @@
 		#set ( $tarikhtamat = $hakmilikbangunaninfo.ttamat )
         #set ( $bulan = $hakmilikbangunaninfo.bulan )
         #set ( $tahun = $hakmilikbangunaninfo.tahun )
+        #set ( $hari = $hakmilikbangunaninfo.hari )
      #elseif( $pagemode == "5"  )
     	#set ($inputstylerep = "" )
         #set ($date = "readonly class=disabled" )
@@ -49,6 +51,7 @@
 		#set ( $tarikhtamat = $hakmilikbangunaninfo.ttamat )
         #set ( $bulan = $hakmilikbangunaninfo.bulan )
         #set ( $tahun = $hakmilikbangunaninfo.tahun )
+        #set ( $hari = $hakmilikbangunaninfo.hari )
 	#end
 
 
@@ -122,7 +125,7 @@
 				</div>             
             </td>
             <td width="1%">:</td>
-            <td width="58%"><input type="text" name="txttahun" size="5" maxlength="4" value="$tahun" onkeyup="validateNumber(this,this.value);" $inputstylerep/> </td>
+            <td width="58%"><input type="text" name="txttahun" size="5" value="$tahun" maxlength="4"  onkeyup="validateNumber(this,this.value);" $inputstylerep /></td>
           </tr>
           <tr>
 			<td width="1%">&nbsp;</td>
@@ -132,7 +135,17 @@
 				</div>             
             </td>
             <td width="1%">:</td>
-            <td width="58%"><input type="text" name="txtbulan" size="5" maxlength="2" value="$bulan" onkeyup="validateNumber(this,this.value);" $inputstylerep/></td>
+            <td width="58%"><input type="text" name="txtbulan" size="5" value="$bulan" maxlength="2" onkeyup="validateNumber(this,this.value);" $inputstylerep /></td>
+          </tr>
+          <tr>
+			<td width="1%">&nbsp;</td>
+            <td width="40%">
+            	<div align="right" class="labelinput">
+					<div align="left">Hari</div>
+				</div>             
+            </td>
+            <td width="1%">:</td>
+            <td width="58%"><input type="text" name="txthari" size="5" value="$hari" maxlength="2" onkeyup="validateNumber(this,this.value);" $inputstylerep /></td>
           </tr>
           <tr>
 			<td width="1%">&nbsp;</td>

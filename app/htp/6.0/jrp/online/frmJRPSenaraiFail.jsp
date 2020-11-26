@@ -854,6 +854,11 @@ function tambahMaklumatPemilik2(id) {
     	document.${formName}.socDaerah.focus(); 
     	return; 
     }
+    if ( document.${formName}.txtnotelefon.value == "" ) { 
+    	alert('Sila masukkan No. Telefon terlebih dahulu.');
+    	document.${formName}.txtnotelefon.focus(); 
+    	return; 
+    }
 	document.${formName}.id_kemaskini.value = id;
 	document.${formName}.pagemode.value = 1;
 	//document.${formName}.method = "post";
@@ -948,6 +953,7 @@ function trans_date21(t_d){
 		}else{
 			document.${formName}.txttahun.value="0";
 			document.${formName}.txtbulan.value="0";
+			document.${formName}.txthari.value="0";
 		}
 	}
 	
@@ -998,6 +1004,7 @@ function DateDiff(fromDate, toDate)
     year = toDate.getFullYear() - (fromDate.getFullYear() + increment);
     document.${formName}.txttahun.value=year;
 	document.${formName}.txtbulan.value=month;
+	document.${formName}.txthari.value=day;
     //return diff;
 }
 function IsLeapYear(utc)
@@ -1261,6 +1268,43 @@ function kemaskiniPemilik(idPermohonan,idPihakBerkepentingan){
 	doAjaxCall${formName}('pkkemaskinipemilik',"id_permohonan="+idPermohonan+"&idPihakBerkepentingan="+idPihakBerkepentingan);
 }
 function simpanUpdatePemilik(idPermohonan,idPihakBerkepentingan){
+	
+	if ( document.${formName}.txtnama.value == "" ) { 
+    	alert('Sila masukkan nama terlebih dahulu.');
+    	document.${formName}.txtnama.focus(); 
+    	return; 
+    	}    
+	
+	if ( document.${formName}.txtalamat1.value == "" ) { 
+    	alert('Sila masukkan alamat 1 terlebih dahulu.');
+    	document.${formName}.txtalamat1.focus(); 
+    	return; 
+    }  
+	/*
+    if ( document.${formName}.txtalamat2.value == "" ) { 
+    	alert('Sila masukkan alamat 2 lot terlebih dahulu.');
+    	document.${formName}.txtalamat2.focus(); 
+    	return; 
+    }
+    
+    if ( document.${formName}.txtposkod.value == "" ) { 
+    	alert('Sila masukkan maklumat poskod terlebih dahulu.');
+    	document.${formName}.txtposkod.focus(); 
+    	return; 
+    } 
+    */
+   	if ( document.${formName}.socDaerah.value == "" ) { 
+    	alert('Sila pilih maklumat daerah terlebih dahulu.');
+    	document.${formName}.socDaerah.focus(); 
+    	return; 
+    }
+    if ( document.${formName}.txtnotelefon.value == "" ) { 
+    	alert('Sila masukkan No. Telefon terlebih dahulu.');
+    	document.${formName}.txtnotelefon.focus(); 
+    	return; 
+    }
+	
+	
 	doAjaxCall${formName}('pkkemaskinipemilik',"id_permohonan="+idPermohonan+"&idPihakBerkepentingan="+idPihakBerkepentingan);
 }
 
@@ -1311,7 +1355,7 @@ function copyAlamat(strValue){
   	document.${formName}.txtposkod.value = document.${formName}.txtTempPBPoskod.value;
   	document.${formName}.socNegeri.value = document.${formName}.txtTempPBSocNegeri.value;
   	document.${formName}.socDaerah.value = document.${formName}.txtTempPBSocDaerah.value;
-  	//document.${formName}.socDaerah.value = document.${formName}.txtTempPBNoTelefon.value;
+  	document.${formName}.txtnotelefon.value = document.${formName}.txtTempPBNoTelefon.value;
   	//document.${formName}.socDaerah.value == document.${formName}.txtTempPBNoFax.value;
   	
 }
