@@ -1587,7 +1587,11 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
         	this.context.put("inputTextClass", "");
         	this.context.put("disabled", "");
         	
-        	//MAKLUMAT PENGARAH			
+        	//MAKLUMAT PENGARAH	
+			this.context.put("selectWarganegara",HTML.SelectWarganegara("socWarganegara", Long.parseLong(idWarganegara), "", "onChange=\"doChangeWarganegara();\""));
+			this.context.put("selectJenisPengenalan",HTML.SelectJenisNoPbIndividu("socJenisPengenalan", Long.parseLong("99999"), "", ""));
+			this.context.put("selectBangsa",HTML.SelectBangsa("socBangsa", Long.parseLong(idBangsa), "", "onChange=\"doChangeBangsa();\""));
+			
 			beanMaklumatPengarah = new Vector();
 			Hashtable hashPengarah = new Hashtable();
     		hashPengarah.put("nama", "");
@@ -1597,18 +1601,17 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 			hashPengarah.put("bangsa", "");
 			beanMaklumatPengarah.addElement(hashPengarah);
 			this.context.put("BeanMaklumatPengarah", beanMaklumatPengarah);
-			this.context.put("selectWarganegara",HTML.SelectWarganegara("socWarganegara", Long.parseLong("99999"), "", "onChange=\"doChangeWarganegara();\""));
-			this.context.put("selectJenisPengenalan",HTML.SelectJenisNoPbIndividu("socJenisPengenalan", Long.parseLong("99999"), "", ""));
-			this.context.put("selectBangsa",HTML.SelectBangsa("socBangsa", Long.parseLong("99999"), "", "onChange=\"doChangeBangsa();\""));
 			
 			if ("doChangeWarganegara".equals(submit)){
-				
-				hashPengarah.put("nama", getParam("txtNamaPengarah") == null ? "" : getParam("txtNamaPengarah"));		
-				hashPengarah.put("noPengenalan", getParam("txtNoPengenalan") == null ? "" : getParam("txtNoPengenalan"));
-				hashPengarah.put("saham", getParam("txtSaham") == null ? "" : getParam("txtSaham"));
-				hashPengarah.put("warga", getParam("txtWarga") == null ? "" : getParam("txtWarga"));
-				hashPengarah.put("bangsa", getParam("txtBangsa") == null ? "" : getParam("txtBangsa"));
-				beanMaklumatPengarah.addElement(hashPengarah);
+
+				beanMaklumatPengarah = new Vector();
+				Hashtable hashPengarahL = new Hashtable();
+				hashPengarahL.put("nama", getParam("txtNamaPengarah") == null ? "" : getParam("txtNamaPengarah"));		
+				hashPengarahL.put("noPengenalan", getParam("txtNoPengenalan") == null ? "" : getParam("txtNoPengenalan"));
+				hashPengarahL.put("saham", getParam("txtSaham") == null ? "" : getParam("txtSaham"));
+				hashPengarahL.put("warga", getParam("txtWarga") == null ? "" : getParam("txtWarga"));
+				hashPengarahL.put("bangsa", getParam("txtBangsa") == null ? "" : getParam("txtBangsa"));
+				beanMaklumatPengarah.addElement(hashPengarahL);
 				this.context.put("BeanMaklumatPengarah", beanMaklumatPengarah);	
 				this.context.put("selectJenisPengenalan",HTML.SelectJenisNoPbIndividu("socJenisPengenalan", Long.parseLong(idJenisPengenalan), "", "onChange=\"doChangeJenisPengenalan();\""));
 				this.context.put("selectBangsa",HTML.SelectBangsa("socBangsa", Long.parseLong(idBangsa), "", "onChange=\"doChangeBangsa();\""));
@@ -1617,12 +1620,14 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 			
 			if ("doChangeBangsa".equals(submit)){
 				
-				hashPengarah.put("nama", getParam("txtNamaPengarah") == null ? "" : getParam("txtNamaPengarah"));		
-				hashPengarah.put("noPengenalan", getParam("txtNoPengenalan") == null ? "" : getParam("txtNoPengenalan"));
-				hashPengarah.put("saham", getParam("txtSaham") == null ? "" : getParam("txtSaham"));
-				hashPengarah.put("warga", getParam("txtWarga") == null ? "" : getParam("txtWarga"));
-				hashPengarah.put("bangsa", getParam("txtBangsa") == null ? "" : getParam("txtBangsa"));
-				beanMaklumatPengarah.addElement(hashPengarah);
+				beanMaklumatPengarah = new Vector();
+				Hashtable hashPengarahL = new Hashtable();
+				hashPengarahL.put("nama", getParam("txtNamaPengarah") == null ? "" : getParam("txtNamaPengarah"));		
+				hashPengarahL.put("noPengenalan", getParam("txtNoPengenalan") == null ? "" : getParam("txtNoPengenalan"));
+				hashPengarahL.put("saham", getParam("txtSaham") == null ? "" : getParam("txtSaham"));
+				hashPengarahL.put("warga", getParam("txtWarga") == null ? "" : getParam("txtWarga"));
+				hashPengarahL.put("bangsa", getParam("txtBangsa") == null ? "" : getParam("txtBangsa"));
+				beanMaklumatPengarah.addElement(hashPengarahL);
 				this.context.put("BeanMaklumatPengarah", beanMaklumatPengarah);	
 				this.context.put("selectWarganegara",HTML.SelectWarganegara("socWarganegara", Long.parseLong(idWarganegara), "", "onChange=\"doChangeWarganegara();\""));
 				this.context.put("selectJenisPengenalan",HTML.SelectJenisNoPbIndividu("socJenisPengenalan", Long.parseLong(idJenisPengenalan), "", ""));
