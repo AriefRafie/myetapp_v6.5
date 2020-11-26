@@ -5869,11 +5869,13 @@ public class BicaraInteraktif extends AjaxBasedModule {
 			String BATAL_KUASA_PENTADBIR = "";
 			String BATAL_P_AMANAH = "";
 			String HARTA_TINGGAL = "";
+			String LAIN_LAIN_TUJUAN = "";//arief add
 			if (mainInfo != null) {
 				SEKSYEN = (String) mainInfo.get("SEKSYEN");
 				BATAL_KUASA_PENTADBIR = (String) mainInfo.get("BATAL_KUASA_PENTADBIR");
 				BATAL_P_AMANAH = (String) mainInfo.get("BATAL_P_AMANAH");
 				HARTA_TINGGAL = (String) mainInfo.get("HARTA_TINGGAL");
+				LAIN_LAIN_TUJUAN = (String) mainInfo.get("LAIN_LAIN_TUJUAN");//arief add
 				ID_PEMOHON = (String) mainInfo.get("ID_PEMOHON");
 			}
 			String styleKP = "";
@@ -5961,6 +5963,10 @@ public class BicaraInteraktif extends AjaxBasedModule {
 						extraBayaranPerintah += 30.00;
 					}
 					if (BATAL_P_AMANAH.equals("Y")) {
+						extraBayaranPerintah += 30.00;
+					}
+					//arief add
+					if (LAIN_LAIN_TUJUAN.equals("Y")) {
 						extraBayaranPerintah += 30.00;
 					}
 				}

@@ -47,7 +47,7 @@
   			<table border="0" cellpadding="0" cellspacing="0" width="100%">
 				<tr>
         			<td>
-   						<input type="button" class="stylobutton" name="add" value="Tambah" onclick="javascript:fGSPA_Tambah()" />
+   						<!-- <input type="button" class="stylobutton" name="add" value="Tambah" onclick="javascript:fGSPA_Tambah()" /> -->
 						<input type="button" class="stylobutton" name="kembali" value="Kembali"  onclick="javascript:fGSPA_Kembali()">       				
         			</td>
         		<tr>       			

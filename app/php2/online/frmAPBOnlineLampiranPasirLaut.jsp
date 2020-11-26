@@ -27,6 +27,7 @@
 <input name="flagPopup" type="hidden" id="flagPopup" value="$flagPopup"/>
 <input name="modePopup" type="hidden" id="modePopup" value="$modePopup"/>
 <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
+<input type="hidden" name="idFail" id="idFail" value="$idFail"/>
 
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr>
@@ -54,7 +55,7 @@
           <td width="1%">&nbsp;</td>
           <td width="28%">Muat Turun Dokumen</td>
           <td width="1%">:</td>
-          <td width="70%"><a href="#" onclick="cetakImej($idDokumen)" class="style2">$beanMaklumatImejan.namaFail</a> </td>
+          <td width="70%"><a href="#" onclick="cetakImej($idDokumen)" class="style2"><font color="blue">$beanMaklumatImejan.namaFail</font></a> </td>
         </tr>
         <tr>
           <td>&nbsp;</td>
@@ -239,7 +240,9 @@ function kembaliSenaraiDokumen(id_laporanpasir) {
 
 function batalKemaskini(id_dokumen) {
 	if ( !window.confirm("Adakah Anda Pasti?") ) return;
-	document.${formName}.actionOnline.value = "paparDokumen";
+	// document.${formName}.actionOnline.value = "paparDokumen";
+	document.${formName}.actionOnline.value = "uploadBaruDokumen";
+	document.${formName}.modePopup.value = "view";
 	document.${formName}.submit();
 }
 

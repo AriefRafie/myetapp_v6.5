@@ -77,6 +77,25 @@ function daftarMaklumatBarge(idJadualKedua,idBorangA){
 	//alert(idJadualKedua);
 	document.${formName}.submit();
 }
+
+// function doSimpanMaklumatBarge(){
+	
+// 	if(document.${formName}.txtNamaDaftar.value == ""){
+// 		alert('Sila masukkan Nama Didaftarkan.');
+//   		document.${formName}.txtNamaDaftar.focus(); 
+// 		return; 
+// 	}
+	
+// 	if ( !window.confirm("Adakah Anda Pasti ?") ){
+// 		return;
+// 	}
+	
+// 	document.${formName}.actionOnline.value = "doMaklumatPasir";
+// 	document.${formName}.mode.value = "viewBarge";
+// 	document.${formName}.hitButton.value = "simpanMaklumatBarge";
+// 	document.${formName}.submit();
+// }
+
 function doSimpanMaklumatBarge(){
 	
 	if(document.${formName}.txtNamaDaftar.value == ""){
@@ -84,21 +103,9 @@ function doSimpanMaklumatBarge(){
   		document.${formName}.txtNamaDaftar.focus(); 
 		return; 
 	}
-	
-	if ( !window.confirm("Adakah Anda Pasti ?") ){
-		return;
-	}
-	
-	document.${formName}.actionOnline.value = "doMaklumatPasir";
-	document.${formName}.mode.value = "viewBarge";
-	document.${formName}.hitButton.value = "simpanMaklumatBarge";
-	document.${formName}.submit();
-}
-function simpanKemaskiniMaklumatBarge(){
-	
-	if(document.${formName}.txtNamaDaftar.value == ""){
-		alert('Sila masukkan Nama Didaftarkan.');
-  		document.${formName}.txtNamaDaftar.focus(); 
+	if(document.${formName}.txtNoTel.value == ""){
+		alert('Sila masukkan No. Tel.');
+  		document.${formName}.txtNoTel.focus(); 
 		return; 
 	}
 	if(document.${formName}.txtJenis.value == ""){
@@ -111,9 +118,42 @@ function simpanKemaskiniMaklumatBarge(){
   		document.${formName}.txtNoPendaftaran.focus(); 
 		return; 
 	}
+	if(document.${formName}.txtKapasiti.value == ""){
+		alert('Sila masukkan Kapasiti.');
+  		document.${formName}.txtKapasiti.focus(); 
+		return; 
+	}
+	
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+	
+	document.${formName}.actionOnline.value = "doMaklumatPasir";
+	document.${formName}.mode.value = "viewBarge";
+	document.${formName}.hitButton.value = "simpanMaklumatBarge";
+	document.${formName}.submit();
+}
+
+function simpanKemaskiniMaklumatBarge(){
+	
+	if(document.${formName}.txtNamaDaftar.value == ""){
+		alert('Sila masukkan Nama Didaftarkan.');
+  		document.${formName}.txtNamaDaftar.focus(); 
+		return; 
+	}
 	if(document.${formName}.txtNoTel.value == ""){
 		alert('Sila masukkan No. Tel.');
   		document.${formName}.txtNoTel.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtJenis.value == ""){
+		alert('Sila masukkan Jenis Kapal.');
+  		document.${formName}.txtJenis.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtNoPendaftaran.value == ""){
+		alert('Sila masukkan No. Pendaftaran.');
+  		document.${formName}.txtNoPendaftaran.focus(); 
 		return; 
 	}
 	if(document.${formName}.txtKapasiti.value == ""){
@@ -134,9 +174,16 @@ function simpanKemaskiniMaklumatBarge(){
 function kemaskiniMaklumatBarge(){
 	document.${formName}.actionOnline.value = "doMaklumatPasir";
 	document.${formName}.mode.value = "updateBarge";
+	document.${formName}.hitButton.value = "";
 	doAjaxCall${formName}("");
 }
 function doBatalMaklumatBarge(){
+	document.${formName}.actionOnline.value = "doMaklumatPasir";
+	document.${formName}.hitButton.value = "";
+	document.${formName}.mode.value = "viewBarge";
+	doAjaxCall${formName}("");
+}
+function doKembaliMaklumatBarge(){
 	document.${formName}.actionOnline.value = "doMaklumatPasir";
 	document.${formName}.hitButton.value = "";
 	document.${formName}.mode.value = "view";

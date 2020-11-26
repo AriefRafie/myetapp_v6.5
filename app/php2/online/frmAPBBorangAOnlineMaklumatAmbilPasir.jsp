@@ -14,7 +14,10 @@
   <input name="actionOnline" type="hidden" id="actionOnline" value="$actionOnline"/>
   <input name="mode" type="hidden" id="mode" value="$mode"/>
   <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
-   <input name="idfail" type="hidden" id="idfail" value="$idFail"/>
+  <input name="idfail" type="hidden" id="idfail" value="$idFail"/>
+   
+  <input name="idFail" type="hidden" id="idFail" value="$idFail"/>
+  <input name="idJadualKeduaLesen" type="hidden" id="idJadualKeduaLesen" value="$idJadualKeduaLesen"/>
   
 </p>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
@@ -98,7 +101,7 @@ function cetakAPBLaporanBorangA(id_borangA) {
 	hWnd.opener = document.window;
     if (hWnd.focus != null) hWnd.focus();
 }
-function doSimpanMaklumatPasir(){
+function doSimpanMaklumatPasir(idFail,idJadualKeduaLesen){
 	if(document.${formName}.socBulan.value == ""){
 		alert('Sila pilih bulan.');
   		document.${formName}.socBulan.focus(); 
@@ -144,6 +147,33 @@ function doSimpanMaklumatPasir(){
   		document.${formName}.txtTarikhTamat.focus(); 
 		return; 
 	}
+	
+	if(document.${formName}.txtLabelTitik.value == ""){
+		alert('Sila masukkan Label Titik.');
+  		document.${formName}.txtLabelTitik.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtDarjahT.value == ""){
+		alert('Sila masukkan Darjah T.');
+  		document.${formName}.txtDarjahT.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtDarjahU.value == ""){
+		alert('Sila masukkan Darjah U.');
+  		document.${formName}.txtDarjahU.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtMinitT.value == ""){
+		alert('Sila masukkan Minit T.');
+  		document.${formName}.txtMinitT.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtMinitU.value == ""){
+		alert('Sila masukkan Minit U.');
+  		document.${formName}.txtMinitU.focus(); 
+		return; 
+	}
+	
 	if(document.${formName}.txtLaluan.value == ""){
 		alert('Sila masukkan Laluan.');
   		document.${formName}.txtLaluan.focus(); 
@@ -155,7 +185,7 @@ function doSimpanMaklumatPasir(){
 		return; 
 	}
 	if(document.${formName}.txtKawasan.value == ""){
-		alert('Sila masukkan Kawasan Pelepusan.');
+		alert('Sila masukkan Kawasan Pelupusan.');
   		document.${formName}.txtKawasan.focus(); 
 		return; 
 	}
@@ -163,12 +193,16 @@ function doSimpanMaklumatPasir(){
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}
-
-	document.${formName}.actionOnline.value = "doMaklumatPasir";
-	document.${formName}.mode.value = "view";
+	
+	document.${formName}.actionOnline.value = "daftarBaruBorangA";
 	document.${formName}.hitButton.value = "simpanMaklumatAmbilPasir";
+	// document.${formName}.actionOnline.value = "doMaklumatPasir";
+	// document.${formName}.mode.value = "view";
 	//document.${formName}.submit();
-	doAjaxCall${formName}("");
+	document.${formName}.idFail.value = idFail;
+	document.${formName}.idJadualKeduaLesen.value = idJadualKeduaLesen;
+	document.${formName}.submit();
+	// doAjaxCall${formName}("");
 }
 function doSimpanKemasMaklumatPasir(){
 	
@@ -190,7 +224,7 @@ function doSimpanKemasMaklumatPasir(){
 	document.${formName}.actionOnline.value = "doMaklumatPasir";
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "simpanKemaskiniMaklumatPasir";
-	//document.${formName}.submit();
+	// document.${formName}.submit();
 	doAjaxCall${formName}("");
 }
 function doKemaskiniMaklumatPasir(){
@@ -201,12 +235,16 @@ function doKemaskiniMaklumatPasir(){
 }
 function doBatalKemaskiniMaklumatPasir(){
 	
-	document.${formName}.mode.value = "new";
+	document.${formName}.actionOnline.value = "doMaklumatPasir";
+	document.${formName}.mode.value = "view";
+	// document.${formName}.mode.value = "new";
 	doAjaxCall${formName}("");
 }
-function doKembali(){
+function doKembali(idFail,idJadualKeduaLesen){
 	
-	document.${formName}.actionOnline.value = "";
+	document.${formName}.actionOnline.value = "daftarBaruBorangA";
+	document.${formName}.idFail.value = idFail;
+	document.${formName}.idJadualKeduaLesen.value = idJadualKeduaLesen;
 	document.${formName}.submit();
 }
 function validateCurrency(elmnt,content,content2) {
@@ -231,43 +269,5 @@ function validateNumber(elmnt,content) {
 		elmnt.value = RemoveNonNumeric(content);
 		return;
 	}
-}
-
-function doSimpanMaklumatBarge(){
-	
-	if(document.${formName}.txtNamaDaftar.value == ""){
-		alert('Sila masukkan Nama Didaftarkan.');
-  		document.${formName}.txtNamaDaftar.focus(); 
-		return; 
-	}
-	if(document.${formName}.txtJenis.value == ""){
-		alert('Sila masukkan Jenis Kapal.');
-  		document.${formName}.txtJenis.focus(); 
-		return; 
-	}
-	if(document.${formName}.txtNoPendaftaran.value == ""){
-		alert('Sila masukkan No. Pendaftaran.');
-  		document.${formName}.txtNoPendaftaran.focus(); 
-		return; 
-	}
-	if(document.${formName}.txtNoTel.value == ""){
-		alert('Sila masukkan No. Tel.');
-  		document.${formName}.txtNoTel.focus(); 
-		return; 
-	}
-	if(document.${formName}.txtKapasiti.value == ""){
-		alert('Sila masukkan Kapasiti.');
-  		document.${formName}.txtKapasiti.focus(); 
-		return; 
-	}
-	
-	if ( !window.confirm("Adakah Anda Pasti ?") ){
-		return;
-	}
-	
-	document.${formName}.actionOnline.value = "doMaklumatPasir";
-	document.${formName}.mode.value = "viewBarge";
-	document.${formName}.hitButton.value = "simpanMaklumatBarge";
-	document.${formName}.submit();
 }
 </script>

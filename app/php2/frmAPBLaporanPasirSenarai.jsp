@@ -141,8 +141,9 @@
       <table width="100%"  cellpadding="1" cellspacing="2" border="0">
         <tr class="table_header">
             <td width="5%" align="center" style="text-transform:uppercase" scope="row">Bil</td>
-            <td width="25%" style="text-transform:uppercase">Bulan</td>
-            <td width="25%" style="text-transform:uppercase">Tahun</td>
+<!--             <td width="25%" style="text-transform:uppercase">Bulan</td> -->
+<!--             <td width="25%" style="text-transform:uppercase">Tahun</td> -->
+			<td width="25%" style="text-transform:uppercase">Tarikh Operasi</td>
             <td width="25%" style="text-transform:uppercase">Kuantiti Isipadu (meter padu)</td>
             <td width="25%" style="text-transform:uppercase">Jumlah Anggaran Royalti (RM)</td>
         </tr>
@@ -157,8 +158,9 @@
           	
           <tr valign="top">
               <td class="$row" align="center">$senarai.bil</td>            
-              <td class="$row"><a href="javascript:papar_laporan('$senarai.id_laporanpasir','$senarai.bulan_pengambilan')"><font color="blue">$senarai.nama_bulan</font></a></td>  
-              <td class="$row">$senarai.tahun_pengambilan</td>
+<!--               <td class="$row"><a href="javascript:papar_laporan('$senarai.id_laporanpasir','$senarai.bulan_pengambilan')"><font color="blue">$senarai.nama_bulan</font></a></td>   -->
+<!--               <td class="$row">$senarai.tahun_pengambilan</td> -->
+              <td class="$row"><a href="javascript:papar_laporan('$senarai.id_laporanpasir','$senarai.tarikh_pengeluaran')"><font color="blue">$!senarai.tarikh_pengeluaran</font></a></td> 
               <td class="$row">$!senarai.jumlah_kuantiti</td>
               <td class="$row">$!senarai.jumlah_royalti</td>
           </tr>          

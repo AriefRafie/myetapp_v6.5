@@ -265,6 +265,7 @@
 			<input type="button" class="stylobutton100" name="cmdSimpan" id="cmdSimpan" value="Seterusnya" onclick="Pengesahan()" />
 			<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="step1Online($!htpPermohonan.permohonan.getIdPermohonan(),$!htpPermohonan.getIdHtpPermohonan())" />
 		#else
+			<b><font color="red"><span class="blink">Sila lengkapkan kesemua maklumat terlebih dahulu.</b></font></span>
        		<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="step1Online($!htpPermohonan.permohonan.getIdPermohonan(),$!htpPermohonan.getIdHtpPermohonan())" />
 		#end 	
 		</td>	

@@ -83,7 +83,7 @@
 		    				<input type="button" name="cmdPindaan" id="cmdPindaan" value="Kembalikan kepada penyedia" onclick="doAjaxCall${formName}('simpanpengesahan2')" />
                 		
                 		#end
-                		
+                	<input type="button" class="stylobutton100" name="cetakakuan" id="cetakakuan" value="Cetak" onclick="javascript:cetakPengesahan('$!htpPermohonan.permohonan.getIdPermohonan()');" />	
                 	<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="step2Online($!htpPermohonan.permohonan.getIdPermohonan())" />
 		    		#else
                     <input type="button" class="stylobutton100" name="cetakakuan" id="cetakakuan" value="Cetak" onclick="javascript:cetakPengesahan('$!htpPermohonan.permohonan.getIdPermohonan()');" />

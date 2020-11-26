@@ -496,27 +496,27 @@ function gotoFLMSstat() {
 	document.${formName}.submit();
 }
 function gotoSenaraiMesyuaratAPB() {
-	document.${formName}.action = "$EkptgUtil.getTabID("Akta Pelantar Benua",$portal_role)?_portal_module=ekptg.view.php2.FrmPHPSenaraiFailMesyuaratView";
+	document.${formName}.action = "$EkptgUtil.getTabID("Akta Pelantar Benua",$portal_role)?_portal_module=ekptg.view.php2.FrmAPBSenaraiMesyuaratView";
 	document.${formName}.submit();
 }
 function gotoSenaraiMesyuaratPYW() {
-	document.${formName}.action = "$EkptgUtil.getTabID("Penyewaan",$portal_role)?_portal_module=ekptg.view.php2.FrmPHPSenaraiFailMesyuaratView";
+	document.${formName}.action = "$EkptgUtil.getTabID("Penyewaan",$portal_role)?_portal_module=ekptg.view.php2.FrmPYWSenaraiMesyuaratView";
 	document.${formName}.submit();
 }
 function gotoSenaraiMesyuaratCRB() {
-	document.${formName}.action = "$EkptgUtil.getTabID("Penguatkuasaan",$portal_role)?_portal_module=ekptg.view.php2.FrmPHPSenaraiFailMesyuaratView";
+	document.${formName}.action = "$EkptgUtil.getTabID("Penguatkuasaan",$portal_role)?_portal_module=ekptg.view.php2.FrmCRBSenaraiMesyuaratView";
 	document.${formName}.submit();
 }
 function gotoSenaraiMesyuaratPLP() {
-	document.${formName}.action = "$EkptgUtil.getTabID("Pelepasan",$portal_role)?_portal_module=ekptg.view.php2.FrmPHPSenaraiFailMesyuaratView";
+	document.${formName}.action = "$EkptgUtil.getTabID("Pelepasan",$portal_role)?_portal_module=ekptg.view.php2.FrmPLPSenaraiMesyuaratView";
 	document.${formName}.submit();
 }
 function gotoSenaraiMesyuaratPNW() {
-	document.${formName}.action = "$EkptgUtil.getTabID("Penawaran",$portal_role)?_portal_module=ekptg.view.php2.FrmPHPSenaraiFailMesyuaratView";
+	document.${formName}.action = "$EkptgUtil.getTabID("Penawaran",$portal_role)?_portal_module=ekptg.view.php2.FrmPNWSenaraiMesyuaratView";
 	document.${formName}.submit();
 }
 function gotoSenaraiMesyuaratTKR() {
-	document.${formName}.action = "$EkptgUtil.getTabID("Tukarguna",$portal_role)?_portal_module=ekptg.view.php2.FrmPHPSenaraiFailMesyuaratView";
+	document.${formName}.action = "$EkptgUtil.getTabID("Tukarguna",$portal_role)?_portal_module=ekptg.view.php2.FrmTKRSenaraiMesyuaratView";
 	document.${formName}.submit();
 }
 </script>

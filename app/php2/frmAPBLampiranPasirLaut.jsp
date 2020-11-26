@@ -16,6 +16,8 @@
     #foreach ( $data in $dataDokumen )
         #set ($txtNamaDokumen=$data.nama_dokumen)
         #set ($txtCatatan=$data.catatan)
+        #set ($namaFail=$data.nama_fail)
+        #set ($idDokumen=$data.id_dokumen)
     #end    
 #end
 
@@ -23,7 +25,7 @@
     <legend>Muatnaik Laporan Pengeluaran Pasir Laut</legend>
     <table width="100%">
    		<tr>
-    		<td align="left" width="50%">
+    		<td align="left" width="20%">
       		  #if ($button=="view")
       		  &nbsp;&nbsp;&nbsp;Nama Dokumen
       		  #else
@@ -31,7 +33,7 @@
       		  #end    
       		</td>
     		<td width="1%">:</td>
-    		<td width="49%">
+    		<td width="79%">
     		  #if ($mode=="disabled")
     		  <input type="text" name="txtNamaDokumen" id="txtNamaDokumen" value="$!txtNamaDokumen" size="10" class="disabled" readonly>
     		  #else
@@ -40,15 +42,15 @@
 			</td> 
   		</tr>
   		<tr>
-    		<td align="left" width="50%">
+    		<td align="left">
       		  #if ($button=="view")
       		  &nbsp;&nbsp;&nbsp;Catatan 
       		  #else
       		  <font color="red">*</font>&nbsp;Catatan 
       		  #end    
       		</td>
-    		<td width="1%">:</td>
-    		<td width="49%">
+    		<td>:</td>
+    		<td>
     		  #if ($mode=="disabled")
     		  <textarea name="txtCatatan" cols="43" rows="5" class="disabled" id="txtCatatan" readonly onKeyUp="textCounter(this.form.txtCatatan,this.form.remLen13,$!saizTxtCatatan);" onKeyDown="textCounter(this.form.txtCatatan,this.form.remLen13,$!saizTxtCatatan);" >$!txtCatatan</textarea>
     		  #else
@@ -57,19 +59,21 @@
 			</td> 
   		</tr>
   		<tr>
-    		<td align="left" width="50%">
+    		<td align="left">
       		  #if ($button=="view")
       		  &nbsp;&nbsp;&nbsp;Direktori Imej
       		  #else
       		  <font color="red">*</font>&nbsp;Direktori Imej
       		  #end    
       		</td>
-    		<td width="1%">:</td>
-   			<td></td> 
+    		<td>:</td>
+   			<td><a href="#" onclick="cetakImej($idDokumen)" class="style2"><font color="blue">$!namaFail</font></a> </td> 
   		</tr>
-  		
+  		 <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
   		<tr>
-  			<td colspan="3" align="center">
+  			<td>&nbsp;</td>
+  			<td>&nbsp;</td>
+  			<td align="left">
   			
 		      #if ($button=="add")
 		        <input type="button" name="cmdSimpan" id="cmdSimpan" value="Simpan" onclick="simpanDokumen()" />    
@@ -168,6 +172,14 @@ function hapusDokumen(id_dokumen){
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmAPBLaporanPasir&command=hapusDokumen&id_dokumen="+id_dokumen;	
 	document.${formName}.submit();
 	}	
+}
+
+function cetakImej(id){
+	var url = "../servlet/ekptg.view.php2.FrmDisplayImage?id="+id;
+    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener=document.window;
+    if (hWnd.focus != null) hWnd.focus();
 }
 
 </script>

@@ -161,7 +161,7 @@ public class FrmPopupCapaianHakmilikeTanah extends AjaxBasedModule {
 				myLog.info("ppk=");
 				getCarianPPK().daftarHakmilik(idHarta, getParam("noResit_"), getParam("idHakmilik_"), idPermohonan, idPengguna);
 			}else if (modul.equals("ppt")) { 
-				logic.daftarHakmilik(idHarta, getParam("noResit"), getParam("idHakmilik"), idPermohonan, idPengguna);
+				logic.daftarHakmilik(idHarta, getParam("noResit_"), getParam("idHakmilik_"), idPermohonan, idPengguna);
 				myLog.info("id harta ppt :"+idHarta);
 				if (idsPemilik != null) {
 					PihakBerkepentingan pemilik = null;

@@ -72,6 +72,7 @@ public class FrmSenaraiFailPajakanKecilData {
 		    r.add("POSKOD",pihak.getPoskod());
 		    r.add("ID_DAERAH",pihak.getIdDaerah());
 		    r.add("ID_NEGERI",pihak.getIdNegeri());
+		    r.add("NO_TEL",pihak.getTel());
 		    sql = r.getSQLUpdate("TBLHTPPIHAKBERKEPENTINGAN");
 		    stmt.executeUpdate(sql);
 		    
@@ -101,6 +102,7 @@ public class FrmSenaraiFailPajakanKecilData {
 		    r.add("POSKOD");
 		    r.add("ID_DAERAH");
 		    r.add("ID_NEGERI");
+		    r.add("NO_TEL");
 		    r.add("ID_PIHAKBERKEPENTINGAN",idPihakBerkepentingan);
 		    sql = r.getSQLSelect("TBLHTPPIHAKBERKEPENTINGAN");
 		    System.out.println("PihakBerkepentingan" +sql);
@@ -116,6 +118,7 @@ public class FrmSenaraiFailPajakanKecilData {
 		    	pihak.setPoskod(rs.getString("POSKOD"));
 		    	pihak.setIdDaerah(rs.getString("ID_DAERAH"));
 		    	pihak.setIdNegeri(rs.getString("ID_NEGERI"));
+		    	pihak.setTel(rs.getString("NO_TEL"));
 		    }
 	    }
 	    catch(Exception e){

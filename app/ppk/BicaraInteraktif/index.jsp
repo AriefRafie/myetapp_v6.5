@@ -1560,16 +1560,16 @@ function tutupSkrinPegawaiMultiple2(skrinName)
 		$jquery("#icon_tukarpegawai2").html(">> ");
 		document.getElementById("flag_tukarpegawai2").value = "close";
 		$jquery("#view_tukarpegawai2").html("");
-		//showHideCheckBox('listID_PERBICARAAN');
+		showHideCheckBox('listID_PERBICARAAN');
 	}
-	else if(skrinName == "tukarpegawaiKPP_multiple")
+	else if(skrinName == "tukarpegawaiKPP2")
 	{
 		//alert("2");
-		$jquery("#icon_tukarpegawaiKPP_multiple").html(">> ");
+		$jquery("#icon_tukarpegawaiKPP2").html(">> ");
 		//alert("3");
-		document.getElementById("flag_tukarpegawaiKPP_multiple").value = "close";
+		document.getElementById("flag_tukarpegawaiKPP2").value = "close";
 		//alert("4");
-		$jquery("#view_tukarpegawaiKPP_multiple").html("");
+		$jquery("#view_tukarpegawaiKPP2").html("");
 		showHideCheckBoxKPP('listkID_TUKARPEGAWAI');
 	}
 }
@@ -1654,7 +1654,7 @@ function openCloseMultipleTPK2(ID_PERMOHONAN,ID_FAIL,ID_SIMATI,ID_PERMOHONANSIMA
 		//alert('2.1');
 		document.getElementById("flag_tukarpegawaiKPP2").value = "open";
 		//alert('2.2');
-		//showHideCheckBox('listkID_TUKARPEGAWAI');
+		showHideCheckBox('listkID_TUKARPEGAWAI');
 		//alert('2.3');
 		$jquery(document).ready(function () {
 			doDivAjaxCall$formname(DIV,'openSkrinTukarPegawai2','mode=edit&div=view_tukarpegawaiKPP2&ID_PERMOHONAN='+ID_PERMOHONAN+'&FIELD_PK=ID_TUKARPEGAWAI&NAMA_TABLE=TBLPPKTUKARPEGAWAI&ID_FAIL='+ID_FAIL+'&ID_SIMATI='+ID_SIMATI+'&ID_PERMOHONANSIMATI='+ID_PERMOHONANSIMATI+'&ID_PERBICARAAN='+ID_PERBICARAAN+'&skrinName='+SKRINNAME);

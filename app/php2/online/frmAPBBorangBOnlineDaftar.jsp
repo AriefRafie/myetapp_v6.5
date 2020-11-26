@@ -14,7 +14,8 @@
 	<input type="hidden" name="id_laporanpasir" id="id_laporanpasir" value="$id_laporanpasir" />
 	<input type="hidden" name="idDokumen" id="idDokumen" value="$idDokumen" />
 	<input name="mode" type="hidden" id="mode" value="$mode"/>
-  <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
+    <input name="hitButton" type="hidden" id="hitButton" value="$hitButton"/>
+    <input type="hidden" name="idFail" id="idFail" value="$idFail"/>
 </p>
 
 <!--  #if ($returnChecking == "true")
@@ -172,11 +173,7 @@
 	   </tr>
 	   <tr>
 		   <td align="left" width="50%">
-		      #if ($button=="view")
 		      &nbsp;&nbsp;&nbsp;Masa
-		      #else
-		      <font color="red">*</font>&nbsp;Masa
-		      #end       
 		    </td>
 		    <td width="1%">:</td>
 		    <td width="49%">
@@ -287,7 +284,7 @@
 
 #if ($button!="add")
 <fieldset>
-	<legend>Senarai Laporan Pengeluaran Pasir Laut</legend>
+	<legend>Senarai Dokumen Pengeluaran Pasir Laut</legend>
 	<!-- #parse("app/utils/record_paging.jsp") -->
 	<table width="100%"  cellpadding="1" cellspacing="2" border="0">
 		<tr>
@@ -297,8 +294,8 @@
 <!-- 	<input type="hidden" name="id_dokumen" id="id_dokumen"  /> -->
 	<table width="100%"  cellpadding="1" cellspacing="2" border="0">
 		<tr class="table_header">
-        	<td scope="row" width="0.5%" align="center">Bil</td>
-            <td width="15%" style="text-transform:uppercase">Nama Lampiran</td>
+        	<td scope="row" width="5%" align="center">Bil</td>
+            <td width="95%" style="text-transform:uppercase">Nama Lampiran</td>
             #if($list_size!=0)     
            	#foreach($senarai in $SenaraiDokumen)
             	#set( $i = $velocityCount )
@@ -480,11 +477,11 @@ function simpanLaporan() {
   		document.${formName}.txtHariOperasi.focus(); 
 		return;		
 	}
-	if(document.${formName}.txtMasaOperasi.value == ""){
-		alert("Sila masukkan \"Masa\" terlebih dahulu.");
-  		document.${formName}.txtMasaOperasi.focus(); 
-		return;		
-	}
+// 	if(document.${formName}.txtMasaOperasi.value == ""){
+// 		alert("Sila masukkan \"Masa\" terlebih dahulu.");
+//   		document.${formName}.txtMasaOperasi.focus(); 
+// 		return;		
+// 	}
 	/*if(document.${formName}.txdTarikhPengeluaran.value == ""){
 		alert("Sila masukkan Tarikh Pengeluaran.");
   		document.${formName}.txdTarikhPengeluaran.focus(); 

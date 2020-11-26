@@ -81,6 +81,7 @@ public class FrmAPBBorangASenaraiFailView extends AjaxBasedModule {
 						getParam("txtAnggaranPasir"), Utils.RemoveSymbol(getParam("txtJumlahRoyalti")), getParam("txtKontraktor"),
 						getParam("txtPembeli"),getParam("txtTarikhMula"),getParam("txtTarikhTamat"),getParam("txtLaluan"),
 						getParam("txtKaedah"),getParam("txtKawasan"),
+						getParam("txtLabelTitik"),getParam("txtDarjahT"),getParam("txtDarjahU"),getParam("txtMinitT"),getParam("txtMinitU"),getParam("txtSaatT"),getParam("txtSaatU"),
 						session);
 			}
 
@@ -92,6 +93,7 @@ public class FrmAPBBorangASenaraiFailView extends AjaxBasedModule {
 						getParam("txtAnggaranPasir"), Utils.RemoveSymbol(getParam("txtJumlahRoyalti")), getParam("txtKontraktor"),
 						getParam("txtPembeli"),getParam("txtTarikhMula"),getParam("txtTarikhTamat"),getParam("txtLaluan"),
 						getParam("txtKaedah"),getParam("txtKawasan"),
+						getParam("txtLabelTitik"),getParam("txtDarjahT"),getParam("txtDarjahU"),getParam("txtMinitT"),getParam("txtMinitU"),getParam("txtSaatT"),getParam("txtSaatU"),
 						session);
 
 			}
@@ -145,6 +147,14 @@ public class FrmAPBBorangASenaraiFailView extends AjaxBasedModule {
 				 hashMaklumatAmbilPasir.put("laluan",getParam("txtLaluan") == null ?"": getParam("txtLaluan"));
 				 hashMaklumatAmbilPasir.put("kaedah",getParam("txtKaedah") == null ? "": getParam("txtKaedah"));
 				 hashMaklumatAmbilPasir.put("kawasan",getParam("txtKawasan") == null ? "": getParam("txtKawasan"));
+				 
+				 hashMaklumatAmbilPasir.put("labelTitik",getParam("txtLabelTitik") == null ? "": getParam("txtLabelTitik"));
+				 hashMaklumatAmbilPasir.put("darjahT",getParam("txtDarjahT") == null ? "": getParam("txtDarjahT"));
+				 hashMaklumatAmbilPasir.put("darjahU",getParam("txtDarjahU") == null ? "": getParam("txtDarjahU"));
+				 hashMaklumatAmbilPasir.put("minitT",getParam("txtMinitT") == null ? "": getParam("txtMinitT"));
+				 hashMaklumatAmbilPasir.put("minitU",getParam("txtMinitU") == null ? "": getParam("txtMinitU"));
+				 hashMaklumatAmbilPasir.put("saatT",getParam("txtSaatT") == null ? "": getParam("txtSaatT"));
+				 hashMaklumatAmbilPasir.put("saatU",getParam("txtSaatU") == null ? "": getParam("txtSaatU"));
 
 				 beanMaklumatAmbilPasir.addElement(hashMaklumatAmbilPasir);
 				
@@ -193,6 +203,14 @@ public class FrmAPBBorangASenaraiFailView extends AjaxBasedModule {
 				 hashMaklumatAmbilPasir.put("laluan",getParam("txtLaluan") == null ?"": getParam("txtLaluan"));
 				 hashMaklumatAmbilPasir.put("kaedah",getParam("txtKaedah") == null ? "": getParam("txtKaedah"));
 				 hashMaklumatAmbilPasir.put("kawasan",getParam("txtKawasan") == null ? "": getParam("txtKawasan"));
+				 
+				 hashMaklumatAmbilPasir.put("labelTitik",getParam("txtLabelTitik") == null ? "": getParam("txtLabelTitik"));
+				 hashMaklumatAmbilPasir.put("darjahT",getParam("txtDarjahT") == null ? "": getParam("txtDarjahT"));
+				 hashMaklumatAmbilPasir.put("darjahU",getParam("txtDarjahU") == null ? "": getParam("txtDarjahU"));
+				 hashMaklumatAmbilPasir.put("minitT",getParam("txtMinitT") == null ? "": getParam("txtMinitT"));
+				 hashMaklumatAmbilPasir.put("minitU",getParam("txtMinitU") == null ? "": getParam("txtMinitU"));
+				 hashMaklumatAmbilPasir.put("saatT",getParam("txtSaatT") == null ? "": getParam("txtSaatT"));
+				 hashMaklumatAmbilPasir.put("saatU",getParam("txtSaatU") == null ? "": getParam("txtSaatU"));
 				
 				 beanMaklumatAmbilPasir.addElement(hashMaklumatAmbilPasir);
 				 this.context.put("BeanMaklumatAmbilPasir",beanMaklumatAmbilPasir);

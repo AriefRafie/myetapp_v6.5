@@ -102,6 +102,29 @@
 
 	</tr>
 	
+	<tr>
+ 		<td>
+ 			<fieldset><legend>PENGESAHAN PERAKUAN PEMBELIAN</legend>
+ 				<table width="100%" border="0" cellspacing="2" cellpadding="2">
+				  <tr>
+				    <td width="1%">&nbsp;</td>
+				    <td width="28%" valign="top"><div align="right">Catatan</div></td>
+				    <td width="1%" valign="top">:</td>
+				    <td width="70%">
+				    	
+				    	
+				    	#if($semakMode == "update")
+						<textarea cols="41" rows="4" name="catatan" id="catatan" >$!htpPermohonan.catatan</textarea>
+						#else
+						<textarea cols="41" rows="4" name="catatan" id="catatan" disabled>$!htpPermohonan.catatan</textarea>
+						#end
+				    </td>
+				  </tr>
+				</table>
+ 			</fieldset>
+ 		</td>
+ 	</tr>
+	
 	 	<tr>
     
 		    	<td align="center" colspan="4">
@@ -113,6 +136,7 @@
 		    		<input type="button" class="stylobutton100" name="cmdSimpan" id="cmdSimpan" value="Kemaskini" onclick="doAjaxCall${formName}('kemaskiniPerakuan')" />
                     <input type="button" class="stylobutton100" name="cetakakuan" id="cetakakuan" value="Cetak" onclick="javascript:senaraiDokumenSurat('tablesuratakuan');" />
                		<input type="button" class="stylobutton100" name="cmdKembali" id="cmdKembali" value="Kembali" onclick="kembaliDraft()" />
+		    		<input type="button" class="" name="cmdMakluman" value="Hantar Semakan" />
 		    		#end
 		    		
 		    	

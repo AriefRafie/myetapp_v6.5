@@ -311,8 +311,14 @@ public class FrmPhpNotifikasiEmel {
 							rsEmel.getString("NO_FAIL");
 				namaPelesen = rsEmel.getString("NAMA") == null ? "" :
 							rsEmel.getString("NAMA");
-				namaJabatan = rsEmel.getString("FLAG_KJP") == null ? "" :
-					rsEmel.getString("FLAG_KJP");
+				if("JP".equals(rsEmel.getString("FLAG_KJP"))) {
+					namaJabatan = "JABATAN PERIKANAN";
+				} else if("PHM".equals(rsEmel.getString("FLAG_KJP"))) {
+					namaJabatan = "PHN";
+				} else {
+					namaJabatan = rsEmel.getString("FLAG_KJP") == null ? "" :
+						rsEmel.getString("FLAG_KJP");
+				}
 				tempoh = rsEmel.getString("JANGKAMASA") == null ? "" :
 							rsEmel.getString("JANGKAMASA");
 				tarikhHantar = sdf.format(rsEmel.getDate("TARIKH_HANTAR"));
@@ -349,8 +355,8 @@ public class FrmPhpNotifikasiEmel {
 							 +"<br><br><u><b>" +tajuk.toUpperCase()+ "</b></u>"
 							 +"<br>Dengan hormatnya saya diarah merujuk berhubung perkara di atas."
 							 +"<br><br>2.		Sukacita dipohon pihak tuan/puan mengemukakan maklum balas dan ulasan "
-							 +"bagi permohonan tersebut kepada Jabatan ini melalui Sitem MyeTaPP sebelum atau pada "
-							 +tarikhTerima+ " untuk tindakan Jabatan selanjutnya."
+							 +"bagi permohonan tersebut kepada Jabatan ini melalui Sistem MyeTaPP "
+							 +"<br>sebelum atau pada <u>"+tarikhTerima+ "</u> untuk tindakan Jabatan selanjutnya."
 							 +"<br><br>3.		Kerjasama dan maklum balas awal pihak tuan/puan berhubung perkara tersebut amat dihargai."
 							 +"<br><br><br>Sekian, terima kasih.<br><br><br>"
 							 +"Unit Maritim"
