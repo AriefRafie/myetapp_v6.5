@@ -147,6 +147,33 @@ function doSimpanMaklumatPasir(idFail,idJadualKeduaLesen){
   		document.${formName}.txtTarikhTamat.focus(); 
 		return; 
 	}
+	
+	if(document.${formName}.txtLabelTitik.value == ""){
+		alert('Sila masukkan Label Titik.');
+  		document.${formName}.txtLabelTitik.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtDarjahT.value == ""){
+		alert('Sila masukkan Darjah T.');
+  		document.${formName}.txtDarjahT.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtDarjahU.value == ""){
+		alert('Sila masukkan Darjah U.');
+  		document.${formName}.txtDarjahU.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtMinitT.value == ""){
+		alert('Sila masukkan Minit T.');
+  		document.${formName}.txtMinitT.focus(); 
+		return; 
+	}
+	if(document.${formName}.txtMinitU.value == ""){
+		alert('Sila masukkan Minit U.');
+  		document.${formName}.txtMinitU.focus(); 
+		return; 
+	}
+	
 	if(document.${formName}.txtLaluan.value == ""){
 		alert('Sila masukkan Laluan.');
   		document.${formName}.txtLaluan.focus(); 
@@ -158,7 +185,7 @@ function doSimpanMaklumatPasir(idFail,idJadualKeduaLesen){
 		return; 
 	}
 	if(document.${formName}.txtKawasan.value == ""){
-		alert('Sila masukkan Kawasan Pelepusan.');
+		alert('Sila masukkan Kawasan Pelupusan.');
   		document.${formName}.txtKawasan.focus(); 
 		return; 
 	}
@@ -242,43 +269,5 @@ function validateNumber(elmnt,content) {
 		elmnt.value = RemoveNonNumeric(content);
 		return;
 	}
-}
-
-function doSimpanMaklumatBarge(){
-	
-	if(document.${formName}.txtNamaDaftar.value == ""){
-		alert('Sila masukkan Nama Didaftarkan.');
-  		document.${formName}.txtNamaDaftar.focus(); 
-		return; 
-	}
-	if(document.${formName}.txtJenis.value == ""){
-		alert('Sila masukkan Jenis Kapal.');
-  		document.${formName}.txtJenis.focus(); 
-		return; 
-	}
-	if(document.${formName}.txtNoPendaftaran.value == ""){
-		alert('Sila masukkan No. Pendaftaran.');
-  		document.${formName}.txtNoPendaftaran.focus(); 
-		return; 
-	}
-	if(document.${formName}.txtNoTel.value == ""){
-		alert('Sila masukkan No. Tel.');
-  		document.${formName}.txtNoTel.focus(); 
-		return; 
-	}
-	if(document.${formName}.txtKapasiti.value == ""){
-		alert('Sila masukkan Kapasiti.');
-  		document.${formName}.txtKapasiti.focus(); 
-		return; 
-	}
-	
-	if ( !window.confirm("Adakah Anda Pasti ?") ){
-		return;
-	}
-	
-	document.${formName}.actionOnline.value = "doMaklumatPasir";
-	document.${formName}.mode.value = "viewBarge";
-	document.${formName}.hitButton.value = "simpanMaklumatBarge";
-	document.${formName}.submit();
 }
 </script>
