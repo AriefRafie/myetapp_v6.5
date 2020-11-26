@@ -294,8 +294,8 @@
 <!-- 	<input type="hidden" name="id_dokumen" id="id_dokumen"  /> -->
 	<table width="100%"  cellpadding="1" cellspacing="2" border="0">
 		<tr class="table_header">
-        	<td scope="row" width="0.5%" align="center">Bil</td>
-            <td width="15%" style="text-transform:uppercase">Nama Lampiran</td>
+        	<td scope="row" width="5%" align="center">Bil</td>
+            <td width="95%" style="text-transform:uppercase">Nama Lampiran</td>
             #if($list_size!=0)     
            	#foreach($senarai in $SenaraiDokumen)
             	#set( $i = $velocityCount )
