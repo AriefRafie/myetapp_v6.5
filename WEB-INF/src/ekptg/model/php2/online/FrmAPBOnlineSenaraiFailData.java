@@ -75,7 +75,8 @@ public class FrmAPBOnlineSenaraiFailData {
 
 	public String daftarBaruLesen(String idJenisPermohonan, String idJenisLesen, String idKaitanTujuan, String tujuanPengambilan,
 			String tempoh, String ringkasanPengalaman, String undangUndang, String jenisPerniagaan, String flagLuar,
-			String idNegeriPerairan, String lokasi, String luas, String idLuas, HttpSession session) throws Exception {
+			String idNegeriPerairan, String lokasi, String luas, String idLuas, String noRujukanSurat, String TarikhSurat,
+			HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -114,7 +115,7 @@ public class FrmAPBOnlineSenaraiFailData {
 			stmt.executeUpdate(sql);
 
 			sql = "SELECT A.USER_NAME, B.ALAMAT1, B.ALAMAT2, B.ALAMAT3, B.POSKOD, B.ID_BANDAR, B.ID_NEGERI,"
-					+ " B.NO_FAX, B.NO_HP, B.NO_KP_BARU, B.NO_TEL, B.EMEL, B.KATEGORI" 
+					+ " B.NO_FAX, B.NO_HP, B.NO_KP_BARU, B.NO_TEL, B.EMEL, B.KATEGORI"
 					+ " FROM USERS A, USERS_ONLINE B"
 					+ " WHERE A.USER_ID = B.USER_ID AND A.USER_ID = '" + userId + "'";
 			ResultSet rsUserOnline = stmt.executeQuery(sql);
@@ -164,6 +165,8 @@ public class FrmAPBOnlineSenaraiFailData {
 			sql = r.getSQLInsert("TBLPHPPEMOHON");
 			stmt.executeUpdate(sql);
 
+			String TS = "to_date('" + TarikhSurat + "','dd/MM/yyyy')";
+
 			// TBLPERMOHONAN
 			r = new SQLRenderer();
 			long idPermohonan = DB.getNextID("TBLPERMOHONAN_SEQ");
@@ -180,7 +183,8 @@ public class FrmAPBOnlineSenaraiFailData {
 					+ currentDate.get(Calendar.YEAR) + "/" + File.getSeqNo(db, 4, Integer.parseInt(idUrusan), 0, 0, 0,
 							false, false, currentDate.get(Calendar.YEAR), 0);
 			r.add("NO_PERMOHONAN", noPermohonan);
-
+			r.add("TARIKH_SURAT", r.unquote(TS));
+			r.add("NO_RUJ_SURAT", noRujukanSurat);
 			r.add("FLAG_AKTIF", 1);
 			r.add("NO_SUBJAKET", 0);
 			r.add("NO_JILID", 0);
@@ -217,7 +221,7 @@ public class FrmAPBOnlineSenaraiFailData {
 			r.add("ID_JENISPERMOHONAN", idJenisPermohonan);
 			r.add("ID_JENIS_LESEN", idJenisLesen);
 			r.add("ID_NEGERI_PERAIRAN", idNegeriPerairan);
-			
+
 			r.add("ID_MASUK", userId);
 			r.add("TARIKH_MASUK", r.unquote("SYSDATE"));
 
@@ -2268,9 +2272,9 @@ public class FrmAPBOnlineSenaraiFailData {
 
 	public void updatePermohonan(String idFail, String idPermohonan, String idPemohon, String idKaitanTujuan,
 			String tujuanPengambilan, String tempoh, String pengalaman, String idNegeri, String lokasi, String luas,
-			String idLuas, String modalBenar, String modalJelas, String idJenistujuan, String idJenisLesen, 
+			String idLuas, String modalBenar, String modalJelas, String idJenistujuan, String idJenisLesen,
 			String undangUndang, String jenisPerniagaan, String jumlahModal, String jumlahModal1,
-			HttpSession session) throws Exception {
+			String noRujukanSurat, String TarikhSurat, HttpSession session) throws Exception {
 
 		Db db = null;
 		Connection conn = null;
@@ -2295,7 +2299,7 @@ public class FrmAPBOnlineSenaraiFailData {
 			r.add("PEKERJAAN", jenisPerniagaan);
 			r.add("MODAL_OPERASI", jumlahModal); // jumlah modal untuk operasi BG BORANG1 (i)
 			r.add("MODAL_OPERASI_1", jumlahModal1); // jumlah modal untuk operasi BG BORANG1 (ii)
-			
+
 			sql = r.getSQLUpdate("TBLPHPPEMOHON");
 			stmt.executeUpdate(sql);
 
@@ -2316,6 +2320,16 @@ public class FrmAPBOnlineSenaraiFailData {
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
 			sql = r.getSQLUpdate("TBLPHPPMOHONNJDUALPERTAMA");
+			stmt.executeUpdate(sql);
+
+			String TS = "to_date('" + TarikhSurat + "','dd/MM/yyyy')";
+
+			// TBLPERMOHONAN
+			r = new SQLRenderer();
+			r.update("ID_PERMOHONAN", idPermohonan);
+			r.add("TARIKH_SURAT", r.unquote(TS));
+			r.add("NO_RUJ_SURAT", noRujukanSurat);
+			sql = r.getSQLUpdate("TBLPERMOHONAN");
 			stmt.executeUpdate(sql);
 
 			conn.commit();
@@ -3372,7 +3386,7 @@ public class FrmAPBOnlineSenaraiFailData {
 				h.put("laluan", rs.getString("LALUAN_VESSEL") == null ? "" : rs.getString("LALUAN_VESSEL"));
 				h.put("kaedah", rs.getString("KAEDAH_PASIR") == null ? "" : rs.getString("KAEDAH_PASIR"));
 				h.put("kawasan", rs.getString("KAWASAN_PELUPUSAN") == null ? "" : rs.getString("KAWASAN_PELUPUSAN"));
-				
+
 				h.put("labelTitik", rs.getString("LABEL_TITIK") == null ? "" : rs.getString("LABEL_TITIK"));
 				h.put("darjahU", rs.getString("DARJAH_U") == null ? "" : rs.getString("DARJAH_U"));
 				h.put("darjahT", rs.getString("DARJAH_T") == null ? "" : rs.getString("DARJAH_T"));
@@ -3394,7 +3408,7 @@ public class FrmAPBOnlineSenaraiFailData {
 	// YATI TAMBAH
 	public String simpanMaklumatAmbilPasir(String idJadualKedua, String idBulan, String tahun, String tujuanAmbil,
 			String destinasiHantar, String jumlahPasir, String jumlahRoyalti, String kontraktor, String pembeli,
-			String tarikhMula, String tarikhTamat, String laluan, String kaedah, String kawasan, 
+			String tarikhMula, String tarikhTamat, String laluan, String kaedah, String kawasan,
 			String txtLabelTitik, String txtDarjahT, String txtDarjahU, String txtMinitT, String txtMinitU, String txtSaatT, String txtSaatU, HttpSession session)
 			throws Exception {
 
@@ -3445,10 +3459,10 @@ public class FrmAPBOnlineSenaraiFailData {
 			sql = r.getSQLInsert("TBLPHPBORANGA");
 			myLog.info("sql simpan ambil pasir : " + sql);
 			stmt.executeUpdate(sql);
-			
+
 			// TBLPHPKOORDINATPERMOHONAN
 			r2.add("ID_BORANGA", idBorangA);
-			
+
 			r2.add("LABEL_TITIK", txtLabelTitik);
 			r2.add("DARJAH_T", txtDarjahT);
 			r2.add("DARJAH_U", txtDarjahU);
@@ -3456,10 +3470,10 @@ public class FrmAPBOnlineSenaraiFailData {
 			r2.add("MINIT_U", txtMinitU);
 			r2.add("SAAT_T", txtSaatT);
 			r2.add("SAAT_U", txtSaatU);
-			
+
 			r2.add("ID_MASUK", userId);
 			r2.add("TARIKH_MASUK", r.unquote("SYSDATE"));
-			
+
 			sql2 = r2.getSQLInsert("TBLPHPKOORDINATPERMOHONAN");
 			myLog.info("sql simpan koordinat borang a : " + sql2);
 			stmt.executeUpdate(sql2);
@@ -3484,7 +3498,7 @@ public class FrmAPBOnlineSenaraiFailData {
 	// yati tambah
 	public void simpanKemaskiniMaklumatPasir(String idBorangA, String idBulan, String tahun, String tujuanAmbil,
 			String destinasiHantar, String jumlahPasir, String jumlahRoyalti, String kontraktor, String pembeli,
-			String tarikhMula, String tarikhTamat, String laluan, String kaedah, String kawasan, 
+			String tarikhMula, String tarikhTamat, String laluan, String kaedah, String kawasan,
 			String txtLabelTitik, String txtDarjahT, String txtDarjahU, String txtMinitT, String txtMinitU, String txtSaatT, String txtSaatU, HttpSession session)
 			throws Exception {
 
@@ -3530,10 +3544,10 @@ public class FrmAPBOnlineSenaraiFailData {
 			sql = r.getSQLUpdate("TBLPHPBORANGA");
 			myLog.info("sql borang A : " + sql);
 			stmt.executeUpdate(sql);
-			
+
 			// TBLPHPKOORDINATPERMOHONAN
 			r2.update("ID_BORANGA", idBorangA);
-			
+
 			r2.add("LABEL_TITIK", txtLabelTitik);
 			r2.add("DARJAH_T", txtDarjahT);
 			r2.add("DARJAH_U", txtDarjahU);
@@ -3541,10 +3555,10 @@ public class FrmAPBOnlineSenaraiFailData {
 			r2.add("MINIT_U", txtMinitU);
 			r2.add("SAAT_T", txtSaatT);
 			r2.add("SAAT_U", txtSaatU);
-			
+
 			r2.add("ID_KEMASKINI", userId);
 			r2.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
-			
+
 			sql2 = r2.getSQLUpdate("TBLPHPKOORDINATPERMOHONAN");
 			myLog.info("sql update koordinat borang a : " + sql2);
 			stmt.executeUpdate(sql2);
