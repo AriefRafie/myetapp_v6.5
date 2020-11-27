@@ -1107,8 +1107,7 @@ public class FrmAPBMaklumatPermohonanData {
 					+ "TBLPHPKOORDINATPERMOHONAN.ID_ULASANTEKNIKAL IS NULL "
 					+ "AND TBLPHPKOORDINATPERMOHONAN.ID_PERMOHONAN = '"
 					//roszai - edit untuk sort by history (17072020)
-					//+ idPermohonan + "'" + " ORDER BY LABEL_TITIK ASC ";
-					+ idPermohonan + "' AND TBLPHPKOORDINATPERMOHONAN.FLAG_HISTORY = 'N' ORDER BY TARIKH_MASUK DESC ";
+					+ idPermohonan + "' AND TBLPHPKOORDINATPERMOHONAN.FLAG_HISTORY = 'N' ORDER BY TARIKH_MASUK ASC ";
 
 			ResultSet rs = stmt.executeQuery(sql);
 			Hashtable h;
@@ -1167,7 +1166,6 @@ public class FrmAPBMaklumatPermohonanData {
 					+ "WHERE TBLPHPKOORDINATPERMOHONAN.ID_ULASANTEKNIKAL IS NULL "
 					+ "AND TBLPHPKOORDINATPERMOHONAN.ID_PERMOHONAN = '" + idPermohonan + "' "
 					//roszai - edit untuk sort by history (17072020)
-					//+ idPermohonan + "'" + " ORDER BY LABEL_TITIK ASC ";
 					+ "AND TBLPHPKOORDINATPERMOHONAN.FLAG_HISTORY = 'Y' ORDER BY TARIKH_MASUK ASC ";
 
 			ResultSet rs = stmt.executeQuery(sql);

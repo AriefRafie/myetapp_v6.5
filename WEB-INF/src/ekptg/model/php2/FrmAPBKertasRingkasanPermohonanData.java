@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -35,9 +36,7 @@ public class FrmAPBKertasRingkasanPermohonanData {
 					+ " TBLPHPKERTASKERJAAPB.ULASAN_JAB_PERIKANAN, TBLPHPKERTASKERJAAPB.ULASAN_JAB_LAUT, TBLPHPKERTASKERJAAPB.ULASAN_JAS, TBLPHPKERTASKERJAAPB.ULASAN_PTG,"
 					+ " TBLPHPKERTASKERJAAPB.ULASAN_JABATAN, TBLPHPKERTASKERJAAPB.SYOR_JABATAN, TBLPHPKERTASKERJAAPB.SYOR_PTP,"
 					+ " TBLPHPKERTASKERJAAPB.TARIKH_MESYUARAT, TBLPHPKERTASKERJAAPB.BIL_MESYUARAT, TBLPHPKERTASKERJAAPB.CATATAN_BERSYARAT_JABATAN"
-					
 					+ " FROM TBLPFDFAIL, TBLPERMOHONAN, TBLPHPKERTASKERJAAPB"
-					
 					+ " WHERE TBLPFDFAIL.ID_FAIL = TBLPERMOHONAN.ID_FAIL AND TBLPERMOHONAN.ID_PERMOHONAN = TBLPHPKERTASKERJAAPB.ID_PERMOHONAN"
 					+ " AND TBLPHPKERTASKERJAAPB.FLAG_KERTAS = 2 AND TBLPERMOHONAN.ID_PERMOHONAN = '" + idPermohonan + "'";
 
@@ -87,6 +86,8 @@ public class FrmAPBKertasRingkasanPermohonanData {
 						: rs.getString("SYOR_JABATAN")); 
 				h.put("catatanBersyarat", rs.getString("CATATAN_BERSYARAT_JABATAN") == null ? ""
 						: rs.getString("CATATAN_BERSYARAT_JABATAN")); 
+//				h.put("tarikhMesyuarat", getBilMesyuaratByIdPermohonan(idPermohonan));				
+//				h.put("bilMesyuarat", getBilMesyuaratByIdPermohonan(idPermohonan));
 				h.put("tarikhMesyuarat", rs.getDate("TARIKH_MESYUARAT") == null ? ""
 						: sdf.format(rs.getDate("TARIKH_MESYUARAT")));				
 				h.put("bilMesyuarat", rs.getString("BIL_MESYUARAT") == null ? ""
@@ -100,6 +101,63 @@ public class FrmAPBKertasRingkasanPermohonanData {
 				db.close();
 		}
 		return beanMaklumatKertasRingkasPermohonan;
+	}
+	
+	public String getBilMesyuaratByIdPermohonan(String idPermohonan)
+			throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT TBLPHPMESYUARAT.TARIKH_MESYUARAT, TBLPHPMESYUARAT.BIL_MESYUARAT "
+				+ "FROM TBLPHPMESYUARATPERMOHONAN, TBLPHPMESYUARAT "
+				+ "WHERE TBLPHPMESYUARATPERMOHONAN.ID_MESYUARAT = TBLPHPMESYUARAT.ID_MESYUARAT "
+				+ "AND ID_PERMOHONAN = '" + idPermohonan + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				return (Date) rs.getDate("TARIKH_MESYUARAT") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_MESYUARAT"));
+			} else {
+				return "";
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+	}
+	
+	public String getTarikhMesyuaratByIdPermohonan(String idPermohonan)
+			throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT TBLPHPMESYUARAT.TARIKH_MESYUARAT, TBLPHPMESYUARAT.BIL_MESYUARAT "
+				+ "FROM TBLPHPMESYUARATPERMOHONAN, TBLPHPMESYUARAT "
+				+ "WHERE TBLPHPMESYUARATPERMOHONAN.ID_MESYUARAT = TBLPHPMESYUARAT.ID_MESYUARAT "
+				+ "AND ID_PERMOHONAN = '" + idPermohonan + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				return (String) rs.getString("TARIKH_MESYUARAT");
+			} else {
+				return "";
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
 	}
 
 	public void updateMaklumatKertasRingkasPermohonan(String idPermohonan, String tarikhKertas, String namaPTP, String namaKSU, String namaMenteri, 			

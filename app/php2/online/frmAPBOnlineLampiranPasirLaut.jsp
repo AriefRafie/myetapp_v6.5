@@ -208,8 +208,7 @@ function simpanDokumen(id_laporanpasir,idPermohonan,idJadualKeduaLesen) {
 	  var dp = document.${formName}.form_token.value ;
 	  var dopost = "&form_token="+dp;
 	  
-	  document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView&hitButton=simpanDokumen&namaLampiran="+namaLampiran+"&catatanLampiran="
-	  +catatanLampiran+"&idPermohonan="+idPermohonan+dopost+"&actionOnline=papar_laporan&id_laporanpasir="+id_laporanpasir+"&idJadualKeduaLesen="+idJadualKeduaLesen;
+	  document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView&hitButton=simpanDokumen&namaLampiran="+namaLampiran+"&catatanLampiran="+catatanLampiran+"&idPermohonan="+idPermohonan+"&id_laporanpasir="+id_laporanpasir+"&idJadualKeduaLesen="+idJadualKeduaLesen+"&actionOnline=papar_laporan"+dopost;
 	  document.${formName}.method="post";
 	  document.${formName}.enctype="multipart/form-data";
 	  document.${formName}.encoding="multipart/form-data";
@@ -254,7 +253,7 @@ function kemaskiniDokumen(idDokumen) {
 	document.${formName}.submit();
 }
 
-function simpanUpdateDokumen(id_laporanpasir,idJadualKeduaLesen,idDokumen){
+function simpanUpdateDokumen(idDokumen){
 	if(document.${formName}.txtNamaDokumen.value == ""){
 	    alert('Sila masukkan Nama Fail.');
 	      document.${formName}.txtNamaDokumen.focus(); 
@@ -269,20 +268,11 @@ function simpanUpdateDokumen(id_laporanpasir,idJadualKeduaLesen,idDokumen){
 	  if ( !window.confirm("Adakah Anda Pasti ?") ){
 	    return;
 	  }
-	  
-	  var namaLampiran = document.${formName}.txtNamaDokumen.value;
-	  var catatanLampiran = document.${formName}.txtCatatan.value ;
-	  var dp = document.${formName}.form_token.value ;
-	  var dopost = "&form_token="+dp;
-	  
-// 	  document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView&hitButton=simpanKemaskiniLampiran&namaLampiran="+namaLampiran+"&catatanLampiran="
-// 	  +catatanLampiran+dopost+"&actionOnline=uploadBaruDokumen&modePopup=view&id_laporanpasir="+id_laporanpasir+"&idJadualKeduaLesen="+idJadualKeduaLesen+"&idDokumen="+idDokumen;
-	  
-	  document.${formName}.action = "?_portal_module=ekptg.view.php2.online.FrmAPBOnlineSenaraiFailView&hitButton=simpanKemaskiniLampiran&actionOnline=uploadBaruDokumen&modePopup=view";
-	  
-// 	  document.${formName}.method="post";
-// 	  document.${formName}.enctype="multipart/form-data";
-// 	  document.${formName}.encoding="multipart/form-data";
+	 
+	  document.${formName}.idDokumen.value = idDokumen;
+	  document.${formName}.hitButton.value = "simpanKemaskiniLampiran";
+	  document.${formName}.actionOnline.value = "uploadBaruDokumen";
+	  document.${formName}.modePopup.value = "view";
 	  document.${formName}.submit();
 }
 

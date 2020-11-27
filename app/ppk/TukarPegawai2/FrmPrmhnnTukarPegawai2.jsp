@@ -884,40 +884,22 @@
 									<input type="hidden"
 										name="tukarpegawai_multipleFLAG_DAFTAR_TERUS_label"
 										id="tukarpegawai_multipleFLAG_DAFTAR_TERUS_label" value="">
-									<tr id="rowtukarpegawai_multipleCATATAN_PEMOHON">
+									<tr id="rowtukarpegawai_multipleNoFail">
 										<td valign="top" align="center"></td>
 										<td valign="top" align="left"><span
-											id="labeltukarpegawai_multipleCATATAN_PEMOHON">Catatan
-												Pemohon</span></td>
+											id="labeltukarpegawai_multipleNoFail">No.Fail</span></td>
 										<td valign="top" align="center">:</td>
 										<td valign="top" align="left"><textarea rows="4"
 												style="text-transform: uppercase" maxlength="4000"
 												spellcheck="false"
-												name="tukarpegawai_multipleCATATAN_PEMOHON"
-												id="tukarpegawai_multipleCATATAN_PEMOHON"
+												name="tukarpegawai_multipleNoFail"
+												id="tukarpegawai_multipleNoFail"
 												class="fullwidth_input"></textarea>
-											<div id="locationreSetuptukarpegawai_multipleCATATAN_PEMOHON"></div>
-											<div id="dummyDivResetuptukarpegawai_multipleCATATAN_PEMOHON"
+											<div id="locationreSetuptukarpegawai_multipleNoFail"></div>
+											<div id="dummyDivResetuptukarpegawai_multipleNoFail"
 												style="display: none;"></div>
-											<div id="timer_tukarpegawai_multipleCATATAN_PEMOHON"
+											<div id="timer_tukarpegawai_multipleNoFail"
 												align="right"></div></td>
-									</tr>
-									<input type="hidden"
-										name="tukarpegawai_multipleCATATAN_PEMOHON_turutan"
-										id="tukarpegawai_multipleCATATAN_PEMOHON_turutan" value="0.0">
-									<input type="hidden"
-										name="tukarpegawai_multipleCATATAN_PEMOHON_label"
-										id="tukarpegawai_multipleCATATAN_PEMOHON_label"
-										value="Catatan Pemohon">
-									<tr>
-										<td></td>
-										<td valign="top" align="left">Jumlah Perbicaraan Dipilih</td>
-										<td valign="top" align="center">:</td>
-										<td valign="top" align="left"><div
-												id="divtukarpegawai_multipleDisplayJumlahPerbicaraan">0</div>
-											<input type="hidden"
-											id="tukarpegawai_multipleJumlahPerbicaraan"
-											name="tukarpegawai_multipleJumlahPerbicaraan" value="0"></td>
 									</tr>
 								</tbody>
 							</table>
@@ -936,7 +918,7 @@
 										onclick="doDivAjaxCallFekptg_view_ppk_BicaraInteraktif('view_tukarpegawai_multiple','resetTukarPegawaiMultiple','NAMA_TABLE=TBLPPKTUKARPEGAWAI&amp;FIELD_PK=ID_TUKARPEGAWAI&amp;mode=edit&amp;skrinName=tukarpegawai_multiple&amp;div=view_tukarpegawai_multiple&amp;scrolPosition='+getPageLocation());">
 										<input type="button" id="cmdTutuptukarpegawai_multiple"
 										name="cmdTutuptukarpegawai_multiple" value="Tutup"
-										onclick="tutupSkrinPegawaiMultiple('tukarpegawai_multiple');"></td>
+										onclick="tutupSkrinPegawai2('tukarpegawai2');"></td>
 								</tr>
 							</tbody>
 						</table></td>
@@ -951,3 +933,62 @@
 
 	</div>
 </fieldset>
+<script>
+function tutupSkrinPegawai2(skrinName)
+{
+	$jquery('#view_'+skrinName).html('');
+	//alert("1"+skrinName);
+	if(skrinName == "tukarpegawai2")
+	{
+		$jquery("#icon_tukarpegawai_multiple").html(">> ");
+		document.getElementById("flag_tukarpegawai_multiple").value = "close";
+		$jquery("#view_tukarpegawai_multiple").html("");
+		showHideCheckBox('listID_PERBICARAAN');
+	}
+	else if(skrinName == "tukarpegawaiKPP_multiple")
+	{
+		//alert("2");
+		$jquery("#icon_tukarpegawaiKPP_multiple").html(">> ");
+		//alert("3");
+		document.getElementById("flag_tukarpegawaiKPP_multiple").value = "close";
+		//alert("4");
+		$jquery("#view_tukarpegawaiKPP_multiple").html("");
+		showHideCheckBoxKPP('listkID_TUKARPEGAWAI');
+	}
+}
+
+function valSimpanTukarPegawaiMultiple(skrinName)
+{
+	var bool_check = true;
+	
+	if(document.getElementById(skrinName+"ID_NEGERIPEGAWAIBARU").value=="")
+	{
+		alert("Sila pilih negeri pegawai ganti!");
+		document.getElementById(skrinName+"ID_NEGERIPEGAWAIBARU").focus();
+		bool_check = false;
+	}
+	else if(document.getElementById(skrinName+"ID_PEGAWAIBARU").value=="")
+	{
+		alert("Sila pilih pegawai ganti!");
+		document.getElementById(skrinName+"ID_PEGAWAIBARU").focus();
+		bool_check = false;
+	}
+	else if(document.getElementById(skrinName+"JumlahPerbicaraan").value=="0")
+	{
+		alert("Sila pilih perbicaraan!");
+		document.getElementById(skrinName+"JumlahPerbicaraan").focus();
+		bool_check = false;
+	}
+	
+	var bool_check_last = false;
+	if(bool_check == true)
+	{		
+		input_box = confirm("Adakah anda pasti?" );
+		if (input_box == true) {
+			bool_check_last = true;
+		}
+	}
+	return bool_check_last;
+}
+
+</script>

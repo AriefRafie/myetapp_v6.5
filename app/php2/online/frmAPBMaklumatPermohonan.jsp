@@ -48,7 +48,7 @@
 	          	<li onClick="doChangeTab(1);" class="TabbedPanelsTab" tabindex="0">MAKLUMAT PEMBELI PASIR</li>
 	          	<li onClick="doChangeTab(2);" class="TabbedPanelsTab" tabindex="0">SENARAI SEMAK APB</li>
 	          	<li onClick="doChangeTab(4);" class="TabbedPanelsTab" tabindex="0">PENGESAHAN PERMOHONAN</li>
-        	</ul>  		
+        	</ul>
   			<div class="TabbedPanelsContentGroup">
   				<div class="TabbedPanelsContent">
   					#if ($selectedTabUpper == '0')
@@ -62,7 +62,7 @@
   				</div>
   				<div class="TabbedPanelsContent">
   					#if ($selectedTabUpper == '2')
-  					#parse("app/php2/online/frmAPBSenaraiSemakOnline.jsp") 
+  					#parse("app/php2/online/frmAPBSenaraiSemakOnline.jsp")
   					#end
   				</div>
   				<div class="TabbedPanelsContent">
@@ -149,15 +149,13 @@
   								<td>&nbsp;</td>
   								<td valign="top" colspan=2>
   								#if ($idStatus == '')
-  									<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
   									<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar &amp; Emel" onClick="doHantarEmel()"/>
   									<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
   								#elseif($idStatus == '1610207')
-  									<!--<input type="button" name="cmdRenewLesen" id="cmdRenewLesen" value="Pembaharuan Lesen" onClick="javascript:daftarPembaharuan('$!idFail','$!idPermohonan','$!idStatus') "/>--> 
-    								<input type="button" name="cmdBorangA" id="cmdBorangA" value="Borang A" onClick="javascript:daftarPembaharuanBorangA('$!idFail','$!idPermohonan','$!idStatus','$!namaPemohon','$!idJadualKeduaLesen','$!noLesen') "/>   
-    								<input type="button" name="cmdBorangB" id="cmdBorangB" value="Borang B" onClick="javascript:daftarPembaharuanBorangB('$!idFail','$!idPermohonan','$!idStatus','$!namaPemohon','$!idJadualKeduaLesen','$!noLesen') "/>    	 
+  									<!--<input type="button" name="cmdRenewLesen" id="cmdRenewLesen" value="Pembaharuan Lesen" onClick="javascript:daftarPembaharuan('$!idFail','$!idPermohonan','$!idStatus') "/>-->
+    								<input type="button" name="cmdBorangA" id="cmdBorangA" value="Borang A" onClick="javascript:daftarPembaharuanBorangA('$!idFail','$!idPermohonan','$!idStatus','$!namaPemohon','$!idJadualKeduaLesen','$!noLesen') "/>
+    								<input type="button" name="cmdBorangB" id="cmdBorangB" value="Borang B" onClick="javascript:daftarPembaharuanBorangB('$!idFail','$!idPermohonan','$!idStatus','$!namaPemohon','$!idJadualKeduaLesen','$!noLesen') "/>
   								#elseif ($idStatus !='' && $idStatus != '1610207')
-  									<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
     								<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
   								#end
 							</tr>
@@ -174,7 +172,7 @@
 
 ##<div id="calculateTotalPercentPengarah_result"></div>
 ##<fieldset id="tableReport" style="display:;">
-##	<legend><strong>SENARAI LAPORAN</strong></legend>  
+##	<legend><strong>SENARAI LAPORAN</strong></legend>
 ##	<table width="100%" border="0" cellspacing="2" cellpadding="2">
 ##		<tr>
 ##		   	<td ><a href="#" class="style2" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"> Pengesahan Permohonan </a></td>
@@ -221,13 +219,13 @@ function getLainlain(id) {
 	} else {
 		document.getElementById(id).style.display="none";
 	}
-	
+
 	if (document.${formName}.socBangsa.value == "7") {
 		document.getElementById(id2).style.display="";
 	} else {
 		document.getElementById(id).style.display="none";
 	}
-	
+
 	if (document.${formName}.socBangsa.value == "") {
 		document.getElementById(id3).style.display="";
 	} else {
@@ -255,7 +253,7 @@ function validateCurrency(elmnt,content,content2) {
 		elmnt.value = content2;
 		return;
 	}
-	
+
 	if(content != "") {
 		var num = content * 1;
 		elmnt.value = num.toFixed(2);
@@ -278,40 +276,40 @@ function batalPembeliPasir() {
 function simpanPembeliPasir(){
 	if(document.${formName}.txtNamaPembeliPasir.value == ""){
 		alert('Sila masukkan Nama.');
-  		document.${formName}.txtNamaPembeliPasir.focus(); 
-		return; 
+  		document.${formName}.txtNamaPembeliPasir.focus();
+		return;
 	}
 	if(document.${formName}.txtAlamat1PembeliPasir.value == ""){
 		alert('Sila masukkan Alamat.');
-  		document.${formName}.txtAlamat1PembeliPasir.focus(); 
-		return; 
+  		document.${formName}.txtAlamat1PembeliPasir.focus();
+		return;
 	}
 	if(document.${formName}.txtPoskodPembeliPasir.value == ""){
 		alert('Sila masukkan Poskod.');
-  		document.${formName}.txtPoskodPembeliPasir.focus(); 
-		return; 
+  		document.${formName}.txtPoskodPembeliPasir.focus();
+		return;
 	}
 	if(document.${formName}.socNegeriPembeliPasir.value == ""){
 		alert('Sila pilih Negeri.');
-  		document.${formName}.socNegeriPembeliPasir.focus(); 
-		return; 
+  		document.${formName}.socNegeriPembeliPasir.focus();
+		return;
 	}
 	if(document.${formName}.socBandarPembeliPasir.value == ""){
 		alert('Sila pilih Bandar.');
-  		document.${formName}.socBandarPembeliPasir.focus(); 
-		return; 
+  		document.${formName}.socBandarPembeliPasir.focus();
+		return;
 	}
 	if(document.${formName}.txtNoTelPembeliPasir.value == ""){
 		alert('Sila masukkan No. Telefon.');
-  		document.${formName}.txtNoTelPembeliPasir.focus(); 
-		return; 
+  		document.${formName}.txtNoTelPembeliPasir.focus();
+		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "newPembeliPasir";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "newPembeliPasir";
 	document.${formName}.hitButton.value = "doSimpanPembeliPasir";
 	document.${formName}.submit();
@@ -327,40 +325,40 @@ function kemaskiniPembeliPasir(){
 function simpanKemaskiniPembeliPasir(){
 	if(document.${formName}.txtNamaPembeliPasir.value == ""){
 		alert('Sila masukkan Nama.');
-  		document.${formName}.txtNamaPembeliPasir.focus(); 
-		return; 
+  		document.${formName}.txtNamaPembeliPasir.focus();
+		return;
 	}
 	if(document.${formName}.txtAlamat1PembeliPasir.value == ""){
 		alert('Sila masukkan Alamat.');
-  		document.${formName}.txtAlamat1PembeliPasir.focus(); 
-		return; 
+  		document.${formName}.txtAlamat1PembeliPasir.focus();
+		return;
 	}
 	if(document.${formName}.txtPoskodPembeliPasir.value == ""){
 		alert('Sila masukkan Poskod.');
-  		document.${formName}.txtPoskodPembeliPasir.focus(); 
-		return; 
+  		document.${formName}.txtPoskodPembeliPasir.focus();
+		return;
 	}
 	if(document.${formName}.socNegeriPembeliPasir.value == ""){
 		alert('Sila pilih Negeri.');
-  		document.${formName}.socNegeriPembeliPasir.focus(); 
-		return; 
+  		document.${formName}.socNegeriPembeliPasir.focus();
+		return;
 	}
 	if(document.${formName}.socBandarPembeliPasir.value == ""){
 		alert('Sila pilih Bandar.');
-  		document.${formName}.socBandarPembeliPasir.focus(); 
-		return; 
+  		document.${formName}.socBandarPembeliPasir.focus();
+		return;
 	}
 	if(document.${formName}.txtNoTelPembeliPasir.value == ""){
 		alert('Sila masukkan No. Telefon.');
-  		document.${formName}.txtNoTelPembeliPasir.focus(); 
-		return; 
+  		document.${formName}.txtNoTelPembeliPasir.focus();
+		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "updatePembeliPasir";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "viewPembeliPasir";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniPembeliPasir";
  	doAjaxCall${formName}("");
@@ -375,7 +373,7 @@ function hapusPembeliPasir(){
 		document.${formName}.mode.value = "viewPembeliPasir";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doHapusPembeliPasir";
  	doAjaxCall${formName}("");
@@ -405,9 +403,9 @@ function batalPengarah() {
 function checkPercentage(){;
 	if(parseInt(document.${formName}.txtSaham.value) > 100){
 		alert('Sila masukkan nilai peratusan saham dengan betul.');
-		document.${formName}.txtSaham.value = ""; 
-  		document.${formName}.txtSaham.focus(); 
-		return; 
+		document.${formName}.txtSaham.value = "";
+  		document.${formName}.txtSaham.focus();
+		return;
 	}
 }
 
@@ -415,35 +413,35 @@ function simpanPengarah(){
 
 	if(document.${formName}.socWarganegara.value == ""){
 		alert('Sila pilih Warganegara.');
-  		document.${formName}.socWarganegara.focus(); 
-		return; 
+  		document.${formName}.socWarganegara.focus();
+		return;
 	}
 	if(document.${formName}.txtNamaPengarah.value == ""){
 		alert('Sila masukkan Nama.');
-  		document.${formName}.txtNamaPengarah.focus(); 
-		return; 
+  		document.${formName}.txtNamaPengarah.focus();
+		return;
 	}
 	if(document.${formName}.socJenisPengenalan.value == ""){
 		alert('Sila pilih Jenis Pengenalan.');
-  		document.${formName}.socJenisPengenalan.focus(); 
-		return; 
+  		document.${formName}.socJenisPengenalan.focus();
+		return;
 	}
 	if(document.${formName}.txtNoPengenalan.value == ""){
 		alert('Sila masukkan No. Pengenalan.');
-  		document.${formName}.txtNoPengenalan.focus(); 
-		return; 
+  		document.${formName}.txtNoPengenalan.focus();
+		return;
 	}
 	if(document.${formName}.socBangsa.value == ""){
 		alert('Sila pilih Bangsa.');
-  		document.${formName}.socBangsa.focus(); 
-		return; 
+  		document.${formName}.socBangsa.focus();
+		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "newPengarah";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "newPengarah";
 	document.${formName}.hitButton.value = "doSimpanPengarah";
  	doAjaxCall${formName}("");
@@ -463,19 +461,19 @@ function simpanKemaskiniPengarah(){
 
 	if(document.${formName}.socWarganegara.value == ""){
 		alert('Sila pilih Warganegara.');
-  		document.${formName}.socWarganegara.focus(); 
-		return; 
+  		document.${formName}.socWarganegara.focus();
+		return;
 	}
 	if(document.${formName}.txtNamaPengarah.value == ""){
 		alert('Sila masukkan Nama.');
-  		document.${formName}.txtNamaPengarah.focus(); 
-		return; 
+  		document.${formName}.txtNamaPengarah.focus();
+		return;
 	}
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "updatePengarah";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "newPengarah";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniPengarah";
 	doAjaxCall${formName}("");
@@ -492,7 +490,7 @@ function hapusPengarah(){
 		document.${formName}.mode.value = "viewPengarah";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doHapusPengarah";
  	doAjaxCall${formName}("");
@@ -525,76 +523,76 @@ function batalKemaskiniPermohonan() {
  	doAjaxCall${formName}("");
 }
 function simpanKemaskiniPermohonan() {
-	
+
 	/*if(document.${formName}.socJenisTujuan.value == ""){
 		alert('Sila pilih Jenis Tujuan.');
-  		document.${formName}.socJenisTujuan.focus(); 
-		return; 
+  		document.${formName}.socJenisTujuan.focus();
+		return;
 	}*/
 	if(document.${formName}.socKaitanTujuan.value == ""){
 		alert('Sila pilih Kaitan Tujuan.');
-  		document.${formName}.socKaitanTujuan.focus(); 
-		return; 
+  		document.${formName}.socKaitanTujuan.focus();
+		return;
 	}
 	if(document.${formName}.txtTujuanPengambilan.value == ""){
 		alert('Sila masukkan Tujuan.');
-  		document.${formName}.txtTujuanPengambilan.focus(); 
-		return; 
+  		document.${formName}.txtTujuanPengambilan.focus();
+		return;
 	}
 	if(document.${formName}.socTempoh.value == "SILA PILIH"){
 		alert('Sila pilih Tempoh Lesen Dipohon.');
-  		document.${formName}.socTempoh.focus(); 
-		return; 
+  		document.${formName}.socTempoh.focus();
+		return;
 	}
 	if(document.${formName}.txtRingkasanPengalaman.value == ""){
 		alert('Sila masukkan Ringkasan Pengalaman Pemohon.');
-  		document.${formName}.txtRingkasanPengalaman.focus(); 
-		return; 
+  		document.${formName}.txtRingkasanPengalaman.focus();
+		return;
 	}
 	if(document.${formName}.txtUndangUndang.value == ""){
 		alert('Sila masukkan maklumat Undang-Undang Diperbadankan.');
-  		document.${formName}.txtUndangUndang.focus(); 
-		return; 
+  		document.${formName}.txtUndangUndang.focus();
+		return;
 	}
 	if(document.${formName}.txtJenisPerniagaan.value == ""){
 		alert('Sila masukkan Jenis Perniagaan.');
-  		document.${formName}.txtJenisPerniagaan.focus(); 
-		return; 
+  		document.${formName}.txtJenisPerniagaan.focus();
+		return;
 	}
 	if(document.${formName}.txtModalBenar.value == ""){
 		alert('Sila masukkan Modal Dibenarkan.');
-			document.${formName}.txtModalBenar.focus(); 
-			return; 
+			document.${formName}.txtModalBenar.focus();
+			return;
 	}
 	if(document.${formName}.txtModalJelas.value == ""){
 		alert('Sila masukkan Modal Jelas.');
-		document.${formName}.txtModalJelas.focus(); 
-		return; 
+		document.${formName}.txtModalJelas.focus();
+		return;
 	}
 	if(document.${formName}.socFlagLuar.value == ""){
 		alert('Sila masukkan Luar Perairan Negeri.');
-		document.${formName}.socFlagLuar.focus(); 
-		return; 
+		document.${formName}.socFlagLuar.focus();
+		return;
 	}
 	if(document.${formName}.socNegeri.value == ""){
 		alert('Sila masukkan Negeri.');
-		document.${formName}.socNegeri.focus(); 
-		return; 
+		document.${formName}.socNegeri.focus();
+		return;
 	}
 	if(document.${formName}.txtLokasi.value == ""){
 		alert('Sila masukkan Lokasi.');
-		document.${formName}.txtLokasi.focus(); 
-		return; 
+		document.${formName}.txtLokasi.focus();
+		return;
 	}
 	if(document.${formName}.txtLuas.value == ""){
 		alert('Sila masukkan Luas dipohon.');
-		document.${formName}.txtLuas.focus(); 
-		return; 
+		document.${formName}.txtLuas.focus();
+		return;
 	}
 	if(document.${formName}.socLuas.value == ""){
 		alert('Sila masukkan jenis luas.');
-		document.${formName}.socLuas.focus(); 
-		return; 
+		document.${formName}.socLuas.focus();
+		return;
 	}
 	if(document.${formName}.txtJumlahModal.value == ""){
 		alert('Sila masukkan jumlah modal untuk operasi yang terdapat pada masa ini.')
@@ -616,48 +614,48 @@ function simpanKemaskiniPermohonan() {
  	doAjaxCall${formName}("");
 }
 function cekTarikhTerima(elmnt) {
-	//CHECK DATE   
-	var str1  = document.${formName}.tarikhTerima.value;		   
+	//CHECK DATE
+	var str1  = document.${formName}.tarikhTerima.value;
 	var dt1   = parseInt(str1.substring(0,2),10);
 	var mon1  = parseInt(str1.substring(3,5),10)-1;
 	var yr1   = parseInt(str1.substring(6,10),10);
 	var tarikhTerima = new Date(yr1, mon1, dt1);
-	
+
 	var currentDate = new Date();
-	
+
 	if (tarikhTerima > currentDate){
 		alert('Tarikh Terima tidak boleh melebihi dari tarikh hari ini.');
   		elmnt.value ="";
-		document.${formName}.tarikhTerima.focus(); 
+		document.${formName}.tarikhTerima.focus();
 		return;
 	}
 }
 function cekTarikhSurat(elmnt) {
-	//CHECK DATE   
-	var str1  = document.${formName}.tarikhTerima.value;		   
+	//CHECK DATE
+	var str1  = document.${formName}.tarikhTerima.value;
 	var dt1   = parseInt(str1.substring(0,2),10);
 	var mon1  = parseInt(str1.substring(3,5),10)-1;
 	var yr1   = parseInt(str1.substring(6,10),10);
 	var tarikhTerima = new Date(yr1, mon1, dt1);
-	
-	var str2  =  document.${formName}.tarikhSurat.value;		   
+
+	var str2  =  document.${formName}.tarikhSurat.value;
 	var dt2   = parseInt(str2.substring(0,2),10);
 	var mon2  = parseInt(str2.substring(3,5),10)-1;
 	var yr2   = parseInt(str2.substring(6,10),10);
 	var tarikhSurat = new Date(yr2, mon2, dt2);
-	
+
 	var currentDate = new Date();
-	
+
 	if (tarikhSurat > currentDate){
 		alert('Tarikh Surat tidak boleh melebihi dari tarikh hari ini.');
 		elmnt.value ="";
-  		document.${formName}.tarikhSurat.focus(); 
+  		document.${formName}.tarikhSurat.focus();
 		return;
 	}
 	if (tarikhSurat > tarikhTerima){
 		alert('Tarikh Surat tidak boleh melebihi dari Tarikh Terima.');
 		elmnt.value ="";
-  		document.${formName}.tarikhSurat.focus(); 
+  		document.${formName}.tarikhSurat.focus();
 		return;
 	}
 }
@@ -670,18 +668,18 @@ function batalProjek() {
  	doAjaxCall${formName}("");
 }
 function simpanProjek(){
-	
+
 	if(document.${formName}.txtNamaProjek.value == ""){
 		alert('Sila masukkan Nama.');
-  		document.${formName}.txtNamaProjek.focus(); 
-		return; 
+  		document.${formName}.txtNamaProjek.focus();
+		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "newProjek";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "newProjek";
 	document.${formName}.hitButton.value = "doSimpanProjek";
  	doAjaxCall${formName}("");
@@ -694,15 +692,15 @@ function simpanKemaskiniProjek(){
 
 	if(document.${formName}.txtNamaProjek.value == ""){
 		alert('Sila masukkan Nama.');
-  		document.${formName}.txtNamaProjek.focus(); 
-		return; 
+  		document.${formName}.txtNamaProjek.focus();
+		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "updateProjek";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "viewProjek";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniProjek";
  	doAjaxCall${formName}("");
@@ -717,7 +715,7 @@ function hapusProjek(){
 		document.${formName}.mode.value = "viewProjek";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doHapusProjek";
 	doAjaxCall${formName}("");
@@ -736,18 +734,18 @@ function batalPakar() {
  	doAjaxCall${formName}("");
 }
 function simpanPakar(){
-	
+
 	if(document.${formName}.txtNamaPakar.value == ""){
 		alert('Sila masukkan Nama.');
-  		document.${formName}.txtNamaPakar.focus(); 
-		return; 
+  		document.${formName}.txtNamaPakar.focus();
+		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "newPakar";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "newPakar";
 	document.${formName}.hitButton.value = "doSimpanPakar";
  	doAjaxCall${formName}("");
@@ -760,15 +758,15 @@ function simpanKemaskiniPakar(){
 
 	if(document.${formName}.txtNamaPakar.value == ""){
 		alert('Sila masukkan Nama.');
-  		document.${formName}.txtNamaPakar.focus(); 
-		return; 
+  		document.${formName}.txtNamaPakar.focus();
+		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "updatePakar";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "viewPakar";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniPakar";
  	doAjaxCall${formName}("");
@@ -783,7 +781,7 @@ function hapusPakar(){
 		document.${formName}.mode.value = "viewPakar";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doHapusPakar";
  	doAjaxCall${formName}("");
@@ -802,38 +800,38 @@ function batalKoordinat() {
  	doAjaxCall${formName}("");
 }
 function simpanKoordinat(){
-	
+
 	if(document.${formName}.txtLabelTitik.value == ""){
 		alert('Sila masukkan Label Koordinat.');
-  		document.${formName}.txtLabelTitik.focus(); 
-		return; 
+  		document.${formName}.txtLabelTitik.focus();
+		return;
 	}
 	if(document.${formName}.txtDarjahU.value == ""){
 		alert('Sila masukkan Darjah U.');
-  		document.${formName}.txtDarjahU.focus(); 
-		return; 
+  		document.${formName}.txtDarjahU.focus();
+		return;
 	}
 	if(document.${formName}.txtMinitU.value == ""){
 		alert('Sila masukkan Minit U.');
-  		document.${formName}.txtMinitU.focus(); 
-		return; 
+  		document.${formName}.txtMinitU.focus();
+		return;
 	}
 	if(document.${formName}.txtDarjahT.value == ""){
 		alert('Sila masukkan Darjah T.');
-  		document.${formName}.txtDarjahT.focus(); 
-		return; 
+  		document.${formName}.txtDarjahT.focus();
+		return;
 	}
 	if(document.${formName}.txtMinitT.value == ""){
 		alert('Sila masukkan Minit T.');
-  		document.${formName}.txtMinitT.focus(); 
-		return; 
+  		document.${formName}.txtMinitT.focus();
+		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "newKoordinat";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "newKoordinat";
 	document.${formName}.hitButton.value = "doSimpanKoordinat";
  	doAjaxCall${formName}("");
@@ -846,45 +844,45 @@ function simpanKemaskiniKoordinat(){
 
 	if(document.${formName}.txtLabelTitik.value == ""){
 		alert('Sila masukkan Label Koordinat.');
-  		document.${formName}.txtLabelTitik.focus(); 
-		return; 
+  		document.${formName}.txtLabelTitik.focus();
+		return;
 	}
 	if(document.${formName}.txtDarjahU.value == ""){
 		alert('Sila masukkan Darjah U.');
-  		document.${formName}.txtDarjahU.focus(); 
-		return; 
+  		document.${formName}.txtDarjahU.focus();
+		return;
 	}
 	if(document.${formName}.txtMinitU.value == ""){
 		alert('Sila masukkan Minit U.');
-  		document.${formName}.txtMinitU.focus(); 
-		return; 
+  		document.${formName}.txtMinitU.focus();
+		return;
 	}
 	if(document.${formName}.txtSaatU.value == ""){
 		alert('Sila masukkan Saat U.');
-  		document.${formName}.txtSaatU.focus(); 
-		return; 
+  		document.${formName}.txtSaatU.focus();
+		return;
 	}
 	if(document.${formName}.txtDarjahT.value == ""){
 		alert('Sila masukkan Darjah T.');
-  		document.${formName}.txtDarjahT.focus(); 
-		return; 
+  		document.${formName}.txtDarjahT.focus();
+		return;
 	}
 	if(document.${formName}.txtMinitT.value == ""){
 		alert('Sila masukkan Minit T.');
-  		document.${formName}.txtMinitT.focus(); 
-		return; 
+  		document.${formName}.txtMinitT.focus();
+		return;
 	}
 	if(document.${formName}.txtSaatT.value == ""){
 		alert('Sila masukkan Saat T.');
-  		document.${formName}.txtSaatT.focus(); 
-		return; 
+  		document.${formName}.txtSaatT.focus();
+		return;
 	}
-	
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "updateKoordinat";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "viewKoordinat";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniKoordinat";
  	doAjaxCall${formName}("");
@@ -899,7 +897,7 @@ function hapusKoordinat(){
 		document.${formName}.mode.value = "viewKoordinat";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doHapusKoordinat";
 	doAjaxCall${formName}("");
@@ -919,23 +917,23 @@ function textCounter(field, countfield, maxlimit) {
 function doHantarEmel(){
 	if(pengesahan.checked != true){
 		alert('Sila tanda pada checkbox untuk teruskan permohonan. ');
-		return; 
+		return;
 	}
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doHantarEmel";
 	document.${formName}.submit();
 }
 function doHapus(){
-		
+
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "view";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doHapus";
 	document.${formName}.actionOnline.value = "";
@@ -958,21 +956,20 @@ function cetakBorangPermohonan(idPermohonan) {
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
 }
-//YG ASAL
-//function cetakBorangPermohonan(idPermohonan) {
-//	var url = "../servlet/ekptg.report.php2.online.PengesahanOnline?template=APBPengesahanPermohonanOnline&folder=ONLINE&ID_PERMOHONAN="+idPermohonan;
-//	var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
-//	if ((document.window != null) && (!hWnd.opener))
-//	   hWnd.opener = document.window;
-//	if (hWnd.focus != null) hWnd.focus();
-//	hWnd.focus();
-//} 
+function cetakPengesahanPermohonan(idPermohonan) {
+	var url = "../servlet/ekptg.report.php2.online.PengesahanOnline?template=APBPengesahanPermohonanOnline&folder=ONLINE&idPermohonan="+idPermohonan;
+    var hWnd = window.open(url,'printuser','width=900,height=300, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
 function doSimpanKemaskiniSenaraiSemak() {
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		document.${formName}.mode.value = "view";
 		return;
 	}
-	
+
 	document.${formName}.mode.value = "view";
 	document.${formName}.hitButton.value = "doSimpanKemaskiniSenaraiSemak";
 	document.${formName}.submit();
@@ -982,7 +979,7 @@ function doBatalKemaskini() {
 	doAjaxCall${formName}("");
 }
 function daftarPembaharuan(idFail,idPermohonan,idStatus){
-	
+
 	document.${formName}.actionOnline.value = "daftarBaruLesen";
 	document.${formName}.idFail.value = idFail;
 	document.${formName}.idPermohonan.value = idPermohonan;
@@ -998,13 +995,70 @@ function daftarPembaharuanBorangA(idFail,idPermohonan,idStatus,namaPemohon,idJad
 	document.${formName}.submit();
 }
 function daftarPembaharuanBorangB(idFail,idPermohonan,idStatus,namaPemohon,idJadualKeduaLesen,noLesen){
-	
+
 	document.${formName}.actionOnline.value = "daftarBaruBorangB";
 	document.${formName}.idFail.value = idFail;
 	document.${formName}.idPermohonan.value = idPermohonan;
 	document.${formName}.idStatus.value = idStatus;
 	document.${formName}.namaPemohon.value = namaPemohon;
 	document.${formName}.submit();
+}
+function open_info() {
+	var width  = 550;
+	var height = 300;
+	var left   = (screen.width  - width)/2;
+	var top    = (screen.height - height)/2;
+
+	var params = 'width='+width+', height='+height;
+ 	params += ', top='+top+', left='+left;
+	params += ', directories=no';
+	params += ', location=front';
+	params += ', menubar=no';
+	params += ', resizable=no';
+	params += ', scrollbars=no';
+	params += ', status=no';
+	params += ', toolbar=no';
+	new_window = open("","title",params);
+	new_window.document.open();
+
+	new_window.document.write("<html><title>Info Kaitan Tujuan</title>");
+	new_window.document.write("<body bgcolor=\"#FFFFFF\">");
+	new_window.document.write("<table><tr><td><b><u>Jenis-Jenis Lesen</u></b></td></tr></table>");
+
+	new_window.document.write("<table width='100%'><tr><td width='50%' valign='top'>");
+
+	new_window.document.write("<table><tr><td align='justify'><b>1. Borang 2(Lesen Pasir)</b> Pilih 'Menjalankan operasi'.</td> <tr><td align='justify'><b>2. Borang 3(Lesen Menjelajah/Mencari Gali/Menggerek)</b> Pilih 'Mencari gali'. <b>3. Borang 4(Lesen galian selain pasir)</b> Pilih 'Melombong'. </td></tr></table>");
+	new_window.document.write("</body></html>");
+	new_window.document.close();
+}
+function open_info1() {
+	var width  = 550;
+	var height = 300;
+	var left   = (screen.width  - width)/2;
+	var top    = (screen.height - height)/2;
+
+	var params = 'width='+width+', height='+height;
+ 	params += ', top='+top+', left='+left;
+	params += ', directories=no';
+	params += ', location=front';
+	params += ', menubar=no';
+	params += ', resizable=no';
+	params += ', scrollbars=no';
+	params += ', status=no';
+	params += ', toolbar=no';
+	new_window = open("","title",params);
+	new_window.document.open();
+
+	new_window.document.write("<html><title>Info Jenis Perniagaan</title>");
+	new_window.document.write("<body bgcolor=\"#FFFFFF\">");
+
+	new_window.document.write("<table><tr><td><b>Jenis Perniagaan</b></td></tr>");
+	new_window.document.write("<tr><td><font><li>&nbsp;Berhad </li></font>");
+	new_window.document.write("<font><li>&nbsp;Sendirian Berhad</li></font>");
+	new_window.document.write("<font><li>&nbsp;Enterprise</li></font></td></tr></table>");
+
+	new_window.document.write("</body></html>");
+	new_window.document.close();
 }
 </script>
 $!javascriptLampiran
