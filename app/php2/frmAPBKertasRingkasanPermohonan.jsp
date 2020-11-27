@@ -257,13 +257,13 @@
           <td width="1%" valign="top">&nbsp;</td>
           <td width="28%" valign="top">Bil. Mesyuarat</td>
           <td width="1%" valign="top">:</td>
-          <td width="70%" valign="top"><input name="txtBilMesyuarat" type="text" class="$inputTextClass" id="txtBilMesyuarat" value="$!beanMaklumatKertasRingkasPermohonan.bilMesyuarat" size="50" maxlength="50"  $readonly  /></td>
+          <td width="70%" valign="top"><input name="txtBilMesyuarat" type="text" class="disabled" id="txtBilMesyuarat" value="$!beanMaklumatKertasRingkasPermohonan.bilMesyuarat" size="9" maxlength="9"  $readonly  /></td>
         </tr>
         <tr>
           <td>&nbsp;</td>
           <td>Tarikh Mesyuarat</td>
           <td>:</td>
-          <td><input name="txtTarikhMesyuarat" type="text" class="$inputTextClass" id="txtTarikhMesyuarat" value="$!beanMaklumatKertasRingkasPermohonan.tarikhMesyuarat" size="9"  $readonly onblur="check_date(this);" />
+          <td><input name="txtTarikhMesyuarat" type="text" class="disabled" id="txtTarikhMesyuarat" value="$!beanMaklumatKertasRingkasPermohonan.tarikhMesyuarat" size="9"  $readonly onblur="check_date(this);" />
             #if ($mode != 'view')<a href="javascript:displayDatePicker('txtTarikhMesyuarat',false,'dmy');"><img border="0" src="../img/calendar.gif"/>#end</td>
         </tr>
       </table>
