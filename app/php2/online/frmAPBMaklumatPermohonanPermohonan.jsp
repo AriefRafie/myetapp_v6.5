@@ -21,7 +21,24 @@
     	<td colspan="2"><fieldset>
       		<legend><strong>MAKLUMAT PERMOHONAN</strong></legend>
       		<table width="100%" border="0" cellspacing="2" cellpadding="2">
-      		#foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)        
+      		#foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
+		        <tr>
+		          	<td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
+		          	<td width="28%">No. Rujukan Surat Rasmi</td>
+		          	<td width="1%">:</td>
+		          	<td width="70%">
+		            	<input name="txtNoRujukanSurat" type="text" class="$inputTextClass" id="txtNoRujukanSurat"  value="$beanMaklumatPermohonan.noRujSurat" size="43" maxlength="250" $readonly />
+		            </td>
+		        </tr>
+		        <tr>
+		          	<td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
+		          	<td width="28%">Tarikh Surat Rasmi</td>
+		          	<td width="1%">:</td>
+		          	<td width="70%">
+		            	<input type="text" name="tarikhSurat" id="tarikhSurat" value="$beanMaklumatPermohonan.tarikhSurat" onblur="check_date(this);cekTarikhSurat(this)" size="11" $readonly class="$inputTextClass"/>
+			            <a href="javascript:displayDatePicker('tarikhSurat',false,'dmy');">#if ($mode != 'view')<img border="0" src="../img/calendar.gif"/>#end</a>
+			        </td>
+		        </tr>
 		        <tr>
 		        	<td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
 		          	<td width="28%">Jenis Lesen</td>
@@ -45,7 +62,13 @@
 		          	<td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
 		          	<td>Kaitan Tujuan</td>
 		          	<td>:</td>
-		          	<td>$selectTujuanKaitan</td>
+		          	<td>$selectTujuanKaitan
+		          	#if ($mode == 'update')
+			          	<a href="javascript:open_info()" class="help" title="info">
+						<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+						</a>
+					#end
+					</td>
 		        </tr>
 		        <tr>
 		          	<td valign="top">#if ($mode == 'update')<span class="style1">*</span>#end</td>
@@ -165,6 +188,11 @@
 				    <td valign="top">:</td>
 				    <td valign="top">
 				       <textarea name="txtJenisPerniagaan" id="txtJenisPerniagaan" cols="43" rows="5" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();" onKeyUp="textCounter(this.form.txtJenisPerniagaan,this.form.remLen4,$!saizTxtJenisPerniagaan);" onKeyDown="textCounter(this.form.txtJenisPerniagaan,this.form.remLen4,$!saizTxtJenisPerniagaan);" >$beanMaklumatPermohonan.jenisPerniagaan</textarea>
+				    	#if ($mode != 'view')
+				    	<a href="javascript:open_info1()" class="help" title="info">
+						<b><font color="blue"><img src="../img/info.png"  align="center" /></font></b>
+						</a>
+						#end
 				    </td>
 				</tr>
 				#if ($mode == 'update')
@@ -216,7 +244,7 @@
 			              	#set( $row = "row1" )
 			              	#elseif (($listProjek.bil % 2) != 0)
 			              	#set( $row = "row1" )
-			              	#else 
+			              	#else
 			              	#set( $row = "row2" )
 			              	#end
 			              	<tr>
@@ -332,7 +360,7 @@
 			             	<td width="1%">:</td>
 		          		 	<td width="70%">
 		          		 		<input name="txtJumlahModal1" type="text" class="$inputTextClass" id="txtJumlahModal1" value="$beanMaklumatPermohonan.jumlahModal1" size="43" maxlength="80" $readonly onBlur="this.value=this.value.toUpperCase();"/>
-		          		 	</td>
+		          		 	</td>		          		 	
               			</tr>
             		  </table>
             		</td>
@@ -378,7 +406,7 @@
 			                #set( $row = "row1" )
 			                #elseif (($listKoordinat.bil % 2) != 0)
 			                #set( $row = "row1" )
-			                #else 
+			                #else
 			                #set( $row = "row2" )
 			                #end
 			                <tr>
@@ -437,7 +465,7 @@
 			              	#set( $row = "row1" )
 			              	#elseif (($listPakar.bil % 2) != 0)
 			              	#set( $row = "row1" )
-			              	#else 
+			              	#else
 			              	#set( $row = "row2" )
 			              	#end
 			              	<tr>
@@ -495,7 +523,7 @@
 			              	#set( $row = "row1" )
 			              	#elseif (($listPengarah.bil % 2) != 0)
 			              	#set( $row = "row1" )
-			              	#else 
+			              	#else
 			              	#set( $row = "row2" )
 			             	#end
 			             	<tr>
@@ -503,7 +531,7 @@
 				                <td class="$row"><a href="javascript:paparPengarah('$listPengarah.idPengarah')" class="style2">$listPengarah.nama</a></td>
 				                <td class="$row">$listPengarah.noPengenalan</td>
 				                <td class="$row">$listPengarah.warganegara</td>
-				                <td class="$row" align="center">RM $listPengarah.saham</td> 
+				                <td class="$row" align="center">RM $listPengarah.peganganSaham</td>
 			              	</tr>
 			              	#end
 			              	#else
@@ -528,16 +556,16 @@
   	</tr>
   	#end
   	<tr>
-    	<td colspan="2" align="center"> 
+    	<td colspan="2" align="center">
     	#if ($idStatus == '')
       	#if ($mode == 'view')
-	      <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang 1" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
+	      <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
 	      <input type="button" name="cmdKemaskiniPermohonan" id="cmdKemaskiniPermohonan" value="Kemaskini" onclick="kemaskiniPermohonan()"/>
 	      <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onclick="doBacklist()"/>
       	#elseif ($mode == 'update')
 	      <input type="button" name="cmdSimpanKemaskiniPermohonan" id="cmdSimpanKemaskiniPermohonan" value="Simpan" onclick="simpanKemaskiniPermohonan()"/>
 	      <input type="button" name="cmdBatalKemaskiniPermohonan" id="cmdSimpanKemaskiniPermohonan" value="Batal" onclick="batalKemaskiniPermohonan()"/>
-      	#end      
+      	#end
      	#else
 	      <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onClick="doBacklist()"/>
 	  	#end

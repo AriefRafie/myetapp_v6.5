@@ -102,9 +102,7 @@ public class FrmAPBKertasKerjaJawatankuasaView extends AjaxBasedModule{
 		logic.setSenaraiPertindihan(idPermohonan);
 		senaraiPertindihan = logic.getListPertindihan();
 		this.context.put("SenaraiPertindihan", senaraiPertindihan);
-	
-		//
-		
+			
 		// MODE VIEW
 		if("view".equals(mode)){		
       	
