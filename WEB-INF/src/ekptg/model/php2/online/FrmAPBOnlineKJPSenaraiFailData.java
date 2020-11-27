@@ -5,6 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -14,27 +17,27 @@ import lebah.db.SQLRenderer;
 import org.apache.log4j.Logger;
 
 public class FrmAPBOnlineKJPSenaraiFailData {
-	
+
 	protected Db db;
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	SimpleDateFormat dtf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a");
-	
+
 	static Logger myLogger = Logger.getLogger(FrmPLPOnlineKJPSenaraiFailData.class);
 
-	public Vector getSenaraiFail(String findNoFail, String findTajukFail, String findPemohon, String findNoPengenalan, 
-			String findTarikhTerima, String findNoHakmilik, String findNoWarta, String findNoPegangan, String findJenisHakmilik, 
+	public Vector getSenaraiFail(String findNoFail, String findTajukFail, String findPemohon, String findNoPengenalan,
+			String findTarikhTerima, String findNoHakmilik, String findNoWarta, String findNoPegangan, String findJenisHakmilik,
 			String findJenisLot, String findNoLot, String findNegeri, String findDaerah, String findMukim, String userId) {
-		
+
 		String sql = "";
 		Vector listFail = null;
 		Hashtable h;
-		
+
 		try {
 			listFail = new Vector();
-			
+
 			db = new Db();
 			Statement stmt = db.getStatement();
-			
+
 			sql = " SELECT TBLPHPULASANTEKNIKAL.ID_ULASANTEKNIKAL, TBLPFDFAIL.ID_FAIL, TBLPFDFAIL.NO_FAIL, TBLPFDFAIL.TAJUK_FAIL, "
 				+ " TBLPHPULASANTEKNIKAL.FLAG_KJP, TBLPHPULASANTEKNIKAL.TARIKH_HANTAR, TBLPHPULASANTEKNIKAL.TARIKH_JANGKA_TERIMA "
 				+ " FROM TBLPHPULASANTEKNIKAL, TBLPERMOHONAN, TBLPHPPEMOHON, TBLPFDFAIL, TBLPHPPMOHONNJDUALPERTAMA, USERS, USERS_KEMENTERIAN"
@@ -47,7 +50,7 @@ public class FrmAPBOnlineKJPSenaraiFailData {
 				+ " AND TBLPHPULASANTEKNIKAL.ID_MENTERI = USERS_KEMENTERIAN.ID_KEMENTERIAN"
 				+ " AND USERS_KEMENTERIAN.ID_AGENSI = TBLPHPULASANTEKNIKAL.ID_AGENSI"
 				+ " AND USERS.USER_ID = USERS_KEMENTERIAN.USER_ID AND USERS.USER_ID = '" + userId + "'";
-			
+
 			if (findNoFail != null) {
 				if (!findNoFail.trim().equals("")) {
 					sql = sql + " AND UPPER(TBLPFDFAIL.NO_FAIL) LIKE '%' ||'"
@@ -83,11 +86,11 @@ public class FrmAPBOnlineKJPSenaraiFailData {
 									.toUpperCase() + "'";
 				}
 			}
-			
+
 			sql = sql + " ORDER BY TBLPHPULASANTEKNIKAL.TARIKH_HANTAR DESC ";
-				
+
 			ResultSet rs = stmt.executeQuery(sql);
-						
+
 			while (rs.next()) {
 				h = new Hashtable();
 				h.put("ID_ULASANTEKNIKAL", rs.getString("ID_ULASANTEKNIKAL") == null ? "" : rs.getString("ID_ULASANTEKNIKAL"));
@@ -96,19 +99,50 @@ public class FrmAPBOnlineKJPSenaraiFailData {
 				h.put("TAJUK_FAIL", rs.getString("TAJUK_FAIL") == null ? "" : rs.getString("TAJUK_FAIL"));
 				h.put("TARIKH_HANTAR", rs.getDate("TARIKH_HANTAR") == null ? "" : sdf.format(rs.getDate("TARIKH_HANTAR")));
 				h.put("TARIKH_JANGKA_TERIMA", rs.getDate("TARIKH_JANGKA_TERIMA") == null ? "" : sdf.format(rs.getDate("TARIKH_JANGKA_TERIMA")));
-								
+
+
+				String status = "";
+				int bilHari = 0;
+
+				if (rs.getDate("TARIKH_JANGKA_TERIMA") != null && rs.getDate("TARIKH_JANGKA_TERIMA").toString().length() > 0) {
+					Calendar calCurrent = new GregorianCalendar();
+					Date dateCurrent = new Date();
+					calCurrent.setTime(dateCurrent);
+
+					Calendar calTamat = new GregorianCalendar();
+					Date dateTamat = sdf.parse(sdf.format(rs.getDate("TARIKH_JANGKA_TERIMA")));
+					calTamat.setTime(dateTamat);
+
+					bilHari = daysBetween(calTamat.getTime(), calCurrent.getTime());
+
+					if (calCurrent.getTime().before(calTamat.getTime()) && bilHari <= 90) {
+						status = bilHari + " HARI LAGI";
+
+					h.put("status", status);
+					}else{
+						h.put("status", "SUDAH TERTUNGGAK");
+					}
+
+				} else {
+					h.put("status", "");
+				}
+
 				listFail.addElement(h);
 			}
-			
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
 			if (db != null ) db.close();
 		}
-		
+
 		return listFail;
 	}
-	
+
+	private int daysBetween(Date date1, Date date2) {
+		return (int) ((date1.getTime() - date2.getTime()) / (1000 * 60 * 60 * 24));
+	}
+
 	public String simpanUlasan(String idUlasanTeknikal, String txtTarikhSurat,
 			String txtNoRujukanSurat, String txtUlasan, String txtKeputusan,
 			String txtNamaPengulas, String txtNoTelPengulas, String userId) {
@@ -140,7 +174,7 @@ public class FrmAPBOnlineKJPSenaraiFailData {
 
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
-			
+
 			sql = r.getSQLUpdate("TBLPHPULASANTEKNIKAL");
 			stmt.executeUpdate(sql);
 
@@ -157,10 +191,10 @@ public class FrmAPBOnlineKJPSenaraiFailData {
 			if (db != null)
 				db.close();
 		}
-		
+
 		return flagStatus;
 	}
-	
+
 	public String hantarUlasan(String idUlasanTeknikal, String txtTarikhSurat,
 			String txtNoRujukanSurat, String txtUlasan, String txtKeputusan,
 			String txtNamaPengulas, String txtNoTelPengulas, String userId) {
@@ -178,7 +212,7 @@ public class FrmAPBOnlineKJPSenaraiFailData {
 			SQLRenderer r = new SQLRenderer();
 
 			// TBLPHPULASANTEKNIKAL
-			r.update("ID_ULASANTEKNIKAL", idUlasanTeknikal);			
+			r.update("ID_ULASANTEKNIKAL", idUlasanTeknikal);
 			if (!"".equals(txtTarikhSurat)) {
 				r.add("TARIKH_SURAT",
 						r.unquote("to_date('" + txtTarikhSurat
@@ -194,7 +228,7 @@ public class FrmAPBOnlineKJPSenaraiFailData {
 
 			r.add("ID_KEMASKINI", userId);
 			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
-			
+
 			sql = r.getSQLUpdate("TBLPHPULASANTEKNIKAL");
 			stmt.executeUpdate(sql);
 
@@ -211,10 +245,10 @@ public class FrmAPBOnlineKJPSenaraiFailData {
 			if (db != null)
 				db.close();
 		}
-		
+
 		return flagStatus;
 	}
-	
+
 	public void hapusDokumen(String idUlasanTeknikal) throws Exception {
 		Db db = null;
 		Connection conn = null;
@@ -273,32 +307,32 @@ public class FrmAPBOnlineKJPSenaraiFailData {
 				db.close();
 		}
 	}
-	
+
 	public Hashtable getMaklumatLampiran(String idUlasanTeknikal, String idPermohonan) {
 		String sql = "";
 		Hashtable lampiran = null;
-		
-		try {			
+
+		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
-			
+
 			sql = "SELECT ID_DOKUMEN FROM TBLPHPDOKUMEN WHERE ID_PERMOHONAN = '" + idPermohonan + "' AND ID_ULASANTEKNIKAL = '" + idUlasanTeknikal + "'";
 			ResultSet rs = stmt.executeQuery(sql);
-			
+
 			if (rs.next()) {
 				lampiran = new Hashtable();
 				lampiran.put("ID_DOKUMEN", rs.getString("ID_DOKUMEN") == null ? "" : rs.getString("ID_DOKUMEN"));
 			}
-			
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
 			if (db != null ) db.close();
 		}
-		
+
 		return lampiran;
 	}
-	
+
 	public String getFlagKJPByidUlasanTeknikal(String idUlasanTeknikal)
 			throws Exception {
 		Db db = null;
