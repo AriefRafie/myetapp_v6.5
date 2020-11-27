@@ -72,9 +72,9 @@ public class FrmTukarPegawaiBI2 extends AjaxBasedModule {
 		if (submit.equals("tutup")) {
 			vm = "app/ppk/dashboard.jsp";
 		}
-		if (getDetailUsers = ) {
+		//if (getDetailUsers = ) {
 			
-		}
+		//}
 		vm = "app/ppk/TukarPegawai2/historyTukarPegawai2.jsp";
 		vm = "app/ppk/TukarPegawai2/listTukarPegawai2.jsp";
 		
