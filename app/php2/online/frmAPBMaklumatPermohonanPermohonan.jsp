@@ -118,7 +118,7 @@
 			        </td>
 			    </tr>
 			    #if ($mode == 'update')
-		        <tr>
+		        <tr>          
 		          	<td valign="top">&nbsp;</td>
 		          	<td valign="top">&nbsp;</td>
 		          	<td valign="top">&nbsp;</td>
@@ -503,7 +503,7 @@
 				                <td class="$row"><a href="javascript:paparPengarah('$listPengarah.idPengarah')" class="style2">$listPengarah.nama</a></td>
 				                <td class="$row">$listPengarah.noPengenalan</td>
 				                <td class="$row">$listPengarah.warganegara</td>
-				                <td class="$row" align="center">RM $listPengarah.saham</td> 
+				                <td class="$row" align="center">RM $listPengarah.peganganSaham</td> 
 			              	</tr>
 			              	#end
 			              	#else
@@ -531,7 +531,7 @@
     	<td colspan="2" align="center"> 
     	#if ($idStatus == '')
       	#if ($mode == 'view')
-	      <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang 1" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
+	      <input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
 	      <input type="button" name="cmdKemaskiniPermohonan" id="cmdKemaskiniPermohonan" value="Kemaskini" onclick="kemaskiniPermohonan()"/>
 	      <input type="button" name="cmdBackList" id="cmdBackList" value="Kembali" onclick="doBacklist()"/>
       	#elseif ($mode == 'update')

@@ -149,7 +149,6 @@
   								<td>&nbsp;</td>
   								<td valign="top" colspan=2>
   								#if ($idStatus == '')
-  									<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
   									<input type="button" name="cmdHantar" id="cmdHantar" value="Hantar &amp; Emel" onClick="doHantarEmel()"/>
   									<input type="button" name="cmdHapus" id="cmdHapus" value="Hapus" onClick="doHapus()"/>
   								#elseif($idStatus == '1610207')
@@ -157,7 +156,6 @@
     								<input type="button" name="cmdBorangA" id="cmdBorangA" value="Borang A" onClick="javascript:daftarPembaharuanBorangA('$!idFail','$!idPermohonan','$!idStatus','$!namaPemohon','$!idJadualKeduaLesen','$!noLesen') "/>   
     								<input type="button" name="cmdBorangB" id="cmdBorangB" value="Borang B" onClick="javascript:daftarPembaharuanBorangB('$!idFail','$!idPermohonan','$!idStatus','$!namaPemohon','$!idJadualKeduaLesen','$!noLesen') "/>    	 
   								#elseif ($idStatus !='' && $idStatus != '1610207')
-  									<input type="button" name="cdmCetak" id="cdmCetakBorang" value="Cetak Borang Permohonan" onClick="javascript:cetakBorangPermohonan('$idPermohonan')"/>
     								<input type="button" name="cdmCetak" id="cdmCetakPengesahan" value="Cetak Pengesahan Permohonan" onClick="javascript:cetakPengesahanPermohonan('$idPermohonan')"/>
   								#end
 							</tr>

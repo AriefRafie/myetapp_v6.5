@@ -299,6 +299,7 @@
 	          </td>
 	        </tr>
 	        #end
+	        <!--  -->
 	        <tr>
 		        <td valign="top">#if ($mode != 'view')<span class="style1">*</span>#end</td>
 		        <td valign="top">Jenis Perniagaan</td>
