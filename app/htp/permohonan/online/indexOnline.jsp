@@ -456,6 +456,20 @@
 		 
 		}
 	}
+	function papar_Lampiran(id_dokumen) {
+	    var url = "../servlet/ekptg.view.online.htp.permohonan.DisplayBlob?id="+id_dokumen;
+	    var hWnd = window.open(url,'displayfile','width=800,height=600, resizable=yes,scrollbars=yes');
+	    if ((document.window != null) && (!hWnd.opener))
+	    hWnd.opener = document.window;
+	    if (hWnd.focus != null) hWnd.focus();
+	}
+	function hapusDokumenPembayaran(id_dokumen) {
+		
+		document.${formName}.ScreenLocation.value = "middle";
+		if ( !window.confirm("Adakah Anda Pasti?")) return;
+		document.${formName}.action = "?_portal_module=ekptg.view.online.htp.permohonan.FrmTerimaPohon1Online&command=hapusDokumenPembayaran&id_dokumen="+id_dokumen;
+		document.${formName}.submit();
+	}
 	
 	/* function ini adalah apabila tekan button TAMBAH pada tab Maklumat Asas Tanah*/
 	function TambahAsasTanah(tabId,tabmode,command,mode){
