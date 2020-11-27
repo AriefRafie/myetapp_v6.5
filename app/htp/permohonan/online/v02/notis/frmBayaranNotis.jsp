@@ -37,7 +37,7 @@
 						</td>
 						<td width="1%">:</td>
 						<td width="58%">
-						<input name="txtTarikhNotis5A" type="text" id="txtTarikhNotis5A" onBlur=doCalculateTarikh(); value="$!dat.tarikhnotis5a" size="11" maxlength="10" /> 
+						<input name="txtTarikhNotis5A" type="text" id="txtTarikhNotis5A" onBlur=doCalculateTarikh(); value="$!tarikhnotis5a" size="11" maxlength="10" /> 
 				      <a href="javascript:displayDatePicker('txtTarikhNotis5A',false,'dmy');"><img border="0" src="../img/calendar.gif"/>
 						</td>
 					</tr>
@@ -53,7 +53,7 @@
 						</td>
 						<td width="1%">:</td>
 						<td width="58%">
-						<input name="txtTarikhTerimaNotis5A" type="text" id="txtTarikhTerimaNotis5A" value="$!dat.tarikhterima" size="11" maxlength="10" />
+						<input name="txtTarikhTerimaNotis5A" type="text" id="txtTarikhTerimaNotis5A" value="$!tarikhterima" size="11" maxlength="10" />
 				      <a href="javascript:displayDatePicker('txtTarikhTerimaNotis5A',false,'dmy');"> <img src="../img/calendar.gif" alt="" border="0"/></a>
 						</td>
 					</tr>		
@@ -77,7 +77,7 @@
 						</td>
 						<td width="1%">:</td>
 						<td width="58%">
-						<input name="txtTarikhLuputPertama" type="text" id="txtTarikhLuputPertama" value="$!dat.tarikhluput1" size="11" maxlength="10" />
+						<input name="txtTarikhLuputPertama" type="text" id="txtTarikhLuputPertama" value="$!tarikhluput1" size="11" maxlength="10" />
 				      <a href="javascript:displayDatePicker('txtTarikhLuputPertama',false,'dmy');"><img src="../img/calendar.gif" alt="" border="0"/></a>
 						</td>
 					</tr>	
@@ -91,7 +91,7 @@
 						</td>
 						<td width="1%">:</td>
 						<td width="58%">
-						<input name="txtTarikhLuputNotisKedua" type="text" id="txtTarikhLuputNotisKedua" value="$!dat.tarikhluput2" size="11" maxlength="10" />
+						<input name="txtTarikhLuputNotisKedua" type="text" id="txtTarikhLuputNotisKedua" value="$!tarikhluput2" size="11" maxlength="10" />
 				      <a href="javascript:displayDatePicker('txtTarikhLuputNotisKedua',false,'dmy');"><img src="../img/calendar.gif" alt="" border="0"/></a>
 						</td>
 					</tr>		
@@ -105,7 +105,7 @@
 						</td>
 						<td width="1%">:</td>
 						<td width="58%">
-						<input name="txtTarikhLuputNotisKetiga" type="text" id="txtTarikhLuputNotisKetiga" value="$!dat.tarikhluput3" size="11" maxlength="10"/>
+						<input name="txtTarikhLuputNotisKetiga" type="text" id="txtTarikhLuputNotisKetiga" value="$!tarikhluput3" size="11" maxlength="10"/>
        <a href="javascript:displayDatePicker('txtTarikhLuputNotisKetiga',false,'dmy');">   
        <img src="../img/calendar.gif" alt="" border="0"/></a>
 						</td>
@@ -128,7 +128,7 @@
 						</td>
 						<td width="1%">:</td>
 						<td width="58%">
-							<input type="text" $!inputStyleNum name="txtCukaiTahunPertama" onblur="validateCurrency(this,this.value,'');calculate()" value="$!dat.kadarcukai"/>
+							<input type="text" $!inputStyleNum name="txtCukaiTahunPertama" onblur="validateCurrency(this,this.value,'');calculate()" value="$!kadarcukai"/>
 							
 						</td>
 					</tr>
@@ -143,7 +143,7 @@
 						</td>
 						<td width="1%">:</td>
 						<td width="58%">
-							<input name="txtPremium" $!inputStyleNum type="text" id="txtPremium" onblur="validateCurrency(this,this.value,'');calculate()" value="$!dat.bayarpremium"/>							
+							<input name="txtPremium" $!inputStyleNum type="text" id="txtPremium" onblur="validateCurrency(this,this.value,'');calculate()" value="$!bayarpremium"/>							
 						</td>
 					</tr>					
 
@@ -158,7 +158,7 @@
 						</td>
 						<td width="1%">:</td>
 						<td width="58%">
-							<input name="txtBayarUkur" $!inputStyleNum type="text" id="txtBayarUkur" onblur="validateCurrency(this,this.value,'');calculate()" value="$!dat.bayarukur"/>							
+							<input name="txtBayarUkur" $!inputStyleNum type="text" id="txtBayarUkur" onblur="validateCurrency(this,this.value,'');calculate()" value="$!bayarukur"/>							
 						</td>
 					</tr>	
 	         		<tr>
@@ -172,7 +172,7 @@
 						</td>
 						<td width="1%">:</td>
 						<td width="58%">
-							<input name="txtTandaSempadan" $!inputStyleNum type="text" id="txtTandaSempadan" onblur="validateCurrency(this,this.value,'');calculate()" value="$!dat.bayarsempadan"/>							
+							<input name="txtTandaSempadan" $!inputStyleNum type="text" id="txtTandaSempadan" onblur="validateCurrency(this,this.value,'');calculate()" value="$!bayarsempadan"/>							
 						</td>
 					</tr>	
 	         		<tr>
@@ -186,7 +186,7 @@
 						</td>
 						<td width="1%">:</td>
 						<td width="58%">
-							<input name="txtPendaftaranHakmilik" $!inputStyleNum type="text" id="txtPendaftaranHakmilik" onblur="validateCurrency(this,this.value,'');calculate()" value="$!dat.bayarhakmilik"/>							
+							<input name="txtPendaftaranHakmilik" $!inputStyleNum type="text" id="txtPendaftaranHakmilik" onblur="validateCurrency(this,this.value,'');calculate()" value="$!bayarhakmilik"/>							
 						</td>
 					</tr>	
 					
@@ -201,7 +201,7 @@
 						</td>
 						<td width="1%">:</td>
 						<td width="58%">
-							<input name="txtBayaranNotisF" $!inputStyleNum type="text" id="txtBayaranNotisF" onblur="validateCurrency(this,this.value,'');calculate()" value="$!dat.bayarnotisf"/>
+							<input name="txtBayaranNotisF" $!inputStyleNum type="text" id="txtBayaranNotisF" onblur="validateCurrency(this,this.value,'');calculate()" value="$!bayarnotisf"/>
 						</td>
 					</tr>	
 	         		<tr>
@@ -215,7 +215,7 @@
 						</td>
 						<td width="1%">:</td>
 						<td width="58%">
-							<input name="txtBayaranFail" $!inputStyleNum type="text" id="txtBayaranFail" onblur="validateCurrency(this,this.value,'');calculate()" value="$!dat.bayarfail"/>							
+							<input name="txtBayaranFail" $!inputStyleNum type="text" id="txtBayaranFail" onblur="validateCurrency(this,this.value,'');calculate()" value="$!bayarfail"/>							
 						</td>
 					</tr>							         		
 	         		<tr>
@@ -229,7 +229,7 @@
 						</td>
 						<td width="1%">:</td>
 						<td width="58%">
-							<input name="txtBayaranPerenggan" $!inputStyleNum type="text" id="txtBayaranPerenggan" onblur="validateCurrency(this,this.value,'');calculate()" value="$!dat.bayarperenggan"/>							
+							<input name="txtBayaranPerenggan" $!inputStyleNum type="text" id="txtBayaranPerenggan" onblur="validateCurrency(this,this.value,'');calculate()" value="$!bayarperenggan"/>							
 						</td>
 					</tr>	
 					<tr>
@@ -243,7 +243,7 @@
 						</td>
 						<td width="1%">:</td>
 						<td width="58%">
-							<input name="txtBayaranLain" $!inputStyleNum type="text" id="txtBayaranLain" onblur="validateCurrency(this,this.value,'');calculate()" value="$!dat.bayaranlain" />							
+							<input name="txtBayaranLain" $!inputStyleNum type="text" id="txtBayaranLain" onblur="validateCurrency(this,this.value,'');calculate()" value="$!bayaranlain" />							
 						</td>
 					</tr>
 	         		<tr>
@@ -257,7 +257,7 @@
 						</td>
 						<td width="1%">:</td>
 						<td width="58%">
-							<input name="txtBayaranLain2" $!inputStyleNum type="text" id="txtBayaranLain2" onblur="validateCurrency(this,this.value,'');calculate()" value="$!dat.bayaranlain2" />							
+							<input name="txtBayaranLain2" $!inputStyleNum type="text" id="txtBayaranLain2" onblur="validateCurrency(this,this.value,'');calculate()" value="$!bayaranlain2" />							
 						</td>
 					</tr>
 	         		<tr>
@@ -271,7 +271,7 @@
 						</td>
 						<td width="1%">:</td>
 						<td width="58%">
-							<input name="txtBayaranLain3" $!inputStyleNum type="text" id="txtBayaranLain3" onblur="validateCurrency(this,this.value,'');calculate()" value="$!dat.bayaranlain3" />							
+							<input name="txtBayaranLain3" $!inputStyleNum type="text" id="txtBayaranLain3" onblur="validateCurrency(this,this.value,'');calculate()" value="$!bayaranlain3" />							
 						</td>
 					</tr>
 					
@@ -292,7 +292,7 @@
 						</td>
 						<td valign="top" width="1%">:</td>
 						<td width="58%">
-						<textarea name="txtPerihalRayuan" id="txtPerihalRayuan" cols="30" rows="5" onkeyup="this.value=this.value.toUpperCase();">$!dat.perihalrayuan</textarea>
+						<textarea name="txtPerihalRayuan" id="txtPerihalRayuan" cols="30" rows="5" onkeyup="this.value=this.value.toUpperCase();">$!perihalrayuan</textarea>
 						</td>
 					</tr>						
 					<tr>
@@ -339,7 +339,7 @@
 						</td>
 						<td width="1%">:</td>
 						<td width="58%">
-							<input name="txtRayuanPremium" $!inputStyleNum type="text" id="txtRayuanPremium"  onblur="validateCurrency(this,this.value,'');"  value="$!dat.rayuanpremium"/>							
+							<input name="txtRayuanPremium" $!inputStyleNum type="text" id="txtRayuanPremium"  onblur="validateCurrency(this,this.value,'');"  value="$!rayuanpremium"/>							
 						</td>
 					</tr>					
 				</table>			          
@@ -364,7 +364,7 @@
 						</td>
 						<td width="1%">:</td>
 						<td width="58%">
-							<input name="txtJumBayaran" $!inputStyleNum type="text" id="txtJumBayaran" onblur="validateCurrency(this,this.value,'');" value="$!dat.jumBayaran" $inputstyleread/>							
+							<input name="txtJumBayaran" $!inputStyleNum type="text" id="txtJumBayaran" onblur="validateCurrency(this,this.value,'');" value="$!jumBayaran" $inputstyleread/>							
 						</td>
 					</tr>					
 				</table>			          
@@ -394,6 +394,7 @@
 		<div align="center">
 			#if ($tabmode == '1')
 				<input class="stylobutton100" type="button" value="Simpan Maklumat Notis" style="width:auto !important" onclick="SimpanNotis()"/>
+				<input type="reset" class="stylobutton100" name="cmdReset" value="Kosongkan" onclick = "javascript:kosongkanPendaftaran()">
 			#else
 				<input class="stylobutton100" type="button" value="Simpan Maklumat Notis" style="width:auto !important" onclick="KemaskiniNotis()"/>
 			#end

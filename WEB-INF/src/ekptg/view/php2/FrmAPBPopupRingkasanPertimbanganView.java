@@ -5,25 +5,21 @@ package ekptg.view.php2;
 
 
 import java.util.Vector;
-
 import javax.servlet.http.HttpSession;
-
 import lebah.portal.AjaxBasedModule;
-import ekptg.helpers.HTML;
 import ekptg.helpers.Paging;
-import ekptg.model.php2.FrmAPBPopupSenaraiPermohonanData;
+import ekptg.model.php2.FrmPYWPopupRingkasanPertimbanganData;
 import ekptg.model.php2.utiliti.PHPUtilHTML;
 
 /**
  * 
  *
  */
-public class FrmAPBPopupSenaraiPermohonanView extends AjaxBasedModule {
+public class FrmAPBPopupRingkasanPertimbanganView extends AjaxBasedModule {
 
 	private static final long serialVersionUID = 1L;
 	
-	FrmAPBPopupSenaraiPermohonanData logic = new FrmAPBPopupSenaraiPermohonanData();
-	//FrmAPBSenaraiMesyuaratView b= new FrmAPBSenaraiMesyuaratView();
+	FrmPYWPopupRingkasanPertimbanganData logic = new FrmPYWPopupRingkasanPertimbanganData();
 	
 	String idNegeriUser = null;
 
@@ -36,62 +32,45 @@ public class FrmAPBPopupSenaraiPermohonanView extends AjaxBasedModule {
 	    String action = getParam("action"); //* ACTION NI HANYA UTK SETUP PAGING SHJ
 	    String vm = "";
 	    String actionPopup = getParam("actionPopup");
-	    //String submit = getParam("command");
+	    String submit = getParam("command");
 	    String hitButton = getParam("hitButton");
-	    //String idFail = getParam("idFail");
+	    String idPermohonan = getParam("idPermohonan");
+	    String catatanRingkasan = getParam("catatanRingkasan");
 	    String step = getParam("step");
 	    String idMesyuarat = getParam("idMesyuarat");
-	    
+
 	    idNegeriUser = (String)session.getAttribute("_ekptg_user_negeri");		
 	    
 	    //VECTOR
         Vector senaraiFail = null;
-	    		
+        Vector maklumatRingkasanPertimbangan = null;
+        Vector maklumatRingkasanPemohon = null;
+        
 		//SEND TO MODEL
-		if ("doSimpanPilihan".equals(hitButton)) {
-			
-			String idPermohonan="";
-			String idJenisPermohonan="";
-			String[] cbPilihan = request.getParameterValues("checkPermohonan");
-			for(int i = 0; i < cbPilihan.length; i++){
-				 idPermohonan=cbPilihan[i].toString();
-				 idJenisPermohonan = logic.getJenisPermohonan(idPermohonan);
-				 if ("1".equals(idJenisPermohonan)){
-					 logic.simpanPilihanBaru(idMesyuarat, idPermohonan, session);
-				 }else if ("2".equals(idJenisPermohonan)){
-					logic.simpanPilihanLanjutan(idMesyuarat, idPermohonan, session);
-				 }else {
-					 logic.simpanPilihanBaru(idMesyuarat, idPermohonan, session);
-				 }
-			}
-			this.context.put("close_window", "yes");
-		}	    
+		if ("doSimpanRingkasanPertimbangan".equals(hitButton)) {
+			logic.simpanCatatanRingkasanPertimbangan(idPermohonan, catatanRingkasan, session);
+		}	
+		
 		if ("tutup".equals(actionPopup)){
-			
 	    	
 	    } else {
-	    	String carianNoFail = getParam("txtCarianNoFail");
-	    	// DROP DOWN CARIAN
-	    	String idJenisPermohonan = getParam("socJenisPermohonan");
-	    	if (idJenisPermohonan == null || idJenisPermohonan.trim().length() == 0) {
-	    		idJenisPermohonan = "99999";
-	    	}
-	    	String carianNamaPemohon = getParam("txtCarianNamaPemohon");
-
-	    	logic.carianFail(carianNoFail,idJenisPermohonan,carianNamaPemohon);
-	
 	    	
-	    	//GO TO LIST TANAH        	
-        	vm = "app/php2/frmAPBPopupSenaraiPermohonan.jsp";  
+        	//MAKLUMAT PEMOHON
+	    	maklumatRingkasanPemohon = new Vector();
+	    	logic.setMaklumatRingkasanPemohon(idPermohonan);
+	    	maklumatRingkasanPemohon = logic.getMaklumatRingkasanPemohon();
+	    	this.context.put("MaklumatRingkasanPemohon", maklumatRingkasanPemohon);
+	    	
+	    	//MAKLUMAT ULASAN JABATAN TEKNIKAL
+	    	maklumatRingkasanPertimbangan= new Vector();
+        	logic.setAPBMaklumatKertasRingkasan(idPermohonan);
+        	maklumatRingkasanPertimbangan = logic.getMaklumatRingkasanPertimbangan();
+			this.context.put("MaklumatRingkasanPertimbangan", maklumatRingkasanPertimbangan);   
+			        	
+        	vm = "app/php2/frmAPBPopupRingkasanPertimbangan.jsp";  
         	
-        	senaraiFail = new Vector();
-        	//logic.setSenaraiFailMesyuarat(idFail);
-        	senaraiFail = logic.getSenaraiFailMesyuarat();
-			this.context.put("SenaraiFail", senaraiFail); 
-			
-			this.context.put("selectJenisPermohonan", PHPUtilHTML.SelectJenisPermohonan("socJenisPermohonan", Long.parseLong(idJenisPermohonan), "", ""));
-        	setupPage(session,action,senaraiFail);
 	    }
+		
 	    this.context.put("actionPopup", actionPopup);
 	    this.context.put("step", step);
 		return vm;

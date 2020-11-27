@@ -108,6 +108,8 @@ public class FrmAPBSenaraiMesyuaratView extends AjaxBasedModule {
 		Vector beanMaklumatPengerusi = null;
 		Vector senaraiImejan = null;
 		Vector beanMaklumatImejan = null;
+		Vector beanMaklumatLampiran = null;
+		this.context.put("BeanMaklumatLampiran",beanMaklumatLampiran);
 		
 		// GET DROPDOWN PARAM
 		String idKategoriPemohon = getParam("socKategoriPemohon");
@@ -195,7 +197,9 @@ public class FrmAPBSenaraiMesyuaratView extends AjaxBasedModule {
 			if ("hapusKehadiran".equals(hitButton)) {
 				logic.hapusKehadiranMesyuarat(idKehadiran, session);
 			}
-			
+			if ("simpanLampiran".equals(hitButton)) {
+				uploadFiles(idMesyuarat, session);
+			}
 			if ("simpanDokumen".equals(hitButton)) {
 				uploadFiles(idMesyuarat, idPermohonan, session);
 			}
@@ -319,8 +323,7 @@ public class FrmAPBSenaraiMesyuaratView extends AjaxBasedModule {
 						beanMaklumatImejan = new Vector();
 						logic.setMaklumatImej(idDokumen);
 						beanMaklumatImejan = logic.getBeanMaklumatImejan();
-						this.context.put("BeanMaklumatImejan",
-								beanMaklumatImejan);
+						this.context.put("BeanMaklumatImejan", beanMaklumatImejan);
 
 					}
 				}
@@ -358,6 +361,11 @@ public class FrmAPBSenaraiMesyuaratView extends AjaxBasedModule {
 					this.context.put("selectMinitDari", HTML.SelectMinit("socMinitDari", Long.parseLong(idMinitDari), "disabled", " class=\"disabled\""));
 					this.context.put("selectJamHingga", HTML.SelectJam("socJamHingga", Long.parseLong(idJamHingga), "disabled", " class=\"disabled\""));
 					this.context.put("selectMinitHingga", HTML.SelectMinit("socMinitHingga", Long.parseLong(idMinitHingga), "disabled", " class=\"disabled\""));
+					
+					// LAMPIRAN MAKLUMAT MESYUARAT
+					beanMaklumatLampiran = new Vector();
+					beanMaklumatLampiran = logic.getBeanMaklumatLampiran(idMesyuarat);
+					this.context.put("BeanMaklumatLampiran",beanMaklumatLampiran);
 
 				} else {
 
@@ -559,7 +567,26 @@ public class FrmAPBSenaraiMesyuaratView extends AjaxBasedModule {
 					+ ex.getMessage());
 		}
 	}
+	
 	// UPLOAD FILE
+	private void uploadFiles(String idMesyuarat,
+			HttpSession session) throws Exception {
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+		if (isMultipart != false) {
+			List items = upload.parseRequest(request);
+			Iterator itr = items.iterator();
+			while (itr.hasNext()) {
+				FileItem item = (FileItem) itr.next();
+				if ((!(item.isFormField())) && (item.getName() != null)
+						&& (!("".equals(item.getName())))) {
+					saveData(item, idMesyuarat, session);
+				}
+			}
+		}
+	}
+	
 	private void uploadFiles(String idMesyuarat, String idPermohonan,
 			HttpSession session) throws Exception {
 		DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -577,6 +604,7 @@ public class FrmAPBSenaraiMesyuaratView extends AjaxBasedModule {
 			}
 		}
 	}
+	
 	private void saveData(FileItem item, String idMesyuarat,
 			String idPermohonan, HttpSession session) throws Exception {
 
@@ -603,6 +631,44 @@ public class FrmAPBSenaraiMesyuaratView extends AjaxBasedModule {
 			ps.setString(8, idMesyuarat);
 			ps.setString(9, "MM");// MINIT MESYUARAT
 			ps.setString(10, idPermohonan);
+			ps.executeUpdate();
+
+			con.commit();
+			this.context.put("idDokumen", idDokumen);
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
+
+		this.context.put("completed", true);
+	}
+	
+	private void saveData(FileItem item, String idMesyuarat,
+			HttpSession session) throws Exception {
+
+		Db db = null;
+		String userId = (String) session.getAttribute("_ekptg_user_id");
+		try {
+			db = new Db();
+
+			// TBLPHPDOKUMEN
+			long idDokumen = DB.getNextID("TBLPHPDOKUMEN_SEQ");
+			Connection con = db.getConnection();
+			con.setAutoCommit(false);
+			PreparedStatement ps = con
+					.prepareStatement("INSERT INTO TBLPHPDOKUMEN "
+							+ "(ID_DOKUMEN,NAMA_DOKUMEN,CATATAN,ID_MASUK,TARIKH_MASUK,CONTENT,JENIS_MIME,NAMA_FAIL,ID_MESYUARAT,FLAG_DOKUMEN) "
+							+ "VALUES(?,?,?,?,SYSDATE,?,?,?,?,?)");
+			ps.setLong(1, idDokumen);
+			ps.setString(2, getParam("namaImej"));
+			ps.setString(3, getParam("catatanImej"));
+			ps.setString(4, userId);
+			ps.setBinaryStream(5, item.getInputStream(), (int) item.getSize());
+			ps.setString(6, item.getContentType());
+			ps.setString(7, item.getName());
+			ps.setString(8, idMesyuarat);
+			ps.setString(9, "L");// LAMPIRAN MESYUARAT
 			ps.executeUpdate();
 
 			con.commit();

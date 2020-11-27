@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
+import lebah.util.Util;
 import ekptg.helpers.AuditTrail;
 import ekptg.helpers.DB;
 import ekptg.helpers.Utils;
@@ -21,6 +22,7 @@ public class FrmPYWPopupRingkasanPertimbanganData {
 	private Vector senaraiFailMesyuarat = null;
 	private Vector senaraiFailPerlanjutanMesyuarat = null;
 	private Vector beanKertasRingkasan = null;
+	private Vector beanMaklumatPemohon = null;
 	
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -203,19 +205,6 @@ public class FrmPYWPopupRingkasanPertimbanganData {
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 			
-			// UPDATE
-//			r.update("ID_KEHADIRAN", idKehadiran);
-//			r.add("NAMA_PEGAWAI", namaPegawai);
-//			r.add("NAMA_AGENSI", agensi);
-//			r.add("NO_TELEFON", noTel);
-//			r.add("NAMA_JAWATAN", txtJawatan);
-//			r.add("FLAG_PENGERUSI", flagPengerusi);
-//			r.add("ID_KEMASKINI", userId);
-//			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
-
-//			sql = r.getSQLUpdate("TBLPHPKEHADIRANMESY");
-//			stmt.executeUpdate(sql);
-			
 			//INSERT
 			long idMesyuaratPermohonan = DB.getNextID("TBLPHPMESYUARATPERMOHONAN_SEQ");
 			r.add("ID_MESYUARAT_PERMOHONAN", idMesyuaratPermohonan);
@@ -248,12 +237,145 @@ public class FrmPYWPopupRingkasanPertimbanganData {
 		//return idMesyuaratString;
 	}
 	
-	public Vector getSenaraiFailMesyuarat() {
-		return senaraiFailMesyuarat;
+	public void setMaklumatRingkasanPemohon(String idPermohonan) throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			beanMaklumatPemohon = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+			SQLRenderer r = new SQLRenderer();
+
+			sql = "SELECT C.ID_PEMOHON, C.ID_KATEGORIPEMOHON, C.NAMA, C.ID_JENISPENGENALAN, C.NO_PENGENALAN,"
+				+ " C.PEKERJAAN, C.MODAL_DIBENARKAN, C.MODAL_JELAS, D.TUJUAN_PENGAMBILAN, D.LOKASI_PERMOHONAN"
+				+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLPHPPMOHONNJDUALPERTAMA D"
+				+ " WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON AND B.ID_PERMOHONAN = D.ID_PERMOHONAN"
+				+ " AND B.ID_PERMOHONAN = '" +idPermohonan+ "'";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			Integer count = 0;
+
+			while (rs.next()) {
+				h = new Hashtable();
+
+				h.put("idPemohon", rs.getString("ID_PEMOHON"));
+				h.put("idKategoriPemohon",
+						rs.getString("ID_KATEGORIPEMOHON") == null ? "" : rs
+								.getString("ID_KATEGORIPEMOHON"));
+				h.put("nama",
+						rs.getString("NAMA") == null ? "" : rs
+								.getString("NAMA"));
+				h.put("idJenisPengenalan",
+						rs.getString("ID_JENISPENGENALAN") == null ? "99999"
+								: rs.getString("ID_JENISPENGENALAN"));
+				h.put("noPengenalan",
+						rs.getString("NO_PENGENALAN") == null ? "" : rs
+								.getString("NO_PENGENALAN"));
+				h.put("pekerjaan",
+						rs.getString("PEKERJAAN") == null ? "" : rs
+								.getString("PEKERJAAN"));
+				h.put("modalBenar",
+						rs.getString("MODAL_DIBENARKAN") == null ? "-" : "RM" + Util
+								.formatDecimal(Double.valueOf(rs
+										.getString("MODAL_DIBENARKAN"))));
+				h.put("modalJelas",
+						rs.getString("MODAL_JELAS") == null ? "-" : "RM" + Util
+								.formatDecimal(Double.valueOf(rs
+										.getString("MODAL_JELAS"))));
+				h.put("tujuan",
+						rs.getString("TUJUAN_PENGAMBILAN") == null ? "" : rs
+								.getString("TUJUAN_PENGAMBILAN"));
+				h.put("lokasi",
+						rs.getString("LOKASI_PERMOHONAN") == null ? "" : rs
+								.getString("LOKASI_PERMOHONAN"));
+				beanMaklumatPemohon.addElement(h);
+				count++;
+			}
+		} finally {
+			if (db != null)
+				db.close();
+		}
 	}
-	
-	public Vector getMaklumatRingkasanPertimbangan() {
-		return beanKertasRingkasan;
+
+	public void setAPBMaklumatKertasRingkasan(String idPermohonan)
+			throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			beanKertasRingkasan = new Vector();
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT A.ID_PERMOHONAN, A.ID_KERTASKERJAAPB , A.NOTA, A.ULASAN_JAS, A.ULASAN_NAHRIM, A.ULASAN_JAB_LAUT, A.ULASAN_JPS, A.ULASAN_PTG, A.ULASAN_JAB_GEOSAINS, A.ULASAN_JAB_PERIKANAN,"
+					+ " A.ULASAN_PUSAT_HIDROGRAFI, A.ULASAN_POLISMARIN, A.ULASAN_KEM_KEBUDAYAAN,B.LOKASI_PERMOHONAN, A.ULASAN_JUPEM, C.CATATAN_RINGKASAN_PERTIMBANGAN "
+					+ " FROM TBLPHPKERTASKERJAAPB A, TBLPHPPMOHONNJDUALPERTAMA B, TBLPHPMESYUARATPERMOHONAN C "
+					+ " WHERE A.ID_PERMOHONAN = B.ID_PERMOHONAN AND B.ID_PERMOHONAN = C.ID_PERMOHONAN AND A.FLAG_KERTAS = '1' AND A.ID_PERMOHONAN = '"
+					+ idPermohonan + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			Hashtable h;
+			int bil = 1;
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("idPermohonan",
+						rs.getString("ID_PERMOHONAN") == null ? "" : rs
+								.getString("ID_PERMOHONAN"));
+				h.put("idKertasKerjaApb",
+						rs.getString("ID_KERTASKERJAAPB") == null ? "" : rs
+								.getString("ID_KERTASKERJAAPB"));
+				h.put("lokasi", rs.getString("LOKASI_PERMOHONAN") == null ? ""
+						: rs.getString("LOKASI_PERMOHONAN"));
+				h.put("nota",
+						rs.getString("NOTA") == null ? "" : rs
+								.getString("NOTA"));
+				h.put("ulasanJAS",
+						rs.getString("ULASAN_JAS") == null ? "" : rs
+								.getString("ULASAN_JAS"));
+				h.put("ulasanNAHRIM",
+						rs.getString("ULASAN_NAHRIM") == null ? "" : rs
+								.getString("ULASAN_NAHRIM"));
+				h.put("ulasanJLM",
+						rs.getString("ULASAN_JAB_LAUT") == null ? "" : rs
+								.getString("ULASAN_JAB_LAUT"));
+				h.put("ulasanJPS",
+						rs.getString("ULASAN_JPS") == null ? "" : rs
+								.getString("ULASAN_JPS"));
+				h.put("ulasanJMG",
+						rs.getString("ULASAN_JAB_GEOSAINS") == null ? "" : rs
+								.getString("ULASAN_JAB_GEOSAINS"));
+				h.put("ulasanDOF",
+						rs.getString("ULASAN_JAB_PERIKANAN") == null ? "" : rs
+								.getString("ULASAN_JAB_PERIKANAN"));
+				h.put("ulasanPHN",
+						rs.getString("ULASAN_PUSAT_HIDROGRAFI") == null ? ""
+								: rs.getString("ULASAN_PUSAT_HIDROGRAFI"));
+				h.put("ulasanPolisMarin",
+						rs.getString("ULASAN_POLISMARIN") == null ? "" : rs
+								.getString("ULASAN_POLISMARIN"));
+				h.put("ulasanKemBudaya",
+						rs.getString("ULASAN_KEM_KEBUDAYAAN") == null ? "" : rs
+								.getString("ULASAN_KEM_KEBUDAYAAN"));
+				h.put("ulasanJUPEM", rs.getString("ULASAN_JUPEM") == null ? ""
+						: rs.getString("ULASAN_JUPEM"));
+				h.put("ulasanPTG", rs.getString("ULASAN_PTG") == null ? ""
+						: rs.getString("ULASAN_PTG"));
+				h.put("catatanRingkasanPertimbangan",
+						rs.getString("CATATAN_RINGKASAN_PERTIMBANGAN") == null ? "" : rs
+								.getString("CATATAN_RINGKASAN_PERTIMBANGAN"));
+
+				beanKertasRingkasan.addElement(h);
+				bil++;
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
 	}
 	
 	public void setMaklumatKertasRingkasan(String idPermohonan)
@@ -266,10 +388,6 @@ public class FrmPYWPopupRingkasanPertimbanganData {
 			db = new Db();
 			Statement stmt = db.getStatement();
 
-			//sql = "SELECT ID_KERTASKERJA, ULASAN_KJP, ULASAN_JPPH, ULASAN_JKPTGN, ULASAN_KEM_KEWANGAN, ULASAN_KEM_WP, ULASAN_PTG,"
-			//		+ " ULASAN_DBKL, ULASAN_BPH, FLAG_PAJAKAN, FLAG_PENSWASTAAN, NAMA_PEGAWAI_HTP, TARIKH_RUJUKAN_HTP"
-			//		+ " FROM TBLPHPKERTASKERJAPENYEWAAN WHERE FLAG_KERTAS = '1' AND ID_PERMOHONAN = '"
-			//		+ idPermohonan + "'";
 			sql = "SELECT A.ID_KERTASKERJA, A.ULASAN_KJP, A.ULASAN_JPPH, A.ULASAN_JKPTGN, A.ULASAN_KEM_KEWANGAN, A.ULASAN_KEM_WP, A.ULASAN_PTG,"
 					+ " A.ULASAN_DBKL, A.ULASAN_BPH, A.FLAG_PAJAKAN, A.FLAG_PENSWASTAAN, A.NAMA_PEGAWAI_HTP, A.TARIKH_RUJUKAN_HTP, B.CATATAN_RINGKASAN_PERTIMBANGAN"
 					+ " FROM TBLPHPKERTASKERJAPENYEWAAN A, TBLPHPMESYUARATPERMOHONAN B WHERE A.ID_PERMOHONAN=B.ID_PERMOHONAN AND A.FLAG_KERTAS = '1' AND A.ID_PERMOHONAN = '"
@@ -328,7 +446,8 @@ public class FrmPYWPopupRingkasanPertimbanganData {
 		}
 	}
 	
-	public void simpanCatatanRingkasanPertimbangan(String idPermohonan,String catatanRingkasanPertimbangan, HttpSession session) throws Exception {
+	public void simpanCatatanRingkasanPertimbangan(String idPermohonan,String catatanRingkasanPertimbangan, HttpSession session) 
+			throws Exception {
 		Db db = null;
 		Connection conn = null;
 		String userId = session.getAttribute("_ekptg_user_id").toString();
@@ -364,4 +483,17 @@ public class FrmPYWPopupRingkasanPertimbanganData {
 				db.close();
 		}
 	}
+	
+	public Vector getSenaraiFailMesyuarat() {
+		return senaraiFailMesyuarat;
+	}
+	
+	public Vector getMaklumatRingkasanPertimbangan() {
+		return beanKertasRingkasan;
+	}
+	
+	public Vector getMaklumatRingkasanPemohon() {
+		return beanMaklumatPemohon;
+	}
+	
 }

@@ -1,4 +1,4 @@
-		<fieldset><legend><strong>SENARAI NO. FAIL PPT</strong></legend>
+		<fieldset><legend><strong>SENARAI NO. FAIL </strong></legend>
 			<table width="100%" border="0">
   	  			<tr>
     				<td colspan="10">
