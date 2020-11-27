@@ -29,21 +29,6 @@
 	<td colspan="2"><fieldset>
 		<legend><strong>MAKLUMAT PEMOHON</strong></legend>
   		<table width="100%" border="0" cellspacing="2" cellpadding="2">
-  			 <tr>
-	          	<td>&nbsp;</td>
-	          	<td>No. Rujukan Surat Rasmi</td>
-	          	<td>:
-	            	<input name="txtNoRujukanSurat" type="text" class="$inputTextClass" id="txtNoRujukanSurat"  value="$beanMaklumatPermohonan.noRujSurat" size="43" maxlength="250" $readonly />
-	            </td>
-	        </tr>
-	        <tr>
-	          	<td>&nbsp;</td>
-	          	<td>Tarikh Surat Rasmi</td>
-	          	<td>:
-	            	<input type="text" name="tarikhSurat" id="tarikhSurat" value="$beanMaklumatPermohonan.tarikhSurat" onblur="check_date(this);cekTarikhSurat(this)" size="11" $readonly class="$inputTextClass"/>
-		            <a href="javascript:displayDatePicker('tarikhSurat',false,'dmy');">#if ($mode != 'view')<img border="0" src="../img/calendar.gif"/>#end</a>
-		        </td>
-	        </tr>
 		    <tr>
 		  		<td width="1%"></td>
 		  		<td width="28%">Kategori Pemohon</td>
@@ -179,6 +164,23 @@
 	            <input type="hidden" name="idUrusan" id="idUrusan" value="9"/>
 	            <input type="hidden" name="idSubUrusan" id="idSubUrusan" value="57"/>
 	          </td>
+	        </tr>
+	        <tr>
+	          	<td width="1%">&nbsp;</td>
+	          	<td width="28%" valign="top">No. Rujukan Surat Rasmi</td>
+	          	<td width="1%">:</td>
+	          	<td width="70%">
+	            	<input name="txtNoRujukanSurat" type="text" class="$inputTextClass" id="txtNoRujukanSurat" value="$beanMaklumatPermohonan.noRujSurat" size="43" maxlength="250" $readonly />
+	            </td>
+	        </tr>
+	        <tr>
+	          	<td width="1%">&nbsp;</td>
+	          	<td width="28%" valign="top">Tarikh Surat Rasmi</td>
+	          	<td width="1%">:</td>
+	          	<td width="70%">
+	            	<input type="text" name="tarikhSurat" id="tarikhSurat" value="$beanMaklumatPermohonan.tarikhSurat" onblur="check_date(this);cekTarikhSurat(this)" size="11" $readonly class="$inputTextClass"/>
+		            <a href="javascript:displayDatePicker('tarikhSurat',false,'dmy');">#if ($mode != 'view')<img border="0" src="../img/calendar.gif"/>#end</a>
+		        </td>
 	        </tr>
 	        <tr>
 	          <td width="1%">#if ($mode == 'new')<span class="style1">*</span>#end</td>

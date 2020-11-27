@@ -86,8 +86,12 @@ public class FrmAPBKertasRingkasanPermohonanData {
 						: rs.getString("SYOR_JABATAN")); 
 				h.put("catatanBersyarat", rs.getString("CATATAN_BERSYARAT_JABATAN") == null ? ""
 						: rs.getString("CATATAN_BERSYARAT_JABATAN")); 
-				h.put("tarikhMesyuarat", getBilMesyuaratByIdPermohonan(idPermohonan));				
-				h.put("bilMesyuarat", getBilMesyuaratByIdPermohonan(idPermohonan));
+//				h.put("tarikhMesyuarat", getBilMesyuaratByIdPermohonan(idPermohonan));				
+//				h.put("bilMesyuarat", getBilMesyuaratByIdPermohonan(idPermohonan));
+				h.put("tarikhMesyuarat", rs.getDate("TARIKH_MESYUARAT") == null ? ""
+						: sdf.format(rs.getDate("TARIKH_MESYUARAT")));				
+				h.put("bilMesyuarat", rs.getString("BIL_MESYUARAT") == null ? ""
+						: rs.getString("BIL_MESYUARAT"));
 				beanMaklumatKertasRingkasPermohonan.addElement(h);
 				bil++;
 			}

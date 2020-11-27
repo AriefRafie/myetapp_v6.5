@@ -23,16 +23,18 @@
       		<table width="100%" border="0" cellspacing="2" cellpadding="2">
       		#foreach ($beanMaklumatPermohonan in $BeanMaklumatPermohonan)
 		        <tr>
-		          	<td>&nbsp;</td>
-		          	<td>No. Rujukan Surat Rasmi</td>
-		          	<td>:
+		          	<td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
+		          	<td width="28%">No. Rujukan Surat Rasmi</td>
+		          	<td width="1%">:</td>
+		          	<td width="70%">
 		            	<input name="txtNoRujukanSurat" type="text" class="$inputTextClass" id="txtNoRujukanSurat"  value="$beanMaklumatPermohonan.noRujSurat" size="43" maxlength="250" $readonly />
 		            </td>
 		        </tr>
 		        <tr>
-		          	<td>&nbsp;</td>
-		          	<td>Tarikh Surat Rasmi</td>
-		          	<td>:
+		          	<td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
+		          	<td width="28%">Tarikh Surat Rasmi</td>
+		          	<td width="1%">:</td>
+		          	<td width="70%">
 		            	<input type="text" name="tarikhSurat" id="tarikhSurat" value="$beanMaklumatPermohonan.tarikhSurat" onblur="check_date(this);cekTarikhSurat(this)" size="11" $readonly class="$inputTextClass"/>
 			            <a href="javascript:displayDatePicker('tarikhSurat',false,'dmy');">#if ($mode != 'view')<img border="0" src="../img/calendar.gif"/>#end</a>
 			        </td>
@@ -358,7 +360,7 @@
 			             	<td width="1%">:</td>
 		          		 	<td width="70%">
 		          		 		<input name="txtJumlahModal1" type="text" class="$inputTextClass" id="txtJumlahModal1" value="$beanMaklumatPermohonan.jumlahModal1" size="43" maxlength="80" $readonly onBlur="this.value=this.value.toUpperCase();"/>
-		          		 	</td>
+		          		 	</td>		          		 	
               			</tr>
             		  </table>
             		</td>

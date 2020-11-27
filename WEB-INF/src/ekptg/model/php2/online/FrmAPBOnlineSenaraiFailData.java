@@ -2162,6 +2162,7 @@ public class FrmAPBOnlineSenaraiFailData {
 			r.add("B.LOKASI_PERMOHONAN");
 			r.add("B.ID_NEGERI_PERAIRAN");
 			r.add("C.TUJUAN");
+			r.add("C.NO_RUJ_SURAT");
 			r.add("C.TARIKH_SURAT");
 			r.add("C.TARIKH_TERIMA");
 			r.add("D.ID_PEMOHON");
@@ -2193,6 +2194,7 @@ public class FrmAPBOnlineSenaraiFailData {
 				h.put("idJenisLesen", rs.getString("ID_JENIS_LESEN") == null ? "" : rs.getString("ID_JENIS_LESEN"));
 				h.put("tarikhTerima",
 						rs.getDate("TARIKH_TERIMA") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMA")));
+				h.put("noRujSurat", rs.getString("NO_RUJ_SURAT") == null ? "" : rs.getString("NO_RUJ_SURAT"));
 				h.put("tarikhSurat", rs.getDate("TARIKH_SURAT") == null ? "" : sdf.format(rs.getDate("TARIKH_SURAT")));
 				h.put("perkara", rs.getString("TUJUAN") == null ? "" : rs.getString("TUJUAN"));
 				h.put("tujuanPengambilan",
