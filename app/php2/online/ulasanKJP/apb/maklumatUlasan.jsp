@@ -41,7 +41,7 @@
 		        #set( $row = "row1" )
 		        #elseif (($MaklumatLampiran.bil % 2) != 0)
 		        #set( $row = "row1" )
-		        #else 
+		        #else
 		        #set( $row = "row2" )
 		        #end
 				<tr>
@@ -90,34 +90,45 @@
                     <td valign="top">:</td>
                     <td valign="top"><textarea name="txtUlasan" id="txtUlasan" rows="5" cols="50">$!maklumatUlasan.ulasan</textarea></td>
                   </tr>
-<!--                   <tr> -->
-<!--                     <td><font color="#ff0000">*</font></td> -->
-<!--                     <td>Keputusan</td> -->
-<!--                     <td>:</td> -->
-<!--                     <td><select name="txtKeputusan" id="txtKeputusan" style="width:140px;"> -->
-<!--                     #if ($!maklumatUlasan.flagKeputusan == 'L') -->
-<!--                         <option>SILA PILIH</option> -->
-<!--                         <option value="L" selected="selected">LULUS</option> -->
-<!--                         <option value="T">TOLAK</option> -->
-<!--                         <option value="G">TANGGUH</option> -->
-<!--                    #elseif ($!maklumatUlasan.flagKeputusan == 'T') -->
-<!--                         <option>SILA PILIH</option> -->
-<!--                         <option value="L">LULUS</option> -->
-<!--                         <option value="T" selected="selected">TOLAK</option> -->
-<!--                         <option value="G">TANGGUH</option> -->
-<!--                    #elseif ($!maklumatUlasan.flagKeputusan == 'G') -->
-<!--                         <option>SILA PILIH</option> -->
-<!--                         <option value="L">LULUS</option> -->
-<!--                         <option value="T">TOLAK</option> -->
-<!--                         <option value="G" selected="selected">TANGGUH</option> -->
-<!--                    #else -->
-<!--                         <option selected="selected">SILA PILIH</option> -->
-<!--                         <option value="L">LULUS</option> -->
-<!--                         <option value="T">TOLAK</option> -->
-<!--                         <option value="G">TANGGUH</option> -->
-<!--                    #end -->
-<!--                       </select></td> -->
-<!--                   </tr> -->
+                  <tr>
+                    <td><font color="#ff0000">*</font></td>
+                    <td>Keputusan</td>
+                    <td>:</td>
+                    <td><select name="txtKeputusan" id="txtKeputusan" style="width:140px;">
+                    #if ($!maklumatUlasan.flagKeputusan == 'S')
+                        <option>SILA PILIH</option>
+                        <option value="S" selected="selected">SOKONG</option>
+                        <option value="SB">SOKONG BERSYARAT</option>
+                        <option value="TS">TIDAK SOKONG</option>
+                        <option value="TH">TIADA HALANGAN</option>
+                   #elseif ($!maklumatUlasan.flagKeputusan == 'SB')
+                        <option>SILA PILIH</option>
+                        <option value="S">SOKONG</option>
+                        <option value="SB" selected="selected">SOKONG BERSYARAT</option>
+                        <option value="TS">TIDAK SOKONG</option>
+                        <option value="TH">TIADA HALANGAN</option>
+                   #elseif ($!maklumatUlasan.flagKeputusan == 'TS')
+                        <option>SILA PILIH</option>
+                        <option value="S">SOKONG</option>
+                        <option value="SB">SOKONG BERSYARAT</option>
+                        <option value="TS" selected="selected">TIDAK SOKONG</option>
+                        <option value="TH">TIADA HALANGAN</option>
+                    #elseif ($!maklumatUlasan.flagKeputusan == 'TH')
+                        <option>SILA PILIH</option>
+                        <option value="S">SOKONG</option>
+                        <option value="SB">SOKONG BERSYARAT</option>
+                        <option value="TS">TIDAK SOKONG</option>
+                        <option value="TH" selected="selected">TIADA HALANGAN</option>
+
+                   #else
+                        <option selected="selected">SILA PILIH</option>
+                        <option value="S">SOKONG</option>
+                        <option value="SB">SOKONG BERSYARAT</option>
+                        <option value="TS">TIDAK SOKONG</option>
+                        <option value="TH">TIADA HALANGAN</option>
+                   #end
+                      </select></td>
+                  </tr>
                   <tr>
                     <td>&nbsp;</td>
                     <td>Nama Pengulas</td>
