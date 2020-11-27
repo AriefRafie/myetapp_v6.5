@@ -237,22 +237,23 @@ public class FrmSemakan {
 		      
 		      //NEW SQL
 		    sql = "SELECT DISTINCT i.aturan, i.id_semakansenarai, i.kod_form, s.perihal,"
-		    		+ "NVL (sjd.id_jenisdokumen, 0) jenis_dokumen, "
-		    		+ "NVL (jd.keterangan, 'TIADA') nama_dokumen, "
-		    		+ "sh.id_permohonan, "
-		    		+ "CASE "
-		    		+ "	WHEN sh.id_semakanhantar IS NULL "
-		    		+ "		THEN 'N' "
-		    		+ "			ELSE 'Y' "
-		    		+ "	END flag "
-              + "FROM tblsemakan s INNER JOIN  tblsemakansenarai i ON i.id_semakan = s.id_semakan "
-              + "	INNER JOIN tblsemakanjenisdokumen sjd ON  i.id_semakan = sjd.id_semakan "
-              + "	INNER JOIN tblrujjenisdokumen jd ON  sjd.id_jenisdokumen = jd.id_jenisdokumen "
-              + "	LEFT OUTER JOIN tblsemakanhantar sh ON i.id_semakansenarai = sh.id_semakansenarai AND sh.id_permohonan='" + idPermohonan + "'"
-              + " WHERE i.kod_form = '" + kodForm + "'"
-              + " ORDER BY i.kod_form, i.aturan ";
+		    	+ "NVL (sjd.id_jenisdokumen, 0) jenis_dokumen, "
+		    	+ "NVL (jd.keterangan, 'TIADA') nama_dokumen, "
+		   		+ "sh.id_permohonan, "
+		   		+ "CASE "
+		   		+ "	WHEN sh.id_semakanhantar IS NULL "
+		   		+ "		THEN 'N' "
+	    		+ "			ELSE 'Y' "
+		   		+ "	END flag "
+		   		+ "FROM tblsemakan s INNER JOIN  tblsemakansenarai i ON i.id_semakan = s.id_semakan "
+	    		+ "	LEFT OUTER JOIN tblsemakanjenisdokumen sjd ON  i.id_semakan = sjd.id_semakan "
+	    		+ "	LEFT OUTER JOIN tblrujjenisdokumen jd ON  sjd.id_jenisdokumen = jd.id_jenisdokumen "
+	    		+ "	LEFT OUTER JOIN tblsemakanhantar sh ON i.id_semakansenarai = sh.id_semakansenarai "
+	    		+ " AND sh.id_permohonan ='" + idPermohonan + "'"
+	    		+ " WHERE i.kod_form = '" + kodForm + "'"
+	    		+ " ORDER BY i.kod_form, i.aturan ";
 	          
-	          myLog.info("getSenaraiSemakanAttach :sql= " + sql);
+//	          myLog.info("getSenaraiSemakanAttach :sql= " + sql);
 		      ResultSet rs = stmt.executeQuery(sql);
 		      Hashtable<String,String> h;
 		      String lampiran = "-";
