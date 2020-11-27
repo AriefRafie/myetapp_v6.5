@@ -498,7 +498,7 @@ public class FrmPYWOnlineSenaraiFailView extends AjaxBasedModule {
 				else if ("INDIVIDU".equals(kategori)) {
 					senaraiSemak = semak.getSenaraiSemakanAttach("phppywindividu",idPermohonan);
 				}
-//			        senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
+//			    senaraiSemak = logic.getSenaraiSemak(idPermohonan, kategori);
     			this.context.put("SenaraiSemak", senaraiSemak);
     		}
 			

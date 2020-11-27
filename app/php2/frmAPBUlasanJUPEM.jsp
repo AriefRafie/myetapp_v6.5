@@ -242,6 +242,27 @@ function doUlanganJUPEM(){
 	document.${formName}.method="POST";
 	document.${formName}.submit();
 }
+function simpanDokumenMohonJUPEM(idUlasanTeknikal,idPermohonan) {
+	
+	if(document.${formName}.fileuploadJUPEM.value == ""){
+		alert('Sila pilih Fail yang Ingin Dimuatnaik.');
+  		document.${formName}.fileuploadJUPEM.focus(); 
+		return; 
+	}
+
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+	
+	var dp = document.${formName}.form_token.value ;
+	var dopost = "&form_token="+dp;
+	
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmAPBJabatanTeknikalView&hitButton=simpanDokumenMohonKJT&selectedTabUpper=0&idPermohonan="+idPermohonan+"&idUlasanTeknikal="+idUlasanTeknikal+"&flagPopup=openJUPEM&modePopup=view"+dopost;
+	document.${formName}.method="post";
+	document.${formName}.enctype="multipart/form-data";
+    document.${formName}.encoding="multipart/form-data";
+	document.${formName}.submit();
+}
 function simpanDokumenJUPEM(idUlasanTeknikal,idPermohonan) {
 	
 	if(document.${formName}.fileuploadJUPEM.value == ""){

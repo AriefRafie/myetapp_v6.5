@@ -1289,6 +1289,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			}else if (idJawatan.equals("4")){
 				langkah = "-1";
 				emelSubjek = ec.tajukHantarPermohonan + "Perakuan Pembelian";
+				String userEmelInternal = "shiqaosman@gmail.com";
 						
 				kandungan = getEmelSemak().setKandungan(htpPermohonan.getPermohonan().getPfdFail().getTajukFail()
 							,htpPermohonan.getPermohonan().getPfdFail().getNamaKementerian()
@@ -1298,7 +1299,9 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 					getIHTP().getErrorHTML("[ONLINE-HTP PEMBELIAN] Emel Pengguna Perlu Dikemaskini Terlebih Dahulu.");
 				//   (HTP)HQPenggunaPembelianPerletakhakan,   (HTP)HQPenggunaPembelian, (HTP)HQPengguna
 
-				ec.hantarPermohonan(getEmelSemak().checkEmail(userID), "(HTP)HQPenggunaPembelianPerletakhakan", emelSubjek, kandungan);
+				//tutup untuk pengujian
+				//ec.hantarPermohonan(getEmelSemak().checkEmail(userID), "(HTP)HQPenggunaPembelianPerletakhakan", emelSubjek, kandungan);
+				ec.hantarPermohonan(userEmelInternal, userEmelInternal, emelSubjek, kandungan);
 								
 			}
 			Tblrujsuburusanstatusfail rsusf = new Tblrujsuburusanstatusfail();
@@ -1387,6 +1390,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 		
 		}else if(command.equals("searchFail")){
 			myLog.info("searchFail ::"+vm);	
+			String noFailOnline = getParam("noFailOnline");
 			String noFail = getParam("noFail");
 			String namaFail = getParam("namaFail");
 			String idStatuss = "";
@@ -1396,7 +1400,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			idStatus = getParam("socStatus") == "" ? "0" : getParam("socStatus");
 			myLog.info("idStatus="+idStatus);
 			//Vector<?> v = getIPembelian().findFailKJP(carian, noFail, idNegeri,id_kementerian);
-			Vector<?> v = getIPembelianOnline().findFailKJP(namaFail, noFail, idNegeri,id_kementerian,idAgensi,idSuburusan,idStatus);
+			Vector<?> v = getIPembelianOnline().findFailKJP(namaFail, noFail, noFailOnline, idNegeri,id_kementerian,idAgensi,idSuburusan,idStatus);
 			context.put("lists", v);
 			
 			socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri));
@@ -1416,6 +1420,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			vm = PATH+"index_.jsp";
 			
 		}else if(command.equals("kosong")) {
+			String noFailOnline = "";
 			String noFail = "";
 			String namaFail = "";
 			
@@ -1435,12 +1440,13 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			idStatus = getParam("socStatus") == "" ? "0" : getParam("socStatus");
 			idSuburusan = getParam("socSubUrusan") == "" ? "0" : getParam("socSubUrusan");
 			
-			Vector<?> v = getIPembelianOnline().findFailKJP(namaFail, noFail, "",id_kementerian,"","","");
+			Vector<?> v = getIPembelianOnline().findFailKJP(namaFail, noFail, noFailOnline, "",id_kementerian,"","","");
 			//this.context.put("lists", v);
 			setupPage(ses,action, v);
 			
 			vm = PATH+"index_.jsp";
 		}else{
+			String noFailOnline = getParam("noFailOnline");
 			String noFail = getParam("noFail");
 			String carian = getParam("namaFail");
 			idNegeri = getParam("socNegeri") == "" ? "0" : getParam("socNegeri");
@@ -1448,7 +1454,7 @@ public class SenaraiFailModuleOnline extends AjaxModule {
 			idStatus = getParam("socStatus") == "" ? "0" : getParam("socStatus");
 			
 			//Vector<?> v = getIPembelian().findFailKJP(carian, noFail, idNegeri,id_kementerian);
-			Vector<?> v = getIPembelianOnline().findFailKJP(carian, noFail, idNegeri,id_kementerian,idAgensi,idSuburusan,idStatus);
+			Vector<?> v = getIPembelianOnline().findFailKJP(carian, noFail, noFailOnline, idNegeri,id_kementerian,idAgensi,idSuburusan,idStatus);
 			
 			context.put("lists", v);
 			socNegeri = HTML.SelectNegeri("socNegeri",Long.parseLong(idNegeri));

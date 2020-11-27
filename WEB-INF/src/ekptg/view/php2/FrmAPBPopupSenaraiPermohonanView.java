@@ -56,10 +56,12 @@ public class FrmAPBPopupSenaraiPermohonanView extends AjaxBasedModule {
 			for(int i = 0; i < cbPilihan.length; i++){
 				 idPermohonan=cbPilihan[i].toString();
 				 idJenisPermohonan = logic.getJenisPermohonan(idPermohonan);
-				 if (idJenisPermohonan.equals("1")){
+				 if ("1".equals(idJenisPermohonan)){
 					 logic.simpanPilihanBaru(idMesyuarat, idPermohonan, session);
-				 }else if (idJenisPermohonan.equals("2")){
+				 }else if ("2".equals(idJenisPermohonan)){
 					logic.simpanPilihanLanjutan(idMesyuarat, idPermohonan, session);
+				 }else {
+					 logic.simpanPilihanBaru(idMesyuarat, idPermohonan, session);
 				 }
 			}
 			this.context.put("close_window", "yes");

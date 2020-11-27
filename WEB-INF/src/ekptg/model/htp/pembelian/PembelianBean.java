@@ -359,7 +359,7 @@ public class PembelianBean implements IPembelian {
 					sql += " NVL(B.ID_JENISTANAH,0) ID_JENISTANAH,B.ID_PEGAWAI,B.NO_RUJUKAN_KJP,B.NO_RUJUKAN_LAIN,B.TARIKH_AGIHAN,B.ID_DAERAH,";
 						sql += " C.ID_NEGERI,C.ID_STATUS, D.TARAF_KESELAMATAN,D.ID_TARAFKESELAMATAN,F.NAMA_NEGERI,TO_CHAR(C.TARIKH_DAFTAR_FAIL,'DD/MM/YYYY') AS OPEN_FILE_DATE, ";
 						sql +=" G.NAMA_KEMENTERIAN, H.NAMA_AGENSI,E.NAMA_SUBURUSAN,E.KOD_SUBURUSAN,A.NO_PERMOHONAN,C.ID_MASUK";
-							sql += " from TBLPERMOHONAN A, TBLHTPPERMOHONAN B , TBLPFDFAIL C , TBLpfdrujtarafkeselamatan D, tblrujsuburusan E,TBLRUJNEGERI F,TBLRUJKEMENTERIAN G,TBLRUJAGENSI H";
+							sql += " from TBLPERMOHONAN A, TBLHTPPERMOHONAN B , TBLPFDFAIL C , TBLPFDRUJTARAFKESELAMATAN D, TBLRUJSUBURUSAN E,TBLRUJNEGERI F,TBLRUJKEMENTERIAN G,TBLRUJAGENSI H ";
 								sql += " where A.ID_PERMOHONAN=B.ID_PERMOHONAN ";
 									sql += " And C.ID_SUBURUSAN = E.ID_SUBURUSAN ";
 										sql += " AND D.ID_TARAFKESELAMATAN(+) = C.ID_TARAFKESELAMATAN ";
@@ -368,6 +368,7 @@ public class PembelianBean implements IPembelian {
 												sql += " AND F.ID_NEGERI = C.ID_NEGERI";
 												sql += " AND G.ID_KEMENTERIAN = C.ID_KEMENTERIAN";
 												sql += " AND B.ID_AGENSI = H.ID_AGENSI";
+
 											if(!idHtpPermohonan.equals("")){
 												sql += " AND B.ID_HTPPERMOHONAN = '"+ idHtpPermohonan +"'";
 											}
@@ -413,7 +414,6 @@ public class PembelianBean implements IPembelian {
 										 			fail.setKodSuburusan(rs.getString("KOD_SUBURUSAN"));
 										 			fail.setTajukFail(rs.getString("TAJUK_FAIL"));
 										 			fail.setIdMasuk(rs.getLong("ID_MASUK"));
-										 			//htpPermohonan.setCatatan(rs.getString("CATATAN"));
 										 			permohonan.setPfdFail(fail);
 										 			htpPermohonan.setPermohonan(permohonan);
 										 			
@@ -421,11 +421,11 @@ public class PembelianBean implements IPembelian {
 										     }
 										    	
 		 } finally {
-		      if (db != null) db.close();
-		    }
+			 if (db != null) db.close();
+		 }
 		
-
 		return htpPermohonan;
+		
 	}
 	@Override
 	public HtpPermohonan kemaskiniPermohonan(HtpPermohonan htpPermohonan,String idPermohonan,String idhtpPermohonan)throws Exception {

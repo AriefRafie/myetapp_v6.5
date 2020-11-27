@@ -534,45 +534,52 @@
 <!-- ****************** END UNTUK Senarai Bukti Pembayaran ************************* -->
 <!-- ****************** START UNTUK Senarai Maklumat Dokumen ************************* -->
 <fieldset>
-	<legend>Senarai Maklumat Dokumen</legend>
-	
-	
-	<table width="100%" border="0">
-		<tr class="table_header">
-			<td width="3%">Bil.</td>
-			<td width="18%">Nama Dokumen</td>
-			<td width="18%">Katerangan</td>
-			<td width="20%">Lampiran</td>
-		</tr>
+    <legend><strong>&nbsp;Senarai Maklumat Pembayaran</strong></legend>
+    
+       	<table width="100%"  cellpadding="0" cellspacing="2" border="0">   
+        	<tr class="table_header">
+           		<td width="4%" align="center"><b>Bil</b></td>
+                <td width="42%" align="center"><b>Nama Dokumen</b></td>
+                <td width="42%" align="center"><b>Keterangan</b></td>
+                <td width="12%" align="center"><b>Lampiran</b></td>
+                <td></td>
+                #if($listDPem_size!=0)
+                #end
+            </tr>
+              
+         #if($listDPem_size!=0)
+          
+             #foreach($listD in $listDokumenPembayaran)  
+                   
+                    #set( $i = $velocityCount )       	
+         		#if ( ($i % 2) != 1 )
+              		#set( $row = "row2" )
+         		#else
+               		#set( $row = "row1" )
+         		#end
+         		      
+          	<tr>
+                <td class="$row" align="center">$listD.bil</td>
+                <td class="$row" align="center">$listD.nama_dokumen</td>
+                <td class="$row" align="center">$listD.txtKeterangan</td>
+                <td class="$row" align="center"><a href="javascript:papar_Lampiran('$!listD.id_Dokumen')"><font color="blue">Lampiran</font></a></td>
+                #if($listDPem_size!=0)
+                <td class="$row" align="center"><input type="button" name="cmdHapusDoc" value ="Hapus" onClick="hapusDokumenPembayaran('$!listD.id_Dokumen')"></td>	
+                #end
+            </tr>
+             #end  
+              		 
+         #else
+            <tr>
+                <td colspan="4">Tiada rekod</td>
+            </tr>
+         #end
+                    
+       </table>        	
+    </fieldset>	
 
-		#set ( $cnt1 = 0 ) 
-		#foreach ( $md in $ViewUploadMD ) 
-		#set ($cnt1 = $cnt1 + 1 ) 
-		#set( $i = $velocityCount ) 
-		#if ( ($i % 2) == 0 )
-		#set( $row = "row2" ) 
-		#else 
-		#set( $row = "row1" ) 
-		#end
-		<tr>
-			<td class="$row">$cnt1.</td>
-			<td class="$row">$md.namaDokumen</td>
-			<td class="$row">$md.keterangan</td>
-			<td class="$row" align="center">
-			#if ($md.namaDokumen != '')
-         	<input name="cetak" type="button" value="Muat turun Dokumen" onclick="javascript:doOpen('$md.idDokumen')" />&nbsp;
-        	 #end
-			</td>
-		</tr>
-		#end #if ($cnt == 0)
-		<tr>
-			<td colspan="4" scope="row"><font color="#FF0000">Tiada
-					Rekod.</font></td>
-			<td colspan="3" scope="row"></td>
-		</tr>
-		#end
-	</table>
-</fieldset>
+
+
 <!-- ****************** END UNTUK Senarai Maklumat Dokumen ************************* -->
 
 

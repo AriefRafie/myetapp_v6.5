@@ -182,6 +182,9 @@ public class FrmPLPLawatanTapakView extends AjaxBasedModule {
 			if ("simpanDokumenLampiran".equals(hitButton)) {
 				uploadFilesLampiran(idLaporanTanah, idPermohonan, session);
 			}
+			if ("simpanKemaskiniLampiran".equals(hitButton)) {
+				logic.simpanKemaskiniLampiran(idDokumen, getParam("txtNamaLampiran"), getParam("txtCatatanLampiran"), session);
+			}
 			if ("hapusDokumen".equals(hitButton)) {
 				logic.hapusDokumen(idDokumen);
 			}

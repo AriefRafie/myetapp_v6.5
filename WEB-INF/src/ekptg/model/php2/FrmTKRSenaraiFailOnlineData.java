@@ -161,7 +161,6 @@ public class FrmTKRSenaraiFailOnlineData {
 	public void updateDaftarOnline(String idFail, String idPermohonan,
 			String txtPerkara, String idHakmilikAgensi, String idSuburusan,
 			HttpSession session) throws Exception {
-
 		Db db = null;
 		Connection conn = null;
 		String userId = session.getAttribute("_ekptg_user_id").toString();
@@ -178,7 +177,7 @@ public class FrmTKRSenaraiFailOnlineData {
 
 			sql = "SELECT TBLHTPHAKMILIKAGENSI.ID_KEMENTERIAN, TBLHTPHAKMILIK.ID_NEGERI, TBLHTPHAKMILIKAGENSI.ID_LUAS_BERSAMAAN, TBLHTPHAKMILIKAGENSI.LUAS_BERSAMAAN"
 					+ " FROM TBLHTPHAKMILIK, TBLHTPHAKMILIKAGENSI WHERE TBLHTPHAKMILIK.ID_HAKMILIK = TBLHTPHAKMILIKAGENSI.ID_HAKMILIK"
-					+ " AND TBLHTPHAKMILIKAGENSI.ID_HAKMILIKAGENSI = '"
+					+ " AND TBLHTPHAKMILIK.ID_HAKMILIK = '"
 					+ idHakmilikAgensi + "'";
 
 			ResultSet rsTanah = stmt.executeQuery(sql);
@@ -188,7 +187,6 @@ public class FrmTKRSenaraiFailOnlineData {
 
 			}
 
-			System.out.println("idNegeriHakmilik >>> "+idNegeriHakmilik);
 			// TBLPFDFAIL
 			r.update("ID_FAIL", idFail);
 			String noFail = "";
@@ -306,7 +304,7 @@ public class FrmTKRSenaraiFailOnlineData {
 	public String generateNoFail(String kodUrusan, String kodKementerian,
 			String idKementerian, String kodNegeri, String idNegeri)
 			throws Exception {
-		System.out.println("kodNegeri >>> "+kodNegeri);
+
 		String noFail = "";
 		//JKPTG/SPHP/
 		noFail = "JKPTG/BPHP/"
@@ -323,7 +321,7 @@ public class FrmTKRSenaraiFailOnlineData {
 	}
 
 	public String getKodNegeriByIdNegeri(String idNegeri) throws Exception {
-		System.out.println("idNegeri >>> "+idNegeri);
+
 		Db db = null;
 		String sql = "";
 
@@ -333,7 +331,7 @@ public class FrmTKRSenaraiFailOnlineData {
 
 			sql = "SELECT KOD_MAMPU FROM TBLRUJNEGERI WHERE ID_NEGERI = '"
 					+ idNegeri + "'";
-			System.out.println("getKodNegeriByIdNegeri :: sql >>> "+sql);
+
 			ResultSet rs = stmt.executeQuery(sql);
 
 			if (rs.next()) {

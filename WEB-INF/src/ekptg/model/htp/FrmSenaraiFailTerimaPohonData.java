@@ -12,19 +12,24 @@ import java.util.Vector;
 import lebah.db.Db;
 import lebah.db.SQLRenderer;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
 
 import ekptg.helpers.DB;
 import ekptg.helpers.File;
 import ekptg.helpers.Utils;
 import ekptg.model.entities.Tblrujjenistanah;
+import ekptg.model.ppt.FrmPermohonanUPTData;
 
 public class FrmSenaraiFailTerimaPohonData {
 
 	private static FrmSenaraiFailTerimaPohonData instance = null;
 	private Vector<Hashtable<String, String>> list = null;
 	private Vector<Hashtable<String, String>> listPPT = null;
+	private static  Vector listDokumenPembayaran = new Vector();
 	private static Logger myLog = Logger.getLogger(FrmSenaraiFailTerimaPohonData.class);
+	private static final Log log = LogFactory.getLog(FrmSenaraiFailTerimaPohonData.class);
 	private static SimpleDateFormat sdf =  new SimpleDateFormat("dd/MM/yyyy");
 	private static Tblrujjenistanah jt = null;
 	public String strNoFail = "";
@@ -526,6 +531,50 @@ public class FrmSenaraiFailTerimaPohonData {
 	      if (db != null) db.close();
 	    }
 	    return output;
+	}
+	
+	public static void  setListDokumenPembayaran(String id) throws Exception {
+	    Db db = null;
+	    listDokumenPembayaran.clear();
+	    String sql = "";
+	    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	    
+	    try {
+	      db = new Db();
+	      Statement stmt = db.getStatement();
+	      SQLRenderer r = new SQLRenderer();		      
+	    
+	      sql = " SELECT * "+
+		    		" FROM TBLHTPDOKUMEN  "+
+		    		" WHERE id_permohonan = '"+id+"' ORDER BY id_permohonan ASC ";
+	         
+	     
+	      ResultSet rs = stmt.executeQuery(sql);
+	      myLog.info(" sql setListDokumenPembayaran==="+sql);
+	     
+	      Hashtable h;
+	      int bil = 1;
+	    
+	      while (rs.next()) {
+	    	  
+	    	  h = new Hashtable();
+	    	 
+	    	  h.put("bil", bil);
+	    	  h.put("id_permohonan", rs.getString("id_permohonan")== null?"":rs.getString("id_permohonan"));
+	    	  h.put("id_Dokumen", rs.getString("id_dokumen")== null?"":rs.getString("id_dokumen"));
+	    	  h.put("nama_dokumen", rs.getString("nama_dokumen")== null?"":rs.getString("nama_dokumen"));
+	    	  h.put("txtKeterangan",rs.getString("keterangan")== null?"":rs.getString("keterangan"));
+	          
+	    	  listDokumenPembayaran.addElement(h);
+	    	  bil++;	    	
+	      }			    
+	      //return list;
+	    }  catch (Exception re) {
+	    	log.error("Error: ", re);
+	    	throw re;
+	    	}finally {		    	
+	    if (db != null) db.close();
+	    }
 	}
 	
 	 public Vector<Hashtable<String, String>> getFileCount(int idnegeri, int idurusan)throws Exception {
@@ -1096,7 +1145,7 @@ public class FrmSenaraiFailTerimaPohonData {
 	    		" AND HT.ID_JENISTANAH = J.ID_JENISTANAH(+) "+
 	    		" AND TK.ID_TARAFKESELAMATAN = T.ID_TARAFKESELAMATAN"+
 	    		" AND P.ID_FAIL='"+idfail+"'";		  
-		  //myLog.info("getPermohonanInfo("+idfail+") : sql::"+sql);
+		  myLog.info("getPermohonanInfo("+idfail+") : sql::"+sql);
 		  ResultSet rs1 = stmt.executeQuery(sql);
 		  h = new Hashtable<String, String>();	  
 		  if(rs1.next()){		  
@@ -2477,6 +2526,10 @@ public class FrmSenaraiFailTerimaPohonData {
 		}
 		return output;		
 
+	}
+	
+	public Vector getListDokumenPembayaran(){
+		return listDokumenPembayaran;
 	}
 	
 		

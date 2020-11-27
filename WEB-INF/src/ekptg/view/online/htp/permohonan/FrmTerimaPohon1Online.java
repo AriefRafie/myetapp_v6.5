@@ -21,6 +21,8 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
 
 import ekptg.helpers.AuditTrail;
@@ -80,6 +82,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 	 */
 	private static final long serialVersionUID = 3744798063048260707L;
 	private static Logger myLog = Logger.getLogger(ekptg.view.online.htp.permohonan.FrmTerimaPohon1Online.class);
+	private static final Log log = LogFactory.getLog(FrmSenaraiFailTerimaPohonData.class);
 //	private final String IDSUBURUSANPERMOHONAN = "42";
 	private final String JENISTANAH = "1,3,6";
 	private final String PATH="app/htp/permohonan/online/";
@@ -724,6 +727,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		    		TerimaPohonInfo = fData.getTerimaPohonInfo(idfail);
 		    		Vector notis5A = fData.getSenaraiNotis5A(idpermohonan);
 					idpermohonan = (String)TerimaPohonInfo.get("lblIdPermohonan");
+					ListDokumenPembayaran(idpermohonan);
 					
 		    		myLog.debug("idNotis:"+idNotis);
 		    		myLog.debug("idpermohonan:"+idpermohonan);
@@ -784,6 +788,19 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		
 				saveData(noBaucer,noResit,tarikhBaucer,tarikhResit,jumlahBaucer);
 				viewBuktiBayaranNotis2();
+				
+				myLog.debug("default page ::"+template_name);
+	    		//senaraiTerimaPohon = fData.TerimaPohongetList(idUser,null,null,null,null,null,null,null,null);
+	    		//senaraiTerimaPohon = fData.TerimaPohongetListOnlineSHTP(idUser,null,null,id_kementerian,null,null,null,null,null);
+	    		senaraiTerimaPohon = fData.TerimaPohongetListOnlineSHTP(null,null,null,id_kementerian,null,null,null,null,null);
+	    		doListing(session,action,mode,senaraiTerimaPohon);
+	    		if(mode.equals("changeNegeri")){
+			    	flagAdvSearch = "Y";
+	    			senaraiTerimaPohon = fData.TerimaPohongetList(null,nofail,txtTajuk,
+							id_kementerian,id_agensi,idnegeri,iddaerah,idmukim,idurusan,idStatus,noRujukanOnline); //--- addbyzul for carian by idStatus dan noRujukanOnline --
+					doListing(session,action,mode,senaraiTerimaPohon);
+	    		}
+				
 				template_name = PATH + "indexOnline.jsp";
 				
 				
@@ -798,8 +815,9 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 
 				// myLog.debug("xxxxx="+xxxxx);
 				myLog.debug("session=" + session);
-
+				
 				uploadFiles(id_permohonan, keterangan, namaDokumen, session);
+				ListDokumenPembayaran(idpermohonan);
 				template_name = PATH + "indexOnline.jsp";
 
 			} else if ("pohonfailbaru".equals(submit)) {
@@ -1397,6 +1415,40 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		return getPR().kemaskiniMaklumatTanah(hashData);
 	
 	}
+	
+	// Open ListDokumen shiqa - 27112020
+	@SuppressWarnings({ "unchecked", "static-access" })
+	private void ListDokumenPembayaran(String id_permohonan) throws Exception {
+
+		Vector listDokumenPembayaran = new Vector();
+		listDokumenPembayaran.clear();
+
+		fData.setListDokumenPembayaran(id_permohonan);
+		listDokumenPembayaran = fData.getListDokumenPembayaran();
+		context.put("listDokumenPembayaran", listDokumenPembayaran);
+		context.put("listDPem_size", listDokumenPembayaran.size());
+
+	}// close ListDokumen
+	//hapusdokumen shiqa - 27112020
+	public static void hapusDokumenPembayaran(Hashtable data) throws Exception {	   
+		Db db = null;
+	    String sql = "";	   
+	    try{	    	
+	    	db = new Db();
+	    	Statement stmt = db.getStatement();
+	    	String iddokumen = (String)data.get("id_dokumen");
+	    	sql = "DELETE FROM tblhtpdokumen where id_dokumen = '"+iddokumen+"'";
+	    	stmt.executeUpdate(sql);
+	    
+	    } catch (Exception re) {
+	    	log.error("Error: ", re);
+	    	throw re;
+	    }
+	    finally {
+	    	if (db != null) db.close();
+	    }
+	  
+	}//close hapus
 	
 	//CHARTING
 	private void ChartingSimpanKemaskini(String tindakan) throws Exception {
@@ -2227,28 +2279,22 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		myLog.debug("selesai viewUploadMD");
 	}
 	private void uploadFiles(String id_permohonan, String keterangan,
-			String namaDokumen, HttpSession session) throws FileUploadException {
+			String namaDokumen, HttpSession session) throws Exception  {
 		
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		ServletFileUpload upload = new ServletFileUpload(factory);
-		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-		
-		
-		if (isMultipart != false) {
 			
-			List items = upload.parseRequest(request);
-			Iterator itr = items.iterator();
-			while (itr.hasNext()) {
-				
-				
-				FileItem item = (FileItem) itr.next();
-				
-				if ((!(item.isFormField())) && (item.getName() != null)	&& (!("".equals(item.getName())))) {
-					
-					saveData(item, id_permohonan, keterangan, namaDokumen, session);
-				}
+		List items = upload.parseRequest(request);
+		Iterator itr = items.iterator();
+		while (itr.hasNext()) {
+
+			FileItem item = (FileItem) itr.next();
+
+			if ((!(item.isFormField())) && (item.getName() != null) && (!("".equals(item.getName())))) {
+
+				saveData(item, id_permohonan, keterangan, namaDokumen, session);
 			}
-		}		
+		}
 	}
 	private void saveData(String noBaucer, String noResit, String tarikhBaucer, String tarikhResit, String jumlahBaucer) throws Exception {
 		Db db = null;
@@ -2302,7 +2348,7 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		
 		try {
 			db = new Db();
-			// TBLPPKDOKUMENSENARAIHUTANG
+			// TBLHTPDOKUMEN
 			long idDokumen = DB.getNextID("TBLHTPDOKUMEN_SEQ");
 			Connection con = db.getConnection();
 			con.setAutoCommit(false);
@@ -2373,7 +2419,10 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 						,htpPermohonan.getPermohonan().getNoPermohonan());
 			
 			//   (HTP)HQPenggunaPembelianPerletakhakan,   (HTP)HQPenggunaPembelian, (HTP)HQPengguna
-			ec.hantarPermohonan(getEmelSemak().checkEmail(userID), "(HTP)HQPenggunaPermohonan", emelSubjek, kandungan);
+			//ec.hantarPermohonan(getEmelSemak().checkEmail(userID), "(HTP)HQPenggunaPermohonan", emelSubjek, kandungan);
+			ec.sendByRole(getEmelSemak().checkEmail(userID), "(HTP)HQPenggunaPermohonan",
+					String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getNamaKementerian()), emelSubjek, kandungan);
+			
 			
 		}
 		

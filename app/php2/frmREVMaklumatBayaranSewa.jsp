@@ -122,6 +122,15 @@ function janaPenyataAkaun(idHasil) {
     if (hWnd.focus != null) hWnd.focus();
 	hWnd.focus();
 }
+function janaPenyataAkaun2(idHasil) {
+
+	var url = "../servlet/ekptg.report.php2.REVPenyataAkaun2?ID_HASIL="+idHasil;
+    var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
 function janaHapusKira(idHasil) {
 
 	var url = "../servlet/ekptg.report.php2.REVHapusKira?ID_HASIL="+idHasil;
@@ -143,6 +152,15 @@ function janaKronologi(idHasil) {
 function janaMaklumatPermohonan(idHasil) {
 
 	var url = "../servlet/ekptg.report.php2.REVMaklumatPermohonan?ID_HASIL="+idHasil;
+    var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function janaSampulSurat(idHasil) {
+
+	var url = "../servlet/ekptg.report.php2.REVSampulSurat?ID_HASIL="+idHasil;
     var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;
@@ -551,12 +569,7 @@ function pemBayaranLL(){
 	doAjaxCall${formName}("");
 }
 function simpanBayaranLL(){
-
-	if(document.${formName}.txtTarikh.value == ""){
-		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus();
-		return;
-	}
+	alert("masuk x sini");
 	if(document.${formName}.socModBayaran.value == ""){
 		alert('Sila pilih Mod Bayaran.');
   		document.${formName}.socModBayaran.focus();
@@ -603,11 +616,6 @@ function hapusBayaranLL(){
 	doAjaxCall${formName}("");
 }
 function simpanKemaskiniBayaranLL(){
-	if(document.${formName}.txtTarikh.value == ""){
-		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus();
-		return;
-	}
 	if(document.${formName}.socCaraBayaran.value == ""){
 		alert('Sila pilih Cara Bayar.');
   		document.${formName}.socCaraBayaran.focus();

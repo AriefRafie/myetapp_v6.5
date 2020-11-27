@@ -29,7 +29,7 @@ parent.document.getElementById("fileupload_progress").innerHTML="<div class=\"su
         #end
         <tr class="table_header">
           <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
-          <td><strong>Nama Imej</strong></td>
+          <td><strong>Nama Lampiran</strong></td>
         </tr>
         #set ($senaraiLampiran = "")
         #if ($SenaraiLampiran.size() > 0)
@@ -83,7 +83,7 @@ function daftarDokumen() {
 }
 function simpanDokumen2(idLaporanTanah,idHakmilikPermohonan,idTanahGanti,flagJenisTanah) {
 
-	if(document.${formName}.txtNamaImej.value == ""){
+	if(document.${formName}.txtNamaLampiran.value == ""){
 		alert('Sila masukkan Nama Lampiran.');
   		document.${formName}.txtNamaImej.focus();
 		return;
@@ -98,8 +98,8 @@ function simpanDokumen2(idLaporanTanah,idHakmilikPermohonan,idTanahGanti,flagJen
 		return;
 	}
 
-	var namaImej = document.${formName}.txtNamaImej.value;
- 	var catatanImej = document.${formName}.txtCatatanImej.value ;
+	var namaImej = document.${formName}.txtNamaLampiran.value;
+ 	var catatanImej = document.${formName}.txtCatatanLampiran.value ;
 	var dp = document.${formName}.form_token.value ;
 	var dopost = "&form_token="+dp;
 
@@ -114,16 +114,16 @@ function batalDokumen(){
 	document.${formName}.modePopup.value = "";
 	doAjaxCall${formName}("");
 }
-function kemaskiniDokumen(){
-	document.${formName}.flagPopup.value = "openPopupDokumenLampiran";
+function kemaskiniDokumen2(){
+	document.${formName}.flagPopup.value = "openPopupDokumen";
 	document.${formName}.modePopup.value = "update";
 	doAjaxCall${formName}("");
 }
-function simpanKemaskiniDokumen() {
+function simpanKemaskiniDokumen2() {
 
-	if(document.${formName}.txtNamaImej.value == ""){
-		alert('Sila masukkan Nama Imej.');
-  		document.${formName}.txtNamaImej.focus();
+	if(document.${formName}.txtNamaLampiran.value == ""){
+		alert('Sila masukkan Nama Lampiran.');
+  		document.${formName}.txtNamaLampiran.focus();
 		return;
 	}
 
@@ -133,28 +133,28 @@ function simpanKemaskiniDokumen() {
 
 	document.${formName}.flagPopup.value = "openPopupDokumen";
 	document.${formName}.modePopup.value = "view";
-	document.${formName}.hitButton.value = "simpanKemaskiniDokumenLampiran";
+	document.${formName}.hitButton.value = "simpanKemaskiniLampiran";
 	doAjaxCall${formName}("");
 }
-function paparDokumen(idDokumen){
+function paparDokumen2(idDokumen){
 	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmPLPLawatanTapakView";
 	document.${formName}.method="POST";
 	document.${formName}.idDokumen.value = idDokumen;
-	document.${formName}.flagPopup.value = "openPopupDokumenLampiran";
+	document.${formName}.flagPopup.value = "openPopupLampiran";
 	document.${formName}.modePopup.value = "view";
 	document.${formName}.submit();
 }
-function hapusDokumen(){
+function hapusDokumen2(){
 	if ( !window.confirm("Adakah Anda Pasti ?") ){
 		return;
 	}
 
 	document.${formName}.flagPopup.value = "";
 	document.${formName}.modePopup.value = "";
-	document.${formName}.hitButton.value = "hapusDokumenLampiran";
+	document.${formName}.hitButton.value = "hapusDokumen";
 	document.${formName}.submit();
 }
-function batalKemaskiniDokumen(){
+function batalKemaskiniDokumen2(){
 	document.${formName}.modePopup.value = "view";
 	doAjaxCall${formName}("");
 }

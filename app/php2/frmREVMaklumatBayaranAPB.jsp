@@ -91,9 +91,36 @@ function validateCurrency(elmnt,content,content2) {
 	}
 }
 
-function janaPenyataAkaun(idHasil) {
+function janaPenyataAkaunDepositPasir(idHasil) {
 
-	var url = "../servlet/ekptg.report.php2.REVPenyataAkaun?ID_JADUAL_PERTAMA="+idHasil;
+	var url = "../servlet/ekptg.report.php2.REVPenyataAkaunDepositPasir?idJadualPertama="+idHasil;
+    var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function janaPenyataAkaunFiPermohonan(idHasil) {
+
+	var url = "../servlet/ekptg.report.php2.REVPenyataAkaunFiPermohonan?idJadualPertama="+idHasil;
+    var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function janaPenyataAkaunFiLesen(idHasil) {
+
+	var url = "../servlet/ekptg.report.php2.REVPenyataAkaunFiLesen?idJadualPertama="+idHasil;
+    var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
+    if ((document.window != null) && (!hWnd.opener))
+       hWnd.opener = document.window;
+    if (hWnd.focus != null) hWnd.focus();
+	hWnd.focus();
+}
+function janaPenyataAkaunRoyaltiPasir(idHasil) {
+
+	var url = "../servlet/ekptg.report.php2.REVPenyataAkaunRoyaltiPasir?idJadualPertama="+idHasil;
     var hWnd = window.open(url,'printuser','width=1000,height=200, resizable=yes,scrollbars=yes');
     if ((document.window != null) && (!hWnd.opener))
        hWnd.opener = document.window;

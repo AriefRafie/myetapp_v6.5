@@ -98,6 +98,33 @@
 				    <td><textarea name="txtCatatanMesyuarat" id="txtCatatanMesyuarat" rows="5" cols="50" $readonly class="$inputTextClass" 
 				    			onBlur="this.value=this.value.toUpperCase();">$beanMaklumatMesyuarat.catatanMesyuarat</textarea></td>
 				</tr>
+				<tr>
+	                <td>&nbsp;</td>
+	                <td valign="top"></td>
+	                <td valign="top"></td>
+	                <td valign="top"></td>
+              	</tr>
+	          	#set($idLampiran = "")
+    			#set($namaLampiran = "")
+			  	#foreach($beanMaklumatLampiran in $BeanMaklumatLampiran)
+					#set($idLampiran = $beanMaklumatLampiran.idDokumen)
+				    #set($namaLampiran = $beanMaklumatLampiran.namaLampiran)
+			  	#end
+				<tr>
+                	<td width="1%">&nbsp;</td>
+	                <td width="28%">Muat Turun Dokumen</td>
+	                <td width="1%">:</td>
+	                <td width="70%">#if ($idLampiran != '') <a href="#" onclick="cetakLampiran($idLampiran)" class="style2">$namaLampiran</a> &nbsp;&nbsp; #end</td>
+              	</tr>
+              	<tr>
+	                <td>&nbsp;</td>
+	                <td>&nbsp;</td>
+	                <td>&nbsp;</td>
+	                <td>
+	                	<input id="fileupload" name="fileupload" type="file" size="40" />
+                  		<input name="cmdUpload" type="button" value="Simpan Dokumen" onclick="uploadDoc($idMesyuarat)" />
+                  	</td>
+              	</tr>
 				#if ($mode != 'view')
 			  	<tr>
 			    	<td colspan="4" valign="bottom"><i><font color="#ff0000">Perhatian</font>: Pastikan label bertanda <font color="#ff0000">*</font> diisi.</i></td>
@@ -245,7 +272,7 @@
 					          <td class="$row">$senaraiFailMohonBaru.jenisPermohonan</td>
 					          <td class="$row">$senaraiFailMohonBaru.namaPemohon</td>
 					          ##<td class="$row" align="center"><a href="#" class="style2" onClick="doCetakKertasPertimbangan('$senaraiFailMohonBaru.id')">
-                      		  <td class="$row" align="center"><a href="#" class="style2" onClick="javascript:doCetakKertasPertimbangan('$senaraiFailMohonBaru.idFail')">
+                      		  <td class="$row" align="center"><a href="#" class="style2" onClick="javascript:paparRingkasanPertimbangan('$senaraiFailMohonBaru.idPermohonan')">
                       		  <img border="0" src="../img/print.gif"/></a></td>
 					          <td class="$row">
 					          		#foreach ($beanMaklumatMesyuarat in $BeanMaklumatMesyuarat)
@@ -473,7 +500,7 @@ function doChangeTab(tabId) {
 	document.${formName}.modePopup.value = "";
 	document.${formName}.mode.value = "view";
 	document.${formName}.actionMesyuarat.value = "papar";
-	document.${formName}.submit();
+	doAjaxCall${formName}("");
 }
 
 function batalMesyuarat(){
@@ -733,7 +760,7 @@ function simpanDokumen(idMesyuarat,idPermohonan) {
 	var dp = document.${formName}.form_token.value ;
 	var dopost = "&form_token="+dp;
 	
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmAPBMesyuaratView&hitButton=simpanDokumen&namaImej="+namaImej+"&catatanImej="+catatanImej+"&idPermohonan="+idPermohonan+"&idMesyuarat="+idMesyuarat+"&selectedTabUpper=3&actionAPB=papar"+dopost;
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmAPBSenaraiMesyuaratView&hitButton=simpanDokumen&namaImej="+namaImej+"&catatanImej="+catatanImej+"&idPermohonan="+idPermohonan+"&idMesyuarat="+idMesyuarat+"&selectedTabUpper=3&actionMesyuarat=papar"+dopost;
 	document.${formName}.method="post";
 	document.${formName}.enctype="multipart/form-data";
     document.${formName}.encoding="multipart/form-data";
@@ -824,5 +851,31 @@ function refreshFromPilihPermohonan() {
 	document.${formName}.refreshPaparan.value = "true";
 	doAjaxCall${formName}("");
 }
+function cetakLampiran(id){
+	var url = "../servlet/ekptg.view.php2.FrmDisplayImage?id="+id;
+    var hWnd=window.open(url,'Cetak','width=800,height=500, resizable=yes,scrollbars=yes,menubar=1');
+    if ((document.window != null) && (!hWnd.opener))
+	hWnd.opener=document.window;
+    if (hWnd.focus != null) hWnd.focus();
+}
+function uploadDoc(idMesyuarat){
+	if(document.${formName}.fileupload.value == ""){
+		alert('Sila pilih Fail yang Ingin Dimuatnaik.');
+  		document.${formName}.fileupload.focus(); 
+		return; 
+	}
 
+	if ( !window.confirm("Adakah Anda Pasti ?") ){
+		return;
+	}
+	
+	var dp = document.${formName}.form_token.value ;
+	var dopost = "&form_token="+dp;
+	
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmAPBSenaraiMesyuaratView&hitButton=simpanLampiran&selectedTabUpper=0&idMesyuarat="+idMesyuarat+"&actionMesyuarat=papar&mode=view"+dopost;	
+	document.${formName}.method="post";
+	document.${formName}.enctype="multipart/form-data";
+    document.${formName}.encoding="multipart/form-data";
+	document.${formName}.submit();
+}
 </script>

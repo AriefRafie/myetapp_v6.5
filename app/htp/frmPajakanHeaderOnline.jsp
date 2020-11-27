@@ -1,9 +1,8 @@
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
     #foreach($beanHeader in $BeanHeader)
-      #set($negeri = $beanHeader.negeri)
-      #set($kementerian = $beanHeader.kementerian)
-      #set($agensi = $beanHeader.agensi)
-  
+    #set($negeri = $beanHeader.negeri)
+    #set($kementerian = $beanHeader.kementerian)
+    #set($agensi = $beanHeader.agensi)
   	#set($idFail = $beanHeader.idFail) 	
     #set($idNegeriTanah = $beanHeader.idNegeriTanah)
     #set($idKementerian = $beanHeader.idKementerian)
@@ -146,25 +145,25 @@
     		<td width="1%"></td>
             <td width="28%">NO. FAIL ONLINE</td>
             <td width="1%">:</td>
-            <td width="70%"><font color="blue">$noFail</font></td>
+            <td width="70%"><font color="blue">$noFailOnline</font></td>
 		 </tr>
           <tr>
     		<td width="1%"></td>
             <td width="28%">TARIKH SURAT PEMOHON</td>
             <td width="1%">:</td>
-            <td width="70%"><fonT color="blue">$!tarikhSuratPemohon</font></td>
+            <td width="70%"><fonT color="blue">$tarikhSuratPemohon</font></td>
 		 </tr>
           <tr>
     		<td width="1%"></td>
             <td width="28%">JENIS FAIL</td>
             <td width="1%">:</td>
-            <td width="70%"><font color="blue">$!idJenisFail</font></td>
+            <td width="70%"><font color="blue">$jenisFail</font></td>
 		 </tr>
           <tr>
     		<td width="1%"></td>
             <td width="28%">STATUS</td>
             <td width="1%">:</td>
-            <td width="70%"><font color="blue">$status</font></td>
+            <td width="70%"><font color="blue">$statusPermohonan</font></td>
 		 </tr>
           
         </table>

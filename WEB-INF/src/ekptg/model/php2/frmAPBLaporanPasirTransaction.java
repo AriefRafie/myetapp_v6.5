@@ -25,7 +25,8 @@ public class frmAPBLaporanPasirTransaction {
 
 	public static String simpanLaporan(String usid,
 			String id_jadualkedualesenAPB, String txtJumKuantiti,
-			String txtJumRoyalti, String socBulan, String txtTahun)
+			String txtJumRoyalti, String txtTarikhPengeluaran, String txtBulan, String txtTahun, String txtMasa, String txtHari,
+			String txtKapal)
 			throws Exception {
 
 		Db db = null;
@@ -33,6 +34,7 @@ public class frmAPBLaporanPasirTransaction {
 		String sql = "";
 		String output = "";
 		Date now = new Date();
+		String tarikhOperasi = "to_date('" + txtTarikhPengeluaran + "','dd/MM/yyyy')";
 
 		try {
 
@@ -52,11 +54,15 @@ public class frmAPBLaporanPasirTransaction {
 			r = new SQLRenderer();
 			r.add("id_laporanpasir", id_laporanpasir);
 			r.add("id_jadualkedualesenAPB", id_jadualkedualesenAPB);
-			r.add("bulan_pengambilan", socBulan);
+			r.add("bulan_pengambilan", txtBulan);
 			r.add("tahun_pengambilan", txtTahun);
 			r.add("jumlah_kuantiti", txtJumKuantiti);
 			r.add("id_unitisipadu", 3); // 3 = METER PERSEGI
 			r.add("jumlah_royalti", txtJumRoyalti);
+			r.add("tarikh_pengeluaran", r.unquote(tarikhOperasi));
+			r.add("masa_operasi", txtMasa);
+			r.add("hari_operasi", txtHari);
+			r.add("nama_kapal", txtKapal);
 			/*r.add("kontraktor", txtKontraktor);*/
 			/*r.add("pembeli_pasir", txtPembeli);*/
 			r.add("id_masuk", usid);
@@ -132,22 +138,28 @@ public class frmAPBLaporanPasirTransaction {
 
 	// EDIT LAPORAN PASIR
 	public void simpanEditLaporan(String usid, String id_laporanpasir,
-			String txtJumKuantiti, String txtJumRoyalti, String socBulan,
-			String txtTahun, String txtKontraktor, String txtPembeli) throws Exception {
+			String txtJumKuantiti, String txtJumRoyalti, String txtTarikhPengeluaran, String txtBulan, String txtTahun, String txtMasa, String txtHari,
+			String txtKapal) throws Exception {
 
 		Db db = null;
 		String sql = "";
+		String tarikhOperasi = "to_date('" + txtTarikhPengeluaran + "','dd/MM/yyyy')";
+		
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 			r.update("id_laporanpasir", id_laporanpasir);
-			r.add("bulan_pengambilan", socBulan);
+			r.add("bulan_pengambilan", txtBulan);
 			r.add("tahun_pengambilan", txtTahun);
 			r.add("jumlah_kuantiti", txtJumKuantiti);
 			r.add("jumlah_royalti", txtJumRoyalti);
-			r.add("kontraktor", txtKontraktor);
-			r.add("pembeli_pasir", txtPembeli);
+			r.add("tarikh_pengeluaran", r.unquote(tarikhOperasi));
+			r.add("masa_operasi", txtMasa);
+			r.add("hari_operasi", txtHari);
+			r.add("nama_kapal", txtKapal);
+//			r.add("kontraktor", txtKontraktor);
+//			r.add("pembeli_pasir", txtPembeli);
 			r.add("id_kemaskini", usid);
 			r.add("tarikh_kemaskini", r.unquote("sysdate"));
 			sql = r.getSQLUpdate("Tblphplaporanpasir");
