@@ -55,7 +55,11 @@ public class FrmTukarPegawaiBI2 extends AjaxBasedModule {
 		HttpSession session = this.request.getSession();
 		String vm = "";
 		String doPost = (String)session.getAttribute("doPost");
-		String userRole = String.valueOf(session.getAttribute("myrole"));
+		String USER_ID_SYSTEM = (String) session.getAttribute("_ekptg_user_id");
+		Map getDetailUsers = modelTukarPegawai.getDetailUsers(session, "", USER_ID_SYSTEM, "", null);
+		
+		List listPermohonanTukarPegawai = null;
+		
 		
 		vm = "app/ppk/TukarPegawai2/FrmPrmhnnTukarPegawai2.jsp";
 		

@@ -61,12 +61,14 @@
         #set( $row = "row1" )
         #elseif (($count % 2) != 0)
         #set( $row = "row1" )
-        #else 
+        #else
         #set( $row = "row2" )
         #end
           <tr>
             <td class="$row" align="center">$count</td>
-            <td class="$row"><a href="javascript:paparFail('$!list.ID_FAIL', '$!list.ID_ULASANTEKNIKAL')" class="style2">$list.NO_FAIL</a></td>
+            <td class="$row"><a href="javascript:paparFail('$!list.ID_FAIL', '$!list.ID_ULASANTEKNIKAL')" class="style2">$list.NO_FAIL</a> &nbsp;&nbsp;
+             #if ($!list.status != "") <font class="blink" ><span class="style2">$list.status</span></font> <br/>
+             #end</td>
             <td class="$row">$list.TAJUK_FAIL</td>
             <td class="$row" align="center">$list.TARIKH_HANTAR</td>
             <td class="$row" align="center">$list.TARIKH_JANGKA_TERIMA</td>
