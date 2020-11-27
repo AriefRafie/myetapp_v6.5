@@ -59,12 +59,23 @@ public class FrmTukarPegawaiBI2 extends AjaxBasedModule {
 		Map getDetailUsers = modelTukarPegawai.getDetailUsers(session, "", USER_ID_SYSTEM, "", null);
 		
 		List listPermohonanTukarPegawai = null;
-		
+		Map h_listBicaraMohonMultiple = null;
 		
 		vm = "app/ppk/TukarPegawai2/FrmPrmhnnTukarPegawai2.jsp";
-		
+		if (submit.equals("hantar")) {
+			
+	
+		}
+		if (submit.equals("batal")) {
+			vm = "app/ppk/TukarPegawai2/FrmPrmhnnTukarPegawai2.jsp";
+		}
+		if (submit.equals("tutup")) {
+			vm = "app/ppk/dashboard.jsp";
+		}
+		if (getDetailUsers = ) {
+			
+		}
 		vm = "app/ppk/TukarPegawai2/historyTukarPegawai2.jsp";
-		
 		vm = "app/ppk/TukarPegawai2/listTukarPegawai2.jsp";
 		
 		return vm;
