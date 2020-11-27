@@ -148,19 +148,6 @@ public class FrmAPBPopupSenaraiPermohonanData {
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 			
-			// UPDATE
-//			r.update("ID_KEHADIRAN", idKehadiran);
-//			r.add("NAMA_PEGAWAI", namaPegawai);
-//			r.add("NAMA_AGENSI", agensi);
-//			r.add("NO_TELEFON", noTel);
-//			r.add("NAMA_JAWATAN", txtJawatan);
-//			r.add("FLAG_PENGERUSI", flagPengerusi);
-//			r.add("ID_KEMASKINI", userId);
-//			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
-
-//			sql = r.getSQLUpdate("TBLPHPKEHADIRANMESY");
-//			stmt.executeUpdate(sql);
-			
 			//INSERT
 			long idMesyuaratPermohonan = DB.getNextID("TBLPHPMESYUARATPERMOHONAN_SEQ");
 			r.add("ID_MESYUARAT_PERMOHONAN", idMesyuaratPermohonan);
@@ -210,19 +197,6 @@ public class FrmAPBPopupSenaraiPermohonanData {
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
 			
-			// UPDATE
-//			r.update("ID_KEHADIRAN", idKehadiran);
-//			r.add("NAMA_PEGAWAI", namaPegawai);
-//			r.add("NAMA_AGENSI", agensi);
-//			r.add("NO_TELEFON", noTel);
-//			r.add("NAMA_JAWATAN", txtJawatan);
-//			r.add("FLAG_PENGERUSI", flagPengerusi);
-//			r.add("ID_KEMASKINI", userId);
-//			r.add("TARIKH_KEMASKINI", r.unquote("SYSDATE"));
-
-//			sql = r.getSQLUpdate("TBLPHPKEHADIRANMESY");
-//			stmt.executeUpdate(sql);
-			
 			//INSERT
 			long idMesyuaratPermohonan = DB.getNextID("TBLPHPMESYUARATPERMOHONAN_SEQ");
 			r.add("ID_MESYUARAT_PERMOHONAN", idMesyuaratPermohonan);
@@ -267,13 +241,6 @@ public class FrmAPBPopupSenaraiPermohonanData {
 		try {
 			db = new Db();
 			Statement stmt = db.getStatement();
-
-			//sql = " SELECT B.ID_PERMOHONAN, D.ID_JENIS_PERMOHONAN"
-			//		+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLPHPPERMOHONANSEWA D"
-			//		+ " WHERE A.ID_FAIL = B.ID_FAIL AND B.ID_PEMOHON = C.ID_PEMOHON AND B.ID_PERMOHONAN = D.ID_PERMOHONAN AND A.NO_FAIL IS NOT NULL AND A.ID_FAIL IS NOT NULL"
-			//		+ " AND A.ID_SEKSYEN = '4' AND B.FLAG_AKTIF = 'Y' AND ID_URUSAN IN (7,12,13) AND B.FLAG_PERJANJIAN = 'U' AND B.ID_STATUS = '1610201'"
-			//		+ " AND B.ID_PERMOHONAN='"+idPermohonan+"'";
-		 
 			
 			sql = " SELECT A.ID_FAIL,  A.NO_FAIL, B.ID_PERMOHONAN, C.NAMA AS NAMA_PEMOHON,D.ID_JENISPERMOHONAN "
 					+ " FROM TBLPFDFAIL A, TBLPERMOHONAN B, TBLPHPPEMOHON C, TBLPHPPMOHONNJDUALPERTAMA D "
@@ -289,7 +256,8 @@ public class FrmAPBPopupSenaraiPermohonanData {
 			Hashtable h;
 			int bil = 1;
 			while (rs.next()) {
-				jenisPermohonan=rs.getString("ID_JENISPERMOHONAN");
+				jenisPermohonan=rs.getString("ID_JENISPERMOHONAN") == null ? "" : rs.
+						getString("ID_JENISPERMOHONAN");
 			}
 		} finally {
 			if (db != null)

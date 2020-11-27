@@ -56,7 +56,47 @@
     <td>:</td>
     <td><input type="text" name="txtTarikhTamat" id="txtTarikhTamat" value="$beanMaklumatAmbilPasir.tarikhTamat" onblur="check_date(this);cekTarikh(this)" size="11" $readonly class="$inputTextClass"/>#if ($mode != 'view') <a href="javascript:displayDatePicker('txtTarikhTamat',false,'dmy');"><img border="0" src="../img/calendar.gif"/> #end </td></td></td>
   </tr>
-    </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td>Koordinat Kawasan Pengorekan</td>
+    <td>:</td>
+    <td>
+    	<table width="50%">
+    		<tr>
+    			<td width="24%">Label Titik</td>
+    			<td width="1%">:</td>
+    			<td width="24%"><input type="text" name="txtLabelTitik" id="txtLabelTitik" size="3" maxlength="3" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();" value="$beanMaklumatAmbilPasir.labelTitik"></td>
+    			<td width="24%">Darjah T</td>
+    			<td width="1%">:</td>
+    			<td width="24%"><input type="text" name="txtDarjahT" id="txtDarjahT" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatAmbilPasir.darjahT" onkeyup="validateNumber(this,this.value);"> &deg;</td>
+    		</tr>
+    		<tr>
+    			<td>Darjah U</td>
+    			<td>:</td>
+    			<td><input type="text" name="txtDarjahU" id="txtDarjahU" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatAmbilPasir.darjahU" onkeyup="validateNumber(this,this.value);"> &deg; </td>
+    			<td>Minit T</td>
+    			<td>:</td>
+    			<td><input type="text" name="txtMinitT" id="txtMinitT" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatAmbilPasir.minitT" onkeyup="validateNumber(this,this.value);"> &prime;</td>
+    		</tr>
+    		<tr>
+    			<td>Minit U</td>
+    			<td>:</td>
+    			<td><input type="text" name="txtMinitU" id="txtMinitU" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatAmbilPasir.minitU" onkeyup="validateNumber(this,this.value);"> &prime; </td>
+    			<td>Saat T</td>
+    			<td>:</td>
+    			<td><input type="text" name="txtSaatT" id="txtSaatT" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatAmbilPasir.saatT" onkeyup="validateNumber(this,this.value);"> &Prime;</td>
+    		</tr>
+    		<tr>
+    			<td>Saat U</td>
+    			<td>:</td>
+    			<td><input type="text" name="txtSaatU" id="txtSaatU" size="5" maxlength="13" $readonly class="$inputTextClass" value="$beanMaklumatAmbilPasir.saatU" onkeyup="validateNumber(this,this.value);"> &Prime;</td>
+    			<td></td>
+    			<td></td>
+    			<td></td>
+    		</tr>
+    	</table>
+    </td>
+   </tr> 
    <tr>
     <td>&nbsp;</td>
     <td>Laluan Vessel</td>
@@ -69,7 +109,6 @@
     <td>:</td>
     <td><input type="text" value="$beanMaklumatAmbilPasir.kaedah" name="txtKaedah" id="txtKaedah" style="width:300px" $readonly class="$inputTextClass" ></td>
   </tr>
-    </tr>
   <tr>
     <td>&nbsp;</td>
     <td>Kawasan Pelupusan Bahan Buangan Korek (spoil) seperti yang dipersetujui oleh Jabatan laut Malaysia (JLM) dan diluluskan dalam Laporan Enviromental Assessement (EA) daripada Jabatan Alam Sekitar (JAS)</td>

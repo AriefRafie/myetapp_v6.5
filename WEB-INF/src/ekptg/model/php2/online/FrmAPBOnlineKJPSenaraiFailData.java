@@ -283,7 +283,6 @@ public class FrmAPBOnlineKJPSenaraiFailData {
 			Statement stmt = db.getStatement();
 			
 			sql = "SELECT ID_DOKUMEN FROM TBLPHPDOKUMEN WHERE ID_PERMOHONAN = '" + idPermohonan + "' AND ID_ULASANTEKNIKAL = '" + idUlasanTeknikal + "'";
-			System.out.println(sql);
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			if (rs.next()) {
@@ -298,5 +297,31 @@ public class FrmAPBOnlineKJPSenaraiFailData {
 		}
 		
 		return lampiran;
+	}
+	
+	public String getFlagKJPByidUlasanTeknikal(String idUlasanTeknikal)
+			throws Exception {
+		Db db = null;
+		String sql = "";
+
+		try {
+			db = new Db();
+			Statement stmt = db.getStatement();
+
+			sql = "SELECT FLAG_KJP FROM TBLPHPULASANTEKNIKAL WHERE ID_ULASANTEKNIKAL = '"
+					+ idUlasanTeknikal + "'";
+
+			ResultSet rs = stmt.executeQuery(sql);
+
+			if (rs.next()) {
+				return (String) rs.getString("FLAG_KJP");
+			} else {
+				return "";
+			}
+
+		} finally {
+			if (db != null)
+				db.close();
+		}
 	}
 }

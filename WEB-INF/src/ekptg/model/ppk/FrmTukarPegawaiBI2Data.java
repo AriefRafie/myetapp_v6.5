@@ -1,0 +1,52 @@
+package ekptg.model.ppk;
+
+import java.math.RoundingMode;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.Vector;
+
+import javax.servlet.http.HttpSession;
+
+import lebah.db.Db;
+import lebah.db.SQLRenderer;
+import lebah.pm.entity.ActivityEvent;
+import lebah.pm.entity.UserActivityEvent;
+import lebah.template.DbPersistence;
+
+import org.apache.log4j.Logger;
+
+import ekptg.engine.EmailProperty;
+import ekptg.engine.EmailSender;
+import ekptg.helpers.AuditTrail;
+import ekptg.helpers.DB;
+import ekptg.report.ppk.FrmPopupPilihPegawaiReportData;
+
+public class FrmTukarPegawaiBI2Data {
+	static Logger myLogger = Logger.getLogger(ekptg.model.ppk.FrmTukarPegawaiBI2Data.class);
+	
+}
+
+
+/*
+ * List fail tukar pegawai 2:
+ * 1. ekptg.view.ppk.FrmTukarPegawaiBI2.java
+ * 2. app/ppk/TukarPegawai2/FrmPrmhnnTukarPegawai2.jsp
+ * 3. app/ppk/TukarPegawai2/historyTukarPegawai2.jsp
+ * 4. app/ppk/TukarPegawai2/listTukarPegawai2.jsp
+ * 5. ekptg.model.ppk.FrmTukarPegawaiBI2Data.java
+ * */

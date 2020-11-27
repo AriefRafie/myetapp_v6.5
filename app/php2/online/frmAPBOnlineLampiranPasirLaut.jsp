@@ -55,7 +55,7 @@
           <td width="1%">&nbsp;</td>
           <td width="28%">Muat Turun Dokumen</td>
           <td width="1%">:</td>
-          <td width="70%"><a href="#" onclick="cetakImej($idDokumen)" class="style2">$beanMaklumatImejan.namaFail</a> </td>
+          <td width="70%"><a href="#" onclick="cetakImej($idDokumen)" class="style2"><font color="blue">$beanMaklumatImejan.namaFail</font></a> </td>
         </tr>
         <tr>
           <td>&nbsp;</td>
