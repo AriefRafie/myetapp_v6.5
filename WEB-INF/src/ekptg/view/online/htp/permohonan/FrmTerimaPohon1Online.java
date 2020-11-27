@@ -784,6 +784,19 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 		
 				saveData(noBaucer,noResit,tarikhBaucer,tarikhResit,jumlahBaucer);
 				viewBuktiBayaranNotis2();
+				
+				myLog.debug("default page ::"+template_name);
+	    		//senaraiTerimaPohon = fData.TerimaPohongetList(idUser,null,null,null,null,null,null,null,null);
+	    		//senaraiTerimaPohon = fData.TerimaPohongetListOnlineSHTP(idUser,null,null,id_kementerian,null,null,null,null,null);
+	    		senaraiTerimaPohon = fData.TerimaPohongetListOnlineSHTP(null,null,null,id_kementerian,null,null,null,null,null);
+	    		doListing(session,action,mode,senaraiTerimaPohon);
+	    		if(mode.equals("changeNegeri")){
+			    	flagAdvSearch = "Y";
+	    			senaraiTerimaPohon = fData.TerimaPohongetList(null,nofail,txtTajuk,
+							id_kementerian,id_agensi,idnegeri,iddaerah,idmukim,idurusan,idStatus,noRujukanOnline); //--- addbyzul for carian by idStatus dan noRujukanOnline --
+					doListing(session,action,mode,senaraiTerimaPohon);
+	    		}
+				
 				template_name = PATH + "indexOnline.jsp";
 				
 				
@@ -2373,7 +2386,10 @@ public class FrmTerimaPohon1Online extends AjaxBasedModule{
 						,htpPermohonan.getPermohonan().getNoPermohonan());
 			
 			//   (HTP)HQPenggunaPembelianPerletakhakan,   (HTP)HQPenggunaPembelian, (HTP)HQPengguna
-			ec.hantarPermohonan(getEmelSemak().checkEmail(userID), "(HTP)HQPenggunaPermohonan", emelSubjek, kandungan);
+			//ec.hantarPermohonan(getEmelSemak().checkEmail(userID), "(HTP)HQPenggunaPermohonan", emelSubjek, kandungan);
+			ec.sendByRole(getEmelSemak().checkEmail(userID), "(HTP)HQPenggunaPermohonan",
+					String.valueOf(htpPermohonan.getPermohonan().getPfdFail().getNamaKementerian()), emelSubjek, kandungan);
+			
 			
 		}
 		
