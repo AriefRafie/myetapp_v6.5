@@ -1,0 +1,137 @@
+<style type="text/css">
+<!--
+.style1 {
+	color: #0033FF
+}
+-->
+</style>
+<p>
+
+  <input type="hidden" name="submit2" />
+  <input type="hidden" name="idFail" />
+  <input type="hidden" name="idStatus" />
+</p>
+<table width="100%" border="0" cellspacing="2" cellpadding="2">
+  <tr>
+    <td><fieldset>
+        <legend><b>CARIAN</b></legend>
+        <table width="100%" align="center" border="0">
+          <tr>
+            <td width="30%" height="24" scope="row" align="right">No. Fail : </td>
+            <td width="70%"><input name="findNoFail" id="findNoFail" type="text" value="$!findNoFail" size="50" maxlength="50" style="text-transform:uppercase;" ></td>
+          </tr>
+          <tr>
+            <td width="30%" height="24" scope="row" align="right">Tajuk Fail : </td>
+            <td width="70%"><input name="findTajukFail" id="findTajukFail" type="text" value="$!findTajukFail" size="50" maxlength="50" style="text-transform:uppercase;" ></td>
+          </tr>
+          <tr>
+            <td width="30%" height="24" scope="row" align="right">Nama Pemohon : </td>
+            <td width="70%"><input name="findPemohon" id="findPemohon" type="text" value="$!findPemohon" size="50" maxlength="50" style="text-transform:uppercase;" ></td>
+          </tr>
+          <tr>
+            <td width="30%" height="24" scope="row" align="right"><em>MyID / MyCoID</em> : </td>
+            <td width="70%"><input name="findNoPengenalan" id="findNoPengenalan" type="text" value="$!findNoPengenalan" size="50" maxlength="50" style="text-transform:uppercase;" ></td>
+          </tr>
+          <tr>
+            <td width="30%" height="24" scope="row" align="right">Tarikh Terima : </td>
+            <td width="70%"><input type="text" name="findTarikhTerima" id="findTarikhTerima" value="$!findTarikhTerima" onblur="check_date(this)" size="9"/>
+              <a href="javascript:displayDatePicker('findTarikhTerima',false,'dmy');"><img border="0" src="../img/calendar.gif"/></td>
+          </tr>
+          <tr>
+            <td scope="row" align="right"> No Hakmilik :</td>
+            <td><input name="findNoHakmilik" id="findNoHakmilik" type="text" value="$!findNoHakmilik" size="30" maxlength="50" /></td>
+          </tr>
+          <tr>
+            <td scope="row" align="right"> No Warta :</td>
+            <td><input name="findNoWarta" id="findNoWarta" type="text" value="$!findNoWarta" size="30" maxlength="50"/></td>
+          </tr>
+          <tr>
+            <td scope="row" align="right">No Pegangan Hakmilik :</td>
+            <td><input name="findNoPegangan" id="findNoPegangan" type="text" value="$!findNoPegangan" size="30" maxlength="50"/></td>
+          </tr>
+          <tr>
+            <td scope="row" align="right"> Jenis Hakmilik :</td>
+            <td>$selectJenisHakmilik</td>
+          </tr>
+          <tr>
+            <td scope="row" align="right">Jenis Lot :</td>
+            <td>$selectLot</td>
+          </tr>
+          <tr>
+            <td scope="row" align="right">No Lot :</td>
+            <td><input name="findNoLot" id="findNoLot" type="text" value="$!findNoLot" size="30" maxlength="50"/></td>
+          </tr>
+          <tr>
+            <td scope="row" align="right">Negeri :</td>
+            <td>$selectNegeri</td>
+          </tr>
+          <tr>
+            <td scope="row" align="right">Daerah :</td>
+            <td>$selectDaerah</td>
+          </tr>
+          <tr>
+            <td scope="row" align="right">Mukim :</td>
+            <td>$selectMukim</td>
+          </tr>
+          <tr>
+            <td scope="row"></td>
+            <td><input name="cmdCari" id="cmdCari" value="Cari" type="button" onclick="doDivAjaxCall$formname('divMainForm','carian','');">
+              <input name="cmdKosongkan" id="cmdKosongkan" value="Kosongkan" type="reset" onclick="doDivAjaxCall$formname('divMainForm','','');"></td>
+          </tr>
+        </table>
+      </fieldset></td>
+  </tr>
+  <tr>
+    <td><fieldset>
+        <legend><b>SENARAI PERMOHONAN</b></legend>
+        #parse("app/utils/record_paging.jsp")
+        <table align="center" width="100%">
+          <tr class="table_header">
+            <td scope="row" width="5%" align="center"><strong>Bil</strong></td>
+           	<td width="19%"><strong>No. Rujukan <i>Online</i></strong></td>
+           	<td width="19%"><strong>No. Fail</i></strong></td>
+            <td width="31%"><strong>Tajuk Fail</strong></td>
+            <td width="13%"><strong>Tarikh Terima Ulasan</strong></td>
+            <td width="13%"><strong>Tarikh Hantar Ulasan</strong></td>
+
+          </tr>
+        #set ($list = "")
+        #set ( $count = $startNumber )
+        #if ($SenaraiFail.size() > 0)
+        #foreach ($list in $SenaraiFail)
+        #set ( $count = $count + 1 )
+        #if ($count == '')
+        #set( $row = "row1" )
+        #elseif (($count % 2) != 0)
+        #set( $row = "row1" )
+        #else
+        #set( $row = "row2" )
+        #end
+          <tr>
+            <td class="$row" align="center">$count</td>
+            <td class="$row">$list.NO_PERMOHONAN</td>
+            <td class="$row"><a href="javascript:paparFailRujukan('$!list.ID_FAIL', '$!list.ID_ULASANTEKNIKAL')" class="style2">$list.NO_FAIL</a></td>
+            <td class="$row">$list.TAJUK_FAIL</td>
+            <td class="$row" align="center">$list.TARIKH_TERIMA</td>
+            <td class="$row" align="center">$list.TARIKH_HANTAR_ULASAN</td>
+          </tr>
+          #end
+          #else
+          <tr>
+            <td class="row1" align="center">&nbsp;</td>
+            <td class="row1" colspan="4">Tiada Rekod</td>
+          </tr>
+          #end
+        </table>
+      </fieldset></td>
+  </tr>
+</table>
+<script>
+function papar(idFail,idStatus) {
+	document.${formName}.idFail.value = idFail;
+	document.${formName}.idStatus.value = idStatus;
+	document.${formName}.submit2.value = "seterusnya";
+	document.${formName}.submit();
+}
+</script>
+
