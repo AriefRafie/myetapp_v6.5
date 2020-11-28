@@ -330,6 +330,10 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
 		this.context.put("flagPopup", "");
 		this.context.put("modePopup", "");
 
+		myLog.info("mode skrung >>> "+mode);
+		myLog.info("flagPopup skrung >>> "+flagPopup);
+		myLog.info("mode modePopup >>> "+modePopup);
+		myLog.info("mode submit >>> "+submit);
         //VIEW MODE
         if ("view".equals(mode)){
 
@@ -375,6 +379,28 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
     				this.context.put("BeanMaklumatTanahGanti", beanMaklumatTanahGanti);
     				this.context.put("selectDaerahTG", HTML.SelectDaerah1("socDaerahTG", Long.parseLong(idDaerahTG), " onChange=\"doChangeDaerah();\""));
     				this.context.put("selectMukimTG", HTML.SelectMukimByDaerah(idDaerahTG, "socMukimTG", Long.parseLong(idMukimTG), ""));
+
+        			if ("doChangeJenisTanah".equals(submit)){
+        				myLog.info("idJenistanah >>>>>> "+getParam("socJenisTanah"));
+        				idJenisTanah = getParam("socJenisTanah");
+        			}
+    				myLog.info("idJenisTanah >>>> "+idJenisTanah);
+    				if ("1".equals(idJenisTanah)) {
+    					this.context.put("selected", "");
+    					this.context.put("selected1", "selected");
+    					this.context.put("selected2", "");
+    					this.context.put("idJenisTanah", idJenisTanah);
+    	        	} else if ("2".equals(idJenisTanah)) {
+    					this.context.put("selected", "");
+    					this.context.put("selected1", "");
+    					this.context.put("selected2", "selected");
+    					this.context.put("idJenisTanah", idJenisTanah);
+    	        	} else {
+    	        		this.context.put("selected", "selected");
+    					this.context.put("selected1", "");
+    					this.context.put("selected2", "");
+    					this.context.put("idJenisTanah", "0");
+    	        	}
         		}
 
         		//MODEPOPUP = VIEW
@@ -587,6 +613,7 @@ public class FrmPLPMaklumatPermohonanView extends AjaxBasedModule {
 			//SENARAI SEMAK
 			semak = new FrmSemakan();
 			semak.mode = mode;
+			myLog.info("idLuasKegunaan >>>> "+idLuasKegunaan);
 			if("2".equals(idLuasKegunaan)){
 				senaraiSemak = semak.getSenaraiSemakanAttach("phppelepasans",idPermohonan);
 			}else{

@@ -79,7 +79,7 @@ public class FrmTKRKeputusanData {
 			}
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610206", "4", null, session, "INS",
 					"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] DIDAFTARKAN");
@@ -333,8 +333,8 @@ public class FrmTKRKeputusanData {
 			}
 
 			conn.commit();
-			
-			
+
+
 			if ("L".equals(idKeputusan)) {
 				AuditTrail.logActivity("1610207", "4", null, session, "INS",
 						"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
@@ -342,7 +342,7 @@ public class FrmTKRKeputusanData {
 			} else if ("B".equals(idKeputusan)) {
 				AuditTrail.logActivity("1617199", "4", null, session, "INS",
 						"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
-								+ "] DIDAFTARKAN"); // LULUS BERSYARAT 
+								+ "] DIDAFTARKAN"); // LULUS BERSYARAT
 			}else if ("T".equals(idKeputusan)) {
 				AuditTrail.logActivity("1610208", "4", null, session, "INS",
 						"FAIL [" + getNoFailByIdPermohonan(idPermohonan)
@@ -363,7 +363,7 @@ public class FrmTKRKeputusanData {
 				db.close();
 		}
 	}
-	
+
 	public void sendEmailtoPemohon(String idPermohonan, String idKeputusan, HttpSession session) throws Exception {
 		Db db = null;
 		Connection conn = null;
@@ -375,6 +375,18 @@ public class FrmTKRKeputusanData {
 		String noPermohonan = "";
 		String idSuburusan = "";
 		String keputusan = "";
+		String bandar = "";
+		String negeri = "";
+		String alamat1 = "";
+		String alamat2 = "";
+		String alamat3 = "";
+		String lot = "";
+		String noHak = "";
+		String jenisTanah = "";
+		String kegunaanTanah = "";
+		String kementerianTanah = "";
+		String luas = "";
+		String jenisLuas = "";
 
 		try {
 			db = new Db();
@@ -382,44 +394,81 @@ public class FrmTKRKeputusanData {
 	    	conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-						
-			sql = "SELECT B.ID_HAKMILIKPERMOHONAN, A.NO_PERMOHONAN, C.ID_SUBURUSAN, D.NAMA, D.EMEL " 
-				+ " FROM TBLPERMOHONAN A,TBLPHPHAKMILIKPERMOHONAN B, TBLPFDFAIL C,TBLPHPPEMOHON D "
-				+ " WHERE C.ID_FAIL = A.ID_FAIL AND A.ID_PERMOHONAN = B.ID_PERMOHONAN "
-				+ " AND A.ID_PEMOHON = D.ID_PEMOHON AND A.ID_PERMOHONAN = '" + idPermohonan + "'";
-			
-			
+
+			sql = "SELECT B.ID_HAKMILIKPERMOHONAN, A.NO_PERMOHONAN, C.ID_SUBURUSAN, D.NAMA, D.EMEL,TBLRUJBANDAR.KETERANGAN AS BANDAR_AGENPEMOHON,"
+					+ " TBLRUJNEGERI.NAMA_NEGERI AS NEGERI_AGENPEMOHON, REPLACE(INITCAP(REPLACE(TRIM(D.ALAMAT1_TETAP), '&', '&#38;')), ',') AS ALAMAT_1_AGENPEMOHON,"
+					+ " REPLACE(INITCAP(REPLACE(TRIM(D.ALAMAT2_TETAP), '&', '&#38;')), ',') AS ALAMAT_2_AGENPEMOHON,"
+					+ " REPLACE(INITCAP(REPLACE(TRIM(D.ALAMAT3_TETAP), '&', '&#38;')), ',') AS ALAMAT_3_AGENPEMOHON,"
+					+ " INITCAP(TBLRUJLOT.KETERANGAN) || ' ' || TBLHTPHAKMILIK.NO_LOT AS LOT,"
+					+ " CASE "
+					+ "	WHEN TBLHTPHAKMILIK.NO_WARTA IS NULL THEN TBLRUJJENISHAKMILIK.KOD_JENIS_HAKMILIK || ' ' || TBLHTPHAKMILIK.NO_HAKMILIK"
+					+ "	WHEN TBLHTPHAKMILIK.NO_HAKMILIK IS NULL THEN TBLHTPHAKMILIK.NO_WARTA"
+					+ "	END AS NO_HAK,"
+					+ "	CASE"
+					+ "	WHEN TBLHTPHAKMILIK.NO_WARTA IS NULL THEN 'milik'"
+					+ "	WHEN TBLHTPHAKMILIK.NO_HAKMILIK IS NULL THEN 'rizab'"
+					+ "	END AS JENIS_TANAH,INITCAP(TBLHTPHAKMILIK.KEGUNAAN_TANAH) AS KEGUNAAN_TANAH,"
+					+ " REPLACE(INITCAP(REPLACE(TRIM(TBLRUJKEMENTERIAN.NAMA_KEMENTERIAN), '&', '&#38;')), ',') AS KEMENTERIAN_TANAH,"
+					+ " CASE "
+					+ "	WHEN SUBSTR(ROUND(TBLPHPPERMOHONANPELEPASAN.LUAS_MHNBERSAMAAN, 4), 1, 1) = '.' THEN '0' || ROUND(TBLPHPPERMOHONANPELEPASAN.LUAS_MHNBERSAMAAN, 4)"
+					+ "	WHEN SUBSTR(ROUND(TBLPHPPERMOHONANPELEPASAN.LUAS_MHNBERSAMAAN, 4), 1, 1) != '.' THEN '' || ROUND(TBLPHPPERMOHONANPELEPASAN.LUAS_MHNBERSAMAAN, 4)"
+					+ " END AS LUAS_MHN, TBLRUJLUAS.KETERANGAN"
+					+ " FROM TBLPERMOHONAN A, TBLPHPHAKMILIKPERMOHONAN B, TBLPFDFAIL C, TBLPHPPEMOHON D, TBLRUJLOT, TBLHTPHAKMILIK,"
+					+ " TBLHTPHAKMILIKAGENSI, TBLRUJJENISHAKMILIK, TBLRUJKEMENTERIAN, TBLRUJBANDAR, TBLRUJNEGERI, TBLPHPPERMOHONANPELEPASAN, TBLRUJLUAS"
+					+ " WHERE C.ID_FAIL = A.ID_FAIL"
+					+ " AND A.ID_PERMOHONAN = B.ID_PERMOHONAN AND A.ID_PEMOHON = D.ID_PEMOHON AND B.ID_HAKMILIKAGENSI = TBLHTPHAKMILIKAGENSI.ID_HAKMILIKAGENSI"
+					+ " AND TBLHTPHAKMILIKAGENSI.ID_HAKMILIK = TBLHTPHAKMILIK.ID_HAKMILIK AND TBLHTPHAKMILIKAGENSI.ID_KEMENTERIAN = TBLRUJKEMENTERIAN.ID_KEMENTERIAN"
+					+ " AND TBLHTPHAKMILIK.ID_LOT = TBLRUJLOT.ID_LOT(+) AND D.ID_NEGERITETAP = TBLRUJNEGERI.ID_NEGERI(+) AND D.ID_BANDARTETAP = TBLRUJBANDAR.ID_BANDAR(+)"
+					+ " AND TBLHTPHAKMILIK.ID_JENISHAKMILIK = TBLRUJJENISHAKMILIK.ID_JENISHAKMILIK(+) AND TBLPHPPERMOHONANPELEPASAN.ID_LUASASAL = TBLRUJLUAS.ID_LUAS(+) "
+					+ " AND A.ID_PERMOHONAN = TBLPHPPERMOHONANPELEPASAN.ID_PERMOHONAN AND A.ID_PERMOHONAN = '99201006404'  = '" + idPermohonan + "'";
+
+
 			ResultSet rsPermohonan = stmt.executeQuery(sql);
 			if (rsPermohonan.next()){
 				idhakmilikPermohonan = rsPermohonan.getString("ID_HAKMILIKPERMOHONAN");
 				noPermohonan = rsPermohonan.getString("NO_PERMOHONAN");
 				idSuburusan = rsPermohonan.getString("ID_SUBURUSAN");
 				namaUser = rsPermohonan.getString("NAMA");
+				bandar = rsPermohonan.getString("BANDAR_AGENPEMOHON");
+				negeri = rsPermohonan.getString("NEGERI_AGENPEMOHON");
+				alamat1 = rsPermohonan.getString("ALAMAT_1_AGENPEMOHON");
+				alamat2 = rsPermohonan.getString("ALAMAT_2_AGENPEMOHON");
+				alamat3 = rsPermohonan.getString("ALAMAT_3_AGENPEMOHON");
+				lot = rsPermohonan.getString("LOT");
+				noHak = rsPermohonan.getString("NO_HAK");
+				jenisTanah = rsPermohonan.getString("JENIS_TANAH");
+				kegunaanTanah = rsPermohonan.getString("KEGUNAAN_TANAH");
+				kementerianTanah = rsPermohonan.getString("KEMENTERIAN_TANAH");
+				luas = rsPermohonan.getString("LUAS_MHN");
+				jenisLuas = rsPermohonan.getString("KETERANGAN");
+
 				//emelUser = rsPermohonan.getString("EMEL");
-			}	
-			
-			if ("L".equals(idKeputusan)) {
-				keputusan = "LULUS";
-			} else if ("B".equals(idKeputusan)) {
-				keputusan = "LULUS BERSYARAT";
-			} else if ("T".equals(idKeputusan)) {
-				keputusan = "TOLAK";
 			}
-			
+
+			if ("L".equals(idKeputusan)) {
+				keputusan = "diluluskan";
+			} else if ("B".equals(idKeputusan)) {
+				keputusan = "lulus bersyarat";
+			} else if ("T".equals(idKeputusan)) {
+				keputusan = "ditolak";
+			}
+
 			if (!"".equals(namaUser) && !"".equals(emelUser)){
 				EmailConfig ef = new EmailConfig();
-				
+
 				String subject = "PERMOHONAN TUKARGUNA " + noPermohonan;
-				String kandungan = namaUser.toUpperCase() + "."
-						+ "<br><br>Permohonan anda telah "+ keputusan +".Sila gunakan nombor permohonan diatas sebagai rujukan.";
-				
+				String kandungan = "Permohonan tukarguna tanah "+ jenisTanah +" "+lot+
+						" "+alamat1+ ", "+alamat2+", "+alamat3+", "+bandar+", "+
+						negeri+ " daripada "+kementerianTanah+" kepada "+namaUser+ " bagi "+kegunaanTanah+
+						" adalah "+ keputusan +" seluas "+luas+" "+jenisLuas+".";
+
 				ef.sendByOnlineUser(emelUser, subject, kandungan);
 			}
 		} finally {
 			if (db != null)
 				db.close();
 		}
-	} 
+	}
 
 	private boolean getFlagBorangK(String idFail) throws Exception {
 		Db db = null;

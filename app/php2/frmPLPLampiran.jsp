@@ -103,7 +103,7 @@ function simpanDokumen2(idLaporanTanah,idHakmilikPermohonan,idTanahGanti,flagJen
 	var dp = document.${formName}.form_token.value ;
 	var dopost = "&form_token="+dp;
 
-	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmPLPLawatanTapakView&hitButton=simpanDokumenLampiran&namaImej="+namaImej+"&catatanImej="+catatanImej+"&idLaporanTanah="+idLaporanTanah+"&selectedTabUpper=5"+dopost+"&actionPelepasan=papar&mode=view&flagPopup=openPopupDokumen&modePopup=new&idHakmilikPermohonan="+idHakmilikPermohonan+"&idTanahGanti="+idTanahGanti+"&flagJenisTanah="+flagJenisTanah;
+	document.${formName}.action = "?_portal_module=ekptg.view.php2.FrmPLPLawatanTapakView&hitButton=simpanDokumenLampiran&namaImej="+namaImej+"&catatanImej="+catatanImej+"&idLaporanTanah="+idLaporanTanah+"&selectedTabUpper=6"+dopost+"&actionPelepasan=papar&mode=view&flagPopup=openPopupDokumen&modePopup=new&idHakmilikPermohonan="+idHakmilikPermohonan+"&idTanahGanti="+idTanahGanti+"&flagJenisTanah="+flagJenisTanah;
 	document.${formName}.method="post";
 	document.${formName}.enctype="multipart/form-data";
     document.${formName}.encoding="multipart/form-data";

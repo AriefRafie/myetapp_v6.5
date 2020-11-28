@@ -30,7 +30,7 @@ public class FrmPhpNotifikasiEmel {
 	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	String tajukFail = "";
 
-	public void sendEmailtoKJP(String idPermohonan, String idUlasanTeknikal, String idKementerian, HttpSession session) 
+	public void sendEmailtoKJP(String idPermohonan, String idUlasanTeknikal, String idKementerian, HttpSession session)
 			throws Exception {
 		Db db = null;
 		Connection conn = null;
@@ -46,14 +46,14 @@ public class FrmPhpNotifikasiEmel {
 		String pemilikTanah = "";
 		String tujuan = "";
 		String kegunaanTanah = "";
-		
+
 		try {
 			db = new Db();
 			conn = db.getConnection();
 	    	conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			
+
 			sql = "SELECT A.TARIKH_HANTAR, A.JANGKAMASA, C.NO_FAIL, C.TAJUK_FAIL, D.NAMA, E.NAMA_SUBURUSAN,"
 				+ " F.FLAG_GUNA, F.CADANGAN_KEGUNAAN"
 				+ " FROM TBLPHPULASANTEKNIKAL A, TBLPERMOHONAN B, TBLPFDFAIL C, TBLPHPPEMOHON D, TBLRUJSUBURUSAN E,"
@@ -61,7 +61,7 @@ public class FrmPhpNotifikasiEmel {
 				+ " WHERE A.ID_PERMOHONAN = B.ID_PERMOHONAN AND B.ID_FAIL = C.ID_FAIL AND C.ID_SUBURUSAN = E.ID_SUBURUSAN"
 				+ " AND B.ID_PERMOHONAN = F.ID_PERMOHONAN AND B.ID_PEMOHON = D.ID_PEMOHON AND A.ID_ULASANTEKNIKAL = "
 				+ "'"+idUlasanTeknikal+"'";
-			
+
 			ResultSet rsEmel = stmt.executeQuery(sql);
 			if (rsEmel.next()){
 				tajukFail = rsEmel.getString("TAJUK_FAIL") == null ? "" :
@@ -82,43 +82,46 @@ public class FrmPhpNotifikasiEmel {
 				} else if("2".equals(rsEmel.getString("FLAG_GUNA"))) {
 					kegunaanTanah = "sebahagian";
 				}
-			}	
-			
+			}
+
 			//TO GET USER EMAIL BY ROLE idKementerian
 //			sql = "SELECT UI.EMEL FROM USERS U, USERS_INTERNAL UI, USERS_KEMENTERIAN UK "
 //				+ "WHERE U.USER_ID = UI.USER_ID AND U.USER_ID = UK.USER_ID "
 //				+ "AND UK.ID_KEMENTERIAN IN ('"+idKementerian+"') ";
-//			  
+//
 //			ResultSet rsPenerimaEmel = stmt.executeQuery(sql);
-//			  
-//			List<String> strPenerima = new ArrayList<String>(); 
+//
+//			List<String> strPenerima = new ArrayList<String>();
 //			while (rsPenerimaEmel.next()) {
 //				if (rsPenerimaEmel.getString("EMEL") != null && rsPenerimaEmel.getString("EMEL").trim().length() > 0) {
-//					strPenerima.add(rsPenerimaEmel.getString("EMEL")); 
+//					strPenerima.add(rsPenerimaEmel.getString("EMEL"));
 //				}
 //			}
 //			email.MULTIPLE_RECIEPIENT = new String[strPenerima.size()];
-//			  
-//			for (int i = 0; i < strPenerima.size(); i++) { 
-//				email.MULTIPLE_RECIEPIENT[i] = strPenerima.get(i); 
+//
+//			for (int i = 0; i < strPenerima.size(); i++) {
+//				email.MULTIPLE_RECIEPIENT[i] = strPenerima.get(i);
 //			}
-			 
+
 			email.RECIEPIENT = "nurulain.siprotech@gmail.com"; //untuk testing sementara
 			email.SUBJECT = "PERMOHONAN MENGEMUKAKAN LAPORAN TANAH URUSAN "+urusan+" BAGI NO. FAIL " + noFail;
 			if (urusan.contains("PELEPASAN")) {
 				email.MESSAGE =  "Tuan/ Puan,"
 						+ "<br><br><u><b>"+tajukFail+"</b></u>"
-						+ "<br><br>Dengan hormatnya saya diarah untuk menarik perhatian tuan kepada perkara di atas "
-						+ "daripada " +pemohon+ "."
-						+ "<br><br>2.	Dimaklumkan bahawa Jabatan ini telah menerima permohonan pelepasan lot tersebut di atas."
-						+ "Tanah yang terlibat merupakan tanah di bawah kawalan " +pemilikTanah+ "."
-						+ "<br><br>3.	Sehubungan dengan itu, pihak tuan dipohon untuk memberi ulasan mengenai "
-						+ "permohonan tersebut dalam tempoh " +tempoh+ " hari sebelum " +tarikhHantar+ ". "
-						+ "Kerjasama dan tindakan awal daripada pihak tuan/ puan amatlah dihargai."
-						+ "<br><br>Sekian, terima kasih.<br><br><br>"			
+						+ "<br><br>Dipohon pihak tuan mengemukakan ulasan bagi permohonan tersebut<br><br>"
+						+ "Kerjasama daripada pihak tuan untuk mengemukakan keputusan tersebut kepada Jabatan dalam tempoh 30 hari dari  "
+						+ tarikhHantar + ".<br><br><br>"
 						+ "Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
-				
-			} else {
+
+			}else if(urusan.contains("TUKARGUNA")) {
+				email.MESSAGE =  "Tuan/ Puan,"
+						+ "<br><br><u><b>"+tajukFail+"</b></u>"
+						+ "<br><br>Dipohon pihak tuan mengemukakan ulasan bagi permohonan tersebut<br><br>"
+						+ "Kerjasama daripada pihak tuan untuk mengemukakan keputusan tersebut kepada Jabatan dalam tempoh 30 hari dari  "
+						+ tarikhHantar + ".<br><br><br>"
+						+ "Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
+
+			}  else {
 				email.MESSAGE =  "Tuan/ Puan,"
 						+ "<br><br><u><b>"+tajukFail+"</b></u>"
 						+ "<br><br>Dengan hormatnya saya diarah untuk menarik perhatian tuan kepada perkara di atas"
@@ -128,17 +131,17 @@ public class FrmPhpNotifikasiEmel {
 						+ "<br><br>3.	Sehubungan dengan itu, pihak tuan dipohon untuk memberi ulasan mengenai "
 						+ "permohonan tukarguna tersebut dalam tempoh " +tempoh+ " hari sebelum " +tarikhHantar+ ". "
 						+ "Kerjasama dan tindakan awal daripada pihak tuan/ puan amatlah dihargai."
-						+ "<br><br>Sekian, terima kasih.<br><br><br>"			
+						+ "<br><br>Sekian, terima kasih.<br><br><br>"
 						+ "Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
 			}
 			email.sendEmail();
-			
+
 		} finally {
 			if (db != null)
 				db.close();
 		}
 	}
-	
+
 	public void sendEmailtoPejabatJKPTG(String idUlasanTeknikal, HttpSession session) throws Exception {
 		Db db = null;
 		Connection conn = null;
@@ -151,19 +154,19 @@ public class FrmPhpNotifikasiEmel {
 		String tempoh = "";
 		String tarikhHantar = "";
 		String urusan = "";
-		
+
 		try {
 			db = new Db();
 			conn = db.getConnection();
 	    	conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			
+
 			sql = "SELECT A.TARIKH_HANTAR, A.JANGKAMASA, C.NO_FAIL, C.TAJUK_FAIL, D.NAMA, E.NAMA_SUBURUSAN"
 				+ " FROM TBLPHPULASANTEKNIKAL A, TBLPERMOHONAN B, TBLPFDFAIL C, TBLPHPPEMOHON D, TBLRUJSUBURUSAN E"
 				+ " WHERE A.ID_PERMOHONAN = B.ID_PERMOHONAN AND B.ID_FAIL = C.ID_FAIL AND C.ID_SUBURUSAN = E.ID_SUBURUSAN"
 				+ " AND B.ID_PEMOHON = D.ID_PEMOHON AND A.ID_ULASANTEKNIKAL = '"+idUlasanTeknikal+"'";
-			
+
 			ResultSet rsEmel = stmt.executeQuery(sql);
 			if (rsEmel.next()){
 				tajuk = rsEmel.getString("TAJUK_FAIL") == null ? "" :
@@ -178,7 +181,7 @@ public class FrmPhpNotifikasiEmel {
 				urusan = rsEmel.getString("NAMA_SUBURUSAN") == null ? "" :
 					rsEmel.getString("NAMA_SUBURUSAN");
 			}
-			
+
 			//TO GET USER EMAIL BY ROLE (PHP)PYWPenolongPegawaiTanahNegeri
 //			sql = "SELECT U.USER_ID, U.USER_LOGIN, U.USER_ROLE AS USER_ROLE, UI.EMEL "
 //				+ "FROM USERS U, USERS_INTERNAL UI "
@@ -188,19 +191,19 @@ public class FrmPhpNotifikasiEmel {
 //				+ "FROM USERS U, USER_ROLE UR, USERS_INTERNAL UI "
 //				+ "WHERE U.USER_LOGIN = UR.USER_ID AND U.USER_ID = UI.USER_ID "
 //				+ "AND UR.ROLE_ID = '(PHP)PYWPenolongPegawaiTanahNegeri'";
-//			
+//
 //			ResultSet rsPenerimaEmel = stmt.executeQuery(sql);
-//			
-//			List<String> strPenerima = new ArrayList<String>(); 
+//
+//			List<String> strPenerima = new ArrayList<String>();
 //			while (rsPenerimaEmel.next()) {
 //				if (rsPenerimaEmel.getString("EMEL") != null && rsPenerimaEmel.getString("EMEL").trim().length() > 0) {
-//					strPenerima.add(rsPenerimaEmel.getString("EMEL")); 
-//				} 			 
+//					strPenerima.add(rsPenerimaEmel.getString("EMEL"));
+//				}
 //			}
 //			email.MULTIPLE_RECIEPIENT = new String[strPenerima.size()];
-//			  
+//
 //			for (int i = 0; i < strPenerima.size(); i++) {
-//				email.MULTIPLE_RECIEPIENT[i] = strPenerima.get(i); 
+//				email.MULTIPLE_RECIEPIENT[i] = strPenerima.get(i);
 //			}
 			email.RECIEPIENT = "nurulain.siprotech@gmail.com"; //untuk testing sementara
 			email.SUBJECT = "PERMOHONAN MENGEMUKAKAN LAPORAN TANAH URUSAN "+urusan+" BAGI NO. FAIL " + noFail;
@@ -211,23 +214,23 @@ public class FrmPhpNotifikasiEmel {
 							 + "agensi yang berminat. Oleh yang demikian, pihak tuan dimohon untuk "
 							 + "mengemukakan laporan tanah berhubung keadaan terkini tapak tersebut dalam tempoh "
 							 + tempoh + " hari sebelum " + tarikhHantar + "."
-							 + " <br><br>Sekian, terima kasih.<br><br><br>"			
+							 + " <br><br>Sekian, terima kasih.<br><br><br>"
 							 + " Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
 			email.sendEmail();
-			
+
 		} finally {
 			if (db != null)
 				db.close();
 		}
 	}
-	
+
 	public void sendEmailtoMOF(String idPermohonan, String idKementerian, HttpSession session) throws Exception {
 		Db db = null;
 		Connection conn = null;
 		Vector beanMaklumatEmail = null;
 		EmailSender email = EmailSender.getInstance();
 		EmailConfig conf = new EmailConfig();
-		
+
 		String sql = "";
 		String emelUser = "nurulain.siprotech@gmail.com"; //untuk sementara
 		String noFail = "";
@@ -239,41 +242,40 @@ public class FrmPhpNotifikasiEmel {
 	    	conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			
+
 			sql = "SELECT A.TARIKH_HANTAR_KEWANGAN, D.NO_FAIL, D.TAJUK_FAIL "
 				+ "FROM TBLPHPKERTASKERJAPELEPASAN A, TBLPERMOHONAN C, TBLPFDFAIL D "
 				+ "WHERE A.ID_PERMOHONAN = C.ID_PERMOHONAN AND C.ID_FAIL = D.ID_FAIL "
 				+ "AND A.FLAG_KERTAS = 2 AND C.ID_PERMOHONAN = '"+idPermohonan+"'";
-			
+
 			ResultSet rsEmel = stmt.executeQuery(sql);
 			if (rsEmel.next()){
 				noFail = rsEmel.getString("NO_FAIL");
 				tajukFail = rsEmel.getString("TAJUK_FAIL");
 				//tempoh = rsEmel.getString("JANGKAMASA");
 				tarikhHantar = sdf.format(rsEmel.getDate("TARIKH_HANTAR_KEWANGAN"));
-			}	
-			
+			}
+
 			String tajuk = "PERMOHONAN MENGEMUKAKAN ULASAN KERTAS CADANGAN URUSAN PELEPASAN BAGI NO. FAIL " + noFail;
 			String kandungan = "Tuan/ Puan,"
-					 		 +"<br><br><u><b>"+tajukFail+"</b></u>"
-							 + "Adalah saya dengan hormatnya merujuk kepada perkara di atas."
-							 + "<br><br>2.	Sukacita dimaklumkan bahawa pihak kami memerlukan kelulusan "
-							 + "daripada Y.A.B Menteri Kewangan Malaysia sebelum " +tarikhHantar+ "."
-							 + "<br>3.	Kerjasama dari pihak tuan amatlah diharapkan dan dihargai.";
-			
+			 		 +"<br><br><u><b>"+tajukFail+"</b></u>"
+					 + "Bersama-sama ini dilampirkan sesalinan Kertas Cadangan bagi permohonan "
+					 + "penyerahan balik sebahagian tanah milik Persekutuan tersebut untuk "
+					 + "pertimbangan dan persetujuan Y.B. Menteri Kewangan Malaysia.";
+
 			conf.sendByKJPPenyedia(idKementerian, "", emelUser, tajuk, kandungan);
 			//email.sendEmail();
-			
+
 		} finally {
 			if (db != null)
 				db.close();
 		}
 	}
-	
+
 	public void sendEmailtoJPPH(String idPermohonan, String idKementerian, HttpSession session) throws Exception {
-		
+
 	}
-	
+
 	public void sendEmailtoKJPAPB(String idUlasanTeknikal, HttpSession session) throws Exception {
 		Db db = null;
 		Connection conn = null;
@@ -287,14 +289,14 @@ public class FrmPhpNotifikasiEmel {
 		String tempoh = "";
 		String tarikhHantar = "";
 		String tarikhTerima = "";
-		
+
 		try {
 			db = new Db();
 			conn = db.getConnection();
 	    	conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			
+
 			sql = "SELECT TBLPHPULASANTEKNIKAL.ID_ULASANTEKNIKAL, TBLPHPULASANTEKNIKAL.FLAG_KJP, TBLPHPULASANTEKNIKAL.JANGKAMASA, "
 				+ "TBLPHPULASANTEKNIKAL.TARIKH_HANTAR, TBLPHPULASANTEKNIKAL.TARIKH_JANGKA_TERIMA, "
 				+ "TBLPFDFAIL.NO_FAIL, TBLPFDFAIL.TAJUK_FAIL, TBLPHPPEMOHON.NAMA "
@@ -302,7 +304,7 @@ public class FrmPhpNotifikasiEmel {
 				+ "WHERE TBLPHPULASANTEKNIKAL.ID_PERMOHONAN = TBLPERMOHONAN.ID_PERMOHONAN "
 				+ "AND TBLPERMOHONAN.ID_PEMOHON = TBLPHPPEMOHON.ID_PEMOHON AND TBLPERMOHONAN.ID_FAIL = TBLPFDFAIL.ID_FAIL "
 				+ "AND TBLPHPULASANTEKNIKAL.ID_ULASANTEKNIKAL =  '"+idUlasanTeknikal+"'";
-			
+
 			ResultSet rsEmel = stmt.executeQuery(sql);
 			if (rsEmel.next()){
 				tajuk = rsEmel.getString("TAJUK_FAIL") == null ? "" :
@@ -324,7 +326,7 @@ public class FrmPhpNotifikasiEmel {
 				tarikhHantar = sdf.format(rsEmel.getDate("TARIKH_HANTAR"));
 				tarikhTerima = sdf.format(rsEmel.getDate("TARIKH_JANGKA_TERIMA"));
 			}
-			
+
 			//TO GET USER EMAIL BY ROLE (PHP)PYWPenolongPegawaiTanahNegeri
 //			sql = "SELECT U.USER_ID, U.USER_LOGIN, U.USER_ROLE AS USER_ROLE, UI.EMEL "
 //				+ "FROM USERS U, USERS_INTERNAL UI "
@@ -334,19 +336,19 @@ public class FrmPhpNotifikasiEmel {
 //				+ "FROM USERS U, USER_ROLE UR, USERS_INTERNAL UI "
 //				+ "WHERE U.USER_LOGIN = UR.USER_ID AND U.USER_ID = UI.USER_ID "
 //				+ "AND UR.ROLE_ID = '(PHP)PYWPenolongPegawaiTanahNegeri'";
-//			
+//
 //			ResultSet rsPenerimaEmel = stmt.executeQuery(sql);
-//			
-//			List<String> strPenerima = new ArrayList<String>(); 
+//
+//			List<String> strPenerima = new ArrayList<String>();
 //			while (rsPenerimaEmel.next()) {
 //				if (rsPenerimaEmel.getString("EMEL") != null && rsPenerimaEmel.getString("EMEL").trim().length() > 0) {
-//					strPenerima.add(rsPenerimaEmel.getString("EMEL")); 
-//				} 			 
+//					strPenerima.add(rsPenerimaEmel.getString("EMEL"));
+//				}
 //			}
 //			email.MULTIPLE_RECIEPIENT = new String[strPenerima.size()];
-//			  
+//
 //			for (int i = 0; i < strPenerima.size(); i++) {
-//				email.MULTIPLE_RECIEPIENT[i] = strPenerima.get(i); 
+//				email.MULTIPLE_RECIEPIENT[i] = strPenerima.get(i);
 //			}
 			email.RECIEPIENT = "nurulain.siprotech@gmail.com"; //untuk testing sementara
 			email.SUBJECT = "Mohon Ulasan " +namaJabatan+ " untuk " +namaPelesen+ " (" +noFail+ ")";
@@ -364,7 +366,7 @@ public class FrmPhpNotifikasiEmel {
 							 +"<br>Jabatan Ketua Pengarah Tanah dan Galian Persekutuan<br><br><br>"
 							 +"Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
 			email.sendEmail();
-			
+
 		} finally {
 			if (db != null)
 				db.close();

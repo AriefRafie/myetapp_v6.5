@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package ekptg.model.php2;
 
@@ -28,7 +28,7 @@ import ekptg.helpers.Utils;
 
 /**
  * modified by hilda
- * 
+ *
  */
 public class FrmPLPJabatanTeknikalData {
 
@@ -399,7 +399,7 @@ public class FrmPLPJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, null, "DEL",
 					"MAKLUMAT KJPKJT [" + idUlasanTeknikal
 							+ "] DIHAPUSKAN");
@@ -473,7 +473,7 @@ public class FrmPLPJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL PELEPASAN [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] DIDAFTARKAN");
@@ -571,7 +571,7 @@ public class FrmPLPJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL PELEPASAN [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] DIDAFTARKAN");
@@ -658,7 +658,7 @@ public class FrmPLPJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "UPD",
 					"FAIL PELEPASAN [" + idUlasanTeknikal + "] DIKEMASKINI");
 
@@ -725,7 +725,7 @@ public class FrmPLPJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL PELEPASAN [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] DIDAFTARKAN");
@@ -817,7 +817,7 @@ public class FrmPLPJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL PELEPASAN [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] DIDAFTARKAN");
@@ -896,7 +896,7 @@ public class FrmPLPJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "UPD",
 					"FAIL PELEPASAN [" + idUlasanTeknikal + "] DIKEMASKINI");
 
@@ -914,7 +914,7 @@ public class FrmPLPJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public void updateUlasanKJP(String idPermohonan, String ulasan, HttpSession session) throws Exception {
 
 		Db db = null;
@@ -1043,7 +1043,7 @@ public class FrmPLPJabatanTeknikalData {
 
 					//add by aishah 08062017 - untuk dapatkan nama pegawai yang memberi ulasan
 					+ " A.NAMA_PEGAWAI, A.NO_TELEFON"
-					
+
 					+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJKEMENTERIAN B, TBLRUJAGENSI C WHERE A.ID_MENTERI = B.ID_KEMENTERIAN"
 					+ " AND A.ID_AGENSI = C.ID_AGENSI AND A.ID_ULASANTEKNIKAL = '"+idUlasanTeknikal+"' "
 					+ " AND A.ID_PERMOHONAN = '"+idPermohonan+"' ";
@@ -1114,7 +1114,7 @@ public class FrmPLPJabatanTeknikalData {
 				db.close();
 		}
 	}
-		
+
 	public void setMaklumatUlasanMOF(String idUlasanTeknikal, String idPermohonan) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -1128,7 +1128,7 @@ public class FrmPLPJabatanTeknikalData {
 				+ "NAMA_PEGAWAI, NO_TELEFON_PEGAWAI FROM TBLPHPKERTASKERJAPELEPASAN "
 				+ "WHERE FLAG_KERTAS = '2' AND ID_KERTASKERJA = '"+idUlasanTeknikal+"' "
 				+ "AND ID_PERMOHONAN = '"+idPermohonan+"' ";
-			
+
 			ResultSet rs = stmt.executeQuery(sql);
 
 			Hashtable h;
@@ -1159,9 +1159,9 @@ public class FrmPLPJabatanTeknikalData {
 		} finally {
 			if (db != null)
 				db.close();
-		}		
+		}
 	}
-	
+
 	public void setLampiranKJP(String idPermohonan) throws Exception {
 		Db db = null;
 		String sql = "";
@@ -1177,7 +1177,7 @@ public class FrmPLPJabatanTeknikalData {
 					+ " WHERE ID_PERMOHONAN = '"+idPermohonan+"' AND FLAG_DOKUMEN = 'P' ";
 
 			ResultSet rs = stmt.executeQuery(sql);
-			
+
 			Hashtable h;
 			int bil = 1;
 			int count = 0;
@@ -1206,7 +1206,7 @@ public class FrmPLPJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public Vector getBeanMaklumatLampiranKJP() {
 		return beanMaklumatLampiranKJP;
 	}
@@ -1258,7 +1258,7 @@ public class FrmPLPJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL PELEPASAN [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] DIDAFTARKAN");
@@ -1349,7 +1349,7 @@ public class FrmPLPJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "INS",
 					"FAIL PELEPASAN [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] DIDAFTARKAN");
@@ -1423,7 +1423,7 @@ public class FrmPLPJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "UPD",
 					"FAIL PELEPASAN [" + idUlasanTeknikal + "] DIKEMASKINI");
 
@@ -1441,7 +1441,7 @@ public class FrmPLPJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public void updateMaklumatJPPH(String idPermohonan, String ulasan, HttpSession session) throws Exception {
 
 		Db db = null;
@@ -1468,7 +1468,7 @@ public class FrmPLPJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610202", "4", null, session, "UPD",
 					"FAIL PELEPASAN [" + getNoFailByIdPermohonan(idPermohonan)
 					+ "] DIKEMASKINI");
@@ -1542,7 +1542,7 @@ public class FrmPLPJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610201", "4", null, session, "UPD",
 					"FAIL PELEPASAN [" + getNoFailByIdPermohonan(idPermohonan)
 							+ "] PROSES SETERUSNYA");
@@ -1561,7 +1561,7 @@ public class FrmPLPJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public void gotoHantarHQ(String idFail, String idNegeriUser,
 			String idPermohonan, HttpSession session) throws Exception{
 		Db db = null;
@@ -1601,17 +1601,17 @@ public class FrmPLPJabatanTeknikalData {
 
 			sql = r.getSQLInsert("TBLPHPLOGTUGASAN");
 			stmt.executeUpdate(sql);
-			
+
 			// TBLPERMOHONAN
 			r = new SQLRenderer();
 			r.update("ID_PERMOHONAN", idPermohonan);
 			r.add("TARIKH_HANTAR_HQ", r.unquote("SYSDATE"));
-			
+
 			sql = r.getSQLUpdate("TBLPERMOHONAN");
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610213", "4", null, session, "INS",
 					"FAIL [" + idFail
 							+ "] DIHANTAR KEPADA HQ");
@@ -1630,7 +1630,7 @@ public class FrmPLPJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public void gotoHantarTugasanPP(String idFail, String idNegeriUser,
 			HttpSession session) throws Exception {
 
@@ -1673,7 +1673,7 @@ public class FrmPLPJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610213", "4", null, session, "UPD",
 					"FAIL [" + idFail
 							+ "] DIHANTAR KEPADA PP HQ");
@@ -1692,7 +1692,7 @@ public class FrmPLPJabatanTeknikalData {
 				db.close();
 		}
 	}
-	
+
 	public void doSimpanAgihanTugas(String idFail, String idPegawai,
 			String catatan, String idNegeriUser, HttpSession session)
 			throws Exception {
@@ -1737,7 +1737,7 @@ public class FrmPLPJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610213", "4", null, session, "INS",
 					"FAIL [" + idFail
 							+ "] TELAH DITUGASKAN");
@@ -1925,7 +1925,7 @@ public class FrmPLPJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "UPD",
 					"FAIL PELEPASAN [" + idKertasKerja + "] DIKEMASKINI");
 
@@ -2456,7 +2456,7 @@ public class FrmPLPJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "UPD",
 					"FAIL PELEPASAN [" + idHakmilikPermohonan + "] DIKEMASKINI");
 
@@ -2503,7 +2503,7 @@ public class FrmPLPJabatanTeknikalData {
 			stmt.executeUpdate(sql);
 
 			conn.commit();
-			
+
 			AuditTrail.logActivity("1610199", "4", null, session, "UPD",
 					"FAIL PELEPASAN [" + idTanahGanti + "] DIKEMASKINI");
 
@@ -2549,7 +2549,7 @@ public class FrmPLPJabatanTeknikalData {
 		}
 		return idPejabat;
 	}
-	
+
 	public Vector getBeanMaklumatLampiran(String idUlasanTeknikal)
 			throws Exception {
 		Db db = null;
@@ -2593,7 +2593,7 @@ public class FrmPLPJabatanTeknikalData {
 
 		return beanMaklumatLampiran;
 	}
-	
+
 	public void sendEmailtoKJP(String idPermohonan, String idKementerian, HttpSession session) throws Exception {
 		Db db = null;
 		Connection conn = null;
@@ -2604,42 +2604,43 @@ public class FrmPLPJabatanTeknikalData {
 		String tempoh = "";
 		String noFail = "";
 		String tarikhAkhir = "";
-		
+		String tarikhHantar = "";
+
 		try {
 			db = new Db();
 			conn = db.getConnection();
 	    	conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			
-			sql = " SELECT D.NO_FAIL, A.TARIKH_JANGKA_TERIMA, A.JANGKAMASA"
+
+			sql = " SELECT D.NO_FAIL, A.TARIKH_JANGKA_TERIMA, A.JANGKAMASA, A.TARIKH_HANTAR"
 				+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJKEMENTERIAN B, TBLPERMOHONAN C, TBLPFDFAIL D "
 				+ " WHERE A.ID_MENTERI = B.ID_KEMENTERIAN AND A.ID_PERMOHONAN = C.ID_PERMOHONAN "
 				+ " AND C.ID_FAIL = D.ID_FAIL AND B.ID_KEMENTERIAN = '"+idKementerian+"' "
 				+ " AND C.ID_PERMOHONAN = '"+idPermohonan+"'";
-			
+
 			ResultSet rsEmel = stmt.executeQuery(sql);
 			if (rsEmel.next()){
 				noFail = rsEmel.getString("NO_FAIL");
 				tempoh = rsEmel.getString("JANGKAMASA");
 				tarikhAkhir = sdf.format(rsEmel.getDate("TARIKH_JANGKA_TERIMA"));
-			}	
-			
+				tarikhHantar = sdf.format(rsEmel.getDate("TARIKH_HANTAR"));
+			}
+
 			email.RECIEPIENT = emelUser;
 			email.SUBJECT = "PERMOHONAN ULASAN URUSAN PELEPASAN BAGI NO. FAIL " + noFail;
-			email.MESSAGE = "Mohon pihak tuan memberikan ulasan dan keputusan bagi permohonan tersebut<br><br>"
-							 + "Kerjasama daripada pihak tuan untuk mengemukakan keputusan tersebut kepada Jabatan ini "
-							 + "sebelum " + tarikhAkhir + " amatlah dihargai."
-							 + " <br><br>Sekian, terima kasih.<br><br><br>"			
+			email.MESSAGE = "Dipohon pihak tuan mengemukakan ulasan bagi permohonan tersebut<br><br>"
+							 + "Kerjasama daripada pihak tuan untuk mengemukakan keputusan tersebut kepada Jabatan dalam tempoh 30 hari dari  "
+							 + tarikhHantar + "."
 							 + " Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
 			email.sendEmail();
-			
+
 		} finally {
 			if (db != null)
 				db.close();
 		}
 	}
-	
+
 	public void sendEmailtoJPPH(String idPermohonan, String idPejabatJPPH, HttpSession session) throws Exception {
 		Db db = null;
 		Connection conn = null;
@@ -2650,41 +2651,41 @@ public class FrmPLPJabatanTeknikalData {
 		String tempoh = "";
 		String noFail = "";
 		String tarikhAkhir = "";
-		
+
 		try {
 			db = new Db();
 			conn = db.getConnection();
 	    	conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			
+
 			sql = " SELECT A.TARIKH_JANGKA_TERIMA, A.JANGKAMASA, D.NO_FAIL"
 				+ " FROM TBLPHPULASANTEKNIKAL A, TBLRUJPEJABAT B, TBLPERMOHONAN C, TBLPFDFAIL D"
 				+ " WHERE A.ID_PEJABAT = B.ID_PEJABAT AND A.ID_PERMOHONAN = C.ID_PERMOHONAN AND C.ID_FAIL = D.ID_FAIL"
 				+ " AND A.FLAG_KJP = 'JPPH' AND A.ID_PERMOHONAN = '"+idPermohonan+"'";
-			
+
 			ResultSet rsEmel = stmt.executeQuery(sql);
 			if (rsEmel.next()){
 				noFail = rsEmel.getString("NO_FAIL");
 				tempoh = rsEmel.getString("JANGKAMASA");
 				tarikhAkhir = sdf.format(rsEmel.getDate("TARIKH_JANGKA_TERIMA"));
-			}	
-						
+			}
+
 			email.RECIEPIENT = emelUser;
 			email.SUBJECT = "PERMOHONAN ULASAN NILAIAN HARTA URUSAN PELEPASAN BAGI NO. FAIL " + noFail;
 			email.MESSAGE = "Mohon pihak tuan memberikan ulasan dan keputusan nilaian bagi permohonan tersebut<br><br>"
 							 + "Kerjasama daripada pihak tuan untuk mengemukakan keputusan tersebut kepada Jabatan ini "
 							 + "sebelum " + tarikhAkhir + " (" + tempoh + " hari) amatlah dihargai."
-							 + " <br><br>Sekian, terima kasih.<br><br><br>"			
+							 + " <br><br>Sekian, terima kasih.<br><br><br>"
 							 + " Emel ini dijana oleh Sistem MyeTaPP dan tidak perlu dibalas. <br>";
 			email.sendEmail();
-			
+
 		} finally {
 			if (db != null)
 				db.close();
 		}
 	}
-	
+
 	public void sendEmailtoUserJKPTGN(String idPermohonan, String idNegeriUser, HttpSession session) throws Exception {
 		Db db = null;
 		Connection conn = null;
@@ -2693,31 +2694,31 @@ public class FrmPLPJabatanTeknikalData {
 		String sql = "";
 		String noFail = "";
 		String emelUser = "";
-		
+
 		try {
 			db = new Db();
 			conn = db.getConnection();
 	    	conn.setAutoCommit(false);
 			Statement stmt = db.getStatement();
 			SQLRenderer r = new SQLRenderer();
-			
+
 			sql = " SELECT A.NO_FAIL, A.ID_MASUK, C.USER_NAME, D.EMEL FROM TBLPFDFAIL A, TBLPERMOHONAN B, USERS C, USERS_INTERNAL D "
 				+ " WHERE A.ID_FAIL = B.ID_FAIL AND A.ID_MASUK = C.USER_ID "
 				+ " AND C.USER_ID = D.USER_ID AND B.ID_PERMOHONAN = '"+idPermohonan+"'";
-			
+
 			ResultSet rsEmel = stmt.executeQuery(sql);
 			if (rsEmel.next()){
 				emelUser = rsEmel.getString("EMEL");
 				noFail = rsEmel.getString("NO_FAIL");
-			}	
-						
+			}
+
 			email.RECIEPIENT = emelUser;
 			email.SUBJECT = "KEPUTUSAN NILAIAN HARTA URUSAN PELEPASAN BAGI NO. FAIL " + noFail;
 			email.MESSAGE = "Keputusan nilaian bagi permohonan tersebut telah dibuat<br><br>"
 							 + "Mohon semakan daripada pihak tuan "
 							 + " <br><br>Sekian, terima kasih.<br>";
 			email.sendEmail();
-			
+
 		} finally {
 			if (db != null)
 				db.close();
@@ -2803,7 +2804,7 @@ public class FrmPLPJabatanTeknikalData {
 	public void setBeanMaklumatJPPH(Vector beanMaklumatJPPH) {
 		this.beanMaklumatJPPH = beanMaklumatJPPH;
 	}
-	
+
 	public Vector getBeanMaklumatUlasanMOF() {
 		return beanMaklumatUlasanMOF;
 	}

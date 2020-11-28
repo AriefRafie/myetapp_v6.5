@@ -367,12 +367,6 @@ function capaianGfmasBayaran() {
 
 function simpanBayaranD(){
 
-	if(document.${formName}.txtTarikh.value == ""){
-		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus();
-		return;
-	}
-
 	if(document.${formName}.socModBayaran.value == ""){
 		alert('Sila pilih Mod Bayaran.');
   		document.${formName}.socModBayaran.focus();
@@ -425,11 +419,7 @@ function hapusBayaranD(){
 	doAjaxCall${formName}("");
 }
 function simpanKemaskiniBayaranD(){
-	if(document.${formName}.txtTarikh.value == ""){
-		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus();
-		return;
-	}
+
 	if(document.${formName}.socCaraBayaran.value == ""){
 		alert('Sila pilih Cara Bayar.');
   		document.${formName}.socCaraBayaran.focus();
@@ -468,11 +458,6 @@ function pemBayaran(){
 }
 function simpanBayaran(){
 
-	if(document.${formName}.txtTarikh.value == ""){
-		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus();
-		return;
-	}
 	if(document.${formName}.socModBayaran.value == ""){
 		alert('Sila pilih Mod Bayaran.');
   		document.${formName}.socModBayaran.focus();
@@ -519,11 +504,7 @@ function hapusBayaran(){
 	doAjaxCall${formName}("");
 }
 function simpanKemaskiniBayaran(){
-	if(document.${formName}.txtTarikh.value == ""){
-		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus();
-		return;
-	}
+
 	if(document.${formName}.socCaraBayaran.value == ""){
 		alert('Sila pilih Cara Bayar.');
   		document.${formName}.socCaraBayaran.focus();
@@ -569,7 +550,6 @@ function pemBayaranLL(){
 	doAjaxCall${formName}("");
 }
 function simpanBayaranLL(){
-	alert("masuk x sini");
 	if(document.${formName}.socModBayaran.value == ""){
 		alert('Sila pilih Mod Bayaran.');
   		document.${formName}.socModBayaran.focus();
@@ -720,11 +700,6 @@ function pelarasanD(){
 }
 function simpanPelarasanD(){
 
-	if(document.${formName}.txtTarikh.value == ""){
-		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus();
-		return;
-	}
 	if(document.${formName}.socJenisPelarasan.value != "C" && document.${formName}.socJenisPelarasan.value != "D" && document.${formName}.socJenisPelarasan.value != "K" && document.${formName}.socJenisPelarasan.value != "R"){
 		alert('Sila pilih Jenis Pelarasan.');
   		document.${formName}.socJenisPelarasan.focus();
@@ -766,11 +741,6 @@ function hapusPelarasanD(){
 	doAjaxCall${formName}("");
 }
 function simpanKemaskiniPelarasanD(){
-	if(document.${formName}.txtTarikh.value == ""){
-		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus();
-		return;
-	}
 	if(document.${formName}.socJenisPelarasan.value != "C" && document.${formName}.socJenisPelarasan.value != "D" && document.${formName}.socJenisPelarasan.value != "K" && document.${formName}.socJenisPelarasan.value != "R"){
 		alert('Sila pilih Jenis Pelarasan.');
   		document.${formName}.socJenisPelarasan.focus();
@@ -810,11 +780,6 @@ function pelarasan(){
 }
 function simpanPelarasan(){
 
-	if(document.${formName}.txtTarikh.value == ""){
-		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus();
-		return;
-	}
 	if(document.${formName}.socJenisPelarasan.value != "C" && document.${formName}.socJenisPelarasan.value != "D" && document.${formName}.socJenisPelarasan.value != "K" && document.${formName}.socJenisPelarasan.value != "R"){
 		alert('Sila pilih Jenis Pelarasan.');
   		document.${formName}.socJenisPelarasan.focus();
@@ -856,11 +821,6 @@ function hapusPelarasan(){
 	doAjaxCall${formName}("");
 }
 function simpanKemaskiniPelarasan(){
-	if(document.${formName}.txtTarikh.value == ""){
-		alert('Sila masukkan Tarikh.');
-  		document.${formName}.txtTarikh.focus();
-		return;
-	}
 	if(document.${formName}.socJenisPelarasan.value != "C" && document.${formName}.socJenisPelarasan.value != "D" && document.${formName}.socJenisPelarasan.value != "K" && document.${formName}.socJenisPelarasan.value != "R"){
 		alert('Sila pilih Jenis Pelarasan.');
   		document.${formName}.socJenisPelarasan.focus();
