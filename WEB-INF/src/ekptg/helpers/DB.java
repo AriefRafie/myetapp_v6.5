@@ -9342,16 +9342,18 @@ myLogger.info("SQL LISTxxx -- :"+sql);
 				db.close();
 		}
 	}
-
-	public static Vector<Tblrujluas> getLuasKjpRekod() throws Exception {
+	//20201129 kemaskini order by keterangan, kod tidak dipaparkan
+	public static Vector<Tblrujluas> getLuaSemasa() throws Exception {
 		String key = "DB.getLuasKjpRekod";
 		Element cachedObject = myCache.get(key);
 		if (cachedObject != null) {
 			return (Vector<Tblrujluas>) cachedObject.getObjectValue();
 		} else {
 			Db db = null;
-			String sql = "SELECT id_Luas, kod_Luas, Keterangan FROM Tblrujluas where id_luas IN (2,3,5,6) ORDER BY kod_Luas";
-
+			String sql = "SELECT id_luas, kod_luas, keterangan FROM tblrujluas where id_luas IN (2,3,5,6) "
+//				+ "ORDER BY kod_Luas";
+				+ "ORDER BY keterangan";
+			
 			try {
 				db = new Db();
 				Statement stmt = db.getStatement();

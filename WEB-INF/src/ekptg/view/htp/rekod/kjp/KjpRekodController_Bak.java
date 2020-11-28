@@ -96,7 +96,7 @@ public class KjpRekodController_Bak extends AjaxBasedModule {
     		//Get Luas in hektar
     		getLuasPTP(listDbPTP,rekodDb);		
     		//dropdown (meter,kaki,ekar & hektar)
-    		context.put("selectLuas",HTML.SelectLuasKjpRekod("socLuas",null,null,"style=width:200px"));
+    		context.put("selectLuas",HTML.SelectLuaSemasa("socLuas",null,null,"style=width:200px"));
     		
 		}//close else
     	//selected form
