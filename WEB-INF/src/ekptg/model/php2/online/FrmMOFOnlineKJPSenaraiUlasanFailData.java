@@ -164,6 +164,145 @@ public class FrmMOFOnlineKJPSenaraiUlasanFailData {
 		
 		return listFail;
 	}
+	public Vector getSenaraiFailRujukan(String findNoFail, String findTajukFail, String findPemohon, String findNoPengenalan, 
+			String findTarikhTerima, String findNoHakmilik, String findNoWarta, String findNoPegangan, String findJenisHakmilik, 
+			String findJenisLot, String findNoLot, String findNegeri, String findDaerah, String findMukim, String userId) {
+		
+		String sql = "";
+		Vector listFail = null;
+		Hashtable h;
+		
+		try {
+			listFail = new Vector();
+			
+			db = new Db();
+			Statement stmt = db.getStatement();
+			
+			sql = "SELECT TBLPFDFAIL.ID_FAIL, TBLPFDFAIL.NO_FAIL, TBLPFDFAIL.TAJUK_FAIL, TBLPHPKERTASKERJAPELEPASAN.TARIKH_HANTAR_KEWANGAN, TBLPERMOHONAN.ID_STATUS, "
+				+ "TBLPHPKERTASKERJAPELEPASAN.TARIKH_TERIMA_KEWANGAN, TBLPERMOHONAN.ID_PERMOHONAN, TBLPHPKERTASKERJAPELEPASAN.ID_KERTASKERJA "
+				+ "FROM TBLPHPKERTASKERJAPELEPASAN, TBLPERMOHONAN, TBLPHPPEMOHON, TBLPFDFAIL, TBLPHPHAKMILIKPERMOHONAN, TBLPHPHAKMILIK, USERS "
+				+ "WHERE TBLPHPKERTASKERJAPELEPASAN.ID_PERMOHONAN = TBLPERMOHONAN.ID_PERMOHONAN "
+				+ "AND TBLPERMOHONAN.ID_PEMOHON = TBLPHPPEMOHON.ID_PEMOHON AND TBLPERMOHONAN.ID_FAIL = TBLPFDFAIL.ID_FAIL "
+				+ "AND TBLPERMOHONAN.ID_PERMOHONAN = TBLPHPHAKMILIKPERMOHONAN.ID_PERMOHONAN "
+				+ "AND TBLPHPHAKMILIKPERMOHONAN.ID_HAKMILIKPERMOHONAN = TBLPHPHAKMILIK.ID_HAKMILIKPERMOHONAN "
+				+ "AND TBLPFDFAIL.ID_SEKSYEN = 4 AND TBLPFDFAIL.ID_URUSAN = '6' AND TBLPFDFAIL.ID_SUBURUSAN = '34' "
+				+ "AND TBLPERMOHONAN.ID_STATUS = '1610203' "
+				+ "AND USERS.USER_ID = '" + userId + "'";
+			
+			if (findNoFail != null) {
+				if (!findNoFail.trim().equals("")) {
+					sql = sql + " AND UPPER(TBLPFDFAIL.NO_FAIL) LIKE '%' ||'"
+							+ findNoFail.trim().toUpperCase() + "'|| '%'";
+				}
+			}
+			if (findTajukFail != null) {
+				if (!findTajukFail.trim().equals("")) {
+					sql = sql + " AND UPPER(TBLPFDFAIL.TAJUK_FAIL) LIKE '%' ||'"
+							+ findTajukFail.trim().toUpperCase() + "'|| '%'";
+				}
+			}
+			if (findPemohon != null) {
+				if (!findPemohon.trim().equals("")) {
+					sql = sql + " AND UPPER(TBLPHPPEMOHON.NAMA) LIKE '%' ||'"
+							+ findPemohon.trim().toUpperCase() + "'|| '%'";
+				}
+			}
+			if (findNoPengenalan != null) {
+				if (!findNoPengenalan.trim().equals("")) {
+					sql = sql + " AND UPPER(TBLPHPPEMOHON.NO_PENGENALAN) LIKE '%' ||'"
+							+ findNoPengenalan.trim().toUpperCase() + "'|| '%'";
+				}
+			}
+			SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MMM-yy");
+
+			// tarikhTerima
+			if (findTarikhTerima != null) {
+				if (!findTarikhTerima.toString().trim().equals("")) {
+					sql = sql
+							+ " AND TO_CHAR(TBLPHPKERTASKERJAPELEPASAN.TARIKH_TERIMA_KEWANGAN,'dd-MON-YY') = '"
+							+ sdf1.format(sdf.parse(findTarikhTerima))
+									.toUpperCase() + "'";
+				}
+			}
+			if (findNoHakmilik != null) {
+				if (!findNoHakmilik.trim().equals("")) {
+					sql = sql + " AND UPPER(TBLPHPHAKMILIK.NO_HAKMILIK) LIKE '%' ||'"
+							+ findNoHakmilik.trim().toUpperCase() + "'|| '%'";
+				}
+			}
+			if (findNoWarta != null) {
+				if (!findNoWarta.trim().equals("")) {
+					sql = sql + " AND UPPER(TBLPHPHAKMILIK.NO_WARTA) LIKE '%' ||'"
+							+ findNoWarta.trim().toUpperCase() + "'|| '%'";
+				}
+			}
+			if (findNoPegangan != null) {
+				if (!findNoPegangan.trim().equals("")) {
+					sql = sql + " AND UPPER(TBLPHPHAKMILIK.PEGANGAN_HAKMILIK) LIKE '%' ||'"
+							+ findNoPegangan.trim().toUpperCase() + "'|| '%'";
+				}
+			}
+			if (findJenisHakmilik != null) {
+				if (!findJenisHakmilik.trim().equals("")
+						&& !findJenisHakmilik.trim().equals("9999")) {
+					sql = sql + " AND TBLPHPHAKMILIK.ID_JENISHAKMILIK = '" + findJenisHakmilik.trim() + "'";
+				}
+			}
+			if (findJenisLot != null) {
+				if (!findJenisLot.trim().equals("")
+						&& !findJenisLot.trim().equals("9999")) {
+					sql = sql + " AND TBLPHPHAKMILIK.ID_LOT = '" + findJenisLot.trim() + "'";
+				}
+			}
+			if (findNoLot != null) {
+				if (!findNoLot.trim().equals("")) {
+					sql = sql + " AND UPPER(TBLPHPHAKMILIK.NO_LOT) LIKE '%' ||'"
+							+ findNoLot.trim().toUpperCase() + "'|| '%'";
+				}
+			}
+			if (findNegeri != null) {
+				if (!findNegeri.trim().equals("")
+						&& !findNegeri.trim().equals("9999")) {
+					sql = sql + " AND TBLPHPHAKMILIK.ID_NEGERI = '" + findNegeri.trim() + "'";
+				}
+			}
+			if (findDaerah != null) {
+				if (!findDaerah.trim().equals("")
+						&& !findDaerah.trim().equals("9999")) {
+					sql = sql + " AND TBLPHPHAKMILIK.ID_DAERAH = '" + findDaerah.trim() + "'";
+				}
+			}
+			if (findMukim != null) {
+				if (!findMukim.trim().equals("")
+						&& !findMukim.trim().equals("9999")) {
+					sql = sql + " AND TBLPHPHAKMILIK.ID_MUKIM = '" + findMukim.trim() + "'";
+				}
+			}
+			
+			sql = sql + " ORDER BY TBLPHPKERTASKERJAPELEPASAN.TARIKH_TERIMA_KEWANGAN DESC ";
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			while (rs.next()) {
+				h = new Hashtable();
+				h.put("ID_ULASANTEKNIKAL", rs.getString("ID_KERTASKERJA") == null ? "" : rs.getString("ID_KERTASKERJA"));
+				h.put("ID_FAIL", rs.getString("ID_FAIL") == null ? "" : rs.getString("ID_FAIL"));
+				h.put("NO_FAIL", rs.getString("NO_FAIL") == null ? "" : rs.getString("NO_FAIL"));
+				h.put("TAJUK_FAIL", rs.getString("TAJUK_FAIL") == null ? "" : rs.getString("TAJUK_FAIL"));
+				h.put("TARIKH_HANTAR", rs.getDate("TARIKH_TERIMA_KEWANGAN") == null ? "" : sdf.format(rs.getDate("TARIKH_TERIMA_KEWANGAN")));
+				h.put("TARIKH_JANGKA_TERIMA", rs.getDate("TARIKH_HANTAR_KEWANGAN") == null ? "" : sdf.format(rs.getDate("TARIKH_HANTAR_KEWANGAN")));
+				h.put("ID_STATUS", rs.getString("ID_STATUS") == null ? "" : rs.getString("ID_STATUS"));
+								
+				listFail.addElement(h);
+			}
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} finally {
+			if (db != null ) db.close();
+		}
+		
+		return listFail;
+	}
 
 	public String simpanUlasan(String idKertasKerja, String txtTarikhTerima, String txtUlasan,
 			String txtKeputusan,  String txtNamaPengulas, String txtNoTelPengulas, HttpSession session) {

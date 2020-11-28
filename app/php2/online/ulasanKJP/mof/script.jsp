@@ -9,6 +9,10 @@ function paparFail(idFail, idUlasanTeknikal){
 	document.${formName}.idFail.value=idFail;
 	doDivAjaxCall$formname('divMainForm','paparFail','&idFail='+ idFail +'&idUlasanTeknikal=' + idUlasanTeknikal);
 }
+function paparFailRujukan(idFail, idUlasanTeknikal){
+	document.${formName}.idFail.value=idFail;
+	doDivAjaxCall$formname('divMainForm','paparFail','&idFail='+ idFail +'&idUlasanTeknikal=' + idUlasanTeknikal);
+}
 function simpanUlasan(){	
 	if(document.${formName}.txtTarikhSurat.value == ""){
   		document.${formName}.txtTarikhSurat.focus(); 
