@@ -8,6 +8,9 @@ function doChangeDaerah(){
 function paparFail(idFail, idUlasanTeknikal){
 	doDivAjaxCall$formname('divMainForm','paparFail','idFail='+ idFail +'&idUlasanTeknikal=' + idUlasanTeknikal);
 }
+function paparFailRujukan(idFail, idUlasanTeknikal){
+	doDivAjaxCall$formname('divMainForm','paparFail','idFail='+ idFail +'&idUlasanTeknikal=' + idUlasanTeknikal);
+}
 function simpanUlasan(){	
 
 	if(document.${formName}.txtTarikhSurat.value == ""){
