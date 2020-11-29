@@ -503,12 +503,10 @@ public class FrmTukarPegawaiBI2Data {
 							List listKPP = modelBI.listKPP(session,ID_NEGERIPEGAWAIBARU,"NEGERI",db);
 							if(listKPP.size() > 0)
 							{
-								//email.MULTIPLE_RECIEPIENT = new String[listKPP.size()];
 								for(int i = 0; i < listKPP.size();i++)
 								{
 									Map m = (Map) listKPP.get(i);
 									String EMEL = (String) m.get("EMEL");
-									//email.MULTIPLE_RECIEPIENT[i] = EMEL;	
 									if(!EMEL.equals(""))
 									{
 										collectionSendTo.add(modelBI.setHashEmel(EMEL));	
@@ -522,12 +520,10 @@ public class FrmTukarPegawaiBI2Data {
 							List listKPP = modelBI.listKPP(session,"","HQ",db);
 							if(listKPP.size() > 0)
 							{
-								//email.MULTIPLE_RECIEPIENT = new String[listKPP.size()];
 								for(int i = 0; i < listKPP.size();i++)
 								{
 									Map m = (Map) listKPP.get(i);
 									String EMEL = (String) m.get("EMEL");
-									//email.MULTIPLE_RECIEPIENT[i] = EMEL;	
 									if(!EMEL.equals(""))
 									{
 										collectionSendTo.add(modelBI.setHashEmel(EMEL));	
@@ -562,16 +558,7 @@ public class FrmTukarPegawaiBI2Data {
 						}
 					}					
 				}
-			}
-			/*
-			else
-			{
-				email.MULTIPLE_RECIEPIENT = new String[1];
-				email.MULTIPLE_RECIEPIENT[0] = "razman.zainal@gmail.com";
-			}
-			*/
-			//sementara, nnti komen balik
-			
+			}			
 			email.MULTIPLE_RECIEPIENT = new String[collectionSendTo.size()];
 			for(int i = 0; i < collectionSendTo.size();i++)
 			{
@@ -580,11 +567,10 @@ public class FrmTukarPegawaiBI2Data {
 				myLogger.info(">>>>>>>>>>>>>>>>>>> SENARAI PENERIMA EMEL "+EMEL);
 				//SEMENTARA
 				email.MULTIPLE_RECIEPIENT[i] = EMEL;
-				//email.MULTIPLE_RECIEPIENT[i] = "razman.zainal@gmail.com";
 			}			
 			
 			email.TO_CC = new String[1]; 
-			email.TO_CC[0] = "etappsupport@jkptg.gov.my";
+			email.TO_CC[0] = "etappsupport@jkptg.gov.my"; 
 						
 			email.SUBJECT = subject;
 			email.MESSAGE = content;

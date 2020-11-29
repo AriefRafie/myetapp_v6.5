@@ -16,7 +16,6 @@ import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +24,6 @@ import org.apache.axis2.addressing.EndpointReference;
 import org.apache.log4j.Logger;
 
 import ekptg.helpers.Utils;
-import ekptg.view.admin.utils.UsersKJP;
 
 
 public class ETanahCarianManager {
@@ -671,7 +669,7 @@ public class ETanahCarianManager {
 	}
 
 	public static void setFlagMsg(String flagMsg) {
-		ETanahPPTManager.flagMsg = flagMsg;
+		ETanahCarianManager.flagMsg = flagMsg;
 	}
 
 	public static String getOutputMsg() {
@@ -679,7 +677,7 @@ public class ETanahCarianManager {
 	}
 
 	public static void setOutputMsg(String outputMsg) {
-		ETanahPPTManager.outputMsg = outputMsg;
+		ETanahCarianManager.outputMsg = outputMsg;
 	}
 
 	public static Hakmilik getTanah() {

@@ -11984,8 +11984,8 @@ public class HTML {
 
 		return sb.toString();
 	}
-
-	public static String SelectLuasKjpRekod(String selectName, Long selectedValue,
+	//20201129 kemaskini order by keterangan, kod tidak dipaparkan
+	public static String SelectLuaSemasa(String selectName, Long selectedValue,
 			String disability, String jsFunction) throws Exception {
 		StringBuffer sb = new StringBuffer("");
 		try {
@@ -11996,7 +11996,7 @@ public class HTML {
 				sb.append(jsFunction);
 			sb.append(" > ");
 			sb.append("<option value=>SILA PILIH</option>\n");
-			Vector v = DB.getLuasKjpRekod();
+			Vector v = DB.getLuaSemasa();
 			Tblrujluas f = null;
 			String s = "";
 			for (int i = 0; i < v.size(); i++) {
@@ -12007,7 +12007,8 @@ public class HTML {
 					s = "";
 				}
 				sb.append("<option " + s + " value=" + f.getIdLuas() + ">"
-						+ f.getKodLuas() + " - " + f.getKeterangan()
+//						+ f.getKodLuas() + " - " 
+						+ f.getKeterangan()
 						+ "</option>\n");
 			}
 			sb.append("</select>");

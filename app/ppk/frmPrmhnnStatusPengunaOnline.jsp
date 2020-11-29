@@ -385,7 +385,7 @@
 	
 	function cetakSuratAkuanTerima(noFail,idfail,flagReport) {
 		//window.close();
-	    var url = "../servlet/ekptg.report.ppk.SuratAkuanTerima?nofail="+noFail+"&idfail="+idfail+"&bilDokumen=01&idPegawai=0&flagReport="+flagReport; 
+	    var url = "../servlet/ekptg.report.ppk.SuratAkuanTerimaOnline?nofail="+noFail+"&idfail="+idfail+"&idPegawai=0&flagReport="+flagReport; 
 	    var hWnd = window.open(url,'printuser','width=800,height=500, resizable=yes,scrollbars=yes');
 	    if ((document.window != null) && (!hWnd.opener))
 		hWnd.opener = document.window;

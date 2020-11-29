@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "BA",
     "BB"
 })
+
 public class PihakBerkepentinganList {
 
     @JsonProperty("IdJenisPengenalanPB")
@@ -32,18 +33,17 @@ public class PihakBerkepentinganList {
     @JsonProperty("BB")
     private String bB;
     @JsonIgnore
+    
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     @JsonProperty("IdJenisPengenalanPB")
     public String getIdJenisPengenalanPB() {
         return idJenisPengenalanPB;
     }
-
     @JsonProperty("IdJenisPengenalanPB")
     public void setIdJenisPengenalanPB(String idJenisPengenalanPB) {
         this.idJenisPengenalanPB = idJenisPengenalanPB;
     }
-
     public PihakBerkepentinganList withIdJenisPengenalanPB(String idJenisPengenalanPB) {
         this.idJenisPengenalanPB = idJenisPengenalanPB;
         return this;
@@ -53,7 +53,6 @@ public class PihakBerkepentinganList {
     public String getNoPengenalanPB() {
         return noPengenalanPB;
     }
-
     @JsonProperty("NoPengenalanPB")
     public void setNoPengenalanPB(String noPengenalanPB) {
         this.noPengenalanPB = noPengenalanPB;
@@ -68,7 +67,6 @@ public class PihakBerkepentinganList {
     public String getNamaPB() {
         return namaPB;
     }
-
     @JsonProperty("NamaPB")
     public void setNamaPB(String namaPB) {
         this.namaPB = namaPB;
@@ -83,7 +81,6 @@ public class PihakBerkepentinganList {
     public String getBA() {
         return bA;
     }
-
     @JsonProperty("BA")
     public void setBA(String bA) {
         this.bA = bA;
@@ -98,7 +95,6 @@ public class PihakBerkepentinganList {
     public String getBB() {
         return bB;
     }
-
     @JsonProperty("BB")
     public void setBB(String bB) {
         this.bB = bB;
@@ -123,5 +119,7 @@ public class PihakBerkepentinganList {
         this.additionalProperties.put(name, value);
         return this;
     }
+    
 
 }
+//20201124

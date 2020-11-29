@@ -100,12 +100,12 @@ public class Hakmilik {
     private String catatan;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    
 
     @JsonProperty("IdHakmilik")
     public String getIdHakmilik() {
         return idHakmilik;
     }
-
     @JsonProperty("IdHakmilik")
     public void setIdHakmilik(String idHakmilik) {
         this.idHakmilik = idHakmilik;
@@ -120,7 +120,6 @@ public class Hakmilik {
     public String getIdJenisHakmilik() {
         return idJenisHakmilik;
     }
-
     @JsonProperty("IdJenisHakmilik")
     public void setIdJenisHakmilik(String idJenisHakmilik) {
         this.idJenisHakmilik = idJenisHakmilik;
@@ -522,3 +521,4 @@ public class Hakmilik {
     }
 
 }
+//20201124

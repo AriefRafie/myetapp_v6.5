@@ -460,9 +460,9 @@
           	##parse("app/php2/online/frmPNWImejan.jsp")
           	<table width="100%" border="0" cellspacing="2" cellpadding="2">
            				<td  colspan="4">
-						#if($semakMode == "update")
+						#if(($semakMode == "update") || ($semakMode == "xupdate")) 
 						
-		    			#if(($!idjawatan.equals("20")||$!idjawatan.equals("24"))&& $!statussemasa.equals("1")) 
+		    			#if(($!idjawatan.equals("20")||$!idjawatan.equals("24"))&& $!statussemasa.equals("1") || $!statussemasa.equals("11")) 
 		    				<p><input type="checkbox" id="checkme"/><a>&nbsp;Saya, <b>$namaPemohon</b> dengan ini mengaku bahawa segala maklumat yang diberikan adalah benar belaka
    							<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tanpa sebarang keraguan dan paksaan dari mana-mana pihak.</a></p>
 		    				<p align="center"><input type="button" name="cmdSimpan" id="cmdSimpan" $buttonSend value="Hantar Semakan" onclick="doAjaxCall${formName}('simpanpengesahan2')" />

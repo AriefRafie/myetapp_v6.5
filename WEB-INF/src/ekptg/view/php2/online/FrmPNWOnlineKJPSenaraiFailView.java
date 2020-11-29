@@ -542,9 +542,10 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
     			
 
     			if (getIOnline().isHantar(Long.parseLong(String.valueOf(permohonan.get("idSubUrusan"))),
-    					Long.parseLong(String.valueOf(permohonan.get("idPermohonan"))),
-    					Long.parseLong(String.valueOf(permohonan.get("idFail"))), "4")) {
-    				semakMode = "xupdate";
+    						Long.parseLong(String.valueOf(permohonan.get("idPermohonan"))),
+    						Long.parseLong(String.valueOf(permohonan.get("idFail"))), "4")) {
+    					semakMode = "xupdate";
+    					statusSemasa = "4";
     			} else {
 
     				myLog.info("idPermohonan::" + logic.getBeanMaklumatHeader().get(0));

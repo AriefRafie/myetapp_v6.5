@@ -245,6 +245,8 @@ function doKembali(idFail,idJadualKeduaLesen){
 	document.${formName}.actionOnline.value = "daftarBaruBorangA";
 	document.${formName}.idFail.value = idFail;
 	document.${formName}.idJadualKeduaLesen.value = idJadualKeduaLesen;
+	document.${formName}.hitButton.value = "";
+	
 	document.${formName}.submit();
 }
 function validateCurrency(elmnt,content,content2) {

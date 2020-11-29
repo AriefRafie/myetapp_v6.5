@@ -114,6 +114,7 @@ function paparMaklumatPasir(idBorangA,idJadualKeduaLesen) {
 
 	document.${formName}.actionOnline.value = "doMaklumatPasir";
 	document.${formName}.mode.value = "view";
+	document.${formName}.hitButton.value = "";
 	document.${formName}.idJadualKeduaLesen.value = idJadualKeduaLesen;
 	document.${formName}.idBorangA.value = idBorangA;
 	document.${formName}.submit();
