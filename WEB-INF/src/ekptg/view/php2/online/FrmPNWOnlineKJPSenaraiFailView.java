@@ -537,8 +537,16 @@ public class FrmPNWOnlineKJPSenaraiFailView extends AjaxBasedModule {
     			this.context.put("userId", userId);
     			myLog.info("namaPemohon:: " + namaPemohon);
 
+    			/*
+				 * 1 untuk status - Pra-daftar
+				 * 2 untuk status - Tindakan Penyemak 
+				 * 3 untuk status - Tindakan Pelulus
+				 * 4 untuk status - Permohonan Online (Pengesahan) 
+				 * 5 untuk status - Penerimaan Permohonan
+				*/
+    			
     			String semakMode = "";
-    			String statusSemasa = "1";
+    			String statusSemasa = "0";
     			
 
     			if (getIOnline().isHantar(Long.parseLong(String.valueOf(permohonan.get("idSubUrusan"))),
