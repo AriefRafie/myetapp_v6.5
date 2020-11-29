@@ -1367,6 +1367,7 @@ public class FrmAPBOnlineSenaraiFailView extends AjaxBasedModule {
 			Hashtable hashMaklumatPermohonan = new Hashtable();
 			hashMaklumatPermohonan.put("tarikhTerima", getParam("tarikhTerima"));
 			hashMaklumatPermohonan.put("tarikhSurat", getParam("tarikhSurat"));
+			hashMaklumatPermohonan.put("noRujSurat", getParam("txtNoRujukanSurat"));
 			hashMaklumatPermohonan.put("perkara", getParam("txtPerkara"));
 			hashMaklumatPermohonan.put("tujuanPengambilan", getParam("txtTujuanPengambilan"));
 			hashMaklumatPermohonan.put("tempoh", getParam("socTempoh"));

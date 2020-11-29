@@ -14,6 +14,7 @@
 #set($saizTxtRingkasanPengalaman="900")
 #set($saizTxtJenisPerniagaan="500")
 #set($saizTxtUndangUndang="500")
+#set($saizTxtJumlahModal1="500")
 
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
 	#if ($mode == 'view' || $mode == 'update')
@@ -50,9 +51,9 @@
 		          	<td>#if ($mode == 'update')<span class="style1">*</span>#end</td>
 		          	<td width="28%">Jenis Tujuan</td>
 		          	<td width="1%">:</td>
-		          	#if($beanMaklumatPermohonan.idJenisLesen == 2)
+		          	#if($idJenisLesen == 2)
 			       		<td width="70%">MENGOREK</td>
-			       	#elseif($beanMaklumatPermohonan.idJenisLesen == 3 || $beanMaklumatPermohonan.idJenisLesen == 4)
+			       	#elseif($idJenisLesen == 3 || $idJenisLesen == 4)
 			       		<td width="70%">MENCARI GALI/MENJELAJAH</td>
 			       	#else
 			       		<td></td>
@@ -359,7 +360,7 @@
 			             	<td width="29%">Yang Boleh Diadakan Oleh Pemohon dan Sumbernya</td>
 			             	<td width="1%">:</td>
 		          		 	<td width="70%">
-		          		 		<input name="txtJumlahModal1" type="text" class="$inputTextClass" id="txtJumlahModal1" value="$beanMaklumatPermohonan.jumlahModal1" size="43" maxlength="80" $readonly onBlur="this.value=this.value.toUpperCase();"/>
+          						<textarea name="txtJumlahModal1" id="txtJumlahModal1" cols="43" rows="5" $readonly class="$inputTextClass" onblur="this.value=this.value.toUpperCase();" onKeyUp="textCounter(this.form.txtJumlahModal1,this.form.remLen4,$!saizTxtJumlahModal1);" onKeyDown="textCounter(this.form.txtJumlahModal1,this.form.remLen4,$!saizTxtJumlahModal1);">$beanMaklumatPermohonan.jumlahModal1</textarea>
 		          		 	</td>		          		 	
               			</tr>
             		  </table>
